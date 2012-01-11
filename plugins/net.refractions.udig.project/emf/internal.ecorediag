@@ -173,10 +173,6 @@
         <element xmi:type="ecore:EAttribute" href="internal.ecore#//Layer/status"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_5zqYjzgOEeGFxNy0Cm4gaw"/>
       </children>
-      <children xmi:type="notation:Node" xmi:id="_5zqYkDgOEeGFxNy0Cm4gaw" type="2001">
-        <element xmi:type="ecore:EAttribute" href="internal.ecore#//Layer/selectable"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_5zqYkTgOEeGFxNy0Cm4gaw"/>
-      </children>
       <children xmi:type="notation:Node" xmi:id="_5zqYkjgOEeGFxNy0Cm4gaw" type="2001">
         <element xmi:type="ecore:EAttribute" href="internal.ecore#//Layer/name"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_5zqYkzgOEeGFxNy0Cm4gaw"/>
@@ -248,7 +244,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_5zqYfzgOEeGFxNy0Cm4gaw" fontColor="4210752" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="internal.ecore#//Layer"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_5zqYgDgOEeGFxNy0Cm4gaw" x="1730" y="495"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_5zqYgDgOEeGFxNy0Cm4gaw" x="1815" y="495"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_5zqYsDgOEeGFxNy0Cm4gaw" type="1001">
     <children xmi:type="notation:Node" xmi:id="_5zqYszgOEeGFxNy0Cm4gaw" type="4001"/>

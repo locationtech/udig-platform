@@ -165,8 +165,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * The cached value of the '{@link #getZorder() <em>Zorder</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
      * @see #getZorder()
      * @generated
      * @ordered
@@ -419,8 +419,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public NotificationChain basicSetContextModel( ContextModel newContextModel,
@@ -454,6 +453,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * Get ZOrder of layer with regards to content model
+     * 
      * @model
      */
     public int getZorder() {
@@ -968,34 +968,18 @@ public class LayerImpl extends EObjectImpl implements Layer {
                     oldGlyph, glyph));
     }
 
-    private boolean selectableIsDefault = true;
-
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated not
+     * @deprecated use getInteraction(Interaction.SELECT)
      */
     public boolean isSelectable() {
-        if (selectableIsDefault) {
-            setSelectable(this.getGeoResource(FeatureSource.class) != null);
-        }
-        return selectable;
+        return getInteraction(Interaction.SELECT);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated not
+     * @deprecated use setInteraction(Interaction.SELECT, value)
      */
     public void setSelectable( boolean newSelectable ) {
-        if (selectableIsDefault) {
-            selectableIsDefault = false;
-        }
-        boolean oldSelectable = selectable;
-        selectable = newSelectable;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__SELECTABLE,
-                    oldSelectable, selectable));
+        setInteraction(Interaction.SELECT, newSelectable);
     }
 
     /**
@@ -1035,26 +1019,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     private volatile int status;
-
-    /**
-     * The default value of the '{@link #isSelectable() <em>Selectable</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #isSelectable()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean SELECTABLE_EDEFAULT = true;
-
-    /**
-     * The cached value of the '{@link #isSelectable() <em>Selectable</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #isSelectable()
-     * @generated not
-     * @ordered
-     */
-    protected volatile boolean selectable = SELECTABLE_EDEFAULT;
 
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -1307,9 +1271,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected volatile double maxScaleDenominator = MAX_SCALE_DENOMINATOR_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getInteractionMap() <em>Interaction Map</em>}' map.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The cached value of the '{@link #getInteractionMap() <em>Interaction Map</em>}' map. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see #getInteractionMap()
      * @generated
      * @ordered
@@ -1334,7 +1298,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         // XXX: rgould how do I process a getWMS().createDescribeLayerRequest()?
 
         // URL wfsURL = null;
-        //        
+        //
         // try {
         // DescribeLayerRequest request = null;
         // request = getWMS().createDescribeLayerRequest();
@@ -1369,8 +1333,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
         // special cases handled as fields
         if (Interaction.VISIBLE.equals(interaction)) {
             return isVisible();
-        } else if (Interaction.SELECT.equals(interaction)) {
-            return isSelectable();
         }
         Boolean applicable = getInteractionMap().get(interaction);
         if (applicable == null) {
@@ -1381,6 +1343,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * Logic to sort out a good default value for the request interaction.
+     * 
      * @param interaction
      * @return <code>true</code> if the interaction defaults to on
      */
@@ -1389,12 +1352,10 @@ public class LayerImpl extends EObjectImpl implements Layer {
         if (Interaction.INFO.equals(interaction)) {
             return true; // info is supported by most layers
         }
-        // wont hit this code yet because value comes from isSelectable
-        /*else if( ID_SELECT.equals(toolsetID)){
-            IGeoResource found = this.getGeoResource(FeatureSource.class);
-            return found != null;
-        }*/
-        else if (Interaction.EDIT.equals(interaction)) {
+        if (Interaction.SELECT.equals(interaction)) {
+            return true; // selection is supported by most layers
+            // TODO: change so that this doesn't include background layers
+        } else if (Interaction.EDIT.equals(interaction)) {
             IGeoResource found = this.getGeoResource(FeatureStore.class);
             return found != null;
         }
@@ -1407,8 +1368,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
     public void setInteraction( Interaction interaction, boolean applicable ) {
         if (Interaction.VISIBLE.equals(interaction)) {
             setVisible(applicable);
-        } else if (Interaction.SELECT.equals(interaction)) {
-            setSelectable(applicable);
         } else {
             getInteractionMap().put(interaction, applicable);
         }
@@ -1605,8 +1564,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public Map<Interaction, Boolean> getInteractionMap() {
@@ -1665,8 +1623,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -1681,8 +1638,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -1701,8 +1657,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -1716,8 +1671,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -1733,8 +1687,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return getZorder();
         case ProjectPackage.LAYER__STATUS:
             return getStatus();
-        case ProjectPackage.LAYER__SELECTABLE:
-            return isSelectable();
         case ProjectPackage.LAYER__NAME:
             return getName();
         case ProjectPackage.LAYER__CATALOG_REF:
@@ -1773,8 +1725,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -1795,9 +1746,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return;
         case ProjectPackage.LAYER__STATUS:
             setStatus((Integer) newValue);
-            return;
-        case ProjectPackage.LAYER__SELECTABLE:
-            setSelectable((Boolean) newValue);
             return;
         case ProjectPackage.LAYER__NAME:
             setName((String) newValue);
@@ -1845,8 +1793,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -1866,9 +1813,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return;
         case ProjectPackage.LAYER__STATUS:
             setStatus(STATUS_EDEFAULT);
-            return;
-        case ProjectPackage.LAYER__SELECTABLE:
-            setSelectable(SELECTABLE_EDEFAULT);
             return;
         case ProjectPackage.LAYER__NAME:
             setName(NAME_EDEFAULT);
@@ -1914,8 +1858,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -1931,8 +1874,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return zorder != ZORDER_EDEFAULT;
         case ProjectPackage.LAYER__STATUS:
             return status != STATUS_EDEFAULT;
-        case ProjectPackage.LAYER__SELECTABLE:
-            return selectable != SELECTABLE_EDEFAULT;
         case ProjectPackage.LAYER__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         case ProjectPackage.LAYER__CATALOG_REF:

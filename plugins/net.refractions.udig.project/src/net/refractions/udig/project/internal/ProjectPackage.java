@@ -402,22 +402,13 @@ public interface ProjectPackage extends EPackage {
     int LAYER__STATUS = ILAYER_FEATURE_COUNT + 4;
 
     /**
-     * The feature id for the '<em><b>Selectable</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int LAYER__SELECTABLE = ILAYER_FEATURE_COUNT + 5;
-
-    /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @generated
      * @ordered
      */
-    int LAYER__NAME = ILAYER_FEATURE_COUNT + 6;
+    int LAYER__NAME = ILAYER_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Catalog Ref</b></em>' attribute.
@@ -426,7 +417,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__CATALOG_REF = ILAYER_FEATURE_COUNT + 7;
+    int LAYER__CATALOG_REF = ILAYER_FEATURE_COUNT + 6;
 
     /**
      * The feature id for the '<em><b>ID</b></em>' attribute.
@@ -435,7 +426,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__ID = ILAYER_FEATURE_COUNT + 8;
+    int LAYER__ID = ILAYER_FEATURE_COUNT + 7;
 
     /**
      * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -444,7 +435,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__VISIBLE = ILAYER_FEATURE_COUNT + 9;
+    int LAYER__VISIBLE = ILAYER_FEATURE_COUNT + 8;
 
     /**
      * The feature id for the '<em><b>Geo Resource</b></em>' attribute.
@@ -453,7 +444,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__GEO_RESOURCE = ILAYER_FEATURE_COUNT + 10;
+    int LAYER__GEO_RESOURCE = ILAYER_FEATURE_COUNT + 9;
 
     /**
      * The feature id for the '<em><b>Geo Resources</b></em>' attribute list. <!--
@@ -462,7 +453,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__GEO_RESOURCES = ILAYER_FEATURE_COUNT + 11;
+    int LAYER__GEO_RESOURCES = ILAYER_FEATURE_COUNT + 10;
 
     /**
      * The feature id for the '<em><b>Glyph</b></em>' attribute.
@@ -471,7 +462,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__GLYPH = ILAYER_FEATURE_COUNT + 12;
+    int LAYER__GLYPH = ILAYER_FEATURE_COUNT + 11;
 
     /**
      * The feature id for the '<em><b>CRS</b></em>' attribute.
@@ -480,7 +471,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__CRS = ILAYER_FEATURE_COUNT + 13;
+    int LAYER__CRS = ILAYER_FEATURE_COUNT + 12;
 
     /**
      * The feature id for the '<em><b>Properties</b></em>' reference.
@@ -489,7 +480,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__PROPERTIES = ILAYER_FEATURE_COUNT + 14;
+    int LAYER__PROPERTIES = ILAYER_FEATURE_COUNT + 13;
 
     /**
      * The feature id for the '<em><b>Colour Scheme</b></em>' attribute.
@@ -498,7 +489,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__COLOUR_SCHEME = ILAYER_FEATURE_COUNT + 15;
+    int LAYER__COLOUR_SCHEME = ILAYER_FEATURE_COUNT + 14;
 
     /**
      * The feature id for the '<em><b>Default Color</b></em>' attribute.
@@ -507,7 +498,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__DEFAULT_COLOR = ILAYER_FEATURE_COUNT + 16;
+    int LAYER__DEFAULT_COLOR = ILAYER_FEATURE_COUNT + 15;
 
     /**
      * The feature id for the '<em><b>SimpleFeature Changes</b></em>' attribute list. <!--
@@ -516,7 +507,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__FEATURE_CHANGES = ILAYER_FEATURE_COUNT + 17;
+    int LAYER__FEATURE_CHANGES = ILAYER_FEATURE_COUNT + 16;
 
     /**
      * The feature id for the '<em><b>Min Scale Denominator</b></em>' attribute.
@@ -525,7 +516,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__MIN_SCALE_DENOMINATOR = ILAYER_FEATURE_COUNT + 18;
+    int LAYER__MIN_SCALE_DENOMINATOR = ILAYER_FEATURE_COUNT + 17;
 
     /**
      * The feature id for the '<em><b>Max Scale Denominator</b></em>' attribute.
@@ -534,7 +525,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__MAX_SCALE_DENOMINATOR = ILAYER_FEATURE_COUNT + 19;
+    int LAYER__MAX_SCALE_DENOMINATOR = ILAYER_FEATURE_COUNT + 18;
 
     /**
      * The feature id for the '<em><b>Interaction Map</b></em>' map.
@@ -543,7 +534,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__INTERACTION_MAP = ILAYER_FEATURE_COUNT + 20;
+    int LAYER__INTERACTION_MAP = ILAYER_FEATURE_COUNT + 19;
 
     /**
      * The number of structural features of the '<em>Layer</em>' class.
@@ -552,7 +543,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER_FEATURE_COUNT = ILAYER_FEATURE_COUNT + 21;
+    int LAYER_FEATURE_COUNT = ILAYER_FEATURE_COUNT + 20;
 
     /**
      * The meta object id for the '{@link net.refractions.udig.project.internal.ProjectElement <em>Element</em>}' class.
@@ -1712,16 +1703,6 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     EAttribute getLayer_Status();
-
-    /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#isSelectable <em>Selectable</em>}'.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Selectable</em>'.
-     * @see net.refractions.udig.project.internal.Layer#isSelectable()
-     * @see #getLayer()
-     * @generated
-     */
-    EAttribute getLayer_Selectable();
 
     /**
      * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getName <em>Name</em>}'.
@@ -2918,14 +2899,6 @@ public interface ProjectPackage extends EPackage {
          * @generated
          */
         EAttribute LAYER__STATUS = eINSTANCE.getLayer_Status();
-
-        /**
-         * The meta object literal for the '<em><b>Selectable</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute LAYER__SELECTABLE = eINSTANCE.getLayer_Selectable();
 
         /**
          * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

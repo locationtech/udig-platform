@@ -86,7 +86,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Layer/styleBlackboard"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/zorder"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/status"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/selectable"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/catalogRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/iD"/>

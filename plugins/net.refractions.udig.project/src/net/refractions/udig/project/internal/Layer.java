@@ -212,8 +212,7 @@ public interface Layer
      * Indicates this layer is selectable.
      * 
      * @return <code>true</code> if layer is selectable, <code>false</code> otherwise.
-     * @uml.property name="selectable"
-     * @model default="true"
+     * @deprecated use getInteraction(Interaction.SELECT)
      */
     public boolean isSelectable();
 
@@ -223,7 +222,7 @@ public interface Layer
      * may be ignored for GeoResources that do not support editing. <!-- end-user-doc -->
      * @param value the new value of the '<em>Selectable</em>' attribute.
      * @see #isSelectable()
-     * @generated
+     * @deprecated use setInteraction(Interaction.SELECT, value)
      */
     void setSelectable( boolean value );
 

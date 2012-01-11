@@ -750,7 +750,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getLayer_Selectable() {
+    public EAttribute getLayer_Name() {
         return (EAttribute) layerEClass.getEStructuralFeatures().get(5);
     }
 
@@ -758,7 +758,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getLayer_Name() {
+    public EAttribute getLayer_CatalogRef() {
         return (EAttribute) layerEClass.getEStructuralFeatures().get(6);
     }
 
@@ -766,7 +766,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getLayer_CatalogRef() {
+    public EAttribute getLayer_ID() {
         return (EAttribute) layerEClass.getEStructuralFeatures().get(7);
     }
 
@@ -774,7 +774,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getLayer_ID() {
+    public EAttribute getLayer_Visible() {
         return (EAttribute) layerEClass.getEStructuralFeatures().get(8);
     }
 
@@ -782,7 +782,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getLayer_Visible() {
+    public EAttribute getLayer_GeoResource() {
         return (EAttribute) layerEClass.getEStructuralFeatures().get(9);
     }
 
@@ -790,7 +790,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getLayer_GeoResource() {
+    public EAttribute getLayer_GeoResources() {
         return (EAttribute) layerEClass.getEStructuralFeatures().get(10);
     }
 
@@ -798,7 +798,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getLayer_GeoResources() {
+    public EAttribute getLayer_Glyph() {
         return (EAttribute) layerEClass.getEStructuralFeatures().get(11);
     }
 
@@ -806,7 +806,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getLayer_Glyph() {
+    public EAttribute getLayer_CRS() {
         return (EAttribute) layerEClass.getEStructuralFeatures().get(12);
     }
 
@@ -814,16 +814,8 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getLayer_CRS() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(13);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
     public EReference getLayer_Properties() {
-        return (EReference) layerEClass.getEStructuralFeatures().get(14);
+        return (EReference) layerEClass.getEStructuralFeatures().get(13);
     }
 
     /**
@@ -831,7 +823,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_ColourScheme() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(15);
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(14);
     }
 
     /**
@@ -839,7 +831,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_DefaultColor() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(16);
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(15);
     }
 
     /**
@@ -847,7 +839,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_FeatureChanges() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(17);
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(16);
     }
 
     /**
@@ -856,7 +848,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_MinScaleDenominator() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(18);
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(17);
     }
 
     /**
@@ -865,7 +857,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_MaxScaleDenominator() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(19);
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(18);
     }
 
     /**
@@ -874,7 +866,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EReference getLayer_InteractionMap() {
-        return (EReference) layerEClass.getEStructuralFeatures().get(20);
+        return (EReference) layerEClass.getEStructuralFeatures().get(19);
     }
 
     /**
@@ -1576,7 +1568,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         createEReference(layerEClass, LAYER__STYLE_BLACKBOARD);
         createEAttribute(layerEClass, LAYER__ZORDER);
         createEAttribute(layerEClass, LAYER__STATUS);
-        createEAttribute(layerEClass, LAYER__SELECTABLE);
         createEAttribute(layerEClass, LAYER__NAME);
         createEAttribute(layerEClass, LAYER__CATALOG_REF);
         createEAttribute(layerEClass, LAYER__ID);
@@ -1852,10 +1843,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 getLayer_Status(),
                 ecorePackage.getEInt(),
                 "status", "0", 0, 1, Layer.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-        initEAttribute(
-                getLayer_Selectable(),
-                ecorePackage.getEBoolean(),
-                "selectable", "true", 0, 1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
         initEAttribute(
                 getLayer_Name(),
                 ecorePackage.getEString(),
