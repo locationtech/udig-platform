@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: net.refractions.udig.libs;singleton:=true
-Bundle-Version: 1.3.1.qualifier
+Bundle-Version: 1.3.2.qualifier
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Eclipse-BuddyPolicy: registered,
@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  org.apache.batik.transcoder;visibility:=reexport,
  org.apache.batik.xml;visibility:=reexport,
  org.apache.xerces;visibility:=reexport,
- org.apache.log4j;visibility:=reexport
+ org.apache.log4j;visibility:=reexport,
+ org.eclipse.xsd;visibility:=reexport
 Bundle-Activator: net.refractions.udig.libs.internal.Activator
 Import-Package: org.osgi.framework;version="1.3.0",
  org.osgi.util.tracker;version="1.3.1"
