@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.core.internal.CorePlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -454,15 +455,31 @@ public class ServiceParameterPersister {
                     throw (RuntimeException) new RuntimeException( ).initCause( e );
                 }
                 try {
-                    List< ? extends IGeoResource> resources = service.resources(null);
-                    if( resources != null && !resources.isEmpty() ){
-                        for( IGeoResource child : resources){
-                            ID childID = child.getID();
+                    if( service.getStatus() == Status.CONNECTED ){
+                        // we can check against the available resources (and thus clean up from any removed resources)
+                        List< ? extends IGeoResource> resources = service.resources(null);
+                        if( resources != null && !resources.isEmpty() ){
+                            for( IGeoResource child : resources){
+                                ID childID = child.getID();
+                                
+                                Map<String, Serializable> childProperties = service.getPersistentProperties(childID);
+                                
+                                String encodeID = encodeID(childID);
+                                String childKey = CHILD_PREFIX+encodeID;
+                                
+                                Preferences childNode = serviceNode.node(childKey);
+                                storeProperties( childNode, childProperties );
+                                childNode.flush();
+                            }
+                        }
+                    }
+                    else {
+                        // we are not connected - so go ahead and save everything back out
+                        //
+                        for( Entry<ID, Map<String, Serializable>> entry : service.resourceProperties.entrySet() ){
+                            Map<String, Serializable> childProperties = entry.getValue();
                             
-                            
-                            Map<String, Serializable> childProperties = service.getPersistentProperties(childID);
-                            
-                            String encodeID = encodeID(childID);
+                            String encodeID = encodeID( entry.getKey() );
                             String childKey = CHILD_PREFIX+encodeID;
                             
                             Preferences childNode = serviceNode.node(childKey);

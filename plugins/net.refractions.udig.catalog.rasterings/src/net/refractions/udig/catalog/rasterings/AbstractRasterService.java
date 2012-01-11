@@ -42,10 +42,7 @@ import org.geotools.coverage.grid.io.GridFormatFactorySpi;
  */
 public abstract class AbstractRasterService extends IService {
     private ID id;
-    
-    /** <code>status</code> field describes the status of the service */
-    protected Status status = Status.NOTCONNECTED;
-    
+        
     /** <code>message</code> field reports any errors encountered. May be null. */
     protected Exception message = null;
     
@@ -76,7 +73,15 @@ public abstract class AbstractRasterService extends IService {
             super.canResolve(adaptee) );
     }
     public Status getStatus() {
-        return this.status;
+        if( reader != null ){
+            return Status.CONNECTED;
+        }
+        else if (message != null ){
+            return Status.BROKEN;
+        }
+        else {
+            return Status.NOTCONNECTED;
+        }
     }
 
     public Throwable getMessage() {
@@ -115,9 +120,6 @@ public abstract class AbstractRasterService extends IService {
                 AbstractGridFormat frmt = (AbstractGridFormat) getFormat();
                 ID id = getID();
                 if( id.isFile() ){
-//	                if( id.toExternalForm().startsWith("C:/")){
-//	                    id = new URL("file:///"+id.toExternalForm());
-//	                }
 	                File file = id.toFile();
 	                if( file != null ){
 	                	// to force  crs
