@@ -20,6 +20,10 @@
             image="icons/pointers/select_source.png"
             id="bbox_cursor"/>
               <enablement>
+                 <property
+                       expectedValue="SELECT"
+                       propertyId="InteractionProperty">
+                 </property>
                   </enablement>
          </modalTool>
           <modalTool
@@ -48,6 +52,10 @@
 	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
 	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
 	                     </or>
+                      <property
+                            expectedValue="SELECT"
+                            propertyId="InteractionProperty">
+                      </property>
                      </and>
                   </enablement>
          </modalTool>

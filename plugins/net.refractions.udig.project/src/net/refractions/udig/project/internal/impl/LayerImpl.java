@@ -1354,7 +1354,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
         }
         if (Interaction.SELECT.equals(interaction)) {
             return true; // selection is supported by most layers
-            // TODO: change so that this doesn't include background layers
         } else if (Interaction.EDIT.equals(interaction)) {
             IGeoResource found = this.getGeoResource(FeatureStore.class);
             return found != null;

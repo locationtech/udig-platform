@@ -34,20 +34,28 @@ public enum Interaction {
     /**
      * Gets the layer interaction property relevant to the supplied key (or toolCategoryId).
      * 
-     * @param layerInteraction
+     * @param text
      * @return interaction
      */
-    public static Interaction getInteraction(String layerInteraction) {
+    public static Interaction getInteraction(String text) {
+        try {
+            Interaction interaction = Interaction.valueOf(text);
+            return interaction;
+        }
+        catch (IllegalArgumentException wrong){
+            // ignore for now maybe it is a tool category
+        }
+
         // check for deprecated ProjectBlackboardConstants
-        if (layerInteraction.equals(ProjectBlackboardConstants.LAYER__EDIT_APPLICABILITY)
-                || layerInteraction.equals(ProjectBlackboardConstants.LAYER__FEATURES_ADD_APPLICABILITY)
-                || layerInteraction.equals(ProjectBlackboardConstants.LAYER__FEATURES_MODIFY_APPLICABILITY)
-                || layerInteraction.equals(ProjectBlackboardConstants.LAYER__FEATURES_REMOVE_APPLICABILITY)) {
+        if (text.equals(ProjectBlackboardConstants.LAYER__EDIT_APPLICABILITY)
+                || text.equals(ProjectBlackboardConstants.LAYER__FEATURES_ADD_APPLICABILITY)
+                || text.equals(ProjectBlackboardConstants.LAYER__FEATURES_MODIFY_APPLICABILITY)
+                || text.equals(ProjectBlackboardConstants.LAYER__FEATURES_REMOVE_APPLICABILITY)) {
             return Interaction.EDIT;
         }
-        for( Interaction interaction : Interaction.values() ){
-            if( layerInteraction.equals( interaction.getKey() ) ){
-                return interaction;
+        for( Interaction candidate : Interaction.values() ){
+            if( text.equals( candidate.getKey() ) ){
+                return candidate;
             }
         }
         return null;
