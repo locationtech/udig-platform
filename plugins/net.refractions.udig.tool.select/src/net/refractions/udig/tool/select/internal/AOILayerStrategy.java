@@ -153,7 +153,7 @@ public class AOILayerStrategy extends IAOIStrategy {
         List<ILayer> aoiLayers = new ArrayList<ILayer>();
         
         for (ILayer layer: layers) {
-            if (layer.isApplicable(ILayer.Interaction.AOI)) {
+            if (layer.getInteraction(ILayer.Interaction.AOI)) {
                 aoiLayers.add(layer);
             }
         }

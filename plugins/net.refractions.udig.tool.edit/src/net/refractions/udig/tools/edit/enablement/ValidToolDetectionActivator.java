@@ -61,7 +61,7 @@ public class ValidToolDetectionActivator implements EnablementBehaviour {
         }
         if (!selectedLayer.hasResource(FeatureStore.class)) {
             return Messages.ValidToolDetectionActivator_warning1;
-        } else if (!selectedLayer.isApplicable(ILayer.Interaction.EDIT)) {
+        } else if (!selectedLayer.getInteraction(ILayer.Interaction.EDIT)) {
             return openQuestion(handler, Messages.ValidToolDetectionActivator_question,
                     selectedLayer);
         } else {

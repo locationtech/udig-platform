@@ -81,7 +81,7 @@ public class LayerApplicabilityMenuCreator {
                     .getActiveWorkbenchWindow().getSelectionService().getSelection();
             for( Iterator iter = selection.iterator(); iter.hasNext(); ) {
                 Layer layer = (Layer) iter.next();
-                layer.setApplicable(Interaction.getInteraction(category.getId()), !menuItem.getSelection()); 
+                layer.setInteraction(Interaction.getInteraction(category.getId()), !menuItem.getSelection()); 
             }
         }
         /**
@@ -97,7 +97,7 @@ public class LayerApplicabilityMenuCreator {
             ModalToolCategory modalToolCategory = category;
             if( category!=null ){
                 Interaction key = Interaction.getInteraction(modalToolCategory.getId());
-                boolean interaction = layer.isApplicable(key);
+                boolean interaction = layer.getInteraction(key);
                 menuItem.setSelection(interaction);
                 menuItem.setText(modalToolCategory.getName());
             }

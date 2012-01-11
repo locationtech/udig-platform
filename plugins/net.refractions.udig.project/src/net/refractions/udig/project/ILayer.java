@@ -300,7 +300,7 @@ public interface ILayer extends Comparable<ILayer> {
      * @param interaction
      * @return
      */
-    public boolean isApplicable( Interaction interaction );
+    public boolean getInteraction( Interaction interaction );
 
     /**
      * Gets the name from the associated metadata.

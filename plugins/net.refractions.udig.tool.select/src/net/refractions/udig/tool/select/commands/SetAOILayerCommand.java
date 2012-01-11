@@ -131,7 +131,7 @@ public class SetAOILayerCommand extends AbstractCommand implements UndoableMapCo
         if( selectedLayer == null){
             return; // nothing to do!
         }
-        if (!selectedLayer.isApplicable(ILayer.Interaction.AOI)){
+        if (!selectedLayer.getInteraction(ILayer.Interaction.AOI)){
             return; // eek!
         }
         // use the bbox to see if we hit anything!

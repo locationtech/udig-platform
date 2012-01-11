@@ -133,7 +133,7 @@ public class UDIGFeatureStore implements FeatureStore<FeatureType,Feature>, UDIG
      * This method is responsible for setting the transaction prior to use.
      */
     private void setTransactionInternal() {
-        if (!layer.isApplicable(ILayer.Interaction.EDIT)) {
+        if (!layer.getInteraction(ILayer.Interaction.EDIT)) {
             String message = "Attempted to open a transaction on a non-editable layer (Aborted)";
             IllegalStateException illegalStateException = new IllegalStateException( message );
             ProjectPlugin.log(message, illegalStateException);

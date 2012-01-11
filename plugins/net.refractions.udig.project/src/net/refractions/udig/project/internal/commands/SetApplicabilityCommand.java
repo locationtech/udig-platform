@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 /**
  * Command for setting the applicability of a layer.  
  * 
- * @see ILayer#isApplicable(String)
+ * @see ILayer#getInteraction(String)
  * @author Jesse
  * @since 1.0.0
  */
@@ -46,10 +46,10 @@ public class SetApplicabilityCommand extends AbstractCommand implements Undoable
     public void run( IProgressMonitor monitor ) throws Exception {
         monitor.beginTask(Messages.SetApplicabilityCommand_name,3); 
         monitor.worked(1);
-        this.oldValue=layer.isApplicable(applicabilityId);
+        this.oldValue=layer.getInteraction(applicabilityId);
         if( oldValue==newValue)
             return;
-        ((Layer)layer).setApplicable(applicabilityId, newValue);
+        ((Layer)layer).setInteraction(applicabilityId, newValue);
         monitor.done();
     }
 
@@ -62,7 +62,7 @@ public class SetApplicabilityCommand extends AbstractCommand implements Undoable
         monitor.worked(1);
         if( oldValue==newValue)
             return;
-        ((Layer)layer).setApplicable(applicabilityId, oldValue);
+        ((Layer)layer).setInteraction(applicabilityId, oldValue);
         monitor.done();
     }
 

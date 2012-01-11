@@ -187,7 +187,7 @@ public interface Layer
      * @param interaction of the layer being considered
      * @param isApplicable true if layer is to be used with indicated interaction
      */
-    public void setApplicable( Interaction interaction, boolean isApplicable );
+    public void setInteraction( Interaction interaction, boolean isApplicable );
 
     /**
      * Indicates this layer is capable of selectable.

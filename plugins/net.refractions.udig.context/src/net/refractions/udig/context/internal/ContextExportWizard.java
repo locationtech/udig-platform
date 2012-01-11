@@ -155,7 +155,7 @@ public class ContextExportWizard extends Wizard implements IExportWizard {
         
         String title = wms.getCapabilities().getService().getTitle();
         int hidden = layer.isVisible() ? 1 : 0;
-        int info = layer.isApplicable(ILayer.Interaction.INFO) ? 1 : 0;
+        int info = layer.getInteraction(ILayer.Interaction.INFO) ? 1 : 0;
         String get = caps.getRequest().getGetCapabilities().getGet().toExternalForm();
 System.out.println(get); if (get.endsWith("&")) get = get.substring(0,get.length()-1); //$NON-NLS-1$
         append( 4, out, "<Layer hidden=\""+ hidden +"\" queryable=\""+info+"\">" ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$

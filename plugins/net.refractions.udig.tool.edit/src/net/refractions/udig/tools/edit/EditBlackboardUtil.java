@@ -611,7 +611,7 @@ public class EditBlackboardUtil {
      */
     private static boolean isEditable( ILayer layer ) {
         return layer != null && layer.hasResource(FeatureStore.class)
-                && layer.isApplicable(Interaction.EDIT) && layer.isVisible(); //$NON-NLS-1$
+                && layer.getInteraction(Interaction.EDIT) && layer.isVisible(); //$NON-NLS-1$
     }
     @SuppressWarnings("unchecked")
     private synchronized static void enableViewportListener( ViewportModel model ) {

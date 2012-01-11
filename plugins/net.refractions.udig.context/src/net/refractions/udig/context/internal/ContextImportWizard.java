@@ -370,7 +370,7 @@ public class ContextImportWizard extends Wizard implements IImportWizard {
         }
         String queryable = resource.getAttributeValue("queryable"); //$NON-NLS-1$
         if (queryable != null) {
-            layer.setApplicable(ILayer.Interaction.SELECT, !"0".equals(queryable)); //$NON-NLS-1$ //$NON-NLS-2$
+            layer.setInteraction(ILayer.Interaction.SELECT, !"0".equals(queryable)); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         Namespace oc = Namespace.getNamespace("http://www.opengis.net/oc"); //$NON-NLS-1$

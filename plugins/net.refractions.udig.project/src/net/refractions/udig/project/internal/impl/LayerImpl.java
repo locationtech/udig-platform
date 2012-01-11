@@ -1349,9 +1349,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#isApplicable(java.lang.String)
+     * @see net.refractions.udig.project.internal.Layer#getInteraction(java.lang.String)
      */
-    public boolean isApplicable( Interaction interaction ) {
+    public boolean getInteraction( Interaction interaction ) {
         // special cases handled as fields
         if (Interaction.VISIBLE.equals(interaction)) {
             return isVisible();
@@ -1495,9 +1495,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#setApplicable(java.lang.String, boolean)
+     * @see net.refractions.udig.project.internal.Layer#setInteraction(java.lang.String, boolean)
      */
-    public void setApplicable( Interaction interaction, boolean applicable ) {
+    public void setInteraction( Interaction interaction, boolean applicable ) {
         if (Interaction.VISIBLE.equals(interaction)) {
             setVisible(applicable);
         } else if (Interaction.SELECT.equals(interaction)) {

@@ -502,7 +502,7 @@ public class EditUtils {
      */
     private Coordinate searchLayer( ILayer layer, IToolContext context, Point centerPoint  ) {
         if (!layer.hasResource(FeatureSource.class) || 
-                !layer.isApplicable(Interaction.EDIT) 
+                !layer.getInteraction(Interaction.EDIT) 
                 || !layer.isVisible() )
             return null;
         

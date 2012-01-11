@@ -29,7 +29,7 @@ public class LayerInteractionProperty extends AbstractPropertyValue<ILayer> {
         if( interaction == null ){
             return false; // unable to figure out Interaction to test
         }        
-        return layer.isApplicable(interaction);
+        return layer.getInteraction(interaction);
     }
 
     @Override
