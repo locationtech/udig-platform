@@ -1,3 +1,17 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2007-2011, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.project.internal.render.impl;
 
 import java.awt.Dimension;
@@ -56,6 +70,10 @@ public final class ScaleUtils {
 
 	/**
 	 * Calculate the resolution of a for a tile given a tile scale in pixels.
+	 * <p>
+	 * This is used to calculate the resolution for a WMS tile. We need to consider the total size of the
+	 * WMS Layer; and the tile size.
+	 * 
 	 * @param bounds The full bounds of a WMS layer
 	 * @param scale The tile scale (viewport_scale * tile.width)
 	 * @param tileWidth The tile width in pixels
@@ -361,11 +379,10 @@ public final class ScaleUtils {
 	public static Envelope centerPixelBounds(IMapDisplay display,
 			ReferencedEnvelope bounds) {
 		Coordinate ul = pixelToWorld((int) (display.getWidth() / 2 - 0.5),
-				(int) (display.getHeight() / 2 - 0.5), bounds, display
+				Math.floor( ((double)display.getHeight()) / 2.0 - 0.5), bounds, display
 						.getDisplaySize());
 		Coordinate lr = pixelToWorld((int) (display.getWidth() / 2 + 0.5),
-				(int) (display.getHeight() / 2 + 0.5), bounds, display
-						.getDisplaySize());
+				Math.floor( ((double)display.getHeight()) / 2.0 + 0.5), bounds, display.getDisplaySize());
 		return new Envelope(ul.x, lr.x, ul.y, lr.y);
 	}
 

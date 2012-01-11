@@ -1,3 +1,17 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 20072011, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.catalog.wmsc.server;
 
 import java.awt.image.BufferedImage;
@@ -7,9 +21,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Date;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.io.FileUtils;
 import org.geotools.data.ows.AbstractOpenWebService;
 
 /**
@@ -25,7 +41,7 @@ public class TileImageReadWriter {
 	private static final String baseSubTileFolder = "tilecache"; //$NON-NLS-1$
 	private URL server;
 	
-	public TileImageReadWriter(AbstractOpenWebService service, String baseDir) {
+	public TileImageReadWriter(AbstractOpenWebService<?,?> service, String baseDir) {
         try {
             server = service.getInfo().getSource().toURL();
         } catch (MalformedURLException e) {
@@ -140,7 +156,7 @@ public class TileImageReadWriter {
 	 */
 	public boolean readTile(Tile tile, String filetype) {
 		BufferedInputStream bis = null;
-		BufferedImage image = null; 
+		BufferedImage image = null;
 		try {
 			// lock on the tile so we aren't trying to write to it as it is being read
 			Object lock = tile.getTileLock();
