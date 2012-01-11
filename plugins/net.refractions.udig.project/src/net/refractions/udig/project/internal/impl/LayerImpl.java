@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -44,7 +45,6 @@ import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.internal.CatalogRef;
 import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.ProjectFactory;
 import net.refractions.udig.project.internal.ProjectPackage;
@@ -70,6 +70,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -78,7 +79,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Display;
@@ -1303,6 +1306,16 @@ public class LayerImpl extends EObjectImpl implements Layer {
      */
     protected volatile double maxScaleDenominator = MAX_SCALE_DENOMINATOR_EDEFAULT;
 
+    /**
+     * The cached value of the '{@link #getInteractionMap() <em>Interaction Map</em>}' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getInteractionMap()
+     * @generated
+     * @ordered
+     */
+    protected EMap<Interaction, Boolean> interactionMap;
+
     private volatile String statusMessage = Messages.LayerImpl_status;
 
     /**
@@ -1707,6 +1720,21 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Map<Interaction, Boolean> getInteractionMap() {
+        if (interactionMap == null) {
+            interactionMap = new EcoreEMap<Interaction, Boolean>(
+                    ProjectPackage.Literals.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY,
+                    InteractionToEBooleanObjectMapEntryImpl.class, this,
+                    ProjectPackage.LAYER__INTERACTION_MAP);
+        }
+        return interactionMap.map();
+    }
+
+    /**
      * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
      */
     @SuppressWarnings("unchecked")
@@ -1780,6 +1808,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return basicSetContextModel(null, msgs);
         case ProjectPackage.LAYER__STYLE_BLACKBOARD:
             return basicSetStyleBlackboard(null, msgs);
+        case ProjectPackage.LAYER__INTERACTION_MAP:
+            return ((InternalEList< ? >) ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap())
+                    .eMap()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -1847,6 +1878,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return getMinScaleDenominator();
         case ProjectPackage.LAYER__MAX_SCALE_DENOMINATOR:
             return getMaxScaleDenominator();
+        case ProjectPackage.LAYER__INTERACTION_MAP:
+            if (coreType)
+                return ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap()).eMap();
+            else
+                return getInteractionMap();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -1915,6 +1951,10 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__MAX_SCALE_DENOMINATOR:
             setMaxScaleDenominator((Double) newValue);
             return;
+        case ProjectPackage.LAYER__INTERACTION_MAP:
+            ((EStructuralFeature.Setting) ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap())
+                    .eMap()).set(newValue);
+            return;
         }
         super.eSet(featureID, newValue);
     }
@@ -1981,6 +2021,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__MAX_SCALE_DENOMINATOR:
             setMaxScaleDenominator(MAX_SCALE_DENOMINATOR_EDEFAULT);
             return;
+        case ProjectPackage.LAYER__INTERACTION_MAP:
+            getInteractionMap().clear();
+            return;
         }
         super.eUnset(featureID);
     }
@@ -2037,6 +2080,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return minScaleDenominator != MIN_SCALE_DENOMINATOR_EDEFAULT;
         case ProjectPackage.LAYER__MAX_SCALE_DENOMINATOR:
             return maxScaleDenominator != MAX_SCALE_DENOMINATOR_EDEFAULT;
+        case ProjectPackage.LAYER__INTERACTION_MAP:
+            return interactionMap != null && !interactionMap.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -2287,7 +2332,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
             // parameters may have changed
             // so set modified on the map so the new params will be saved on
             // shutdown.
-            Map map = getMapInternal();
+            net.refractions.udig.project.internal.Map map = getMapInternal();
             Resource eResource = map.eResource();
             if (eResource != null) {
                 eResource.setModified(true);
@@ -2405,7 +2450,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     public Set<Range> getScaleRange() {
-        Map mapInternal = getMapInternal();
+        net.refractions.udig.project.internal.Map mapInternal = getMapInternal();
         if (mapInternal == null) {
             // we're in the middle of a map closing or map deleteing or something.
             return Collections.emptySet();

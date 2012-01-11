@@ -21,6 +21,7 @@ import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProject;
 import net.refractions.udig.project.IProjectElement;
 import net.refractions.udig.project.IStyleBlackboard;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.command.CommandStack;
 import net.refractions.udig.project.command.EditCommand;
 import net.refractions.udig.project.command.EditManagerControlCommand;
@@ -64,6 +65,7 @@ import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.brewer.color.BrewerPalette;
@@ -246,6 +248,13 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     private EClass iStyleBlackboardEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass interactionToEBooleanObjectMapEntryEClass = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -445,6 +454,13 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
     private EDataType brewerPaletteEDataType = null;
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EDataType interactionEDataType = null;
+
+    /**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -489,6 +505,9 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 .get(eNS_URI) : new ProjectPackageImpl());
 
         isInited = true;
+
+        // Initialize simple dependencies
+        EcorePackage.eINSTANCE.eClass();
 
         // Obtain or create and register interdependencies
         ElementPackageImpl theElementPackage = (ElementPackageImpl) (EPackage.Registry.INSTANCE
@@ -850,6 +869,15 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getLayer_InteractionMap() {
+        return (EReference) layerEClass.getEStructuralFeatures().get(20);
+    }
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -1187,6 +1215,35 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getInteractionToEBooleanObjectMapEntry() {
+        return interactionToEBooleanObjectMapEntryEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getInteractionToEBooleanObjectMapEntry_Key() {
+        return (EAttribute) interactionToEBooleanObjectMapEntryEClass.getEStructuralFeatures().get(
+                0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getInteractionToEBooleanObjectMapEntry_Value() {
+        return (EAttribute) interactionToEBooleanObjectMapEntryEClass.getEStructuralFeatures().get(
+                1);
+    }
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -1448,6 +1505,15 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EDataType getInteraction() {
+        return interactionEDataType;
+    }
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -1525,6 +1591,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         createEAttribute(layerEClass, LAYER__FEATURE_CHANGES);
         createEAttribute(layerEClass, LAYER__MIN_SCALE_DENOMINATOR);
         createEAttribute(layerEClass, LAYER__MAX_SCALE_DENOMINATOR);
+        createEReference(layerEClass, LAYER__INTERACTION_MAP);
 
         mapEClass = createEClass(MAP);
         createEReference(mapEClass, MAP__CONTEXT_MODEL);
@@ -1582,6 +1649,12 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
 
         iStyleBlackboardEClass = createEClass(ISTYLE_BLACKBOARD);
 
+        interactionToEBooleanObjectMapEntryEClass = createEClass(INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY);
+        createEAttribute(interactionToEBooleanObjectMapEntryEClass,
+                INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__KEY);
+        createEAttribute(interactionToEBooleanObjectMapEntryEClass,
+                INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__VALUE);
+
         // Create data types
         coordinateEDataType = createEDataType(COORDINATE);
         mapDisplayEDataType = createEDataType(MAP_DISPLAY);
@@ -1615,6 +1688,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         ioExceptionEDataType = createEDataType(IO_EXCEPTION);
         colorEDataType = createEDataType(COLOR);
         brewerPaletteEDataType = createEDataType(BREWER_PALETTE);
+        interactionEDataType = createEDataType(INTERACTION);
     }
 
     /**
@@ -1642,6 +1716,8 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         // Obtain other dependent packages
         RenderPackage theRenderPackage = (RenderPackage) EPackage.Registry.INSTANCE
                 .getEPackage(RenderPackage.eNS_URI);
+        EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
+                .getEPackage(EcorePackage.eNS_URI);
 
         // Create type parameters
 
@@ -1837,6 +1913,11 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 getLayer_MaxScaleDenominator(),
                 ecorePackage.getEDouble(),
                 "maxScaleDenominator", null, 0, 1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEReference(
+                getLayer_InteractionMap(),
+                this.getInteractionToEBooleanObjectMapEntry(),
+                null,
+                "interactionMap", null, 0, -1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         op = addEOperation(layerEClass, this.getQuery(), "getQuery", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEBoolean(), "selection", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -2067,6 +2148,19 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         initEClass(iStyleBlackboardEClass, IStyleBlackboard.class,
                 "IStyleBlackboard", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
+        initEClass(
+                interactionToEBooleanObjectMapEntryEClass,
+                java.util.Map.Entry.class,
+                "InteractionToEBooleanObjectMapEntry", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(
+                getInteractionToEBooleanObjectMapEntry_Key(),
+                this.getInteraction(),
+                "key", null, 0, 1, java.util.Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getInteractionToEBooleanObjectMapEntry_Value(),
+                theEcorePackage.getEBooleanObject(),
+                "value", null, 0, 1, java.util.Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
         // Initialize data types
         initEDataType(coordinateEDataType, Coordinate.class,
                 "Coordinate", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -2132,6 +2226,8 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 "Color", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(brewerPaletteEDataType, BrewerPalette.class,
                 "BrewerPalette", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEDataType(interactionEDataType, Interaction.class,
+                "Interaction", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
         // Create resource
         createResource(eNS_URI);

@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.geotools.data.Query;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -293,6 +294,9 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
                 .get(eNS_URI) : new RenderPackageImpl());
 
         isInited = true;
+
+        // Initialize simple dependencies
+        EcorePackage.eINSTANCE.eClass();
 
         // Obtain or create and register interdependencies
         ElementPackageImpl theElementPackage = (ElementPackageImpl) (EPackage.Registry.INSTANCE

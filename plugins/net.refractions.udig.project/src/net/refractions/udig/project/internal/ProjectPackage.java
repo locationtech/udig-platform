@@ -537,13 +537,22 @@ public interface ProjectPackage extends EPackage {
     int LAYER__MAX_SCALE_DENOMINATOR = ILAYER_FEATURE_COUNT + 19;
 
     /**
+     * The feature id for the '<em><b>Interaction Map</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LAYER__INTERACTION_MAP = ILAYER_FEATURE_COUNT + 20;
+
+    /**
      * The number of structural features of the '<em>Layer</em>' class.
      * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LAYER_FEATURE_COUNT = ILAYER_FEATURE_COUNT + 20;
+    int LAYER_FEATURE_COUNT = ILAYER_FEATURE_COUNT + 21;
 
     /**
      * The meta object id for the '{@link net.refractions.udig.project.internal.ProjectElement <em>Element</em>}' class.
@@ -1071,6 +1080,43 @@ public interface ProjectPackage extends EPackage {
     int IRESOLVE_CHANGE_LISTENER_FEATURE_COUNT = 0;
 
     /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl <em>Interaction To EBoolean Object Map Entry</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getInteractionToEBooleanObjectMapEntry()
+     * @generated
+     */
+    int INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY = 27;
+
+    /**
+     * The feature id for the '<em><b>Key</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__KEY = 0;
+
+    /**
+     * The feature id for the '<em><b>Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__VALUE = 1;
+
+    /**
+     * The number of structural features of the '<em>Interaction To EBoolean Object Map Entry</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY_FEATURE_COUNT = 2;
+
+    /**
      * The meta object id for the '<em>Coordinate</em>' data type.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
@@ -1078,7 +1124,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCoordinate()
      * @generated
      */
-    int COORDINATE = 27;
+    int COORDINATE = 28;
 
     /**
      * The meta object id for the '<em>Map Display</em>' data type.
@@ -1088,7 +1134,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getMapDisplay()
      * @generated
      */
-    int MAP_DISPLAY = 28;
+    int MAP_DISPLAY = 29;
 
     /**
      * The meta object id for the '<em>List</em>' data type.
@@ -1098,7 +1144,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getList()
      * @generated
      */
-    int LIST = 29;
+    int LIST = 30;
 
     /**
      * The meta object id for the '<em>Affine Transform</em>' data type.
@@ -1108,7 +1154,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getAffineTransform()
      * @generated
      */
-    int AFFINE_TRANSFORM = 30;
+    int AFFINE_TRANSFORM = 31;
 
     /**
      * The meta object id for the '<em>Nav Command Stack</em>' data type.
@@ -1118,7 +1164,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getNavCommandStack()
      * @generated
      */
-    int NAV_COMMAND_STACK = 31;
+    int NAV_COMMAND_STACK = 32;
 
     /**
      * The meta object id for the '<em>IGeo Resource</em>' data type.
@@ -1128,7 +1174,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIGeoResource()
      * @generated
      */
-    int IGEO_RESOURCE = 32;
+    int IGEO_RESOURCE = 33;
 
     /**
      * The meta object id for the '<em>Filter</em>' data type.
@@ -1138,7 +1184,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFilter()
      * @generated
      */
-    int FILTER = 33;
+    int FILTER = 34;
 
     /**
      * The meta object id for the '<em>Coordinate Reference System</em>' data type. <!--
@@ -1148,7 +1194,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCoordinateReferenceSystem()
      * @generated
      */
-    int COORDINATE_REFERENCE_SYSTEM = 34;
+    int COORDINATE_REFERENCE_SYSTEM = 35;
 
     /**
      * The meta object id for the '<em>Command Stack</em>' data type.
@@ -1158,7 +1204,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCommandStack()
      * @generated
      */
-    int COMMAND_STACK = 35;
+    int COMMAND_STACK = 36;
 
     /**
      * The meta object id for the '<em>Point</em>' data type.
@@ -1168,7 +1214,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getPoint()
      * @generated
      */
-    int POINT = 36;
+    int POINT = 37;
 
     /**
      * The meta object id for the '<em>Adapter</em>' data type.
@@ -1178,7 +1224,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getAdapter()
      * @generated
      */
-    int ADAPTER = 37;
+    int ADAPTER = 38;
 
     /**
      * The meta object id for the '<em>IProgress Monitor</em>' data type.
@@ -1188,7 +1234,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIProgressMonitor()
      * @generated
      */
-    int IPROGRESS_MONITOR = 38;
+    int IPROGRESS_MONITOR = 39;
 
     /**
      * The meta object id for the '<em>Query</em>' data type.
@@ -1198,7 +1244,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getQuery()
      * @generated
      */
-    int QUERY = 39;
+    int QUERY = 40;
 
     /**
      * The meta object id for the '<em>URL</em>' data type.
@@ -1208,7 +1254,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getURL()
      * @generated
      */
-    int URL = 40;
+    int URL = 41;
 
     /**
      * The meta object id for the '<em>Image Descriptor</em>' data type.
@@ -1218,7 +1264,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getImageDescriptor()
      * @generated
      */
-    int IMAGE_DESCRIPTOR = 41;
+    int IMAGE_DESCRIPTOR = 42;
 
     /**
      * The meta object id for the '<em>Edit Command</em>' data type.
@@ -1228,7 +1274,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEditCommand()
      * @generated
      */
-    int EDIT_COMMAND = 42;
+    int EDIT_COMMAND = 43;
 
     /**
      * The meta object id for the '<em>Nav Command</em>' data type.
@@ -1238,7 +1284,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getNavCommand()
      * @generated
      */
-    int NAV_COMMAND = 43;
+    int NAV_COMMAND = 44;
 
     /**
      * The meta object id for the '<em>Envelope</em>' data type.
@@ -1248,7 +1294,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEnvelope()
      * @generated
      */
-    int ENVELOPE = 44;
+    int ENVELOPE = 45;
 
     /**
      * The meta object id for the '<em>Edit Manager Control Command</em>' data type. <!--
@@ -1257,7 +1303,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEditManagerControlCommand()
      * @generated
      */
-    int EDIT_MANAGER_CONTROL_COMMAND = 45;
+    int EDIT_MANAGER_CONTROL_COMMAND = 46;
 
     /**
      * The meta object id for the '<em>Command</em>' data type.
@@ -1267,7 +1313,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCommand()
      * @generated
      */
-    int COMMAND = 46;
+    int COMMAND = 47;
 
     /**
      * The meta object id for the '<em>URI</em>' data type.
@@ -1277,7 +1323,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getURI()
      * @generated
      */
-    int URI = 47;
+    int URI = 48;
 
     /**
      * The meta object id for the '<em>Catalog Ref</em>' data type.
@@ -1287,7 +1333,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCatalogRef()
      * @generated
      */
-    int CATALOG_REF = 48;
+    int CATALOG_REF = 49;
 
     /**
      * The meta object id for the '<em>Colour Palette</em>' data type.
@@ -1297,7 +1343,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getColourPalette()
      * @generated
      */
-    int COLOUR_PALETTE = 49;
+    int COLOUR_PALETTE = 50;
 
     /**
      * The meta object id for the '<em>Colour Scheme</em>' data type.
@@ -1307,7 +1353,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getColourScheme()
      * @generated
      */
-    int COLOUR_SCHEME = 50;
+    int COLOUR_SCHEME = 51;
 
     /**
      * The meta object id for the '<em>Mutable Pico Container</em>' data type. <!--
@@ -1317,7 +1363,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getMutablePicoContainer()
      * @generated
      */
-    int MUTABLE_PICO_CONTAINER = 51;
+    int MUTABLE_PICO_CONTAINER = 52;
 
     /**
      * The meta object id for the '<em>Referenced Envelope</em>' data type.
@@ -1327,7 +1373,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getReferencedEnvelope()
      * @generated
      */
-    int REFERENCED_ENVELOPE = 52;
+    int REFERENCED_ENVELOPE = 53;
 
     /**
      * The meta object id for the '<em>Feature Event</em>' data type.
@@ -1337,7 +1383,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFeatureEvent()
      * @generated
      */
-    int FEATURE_EVENT = 53;
+    int FEATURE_EVENT = 54;
 
     /**
      * The meta object id for the '<em>Simple Feature</em>' data type.
@@ -1347,7 +1393,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getSimpleFeature()
      * @generated
      */
-    int SIMPLE_FEATURE = 54;
+    int SIMPLE_FEATURE = 55;
 
     /**
      * The meta object id for the '<em>Illegal Argument Exception</em>' data type.
@@ -1357,7 +1403,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIllegalArgumentException()
      * @generated
      */
-    int ILLEGAL_ARGUMENT_EXCEPTION = 55;
+    int ILLEGAL_ARGUMENT_EXCEPTION = 56;
 
     /**
      * The meta object id for the '<em>IO Exception</em>' data type.
@@ -1367,7 +1413,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIOException()
      * @generated
      */
-    int IO_EXCEPTION = 56;
+    int IO_EXCEPTION = 57;
 
     /**
      * The meta object id for the '<em>Color</em>' data type.
@@ -1377,7 +1423,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getColor()
      * @generated
      */
-    int COLOR = 57;
+    int COLOR = 58;
 
     /**
      * The meta object id for the '<em>Brewer Palette</em>' data type.
@@ -1387,7 +1433,17 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getBrewerPalette()
      * @generated
      */
-    int BREWER_PALETTE = 58;
+    int BREWER_PALETTE = 59;
+
+    /**
+     * The meta object id for the '<em>Interaction</em>' data type.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see net.refractions.udig.project.Interaction
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getInteraction()
+     * @generated
+     */
+    int INTERACTION = 60;
 
     /**
      * Returns the meta object for class '{@link Comparable <em>Comparable</em>}'. <!--
@@ -1811,6 +1867,17 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_MaxScaleDenominator();
 
     /**
+     * Returns the meta object for the map '{@link net.refractions.udig.project.internal.Layer#getInteractionMap <em>Interaction Map</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the map '<em>Interaction Map</em>'.
+     * @see net.refractions.udig.project.internal.Layer#getInteractionMap()
+     * @see #getLayer()
+     * @generated
+     */
+    EReference getLayer_InteractionMap();
+
+    /**
      * Returns the meta object for class '{@link net.refractions.udig.project.internal.Map <em>Map</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Map</em>'.
@@ -2224,6 +2291,40 @@ public interface ProjectPackage extends EPackage {
     EClass getIStyleBlackboard();
 
     /**
+     * Returns the meta object for class '{@link java.util.Map.Entry <em>Interaction To EBoolean Object Map Entry</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Interaction To EBoolean Object Map Entry</em>'.
+     * @see java.util.Map.Entry
+     * @model keyDataType="net.refractions.udig.project.internal.Interaction"
+     *        valueDataType="org.eclipse.emf.ecore.EBooleanObject"
+     * @generated
+     */
+    EClass getInteractionToEBooleanObjectMapEntry();
+
+    /**
+     * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Key</em>'.
+     * @see java.util.Map.Entry
+     * @see #getInteractionToEBooleanObjectMapEntry()
+     * @generated
+     */
+    EAttribute getInteractionToEBooleanObjectMapEntry_Key();
+
+    /**
+     * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Value</em>'.
+     * @see java.util.Map.Entry
+     * @see #getInteractionToEBooleanObjectMapEntry()
+     * @generated
+     */
+    EAttribute getInteractionToEBooleanObjectMapEntry_Value();
+
+    /**
      * Returns the meta object for data type '{@link com.vividsolutions.jts.geom.Coordinate <em>Coordinate</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Coordinate</em>'.
@@ -2550,6 +2651,17 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     EDataType getBrewerPalette();
+
+    /**
+     * Returns the meta object for data type '{@link net.refractions.udig.project.Interaction <em>Interaction</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for data type '<em>Interaction</em>'.
+     * @see net.refractions.udig.project.Interaction
+     * @model instanceClass="net.refractions.udig.project.Interaction"
+     * @generated
+     */
+    EDataType getInteraction();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -2928,6 +3040,14 @@ public interface ProjectPackage extends EPackage {
         EAttribute LAYER__MAX_SCALE_DENOMINATOR = eINSTANCE.getLayer_MaxScaleDenominator();
 
         /**
+         * The meta object literal for the '<em><b>Interaction Map</b></em>' map feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference LAYER__INTERACTION_MAP = eINSTANCE.getLayer_InteractionMap();
+
+        /**
          * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.MapImpl <em>Map</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3294,6 +3414,35 @@ public interface ProjectPackage extends EPackage {
         EClass ISTYLE_BLACKBOARD = eINSTANCE.getIStyleBlackboard();
 
         /**
+         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl <em>Interaction To EBoolean Object Map Entry</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see net.refractions.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl
+         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getInteractionToEBooleanObjectMapEntry()
+         * @generated
+         */
+        EClass INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY = eINSTANCE
+                .getInteractionToEBooleanObjectMapEntry();
+
+        /**
+         * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__KEY = eINSTANCE
+                .getInteractionToEBooleanObjectMapEntry_Key();
+
+        /**
+         * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__VALUE = eINSTANCE
+                .getInteractionToEBooleanObjectMapEntry_Value();
+
+        /**
          * The meta object literal for the '<em>Coordinate</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3612,6 +3761,16 @@ public interface ProjectPackage extends EPackage {
          * @generated
          */
         EDataType BREWER_PALETTE = eINSTANCE.getBrewerPalette();
+
+        /**
+         * The meta object literal for the '<em>Interaction</em>' data type.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see net.refractions.udig.project.Interaction
+         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getInteraction()
+         * @generated
+         */
+        EDataType INTERACTION = eINSTANCE.getInteraction();
 
     }
 

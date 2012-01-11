@@ -8,7 +8,7 @@
     editPluginClass="net.refractions.udig.project.internal.provider.ProjectEditPlugin"
     editorPluginClass="" nonNLSMarkers="true" suppressEMFTypes="true" codeFormatting="true"
     testsDirectory="" testSuiteClass="" importerID="org.eclipse.emf.importer.java"
-    complianceLevel="5.0" copyrightFields="false">
+    complianceLevel="5.0" copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <foreignModel>@model</foreignModel>
   <genPackages prefix="Element" basePackage="net.refractions.udig.project" disposableProviderFactory="true"
       ecorePackage="element.ecore#/">
@@ -50,6 +50,7 @@
     <genDataTypes ecoreDataType="internal.ecore#//IOException"/>
     <genDataTypes ecoreDataType="internal.ecore#//Color"/>
     <genDataTypes ecoreDataType="internal.ecore#//BrewerPalette"/>
+    <genDataTypes ecoreDataType="internal.ecore#//Interaction"/>
     <genClasses ecoreClass="internal.ecore#//Comparable"/>
     <genClasses ecoreClass="internal.ecore#//IMap"/>
     <genClasses ecoreClass="internal.ecore#//ILayer"/>
@@ -100,6 +101,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/featureChanges"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/minScaleDenominator"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/maxScaleDenominator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Layer/interactionMap"/>
       <genOperations ecoreOperation="internal.ecore#//Layer/getQuery">
         <genParameters ecoreParameter="internal.ecore#//Layer/getQuery/selection"/>
       </genOperations>
@@ -195,6 +197,10 @@
     </genClasses>
     <genClasses image="false" ecoreClass="internal.ecore#//IResolveChangeListener"/>
     <genClasses image="false" ecoreClass="internal.ecore#//IStyleBlackboard"/>
+    <genClasses ecoreClass="internal.ecore#//InteractionToEBooleanObjectMapEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//InteractionToEBooleanObjectMapEntry/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//InteractionToEBooleanObjectMapEntry/value"/>
+    </genClasses>
   </genPackages>
   <genPackages prefix="Render" basePackage="net.refractions.udig.project.internal"
       ecorePackage="render.ecore#/">

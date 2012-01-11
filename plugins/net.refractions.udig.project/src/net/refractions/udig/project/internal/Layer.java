@@ -10,6 +10,7 @@ package net.refractions.udig.project.internal;
 import java.awt.Color;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.refractions.udig.catalog.ID;
@@ -182,6 +183,12 @@ public interface Layer
      * @param message the status message
      */
     void setStatusMessage( String message );
+
+    /**
+     * @model keyType="Interaction" valueType="java.lang.Boolean" 
+     */
+    public Map<Interaction, Boolean> getInteractionMap();
+
     /**
      * Set interaction applicability.
      * 
@@ -408,7 +415,7 @@ public interface Layer
      * 
      * @return
      */
-    Map getMapInternal();
+    net.refractions.udig.project.internal.Map getMapInternal();
 
     /**
      * @return

@@ -881,4 +881,9 @@ public class LayerDecorator implements Layer, InternalEObject {
         return interalObject.eDerivedOperationID(baseOperationID, baseClass);
     }
 
+    @Override
+    public java.util.Map<Interaction, Boolean> getInteractionMap() {
+        return layer.getInteractionMap();
+    }
+
 }
