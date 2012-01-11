@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.core.internal.CorePlugin;
 import net.refractions.udig.core.internal.ExtensionPointList;
 import net.refractions.udig.project.command.CommandStack;
@@ -143,6 +144,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
             return createBlackboard();
         case ProjectPackage.BLACKBOARD_ENTRY:
             return createBlackboardEntry();
+        case ProjectPackage.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY:
+            return (EObject) createInteractionToEBooleanObjectMapEntry();
         default:
             throw new IllegalArgumentException(
                     "The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -220,6 +223,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
             return createColorFromString(eDataType, initialValue);
         case ProjectPackage.BREWER_PALETTE:
             return createBrewerPaletteFromString(eDataType, initialValue);
+        case ProjectPackage.INTERACTION:
+            return createInteractionFromString(eDataType, initialValue);
         default:
             throw new IllegalArgumentException(
                     "The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -297,6 +302,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
             return convertColorToString(eDataType, instanceValue);
         case ProjectPackage.BREWER_PALETTE:
             return convertBrewerPaletteToString(eDataType, instanceValue);
+        case ProjectPackage.INTERACTION:
+            return convertInteractionToString(eDataType, instanceValue);
         default:
             throw new IllegalArgumentException(
                     "The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -382,6 +389,16 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
     public BlackboardEntry createBlackboardEntry() {
         BlackboardEntryImpl blackboardEntry = new BlackboardEntryImpl();
         return blackboardEntry;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public java.util.Map.Entry<Interaction, Boolean> createInteractionToEBooleanObjectMapEntry() {
+        InteractionToEBooleanObjectMapEntryImpl interactionToEBooleanObjectMapEntry = new InteractionToEBooleanObjectMapEntryImpl();
+        return interactionToEBooleanObjectMapEntry;
     }
 
     /**
@@ -772,6 +789,24 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      */
     public String convertBrewerPaletteToString( EDataType eDataType, Object instanceValue ) {
         return ((BrewerPalette) instanceValue).getName();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Interaction createInteractionFromString( EDataType eDataType, String initialValue ) {
+        return (Interaction) super.createFromString(eDataType, initialValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertInteractionToString( EDataType eDataType, Object instanceValue ) {
+        return super.convertToString(eDataType, instanceValue);
     }
 
     /**

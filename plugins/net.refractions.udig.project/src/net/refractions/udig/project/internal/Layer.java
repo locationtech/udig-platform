@@ -10,6 +10,7 @@ package net.refractions.udig.project.internal;
 import java.awt.Color;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.refractions.udig.catalog.ID;
@@ -18,6 +19,7 @@ import net.refractions.udig.catalog.IResolveChangeListener;
 import net.refractions.udig.core.IBlockingAdaptable;
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.ui.palette.ColourScheme;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -181,13 +183,19 @@ public interface Layer
      * @param message the status message
      */
     void setStatusMessage( String message );
+
+    /**
+     * @model keyType="Interaction" valueType="java.lang.Boolean" 
+     */
+    public Map<Interaction, Boolean> getInteractionMap();
+
     /**
      * Set interaction applicability.
      * 
      * @param interaction of the layer being considered
      * @param isApplicable true if layer is to be used with indicated interaction
      */
-    public void setApplicable( Interaction interaction, boolean isApplicable );
+    public void setInteraction( Interaction interaction, boolean isApplicable );
 
     /**
      * Indicates this layer is capable of selectable.
@@ -204,8 +212,7 @@ public interface Layer
      * Indicates this layer is selectable.
      * 
      * @return <code>true</code> if layer is selectable, <code>false</code> otherwise.
-     * @uml.property name="selectable"
-     * @model default="true"
+     * @deprecated use getInteraction(Interaction.SELECT)
      */
     public boolean isSelectable();
 
@@ -215,7 +222,7 @@ public interface Layer
      * may be ignored for GeoResources that do not support editing. <!-- end-user-doc -->
      * @param value the new value of the '<em>Selectable</em>' attribute.
      * @see #isSelectable()
-     * @generated
+     * @deprecated use setInteraction(Interaction.SELECT, value)
      */
     void setSelectable( boolean value );
 
@@ -407,7 +414,7 @@ public interface Layer
      * 
      * @return
      */
-    Map getMapInternal();
+    net.refractions.udig.project.internal.Map getMapInternal();
 
     /**
      * @return

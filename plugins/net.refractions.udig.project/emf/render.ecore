@@ -35,7 +35,7 @@
         eType="#//ViewportModel" transient="true" resolveProxies="false" eOpposite="#//ViewportModel/renderManagerInternal"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ViewportModel" eSuperTypes="#//IMapDisplayListener #//IViewportModel">
-    <eOperations name="setBounds" eExceptions="ecore:EDataType internal.ecore#//IllegalArgumentException">
+    <eOperations name="setBounds" eExceptions="#//IllegalArgumentException">
       <eParameters name="minx" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
       <eParameters name="maxx" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
       <eParameters name="miny" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
@@ -132,4 +132,5 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="ReferencedEnvelope" instanceClassName="org.geotools.geometry.jts.ReferencedEnvelope"/>
   <eClassifiers xsi:type="ecore:EDataType" name="DateTime" instanceClassName="org.joda.time.DateTime"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="IllegalArgumentException" instanceClassName="java.lang.IllegalArgumentException"/>
 </ecore:EPackage>
