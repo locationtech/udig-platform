@@ -32,6 +32,21 @@ import net.refractions.udig.catalog.IDocument;
 import net.refractions.udig.catalog.IDocumentSource;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceFactory;
+import net.refractions.udig.core.internal.FeatureUtils;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.Query;
+import org.geotools.data.shapefile.ShapefileDataStore;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.factory.CommonFactoryFinder;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.AttributeDescriptor;
+import org.opengis.filter.Filter;
+import org.opengis.filter.FilterFactory2;
+import org.opengis.filter.identity.FeatureId;
 
 /**
  * Document Source for a shapefile. 
@@ -47,13 +62,13 @@ public class ShpDocumentSource extends IDocumentSource {
      * The field in the properties file that identifies the attribute in the shapefile 
      * that lists the documents for a specific feature / record
      */
-    public static final String ATTRIBUTE_LIST = "shp_document_attribute"; //$NON-NLS-1$
+    public static final String ATTRIBUTE_LIST = "shp_document_attributes"; //$NON-NLS-1$
     
     /**
      * The field in the properties file that lists the documents associated to all the features
      * in the shapefile
      */
-    public static final String DOCUMENT_LIST = "shp_document_list"; //$NON-NLS-1$
+    public static final String RESOURCE_DOCUMENTS = "shp_resource_documents"; //$NON-NLS-1$
     
     private URL url;
 
@@ -75,7 +90,9 @@ public class ShpDocumentSource extends IDocumentSource {
         if (documents != null && !documents.isEmpty()) {
             return true;
         }
-        // TODO: need to check other find documents (fid)
+        if (!getAttributes().isEmpty()) {
+            return true;
+        }
         return false;
     }
     
@@ -92,7 +109,7 @@ public class ShpDocumentSource extends IDocumentSource {
     public List<IDocument> findDocuments() {
         List<IDocument> returnList = new ArrayList<IDocument>();
         
-        String documents = getProperty(DOCUMENT_LIST);
+        String documents = getProperty(RESOURCE_DOCUMENTS);
         // if the properties file has a document list
         if (documents != null && documents.length() > 0) {
             returnList = stringToDocumentList(documents);
@@ -134,7 +151,6 @@ public class ShpDocumentSource extends IDocumentSource {
         return null;
     }
 
-
     /**
      * This is used to look up documents associated with an individual Feature.
      * <p>
@@ -154,36 +170,37 @@ public class ShpDocumentSource extends IDocumentSource {
         List<IService> services = factory.createService( url );
         ShpServiceImpl service = (ShpServiceImpl) services.get(0);
         
-//        String files = null;
-//        String[] tempList;
-//        // TODO: need to look through the shapefile to get the list of files for this fid
-//        IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
-//        List<IService> services = factory.createService( url );
-//        ShpServiceImpl service = (ShpServiceImpl) services.get(0);
-//        //service.
-//
-//        if (files != null && files.length() > 0) {
-//            tempList = files.split("\\|"); //$NON-NLS-1$
-//            for (String file : tempList) {
-//                File f = new File(file);
-//                if (f.exists()) {
-//                    returnList.add(new FileDocument(f));
-//                }
-//            }
-//        }
-//        
-//        String hotlinks = null;
-//        // TODO: need to look through the shapefile to get the list of hotlinks for this fid
-//        if (hotlinks != null && hotlinks.length() > 0) {
-//            tempList = hotlinks.split("\\|"); //$NON-NLS-1$
-//            for (String file : tempList) {
-//                File f = new File(file);
-//                if (f.exists()) {
-//                    returnList.add(new FileDocument(f));
-//                }
-//            }
-//        }
-        
+        IProgressMonitor monitor = new NullProgressMonitor();
+        try {
+            ShapefileDataStore dataStore = service.getDS(monitor);
+            
+            // create a filter to get the selected feature
+            FilterFactory2 ff = (FilterFactory2) CommonFactoryFinder.getFilterFactory(null);
+            Filter fidFilter = ff.id(FeatureUtils.stringToId(ff, fid));
+            SimpleFeatureCollection featureCollection = dataStore.getFeatureSource().getFeatures(fidFilter);
+            
+            if (featureCollection.features().hasNext()) {
+                SimpleFeature feature = featureCollection.features().next();
+                // get all the document attributes
+                List<String> attributes = getAttributes();
+                for (String attribute: attributes) {
+                    // for every document attribute get the matching feature attribute
+                    Object featureAttribute = feature.getAttribute(attribute);
+                    String documentString = featureAttribute.toString();
+                    if (!documentString.isEmpty()) {
+                        // create a document and add it to the list
+                        DocumentFactory documentFactory = new DocumentFactory();
+                        IDocument document = documentFactory.create(documentString);
+                        returnList.add(document);
+                    }
+                }
+            }
+            
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+                
         return returnList;
     }
     
@@ -290,7 +307,7 @@ public class ShpDocumentSource extends IDocumentSource {
         documentList.add(doc);
         String documentString = documentListToString(documentList);
         
-        storeProperty(DOCUMENT_LIST, documentString);
+        storeProperty(RESOURCE_DOCUMENTS, documentString);
     }
 
     @Override
@@ -300,20 +317,72 @@ public class ShpDocumentSource extends IDocumentSource {
     }
 
     /**
+     * Gets the list of attributes that store documents in the features
+     * @return
+     */
+    public List<String> getAttributes() {
+        List<String> returnList = new ArrayList<String>();
+        
+        String attributes = getProperty(ATTRIBUTE_LIST);
+        // if the properties file has a document list
+        if (attributes != null && attributes.length() > 0) {
+            returnList = stringToAttributeList(attributes);
+        }
+        
+        return returnList;
+    }
+    
+    /**
      * Adds an attribute that will be used to store documents
      * @param attribute
      */
     public void addAttribute( String attribute ) {
+        List<String> attributeList = new ArrayList<String>();
+        
         // get the existing attributes
         String list = getProperty(ATTRIBUTE_LIST);
-        List<String> attributeList = stringToAttributeList(list);
+        if (list != null) {
+            attributeList = stringToAttributeList(list);
+        }
         // adds the attribute
-        attributeList.add(attribute);
+        if (!attributeList.contains(attribute)) {
+            attributeList.add(attribute);
+        }
         list = attributeListToString(attributeList);
         // stores the list
         storeProperty(ATTRIBUTE_LIST, list);
     }
 
+    /**
+     * Removes an attribute from the list that will be used to store documents
+     * @param attribute
+     */
+    public void removeAttribute( String attribute ) {
+        // get the existing attributes
+        String list = getProperty(ATTRIBUTE_LIST);
+        List<String> attributeList = stringToAttributeList(list);
+        // removes the attribute
+        while(attributeList.remove(attribute));
+        list = attributeListToString(attributeList);
+        // stores the list
+        storeProperty(ATTRIBUTE_LIST, list);
+        
+        deletePropertiesIfEmpty();
+    }
+    
+    /*
+     * deletes the property file if there are no documents
+     */
+    private void deletePropertiesIfEmpty() {
+        if (!hasDocuments()) {
+            File propertiesFile = getPropertiesFile();
+            if (propertiesFile.exists()) {
+                propertiesFile.delete();
+            }
+            
+        }
+    }
+    
     @Override
     public void remove( IDocument doc ) {
 
@@ -321,18 +390,11 @@ public class ShpDocumentSource extends IDocumentSource {
         List<IDocument> documentList = findDocuments();
         while(documentList.remove(doc));
         
-        // if no documents: delete the propeties file
-        if (documentList.isEmpty()) {
-            File propertiesFile = getPropertiesFile();
-            if (propertiesFile.exists()) {
-                propertiesFile.delete();
-            }
-            return;
-        }
-        
         String documentString = documentListToString(documentList);
         
-        storeProperty(DOCUMENT_LIST, documentString);
+        storeProperty(RESOURCE_DOCUMENTS, documentString);
+        
+        deletePropertiesIfEmpty();
     }
     
     /*

@@ -70,7 +70,7 @@ public class ShpDocumentSourceTest {
         
         File propertiesFile = ShpDocumentSource.getPropertiesFile(url);
         if (propertiesFile.exists()) {
-            propertiesFile.deleteOnExit();
+//            propertiesFile.deleteOnExit();
         }
         
         // clean up service
@@ -120,6 +120,13 @@ public class ShpDocumentSourceTest {
         source.remove(globalDocument);
         assertFalse("Global url document not removed", source.hasDocuments());
         
+        // add an attribute for feature documents
+        source.addAttribute("Comment");
+        assertTrue("feature attribute not added", source.hasDocuments());
+        
+        // remove the attribute
+//        source.removeAttribute("Comment");
+//        assertFalse("feature attribute not removed", source.hasDocuments());
     }
     
 }

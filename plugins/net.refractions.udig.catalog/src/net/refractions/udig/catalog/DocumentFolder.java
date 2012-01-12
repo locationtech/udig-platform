@@ -88,9 +88,7 @@ public class DocumentFolder implements IFolder {
      */
     public void setSelectedFeature( String selectedFeature ) {
         this.selectedFeature = selectedFeature;
-        if (featureDocuments == null) {
-            featureDocuments.setSelectedFeature(selectedFeature);
-        }
+        featureDocuments.setSelectedFeature(selectedFeature);
     }
     
 
