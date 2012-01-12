@@ -22,14 +22,17 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.Properties;
 
 import net.refractions.udig.catalog.ID;
+import net.refractions.udig.catalog.IDocumentSource;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.URLUtils;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.data.DataUtilities;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.shapefile.indexed.IndexedShapefileDataStore;
@@ -163,6 +166,12 @@ public class ShpGeoResourceImpl extends IGeoResource {
         if (adaptee.isAssignableFrom(IndexedShapefileDataStore.class)) {
             return adaptee.cast(parent.getDS(monitor));
         }
+        if (adaptee.isAssignableFrom(IDocumentSource.class)) {
+            IDocumentSource document = document(monitor);
+            if (document != null) {
+                return adaptee.cast(document);
+            }
+        }
         if (adaptee.isAssignableFrom(Style.class)) {
             Style style = style(monitor);
             if (style != null) {
@@ -179,13 +188,35 @@ public class ShpGeoResourceImpl extends IGeoResource {
         return parent.getDS(monitor).getFeatureSource();
     }
 
+    /*
+     * resolves a document source
+     */
+    private IDocumentSource document( IProgressMonitor monitor ) {
+        URL url = parent.getIdentifier();
+        File f = ShpDocumentSource.getPropertiesFile(url);
+        
+        try {
+            if (f.createNewFile()) {
+                // if it can be created and hasn't yet then delete it
+                // because we don't want to leave properties files everywhere
+                f.delete();
+            }
+            return new ShpDocumentSource(url);
+        } 
+        catch (IOException e) {
+            //otherwise there was some permission or io error so we can't resolve to DocumentSource
+            //e.printStackTrace();
+            return null;
+        }
+    }
+
     public Style style( IProgressMonitor monitor ) {
         URL url = parent.getIdentifier();
         File file = URLUtils.urlToFile(url);
         String shp = file.getAbsolutePath();
-
+        
         StyleFactory styleFactory = CommonFactoryFinder.getStyleFactory(GeoTools.getDefaultHints());
-
+        
         // strip off the extension and check for sld
         String sld = shp.substring(0, shp.length() - 4) + ".sld"; //$NON-NLS-1$
         File f = new File(sld);
@@ -194,7 +225,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
             sld = shp.substring(0, shp.length() - 4) + ".SLD"; //$NON-NLS-1$
             f = new File(sld);
         }
-
+        
         if (f.exists()) {
             // parse it up
             SLDParser parser = new SLDParser(styleFactory);
@@ -204,7 +235,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
                 return null; // well that is unexpected since f.exists()
             }
             Style[] styles = parser.readXML();
-
+            
             FeatureSource<SimpleFeatureType, SimpleFeature> source;
             try {
                 source = featureSource(null);
@@ -218,14 +249,14 @@ public class ShpGeoResourceImpl extends IGeoResource {
                 if (style == null) {
                     style = styles[0];
                 }
-
+                
                 makeGraphicsAbsolute(file, style);
                 return style;
             }
         }
         return null; // well nothing worked out; make your own style
     }
-
+    
     /**
      * This transforms all external graphics references that are relative to absolute.
      * This is a workaround to be able to visualize png and svg in relative mode, which 
@@ -416,11 +447,15 @@ public class ShpGeoResourceImpl extends IGeoResource {
         if (adaptee == null) {
             return false;
         }
-        return (adaptee.isAssignableFrom(IGeoResourceInfo.class) || adaptee.isAssignableFrom(FeatureStore.class)
+        return (adaptee.isAssignableFrom(IGeoResourceInfo.class) 
+                || adaptee.isAssignableFrom(FeatureStore.class)
                 || adaptee.isAssignableFrom(FeatureSource.class) 
                 || adaptee.isAssignableFrom(SimpleFeatureSource.class) 
-                || adaptee.isAssignableFrom(IService.class) || adaptee
-                .isAssignableFrom(Style.class)) || super.canResolve(adaptee);
+                || adaptee.isAssignableFrom(IService.class) 
+                || adaptee.isAssignableFrom(Style.class)
+                || adaptee.isAssignableFrom(IDocumentSource.class)
+                ) 
+                || super.canResolve(adaptee);
     }
     @Override
     public ShpGeoResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {

@@ -225,6 +225,13 @@
             %search.description
          </description>
       </view>
+      <view
+            category="catalog"
+            class="net.refractions.udig.catalog.ui.DocumentView"
+            id="net.refractions.udig.catalog.ui.documentView"
+            name="Document"
+            restorable="true">
+      </view>
    </extension>
    <extension
          name="catalogPerspectiveContributions"

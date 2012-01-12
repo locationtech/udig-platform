@@ -92,7 +92,7 @@ public interface ILayer extends Comparable<ILayer> {
      * 
      * @param clazz the clazz that the returned georesource can resolve to.
      * @return the first found geoResource that can resolve to clazz.
-     * @deprecated
+     * @deprecated Please use {@link #findGeoResource(Class)}
      */
     public <T> IGeoResource getGeoResource( Class<T> clazz );
 
