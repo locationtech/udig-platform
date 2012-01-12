@@ -25,12 +25,12 @@ import java.util.List;
  * @version 1.3.1
  *
  */
-public class GlobalFolder implements IFolder {
+public class ResourceFolder implements IFolder {
 
-    private static final String GLOBAL_DOCUMENT = "Global Documents";
+    private static final String RESOURCE_DOCUMENT = "Resource Documents";
     private IDocumentSource documentSource;
 
-    public GlobalFolder( IDocumentSource documentSource ) {
+    public ResourceFolder( IDocumentSource documentSource ) {
         this.documentSource = documentSource;
     }
 
@@ -54,7 +54,7 @@ public class GlobalFolder implements IFolder {
 
     @Override
     public String getName() {
-        return GLOBAL_DOCUMENT;
+        return RESOURCE_DOCUMENT;
     }
 
 }
