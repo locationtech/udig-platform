@@ -446,7 +446,12 @@ public class ShpGeoResourceImpl extends IGeoResource {
         if (adaptee == null) {
             return false;
         }
+<<<<<<< HEAD
         return (adaptee.isAssignableFrom(IGeoResourceInfo.class) || adaptee.isAssignableFrom(SimpleFeatureStore.class)
+=======
+        return (adaptee.isAssignableFrom(IGeoResourceInfo.class) 
+                || adaptee.isAssignableFrom(FeatureStore.class)
+>>>>>>> added document work after creating clean git branch
                 || adaptee.isAssignableFrom(FeatureSource.class) 
                 || adaptee.isAssignableFrom(SimpleFeatureSource.class) 
                 || adaptee.isAssignableFrom(IService.class) 
