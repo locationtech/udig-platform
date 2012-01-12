@@ -27,7 +27,7 @@ package net.refractions.udig.catalog;
  */
 public class DocumentFolder implements IFolder {
 
-    private GlobalFolder globalDocuments = null;
+    private ResourceFolder globalDocuments = null;
     private FeatureFolder featureDocuments = null;
     private final String name = "Top Level";
 //    private IDocumentSource source;
@@ -35,7 +35,7 @@ public class DocumentFolder implements IFolder {
     
     public DocumentFolder(IDocumentSource source) {
 //        this.source = source;
-        globalDocuments = new GlobalFolder(source);
+        globalDocuments = new ResourceFolder(source);
         featureDocuments = new FeatureFolder(source);
     }
     
