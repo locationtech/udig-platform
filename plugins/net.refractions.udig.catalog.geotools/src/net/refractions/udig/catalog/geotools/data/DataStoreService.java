@@ -1,3 +1,17 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2010-2012, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.catalog.geotools.data;
 
 import java.io.IOException;
@@ -17,7 +31,17 @@ import org.geotools.data.DataAccessFactory;
 import org.geotools.data.ServiceInfo;
 import org.opengis.feature.type.Name;
 
+/**
+ * This is a generic DataStore service offering no extended functionality besides
+ * the ability to resolve to a DataStore containing FeatureSource.
+ * 
+ * @author Jody Garnett
+ */
 public class DataStoreService extends IService {
+	
+	/** Key used to mark generic datastore service entry */
+	public static String GENERIC = "generic";
+	
     private ID id;
     private Map<String, Serializable> connectionParams;
     private DataAccess< ? , ? > dataStore;

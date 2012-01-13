@@ -1,3 +1,17 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2010-2012, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.catalog.geotools.process;
 
 import java.io.IOException;
@@ -5,17 +19,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.process.ProcessFactory;
-import org.opengis.feature.type.Name;
-import org.opengis.util.InternationalString;
-
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IProcess;
 import net.refractions.udig.catalog.IProcessInfo;
-import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.ISharedImages;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.opengis.feature.type.Name;
+import org.opengis.util.InternationalString;
 
 /**
  * LocalProcess wrapping up a GeoTools ProcessFactory and name.

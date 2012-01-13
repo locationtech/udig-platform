@@ -152,6 +152,15 @@ public class ResolveManager implements IResolveManager {
      */
     private boolean isResolvableType( IConfigurationElement element, IResolve resolve ){
     	String requiredType=element.getAttribute("resolveableType"); //$NON-NLS-1$
+		if (requiredType == null) {
+			String badPuppy = element.getContributor().getName();
+			if (badPuppy == null) {
+				badPuppy = "A plugin";
+			}
+			System.out.println(badPuppy + " failed to configure ResolveAdaptorFactory: requiredType missing ");
+			return false; // this should not happen! did you forget to fill in
+							// their XML resoleableType info?
+		}
         try {
             Class< ? > clazz=resolve.getClass().getClassLoader().loadClass(requiredType);
             return clazz.isAssignableFrom(resolve.getClass() );
