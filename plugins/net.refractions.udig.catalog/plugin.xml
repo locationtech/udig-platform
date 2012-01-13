@@ -34,11 +34,4 @@
              descriptorClass="org.opengis.feature.simple.SimpleFeatureType"
              factory="net.refractions.udig.catalog.memory.internal.TemporaryResourceFactory"/>
     </extension>
-    <extension
-          point="net.refractions.udig.catalog.resolvers">
-       <factory>
-          <resolve></resolve>
-       </factory>
-    </extension>
-  
 </plugin>
