@@ -18,6 +18,7 @@ package net.refractions.udig.catalog.internal.shp;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -36,27 +37,32 @@ import net.refractions.udig.core.internal.FeatureUtils;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.Query;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
 import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory2;
-import org.opengis.filter.identity.FeatureId;
 
 /**
  * Document Source for a shapefile. 
  * This class is responsible for interacting with the properties file 
- * in order to get and modify the Document lists
+ * in order to get and modify the Document lists.
+ * 
+ * Note that currently there is a restriction on the number of attributes that can be added
+ * for feature documents: one attribute per document type (which at the time of writing this
+ * was FileDocument and URLDocument)
  * 
  * @author paul.pfeiffer
  * @version 1.3.0
  */
 public class ShpDocumentSource extends IDocumentSource {
+    
+    /**
+     * The field in the properties file that lists the documents associated to all the features
+     * in the shapefile
+     */
+    public static final String RESOURCE_DOCUMENTS = "shp_resource_documents"; //$NON-NLS-1$
     
     /**
      * The field in the properties file that identifies the attribute in the shapefile 
@@ -65,10 +71,10 @@ public class ShpDocumentSource extends IDocumentSource {
     public static final String ATTRIBUTE_LIST = "shp_document_attributes"; //$NON-NLS-1$
     
     /**
-     * The field in the properties file that lists the documents associated to all the features
-     * in the shapefile
+     * The field in the properties file that identifies the attribute types in the shapefile 
+     * that lists the documents for a specific feature / record
      */
-    public static final String RESOURCE_DOCUMENTS = "shp_resource_documents"; //$NON-NLS-1$
+    public static final String ATTRIBUTE_TYPE_LIST = "shp_document_attribute_types"; //$NON-NLS-1$
     
     private URL url;
 
@@ -119,7 +125,7 @@ public class ShpDocumentSource extends IDocumentSource {
     }
     
     
-    /*
+    /**
      * Gets the property value from the property file associated with this shapefile.
      * Handles file IO.
      * Can return null.
@@ -204,7 +210,7 @@ public class ShpDocumentSource extends IDocumentSource {
         return returnList;
     }
     
-    /*
+    /**
      * creates a list of documents from the string in the properties file
      */
     private List<IDocument> stringToDocumentList(String list) {
@@ -217,7 +223,7 @@ public class ShpDocumentSource extends IDocumentSource {
         return returnList;
     }
 
-    /*
+    /**
      * creates a string to store in the properties file from a list of documents
      */
     private String documentListToString(List<IDocument> documents) {
@@ -237,7 +243,7 @@ public class ShpDocumentSource extends IDocumentSource {
         return returnString;
     }
     
-    /*
+    /**
      * creates a list of attributes from the string in the properties file
      */
     private List<String> stringToAttributeList(String list) {
@@ -249,7 +255,7 @@ public class ShpDocumentSource extends IDocumentSource {
         return returnList;
     }
         
-    /*
+    /**
      * creates a string to store in the properties file from a list of attributes
      */
     private String attributeListToString(List<String> attributes) {
@@ -269,7 +275,45 @@ public class ShpDocumentSource extends IDocumentSource {
         return returnString;
     }
     
-    /*
+    /**
+     * creates a list of attribute types from the string in the properties file
+     */
+    private List<Class<? extends IDocument>> stringToTypeList(String list) {
+        List<Class<? extends IDocument>> returnList = new ArrayList<Class<? extends IDocument>>();
+        String[] attributeTypes = list.split("\\|"); //$NON-NLS-1$
+        for (String attributeType: attributeTypes) {
+            Class< ? extends IDocument> clazz;
+            try {
+                clazz = Class.forName(attributeType).asSubclass(IDocument.class);
+                returnList.add(clazz);
+            } catch (ClassNotFoundException e) {
+                // TODO Auto-generated catch block
+            }
+        }
+        return returnList;
+    }
+    
+    /**
+     * creates a string to store in the properties file from a list of attribute types
+     */
+    private String typeListToString(List<Class<? extends IDocument>> attributeTypes) {
+        String returnString = ""; //$NON-NLS-1$
+        
+        int count = 0;      
+        for (Class<? extends IDocument> attributeType : attributeTypes) {
+            if (count == 0) {
+                count++;
+            }
+            else {
+                returnString += "|"; //$NON-NLS-1$
+            }
+            returnString += attributeType.getName();
+        }
+        
+        return returnString;
+    }
+    
+    /**
      * Access the properties file (if it exists).
      * <p>
      * Note if the file does not exist use id.toFile("properties")
@@ -312,7 +356,10 @@ public class ShpDocumentSource extends IDocumentSource {
 
     @Override
     public void add( IDocument doc, String fid ) {
-        // TODO Auto-generated method stub
+        // figure out what attribute the document needs to be stored against
+        
+        // have a look at addAttribute() and getAttributeTypes() to see 
+        // how attribute types are stored 
         
     }
 
@@ -328,58 +375,98 @@ public class ShpDocumentSource extends IDocumentSource {
         if (attributes != null && attributes.length() > 0) {
             returnList = stringToAttributeList(attributes);
         }
-        
         return returnList;
     }
     
+
     /**
-     * Adds an attribute that will be used to store documents
-     * @param attribute
+     * Gets the list of attribute types. The order will match the attributes
+     * @return
      */
-    public void addAttribute( String attribute ) {
-        List<String> attributeList = new ArrayList<String>();
+    public List<Class< ? extends IDocument>> getAttributeTypes() {
+        List<Class< ? extends IDocument>> returnList = new ArrayList<Class< ? extends IDocument>>();
+        
+        String attributeTypes = getProperty(ATTRIBUTE_TYPE_LIST);
+        // if the properties file has a document list
+        if (attributeTypes != null && attributeTypes.length() > 0) {
+            returnList = stringToTypeList(attributeTypes);
+        }
+        return returnList;
+    }
+    
+    
+    /**
+     * Adds an attribute that will be used to store documents.
+     * 
+     * Note that currently there is a restriction on the number of attributes that can be added
+     * for feature documents: one attribute per document type (which at the time of writing this
+     * was FileDocument and URLDocument)
+     * 
+     * @param attribute The attribute of the shapefile to be used as a document
+     * @param docType The type of document to be stored
+     * @throws IllegalStateException If an attribute already exists for this documnent type
+     */
+    public void addAttribute( String attribute, Class<? extends IDocument> docType ) 
+            throws IllegalStateException {
+        
+        // get the existing attribute types and checks if the type already exists
+        List<Class< ? extends IDocument>> attributeTypes = getAttributeTypes();
+        if (attributeTypes.contains(docType)) {
+            throw new IllegalStateException("An attribute already exists for this documnent type");
+        }
+        attributeTypes.add(docType);
+        String types = typeListToString(attributeTypes);
+        // store the type list
+        storeProperty(ATTRIBUTE_TYPE_LIST, types);
         
         // get the existing attributes
-        String list = getProperty(ATTRIBUTE_LIST);
-        if (list != null) {
-            attributeList = stringToAttributeList(list);
-        }
+        List<String> attributeList = getAttributes();
         // adds the attribute
         if (!attributeList.contains(attribute)) {
             attributeList.add(attribute);
         }
-        list = attributeListToString(attributeList);
+        String list = attributeListToString(attributeList);
         // stores the list
         storeProperty(ATTRIBUTE_LIST, list);
     }
 
     /**
-     * Removes an attribute from the list that will be used to store documents
+     * Removes an attribute and it's matching type from the list that will be used to store documents
      * @param attribute
+     * @throws IllegalStateException if a matching type can not be removed
      */
-    public void removeAttribute( String attribute ) {
+    public void removeAttribute( String attribute ) throws IllegalStateException {
         // get the existing attributes
-        String list = getProperty(ATTRIBUTE_LIST);
-        List<String> attributeList = stringToAttributeList(list);
+        List<String> attributeList = getAttributes();
+        int index = attributeList.indexOf(attribute);
         // removes the attribute
-        while(attributeList.remove(attribute));
-        list = attributeListToString(attributeList);
+        if (index != -1) {
+            attributeList.remove(attribute);
+            
+            //remove the matching attribute type
+            List<Class< ? extends IDocument>> attributeTypes = getAttributeTypes();
+            if (index >= attributeTypes.size()) {
+                throw new IllegalStateException("Could not delete the matching documnent type for this attribute");
+            }
+            attributeTypes.remove(index);
+            String types = typeListToString(attributeTypes);
+            // store the type list
+            storeProperty(ATTRIBUTE_TYPE_LIST, types);
+            
+        }
+        String list = attributeListToString(attributeList);
         // stores the list
         storeProperty(ATTRIBUTE_LIST, list);
         
         deletePropertiesIfEmpty();
     }
     
-    /*
+    /**
      * deletes the property file if there are no documents
      */
     private void deletePropertiesIfEmpty() {
         if (!hasDocuments()) {
-            File propertiesFile = getPropertiesFile();
-            if (propertiesFile.exists()) {
-                propertiesFile.delete();
-            }
-            
+            clean();
         }
     }
     
@@ -397,29 +484,50 @@ public class ShpDocumentSource extends IDocumentSource {
         deletePropertiesIfEmpty();
     }
     
-    /*
-     * writes the document list to the property of the property file
+    /**
+     * writes the value to the property of the property file
      */
-    private void storeProperty(String property, String documentString) {
+    private void storeProperty(String property, String value) {
         
         Properties properties = new Properties();
-        properties.put(property, documentString);
+        FileInputStream inputStream = null;
         FileOutputStream outStream = null;
         try {
             File propertiesFile = getPropertiesFile();
-            propertiesFile.createNewFile();
+            if(!propertiesFile.createNewFile()) {
+                // Load the existing properties
+                inputStream = new FileInputStream(propertiesFile);
+                properties.load(inputStream);
+            }
+            // set the property value
+            properties.put(property, value);
+            
+            // save the property file
             outStream = new FileOutputStream(propertiesFile);
             properties.store(outStream, null);
+            
         } 
-        catch (IOException e) {
-            e.printStackTrace();
+        catch (FileNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
         }
         finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                   // couldn't close
+                }
+            }
             if (outStream != null) {
                 try {
                     outStream.close();
                 } catch (IOException e) {
-                   // couldn't close
+                    // couldn't close
                 }
             }
         }
@@ -434,6 +542,16 @@ public class ShpDocumentSource extends IDocumentSource {
     @Override
     public void open( IDocument doc ) {
         doc.open();
+    }
+
+    /**
+     * deletes the properties file - used for testing
+     */
+    public void clean() {
+        File propertiesFile = getPropertiesFile();
+        if (propertiesFile.exists()) {
+            propertiesFile.delete();
+        }
     }
 
 }

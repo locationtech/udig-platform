@@ -46,6 +46,7 @@ import org.junit.Test;
  * @author paul.pfeiffer
  *
  */
+@SuppressWarnings({"nls","restriction"})
 public class ShpDocumentSourceTest {
 
     private static URL url = null;
@@ -71,10 +72,10 @@ public class ShpDocumentSourceTest {
     public static void testCleanup() throws Exception {
         // assume we clean up any temp files here
         
-        File propertiesFile = ShpDocumentSource.getPropertiesFile(url);
-        if (propertiesFile.exists()) {
-            propertiesFile.deleteOnExit();
-        }
+//        File propertiesFile = ShpDocumentSource.getPropertiesFile(url);
+//        if (propertiesFile.exists()) {
+//            propertiesFile.deleteOnExit();
+//        }
         
         // clean up service
         if( service != null ){
@@ -89,11 +90,13 @@ public class ShpDocumentSourceTest {
         assertNotNull("Connection", service );
     }
 
+    
     @Test
     public void testShpDocumentSource() throws IOException {
         ShpDocumentSource source = null;
         source = new ShpDocumentSource(url);
         assertNotNull("Unable to create document source", source);
+        source.clean();
         assertFalse("Properties file not clean: please delete it", source.hasDocuments());
         
         // add a Resource file
@@ -123,8 +126,12 @@ public class ShpDocumentSourceTest {
         source.remove(resourceDocument);
         assertFalse("Resource url document not removed", source.hasDocuments());
         
+        
+        // --------------
+        
         // add an attribute for feature file documents
-        source.addAttribute("Comment");
+        Class<FileDocument> docType = FileDocument.class;
+        source.addAttribute("Comment", docType);
         assertTrue("feature attribute for file documents not added", source.hasDocuments());
         
         // test retrieving a feature file document
@@ -135,7 +142,7 @@ public class ShpDocumentSourceTest {
         assertTrue("feature document is not of FileDocument type", document instanceof FileDocument);
         
         // add an attribute for feature url documents
-        source.addAttribute("Name_Alt");
+        source.addAttribute("Name_Alt", URLDocument.class);
         List<String> attributes = source.getAttributes();
         assertEquals("feature attribute for url documents not added", 2, attributes.size());
         
