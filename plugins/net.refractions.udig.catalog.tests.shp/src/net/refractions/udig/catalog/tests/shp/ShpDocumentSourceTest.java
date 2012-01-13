@@ -16,6 +16,7 @@
  */
 package net.refractions.udig.catalog.tests.shp;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -27,9 +28,11 @@ import java.util.List;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.DocumentFactory;
+import net.refractions.udig.catalog.FileDocument;
 import net.refractions.udig.catalog.IDocument;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceFactory;
+import net.refractions.udig.catalog.URLDocument;
 import net.refractions.udig.catalog.internal.shp.ShpDocumentSource;
 import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
 
@@ -70,7 +73,7 @@ public class ShpDocumentSourceTest {
         
         File propertiesFile = ShpDocumentSource.getPropertiesFile(url);
         if (propertiesFile.exists()) {
-//            propertiesFile.deleteOnExit();
+            propertiesFile.deleteOnExit();
         }
         
         // clean up service
@@ -93,40 +96,63 @@ public class ShpDocumentSourceTest {
         assertNotNull("Unable to create document source", source);
         assertFalse("Properties file not clean: please delete it", source.hasDocuments());
         
-        // add a global file
+        // add a Resource file
         URL bundleURL = TestActivator.getDefault().getBundle()
-                .getEntry("data/global_file.txt"); //$NON-NLS-1$
+                .getEntry("data/resource_file.txt"); //$NON-NLS-1$
         URL internalURL = FileLocator.toFileURL(bundleURL);
-        File globalFile = DataUtilities.urlToFile(internalURL);
+        File resourceFile = DataUtilities.urlToFile(internalURL);
         DocumentFactory factory = new DocumentFactory();
-        IDocument globalDocument = factory.create(globalFile);
-        source.add(globalDocument);
-        assertTrue("Global file document not added", source.hasDocuments());
+        IDocument resourceDocument = factory.create(resourceFile);
+        source.add(resourceDocument);
+        assertTrue("Resource file document not added", source.hasDocuments());
         
-        // remove the global file
-        source.remove(globalDocument);
-        assertFalse("Global file document not removed", source.hasDocuments());
+        // remove the Resource file
+        source.remove(resourceDocument);
+        assertFalse("Resource file document not removed", source.hasDocuments());
         
         File propertiesFile = ShpDocumentSource.getPropertiesFile(url);
         assertFalse("properties file was not deleted", propertiesFile.exists());
         
-        // add a global web url
+        // add a resource web url
         URL webURL = new URL("http://www.google.com.au"); //$NON-NLS-1$
-        globalDocument = factory.create(webURL);
-        source.add(globalDocument);
-        assertTrue("Global url document not added", source.hasDocuments());
+        resourceDocument = factory.create(webURL);
+        source.add(resourceDocument);
+        assertTrue("Resource url document not added", source.hasDocuments());
         
-        // remove the global web url
-        source.remove(globalDocument);
-        assertFalse("Global url document not removed", source.hasDocuments());
+        // remove the resource web url
+        source.remove(resourceDocument);
+        assertFalse("Resource url document not removed", source.hasDocuments());
         
-        // add an attribute for feature documents
+        // add an attribute for feature file documents
         source.addAttribute("Comment");
-        assertTrue("feature attribute not added", source.hasDocuments());
+        assertTrue("feature attribute for file documents not added", source.hasDocuments());
+        
+        // test retrieving a feature file document
+        List<IDocument> findDocuments = source.findDocuments("10m_geography_regions_points.6");
+        assertFalse("feature file document not retrieved", findDocuments.isEmpty());
+        // check that it is a file document
+        IDocument document = findDocuments.get(0);
+        assertTrue("feature document is not of FileDocument type", document instanceof FileDocument);
+        
+        // add an attribute for feature url documents
+        source.addAttribute("Name_Alt");
+        List<String> attributes = source.getAttributes();
+        assertEquals("feature attribute for url documents not added", 2, attributes.size());
+        
+        // test retrieving a feature url document
+        findDocuments = source.findDocuments("10m_geography_regions_points.8");
+        assertFalse("feature url document not retrieved", findDocuments.isEmpty());
+        // check that it is a url document
+        document = findDocuments.get(0);
+        assertTrue("feature document is not of URLDocument type", document instanceof URLDocument);
+        
+        // remove the attribute for feature url documents
+        source.removeAttribute("Name_Alt");
+        assertEquals("feature attribute for url documents not removed", 1, source.getAttributes().size());
         
         // remove the attribute
-//        source.removeAttribute("Comment");
-//        assertFalse("feature attribute not removed", source.hasDocuments());
+        source.removeAttribute("Comment");
+        assertFalse("feature attribute not removed", source.hasDocuments());
     }
     
 }
