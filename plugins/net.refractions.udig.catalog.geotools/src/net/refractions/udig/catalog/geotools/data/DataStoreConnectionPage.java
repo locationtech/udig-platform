@@ -1,27 +1,39 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2010-2012, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.catalog.geotools.data;
 
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.eclipse.core.runtime.IStatus;
+import net.miginfocom.swt.MigLayout;
+import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
+import net.refractions.udig.catalog.ui.CatalogUIPlugin;
+import net.refractions.udig.catalog.ui.ISharedImages;
+import net.refractions.udig.catalog.ui.UDIGConnectionPage;
+
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IBaseLabelProvider;
-import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -37,29 +49,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.actions.LabelRetargetAction;
-import org.eclipse.ui.part.IPage;
 import org.geotools.data.DataAccessFactory;
 import org.geotools.data.DataAccessFinder;
 import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.FileDataStoreFactorySpi;
-import org.geotools.data.postgis.PostgisDataStoreFactory;
-import org.geotools.data.postgis.VersionedPostgisDataStoreFactory;
-import org.geotools.data.property.PropertyDataStoreFactory;
-import org.geotools.data.wfs.WFSDataStoreFactory;
 import org.geotools.jdbc.JDBCDataStoreFactory;
-
-import com.mysql.jdbc.Field;
-import com.mysql.jdbc.JDBC4NClob;
-
-import net.miginfocom.layout.LC;
-import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.ISharedImages;
-import net.refractions.udig.catalog.ui.UDIGConnectionPage;
 
 /**
  * Wizard page constructed based on datastore factory params.
