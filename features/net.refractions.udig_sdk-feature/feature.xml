@@ -16,7 +16,8 @@ The complete SDK includes more functionality than the example uDig application.
       2011 Refractions Research
    </copyright>
 
-   <license url="http://www.gnu.org/licenses/lgpl-2.1.html">Copyright (C) 2011 Refractions Research
+   <license url="http://www.gnu.org/licenses/lgpl-2.1.html">
+      Copyright (C) 2011 Refractions Research
       
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
@@ -79,6 +80,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
    <includes
          id="net.refractions.udig_tutorials.source-feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.xsd.source"
          version="0.0.0"/>
 
    <plugin
