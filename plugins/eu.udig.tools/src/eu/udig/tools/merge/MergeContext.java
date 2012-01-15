@@ -45,6 +45,7 @@ public class MergeContext {
 	private Point				bboxStartPoint	= null;
 	private SelectionBoxCommand	selectionBoxCommand	= new SelectionBoxCommand();
 	private List<Envelope>		boundList = new ArrayList<Envelope>();
+	private MergeView mergeView;
 
 	/**
 	 * Reinitializes the status context
@@ -120,4 +121,23 @@ public class MergeContext {
 
 		return boundList;
 	}
+
+	/**
+	 * Set the associated merge view
+	 */
+	public void setMergeView(MergeView view) {
+		this.mergeView = view;
+		
+	}
+
+	/**
+	 * 
+	 * @return the associated merge view
+	 */
+	public MergeView getMergeView() {
+		
+		assert mergeView != null: "the merge view was not set"; //$NON-NLS-1$
+		return mergeView;
+	}
+	
 }

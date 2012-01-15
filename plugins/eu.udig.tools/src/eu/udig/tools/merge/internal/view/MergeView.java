@@ -23,6 +23,7 @@ package eu.udig.tools.merge.internal.view;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -186,13 +187,6 @@ public class MergeView extends ViewPart implements IUDIGView {
 		this.finishButton.setEnabled(true);
 	}
 
-	public void setSourceFeatures(List<SimpleFeature> sourceFeatures) {
-
-		assert sourceFeatures != null;
-
-		this.sourceFeatures = sourceFeatures;
-
-	}
 
 	/**
 	 * Checks the merge parameters:
@@ -301,6 +295,13 @@ public class MergeView extends ViewPart implements IUDIGView {
 		}
 	}
 
+	
+	public void deleteFromMergeList(List<SimpleFeature> featureToDeleteList) {
+		for (SimpleFeature simpleFeature : featureToDeleteList) {
+			deleteFromMergeList(simpleFeature);
+		}
+	}
+	
 	/**
 	 * Called when the delete button is pressed. If a feature is selected on the
 	 * tree view with the source features, it is deleted from there and launched
@@ -318,7 +319,7 @@ public class MergeView extends ViewPart implements IUDIGView {
 
 		// creates the builder, an launch again.
 		MergeFeatureBuilder builder = createMergeBuilder();
-		this.setSourceFeatures(this.sourceFeatures);
+		this.addSourceFeatures(this.sourceFeatures);
 		this.setBuilder(builder);
 		unselect(this.context);
 	}
@@ -335,6 +336,24 @@ public class MergeView extends ViewPart implements IUDIGView {
 		}
 	}
 	
+	/**
+	 * Add the features the merge feature list
+	 * @param sourceFeatures
+	 */
+	public void addSourceFeatures(List<SimpleFeature> sourceFeatures) {
+
+		assert sourceFeatures != null;
+
+		if(this.sourceFeatures.isEmpty()){
+			this.sourceFeatures = new LinkedList<SimpleFeature>();
+		}
+			
+		this.sourceFeatures.addAll(sourceFeatures);
+
+	}
+	public boolean contains(List<SimpleFeature> selectedFeatures) {
+		return this.sourceFeatures.contains(selectedFeatures);
+	}
 
 	/**
 	 * Check if the feature to be deleted from the list could be deleted. If
@@ -408,4 +427,5 @@ public class MergeView extends ViewPart implements IUDIGView {
 		}
 		super.dispose();
 	}
+
 }

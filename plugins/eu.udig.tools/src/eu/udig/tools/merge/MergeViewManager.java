@@ -111,16 +111,21 @@ final class MergeViewManager {
 			@Override
 			public void run() {
 
+				// retrieve the reference to the merge view
 				MergeView view = (MergeView)ApplicationGIS.getView(true, MergeView.ID);
 				if(view == null){
+					// crates a new merge view
 					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 					view = (MergeView) page.findView(MergeView.ID);
 				}
 				assert view != null : "view is null"; //$NON-NLS-1$
-
+				
+				// associates this the merge view with the merge context
 				view.setMergeContext(mergeContext);
-				view.setSourceFeatures(sourceFeatures);
-
+				mergeContext.setMergeView(view);
+				
+				// set the features to merge
+				view.addSourceFeatures(sourceFeatures);
 				MergeFeatureBuilder builder = createMergeBuilder(sourceFeatures);
 				view.setBuilder(builder);
 			}
