@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Mac OSX Fragment
-Bundle-SymbolicName: net.refractions.udig.jai.macosx
-Bundle-Version: 1.2.0.qualifier
-Fragment-Host: net.refractions.udig.core;bundle-version="1.1.0"
-Bundle-Vendor: udig.refractions.net
-Eclipse-PlatformFilter:  (osgi.os=macosx)
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6

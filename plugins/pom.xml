@@ -130,8 +130,6 @@
     <module>net.refractions.udig.core</module>
     <module>net.refractions.udig.feature.editor</module>
     <module>net.refractions.udig.help</module>
-    <module>net.refractions.udig.jai</module>
-    <module>net.refractions.udig.jai.macosx</module>
     <module>net.refractions.udig.legend</module>
     <module>net.refractions.udig.libs</module>
     <module>net.refractions.udig.libs.db2</module>
