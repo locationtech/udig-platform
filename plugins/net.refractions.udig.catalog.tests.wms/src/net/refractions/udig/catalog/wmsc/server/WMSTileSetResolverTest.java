@@ -17,7 +17,9 @@ package net.refractions.udig.catalog.wmsc.server;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
 import net.refractions.udig.catalog.CatalogPlugin;
@@ -29,13 +31,36 @@ import net.refractions.udig.catalog.IServiceFactory;
 import net.refractions.udig.catalog.tests.wmsc.Activator;
 import net.refractions.udig.project.ui.preferences.PreferenceConstants;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class WMSTileSetResolverTest {
-
+    
+    public static String getCapabilities = "http://localhost:8080/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities";
+    static boolean localGeoserver = false;
+    
+    @BeforeClass
+    public static void checkThatWeHaveLocalGeoServer() throws Exception {
+        URL url = new URL( getCapabilities );
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        try {
+            int responseCode = connection.getResponseCode();
+            if( responseCode == 200 ){
+                localGeoserver = true;
+            }
+        }
+        catch (Throwable ignore){
+            localGeoserver = false; // obviously not avaialble!
+        } finally {
+            connection.disconnect();
+        }
+    }
     @SuppressWarnings("nls")
     @Test
     public void testResolver() throws Exception {
+        if( !localGeoserver){
+            return; // ignore this test
+        }
         Activator instance = Activator.getDefault();
         assertNotNull("Run as a JUnit Plug-in Test", instance);
 
@@ -43,8 +68,7 @@ public class WMSTileSetResolverTest {
         IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
 
         // create the service
-        URL url = new URL(
-                "http://localhost:8080/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities");
+        URL url = new URL( getCapabilities );
         List<IService> services = factory.createService(url);
 
         // ensure the service was created
