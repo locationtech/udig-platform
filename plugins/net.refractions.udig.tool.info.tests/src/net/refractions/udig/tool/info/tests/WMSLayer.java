@@ -13,6 +13,7 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IStyleBlackboard;
+import net.refractions.udig.project.Interaction;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -232,19 +233,18 @@ public class WMSLayer implements ILayer {;
 	}
 
 
-
 	@Override
-	public boolean isApplicable(Interaction interaction) {
+	public IBlackboard getBlackboard() {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 
 
 	@Override
-	public IBlackboard getBlackboard() {
+	public boolean getInteraction(Interaction interaction) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 	
 }
