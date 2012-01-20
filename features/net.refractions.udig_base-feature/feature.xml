@@ -24,6 +24,10 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
       <update label="User-friendly Desktop Internet GIS Updates" url="http://udig.refractions.net/update/"/>
    </url>
 
+   <includes
+         id="org.eclipse.help"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.ui.views"
          download-size="0"
@@ -128,21 +132,7 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
          unpack="false"/>
 
    <plugin
-         id="org.apache.jasper"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.update.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.commons.el"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -435,7 +425,35 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
          unpack="false"/>
 
    <plugin
-         id="org.apache.commons.logging"
+         id="javax.activation"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.servlet.jsp.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.servlet.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.xml.bind"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.xml.stream"
          download-size="0"
          install-size="0"
          version="0.0.0"
