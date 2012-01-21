@@ -21,8 +21,11 @@
 package eu.udig.tools.merge.internal.view;
 
 import java.text.MessageFormat;
+import java.util.LinkedList;
+import java.util.List;
 
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
@@ -55,11 +58,16 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
+import org.geotools.data.DataUtilities;
 import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Polygon;
 
+import eu.udig.tools.geometry.internal.util.GeometryUtil;
 import eu.udig.tools.internal.i18n.Messages;
 import eu.udig.tools.internal.ui.util.InfoMessage;
 import eu.udig.tools.internal.ui.util.LayerUtil;
@@ -90,7 +98,7 @@ class MergeComposite extends Composite {
 	private MergeFeatureBuilder	builder					= null;
 	private ViewForm			viewForm				= null;
 	private Composite			infoComposite			= null;
-	private CLabel				message					= null;
+	private String				message					= null;
 	private CLabel				messageTitle			= null;
 	private Button				trashButton				= null;
 	private ImageRegistry		registry				= null;
@@ -116,6 +124,8 @@ class MergeComposite extends Composite {
 	private static final String	NULL_LABEL				= "<null>"; //$NON-NLS-1$
 
 	private DeleteButtonAction	deleteButton			= null;
+	private List<SimpleFeature> sourceFeatures;
+	private CLabel messagePanel;
 
 	/**
 	 * Create the delete action that will be showed on the context menu.
@@ -196,8 +206,8 @@ class MergeComposite extends Composite {
 		gridData2.grabExcessVerticalSpace = true;
 		gridData2.verticalAlignment = GridData.FILL;
 
-		message = new CLabel(infoComposite, SWT.NONE);
-		message.setLayoutData(gridData2);
+		this.messagePanel = new CLabel(infoComposite, SWT.NONE);
+		this.messagePanel.setLayoutData(gridData2);
 
 	}
 
@@ -409,8 +419,9 @@ class MergeComposite extends Composite {
 	 * Populate its data.
 	 */
 	public void open() {
+		
+		if( builder == null ) return;
 
-		assert builder != null : "When code reach here, builder mustn't be null"; //$NON-NLS-1$
 		// presents the source in tree view
 		populateSourceFeaturesView();
 
@@ -431,8 +442,7 @@ class MergeComposite extends Composite {
 	}
 
 	/**
-	 * Set the builder and adds a change listener. Before doing nothing, clear
-	 * the previous data if exist.
+	 * Set the builder and adds a change listener.
 	 * 
 	 * @param mergeBuilder
 	 */
@@ -455,6 +465,49 @@ class MergeComposite extends Composite {
 		// set up initial feedback
 		mergeGeometryChanged(mergeBuilder);
 	}
+
+	/**
+	 * Creates the merge builder using the set of features selected 
+	 * @return {@link MergeFeatureBuilder}
+	 * @throws IllegalStateException
+	 */
+	private MergeFeatureBuilder createMergeBuilder(final List<SimpleFeature> sourceFeatures) throws IllegalStateException {
+
+		try {
+			SimpleFeatureType type = sourceFeatures.get(0).getFeatureType();
+			final Class<?> expectedGeometryType = type.getGeometryDescriptor()
+					.getType().getBinding();
+			
+			Geometry union;
+			
+			union = GeometryUtil.geometryUnion(DataUtilities.collection(sourceFeatures));
+			checkGeomCollection(union, expectedGeometryType);
+
+			union = GeometryUtil.adapt(union,(Class<? extends Geometry>) expectedGeometryType);
+			
+			IToolContext toolContext = this.mergeView.getContext();
+			final ILayer layer =  toolContext.getSelectedLayer();
+			
+			MergeFeatureBuilder mergeBuilder = new MergeFeatureBuilder(
+					sourceFeatures, union, layer);
+			return mergeBuilder;
+			
+		} catch (IllegalArgumentException iae) {
+			throw new IllegalStateException(iae.getMessage());
+		}
+	}
+
+	private void checkGeomCollection(Geometry union, Class<?> expectedGeometryType) throws IllegalArgumentException {
+
+		if (Polygon.class.equals(expectedGeometryType) && (MultiPolygon.class.equals(union.getClass()))
+					&& union.getNumGeometries() > 1) {
+
+			final String msg = MessageFormat.format(Messages.GeometryUtil_DonotKnowHowAdapt, union.getClass()
+						.getSimpleName(), expectedGeometryType.getSimpleName());
+
+			throw new IllegalArgumentException(msg);
+		}
+	}	
 
 	/**
 	 * Call back function to report a change in the merged geometry attribute
@@ -485,8 +538,8 @@ class MergeComposite extends Composite {
 	public void setMessage(String usrMessage, final int type) {
 
 		InfoMessage info = new InfoMessage(usrMessage, type);
-		message.setImage(info.getImage());
-		message.setText(info.getText());
+		messagePanel.setImage(info.getImage());
+		messagePanel.setText(info.getText());
 		messageTitle.setText(Messages.MergeFeaturesComposite_merge_result_title);
 	}
 
@@ -747,6 +800,7 @@ class MergeComposite extends Composite {
 	 */
 	private void populateSourceFeaturesView() {
 
+		
 		final int featureCount = builder.getFeatureCount();
 		// add feature as parent
 		for (int featureIndex = 0; featureIndex < featureCount; featureIndex++) {
@@ -807,4 +861,40 @@ class MergeComposite extends Composite {
 		this.mergeView = mergeView;
 
 	}
+
+	public void setSourceFeatures(List<SimpleFeature> sourceFeatures) {
+
+		this.sourceFeatures = sourceFeatures;
+		MergeFeatureBuilder builder = createMergeBuilder(sourceFeatures);
+		setBuilder(builder);
+		
+	}
+	
+	public void addSourceFeatures(List<SimpleFeature> sourceFeatures2) {
+
+		this.sourceFeatures.addAll(sourceFeatures);
+		MergeFeatureBuilder builder = createMergeBuilder(sourceFeatures);
+		setBuilder(builder);
+		
+	}
+	
+	
+	public boolean isValid() {
+
+		boolean valid = true;
+		this.message = ""; 
+
+		// Must select two or more feature
+		if (this.sourceFeatures.size() < 2) {
+			this.setMessage(Messages.MergeFeatureBehaviour_select_two_or_more, IMessageProvider.WARNING);
+			valid = false;
+		}
+		
+		return valid;
+	}
+
+	public List<SimpleFeature> getSourceFeatures() {
+		return this.sourceFeatures;
+	}
+
 }

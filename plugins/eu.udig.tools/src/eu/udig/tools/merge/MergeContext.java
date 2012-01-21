@@ -24,7 +24,10 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import opendap.servlet.GetInfoHandler;
+
 import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
+import net.refractions.udig.project.ui.tool.IToolContext;
 
 import com.vividsolutions.jts.geom.Envelope;
 
@@ -42,10 +45,37 @@ import eu.udig.tools.merge.internal.view.MergeView;
  */
 public class MergeContext {
 
+	private static final MergeContext THIS = new MergeContext();
+	
 	private Point				bboxStartPoint	= null;
 	private SelectionBoxCommand	selectionBoxCommand	= new SelectionBoxCommand();
 	private List<Envelope>		boundList = new ArrayList<Envelope>();
-	private MergeView mergeView;
+	private MergeView 			mergeView = null;
+	private IToolContext 		toolContext = null;
+
+	/**
+	 * Singleton use the getInstance methods
+	 */
+	private MergeContext(){
+		// singleton
+	}
+	
+	/**
+	 * Singleton
+	 * @return return the instance of {@link MergeContext}
+	 * 
+	 */
+	public static MergeContext getInstance(){
+		return THIS;
+	}
+	
+	public IToolContext getToolContext() {
+		return toolContext;
+	}
+
+	public void setToolContext(IToolContext toolContext) {
+		this.toolContext = toolContext;
+	}
 
 	/**
 	 * Reinitializes the status context
@@ -136,7 +166,6 @@ public class MergeContext {
 	 */
 	public MergeView getMergeView() {
 		
-		assert mergeView != null: "the merge view was not set"; //$NON-NLS-1$
 		return mergeView;
 	}
 	

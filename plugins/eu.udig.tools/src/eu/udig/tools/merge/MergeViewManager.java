@@ -20,33 +20,19 @@
  */
 package eu.udig.tools.merge;
 
-import java.text.MessageFormat;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ui.AnimationUpdater;
 import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.tools.edit.animation.MessageBubble;
-import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
-import org.geotools.data.DataUtilities;
 import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Polygon;
-
-import eu.udig.tools.geometry.internal.util.GeometryUtil;
 import eu.udig.tools.internal.i18n.Messages;
-import eu.udig.tools.merge.internal.view.MergeFeatureBuilder;
 import eu.udig.tools.merge.internal.view.MergeView;
 
 
@@ -61,6 +47,7 @@ import eu.udig.tools.merge.internal.view.MergeView;
  * @author Aritz Davila (www.axios.es)
  * @since 1.1.0
  * 
+ * @deprecated not used
  */
 final class MergeViewManager {
 
@@ -124,56 +111,12 @@ final class MergeViewManager {
 				view.setMergeContext(mergeContext);
 				mergeContext.setMergeView(view);
 				
-				// set the features to merge
-				view.addSourceFeatures(sourceFeatures);
-				MergeFeatureBuilder builder = createMergeBuilder(sourceFeatures);
-				view.setBuilder(builder);
 			}
 		});
 		
 
 	}
 
-	/**
-	 * Creates the merge builder using the set of features selected 
-	 * @return {@link MergeFeatureBuilder}
-	 * @throws IllegalStateException
-	 */
-	private MergeFeatureBuilder createMergeBuilder(final List<SimpleFeature> sourceFeatures) throws IllegalStateException {
-
-		try {
-			SimpleFeatureType type = sourceFeatures.get(0).getFeatureType();
-			final Class<?> expectedGeometryType = type.getGeometryDescriptor()
-					.getType().getBinding();
-			
-			Geometry union;
-			
-			union = GeometryUtil.geometryUnion(DataUtilities.collection(sourceFeatures));
-			checkGeomCollection(union, expectedGeometryType);
-
-			union = GeometryUtil.adapt(union,(Class<? extends Geometry>) expectedGeometryType);
-			final ILayer layer = this.toolContext.getSelectedLayer();
-			
-			MergeFeatureBuilder mergeBuilder = new MergeFeatureBuilder(
-					sourceFeatures, union, layer);
-			return mergeBuilder;
-			
-		} catch (IllegalArgumentException iae) {
-			throw new IllegalStateException(iae.getMessage());
-		}
-	}
-
-	private void checkGeomCollection(Geometry union, Class<?> expectedGeometryType) throws IllegalArgumentException {
-
-		if (Polygon.class.equals(expectedGeometryType) && (MultiPolygon.class.equals(union.getClass()))
-					&& union.getNumGeometries() > 1) {
-
-			final String msg = MessageFormat.format(Messages.GeometryUtil_DonotKnowHowAdapt, union.getClass()
-						.getSimpleName(), expectedGeometryType.getSimpleName());
-
-			throw new IllegalArgumentException(msg);
-		}
-	}
 
 	/**
 	 * It should be two or more feature selected</li>

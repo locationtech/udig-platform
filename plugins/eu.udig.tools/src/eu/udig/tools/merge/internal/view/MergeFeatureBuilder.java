@@ -475,5 +475,9 @@ public class MergeFeatureBuilder {
 
 		return filter;
 	}
+	
+	public List<SimpleFeature> getSourceFeatures(){
+		return this.sourceFeatures;
+	}
 
 }

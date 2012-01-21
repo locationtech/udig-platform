@@ -184,7 +184,7 @@ class MergeEventBehaviour implements EventBehaviour {
 			this.mergeContext.addBound(bounds);
 			// FIXME this.mergeContext.storeMouseLocation(e);
 
-			MergeCommandViewLauncher viewlauncherCommand = new MergeCommandViewLauncher(this.mergeContext, context);
+			MergeViewOpenCommand viewlauncherCommand = new MergeViewOpenCommand(this.mergeContext);
 			commands.add(viewlauncherCommand);
 			
 			return commands;
