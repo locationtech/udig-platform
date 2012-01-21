@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- This script was created to automagically download the external libs 
+		required for uDig to build and export correctly. To download the required 
+		libraries, use: mvn install -f pom-libs.xml 
+		
+		After they have downloaded, make sure you:
+		  - refresh the net.refractions.udig.libs project in Eclipse;
+		  - verify the classpath (Manfiest Runtime tab) references the libs;
+		  - ensure the lib versions in the classpath are also correct. -->
+
+
+	<developers>
+		<developer>
+			<id>Sev</id>
+			<name>Severin</name>
+			<email>djseverin@gmail.com</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>+10</timezone>
+		</developer>
+	</developers>
+
 	<modelVersion>4.0.0</modelVersion>
+	
 	<groupId>net.refractions.udig</groupId>
 	<artifactId>libs</artifactId>
 	<version>1.3.2</version>
 	<name>uDig - User-friendly Desktop Internet GIS</name>
+	
 	<packaging>pom</packaging>
 
 	<properties>
@@ -739,12 +764,11 @@
 
 	<build>
 		<plugins>
+		
 			<plugin>
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>2.4.1</version>
-
 				<configuration>
-
 					<filesets>
 						<fileset>
 							<directory>${basedir}/lib</directory>
@@ -763,6 +787,8 @@
 					</filesets>					
 				</configuration>
 			</plugin>
+			
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -800,6 +826,8 @@
                      </execution>
 				</executions>
 			</plugin>
+			
          </plugins>
     </build>
+    
 </project>
