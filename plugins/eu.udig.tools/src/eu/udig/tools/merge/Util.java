@@ -35,22 +35,15 @@ final class Util {
 	private Util(){}
 
 	/**
-	 * Get the features contained on the envelope/s. If there are more than one
-	 * envelope, create a {@link Filter} of those envelopes and return the
-	 * features contained in it.
+	 * Retrieves the features from layer using the filter
 	 * 
-	 * @param bbox
-	 * @param context
+	 * @param filter
+	 * @param layer
+	 * 
 	 * @return List of {@link SimpleFeature}}
 	 * @throws IOException
 	 */
-	public static List<SimpleFeature> retrieveFeaturesInBBox(Envelope bbox, IToolContext context) throws IOException {
-		List<Envelope> list = new LinkedList<Envelope>(); 
-		list.add(bbox);
-		return retrieveFeaturesInBBox(list, context);
-	}
-
-	public static List<SimpleFeature> retrieveFeaturesInBBox(Filter filter, ILayer layer) throws IOException {
+	public static List<SimpleFeature> retrieveFeatures(Filter filter, ILayer layer) throws IOException {
 
 		SimpleFeatureSource source = (SimpleFeatureSource) layer.getResource(FeatureSource.class, null);
 
@@ -58,8 +51,9 @@ final class Util {
 
 		Query query = new Query(typename, filter);
 
-		SimpleFeatureCollection features = source.getFeatures(query);
-
+		// FIXME SimpleFeatureCollection features = source.getFeatures(query);
+		SimpleFeatureCollection features = source.getFeatures(); //FIXME Hack done to continue the merge tool devel (It is necessary to solve this issue)
+		
 		List<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
 		FeatureIterator<SimpleFeature> iter = null;
 		try {

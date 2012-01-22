@@ -182,8 +182,8 @@ public class MergeView extends ViewPart implements IUDIGView {
 		assert builder != null;
 
 		this.mergeBuilder = builder;
-		this.mergeComposite.setBuilder(mergeBuilder);
-		this.mergeComposite.open();
+		this.mergeComposite.setBuilder(this.mergeBuilder);
+		this.mergeComposite.display();
 		this.finishButton.setEnabled(true);
 	}
 
@@ -196,9 +196,9 @@ public class MergeView extends ViewPart implements IUDIGView {
 	 * 
 	 * @return true if the input are OK
 	 */
-	public boolean isValid() {
+	public boolean canMerge() {
 		
-		return this.mergeComposite.isValid();
+		return this.mergeComposite.canMerge();
 	}
 
 	/**
@@ -219,7 +219,7 @@ public class MergeView extends ViewPart implements IUDIGView {
 		MergeFeaturesCommand cmd = null;
 		final String dlgTitle = Messages.MergeTool_title_tool;
 
-		if (!isValid()) {
+		if (!canMerge()) {
 			this.mergeComposite.setMessage(this.message, IMessageProvider.ERROR);
 			return;
 		}
@@ -331,12 +331,11 @@ public class MergeView extends ViewPart implements IUDIGView {
 	 * Add the features the merge feature list
 	 * @param sourceFeatures
 	 */
-	public void addSourceFeatures(List<SimpleFeature> sourceFeatures) {
+	public void addSourceFeatures(List<SimpleFeature> sourceFeatures, ILayer layer) {
 
 		assert sourceFeatures != null;
 		
-		this.mergeComposite.addSourceFeatures(sourceFeatures);
-
+		this.mergeComposite.addSourceFeatures(sourceFeatures, layer);
 	}
 
 	/**
@@ -344,14 +343,13 @@ public class MergeView extends ViewPart implements IUDIGView {
 	 * 
 	 * @param selectedFeatures
 	 */
-	public void setFeatures(List<SimpleFeature> selectedFeatures) {
+	public void display(List<SimpleFeature> selectedFeatures, ILayer layer) {
 			
-		this.mergeComposite.setSourceFeatures(selectedFeatures);
-		
+		this.mergeComposite.display(selectedFeatures, layer);
 	}
 
 	/**
-	 * Check ifs the feature to be deleted from the list could be deleted. If
+	 * Checks if the feature to be deleted from the list could be deleted. If
 	 * there is no selection or if it's only one feature on the list, will
 	 * return false.
 	 * 

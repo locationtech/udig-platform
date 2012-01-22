@@ -23,7 +23,7 @@ import eu.udig.tools.merge.internal.view.MergeView;
 /**
  * 
  * @author Mauricio Pazos
- *
+ * @deprecated 
  */
 final class MergeViewOpenCommand  extends AbstractCommand implements UndoableMapCommand{
 
@@ -44,7 +44,6 @@ final class MergeViewOpenCommand  extends AbstractCommand implements UndoableMap
 	public MergeViewOpenCommand(MergeContext mergeContext) {
 
 		assert mergeContext != null : "merge context is null"; //$NON-NLS-1$
-		assert selectedFeatures != null : "merge context is null"; //$NON-NLS-1$
 
 		this.mergeContext = mergeContext;
 	}
@@ -76,7 +75,7 @@ final class MergeViewOpenCommand  extends AbstractCommand implements UndoableMap
 				view.setMergeContext(mergeContext);
 				mergeContext.setMergeView(view);
 	
-				view.setFeatures(selectedFeatures);
+				// FIXME view.setFeatures(selectedFeatures);
 				
 			}
 		});
@@ -84,7 +83,8 @@ final class MergeViewOpenCommand  extends AbstractCommand implements UndoableMap
 
 	@Override
 	public String getName() {
-		return this.getClass().getName();
+		String name = this.getClass().getName();
+		return name;
 	}
 
 

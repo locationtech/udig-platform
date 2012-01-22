@@ -412,13 +412,24 @@ class MergeComposite extends Composite {
 
 		String imgFile = "images/" + "trash" + ".gif"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		registry.put("trash", ImageDescriptor.createFromFile(MergeComposite.class, imgFile)); //$NON-NLS-1$
+	}
 
+	/**
+	 * Display in this composite the features of the indeed layer 
+	 * 
+	 * @param selectedFeatures
+	 * @param layer
+	 */
+	public void display(List<SimpleFeature> selectedFeatures, ILayer layer) {
+		
+		setSourceFeatures(selectedFeatures, layer);
+		display();
 	}
 
 	/**
 	 * Populate its data.
 	 */
-	public void open() {
+	public void display() {
 		
 		if( builder == null ) return;
 
@@ -471,9 +482,12 @@ class MergeComposite extends Composite {
 	 * @return {@link MergeFeatureBuilder}
 	 * @throws IllegalStateException
 	 */
-	private MergeFeatureBuilder createMergeBuilder(final List<SimpleFeature> sourceFeatures) throws IllegalStateException {
+	private MergeFeatureBuilder createMergeBuilder(final List<SimpleFeature> sourceFeatures, ILayer layer) throws IllegalStateException {
 
 		try {
+			
+			assert !sourceFeatures.isEmpty() :"nothing to merge"; //$NON-NLS-1$
+			
 			SimpleFeatureType type = sourceFeatures.get(0).getFeatureType();
 			final Class<?> expectedGeometryType = type.getGeometryDescriptor()
 					.getType().getBinding();
@@ -484,12 +498,9 @@ class MergeComposite extends Composite {
 			checkGeomCollection(union, expectedGeometryType);
 
 			union = GeometryUtil.adapt(union,(Class<? extends Geometry>) expectedGeometryType);
+
+			MergeFeatureBuilder mergeBuilder = new MergeFeatureBuilder( sourceFeatures, union, layer);
 			
-			IToolContext toolContext = this.mergeView.getContext();
-			final ILayer layer =  toolContext.getSelectedLayer();
-			
-			MergeFeatureBuilder mergeBuilder = new MergeFeatureBuilder(
-					sourceFeatures, union, layer);
 			return mergeBuilder;
 			
 		} catch (IllegalArgumentException iae) {
@@ -862,39 +873,44 @@ class MergeComposite extends Composite {
 
 	}
 
-	public void setSourceFeatures(List<SimpleFeature> sourceFeatures) {
+	public void setSourceFeatures(List<SimpleFeature> sourceFeatures, ILayer layer) {
 
 		this.sourceFeatures = sourceFeatures;
-		MergeFeatureBuilder builder = createMergeBuilder(sourceFeatures);
+		if( sourceFeatures.isEmpty() ){
+			return;
+		}
+
+		MergeFeatureBuilder builder = createMergeBuilder(sourceFeatures, layer);
 		setBuilder(builder);
 		
 	}
 	
-	public void addSourceFeatures(List<SimpleFeature> sourceFeatures2) {
+	public void addSourceFeatures(List<SimpleFeature> sourceFeatures2, ILayer layer) {
 
 		this.sourceFeatures.addAll(sourceFeatures);
-		MergeFeatureBuilder builder = createMergeBuilder(sourceFeatures);
+		MergeFeatureBuilder builder = createMergeBuilder(sourceFeatures, layer);
 		setBuilder(builder);
 		
 	}
 	
 	
-	public boolean isValid() {
+	public boolean canMerge() {
 
 		boolean valid = true;
 		this.message = ""; 
 
 		// Must select two or more feature
 		if (this.sourceFeatures.size() < 2) {
-			this.setMessage(Messages.MergeFeatureBehaviour_select_two_or_more, IMessageProvider.WARNING);
+			this.message = Messages.MergeFeatureBehaviour_select_two_or_more;
 			valid = false;
 		}
-		
+		this.setMessage(this.message, IMessageProvider.WARNING);
 		return valid;
 	}
 
 	public List<SimpleFeature> getSourceFeatures() {
 		return this.sourceFeatures;
 	}
+
 
 }

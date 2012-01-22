@@ -79,16 +79,18 @@ public class MergeTool extends SimpleTool  {
 	public void setActive(final boolean active) {
 
 		super.setActive(active);
+
+		this.mergeContext.initContext();
+
 		IToolContext toolContext = getContext();
 		this.mergeContext.setToolContext(toolContext);
+		
+		StatusBar.setStatusBarMessage(toolContext, "");//$NON-NLS-1$
 		if (active && toolContext.getMapLayers().size() > 0) {
 
 			String message = Messages.MergeTool_select_features_to_merge;
-			StatusBar.setStatusBarMessage(toolContext, message);
+			StatusBar.setStatusBarMessage(toolContext, message); 
 		} else {
-			StatusBar.setStatusBarMessage(toolContext, "");//$NON-NLS-1$
-		}
-		if (!active) {
 
 			Display.getCurrent().asyncExec(new Runnable() {
 				public void run() {
@@ -98,10 +100,9 @@ public class MergeTool extends SimpleTool  {
 					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 					IViewPart viewPart = page.findView(MergeView.ID);
 					page.hideView(viewPart);
-					page.close();
+
 				}
 			});
-			mergeContext.initContext();
 		}
 	}
 
@@ -109,19 +110,18 @@ public class MergeTool extends SimpleTool  {
 	 * Saves in the merge context the start point of bbox
 	 */
     @Override
-    public void onMousePressed( MapMouseEvent e ) {
+    protected void onMousePressed( MapMouseEvent e ) {
 
-			SelectionBoxCommand selectionBoxCommand = this.mergeContext
+		SelectionBoxCommand selectionBoxCommand = this.mergeContext
 					.getSelectionBoxCommand();
 			
-			
-			this.mergeContext.setBBoxStartPoint(e.getPoint());
-			selectionBoxCommand.setValid(true);
-			selectionBoxCommand.setShape(new Rectangle(e.getPoint().x, e
+		this.mergeContext.setBBoxStartPoint(e.getPoint());
+		selectionBoxCommand.setValid(true);
+		selectionBoxCommand.setShape(new Rectangle(e.getPoint().x, e
 					.getPoint().y, 0, 0));
-			getContext().sendASyncCommand(selectionBoxCommand);
+		getContext().sendASyncCommand(selectionBoxCommand);
 
-			getContext().getViewportPane().repaint();
+		getContext().getViewportPane().repaint();
     }
     
     /**
@@ -131,8 +131,8 @@ public class MergeTool extends SimpleTool  {
      * FIXME it looks like this hook method is not called
      */
     @Override
-    public void onMouseDragged( MapMouseEvent e ) {
-
+    protected void onMouseDragged( MapMouseEvent e ) {
+    	
 		java.awt.Point start = this.mergeContext.getBBoxStartPoint();;
     	if (start == null) {
 			start = e.getPoint();
@@ -155,16 +155,16 @@ public class MergeTool extends SimpleTool  {
 	 * </lu>
 	 */
     @Override
-    public void onMouseReleased(MapMouseEvent e) {
+    protected void onMouseReleased(MapMouseEvent e) {
     	
-		// search an existent view
+		// search an existent view or open a new one
 		MergeView mergeView = this.mergeContext.getMergeView();
-		
-		// presents the selected features in the view. The view must be synchronized 
-		if(mergeView == null || !mergeView.isValid()){
-			// opens a new view
+		if(mergeView == null ){
 			openMergeView(e.x, e.y, this.mergeContext);
-		} 
+			mergeView = this.mergeContext.getMergeView();
+		}
+		assert mergeView !=null;
+		
 		// set the selected features in the merge view
 		ILayer selectedLayer = getContext().getSelectedLayer();
 		if (!e.isControlDown()) {
@@ -176,39 +176,13 @@ public class MergeTool extends SimpleTool  {
 			// under the cursor must be added or removed from the merge feature
 			// list.
 
-			if (isSelectionUnderCursor(e)) {
+			if (isFeatureSelectedUnderCursor(e)) {
 
 				displayFeatureOnView(e, selectedLayer, mergeView);
 			} else {
 				removeFeatureFromView(e, selectedLayer, mergeView);
 			}
 		}
-		
-// FIXME		
-//		if(mergeView == null || !mergeView.isValid()){
-//			// opens a new view
-//			openMergeVeiw(e.x, e.y, this.mergeContext, context);
-//		} else {
-//			// adds the selected feature in the existent merge view
-//			List<SimpleFeature> selectedFeatures;
-//			try {
-//				selectedFeatures = Util.retrieveFeaturesInBBox(bound, this.getContext());
-//			} catch (IOException e1) {
-//				LOGGER.warning(e1.getMessage()); 
-//				return;
-//			}
-//			if( selectedFeatures.isEmpty() ){
-//				LOGGER.warning("nothing was selected to merge"); //$NON-NLS-1$
-//				return;
-//			}
-//			if(mergeView.contains(selectedFeatures)){
-//				mergeView.deleteFromMergeList(selectedFeatures);
-//			} else {
-//				mergeView.addSourceFeatures(selectedFeatures);
-//			}
-//			
-//		}
-		
     }
     
 
@@ -218,7 +192,7 @@ public class MergeTool extends SimpleTool  {
 		
 	}
 
-	private boolean isSelectionUnderCursor(MapMouseEvent e) {
+	private boolean isFeatureSelectedUnderCursor(MapMouseEvent e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -228,12 +202,10 @@ public class MergeTool extends SimpleTool  {
 			MergeView mergeView) {
 
 		Envelope bound = getContext().getBoundingBox(e.getPoint(), 3); // FIXME it should be a better solution to retrieve the feature under the cursor
-		Filter filterSelectedFeatures = selectFeaturesUnderBBox(
-											e, bound, getContext());
+		Filter filterSelectedFeatures = selectFeaturesUnderBBox(e, bound, getContext());
 		try {
-			List<SimpleFeature> selectedFeatures = Util.retrieveFeaturesInBBox(filterSelectedFeatures,
-							selectedLayer);
-			mergeView.addSourceFeatures(selectedFeatures);
+			List<SimpleFeature> selectedFeatures = Util.retrieveFeatures(filterSelectedFeatures, selectedLayer);
+			mergeView.addSourceFeatures(selectedFeatures, selectedLayer);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -241,6 +213,12 @@ public class MergeTool extends SimpleTool  {
 		
 	}
 
+    /**
+     * Presents the features selected using the bbox interaction in the merge view
+     * @param e
+     * @param selectedLayer
+     * @param mergeView
+     */
 	private void displayFeaturesUnderBBox(MapMouseEvent e, ILayer selectedLayer, MergeView mergeView) {
 
 		Filter filterSelectedFeatures;
@@ -262,14 +240,12 @@ public class MergeTool extends SimpleTool  {
 		}
 
 		// builds a command to show the features selected to merge
-		filterSelectedFeatures = selectFeaturesUnderBBox(e, bound,
-				getContext());
-
-		List<SimpleFeature> selectedFeatures;
 		try {
-			selectedFeatures = Util.retrieveFeaturesInBBox(filterSelectedFeatures,
-							selectedLayer);
-			mergeView.setFeatures(selectedFeatures);
+			filterSelectedFeatures = selectFeaturesUnderBBox(e, bound, getContext());
+			List<SimpleFeature>  selectedFeatures = Util.retrieveFeatures(filterSelectedFeatures, selectedLayer);
+			
+			mergeView.display(selectedFeatures, selectedLayer);
+			
 		} catch (IOException e1) {
 			LOGGER.warning(e1.getMessage());
 			return;
@@ -286,13 +262,23 @@ public class MergeTool extends SimpleTool  {
 	private void openMergeView(int eventX, int eventY, MergeContext mergeContext) {
 		
 		try{
-			MergeViewOpenCommand viewlauncherCommand = new MergeViewOpenCommand(mergeContext);
-			getContext().sendASyncCommand(viewlauncherCommand);
+
+			MergeView view = (MergeView)ApplicationGIS.getView(true, MergeView.ID);
+			if(view == null){
+				// crates a new merge view
+				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+				view = (MergeView) page.findView(MergeView.ID);
+			}
+			assert view != null : "view is null"; //$NON-NLS-1$
+			
+			// associates this the merge view with the merge context
+			view.setMergeContext(mergeContext);
+			mergeContext.setMergeView(view);
 			
 		} catch (Exception ex){
 			AnimationUpdater.runTimer(
 					getContext().getMapDisplay(), 
-					new MessageBubble(eventX, eventY, "It cannot be merge", 
+					new MessageBubble(eventX, eventY, "It cannot be merge",  //$NON-NLS-1$
 							PreferenceUtil.instance().getMessageDisplayDelay())); 
 		}
 		
@@ -326,9 +312,8 @@ public class MergeTool extends SimpleTool  {
 		}
 		getContext().sendSyncCommand(command);
 
-		SelectionBoxCommand selectionBoxCommand = this.mergeContext
-				.getSelectionBoxCommand();
-		selectionBoxCommand.setValid(false);
+		SelectionBoxCommand selectionBoxCommand = this.mergeContext.getSelectionBoxCommand();
+		selectionBoxCommand.setValid(true);
 
 		getContext().getViewportPane().repaint();
 
@@ -337,40 +322,5 @@ public class MergeTool extends SimpleTool  {
 		return filterSelectedFeatures;
 	}
 
-
-//	@Override
-//	protected void initActivators(Set<Activator> activators) {
-//
-//		activators.add(new EditStateListenerActivator());
-//		activators.add(new ResetAllStateActivator());
-//	}
-
-//	@Override
-//	protected void initCancelBehaviours(List<Behaviour> cancelBehaviours) {
-//
-//		cancelBehaviours.add(new DefaultCancelBehaviour());
-//	}
-
-//	@Override
-//	protected void initEnablementBehaviours(List<EnablementBehaviour> enablementBehaviours) {
-//
-//		enablementBehaviours.add(new ValidToolDetectionActivator(new Class[] {
-//				Geometry.class,
-//				LineString.class,
-//				MultiLineString.class,
-//				Polygon.class,
-//				MultiPolygon.class,
-//				Point.class,
-//				MultiPoint.class,
-//				GeometryCollection.class }));
-//		enablementBehaviours.add(new WithinLegalLayerBoundsBehaviour());
-//	}
-
-//	@Override
-//	protected void initEventBehaviours(EditToolConfigurationHelper helper) {
-//
-//		helper.add(new MergeEventBehaviour(mergeContext));
-//		helper.done();
-//	}
 
 }

@@ -13,7 +13,7 @@
             icon="icons/etool16/split_feature_mode.gif"
             id="eu.udig.tools.split.SplitTool"
             largeIcon="icons/etool24/split_24.png"
-            name="%eu.udig.tools.split.name"
+            name="Split"
             onToolbar="true"
             toolCursorId="arrowCursor"
             tooltip="%eu.udig.tools.split.tooltip">
@@ -24,7 +24,7 @@
             icon="icons/etool16/merge_feature_mode.gif"
             id="eu.udig.tools.merge.MergeTool"
             largeIcon="icons/etool24/merge_24.png"
-            name="%eu.udig.tools.merge.name"
+            name="Merge"
             onToolbar="true"
             toolCursorId="arrowCursor"
             tooltip="%eu.udig.tools.merge.tooltip">

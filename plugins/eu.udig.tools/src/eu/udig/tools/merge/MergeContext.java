@@ -80,10 +80,13 @@ public class MergeContext {
 	/**
 	 * Reinitializes the status context
 	 */
-	public synchronized void initContext() {
+	public void initContext() {
 
 		bboxStartPoint = null;
 		selectionBoxCommand = new SelectionBoxCommand();
+		
+		mergeView = null;
+		toolContext = null;
 
 		boundList.clear();
 	}
@@ -165,7 +168,6 @@ public class MergeContext {
 	 * @return the associated merge view
 	 */
 	public MergeView getMergeView() {
-		
 		return mergeView;
 	}
 	
