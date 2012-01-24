@@ -179,11 +179,15 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
                 Layer layer = resolve.resolve(Layer.class, monitor);
                 StringBuilder sb = new StringBuilder(""); //$NON-NLS-1$
                 for( StyleImpl layerStyle : layer.getStyles() ) {
-                    sb.append(layerStyle.getName()+",");
+                    sb.append(layerStyle.getName()+","); //$NON-NLS-1$
                 }
                 style = sb.toString();
             }
-            tileset.setStyles(style.substring(0, style.length()-1));
+            if (style.length()>0){
+                tileset.setStyles(style.substring(0, style.length()-1));
+            } else {
+                tileset.setStyles(style);
+            }
 
             /*
              * The server is where tiles can be retrieved

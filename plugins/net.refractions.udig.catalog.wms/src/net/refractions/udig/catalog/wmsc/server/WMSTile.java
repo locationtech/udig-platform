@@ -35,7 +35,6 @@ import org.geotools.data.ows.AbstractOpenWebService;
 import org.geotools.data.ows.AbstractRequest;
 import org.geotools.data.ows.HTTPClient;
 import org.geotools.data.ows.HTTPResponse;
-import org.geotools.data.ows.Request;
 import org.geotools.data.ows.Response;
 import org.geotools.ows.ServiceException;
 
@@ -274,10 +273,10 @@ public class WMSTile implements Tile {
             }
             InputStream inputStream = null;
             try {
-                Response response = issueRequest(request);
+                HTTPResponse response = issueRequest(request);
                 String cacheControl = extractHeaderCacheControl(response);
                 setMaxCacheAge(cacheControl);
-                inputStream = response.getInputStream();
+                inputStream = response.getResponseStream();
                 // simulate latency if testing
                 if (testing) {
                     Random rand = new Random();
@@ -337,8 +336,8 @@ public class WMSTile implements Tile {
      * @return
      */
     @SuppressWarnings("nls")
-    private String extractHeaderCacheControl( Response response ) {
-        String cacheControl = response.getHeader("Cache-Control");
+    private String extractHeaderCacheControl( HTTPResponse response ) {
+        String cacheControl = response.getResponseHeader("Cache-Control");
         if (cacheControl != null && !"".equals(cacheControl)) {
             String[] split = cacheControl.split(",");
             String maxAge = split[0];
@@ -349,7 +348,7 @@ public class WMSTile implements Tile {
         return null;
     }
 
-    public Response issueRequest( Request request ) throws IOException, ServiceException {
+    public HTTPResponse issueRequest( GetMapRequest request ) throws IOException, ServiceException {
         URL finalURL = request.getFinalURL();
         if (finalURL.getHost() == null) {
             // System.out.prinln("Poor WMS-C configuration - no host provided by "+ finalURL );
@@ -376,9 +375,7 @@ public class WMSTile implements Tile {
             httpResponse = httpClient.get(finalURL);
         }
 
-        final Response response = request.createResponse(httpResponse);
-        
-        return response;
+        return httpResponse;
     }
 
     private BufferedImage createErrorImage() {
