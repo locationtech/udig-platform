@@ -72,5 +72,12 @@ public interface Tile extends Comparable<Tile> {
 	 * @return true on successful load of image or successful load of place holder
 	 */
 	public abstract boolean loadTile(IProgressMonitor monitor);
+		
+	public abstract String getMaxCacheAge();
 
+	/**
+	 * Set the maximum cache time this tile is allowed before it is forced to be updated
+	 * @param maxCacheAge
+	 */
+	public abstract void setMaxCacheAge(String maxCacheAge);
 }
