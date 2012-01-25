@@ -91,8 +91,7 @@ public class WMSTileSet implements TileSet {
      * memory storing all the tiles.  The garbage collector should clean
      * up less-used keys and their objects as necessary. 
      **/
-    ObjectCache tiles = ObjectCaches.create("soft", 50); //Tiles that are on the screen //$NON-NLS-1$
-    
+    ObjectCache tiles = ObjectCaches.create("soft", 50); //Tiles that are on the screen //$NON-NLS-1$  
 
     public WMSTileSet() {
         updateID();

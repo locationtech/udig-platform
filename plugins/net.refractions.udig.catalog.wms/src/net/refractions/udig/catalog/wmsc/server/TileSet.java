@@ -198,5 +198,4 @@ public interface TileSet {
 	 * @return server
 	 */
 	public abstract AbstractOpenWebService<?,?> getServer();
-
 }
