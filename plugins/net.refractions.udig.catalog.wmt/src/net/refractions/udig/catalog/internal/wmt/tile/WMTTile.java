@@ -30,8 +30,11 @@ public abstract class WMTTile implements Tile{
     private BufferedImage image; //imageObject of the downloaded/cached tile
     private Object imageLock = new Object();
     private int state;
-
-    private String updateSequence;
+    
+    /**
+     * The time this Tile is allowed to be cached before being forced to refresh from the server
+     */
+    private String maxCacheAge;
     
     public WMTTile(ReferencedEnvelope extent, WMTTileName tileName) {
         this.extent = extent;
@@ -211,6 +214,15 @@ public abstract class WMTTile implements Tile{
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void setMaxCacheAge( String maxCacheAge ) {
+        this.maxCacheAge = maxCacheAge;
+    }
+
+    @Override
+    public String getMaxCacheAge() {
+        return this.maxCacheAge;
+    }
 
     public int compareTo(Tile other) {
         // id contains scale and bounds so compare with that
@@ -347,15 +359,5 @@ public abstract class WMTTile implements Tile{
             
             return zoomLevel == other.zoomLevel;
         }
-    }
-    
-    @Override
-    public String getUpdateSequence() {
-        return this.updateSequence;
-    }
-
-    @Override
-    public void setUpdateSequence( String updateSequence ) {
-        this.updateSequence = updateSequence;
     }
 }
