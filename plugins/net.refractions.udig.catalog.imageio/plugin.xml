@@ -15,6 +15,10 @@
          id="net.refractions.udig.catalog.imageio.formats"
          name="ImageIO File Formats"
          point="net.refractions.udig.catalog.ui.fileFormat">
+      <provider
+            class="net.refractions.udig.catalog.imageio.internal.GDALFormatProvider">
+      </provider>
+      <!--
       <fileService
             fileExtension="*.sid"
             name="MrSID"/>
@@ -30,7 +34,7 @@
       <fileService
             fileExtension="*.on1,*.on2,*.on5"
             name="NITF"/>                                                 
-                                            
+      -->                                  
    </extension>
    <extension
          point="org.eclipse.ui.importWizards">

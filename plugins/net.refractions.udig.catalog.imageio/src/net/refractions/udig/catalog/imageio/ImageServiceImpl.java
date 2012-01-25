@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource;
 import net.refractions.udig.catalog.rasterings.AbstractRasterService;
 import net.refractions.udig.catalog.rasterings.AbstractRasterServiceInfo;
@@ -40,6 +39,7 @@ import org.geotools.coverage.grid.io.GridFormatFactorySpi;
  * @author Daniele Romagnoli, GeoSolutions
  * @author Jody Garnett
  * @author Simone Giannecchini, GeoSolutions
+ * @author Frank Gasdorf
  * @since 0.6.0
  */
 public class ImageServiceImpl extends AbstractRasterService {
@@ -83,9 +83,9 @@ public class ImageServiceImpl extends AbstractRasterService {
         if (monitor == null)
             monitor = new NullProgressMonitor();
         try {
-            monitor.beginTask("MrSID/ECW", 2);
+            monitor.beginTask("GDAL ImageIO-Ext", 2);
             monitor.worked(1);
-            return new AbstractRasterServiceInfo(this, "MrSID", "ECW"); //$NON-NLS-1$ //$NON-NLS-2$
+            return new AbstractRasterServiceInfo(this, ImageServiceExtension.TYPE, "gdal"); //$NON-NLS-1$ //$NON-NLS-2$
         } finally {
             monitor.done();
         }
