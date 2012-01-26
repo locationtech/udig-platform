@@ -59,7 +59,10 @@ public class ShpServiceExtension extends AbstractDataStoreServiceExtension imple
             // shapefile ...
 
             URL url = null;
-            if(params.get(ShapefileDataStoreFactory.URLP.key) instanceof URL){
+            if(params.get(ShapefileDataStoreFactory.URLP.key) == null) {
+            	return null;
+            } else if (params.get(ShapefileDataStoreFactory.URLP.key) instanceof URL){
+            
                 url = (URL)params.get(ShapefileDataStoreFactory.URLP.key);
             }else{
                 try {
