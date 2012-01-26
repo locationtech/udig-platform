@@ -41,6 +41,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
@@ -260,7 +261,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         super.dispose();
     }
 
-    protected Text addField( final Composite parent, Param param ) {
+    protected Text addField( final Composite parent, final Param param ) {
         Label label = new Label(parent, SWT.RIGHT);
         String name = param.title == null ? param.key : param.title.toString();
         String suffix = param.required ? "*:" : ":";
@@ -272,16 +273,11 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         final String EXTENSION = (String) (param.metadata != null
                 ? param.metadata.get(Param.EXT)
                 : null);
-        final Integer LENGTH = (Integer) (param.metadata != null
-                ? param.metadata.get(Param.LENGTH)
-                : null);
-        final Object MIN = (param.metadata != null ? param.metadata.get(Param.MIN) : null);
-        final Object MAX = (param.metadata != null ? param.metadata.get(Param.MAX) : null);
-
+        
         if (param.isPassword()) {
             field = new Text(parent, SWT.SINGLE | SWT.BORDER | SWT.PASSWORD);
             field.setLayoutData("span, growx, wrap unrelated");
-        } else if (File.class.isAssignableFrom(param.type)) {
+        } else if (File.class.isAssignableFrom(param.type) || URL.class.isAssignableFrom(param.type)) {
             field = new Text(parent, SWT.SINGLE | SWT.BORDER);
             field.setLayoutData("growx");
             Button button = new Button(parent, SWT.DEFAULT);
@@ -290,42 +286,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
             final Text target = field;
             button.addSelectionListener(new SelectionListener(){
                 public void widgetSelected( SelectionEvent e ) {
-                    FileDialog browse = new FileDialog(parent.getShell(), SWT.OPEN);
-                    if (EXTENSION != null) {
-                        browse.setFilterExtensions(new String[]{EXTENSION});
-                    }
-                    String path = browse.open();
-                    if (path != null) {
-                        target.setText(path);
-                        
-                        sync((Param) target.getData(), target);
-                    }
-                }
-                public void widgetDefaultSelected( SelectionEvent e ) {
-                    widgetSelected(e);
-                }
-            });
-        } else if (URL.class.isAssignableFrom(param.type)) {
-            field = new Text(parent, SWT.SINGLE | SWT.BORDER);
-            field.setLayoutData("growx");
-            Button button = new Button(parent, SWT.DEFAULT);
-            button.setText("Browse");
-            button.setLayoutData("wrap unrelated");
-            final Text target = field;
-            button.addSelectionListener(new SelectionListener(){
-                public void widgetSelected( SelectionEvent e ) {
-                    FileDialog browse = new FileDialog(parent.getShell(), SWT.OPEN);
-                    if (EXTENSION != null) {
-                        browse.setFilterExtensions(new String[]{EXTENSION});
-                    }
-                    String path = browse.open();
-                    if (path != null) {
-                        File file = new File(path);
-                        URL url = DataUtilities.fileToURL(file);                        
-                        target.setText( url.toString() );
-
-                        sync((Param) target.getData(), target);
-                    }
+                	getPathAndSynchWithText(EXTENSION, parent, target, param.type);
                 }
                 public void widgetDefaultSelected( SelectionEvent e ) {
                     widgetSelected(e);
@@ -356,7 +317,47 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         return field;
     }
 
-    protected synchronized List<Param> getParameterInfo() {
+	@SuppressWarnings("rawtypes")
+	protected void getPathAndSynchWithText(String extension, Composite parent, Text target,
+			Class targetClass) {
+		String path = null;
+		if (extension != null) {
+			FileDialog browse = new FileDialog(parent.getShell(), SWT.OPEN);
+			browse.setFilterExtensions(new String[] { wrapExtension(extension) });
+			path = browse.open();
+		} else {
+			DirectoryDialog browse = new DirectoryDialog(parent.getShell(),
+					SWT.OPEN);
+			path = browse.open();
+		}
+
+		if (path != null) {
+			String text = null;
+			if (File.class.isAssignableFrom(targetClass)) {
+				text = path;
+			} else if (URL.class.isAssignableFrom(targetClass)) {
+				File file = new File(path);
+				URL url = DataUtilities.fileToURL(file);
+				text = url.toString();
+			}
+
+			if (text != null) {
+				target.setText(text);
+			}
+
+			sync((Param) target.getData(), target);
+		}
+	}
+
+	private String wrapExtension(String extension) {
+    	if (extension != null) {
+	    	int index = extension.lastIndexOf('.');
+	        return "*." + (index >= 0 ? extension.substring(index) : extension);
+    	}
+    	return null;
+	}
+
+	protected synchronized List<Param> getParameterInfo() {
         if (paramFactory == getPreviousPage().getFactory()) {
             return paramInfo;
         }
