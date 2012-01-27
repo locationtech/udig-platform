@@ -317,47 +317,57 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         return field;
     }
 
-	@SuppressWarnings("rawtypes")
-	protected void getPathAndSynchWithText(String extension, Composite parent, Text target,
-			Class targetClass) {
-		String path = null;
-		if (extension != null) {
-			FileDialog browse = new FileDialog(parent.getShell(), SWT.OPEN);
-			browse.setFilterExtensions(new String[] { wrapExtension(extension) });
-			path = browse.open();
-		} else {
-			DirectoryDialog browse = new DirectoryDialog(parent.getShell(),
-					SWT.OPEN);
-			path = browse.open();
-		}
+    @SuppressWarnings("rawtypes")
+    protected void getPathAndSynchWithText(String extension, Composite parent,
+            Text target, Class targetClass) {
+        String path = null;
+        if (extension != null) {
+            FileDialog browse = new FileDialog(parent.getShell(), SWT.OPEN);
+            browse.setFilterExtensions(new String[] { wrapExtension(extension) });
+            path = browse.open();
+        } else {
+            DirectoryDialog browse = new DirectoryDialog(parent.getShell(),
+                    SWT.OPEN);
+            path = browse.open();
+        }
+    
+        if (path != null) {
+            String text = null;
+            if (File.class.isAssignableFrom(targetClass)) {
+                text = path;
+            } else if (URL.class.isAssignableFrom(targetClass)) {
+                File file = new File(path);
+                URL url = DataUtilities.fileToURL(file);
+                text = url.toString();
+            }
+    
+            if (text != null) {
+                target.setText(text);
+            }
+    
+            sync((Param) target.getData(), target);
+        }
+    }
 
-		if (path != null) {
-			String text = null;
-			if (File.class.isAssignableFrom(targetClass)) {
-				text = path;
-			} else if (URL.class.isAssignableFrom(targetClass)) {
-				File file = new File(path);
-				URL url = DataUtilities.fileToURL(file);
-				text = url.toString();
-			}
+    /**
+     * Concatenate "*." with the given extension. Excepted values are '.xxx',
+     * '*.xxx' and 'xxx', the return value will always '*.xxx' for all variations.
+     * 
+     * @param extension
+     * @return prefixed extension that looks like '*.xxx' for given values '*.xxx',
+     *         '.xxx' and 'xxx'
+     */
+    protected String wrapExtension(String extension) {
+        if (extension != null) {
+            int index = extension.lastIndexOf('.');
+            return "*."
+                    + (index >= 0 && extension.length() > index + 1 ? extension
+                            .substring(index + 1) : extension);
+        }
+        return null;
+    }
 
-			if (text != null) {
-				target.setText(text);
-			}
-
-			sync((Param) target.getData(), target);
-		}
-	}
-
-	private String wrapExtension(String extension) {
-    	if (extension != null) {
-	    	int index = extension.lastIndexOf('.');
-	        return "*." + (index >= 0 ? extension.substring(index) : extension);
-    	}
-    	return null;
-	}
-
-	protected synchronized List<Param> getParameterInfo() {
+    protected synchronized List<Param> getParameterInfo() {
         if (paramFactory == getPreviousPage().getFactory()) {
             return paramInfo;
         }
