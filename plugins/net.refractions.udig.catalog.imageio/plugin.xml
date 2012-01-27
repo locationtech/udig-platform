@@ -18,23 +18,6 @@
       <provider
             class="net.refractions.udig.catalog.imageio.internal.GDALFormatProvider">
       </provider>
-      <!--
-      <fileService
-            fileExtension="*.sid"
-            name="MrSID"/>
-      <fileService
-            fileExtension="*.ecw"
-            name="ECW"/>   
-      <fileService
-            fileExtension="*.img"
-            name="HFA"/>     
-      <fileService
-            fileExtension="*.dt0,*.dt1,*.dt2"
-            name="DTED"/>   
-      <fileService
-            fileExtension="*.on1,*.on2,*.on5"
-            name="NITF"/>                                                 
-      -->                                  
    </extension>
    <extension
          point="org.eclipse.ui.importWizards">
@@ -48,6 +31,4 @@
          </description>
       </wizard>
    </extension>
-
-
 </plugin>
