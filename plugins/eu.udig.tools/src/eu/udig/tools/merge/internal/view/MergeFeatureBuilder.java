@@ -102,7 +102,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * @author Aritz Davila (www.axios.es)
  * @since 1.1.0
  */
-public class MergeFeatureBuilder {
+class MergeFeatureBuilder {
 
 	/**
 	 * Null mergeGeometryValue to check for equality with a feature's default
@@ -157,39 +157,70 @@ public class MergeFeatureBuilder {
 		if (sourceFeatures.size() < 1) {
 			throw new IllegalArgumentException("Expected at least one source feature"); //$NON-NLS-1$
 		}
+
+		assert compatibleFeatureType(sourceFeatures):"Features in the collection must conform to a common schema"; //$NON-NLS-1$
+		
+		this.sourceFeatures = sourceFeatures;
+		
+		GeometryDescriptor defaultGeometry = featureType.getGeometryDescriptor();
+		assert defaultGeometry != null: "Feature schema does not contain a default geometry"; //$NON-NLS-1$
+		
+		Class<?> binding = defaultGeometry.getType().getBinding();
+		if (!binding.isAssignableFrom(mergedGeometry.getClass())) {
+			throw new IllegalArgumentException(
+						"Can't assign " + mergedGeometry.getClass().getName() + " to " //$NON-NLS-1$ //$NON-NLS-2$
+						+ defaultGeometry.getClass().getName());
+		}
+		this.defaultGeometryIndex = featureType.indexOf(defaultGeometry.getName());
+
+		mergedFeature = new Object[featureType.getAttributeCount()];
+		SimpleFeature feature = this.sourceFeatures.get(0);
+		mergedFeature = feature.getAttributes().toArray(mergedFeature);
+
+		mergedFeature[defaultGeometryIndex] = mergedGeometry;
+	}
+	
+	/**
+	 * Checks all features have got the same feature type
+	 * @param sourceFeatures
+	 * @return
+	 */	
+	private boolean compatibleFeatureType(List<SimpleFeature> sourceFeatures) {
+
 		this.featureType = sourceFeatures.get(0).getFeatureType();
 
 		for (int i = 0; i < sourceFeatures.size(); i++) {
 			SimpleFeature next = sourceFeatures.get(i);
 			if (featureType != next.getFeatureType()) {
-				throw new IllegalArgumentException("Features in the collection must conform to a common schema"); //$NON-NLS-1$
-			}
-			this.sourceFeatures.add(next);
-		}
-
-		SimpleFeature feature = this.sourceFeatures.get(0);
-		GeometryDescriptor defaultGeometry = featureType.getGeometryDescriptor();
-		if (null == defaultGeometry) {
-			throw new IllegalArgumentException("Feature schema contains no default geometry"); //$NON-NLS-1$
-		}
-		if (mergedGeometry != null) {
-			Class<?> binding = defaultGeometry.getType().getBinding();
-			if (!binding.isAssignableFrom(mergedGeometry.getClass())) {
-				throw new IllegalArgumentException(
-							"Can't assign " + mergedGeometry.getClass().getName() + " to " //$NON-NLS-1$ //$NON-NLS-2$
-							+ defaultGeometry.getClass().getName());
+				return false;
 			}
 		}
-		this.defaultGeometryIndex = featureType.indexOf(defaultGeometry.getName());
-
-		mergedFeature = new Object[featureType.getAttributeCount()];
-		mergedFeature = feature.getAttributes().toArray(mergedFeature);
-
-		if (mergedGeometry != null) {
-			mergedFeature[defaultGeometryIndex] = mergedGeometry;
-		}
+		return true;
 	}
 
+	/**
+	 * Adds the feature list to the existent source features
+	 * @param featureList
+	 */
+	public void addSourceFeature(List<SimpleFeature> featureList) {
+		
+		this.sourceFeatures.addAll(featureList);
+		
+	}
+	
+	/**
+	 * adds the feature as last element
+	 * @param feature
+	 * @return return the position of the added feature
+	 */
+	public int addSourceFeature(SimpleFeature feature) {
+		
+		this.sourceFeatures.add(feature);
+		return this.sourceFeatures.size()-1;
+		
+	}
+
+	
 	/**
 	 * Event listener interface for implementors to listen to merge attribute
 	 * changes
@@ -479,5 +510,13 @@ public class MergeFeatureBuilder {
 	public List<SimpleFeature> getSourceFeatures(){
 		return this.sourceFeatures;
 	}
+
+	public void removeFromSourceFeatures(SimpleFeature selectedFeature) {
+		
+		assert !sourceFeatures.isEmpty(): "the sources feature list cannot be empty"; //$NON-NLS-1$
+			
+		sourceFeatures.remove(selectedFeature);
+	}
+
 
 }

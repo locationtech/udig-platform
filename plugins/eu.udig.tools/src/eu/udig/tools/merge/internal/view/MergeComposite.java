@@ -21,15 +21,12 @@
 package eu.udig.tools.merge.internal.view;
 
 import java.text.MessageFormat;
-import java.util.LinkedList;
 import java.util.List;
 
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.ui.tool.IToolContext;
 
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -59,6 +56,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 import org.geotools.data.DataUtilities;
+import org.geotools.util.UnsupportedImplementationException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -100,9 +98,12 @@ class MergeComposite extends Composite {
 	private Composite			infoComposite			= null;
 	private String				message					= null;
 	private CLabel				messageTitle			= null;
-	private Button				trashButton				= null;
+	
+	
 	private ImageRegistry		registry				= null;
+	private Button				trashButton				= null;
 	private MergeView			mergeView				= null;
+
 	private Menu				menu;
 
 	/**
@@ -123,29 +124,28 @@ class MergeComposite extends Composite {
 	 */
 	private static final String	NULL_LABEL				= "<null>"; //$NON-NLS-1$
 
-	private DeleteButtonAction	deleteButton			= null;
-	private List<SimpleFeature> sourceFeatures;
 	private CLabel messagePanel;
 
-	/**
-	 * Create the delete action that will be showed on the context menu.
-	 */
-	private class DeleteButtonAction extends Action {
-
-		public DeleteButtonAction() {
-
-			setToolTipText(Messages.MergeView_remove_tool_tip);
-			setText(Messages.MergeView_remove_text);
-			String imgFile = "images/trash.gif"; //$NON-NLS-1$
-			setImageDescriptor(ImageDescriptor.createFromFile(MergeView.class, imgFile));
-		}
-
-		@Override
-		public void run() {
-
-			mergeView.deleteFromMergeList(getSelectedFeature());
-		}
-	}
+//	/**
+//	 * Create the delete action that will be showed on the context menu.
+//	 */
+//	private class DeleteButtonAction extends Action {
+//
+//		
+//		public DeleteButtonAction() {
+//
+//			setToolTipText(Messages.MergeView_remove_tool_tip);
+//			setText(Messages.MergeView_remove_text);
+//			String imgFile = "images/trash.gif"; //$NON-NLS-1$
+//			setImageDescriptor(ImageDescriptor.createFromFile(MergeView.class, imgFile));
+//		}
+//		
+//		@Override
+//		public void run() {
+//
+//			deleteFromMergePanel();
+//		}
+//	}
 
 	public MergeComposite(Composite parent, int style) {
 
@@ -332,8 +332,8 @@ class MergeComposite extends Composite {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-
-				mergeView.deleteFromMergeList( getSelectedFeature() );
+				
+				deleteSourceFeatures();
 			}
 		});
 
@@ -380,25 +380,61 @@ class MergeComposite extends Composite {
 		treeColumnValue.setText(Messages.MergeFeaturesComposite_value);
 	}
 
+	protected void deleteSourceFeatures() {
+		
+		//delete from builder 
+		
+		TreeItem[] items = this.treeFeatures.getSelection();
+		for (int i = 0; i < items.length; i++) {
+			String id = items[i].getText();
+			
+			List<SimpleFeature> sourceFeatures = this.builder.getSourceFeatures();
+			for (SimpleFeature feature : sourceFeatures) {
+				
+				if(feature.getID().equals(id) ){
+					
+					this.builder.removeFromSourceFeatures( feature);
+
+					unselect(feature);
+					
+					break;
+				}
+			}
+		
+			// deletes from three view
+			items[i].dispose();
+		}
+		changed();
+	
+	}
+
+	/**
+	 * Unselects the merged features
+	 * 
+	 * @param unselectedFeature
+	 */
+	private void unselect(SimpleFeature unselectedFeature) {
+		
+		// TODO unselect only the selected feature
+		
+		IToolContext context=  this.mergeView.getContext();
+		UndoableMapCommand unselectCommand = context.getSelectionFactory().createNoSelectCommand();
+
+		context.sendASyncCommand(unselectCommand);
+	}
+
 	/**
 	 * Creates the context menu that will be showed when user do a right click
 	 * on the treeSourceFeatures.
 	 */
 	private void createContextMenu() {
 
-		this.deleteButton = new DeleteButtonAction();
 
 		final MenuManager contextMenu = new MenuManager();
 
 		contextMenu.setRemoveAllWhenShown(true);
-		contextMenu.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager mgr) {
 
-				contextMenu.add(deleteButton);
-			}
-		});
-
-		menu = contextMenu.createContextMenu(compositeSourceFeatures);
+		this.menu = contextMenu.createContextMenu(compositeSourceFeatures);
 	}
 
 	private Image getImage() {
@@ -431,14 +467,14 @@ class MergeComposite extends Composite {
 	 */
 	public void display() {
 		
-		if( builder == null ) return;
+		assert builder != null : "the merge builder was not been set"; //$NON-NLS-1$
 
 		// presents the source in tree view
 		populateSourceFeaturesView();
 
 		populateMergeFeatureView();
 
-		updateMergedFeatureView();
+		changed();
 	}
 
 	/**
@@ -469,12 +505,15 @@ class MergeComposite extends Composite {
 				if (attributeIndex == builder.getDefaultGeometryIndex()) {
 					mergeGeometryChanged(builder);
 				}
-				updateMergedFeatureView();
+				changed();
 			}
 
 		});
 		// set up initial feedback
 		mergeGeometryChanged(mergeBuilder);
+
+		display();
+
 	}
 
 	/**
@@ -507,6 +546,29 @@ class MergeComposite extends Composite {
 			throw new IllegalStateException(iae.getMessage());
 		}
 	}
+// FIXME was replaced	
+//	/**
+//	 * 
+//	 * @return
+//	 * @throws IllegalStateException
+//	 */
+//	private MergeFeatureBuilder createMergeBuilder() throws IllegalStateException {
+//
+//		SimpleFeatureType type = sourceFeatures.get(0).getFeatureType();
+//		final Class<?> expectedGeometryType = type.getGeometryDescriptor().getType().getBinding();
+//		Geometry union;
+//		union = GeometryUtil.geometryUnion(DataUtilities.collection(sourceFeatures));
+//		try {
+//			union = GeometryUtil.adapt(union, (Class<? extends Geometry>) expectedGeometryType);
+//			final ILayer layer = this.mergeView.getContext().getSelectedLayer();
+//			MergeFeatureBuilder mergeBuilder = new MergeFeatureBuilder(sourceFeatures, union, layer);
+//			return mergeBuilder;
+//		} catch (IllegalArgumentException iae) {
+//			throw new IllegalStateException(iae.getMessage());
+//		}
+//
+//	}
+//	
 
 	private void checkGeomCollection(Geometry union, Class<?> expectedGeometryType) throws IllegalArgumentException {
 
@@ -577,7 +639,7 @@ class MergeComposite extends Composite {
 	 * No manipulation of the target feature view is done here. Instead, as this
 	 * method calls {@link #setAttributeValue(int, int, boolean)}, the
 	 * {@link MergeFeatureBuilder} will raise change events that will be catched
-	 * up by {@link #updateMergedFeatureView()}
+	 * up by {@link #changed()}
 	 * </p>
 	 * 
 	 * @param event
@@ -674,17 +736,44 @@ class MergeComposite extends Composite {
 	 * Called whenever a merged feature attribute value changed to update the
 	 * merge feature view
 	 */
-	private void updateMergedFeatureView() {
+	private void changed() {
 
-		final int attributeCount = builder.getAttributeCount();
+		updateMergePanel();
+		
+		updateCommandButtonStatus();
+	}
 
-		for (int attIndex = 0; attIndex < attributeCount; attIndex++) {
-			TableItem attrItem = tableMergeFeature.getItem(attIndex);
-			Object attrValue = builder.getMergeAttribute(attIndex);
-			String strValue = (attrValue == null) ? NULL_LABEL : String.valueOf(attrValue.toString());
+	private void updateMergePanel() {
+		
+		List<SimpleFeature> sourceFeatures = this.builder.getSourceFeatures();
+		if(sourceFeatures.size() == 0 ){
+		
+			tableMergeFeature.removeAll();
 
-			attrItem.setText(VALUE_COLUMN, strValue);
+		} else {
+			
+			final int attributeCount = builder.getAttributeCount();
+
+			for (int attIndex = 0; attIndex < attributeCount; attIndex++) {
+				TableItem attrItem = tableMergeFeature.getItem(attIndex);
+				
+				Object attrOfMergeFeature = builder.getMergeAttribute(attIndex);
+				String strValue = (attrOfMergeFeature == null) ? NULL_LABEL : String.valueOf(attrOfMergeFeature.toString());
+
+				attrItem.setText(VALUE_COLUMN, strValue);
+			}
 		}
+	}
+
+	private void updateCommandButtonStatus() {
+		
+		canMerge();
+		canDelete();
+	}
+
+	private void canDelete() {
+
+		this.trashButton.setEnabled(!this.builder.getSourceFeatures().isEmpty());
 	}
 
 	/**
@@ -696,7 +785,7 @@ class MergeComposite extends Composite {
 	 * As a result of calling
 	 * {@link MergeFeatureBuilder#setMergeAttribute(int, int)} or
 	 * {@link MergeFeatureBuilder#clearMergeAttribute(int)}, the change event
-	 * will be caught up by {@link #updateMergedFeatureView()} to reflect the
+	 * will be caught up by {@link #changed()} to reflect the
 	 * change in the merge feature view
 	 * </p>
 	 * 
@@ -810,7 +899,6 @@ class MergeComposite extends Composite {
 	 * </p>
 	 */
 	private void populateSourceFeaturesView() {
-
 		
 		final int featureCount = builder.getFeatureCount();
 		// add feature as parent
@@ -844,10 +932,43 @@ class MergeComposite extends Composite {
 				} else {
 					attrItem.setChecked(isFisrtFeature);
 				}
-
 			}
 			featureItem.setExpanded(isFisrtFeature);
 		}
+	}
+	
+	
+	/**
+	 * Adds the feature as last element in the tree view that shows the source feature list.
+	 * 
+	 * @param feature
+	 */
+	private void displaySourceFeature(SimpleFeature feature){
+
+		int position = this.builder.addSourceFeature(feature);
+		
+		TreeItem featureItem = new TreeItem(this.treeFeatures, SWT.NONE);
+			// store the feature id
+		featureItem.setData(position);
+		featureItem.setText(builder.getID(position));
+		
+		// adds feature's attribute as child items
+		for (int attIndex = 0; attIndex < builder.getAttributeCount(); attIndex++) {
+
+				TreeItem attrItem = new TreeItem(featureItem, SWT.NONE);
+
+				// sets Name
+				String attrName = builder.getAttributeName(attIndex);
+				attrItem.setText(0, attrName);
+				attrItem.setData(Integer.valueOf(attIndex));
+
+				// sets value
+				Object attrValue = builder.getAttribute(position, attIndex);
+				String strValue = attrValue == null ? NULL_LABEL : String.valueOf(attrValue);
+				attrItem.setText(VALUE_COLUMN, strValue);
+
+		}
+		featureItem.setExpanded(true);
 	}
 
 	/**
@@ -875,7 +996,6 @@ class MergeComposite extends Composite {
 
 	public void setSourceFeatures(List<SimpleFeature> sourceFeatures, ILayer layer) {
 
-		this.sourceFeatures = sourceFeatures;
 		if( sourceFeatures.isEmpty() ){
 			return;
 		}
@@ -885,32 +1005,40 @@ class MergeComposite extends Composite {
 		
 	}
 	
-	public void addSourceFeatures(List<SimpleFeature> sourceFeatures2, ILayer layer) {
+	/**
+	 * Adds the features to the existent source feature set.
+	 * 
+	 * @param featureList
+	 * @param layer
+	 */
+	public void addSourceFeatures(List<SimpleFeature> featureList, ILayer layer) {
 
-		this.sourceFeatures.addAll(sourceFeatures);
-		MergeFeatureBuilder builder = createMergeBuilder(sourceFeatures, layer);
-		setBuilder(builder);
+		for (SimpleFeature feature : featureList) {
+			displaySourceFeature(feature);
+		}
 		
 	}
+
 	
-	
-	public boolean canMerge() {
+	private boolean canMerge() {
 
 		boolean valid = true;
-		this.message = ""; 
 
 		// Must select two or more feature
-		if (this.sourceFeatures.size() < 2) {
+		if (this.builder.getSourceFeatures().size() < 2) {
 			this.message = Messages.MergeFeatureBehaviour_select_two_or_more;
+			setMessage(this.message, IMessageProvider.WARNING);
 			valid = false;
 		}
-		this.setMessage(this.message, IMessageProvider.WARNING);
+		this.mergeView.canMerge(valid);
+		
 		return valid;
 	}
 
-	public List<SimpleFeature> getSourceFeatures() {
-		return this.sourceFeatures;
+	/**
+	 * @return The set of features to merge
+	 */
+	public MergeFeatureBuilder getMergeBuilder() {
+		return this.builder;
 	}
-
-
 }

@@ -24,8 +24,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import opendap.servlet.GetInfoHandler;
-
 import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
 import net.refractions.udig.project.ui.tool.IToolContext;
 

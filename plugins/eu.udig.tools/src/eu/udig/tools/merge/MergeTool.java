@@ -94,7 +94,8 @@ public class MergeTool extends SimpleTool  {
 
 			Display.getCurrent().asyncExec(new Runnable() {
 				public void run() {
-
+					
+			
 					// When the tool is deactivated, hide the view.
 					ApplicationGIS.getView(false, MergeView.ID);
 					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
@@ -175,13 +176,13 @@ public class MergeTool extends SimpleTool  {
 			// a control key + mouse press has occurred. Then the feature
 			// under the cursor must be added or removed from the merge feature
 			// list.
-
-			if (isFeatureSelectedUnderCursor(e)) {
-
-				displayFeatureOnView(e, selectedLayer, mergeView);
-			} else {
-				removeFeatureFromView(e, selectedLayer, mergeView);
-			}
+// TODO
+//			if (isFeatureSelectedUnderCursor(e)) {
+//
+//				displayFeatureOnView(e, selectedLayer, mergeView);
+//			} else {
+//				removeFeatureFromView(e, selectedLayer, mergeView);
+//			}
 		}
     }
     
@@ -194,7 +195,7 @@ public class MergeTool extends SimpleTool  {
 
 	private boolean isFeatureSelectedUnderCursor(MapMouseEvent e) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
     private void displayFeatureOnView(
     		MapMouseEvent e,

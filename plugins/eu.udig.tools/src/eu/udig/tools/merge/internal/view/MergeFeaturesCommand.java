@@ -49,7 +49,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * @author Aritz Davila (www.axios.es)
  * @since 1.1.0
  */
-public final class MergeFeaturesCommand implements UndoableMapCommand {
+final class MergeFeaturesCommand implements UndoableMapCommand {
 
 	private UndoableComposite	compositeCmd		= null;
 
