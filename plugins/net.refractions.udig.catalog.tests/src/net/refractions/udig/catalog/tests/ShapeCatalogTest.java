@@ -21,6 +21,8 @@ import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceFactory;
+import net.refractions.udig.catalog.geotools.data.DataStoreService;
+import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
@@ -65,6 +67,27 @@ public class ShapeCatalogTest extends TestCase{
         File file = new File("data/point.shp");
         Map<String, Serializable> map = new HashMap<String, Serializable>();
         map.put( "url", file.toURL() );
+        map.put( "fstype", "shape" );
+        
+        IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
+        ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
+        
+        //List<IService> test = serviceFactory.acquire(map);
+        List<IService> test = serviceFactory.createService(map);
+        boolean found = false;
+        for ( IService victim : test ){
+            if( victim instanceof ShpServiceImpl){
+                found = true;
+                break;
+            }
+        }
+        assertTrue( "ShpServiceImpl", found );
+    }
+    
+    public void testCatalogPluginShapeNG() throws IOException {
+        File file = new File("data/point.shp");
+        Map<String, Serializable> map = new HashMap<String, Serializable>();
+        map.put( "url", file.toURL() );
         map.put( "fstype", "shape-ng" );
         
         IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
@@ -72,11 +95,25 @@ public class ShapeCatalogTest extends TestCase{
         
         //List<IService> test = serviceFactory.acquire(map);
         List<IService> test = serviceFactory.createService(map);
-        System.out.println(test.toArray().toString());
         
-        System.out.println(test.contains("ShpServiceImpl"));
+        boolean found = false;
+        for ( IService victim : test ){
+            if( victim instanceof ShpServiceImpl){
+                found = true;
+                break;
+            }
+        }
+        assertTrue( "ShpServiceImpl", !found );
+        
+        found = false;
+        for ( IService victim : test ){
+            if( victim instanceof DataStoreService){
+                found = true;
+                break;
+            }
+        }
+        assertTrue( "DataStoreService", found );
     }
-    
     
 
 }
