@@ -211,6 +211,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
             }
             Text field = addField(getControl(), param);
             fields.put(param, field);
+            sync(param, field);
         }
         
         Label seperator = new Label(getControl(), SWT.HORIZONTAL | SWT.SEPARATOR );
@@ -225,6 +226,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
             }
             Text field = addField(getControl(), param);
             fields.put(param, field);
+            sync(param, field);
         }
         
         listen(true);
