@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.internal.ui.CatalogImport.CatalogImportWizard;
@@ -211,7 +212,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
             }
             Text field = addField(getControl(), param);
             fields.put(param, field);
-            sync(param, field);
+            //sync(param, field);
         }
         
         Label seperator = new Label(getControl(), SWT.HORIZONTAL | SWT.SEPARATOR );
@@ -226,7 +227,6 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
             }
             Text field = addField(getControl(), param);
             fields.put(param, field);
-            sync(param, field);
         }
         
         listen(true);
@@ -323,6 +323,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         if (value != null) {
             field.setText(text);
         }
+        
         return field;
     }
 
@@ -400,7 +401,9 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
 
     @Override
     public boolean canFlipToNextPage() {
+        syncParameters();
         boolean flip = super.canFlipToNextPage();
+        
         if (flip) {
             // validate user input (usually checking state of ui)
             if (isParametersComplete(false)) {
@@ -408,6 +411,19 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
             }
         }
         return false;
+    }
+    
+    /**
+     * This method synchronises the value of all fields with the connection parameters, this allows 
+     * for the validation of fields that have been populated by other methods besides keyboard input. 
+     * E.g (Copy past, Drag drop ...)
+     */
+    private void syncParameters(){
+        for (Entry<Param, Text> field : fields.entrySet()) {
+            Param param = field.getKey();
+            Text textField = field.getValue();
+            sync(param, textField);
+        }
     }
 
     /**
