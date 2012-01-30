@@ -358,13 +358,24 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
 		}
 	}
 
-	private String wrapExtension(String extension) {
-    	if (extension != null) {
-	    	int index = extension.lastIndexOf('.');
-	        return "*." + (index >= 0 ? extension.substring(index) : extension);
-    	}
-    	return null;
-	}
+    /**
+     * Concatenate "*." with the given extension. Excepted values are '.xxx',
+     * '*.xxx' and 'xxx', the return value will always '*.xxx' for all variations.
+     * 
+     * @param extension
+     * @return prefixed extension that looks like '*.xxx' for given values '*.xxx',
+     *         '.xxx' and 'xxx'
+     */
+    protected String wrapExtension(String extension) {
+        if (extension != null) {
+            int index = extension.lastIndexOf('.');
+            return "*."
+                    + (index >= 0 && extension.length() > index + 1 ? extension
+                            .substring(index + 1) : extension);
+        }
+        return null;
+    }
+
 
 	protected synchronized List<Param> getParameterInfo() {
         if (paramFactory == getPreviousPage().getFactory()) {
