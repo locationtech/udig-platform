@@ -23,8 +23,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.miginfocom.swt.MigLayout;
+import net.refractions.udig.catalog.geotools.Activator;
 import net.refractions.udig.catalog.internal.ui.CatalogImport.CatalogImportWizard;
 import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
 import net.refractions.udig.catalog.ui.UDIGConnectionPage;
@@ -144,8 +146,27 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
                         field.setToolTipText("Required");
                         connectionParameters.remove(param.key);
                     } else {
-                        field.setToolTipText("Value: "+value);                    
-                        connectionParameters.put(param.key, (Serializable) value);
+                        field.setToolTipText("Value: "+value);
+                        
+                        if( value instanceof Serializable){
+                            // we are good to go
+                            connectionParameters.put(param.key, (Serializable) value);
+                        }
+                        else {
+                            // Ask the param to give us a string representation
+                            try {
+                                String txt = param.text(value);
+                                
+                                connectionParameters.put(param.key, txt);
+                            }
+                            catch (Throwable t ){
+                                // must be something scary like JDBC Connection Pool -- ignoring!
+                                if( Activator.getDefault().isDebugging() ){
+                                    System.out.println( Activator.PLUGIN_ID + " could not write out "+param.key+" connection param:"+t);
+                                    t.printStackTrace();
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -211,6 +232,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
             }
             Text field = addField(getControl(), param);
             fields.put(param, field);
+            //sync(param, field);
         }
         
         Label seperator = new Label(getControl(), SWT.HORIZONTAL | SWT.SEPARATOR );
@@ -295,7 +317,9 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         } else {
             field = new Text(parent, SWT.SINGLE | SWT.BORDER);
             field.setLayoutData("span, growx, wrap unrelated");
+            
         }
+        
         field.setData(param);
         
         if( "dbtype".equals( param.key)){
@@ -304,33 +328,38 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         }
 
         Object value = null;
+        
         if (getParams() != null && getParams().containsKey(param.key)) {
             value = getParams().get(param.key);
         }
-        if( value == null && param.required && param.sample != null ){
-            value = param.sample;
+        
+        if( value == null){
+            value = param.getDefaultValue();
         }
+        
+        
+        
         String text = value != null ? param.text(value) : "";
         if (value != null) {
             field.setText(text);
         }
+        
         return field;
     }
 
     @SuppressWarnings("rawtypes")
-    protected void getPathAndSynchWithText(String extension, Composite parent,
-            Text target, Class targetClass) {
+    protected void getPathAndSynchWithText( String extension, Composite parent, Text target,
+            Class targetClass ) {
         String path = null;
         if (extension != null) {
             FileDialog browse = new FileDialog(parent.getShell(), SWT.OPEN);
-            browse.setFilterExtensions(new String[] { wrapExtension(extension) });
+            browse.setFilterExtensions(new String[]{wrapExtension(extension)});
             path = browse.open();
         } else {
-            DirectoryDialog browse = new DirectoryDialog(parent.getShell(),
-                    SWT.OPEN);
+            DirectoryDialog browse = new DirectoryDialog(parent.getShell(), SWT.OPEN);
             path = browse.open();
         }
-    
+
         if (path != null) {
             String text = null;
             if (File.class.isAssignableFrom(targetClass)) {
@@ -340,11 +369,11 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
                 URL url = DataUtilities.fileToURL(file);
                 text = url.toString();
             }
-    
+
             if (text != null) {
                 target.setText(text);
             }
-    
+
             sync((Param) target.getData(), target);
         }
     }
@@ -367,7 +396,8 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         return null;
     }
 
-    protected synchronized List<Param> getParameterInfo() {
+
+	protected synchronized List<Param> getParameterInfo() {
         if (paramFactory == getPreviousPage().getFactory()) {
             return paramInfo;
         }
@@ -390,14 +420,45 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
 
     @Override
     public boolean canFlipToNextPage() {
-        boolean flip = super.canFlipToNextPage();
-        if (flip) {
-            // validate user input (usually checking state of ui)
-            if (isParametersComplete(false)) {
-                return true;
-            }
+        // validate user input (usually checking state of ui)
+        if (isParametersComplete(false)) {
+            return true;
         }
+
         return false;
+    }
+    
+    @Override
+    public boolean leavingPage() {
+
+        // TODO: we should be checking that we can make a connection however that is currently
+        // blocking the UI and causing the wizard to not finish.
+        syncParameters();
+        return true;
+    }
+
+//    @Override
+//    public boolean isPageComplete(){
+//        syncParameters();
+//        
+//        if (canFlipToNextPage()) {
+//            return true;
+//        }
+//        
+//        return false;
+//    }
+    
+    /**
+     * This method synchronises the value of all fields with the connection parameters, this allows 
+     * for the validation of fields that have been populated by other methods besides keyboard input. 
+     * E.g (Copy past, Drag drop ...)
+     */
+    private void syncParameters(){
+        for (Entry<Param, Text> field : fields.entrySet()) {
+            Param param = field.getKey();
+            Text textField = field.getValue();
+            sync(param, textField);
+        }
     }
 
     /**

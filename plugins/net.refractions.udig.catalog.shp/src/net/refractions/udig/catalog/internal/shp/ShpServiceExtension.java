@@ -78,13 +78,19 @@ public class ShpServiceExtension extends AbstractDataStoreServiceExtension imple
             }
             String file=url.getFile();
             file=file.toLowerCase();
-            if( !(file.endsWith(".shp") || file.endsWith(".shx") ||file.endsWith(".qix")  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-                    || file.endsWith(".dbf"))) //$NON-NLS-1$
-                    return null;
-                if(id == null){
+            if (!(file.endsWith(".shp") || file.endsWith(".shx") || file.endsWith(".qix") || file
+                    .endsWith(".dbf"))) {
+                return null;
+            }
+            
+            if( getSHPDSFactory().canProcess(params)){
+                if (id == null) {
                     return new ShpServiceImpl(url,params);
                 }
-                return new ShpServiceImpl(id,params);
+                else {
+                    return new ShpServiceImpl(id,params);
+                }
+            }
         }
         return null;
     }

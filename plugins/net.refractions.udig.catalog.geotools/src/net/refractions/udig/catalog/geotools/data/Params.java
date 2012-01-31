@@ -63,7 +63,7 @@ public class Params {
         for( Param param : params ){
             try {
                 Object value = param.lookUp( connectionParams );
-                if( value != null ){
+                if( value != null && type.isInstance(value)){
                     return type.cast(value);
                 }
             } catch (IOException e) {

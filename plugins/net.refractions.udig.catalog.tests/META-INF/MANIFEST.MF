@@ -9,6 +9,8 @@ Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  org.junit;visibility:=reexport,
  org.eclipse.jface;visibility:=reexport,
  net.refractions.udig.catalog;visibility:=reexport,
+ net.refractions.udig.catalog.geotools,
+ net.refractions.udig.catalog.shp,
  net.refractions.udig.ui.tests,
  org.junit4
 Bundle-Activator: net.refractions.udig.catalog.tests.TestActivator
