@@ -26,6 +26,8 @@ import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
+import org.geotools.data.shapefile.indexed.IndexedShapefileDataStore;
+import org.geotools.data.shapefile.ng.ShapefileDataStore;
 
 import junit.framework.TestCase;
 
@@ -47,9 +49,13 @@ public class ShapeCatalogTest extends TestCase{
         map.put( "url", file.toURL() );
         map.put( "fstype", "shape-ng" );
         DataStore dataStore = DataStoreFinder.getDataStore(map);
-
-        String packageName = dataStore.getClass().getPackage().getName();
-        assertEquals(packageName, "org.geotools.data.shapefile.ng");
+        
+        boolean test = false;
+        if(dataStore instanceof ShapefileDataStore)
+            test  = true;
+        
+        assertTrue( "Check is ShapefileDataStore", test );
+        assertEquals(dataStore.getClass().getPackage(), ShapefileDataStore.class.getPackage());
     }
     
     public void testCreateShape() throws IOException {
@@ -58,9 +64,16 @@ public class ShapeCatalogTest extends TestCase{
         map.put( "url", file.toURL() );
         map.put( "fstype", "shape" );
         DataStore dataStore = DataStoreFinder.getDataStore(map);
-
+        
         String packageName = dataStore.getClass().getPackage().getName();
-        assertEquals(packageName, "org.geotools.data.shapefile.indexed");
+        System.out.println(packageName);
+        
+        boolean test = false;
+        if(dataStore instanceof IndexedShapefileDataStore)
+            test  = true;
+        
+        assertTrue( "Check is IndexedShapefileDataStore", test );
+        assertEquals(dataStore.getClass().getPackage(), IndexedShapefileDataStore.class.getPackage());
     }
     
     public void testCatalogPluginShape() throws IOException {
