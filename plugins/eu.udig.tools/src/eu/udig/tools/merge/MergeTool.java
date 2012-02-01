@@ -75,36 +75,55 @@ public class MergeTool extends SimpleTool  {
 		return EXTENSION_ID;
 	}
 
+	/**
+	 * When the Merge tool is activated by a click in the toolbar, if the 
+	 * Merge View is opened, it will be closed. 
+	 */
 	@Override
 	public void setActive(final boolean active) {
 
 		super.setActive(active);
 
-		this.mergeContext.initContext();
+		this.mergeContext.setToolContext(getContext());
 
-		IToolContext toolContext = getContext();
-		this.mergeContext.setToolContext(toolContext);
-		
-		StatusBar.setStatusBarMessage(toolContext, "");//$NON-NLS-1$
-		if (active && toolContext.getMapLayers().size() > 0) {
+		if(active){
+			// feedback to the user indeed that he can select some features to merege
+			StatusBar.setStatusBarMessage(this.mergeContext.getToolContext(), "");//$NON-NLS-1$
+			if (this.mergeContext.getToolContext().getMapLayers().size() > 0) {
 
-			String message = Messages.MergeTool_select_features_to_merge;
-			StatusBar.setStatusBarMessage(toolContext, message); 
+				String message = Messages.MergeTool_select_features_to_merge;
+				StatusBar.setStatusBarMessage(this.mergeContext.getToolContext(), message); 
+				
+			} else {
+				
+				String message = "The layer hasn't got features to merge";
+				StatusBar.setStatusBarMessage(this.mergeContext.getToolContext(), message); 
+			}
 		} else {
-
-			Display.getCurrent().asyncExec(new Runnable() {
-				public void run() {
-					
-			
-					// When the tool is deactivated, hide the view.
-					ApplicationGIS.getView(false, MergeView.ID);
-					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-					IViewPart viewPart = page.findView(MergeView.ID);
-					page.hideView(viewPart);
-
-				}
-			});
+			// if the merge view is opened it will be closed
+			if( this.mergeContext.isMergeViewActive() ){
+				
+				closeMergeView();
+			}
 		}
+	}
+
+	/**
+	 * Hide the merge view. 
+	 */
+	private void closeMergeView() {
+		Display.getCurrent().asyncExec(new Runnable() {
+			
+			public void run() {
+
+				// When the tool is deactivated, hide the view.
+				ApplicationGIS.getView(false, MergeView.ID);
+				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+				IViewPart viewPart = page.findView(MergeView.ID);
+				page.hideView(viewPart);
+				mergeContext.disposeMergeView();
+			}
+		});
 	}
 
 	/**
@@ -159,11 +178,11 @@ public class MergeTool extends SimpleTool  {
     protected void onMouseReleased(MapMouseEvent e) {
     	
 		// search an existent view or open a new one
-		MergeView mergeView = this.mergeContext.getMergeView();
-		if(mergeView == null ){
+		if(! this.mergeContext.isMergeViewActive() ){
 			openMergeView(e.x, e.y, this.mergeContext);
-			mergeView = this.mergeContext.getMergeView();
 		}
+		MergeView mergeView = this.mergeContext.getMergeView();
+
 		assert mergeView !=null;
 		
 		// set the selected features in the merge view
@@ -274,7 +293,7 @@ public class MergeTool extends SimpleTool  {
 			
 			// associates this the merge view with the merge context
 			view.setMergeContext(mergeContext);
-			mergeContext.setMergeView(view);
+			mergeContext.activeMergeView(view);
 			
 		} catch (Exception ex){
 			AnimationUpdater.runTimer(

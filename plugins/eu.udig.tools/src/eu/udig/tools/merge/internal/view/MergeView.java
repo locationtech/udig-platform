@@ -174,12 +174,12 @@ public class MergeView extends ViewPart implements IUDIGView {
 	/**
 	 * Set the mergeBuilder that contains all the data and populate the
 	 * composite with these data.
-	 * 
+	 * @deprecated
 	 * @param builder
 	 */
 	public void setBuilder(MergeFeatureBuilder builder) {
-
-		this.mergeComposite.setBuilder(builder);
+		throw new UnsupportedOperationException();
+		//this.mergeComposite.setBuilder(builder);
 	}
 
 
@@ -289,6 +289,8 @@ public class MergeView extends ViewPart implements IUDIGView {
 	@Override
 	public void dispose() {
 
+		this.mergeContext.disposeMergeView();
+		
 		super.dispose();
 	}
 
@@ -313,6 +315,11 @@ public class MergeView extends ViewPart implements IUDIGView {
 	public void setMergeContext(MergeContext mergeContext) {
 
 		this.mergeContext = mergeContext;
+	}
+
+	public boolean isDisposed() {
+		// TODO Auto-generated method stub
+		return this.mergeComposite.isDisposed();
 	}
 
 }

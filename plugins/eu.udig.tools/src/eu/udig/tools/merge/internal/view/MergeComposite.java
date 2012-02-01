@@ -56,7 +56,6 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 import org.geotools.data.DataUtilities;
-import org.geotools.util.UnsupportedImplementationException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -196,7 +195,6 @@ class MergeComposite extends Composite {
 		gridData.horizontalSpan = 2;
 		gridData.verticalAlignment = GridData.FILL;
 
-		// TODO show this text BOLD.
 		messageTitle = new CLabel(infoComposite, SWT.BOLD);
 		messageTitle.setLayoutData(gridData);
 
@@ -490,12 +488,9 @@ class MergeComposite extends Composite {
 
 	/**
 	 * Set the builder and adds a change listener.
-	 * 
 	 * @param mergeBuilder
 	 */
-	public void setBuilder(MergeFeatureBuilder mergeBuilder) {
-
-		init();
+	private void setBuilder(MergeFeatureBuilder mergeBuilder) {
 
 		this.builder = mergeBuilder;
 		this.builder.addChangeListener(new MergeFeatureBuilder.ChangeListener() {
@@ -996,10 +991,11 @@ class MergeComposite extends Composite {
 
 	public void setSourceFeatures(List<SimpleFeature> sourceFeatures, ILayer layer) {
 
-		if( sourceFeatures.isEmpty() ){
-			return;
-		}
+		assert ! sourceFeatures.isEmpty() : "illegal paramenter: the list cannot be empty"; //$NON-NLS-1$
 
+		this.treeFeatures.removeAll();
+		this.tableMergeFeature.removeAll();
+		
 		MergeFeatureBuilder builder = createMergeBuilder(sourceFeatures, layer);
 		setBuilder(builder);
 		

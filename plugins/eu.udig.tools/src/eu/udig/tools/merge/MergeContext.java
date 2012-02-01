@@ -154,19 +154,38 @@ public class MergeContext {
 	}
 
 	/**
-	 * Set the associated merge view
-	 */
-	public void setMergeView(MergeView view) {
-		this.mergeView = view;
-		
-	}
-
-	/**
 	 * 
 	 * @return the associated merge view
 	 */
 	public MergeView getMergeView() {
 		return mergeView;
 	}
+
+	/**
+	 * 
+	 * @return true If a merge view is opened, false in other case
+	 */
+	public boolean isMergeViewActive() {
+		
+		return (mergeView != null) && !mergeView.isDisposed();
+	}
+
+	/**
+	 * 
+	 */
+	public void disposeMergeView() {
+
+		this.mergeView = null;
+	}
+	
+
+	/**
+	 * Set the associated merge view
+	 */
+	public void activeMergeView(MergeView view) {
+		this.mergeView = view;
+		
+	}
+	
 	
 }
