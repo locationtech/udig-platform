@@ -39,7 +39,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-postgis-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-spatialite-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-sqlserver-8-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jp2k-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-main-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-opengis-8-SNAPSHOT.jar"/>
@@ -91,8 +90,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-gdalrpftoc-1.1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-geocore-1.1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-imagereadmt-1.1.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-kakadu-1.1.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-kakadujni-5.2.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-1.1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-netcdf-core-1.1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-streams-1.1.2.jar"/>
@@ -106,7 +103,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/jfreechart-1.0.13.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jfreechart-experimental-1.0.13.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jfreechart-swt-1.0.13.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jgt-oms3-0.7.3-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jgt-oms3-0.7.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jline-0.9.94.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jna-3.0.9.jar"/>

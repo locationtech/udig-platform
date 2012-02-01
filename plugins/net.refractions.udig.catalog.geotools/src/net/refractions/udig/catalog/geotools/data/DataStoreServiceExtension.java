@@ -200,46 +200,7 @@ public class DataStoreServiceExtension extends IServiceExtension {
         }
         return null; // could not use
     }
-//    private static Param lookupParam( DataAccessFactory factory, Class< ? > type ) {
-//        if (type == null)
-//            return null;
-//        for( Param param : factory.getParametersInfo() ) {
-//            if (type.isAssignableFrom(param.type)) {
-//                return param;
-//            }
-//        }
-//        return null;
-//    }
-//    private static Param lookupParam( DataAccessFactory factory, String key ) {
-//        if (key == null)
-//            return null;
-//        for( Param param : factory.getParametersInfo() ) {
-//            if (key.equalsIgnoreCase(param.key)) {
-//                return param;
-//            }
-//        }
-//        return null;
-//    }
-
-//    @SuppressWarnings("unchecked")
-//    private static <T> T lookup( DataAccessFactory factory, Map<String, Serializable> params,
-//            Class<T> type ) {
-//        Param param = lookupParam(factory, URL.class);
-//        if (param != null) {
-//            T value;
-//            try {
-//                value = (T) param.lookUp(params); // find the value
-//                if (value != null) {
-//                    return value;
-//                }
-//            } catch (IOException e) {
-//                if (Activator.getDefault().isDebugging()) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//        return null; // not found!
-//    }
+    
 
     public static ID createID( URL providedId, DataAccessFactory factory,
             Map<String, Serializable> params ) {
