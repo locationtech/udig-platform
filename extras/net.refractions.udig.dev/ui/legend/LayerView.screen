@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:TabbedPane" x="280" y="144" width="169" height="385" text="Layer" measuredWidth="169" measuredHeight="385" selection="0">
+    <items x="10" y="0" width="49" height="23" text="Layer"/>
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Icon" x="433" y="149" measuredWidth="16" measuredHeight="16" icon="empty-arrow-down (small)"/>
+  <widgets xsi:type="model:List" x="280" y="167" width="169" height="362" text="[x] {squared-plus}  Grid&#xA;[x] {squared-plus} Scalebar&#xA;[x] {squared-plus} Cities&#xA;[x] {squared-plus} Mountains&#xA;[x] {squared-plus} Roads&#xA;[x] {squared-plus} Rivers&#xA;[x] {squared-plus} Lakes&#xA;[x] {squared-plus} Urban areas&#xA;[x] {squared-plus} Orthophoto" measuredWidth="169" measuredHeight="362" selection="2" verticalScrollbar="true">
+    <font/>
+    <items x="0" y="2" width="152" height="23" text="[x] {squared-plus}  Grid"/>
+    <items x="0" y="25" width="152" height="23" text="[x] {squared-plus} Scalebar"/>
+    <items x="0" y="48" width="152" height="23" text="[x] {squared-plus} Cities"/>
+    <items x="0" y="71" width="152" height="23" text="[x] {squared-plus} Mountains"/>
+    <items x="0" y="94" width="152" height="23" text="[x] {squared-plus} Roads"/>
+    <items x="0" y="117" width="152" height="23" text="[x] {squared-plus} Rivers"/>
+    <items x="0" y="140" width="152" height="23" text="[x] {squared-plus} Lakes"/>
+    <items x="0" y="163" width="152" height="23" text="[x] {squared-plus} Urban areas"/>
+    <items x="0" y="186" width="152" height="23" text="[x] {squared-plus} Orthophoto"/>
+  </widgets>
+  <widgets xsi:type="model:Icon" x="408" y="149" measuredWidth="16" measuredHeight="16" icon="print-preview (small)"/>
+  <widgets xsi:type="model:Icon" x="391" y="149" measuredWidth="16" measuredHeight="16" icon="unchecked (small)"/>
+  <widgets xsi:type="model:Icon" x="376" y="149" measuredWidth="16" measuredHeight="16" icon="unchecked (small)"/>
+  <hRuler/>
+  <vRuler/>
+  <font/>
+</model:Screen>
