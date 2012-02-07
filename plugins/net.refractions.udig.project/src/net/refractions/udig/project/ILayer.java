@@ -32,7 +32,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * @author Jesse
  * @since 1.0.0
  */
-public interface ILayer extends Comparable<ILayer> {
+public interface ILayer extends ILegendItem, Comparable<ILayer> {
 
     /**
      * Indicates the crs that will be used if the layer does not declare a crs. This crs is wgs84
