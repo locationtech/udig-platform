@@ -60,5 +60,5 @@ public interface ILegendItem {
      * 
      * @return true if LegendItem is shown in legend
      */
-    //public boolean isShown();
+    public boolean isShown();
 }

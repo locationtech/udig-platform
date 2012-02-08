@@ -916,7 +916,7 @@ public class MapImpl extends EObjectImpl implements Map {
         if (eNotificationRequired()) {
             // create bas notification
             ENotificationImpl notifications = new BatchNotification(this, eventType,
-                    ProjectPackage.MAP__BATCH_EVENT);
+                    ProjectPackage.MAP_FEATURE_COUNT + 1);
             // Create layer notifications
             for( Layer layer : getContextModel().getLayers() ) {
                 EStructuralFeature feature = layer.eClass().getEStructuralFeature(featureID);

@@ -409,6 +409,24 @@ public class LayerItemProvider extends ItemProviderAdapter
     }
 
     /**
+     * This adds a property descriptor for the Shown feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addShownPropertyDescriptor( Object object ) {
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(
+                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                        getResourceLocator(),
+                        getString("_UI_Layer_shown_feature"), //$NON-NLS-1$
+                        getString(
+                                "_UI_PropertyDescriptor_description", "_UI_Layer_shown_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        ProjectPackage.Literals.LAYER__SHOWN, true, false, false,
+                        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+    }
+
+    /**
      * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate
      * feature for an {@link org.eclipse.emf.edit.command.AddCommand},
      * {@link org.eclipse.emf.edit.command.RemoveCommand} or

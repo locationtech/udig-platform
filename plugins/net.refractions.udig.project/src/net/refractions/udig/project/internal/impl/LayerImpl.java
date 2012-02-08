@@ -1280,6 +1280,26 @@ public class LayerImpl extends EObjectImpl implements Layer {
      */
     protected EMap<Interaction, Boolean> interactionMap;
 
+    /**
+     * The default value of the '{@link #isShown() <em>Shown</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isShown()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean SHOWN_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isShown() <em>Shown</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isShown()
+     * @generated
+     * @ordered
+     */
+    protected boolean shown = SHOWN_EDEFAULT;
+
     private volatile String statusMessage = Messages.LayerImpl_status;
 
     /**
@@ -1577,6 +1597,28 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isShown() {
+        return shown;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setShown( boolean newShown ) {
+        boolean oldShown = shown;
+        shown = newShown;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__SHOWN,
+                    oldShown, shown));
+    }
+
+    /**
      * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
      */
     @SuppressWarnings("unchecked")
@@ -1719,6 +1761,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 return ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap()).eMap();
             else
                 return getInteractionMap();
+        case ProjectPackage.LAYER__SHOWN:
+            return isShown();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -1787,6 +1831,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
             ((EStructuralFeature.Setting) ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap())
                     .eMap()).set(newValue);
             return;
+        case ProjectPackage.LAYER__SHOWN:
+            setShown((Boolean) newValue);
+            return;
         }
         super.eSet(featureID, newValue);
     }
@@ -1852,6 +1899,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__INTERACTION_MAP:
             getInteractionMap().clear();
             return;
+        case ProjectPackage.LAYER__SHOWN:
+            setShown(SHOWN_EDEFAULT);
+            return;
         }
         super.eUnset(featureID);
     }
@@ -1907,6 +1957,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return maxScaleDenominator != MAX_SCALE_DENOMINATOR_EDEFAULT;
         case ProjectPackage.LAYER__INTERACTION_MAP:
             return interactionMap != null && !interactionMap.isEmpty();
+        case ProjectPackage.LAYER__SHOWN:
+            return shown != SHOWN_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }

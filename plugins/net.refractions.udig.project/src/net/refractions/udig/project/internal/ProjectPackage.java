@@ -95,15 +95,6 @@ public interface ProjectPackage extends EPackage {
     int ILAYER = 2;
 
     /**
-     * The number of structural features of the '<em>ILayer</em>' class.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ILAYER_FEATURE_COUNT = 0;
-
-    /**
      * The meta object id for the '{@link net.refractions.udig.project.IEditManager <em>IEdit Manager</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see net.refractions.udig.project.IEditManager
@@ -111,15 +102,6 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     int IEDIT_MANAGER = 3;
-
-    /**
-     * The number of structural features of the the '<em>IEdit Manager</em>' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     * @ordered
-     */
-    int IEDIT_MANAGER_FEATURE_COUNT = 0;
 
     /**
      * The meta object id for the '{@link net.refractions.udig.project.IProject <em>IProject</em>}' class.
@@ -131,15 +113,6 @@ public interface ProjectPackage extends EPackage {
     int IPROJECT = 4;
 
     /**
-     * The number of structural features of the the '<em>IProject</em>' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     * @ordered
-     */
-    int IPROJECT_FEATURE_COUNT = 0;
-
-    /**
      * The meta object id for the '{@link net.refractions.udig.project.IAbstractContext <em>IAbstract Context</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see net.refractions.udig.project.IAbstractContext
@@ -147,15 +120,6 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     int IABSTRACT_CONTEXT = 5;
-
-    /**
-     * The number of structural features of the the '<em>IAbstract Context</em>' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     * @ordered
-     */
-    int IABSTRACT_CONTEXT_FEATURE_COUNT = 0;
 
     /**
      * The meta object id for the '{@link net.refractions.udig.project.IBlackboard <em>IBlackboard</em>}' class.
@@ -167,15 +131,6 @@ public interface ProjectPackage extends EPackage {
     int IBLACKBOARD = 6;
 
     /**
-     * The number of structural features of the the '<em>IBlackboard</em>' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     * @ordered
-     */
-    int IBLACKBOARD_FEATURE_COUNT = 0;
-
-    /**
      * The meta object id for the '{@link net.refractions.udig.project.IProjectElement <em>IProject Element</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see net.refractions.udig.project.IProjectElement
@@ -183,15 +138,6 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     int IPROJECT_ELEMENT = 7;
-
-    /**
-     * The number of structural features of the the '<em>IProject Element</em>' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     * @ordered
-     */
-    int IPROJECT_ELEMENT_FEATURE_COUNT = 0;
 
     /**
      * The meta object id for the '{@link net.refractions.udig.project.render.IRenderManager <em>IRender Manager</em>}' class.
@@ -203,15 +149,6 @@ public interface ProjectPackage extends EPackage {
     int IRENDER_MANAGER = 8;
 
     /**
-     * The number of structural features of the the '<em>IRender Manager</em>' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     * @ordered
-     */
-    int IRENDER_MANAGER_FEATURE_COUNT = 0;
-
-    /**
      * The meta object id for the '{@link net.refractions.udig.project.render.IViewportModel <em>IViewport Model</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see net.refractions.udig.project.render.IViewportModel
@@ -219,15 +156,6 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     int IVIEWPORT_MODEL = 9;
-
-    /**
-     * The number of structural features of the the '<em>IViewport Model</em>' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     * @ordered
-     */
-    int IVIEWPORT_MODEL_FEATURE_COUNT = 0;
 
     /**
      * The meta object id for the '{@link Cloneable <em>Cloneable</em>}' class. <!--
@@ -247,6 +175,278 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     int CONTEXT_MODEL = 10;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.EditManagerImpl <em>Edit Manager</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.impl.EditManagerImpl
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEditManager()
+     * @generated
+     */
+    int EDIT_MANAGER = 11;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.LayerImpl <em>Layer</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.impl.LayerImpl
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getLayer()
+     * @generated
+     */
+    int LAYER = 12;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.ProjectElement <em>Element</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.ProjectElement
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getProjectElement()
+     * @generated
+     */
+    int PROJECT_ELEMENT = 15;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.MapImpl <em>Map</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.impl.MapImpl
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getMap()
+     * @generated
+     */
+    int MAP = 13;
+
+    /**
+     * Event for batched events.
+     * <p>
+     * <ul>
+     * <li>When a batch event occurs the Notification object will be implement the Iterable
+     * <Notification>interface.</li>
+     * <li>By definition of this event all Notification objects will have occurred effectively
+     * simultaneously.</li>
+     * <li>All the notifiers of the notification objects will be Layer objects.</li>
+     * <li>The Event object received will not be one of the objects in the iterations</li>
+     * </ul>
+     * </p>
+     */
+    //    int MAP__BATCH_EVENT = MAP_FEATURE_COUNT + 1;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.ProjectImpl <em>Project</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.impl.ProjectImpl
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getProject()
+     * @generated
+     */
+    int PROJECT = 14;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.ProjectRegistryImpl <em>Registry</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.impl.ProjectRegistryImpl
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getProjectRegistry()
+     * @generated
+     */
+    int PROJECT_REGISTRY = 16;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.IStyleBlackboard <em>IStyle Blackboard</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see net.refractions.udig.project.IStyleBlackboard
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIStyleBlackboard()
+     * @generated
+     */
+    int ISTYLE_BLACKBOARD = 26;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.StyleBlackboardImpl <em>Style Blackboard</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.impl.StyleBlackboardImpl
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getStyleBlackboard()
+     * @generated
+     */
+    int STYLE_BLACKBOARD = 17;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.StyleEntryImpl <em>Style Entry</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.impl.StyleEntryImpl
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getStyleEntry()
+     * @generated
+     */
+    int STYLE_ENTRY = 18;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.LayerFactoryImpl <em>Layer Factory</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.impl.LayerFactoryImpl
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getLayerFactory()
+     * @generated
+     */
+    int LAYER_FACTORY = 20;
+
+    /**
+     * The meta object id for the '{@link org.eclipse.core.runtime.IAdaptable <em>IAdaptable</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see org.eclipse.core.runtime.IAdaptable
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIAdaptable()
+     * @generated
+     */
+    int IADAPTABLE = 21;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.core.IBlockingAdaptable <em>IBlocking Adaptable</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see net.refractions.udig.core.IBlockingAdaptable
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIBlockingAdaptable()
+     * @generated
+     */
+    int IBLOCKING_ADAPTABLE = 22;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.BlackboardImpl <em>Blackboard</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.impl.BlackboardImpl
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getBlackboard()
+     * @generated
+     */
+    int BLACKBOARD = 23;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.BlackboardEntryImpl <em>Blackboard Entry</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.impl.BlackboardEntryImpl
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getBlackboardEntry()
+     * @generated
+     */
+    int BLACKBOARD_ENTRY = 24;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.catalog.IResolveChangeListener <em>IResolve Change Listener</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see net.refractions.udig.catalog.IResolveChangeListener
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIResolveChangeListener()
+     * @generated
+     */
+    int IRESOLVE_CHANGE_LISTENER = 25;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl <em>Interaction To EBoolean Object Map Entry</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getInteractionToEBooleanObjectMapEntry()
+     * @generated
+     */
+    int INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY = 27;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.IFolder <em>IFolder</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see net.refractions.udig.project.IFolder
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIFolder()
+     * @generated
+     */
+    int IFOLDER = 28;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.FolderImpl <em>Folder</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.impl.FolderImpl
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFolder()
+     * @generated
+     */
+    int FOLDER = 29;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.ILegendItem <em>ILegend Item</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see net.refractions.udig.project.ILegendItem
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getILegendItem()
+     * @generated
+     */
+    int ILEGEND_ITEM = 31;
+
+    /**
+     * The number of structural features of the '<em>ILegend Item</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ILEGEND_ITEM_FEATURE_COUNT = 0;
+
+    /**
+     * The number of structural features of the '<em>ILayer</em>' class.
+     * <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ILAYER_FEATURE_COUNT = ILEGEND_ITEM_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the the '<em>IEdit Manager</em>' class. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     * @ordered
+     */
+    int IEDIT_MANAGER_FEATURE_COUNT = 0;
+
+    /**
+     * The number of structural features of the the '<em>IProject</em>' class. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     * @ordered
+     */
+    int IPROJECT_FEATURE_COUNT = 0;
+
+    /**
+     * The number of structural features of the the '<em>IAbstract Context</em>' class. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     * @ordered
+     */
+    int IABSTRACT_CONTEXT_FEATURE_COUNT = 0;
+
+    /**
+     * The number of structural features of the the '<em>IBlackboard</em>' class. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     * @ordered
+     */
+    int IBLACKBOARD_FEATURE_COUNT = 0;
+
+    /**
+     * The number of structural features of the the '<em>IProject Element</em>' class. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     * @ordered
+     */
+    int IPROJECT_ELEMENT_FEATURE_COUNT = 0;
+
+    /**
+     * The number of structural features of the the '<em>IRender Manager</em>' class. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     * @ordered
+     */
+    int IRENDER_MANAGER_FEATURE_COUNT = 0;
+
+    /**
+     * The number of structural features of the the '<em>IViewport Model</em>' class. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     * @ordered
+     */
+    int IVIEWPORT_MODEL_FEATURE_COUNT = 0;
 
     /**
      * The feature id for the '<em><b>Layers</b></em>' containment reference list. <!--
@@ -274,15 +474,6 @@ public interface ProjectPackage extends EPackage {
      * @ordered
      */
     int CONTEXT_MODEL_FEATURE_COUNT = 2;
-
-    /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.EditManagerImpl <em>Edit Manager</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.EditManagerImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEditManager()
-     * @generated
-     */
-    int EDIT_MANAGER = 11;
 
     /**
      * The feature id for the '<em><b>Edit Feature</b></em>' attribute.
@@ -346,15 +537,6 @@ public interface ProjectPackage extends EPackage {
      * @ordered
      */
     int EDIT_MANAGER_FEATURE_COUNT = IEDIT_MANAGER_FEATURE_COUNT + 6;
-
-    /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.LayerImpl <em>Layer</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.LayerImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getLayer()
-     * @generated
-     */
-    int LAYER = 12;
 
     /**
      * The feature id for the '<em><b>Context Model</b></em>' container reference. <!--
@@ -537,22 +719,22 @@ public interface ProjectPackage extends EPackage {
     int LAYER__INTERACTION_MAP = ILAYER_FEATURE_COUNT + 19;
 
     /**
+     * The feature id for the '<em><b>Shown</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LAYER__SHOWN = ILAYER_FEATURE_COUNT + 20;
+
+    /**
      * The number of structural features of the '<em>Layer</em>' class.
      * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LAYER_FEATURE_COUNT = ILAYER_FEATURE_COUNT + 20;
-
-    /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.ProjectElement <em>Element</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.ProjectElement
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getProjectElement()
-     * @generated
-     */
-    int PROJECT_ELEMENT = 15;
+    int LAYER_FEATURE_COUNT = ILAYER_FEATURE_COUNT + 21;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -580,15 +762,6 @@ public interface ProjectPackage extends EPackage {
      * @ordered
      */
     int PROJECT_ELEMENT_FEATURE_COUNT = IPROJECT_ELEMENT_FEATURE_COUNT + 2;
-
-    /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.MapImpl <em>Map</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.MapImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getMap()
-     * @generated
-     */
-    int MAP = 13;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -714,30 +887,6 @@ public interface ProjectPackage extends EPackage {
     int MAP_FEATURE_COUNT = PROJECT_ELEMENT_FEATURE_COUNT + 11;
 
     /**
-     * Event for batched events.
-     * <p>
-     * <ul>
-     * <li>When a batch event occurs the Notification object will be implement the Iterable
-     * <Notification>interface.</li>
-     * <li>By definition of this event all Notification objects will have occurred effectively
-     * simultaneously.</li>
-     * <li>All the notifiers of the notification objects will be Layer objects.</li>
-     * <li>The Event object received will not be one of the objects in the iterations</li>
-     * </ul>
-     * </p>
-     */
-    int MAP__BATCH_EVENT = MAP_FEATURE_COUNT + 1;
-
-    /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.ProjectImpl <em>Project</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.ProjectImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getProject()
-     * @generated
-     */
-    int PROJECT = 14;
-
-    /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
@@ -763,15 +912,6 @@ public interface ProjectPackage extends EPackage {
      * @ordered
      */
     int PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 2;
-
-    /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.ProjectRegistryImpl <em>Registry</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.ProjectRegistryImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getProjectRegistry()
-     * @generated
-     */
-    int PROJECT_REGISTRY = 16;
 
     /**
      * The feature id for the '<em><b>Current Project</b></em>' reference.
@@ -801,16 +941,6 @@ public interface ProjectPackage extends EPackage {
     int PROJECT_REGISTRY_FEATURE_COUNT = 2;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.IStyleBlackboard <em>IStyle Blackboard</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.IStyleBlackboard
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIStyleBlackboard()
-     * @generated
-     */
-    int ISTYLE_BLACKBOARD = 26;
-
-    /**
      * The number of structural features of the '<em>IStyle Blackboard</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -818,15 +948,6 @@ public interface ProjectPackage extends EPackage {
      * @ordered
      */
     int ISTYLE_BLACKBOARD_FEATURE_COUNT = 0;
-
-    /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.StyleBlackboardImpl <em>Style Blackboard</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.StyleBlackboardImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getStyleBlackboard()
-     * @generated
-     */
-    int STYLE_BLACKBOARD = 17;
 
     /**
      * The feature id for the '<em><b>Content</b></em>' containment reference list. <!--
@@ -845,15 +966,6 @@ public interface ProjectPackage extends EPackage {
      * @ordered
      */
     int STYLE_BLACKBOARD_FEATURE_COUNT = ISTYLE_BLACKBOARD_FEATURE_COUNT + 1;
-
-    /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.StyleEntryImpl <em>Style Entry</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.StyleEntryImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getStyleEntry()
-     * @generated
-     */
-    int STYLE_ENTRY = 18;
 
     /**
      * The feature id for the '<em><b>ID</b></em>' attribute.
@@ -910,15 +1022,6 @@ public interface ProjectPackage extends EPackage {
     int CLONEABLE_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.LayerFactoryImpl <em>Layer Factory</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.LayerFactoryImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getLayerFactory()
-     * @generated
-     */
-    int LAYER_FACTORY = 20;
-
-    /**
      * The feature id for the '<em><b>Map</b></em>' container reference.
      * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
@@ -937,15 +1040,6 @@ public interface ProjectPackage extends EPackage {
     int LAYER_FACTORY_FEATURE_COUNT = 1;
 
     /**
-     * The meta object id for the '{@link org.eclipse.core.runtime.IAdaptable <em>IAdaptable</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see org.eclipse.core.runtime.IAdaptable
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIAdaptable()
-     * @generated
-     */
-    int IADAPTABLE = 21;
-
-    /**
      * The number of structural features of the the '<em>IAdaptable</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -955,15 +1049,6 @@ public interface ProjectPackage extends EPackage {
     int IADAPTABLE_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.core.IBlockingAdaptable <em>IBlocking Adaptable</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.core.IBlockingAdaptable
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIBlockingAdaptable()
-     * @generated
-     */
-    int IBLOCKING_ADAPTABLE = 22;
-
-    /**
      * The number of structural features of the the '<em>IBlocking Adaptable</em>' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -971,15 +1056,6 @@ public interface ProjectPackage extends EPackage {
      * @ordered
      */
     int IBLOCKING_ADAPTABLE_FEATURE_COUNT = 0;
-
-    /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.BlackboardImpl <em>Blackboard</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.BlackboardImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getBlackboard()
-     * @generated
-     */
-    int BLACKBOARD = 23;
 
     /**
      * The feature id for the '<em><b>Entries</b></em>' containment reference list. <!--
@@ -998,15 +1074,6 @@ public interface ProjectPackage extends EPackage {
      * @ordered
      */
     int BLACKBOARD_FEATURE_COUNT = IBLACKBOARD_FEATURE_COUNT + 1;
-
-    /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.BlackboardEntryImpl <em>Blackboard Entry</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.BlackboardEntryImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getBlackboardEntry()
-     * @generated
-     */
-    int BLACKBOARD_ENTRY = 24;
 
     /**
      * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -1054,31 +1121,12 @@ public interface ProjectPackage extends EPackage {
     int BLACKBOARD_ENTRY_FEATURE_COUNT = 4;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.catalog.IResolveChangeListener <em>IResolve Change Listener</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.catalog.IResolveChangeListener
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIResolveChangeListener()
-     * @generated
-     */
-    int IRESOLVE_CHANGE_LISTENER = 25;
-
-    /**
      * The number of structural features of the '<em>IResolve Change Listener</em>' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      * @ordered
      */
     int IRESOLVE_CHANGE_LISTENER_FEATURE_COUNT = 0;
-
-    /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl <em>Interaction To EBoolean Object Map Entry</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getInteractionToEBooleanObjectMapEntry()
-     * @generated
-     */
-    int INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY = 27;
 
     /**
      * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -1106,45 +1154,6 @@ public interface ProjectPackage extends EPackage {
      * @ordered
      */
     int INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY_FEATURE_COUNT = 2;
-
-    /**
-     * The meta object id for the '{@link net.refractions.udig.project.IFolder <em>IFolder</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.IFolder
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIFolder()
-     * @generated
-     */
-    int IFOLDER = 28;
-
-    /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.FolderImpl <em>Folder</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.FolderImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFolder()
-     * @generated
-     */
-    int FOLDER = 29;
-
-    /**
-     * The meta object id for the '{@link net.refractions.udig.project.ILegendItem <em>ILegend Item</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.ILegendItem
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getILegendItem()
-     * @generated
-     */
-    int ILEGEND_ITEM = 31;
-
-    /**
-     * The number of structural features of the '<em>ILegend Item</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ILEGEND_ITEM_FEATURE_COUNT = 0;
 
     /**
      * The number of structural features of the '<em>IFolder</em>' class.
@@ -1996,6 +2005,17 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     EReference getLayer_InteractionMap();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#isShown <em>Shown</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Shown</em>'.
+     * @see net.refractions.udig.project.internal.Layer#isShown()
+     * @see #getLayer()
+     * @generated
+     */
+    EAttribute getLayer_Shown();
 
     /**
      * Returns the meta object for class '{@link net.refractions.udig.project.internal.Map <em>Map</em>}'.
@@ -3277,6 +3297,14 @@ public interface ProjectPackage extends EPackage {
          * @generated
          */
         EReference LAYER__INTERACTION_MAP = eINSTANCE.getLayer_InteractionMap();
+
+        /**
+         * The meta object literal for the '<em><b>Shown</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute LAYER__SHOWN = eINSTANCE.getLayer_Shown();
 
         /**
          * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.MapImpl <em>Map</em>}' class.

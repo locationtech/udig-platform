@@ -86,6 +86,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxScaleDenominator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="interactionMap" upperBound="-1"
         eType="#//InteractionToEBooleanObjectMapEntry" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shown" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Map" eSuperTypes="#//ProjectElement #//IMap">
     <eOperations name="getBounds" eType="#//ReferencedEnvelope">

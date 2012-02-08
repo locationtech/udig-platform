@@ -114,6 +114,7 @@ public class ProjectSwitch<T> extends Switch<T> {
             if (result == null) result = caseIAdaptable(layer);
             if (result == null) result = caseIBlockingAdaptable(layer);
             if (result == null) result = caseIResolveChangeListener(layer);
+            if (result == null) result = caseILegendItem(layer);
             if (result == null) result = defaultCase(theEObject);
             return result;
         }

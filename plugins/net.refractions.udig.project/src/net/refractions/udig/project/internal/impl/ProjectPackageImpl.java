@@ -902,6 +902,15 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getLayer_Shown() {
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(20);
+    }
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -1714,6 +1723,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         createEAttribute(layerEClass, LAYER__MIN_SCALE_DENOMINATOR);
         createEAttribute(layerEClass, LAYER__MAX_SCALE_DENOMINATOR);
         createEReference(layerEClass, LAYER__INTERACTION_MAP);
+        createEAttribute(layerEClass, LAYER__SHOWN);
 
         mapEClass = createEClass(MAP);
         createEReference(mapEClass, MAP__CONTEXT_MODEL);
@@ -1851,16 +1861,17 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         setNsURI(eNS_URI);
 
         // Obtain other dependent packages
-        RenderPackage theRenderPackage = (RenderPackage) EPackage.Registry.INSTANCE
-                .getEPackage(RenderPackage.eNS_URI);
         EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
                 .getEPackage(EcorePackage.eNS_URI);
+        RenderPackage theRenderPackage = (RenderPackage) EPackage.Registry.INSTANCE
+                .getEPackage(RenderPackage.eNS_URI);
 
         // Create type parameters
 
         // Set bounds for type parameters
 
         // Add supertypes to classes
+        iLayerEClass.getESuperTypes().add(this.getILegendItem());
         editManagerEClass.getESuperTypes().add(this.getIEditManager());
         layerEClass.getESuperTypes().add(this.getILayer());
         layerEClass.getESuperTypes().add(this.getIAdaptable());
@@ -2054,6 +2065,10 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 this.getInteractionToEBooleanObjectMapEntry(),
                 null,
                 "interactionMap", null, 0, -1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getLayer_Shown(),
+                theEcorePackage.getEBoolean(),
+                "shown", null, 0, 1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         op = addEOperation(layerEClass, this.getQuery(), "getQuery", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEBoolean(), "selection", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$

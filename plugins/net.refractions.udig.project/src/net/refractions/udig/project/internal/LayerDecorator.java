@@ -886,4 +886,16 @@ public class LayerDecorator implements Layer, InternalEObject {
         return layer.getInteractionMap();
     }
 
+    @Override
+    public boolean isShown() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void setShown( boolean value ) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }
