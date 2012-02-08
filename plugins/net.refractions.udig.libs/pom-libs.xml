@@ -49,9 +49,6 @@
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
 		</repository>
 
 		<!-- The OpenGeo company offers a SNAPSHOT repository populated by GeoTools
@@ -90,9 +87,6 @@
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
 		</repository>
 
 		<!-- jgrasstools repo -->
