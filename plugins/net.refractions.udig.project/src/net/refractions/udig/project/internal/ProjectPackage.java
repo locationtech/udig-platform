@@ -878,13 +878,22 @@ public interface ProjectPackage extends EPackage {
     int MAP__BLACK_BOARD_INTERNAL = PROJECT_ELEMENT_FEATURE_COUNT + 10;
 
     /**
+     * The feature id for the '<em><b>Legend</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAP__LEGEND = PROJECT_ELEMENT_FEATURE_COUNT + 11;
+
+    /**
      * The number of structural features of the '<em>Map</em>' class.
      * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MAP_FEATURE_COUNT = PROJECT_ELEMENT_FEATURE_COUNT + 11;
+    int MAP_FEATURE_COUNT = PROJECT_ELEMENT_FEATURE_COUNT + 12;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2135,6 +2144,17 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     EReference getMap_BlackBoardInternal();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link net.refractions.udig.project.internal.Map#getLegend <em>Legend</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Legend</em>'.
+     * @see net.refractions.udig.project.internal.Map#getLegend()
+     * @see #getMap()
+     * @generated
+     */
+    EReference getMap_Legend();
 
     /**
      * Returns the meta object for class '{@link net.refractions.udig.project.internal.Project <em>Project</em>}'.
@@ -3403,6 +3423,14 @@ public interface ProjectPackage extends EPackage {
          * @generated
          */
         EReference MAP__BLACK_BOARD_INTERNAL = eINSTANCE.getMap_BlackBoardInternal();
+
+        /**
+         * The meta object literal for the '<em><b>Legend</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MAP__LEGEND = eINSTANCE.getMap_Legend();
 
         /**
          * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.ProjectImpl <em>Project</em>}' class.

@@ -119,6 +119,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="colourScheme" eType="#//ColourScheme"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="blackBoardInternal" eType="#//Blackboard"
         containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="legend" upperBound="-1"
+        eType="#//ILegendItem" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//IProject">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

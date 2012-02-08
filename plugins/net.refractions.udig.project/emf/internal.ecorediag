@@ -1339,4 +1339,17 @@
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AMowYFIfEeGr28S6i8c_gg" id="(0.5,0.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AMowYVIfEeGr28S6i8c_gg" id="(0.5,1.0)"/>
   </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_YfL_MFIoEeGr28S6i8c_gg" type="3002" source="_5zqYsDgOEeGFxNy0Cm4gaw" target="_mOPjcFIYEeGr28S6i8c_gg">
+    <children xmi:type="notation:Node" xmi:id="_YfL_NFIoEeGr28S6i8c_gg" type="4011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_YfL_NVIoEeGr28S6i8c_gg" x="-10" y="-10"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_YfL_NlIoEeGr28S6i8c_gg" type="4012">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_YfL_N1IoEeGr28S6i8c_gg" x="10" y="10"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_YfL_MVIoEeGr28S6i8c_gg" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_YfL_MlIoEeGr28S6i8c_gg" fontColor="4210752" fontHeight="10"/>
+    <element xmi:type="ecore:EReference" href="internal.ecore#//Map/legend"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_YfL_M1IoEeGr28S6i8c_gg" points="[21, -64, -1371, 470]$[177, -534, -1215, 0]$[1342, -534, -50, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_YfL_OFIoEeGr28S6i8c_gg" id="(0.843558282208589,0.325)"/>
+  </edges>
 </notation:Diagram>

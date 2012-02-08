@@ -1007,6 +1007,15 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getMap_Legend() {
+        return (EReference) mapEClass.getEStructuralFeatures().get(11);
+    }
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -1737,6 +1746,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         createEReference(mapEClass, MAP__RENDER_MANAGER_INTERNAL);
         createEAttribute(mapEClass, MAP__COLOUR_SCHEME);
         createEReference(mapEClass, MAP__BLACK_BOARD_INTERNAL);
+        createEReference(mapEClass, MAP__LEGEND);
 
         projectEClass = createEClass(PROJECT);
         createEAttribute(projectEClass, PROJECT__NAME);
@@ -2129,6 +2139,11 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 this.getBlackboard(),
                 null,
                 "blackBoardInternal", null, 0, 1, Map.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEReference(
+                getMap_Legend(),
+                this.getILegendItem(),
+                null,
+                "legend", null, 0, -1, Map.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         op = addEOperation(mapEClass, this.getReferencedEnvelope(),
                 "getBounds", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
