@@ -210,6 +210,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="#//Interaction"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBooleanObject"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IFolder" instanceClassName="net.refractions.udig.project.IFolder"
+      abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Coordinate" instanceClassName="com.vividsolutions.jts.geom.Coordinate"/>
   <eClassifiers xsi:type="ecore:EDataType" name="MapDisplay" instanceClassName="net.refractions.udig.project.render.displayAdapter.IMapDisplay"/>
   <eClassifiers xsi:type="ecore:EDataType" name="List" instanceClassName="java.util.List"/>
@@ -243,4 +245,15 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Color" instanceClassName="java.awt.Color"/>
   <eClassifiers xsi:type="ecore:EDataType" name="BrewerPalette" instanceClassName="org.geotools.brewer.color.BrewerPalette"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Interaction" instanceClassName="net.refractions.udig.project.Interaction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Folder" eSuperTypes="#//IFolder">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
+        eType="#//ILegendItem" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LegendItem" eSuperTypes="#//ILegendItem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="glyph" eType="#//ImageDescriptor"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shown" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ILegendItem" instanceClassName="net.refractions.udig.project.ILegendItem"
+      abstract="true" interface="true"/>
 </ecore:EPackage>

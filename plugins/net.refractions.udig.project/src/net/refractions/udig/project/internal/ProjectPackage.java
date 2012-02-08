@@ -1108,6 +1108,118 @@ public interface ProjectPackage extends EPackage {
     int INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY_FEATURE_COUNT = 2;
 
     /**
+     * The meta object id for the '{@link net.refractions.udig.project.IFolder <em>IFolder</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see net.refractions.udig.project.IFolder
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIFolder()
+     * @generated
+     */
+    int IFOLDER = 28;
+
+    /**
+     * The number of structural features of the '<em>IFolder</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IFOLDER_FEATURE_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.FolderImpl <em>Folder</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.impl.FolderImpl
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFolder()
+     * @generated
+     */
+    int FOLDER = 29;
+
+    /**
+     * The feature id for the '<em><b>Items</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FOLDER__ITEMS = IFOLDER_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Folder</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FOLDER_FEATURE_COUNT = IFOLDER_FEATURE_COUNT + 1;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.ILegendItem <em>ILegend Item</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see net.refractions.udig.project.ILegendItem
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getILegendItem()
+     * @generated
+     */
+    int ILEGEND_ITEM = 31;
+
+    /**
+     * The number of structural features of the '<em>ILegend Item</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ILEGEND_ITEM_FEATURE_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.LegendItemImpl <em>Legend Item</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see net.refractions.udig.project.internal.impl.LegendItemImpl
+     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getLegendItem()
+     * @generated
+     */
+    int LEGEND_ITEM = 30;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LEGEND_ITEM__NAME = ILEGEND_ITEM_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Glyph</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LEGEND_ITEM__GLYPH = ILEGEND_ITEM_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Shown</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LEGEND_ITEM__SHOWN = ILEGEND_ITEM_FEATURE_COUNT + 2;
+
+    /**
+     * The number of structural features of the '<em>Legend Item</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LEGEND_ITEM_FEATURE_COUNT = ILEGEND_ITEM_FEATURE_COUNT + 3;
+
+    /**
      * The meta object id for the '<em>Coordinate</em>' data type.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
@@ -1115,7 +1227,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCoordinate()
      * @generated
      */
-    int COORDINATE = 28;
+    int COORDINATE = 32;
 
     /**
      * The meta object id for the '<em>Map Display</em>' data type.
@@ -1125,7 +1237,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getMapDisplay()
      * @generated
      */
-    int MAP_DISPLAY = 29;
+    int MAP_DISPLAY = 33;
 
     /**
      * The meta object id for the '<em>List</em>' data type.
@@ -1135,7 +1247,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getList()
      * @generated
      */
-    int LIST = 30;
+    int LIST = 34;
 
     /**
      * The meta object id for the '<em>Affine Transform</em>' data type.
@@ -1145,7 +1257,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getAffineTransform()
      * @generated
      */
-    int AFFINE_TRANSFORM = 31;
+    int AFFINE_TRANSFORM = 35;
 
     /**
      * The meta object id for the '<em>Nav Command Stack</em>' data type.
@@ -1155,7 +1267,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getNavCommandStack()
      * @generated
      */
-    int NAV_COMMAND_STACK = 32;
+    int NAV_COMMAND_STACK = 36;
 
     /**
      * The meta object id for the '<em>IGeo Resource</em>' data type.
@@ -1165,7 +1277,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIGeoResource()
      * @generated
      */
-    int IGEO_RESOURCE = 33;
+    int IGEO_RESOURCE = 37;
 
     /**
      * The meta object id for the '<em>Filter</em>' data type.
@@ -1175,7 +1287,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFilter()
      * @generated
      */
-    int FILTER = 34;
+    int FILTER = 38;
 
     /**
      * The meta object id for the '<em>Coordinate Reference System</em>' data type. <!--
@@ -1185,7 +1297,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCoordinateReferenceSystem()
      * @generated
      */
-    int COORDINATE_REFERENCE_SYSTEM = 35;
+    int COORDINATE_REFERENCE_SYSTEM = 39;
 
     /**
      * The meta object id for the '<em>Command Stack</em>' data type.
@@ -1195,7 +1307,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCommandStack()
      * @generated
      */
-    int COMMAND_STACK = 36;
+    int COMMAND_STACK = 40;
 
     /**
      * The meta object id for the '<em>Point</em>' data type.
@@ -1205,7 +1317,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getPoint()
      * @generated
      */
-    int POINT = 37;
+    int POINT = 41;
 
     /**
      * The meta object id for the '<em>Adapter</em>' data type.
@@ -1215,7 +1327,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getAdapter()
      * @generated
      */
-    int ADAPTER = 38;
+    int ADAPTER = 42;
 
     /**
      * The meta object id for the '<em>IProgress Monitor</em>' data type.
@@ -1225,7 +1337,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIProgressMonitor()
      * @generated
      */
-    int IPROGRESS_MONITOR = 39;
+    int IPROGRESS_MONITOR = 43;
 
     /**
      * The meta object id for the '<em>Query</em>' data type.
@@ -1235,7 +1347,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getQuery()
      * @generated
      */
-    int QUERY = 40;
+    int QUERY = 44;
 
     /**
      * The meta object id for the '<em>URL</em>' data type.
@@ -1245,7 +1357,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getURL()
      * @generated
      */
-    int URL = 41;
+    int URL = 45;
 
     /**
      * The meta object id for the '<em>Image Descriptor</em>' data type.
@@ -1255,7 +1367,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getImageDescriptor()
      * @generated
      */
-    int IMAGE_DESCRIPTOR = 42;
+    int IMAGE_DESCRIPTOR = 46;
 
     /**
      * The meta object id for the '<em>Edit Command</em>' data type.
@@ -1265,7 +1377,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEditCommand()
      * @generated
      */
-    int EDIT_COMMAND = 43;
+    int EDIT_COMMAND = 47;
 
     /**
      * The meta object id for the '<em>Nav Command</em>' data type.
@@ -1275,7 +1387,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getNavCommand()
      * @generated
      */
-    int NAV_COMMAND = 44;
+    int NAV_COMMAND = 48;
 
     /**
      * The meta object id for the '<em>Envelope</em>' data type.
@@ -1285,7 +1397,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEnvelope()
      * @generated
      */
-    int ENVELOPE = 45;
+    int ENVELOPE = 49;
 
     /**
      * The meta object id for the '<em>Edit Manager Control Command</em>' data type. <!--
@@ -1294,7 +1406,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEditManagerControlCommand()
      * @generated
      */
-    int EDIT_MANAGER_CONTROL_COMMAND = 46;
+    int EDIT_MANAGER_CONTROL_COMMAND = 50;
 
     /**
      * The meta object id for the '<em>Command</em>' data type.
@@ -1304,7 +1416,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCommand()
      * @generated
      */
-    int COMMAND = 47;
+    int COMMAND = 51;
 
     /**
      * The meta object id for the '<em>URI</em>' data type.
@@ -1314,7 +1426,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getURI()
      * @generated
      */
-    int URI = 48;
+    int URI = 52;
 
     /**
      * The meta object id for the '<em>Catalog Ref</em>' data type.
@@ -1324,7 +1436,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCatalogRef()
      * @generated
      */
-    int CATALOG_REF = 49;
+    int CATALOG_REF = 53;
 
     /**
      * The meta object id for the '<em>Colour Palette</em>' data type.
@@ -1334,7 +1446,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getColourPalette()
      * @generated
      */
-    int COLOUR_PALETTE = 50;
+    int COLOUR_PALETTE = 54;
 
     /**
      * The meta object id for the '<em>Colour Scheme</em>' data type.
@@ -1344,7 +1456,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getColourScheme()
      * @generated
      */
-    int COLOUR_SCHEME = 51;
+    int COLOUR_SCHEME = 55;
 
     /**
      * The meta object id for the '<em>Mutable Pico Container</em>' data type. <!--
@@ -1354,7 +1466,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getMutablePicoContainer()
      * @generated
      */
-    int MUTABLE_PICO_CONTAINER = 52;
+    int MUTABLE_PICO_CONTAINER = 56;
 
     /**
      * The meta object id for the '<em>Referenced Envelope</em>' data type.
@@ -1364,7 +1476,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getReferencedEnvelope()
      * @generated
      */
-    int REFERENCED_ENVELOPE = 53;
+    int REFERENCED_ENVELOPE = 57;
 
     /**
      * The meta object id for the '<em>Feature Event</em>' data type.
@@ -1374,7 +1486,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFeatureEvent()
      * @generated
      */
-    int FEATURE_EVENT = 54;
+    int FEATURE_EVENT = 58;
 
     /**
      * The meta object id for the '<em>Simple Feature</em>' data type.
@@ -1384,7 +1496,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getSimpleFeature()
      * @generated
      */
-    int SIMPLE_FEATURE = 55;
+    int SIMPLE_FEATURE = 59;
 
     /**
      * The meta object id for the '<em>Illegal Argument Exception</em>' data type.
@@ -1394,7 +1506,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIllegalArgumentException()
      * @generated
      */
-    int ILLEGAL_ARGUMENT_EXCEPTION = 56;
+    int ILLEGAL_ARGUMENT_EXCEPTION = 60;
 
     /**
      * The meta object id for the '<em>IO Exception</em>' data type.
@@ -1404,7 +1516,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIOException()
      * @generated
      */
-    int IO_EXCEPTION = 57;
+    int IO_EXCEPTION = 61;
 
     /**
      * The meta object id for the '<em>Color</em>' data type.
@@ -1414,7 +1526,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getColor()
      * @generated
      */
-    int COLOR = 58;
+    int COLOR = 62;
 
     /**
      * The meta object id for the '<em>Brewer Palette</em>' data type.
@@ -1424,7 +1536,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getBrewerPalette()
      * @generated
      */
-    int BREWER_PALETTE = 59;
+    int BREWER_PALETTE = 63;
 
     /**
      * The meta object id for the '<em>Interaction</em>' data type.
@@ -1434,7 +1546,7 @@ public interface ProjectPackage extends EPackage {
      * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getInteraction()
      * @generated
      */
-    int INTERACTION = 60;
+    int INTERACTION = 64;
 
     /**
      * Returns the meta object for class '{@link Comparable <em>Comparable</em>}'. <!--
@@ -2304,6 +2416,92 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     EAttribute getInteractionToEBooleanObjectMapEntry_Value();
+
+    /**
+     * Returns the meta object for class '{@link net.refractions.udig.project.IFolder <em>IFolder</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>IFolder</em>'.
+     * @see net.refractions.udig.project.IFolder
+     * @model instanceClass="net.refractions.udig.project.IFolder"
+     * @generated
+     */
+    EClass getIFolder();
+
+    /**
+     * Returns the meta object for class '{@link net.refractions.udig.project.internal.Folder <em>Folder</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Folder</em>'.
+     * @see net.refractions.udig.project.internal.Folder
+     * @generated
+     */
+    EClass getFolder();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link net.refractions.udig.project.internal.Folder#getItems <em>Items</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Items</em>'.
+     * @see net.refractions.udig.project.internal.Folder#getItems()
+     * @see #getFolder()
+     * @generated
+     */
+    EReference getFolder_Items();
+
+    /**
+     * Returns the meta object for class '{@link net.refractions.udig.project.internal.LegendItem <em>Legend Item</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Legend Item</em>'.
+     * @see net.refractions.udig.project.internal.LegendItem
+     * @generated
+     */
+    EClass getLegendItem();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.LegendItem#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see net.refractions.udig.project.internal.LegendItem#getName()
+     * @see #getLegendItem()
+     * @generated
+     */
+    EAttribute getLegendItem_Name();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.LegendItem#getGlyph <em>Glyph</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Glyph</em>'.
+     * @see net.refractions.udig.project.internal.LegendItem#getGlyph()
+     * @see #getLegendItem()
+     * @generated
+     */
+    EAttribute getLegendItem_Glyph();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.LegendItem#isShown <em>Shown</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Shown</em>'.
+     * @see net.refractions.udig.project.internal.LegendItem#isShown()
+     * @see #getLegendItem()
+     * @generated
+     */
+    EAttribute getLegendItem_Shown();
+
+    /**
+     * Returns the meta object for class '{@link net.refractions.udig.project.ILegendItem <em>ILegend Item</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>ILegend Item</em>'.
+     * @see net.refractions.udig.project.ILegendItem
+     * @model instanceClass="net.refractions.udig.project.ILegendItem"
+     * @generated
+     */
+    EClass getILegendItem();
 
     /**
      * Returns the meta object for data type '{@link com.vividsolutions.jts.geom.Coordinate <em>Coordinate</em>}'.
@@ -3414,6 +3612,78 @@ public interface ProjectPackage extends EPackage {
          */
         EAttribute INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__VALUE = eINSTANCE
                 .getInteractionToEBooleanObjectMapEntry_Value();
+
+        /**
+         * The meta object literal for the '{@link net.refractions.udig.project.IFolder <em>IFolder</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see net.refractions.udig.project.IFolder
+         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIFolder()
+         * @generated
+         */
+        EClass IFOLDER = eINSTANCE.getIFolder();
+
+        /**
+         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.FolderImpl <em>Folder</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see net.refractions.udig.project.internal.impl.FolderImpl
+         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFolder()
+         * @generated
+         */
+        EClass FOLDER = eINSTANCE.getFolder();
+
+        /**
+         * The meta object literal for the '<em><b>Items</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference FOLDER__ITEMS = eINSTANCE.getFolder_Items();
+
+        /**
+         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.LegendItemImpl <em>Legend Item</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see net.refractions.udig.project.internal.impl.LegendItemImpl
+         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getLegendItem()
+         * @generated
+         */
+        EClass LEGEND_ITEM = eINSTANCE.getLegendItem();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute LEGEND_ITEM__NAME = eINSTANCE.getLegendItem_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Glyph</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute LEGEND_ITEM__GLYPH = eINSTANCE.getLegendItem_Glyph();
+
+        /**
+         * The meta object literal for the '<em><b>Shown</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute LEGEND_ITEM__SHOWN = eINSTANCE.getLegendItem_Shown();
+
+        /**
+         * The meta object literal for the '{@link net.refractions.udig.project.ILegendItem <em>ILegend Item</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see net.refractions.udig.project.ILegendItem
+         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getILegendItem()
+         * @generated
+         */
+        EClass ILEGEND_ITEM = eINSTANCE.getILegendItem();
 
         /**
          * The meta object literal for the '<em>Coordinate</em>' data type.

@@ -1,5 +1,5 @@
 /*
- * uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004,
+ * uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2012,
  * Refractions Research Inc. This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by the Free Software
  * Foundation; version 2.1 of the License. This library is distributed in the hope that it will be
@@ -26,7 +26,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * displayed in the legend as "Expected Population Densisity" (given a few assumptions about time
  * of day and the location of commuters).
  * 
- * @author pfeiffp
+ * @author paul.pfeiffer
  *
  */
 public interface ILegendItem {
@@ -60,5 +60,5 @@ public interface ILegendItem {
      * 
      * @return true if LegendItem is shown in legend
      */
-    // boolean isShown();
+    //public boolean isShown();
 }

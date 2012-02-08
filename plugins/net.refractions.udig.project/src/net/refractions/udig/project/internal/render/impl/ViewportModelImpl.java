@@ -775,17 +775,17 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                         hasVisibleLayer = true;
                         // consider zooming in (or zooming out) to a scale the layer is visible
                         ReferencedEnvelope fitted = ScaleUtils.fitToMinAndMax(layerBounds, layer);
-                        if( fitted.getCoordinateReferenceSystem() == bounds2.getCoordinateReferenceSystem()){
+                        if (fitted.getCoordinateReferenceSystem() == bounds2
+                                .getCoordinateReferenceSystem()) {
                             bounds2.expandToInclude(fitted);
-                        }
-                        else if ( bounds2.getCoordinateReferenceSystem() == layerBounds.getCoordinateReferenceSystem() ){
+                        } else if (bounds2.getCoordinateReferenceSystem() == layerBounds
+                                .getCoordinateReferenceSystem()) {
                             // We have a small problem here? Should do the fitting
                             // before transform to viewport CRS
-                            
+
                             // use layerBounds which should match
-                            bounds2.expandToInclude( layerBounds );
-                        }
-                        else {
+                            bounds2.expandToInclude(layerBounds);
+                        } else {
                             // ignore as it probably does not have a CRS
                         }
                     }

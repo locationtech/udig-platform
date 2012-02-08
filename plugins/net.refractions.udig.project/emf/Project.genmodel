@@ -200,6 +200,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//InteractionToEBooleanObjectMapEntry/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//InteractionToEBooleanObjectMapEntry/value"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="internal.ecore#//IFolder"/>
   </genPackages>
   <genPackages prefix="Render" basePackage="net.refractions.udig.project.internal"
       ecorePackage="render.ecore#/">
