@@ -21,6 +21,7 @@ import net.refractions.udig.project.IFolder;
 
 import net.refractions.udig.project.ILegendItem;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.resource.ImageDescriptor;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,6 +32,9 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link net.refractions.udig.project.internal.Folder#getItems <em>Items</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.Folder#getName <em>Name</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.Folder#getGlyph <em>Glyph</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.Folder#isShown <em>Shown</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,4 +59,82 @@ public interface Folder extends EObject, IFolder {
      * @generated
      */
     List<ILegendItem> getItems();
+
+    /**
+     * Returns the value of the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Name</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Name</em>' attribute.
+     * @see #setName(String)
+     * @see net.refractions.udig.project.internal.ProjectPackage#getFolder_Name()
+     * @model
+     * @generated
+     */
+    String getName();
+
+    /**
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Folder#getName <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Name</em>' attribute.
+     * @see #getName()
+     * @generated
+     */
+    void setName( String value );
+
+    /**
+     * Returns the value of the '<em><b>Glyph</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Glyph</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Glyph</em>' attribute.
+     * @see #setGlyph(ImageDescriptor)
+     * @see net.refractions.udig.project.internal.ProjectPackage#getFolder_Glyph()
+     * @model dataType="net.refractions.udig.project.internal.ImageDescriptor"
+     * @generated
+     */
+    ImageDescriptor getGlyph();
+
+    /**
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Folder#getGlyph <em>Glyph</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Glyph</em>' attribute.
+     * @see #getGlyph()
+     * @generated
+     */
+    void setGlyph( ImageDescriptor value );
+
+    /**
+     * Returns the value of the '<em><b>Shown</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Shown</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Shown</em>' attribute.
+     * @see #setShown(boolean)
+     * @see net.refractions.udig.project.internal.ProjectPackage#getFolder_Shown()
+     * @model
+     * @generated
+     */
+    boolean isShown();
+
+    /**
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Folder#isShown <em>Shown</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Shown</em>' attribute.
+     * @see #isShown()
+     * @generated
+     */
+    void setShown( boolean value );
 } // Folder

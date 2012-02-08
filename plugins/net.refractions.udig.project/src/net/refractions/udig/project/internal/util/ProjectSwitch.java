@@ -192,6 +192,7 @@ public class ProjectSwitch<T> extends Switch<T> {
             Folder folder = (Folder) theEObject;
             T result = caseFolder(folder);
             if (result == null) result = caseIFolder(folder);
+            if (result == null) result = caseILegendItem(folder);
             if (result == null) result = defaultCase(theEObject);
             return result;
         }

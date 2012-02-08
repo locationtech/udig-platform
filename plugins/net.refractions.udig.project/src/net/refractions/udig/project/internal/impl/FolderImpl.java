@@ -23,14 +23,17 @@ import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.LegendItem;
 import net.refractions.udig.project.internal.ProjectPackage;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.jface.resource.ImageDescriptor;
 
 /**
  * <!-- begin-user-doc -->
@@ -40,6 +43,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getItems <em>Items</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getName <em>Name</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getGlyph <em>Glyph</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#isShown <em>Shown</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,6 +61,61 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * @ordered
      */
     protected EList<ILegendItem> items;
+
+    /**
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected static final String NAME_EDEFAULT = null;
+    /**
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected String name = NAME_EDEFAULT;
+    /**
+     * The default value of the '{@link #getGlyph() <em>Glyph</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getGlyph()
+     * @generated
+     * @ordered
+     */
+    protected static final ImageDescriptor GLYPH_EDEFAULT = null;
+    /**
+     * The cached value of the '{@link #getGlyph() <em>Glyph</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getGlyph()
+     * @generated
+     * @ordered
+     */
+    protected ImageDescriptor glyph = GLYPH_EDEFAULT;
+    /**
+     * The default value of the '{@link #isShown() <em>Shown</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isShown()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean SHOWN_EDEFAULT = false;
+    /**
+     * The cached value of the '{@link #isShown() <em>Shown</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isShown()
+     * @generated
+     * @ordered
+     */
+    protected boolean shown = SHOWN_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -93,6 +154,72 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setName( String newName ) {
+        String oldName = name;
+        name = newName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.FOLDER__NAME,
+                    oldName, name));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ImageDescriptor getGlyph() {
+        return glyph;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setGlyph( ImageDescriptor newGlyph ) {
+        ImageDescriptor oldGlyph = glyph;
+        glyph = newGlyph;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.FOLDER__GLYPH,
+                    oldGlyph, glyph));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isShown() {
+        return shown;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setShown( boolean newShown ) {
+        boolean oldShown = shown;
+        shown = newShown;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.FOLDER__SHOWN,
+                    oldShown, shown));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
             NotificationChain msgs ) {
@@ -113,6 +240,12 @@ public class FolderImpl extends EObjectImpl implements Folder {
         switch( featureID ) {
         case ProjectPackage.FOLDER__ITEMS:
             return getItems();
+        case ProjectPackage.FOLDER__NAME:
+            return getName();
+        case ProjectPackage.FOLDER__GLYPH:
+            return getGlyph();
+        case ProjectPackage.FOLDER__SHOWN:
+            return isShown();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -130,6 +263,15 @@ public class FolderImpl extends EObjectImpl implements Folder {
             getItems().clear();
             getItems().addAll((Collection< ? extends ILegendItem>) newValue);
             return;
+        case ProjectPackage.FOLDER__NAME:
+            setName((String) newValue);
+            return;
+        case ProjectPackage.FOLDER__GLYPH:
+            setGlyph((ImageDescriptor) newValue);
+            return;
+        case ProjectPackage.FOLDER__SHOWN:
+            setShown((Boolean) newValue);
+            return;
         }
         super.eSet(featureID, newValue);
     }
@@ -145,6 +287,15 @@ public class FolderImpl extends EObjectImpl implements Folder {
         case ProjectPackage.FOLDER__ITEMS:
             getItems().clear();
             return;
+        case ProjectPackage.FOLDER__NAME:
+            setName(NAME_EDEFAULT);
+            return;
+        case ProjectPackage.FOLDER__GLYPH:
+            setGlyph(GLYPH_EDEFAULT);
+            return;
+        case ProjectPackage.FOLDER__SHOWN:
+            setShown(SHOWN_EDEFAULT);
+            return;
         }
         super.eUnset(featureID);
     }
@@ -159,8 +310,34 @@ public class FolderImpl extends EObjectImpl implements Folder {
         switch( featureID ) {
         case ProjectPackage.FOLDER__ITEMS:
             return items != null && !items.isEmpty();
+        case ProjectPackage.FOLDER__NAME:
+            return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+        case ProjectPackage.FOLDER__GLYPH:
+            return GLYPH_EDEFAULT == null ? glyph != null : !GLYPH_EDEFAULT.equals(glyph);
+        case ProjectPackage.FOLDER__SHOWN:
+            return shown != SHOWN_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (name: "); //$NON-NLS-1$
+        result.append(name);
+        result.append(", glyph: "); //$NON-NLS-1$
+        result.append(glyph);
+        result.append(", shown: "); //$NON-NLS-1$
+        result.append(shown);
+        result.append(')');
+        return result.toString();
     }
 
 } //FolderImpl

@@ -1118,15 +1118,6 @@ public interface ProjectPackage extends EPackage {
     int IFOLDER = 28;
 
     /**
-     * The number of structural features of the '<em>IFolder</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int IFOLDER_FEATURE_COUNT = 0;
-
-    /**
      * The meta object id for the '{@link net.refractions.udig.project.internal.impl.FolderImpl <em>Folder</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1135,24 +1126,6 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     int FOLDER = 29;
-
-    /**
-     * The feature id for the '<em><b>Items</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int FOLDER__ITEMS = IFOLDER_FEATURE_COUNT + 0;
-
-    /**
-     * The number of structural features of the '<em>Folder</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int FOLDER_FEATURE_COUNT = IFOLDER_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link net.refractions.udig.project.ILegendItem <em>ILegend Item</em>}' class.
@@ -1172,6 +1145,60 @@ public interface ProjectPackage extends EPackage {
      * @ordered
      */
     int ILEGEND_ITEM_FEATURE_COUNT = 0;
+
+    /**
+     * The number of structural features of the '<em>IFolder</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IFOLDER_FEATURE_COUNT = ILEGEND_ITEM_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Items</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FOLDER__ITEMS = IFOLDER_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FOLDER__NAME = IFOLDER_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Glyph</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FOLDER__GLYPH = IFOLDER_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Shown</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FOLDER__SHOWN = IFOLDER_FEATURE_COUNT + 3;
+
+    /**
+     * The number of structural features of the '<em>Folder</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FOLDER_FEATURE_COUNT = IFOLDER_FEATURE_COUNT + 4;
 
     /**
      * The meta object id for the '{@link net.refractions.udig.project.internal.impl.LegendItemImpl <em>Legend Item</em>}' class.
@@ -2423,7 +2450,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>IFolder</em>'.
      * @see net.refractions.udig.project.IFolder
-     * @model instanceClass="net.refractions.udig.project.IFolder"
+     * @model instanceClass="net.refractions.udig.project.IFolder" superTypes="net.refractions.udig.project.internal.ILegendItem"
      * @generated
      */
     EClass getIFolder();
@@ -2448,6 +2475,39 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     EReference getFolder_Items();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Folder#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see net.refractions.udig.project.internal.Folder#getName()
+     * @see #getFolder()
+     * @generated
+     */
+    EAttribute getFolder_Name();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Folder#getGlyph <em>Glyph</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Glyph</em>'.
+     * @see net.refractions.udig.project.internal.Folder#getGlyph()
+     * @see #getFolder()
+     * @generated
+     */
+    EAttribute getFolder_Glyph();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Folder#isShown <em>Shown</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Shown</em>'.
+     * @see net.refractions.udig.project.internal.Folder#isShown()
+     * @see #getFolder()
+     * @generated
+     */
+    EAttribute getFolder_Shown();
 
     /**
      * Returns the meta object for class '{@link net.refractions.udig.project.internal.LegendItem <em>Legend Item</em>}'.
@@ -3640,6 +3700,30 @@ public interface ProjectPackage extends EPackage {
          * @generated
          */
         EReference FOLDER__ITEMS = eINSTANCE.getFolder_Items();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute FOLDER__NAME = eINSTANCE.getFolder_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Glyph</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute FOLDER__GLYPH = eINSTANCE.getFolder_Glyph();
+
+        /**
+         * The meta object literal for the '<em><b>Shown</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute FOLDER__SHOWN = eINSTANCE.getFolder_Shown();
 
         /**
          * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.LegendItemImpl <em>Legend Item</em>}' class.

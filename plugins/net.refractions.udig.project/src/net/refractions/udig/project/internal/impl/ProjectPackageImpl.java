@@ -1299,6 +1299,33 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getFolder_Name() {
+        return (EAttribute) folderEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getFolder_Glyph() {
+        return (EAttribute) folderEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getFolder_Shown() {
+        return (EAttribute) folderEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getLegendItem() {
         return legendItemEClass;
     }
@@ -1754,6 +1781,9 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
 
         folderEClass = createEClass(FOLDER);
         createEReference(folderEClass, FOLDER__ITEMS);
+        createEAttribute(folderEClass, FOLDER__NAME);
+        createEAttribute(folderEClass, FOLDER__GLYPH);
+        createEAttribute(folderEClass, FOLDER__SHOWN);
 
         legendItemEClass = createEClass(LEGEND_ITEM);
         createEAttribute(legendItemEClass, LEGEND_ITEM__NAME);
@@ -1844,6 +1874,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         styleBlackboardEClass.getESuperTypes().add(this.getIStyleBlackboard());
         styleBlackboardEClass.getESuperTypes().add(this.getCloneable());
         blackboardEClass.getESuperTypes().add(this.getIBlackboard());
+        iFolderEClass.getESuperTypes().add(this.getILegendItem());
         folderEClass.getESuperTypes().add(this.getIFolder());
         legendItemEClass.getESuperTypes().add(this.getILegendItem());
 
@@ -2276,6 +2307,18 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 this.getILegendItem(),
                 null,
                 "items", null, 0, -1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getFolder_Name(),
+                theEcorePackage.getEString(),
+                "name", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getFolder_Glyph(),
+                this.getImageDescriptor(),
+                "glyph", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getFolder_Shown(),
+                theEcorePackage.getEBoolean(),
+                "shown", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         initEClass(legendItemEClass, LegendItem.class,
                 "LegendItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
