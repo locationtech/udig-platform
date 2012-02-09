@@ -30,6 +30,7 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
@@ -65,6 +66,10 @@ public class AddFeatureCommand extends AbstractCommand implements UndoableMapCom
                 return 1;
             }
             @Override
+            public ReferencedEnvelope getBounds() {
+                return ReferencedEnvelope.reference(feature.getBounds());
+            }
+            @Override
             protected Iterator openIterator() {
                 return new Iterator(){
                     SimpleFeature next = feature;
@@ -79,7 +84,6 @@ public class AddFeatureCommand extends AbstractCommand implements UndoableMapCom
                     public void remove() {
                         throw new UnsupportedOperationException();
                     }
-
                 };
             }
             @Override

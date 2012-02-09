@@ -11,6 +11,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -44,7 +45,7 @@ public final class ProjectEditPlugin extends EMFPlugin {
      * @generated
      */
     public ProjectEditPlugin() {
-        super(new ResourceLocator[]{});
+        super(new ResourceLocator[]{EcoreEditPlugin.INSTANCE,});
     }
 
     /**

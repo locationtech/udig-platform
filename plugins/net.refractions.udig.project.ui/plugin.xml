@@ -224,7 +224,7 @@
             class="net.refractions.udig.project.ui.internal.property.pages.LayerSummary"
             id="net.refractions.udig.configuration.property.layer.summary"
             name="%LayerSummary.name"
-            objectClass="net.refractions.udig.project.ILayer"/>
+            objectClass="net.refractions.udig.catalog.IGeoResource"/>
       <page
             class="net.refractions.udig.project.ui.internal.property.pages.LayerCRSPropertyPage"
             id="net.refractions.udig.project.ui.layer.crs"
@@ -236,6 +236,12 @@
             id="net.refractions.udig.project.ui.property.layer.interaction"
             name="Interaction"
             objectClass="net.refractions.udig.project.internal.Layer">
+      </page>
+      <page
+            class="net.refractions.udig.project.ui.tileset.TileSetPropertyPage"
+            id="net.refractions.udig.configuration.property.layer.tileset"
+            name="%tilesetDefine"
+            objectClass="net.refractions.udig.project.ILayer">
       </page>
    </extension>
 
@@ -891,12 +897,6 @@
                id="net.refractions.udig.project.ui.operation.addCategory"
                name="%Add.Category">
                </category> 
-         <operation
-               categoryId="net.refractions.udig.catalog.ui.operation.resourceCategory"
-               class="net.refractions.udig.project.ui.operations.DefineTileSetOp"
-               id="net.refractions.udig.project.ui.defineTileset"
-               name="%tilesetDefine"
-               targetClass="net.refractions.udig.catalog.IGeoResource"/>
          <operation
                categoryId="net.refractions.udig.catalog.ui.operation.resourceCategory"
                class="net.refractions.udig.project.ui.operations.example.MultiTargetOp"

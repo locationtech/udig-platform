@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2004, Refractions Research Inc.
+ * (C) 2010-2012, Refractions Research Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -13,13 +13,6 @@
  * Lesser General Public License for more details.
  */
 package net.refractions.udig.catalog.internal.geotools;
-
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.geotools.process.LocalProcessService;
-import net.refractions.udig.ui.ProgressManager;
 
 import org.eclipse.ui.IStartup;
 

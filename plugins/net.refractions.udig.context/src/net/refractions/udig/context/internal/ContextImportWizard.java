@@ -21,7 +21,7 @@ import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceFactory;
 import net.refractions.udig.context.ContextPlugin;
-import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Project;
@@ -370,7 +370,7 @@ public class ContextImportWizard extends Wizard implements IImportWizard {
         }
         String queryable = resource.getAttributeValue("queryable"); //$NON-NLS-1$
         if (queryable != null) {
-            layer.setApplicable(ILayer.Interaction.SELECT, !"0".equals(queryable)); //$NON-NLS-1$ //$NON-NLS-2$
+            layer.setInteraction(Interaction.SELECT, !"0".equals(queryable)); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         Namespace oc = Namespace.getNamespace("http://www.opengis.net/oc"); //$NON-NLS-1$

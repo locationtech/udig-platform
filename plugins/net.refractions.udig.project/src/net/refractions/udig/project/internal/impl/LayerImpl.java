@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -39,11 +40,11 @@ import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.internal.CatalogRef;
 import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.ProjectFactory;
 import net.refractions.udig.project.internal.ProjectPackage;
@@ -69,6 +70,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -77,7 +79,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Display;
@@ -161,8 +165,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * The cached value of the '{@link #getZorder() <em>Zorder</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
      * @see #getZorder()
      * @generated
      * @ordered
@@ -415,8 +419,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public NotificationChain basicSetContextModel( ContextModel newContextModel,
@@ -450,6 +453,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * Get ZOrder of layer with regards to content model
+     * 
      * @model
      */
     public int getZorder() {
@@ -964,34 +968,18 @@ public class LayerImpl extends EObjectImpl implements Layer {
                     oldGlyph, glyph));
     }
 
-    private boolean selectableIsDefault = true;
-
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated not
+     * @deprecated use getInteraction(Interaction.SELECT)
      */
     public boolean isSelectable() {
-        if (selectableIsDefault) {
-            setSelectable(this.getGeoResource(FeatureSource.class) != null);
-        }
-        return selectable;
+        return getInteraction(Interaction.SELECT);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated not
+     * @deprecated use setInteraction(Interaction.SELECT, value)
      */
     public void setSelectable( boolean newSelectable ) {
-        if (selectableIsDefault) {
-            selectableIsDefault = false;
-        }
-        boolean oldSelectable = selectable;
-        selectable = newSelectable;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__SELECTABLE,
-                    oldSelectable, selectable));
+        setInteraction(Interaction.SELECT, newSelectable);
     }
 
     /**
@@ -1031,26 +1019,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     private volatile int status;
-
-    /**
-     * The default value of the '{@link #isSelectable() <em>Selectable</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #isSelectable()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean SELECTABLE_EDEFAULT = true;
-
-    /**
-     * The cached value of the '{@link #isSelectable() <em>Selectable</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #isSelectable()
-     * @generated not
-     * @ordered
-     */
-    protected volatile boolean selectable = SELECTABLE_EDEFAULT;
 
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -1302,6 +1270,16 @@ public class LayerImpl extends EObjectImpl implements Layer {
      */
     protected volatile double maxScaleDenominator = MAX_SCALE_DENOMINATOR_EDEFAULT;
 
+    /**
+     * The cached value of the '{@link #getInteractionMap() <em>Interaction Map</em>}' map. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see #getInteractionMap()
+     * @generated
+     * @ordered
+     */
+    protected EMap<Interaction, Boolean> interactionMap;
+
     private volatile String statusMessage = Messages.LayerImpl_status;
 
     /**
@@ -1320,7 +1298,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         // XXX: rgould how do I process a getWMS().createDescribeLayerRequest()?
 
         // URL wfsURL = null;
-        //        
+        //
         // try {
         // DescribeLayerRequest request = null;
         // request = getWMS().createDescribeLayerRequest();
@@ -1349,36 +1327,23 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#isApplicable(java.lang.String)
+     * @see net.refractions.udig.project.internal.Layer#getInteraction(java.lang.String)
      */
-    public boolean isApplicable( Interaction interaction ) {
+    public boolean getInteraction( Interaction interaction ) {
         // special cases handled as fields
         if (Interaction.VISIBLE.equals(interaction)) {
             return isVisible();
-        } else if (Interaction.SELECT.equals(interaction)) {
-            return isSelectable();
         }
-        // check the blackboard 
-        // layer blackboard is not persisted; store on the map blackboard for now
-        String key = interaction.getKey();
-        Boolean applicable = (Boolean) getBlackboard().get(key);
+        Boolean applicable = getInteractionMap().get(interaction);
         if (applicable == null) {
-            // look for a default from the last time the user used this map
-            applicable = isMapApplicable(key);
-            if (applicable != null) {
-                // use value from last time
-                getBlackboard().put(key, applicable);
-            } else {
-                // create a new default value from scratch
-                applicable = getDefaultApplicable(interaction);
-                getBlackboard().put(key, applicable);
-            }
+            applicable = getDefaultApplicable(interaction);
         }
         return applicable;
     }
 
     /**
      * Logic to sort out a good default value for the request interaction.
+     * 
      * @param interaction
      * @return <code>true</code> if the interaction defaults to on
      */
@@ -1387,131 +1352,23 @@ public class LayerImpl extends EObjectImpl implements Layer {
         if (Interaction.INFO.equals(interaction)) {
             return true; // info is supported by most layers
         }
-        // wont hit this code yet because value comes from isSelectable
-        /*else if( ID_SELECT.equals(toolsetID)){
-            IGeoResource found = this.getGeoResource(FeatureSource.class);
-            return found != null;
-        }*/
-        else if (Interaction.EDIT.equals(interaction)) {
+        if (Interaction.SELECT.equals(interaction)) {
+            return true; // selection is supported by most layers
+        } else if (Interaction.EDIT.equals(interaction)) {
             IGeoResource found = this.getGeoResource(FeatureStore.class);
             return found != null;
         }
         return false;
     }
-    /**
-     * Check the map blackboard to see is a previous run has specified
-     * an applicable value for us to use. We can use this as a default;
-     * when re-loading the map.
-     * 
-     * @param key
-     * @param applicable
-     * @return true or false (if the value was available previously) or null if it was unknown.
-     */
-    protected Boolean isMapApplicable( String key ) {
-        IBlackboard mapBlackboard = getMap().getBlackboard();
-        String text = mapBlackboard.getString(key);
-        if (text == null) {
-            return null;
-        }
-        String token = this.getID().toString();
-        List<String> values;
-        if (text.indexOf('\n') == -1) {
-            values = new ArrayList<String>();
-            values.add(text);
-        } else {
-            values = new ArrayList<String>(Arrays.asList(text.split("\n")));
-        }
-        for( String line : values ) {
-            if (line.startsWith(token)) {
-                // match!
-                if (line.endsWith("=true")) {
-                    return true;
-                } else if (line.endsWith("=false")) {
-                    return false;
-                } else {
-                    break;
-                }
-            }
-        }
-        return null;
-    }
 
     /**
-     * Will record a list of layers that have the key set to true; this will
-     * be used as a default when the map is re-loaded.
-     * 
-     * @param key
-     * @param applicable
+     * @see net.refractions.udig.project.internal.Layer#setInteraction(java.lang.String, boolean)
      */
-    protected void setMapApplicable( String key, boolean applicable ) {
-        IBlackboard mapBlackboard = getMap().getBlackboard();
-        String text = mapBlackboard.getString(key);
-        String token = this.getID().toString();
-        List<String> values;
-        if (text == null) {
-            values = new ArrayList<String>();
-        } else if (text.indexOf('\n') == -1) {
-            values = new ArrayList<String>();
-            values.add(text);
-        } else {
-            values = new ArrayList<String>(Arrays.asList(text.split("\n")));
-        }
-        boolean updated = false;
-        for( int index = 0; index < values.size(); index++ ) {
-            String line = values.get(index);
-            if (line.startsWith(token)) {
-                if (applicable) {
-                    if (line.endsWith("=true")) {
-                        return; // no change needed
-                    }
-                    values.set(index, token + "=true");
-                    updated = true;
-                } else {
-                    if (line.endsWith("=false")) {
-                        return; // no change needed
-                    }
-                    values.set(index, token + "=false");
-                    updated = true;
-                }
-            }
-        }
-        if (updated == false) {
-            if (applicable) {
-                values.add(token + "=true");
-            } else {
-                values.add(token + "=false");
-            }
-        }
-        StringBuilder build = new StringBuilder();
-        for( String aToken : values ) {
-            if (aToken.length() == 0) {
-                continue;
-            }
-            build.append(aToken);
-            build.append("\n");
-        }
-        String updatedText = build.substring(0, build.length() - 1);
-        mapBlackboard.putString(key, updatedText);
-    }
-
-    /**
-     * @see net.refractions.udig.project.internal.Layer#setApplicable(java.lang.String, boolean)
-     */
-    public void setApplicable( Interaction interaction, boolean applicable ) {
+    public void setInteraction( Interaction interaction, boolean applicable ) {
         if (Interaction.VISIBLE.equals(interaction)) {
             setVisible(applicable);
-        } else if (Interaction.SELECT.equals(interaction)) {
-            setSelectable(applicable);
         } else {
-            // layer blackboard is not persisted; store on the map blackboard for now
-            String key = interaction.getKey();
-            getBlackboard().put(key, applicable);
-
-            // save a default for next time!
-            setMapApplicable(key, applicable);
-
-            // XXX just to send an event needs to change when we have EMF set up
-            setSelectable(isSelectable());
+            getInteractionMap().put(interaction, applicable);
         }
     }
 
@@ -1706,6 +1563,20 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
+    public Map<Interaction, Boolean> getInteractionMap() {
+        if (interactionMap == null) {
+            interactionMap = new EcoreEMap<Interaction, Boolean>(
+                    ProjectPackage.Literals.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY,
+                    InteractionToEBooleanObjectMapEntryImpl.class, this,
+                    ProjectPackage.LAYER__INTERACTION_MAP);
+        }
+        return interactionMap.map();
+    }
+
+    /**
      * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
      */
     @SuppressWarnings("unchecked")
@@ -1751,8 +1622,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -1767,8 +1637,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -1779,13 +1648,15 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return basicSetContextModel(null, msgs);
         case ProjectPackage.LAYER__STYLE_BLACKBOARD:
             return basicSetStyleBlackboard(null, msgs);
+        case ProjectPackage.LAYER__INTERACTION_MAP:
+            return ((InternalEList< ? >) ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap())
+                    .eMap()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -1799,8 +1670,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -1816,8 +1686,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return getZorder();
         case ProjectPackage.LAYER__STATUS:
             return getStatus();
-        case ProjectPackage.LAYER__SELECTABLE:
-            return isSelectable();
         case ProjectPackage.LAYER__NAME:
             return getName();
         case ProjectPackage.LAYER__CATALOG_REF:
@@ -1846,13 +1714,17 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return getMinScaleDenominator();
         case ProjectPackage.LAYER__MAX_SCALE_DENOMINATOR:
             return getMaxScaleDenominator();
+        case ProjectPackage.LAYER__INTERACTION_MAP:
+            if (coreType)
+                return ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap()).eMap();
+            else
+                return getInteractionMap();
         }
         return super.eGet(featureID, resolve, coreType);
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -1873,9 +1745,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return;
         case ProjectPackage.LAYER__STATUS:
             setStatus((Integer) newValue);
-            return;
-        case ProjectPackage.LAYER__SELECTABLE:
-            setSelectable((Boolean) newValue);
             return;
         case ProjectPackage.LAYER__NAME:
             setName((String) newValue);
@@ -1914,13 +1783,16 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__MAX_SCALE_DENOMINATOR:
             setMaxScaleDenominator((Double) newValue);
             return;
+        case ProjectPackage.LAYER__INTERACTION_MAP:
+            ((EStructuralFeature.Setting) ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap())
+                    .eMap()).set(newValue);
+            return;
         }
         super.eSet(featureID, newValue);
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -1940,9 +1812,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return;
         case ProjectPackage.LAYER__STATUS:
             setStatus(STATUS_EDEFAULT);
-            return;
-        case ProjectPackage.LAYER__SELECTABLE:
-            setSelectable(SELECTABLE_EDEFAULT);
             return;
         case ProjectPackage.LAYER__NAME:
             setName(NAME_EDEFAULT);
@@ -1980,13 +1849,15 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__MAX_SCALE_DENOMINATOR:
             setMaxScaleDenominator(MAX_SCALE_DENOMINATOR_EDEFAULT);
             return;
+        case ProjectPackage.LAYER__INTERACTION_MAP:
+            getInteractionMap().clear();
+            return;
         }
         super.eUnset(featureID);
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -2002,8 +1873,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return zorder != ZORDER_EDEFAULT;
         case ProjectPackage.LAYER__STATUS:
             return status != STATUS_EDEFAULT;
-        case ProjectPackage.LAYER__SELECTABLE:
-            return selectable != SELECTABLE_EDEFAULT;
         case ProjectPackage.LAYER__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         case ProjectPackage.LAYER__CATALOG_REF:
@@ -2036,6 +1905,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return minScaleDenominator != MIN_SCALE_DENOMINATOR_EDEFAULT;
         case ProjectPackage.LAYER__MAX_SCALE_DENOMINATOR:
             return maxScaleDenominator != MAX_SCALE_DENOMINATOR_EDEFAULT;
+        case ProjectPackage.LAYER__INTERACTION_MAP:
+            return interactionMap != null && !interactionMap.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -2286,7 +2157,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
             // parameters may have changed
             // so set modified on the map so the new params will be saved on
             // shutdown.
-            Map map = getMapInternal();
+            net.refractions.udig.project.internal.Map map = getMapInternal();
             Resource eResource = map.eResource();
             if (eResource != null) {
                 eResource.setModified(true);
@@ -2404,7 +2275,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     public Set<Range> getScaleRange() {
-        Map mapInternal = getMapInternal();
+        net.refractions.udig.project.internal.Map mapInternal = getMapInternal();
         if (mapInternal == null) {
             // we're in the middle of a map closing or map deleteing or something.
             return Collections.emptySet();

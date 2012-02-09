@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+
+	<!-- This script was created to automagically download the language fragments 
+		required by the uDig language feature for internationalization. The script 
+		reads the required plugins/fragments list from feature.xml and attempts to 
+		retrieve them from the Babel Eclipse P2 repos. The only down side is that 
+		it also downloads transients, as at this point in time, you are unable to 
+		exclude transients via Tycho 0.13.0. This may well be rectified in the near 
+		future.
+		
+		To download the required language fragments, use:
+		    mvn install -f pom-languages.xml
+		
+		To use them, add net.refractions.udig_language_feature/lib to your target
+		platform as an installation. See:
+			Preferences -> Plugin-development -> Target Platform .		
+		-->
+
+
+	<developers>
+		<developer>
+			<id>Sev</id>
+			<name>Severin</name>
+			<email>djseverin@gmail.com</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>+10</timezone>
+		</developer>
+	</developers>
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.refractions.udig</groupId>
+	<artifactId>net.refractions.udig_language-feature</artifactId>
+	<version>1.3.0.qualifier</version>
+	<name>uDig - Language Pack Fetching maven script</name>
+
+	<packaging>eclipse-feature</packaging>
+
+	<properties>
+		<tycho-version>0.13.0</tycho-version>
+		<tycho-provider>org.eclipse.tycho</tycho-provider>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>indigo-web</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/releases/indigo/</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>never</updatePolicy>
+			</snapshots>
+		</repository>
+
+		<repository>
+			<id>indigo-babel-web</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/technology/babel/update-site/R0.9.1/indigo</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>never</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<!-- dependencies> <dependency> <groupId>org.mortbay.jetty</groupId> <artifactId>jetty</artifactId> 
+		<version>6.1.23</version> <exclusions> <exclusion> <groupId>*</groupId> </exclusion> 
+		</exclusions> </dependency> </dependencies -->
+
+	<build>
+		<plugins>
+		
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-jar</id>
+						<phase>never</phase>
+						<configuration>
+							<finalName>unwanted</finalName>
+							<classifier>unwanted</classifier>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+			<plugin>
+				<artifactId>maven-install-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-install</id>
+						<phase>never</phase>
+						<configuration>
+							<finalName>unwanted</finalName>
+							<classifier>unwanted</classifier>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-compile</id>
+						<phase>never</phase>
+						<configuration>
+							<finalName>unwanted</finalName>
+							<classifier>unwanted</classifier>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+			<plugin>
+				<groupId>${tycho-provider}</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+
+
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${basedir}/lib</directory>
+							<includes>
+								<include>*.*</include>
+							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<overWrite>true</overWrite>
+							<outputDirectory>${basedir}/lib</outputDirectory>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+							<excludeScope>provided</excludeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+		</plugins>
+	</build>
+	
+</project>

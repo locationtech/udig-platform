@@ -22,6 +22,7 @@ import net.refractions.udig.aoi.IAOIStrategy;
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.ui.ApplicationGIS;
 
 import org.geotools.geometry.jts.JTSFactoryFinder;
@@ -153,7 +154,7 @@ public class AOILayerStrategy extends IAOIStrategy {
         List<ILayer> aoiLayers = new ArrayList<ILayer>();
         
         for (ILayer layer: layers) {
-            if (layer.isApplicable(ILayer.Interaction.AOI)) {
+            if (layer.getInteraction(Interaction.AOI)) {
                 aoiLayers.add(layer);
             }
         }

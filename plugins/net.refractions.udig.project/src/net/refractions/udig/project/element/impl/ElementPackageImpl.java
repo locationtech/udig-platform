@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -89,6 +90,9 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
                 .get(eNS_URI) : new ElementPackageImpl());
 
         isInited = true;
+
+        // Initialize simple dependencies
+        EcorePackage.eINSTANCE.eClass();
 
         // Obtain or create and register interdependencies
         ProjectPackageImpl theProjectPackage = (ProjectPackageImpl) (EPackage.Registry.INSTANCE

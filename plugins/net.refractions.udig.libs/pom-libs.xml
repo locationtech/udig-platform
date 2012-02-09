@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- This script was created to automagically download the external libs 
+		required for uDig to build and export correctly. To download the required 
+		libraries, use: mvn install -f pom-libs.xml 
+		
+		After they have downloaded, make sure you:
+		  - refresh the net.refractions.udig.libs project in Eclipse;
+		  - verify the classpath (Manfiest Runtime tab) references the libs;
+		  - ensure the lib versions in the classpath are also correct. -->
+
+
+	<developers>
+		<developer>
+			<id>Sev</id>
+			<name>Severin</name>
+			<email>djseverin@gmail.com</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>+10</timezone>
+		</developer>
+	</developers>
+
 	<modelVersion>4.0.0</modelVersion>
+	
 	<groupId>net.refractions.udig</groupId>
 	<artifactId>libs</artifactId>
-	<version>1.3.1</version>
+	<version>1.3.2</version>
 	<name>uDig - User-friendly Desktop Internet GIS</name>
+	
 	<packaging>pom</packaging>
 
 	<properties>
 		<geotools.version>8-SNAPSHOT</geotools.version>
-		<imageio-ext.version>1.1.0</imageio-ext.version>
+		<imageio-ext.version>1.1.2</imageio-ext.version>
 		<jfreechart.version>1.0.13</jfreechart.version>
 	</properties>
 
@@ -24,9 +49,6 @@
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
 		</repository>
 
 		<!-- The OpenGeo company offers a SNAPSHOT repository populated by GeoTools
@@ -65,9 +87,6 @@
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
 		</repository>
 
 		<!-- jgrasstools repo -->
@@ -238,6 +257,11 @@
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-shapefile</artifactId>
+			<version>${geotools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-shapefile-ng</artifactId>
 			<version>${geotools.version}</version>
 		</dependency>
 		<dependency>
@@ -713,7 +737,7 @@
 		<dependency>
 			<groupId>org.jgrasstools</groupId>
 			<artifactId>jgt-oms3</artifactId>
-			<version>0.7.3-SNAPSHOT</version>
+			<version>0.7.3</version>
 		</dependency>
 		<dependency>
 			<groupId>javassist</groupId>
@@ -739,12 +763,11 @@
 
 	<build>
 		<plugins>
+		
 			<plugin>
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>2.4.1</version>
-
 				<configuration>
-
 					<filesets>
 						<fileset>
 							<directory>${basedir}/lib</directory>
@@ -763,6 +786,8 @@
 					</filesets>					
 				</configuration>
 			</plugin>
+			
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -800,6 +825,8 @@
                      </execution>
 				</executions>
 			</plugin>
+			
          </plugins>
     </build>
+    
 </project>

@@ -709,6 +709,16 @@ public interface RenderPackage extends EPackage {
     int DATE_TIME = 29;
 
     /**
+     * The meta object id for the '<em>Illegal Argument Exception</em>' data type.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see java.lang.IllegalArgumentException
+     * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIllegalArgumentException()
+     * @generated
+     */
+    int ILLEGAL_ARGUMENT_EXCEPTION = 30;
+
+    /**
      * The meta object id for the '<em>Info List</em>' data type. <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * 
@@ -1251,6 +1261,17 @@ public interface RenderPackage extends EPackage {
     EDataType getDateTime();
 
     /**
+     * Returns the meta object for data type '{@link java.lang.IllegalArgumentException <em>Illegal Argument Exception</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for data type '<em>Illegal Argument Exception</em>'.
+     * @see java.lang.IllegalArgumentException
+     * @model instanceClass="java.lang.IllegalArgumentException"
+     * @generated
+     */
+    EDataType getIllegalArgumentException();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
@@ -1753,6 +1774,16 @@ public interface RenderPackage extends EPackage {
          * @generated
          */
         EDataType DATE_TIME = eINSTANCE.getDateTime();
+
+        /**
+         * The meta object literal for the '<em>Illegal Argument Exception</em>' data type.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see java.lang.IllegalArgumentException
+         * @see net.refractions.udig.project.internal.render.impl.RenderPackageImpl#getIllegalArgumentException()
+         * @generated
+         */
+        EDataType ILLEGAL_ARGUMENT_EXCEPTION = eINSTANCE.getIllegalArgumentException();
 
     }
 
