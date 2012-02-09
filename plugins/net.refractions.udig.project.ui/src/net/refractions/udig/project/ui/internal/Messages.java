@@ -220,6 +220,12 @@ public class Messages extends NLS {
 	public static String OpenProject_newProject_filename;
 	public static String LayersView_up_tooltip;
 	public static String LayersView_down_tooltip;
+	public static String LegendView_show_mg_tooltip;
+	public static String LegendView_hide_mg_tooltip;
+	public static String LegendView_show_bg_tooltip;
+	public static String LegendView_hide_bg_tooltip;
+	public static String LegendView_show_grid_tooltip;
+	public static String LegendView_hide_grid_tooltip;
 	public static String MapImport_addingLayersTask;
 	public static String MapImport_createMap;
 	public static String MapImport_selectLayers;

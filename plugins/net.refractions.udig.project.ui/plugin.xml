@@ -339,6 +339,40 @@
                </enablement>
             </action>
          </viewContribution>
+         <viewContribution
+               id="net.refractions.udig.project.ui.legendManagerLayersContributor"
+               targetID="net.refractions.udig.project.ui.legendManager">
+            <action
+                  class="net.refractions.udig.project.ui.internal.actions.ZoomToLayer"
+                  disabledIcon="icons/dlcl16/zoom_layer_co.gif"
+                  enablesFor="+"
+                  icon="icons/elcl16/zoom_layer_co.gif"
+                  id="net.refractions.udig.project.ui.zoomToLayerViewAction"
+                  label="%zoomToMultipleLayers.label"
+                  style="push"
+                  toolbarPath="additions"
+                  tooltip="%zoomToMultipleLayers.tooltip">
+               <enablement>
+                  <objectClass
+                        name="net.refractions.udig.project.ILayer">
+                  </objectClass>
+               </enablement>
+            </action>
+            <action
+                  class="net.refractions.udig.project.ui.internal.actions.MylarAction"
+                  enablesFor="+"
+                  icon="icons/elcl16/mylar_mode.gif"
+                  id="net.refractions.udig.project.ui.mylar"
+                  label="%mylarAction.label"
+                  style="toggle"
+                  toolbarPath="additions">
+               <enablement>
+                  <objectClass
+                        name="net.refractions.udig.project.ILayer">
+                  </objectClass>
+               </enablement>
+            </action>
+         </viewContribution>
       </extension>
       <extension
             id="net.refractions.udig.ui.layerDecorators"
@@ -404,6 +438,9 @@
 	       <destination class="net.refractions.udig.project.ui.internal.MapPart"/>
            <destination
                  class="net.refractions.udig.project.ui.internal.LayersView"/>
+           <destination
+                 class="net.refractions.udig.project.ui.internal.LegendView">
+           </destination>
            <acceptedType
                  adapt="true"
                  class="net.refractions.udig.catalog.IResolve"/>
@@ -447,6 +484,9 @@
         <acceptedType class="net.refractions.udig.project.IMap"/>
         <acceptedType class="java.lang.String"/>
         <destination class="net.refractions.udig.project.ui.internal.LayersView"/>
+        <destination
+              class="net.refractions.udig.project.ui.internal.LegendView">
+        </destination>
         <acceptedType class="java.net.URL"/>
         <destination class="net.refractions.udig.project.ILayer"/>
         <acceptedType
@@ -496,6 +536,9 @@
            %MoveLayerAction.desc
         </description>
         <destination class="net.refractions.udig.project.ui.internal.LayersView"/>
+        <destination
+              class="net.refractions.udig.project.ui.internal.LegendView">
+        </destination>
         <acceptedType
               adapt="false"
               class="net.refractions.udig.project.ui.internal.MapEditorPart"/>
