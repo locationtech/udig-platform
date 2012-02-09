@@ -188,7 +188,7 @@ public class InfoTreeViewer extends TreeViewer implements ITreeContentProvider,I
         }
         if (element instanceof LayerPointInfo){
             LayerPointInfo info = (LayerPointInfo) element;
-            return imageCache.getImage( info.getLayer().getGlyph() );            
+            return imageCache.getImage( info.getLayer().getIcon() );            
         }
         return null;
     }

@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
 
+import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.command.CommandStack;
@@ -260,6 +261,22 @@ public interface Map extends ProjectElement, IMap {
      * @generated
      */
     void setBlackBoardInternal( Blackboard value );
+
+    /**
+     * Returns the value of the '<em><b>Legend</b></em>' containment reference list.
+     * The list contents are of type {@link net.refractions.udig.project.ILegendItem}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Legend</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Legend</em>' containment reference list.
+     * @see net.refractions.udig.project.internal.ProjectPackage#getMap_Legend()
+     * @model type="net.refractions.udig.project.internal.ILegendItem" containment="true"
+     * @generated
+     */
+    List<ILegendItem> getLegend();
 
     /**
      * Returns all the layers contained in the map. The list is mutable and events will be raised if

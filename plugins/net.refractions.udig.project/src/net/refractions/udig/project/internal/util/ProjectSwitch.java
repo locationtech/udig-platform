@@ -10,7 +10,9 @@ import net.refractions.udig.core.IBlockingAdaptable;
 import net.refractions.udig.project.IAbstractContext;
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.IEditManager;
+import net.refractions.udig.project.IFolder;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProject;
 import net.refractions.udig.project.IProjectElement;
@@ -21,8 +23,10 @@ import net.refractions.udig.project.internal.Blackboard;
 import net.refractions.udig.project.internal.BlackboardEntry;
 import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.EditManager;
+import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerFactory;
+import net.refractions.udig.project.internal.LegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Project;
 import net.refractions.udig.project.internal.ProjectElement;
@@ -181,6 +185,20 @@ public class ProjectSwitch<T> extends Switch<T> {
             @SuppressWarnings("unchecked")
             java.util.Map.Entry<Interaction, Boolean> interactionToEBooleanObjectMapEntry = (java.util.Map.Entry<Interaction, Boolean>) theEObject;
             T result = caseInteractionToEBooleanObjectMapEntry(interactionToEBooleanObjectMapEntry);
+            if (result == null) result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.FOLDER: {
+            Folder folder = (Folder) theEObject;
+            T result = caseFolder(folder);
+            if (result == null) result = caseIFolder(folder);
+            if (result == null) result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.LEGEND_ITEM: {
+            LegendItem legendItem = (LegendItem) theEObject;
+            T result = caseLegendItem(legendItem);
+            if (result == null) result = caseILegendItem(legendItem);
             if (result == null) result = defaultCase(theEObject);
             return result;
         }
@@ -390,6 +408,66 @@ public class ProjectSwitch<T> extends Switch<T> {
      */
     public T caseInteractionToEBooleanObjectMapEntry(
             java.util.Map.Entry<Interaction, Boolean> object ) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>IFolder</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>IFolder</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIFolder( IFolder object ) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Folder</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Folder</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseFolder( Folder object ) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Legend Item</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Legend Item</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseLegendItem( LegendItem object ) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>ILegend Item</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>ILegend Item</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseILegendItem( ILegendItem object ) {
         return null;
     }
 

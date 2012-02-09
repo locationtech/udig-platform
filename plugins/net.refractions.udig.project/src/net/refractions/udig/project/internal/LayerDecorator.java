@@ -298,15 +298,15 @@ public class LayerDecorator implements Layer, InternalEObject {
     /*
      * @see net.refractions.udig.project.Layer#getGlyph()
      */
-    public ImageDescriptor getGlyph() {
-        return layer.getGlyph();
+    public ImageDescriptor getIcon() {
+        return layer.getIcon();
     }
 
     /*
      * @see net.refractions.udig.project.Layer#setGlyph(org.eclipse.jface.resource.ImageDescriptor)
      */
-    public void setGlyph( ImageDescriptor value ) {
-        layer.setGlyph(value);
+    public void setIcon( ImageDescriptor value ) {
+        layer.setIcon(value);
     }
 
     /*
@@ -884,6 +884,18 @@ public class LayerDecorator implements Layer, InternalEObject {
     @Override
     public java.util.Map<Interaction, Boolean> getInteractionMap() {
         return layer.getInteractionMap();
+    }
+
+    @Override
+    public boolean isShown() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void setShown( boolean value ) {
+        // TODO Auto-generated method stub
+        
     }
 
 }
