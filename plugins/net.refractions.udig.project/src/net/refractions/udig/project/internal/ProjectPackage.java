@@ -368,22 +368,13 @@ public interface ProjectPackage extends EPackage {
     int ILEGEND_ITEM = 31;
 
     /**
-     * The number of structural features of the '<em>ILegend Item</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ILEGEND_ITEM_FEATURE_COUNT = 0;
-
-    /**
      * The number of structural features of the '<em>ILayer</em>' class.
      * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ILAYER_FEATURE_COUNT = ILEGEND_ITEM_FEATURE_COUNT + 0;
+    int ILAYER_FEATURE_COUNT = 0;
 
     /**
      * The number of structural features of the the '<em>IEdit Manager</em>' class. <!--
@@ -638,22 +629,13 @@ public interface ProjectPackage extends EPackage {
     int LAYER__GEO_RESOURCES = ILAYER_FEATURE_COUNT + 10;
 
     /**
-     * The feature id for the '<em><b>Glyph</b></em>' attribute.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int LAYER__GLYPH = ILAYER_FEATURE_COUNT + 11;
-
-    /**
      * The feature id for the '<em><b>CRS</b></em>' attribute.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @generated
      * @ordered
      */
-    int LAYER__CRS = ILAYER_FEATURE_COUNT + 12;
+    int LAYER__CRS = ILAYER_FEATURE_COUNT + 11;
 
     /**
      * The feature id for the '<em><b>Properties</b></em>' reference.
@@ -662,7 +644,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__PROPERTIES = ILAYER_FEATURE_COUNT + 13;
+    int LAYER__PROPERTIES = ILAYER_FEATURE_COUNT + 12;
 
     /**
      * The feature id for the '<em><b>Colour Scheme</b></em>' attribute.
@@ -671,7 +653,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__COLOUR_SCHEME = ILAYER_FEATURE_COUNT + 14;
+    int LAYER__COLOUR_SCHEME = ILAYER_FEATURE_COUNT + 13;
 
     /**
      * The feature id for the '<em><b>Default Color</b></em>' attribute.
@@ -680,7 +662,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__DEFAULT_COLOR = ILAYER_FEATURE_COUNT + 15;
+    int LAYER__DEFAULT_COLOR = ILAYER_FEATURE_COUNT + 14;
 
     /**
      * The feature id for the '<em><b>SimpleFeature Changes</b></em>' attribute list. <!--
@@ -689,7 +671,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__FEATURE_CHANGES = ILAYER_FEATURE_COUNT + 16;
+    int LAYER__FEATURE_CHANGES = ILAYER_FEATURE_COUNT + 15;
 
     /**
      * The feature id for the '<em><b>Min Scale Denominator</b></em>' attribute.
@@ -698,7 +680,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__MIN_SCALE_DENOMINATOR = ILAYER_FEATURE_COUNT + 17;
+    int LAYER__MIN_SCALE_DENOMINATOR = ILAYER_FEATURE_COUNT + 16;
 
     /**
      * The feature id for the '<em><b>Max Scale Denominator</b></em>' attribute.
@@ -707,7 +689,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__MAX_SCALE_DENOMINATOR = ILAYER_FEATURE_COUNT + 18;
+    int LAYER__MAX_SCALE_DENOMINATOR = ILAYER_FEATURE_COUNT + 17;
 
     /**
      * The feature id for the '<em><b>Interaction Map</b></em>' map.
@@ -716,7 +698,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__INTERACTION_MAP = ILAYER_FEATURE_COUNT + 19;
+    int LAYER__INTERACTION_MAP = ILAYER_FEATURE_COUNT + 18;
 
     /**
      * The feature id for the '<em><b>Shown</b></em>' attribute.
@@ -725,7 +707,16 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__SHOWN = ILAYER_FEATURE_COUNT + 20;
+    int LAYER__SHOWN = ILAYER_FEATURE_COUNT + 19;
+
+    /**
+     * The feature id for the '<em><b>Icon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LAYER__ICON = ILAYER_FEATURE_COUNT + 20;
 
     /**
      * The number of structural features of the '<em>Layer</em>' class.
@@ -1171,7 +1162,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int IFOLDER_FEATURE_COUNT = ILEGEND_ITEM_FEATURE_COUNT + 0;
+    int IFOLDER_FEATURE_COUNT = 0;
 
     /**
      * The feature id for the '<em><b>Items</b></em>' containment reference list.
@@ -1192,22 +1183,22 @@ public interface ProjectPackage extends EPackage {
     int FOLDER__NAME = IFOLDER_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Glyph</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int FOLDER__GLYPH = IFOLDER_FEATURE_COUNT + 2;
-
-    /**
      * The feature id for the '<em><b>Shown</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int FOLDER__SHOWN = IFOLDER_FEATURE_COUNT + 3;
+    int FOLDER__SHOWN = IFOLDER_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Icon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FOLDER__ICON = IFOLDER_FEATURE_COUNT + 3;
 
     /**
      * The number of structural features of the '<em>Folder</em>' class.
@@ -1217,6 +1208,15 @@ public interface ProjectPackage extends EPackage {
      * @ordered
      */
     int FOLDER_FEATURE_COUNT = IFOLDER_FEATURE_COUNT + 4;
+
+    /**
+     * The number of structural features of the '<em>ILegend Item</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ILEGEND_ITEM_FEATURE_COUNT = 0;
 
     /**
      * The meta object id for the '{@link net.refractions.udig.project.internal.impl.LegendItemImpl <em>Legend Item</em>}' class.
@@ -1238,22 +1238,22 @@ public interface ProjectPackage extends EPackage {
     int LEGEND_ITEM__NAME = ILEGEND_ITEM_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Glyph</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int LEGEND_ITEM__GLYPH = ILEGEND_ITEM_FEATURE_COUNT + 1;
-
-    /**
      * The feature id for the '<em><b>Shown</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LEGEND_ITEM__SHOWN = ILEGEND_ITEM_FEATURE_COUNT + 2;
+    int LEGEND_ITEM__SHOWN = ILEGEND_ITEM_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Icon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LEGEND_ITEM__ICON = ILEGEND_ITEM_FEATURE_COUNT + 2;
 
     /**
      * The number of structural features of the '<em>Legend Item</em>' class.
@@ -1922,16 +1922,6 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_GeoResources();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getGlyph <em>Glyph</em>}'.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Glyph</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getGlyph()
-     * @see #getLayer()
-     * @generated
-     */
-    EAttribute getLayer_Glyph();
-
-    /**
      * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getCRS <em>CRS</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>CRS</em>'.
@@ -2025,6 +2015,17 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     EAttribute getLayer_Shown();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getIcon <em>Icon</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Icon</em>'.
+     * @see net.refractions.udig.project.internal.Layer#getIcon()
+     * @see #getLayer()
+     * @generated
+     */
+    EAttribute getLayer_Icon();
 
     /**
      * Returns the meta object for class '{@link net.refractions.udig.project.internal.Map <em>Map</em>}'.
@@ -2490,7 +2491,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>IFolder</em>'.
      * @see net.refractions.udig.project.IFolder
-     * @model instanceClass="net.refractions.udig.project.IFolder" superTypes="net.refractions.udig.project.internal.ILegendItem"
+     * @model instanceClass="net.refractions.udig.project.IFolder"
      * @generated
      */
     EClass getIFolder();
@@ -2528,17 +2529,6 @@ public interface ProjectPackage extends EPackage {
     EAttribute getFolder_Name();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Folder#getGlyph <em>Glyph</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Glyph</em>'.
-     * @see net.refractions.udig.project.internal.Folder#getGlyph()
-     * @see #getFolder()
-     * @generated
-     */
-    EAttribute getFolder_Glyph();
-
-    /**
      * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Folder#isShown <em>Shown</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2548,6 +2538,17 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     EAttribute getFolder_Shown();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Folder#getIcon <em>Icon</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Icon</em>'.
+     * @see net.refractions.udig.project.internal.Folder#getIcon()
+     * @see #getFolder()
+     * @generated
+     */
+    EAttribute getFolder_Icon();
 
     /**
      * Returns the meta object for class '{@link net.refractions.udig.project.internal.LegendItem <em>Legend Item</em>}'.
@@ -2571,17 +2572,6 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLegendItem_Name();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.LegendItem#getGlyph <em>Glyph</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Glyph</em>'.
-     * @see net.refractions.udig.project.internal.LegendItem#getGlyph()
-     * @see #getLegendItem()
-     * @generated
-     */
-    EAttribute getLegendItem_Glyph();
-
-    /**
      * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.LegendItem#isShown <em>Shown</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2591,6 +2581,17 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     EAttribute getLegendItem_Shown();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.LegendItem#getIcon <em>Icon</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Icon</em>'.
+     * @see net.refractions.udig.project.internal.LegendItem#getIcon()
+     * @see #getLegendItem()
+     * @generated
+     */
+    EAttribute getLegendItem_Icon();
 
     /**
      * Returns the meta object for class '{@link net.refractions.udig.project.ILegendItem <em>ILegend Item</em>}'.
@@ -3247,14 +3248,6 @@ public interface ProjectPackage extends EPackage {
         EAttribute LAYER__GEO_RESOURCES = eINSTANCE.getLayer_GeoResources();
 
         /**
-         * The meta object literal for the '<em><b>Glyph</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute LAYER__GLYPH = eINSTANCE.getLayer_Glyph();
-
-        /**
          * The meta object literal for the '<em><b>CRS</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3325,6 +3318,14 @@ public interface ProjectPackage extends EPackage {
          * @generated
          */
         EAttribute LAYER__SHOWN = eINSTANCE.getLayer_Shown();
+
+        /**
+         * The meta object literal for the '<em><b>Icon</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute LAYER__ICON = eINSTANCE.getLayer_Icon();
 
         /**
          * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.MapImpl <em>Map</em>}' class.
@@ -3766,20 +3767,20 @@ public interface ProjectPackage extends EPackage {
         EAttribute FOLDER__NAME = eINSTANCE.getFolder_Name();
 
         /**
-         * The meta object literal for the '<em><b>Glyph</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute FOLDER__GLYPH = eINSTANCE.getFolder_Glyph();
-
-        /**
          * The meta object literal for the '<em><b>Shown</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EAttribute FOLDER__SHOWN = eINSTANCE.getFolder_Shown();
+
+        /**
+         * The meta object literal for the '<em><b>Icon</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute FOLDER__ICON = eINSTANCE.getFolder_Icon();
 
         /**
          * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.LegendItemImpl <em>Legend Item</em>}' class.
@@ -3800,20 +3801,20 @@ public interface ProjectPackage extends EPackage {
         EAttribute LEGEND_ITEM__NAME = eINSTANCE.getLegendItem_Name();
 
         /**
-         * The meta object literal for the '<em><b>Glyph</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute LEGEND_ITEM__GLYPH = eINSTANCE.getLegendItem_Glyph();
-
-        /**
          * The meta object literal for the '<em><b>Shown</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EAttribute LEGEND_ITEM__SHOWN = eINSTANCE.getLegendItem_Shown();
+
+        /**
+         * The meta object literal for the '<em><b>Icon</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute LEGEND_ITEM__ICON = eINSTANCE.getLegendItem_Icon();
 
         /**
          * The meta object literal for the '{@link net.refractions.udig.project.ILegendItem <em>ILegend Item</em>}' class.

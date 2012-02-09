@@ -44,8 +44,8 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * <ul>
  *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getItems <em>Items</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getName <em>Name</em>}</li>
- *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getGlyph <em>Glyph</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#isShown <em>Shown</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getIcon <em>Icon</em>}</li>
  * </ul>
  * </p>
  *
@@ -81,24 +81,6 @@ public class FolderImpl extends EObjectImpl implements Folder {
      */
     protected String name = NAME_EDEFAULT;
     /**
-     * The default value of the '{@link #getGlyph() <em>Glyph</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getGlyph()
-     * @generated
-     * @ordered
-     */
-    protected static final ImageDescriptor GLYPH_EDEFAULT = null;
-    /**
-     * The cached value of the '{@link #getGlyph() <em>Glyph</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getGlyph()
-     * @generated
-     * @ordered
-     */
-    protected ImageDescriptor glyph = GLYPH_EDEFAULT;
-    /**
      * The default value of the '{@link #isShown() <em>Shown</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -116,6 +98,26 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * @ordered
      */
     protected boolean shown = SHOWN_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getIcon() <em>Icon</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIcon()
+     * @generated
+     * @ordered
+     */
+    protected static final ImageDescriptor ICON_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getIcon() <em>Icon</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIcon()
+     * @generated
+     * @ordered
+     */
+    protected ImageDescriptor icon = ICON_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -176,8 +178,8 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * <!-- end-user-doc -->
      * @generated
      */
-    public ImageDescriptor getGlyph() {
-        return glyph;
+    public ImageDescriptor getIcon() {
+        return icon;
     }
 
     /**
@@ -185,12 +187,12 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setGlyph( ImageDescriptor newGlyph ) {
-        ImageDescriptor oldGlyph = glyph;
-        glyph = newGlyph;
+    public void setIcon( ImageDescriptor newIcon ) {
+        ImageDescriptor oldIcon = icon;
+        icon = newIcon;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.FOLDER__GLYPH,
-                    oldGlyph, glyph));
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.FOLDER__ICON,
+                    oldIcon, icon));
     }
 
     /**
@@ -242,10 +244,10 @@ public class FolderImpl extends EObjectImpl implements Folder {
             return getItems();
         case ProjectPackage.FOLDER__NAME:
             return getName();
-        case ProjectPackage.FOLDER__GLYPH:
-            return getGlyph();
         case ProjectPackage.FOLDER__SHOWN:
             return isShown();
+        case ProjectPackage.FOLDER__ICON:
+            return getIcon();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -266,11 +268,11 @@ public class FolderImpl extends EObjectImpl implements Folder {
         case ProjectPackage.FOLDER__NAME:
             setName((String) newValue);
             return;
-        case ProjectPackage.FOLDER__GLYPH:
-            setGlyph((ImageDescriptor) newValue);
-            return;
         case ProjectPackage.FOLDER__SHOWN:
             setShown((Boolean) newValue);
+            return;
+        case ProjectPackage.FOLDER__ICON:
+            setIcon((ImageDescriptor) newValue);
             return;
         }
         super.eSet(featureID, newValue);
@@ -290,11 +292,11 @@ public class FolderImpl extends EObjectImpl implements Folder {
         case ProjectPackage.FOLDER__NAME:
             setName(NAME_EDEFAULT);
             return;
-        case ProjectPackage.FOLDER__GLYPH:
-            setGlyph(GLYPH_EDEFAULT);
-            return;
         case ProjectPackage.FOLDER__SHOWN:
             setShown(SHOWN_EDEFAULT);
+            return;
+        case ProjectPackage.FOLDER__ICON:
+            setIcon(ICON_EDEFAULT);
             return;
         }
         super.eUnset(featureID);
@@ -312,10 +314,10 @@ public class FolderImpl extends EObjectImpl implements Folder {
             return items != null && !items.isEmpty();
         case ProjectPackage.FOLDER__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-        case ProjectPackage.FOLDER__GLYPH:
-            return GLYPH_EDEFAULT == null ? glyph != null : !GLYPH_EDEFAULT.equals(glyph);
         case ProjectPackage.FOLDER__SHOWN:
             return shown != SHOWN_EDEFAULT;
+        case ProjectPackage.FOLDER__ICON:
+            return ICON_EDEFAULT == null ? icon != null : !ICON_EDEFAULT.equals(icon);
         }
         return super.eIsSet(featureID);
     }
@@ -332,10 +334,10 @@ public class FolderImpl extends EObjectImpl implements Folder {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: "); //$NON-NLS-1$
         result.append(name);
-        result.append(", glyph: "); //$NON-NLS-1$
-        result.append(glyph);
         result.append(", shown: "); //$NON-NLS-1$
         result.append(shown);
+        result.append(", icon: "); //$NON-NLS-1$
+        result.append(icon);
         result.append(')');
         return result.toString();
     }

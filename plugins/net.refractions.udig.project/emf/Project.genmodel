@@ -92,7 +92,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/visible"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/geoResource"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/geoResources"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/glyph"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/cRS"/>
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference internal.ecore#//Layer/properties"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/colourScheme"/>
@@ -101,6 +100,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/minScaleDenominator"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/maxScaleDenominator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Layer/interactionMap"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/shown"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/icon"/>
       <genOperations ecoreOperation="internal.ecore#//Layer/getQuery">
         <genParameters ecoreParameter="internal.ecore#//Layer/getQuery/selection"/>
       </genOperations>
@@ -120,6 +121,7 @@
       <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference internal.ecore#//Map/renderManagerInternal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Map/colourScheme"/>
       <genFeatures notify="false" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Map/blackBoardInternal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Map/legend"/>
       <genOperations ecoreOperation="internal.ecore#//Map/getBounds">
         <genParameters ecoreParameter="internal.ecore#//Map/getBounds/monitor"/>
       </genOperations>
@@ -201,6 +203,18 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//InteractionToEBooleanObjectMapEntry/value"/>
     </genClasses>
     <genClasses image="false" ecoreClass="internal.ecore#//IFolder"/>
+    <genClasses ecoreClass="internal.ecore#//Folder">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Folder/items"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Folder/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Folder/shown"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Folder/icon"/>
+    </genClasses>
+    <genClasses ecoreClass="internal.ecore#//LegendItem">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//LegendItem/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//LegendItem/shown"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//LegendItem/icon"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="internal.ecore#//ILegendItem"/>
   </genPackages>
   <genPackages prefix="Render" basePackage="net.refractions.udig.project.internal"
       ecorePackage="render.ecore#/">

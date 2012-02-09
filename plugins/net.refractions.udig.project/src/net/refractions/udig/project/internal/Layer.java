@@ -356,16 +356,17 @@ public interface Layer
      * @uml.property name="glyph"
      * @model transient="true"
      */
-    public ImageDescriptor getGlyph();
+    public ImageDescriptor getIcon();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getGlyph <em>Glyph</em>}' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @param value the new value of the '<em>Glyph</em>' attribute.
-     * @see #getGlyph()
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getIcon <em>Icon</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Icon</em>' attribute.
+     * @see #getIcon()
      * @generated
      */
-    void setGlyph( ImageDescriptor value );
+    void setIcon( ImageDescriptor value );
 
     /**
      * Query that selects all the features for the layer.

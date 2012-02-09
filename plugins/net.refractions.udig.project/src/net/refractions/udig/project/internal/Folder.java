@@ -33,8 +33,8 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * <ul>
  *   <li>{@link net.refractions.udig.project.internal.Folder#getItems <em>Items</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.Folder#getName <em>Name</em>}</li>
- *   <li>{@link net.refractions.udig.project.internal.Folder#getGlyph <em>Glyph</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.Folder#isShown <em>Shown</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.Folder#getIcon <em>Icon</em>}</li>
  * </ul>
  * </p>
  *
@@ -87,30 +87,30 @@ public interface Folder extends EObject, IFolder {
     void setName( String value );
 
     /**
-     * Returns the value of the '<em><b>Glyph</b></em>' attribute.
+     * Returns the value of the '<em><b>Icon</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Glyph</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Glyph</em>' attribute.
-     * @see #setGlyph(ImageDescriptor)
-     * @see net.refractions.udig.project.internal.ProjectPackage#getFolder_Glyph()
+     * @return the value of the '<em>Icon</em>' attribute.
+     * @see #setIcon(ImageDescriptor)
+     * @see net.refractions.udig.project.internal.ProjectPackage#getFolder_Icon()
      * @model dataType="net.refractions.udig.project.internal.ImageDescriptor"
      * @generated
      */
-    ImageDescriptor getGlyph();
+    ImageDescriptor getIcon();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Folder#getGlyph <em>Glyph</em>}' attribute.
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Folder#getIcon <em>Icon</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Glyph</em>' attribute.
-     * @see #getGlyph()
+     * @param value the new value of the '<em>Icon</em>' attribute.
+     * @see #getIcon()
      * @generated
      */
-    void setGlyph( ImageDescriptor value );
+    void setIcon( ImageDescriptor value );
 
     /**
      * Returns the value of the '<em><b>Shown</b></em>' attribute.

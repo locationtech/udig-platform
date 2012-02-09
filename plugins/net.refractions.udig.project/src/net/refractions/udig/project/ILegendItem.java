@@ -49,7 +49,7 @@ public interface ILegendItem {
      * 
      * @return Icon used to represent this LegendItem
      */
-    public ImageDescriptor getGlyph();
+    public ImageDescriptor getIcon();
 
     /**
      * Indicates if this LegendItem is shown or hidden in the legend.

@@ -99,7 +99,7 @@ public class WMSLayer implements ILayer {;
 		return null;
 	}
 
-	public ImageDescriptor getGlyph() {
+	public ImageDescriptor getIcon() {
 		// TODO Auto-generated method stub
 		return null;
 	}

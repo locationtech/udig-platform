@@ -830,7 +830,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getLayer_Glyph() {
+    public EAttribute getLayer_CRS() {
         return (EAttribute) layerEClass.getEStructuralFeatures().get(11);
     }
 
@@ -838,16 +838,8 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getLayer_CRS() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(12);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
     public EReference getLayer_Properties() {
-        return (EReference) layerEClass.getEStructuralFeatures().get(13);
+        return (EReference) layerEClass.getEStructuralFeatures().get(12);
     }
 
     /**
@@ -855,7 +847,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_ColourScheme() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(14);
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(13);
     }
 
     /**
@@ -863,7 +855,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_DefaultColor() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(15);
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(14);
     }
 
     /**
@@ -871,7 +863,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_FeatureChanges() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(16);
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(15);
     }
 
     /**
@@ -880,7 +872,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_MinScaleDenominator() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(17);
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(16);
     }
 
     /**
@@ -889,7 +881,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_MaxScaleDenominator() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(18);
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(17);
     }
 
     /**
@@ -898,7 +890,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EReference getLayer_InteractionMap() {
-        return (EReference) layerEClass.getEStructuralFeatures().get(19);
+        return (EReference) layerEClass.getEStructuralFeatures().get(18);
     }
 
     /**
@@ -907,6 +899,15 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_Shown() {
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(19);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getLayer_Icon() {
         return (EAttribute) layerEClass.getEStructuralFeatures().get(20);
     }
 
@@ -1326,7 +1327,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getFolder_Glyph() {
+    public EAttribute getFolder_Shown() {
         return (EAttribute) folderEClass.getEStructuralFeatures().get(2);
     }
 
@@ -1335,7 +1336,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getFolder_Shown() {
+    public EAttribute getFolder_Icon() {
         return (EAttribute) folderEClass.getEStructuralFeatures().get(3);
     }
 
@@ -1362,7 +1363,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getLegendItem_Glyph() {
+    public EAttribute getLegendItem_Shown() {
         return (EAttribute) legendItemEClass.getEStructuralFeatures().get(1);
     }
 
@@ -1371,7 +1372,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getLegendItem_Shown() {
+    public EAttribute getLegendItem_Icon() {
         return (EAttribute) legendItemEClass.getEStructuralFeatures().get(2);
     }
 
@@ -1723,7 +1724,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         createEAttribute(layerEClass, LAYER__VISIBLE);
         createEAttribute(layerEClass, LAYER__GEO_RESOURCE);
         createEAttribute(layerEClass, LAYER__GEO_RESOURCES);
-        createEAttribute(layerEClass, LAYER__GLYPH);
         createEAttribute(layerEClass, LAYER__CRS);
         createEReference(layerEClass, LAYER__PROPERTIES);
         createEAttribute(layerEClass, LAYER__COLOUR_SCHEME);
@@ -1733,6 +1733,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         createEAttribute(layerEClass, LAYER__MAX_SCALE_DENOMINATOR);
         createEReference(layerEClass, LAYER__INTERACTION_MAP);
         createEAttribute(layerEClass, LAYER__SHOWN);
+        createEAttribute(layerEClass, LAYER__ICON);
 
         mapEClass = createEClass(MAP);
         createEReference(mapEClass, MAP__CONTEXT_MODEL);
@@ -1802,13 +1803,13 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         folderEClass = createEClass(FOLDER);
         createEReference(folderEClass, FOLDER__ITEMS);
         createEAttribute(folderEClass, FOLDER__NAME);
-        createEAttribute(folderEClass, FOLDER__GLYPH);
         createEAttribute(folderEClass, FOLDER__SHOWN);
+        createEAttribute(folderEClass, FOLDER__ICON);
 
         legendItemEClass = createEClass(LEGEND_ITEM);
         createEAttribute(legendItemEClass, LEGEND_ITEM__NAME);
-        createEAttribute(legendItemEClass, LEGEND_ITEM__GLYPH);
         createEAttribute(legendItemEClass, LEGEND_ITEM__SHOWN);
+        createEAttribute(legendItemEClass, LEGEND_ITEM__ICON);
 
         iLegendItemEClass = createEClass(ILEGEND_ITEM);
 
@@ -1871,17 +1872,16 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         setNsURI(eNS_URI);
 
         // Obtain other dependent packages
-        EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
-                .getEPackage(EcorePackage.eNS_URI);
         RenderPackage theRenderPackage = (RenderPackage) EPackage.Registry.INSTANCE
                 .getEPackage(RenderPackage.eNS_URI);
+        EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
+                .getEPackage(EcorePackage.eNS_URI);
 
         // Create type parameters
 
         // Set bounds for type parameters
 
         // Add supertypes to classes
-        iLayerEClass.getESuperTypes().add(this.getILegendItem());
         editManagerEClass.getESuperTypes().add(this.getIEditManager());
         layerEClass.getESuperTypes().add(this.getILayer());
         layerEClass.getESuperTypes().add(this.getIAdaptable());
@@ -1895,7 +1895,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         styleBlackboardEClass.getESuperTypes().add(this.getIStyleBlackboard());
         styleBlackboardEClass.getESuperTypes().add(this.getCloneable());
         blackboardEClass.getESuperTypes().add(this.getIBlackboard());
-        iFolderEClass.getESuperTypes().add(this.getILegendItem());
         folderEClass.getESuperTypes().add(this.getIFolder());
         legendItemEClass.getESuperTypes().add(this.getILegendItem());
 
@@ -2038,10 +2037,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 this.getIGeoResource(),
                 "geoResources", null, 0, -1, Layer.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEAttribute(
-                getLayer_Glyph(),
-                this.getImageDescriptor(),
-                "glyph", null, 0, 1, Layer.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
                 getLayer_CRS(),
                 this.getCoordinateReferenceSystem(),
                 "cRS", null, 0, 1, Layer.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -2077,8 +2072,12 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 "interactionMap", null, 0, -1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEAttribute(
                 getLayer_Shown(),
-                theEcorePackage.getEBoolean(),
+                ecorePackage.getEBoolean(),
                 "shown", null, 0, 1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getLayer_Icon(),
+                this.getImageDescriptor(),
+                "icon", null, 0, 1, Layer.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         op = addEOperation(layerEClass, this.getQuery(), "getQuery", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEBoolean(), "selection", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -2339,31 +2338,31 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 "items", null, 0, -1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEAttribute(
                 getFolder_Name(),
-                theEcorePackage.getEString(),
+                ecorePackage.getEString(),
                 "name", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEAttribute(
-                getFolder_Glyph(),
-                this.getImageDescriptor(),
-                "glyph", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
                 getFolder_Shown(),
-                theEcorePackage.getEBoolean(),
+                ecorePackage.getEBoolean(),
                 "shown", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getFolder_Icon(),
+                this.getImageDescriptor(),
+                "icon", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         initEClass(legendItemEClass, LegendItem.class,
                 "LegendItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEAttribute(
                 getLegendItem_Name(),
-                theEcorePackage.getEString(),
+                ecorePackage.getEString(),
                 "name", null, 0, 1, LegendItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEAttribute(
-                getLegendItem_Glyph(),
-                this.getImageDescriptor(),
-                "glyph", null, 0, 1, LegendItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
                 getLegendItem_Shown(),
-                theEcorePackage.getEBoolean(),
+                ecorePackage.getEBoolean(),
                 "shown", null, 0, 1, LegendItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getLegendItem_Icon(),
+                this.getImageDescriptor(),
+                "icon", null, 0, 1, LegendItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         initEClass(iLegendItemEClass, ILegendItem.class,
                 "ILegendItem", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

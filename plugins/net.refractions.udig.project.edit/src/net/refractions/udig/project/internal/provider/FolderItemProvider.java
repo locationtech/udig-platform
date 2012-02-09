@@ -73,8 +73,8 @@ public class FolderItemProvider extends ItemProviderAdapter
             super.getPropertyDescriptors(object);
 
             addNamePropertyDescriptor(object);
-            addGlyphPropertyDescriptor(object);
             addShownPropertyDescriptor(object);
+            addIconPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -98,24 +98,6 @@ public class FolderItemProvider extends ItemProviderAdapter
     }
 
     /**
-     * This adds a property descriptor for the Glyph feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addGlyphPropertyDescriptor( Object object ) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Folder_glyph_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Folder_glyph_feature", "_UI_Folder_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.FOLDER__GLYPH, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-    }
-
-    /**
      * This adds a property descriptor for the Shown feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -131,6 +113,24 @@ public class FolderItemProvider extends ItemProviderAdapter
                                 "_UI_PropertyDescriptor_description", "_UI_Folder_shown_feature", "_UI_Folder_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         ProjectPackage.Literals.FOLDER__SHOWN, true, false, false,
                         ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+    }
+
+    /**
+     * This adds a property descriptor for the Icon feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addIconPropertyDescriptor( Object object ) {
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(
+                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                        getResourceLocator(),
+                        getString("_UI_Folder_icon_feature"), //$NON-NLS-1$
+                        getString(
+                                "_UI_PropertyDescriptor_description", "_UI_Folder_icon_feature", "_UI_Folder_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        ProjectPackage.Literals.FOLDER__ICON, true, false, false,
+                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -210,8 +210,8 @@ public class FolderItemProvider extends ItemProviderAdapter
 
         switch( notification.getFeatureID(Folder.class) ) {
         case ProjectPackage.FOLDER__NAME:
-        case ProjectPackage.FOLDER__GLYPH:
         case ProjectPackage.FOLDER__SHOWN:
+        case ProjectPackage.FOLDER__ICON:
             fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
                     false, true));
             return;

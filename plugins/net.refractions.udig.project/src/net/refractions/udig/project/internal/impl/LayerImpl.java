@@ -952,20 +952,39 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public ImageDescriptor getGlyph() {
-        return glyph;
+    public ImageDescriptor getIcon() {
+        return icon;
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * please use getIcon
+     * @deprecated
+     * @generated NOT
+     */
+    public ImageDescriptor getGlyph() {
+        return getIcon();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void setGlyph( ImageDescriptor newGlyph ) {
-        ImageDescriptor oldGlyph = glyph;
-        glyph = newGlyph;
+    public void setIcon( ImageDescriptor newIcon ) {
+        ImageDescriptor oldIcon = icon;
+        icon = newIcon;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__GLYPH,
-                    oldGlyph, glyph));
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__ICON,
+                    oldIcon, icon));
+    }
+
+    /**
+     * please use setIcon
+     * @deprecated
+     * @generated NOT
+     */
+    public void setGlyph( ImageDescriptor icon ) {
+        setIcon(icon);
     }
 
     /**
@@ -1131,26 +1150,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected volatile EList<IGeoResource> geoResources = null;
 
     /**
-     * The default value of the '{@link #getGlyph() <em>Glyph</em>}' attribute.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
-     * @see #getGlyph()
-     * @generated
-     * @ordered
-     */
-    protected static final ImageDescriptor GLYPH_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getGlyph() <em>Glyph</em>}' attribute. <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
-     * 
-     * @see #getGlyph()
-     * @generated NOT
-     * @ordered
-     */
-    protected volatile ImageDescriptor glyph = GLYPH_EDEFAULT;
-
-    /**
      * The default value of the '{@link #getCRS() <em>CRS</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1299,6 +1298,26 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @ordered
      */
     protected boolean shown = SHOWN_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getIcon() <em>Icon</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIcon()
+     * @generated
+     * @ordered
+     */
+    protected static final ImageDescriptor ICON_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getIcon() <em>Icon</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIcon()
+     * @generated
+     * @ordered
+     */
+    protected ImageDescriptor icon = ICON_EDEFAULT;
 
     private volatile String statusMessage = Messages.LayerImpl_status;
 
@@ -1740,8 +1759,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return getGeoResource();
         case ProjectPackage.LAYER__GEO_RESOURCES:
             return getGeoResources();
-        case ProjectPackage.LAYER__GLYPH:
-            return getGlyph();
         case ProjectPackage.LAYER__CRS:
             return getCRS();
         case ProjectPackage.LAYER__PROPERTIES:
@@ -1763,6 +1780,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 return getInteractionMap();
         case ProjectPackage.LAYER__SHOWN:
             return isShown();
+        case ProjectPackage.LAYER__ICON:
+            return getIcon();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -1805,9 +1824,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__GEO_RESOURCE:
             setGeoResource((IGeoResource) newValue);
             return;
-        case ProjectPackage.LAYER__GLYPH:
-            setGlyph((ImageDescriptor) newValue);
-            return;
         case ProjectPackage.LAYER__CRS:
             setCRS((CoordinateReferenceSystem) newValue);
             return;
@@ -1833,6 +1849,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return;
         case ProjectPackage.LAYER__SHOWN:
             setShown((Boolean) newValue);
+            return;
+        case ProjectPackage.LAYER__ICON:
+            setIcon((ImageDescriptor) newValue);
             return;
         }
         super.eSet(featureID, newValue);
@@ -1875,9 +1894,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__GEO_RESOURCE:
             setGeoResource(GEO_RESOURCE_EDEFAULT);
             return;
-        case ProjectPackage.LAYER__GLYPH:
-            setGlyph(GLYPH_EDEFAULT);
-            return;
         case ProjectPackage.LAYER__CRS:
             setCRS(CRS_EDEFAULT);
             return;
@@ -1901,6 +1917,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return;
         case ProjectPackage.LAYER__SHOWN:
             setShown(SHOWN_EDEFAULT);
+            return;
+        case ProjectPackage.LAYER__ICON:
+            setIcon(ICON_EDEFAULT);
             return;
         }
         super.eUnset(featureID);
@@ -1937,8 +1956,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
                     .equals(geoResource);
         case ProjectPackage.LAYER__GEO_RESOURCES:
             return geoResources != null && !geoResources.isEmpty();
-        case ProjectPackage.LAYER__GLYPH:
-            return GLYPH_EDEFAULT == null ? glyph != null : !GLYPH_EDEFAULT.equals(glyph);
         case ProjectPackage.LAYER__CRS:
             return CRS_EDEFAULT == null ? cRS != null : !CRS_EDEFAULT.equals(cRS);
         case ProjectPackage.LAYER__PROPERTIES:
@@ -1959,6 +1976,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return interactionMap != null && !interactionMap.isEmpty();
         case ProjectPackage.LAYER__SHOWN:
             return shown != SHOWN_EDEFAULT;
+        case ProjectPackage.LAYER__ICON:
+            return ICON_EDEFAULT == null ? icon != null : !ICON_EDEFAULT.equals(icon);
         }
         return super.eIsSet(featureID);
     }

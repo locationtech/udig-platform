@@ -104,7 +104,7 @@ public class ContextModelListenerAdapter extends AdapterImpl {
         }// if
         else if (msg.getNotifier() instanceof Layer) {
             switch( msg.getFeatureID(Layer.class) ) {
-            case ProjectPackage.LAYER__GLYPH: {
+            case ProjectPackage.LAYER__ICON: {
                 glyphChanged(msg);
                 break;
             }// case
