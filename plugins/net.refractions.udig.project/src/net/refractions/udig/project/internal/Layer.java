@@ -190,6 +190,32 @@ public interface Layer
     public Map<Interaction, Boolean> getInteractionMap();
 
     /**
+     * Returns the value of the '<em><b>Shown</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Shown</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Shown</em>' attribute.
+     * @see #setShown(boolean)
+     * @see net.refractions.udig.project.internal.ProjectPackage#getLayer_Shown()
+     * @model
+     * @generated
+     */
+    boolean isShown();
+
+    /**
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#isShown <em>Shown</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Shown</em>' attribute.
+     * @see #isShown()
+     * @generated
+     */
+    void setShown( boolean value );
+
+    /**
      * Set interaction applicability.
      * 
      * @param interaction of the layer being considered
@@ -330,16 +356,17 @@ public interface Layer
      * @uml.property name="glyph"
      * @model transient="true"
      */
-    public ImageDescriptor getGlyph();
+    public ImageDescriptor getIcon();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getGlyph <em>Glyph</em>}' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @param value the new value of the '<em>Glyph</em>' attribute.
-     * @see #getGlyph()
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getIcon <em>Icon</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Icon</em>' attribute.
+     * @see #getIcon()
      * @generated
      */
-    void setGlyph( ImageDescriptor value );
+    void setIcon( ImageDescriptor value );
 
     /**
      * Query that selects all the features for the layer.

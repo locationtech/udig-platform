@@ -72,8 +72,6 @@
         transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="geoResources" upperBound="-1"
         eType="#//IGeoResource" changeable="false" transient="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="glyph" eType="#//ImageDescriptor"
-        transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cRS" eType="#//CoordinateReferenceSystem"
         transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" eType="#//IBlackboard"
@@ -86,6 +84,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxScaleDenominator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="interactionMap" upperBound="-1"
         eType="#//InteractionToEBooleanObjectMapEntry" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shown" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="icon" eType="#//ImageDescriptor"
+        transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Map" eSuperTypes="#//ProjectElement #//IMap">
     <eOperations name="getBounds" eType="#//ReferencedEnvelope">
@@ -118,6 +119,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="colourScheme" eType="#//ColourScheme"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="blackBoardInternal" eType="#//Blackboard"
         containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="legend" upperBound="-1"
+        eType="#//ILegendItem" containment="true" resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//IProject">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -210,6 +213,22 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="#//Interaction"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBooleanObject"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IFolder" instanceClassName="net.refractions.udig.project.IFolder"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Folder" eSuperTypes="#//IFolder">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
+        eType="#//ILegendItem" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shown" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="icon" eType="#//ImageDescriptor"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LegendItem" eSuperTypes="#//ILegendItem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shown" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="icon" eType="#//ImageDescriptor"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ILegendItem" instanceClassName="net.refractions.udig.project.ILegendItem"
+      abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Coordinate" instanceClassName="com.vividsolutions.jts.geom.Coordinate"/>
   <eClassifiers xsi:type="ecore:EDataType" name="MapDisplay" instanceClassName="net.refractions.udig.project.render.displayAdapter.IMapDisplay"/>
   <eClassifiers xsi:type="ecore:EDataType" name="List" instanceClassName="java.util.List"/>

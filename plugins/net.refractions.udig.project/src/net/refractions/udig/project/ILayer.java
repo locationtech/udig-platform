@@ -1,5 +1,5 @@
 /*
- * uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004,
+ * uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004-2012,
  * Refractions Research Inc. This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by the Free Software
  * Foundation; version 2.1 of the License. This library is distributed in the hope that it will be
@@ -32,7 +32,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * @author Jesse
  * @since 1.0.0
  */
-public interface ILayer extends Comparable<ILayer> {
+public interface ILayer extends ILegendItem, Comparable<ILayer> {
 
     /**
      * Indicates the crs that will be used if the layer does not declare a crs. This crs is wgs84
@@ -283,7 +283,7 @@ public interface ILayer extends Comparable<ILayer> {
      * 
      * @return Custom glyph - or null if none available.
      */
-    public ImageDescriptor getGlyph();
+    public ImageDescriptor getIcon();
 
     /**
      * Query that selects all the features for the layer.

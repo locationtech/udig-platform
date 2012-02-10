@@ -290,6 +290,52 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.Folder} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected FolderItemProvider folderItemProvider;
+
+    /**
+     * This creates an adapter for a {@link net.refractions.udig.project.internal.Folder}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createFolderAdapter() {
+        if (folderItemProvider == null) {
+            folderItemProvider = new FolderItemProvider(this);
+        }
+
+        return folderItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.LegendItem} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected LegendItemItemProvider legendItemItemProvider;
+
+    /**
+     * This creates an adapter for a {@link net.refractions.udig.project.internal.LegendItem}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createLegendItemAdapter() {
+        if (legendItemItemProvider == null) {
+            legendItemItemProvider = new LegendItemItemProvider(this);
+        }
+
+        return legendItemItemProvider;
+    }
+
+    /**
      * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.EditManager} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

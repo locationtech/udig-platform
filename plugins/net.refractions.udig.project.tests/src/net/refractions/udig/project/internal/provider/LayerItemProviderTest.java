@@ -51,7 +51,7 @@ public class LayerItemProviderTest extends TestCase {
             image = (Image) fac.getImage(layer);
             assertNotSame(image, image2);
             
-            layer.setGlyph(Glyph.geometry(Color.GREEN, Color.RED));
+            layer.setIcon(Glyph.geometry(Color.GREEN, Color.RED));
             image2 = (Image) fac.getImage(layer);
             assertNotSame(image, image2);
             

@@ -30,8 +30,10 @@ import net.refractions.udig.project.internal.BlackboardEntry;
 import net.refractions.udig.project.internal.CatalogRef;
 import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.EditManager;
+import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerFactory;
+import net.refractions.udig.project.internal.LegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Project;
 import net.refractions.udig.project.internal.ProjectFactory;
@@ -146,6 +148,10 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
             return createBlackboardEntry();
         case ProjectPackage.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY:
             return (EObject) createInteractionToEBooleanObjectMapEntry();
+        case ProjectPackage.FOLDER:
+            return createFolder();
+        case ProjectPackage.LEGEND_ITEM:
+            return createLegendItem();
         default:
             throw new IllegalArgumentException(
                     "The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -399,6 +405,26 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
     public java.util.Map.Entry<Interaction, Boolean> createInteractionToEBooleanObjectMapEntry() {
         InteractionToEBooleanObjectMapEntryImpl interactionToEBooleanObjectMapEntry = new InteractionToEBooleanObjectMapEntryImpl();
         return interactionToEBooleanObjectMapEntry;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Folder createFolder() {
+        FolderImpl folder = new FolderImpl();
+        return folder;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public LegendItem createLegendItem() {
+        LegendItemImpl legendItem = new LegendItemImpl();
+        return legendItem;
     }
 
     /**

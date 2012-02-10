@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import net.refractions.udig.project.ILegendItem;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.locks.Lock;
 
@@ -64,6 +65,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -72,6 +74,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Display;
@@ -278,6 +282,16 @@ public class MapImpl extends EObjectImpl implements Map {
      * @ordered
      */
     protected volatile Blackboard blackBoardInternal = null;
+
+    /**
+     * The cached value of the '{@link #getLegend() <em>Legend</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getLegend()
+     * @generated
+     * @ordered
+     */
+    protected EList<ILegendItem> legend;
 
     /**
      * <p>
@@ -916,7 +930,7 @@ public class MapImpl extends EObjectImpl implements Map {
         if (eNotificationRequired()) {
             // create bas notification
             ENotificationImpl notifications = new BatchNotification(this, eventType,
-                    ProjectPackage.MAP__BATCH_EVENT);
+                    ProjectPackage.MAP_FEATURE_COUNT + 1);
             // Create layer notifications
             for( Layer layer : getContextModel().getLayers() ) {
                 EStructuralFeature feature = layer.eClass().getEStructuralFeature(featureID);
@@ -1079,6 +1093,8 @@ public class MapImpl extends EObjectImpl implements Map {
             return basicSetRenderManagerInternal(null, msgs);
         case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
             return basicSetBlackBoardInternal(null, msgs);
+        case ProjectPackage.MAP__LEGEND:
+            return ((InternalEList< ? >) getLegend()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -1119,6 +1135,8 @@ public class MapImpl extends EObjectImpl implements Map {
             return getColourScheme();
         case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
             return getBlackBoardInternal();
+        case ProjectPackage.MAP__LEGEND:
+            return getLegend();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -1128,6 +1146,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet( int featureID, Object newValue ) {
         switch( featureID ) {
@@ -1163,6 +1182,10 @@ public class MapImpl extends EObjectImpl implements Map {
             return;
         case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
             setBlackBoardInternal((Blackboard) newValue);
+            return;
+        case ProjectPackage.MAP__LEGEND:
+            getLegend().clear();
+            getLegend().addAll((Collection< ? extends ILegendItem>) newValue);
             return;
         }
         super.eSet(featureID, newValue);
@@ -1209,6 +1232,9 @@ public class MapImpl extends EObjectImpl implements Map {
         case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
             setBlackBoardInternal((Blackboard) null);
             return;
+        case ProjectPackage.MAP__LEGEND:
+            getLegend().clear();
+            return;
         }
         super.eUnset(featureID);
     }
@@ -1254,6 +1280,8 @@ public class MapImpl extends EObjectImpl implements Map {
                     .equals(colourScheme);
         case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
             return blackBoardInternal != null;
+        case ProjectPackage.MAP__LEGEND:
+            return legend != null && !legend.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -1494,6 +1522,19 @@ public class MapImpl extends EObjectImpl implements Map {
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__BLACK_BOARD_INTERNAL, newBlackBoardInternal,
                     newBlackBoardInternal));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public List<ILegendItem> getLegend() {
+        if (legend == null) {
+            legend = new EObjectContainmentEList<ILegendItem>(ILegendItem.class, this,
+                    ProjectPackage.MAP__LEGEND);
+        }
+        return legend;
     }
 
     /**
