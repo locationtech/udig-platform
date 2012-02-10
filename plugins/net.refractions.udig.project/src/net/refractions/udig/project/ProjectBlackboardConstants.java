@@ -100,8 +100,9 @@ public interface ProjectBlackboardConstants {
     String LAYER__LAST_RESORT_RENDERER=RendererCreator.LAST_RESORT_RENDERER_ID;
     /**
      * If a filter or a query is on a layer's blackboard under the key: the {@link #LAYER__DATA_QUERY} then the
-     * interceptor {@link ShowViewInterceptor} will return the "view" see {@link DataStore#getView(Query)}.   
-     * In addition Renderers should attempt to use the query to filter what is displayed.
+     * interceptor {@link ShowViewInterceptor} will return the "view" see {@link DataStore#getView(Query)}.
+     *    
+     * In addition Renderers should attempt to use the query to filter what is displayed:
      * <p>If a filter is in the layer {@link StyleBlackboard} then the filter will only apply to that layer.  </p>
      * <p>If a query is in the Layer {@link StyleBlackboard} then it will be applied to the layer even if the type name is incorrect</p>
      * <p>If there is a filter or query on both the Map blackboard and 
@@ -110,6 +111,14 @@ public interface ProjectBlackboardConstants {
      * @see #MAP__DATA_QUERY
      */
     String LAYER__DATA_QUERY = "net.refractions.udig.project.view"; //$NON-NLS-1$
+    
+    /**
+     * Key for a FilterStyle used to provided user supplied filtering of content during rendering.
+     * <p>
+     * The FilterStyle object includes both a user supplied filter; and various flags and settings allowing
+     * the user to interact with facilities such as the Area of Interest.
+     */
+    String LAYER__STYLE_FILTER = "net.refractions.udig.style.filter"; //$NON-NLS-1$
 
     /**
      * Key to indicate a layer may be edited.

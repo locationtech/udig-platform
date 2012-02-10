@@ -7,7 +7,7 @@ Bundle-Activator: net.refractions.udig.style.sld.SLDPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Eclipse-BuddyPolicy: global
-Export-Package: net.refractions.udig.filter,
+Export-Package: net.refractions.udig.style.filter,
  net.refractions.udig.style.sld,
  net.refractions.udig.style.sld.editor,
  net.refractions.udig.style.sld.editor.internal,

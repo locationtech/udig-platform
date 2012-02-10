@@ -51,6 +51,7 @@ public class BasicFeatureMetrics extends AbstractRenderMetrics {
         ArrayList<String> styleIds = new ArrayList<String>();
         styleIds.add(SLDContent.ID);
         styleIds.add(ProjectBlackboardConstants.LAYER__DATA_QUERY);
+        styleIds.add(ProjectBlackboardConstants.LAYER__STYLE_FILTER);
         styleIds.add("net.refractions.udig.style.cache");
         
         return styleIds;
