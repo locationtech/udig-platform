@@ -112,7 +112,10 @@ class MergeFeatureBuilder {
 	private static final Object			NULL_GEOM		= new Object();
 	private EventListenerList			listeners		= new EventListenerList();
 	private SimpleFeatureType			featureType;
+	
+	/** maintains a list of features. A feature cannot be two times in the list*/
 	private List<SimpleFeature>			sourceFeatures = new LinkedList<SimpleFeature>();
+	
 	private Object						mergedGeometry;
 	private Object[]					mergedFeature;
 	private int							defaultGeometryIndex;
@@ -150,17 +153,15 @@ class MergeFeatureBuilder {
 		assert layer != null;
 
 		this.layer = layer;
-		this.mergedGeometry = mergedGeometry;
-		if (mergedGeometry == null) {
-			this.mergedGeometry = NULL_GEOM;
-		}
-		if (sourceFeatures.size() < 1) {
-			throw new IllegalArgumentException("Expected at least one source feature"); //$NON-NLS-1$
-		}
+		this.mergedGeometry = (mergedGeometry != null)? mergedGeometry: NULL_GEOM;
+// FIXME it is not true right now
+//		if (sourceFeatures.size() < 1) {
+//			throw new IllegalArgumentException("Expected at least one source feature"); //$NON-NLS-1$
+//		}
 
 		assert compatibleFeatureType(sourceFeatures):"Features in the collection must conform to a common schema"; //$NON-NLS-1$
 		
-		this.sourceFeatures = sourceFeatures;
+		addSourceFeature(sourceFeatures);
 		
 		GeometryDescriptor defaultGeometry = featureType.getGeometryDescriptor();
 		assert defaultGeometry != null: "Feature schema does not contain a default geometry"; //$NON-NLS-1$
@@ -204,20 +205,25 @@ class MergeFeatureBuilder {
 	 */
 	public void addSourceFeature(List<SimpleFeature> featureList) {
 		
-		this.sourceFeatures.addAll(featureList);
+		for (SimpleFeature feature : featureList) {
+			addSourceFeature(feature);
+		}
 		
 	}
 	
 	/**
-	 * adds the feature as last element
+	 * Adds the feature as last element. If the feature is present in the list it won't be added.
+	 * 
 	 * @param feature
-	 * @return return the position of the added feature
+	 * @return return the position of the added feature.  -1 will be returned because the feature had added previously.
 	 */
 	public int addSourceFeature(SimpleFeature feature) {
-		
+		if(this.sourceFeatures.contains(feature)){
+			return -1;
+		}
 		this.sourceFeatures.add(feature);
+
 		return this.sourceFeatures.size()-1;
-		
 	}
 
 	

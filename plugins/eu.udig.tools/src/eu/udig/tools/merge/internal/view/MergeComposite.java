@@ -520,9 +520,9 @@ class MergeComposite extends Composite {
 
 		try {
 			
-			assert !sourceFeatures.isEmpty() :"nothing to merge"; //$NON-NLS-1$
+			assert !sourceFeatures.isEmpty() :"nothing to merge"; //FIXME this assertion is not true, because the feature source could be null. So the feature type should be gotten from the layer 
 			
-			SimpleFeatureType type = sourceFeatures.get(0).getFeatureType();
+			SimpleFeatureType type = layer.getSchema();// sourceFeatures.get(0).getFeatureType();
 			final Class<?> expectedGeometryType = type.getGeometryDescriptor()
 					.getType().getBinding();
 			
@@ -895,6 +895,8 @@ class MergeComposite extends Composite {
 	 */
 	private void populateSourceFeaturesView() {
 		
+		this.treeFeatures.removeAll();
+		
 		final int featureCount = builder.getFeatureCount();
 		// add feature as parent
 		for (int featureIndex = 0; featureIndex < featureCount; featureIndex++) {
@@ -941,6 +943,10 @@ class MergeComposite extends Composite {
 	private void displaySourceFeature(SimpleFeature feature){
 
 		int position = this.builder.addSourceFeature(feature);
+		if(position == -1){
+			// it was inserted previously y the source feature list. 
+			return;
+		}
 		
 		TreeItem featureItem = new TreeItem(this.treeFeatures, SWT.NONE);
 			// store the feature id
@@ -1026,6 +1032,8 @@ class MergeComposite extends Composite {
 			setMessage(this.message, IMessageProvider.WARNING);
 			valid = false;
 		}
+		// TODO it is necesary to analyze the geometry type. 
+		// Multi geometries could be merge allways but simple geometries should be in contact (touchs, intersects, etc).
 		this.mergeView.canMerge(valid);
 		
 		return valid;
