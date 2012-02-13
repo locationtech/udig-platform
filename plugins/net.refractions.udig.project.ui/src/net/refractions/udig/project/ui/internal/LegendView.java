@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2004-2011, Refractions Research Inc.
+ * (C) 2004-2012, Refractions Research Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -102,23 +102,18 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 
 /**
- * TODO Purpose of
- * <p>
- * <ul>
- * <li></li>
- * </ul>
- * </p>
+ * The Legend View. This view allows the user to group layers together and set them into different
+ * categories. The view also provides facilities to show/hide map graphics and background layers.
+ * Also, additional layer sorting functionalities (similar to power-point sorting) are implemented.
  * 
  * @author nchan
- * @since 1.2.0
+ * @since 1.3.1
  */
 public class LegendView extends ViewPart
         implements
             IDropTargetProvider,
             IDoubleClickListener,
             ISelectionChangedListener {
-
-    //TODO - Class variables start here
     
     public static final String ID = "net.refractions.udig.project.ui.legendManager"; //$NON-NLS-1$
     
@@ -151,8 +146,6 @@ public class LegendView extends ViewPart
     private IBlackboardListener mylarListener = new BlackboardListener();
     private IViewportModelListener zoomListener = new ViewportModelListener();
     private Adapter checkboxContextListener = new CheckboxContextListener();
-    
-    //TODO - Methods start here
     
     /**
      * @see org.eclipse.ui.IWorkbenchPart#setFocus()
@@ -368,8 +361,6 @@ public class LegendView extends ViewPart
         return super.getAdapter(key);
     }
 
-    //TODO - Viewer's checkboxes maintenance functions 
-
     /**
      * Updates the viewer's checkbox display of the layer parameter with respect to its visibility.
      * Method called from the notifications of checkboxContextListener
@@ -462,8 +453,6 @@ public class LegendView extends ViewPart
         }
         return false;
     }
-
-    //TODO - Toolbar actions creation/initialization methods
     
     private void addToobarActions() {
         
@@ -562,8 +551,6 @@ public class LegendView extends ViewPart
                 ISharedImages.BACK_CO));
         return backAction;
     }
-    
-    //TODO - Context menu creation/initialization methods
     
     /**
      * Creates a context menu
@@ -688,8 +675,6 @@ public class LegendView extends ViewPart
         
     }
 
-    //TODO - Singleton methods of view
-
     @Override
     public void init( IViewSite site ) throws PartInitException {
         super.init(site);
@@ -711,8 +696,6 @@ public class LegendView extends ViewPart
         return viewPart.viewer;
         
     }
-    
-    //TODO - Methods from interfaces
     
     /**
      * Method implemented from IDropTargetProvider
@@ -793,22 +776,10 @@ public class LegendView extends ViewPart
         }
 
     }
-
-    
-    //TODO - Internal classes
     
     /**
      * Listens to changes on layer selection of the current map. Updates the viewer when necessary.
      * Ex. A new layer is selected.
-     * 
-     * <p>
-     * <ul>
-     * <li></li>
-     * </ul>
-     * </p>
-     * 
-     * @author nchan
-     * @since 1.2.0
      */
     private class EditManagerListener implements IEditManagerListener {
         
@@ -860,6 +831,10 @@ public class LegendView extends ViewPart
 
     }
     
+    /**
+     * The abstract class for the sorting actions. This also acts as a selection listener to manage
+     * enabling/disabling of the buttons.
+     */
     private abstract class LayerAction extends Action implements ISelectionListener {
 
         protected IStructuredSelection selection;
@@ -958,7 +933,6 @@ public class LegendView extends ViewPart
          */
         public void partClosed( IWorkbenchPart part ) {
             
-            //TODO - [nchan] Will this ever happen?
             if (part == this) {
                 disposeInternal();
                 return;
@@ -989,6 +963,9 @@ public class LegendView extends ViewPart
 
     }
     
+    /**
+     * Listens to changes in the blackboard and sets/refreshes the viewer as necessary.
+     */
     private class BlackboardListener implements IBlackboardListener {
 
         @Override
@@ -1022,6 +999,9 @@ public class LegendView extends ViewPart
         
     }
     
+    /**
+     * This listener listens to label provider changes and refreshes the viewer as necessary.
+     */
     private class LabelProviderListerner implements ILabelProviderListener {
 
         @Override
@@ -1056,6 +1036,10 @@ public class LegendView extends ViewPart
         
     }
     
+    /**
+     * This listener is designed to act as 'zoom change listener' and listens to viewport model
+     * changes and updates the viewer as necessary.
+     */
     private class ViewportModelListener implements IViewportModelListener {
 
         @Override
@@ -1069,11 +1053,15 @@ public class LegendView extends ViewPart
         
     }
     
+    /**
+     * This listener is designed to be added as a deep adapter to map and listens to changes both to
+     * the map and its contained layers and updates the checkboxes as necessary.
+     */
     private class CheckboxContextListener extends AdapterImpl {
         
         @SuppressWarnings({"unchecked", "deprecation"})
         public void notifyChanged( final Notification msg ) {
-
+        
             if (msg.getNotifier() instanceof ContextModel) {
                 ContextModel contextModel = (ContextModel) msg.getNotifier();
                 Map map = contextModel.getMap();

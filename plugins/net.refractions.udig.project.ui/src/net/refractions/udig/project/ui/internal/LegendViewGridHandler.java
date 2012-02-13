@@ -1,3 +1,17 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004-2012, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.project.ui.internal;
 
 import java.util.ArrayList;
@@ -16,7 +30,14 @@ import net.refractions.udig.project.internal.commands.AddLayersCommand;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 
-
+/**
+ * 
+ * The Grid Handler of the Legend View. This class is designed to handle the maintenance of the
+ * grid layer visibility toggle functionality. 
+ * 
+ * @author nchan
+ * @since 1.3.1
+ */
 public class LegendViewGridHandler implements ILayerListener, IMapCompositionListener {
 
     private Map map;
@@ -25,10 +46,17 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
     
     private boolean isLegendViewAddingGrid = false;
     
+    /**
+     * Creates a LegendViewGridHandler
+     */
     public LegendViewGridHandler() {
         //Nothing yet
     }
     
+    /**
+     * Sets the current map
+     * @param map
+     */
     public void setMap(Map map) {
         cleanHandler();
         initMap(map);
@@ -36,6 +64,9 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
         setGridActionState();
     }
     
+    /**
+     * Cleans up the handler of listeners and objects.
+     */
     public void disposeHandler() {
         cleanHandler();
         if (gridAction != null) {
@@ -43,6 +74,9 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
         }
     }
     
+    /**
+     * Cleans the handler of listeners attached to the grid layers, current map and the current map itself.
+     */
     private void cleanHandler() {
         
         if (gridLayers != null) {
@@ -62,6 +96,10 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
         
     }
     
+    /**
+     * Initialises the current map and adds listeners to it.
+     * @param map
+     */
     private void initMap(Map map) {
         
         this.map = map;
@@ -72,6 +110,12 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
         
     }
     
+    /**
+     * Initialises the grid layers from the passed map. The method traverses the map and looks for
+     * grid layers and add these to the grid layers list.
+     * 
+     * @param map
+     */
     private void initGridLayers(Map map) {
         
         if (map != null) {
@@ -93,6 +137,10 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
                 
     }
     
+    /**
+     * Adds a grid layer to the grid layer list
+     * @param layer
+     */
     private void addGridLayer(Layer layer) {
         if (layer != null) {
             layer.addListener(this);
@@ -100,6 +148,10 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
         }
     }
     
+    /**
+     * Removes a grid layer from the grid layer list
+     * @param layer
+     */
     private void removeGridLayer(Layer layer) {
         if (layer != null) { 
             layer.removeListener(this);
@@ -107,6 +159,10 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
         }
     }
 
+    /**
+     * Initialises and returns the gridAction action.
+     * @return
+     */
     public Action getGridAction() {
         
         gridAction = new Action(null, IAction.AS_CHECK_BOX){
@@ -123,17 +179,27 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
         
     }
     
+    /**
+     * Toggles the visibility of the grid layers in the grid list
+     * @param isChecked
+     */
     private void toggleGrid(boolean isChecked) {
         for( Layer gridLayer : gridLayers ) {
             gridLayer.setVisible(isChecked);
         }
     }
     
+    /**
+     * ILayerListener method
+     */
     @Override
     public void refresh( LayerEvent event ) {
         setGridActionState();
     }
     
+    /**
+     * IMapCompositionListener method
+     */
     @Override
     public void changed( MapCompositionEvent event ) {
 
@@ -157,6 +223,10 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
         
     }
     
+    /**
+     * Sets the grid action (button) state. This manages the enabled/disabled and checked/unchecked
+     * states of the action.
+     */
     private void setGridActionState() {
         if (gridAction != null) {
             if (gridLayers == null) {
@@ -172,6 +242,9 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
         }
     }
 
+    /**
+     * This manages the checked/unchecked states of the action as well as toggling the tooltip.
+     */
     private void setGridActionCheckedState() {
         boolean isAtLeastOneVisible = false;
         for( Layer gridLayer : gridLayers ) {
