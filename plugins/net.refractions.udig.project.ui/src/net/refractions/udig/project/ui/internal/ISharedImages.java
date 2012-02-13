@@ -50,7 +50,10 @@ public interface ISharedImages {
     public final static String RIGHT_CO = Icons.ELOCALTOOL + "left_co.gif"; //$NON-NLS-1$
     /** drop down arrow * */
     public final static String DROP_DOWN_BUTTON = Icons.OVERLAY + "drop_down_ovr.gif"; //$NON-NLS-1$
-
+    /** Front arrow * */
+    public final static String FRONT_CO = Icons.ELOCALTOOL + "front_co.gif"; //$NON-NLS-1$
+    /** Back arrow * */
+    public final static String BACK_CO = Icons.ELOCALTOOL + "back_co.gif"; //$NON-NLS-1$
     // OVR
     //
 
@@ -151,6 +154,16 @@ public interface ISharedImages {
      * Represents a Map folder object
      */
     public static final String MAP_FOLDER_OBJ = OBJECT + "mapfolder_obj.gif"; //$NON-NLS-1$;
+    
+    /**
+     * Represents a Grid object
+     */
+    public static final String GRID_OBJ = OBJECT + "grid_map_praghic_obj.gif"; //$NON-NLS-1$;
+    
+    /**
+     * Represents a Map Graphic object
+     */
+    public static final String MAP_GRAPHIC_OBJ = OBJECT + "graphic_obj.gif"; //$NON-NLS-1$;
 
     /**
      * Represent a Project.

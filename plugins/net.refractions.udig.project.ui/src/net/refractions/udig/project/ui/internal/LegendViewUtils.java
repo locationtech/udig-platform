@@ -1,14 +1,15 @@
 package net.refractions.udig.project.ui.internal;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
-
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IRepository;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.internal.Layer;
+
+import org.eclipse.core.runtime.NullProgressMonitor;
 
 public final class LegendViewUtils {
 
@@ -18,6 +19,9 @@ public final class LegendViewUtils {
     private static final ID GRID_ID = new ID(GRID_URL, null);
     
     public static boolean isBackgroundLayer(ILayer layer) {
+        if( layer.getInteraction( Interaction.BACKGROUND ) ){
+            return true;
+         }
         return false;
     }
     

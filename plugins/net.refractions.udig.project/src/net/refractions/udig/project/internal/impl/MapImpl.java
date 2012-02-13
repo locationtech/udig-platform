@@ -1695,18 +1695,33 @@ public class MapImpl extends EObjectImpl implements Map {
     public void removeDeepAdapter( Adapter adapter ) {
         ((LayersList2) getLayersInternal()).removeDeepAdapter(adapter);
     }
+
     public void lowerLayer( Layer layer ) {
         int index = getLayersInternal().indexOf(layer);
         if (index == 0) return;
         ((LayersList2) getLayersInternal()).move(index--, index);
     }
-
     public void raiseLayer( Layer layer ) {
         int index = getLayersInternal().indexOf(layer);
         if (index > getLayersInternal().size() - 2) return;
         ((LayersList2) getLayersInternal()).move(index++, index);
     }
 
+    public void sendToFrontLayer( Layer layer) {
+        int index = getLayersInternal().indexOf(layer);
+        ((LayersList2) getLayersInternal()).move(getLayersInternal().size() - 1, index);
+    }
+    
+    public void sendToBackLayer( Layer layer) {
+        int index = getLayersInternal().indexOf(layer);
+        ((LayersList2) getLayersInternal()).move(0, index);
+    }
+    
+    public void sendToIndexLayer( Layer layer, int index) {
+        int currentIndex = getLayersInternal().indexOf(layer);
+        ((LayersList2) getLayersInternal()).move(index, currentIndex);
+    }
+    
     private SpatialOperator localize( SimpleFeatureType schema, SpatialOperator filter ) {
         DuplicatingFilterVisitor copier = new DuplicatingFilterVisitor();
         return (SpatialOperator) filter.accept(copier, null);

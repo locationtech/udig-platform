@@ -115,7 +115,7 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
                 toggleGrid(gridAction.isChecked());
             }
         };
-        gridAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.ADD_CO));
+        gridAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.GRID_OBJ));
         
         setGridActionState();
         

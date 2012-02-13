@@ -27,7 +27,9 @@ import net.refractions.udig.project.IEditManagerListener;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProjectElement;
+import net.refractions.udig.project.command.map.LayerMoveBackCommand;
 import net.refractions.udig.project.command.map.LayerMoveDownCommand;
+import net.refractions.udig.project.command.map.LayerMoveFrontCommand;
 import net.refractions.udig.project.command.map.LayerMoveUpCommand;
 import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.Layer;
@@ -52,8 +54,10 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
@@ -127,7 +131,10 @@ public class LegendView extends ViewPart
     private LegendViewFiltersHandler filtersHandler = new LegendViewFiltersHandler(this);
     
     private LayerAction downAction;
-    private LayerAction upAction;
+    private LayerAction upAction;    
+    private LayerAction frontAction;
+    private LayerAction backAction;
+
     
     private CheckboxTreeViewer viewer;
     private AdapterFactoryContentProvider contentProvider;
@@ -296,7 +303,7 @@ public class LegendView extends ViewPart
             final Object mapObj = (currentMap == null) ? emptyMap : currentMap;
             viewer.setInput(mapObj);
         }
-
+        
         //Init Edit Manager Listerner
         if (editManagerListener == null) {
             editManagerListener = new EditManagerListener();
@@ -462,8 +469,12 @@ public class LegendView extends ViewPart
         
         IToolBarManager mgr = getViewSite().getActionBars().getToolBarManager();
         
+        mgr.add(moveFrontAction());
         mgr.add(upAction());
         mgr.add(downAction());
+        mgr.add(moveBackAction());
+        
+        mgr.add(new Separator());
         
         //Added new functionalities for Legend View
         mgr.add(filtersHandler.getToggleMgAction());
@@ -487,7 +498,7 @@ public class LegendView extends ViewPart
             }
         };
         downAction.setEnabled(false);
-        downAction.setToolTipText(Messages.LayersView_down_tooltip);
+        downAction.setToolTipText(Messages.LegendView_down_tooltip);
         downAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
                 ISharedImages.DOWN_CO));
         return downAction;
@@ -509,12 +520,49 @@ public class LegendView extends ViewPart
             }
         };
         upAction.setEnabled(false);
-        upAction.setToolTipText(Messages.LayersView_up_tooltip);
+        upAction.setToolTipText(Messages.LegendView_up_tooltip);
         upAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
                 ISharedImages.UP_CO));
         return upAction;
     }
 
+    /**
+     * Create an action that moves a layer down in the rendering order
+     */
+    private LayerAction moveFrontAction() {
+        frontAction = new LayerAction(){
+            public void run() {
+                if (selection.isEmpty()) return;
+                getCurrentMap().sendCommandASync(new LayerMoveFrontCommand(currentMap, selection));
+            }
+        };
+        frontAction.setEnabled(false);
+        frontAction.setToolTipText(Messages.LegendView_front_tooltip);
+        frontAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
+                ISharedImages.FRONT_CO));
+        return frontAction;
+    }
+
+    /**
+     * Create an action that moves a layer up in the rendering order
+     */
+    private LayerAction moveBackAction() {
+        backAction = new LayerAction(){
+            /**
+             * @see org.eclipse.jface.action.Action#run()
+             */
+            public void run() {
+                if (selection.isEmpty()) return;
+                getCurrentMap().sendCommandASync(new LayerMoveBackCommand(currentMap, selection));
+            }
+        };
+        backAction.setEnabled(false);
+        backAction.setToolTipText(Messages.LegendView_back_tooltip);
+        backAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
+                ISharedImages.BACK_CO));
+        return backAction;
+    }
+    
     //TODO - Context menu creation/initialization methods
     
     /**

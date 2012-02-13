@@ -1,6 +1,8 @@
 package net.refractions.udig.project.ui.internal;
 
+import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.IMapCompositionListener;
+import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.MapCompositionEvent;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
@@ -10,7 +12,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 
-public class LegendViewFiltersHandler implements IMapCompositionListener {
+public class LegendViewFiltersHandler implements IMapCompositionListener, ILayerListener {
 
     private Action toggleMgLayerAction;
     private Action toggleBgLayerAction;
@@ -79,7 +81,7 @@ public class LegendViewFiltersHandler implements IMapCompositionListener {
             };
             toggleMgLayerAction.setToolTipText(Messages.LegendView_hide_mg_tooltip);
             toggleMgLayerAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
-                    ISharedImages.D_ADD_CO));            
+                    ISharedImages.MAP_GRAPHIC_OBJ));
         }
         
         return toggleMgLayerAction;
@@ -98,7 +100,7 @@ public class LegendViewFiltersHandler implements IMapCompositionListener {
             };
             toggleBgLayerAction.setToolTipText(Messages.LegendView_hide_bg_tooltip);
             toggleBgLayerAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
-                    ISharedImages.D_ADD_CO));            
+                    ISharedImages.LAYER_OBJ));            
         }
                 
         return toggleBgLayerAction;
@@ -199,7 +201,21 @@ public class LegendViewFiltersHandler implements IMapCompositionListener {
     //IMapCompositionListener method
     @Override
     public void changed( MapCompositionEvent event ) {
+        if (MapCompositionEvent.EventType.ADDED == event.getType()) {
+            final Layer layer = (Layer) event.getNewValue();
+            layer.addListener(this);
+        } else if (MapCompositionEvent.EventType.REMOVED == event.getType()) {
+            final Layer layer = (Layer) event.getOldValue();
+            layer.removeListener(this);
+        }
         setToggleLayersActionState();
+    }
+
+    //ILayerListener method
+    @Override
+    public void refresh( LayerEvent event ) {
+        //LegendView.getViewer().refresh();
+        //view.updateCheckboxes();
     }
     
 }

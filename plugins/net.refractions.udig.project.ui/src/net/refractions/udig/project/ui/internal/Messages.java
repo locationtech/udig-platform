@@ -220,6 +220,10 @@ public class Messages extends NLS {
 	public static String OpenProject_newProject_filename;
 	public static String LayersView_up_tooltip;
 	public static String LayersView_down_tooltip;
+	public static String LegendView_up_tooltip;
+    public static String LegendView_down_tooltip;
+	public static String LegendView_front_tooltip;
+    public static String LegendView_back_tooltip;
 	public static String LegendView_show_mg_tooltip;
 	public static String LegendView_hide_mg_tooltip;
 	public static String LegendView_show_bg_tooltip;

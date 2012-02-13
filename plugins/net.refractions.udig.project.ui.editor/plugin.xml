@@ -24,7 +24,7 @@
       <view
             category="net.refractions.udig.project.ui.project"
             class="net.refractions.udig.project.ui.internal.LegendView"
-            icon="icons/eview16/layer_view.gif"
+            icon="icons/eview16/legend_view.gif"
             id="net.refractions.udig.project.ui.legendManager"
             name="%LegendManager.name">
       </view>
