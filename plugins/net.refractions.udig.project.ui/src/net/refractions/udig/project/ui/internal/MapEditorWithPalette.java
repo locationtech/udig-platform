@@ -833,7 +833,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
             List<Layer> layers = getMap().getLayersInternal();
             List<Layer> layersToRemove = new ArrayList<Layer>();
             for( Layer layer : layers ) {
-                if (layer.getGeoResources().get(0).canResolve(ITransientResolve.class)) {
+                if (!layer.getGeoResources().isEmpty() && layer.getGeoResources().get(0).canResolve(ITransientResolve.class)) {
                     layersToRemove.add(layer);
                 }
             }
