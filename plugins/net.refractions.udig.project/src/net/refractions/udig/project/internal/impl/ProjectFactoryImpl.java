@@ -1160,8 +1160,9 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         map.setProjectInternal(owner);
         map.setViewportModelInternal(RenderFactory.eINSTANCE.createViewportModel());
         runMapCreationInterceptors(map);
-        if (!layers.isEmpty()) map.getLayersInternal().addAll(layers);
-
+        if (!layers.isEmpty()){
+            map.getLayersInternal().addAll(layers);
+        }
         return map;
     }
 
