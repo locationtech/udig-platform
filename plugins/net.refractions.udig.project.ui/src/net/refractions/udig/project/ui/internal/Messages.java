@@ -230,6 +230,7 @@ public class Messages extends NLS {
 	public static String LegendView_hide_bg_tooltip;
 	public static String LegendView_show_grid_tooltip;
 	public static String LegendView_hide_grid_tooltip;
+	public static String LegendView_new_folder_tooltip;
 	public static String MapImport_addingLayersTask;
 	public static String MapImport_createMap;
 	public static String MapImport_selectLayers;

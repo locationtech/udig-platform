@@ -36,6 +36,9 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.ProjectPlugin;
+import net.refractions.udig.project.internal.impl.LayerFactoryImpl;
+import net.refractions.udig.project.internal.impl.LayerImpl;
+import net.refractions.udig.project.internal.impl.MapLegendImpl;
 import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.render.IViewportModelListener;
 import net.refractions.udig.project.render.ViewportModelEvent;
@@ -129,7 +132,8 @@ public class LegendView extends ViewPart
     private LayerAction upAction;    
     private LayerAction frontAction;
     private LayerAction backAction;
-
+    
+    private IAction newFolderAction;
     
     private CheckboxTreeViewer viewer;
     private AdapterFactoryContentProvider contentProvider;
@@ -294,6 +298,8 @@ public class LegendView extends ViewPart
         //Set current map as viewer's input
         if (viewer != null) {
             final Object mapObj = (currentMap == null) ? emptyMap : currentMap;
+            final MapLegendImpl mapLegend = new MapLegendImpl((Map) mapObj);
+            //viewer.setInput(mapLegend);
             viewer.setInput(mapObj);
         }
         
@@ -458,6 +464,10 @@ public class LegendView extends ViewPart
         
         IToolBarManager mgr = getViewSite().getActionBars().getToolBarManager();
         
+        mgr.add(newFolderAction());
+        
+        mgr.add(new Separator());
+        
         mgr.add(moveFrontAction());
         mgr.add(upAction());
         mgr.add(downAction());
@@ -480,10 +490,8 @@ public class LegendView extends ViewPart
     private LayerAction downAction() {
         downAction = new LayerAction(){
             public void run() {
-                if (selection.isEmpty()) return;
-                IMap map = getCurrentMap();
-                // map.sendCommandSync( new LayerMoveDownCommand( selection ));
-                map.sendCommandASync(new LayerMoveDownCommand(selection));
+                if (isSelectionAllOrNothing(selection)) return;
+                getCurrentMap().sendCommandASync(new LayerMoveDownCommand(selection));
             }
         };
         downAction.setEnabled(false);
@@ -502,10 +510,8 @@ public class LegendView extends ViewPart
              * @see org.eclipse.jface.action.Action#run()
              */
             public void run() {
-                if (selection.isEmpty()) return;
-                IMap map = getCurrentMap();
-                // map.sendCommandSync( new LayerMoveUpCommand( selection ));
-                map.sendCommandASync(new LayerMoveUpCommand(selection));
+                if (isSelectionAllOrNothing(selection)) return;
+                getCurrentMap().sendCommandASync(new LayerMoveUpCommand(selection));
             }
         };
         upAction.setEnabled(false);
@@ -521,7 +527,7 @@ public class LegendView extends ViewPart
     private LayerAction moveFrontAction() {
         frontAction = new LayerAction(){
             public void run() {
-                if (selection.isEmpty()) return;
+                if (isSelectionAllOrNothing(selection)) return;
                 getCurrentMap().sendCommandASync(new LayerMoveFrontCommand(currentMap, selection));
             }
         };
@@ -541,7 +547,7 @@ public class LegendView extends ViewPart
              * @see org.eclipse.jface.action.Action#run()
              */
             public void run() {
-                if (selection.isEmpty()) return;
+                if (isSelectionAllOrNothing(selection)) return;
                 getCurrentMap().sendCommandASync(new LayerMoveBackCommand(currentMap, selection));
             }
         };
@@ -550,6 +556,32 @@ public class LegendView extends ViewPart
         backAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
                 ISharedImages.BACK_CO));
         return backAction;
+    }
+    
+    private boolean isSelectionAllOrNothing(IStructuredSelection selection) {
+        if (selection.isEmpty() || selection.size() == currentMap.getMapLayers().size()) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Create an action that creates a new folder
+     */
+    private IAction newFolderAction() {
+        if (newFolderAction == null) {
+            newFolderAction = new LayerAction(){
+                public void run() {
+                    //Add new folder
+                    System.out.println("Add new folder");
+                }
+            };
+            newFolderAction.setText("Add folder");
+            newFolderAction.setEnabled(false);
+            newFolderAction.setToolTipText(Messages.LegendView_new_folder_tooltip);
+            newFolderAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.ADD_CO));    
+        }
+        return newFolderAction;
     }
     
     /**
@@ -566,6 +598,9 @@ public class LegendView extends ViewPart
 
             public void menuAboutToShow( IMenuManager mgr ) {
 
+                contextMenu.add(newFolderAction());
+                contextMenu.add(new Separator());
+                
                 contextMenu.add(ApplicationGIS.getToolManager().getCOPYAction(LegendView.this));
                 contextMenu.add(ApplicationGIS.getToolManager().getPASTEAction(LegendView.this));
                 contextMenu.add(getDeleteAction());
