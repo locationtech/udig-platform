@@ -172,7 +172,7 @@ public class InfoView2 extends SearchPart {
                 ImageDescriptor icon;
                 icon = (ImageDescriptor) layer.getProperties().get("generated icon");
                 if( icon == null ){
-                    icon = layer.getGlyph();
+                    icon = layer.getIcon();
                 }
                 if( icon == null ){
                     IGeoResource resource = layer.getGeoResource();

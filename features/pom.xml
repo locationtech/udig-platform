@@ -46,7 +46,7 @@
   <modules>
     <module>eu.udig.teradata-feature</module>
     <module>net.refractions.udig-feature</module>
-    <module>net.refractions.udig-product</module>
+    <!-- module>net.refractions.udig-product</module -->
     <module>net.refractions.udig_language-feature</module>
     <module>net.refractions.udig.rcp_feature</module>
     <module>net.refractions.udig_application-feature</module>

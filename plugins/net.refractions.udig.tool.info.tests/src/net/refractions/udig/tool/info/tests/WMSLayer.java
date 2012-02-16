@@ -99,7 +99,7 @@ public class WMSLayer implements ILayer {;
 		return null;
 	}
 
-	public ImageDescriptor getGlyph() {
+	public ImageDescriptor getIcon() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -245,5 +245,13 @@ public class WMSLayer implements ILayer {;
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+
+
+    @Override
+    public boolean isShown() {
+        // TODO Auto-generated method stub
+        return false;
+    }
 	
 }

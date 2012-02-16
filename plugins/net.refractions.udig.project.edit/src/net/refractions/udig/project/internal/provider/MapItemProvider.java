@@ -76,7 +76,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
         }
 
         public Image getImage() {
-            return getGlyph().createImage();
+            return getIcon().createImage();
         }
 
         public String getText() {
@@ -465,7 +465,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
 
         IPath path = new Path("icons/full/obj16/Layer.gif"); //$NON-NLS-1$
         ImageDescriptor image = ImageDescriptor.createFromURL(FileLocator.find(bundle, path, null));
-        LOADING_LAYER.setGlyph(image);
+        LOADING_LAYER.setIcon(image);
         LOADING_LAYER.setVisible(true);
     }
 

@@ -104,13 +104,27 @@ public interface IMap extends IProjectElement {
     public IRenderManager getRenderManager();
 
     /**
-     * Returns the list of Layers in the map. The layers are in zorder. The layer at position 0 is
-     * that first layer rendered (The bottom layer in the image); This list is immutable.
+     * The list of Layers in the map.
+     * <p>
+     * The layers are provided in Z-order. The layer at position 0 is
+     * that first layer rendered (The bottom layer in the image); this list is immutable.
+     * <p>
+     * To add a layer to this list please make use of a command such as AddLayerCommand.
      * 
      * @return An immutable list containing all the Map's layers.
      */
     public List<ILayer> getMapLayers();
 
+    /**
+     * This list of legend items (including folders and layers).
+     * <p>
+     * The legend items are provided in the order to be displayed in the legend; please
+     * note this does not strictly match the Z-order supplied by getMapLayers() above.
+     * 
+     * @return An immutable list containing legend items
+     */
+    // public List<ILegendItem> getLegendItems();
+    
     /**
      * Returns a blackboard for the map. The blackboard is used by various plugins in order to store
      * data and collaborate.
