@@ -16,7 +16,9 @@ import net.refractions.udig.core.IBlockingAdaptable;
 import net.refractions.udig.project.IAbstractContext;
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.IEditManager;
+import net.refractions.udig.project.IFolder;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProject;
 import net.refractions.udig.project.IProjectElement;
@@ -36,8 +38,10 @@ import net.refractions.udig.project.internal.BlackboardEntry;
 import net.refractions.udig.project.internal.CatalogRef;
 import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.EditManager;
+import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerFactory;
+import net.refractions.udig.project.internal.LegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Project;
 import net.refractions.udig.project.internal.ProjectElement;
@@ -255,6 +259,34 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     private EClass interactionToEBooleanObjectMapEntryEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass iFolderEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass folderEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass legendItemEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass iLegendItemEClass = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -798,7 +830,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getLayer_Glyph() {
+    public EAttribute getLayer_CRS() {
         return (EAttribute) layerEClass.getEStructuralFeatures().get(11);
     }
 
@@ -806,16 +838,8 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getLayer_CRS() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(12);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
     public EReference getLayer_Properties() {
-        return (EReference) layerEClass.getEStructuralFeatures().get(13);
+        return (EReference) layerEClass.getEStructuralFeatures().get(12);
     }
 
     /**
@@ -823,7 +847,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_ColourScheme() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(14);
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(13);
     }
 
     /**
@@ -831,7 +855,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_DefaultColor() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(15);
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(14);
     }
 
     /**
@@ -839,7 +863,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_FeatureChanges() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(16);
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(15);
     }
 
     /**
@@ -848,7 +872,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_MinScaleDenominator() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(17);
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(16);
     }
 
     /**
@@ -857,7 +881,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLayer_MaxScaleDenominator() {
-        return (EAttribute) layerEClass.getEStructuralFeatures().get(18);
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(17);
     }
 
     /**
@@ -866,7 +890,25 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EReference getLayer_InteractionMap() {
-        return (EReference) layerEClass.getEStructuralFeatures().get(19);
+        return (EReference) layerEClass.getEStructuralFeatures().get(18);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getLayer_Shown() {
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(19);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getLayer_Icon() {
+        return (EAttribute) layerEClass.getEStructuralFeatures().get(20);
     }
 
     /**
@@ -963,6 +1005,15 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      */
     public EReference getMap_BlackBoardInternal() {
         return (EReference) mapEClass.getEStructuralFeatures().get(10);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getMap_Legend() {
+        return (EReference) mapEClass.getEStructuralFeatures().get(11);
     }
 
     /**
@@ -1233,6 +1284,105 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
     public EAttribute getInteractionToEBooleanObjectMapEntry_Value() {
         return (EAttribute) interactionToEBooleanObjectMapEntryEClass.getEStructuralFeatures().get(
                 1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getIFolder() {
+        return iFolderEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getFolder() {
+        return folderEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getFolder_Items() {
+        return (EReference) folderEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getFolder_Name() {
+        return (EAttribute) folderEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getFolder_Shown() {
+        return (EAttribute) folderEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getFolder_Icon() {
+        return (EAttribute) folderEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getLegendItem() {
+        return legendItemEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getLegendItem_Name() {
+        return (EAttribute) legendItemEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getLegendItem_Shown() {
+        return (EAttribute) legendItemEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getLegendItem_Icon() {
+        return (EAttribute) legendItemEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getILegendItem() {
+        return iLegendItemEClass;
     }
 
     /**
@@ -1574,7 +1724,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         createEAttribute(layerEClass, LAYER__VISIBLE);
         createEAttribute(layerEClass, LAYER__GEO_RESOURCE);
         createEAttribute(layerEClass, LAYER__GEO_RESOURCES);
-        createEAttribute(layerEClass, LAYER__GLYPH);
         createEAttribute(layerEClass, LAYER__CRS);
         createEReference(layerEClass, LAYER__PROPERTIES);
         createEAttribute(layerEClass, LAYER__COLOUR_SCHEME);
@@ -1583,6 +1732,8 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         createEAttribute(layerEClass, LAYER__MIN_SCALE_DENOMINATOR);
         createEAttribute(layerEClass, LAYER__MAX_SCALE_DENOMINATOR);
         createEReference(layerEClass, LAYER__INTERACTION_MAP);
+        createEAttribute(layerEClass, LAYER__SHOWN);
+        createEAttribute(layerEClass, LAYER__ICON);
 
         mapEClass = createEClass(MAP);
         createEReference(mapEClass, MAP__CONTEXT_MODEL);
@@ -1596,6 +1747,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         createEReference(mapEClass, MAP__RENDER_MANAGER_INTERNAL);
         createEAttribute(mapEClass, MAP__COLOUR_SCHEME);
         createEReference(mapEClass, MAP__BLACK_BOARD_INTERNAL);
+        createEReference(mapEClass, MAP__LEGEND);
 
         projectEClass = createEClass(PROJECT);
         createEAttribute(projectEClass, PROJECT__NAME);
@@ -1645,6 +1797,21 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__KEY);
         createEAttribute(interactionToEBooleanObjectMapEntryEClass,
                 INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY__VALUE);
+
+        iFolderEClass = createEClass(IFOLDER);
+
+        folderEClass = createEClass(FOLDER);
+        createEReference(folderEClass, FOLDER__ITEMS);
+        createEAttribute(folderEClass, FOLDER__NAME);
+        createEAttribute(folderEClass, FOLDER__SHOWN);
+        createEAttribute(folderEClass, FOLDER__ICON);
+
+        legendItemEClass = createEClass(LEGEND_ITEM);
+        createEAttribute(legendItemEClass, LEGEND_ITEM__NAME);
+        createEAttribute(legendItemEClass, LEGEND_ITEM__SHOWN);
+        createEAttribute(legendItemEClass, LEGEND_ITEM__ICON);
+
+        iLegendItemEClass = createEClass(ILEGEND_ITEM);
 
         // Create data types
         coordinateEDataType = createEDataType(COORDINATE);
@@ -1728,6 +1895,8 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         styleBlackboardEClass.getESuperTypes().add(this.getIStyleBlackboard());
         styleBlackboardEClass.getESuperTypes().add(this.getCloneable());
         blackboardEClass.getESuperTypes().add(this.getIBlackboard());
+        folderEClass.getESuperTypes().add(this.getIFolder());
+        legendItemEClass.getESuperTypes().add(this.getILegendItem());
 
         // Initialize classes and features; add operations and parameters
         initEClass(comparableEClass, Object.class,
@@ -1868,10 +2037,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 this.getIGeoResource(),
                 "geoResources", null, 0, -1, Layer.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEAttribute(
-                getLayer_Glyph(),
-                this.getImageDescriptor(),
-                "glyph", null, 0, 1, Layer.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
                 getLayer_CRS(),
                 this.getCoordinateReferenceSystem(),
                 "cRS", null, 0, 1, Layer.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -1905,6 +2070,14 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 this.getInteractionToEBooleanObjectMapEntry(),
                 null,
                 "interactionMap", null, 0, -1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getLayer_Shown(),
+                ecorePackage.getEBoolean(),
+                "shown", null, 0, 1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getLayer_Icon(),
+                this.getImageDescriptor(),
+                "icon", null, 0, 1, Layer.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         op = addEOperation(layerEClass, this.getQuery(), "getQuery", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEBoolean(), "selection", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -1965,6 +2138,11 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 this.getBlackboard(),
                 null,
                 "blackBoardInternal", null, 0, 1, Map.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEReference(
+                getMap_Legend(),
+                this.getILegendItem(),
+                null,
+                "legend", null, 0, -1, Map.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         op = addEOperation(mapEClass, this.getReferencedEnvelope(),
                 "getBounds", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -2147,6 +2325,47 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 getInteractionToEBooleanObjectMapEntry_Value(),
                 theEcorePackage.getEBooleanObject(),
                 "value", null, 0, 1, java.util.Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+        initEClass(iFolderEClass, IFolder.class,
+                "IFolder", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+        initEClass(folderEClass, Folder.class,
+                "Folder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(
+                getFolder_Items(),
+                this.getILegendItem(),
+                null,
+                "items", null, 0, -1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getFolder_Name(),
+                ecorePackage.getEString(),
+                "name", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getFolder_Shown(),
+                ecorePackage.getEBoolean(),
+                "shown", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getFolder_Icon(),
+                this.getImageDescriptor(),
+                "icon", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+        initEClass(legendItemEClass, LegendItem.class,
+                "LegendItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(
+                getLegendItem_Name(),
+                ecorePackage.getEString(),
+                "name", null, 0, 1, LegendItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getLegendItem_Shown(),
+                ecorePackage.getEBoolean(),
+                "shown", null, 0, 1, LegendItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getLegendItem_Icon(),
+                this.getImageDescriptor(),
+                "icon", null, 0, 1, LegendItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+        initEClass(iLegendItemEClass, ILegendItem.class,
+                "ILegendItem", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
         // Initialize data types
         initEDataType(coordinateEDataType, Coordinate.class,

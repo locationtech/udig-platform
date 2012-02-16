@@ -5,7 +5,9 @@ import net.refractions.udig.core.IBlockingAdaptable;
 import net.refractions.udig.project.IAbstractContext;
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.IEditManager;
+import net.refractions.udig.project.IFolder;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProject;
 import net.refractions.udig.project.IProjectElement;
@@ -16,8 +18,10 @@ import net.refractions.udig.project.internal.Blackboard;
 import net.refractions.udig.project.internal.BlackboardEntry;
 import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.EditManager;
+import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerFactory;
+import net.refractions.udig.project.internal.LegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Project;
 import net.refractions.udig.project.internal.ProjectElement;
@@ -200,6 +204,22 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
         public Adapter caseInteractionToEBooleanObjectMapEntry(
                 java.util.Map.Entry<Interaction, Boolean> object ) {
             return createInteractionToEBooleanObjectMapEntryAdapter();
+        }
+        @Override
+        public Adapter caseIFolder( IFolder object ) {
+            return createIFolderAdapter();
+        }
+        @Override
+        public Adapter caseFolder( Folder object ) {
+            return createFolderAdapter();
+        }
+        @Override
+        public Adapter caseLegendItem( LegendItem object ) {
+            return createLegendItemAdapter();
+        }
+        @Override
+        public Adapter caseILegendItem( ILegendItem object ) {
+            return createILegendItemAdapter();
         }
         @Override
         public Adapter defaultCase( EObject object ) {
@@ -417,6 +437,62 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createInteractionToEBooleanObjectMapEntryAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.IFolder <em>IFolder</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see net.refractions.udig.project.IFolder
+     * @generated
+     */
+    public Adapter createIFolderAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.Folder <em>Folder</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see net.refractions.udig.project.internal.Folder
+     * @generated
+     */
+    public Adapter createFolderAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.LegendItem <em>Legend Item</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see net.refractions.udig.project.internal.LegendItem
+     * @generated
+     */
+    public Adapter createLegendItemAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.ILegendItem <em>ILegend Item</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see net.refractions.udig.project.ILegendItem
+     * @generated
+     */
+    public Adapter createILegendItemAdapter() {
         return null;
     }
 

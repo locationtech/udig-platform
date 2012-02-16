@@ -93,7 +93,7 @@ public class LayerItemProvider extends ItemProviderAdapter
             addZorderPropertyDescriptor(object);
             addNamePropertyDescriptor(object);
             addVisiblePropertyDescriptor(object);
-            addGlyphPropertyDescriptor(object);
+            addIconPropertyDescriptor(object);
             addFilterPropertyDescriptor(object);
             addStatusPropertyDescriptor(object);
             addCRSPropertyDescriptor(object);
@@ -189,24 +189,6 @@ public class LayerItemProvider extends ItemProviderAdapter
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_geoResource_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         ProjectPackage.Literals.LAYER__GEO_RESOURCE, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-    }
-
-    /**
-     * This adds a property descriptor for the Glyph feature.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @generated
-     */
-    protected void addGlyphPropertyDescriptor( Object object ) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_glyph_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_glyph_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__GLYPH, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
@@ -409,6 +391,42 @@ public class LayerItemProvider extends ItemProviderAdapter
     }
 
     /**
+     * This adds a property descriptor for the Shown feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addShownPropertyDescriptor( Object object ) {
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(
+                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                        getResourceLocator(),
+                        getString("_UI_Layer_shown_feature"), //$NON-NLS-1$
+                        getString(
+                                "_UI_PropertyDescriptor_description", "_UI_Layer_shown_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        ProjectPackage.Literals.LAYER__SHOWN, true, false, false,
+                        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+    }
+
+    /**
+     * This adds a property descriptor for the Icon feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addIconPropertyDescriptor( Object object ) {
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(
+                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                        getResourceLocator(),
+                        getString("_UI_Layer_icon_feature"), //$NON-NLS-1$
+                        getString(
+                                "_UI_PropertyDescriptor_description", "_UI_Layer_icon_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        ProjectPackage.Literals.LAYER__ICON, true, false, false,
+                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    }
+
+    /**
      * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate
      * feature for an {@link org.eclipse.emf.edit.command.AddCommand},
      * {@link org.eclipse.emf.edit.command.RemoveCommand} or
@@ -481,7 +499,7 @@ public class LayerItemProvider extends ItemProviderAdapter
         // Decorator should try out any icon given to it by a third party and make us a image
         // (We don't want the ImageDescriptor to block on an external WMS)
         //
-        ImageDescriptor image = layer.getGlyph();
+        ImageDescriptor image = layer.getIcon();
 
         if (image == null) {
             image = (ImageDescriptor) layer.getProperties().get(GENERATED_ICON);
@@ -572,7 +590,7 @@ public class LayerItemProvider extends ItemProviderAdapter
         case ProjectPackage.LAYER__GEO_RESOURCE:
         case ProjectPackage.LAYER__PROPERTIES:
         case ProjectPackage.LAYER__STATUS:
-        case ProjectPackage.LAYER__GLYPH:
+        case ProjectPackage.LAYER__ICON:
             fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
                     false, true));
             return;
