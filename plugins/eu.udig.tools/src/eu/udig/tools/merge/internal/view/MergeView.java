@@ -22,6 +22,8 @@ package eu.udig.tools.merge.internal.view;
 
 import java.util.List;
 
+import javassist.bytecode.stackmap.TypeData.ClassName;
+
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.ui.AnimationUpdater;
@@ -162,6 +164,9 @@ public class MergeView extends ViewPart implements IUDIGView {
 			StatusBar.setStatusBarMessage(context, Messages.MergeTool_successful);
 			
 			context.getViewportPane().repaint();
+			
+			getViewSite().getPage().hideView((IViewPart) this);
+	
 		}
 	}
 
@@ -204,54 +209,26 @@ public class MergeView extends ViewPart implements IUDIGView {
 					.instance().getMessageDisplayDelay())); //$NON-NLS-1$
 	}
 
-
-
-
-//	FIXME
-//	public void deleteFromMergeList(List<SimpleFeature> featureToDeleteList) {
-//		for (SimpleFeature simpleFeature : featureToDeleteList) {
-//			deleteFromMergeList(simpleFeature);
-//		}
-//	}
-	
-	/**
-	 * Called when the delete button is pressed. If a feature is selected on the
-	 * tree view with the source features, it is deleted from there and launched
-	 * again the mergeBuilder.
-	 * 
-	 * @param featureToDelete 
-	 */
-// FIXME Not used	
-//	public void deleteFromMergeList(SimpleFeature featureToDelete) {
-//
-//		if (!canDelete(featureToDelete)) {
-//
-//			return;
-//		}
-//		addDeletedFeature(featureToDelete);
-//
-//		unselect(mergeContext.getToolContext());
-//	}
 	
 	/**
 	 * Add the features the merge feature list
 	 * @param sourceFeatures
 	 */
-	public void addSourceFeatures(List<SimpleFeature> sourceFeatures, ILayer layer) {
+	public void addSourceFeatures(List<SimpleFeature> sourceFeatures) {
 
 		assert sourceFeatures != null;
 		
-		this.mergeComposite.addSourceFeatures(sourceFeatures, layer);
+		this.mergeComposite.addSourceFeatures(sourceFeatures);
 	}
 
 	/**
-	 * Sets the set of feature to merge. 
+	 * Displays the content of this view 
 	 * 
 	 * @param selectedFeatures
 	 */
-	public void display(List<SimpleFeature> selectedFeatures, ILayer layer) {
+	public void display() {
 			
-		this.mergeComposite.display(selectedFeatures, layer);
+		this.mergeComposite.display();
 	}
 
 	
@@ -289,8 +266,9 @@ public class MergeView extends ViewPart implements IUDIGView {
 	@Override
 	public void dispose() {
 
-		this.mergeContext.disposeMergeView();
-		
+		if(this.mergeContext != null){ 
+			this.mergeContext.disposeMergeView();
+		}
 		super.dispose();
 	}
 

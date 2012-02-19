@@ -21,6 +21,7 @@
 package eu.udig.tools.merge.internal.view;
 
 import java.text.MessageFormat;
+import java.util.Collections;
 import java.util.List;
 
 import net.refractions.udig.project.ILayer;
@@ -61,6 +62,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 
@@ -92,7 +94,6 @@ class MergeComposite extends Composite {
 	private Label				labelResult				= null;
 	private Label				labelResultGeometry		= null;
 
-	private MergeFeatureBuilder	builder					= null;
 	private ViewForm			viewForm				= null;
 	private Composite			infoComposite			= null;
 	private String				message					= null;
@@ -104,6 +105,9 @@ class MergeComposite extends Composite {
 	private MergeView			mergeView				= null;
 
 	private Menu				menu;
+
+	/** data handle */
+	private MergeFeatureBuilder	builder					= null;
 
 	/**
 	 * Union geometry
@@ -456,7 +460,7 @@ class MergeComposite extends Composite {
 	 */
 	public void display(List<SimpleFeature> selectedFeatures, ILayer layer) {
 		
-		setSourceFeatures(selectedFeatures, layer);
+		addSourceFeatures(selectedFeatures);
 		display();
 	}
 
@@ -507,75 +511,10 @@ class MergeComposite extends Composite {
 		// set up initial feedback
 		mergeGeometryChanged(mergeBuilder);
 
-		display();
+		//display();
 
 	}
-
-	/**
-	 * Creates the merge builder using the set of features selected 
-	 * @return {@link MergeFeatureBuilder}
-	 * @throws IllegalStateException
-	 */
-	private MergeFeatureBuilder createMergeBuilder(final List<SimpleFeature> sourceFeatures, ILayer layer) throws IllegalStateException {
-
-		try {
-			
-			assert !sourceFeatures.isEmpty() :"nothing to merge"; //FIXME this assertion is not true, because the feature source could be null. So the feature type should be gotten from the layer 
-			
-			SimpleFeatureType type = layer.getSchema();// sourceFeatures.get(0).getFeatureType();
-			final Class<?> expectedGeometryType = type.getGeometryDescriptor()
-					.getType().getBinding();
-			
-			Geometry union;
-			
-			union = GeometryUtil.geometryUnion(DataUtilities.collection(sourceFeatures));
-			checkGeomCollection(union, expectedGeometryType);
-
-			union = GeometryUtil.adapt(union,(Class<? extends Geometry>) expectedGeometryType);
-
-			MergeFeatureBuilder mergeBuilder = new MergeFeatureBuilder( sourceFeatures, union, layer);
-			
-			return mergeBuilder;
-			
-		} catch (IllegalArgumentException iae) {
-			throw new IllegalStateException(iae.getMessage());
-		}
-	}
-// FIXME was replaced	
-//	/**
-//	 * 
-//	 * @return
-//	 * @throws IllegalStateException
-//	 */
-//	private MergeFeatureBuilder createMergeBuilder() throws IllegalStateException {
-//
-//		SimpleFeatureType type = sourceFeatures.get(0).getFeatureType();
-//		final Class<?> expectedGeometryType = type.getGeometryDescriptor().getType().getBinding();
-//		Geometry union;
-//		union = GeometryUtil.geometryUnion(DataUtilities.collection(sourceFeatures));
-//		try {
-//			union = GeometryUtil.adapt(union, (Class<? extends Geometry>) expectedGeometryType);
-//			final ILayer layer = this.mergeView.getContext().getSelectedLayer();
-//			MergeFeatureBuilder mergeBuilder = new MergeFeatureBuilder(sourceFeatures, union, layer);
-//			return mergeBuilder;
-//		} catch (IllegalArgumentException iae) {
-//			throw new IllegalStateException(iae.getMessage());
-//		}
-//
-//	}
-//	
-
-	private void checkGeomCollection(Geometry union, Class<?> expectedGeometryType) throws IllegalArgumentException {
-
-		if (Polygon.class.equals(expectedGeometryType) && (MultiPolygon.class.equals(union.getClass()))
-					&& union.getNumGeometries() > 1) {
-
-			final String msg = MessageFormat.format(Messages.GeometryUtil_DonotKnowHowAdapt, union.getClass()
-						.getSimpleName(), expectedGeometryType.getSimpleName());
-
-			throw new IllegalArgumentException(msg);
-		}
-	}	
+	
 
 	/**
 	 * Call back function to report a change in the merged geometry attribute
@@ -752,9 +691,8 @@ class MergeComposite extends Composite {
 			for (int attIndex = 0; attIndex < attributeCount; attIndex++) {
 				TableItem attrItem = tableMergeFeature.getItem(attIndex);
 				
-				Object attrOfMergeFeature = builder.getMergeAttribute(attIndex);
-				String strValue = (attrOfMergeFeature == null) ? NULL_LABEL : String.valueOf(attrOfMergeFeature.toString());
-
+				Object mergeFeatureProperty = builder.getMergeAttribute(attIndex);
+				String strValue = (mergeFeatureProperty == null) ? NULL_LABEL : String.valueOf(mergeFeatureProperty);
 				attrItem.setText(VALUE_COLUMN, strValue);
 			}
 		}
@@ -942,6 +880,13 @@ class MergeComposite extends Composite {
 	 */
 	private void displaySourceFeature(SimpleFeature feature){
 
+		MergeFeatureBuilder builder = getMergeBuilder();
+
+		if(!builder.canBeAddedToSourceList(feature)){
+			this.message = Messages.MergeFeatureBehaviour_must_intersect;
+			setMessage(this.message, IMessageProvider.WARNING);
+			return;
+		}
 		int position = this.builder.addSourceFeature(feature);
 		if(position == -1){
 			// it was inserted previously y the source feature list. 
@@ -979,11 +924,13 @@ class MergeComposite extends Composite {
 	 */
 	private void populateMergeFeatureView() {
 
+		this.tableMergeFeature.removeAll();
+
 		final int attributeCount = builder.getAttributeCount();
 		for (int attIndex = 0; attIndex < attributeCount; attIndex++) {
 
 			TableItem attrItem = new TableItem(this.tableMergeFeature, SWT.NONE);
-			attrItem.setData(Integer.valueOf(attIndex));
+			attrItem.setData(attIndex);
 			String attrName = builder.getAttributeName(attIndex);
 			attrItem.setText(NAME_COLUMN, attrName);
 		}
@@ -995,33 +942,28 @@ class MergeComposite extends Composite {
 
 	}
 
-	public void setSourceFeatures(List<SimpleFeature> sourceFeatures, ILayer layer) {
-
-		assert ! sourceFeatures.isEmpty() : "illegal paramenter: the list cannot be empty"; //$NON-NLS-1$
-
-		this.treeFeatures.removeAll();
-		this.tableMergeFeature.removeAll();
-		
-		MergeFeatureBuilder builder = createMergeBuilder(sourceFeatures, layer);
-		setBuilder(builder);
-		
-	}
 	
 	/**
 	 * Adds the features to the existent source feature set.
 	 * 
 	 * @param featureList
-	 * @param layer
 	 */
-	public void addSourceFeatures(List<SimpleFeature> featureList, ILayer layer) {
+	public void addSourceFeatures(List<SimpleFeature> featureList) {
 
 		for (SimpleFeature feature : featureList) {
 			displaySourceFeature(feature);
 		}
 		
 	}
-
 	
+	public void addSourceFeature(SimpleFeature newFeature ){
+		displaySourceFeature(newFeature);
+	}
+
+	/**
+	 * Checks the conditions to execute the merge operation.
+	 * @return true if the features could be merge
+	 */
 	private boolean canMerge() {
 
 		boolean valid = true;
@@ -1032,17 +974,37 @@ class MergeComposite extends Composite {
 			setMessage(this.message, IMessageProvider.WARNING);
 			valid = false;
 		}
-		// TODO it is necesary to analyze the geometry type. 
-		// Multi geometries could be merge allways but simple geometries should be in contact (touchs, intersects, etc).
 		this.mergeView.canMerge(valid);
 		
 		return valid;
 	}
+	
+		
 
 	/**
-	 * @return The set of features to merge
+	 * The builder used to merge the features. This is a factory method if the builder instance is null 
+	 * a new one will be created
+	 * 
+	 * @return {@link MergeFeatureBuilder} 
 	 */
 	public MergeFeatureBuilder getMergeBuilder() {
+		if(this.builder == null) {
+			// create a new merge builder
+			this.builder =  new MergeFeatureBuilder(this.mergeView.getContext().getSelectedLayer());
+			
+			this.builder.addChangeListener(new MergeFeatureBuilder.ChangeListener() {
+
+				public void attributeChanged(MergeFeatureBuilder builder, int attributeIndex, Object oldValue) {
+
+					if (attributeIndex == builder.getDefaultGeometryIndex()) {
+						mergeGeometryChanged(builder);
+					}
+					changed();
+				}
+			});
+			// set up initial feedback
+			mergeGeometryChanged(this.builder);
+		}
 		return this.builder;
 	}
 }

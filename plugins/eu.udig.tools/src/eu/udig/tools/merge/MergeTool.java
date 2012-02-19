@@ -216,6 +216,14 @@ public class MergeTool extends SimpleTool  {
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
+	/**
+	 * Display the feature selected on the view
+	 * 
+	 * @param e mouse event
+	 * @param selectedLayer
+	 * @param mergeView
+	 */
     private void displayFeatureOnView(
     		MapMouseEvent e,
 			ILayer selectedLayer, 
@@ -225,7 +233,9 @@ public class MergeTool extends SimpleTool  {
 		Filter filterSelectedFeatures = selectFeaturesUnderBBox(e, bound, getContext());
 		try {
 			List<SimpleFeature> selectedFeatures = Util.retrieveFeatures(filterSelectedFeatures, selectedLayer);
-			mergeView.addSourceFeatures(selectedFeatures, selectedLayer);
+			
+			mergeView.addSourceFeatures(selectedFeatures);
+			
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -264,8 +274,10 @@ public class MergeTool extends SimpleTool  {
 			filterSelectedFeatures = selectFeaturesUnderBBox(e, bound, getContext());
 			List<SimpleFeature>  selectedFeatures = Util.retrieveFeatures(filterSelectedFeatures, selectedLayer);
 			
-			mergeView.display(selectedFeatures, selectedLayer);
-			
+			mergeView.addSourceFeatures(selectedFeatures);
+		
+			mergeView.display();
+
 		} catch (IOException e1) {
 			LOGGER.warning(e1.getMessage());
 			return;
