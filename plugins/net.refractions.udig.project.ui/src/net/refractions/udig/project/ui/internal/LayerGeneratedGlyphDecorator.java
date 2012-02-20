@@ -548,7 +548,9 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
         //
         IGeoResourceInfo info = null;
         try {
-            info = layer.getGeoResources().get(0).getInfo(null);
+            if( !layer.getGeoResources().isEmpty() ){
+                info = layer.getGeoResources().get(0).getInfo(null);
+            }
         } catch (IOException e) {
             //
         }
