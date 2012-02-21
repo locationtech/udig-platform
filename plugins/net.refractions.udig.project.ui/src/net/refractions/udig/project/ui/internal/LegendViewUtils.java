@@ -14,10 +14,15 @@
  */
 package net.refractions.udig.project.ui.internal;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IRepository;
+import net.refractions.udig.catalog.IService;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.Interaction;
@@ -35,6 +40,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 public final class LegendViewUtils {
 
     private static final String MAP_GRAPHIC_PROTOCOL = "mapgraphic"; //$NON-NLS-1$
+    private static final String MAP_GRAPHIC_URL = "mapgraphic:/localhost"; //$NON-NLS-1$
     private static final String GRID_ID_STR = "grid"; //$NON-NLS-1$
     private static final String GRID_URL = "mapgraphic:/localhost/mapgraphic#grid"; //$NON-NLS-1$
     private static final ID GRID_ID = new ID(GRID_URL, null);
@@ -95,11 +101,15 @@ public final class LegendViewUtils {
     /**
      * Retrieves the an IGeoResource reference of the grid map graphic from the catalog.
      * 
-     * @return grid map graphic
+     * @return grid map graphic, returns null if service is not up or service does not hold the resource
      */
     public static IGeoResource getGridMapGraphic() {
         final IRepository local = CatalogPlugin.getDefault().getLocal();
-        return local.getById(IGeoResource.class, GRID_ID, new NullProgressMonitor());
+        final IGeoResource gridResource = local.getById(IGeoResource.class, GRID_ID, new NullProgressMonitor()); 
+        if (gridResource == null) {
+            System.out.println("[LegendViewUtils] Grid resource not found. Either service is not up or it does not hold the resource.");
+        }
+        return gridResource;
     }
 
 }

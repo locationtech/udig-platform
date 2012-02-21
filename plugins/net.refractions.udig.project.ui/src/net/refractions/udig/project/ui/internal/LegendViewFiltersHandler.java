@@ -14,14 +14,10 @@
  */
 package net.refractions.udig.project.ui.internal;
 
-import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.IMapCompositionListener;
-import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.MapCompositionEvent;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.render.IViewportModelListener;
-import net.refractions.udig.project.render.ViewportModelEvent;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -35,7 +31,7 @@ import org.eclipse.jface.viewers.ViewerFilter;
  * @author nchan
  * @since 1.3.1
  */
-public class LegendViewFiltersHandler implements IMapCompositionListener, ILayerListener, IViewportModelListener {
+public class LegendViewFiltersHandler implements IMapCompositionListener {
 
     private Action toggleMgLayerAction;
     private Action toggleBgLayerAction;
@@ -45,6 +41,30 @@ public class LegendViewFiltersHandler implements IMapCompositionListener, ILayer
     
     private LegendView view;
     private Map map;
+    
+    /**
+     * For test case use only
+     * @return MapGraphicLayerFilter
+     */
+    public MapGraphicLayerFilter getMgLayerFilter() {
+        return mgLayerFilter;
+    }
+
+    /**
+     * For test case use only
+     * @return BackgroundLayerFilter
+     */
+    public BackgroundLayerFilter getBgLayerFilter() {
+        return bgLayerFilter;
+    }
+
+    public void setBgLayerFilter(boolean isOn) {
+        bgLayerFilter.setShowLayer(isOn);
+    }
+    
+    public boolean isBgInViewer(Viewer viewer, Object parent, Object element) {
+        return bgLayerFilter.select(viewer, parent, element);
+    }
     
     /**
      * Creates a LegendViewFiltersHandler
@@ -95,7 +115,6 @@ public class LegendViewFiltersHandler implements IMapCompositionListener, ILayer
      */
     private void cleanHandler() {
         if (map != null) {
-            map.getViewportModel().removeViewportModelListener(this);
             map.removeMapCompositionListener(this);
             map = null;
         }
@@ -108,7 +127,6 @@ public class LegendViewFiltersHandler implements IMapCompositionListener, ILayer
     private void initMap(Map map) {
         this.map = map;
         if (map != null) {
-            this.map.getViewportModel().addViewportModelListener(this);
             this.map.addMapCompositionListener(this);
         }
     }
@@ -243,10 +261,12 @@ public class LegendViewFiltersHandler implements IMapCompositionListener, ILayer
 
         @Override
         public boolean select( Viewer viewer, Object parentElement, Object element ) {
-            final Layer layer = (Layer) element;
-            if (!this.showLayer && isLayerType(layer)) {
-                return false;
-                
+            if (element instanceof Layer) {
+                final Layer layer = (Layer) element;
+                if (!this.showLayer && isLayerType(layer)) {
+                    return false;
+
+                }
             }
             return true;
         }
@@ -282,30 +302,10 @@ public class LegendViewFiltersHandler implements IMapCompositionListener, ILayer
     public void changed( MapCompositionEvent event ) {
         if (MapCompositionEvent.EventType.ADDED == event.getType()) {
             final Layer layer = (Layer) event.getNewValue();
-            layer.addListener(this);
         } else if (MapCompositionEvent.EventType.REMOVED == event.getType()) {
             final Layer layer = (Layer) event.getOldValue();
-            layer.removeListener(this);
         }
         setToggleLayersActionState();
-    }
-
-    /**
-     * ILayerListener method
-     */
-    @Override
-    public void refresh( LayerEvent event ) {
-        //LegendView.getViewer().refresh();
-        //view.updateCheckboxes();
-    }
-
-    /**
-     * IViewportModelListener method
-     */
-    @Override
-    public void changed( ViewportModelEvent event ) {
-        //LegendView.getViewer().refresh();
-        //view.updateCheckboxes();
     }
     
 }

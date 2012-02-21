@@ -190,6 +190,14 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
     }
     
     /**
+     * For testing only
+     * @param isChecked
+     */
+    public void testToggleGrid(boolean isChecked) { 
+        toggleGrid(isChecked);
+    }
+    
+    /**
      * ILayerListener method
      */
     @Override

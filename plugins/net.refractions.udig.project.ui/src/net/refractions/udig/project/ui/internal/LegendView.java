@@ -36,9 +36,6 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.impl.LayerFactoryImpl;
-import net.refractions.udig.project.internal.impl.LayerImpl;
-import net.refractions.udig.project.internal.impl.MapLegendImpl;
 import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.render.IViewportModelListener;
 import net.refractions.udig.project.render.ViewportModelEvent;
@@ -57,10 +54,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
@@ -151,6 +146,39 @@ public class LegendView extends ViewPart
     private IViewportModelListener zoomListener = new ViewportModelListener();
     private Adapter checkboxContextListener = new CheckboxContextListener();
     
+    
+    /**
+     * For test case use only
+     * @return LegendViewGridHandler
+     */
+    public LegendViewGridHandler getGridHandler() {
+        return gridHandler;
+    }
+
+    /**
+     * For test case use only
+     * @return LegendViewFiltersHandler
+     */
+    public LegendViewFiltersHandler getFiltersHandler() {
+        return filtersHandler;
+    }
+
+    /**
+     * For test case use only
+     * @return frontAction
+     */
+    public LayerAction getFrontAction() {
+        return frontAction;
+    }
+
+    /**
+     * For test case use only
+     * @return backAction
+     */
+    public LayerAction getBackAction() {
+        return backAction;
+    }
+
     /**
      * @see org.eclipse.ui.IWorkbenchPart#setFocus()
      */
@@ -298,8 +326,6 @@ public class LegendView extends ViewPart
         //Set current map as viewer's input
         if (viewer != null) {
             final Object mapObj = (currentMap == null) ? emptyMap : currentMap;
-            final MapLegendImpl mapLegend = new MapLegendImpl((Map) mapObj);
-            //viewer.setInput(mapLegend);
             viewer.setInput(mapObj);
         }
         
@@ -464,9 +490,8 @@ public class LegendView extends ViewPart
         
         IToolBarManager mgr = getViewSite().getActionBars().getToolBarManager();
         
-        mgr.add(newFolderAction());
-        
-        mgr.add(new Separator());
+        //mgr.add(newFolderAction());
+        //mgr.add(new Separator());
         
         mgr.add(moveFrontAction());
         mgr.add(upAction());
