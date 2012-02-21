@@ -14,6 +14,7 @@ import java.util.List;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
+import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
@@ -31,6 +32,7 @@ import net.refractions.udig.ui.palette.ColourScheme;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -336,28 +338,35 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
             return null;
         }
         // check that the service is part of catalog... If not add
-        if (CatalogPlugin.getDefault().getLocalCatalog()
-                .getById(IService.class, service.getID(), new NullProgressMonitor()) == null) {
-            CatalogPlugin.getDefault().getLocalCatalog().add(resource.service(null));
+        ICatalog local = CatalogPlugin.getDefault().getLocalCatalog();
+        if (local.getById(IService.class, service.getID(), new NullProgressMonitor()) == null) {
+            local.add(resource.service(null));
         }
 
         LayerImpl layer = (LayerImpl) ProjectFactory.eINSTANCE.createLayer();
-
-        layer.setResourceID(resource.getID());
 
         if (layer == null) {
             throw new IOException(
                     "Unable to create layer from resource '" + resource.getIdentifier() + "'"); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
+        ID resourceID = resource.getID();
+        layer.setResourceID(resourceID);
+
         // process the style content extension point to initially populate
         // the style blackboard with style info
         // TODO: the style objects need access to preference system
         final Layer theLayer = layer;
 
-        ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
-        List<IResolve> resolves = localCatalog.find(layer.getResourceID(), ProgressManager
-                .instance().get());
+        ICatalog localCatalog = local;
+        ID layerResourceID = layer.getResourceID();
+        IProgressMonitor monitor = ProgressManager.instance().get();
+        List<IResolve> resolves = localCatalog.find(layerResourceID, monitor );
+        if( resolves.isEmpty() ){
+            // Identifier lookup is being inconsistent; this often happens when code trips up over
+            // converting URLs to and from Files
+            throw new IOException("Could not find "+layerResourceID +" in local catalog");
+        }
         EList resources = new EDataTypeUniqueEList(IGeoResource.class, this,
                 ProjectPackage.LAYER__GEO_RESOURCES);
         LayerResource preferredResource = null;
@@ -365,16 +374,20 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
             if (resolve instanceof IGeoResource) {
                 LayerResource layerResource = new LayerResource((LayerImpl) layer,
                         (IGeoResource) resolve);
-                if (resolve.getID().equals(layer.getResourceID())) {
+                if (resolve.getID().equals(layerResourceID)) {
                     resources.add(0, layerResource);
                 } else {
                     resources.add(layerResource);
                 }
-                if (resolve == resource) preferredResource = layerResource;
+                if (resolve == resource) {
+                    preferredResource = layerResource;
+                }
             }
         }
-
+        // This is the total list of resources capable of providing information
         ((LayerImpl) layer).geoResources = resources;
+        
+        // This is the "best" match; usually the one the user supplied
         layer.setGeoResource(preferredResource);
 
         // determine the default colour

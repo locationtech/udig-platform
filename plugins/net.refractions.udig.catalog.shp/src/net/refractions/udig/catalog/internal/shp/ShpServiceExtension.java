@@ -31,6 +31,7 @@ import net.refractions.udig.catalog.shp.internal.Messages;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFactorySpi;
+import org.geotools.data.DataUtilities;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 
 /**
@@ -96,17 +97,23 @@ public class ShpServiceExtension extends AbstractDataStoreServiceExtension imple
     }
 
     public Map<String,Serializable> createParams( URL url ) {
-        URL url2=url;
-        if ( !isSupportedExtension(url) )
-                return null;
+        if ( !isSupportedExtension(url) ){
+           return null;
+        }
+        URL cleanedShapeURL = toShpURL( url );
         
-        url2 = toShpURL(url2);
-        if( url2==null )
-            return null;
-        if(getSHPDSFactory().canProcess(url2)){
-            // shapefile
+        if( cleanedShapeURL==null ){
+            return null; // file did not exist or was not valid
+        }
+        
+        if(getSHPDSFactory().canProcess(cleanedShapeURL)){
+            // shape file
+            File file = URLUtils.urlToFile( cleanedShapeURL );
+            if( !file.exists() ){
+                return null; // file does not exist?
+            }
             HashMap<String,Serializable> params = new HashMap<String,Serializable>();
-            params.put(ShapefileDataStoreFactory.URLP.key,url2); 
+            params.put(ShapefileDataStoreFactory.URLP.key,cleanedShapeURL); 
             return params;
         }
         return null;
@@ -119,21 +126,29 @@ public class ShpServiceExtension extends AbstractDataStoreServiceExtension imple
         return (file.endsWith(".shp") || file.endsWith(".shx") ||file.endsWith(".qix")  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
                 || file.endsWith(".dbf")); //$NON-NLS-1$
     }
-
+    
+    /**
+     * Has a go at cleaning the provided URL and ensuring it is a file
+     */
     private URL toShpURL( URL url) {
-        URL url2=url;
+        File file = URLUtils.urlToFile( url );
+        URL shpURL = URLUtils.fileToURL(file);
+        if( shpURL != null ){
+            return shpURL; // clean!
+        }
+        // previous approach tries to duplicate the functionality of URLUtils above; using it as a fallback
+        String authority = url.getAuthority();
+        String path = url.getPath();
         
-        String auth = url.getAuthority();
-        String urlFile = url2.getPath();
-        if (auth != null && auth.length() != 0) {
-            urlFile = "//"+auth+urlFile; //$NON-NLS-1$
+        if (authority != null && authority.length() != 0) {
+            path = "//"+authority+path; //$NON-NLS-1$
         }
-        if( !urlFile.toLowerCase().endsWith(".shp") ){ //$NON-NLS-1$
-            urlFile = urlFile.substring(0, urlFile.lastIndexOf('.') )+".shp"; //$NON-NLS-1$
+        if( !path.toLowerCase().endsWith(".shp") ){ //$NON-NLS-1$
+            path = path.substring(0, path.lastIndexOf('.') )+".shp"; //$NON-NLS-1$
         }
-        File file = new File(urlFile);
-        url2 = URLUtils.fileToURL(file);
-        return url2;
+        file = new File(path);
+        shpURL = URLUtils.fileToURL(file);
+        return shpURL; // clean!
     }
 
     @Override

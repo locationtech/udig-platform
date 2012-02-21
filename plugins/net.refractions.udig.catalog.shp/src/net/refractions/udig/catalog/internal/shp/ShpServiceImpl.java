@@ -170,7 +170,8 @@ public class ShpServiceImpl extends IService {
                     String[] typenames = ds.getTypeNames();
                     if (typenames != null)
                         for( int i = 0; i < typenames.length; i++ ) {
-                            members.add(new ShpGeoResourceImpl(this, typenames[i]));
+                            ShpGeoResourceImpl shpGeoResource = new ShpGeoResourceImpl(this, typenames[i]);
+                            members.add(shpGeoResource);
                         }
                 }
             } finally {
