@@ -40,7 +40,7 @@ public class AddLayerCommand extends AbstractCommand implements UndoableMapComma
      * @param layer the layer that will be added.
      */
     public AddLayerCommand( Layer layer ) {
-        this.layer = layer;
+        this( layer, -1 );
     }
 
     /**

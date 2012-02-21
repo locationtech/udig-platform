@@ -391,8 +391,12 @@ public class CatalogImpl extends ICatalog {
         for( IService service : services ) {
             if (service.getStatus() != CONNECTED)
                 continue; // skip non connected service
+            
             URL identifier = service.getIdentifier();
-            if (URLUtils.urlEquals(query, identifier, true)) {
+            boolean matchParentURL = URLUtils.urlEquals(query, identifier, true);
+            boolean matchParentID = service.getID().equals( id, true );
+
+            if (matchParentURL || matchParentID) {
                 if (matchedService(query, identifier)) {
                     found.add(service);
                     found.addAll(friends(service));
