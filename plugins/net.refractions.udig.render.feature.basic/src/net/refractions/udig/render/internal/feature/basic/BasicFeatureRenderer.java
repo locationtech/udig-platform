@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import net.refractions.udig.core.TransparencyRemovingVisitor;
 import net.refractions.udig.core.jts.ReferencedEnvelopeCache;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ProjectBlackboardConstants;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.project.internal.render.SelectionLayer;
@@ -33,6 +34,7 @@ import net.refractions.udig.project.render.ILabelPainter;
 import net.refractions.udig.project.render.IRenderContext;
 import net.refractions.udig.project.render.RenderException;
 import net.refractions.udig.render.feature.basic.internal.Messages;
+import net.refractions.udig.style.filter.FilterStyle;
 import net.refractions.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -156,20 +158,30 @@ public class BasicFeatureRenderer extends RendererImpl {
         Style style = getStyle(styleBlackboard, featureSource);
         layers = new Layer[1];
         CoordinateReferenceSystem layerCRS = layer.getCRS();
-        CoordinateReferenceSystem dataCRS = featureSource.getSchema()
-                .getCoordinateReferenceSystem();
+        SimpleFeatureType schema = featureSource.getSchema();
+        
+        Query query = null;
+        if( styleBlackboard.contains(ProjectBlackboardConstants.LAYER__STYLE_FILTER)){
+            FilterStyle filterStyle = (FilterStyle) styleBlackboard.get(ProjectBlackboardConstants.LAYER__STYLE_FILTER);
+            query = new Query();
+            query.setTypeName(schema.getTypeName());
+            query.setFilter( filterStyle.toFilter(schema) );
+        }
 
+        CoordinateReferenceSystem dataCRS = schema.getCoordinateReferenceSystem();
         if (!layerCRS.equals(dataCRS)) {
             // need to force the coordinate reference system to match the layer definition
             FeatureLayer featureLayer = new FeatureLayer(featureSource, style, layer.getName()); //$NON-NLS-1$
-            Query query = new Query();
-            query.setTypeName(featureSource.getSchema().getTypeName());
+            if( query == null ){
+                query = new Query();
+                query.setTypeName(schema.getTypeName());
+            }
             query.setCoordinateSystem(layerCRS);
             featureLayer.setQuery(query);
-            
             // double check the implementation is respecting our layer CRS
             FeatureCollection<SimpleFeatureType, SimpleFeature> features = featureSource.getFeatures( query );
             CoordinateReferenceSystem queryCRS = features.getSchema().getCoordinateReferenceSystem();
+            
             if(queryCRS.equals(layerCRS)){
                 layers[0] = featureLayer;
             } else {
@@ -180,7 +192,11 @@ public class BasicFeatureRenderer extends RendererImpl {
             }
         }
         else {
-            layers[0] = new FeatureLayer(featureSource, style, layer.getName());
+            FeatureLayer featureLayer = new FeatureLayer(featureSource, style, layer.getName());
+            if( query != null ){
+                featureLayer.setQuery( query );
+            }
+            layers[0] = featureLayer;
         }
         map = new MapContent();
         map.getViewport().setCoordinateReferenceSystem(getContext().getCRS());

@@ -39,7 +39,7 @@ import net.refractions.udig.ui.ProgressManager;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
 import org.geotools.data.DataStore;
-import org.geotools.data.DefaultQuery;
+import org.geotools.data.Query;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.data.simple.SimpleFeatureSource;
@@ -139,13 +139,13 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
                     DataStore ds = service.resolve(DataStore.class,
                             ProgressManager.instance().get());
                     if (ds == null){
-                        return resource;
+                        return resource; // not a datastore give up!
                     }
                     String typeName = resource.getSchema().getTypeName();
                     Query query;
 
                     if (prop instanceof Filter) {
-                        query = new DefaultQuery(typeName, (Filter) prop);
+                        query = new Query(typeName, (Filter) prop);
                     } else {
                         query = (Query) prop;
                     }
@@ -181,13 +181,13 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
         return resource;
     }
 
-    private static DefaultQuery createQuery(Filter filter,
+    private static Query createQuery(Filter filter,
             CoordinateReferenceSystem crs, CoordinateReferenceSystem reproject,
             String handle, Integer maxFeature, URI namespace,
             String[] propertyNames, String typeName) {
-        DefaultQuery query = new DefaultQuery();
+        Query query = new Query();
         if (namespace != null) {
-            query = new DefaultQuery(typeName, namespace, filter, maxFeature,
+            query = new Query(typeName, namespace, filter, maxFeature,
                     propertyNames, handle);
         }
         if (crs != null) {
@@ -274,11 +274,11 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
             if (propNameString != null) {
                 propertyNames = propNameString.split(",");
             } else {
-                propertyNames = DefaultQuery.ALL_NAMES;
+                propertyNames = Query.ALL_NAMES;
             }
             String typeName = decode(memento.getString(TYPENAME));
 
-            DefaultQuery query = createQuery(filter, crs, reproject, handle,
+            Query query = createQuery(filter, crs, reproject, handle,
                     maxFeature, namespace, propertyNames, typeName);
             return query;
         }
@@ -327,7 +327,7 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
             Query viewRestriction;
             if (value instanceof Filter) {
                 Filter filter = (Filter) value;
-                viewRestriction = new DefaultQuery("Feature", filter);
+                viewRestriction = new Query("Feature", filter);
             } else {
                 viewRestriction = (Query) value;
             }
