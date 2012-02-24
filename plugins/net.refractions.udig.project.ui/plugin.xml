@@ -463,6 +463,17 @@
         <destination class="net.refractions.udig.project.internal.Map"/>
      </action>
      <action
+           class="net.refractions.udig.project.ui.internal.actions.LegendDropAction"
+           enablesFor="+"
+           name="Legend Drag and Drop">
+        <destination
+              class="net.refractions.udig.project.ILegendItem">
+        </destination>
+        <acceptedType
+              class="net.refractions.udig.project.ILegendItem">
+        </acceptedType>
+     </action>
+     <action
            class="net.refractions.udig.project.ui.internal.actions.LayerDropAction"
            enablesFor="+"
            name="%LayerDropAction.name">

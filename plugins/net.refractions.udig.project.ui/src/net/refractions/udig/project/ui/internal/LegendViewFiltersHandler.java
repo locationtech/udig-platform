@@ -241,7 +241,7 @@ public class LegendViewFiltersHandler implements IMapCompositionListener {
                  setToolTipText(hideTooltip);
              }
              LegendView.getViewer().refresh();
-             view.updateCheckboxes();
+             LegendViewCheckboxUtils.updateCheckboxes();
         }
          
     }

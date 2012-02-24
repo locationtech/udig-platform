@@ -193,4 +193,7 @@ public interface ISharedImages {
 
     /** Represents the "Start new Project wizard" action */
     public static final String NEW_PROJECT = ETOOL + "newprj_wiz.gif"; //$NON-NLS-1$    
+    
+    /** Represents the "Start new Project wizard" action */
+    public static final String NEW_FOLDER = ETOOL + "newfolder_wiz.gif"; //$NON-NLS-1$
 }

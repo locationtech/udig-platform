@@ -14,7 +14,6 @@
  */
 package net.refractions.udig.project.ui.internal;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,17 +24,20 @@ import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.IBlackboardListener;
 import net.refractions.udig.project.IEditManagerListener;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IProjectElement;
 import net.refractions.udig.project.command.map.LayerMoveBackCommand;
 import net.refractions.udig.project.command.map.LayerMoveDownCommand;
 import net.refractions.udig.project.command.map.LayerMoveFrontCommand;
 import net.refractions.udig.project.command.map.LayerMoveUpCommand;
 import net.refractions.udig.project.internal.ContextModel;
+import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
+import net.refractions.udig.project.internal.ProjectFactory;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.ProjectPlugin;
+import net.refractions.udig.project.internal.commands.AddFolderItemCommand;
 import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.render.IViewportModelListener;
 import net.refractions.udig.project.render.ViewportModelEvent;
@@ -43,6 +45,7 @@ import net.refractions.udig.project.ui.AdapterFactoryLabelProviderDecorator;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.actions.Delete;
 import net.refractions.udig.project.ui.internal.actions.MylarAction;
+import net.refractions.udig.project.ui.internal.actions.RenameFolderAction;
 import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.UDIGDragDropUtilities;
@@ -52,7 +55,6 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
@@ -64,16 +66,16 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
-import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeViewerListener;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.SameShellProvider;
 import org.eclipse.swt.SWT;
@@ -107,18 +109,14 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
  * @author nchan
  * @since 1.3.1
  */
-public class LegendView extends ViewPart
-        implements
-            IDropTargetProvider,
-            IDoubleClickListener,
-            ISelectionChangedListener {
+@SuppressWarnings("nls")
+public class LegendView extends ViewPart implements IDropTargetProvider, ISelectionChangedListener {
     
     public static final String ID = "net.refractions.udig.project.ui.legendManager"; //$NON-NLS-1$
     
     private static LegendView instance;
     
     private Map currentMap;
-    private IMap emptyMap = ApplicationGIS.NO_MAP;
     
     private LegendViewGridHandler gridHandler = new LegendViewGridHandler();
     private LegendViewFiltersHandler filtersHandler = new LegendViewFiltersHandler(this);
@@ -129,9 +127,10 @@ public class LegendView extends ViewPart
     private LayerAction backAction;
     
     private IAction newFolderAction;
+    private RenameFolderAction renameFolderAction;
     
     private CheckboxTreeViewer viewer;
-    private AdapterFactoryContentProvider contentProvider;
+    private LegendViewContentProvider contentProvider;
     private AdapterFactoryLabelProviderDecorator labelProvider;
     private ILabelProviderListener labelProviderListener = new LabelProviderListerner();
     
@@ -144,7 +143,7 @@ public class LegendView extends ViewPart
     private EditManagerListener editManagerListener;
     private IBlackboardListener mylarListener = new BlackboardListener();
     private IViewportModelListener zoomListener = new ViewportModelListener();
-    private Adapter checkboxContextListener = new CheckboxContextListener();
+    private Adapter mapDeepListener = new MapDeepListener();
     
     
     /**
@@ -186,6 +185,28 @@ public class LegendView extends ViewPart
         viewer.getControl().setFocus();
     }
     
+    @Override
+    public void init( IViewSite site ) throws PartInitException {
+        super.init(site);
+        instance = this;
+    }
+    
+    public static LegendView getViewPart() {
+        return instance;
+    }
+    
+    public static Viewer getViewer() {
+        
+        LegendView viewPart = getViewPart();
+        
+        if (viewPart == null) {
+            return null;
+        }
+        
+        return viewPart.viewer;
+        
+    }
+    
     /**
      * @see org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
      */
@@ -195,35 +216,25 @@ public class LegendView extends ViewPart
         getSite().getWorkbenchWindow().getPartService().addPartListener(partServiceListener);
 
         initViewer(parent);
-        createContextMenuFor(viewer);
-        addToobarActions();
+        initContextMenu(viewer);
+        initToobarActions();
         setGlobalActions();
 
         UDIGDragDropUtilities.addDragDropSupport(viewer, this);
 
     }
     
+    /**
+     * Initialises the viewer with necessary properties and listeners. Called on creation of view.
+     * @param parent
+     */
     private void initViewer(Composite parent) {
         
         //Init viewer object
         viewer = new CheckboxTreeViewer(parent, SWT.MULTI);
         
         //Set content provider settings
-        contentProvider = new AdapterFactoryContentProvider(ProjectUIPlugin.getDefault().getAdapterFactory()){
-            @Override
-            public void notifyChanged( Notification notification ) {
-                super.notifyChanged(notification);
-
-                switch( notification.getFeatureID(Map.class) ) {
-                case ProjectPackage.MAP__CONTEXT_MODEL: {
-                    if (notification.getNotifier() == getCurrentMap()) {
-                        updateCheckboxes();
-                    }
-                    break;
-                }
-                }
-            }
-        };
+        contentProvider = new LegendViewContentProvider();
         viewer.setContentProvider(contentProvider);
 
         //Set label provider settings
@@ -234,6 +245,28 @@ public class LegendView extends ViewPart
         viewer.setLabelProvider(labelProvider);
         
         //Initialises the current map on creation of the view
+        initMapFromEditor();
+
+        // Listens to check/uncheck of tree items
+        viewer.addCheckStateListener(new CheckStateListener());
+        // Listens to expand/collapse of tree items
+        viewer.addTreeListener(new CollapseExpandListener());
+        //Listens to selection changes of tree items 
+        viewer.addSelectionChangedListener(this);
+
+        //Set filter settings
+        viewer.setFilters(this.filtersHandler.getFilters());
+        
+        // We need to set the selection provider before creating the global actions
+        // (so ToolManager can hook us up to the global actions like properties and delete)
+        getViewSite().setSelectionProvider(viewer);
+        
+    }
+    
+    /**
+     * Initialises the current map on creation of the view
+     */
+    private void initMapFromEditor() {
         IEditorPart activeEditor = getSite().getPage().getActiveEditor();
         if (activeEditor != null && activeEditor instanceof IAdaptable) {
             Object mapObj = ((IAdaptable) activeEditor).getAdapter(Map.class);
@@ -241,372 +274,6 @@ public class LegendView extends ViewPart
                 setCurrentMap((Map) mapObj);
             }
         }
-
-        //Set sorter settings
-        viewer.setSorter(new ViewerLayerSorter());
-
-        //Set filter settings
-        viewer.setFilters(this.filtersHandler.getFilters());
-        
-        // sets the layer visibility to match the check box setting.
-        viewer.addCheckStateListener(new ICheckStateListener(){
-            public void checkStateChanged( CheckStateChangedEvent event ) {
-                final Layer eventLayer = (Layer) event.getElement(); 
-                if (eventLayer.isVisible() != event.getChecked()) {
-                    eventLayer.setVisible(event.getChecked());
-                }
-            }
-        });
-        // We need to set the selection provider before creating the global actions
-        // (so ToolManager can hook us up to the global actions like properties and delete)
-        //
-        getViewSite().setSelectionProvider(viewer);
-        viewer.addSelectionChangedListener(this);
-        viewer.addDoubleClickListener(this);
-        
-    }
-    
-    /**
-     * @see org.eclipse.ui.IWorkbenchPart#dispose()
-     */
-    public void dispose() {
-        disposeInternal();
-        super.dispose();
-    }
-
-    protected void disposeInternal() {
-        
-        if (PlatformUI.getWorkbench().isClosing()) {
-            ProjectPlugin.getPlugin().turnOffEvents();
-        }
-        
-        gridHandler.disposeHandler();
-        filtersHandler.disposeHandler();
-        
-        if (currentMap != null) {
-            currentMap.removeDeepAdapter(checkboxContextListener);
-
-            IViewportModel viewportModel = currentMap.getViewportModel();
-            if (viewportModel != null) {
-                viewportModel.removeViewportModelListener(zoomListener);
-            }
-        }
-
-        labelProvider.dispose();
-        labelProvider.removeListener(labelProviderListener);
-        labelProvider = null;
-        labelProviderListener = null;
-
-        getSite().getWorkbenchWindow().getPartService().removePartListener(partServiceListener);
-    }
-
-    /**
-     * @return Returns the currentMap.
-     */
-    public synchronized Map getCurrentMap() {
-        return currentMap;
-    }
-    
-    /**
-     * @param currentMap The currentMap to set.
-     */
-    @SuppressWarnings("unchecked")
-    public synchronized void setCurrentMap( final Map currentMap ) {
-
-        //Remove listeners from current map
-        if (this.currentMap != null) {
-            this.currentMap.removeDeepAdapter(checkboxContextListener);
-            this.currentMap.getBlackboard().removeListener(mylarListener);
-            this.currentMap.getViewportModel().removeViewportModelListener(zoomListener);
-        }
-
-        // Set new current map
-        this.currentMap = currentMap;
-
-        //Set current map as viewer's input
-        if (viewer != null) {
-            final Object mapObj = (currentMap == null) ? emptyMap : currentMap;
-            viewer.setInput(mapObj);
-        }
-        
-        //Init Edit Manager Listerner
-        if (editManagerListener == null) {
-            editManagerListener = new EditManagerListener();
-        }
-
-        //Init listeners to current map
-        if (currentMap != null) {
-            
-            this.currentMap.getViewportModel().addViewportModelListener(zoomListener);
-            this.currentMap.getBlackboard().addListener(mylarListener);
-            currentMap.addDeepAdapter(checkboxContextListener);
-            
-            editManagerListener.setCurrentMap(currentMap);
-            if (!(currentMap.getEditManager()).containsListener(editManagerListener)) {
-                currentMap.getEditManager().addListener(editManagerListener);
-            }
-                
-            Object selectedLayer = currentMap.getEditManager().getSelectedLayer();
-            if (selectedLayer != null && viewer != null) {
-                viewer.setSelection(new StructuredSelection(selectedLayer));
-            }
-            
-            updateCheckboxes();
-        }
-        
-        gridHandler.setMap(currentMap);
-        filtersHandler.setMap(currentMap);
-        
-    }
-
-    /**
-     * We use this method to contribute some global actions from the ToolManager and hook up a
-     * custom delete action that is willing to delete a layer.
-     */
-    private void setGlobalActions() {
-        IActionBars actionBars = getViewSite().getActionBars();
-
-        IToolManager toolManager = ApplicationGIS.getToolManager();
-        toolManager.contributeGlobalActions(this, actionBars);
-        toolManager.registerActionsWithPart(this);
-
-        IKeyBindingService keyBindings = getSite().getKeyBindingService();
-        IAction delAction = getDeleteAction();
-        actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), delAction);
-        keyBindings.registerAction(delAction);
-    }
-
-    /**
-     * This is how the framework determines which interfaces we implement. <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * 
-     * @param key The desired class
-     * @return An object of type key or null;
-     */
-    public Object getAdapter( Class key ) {
-        if (key.equals(IPropertySheetPage.class)) {
-            return ProjectUIPlugin.getDefault().getPropertySheetPage();
-        }
-        if (key.isAssignableFrom(IMap.class)) {
-            return getCurrentMap();
-        }
-        return super.getAdapter(key);
-    }
-
-    /**
-     * Updates the viewer's checkbox display of the layer parameter with respect to its visibility.
-     * Method called from the notifications of checkboxContextListener
-     * 
-     * @param layer
-     */
-    private void updateCheckbox( final Layer layer ) {
-        PlatformGIS.asyncInDisplayThread(new Runnable(){
-            public void run() {
-                if (!PlatformUI.getWorkbench().isClosing()) {
-                    viewer.setChecked(layer, layer.isVisible());    
-                }
-            }
-        }, true);
-    }
-    
-    /**
-     * Updates the viewer's checkbox display with respect to the current layer's visibility.
-     * Method called from the notifications of checkboxContextListener
-     */
-    protected void updateCheckboxes() {
-        PlatformGIS.asyncInDisplayThread(new Runnable(){
-            public void run() {
-
-                List<Layer> layers = currentMap.getLayersInternal();
-
-                if (canUpdateCheckboxes(layers)) {
-                
-                    final List<Layer> checkedLayers = new ArrayList<Layer>();
-                    for( Layer layer : layers ) {
-                        if (layer.isVisible()) {
-                            checkedLayers.add(layer);
-                        }
-                    }
-
-                    if (viewer != null) {
-                        viewer.setCheckedElements(checkedLayers.toArray());
-                        final ILayer selectedLayer = currentMap.getEditManager().getSelectedLayer();
-                        if (selectedLayer != null) {
-                            viewer.setSelection(new StructuredSelection(selectedLayer), true);
-                        }
-                    }
-                    
-                }
-                
-            }
-
-        }, true);
-    }
-
-    /**
-     * Checks if the current status of workbench and current map allows checkbox update. Also calls
-     * requiresCheckboxUpdate() to check current viewer display
-     * 
-     * @param layers
-     * @return
-     */
-    private boolean canUpdateCheckboxes(List<Layer> layers) {
-        
-        if (PlatformUI.getWorkbench().isClosing()) {
-            return false;
-        }
-
-        final Map currentMap;
-        synchronized (this) {
-            currentMap = LegendView.this.currentMap;
-        }
-        if (currentMap == null) {
-            return false;
-        }
-
-        if (!requiresCheckboxUpdate(layers)) {
-            return false;
-        }
-        
-        return true;
-        
-    }
-    
-    /**
-     * Checks if the current visibility of the layers are not in sync with the viewer's checkbox display.
-     * @param layers
-     * @return true - requires update, otherwise false
-     */
-    private boolean requiresCheckboxUpdate( List<Layer> layers ) {
-        for( Layer layer : layers ) {
-            if (!(layer.isVisible() == viewer.getChecked(layer))) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    private void addToobarActions() {
-        
-        IToolBarManager mgr = getViewSite().getActionBars().getToolBarManager();
-        
-        //mgr.add(newFolderAction());
-        //mgr.add(new Separator());
-        
-        mgr.add(moveFrontAction());
-        mgr.add(upAction());
-        mgr.add(downAction());
-        mgr.add(moveBackAction());
-        
-        mgr.add(new Separator());
-        
-        //Added new functionalities for Legend View
-        mgr.add(filtersHandler.getToggleMgAction());
-        mgr.add(filtersHandler.getToggleBgAction());
-        mgr.add(gridHandler.getGridAction());
-        
-        filtersHandler.setToggleLayersActionState();
-        
-    }
-
-    /**
-     * Create an action that moves a layer down in the rendering order
-     */
-    private LayerAction downAction() {
-        downAction = new LayerAction(){
-            public void run() {
-                if (isSelectionAllOrNothing(selection)) return;
-                getCurrentMap().sendCommandASync(new LayerMoveDownCommand(selection));
-            }
-        };
-        downAction.setEnabled(false);
-        downAction.setToolTipText(Messages.LegendView_down_tooltip);
-        downAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
-                ISharedImages.DOWN_CO));
-        return downAction;
-    }
-
-    /**
-     * Create an action that moves a layer up in the rendering order
-     */
-    private LayerAction upAction() {
-        upAction = new LayerAction(){
-            /**
-             * @see org.eclipse.jface.action.Action#run()
-             */
-            public void run() {
-                if (isSelectionAllOrNothing(selection)) return;
-                getCurrentMap().sendCommandASync(new LayerMoveUpCommand(selection));
-            }
-        };
-        upAction.setEnabled(false);
-        upAction.setToolTipText(Messages.LegendView_up_tooltip);
-        upAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
-                ISharedImages.UP_CO));
-        return upAction;
-    }
-
-    /**
-     * Create an action that moves a layer down in the rendering order
-     */
-    private LayerAction moveFrontAction() {
-        frontAction = new LayerAction(){
-            public void run() {
-                if (isSelectionAllOrNothing(selection)) return;
-                getCurrentMap().sendCommandASync(new LayerMoveFrontCommand(currentMap, selection));
-            }
-        };
-        frontAction.setEnabled(false);
-        frontAction.setToolTipText(Messages.LegendView_front_tooltip);
-        frontAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
-                ISharedImages.FRONT_CO));
-        return frontAction;
-    }
-
-    /**
-     * Create an action that moves a layer up in the rendering order
-     */
-    private LayerAction moveBackAction() {
-        backAction = new LayerAction(){
-            /**
-             * @see org.eclipse.jface.action.Action#run()
-             */
-            public void run() {
-                if (isSelectionAllOrNothing(selection)) return;
-                getCurrentMap().sendCommandASync(new LayerMoveBackCommand(currentMap, selection));
-            }
-        };
-        backAction.setEnabled(false);
-        backAction.setToolTipText(Messages.LegendView_back_tooltip);
-        backAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
-                ISharedImages.BACK_CO));
-        return backAction;
-    }
-    
-    private boolean isSelectionAllOrNothing(IStructuredSelection selection) {
-        if (selection.isEmpty() || selection.size() == currentMap.getMapLayers().size()) {
-            return true;
-        }
-        return false;
-    }
-    
-    /**
-     * Create an action that creates a new folder
-     */
-    private IAction newFolderAction() {
-        if (newFolderAction == null) {
-            newFolderAction = new LayerAction(){
-                public void run() {
-                    //Add new folder
-                    System.out.println("Add new folder");
-                }
-            };
-            newFolderAction.setText("Add folder");
-            newFolderAction.setEnabled(false);
-            newFolderAction.setToolTipText(Messages.LegendView_new_folder_tooltip);
-            newFolderAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.ADD_CO));    
-        }
-        return newFolderAction;
     }
     
     /**
@@ -614,7 +281,7 @@ public class LegendView extends ViewPart
      * 
      * @param targetViewer
      */
-    private void createContextMenuFor( final Viewer targetViewer ) {
+    private void initContextMenu( final Viewer targetViewer ) {
 
         final MenuManager contextMenu = new MenuManager();
 
@@ -624,6 +291,9 @@ public class LegendView extends ViewPart
             public void menuAboutToShow( IMenuManager mgr ) {
 
                 contextMenu.add(newFolderAction());
+                if (LegendViewUtils.isFolderSelected(viewer.getSelection())) {
+                    contextMenu.add(renameFolderAction());    
+                }
                 contextMenu.add(new Separator());
                 
                 contextMenu.add(ApplicationGIS.getToolManager().getCOPYAction(LegendView.this));
@@ -734,27 +404,281 @@ public class LegendView extends ViewPart
         return propertiesAction;
         
     }
+    
+    private void initToobarActions() {
+        
+        IToolBarManager mgr = getViewSite().getActionBars().getToolBarManager();
+        
+        mgr.add(newFolderAction());
+        // Just to initialise object, will be shown on context menu
+        renameFolderAction();
+        mgr.add(new Separator());
+        
+        mgr.add(moveFrontAction());
+        mgr.add(upAction());
+        mgr.add(downAction());
+        mgr.add(moveBackAction());
+        mgr.add(new Separator());
+        
+        //Added new functionalities for Legend View
+        mgr.add(filtersHandler.getToggleMgAction());
+        mgr.add(filtersHandler.getToggleBgAction());
+        mgr.add(gridHandler.getGridAction());
+        
+        filtersHandler.setToggleLayersActionState();
+        
+    }
 
-    @Override
-    public void init( IViewSite site ) throws PartInitException {
-        super.init(site);
-        instance = this;
+    /**
+     * Create an action that moves a layer down in the rendering order
+     */
+    private LayerAction downAction() {
+        downAction = new LayerAction(){
+            public void run() {
+                if (isSelectionAllOrNothing(selection)) return;
+                getCurrentMap().sendCommandASync(new LayerMoveDownCommand(selection));
+            }
+        };
+        downAction.setEnabled(false);
+        downAction.setToolTipText(Messages.LegendView_down_tooltip);
+        downAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
+                ISharedImages.DOWN_CO));
+        return downAction;
+    }
+
+    /**
+     * Create an action that moves a layer up in the rendering order
+     */
+    private LayerAction upAction() {
+        upAction = new LayerAction(){
+            /**
+             * @see org.eclipse.jface.action.Action#run()
+             */
+            public void run() {
+                if (isSelectionAllOrNothing(selection)) return;
+                getCurrentMap().sendCommandASync(new LayerMoveUpCommand(selection));
+            }
+        };
+        upAction.setEnabled(false);
+        upAction.setToolTipText(Messages.LegendView_up_tooltip);
+        upAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
+                ISharedImages.UP_CO));
+        return upAction;
+    }
+
+    /**
+     * Create an action that moves a layer down in the rendering order
+     */
+    private LayerAction moveFrontAction() {
+        frontAction = new LayerAction(){
+            public void run() {
+                if (isSelectionAllOrNothing(selection)) return;
+                getCurrentMap().sendCommandASync(new LayerMoveFrontCommand(currentMap, selection));
+            }
+        };
+        frontAction.setEnabled(false);
+        frontAction.setToolTipText(Messages.LegendView_front_tooltip);
+        frontAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
+                ISharedImages.FRONT_CO));
+        return frontAction;
+    }
+
+    /**
+     * Create an action that moves a layer up in the rendering order
+     */
+    private LayerAction moveBackAction() {
+        backAction = new LayerAction(){
+            /**
+             * @see org.eclipse.jface.action.Action#run()
+             */
+            public void run() {
+                if (isSelectionAllOrNothing(selection)) return;
+                getCurrentMap().sendCommandASync(new LayerMoveBackCommand(currentMap, selection));
+            }
+        };
+        backAction.setEnabled(false);
+        backAction.setToolTipText(Messages.LegendView_back_tooltip);
+        backAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
+                ISharedImages.BACK_CO));
+        return backAction;
     }
     
-    public static LegendView getViewPart() {
-        return instance;
+    private boolean isSelectionAllOrNothing(IStructuredSelection selection) {
+        if (selection.isEmpty() || selection.size() == currentMap.getMapLayers().size()) {
+            return true;
+        }
+        return false;
     }
     
-    public static Viewer getViewer() {
+    /**
+     * Create an action that creates a new folder
+     */
+    private IAction newFolderAction() {
+        if (newFolderAction == null) {
+            newFolderAction = new Action(){
+                public void run() {
+                    doNewFolderAction();
+                }
+            };
+            newFolderAction.setText("Add folder");
+            newFolderAction.setEnabled(currentMap == null ? false : true);
+            newFolderAction.setToolTipText(Messages.LegendView_new_folder_tooltip);
+            newFolderAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.NEW_FOLDER));    
+        }
+        return newFolderAction;
+    }
+    
+    private void doNewFolderAction() {
+        final Folder folder = ProjectFactory.eINSTANCE.createFolder();
+        folder.setName("New Folder");
+        currentMap.sendCommandSync(new AddFolderItemCommand(folder));
+        viewer.refresh();
+    }
+    
+    /**
+     * Create an action that renames folder
+     */
+    private IAction renameFolderAction() {
+        if (renameFolderAction == null) {
+            renameFolderAction = new RenameFolderAction(viewer);
+        }
+        return renameFolderAction;
+    }
+    
+    /**
+     * @see org.eclipse.ui.IWorkbenchPart#dispose()
+     */
+    public void dispose() {
+        disposeInternal();
+        super.dispose();
+    }
+
+    protected void disposeInternal() {
         
-        LegendView viewPart = getViewPart();
-        
-        if (viewPart == null) {
-            return null;
+        if (PlatformUI.getWorkbench().isClosing()) {
+            ProjectPlugin.getPlugin().turnOffEvents();
         }
         
-        return viewPart.viewer;
+        gridHandler.disposeHandler();
+        filtersHandler.disposeHandler();
         
+        if (currentMap != null) {
+            currentMap.removeDeepAdapter(mapDeepListener);
+
+            IViewportModel viewportModel = currentMap.getViewportModel();
+            if (viewportModel != null) {
+                viewportModel.removeViewportModelListener(zoomListener);
+            }
+        }
+
+        labelProvider.dispose();
+        labelProvider.removeListener(labelProviderListener);
+        labelProvider = null;
+        labelProviderListener = null;
+
+        getSite().getWorkbenchWindow().getPartService().removePartListener(partServiceListener);
+    }
+
+    /**
+     * @return Returns the currentMap.
+     */
+    public synchronized Map getCurrentMap() {
+        return currentMap;
+    }
+    
+    /**
+     * @param currentMap The currentMap to set.
+     */
+    @SuppressWarnings("unchecked")
+    public synchronized void setCurrentMap( final Map currentMap ) {
+
+        //Remove listeners from current map
+        if (this.currentMap != null) {
+            this.currentMap.removeDeepAdapter(mapDeepListener);
+            this.currentMap.getBlackboard().removeListener(mylarListener);
+            this.currentMap.getViewportModel().removeViewportModelListener(zoomListener);
+        }
+
+        // Set new current map
+        this.currentMap = currentMap;
+
+        //Set current map as viewer's input
+        if (viewer != null) {
+            if (currentMap == null) {
+                viewer.setInput(null);
+                if (newFolderAction != null) {
+                    newFolderAction.setEnabled(false);
+                }
+            } else {
+                viewer.setInput(currentMap.getLegend());
+                if (newFolderAction != null) {
+                    newFolderAction.setEnabled(true);    
+                }
+            }
+        }
+        
+        //Init Edit Manager Listerner
+        if (editManagerListener == null) {
+            editManagerListener = new EditManagerListener();
+        }
+
+        //Init listeners to current map
+        if (currentMap != null) {
+            
+            this.currentMap.getViewportModel().addViewportModelListener(zoomListener);
+            this.currentMap.getBlackboard().addListener(mylarListener);
+            currentMap.addDeepAdapter(mapDeepListener);
+            
+            editManagerListener.setCurrentMap(currentMap);
+            if (!(currentMap.getEditManager()).containsListener(editManagerListener)) {
+                currentMap.getEditManager().addListener(editManagerListener);
+            }
+                
+            Object selectedLayer = currentMap.getEditManager().getSelectedLayer();
+            if (selectedLayer != null && viewer != null) {
+                viewer.setSelection(new StructuredSelection(selectedLayer));
+            }
+            
+            LegendViewCheckboxUtils.updateCheckboxes();
+        }
+        
+        gridHandler.setMap(currentMap);
+        filtersHandler.setMap(currentMap);
+        
+    }
+
+    /**
+     * We use this method to contribute some global actions from the ToolManager and hook up a
+     * custom delete action that is willing to delete a layer.
+     */
+    private void setGlobalActions() {
+        IActionBars actionBars = getViewSite().getActionBars();
+
+        IToolManager toolManager = ApplicationGIS.getToolManager();
+        toolManager.contributeGlobalActions(this, actionBars);
+        toolManager.registerActionsWithPart(this);
+
+        IKeyBindingService keyBindings = getSite().getKeyBindingService();
+        IAction delAction = getDeleteAction();
+        actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), delAction);
+        keyBindings.registerAction(delAction);
+    }
+
+    /**
+     * This is how the framework determines which interfaces we implement. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @param key The desired class
+     * @return An object of type key or null;
+     */
+    public Object getAdapter( Class key ) {
+        if (key.equals(IPropertySheetPage.class)) {
+            return ProjectUIPlugin.getDefault().getPropertySheetPage();
+        }
+        if (key.isAssignableFrom(IMap.class)) {
+            return getCurrentMap();
+        }
+        return super.getAdapter(key);
     }
     
     /**
@@ -774,33 +698,11 @@ public class LegendView extends ViewPart
 
         return mapLayers.get(mapLayers.size() - 1);
     }
-    
 
     /**
-     * Method implemented from IDoubleClickListener
-     */
-    @Override
-    public void doubleClick( DoubleClickEvent event ) {
-
-        final Object obj = ((IStructuredSelection) viewer.getSelection()).getFirstElement();
-        
-        if (!(obj instanceof IProjectElement)) {
-            
-            Display.getDefault().asyncExec(new Runnable(){
-                public void run() {
-                    // For future when styling is in properties view
-                    // getPropertiesAction().runWithEvent(new Event());
-                }
-            });
-            
-            return;
-            
-        }
-
-    }
-
-    /**
-     * Method implemented from ISelectionChangedListener
+     * Function sets the status message on the bottom left of the application relative to the status
+     * of the currently selected item on the view. Method implemented from
+     * ISelectionChangedListener.
      */
     @Override
     public void selectionChanged( SelectionChangedEvent event ) {
@@ -838,19 +740,19 @@ public class LegendView extends ViewPart
     }
     
     /**
-     * Listens to changes on layer selection of the current map. Updates the viewer when necessary.
-     * Ex. A new layer is selected.
+     * Listens to changes on layer selection of the current map. Updates the viewer when necessary
+     * to reflect the changes. Ex. A new layer is selected.
      */
     private class EditManagerListener implements IEditManagerListener {
         
         private Map map;
-
         private synchronized void setCurrentMap( final Map currentMap ) {
             this.map = currentMap;
         }
 
         public void changed( final EditManagerEvent event ) {
             
+            // Just in case
             if (getCurrentMap() != this.map) {
                 this.map.getEditManager().removeListener(this);
                 return;
@@ -863,7 +765,7 @@ public class LegendView extends ViewPart
                         final Object selection = ((IStructuredSelection) viewer.getSelection()).getFirstElement(); 
                         if (selection != event.getNewValue()) {
                             StructuredSelection structuredSelection = new StructuredSelection(event.getNewValue());
-                            //Selection provider is the CheckboxTreeViewer
+                            // Note: Selection provider is the CheckboxTreeViewer
                             getSite().getSelectionProvider().setSelection(structuredSelection);
                         }
                         if (mylarOn()) {
@@ -964,21 +866,17 @@ public class LegendView extends ViewPart
          * @see org.eclipse.ui.IPartListener#partActivated(org.eclipse.ui.IWorkbenchPart)
          */
         public void partActivated( IWorkbenchPart part ) {
-            
             //If newly activated part is different map, set current map to refresh view
             if (part != currentPart) {
                 if (part instanceof IAdaptable) {
                     IAdaptable adaptable = (IAdaptable) part;
                     Object obj = adaptable.getAdapter(Map.class);
-                    
                     if (obj instanceof Map) {
                         currentPart = part;
                         setCurrentMap(((Map) obj));
                     }
-                    
                 }
             }
-            
         }
         
         /**
@@ -992,19 +890,17 @@ public class LegendView extends ViewPart
          * @see org.eclipse.ui.IPartListener#partClosed(org.eclipse.ui.IWorkbenchPart)
          */
         public void partClosed( IWorkbenchPart part ) {
-            
-            if (part == this) {
+            // [Naz] This seems to be wrong.
+            if (part == this) { 
                 disposeInternal();
                 return;
             }
-            
             //If closed part is current map, set current map to null and refresh viewer
             if (part == currentPart) {
                 currentPart = null;
                 setCurrentMap(null);
                 viewer.refresh(true);                
             }
-
         }
 
         /**
@@ -1047,7 +943,7 @@ public class LegendView extends ViewPart
             final Runnable runnable = new Runnable(){
                 public void run() {
                     viewer.update(getCurrentMap().getMapLayers().toArray(),
-                            new String[]{MylarAction.KEY});
+                            new String[]{ MylarAction.KEY });
                 }
             };
             if (Display.getCurrent() == null) {
@@ -1060,40 +956,35 @@ public class LegendView extends ViewPart
     }
     
     /**
-     * This listener listens to label provider changes and refreshes the viewer as necessary.
+     * This listener listens to label provider changes and refreshes the viewer as necessary to
+     * reflect the changes.
      */
     private class LabelProviderListerner implements ILabelProviderListener {
 
         @Override
         public void labelProviderChanged( LabelProviderChangedEvent event ) {
-            updateLabels();
-        }
-        
-        /**
-         * Refreshes the viewer's labels
-         */
-        private void updateLabels() {
-            
+
+            // Synchronize map variable to view's map attribute
             final Map currentMap;
-            
             synchronized (this) {
                 currentMap = LegendView.this.currentMap;
             }
-            
+
+            // Refresh the viewer to reflect any change in the labels
             if (currentMap != null) {
                 PlatformGIS.syncInDisplayThread(new Runnable(){
                     public void run() {
                         if (!PlatformUI.getWorkbench().isClosing()) {
                             if (viewer != null) {
                                 viewer.refresh(true);
-                            }    
+                            }
                         }
                     }
-                });            
+                });
             }
 
         }
-        
+
     }
     
     /**
@@ -1115,9 +1006,9 @@ public class LegendView extends ViewPart
     
     /**
      * This listener is designed to be added as a deep adapter to map and listens to changes both to
-     * the map and its contained layers and updates the checkboxes as necessary.
+     * the map and its contained layers and updates the checkboxes as necessary to reflect changes.
      */
-    private class CheckboxContextListener extends AdapterImpl {
+    private class MapDeepListener extends AdapterImpl {
         
         @SuppressWarnings({"unchecked", "deprecation"})
         public void notifyChanged( final Notification msg ) {
@@ -1126,54 +1017,158 @@ public class LegendView extends ViewPart
                 ContextModel contextModel = (ContextModel) msg.getNotifier();
                 Map map = contextModel.getMap();
 
+                // Just in case
                 if (getCurrentMap() != map) {
-                    // Just in case
                     map.removeDeepAdapter(this);
                     return;
                 }
 
-                if (PlatformUI.getWorkbench().isClosing()) contextModel.eAdapters().remove(this);
+                // If workbench is closing
+                if (PlatformUI.getWorkbench().isClosing()) {
+                    contextModel.eAdapters().remove(this);
+                }
 
+                // When layer(s) are added or set, update the viewer's checkbox display
                 if (msg.getFeatureID(ContextModel.class) == ProjectPackage.CONTEXT_MODEL__LAYERS) {
                     switch( msg.getEventType() ) {
                     case Notification.ADD: {
-                        Layer layer = (Layer) msg.getNewValue();
-                        updateCheckbox(layer);
+                        LegendViewCheckboxUtils.updateCheckbox((Layer) msg.getNewValue());
                         break;
                     }
                     case Notification.ADD_MANY: {
-                        updateCheckboxes();
+                        LegendViewCheckboxUtils.updateCheckboxes();
                         break;
                     }
                     case Notification.SET: {
-                        Layer layer = (Layer) msg.getNewValue();
-                        updateCheckbox(layer);
+                        LegendViewCheckboxUtils.updateCheckbox((Layer) msg.getNewValue());
                         break;
                     }
                     }
                 }
+                
             } else if (msg.getNotifier() instanceof Layer) {
-                Layer layer = (Layer) msg.getNotifier();
+                
+                final Layer layer = (Layer) msg.getNotifier();
+                
+                // Just in case
                 if (getCurrentMap() != layer.getMapInternal()) {
-                    // Just in case
                     layer.getMapInternal().removeDeepAdapter(this);
                     return;
                 }
-                if (msg.getFeatureID(Layer.class) == ProjectPackage.LAYER__VISIBLE)
-                    if (msg.getNewBooleanValue() != msg.getOldBooleanValue()) {
+                
+                // When layer is set to visible/invisible
+                if (msg.getFeatureID(Layer.class) == ProjectPackage.LAYER__VISIBLE) {
+                    
+                    final boolean oldIsVisible = msg.getOldBooleanValue();
+                    final boolean newIsVisible = msg.getNewBooleanValue();
+                    
+                    if (newIsVisible != oldIsVisible) {
                         if (Display.getCurrent() == null) {
                             viewer.getControl().getDisplay().asyncExec(new Runnable(){
                                 public void run() {
-                                    viewer.setChecked(msg.getNotifier(), msg.getNewBooleanValue());
+                                    viewer.setChecked(layer, newIsVisible);
                                 }
                             });
                         } else {
-                            viewer.setChecked(msg.getNotifier(), msg.getNewBooleanValue());
+                            viewer.setChecked(layer, newIsVisible);
                         }
                     }
+                }
+                
             }
         }
         
     }
+    
+    private class CollapseExpandListener implements ITreeViewerListener {
+
+        @Override
+        public void treeCollapsed( TreeExpansionEvent event ) {
+            //Do nothing
+        }
+
+        @Override
+        public void treeExpanded( TreeExpansionEvent event ) {
+            LegendViewCheckboxUtils.updateCheckboxes();
+        }
+        
+    }
    
+    private class CheckStateListener implements ICheckStateListener {
+
+        private static final int UNCHECKED = 0;
+        private static final int CHECKED = 1;
+        private static final int BLOCKED = 2;
+        
+        @Override
+        public void checkStateChanged( CheckStateChangedEvent event ) {
+            if (event.getElement() instanceof Folder) {
+                checkFolder(event);
+            } else if (event.getElement() instanceof Layer) {
+                checkLayer(event);
+            }
+        }
+        
+        private void checkLayer(CheckStateChangedEvent event) {
+            final Layer eventLayer = (Layer) event.getElement();
+            if (eventLayer.isVisible() != event.getChecked()) {
+                eventLayer.setVisible(event.getChecked());
+                processParentFolder(eventLayer);
+            }
+        }
+        
+        private void checkFolder(CheckStateChangedEvent event) {
+            final Folder eventFolder = (Folder) event.getElement();
+            viewer.setGrayed(eventFolder, false);
+            for( ILegendItem item : eventFolder.getItems() ) {
+                final Layer layer = (Layer) item;
+                layer.setVisible(event.getChecked());
+                viewer.setChecked(layer, event.getChecked());
+            }
+        }
+        
+        private void processParentFolder(Layer layer) {
+            final Object parent = LegendViewUtils.getParent(layer);
+            if (parent instanceof Folder) {
+                final Folder folder = (Folder) parent;
+                switch( shouldCheckParentFolder(folder) ) {
+                case CHECKED:
+                    viewer.setChecked(folder, true);
+                    viewer.setGrayed(folder, false);
+                    break;
+                case BLOCKED:
+                    viewer.setGrayChecked(folder, true);
+                    break;
+                case UNCHECKED:
+                    viewer.setChecked(folder, false);
+                    viewer.setGrayed(folder, false);
+                    break;
+                default:
+                    break;
+                }    
+            }
+        }
+        
+        private int shouldCheckParentFolder(Folder folder) {
+            int checkedCnt = 0;
+            for( ILegendItem item : folder.getItems() ) {
+                final Layer layer = (Layer) item;
+                if (viewer.getChecked(layer)) {
+                    checkedCnt++;
+                }
+            }
+            
+            if (checkedCnt > 0) {
+                if (checkedCnt == folder.getItems().size()) {
+                    return CHECKED;
+                } else {
+                    return BLOCKED;
+                }
+            }
+            return UNCHECKED;
+        }
+        
+    }
+    
 }
+
