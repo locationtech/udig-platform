@@ -382,9 +382,10 @@ class MergeComposite extends Composite {
 		treeColumnValue.setText(Messages.MergeFeaturesComposite_value);
 	}
 
+	/**
+	 * Removes the set of features selected
+	 */
 	protected void deleteSourceFeatures() {
-		
-		//delete from builder 
 		
 		TreeItem[] items = this.treeFeatures.getSelection();
 		for (int i = 0; i < items.length; i++) {

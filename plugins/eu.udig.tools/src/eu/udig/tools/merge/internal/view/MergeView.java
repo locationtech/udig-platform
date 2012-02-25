@@ -156,6 +156,8 @@ public class MergeView extends ViewPart implements IUDIGView {
 			final SimpleFeatureCollection sourceFeaturesCollection = DataUtilities.collection(sourceFeatures);
 
 			final SimpleFeature mergedFeature = mergeBuilder.buildMergedFeature();
+			
+			mergeBuilder.removeFromSourceFeatures(sourceFeatures);
 
 			MergeFeaturesCommand cmd = MergeFeaturesCommand.getInstance(layer, sourceFeaturesCollection, mergedFeature);
 
@@ -166,6 +168,8 @@ public class MergeView extends ViewPart implements IUDIGView {
 			context.getViewportPane().repaint();
 			
 			getViewSite().getPage().hideView((IViewPart) this);
+			
+			
 	
 		}
 	}
@@ -286,6 +290,7 @@ public class MergeView extends ViewPart implements IUDIGView {
 
 	@Override
 	public IToolContext getContext() {
+		if(this.mergeContext == null) return null;
 		
 		return this.mergeContext.getToolContext();
 	}

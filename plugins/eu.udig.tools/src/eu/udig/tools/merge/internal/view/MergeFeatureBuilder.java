@@ -376,7 +376,9 @@ class MergeFeatureBuilder {
 	public boolean mergeGeomIsUnion() {
 
 		int defaultGeometryIndex = getDefaultGeometryIndex();
+		assert defaultGeometryIndex >= 0;
 		boolean geomAttIsMerged = mergedGeometry == mergedFeature[defaultGeometryIndex];
+		
 		return geomAttIsMerged;
 	}
 
@@ -404,7 +406,17 @@ class MergeFeatureBuilder {
 
 		assert attributeIndex < getAttributeCount();
 
-		Object attribute = mergedFeature[attributeIndex];
+		Object attribute;
+		if(attributeIndex == getDefaultGeometryIndex()){
+			if(mergeGeomIsUnion()){
+				attribute = "UNION";
+			} else {
+				attribute = mergedFeature[attributeIndex];
+			}
+		} else{
+			attribute = mergedFeature[attributeIndex];
+		}
+
 		return attribute;
 	}
 
@@ -576,9 +588,22 @@ class MergeFeatureBuilder {
 			
 		sourceFeatures.remove(selectedFeature);
 	}
+	public synchronized void removeFromSourceFeatures(List<SimpleFeature> featureList) {
+		
+		assert !sourceFeatures.isEmpty(): "the sources feature list cannot be empty"; //$NON-NLS-1$
+			
+		for (SimpleFeature feature : featureList) {
+			sourceFeatures.remove(feature);
+		}
+	}
 
 	/**
 	 * Checks if the geometry fulfill the conditions to be added in the list of features to merge.
+	 * <lu>
+	 * <li>should be compatible with the layer geometry.</li>
+	 * <li>Multipolygon, MultiLineString, MultiPoint can be merge always.
+	 * <li>Polygno, LineString, Point can be merge if and only if they intersect.<li>
+	 * </lu>
 	 * 
 	 * @param newFeature
 	 * @return true if the feature can be merge.
@@ -591,9 +616,13 @@ class MergeFeatureBuilder {
 		Geometry defaultGeometry = (Geometry) newFeature.getDefaultGeometry();
 
 		// "Multi" geometries could be merge always.
-		Class<? extends Object> geomClass = defaultGeometry.getClass();
+		Class<? extends Object> geomClass = (defaultGeometry != null)? defaultGeometry.getClass(): Object.class;
 		
-		if(GeometryCollection.class.isAssignableFrom( geomClass) ){
+		Class<? extends Geometry> layerGemetryClass = (Class<? extends Geometry>) layer.getSchema().getGeometryDescriptor().getType().getBinding();
+		if(!layerGemetryClass.isAssignableFrom( geomClass) ){
+			return false; 
+		}
+		if(GeometryCollection.class.isAssignableFrom(geomClass)){
 			return true;
 		}
 		assert (defaultGeometry instanceof Polygon) || (defaultGeometry instanceof LineString) || (defaultGeometry instanceof Point);
