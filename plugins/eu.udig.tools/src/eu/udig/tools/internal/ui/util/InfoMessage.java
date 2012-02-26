@@ -90,30 +90,7 @@ public final class InfoMessage {
 		this.text = text;
 		this.type = type;
 	}
-
-	public InfoMessage(final String text, final int type) {
-
-		assert text != null;
-
-		this.text = text;
-
-		switch (type) {
-		case IMessageProvider.INFORMATION:
-			this.type = Type.INFORMATION;
-			break;
-		case IMessageProvider.ERROR:
-			this.type = Type.ERROR;
-			break;
-		case IMessageProvider.NONE:
-			this.type = Type.NULL;
-			break;
-		case IMessageProvider.WARNING:
-			this.type = Type.WARNING;
-			break;
-		}
-
-	}
-
+	
 	public void setText(final String text) {
 		assert text != null;
 

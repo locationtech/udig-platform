@@ -14,7 +14,6 @@
  */
 package eu.udig.tools.merge.internal.view;
 
-import java.text.MessageFormat;
 import java.util.EventListener;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,12 +36,10 @@ import org.opengis.feature.type.GeometryDescriptor;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
 import eu.udig.tools.geometry.internal.util.GeometryUtil;
-import eu.udig.tools.internal.i18n.Messages;
 
 /**
  * A builder for a {@link Feature} that allows to select which attributes from a
@@ -61,11 +58,12 @@ import eu.udig.tools.internal.i18n.Messages;
  * FeatureCollection features = &lt;get desired source features&gt;...
  * Geometry mergedGeometry = &lt;get merged geometry from features&gt;...
  * MergeFeatureBuilder builder = new MergeFeatureBuilder(features, union);
+ * 
  * //set the first attribute of the merge feature to be the first attribute
  * //of the third source feature
  * int featureIndex = 2;
  * int attributeIndex = 0;
- * builder.setMergeAttribute(featureIndex, attributeIndex);
+ * builder.copyAttributeToMerge(featureIndex, attributeIndex);
  * .... repeat as desired
  * //set the 3th attribute of the merge feature to null
  * builder.clearMergeAttribute(2);
@@ -117,7 +115,6 @@ class MergeFeatureBuilder {
 	private Object[]					mergedFeature;
 
 	/** Geometry if it have a null value the build executes the union operation in the source features*/
-	//private Geometry					mergedGeometry;
 	private int							defaultGeometryIndex;
 	
 	/** the layer where the features will be merge (or working layer)*/
@@ -136,15 +133,13 @@ class MergeFeatureBuilder {
 
 		this.layer = layer;
 		this.featureType = layer.getSchema();
-		
-		//this.mergedGeometry = null;
-		
-		GeometryDescriptor defaultGeometry = featureType.getGeometryDescriptor();
-		if( defaultGeometry == null){
+
+		GeometryDescriptor geometryDescriptor = featureType.getGeometryDescriptor();
+		if( geometryDescriptor == null){
 			throw new IllegalStateException( "The layer schema does not contain a geometry descriptor"); //$NON-NLS-1$
 		}
 		this.mergedFeature = new Object[featureType.getAttributeCount()];
-		this.defaultGeometryIndex = featureType.indexOf(defaultGeometry.getName());		
+		this.defaultGeometryIndex = featureType.indexOf(geometryDescriptor.getName());		
 	}
 	
 	/**
@@ -204,17 +199,17 @@ class MergeFeatureBuilder {
 
 
 	/**
-	 * Uses the feature's values to set the merge feature.
+	 * Uses the feature's values to set the merge feature. The geometry value is not set by
+	 * this method.
 	 * 
 	 * @param feature the feature where the values will get to set the merge feature properties
 	 */
 	private void setDefaultMergeValues(SimpleFeature feature) {
+		
 
 		this.mergedFeature = feature.getAttributes().toArray();
-
-		assert (this.defaultGeometryIndex >= 0);
 		
-		this.mergedFeature[defaultGeometryIndex] = getPrittyMergeGeometry();
+		this.mergedFeature[getDefaultGeometryIndex()] = null;
 	}
 
 
@@ -245,7 +240,7 @@ class MergeFeatureBuilder {
 	/**
 	 * Adds a listener for changes in the target feature attribute values
 	 * 
-	 * @see #setMergeAttribute(int, int)
+	 * @see #copyAttributeToMerge(int, int)
 	 * @see #clearMergeAttribute(int)
 	 */
 	public void addChangeListener(ChangeListener listener) {
@@ -365,23 +360,22 @@ class MergeFeatureBuilder {
 	}
 
 	/**
-	 * Sets the value of the attribute at index {@code attritbuteIndex} in the
+	 * Copies the value of the attribute at index {@code attritbuteIndex} in the
 	 * merged feature to be the value of the {@code attritbuteIndex} attribute
 	 * in the {@code featureIndex} source feature, and fires a change event to
 	 * be caught by the registered {@link ChangeListener}
 	 * 
-	 * @param featureIndex
-	 * @param attributeIndex
-	 *            index of the attribute at feature {@code featureIndex} index
+	 * @param srcFeatureIndex position of source feature
+	 * @param attributeIndex  index of the attribute at source feature {@code featureIndex} index
 	 * @throws IllegalArgumentException
 	 * @see {@link #addChangeListener(MergeFeatureBuilder.ChangeListener)}
 	 */
-	public void setMergeAttribute(int featureIndex, int attributeIndex) throws IllegalArgumentException {
+	public void copyAttributeToMerge(int srcFeatureIndex, int attributeIndex) throws IllegalArgumentException {
 
-		assert featureIndex < getFeatureCount();
+		assert srcFeatureIndex < getFeatureCount();
 		assert attributeIndex < getAttributeCount();
 
-		Object value = getAttribute(featureIndex, attributeIndex);
+		Object value = getAttribute(srcFeatureIndex, attributeIndex);
 		setMergeValue(attributeIndex, value);
 	}
 
@@ -417,7 +411,7 @@ class MergeFeatureBuilder {
 	 *            the index of the feature to retrieve the attribute from
 	 * @param attributeIndex
 	 *            the index of the attribute to retrieve from the feature at
-	 *            index <coed>featureIndex</code>
+	 *            index <code>featureIndex</code>
 	 * @return the attribute value at index <code>attributeIndex</code>of the
 	 *         source feature at index <code>featureIndex</code>
 	 */
@@ -596,19 +590,5 @@ class MergeFeatureBuilder {
 			return union;
 		}
 	}
-
-// FIXME it is not used
-//	private void checkGeomCollection(Geometry union, Class<?> expectedGeometryType) throws IllegalArgumentException {
-//
-//		if (Polygon.class.equals(expectedGeometryType) && (MultiPolygon.class.equals(union.getClass()))
-//					&& union.getNumGeometries() > 1) {
-//
-//			final String msg = MessageFormat.format(Messages.GeometryUtil_DonotKnowHowAdapt, union.getClass()
-//						.getSimpleName(), expectedGeometryType.getSimpleName());
-//
-//			throw new IllegalArgumentException(msg);
-//		}
-//	}	
-
 
 }

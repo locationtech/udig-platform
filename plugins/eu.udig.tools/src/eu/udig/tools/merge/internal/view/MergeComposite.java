@@ -30,7 +30,6 @@ import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.SWT;
@@ -63,8 +62,6 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
 import org.opengis.filter.identity.FeatureId;
-
-import com.vividsolutions.jts.geom.Geometry;
 
 import eu.udig.tools.internal.i18n.Messages;
 import eu.udig.tools.internal.ui.util.InfoMessage;
@@ -362,7 +359,7 @@ class MergeComposite extends Composite {
 	/**
 	 * Removes the set of features selected
 	 */
-	protected void deleteSourceFeatures() {
+	private void deleteSourceFeatures() {
 
 		TreeItem[] items = this.treeFeatures.getSelection();
 		for (int i = 0; i < items.length; i++) {
@@ -390,13 +387,11 @@ class MergeComposite extends Composite {
 	}
 
 	/**
-	 * Unselects the merged features
+	 * deselects the merged features
 	 * 
 	 * @param unselectedFeature
 	 */
 	private void unselect(SimpleFeature unselectedFeature) {
-
-		// TODO unselect only the selected feature
 
 		IToolContext context = this.mergeView.getContext();
 		UndoableMapCommand unselectCommand = context.getSelectionFactory()
@@ -459,44 +454,44 @@ class MergeComposite extends Composite {
 		changed();
 	}
 
-	/**
-	 * Clears source tree and merge features table data.
-	 */
-	private void init() {
-
-		treeFeatures.removeAll();
-		treeFeatures.clearAll(true);
-		tableMergeFeature.removeAll();
-		tableMergeFeature.clearAll();
-	}
+//	/**
+//	 * Clears source tree and merge features table data.
+//	 */
+//	private void init() {
+//
+//		treeFeatures.removeAll();
+//		treeFeatures.clearAll(true);
+//		tableMergeFeature.removeAll();
+//		tableMergeFeature.clearAll();
+//	}
 
 	/**
 	 * Set the builder and adds a change listener.
 	 * 
 	 * @param mergeBuilder
 	 */
-	private void setBuilder(MergeFeatureBuilder mergeBuilder) {
-
-		this.mergeBuilder = mergeBuilder;
-		this.mergeBuilder
-				.addChangeListener(new MergeFeatureBuilder.ChangeListener() {
-
-					public void attributeChanged(MergeFeatureBuilder builder,
-							int attributeIndex, Object oldValue) {
-
-						if (attributeIndex == builder.getDefaultGeometryIndex()) {
-							mergeGeometryChanged(builder);
-						}
-						changed();
-					}
-
-				});
-		// set up initial feedback
-		mergeGeometryChanged(mergeBuilder);
-
-		// display();
-
-	}
+//	private void setBuilder(MergeFeatureBuilder mergeBuilder) {
+//
+//		this.mergeBuilder = mergeBuilder;
+//		this.mergeBuilder
+//				.addChangeListener(new MergeFeatureBuilder.ChangeListener() {
+//
+//					public void attributeChanged(MergeFeatureBuilder builder,
+//							int attributeIndex, Object oldValue) {
+//
+//						if (attributeIndex == builder.getDefaultGeometryIndex()) {
+//							mergeGeometryChanged(builder);
+//						}
+//						changed();
+//					}
+//
+//				});
+//		// set up initial feedback
+//		mergeGeometryChanged(mergeBuilder);
+//
+//		// display();
+//
+//	}
 
 	/**
 	 * Call back function to report a change in the merged geometry attribute
@@ -515,7 +510,7 @@ class MergeComposite extends Composite {
 		final String msg = MessageFormat.format(
 				Messages.MergeFeaturesComposite_result_will_be, geomName);
 
-		setMessage(msg, IMessageProvider.INFORMATION);
+		setMessage(msg, InfoMessage.Type.INFORMATION);
 	}
 
 	/**
@@ -524,13 +519,12 @@ class MergeComposite extends Composite {
 	 * @param usrMessage
 	 * @param type
 	 */
-	public void setMessage(String usrMessage, final int type) {
+	public void setMessage(final String usrMessage, final  InfoMessage.Type type) {
 
 		InfoMessage info = new InfoMessage(usrMessage, type);
 		messagePanel.setImage(info.getImage());
 		messagePanel.setText(info.getText());
-		messageTitle
-				.setText(Messages.MergeFeaturesComposite_merge_result_title);
+		messageTitle.setText(Messages.MergeFeaturesComposite_merge_result_title);
 	}
 
 	/**
@@ -639,35 +633,6 @@ class MergeComposite extends Composite {
 	}
 
 	/**
-	 * Return the selected feature on the tree view of the source features. If
-	 * there isn't any selected feature or the selection is not a feature(it is
-	 * one of its attributes) will return null.
-	 * 
-	 * @return The selected feature or null if it isn't anyone selected.
-	 */
-	public SimpleFeature getSelectedFeature() {
-
-		SimpleFeature feature = null;
-
-		TreeItem[] selection = treeFeatures.getSelection();
-
-		if (selection.length == 0) {
-
-			return feature;
-		}
-		final boolean isFeatureItem = isFeatureItem(selection[0]);
-		if (isFeatureItem) {
-			Object obj = selection[0].getData();
-			if (obj instanceof Integer) {
-
-				feature = mergeBuilder.getFeature((Integer) obj);
-			}
-		}
-
-		return feature;
-	}
-
-	/**
 	 * Called whenever a merged feature attribute value changed to update the
 	 * merge feature view
 	 */
@@ -678,6 +643,10 @@ class MergeComposite extends Composite {
 		updateCommandButtonStatus();
 	}
 
+	/**
+	 * Updates the merge's attributes using the values present in the 
+	 * {@link MergeFeatureBuilder} object. 
+	 */
 	private void updateMergePanel() {
 
 		List<SimpleFeature> sourceFeatures = this.mergeBuilder.getSourceFeatures();
@@ -729,13 +698,13 @@ class MergeComposite extends Composite {
 	 * feature.
 	 * <p>
 	 * As a result of calling
-	 * {@link MergeFeatureBuilder#setMergeAttribute(int, int)} or
+	 * {@link MergeFeatureBuilder#copyAttributeToMerge(int, int)} or
 	 * {@link MergeFeatureBuilder#clearMergeAttribute(int)}, the change event
 	 * will be caught up by {@link #changed()} to reflect the change in the
 	 * merge feature view
 	 * </p>
 	 * 
-	 * @param featureIndex
+	 * @param sourceFeatureIndex
 	 *            the index of the source feature where the UI event event
 	 *            occurred
 	 * @param attributeIndex
@@ -744,14 +713,14 @@ class MergeComposite extends Composite {
 	 * @param setValue
 	 *            whether to set or clear the target feature attribute value at
 	 *            index <code>attributeIndex</code>
-	 * @see MergeFeatureBuilder#setMergeAttribute(int, int)
+	 * @see MergeFeatureBuilder#copyAttributeToMerge(int, int)
 	 * @see MergeFeatureBuilder#clearMergeAttribute(int)
 	 */
-	private void setAttributeValue(int featureIndex, int attributeIndex,
+	private void setAttributeValue(int sourceFeatureIndex, int attributeIndex,
 			boolean setValue) {
 
 		if (setValue) {
-			mergeBuilder.setMergeAttribute(featureIndex, attributeIndex);
+			mergeBuilder.copyAttributeToMerge(sourceFeatureIndex, attributeIndex);
 		} else {
 			mergeBuilder.clearMergeAttribute(attributeIndex);
 		}
@@ -840,7 +809,7 @@ class MergeComposite extends Composite {
 	}
 
 	/**
-	 * Populates the treeview with the source features
+	 * Populates the source feature panel.
 	 * <p>
 	 * Feature item's {@link TreeItem#getData() data} are <code>Integer</code>
 	 * values with the corresponding feature index in the
@@ -898,11 +867,13 @@ class MergeComposite extends Composite {
 	 */
 	private void displaySourceFeature(SimpleFeature feature) {
 
+		setMessage("", InfoMessage.Type.NULL); //$NON-NLS-1$
+
 		MergeFeatureBuilder builder = getMergeBuilder();
 
 		if (!builder.canMerge(feature)) {
 			this.message = Messages.MergeFeatureBehaviour_must_intersect;
-			setMessage(this.message, IMessageProvider.WARNING);
+			setMessage(this.message, InfoMessage.Type.WARNING);
 			return;
 		}
 		int position = this.mergeBuilder.addSourceFeature(feature);
@@ -990,7 +961,7 @@ class MergeComposite extends Composite {
 		// Must select two or more feature
 		if (this.mergeBuilder.getSourceFeatures().size() < 2) {
 			this.message = Messages.MergeFeatureBehaviour_select_two_or_more;
-			setMessage(this.message, IMessageProvider.WARNING);
+			setMessage(this.message, InfoMessage.Type.WARNING);
 			valid = false;
 		}
 		this.mergeView.canMerge(valid);
@@ -1024,8 +995,6 @@ class MergeComposite extends Composite {
 							changed();
 						}
 					});
-			// set up initial feedback
-			//FIXME mergeGeometryChanged(this.mergeBuilder);
 		}
 		return this.mergeBuilder;
 	}
