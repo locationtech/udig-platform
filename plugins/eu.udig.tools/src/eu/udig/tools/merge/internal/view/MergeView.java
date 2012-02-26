@@ -22,8 +22,6 @@ package eu.udig.tools.merge.internal.view;
 
 import java.util.List;
 
-import javassist.bytecode.stackmap.TypeData.ClassName;
-
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.ui.AnimationUpdater;
@@ -85,8 +83,6 @@ public class MergeView extends ViewPart implements IUDIGView {
 
 		createActions();
 		createToolbar();
-
-		//this.doMergeButton.setEnabled(false);
 	}
 
 	private void createToolbar() {
@@ -117,20 +113,27 @@ public class MergeView extends ViewPart implements IUDIGView {
 		 */
 		@Override
 		public void run() {
-			try {
-				
-				ApplicationGIS.getView(false, MergeView.ID);
-				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-				IViewPart viewPart = page.findView(MergeView.ID);
-				page.hideView(viewPart);
-			} finally {
-				IToolContext context=  getContext();
-				UndoableMapCommand clearSelectionCommand = context.getSelectionFactory().createNoSelectCommand();
-
-				context.sendASyncCommand(clearSelectionCommand);
-			}		
+			close();
 		}
 	}
+
+	private  void close() {
+		try {
+			
+			ApplicationGIS.getView(false, MergeView.ID);
+			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			IViewPart viewPart = page.findView(MergeView.ID);
+			page.hideView(viewPart);
+		} finally {
+			IToolContext context=  getContext();
+			UndoableMapCommand clearSelectionCommand = context.getSelectionFactory().createNoSelectCommand();
+
+			context.sendASyncCommand(clearSelectionCommand);
+		}		
+		
+	}
+	
+	
 
 	private class MergeButtonAction extends Action {
 
@@ -167,10 +170,7 @@ public class MergeView extends ViewPart implements IUDIGView {
 			
 			context.getViewportPane().repaint();
 			
-			getViewSite().getPage().hideView((IViewPart) this);
-			
-			
-	
+			close();
 		}
 	}
 

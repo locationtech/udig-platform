@@ -45,7 +45,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-jp2k-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-main-8-SNAPSHOT.jar" sourcepath="/home/mauro/.m2/repository/org/geotools/gt-main/8-SNAPSHOT/gt-main-8-SNAPSHOT-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-8-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-opengis-8-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-opengis-8-SNAPSHOT.jar" sourcepath="/home/mauro/.m2/repository/org/geotools/gt-opengis/8-SNAPSHOT/gt-opengis-8-SNAPSHOT-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-postgis-versioned-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-process-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-process-feature-8-SNAPSHOT.jar"/>

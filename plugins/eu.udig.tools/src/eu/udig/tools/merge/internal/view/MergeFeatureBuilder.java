@@ -16,17 +16,14 @@ package eu.udig.tools.merge.internal.view;
 
 import java.text.MessageFormat;
 import java.util.EventListener;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.event.EventListenerList;
 
 import net.refractions.udig.project.ILayer;
 
 import org.geotools.data.DataUtilities;
-import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.opengis.feature.Feature;
@@ -36,10 +33,6 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.FeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.Id;
-import org.opengis.filter.identity.FeatureId;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
@@ -114,83 +107,28 @@ import eu.udig.tools.internal.i18n.Messages;
  */
 class MergeFeatureBuilder {
 
-	/**
-	 * Null mergeGeometryValue to check for equality with a feature's default
-	 * geometry when both the provided union geom and the assigned attribute are
-	 * null. see {@link #mergeGeomIsUnion()}
-	 */
 	private EventListenerList			listeners		= new EventListenerList();
 	private SimpleFeatureType			featureType;
 	
 	/** maintains a list of features. A feature cannot be two times in the list*/
 	private List<SimpleFeature>			sourceFeatures = new LinkedList<SimpleFeature>();
 	
-	private Geometry					mergedGeometry;
+	/** the attributes of the merge feature (in other words the feature to build)*/
 	private Object[]					mergedFeature;
-	private int							defaultGeometryIndex;
-	private ILayer						layer;
-	private static final FilterFactory	FILTER_FACTORY	= CommonFactoryFinder.getFilterFactory(null);
 
-	/**
-	 * Creates a MergeFeatureBuilder that works over the provided features and
-	 * theirs geometries.
-	 * <p>
-	 * Preconditions:
-	 * <ul>
-	 * <li><code>sourceFeatures.size() > 0</code>
-	 * <li>
-	 * <code>for all Feature f1,f2 in sourceFeatures: f1.getSchema() == f2.getSchema()</code>
-	 * <li><code>sourceFeatures.getSchema().getDefaultGeometry() != null</code>
-	 * <li>
-	 * <code>if (mergedGeometry != null) sourceFeatures.getSchema().getDefaultGeometry().getType().isAssignableFrom(medgedGeometry.getClass()) == true
-	 * </ul>
-	 * </p>
-	 * 
-	 * @param sourceFeatures
-	 *            non null collection containing non null elements, of features
-	 *            with the same schema from whose members to select the merged
-	 *            feature attributes
-	 * @param mergedGeometry
-	 *            the Geometry to use as the default geometry for the merge
-	 *            feature, or <code>null</code>
-	 * @param layer
-	 *            The layer which contains the features.
-	 */
-//	public MergeFeatureBuilder(List<SimpleFeature> sourceFeatures, Geometry mergedGeometry, ILayer layer) {
-//
-//		assert sourceFeatures != null;
-//		assert layer != null;
-//
-//		this.layer = layer;
-//		this.featureType = layer.getSchema();
-//		
-//		this.mergedGeometry = (mergedGeometry != null)? mergedGeometry: NULL_GEOM;
-//
-//		assert compatibleFeatureType(sourceFeatures):"Features in the collection must conform to a common schema"; //$NON-NLS-1$
-//		
-//		addSourceFeature(sourceFeatures);
-//		
-//		GeometryDescriptor defaultGeometry = featureType.getGeometryDescriptor();
-//		assert defaultGeometry != null: "Feature schema does not contain a default geometry"; //$NON-NLS-1$
-//		
-//		Class<?> binding = defaultGeometry.getType().getBinding();
-//		if (!binding.isAssignableFrom(mergedGeometry.getClass())) {
-//			throw new IllegalArgumentException(
-//						"Can't assign " + mergedGeometry.getClass().getName() + " to " //$NON-NLS-1$ //$NON-NLS-2$
-//						+ defaultGeometry.getClass().getName());
-//		}
-//		this.defaultGeometryIndex = this.featureType.indexOf(defaultGeometry.getName());
-//
-//		this.mergedFeature = new Object[this.featureType.getAttributeCount()];
-//		SimpleFeature feature = this.sourceFeatures.get(0);
-//		this.mergedFeature = feature.getAttributes().toArray(mergedFeature);
-//
-//		mergedFeature[defaultGeometryIndex] = mergedGeometry;
-//	}
+	/** Geometry if it have a null value the build executes the union operation in the source features*/
+	//private Geometry					mergedGeometry;
+	private int							defaultGeometryIndex;
+	
+	/** the layer where the features will be merge (or working layer)*/
+	private ILayer						layer;
+	
+
 	
 	/**
 	 * Creates a MergeFeatureBuilder that works over the provided 
 	 * features and their geometries.
+	 * @param layer The layer which contains the features.
 	 */
 	public MergeFeatureBuilder(ILayer layer) {
 		
@@ -199,7 +137,7 @@ class MergeFeatureBuilder {
 		this.layer = layer;
 		this.featureType = layer.getSchema();
 		
-		this.mergedGeometry = null;
+		//this.mergedGeometry = null;
 		
 		GeometryDescriptor defaultGeometry = featureType.getGeometryDescriptor();
 		if( defaultGeometry == null){
@@ -255,7 +193,7 @@ class MergeFeatureBuilder {
 			setDefaultMergeValues(feature);
 		}
 		
-		assert canBeAddedToSourceList(feature): "this precondition should be evaluated before call this method"; //$NON-NLS-1$
+		assert canMerge(feature): "this precondition should be evaluated before call this method"; //$NON-NLS-1$
 		
 		this.sourceFeatures.add(feature);
 
@@ -276,7 +214,7 @@ class MergeFeatureBuilder {
 
 		assert (this.defaultGeometryIndex >= 0);
 		
-		this.mergedFeature[defaultGeometryIndex] = mergedGeometry;
+		this.mergedFeature[defaultGeometryIndex] = getPrittyMergeGeometry();
 	}
 
 
@@ -326,7 +264,7 @@ class MergeFeatureBuilder {
 	}
 
 	/**
-	 * Builds the merged {@link Feature} from the internal state of this builder
+	 * Builds the merged {@link Feature} from the build attributes
 	 * 
 	 * @return a new {@link Feature} of the same {@link FeatureType} than the
 	 *         provided source features, built with the attribute values
@@ -339,11 +277,16 @@ class MergeFeatureBuilder {
 
 		SimpleFeature feature;
 		try {
-			// feature = SimpleFeatureBuilder.build(fType, mergedFeature, null
-			// );
+			
+			// sets the features attributes
 			SimpleFeatureBuilder builder = new SimpleFeatureBuilder(featureType);
 			builder.addAll(mergedFeature);
-			feature = builder.buildFeature(null); // no id?
+			feature = builder.buildFeature(null); 
+
+			// build the geometry
+			Geometry geometry = buildMergeGeometry();
+			feature.setDefaultGeometry(geometry);
+			
 		} catch (IllegalAttributeException e) {
 			throw new IllegalStateException("Can't create merged feature: " + e.getMessage(), e); //$NON-NLS-1$
 		}
@@ -351,33 +294,44 @@ class MergeFeatureBuilder {
 	}
 
 	/**
+	 * Returns a printable geometry for the Union Geometry.
+	 * 
 	 * @return the original geometry passed as constructor argument to be used
 	 *         as the merge geometry
 	 */
-	public Geometry getMergedGeometry() {
+	public String getPrittyMergeGeometry() {
 
-		return this.mergedGeometry;
+		String printableGeom;
+		if(isGeometriesUnion()){
+		
+			printableGeom = "Union"; //$NON-NLS-1$
+		
+		} else {
+			
+			printableGeom = mergedFeature[getDefaultGeometryIndex()].toString();
+		}
+		
+		return printableGeom;
 	}
 
 	/**
 	 * @return the attribute index of the default geometry
 	 */
 	public int getDefaultGeometryIndex() {
-
+		assert defaultGeometryIndex >= 0;
 		return defaultGeometryIndex;
 	}
 
 	/**
-	 * @return whether the geometry currently being used as the default geometry
-	 *         for the target feature is the same than the one provided in the
-	 *         constructor to be used as the geometry merge result of all the
-	 *         source features
+	 * Checks if any geometry was set in the merge feature. In other case the
+	 * union of source geometries will be exectured. 
+	 * 
+	 * @return True if the merge resultant is the union of source geometries
 	 */
-	public boolean mergeGeomIsUnion() {
+	public boolean isGeometriesUnion() {
 
 		int defaultGeometryIndex = getDefaultGeometryIndex();
-		assert defaultGeometryIndex >= 0;
-		boolean geomAttIsMerged = mergedGeometry == mergedFeature[defaultGeometryIndex];
+		boolean geomAttIsMerged = mergedFeature[defaultGeometryIndex] == null;
 		
 		return geomAttIsMerged;
 	}
@@ -405,17 +359,7 @@ class MergeFeatureBuilder {
 	public Object getMergeAttribute(int attributeIndex) {
 
 		assert attributeIndex < getAttributeCount();
-
-		Object attribute;
-		if(attributeIndex == getDefaultGeometryIndex()){
-			if(mergeGeomIsUnion()){
-				attribute = "UNION";
-			} else {
-				attribute = mergedFeature[attributeIndex];
-			}
-		} else{
-			attribute = mergedFeature[attributeIndex];
-		}
+		Object attribute = mergedFeature[attributeIndex];
 
 		return attribute;
 	}
@@ -447,7 +391,7 @@ class MergeFeatureBuilder {
 	 * {@link ChangeListener}
 	 * <p>
 	 * If {@code attributeIndex == #getDefaultGeometryIndex()}, sets the
-	 * geometry value of the merged feature to {@link #getMergedGeometry()}
+	 * geometry value of the merged feature to {@link #getPrittyMergeGeometry()}
 	 * </p>
 	 * 
 	 * @param attributeIndex
@@ -460,7 +404,7 @@ class MergeFeatureBuilder {
 
 		Object value = null;
 		if (attributeIndex == getDefaultGeometryIndex()) {
-			value = getMergedGeometry();
+			value = null;
 		}
 		setMergeValue(attributeIndex, value);
 	}
@@ -560,23 +504,7 @@ class MergeFeatureBuilder {
 		return this.layer;
 	}
 
-	/**
-	 * Get the filter of the desired feature.
-	 * 
-	 * @param index
-	 *            The index of this feature.
-	 * @return The geometry filter for this feature.
-	 */
-	public Filter getSelectedFeatureFilter(Integer index) {
 
-		String id = getFeature(index).getID();
-		FeatureId fid = FILTER_FACTORY.featureId(id);
-		Set<FeatureId> ids = new HashSet<FeatureId>(1);
-		ids.add(fid);
-		Id filter = FILTER_FACTORY.id(ids);
-
-		return filter;
-	}
 	
 	public List<SimpleFeature> getSourceFeatures(){
 		return this.sourceFeatures;
@@ -598,22 +526,25 @@ class MergeFeatureBuilder {
 	}
 
 	/**
-	 * Checks if the geometry fulfill the conditions to be added in the list of features to merge.
+	 * Checks if the feature's geometry fulfill the conditions to be added in the list of features to merge.
+	 * 
 	 * <lu>
 	 * <li>should be compatible with the layer geometry.</li>
 	 * <li>Multipolygon, MultiLineString, MultiPoint can be merge always.
-	 * <li>Polygno, LineString, Point can be merge if and only if they intersect.<li>
+	 * <li>Polygon, LineString, Point can be merge if and only if they intersect.<li>
 	 * </lu>
 	 * 
 	 * @param newFeature
 	 * @return true if the feature can be merge.
 	 */
-	public boolean canBeAddedToSourceList(SimpleFeature newFeature) {
+	public boolean canMerge(SimpleFeature newFeature) {
 
 		if(this.sourceFeatures.isEmpty()){
 			return true; // this is the first feature, so there is nothing to check.
 		}
 		Geometry defaultGeometry = (Geometry) newFeature.getDefaultGeometry();
+		assert defaultGeometry != null:"the feature " + newFeature.getID() + " has not geometry!";  //$NON-NLS-1$//$NON-NLS-2$
+
 
 		// "Multi" geometries could be merge always.
 		Class<? extends Object> geomClass = (defaultGeometry != null)? defaultGeometry.getClass(): Object.class;
@@ -637,35 +568,47 @@ class MergeFeatureBuilder {
 		return false;
 	}
 
-	
-	public void buildMergeGeometry() {
 
-		if(this.sourceFeatures.isEmpty() ) return;
+	/**
+	 * Builds the merge geometry. If any geometry was set in the merge feature, this
+	 * method will build a new one execturing the union of source geometries.
+	 *  
+	 * @return a Geometry for the merge feature.
+	 */
+	private Geometry buildMergeGeometry() {
 		
-		SimpleFeatureType type = layer.getSchema();
-		final Class<?> expectedGeometryType = type.getGeometryDescriptor()
-				.getType().getBinding();
-		
-		Geometry union;
-		
-		union = GeometryUtil.geometryUnion(DataUtilities.collection(sourceFeatures));
-		// FIXME checkGeomCollection(union, expectedGeometryType);
+		Geometry geom =  (Geometry) this.mergedFeature[ getDefaultGeometryIndex() ];
+		if(geom != null){
+			// a geometry was set
+			return geom;
+		} else {
+			// make the union 
+			SimpleFeatureType type = layer.getSchema();
+			final Class<?> expectedGeometryType = type.getGeometryDescriptor()
+					.getType().getBinding();
+			
+			Geometry union;
+			
+			union = GeometryUtil.geometryUnion(DataUtilities.collection(sourceFeatures));
 
-		union = GeometryUtil.adapt(union,(Class<? extends Geometry>) expectedGeometryType);
+			union = GeometryUtil.adapt(union,(Class<? extends Geometry>) expectedGeometryType);
+			
+			return union;
+		}
 	}
 
-
-	private void checkGeomCollection(Geometry union, Class<?> expectedGeometryType) throws IllegalArgumentException {
-
-		if (Polygon.class.equals(expectedGeometryType) && (MultiPolygon.class.equals(union.getClass()))
-					&& union.getNumGeometries() > 1) {
-
-			final String msg = MessageFormat.format(Messages.GeometryUtil_DonotKnowHowAdapt, union.getClass()
-						.getSimpleName(), expectedGeometryType.getSimpleName());
-
-			throw new IllegalArgumentException(msg);
-		}
-	}	
+// FIXME it is not used
+//	private void checkGeomCollection(Geometry union, Class<?> expectedGeometryType) throws IllegalArgumentException {
+//
+//		if (Polygon.class.equals(expectedGeometryType) && (MultiPolygon.class.equals(union.getClass()))
+//					&& union.getNumGeometries() > 1) {
+//
+//			final String msg = MessageFormat.format(Messages.GeometryUtil_DonotKnowHowAdapt, union.getClass()
+//						.getSimpleName(), expectedGeometryType.getSimpleName());
+//
+//			throw new IllegalArgumentException(msg);
+//		}
+//	}	
 
 
 }
