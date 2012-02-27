@@ -340,9 +340,6 @@
                   style="toggle"
                   tooltip="%mylarAction.tooltip"
                   toolbarPath="additions">
-               <enablement>
-                  <objectClass name="net.refractions.udig.project.ILayer"/>
-               </enablement>
             </action>
          </viewContribution>
          <viewContribution
@@ -372,11 +369,6 @@
                   label="%mylarAction.label"
                   style="toggle"
                   toolbarPath="additions">
-               <enablement>
-                  <objectClass
-                        name="net.refractions.udig.project.ILayer">
-                  </objectClass>
-               </enablement>
             </action>
          </viewContribution>
       </extension>
