@@ -1,3 +1,17 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.project.ui.internal.actions;
 
 import net.refractions.udig.project.internal.Folder;
@@ -16,10 +30,9 @@ import org.eclipse.swt.widgets.Display;
 /**
  * Action that processes the renaming of folder items in the LegendView.
  * 
- * @author nchan
- * @since 1.2.0
+ * @author Naz Chan (LISAsoft)
+ * @since 1.3.1
  */
-@SuppressWarnings("nls")
 public class RenameFolderAction extends Action implements ISelectionChangedListener {
     
     private IStructuredSelection selection;

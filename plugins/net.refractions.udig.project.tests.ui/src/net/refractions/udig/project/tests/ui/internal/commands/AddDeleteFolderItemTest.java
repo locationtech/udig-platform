@@ -1,3 +1,17 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.project.tests.ui.internal.commands;
 
 import java.util.ArrayList;
@@ -9,10 +23,15 @@ import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectFactory;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.commands.AddFolderItemCommand;
-import net.refractions.udig.project.internal.commands.AddLayerItemCommand;
 import net.refractions.udig.project.internal.commands.DeleteFolderItemCommand;
 import net.refractions.udig.project.ui.ApplicationGIS;
 
+/**
+ * Test class for AddFolderItemCommand and DeleteFolderItemCommand 
+ * 
+ * @author Naz Chan (LISAsoft)
+ * @since 1.3.1
+ */
 @SuppressWarnings("nls")
 public class AddDeleteFolderItemTest extends AbstractProjectUITestCase {
 

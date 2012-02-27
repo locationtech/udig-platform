@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2004-2012, Refractions Research Inc.
+ * (C) 2012, Refractions Research Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -106,10 +106,9 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
  * categories. The view also provides facilities to show/hide map graphics and background layers.
  * Also, additional layer sorting functionalities (similar to power-point sorting) are implemented.
  * 
- * @author nchan
+ * @author Naz Chan (LISAsoft)
  * @since 1.3.1
  */
-@SuppressWarnings("nls")
 public class LegendView extends ViewPart implements IDropTargetProvider, ISelectionChangedListener {
     
     public static final String ID = "net.refractions.udig.project.ui.legendManager"; //$NON-NLS-1$

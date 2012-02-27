@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2004-2012, Refractions Research Inc.
+ * (C) 2012, Refractions Research Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -35,7 +35,7 @@ import org.eclipse.jface.action.IAction;
  * The Grid Handler of the Legend View. This class is designed to handle the maintenance of the
  * grid layer visibility toggle functionality. 
  * 
- * @author nchan
+ * @author Naz Chan (LISAsoft)
  * @since 1.3.1
  */
 public class LegendViewGridHandler implements ILayerListener, IMapCompositionListener {

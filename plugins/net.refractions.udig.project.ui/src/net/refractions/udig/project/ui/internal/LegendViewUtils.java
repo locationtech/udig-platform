@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2004-2012, Refractions Research Inc.
+ * (C) 2012, Refractions Research Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -36,10 +36,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
  * The utility class of the Legend View. This contains static helper methods for Legend View
  * functions.
  * 
- * @author nchan
+ * @author Naz Chan (LISAsoft)
  * @since 1.3.1
  */
-@SuppressWarnings("nls")
 public final class LegendViewUtils {
 
     private static final String MAP_GRAPHIC_PROTOCOL = "mapgraphic"; //$NON-NLS-1$
