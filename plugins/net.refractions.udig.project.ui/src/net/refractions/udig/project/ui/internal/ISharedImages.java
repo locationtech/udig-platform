@@ -41,6 +41,7 @@ import net.refractions.udig.core.internal.Icons;
  * </p>
  */
 public interface ISharedImages {
+    
     public final static String UP_CO = Icons.ELOCALTOOL + "up_co.gif"; //$NON-NLS-1$
     /** Down arrow */
     public final static String DOWN_CO = Icons.ELOCALTOOL + "down_co.gif"; //$NON-NLS-1$
@@ -54,9 +55,19 @@ public interface ISharedImages {
     public final static String FRONT_CO = Icons.ELOCALTOOL + "front_co.gif"; //$NON-NLS-1$
     /** Back arrow * */
     public final static String BACK_CO = Icons.ELOCALTOOL + "back_co.gif"; //$NON-NLS-1$
+    
+    /** Toggle Grid command */
+    public static final String TOG_GRID_CO = Icons.ELOCALTOOL + "toggle_grid_co.gif"; //$NON-NLS-1$;
+    /** Toggle Map Graphic command */
+    public static final String TOG_MAP_GRAPHIC_CO = Icons.ELOCALTOOL + "toggle_map_graphic_co.gif"; //$NON-NLS-1$;
+    /** Toggle Background Layer command */
+    public static final String TOG_BG_LAYER_CO = Icons.ELOCALTOOL + "toggle_bg_layer_co.gif"; //$NON-NLS-1$;
+    
+    /** New folder action */
+    public static final String NEW_FOLDER_CO = Icons.ELOCALTOOL + "newfolder_co.gif"; //$NON-NLS-1$
+    
     // OVR
     //
-
     /** <code>WARN_OVR</code> indicates render produced warnings, often due to reprojection */
     public final static String WARN_OVR = Icons.OVERLAY + "warning_ovr.gif"; //$NON-NLS-1$
 
@@ -153,17 +164,7 @@ public interface ISharedImages {
     /**
      * Represents a Map folder object
      */
-    public static final String MAP_FOLDER_OBJ = OBJECT + "mapfolder_obj.gif"; //$NON-NLS-1$;
-    
-    /**
-     * Represents a Grid object
-     */
-    public static final String GRID_OBJ = OBJECT + "grid_map_praghic_obj.gif"; //$NON-NLS-1$;
-    
-    /**
-     * Represents a Map Graphic object
-     */
-    public static final String MAP_GRAPHIC_OBJ = OBJECT + "graphic_obj.gif"; //$NON-NLS-1$;
+    public static final String MAP_FOLDER_OBJ = OBJECT + "mapfolder_obj.gif"; //$NON-NLS-1$;  
 
     /**
      * Represent a Project.
@@ -192,8 +193,6 @@ public interface ISharedImages {
     public static final String D_LINK = DLOCALTOOL + "link_co.gif"; //$NON-NLS-1$;;
 
     /** Represents the "Start new Project wizard" action */
-    public static final String NEW_PROJECT = ETOOL + "newprj_wiz.gif"; //$NON-NLS-1$    
+    public static final String NEW_PROJECT = ETOOL + "newprj_wiz.gif"; //$NON-NLS-1$      
     
-    /** Represents the "Start new Project wizard" action */
-    public static final String NEW_FOLDER = ETOOL + "newfolder_wiz.gif"; //$NON-NLS-1$
 }

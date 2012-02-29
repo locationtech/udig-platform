@@ -171,8 +171,8 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
                 toggleGrid(gridAction.isChecked());
             }
         };
-        gridAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.GRID_OBJ));
-        
+        gridAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.TOG_GRID_CO));
+        gridAction.setToolTipText(Messages.LegendView_show_grid_tooltip);
         setGridActionState();
         
         return gridAction;
@@ -261,13 +261,7 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
                 break;
             }
         }
-        gridAction.setChecked(isAtLeastOneVisible);
-        if (isAtLeastOneVisible) {
-            gridAction.setToolTipText(Messages.LegendView_hide_grid_tooltip);    
-        } else {
-            gridAction.setToolTipText(Messages.LegendView_show_grid_tooltip);
-        }
-        
+        gridAction.setChecked(isAtLeastOneVisible);        
     }
     
 }

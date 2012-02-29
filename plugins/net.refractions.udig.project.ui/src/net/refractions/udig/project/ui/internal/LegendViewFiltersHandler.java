@@ -138,8 +138,7 @@ public class LegendViewFiltersHandler implements IMapCompositionListener {
     public Action getToggleMgAction() {
         
         if (toggleMgLayerAction == null) {
-            toggleMgLayerAction = new FilterAction(null, IAction.AS_CHECK_BOX,
-                    Messages.LegendView_show_mg_tooltip, Messages.LegendView_hide_mg_tooltip){
+            toggleMgLayerAction = new FilterAction(null, IAction.AS_CHECK_BOX){
                 @Override
                 public void run() {
                     mgLayerFilter.setShowLayer(!this.isChecked());
@@ -148,7 +147,7 @@ public class LegendViewFiltersHandler implements IMapCompositionListener {
             };
             toggleMgLayerAction.setToolTipText(Messages.LegendView_hide_mg_tooltip);
             toggleMgLayerAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
-                    ISharedImages.MAP_GRAPHIC_OBJ));
+                    ISharedImages.TOG_MAP_GRAPHIC_CO));
         }
         
         return toggleMgLayerAction;
@@ -161,8 +160,7 @@ public class LegendViewFiltersHandler implements IMapCompositionListener {
     public Action getToggleBgAction() {
         
         if (toggleBgLayerAction == null) {
-            toggleBgLayerAction = new FilterAction(null, IAction.AS_CHECK_BOX,
-                    Messages.LegendView_show_bg_tooltip, Messages.LegendView_hide_bg_tooltip){
+            toggleBgLayerAction = new FilterAction(null, IAction.AS_CHECK_BOX){
                 @Override
                 public void run() {
                     bgLayerFilter.setShowLayer(!this.isChecked());
@@ -171,7 +169,7 @@ public class LegendViewFiltersHandler implements IMapCompositionListener {
             };
             toggleBgLayerAction.setToolTipText(Messages.LegendView_hide_bg_tooltip);
             toggleBgLayerAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
-                    ISharedImages.LAYER_OBJ));            
+                    ISharedImages.TOG_BG_LAYER_CO));            
         }
                 
         return toggleBgLayerAction;
@@ -222,26 +220,16 @@ public class LegendViewFiltersHandler implements IMapCompositionListener {
      */
     private class FilterAction extends Action {
         
-         private String showTooltip;
-         private String hideTooltip;
-        
-         public FilterAction(String text, int style, String showTooltip, String hideTooltip) {
+         public FilterAction(String text, int style) {
              super(text, style);
-             this.showTooltip = showTooltip;
-             this.hideTooltip = hideTooltip;
-             setToolTipText(hideTooltip);
          }
          
          @Override
         public void run() {
-             final boolean showLayer = this.isChecked();
-             if (showLayer) { 
-                 setToolTipText(showTooltip);
-             } else {
-                 setToolTipText(hideTooltip);
-             }
-             LegendView.getViewer().refresh();
-             LegendViewCheckboxUtils.updateCheckboxes();
+             //Apply filter on viewer elements
+             view.getViewer().refresh();
+             //Set checkbox status
+             LegendViewCheckboxUtils.updateCheckboxes(view);
         }
          
     }

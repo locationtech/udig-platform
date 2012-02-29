@@ -77,7 +77,7 @@ public class LegendViewTest extends AbstractProjectUITestCase {
         assertNotNull("Filter background layer filter should not be null.", filtersHandler.getBgLayerFilter());
         assertEquals(2, filtersHandler.getFilters().length);
         
-        final CheckboxTreeViewer viewer = (CheckboxTreeViewer) LegendView.getViewer();
+        final CheckboxTreeViewer viewer = view.getViewer();
         assertEquals(2, viewer.getFilters().length);
         
         

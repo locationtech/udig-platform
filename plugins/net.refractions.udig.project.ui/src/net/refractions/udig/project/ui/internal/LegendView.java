@@ -113,8 +113,6 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
     
     public static final String ID = "net.refractions.udig.project.ui.legendManager"; //$NON-NLS-1$
     
-    private static LegendView instance;
-    
     private Map currentMap;
     
     private LegendViewGridHandler gridHandler = new LegendViewGridHandler();
@@ -183,27 +181,13 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
     public void setFocus() {
         viewer.getControl().setFocus();
     }
-    
-    @Override
-    public void init( IViewSite site ) throws PartInitException {
-        super.init(site);
-        instance = this;
-    }
-    
-    public static LegendView getViewPart() {
-        return instance;
-    }
-    
-    public static Viewer getViewer() {
-        
-        LegendView viewPart = getViewPart();
-        
-        if (viewPart == null) {
-            return null;
-        }
-        
-        return viewPart.viewer;
-        
+
+    /**
+     * Returns checkbox tree viewer of the LegendView 
+     * @return viewer
+     */
+    public CheckboxTreeViewer getViewer() {
+        return viewer;
     }
     
     /**
@@ -233,19 +217,20 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
         viewer = new CheckboxTreeViewer(parent, SWT.MULTI);
         
         //Set content provider settings
-        contentProvider = new LegendViewContentProvider();
+        contentProvider = new LegendViewContentProvider(this);
         viewer.setContentProvider(contentProvider);
 
         //Set label provider settings
         labelProvider = new AdapterFactoryLabelProviderDecorator(ProjectExplorer
                 .getProjectExplorer().getAdapterFactory(), viewer);
+        
         // In dispose() method we need to remove this listener manually!
         labelProvider.addListener(labelProviderListener);
         viewer.setLabelProvider(labelProvider);
         
         //Initialises the current map on creation of the view
         initMapFromEditor();
-
+        
         // Listens to check/uncheck of tree items
         viewer.addCheckStateListener(new CheckStateListener());
         // Listens to expand/collapse of tree items
@@ -377,7 +362,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
             
             final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
             final PropertyDialogAction propDialogAction = new PropertyDialogAction(new SameShellProvider(shell),
-                    getViewer());
+                    viewer);
 
             propertiesAction = new Action(){
                 @Override
@@ -522,7 +507,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
             newFolderAction.setText("Add folder");
             newFolderAction.setEnabled(currentMap == null ? false : true);
             newFolderAction.setToolTipText(Messages.LegendView_new_folder_tooltip);
-            newFolderAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.NEW_FOLDER));    
+            newFolderAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.NEW_FOLDER_CO));    
         }
         return newFolderAction;
     }
@@ -570,11 +555,11 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
             }
         }
 
-        labelProvider.dispose();
         labelProvider.removeListener(labelProviderListener);
-        labelProvider = null;
         labelProviderListener = null;
-
+        labelProvider.dispose();
+        labelProvider = null;
+        
         getSite().getWorkbenchWindow().getPartService().removePartListener(partServiceListener);
     }
 
@@ -609,7 +594,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                     newFolderAction.setEnabled(false);
                 }
             } else {
-                viewer.setInput(currentMap.getLegend());
+                viewer.setInput(currentMap);
                 if (newFolderAction != null) {
                     newFolderAction.setEnabled(true);    
                 }
@@ -638,7 +623,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                 viewer.setSelection(new StructuredSelection(selectedLayer));
             }
             
-            LegendViewCheckboxUtils.updateCheckboxes();
+            LegendViewCheckboxUtils.updateCheckboxes(this);
         }
         
         gridHandler.setMap(currentMap);
@@ -696,6 +681,15 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
         }
 
         return mapLayers.get(mapLayers.size() - 1);
+        
+        /* TODO - Implement when rendering has been migrated
+        final List<ILegendItem> legendItems = getCurrentMap().getLegend();
+        if (legendItems.isEmpty()) {
+            return this;
+        }
+
+        return legendItems.get(legendItems.size() - 1);
+        */
     }
 
     /**
@@ -1009,9 +1003,9 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
      */
     private class MapDeepListener extends AdapterImpl {
         
-        @SuppressWarnings({"unchecked", "deprecation"})
+        @SuppressWarnings({"deprecation"})
         public void notifyChanged( final Notification msg ) {
-        
+            
             if (msg.getNotifier() instanceof ContextModel) {
                 ContextModel contextModel = (ContextModel) msg.getNotifier();
                 Map map = contextModel.getMap();
@@ -1021,7 +1015,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                     map.removeDeepAdapter(this);
                     return;
                 }
-
+                
                 // If workbench is closing
                 if (PlatformUI.getWorkbench().isClosing()) {
                     contextModel.eAdapters().remove(this);
@@ -1031,15 +1025,15 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                 if (msg.getFeatureID(ContextModel.class) == ProjectPackage.CONTEXT_MODEL__LAYERS) {
                     switch( msg.getEventType() ) {
                     case Notification.ADD: {
-                        LegendViewCheckboxUtils.updateCheckbox((Layer) msg.getNewValue());
+                        LegendViewCheckboxUtils.updateCheckbox(viewer, (Layer) msg.getNewValue());
                         break;
                     }
                     case Notification.ADD_MANY: {
-                        LegendViewCheckboxUtils.updateCheckboxes();
+                        LegendViewCheckboxUtils.updateCheckboxes(LegendView.this);
                         break;
                     }
                     case Notification.SET: {
-                        LegendViewCheckboxUtils.updateCheckbox((Layer) msg.getNewValue());
+                        LegendViewCheckboxUtils.updateCheckbox(viewer, (Layer) msg.getNewValue());
                         break;
                     }
                     }
@@ -1073,7 +1067,6 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                         }
                     }
                 }
-                
             }
         }
         
@@ -1088,7 +1081,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
 
         @Override
         public void treeExpanded( TreeExpansionEvent event ) {
-            LegendViewCheckboxUtils.updateCheckboxes();
+            LegendViewCheckboxUtils.updateCheckboxes(LegendView.this);
         }
         
     }
@@ -1121,6 +1114,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
             viewer.setGrayed(eventFolder, false);
             for( ILegendItem item : eventFolder.getItems() ) {
                 final Layer layer = (Layer) item;
+                // TODO - Check if this will cause infinite loop on listener updating the tree also
                 layer.setVisible(event.getChecked());
                 viewer.setChecked(layer, event.getChecked());
             }

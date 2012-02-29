@@ -40,12 +40,11 @@ public final class LegendViewCheckboxUtils {
      * 
      * @param layer
      */
-    public static void updateCheckbox( final Layer layer ) {
+    public static void updateCheckbox( final CheckboxTreeViewer viewer, final Layer layer ) {
         
         PlatformGIS.asyncInDisplayThread(new Runnable(){
             public void run() {
                 if (!PlatformUI.getWorkbench().isClosing()) {
-                    final CheckboxTreeViewer viewer = (CheckboxTreeViewer) LegendView.getViewer();
                     viewer.setChecked(layer, layer.isVisible());
                 }
             }
@@ -57,14 +56,13 @@ public final class LegendViewCheckboxUtils {
      * Updates the viewer's checkbox display with respect to the current layer's visibility. Method
      * called from the notifications of checkboxContextListener
      */
-    public static void updateCheckboxes() {
+    public static void updateCheckboxes( final LegendView view ) {
         
         PlatformGIS.asyncInDisplayThread(new Runnable(){
             public void run() {
 
-                final LegendView view = LegendView.getViewPart();
                 final Map map = view.getCurrentMap();
-                final CheckboxTreeViewer viewer = (CheckboxTreeViewer) LegendView.getViewer();
+                final CheckboxTreeViewer viewer = view.getViewer();
                 final List<Layer> layers = map.getLayersInternal();
 
                 if (canUpdateCheckboxes(view, map, layers, viewer)) {

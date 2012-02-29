@@ -109,11 +109,16 @@ public final class LegendViewUtils {
         final IRepository local = CatalogPlugin.getDefault().getLocal();
         final IGeoResource gridResource = local.getById(IGeoResource.class, GRID_ID, new NullProgressMonitor()); 
         if (gridResource == null) {
-            System.out.println("[LegendViewUtils] Grid resource not found. Either service is not up or it does not hold the resource.");
+            System.out.println("[LegendViewUtils] Grid resource not found. Either service is not up or it does not hold the resource."); //$NON-NLS-1$
         }
         return gridResource;
     }
 
+    /**
+     * Checks if the selection input is a folder.
+     * @param selection
+     * @return true if selection is a folder, else false
+     */
     public static boolean isFolderSelected(ISelection selection) {
         if (selection instanceof IStructuredSelection) {
             final IStructuredSelection strucSelection = (IStructuredSelection) selection;
@@ -124,6 +129,14 @@ public final class LegendViewUtils {
         return false;
     }
     
+    /**
+     * Gets the parent object of the input object.
+     * 
+     * @param map
+     * @param object
+     * @return map - if object is inside the LegendItems list, folder - if object is a layer inside a
+     *         folder
+     */
     public static Object getParent(Map map, Object object) {
         
         if (object instanceof Folder) {
@@ -150,8 +163,17 @@ public final class LegendViewUtils {
         
     }
     
+    /**
+     * Gets the parent object of the input object.
+     * 
+     * @param object
+     * @return map - if object is inside the LegendItems list, folder - if object is a layer inside a
+     *         folder
+     */
     public static Object getParent(Object object) {
         return getParent(((Map) ApplicationGIS.getActiveMap()), object);
     }
+    
+    
     
 }

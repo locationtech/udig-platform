@@ -157,9 +157,11 @@ public class LegendDropAction extends IDropAction {
 
     /**
      * Refreshes the LegendView viewer
+     * @deprecated - Should expand (in general, update the viewer) in the LegendView itself by
+     *             listening to changes to the map and legenditems list
      */
     private void refresh() {
-        
+        /*
         final Runnable runnable = new Runnable(){
             public void run() {
                 if (LegendView.getViewer() != null) {
@@ -173,15 +175,22 @@ public class LegendDropAction extends IDropAction {
         } else {
             runnable.run();
         }
-        
+        */
     }
     
     /**
-     * Expands the node of the element in the LegendView viewer
+     * Expands the node of the element in the LegendView viewer.
+     * 
      * @param element
+     * @deprecated - Should expand (in general, update the viewer) in the LegendView itself by
+     *             listening to changes to the map and legenditems list
      */
     private void expandElement(final Object element) {
         
+        // Should expand (in general, update the viewer) in the LegendView itself by listening to
+        // changes to the map and legenditems list
+        
+        /*
         final Runnable runnable = new Runnable(){
             public void run() {
                 final CheckboxTreeViewer viewer = (CheckboxTreeViewer) LegendView.getViewer();
@@ -196,6 +205,7 @@ public class LegendDropAction extends IDropAction {
         } else {
             runnable.run();
         }
+        */
         
     }
     
