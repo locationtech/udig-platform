@@ -14,6 +14,9 @@
  */
 package net.refractions.udig.project.ui.internal;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import net.refractions.udig.catalog.CatalogPlugin;
@@ -21,6 +24,7 @@ import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IRepository;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.internal.Folder;
@@ -31,6 +35,7 @@ import net.refractions.udig.project.ui.ApplicationGIS;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.jaitools.jiffle.parser.RuntimeSourceGenerator.listAssignment_return;
 
 /**
  * The utility class of the Legend View. This contains static helper methods for Legend View
@@ -174,6 +179,61 @@ public final class LegendViewUtils {
         return getParent(((Map) ApplicationGIS.getActiveMap()), object);
     }
     
+    /**
+     * Gets the list of layers from the legendItems. Option can be specified to return an ordered
+     * list by z-order.
+     * 
+     * @param legendItems
+     * @param isOrdered
+     * @return list of layers
+     */
+    public static List<Layer> getLayers(List<ILegendItem> legendItems, boolean isOrdered) {
+        
+        //Gets the layers from the LegendItems list
+        final List<Layer> layers = new ArrayList<Layer>();
+        for( ILegendItem item : legendItems ) {
+            if (item instanceof Folder) {
+                final Folder folder = (Folder) item;
+                for( ILegendItem folderItem : folder.getItems() ) {
+                    layers.add((Layer) folderItem);
+                }
+            } else if (item instanceof Layer) {
+                layers.add((Layer) item);
+            }
+        }
+        
+        if (isOrdered) {
+            //Sorts the layers according to z-order (defined in LayerImpl)
+            Collections.sort(layers);            
+        }
+        
+        return layers;
+        
+    }
     
+    public static List<Layer> getGridLayers( List<ILegendItem> legendItems ) {
+
+        // Gets the grid layers from the LegendItems list
+        final List<Layer> layers = new ArrayList<Layer>();
+        for( ILegendItem item : legendItems ) {
+            if (item instanceof Folder) {
+                final Folder folder = (Folder) item;
+                for( ILegendItem folderItem : folder.getItems() ) {
+                    final Layer layer = (Layer) folderItem; 
+                    if (isGridLayer(layer)) {
+                        layers.add(layer);    
+                    }
+                }
+            } else if (item instanceof Layer) {
+                final Layer layer = (Layer) item; 
+                if (isGridLayer(layer)) {
+                    layers.add(layer);    
+                }
+            }
+        }
+
+        return layers;
+
+    }
     
 }

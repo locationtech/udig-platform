@@ -40,7 +40,7 @@ public class LegendViewContentProvider extends AdapterFactoryContentProvider {
     @Override
     public void notifyChanged( Notification notification ) {
         super.notifyChanged(notification);
-        
+        /*
         switch( notification.getFeatureID(Map.class) ) {
         case ProjectPackage.MAP__CONTEXT_MODEL: {
             if (notification.getNotifier() == view.getCurrentMap()) {
@@ -49,7 +49,7 @@ public class LegendViewContentProvider extends AdapterFactoryContentProvider {
             break;
         }
         }
-        
+        */
     }
 
     @Override

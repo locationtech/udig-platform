@@ -14,8 +14,6 @@
  */
 package net.refractions.udig.project.ui.internal;
 
-import net.refractions.udig.project.IMapCompositionListener;
-import net.refractions.udig.project.MapCompositionEvent;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 
@@ -31,7 +29,7 @@ import org.eclipse.jface.viewers.ViewerFilter;
  * @author Naz Chan (LISAsoft)
  * @since 1.3.1
  */
-public class LegendViewFiltersHandler implements IMapCompositionListener {
+public class LegendViewFiltersHandler {
 
     private Action toggleMgLayerAction;
     private Action toggleBgLayerAction;
@@ -115,7 +113,6 @@ public class LegendViewFiltersHandler implements IMapCompositionListener {
      */
     private void cleanHandler() {
         if (map != null) {
-            map.removeMapCompositionListener(this);
             map = null;
         }
     }
@@ -126,9 +123,6 @@ public class LegendViewFiltersHandler implements IMapCompositionListener {
      */
     private void initMap(Map map) {
         this.map = map;
-        if (map != null) {
-            this.map.addMapCompositionListener(this);
-        }
     }
     
     /**
@@ -183,7 +177,7 @@ public class LegendViewFiltersHandler implements IMapCompositionListener {
         if (map == null) {
             setLayerActionsEnabled(false);
         } else {
-            if (map.getLayersInternal().size() > 0) {
+            if (LegendViewUtils.getLayers(map.getLegend(), false).size() > 0) {
                 setLayerActionsEnabled(true);
             } else {
                 setLayerActionsEnabled(false);
@@ -284,15 +278,9 @@ public class LegendViewFiltersHandler implements IMapCompositionListener {
     }
 
     /**
-     * IMapCompositionListener method 
+     * Refreshes the toggle filter buttons display
      */
-    @Override
-    public void changed( MapCompositionEvent event ) {
-        if (MapCompositionEvent.EventType.ADDED == event.getType()) {
-            final Layer layer = (Layer) event.getNewValue();
-        } else if (MapCompositionEvent.EventType.REMOVED == event.getType()) {
-            final Layer layer = (Layer) event.getOldValue();
-        }
+    public void refresh() {
         setToggleLayersActionState();
     }
     

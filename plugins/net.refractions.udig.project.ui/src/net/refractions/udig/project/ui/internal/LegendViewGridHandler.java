@@ -20,13 +20,12 @@ import java.util.List;
 
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ILayerListener;
-import net.refractions.udig.project.IMapCompositionListener;
 import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.project.MapCompositionEvent;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.commands.AddLayersCommand;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 
@@ -38,7 +37,7 @@ import org.eclipse.jface.action.IAction;
  * @author Naz Chan (LISAsoft)
  * @since 1.3.1
  */
-public class LegendViewGridHandler implements ILayerListener, IMapCompositionListener {
+public class LegendViewGridHandler implements ILayerListener {
 
     private Map map;
     private List<Layer> gridLayers;
@@ -90,7 +89,6 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
         }
         
         if (map != null) {
-            map.removeMapCompositionListener(this);
             map = null;
         }
         
@@ -101,13 +99,7 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
      * @param map
      */
     private void initMap(Map map) {
-        
         this.map = map;
-        
-        if (map != null) {
-            this.map.addMapCompositionListener(this);
-        }
-        
     }
     
     /**
@@ -122,7 +114,7 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
 
             this.gridLayers = new ArrayList<Layer>();
             
-            for( ILayer layer : map.getMapLayers() ) {
+            for( ILayer layer : LegendViewUtils.getLayers(map.getLegend(), false) ) {
                 if (LegendViewUtils.isGridLayer(layer)) {
                     addGridLayer((Layer) layer);
                 }
@@ -206,28 +198,31 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
     }
     
     /**
-     * IMapCompositionListener method
+     * Refreshes the grid toggle button display and sets/unsets the grid layers handled by the handler 
      */
-    @Override
-    public void changed( MapCompositionEvent event ) {
+    public void refresh( int eventType, Object object ) {
 
-        if (MapCompositionEvent.EventType.ADDED == event.getType()) {
-            final Layer layer = (Layer) event.getNewValue();
-            if (LegendViewUtils.isGridLayer(layer)) {
-                if (this.isLegendViewAddingGrid) {
-                    layer.setVisible(false);
-                    this.isLegendViewAddingGrid = false;
+        if (object instanceof Layer) {
+
+            final Layer layer = (Layer) object;
+            
+            if (Notification.ADD == eventType) {
+                if (LegendViewUtils.isGridLayer(layer)) {
+                    if (this.isLegendViewAddingGrid) {
+                        layer.setVisible(false);
+                        this.isLegendViewAddingGrid = false;
+                    }
+                    addGridLayer(layer);
                 }
-                addGridLayer(layer);
+            } else if (Notification.REMOVE == eventType) {
+                if (LegendViewUtils.isGridLayer(layer)) {
+                    removeGridLayer(layer);
+                }
             }
-        } else if (MapCompositionEvent.EventType.REMOVED == event.getType()) {
-            final Layer layer = (Layer) event.getOldValue();
-            if (LegendViewUtils.isGridLayer(layer)) {
-                removeGridLayer(layer);
-            }
+            
+            setGridActionState();    
+            
         }
-        
-        setGridActionState();
         
     }
     
@@ -236,24 +231,28 @@ public class LegendViewGridHandler implements ILayerListener, IMapCompositionLis
      * states of the action.
      */
     private void setGridActionState() {
+
+        //final List<Layer> gridLayers = LegendViewUtils.getGridLayers(map.getLegend());
+        
         if (gridAction != null) {
             if (gridLayers == null) {
                 gridAction.setEnabled(false);
             } else {
                 if (gridLayers.size() > 0) {
                     gridAction.setEnabled(true);
-                    setGridActionCheckedState();
+                    setGridActionCheckedState(gridLayers);
                 } else {
                     gridAction.setEnabled(false);
-                }                
+                }
             }
         }
+
     }
 
     /**
      * This manages the checked/unchecked states of the action as well as toggling the tooltip.
      */
-    private void setGridActionCheckedState() {
+    private void setGridActionCheckedState(List<Layer> gridLayers) {
         boolean isAtLeastOneVisible = false;
         for( Layer gridLayer : gridLayers ) {
             if (gridLayer.isVisible()) {

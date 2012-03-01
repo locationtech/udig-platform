@@ -72,7 +72,7 @@ public class RenameFolderAction extends Action implements ISelectionChangedListe
             public void run() {
                 final Folder folder = (Folder) selection.getFirstElement();
                 final InputDialog folderNameDialog = new InputDialog(Display.getDefault().getActiveShell(), 
-                        "Rename Folder", "Enter new folder name", folder.getName(), null);
+                        "Enter new Name", "", folder.getName(), null);
                 final int folderNameDialogResult = folderNameDialog.open();
                 if (folderNameDialogResult == Dialog.OK) {
                     folder.setName(folderNameDialog.getValue());
