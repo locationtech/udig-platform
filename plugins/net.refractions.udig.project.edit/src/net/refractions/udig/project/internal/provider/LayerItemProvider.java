@@ -6,6 +6,7 @@
  */
 package net.refractions.udig.project.internal.provider;
 
+import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -118,24 +119,6 @@ public class LayerItemProvider extends ItemProviderAdapter
                                 "_UI_PropertyDescriptor_description", "_UI_Layer_zorder_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         ProjectPackage.eINSTANCE.getLayer_Zorder(), true,
                         ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
-    }
-
-    /**
-     * This adds a property descriptor for the Name feature.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @generated
-     */
-    protected void addNamePropertyDescriptor( Object object ) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_name_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_name_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__NAME, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -391,39 +374,20 @@ public class LayerItemProvider extends ItemProviderAdapter
     }
 
     /**
-     * This adds a property descriptor for the Shown feature.
+     * This adds a property descriptor for the Map feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addShownPropertyDescriptor( Object object ) {
+    protected void addMapPropertyDescriptor( Object object ) {
         itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory)
+                        .getRootAdapterFactory(),
                         getResourceLocator(),
-                        getString("_UI_Layer_shown_feature"), //$NON-NLS-1$
+                        getString("_UI_Layer_map_feature"), //$NON-NLS-1$
                         getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_shown_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__SHOWN, true, false, false,
-                        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
-    }
-
-    /**
-     * This adds a property descriptor for the Icon feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addIconPropertyDescriptor( Object object ) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        getString("_UI_Layer_icon_feature"), //$NON-NLS-1$
-                        getString(
-                                "_UI_PropertyDescriptor_description", "_UI_Layer_icon_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LAYER__ICON, true, false, false,
-                        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+                                "_UI_PropertyDescriptor_description", "_UI_Layer_map_feature", "_UI_Layer_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        ProjectPackage.Literals.LAYER__MAP, true, false, true, null, null, null));
     }
 
     /**
@@ -473,13 +437,18 @@ public class LayerItemProvider extends ItemProviderAdapter
         }
         @Override
         public boolean equals( Object obj ) {
-            if (this == obj) return true;
-            if (obj == null) return false;
-            if (getClass() != obj.getClass()) return false;
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
             final Data other = (Data) obj;
             if (desc == null) {
-                if (other.desc != null) return false;
-            } else if (!desc.equals(other.desc)) return false;
+                if (other.desc != null)
+                    return false;
+            } else if (!desc.equals(other.desc))
+                return false;
             return true;
         }
 
@@ -542,7 +511,8 @@ public class LayerItemProvider extends ItemProviderAdapter
         Collection<Data> values = cache.values();
         for( Data data : values ) {
             try {
-                if (data.image != null && !data.image.isDisposed()) data.image.dispose();
+                if (data.image != null && !data.image.isDisposed())
+                    data.image.dispose();
             } catch (Throwable e) {
                 ProjectEditPlugin.log("Error disposing LayerItemProvider", e); //$NON-NLS-1$
             }
@@ -563,10 +533,12 @@ public class LayerItemProvider extends ItemProviderAdapter
         Layer layer = (Layer) object;
         String label = layer.getName();
 
-        if (label != null && label.length() != 0) return label;
+        if (label != null && label.length() != 0)
+            return label;
 
         String title = (String) layer.getProperties().get("generated title"); //$NON-NLS-1$
-        if (title != null) return title;
+        if (title != null)
+            return title;
 
         // Okay have a default
         //
@@ -626,7 +598,8 @@ public class LayerItemProvider extends ItemProviderAdapter
             }
             LayerImpl layer = (LayerImpl) element;
             java.awt.Color awtColor = layer.getDefaultColor();
-            if (awtColor == null) return null;
+            if (awtColor == null)
+                return null;
             if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_FOREGROUND)) {
                 return null; //not used yet (flip between black and white?)
             } else if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_BACKGROUND)) {
@@ -647,20 +620,23 @@ public class LayerItemProvider extends ItemProviderAdapter
                 return systemColor;
             }
             IMap map = layer.getMap();
-            if (map == null) return null;
+            if (map == null)
+                return null;
             boolean mylarOnAndAffectingLayer = mylarOnAndAffectingLayer(layer, map);
 
             ScopedPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
             String highlightPref = store.getString(PreferenceConstants.P_HIGHLIGHT);
 
             if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_NONE)) {
-                if (mylarOnAndAffectingLayer) return systemColor;
+                if (mylarOnAndAffectingLayer)
+                    return systemColor;
                 return null;
             }
 
             float mylarEffect = 1.0f;
             java.awt.Color awtColor = layer.getDefaultColor();
-            if (awtColor == null) return null;
+            if (awtColor == null)
+                return null;
             if (highlightPref.equals(PreferenceConstants.P_HIGHLIGHT_FOREGROUND)) {
                 return new Color(PlatformUI.getWorkbench().getDisplay(), (int) mylarEffect
                         * awtColor.getRed(), (int) mylarEffect * awtColor.getGreen(),

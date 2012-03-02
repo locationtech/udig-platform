@@ -268,7 +268,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
         List lists = new ArrayList();
         for( Iterator iter = getElementsInternal().iterator(); iter.hasNext(); ) {
             Object obj = iter.next();
-            if (type.isAssignableFrom(obj.getClass())) lists.add(obj);
+            if (type.isAssignableFrom(obj.getClass()))
+                lists.add(obj);
         }
         return lists;
     }
@@ -279,7 +280,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
      */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: "); //$NON-NLS-1$
@@ -323,7 +325,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
      * The resource will end in .umap.
      */
     private void createResourceAndAddElement( Project value, ProjectElement projectElement ) {
-        if (projectElement == null || projectElement.eIsProxy()) return;
+        if (projectElement == null || projectElement.eIsProxy())
+            return;
         Resource projectResource = eResource();
         if (projectResource != null) {
             URI projectURI = projectResource.getURI();
@@ -401,7 +404,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
             }
             if (!found) {
                 File file = new File(uri.toFileString());
-                if (file.exists()) found = true;
+                if (file.exists())
+                    found = true;
             }
         } while( found );
         uri.deresolve(projectResource.getURI(), true, true, true);
@@ -426,7 +430,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
     }
 
     public URI getID() {
-        if (eResource() == null) return URI.createFileURI(getName());
+        if (eResource() == null)
+            return URI.createFileURI(getName());
         return eResource().getURI();
     }
 

@@ -172,7 +172,8 @@ public final class ProjectPlugin extends EMFPlugin {
                             .getResources();
                     for( Iterator<Resource> iter = resources.iterator(); iter.hasNext(); ) {
                         Resource resource = (Resource) iter.next();
-                        if (resource.getContents().isEmpty()) continue;
+                        if (resource.getContents().isEmpty())
+                            continue;
                         Object next = resource.getAllContents().next();
                         if (resource.isModified() && next != null && !((EObject) next).eIsProxy()) {
                             try {
@@ -288,8 +289,10 @@ public final class ProjectPlugin extends EMFPlugin {
      */
     private static void trace( String message, Throwable e ) {
         if (getPlugin().isDebugging()) {
-            if (message != null) System.out.println(message + "\n"); //$NON-NLS-1$
-            if (e != null) e.printStackTrace(System.out);
+            if (message != null)
+                System.out.println(message + "\n"); //$NON-NLS-1$
+            if (e != null)
+                e.printStackTrace(System.out);
         }
     }
     /**

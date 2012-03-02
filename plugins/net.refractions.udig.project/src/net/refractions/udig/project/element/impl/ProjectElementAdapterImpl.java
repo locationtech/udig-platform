@@ -194,7 +194,8 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
                 msgs = ((InternalEObject) newProjectInternal).eInverseAdd(this,
                         ProjectPackage.PROJECT__ELEMENTS_INTERNAL, Project.class, msgs);
             msgs = basicSetProjectInternal(newProjectInternal, msgs);
-            if (msgs != null) msgs.dispatch();
+            if (msgs != null)
+                msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ElementPackage.PROJECT_ELEMENT_ADAPTER__PROJECT_INTERNAL, newProjectInternal,
@@ -269,7 +270,8 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__NAME:
             return getName();
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__PROJECT_INTERNAL:
-            if (resolve) return getProjectInternal();
+            if (resolve)
+                return getProjectInternal();
             return basicGetProjectInternal();
         case ElementPackage.PROJECT_ELEMENT_ADAPTER__BACKING_OBJECT:
             return getBackingObject();
@@ -346,7 +348,8 @@ public class ProjectElementAdapterImpl extends EObjectImpl implements ProjectEle
      */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: "); //$NON-NLS-1$
