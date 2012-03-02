@@ -69,28 +69,26 @@ public interface LegendItem extends EObject, ILegendItem {
     void setName( String value );
 
     /**
-     * Returns the value of the '<em><b>Map</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link net.refractions.udig.project.internal.Map#getLegend <em>Legend</em>}'.
+     * Returns the value of the '<em><b>Map</b></em>' reference.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Map</em>' container reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Map</em>' container reference.
+     * @return the value of the '<em>Map</em>' reference.
      * @see #setMap(Map)
      * @see net.refractions.udig.project.internal.ProjectPackage#getLegendItem_Map()
-     * @see net.refractions.udig.project.internal.Map#getLegend
-     * @model opposite="legend" transient="false"
+     * @model
      * @generated
      */
     Map getMap();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.LegendItem#getMap <em>Map</em>}' container reference.
+     * Sets the value of the '{@link net.refractions.udig.project.internal.LegendItem#getMap <em>Map</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Map</em>' container reference.
+     * @param value the new value of the '<em>Map</em>' reference.
      * @see #getMap()
      * @generated
      */

@@ -115,6 +115,15 @@ public class FolderImpl extends EObjectImpl implements Folder {
     protected String name = NAME_EDEFAULT;
 
     /**
+     * The cached value of the '{@link #getMap() <em>Map</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMap()
+     * @generated
+     * @ordered
+     */
+    protected Map map;
+    /**
      * The cached value of the '{@link #getItems() <em>Items</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -161,22 +170,6 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
-        case ProjectPackage.FOLDER__MAP:
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
-            return basicSetMap((Map) otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public String getName() {
         return name;
     }
@@ -200,8 +193,16 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * @generated
      */
     public Map getMap() {
-        if (eContainerFeatureID() != ProjectPackage.FOLDER__MAP) return null;
-        return (Map) eContainer();
+        if (map != null && map.eIsProxy()) {
+            InternalEObject oldMap = (InternalEObject) map;
+            map = (Map) eResolveProxy(oldMap);
+            if (map != oldMap) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+                            ProjectPackage.FOLDER__MAP, oldMap, map));
+            }
+        }
+        return map;
     }
 
     /**
@@ -209,9 +210,8 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetMap( Map newMap, NotificationChain msgs ) {
-        msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.FOLDER__MAP, msgs);
-        return msgs;
+    public Map basicGetMap() {
+        return map;
     }
 
     /**
@@ -220,21 +220,11 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * @generated
      */
     public void setMap( Map newMap ) {
-        if (newMap != eInternalContainer()
-                || (eContainerFeatureID() != ProjectPackage.FOLDER__MAP && newMap != null)) {
-            if (EcoreUtil.isAncestor(this, newMap))
-                throw new IllegalArgumentException(
-                        "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
-            NotificationChain msgs = null;
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
-            if (newMap != null)
-                msgs = ((InternalEObject) newMap).eInverseAdd(this, ProjectPackage.MAP__LEGEND,
-                        Map.class, msgs);
-            msgs = basicSetMap(newMap, msgs);
-            if (msgs != null) msgs.dispatch();
-        } else if (eNotificationRequired())
+        Map oldMap = map;
+        map = newMap;
+        if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.FOLDER__MAP,
-                    newMap, newMap));
+                    oldMap, map));
     }
 
     /**
@@ -290,27 +280,10 @@ public class FolderImpl extends EObjectImpl implements Folder {
     public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
             NotificationChain msgs ) {
         switch( featureID ) {
-        case ProjectPackage.FOLDER__MAP:
-            return basicSetMap(null, msgs);
         case ProjectPackage.FOLDER__ITEMS:
             return ((InternalEList< ? >) getItems()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eBasicRemoveFromContainerFeature( NotificationChain msgs ) {
-        switch( eContainerFeatureID() ) {
-        case ProjectPackage.FOLDER__MAP:
-            return eInternalContainer().eInverseRemove(this, ProjectPackage.MAP__LEGEND, Map.class,
-                    msgs);
-        }
-        return super.eBasicRemoveFromContainerFeature(msgs);
     }
 
     /**
@@ -328,7 +301,8 @@ public class FolderImpl extends EObjectImpl implements Folder {
         case ProjectPackage.FOLDER__NAME:
             return getName();
         case ProjectPackage.FOLDER__MAP:
-            return getMap();
+            if (resolve) return getMap();
+            return basicGetMap();
         case ProjectPackage.FOLDER__ITEMS:
             return getItems();
         }
@@ -406,7 +380,7 @@ public class FolderImpl extends EObjectImpl implements Folder {
         case ProjectPackage.FOLDER__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         case ProjectPackage.FOLDER__MAP:
-            return getMap() != null;
+            return map != null;
         case ProjectPackage.FOLDER__ITEMS:
             return items != null && !items.isEmpty();
         }

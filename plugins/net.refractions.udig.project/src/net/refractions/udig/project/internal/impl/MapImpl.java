@@ -1081,9 +1081,6 @@ public class MapImpl extends EObjectImpl implements Map {
                 msgs = ((InternalEObject) renderManagerInternal).eInverseRemove(this,
                         RenderPackage.RENDER_MANAGER__MAP_INTERNAL, RenderManager.class, msgs);
             return basicSetRenderManagerInternal((RenderManager) otherEnd, msgs);
-        case ProjectPackage.MAP__LEGEND:
-            return ((InternalEList<InternalEObject>) (InternalEList< ? >) getLegend()).basicAdd(
-                    otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -1560,8 +1557,8 @@ public class MapImpl extends EObjectImpl implements Map {
      */
     public List<LegendItem> getLegend() {
         if (legend == null) {
-            legend = new EObjectContainmentWithInverseEList<LegendItem>(LegendItem.class, this,
-                    ProjectPackage.MAP__LEGEND, ProjectPackage.LEGEND_ITEM__MAP);
+            legend = new EObjectContainmentEList<LegendItem>(LegendItem.class, this,
+                    ProjectPackage.MAP__LEGEND);
         }
         return legend;
     }

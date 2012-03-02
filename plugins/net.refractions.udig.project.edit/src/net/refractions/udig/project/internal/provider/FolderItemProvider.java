@@ -75,6 +75,7 @@ public class FolderItemProvider extends ItemProviderAdapter
             addShownPropertyDescriptor(object);
             addIconPropertyDescriptor(object);
             addNamePropertyDescriptor(object);
+            addMapPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -95,6 +96,24 @@ public class FolderItemProvider extends ItemProviderAdapter
                                 "_UI_PropertyDescriptor_description", "_UI_LegendItem_name_feature", "_UI_LegendItem_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         ProjectPackage.Literals.LEGEND_ITEM__NAME, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    }
+
+    /**
+     * This adds a property descriptor for the Map feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addMapPropertyDescriptor( Object object ) {
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(
+                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                        getResourceLocator(),
+                        getString("_UI_LegendItem_map_feature"), //$NON-NLS-1$
+                        getString(
+                                "_UI_PropertyDescriptor_description", "_UI_LegendItem_map_feature", "_UI_LegendItem_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        ProjectPackage.Literals.LEGEND_ITEM__MAP, true, false, true, null, null,
+                        null));
     }
 
     /**
