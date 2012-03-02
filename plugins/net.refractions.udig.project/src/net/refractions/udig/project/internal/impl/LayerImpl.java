@@ -1068,16 +1068,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected volatile String name = NAME_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getMap() <em>Map</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getMap()
-     * @generated
-     * @ordered
-     */
-    protected Map map;
-
-    /**
      * The default value of the '{@link #getFilter() <em>Filter</em>}' attribute.
      * 
      * @see #getFilter()
@@ -1358,6 +1348,16 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @ordered
      */
     protected EMap<Interaction, Boolean> interactionMap;
+
+    /**
+     * The cached value of the '{@link #getMap() <em>Map</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMap()
+     * @generated
+     * @ordered
+     */
+    protected Map map;
 
     private volatile String statusMessage = Messages.LayerImpl_status;
 
@@ -1711,6 +1711,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
             return basicSetContextModel((ContextModel) otherEnd, msgs);
+        case ProjectPackage.LAYER__MAP:
+            if (map != null)
+                msgs = ((InternalEObject) map).eInverseRemove(this, ProjectPackage.MAP__LAYERS,
+                        Map.class, msgs);
+            return basicSetMap((Map) otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -1730,6 +1735,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__INTERACTION_MAP:
             return ((InternalEList< ? >) ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap())
                     .eMap()).basicRemove(otherEnd, msgs);
+        case ProjectPackage.LAYER__MAP:
+            return basicSetMap(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -1761,9 +1768,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return getIcon();
         case ProjectPackage.LAYER__NAME:
             return getName();
-        case ProjectPackage.LAYER__MAP:
-            if (resolve) return getMap();
-            return basicGetMap();
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             return getContextModel();
         case ProjectPackage.LAYER__FILTER:
@@ -1803,6 +1807,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 return ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap()).eMap();
             else
                 return getInteractionMap();
+        case ProjectPackage.LAYER__MAP:
+            if (resolve) return getMap();
+            return basicGetMap();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -1823,9 +1830,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return;
         case ProjectPackage.LAYER__NAME:
             setName((String) newValue);
-            return;
-        case ProjectPackage.LAYER__MAP:
-            setMap((Map) newValue);
             return;
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             setContextModel((ContextModel) newValue);
@@ -1877,6 +1881,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
             ((EStructuralFeature.Setting) ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap())
                     .eMap()).set(newValue);
             return;
+        case ProjectPackage.LAYER__MAP:
+            setMap((Map) newValue);
+            return;
         }
         super.eSet(featureID, newValue);
     }
@@ -1896,9 +1903,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return;
         case ProjectPackage.LAYER__NAME:
             setName(NAME_EDEFAULT);
-            return;
-        case ProjectPackage.LAYER__MAP:
-            setMap((Map) null);
             return;
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             setContextModel((ContextModel) null);
@@ -1948,6 +1952,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__INTERACTION_MAP:
             getInteractionMap().clear();
             return;
+        case ProjectPackage.LAYER__MAP:
+            setMap((Map) null);
+            return;
         }
         super.eUnset(featureID);
     }
@@ -1965,8 +1972,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return ICON_EDEFAULT == null ? icon != null : !ICON_EDEFAULT.equals(icon);
         case ProjectPackage.LAYER__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-        case ProjectPackage.LAYER__MAP:
-            return map != null;
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             return getContextModel() != null;
         case ProjectPackage.LAYER__FILTER:
@@ -2007,6 +2012,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return maxScaleDenominator != MAX_SCALE_DENOMINATOR_EDEFAULT;
         case ProjectPackage.LAYER__INTERACTION_MAP:
             return interactionMap != null && !interactionMap.isEmpty();
+        case ProjectPackage.LAYER__MAP:
+            return map != null;
         }
         return super.eIsSet(featureID);
     }
@@ -2050,8 +2057,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 return ProjectPackage.LEGEND_ITEM__ICON;
             case ProjectPackage.LAYER__NAME:
                 return ProjectPackage.LEGEND_ITEM__NAME;
-            case ProjectPackage.LAYER__MAP:
-                return ProjectPackage.LEGEND_ITEM__MAP;
             default:
                 return -1;
             }
@@ -2098,8 +2103,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 return ProjectPackage.LAYER__ICON;
             case ProjectPackage.LEGEND_ITEM__NAME:
                 return ProjectPackage.LAYER__NAME;
-            case ProjectPackage.LEGEND_ITEM__MAP:
-                return ProjectPackage.LAYER__MAP;
             default:
                 return -1;
             }
@@ -2270,17 +2273,15 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @see net.refractions.udig.project.internal.Layer#getMap()
      */
-    public net.refractions.udig.project.internal.Map getMapInternal() {
-        ContextModel context = getContextModel();
-        if (context == null) return null;
-        return context.getMap();
+    public Map getMapInternal() {
+        return map;
     }
 
     /**
      * @see net.refractions.udig.project.ILayer#getMap()
      */
     public Map getMap() {
-        return getMapInternal();
+        return map;
     }
 
     /**
@@ -2297,12 +2298,39 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setMap( Map newMap ) {
+    public NotificationChain basicSetMap( Map newMap, NotificationChain msgs ) {
         Map oldMap = map;
         map = newMap;
-        if (eNotificationRequired())
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+                    ProjectPackage.LAYER__MAP, oldMap, newMap);
+            if (msgs == null)
+                msgs = notification;
+            else
+                msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setMap( Map newMap ) {
+        if (newMap != map) {
+            NotificationChain msgs = null;
+            if (map != null)
+                msgs = ((InternalEObject) map).eInverseRemove(this, ProjectPackage.MAP__LAYERS,
+                        Map.class, msgs);
+            if (newMap != null)
+                msgs = ((InternalEObject) newMap).eInverseAdd(this, ProjectPackage.MAP__LAYERS,
+                        Map.class, msgs);
+            msgs = basicSetMap(newMap, msgs);
+            if (msgs != null) msgs.dispatch();
+        } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__MAP,
-                    oldMap, map));
+                    newMap, newMap));
     }
 
     /**
