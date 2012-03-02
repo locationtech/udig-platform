@@ -199,6 +199,25 @@
             </enablement>
          </action>
       </viewContribution>
+      <viewContribution
+            id="net.refractions.udig.style.sld.styleAction"
+            targetID="net.refractions.udig.project.ui.legendManager">
+         <action
+               class="net.refractions.udig.style.sld.editor.OpenStyleEditorAction"
+               enablesFor="1"
+               icon="icons/style_tsk.gif"
+               id="net.refractions.udig.style.sld.view.openStyling"
+               label="%StyleEditor.label"
+               style="push"
+               toolbarPath="additions"
+               tooltip="%StyleEditor.tooltip">
+            <enablement>
+               <objectClass
+                     name="net.refractions.udig.project.ILayer">
+               </objectClass>
+            </enablement>
+         </action>
+      </viewContribution>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
