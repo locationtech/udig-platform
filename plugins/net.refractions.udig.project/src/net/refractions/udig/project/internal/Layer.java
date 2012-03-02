@@ -190,34 +190,6 @@ public interface Layer
     public Map<Interaction, Boolean> getInteractionMap();
 
     /**
-     * Returns the value of the '<em><b>Map</b></em>' reference.
-     * It is bidirectional and its opposite is '{@link net.refractions.udig.project.internal.Map#getLayers <em>Layers</em>}'.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Map</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Map</em>' reference.
-     * @see #setMap(net.refractions.udig.project.internal.Map)
-     * @see net.refractions.udig.project.internal.ProjectPackage#getLayer_Map()
-     * @see net.refractions.udig.project.internal.Map#getLayers
-     * @model opposite="layers"
-     * @generated
-     */
-    net.refractions.udig.project.internal.Map getMap();
-
-    /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getMap <em>Map</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Map</em>' reference.
-     * @see #getMap()
-     * @generated
-     */
-    void setMap( net.refractions.udig.project.internal.Map value );
-
-    /**
      * Set interaction applicability.
      * 
      * @param interaction of the layer being considered

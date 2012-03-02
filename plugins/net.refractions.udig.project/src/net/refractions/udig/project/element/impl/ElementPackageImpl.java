@@ -173,8 +173,7 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
      * @generated
      */
     public void createPackageContents() {
-        if (isCreated)
-            return;
+        if (isCreated) return;
         isCreated = true;
 
         // Create classes and their features
@@ -200,8 +199,7 @@ public class ElementPackageImpl extends EPackageImpl implements ElementPackage {
      * @generated
      */
     public void initializePackageContents() {
-        if (isInitialized)
-            return;
+        if (isInitialized) return;
         isInitialized = true;
 
         // Initialize package

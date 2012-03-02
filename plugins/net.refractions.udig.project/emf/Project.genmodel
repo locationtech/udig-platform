@@ -99,6 +99,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/minScaleDenominator"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/maxScaleDenominator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Layer/interactionMap"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference internal.ecore#//Layer/map"/>
       <genOperations ecoreOperation="internal.ecore#//Layer/getQuery">
         <genParameters ecoreParameter="internal.ecore#//Layer/getQuery/selection"/>
       </genOperations>
@@ -119,6 +120,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Map/colourScheme"/>
       <genFeatures notify="false" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Map/blackBoardInternal"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Map/legend"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference internal.ecore#//Map/layers"/>
       <genOperations ecoreOperation="internal.ecore#//Map/getBounds">
         <genParameters ecoreParameter="internal.ecore#//Map/getBounds/monitor"/>
       </genOperations>
@@ -188,8 +190,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Blackboard/entries"/>
     </genClasses>
     <genClasses ecoreClass="internal.ecore#//BlackboardEntry">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//BlackboardEntry/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//BlackboardEntry/memento"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//BlackboardEntry/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//BlackboardEntry/objectClass"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//BlackboardEntry/object"/>
     </genClasses>
@@ -202,14 +204,11 @@
     <genClasses image="false" ecoreClass="internal.ecore#//IFolder"/>
     <genClasses ecoreClass="internal.ecore#//Folder">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Folder/items"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Folder/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Folder/shown"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Folder/icon"/>
     </genClasses>
     <genClasses ecoreClass="internal.ecore#//LegendItem">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//LegendItem/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//LegendItem/shown"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//LegendItem/icon"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//LegendItem/name"/>
     </genClasses>
     <genClasses image="false" ecoreClass="internal.ecore#//ILegendItem"/>
   </genPackages>

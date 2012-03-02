@@ -282,8 +282,7 @@ public class StyleEntryImpl extends EObjectImpl implements StyleEntry {
      * @generated NOT
      */
     public String toString() {
-        if (eIsProxy())
-            return super.toString();
+        if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (iD: "); //$NON-NLS-1$

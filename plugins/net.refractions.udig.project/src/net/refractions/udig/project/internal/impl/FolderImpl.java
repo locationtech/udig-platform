@@ -21,6 +21,7 @@ import java.util.List;
 import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.LegendItem;
+import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jface.resource.ImageDescriptor;
 
@@ -45,6 +47,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
  *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#isShown <em>Shown</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getIcon <em>Icon</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getName <em>Name</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getMap <em>Map</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getItems <em>Items</em>}</li>
  * </ul>
  * </p>
@@ -158,6 +161,22 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
+            NotificationChain msgs ) {
+        switch( featureID ) {
+        case ProjectPackage.FOLDER__MAP:
+            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            return basicSetMap((Map) otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public String getName() {
         return name;
     }
@@ -173,6 +192,49 @@ public class FolderImpl extends EObjectImpl implements Folder {
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.FOLDER__NAME,
                     oldName, name));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Map getMap() {
+        if (eContainerFeatureID() != ProjectPackage.FOLDER__MAP) return null;
+        return (Map) eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetMap( Map newMap, NotificationChain msgs ) {
+        msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.FOLDER__MAP, msgs);
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setMap( Map newMap ) {
+        if (newMap != eInternalContainer()
+                || (eContainerFeatureID() != ProjectPackage.FOLDER__MAP && newMap != null)) {
+            if (EcoreUtil.isAncestor(this, newMap))
+                throw new IllegalArgumentException(
+                        "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            if (newMap != null)
+                msgs = ((InternalEObject) newMap).eInverseAdd(this, ProjectPackage.MAP__LEGEND,
+                        Map.class, msgs);
+            msgs = basicSetMap(newMap, msgs);
+            if (msgs != null) msgs.dispatch();
+        } else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.FOLDER__MAP,
+                    newMap, newMap));
     }
 
     /**
@@ -228,10 +290,27 @@ public class FolderImpl extends EObjectImpl implements Folder {
     public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
             NotificationChain msgs ) {
         switch( featureID ) {
+        case ProjectPackage.FOLDER__MAP:
+            return basicSetMap(null, msgs);
         case ProjectPackage.FOLDER__ITEMS:
             return ((InternalEList< ? >) getItems()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eBasicRemoveFromContainerFeature( NotificationChain msgs ) {
+        switch( eContainerFeatureID() ) {
+        case ProjectPackage.FOLDER__MAP:
+            return eInternalContainer().eInverseRemove(this, ProjectPackage.MAP__LEGEND, Map.class,
+                    msgs);
+        }
+        return super.eBasicRemoveFromContainerFeature(msgs);
     }
 
     /**
@@ -248,6 +327,8 @@ public class FolderImpl extends EObjectImpl implements Folder {
             return getIcon();
         case ProjectPackage.FOLDER__NAME:
             return getName();
+        case ProjectPackage.FOLDER__MAP:
+            return getMap();
         case ProjectPackage.FOLDER__ITEMS:
             return getItems();
         }
@@ -271,6 +352,9 @@ public class FolderImpl extends EObjectImpl implements Folder {
             return;
         case ProjectPackage.FOLDER__NAME:
             setName((String) newValue);
+            return;
+        case ProjectPackage.FOLDER__MAP:
+            setMap((Map) newValue);
             return;
         case ProjectPackage.FOLDER__ITEMS:
             getItems().clear();
@@ -297,6 +381,9 @@ public class FolderImpl extends EObjectImpl implements Folder {
         case ProjectPackage.FOLDER__NAME:
             setName(NAME_EDEFAULT);
             return;
+        case ProjectPackage.FOLDER__MAP:
+            setMap((Map) null);
+            return;
         case ProjectPackage.FOLDER__ITEMS:
             getItems().clear();
             return;
@@ -318,6 +405,8 @@ public class FolderImpl extends EObjectImpl implements Folder {
             return ICON_EDEFAULT == null ? icon != null : !ICON_EDEFAULT.equals(icon);
         case ProjectPackage.FOLDER__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+        case ProjectPackage.FOLDER__MAP:
+            return getMap() != null;
         case ProjectPackage.FOLDER__ITEMS:
             return items != null && !items.isEmpty();
         }
@@ -345,6 +434,8 @@ public class FolderImpl extends EObjectImpl implements Folder {
                 return ProjectPackage.LEGEND_ITEM__ICON;
             case ProjectPackage.FOLDER__NAME:
                 return ProjectPackage.LEGEND_ITEM__NAME;
+            case ProjectPackage.FOLDER__MAP:
+                return ProjectPackage.LEGEND_ITEM__MAP;
             default:
                 return -1;
             }
@@ -373,6 +464,8 @@ public class FolderImpl extends EObjectImpl implements Folder {
                 return ProjectPackage.FOLDER__ICON;
             case ProjectPackage.LEGEND_ITEM__NAME:
                 return ProjectPackage.FOLDER__NAME;
+            case ProjectPackage.LEGEND_ITEM__MAP:
+                return ProjectPackage.FOLDER__MAP;
             default:
                 return -1;
             }
@@ -387,8 +480,7 @@ public class FolderImpl extends EObjectImpl implements Folder {
      */
     @Override
     public String toString() {
-        if (eIsProxy())
-            return super.toString();
+        if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (shown: "); //$NON-NLS-1$

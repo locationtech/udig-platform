@@ -83,54 +83,40 @@ public class RenderSwitch<T> extends Switch<T> {
         case RenderPackage.MULTI_LAYER_RENDERER: {
             MultiLayerRenderer multiLayerRenderer = (MultiLayerRenderer) theEObject;
             T result = caseMultiLayerRenderer(multiLayerRenderer);
-            if (result == null)
-                result = caseRenderer(multiLayerRenderer);
-            if (result == null)
-                result = caseIMultiLayerRenderer(multiLayerRenderer);
-            if (result == null)
-                result = caseIRenderer(multiLayerRenderer);
-            if (result == null)
-                result = defaultCase(theEObject);
+            if (result == null) result = caseRenderer(multiLayerRenderer);
+            if (result == null) result = caseIMultiLayerRenderer(multiLayerRenderer);
+            if (result == null) result = caseIRenderer(multiLayerRenderer);
+            if (result == null) result = defaultCase(theEObject);
             return result;
         }
         case RenderPackage.RENDER_EXECUTOR: {
             RenderExecutor renderExecutor = (RenderExecutor) theEObject;
             T result = caseRenderExecutor(renderExecutor);
-            if (result == null)
-                result = caseRenderer(renderExecutor);
-            if (result == null)
-                result = caseIRenderer(renderExecutor);
-            if (result == null)
-                result = defaultCase(theEObject);
+            if (result == null) result = caseRenderer(renderExecutor);
+            if (result == null) result = caseIRenderer(renderExecutor);
+            if (result == null) result = defaultCase(theEObject);
             return result;
         }
         case RenderPackage.RENDER_MANAGER: {
             RenderManager renderManager = (RenderManager) theEObject;
             T result = caseRenderManager(renderManager);
-            if (result == null)
-                result = caseIRenderManager(renderManager);
-            if (result == null)
-                result = defaultCase(theEObject);
+            if (result == null) result = caseIRenderManager(renderManager);
+            if (result == null) result = defaultCase(theEObject);
             return result;
         }
         case RenderPackage.VIEWPORT_MODEL: {
             ViewportModel viewportModel = (ViewportModel) theEObject;
             T result = caseViewportModel(viewportModel);
-            if (result == null)
-                result = caseIMapDisplayListener(viewportModel);
-            if (result == null)
-                result = caseIViewportModel(viewportModel);
-            if (result == null)
-                result = defaultCase(theEObject);
+            if (result == null) result = caseIMapDisplayListener(viewportModel);
+            if (result == null) result = caseIViewportModel(viewportModel);
+            if (result == null) result = defaultCase(theEObject);
             return result;
         }
         case RenderPackage.RENDERER: {
             Renderer renderer = (Renderer) theEObject;
             T result = caseRenderer(renderer);
-            if (result == null)
-                result = caseIRenderer(renderer);
-            if (result == null)
-                result = defaultCase(theEObject);
+            if (result == null) result = caseIRenderer(renderer);
+            if (result == null) result = defaultCase(theEObject);
             return result;
         }
         default:
