@@ -264,7 +264,7 @@ public interface Map extends ProjectElement, IMap {
 
     /**
      * Returns the value of the '<em><b>Legend</b></em>' containment reference list.
-     * The list contents are of type {@link net.refractions.udig.project.ILegendItem}.
+     * The list contents are of type {@link net.refractions.udig.project.internal.LegendItem}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Legend</em>' containment reference list isn't clear,
@@ -273,10 +273,10 @@ public interface Map extends ProjectElement, IMap {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Legend</em>' containment reference list.
      * @see net.refractions.udig.project.internal.ProjectPackage#getMap_Legend()
-     * @model type="net.refractions.udig.project.internal.ILegendItem" containment="true"
+     * @model containment="true"
      * @generated
      */
-    List<ILegendItem> getLegend();
+    List<LegendItem> getLegend();
 
     /**
      * Returns the value of the '<em><b>Layers</b></em>' reference list.

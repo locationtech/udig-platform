@@ -26,26 +26,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  */
 public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry {
     /**
-     * The default value of the '{@link #getKey() <em>Key</em>}' attribute.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
-     * @see #getKey()
-     * @generated
-     * @ordered
-     */
-    protected static final String KEY_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getKey() <em>Key</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getKey()
-     * @generated
-     * @ordered
-     */
-    protected String key = KEY_EDEFAULT;
-
-    /**
      * The default value of the '{@link #getMemento() <em>Memento</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -64,6 +44,26 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      * @ordered
      */
     protected String memento = MEMENTO_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getKey() <em>Key</em>}' attribute.
+     * <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * @see #getKey()
+     * @generated
+     * @ordered
+     */
+    protected static final String KEY_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getKey() <em>Key</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getKey()
+     * @generated
+     * @ordered
+     */
+    protected String key = KEY_EDEFAULT;
 
     /**
      * The default value of the '{@link #getObject() <em>Object</em>}' attribute. <!--
@@ -184,10 +184,10 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
     @Override
     public Object eGet( int featureID, boolean resolve, boolean coreType ) {
         switch( featureID ) {
-        case ProjectPackage.BLACKBOARD_ENTRY__KEY:
-            return getKey();
         case ProjectPackage.BLACKBOARD_ENTRY__MEMENTO:
             return getMemento();
+        case ProjectPackage.BLACKBOARD_ENTRY__KEY:
+            return getKey();
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT_CLASS:
             return getObjectClass();
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT:
@@ -204,11 +204,11 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
     @Override
     public void eSet( int featureID, Object newValue ) {
         switch( featureID ) {
-        case ProjectPackage.BLACKBOARD_ENTRY__KEY:
-            setKey((String) newValue);
-            return;
         case ProjectPackage.BLACKBOARD_ENTRY__MEMENTO:
             setMemento((String) newValue);
+            return;
+        case ProjectPackage.BLACKBOARD_ENTRY__KEY:
+            setKey((String) newValue);
             return;
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT_CLASS:
             setObjectClass((Class) newValue);
@@ -228,11 +228,11 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
     @Override
     public void eUnset( int featureID ) {
         switch( featureID ) {
-        case ProjectPackage.BLACKBOARD_ENTRY__KEY:
-            setKey(KEY_EDEFAULT);
-            return;
         case ProjectPackage.BLACKBOARD_ENTRY__MEMENTO:
             setMemento(MEMENTO_EDEFAULT);
+            return;
+        case ProjectPackage.BLACKBOARD_ENTRY__KEY:
+            setKey(KEY_EDEFAULT);
             return;
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT_CLASS:
             setObjectClass((Class) null);
@@ -252,10 +252,10 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
     @Override
     public boolean eIsSet( int featureID ) {
         switch( featureID ) {
-        case ProjectPackage.BLACKBOARD_ENTRY__KEY:
-            return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
         case ProjectPackage.BLACKBOARD_ENTRY__MEMENTO:
             return MEMENTO_EDEFAULT == null ? memento != null : !MEMENTO_EDEFAULT.equals(memento);
+        case ProjectPackage.BLACKBOARD_ENTRY__KEY:
+            return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT_CLASS:
             return getObjectClass() != null;
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT:
@@ -275,10 +275,10 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
             return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (key: "); //$NON-NLS-1$
-        result.append(key);
-        result.append(", memento: "); //$NON-NLS-1$
+        result.append(" (memento: "); //$NON-NLS-1$
         result.append(memento);
+        result.append(", key: "); //$NON-NLS-1$
+        result.append(key);
         result.append(')');
         return result.toString();
     }
