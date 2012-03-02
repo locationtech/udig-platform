@@ -187,7 +187,7 @@ public final class LegendViewUtils {
      * @param isOrdered
      * @return list of layers
      */
-    public static List<Layer> getLayers(List<ILegendItem> legendItems, boolean isOrdered) {
+    public static List<Layer> getLayers(List<? extends ILegendItem> legendItems, boolean isOrdered) {
         
         //Gets the layers from the LegendItems list
         final List<Layer> layers = new ArrayList<Layer>();
