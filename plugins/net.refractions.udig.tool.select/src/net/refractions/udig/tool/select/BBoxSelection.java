@@ -58,9 +58,8 @@ public class BBoxSelection extends SimpleTool implements ModalTool {
 	protected void onMouseDragged(MapMouseEvent e) {
 		Point end = e.getPoint();
 		if(start == null) return; 
-		shapeCommand.setShape(new Rectangle(Math.min(start.x, end.x), Math.min(
-				start.y, end.y), Math.abs(start.x - end.x), Math.abs(start.y
-				- end.y)));
+		shapeCommand.setShape(
+				new Rectangle(Math.min(start.x, end.x), Math.min(start.y, end.y), Math.abs(start.x - end.x), Math.abs(start.y - end.y)));
 		context.getViewportPane().repaint();
 	}
 

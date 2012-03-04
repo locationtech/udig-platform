@@ -20,6 +20,7 @@
  */
 package eu.udig.tools.merge;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.IOException;
 import java.util.List;
@@ -34,6 +35,7 @@ import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.project.ui.tool.IToolContext;
+import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.project.ui.tool.SimpleTool;
 import net.refractions.udig.tools.edit.animation.MessageBubble;
 import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
@@ -62,17 +64,25 @@ import eu.udig.tools.merge.internal.view.MergeView;
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
  */
-public class MergeTool extends SimpleTool  {
+public class MergeTool extends SimpleTool  implements ModalTool{
+
+    /**
+     * Comment for <code>ID</code>
+     */
+	public static final String	ID = "eu.udig.tools.merge.MergeTool";	//$NON-NLS-1$
 
 	private static final Logger LOGGER = Logger.getLogger(MergeTool.class.getName());
 
-	private MergeContext		mergeContext	= MergeContext.getInstance();
+	private MergeContext		mergeContext = MergeContext.getInstance();
 
-	private static final String	EXTENSION_ID	= "eu.udig.tools.merge.MergeTool";	//$NON-NLS-1$
+	private SelectionBoxCommand selectionBoxCommand = null;
+
 	
-	public String getExtensionID() {
-
-		return EXTENSION_ID;
+	/**
+	 * The tool will respond to the mouse event and map motion stimulus.
+	 */
+	public MergeTool() {
+		super(MOUSE | MOTION);
 	}
 
 	/**
@@ -127,22 +137,26 @@ public class MergeTool extends SimpleTool  {
 	}
 
 	/**
+	 * Begins the bbox selection. 
 	 * Saves in the merge context the start point of bbox
 	 */
     @Override
     protected void onMousePressed( MapMouseEvent e ) {
-
-		SelectionBoxCommand selectionBoxCommand = this.mergeContext
-					.getSelectionBoxCommand();
+    
+    	if(e.button != MapMouseEvent.BUTTON1){
+    		return;
+    	}
+    	// Draw the initial bbox
+		selectionBoxCommand = new SelectionBoxCommand(); //this.mergeContext.getSelectionBoxCommand();
 			
-		this.mergeContext.setBBoxStartPoint(e.getPoint());
-		selectionBoxCommand.setValid(true);
-		selectionBoxCommand.setShape(new Rectangle(e.getPoint().x, e
-					.getPoint().y, 0, 0));
-		getContext().sendASyncCommand(selectionBoxCommand);
+		Point start = e.getPoint();
+		this.mergeContext.setBBoxStartPoint(start);
 
-		getContext().getViewportPane().repaint();
+		selectionBoxCommand.setValid(true);
+		selectionBoxCommand.setShape(new Rectangle(start.x, start.y, 0, 0));
+		context.sendASyncCommand(selectionBoxCommand);
     }
+    
     
     /**
      * Uses the position of last event as second corner of bbox drawn to 
@@ -152,20 +166,51 @@ public class MergeTool extends SimpleTool  {
      */
     @Override
     protected void onMouseDragged( MapMouseEvent e ) {
-    	
-		java.awt.Point start = this.mergeContext.getBBoxStartPoint();;
+        
+    	// draw the selection box 
+    	Point start = this.mergeContext.getBBoxStartPoint();
     	if (start == null) {
 			start = e.getPoint();
 		}
-    	SelectionBoxCommand selectionBoxCommand = this.mergeContext.getSelectionBoxCommand();
+		
 		selectionBoxCommand.setShape(
-				new Rectangle(	Math.min(start.x, e.x), Math.min(start.y, e.y),
-								Math.abs(e.x - start.x), Math.abs(start.y - e.y)));
+				new Rectangle(
+							Math.min(start.x, e.x), Math.min(start.y, e.y),
+							Math.abs(e.x - start.x), Math.abs(start.y - e.y)) );
+		context.getViewportPane().repaint();		
+		
+    }
+    
+    private void executeBBoxDraw(final Point start, final MapMouseEvent e){
 
-		getContext().sendASyncCommand(selectionBoxCommand);
+		int x1 = Math.min(start.x, e.x);
+		int y1 = Math.min(start.y, e.y);
+		int x2 = Math.abs(e.x - start.x);
+		int y2 = Math.abs(start.y - e.y);
+		
+		Coordinate c1 = context.getMap().getViewportModel()
+				.pixelToWorld(x1, y1);
+		Coordinate c2 = context.getMap().getViewportModel()
+				.pixelToWorld(x2, y2);
 
+		Envelope bounds = new Envelope(c1, c2);
+
+		MapCommand command;
+		if (e.isModifierDown(MapMouseEvent.MOD2_DOWN_MASK)) {
+			command = new BBoxSelectionCommand(bounds, BBoxSelectionCommand.ADD);
+		} else if (e.isModifierDown(MapMouseEvent.MOD1_DOWN_MASK)) {
+			command = new BBoxSelectionCommand(bounds,
+					BBoxSelectionCommand.SUBTRACT);
+		} else {
+			command = new BBoxSelectionCommand(bounds,
+					BBoxSelectionCommand.NONE);
+		}
+		getContext().sendASyncCommand(command);
+
+		selectionBoxCommand.setValid(false);
 		getContext().getViewportPane().repaint();
     }
+    
 
 	/**
 	 * This hook is used to catch two events:
@@ -177,6 +222,13 @@ public class MergeTool extends SimpleTool  {
     @Override
     protected void onMouseReleased(MapMouseEvent e) {
     	
+    	if(e.button != MapMouseEvent.BUTTON1){
+    		return;
+    	}
+    	// draw the selection box 
+    	Point start = this.mergeContext.getBBoxStartPoint();
+		executeBBoxDraw(start, e);
+
 		// search an existent view or open a new one
 		if(! this.mergeContext.isMergeViewActive() ){
 			openMergeView(e.x, e.y, this.mergeContext);
