@@ -14,6 +14,9 @@ import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
+/**
+ * Provider that is willing to use a {@link ChildFetcher} to load things in a background Job.
+ */
 public class AbstractLazyLoadingItemProvider extends ItemProviderAdapter {
 
     protected volatile ChildFetcher childFetcher;
@@ -25,8 +28,9 @@ public class AbstractLazyLoadingItemProvider extends ItemProviderAdapter {
      * @param object object that is the parent.
      * @return
      */
-    @SuppressWarnings("unchecked")
-    protected Collection< ? extends Object> getConcreteChildren(Object object){ return super.getChildren(object); }
+    protected Collection< ? extends Object> getConcreteChildren(Object object){
+        return super.getChildren(object);
+    }
 
     /**
      * Returns the child at the indicated index or null if there is fewer children
@@ -37,18 +41,21 @@ public class AbstractLazyLoadingItemProvider extends ItemProviderAdapter {
      */
     @SuppressWarnings("unchecked")
     public Object getChild( Object object, int childIndex ) {
-        if (!(object instanceof EObject) )
+        if (!(object instanceof EObject) ){
             return null;
+        }
         int currentIndex=0;
         Collection<? extends EStructuralFeature> features = getChildrenFeatures(object);
         for( EStructuralFeature feature : features ) {
+            
             Object value = getFeatureValue((EObject) object, feature);
             if( value instanceof Collection ){
                 Collection<Object> collection = (Collection) value;
                 
                 // index of child is in another feature
-                if( currentIndex+collection.size()<childIndex )
+                if( currentIndex+collection.size()<childIndex ){
                     continue;
+                }
                 // ok the child is in this feature lets find it.
                 if( value instanceof List ){
                     List list = ((List)value);
@@ -57,7 +64,7 @@ public class AbstractLazyLoadingItemProvider extends ItemProviderAdapter {
                         continue;
                     }
                     return list.get(childIndex);
-                }else{
+                } else {
                     Iterator<Object> iter=collection.iterator();
                     while (currentIndex<childIndex){
                         iter.next();
@@ -67,8 +74,9 @@ public class AbstractLazyLoadingItemProvider extends ItemProviderAdapter {
                 }
             }
             currentIndex++;
-            if( currentIndex==childIndex )
+            if( currentIndex==childIndex ){
                 return value;
+            }
         }
         return null;
     }

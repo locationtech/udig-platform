@@ -6,6 +6,7 @@ import net.refractions.udig.project.MapCompositionEvent;
 import net.refractions.udig.project.MapCompositionEvent.EventType;
 import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.ContextModelListenerAdapter;
+import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.ProjectPlugin;
 
@@ -34,13 +35,14 @@ import org.eclipse.emf.common.notify.Notification;
          */
         @SuppressWarnings("deprecation")
         public void notifyChanged( Notification msg ) {
-            if (! (msg.getNotifier() instanceof ContextModel)) {
-                throw new IllegalArgumentException( "This listener should only be added to Context Models" ); //$NON-NLS-1$
+            if (! (msg.getNotifier() instanceof ContextModel || msg.getNotifier() instanceof Map)) {
+                throw new IllegalArgumentException( "This listener should only be added to Map or Context Models" ); //$NON-NLS-1$
             }
             
             fireEventToCompositionListeners(msg);
-            if( map.eResource()!=null )
+            if( map.eResource()!=null ) {
                 map.eResource().setModified(true);
+            }
         }
 
 		private void notifyCompositionListeners( MapCompositionEvent event ){
@@ -55,6 +57,34 @@ import org.eclipse.emf.common.notify.Notification;
 
 		@SuppressWarnings("deprecation")
         private void fireEventToCompositionListeners( Notification msg ) {
+		    if( msg.getFeatureID(Map.class)==ProjectPackage.MAP__LAYERS ){
+                switch( msg.getEventType() ) {
+                case Notification.ADD:
+                    notifyCompositionListeners(new MapCompositionEvent(map, EventType.ADDED, 
+                            msg.getNewValue(), msg.getOldValue(), (ILayer) msg.getNewValue()));
+                    break;
+                case Notification.ADD_MANY:
+                    notifyCompositionListeners(new MapCompositionEvent(map, EventType.MANY_ADDED, 
+                            msg.getNewValue(), msg.getOldValue(), null));
+                    break;
+                case Notification.REMOVE:
+                    notifyCompositionListeners(new MapCompositionEvent(map, EventType.REMOVED, 
+                            msg.getNewValue(), msg.getOldValue(), (ILayer)msg.getOldValue()));
+                    break;
+                case Notification.REMOVE_MANY:
+                    notifyCompositionListeners(new MapCompositionEvent(map, EventType.MANY_REMOVED, 
+                            msg.getNewValue(), msg.getOldValue(), null));
+                    break;
+                case Notification.MOVE:
+                    notifyCompositionListeners(new MapCompositionEvent(map, EventType.REORDERED, 
+                            msg.getPosition(), msg.getOldValue(), (ILayer)msg.getNewValue()));                    
+                    break;
+
+                default:
+                    break;
+                }
+            }
+		    // Preserve Context Model notifications until that class is removed
             if( msg.getFeatureID(ContextModel.class)==ProjectPackage.CONTEXT_MODEL__LAYERS ){
                 switch( msg.getEventType() ) {
                 case Notification.ADD:

@@ -321,10 +321,14 @@ public class RendererCreatorImpl implements RendererCreator {
     }
 
     public void changed( Notification event ) {
-            if (((event.getNotifier() instanceof ContextModel || event.getNotifier() instanceof RenderManager) && event
-                    .getFeatureID(ContextModel.class) == ProjectPackage.CONTEXT_MODEL__LAYERS))  {
-                handleMapCompositionEvent(event);
-            }
+        if (((event.getNotifier() instanceof net.refractions.udig.project.internal.Map || event.getNotifier() instanceof RenderManager) && event
+                .getFeatureID(net.refractions.udig.project.internal.Map.class) == ProjectPackage.MAP__LAYERS))  {
+            handleMapCompositionEvent(event);
+        }
+        else if (((event.getNotifier() instanceof ContextModel || event.getNotifier() instanceof RenderManager) && event
+                .getFeatureID(ContextModel.class) == ProjectPackage.CONTEXT_MODEL__LAYERS))  {
+            handleMapCompositionEvent(event);
+        }
     }
 
     @SuppressWarnings("unchecked")

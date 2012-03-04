@@ -14,6 +14,7 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.ContextModelListenerAdapter;
 import net.refractions.udig.project.internal.Layer;
+import net.refractions.udig.project.internal.LayerListListenerAdapter;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.ProjectPlugin;
@@ -126,11 +127,87 @@ public class RenderManagerAdapters {
     }
     
     /**
+     * Added by RenderManagerDynamic to listen for changes to layers list. Used to selectively refresh
+     * layers as they are added / removed and otherwise moved around.
+     * 
+     * @param manager 
+     * @returnContext
+     */
+    static LayerListListenerAdapter createLayerListListener(
+            final RenderManagerDynamic manager ) {
+        return new LayerListListenerAdapter(){
+            /**
+             * @see net.refractions.udig.project.ContextModelListenerAdapter#commandExecuted(org.eclipse.emf.common.notify.Notification)
+             */
+            public void notifyChanged( Notification msg ) {
+                super.notifyChanged(msg);
+            }
+
+            /**
+             * Will sychronizeAndRefresh( the manager based on the notification; and
+             * updateImage().
+             * 
+             * @see net.refractions.udig.project.ContextModelListenerAdapter#zorderChanged(org.eclipse.emf.common.notify.Notification)
+             */
+            protected void zorderChanged( Notification msg ) {
+                synchronizeAndRefresh(msg, manager);
+
+                updateImage();
+            }
+
+            /**
+             * @see net.refractions.udig.project.ContextModelListenerAdapter#layerAdded(org.eclipse.emf.common.notify.Notification)
+             */
+            protected void layerAdded( Notification msg ) {
+                synchronizeAndRefresh(msg, manager);
+                updateImage();
+            }
+
+            /**
+             * @see net.refractions.udig.project.ContextModelListenerAdapter#layerRemoved(org.eclipse.emf.common.notify.Notification)
+             */
+            protected void layerRemoved( Notification msg ) {
+                synchronizeAndRefresh(msg, manager);
+                manager.validateRendererConfiguration();
+                updateImage();
+            }
+
+            /**
+             * @see net.refractions.udig.project.ContextModelListenerAdapter#manyLayersAdded(org.eclipse.emf.common.notify.Notification)
+             */
+            protected void manyLayersAdded( Notification msg ) {
+                synchronizeAndRefresh(msg, manager);
+                updateImage();
+            }
+
+            /**
+             * @see net.refractions.udig.project.ContextModelListenerAdapter#manyLayersRemoved(org.eclipse.emf.common.notify.Notification)
+             */
+            protected void manyLayersRemoved( Notification msg ) {
+                synchronizeAndRefresh(msg, manager);
+                manager.validateRendererConfiguration();
+                updateImage();
+            }
+
+            public void updateImage() {
+                try {
+                    ((MultiLayerRenderer) manager.getRenderExecutor().getRenderer()).refreshImage();
+                } catch (RenderException e) {
+                    // won't happen.
+                    e.printStackTrace();
+                }
+                ((ViewportPane) manager.getMapDisplay()).renderDone();
+            }
+        };
+    }
+    
+    /**
      * Who are you and what do you do? It does not actually
      * get added anywhere so we do not know where and how.
      * 
      * @param manager 
      * @returnContext
+     * @deprecated use createLayerListListener
      */
     static ContextModelListenerAdapter createContextModelListener(
             final RenderManagerDynamic manager ) {
@@ -197,73 +274,8 @@ public class RenderManagerAdapters {
                 }
                 ((ViewportPane) manager.getMapDisplay()).renderDone();
             }
-
         };
-
     }
-    
-//    /**
-//     * This private method is called by the context model listener when a layer
-//     * has been added/removed/moved in order to refresh the image.  
-//     *  
-//     * <p>
-//     * This implementation hunts down a layer can calls layer.refresh( null ) in order
-//     * to ask it to redraw pretty much everything it has... the synchronizeRenderers
-//     * will hunt down the list of layers effected by this notification....scared.
-//     * <p>
-//     * 
-//     * @param msg
-//     * @param manager
-//     */
-//    private static void synchronizeAndRefresh(Notification msg, TiledRenderManagerDynamic manager) {
-//        //something has happened and we need to re-create the contexts when we 
-//        //go to render a tile
-//        manager.invalidateAllTileContext();
-//        List<Layer> toRender = synchronizeRenderers(msg, (TiledRendererCreatorImpl)manager.getRendererCreator());
-//        for( Layer layer : toRender ) {
-//            layer.refresh(null);
-//        }
-//    }
-//    
-//    /** 
-//     * This method is responsible for spitting out a list of layers that need 
-//     * to be refreshed in response to the provided notification.
-//     * <p>
-//     * 
-//     * 
-//     * @param msg notifcation message (such as a zorder change) causing this change
-//     * @param configuration RemderContexts being drawn into...
-//     * @param rendererCreator RemderCreator responsible for setting up renderers associated with these layers
-//     * @return List of layers to refresh or other wise schedule for redrawing
-//     */
-//    public static List<Layer> synchronizeRenderers( final Notification msg, 
-//            final TiledRendererCreatorImpl rendererCreator) {
-//        
-//        
-//        //This call updates the layers list in the renderer creator
-//        //this layer list is the list of layers drawn on the screen
-//        //For the Tile Render Manager this deals with keeping and removing contexts as required
-//        rendererCreator.changed(msg);
-//        
-//        //what are the new layers?
-//        //these layers need to be kicked for redraw
-//        ArrayList<Layer> addedLayers = new ArrayList<Layer>();
-//        switch( msg.getEventType() ) {
-//        case Notification.ADD: {
-//            //layer has been added need to add to layers list
-//            //if selectable layer also add a selection layer
-//            Layer layer = (Layer) msg.getNewValue();
-//            addedLayers.add(layer);
-//            break;
-//        }
-//        case Notification.ADD_MANY: {
-//            for( Layer layer : (Collection< ? extends Layer>) msg.getNewValue() ) {
-//                addedLayers.add(layer);
-//            }
-//        }}
-//        return addedLayers;
-//    }
-    
     
     /**
      * This private method is called by listeners (such as the context model listener)
@@ -357,7 +369,7 @@ public class RenderManagerAdapters {
      * @generated NOT
      */
     static Adapter createViewportModelChangeListener( final RenderManagerImpl manager,
-            final Adapter viewportListener, final ContextModelListenerAdapter contextModelListener ) {
+            final Adapter viewportListener, final LayerListListenerAdapter layerListListener ) {
         return new AdapterImpl(){
             /**
              * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
@@ -376,11 +388,9 @@ public class RenderManagerAdapters {
                 }// case
                 case RenderPackage.RENDER_MANAGER__MAP_INTERNAL: {
                     if (msg.getOldValue() != null)
-                        ((Map) msg.getOldValue()).getContextModel().eAdapters().remove(
-                                contextModelListener);
+                        ((Map) msg.getOldValue()).eAdapters().remove(  layerListListener);
                     if (msg.getNewValue() != null)
-                        ((Map) msg.getNewValue()).getContextModel().eAdapters().add(
-                                contextModelListener);
+                        ((Map) msg.getNewValue()).eAdapters().add( layerListListener);
                     break;
                 }// case
 
@@ -388,7 +398,11 @@ public class RenderManagerAdapters {
             }
         };
     }
-
+    /**
+     * Adaptor responsible to listening to Map and Layer changes.
+     * @param manager
+     * @return
+     */
     static Adapter createLayerListener( final RenderManagerDynamic manager ) {
         return new AdapterImpl(){
             /**
@@ -398,12 +412,12 @@ public class RenderManagerAdapters {
                 manager.checkState();
 
                 if (event.getNotifier() instanceof Map) {
-                    if (ProjectPackage.MAP__CONTEXT_MODEL == event.getFeatureID(Map.class)) {
+                    if (ProjectPackage.MAP == event.getFeatureID(Map.class)) {
                         if (event.getOldValue() != null) {
-                            ((ContextModel) event.getOldValue()).removeDeepAdapter(this);
+                            ((Map) event.getOldValue()).removeDeepAdapter(this);
                         }
                         if (event.getNewValue() != null) {
-                            ((ContextModel) event.getNewValue()).addDeepAdapter(this);
+                            ((Map) event.getNewValue()).addDeepAdapter(this);
                         }
                     }
                 } else if (event.getNotifier() instanceof Layer) {
@@ -572,12 +586,12 @@ public class RenderManagerAdapters {
                 manager.checkState();
 
                 if (event.getNotifier() instanceof Map) {
-                    if (ProjectPackage.MAP__CONTEXT_MODEL == event.getFeatureID(Map.class)) {
+                    if (ProjectPackage.MAP == event.getFeatureID(Map.class)) {
                         if (event.getOldValue() != null) {
-                            ((ContextModel) event.getOldValue()).removeDeepAdapter(this);
+                            ((Map) event.getOldValue()).removeDeepAdapter(this);
                         }
                         if (event.getNewValue() != null) {
-                            ((ContextModel) event.getNewValue()).addDeepAdapter(this);
+                            ((Map) event.getNewValue()).addDeepAdapter(this);
                         }
                     }
                 } else if (event.getNotifier() instanceof Layer) {
@@ -702,7 +716,63 @@ public class RenderManagerAdapters {
           }
         };
     }
-            
+
+    /**
+     * Creates a new adapter for dealing with zorder changes, layers added and removed.
+     * 
+     * @param manager 
+     * @returnContext
+     */
+    static LayerListListenerAdapter createLayerListListener( final TiledRenderManagerDynamic manager ) {
+        
+        return new LayerListListenerAdapter(){
+            /**
+             * @see net.refractions.udig.project.ContextModelListenerAdapter#commandExecuted(org.eclipse.emf.common.notify.Notification)
+             */
+            public void notifyChanged( Notification msg ) {
+                super.notifyChanged(msg);
+            }
+
+            /**
+             * Will sychronizeAndRefresh( the manager based on the notification; and
+             * updateImage().
+             * 
+             * @see net.refractions.udig.project.ContextModelListenerAdapter#zorderChanged(org.eclipse.emf.common.notify.Notification)
+             */
+            protected void zorderChanged( Notification msg ) {
+                manager.zorderChanged(msg);
+            }
+
+            /**
+             * @see net.refractions.udig.project.ContextModelListenerAdapter#layerAdded(org.eclipse.emf.common.notify.Notification)
+             */
+            protected void layerAdded( Notification msg ) {
+                manager.layersAdded(msg);
+            }
+
+            /**
+             * @see net.refractions.udig.project.ContextModelListenerAdapter#layerRemoved(org.eclipse.emf.common.notify.Notification)
+             */
+            protected void layerRemoved( Notification msg ) {
+                manager.layersRemoved(msg);
+            }
+
+            /**
+             * @see net.refractions.udig.project.ContextModelListenerAdapter#manyLayersAdded(org.eclipse.emf.common.notify.Notification)
+             */
+            protected void manyLayersAdded( Notification msg ) {
+                manager.layersAdded(msg);
+            }
+
+            /**
+             * @see net.refractions.udig.project.ContextModelListenerAdapter#manyLayersRemoved(org.eclipse.emf.common.notify.Notification)
+             */
+            protected void manyLayersRemoved( Notification msg ) {
+                manager.layersRemoved(msg);
+            }
+        };
+    }
+    
     
     /**
      * Creates a new adapter for dealing with zorder changes, layers added and removed.
