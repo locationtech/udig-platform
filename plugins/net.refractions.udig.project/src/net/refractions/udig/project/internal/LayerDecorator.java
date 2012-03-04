@@ -697,14 +697,10 @@ public class LayerDecorator implements Layer, InternalEObject {
     /**
      * @see net.refractions.udig.project.ILayer#getMap()
      */
-    public Map getMap() {
+    public IMap getMap() {
         return layer.getMap();
     }
 
-    @Override
-    public void setMap( Map value ) {
-        layer.setMap(value);
-    }
     /**
      * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
      */

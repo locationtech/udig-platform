@@ -33,7 +33,6 @@ import net.refractions.udig.project.command.map.LayerMoveFrontCommand;
 import net.refractions.udig.project.command.map.LayerMoveUpCommand;
 import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectFactory;
 import net.refractions.udig.project.internal.ProjectPackage;
@@ -709,7 +708,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
     private void addLegendItemsDeepListeners() {
         
         //Add to list
-        ((EObjectContainmentEList<LegendItem>) this.currentMap.getLegend()).getEObject()
+        ((EObjectContainmentEList<ILegendItem>) this.currentMap.getLegend()).getEObject()
                 .eAdapters().add(mapDeepListener);
         
         //Add to list children
@@ -734,7 +733,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
     private void removeLegendItemsDeepListeners() {
         
         //Remove from list
-        ((EObjectContainmentEList<LegendItem>) this.currentMap.getLegend()).getEObject()
+        ((EObjectContainmentEList<ILegendItem>) this.currentMap.getLegend()).getEObject()
                 .eAdapters().remove(mapDeepListener);
         
         //Remove from list children
