@@ -72,7 +72,10 @@ public class Messages extends NLS {
 	public static String AddFeatureCommand_name;
 	public static String AddLayersCommand_name;
 	public static String AddLayerCommand_Name;
-	public static String CompositeRendererExecutorImpl_0;
+	public static String AddLayerItemsCommand_name;
+    public static String AddLayerItemCommand_Name;
+    public static String AddFolderItemCommand_Name;
+    public static String CompositeRendererExecutorImpl_0;
 	public static String SelectCommand_name;
 	public static String SelectionListener_0;
 	public static String SelectionListener_SelectionTimer;
@@ -112,6 +115,9 @@ public class Messages extends NLS {
 	public static String ZoomExtentCommand_name;
 	public static String DeleteManyFeaturesCommand_name;
 	public static String DeleteLayerCommand_deleteLayer;
+    public static String DeleteLayerItemCommand_Name;
+    public static String DeleteLayerItemsCommand_Name;
+    public static String DeleteFolderItemCommand_Name;
 	public static String DeleteFeatureCommand_deleteFeature;
 	public static String RenderExecutorImpl_1;
 	public static String RenderExecutorImpl_2;
