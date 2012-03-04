@@ -1277,7 +1277,7 @@
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_YfL_MVIoEeGr28S6i8c_gg" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_YfL_MlIoEeGr28S6i8c_gg" fontColor="4210752" fontHeight="10"/>
     <element xmi:type="ecore:EReference" href="internal.ecore#//Map/legend"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_YfL_M1IoEeGr28S6i8c_gg" points="[20, -13, -741, 195]$[303, -208, -458, 0]$[682, -208, -79, 0]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_YfL_M1IoEeGr28S6i8c_gg" points="[22, -13, -739, 195]$[313, -197, -448, 11]$[682, -206, -79, 2]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cBVWwmQwEeG61sJUqCFiLA" id="(0.8680981595092024,0.07)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cBVWw2QwEeG61sJUqCFiLA" id="(0.5,0.5)"/>
   </edges>
@@ -1291,7 +1291,7 @@
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_IQpxoWQcEeGkx8Duf_FpWg" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_IQpxomQcEeGkx8Duf_FpWg" fontColor="4210752" fontName="Lucida Grande" fontHeight="10"/>
     <element xmi:type="ecore:EReference" href="internal.ecore#//Map/layers"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_IQpxo2QcEeGkx8Duf_FpWg" points="[162, 8, -294, -15]$[432, 22, -24, -1]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_IQpxo2QcEeGkx8Duf_FpWg" points="[130, 5, -695, -27]$[468, 3, -357, -29]$[807, 32, -18, 0]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_5PeCsGQhEeGkx8Duf_FpWg" id="(0.5,0.5)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_5PeCsWQhEeGkx8Duf_FpWg" id="(0.0683453237410072,0.5392857142857143)"/>
   </edges>
@@ -1321,7 +1321,7 @@
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_V-XuwWQwEeG61sJUqCFiLA" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_V-XuwmQwEeG61sJUqCFiLA" fontColor="4210752" fontHeight="10"/>
     <element xmi:type="ecore:EReference" href="internal.ecore#//LegendItem/map"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_V-Xuw2QwEeG61sJUqCFiLA" points="[-79, 9, 682, -199]$[-408, 46, 353, -162]$[-731, 195, 30, -13]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_V-Xuw2QwEeG61sJUqCFiLA" points="[-79, 2, 682, -206]$[-448, 11, 313, -197]$[-739, 195, 22, -13]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_bUeQwGQwEeG61sJUqCFiLA" id="(0.5,0.5)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Yrus4GQwEeG61sJUqCFiLA" id="(0.8680981595092024,0.07)"/>
   </edges>

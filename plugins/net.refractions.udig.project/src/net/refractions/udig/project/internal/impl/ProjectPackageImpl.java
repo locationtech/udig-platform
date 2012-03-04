@@ -2092,7 +2092,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         initEReference(
                 getMap_Legend(),
                 this.getLegendItem(),
-                null,
+                this.getLegendItem_Map(),
                 "legend", null, 0, -1, Map.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEReference(
                 getMap_Layers(),
@@ -2310,8 +2310,8 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         initEReference(
                 getLegendItem_Map(),
                 this.getMap(),
-                null,
-                "map", null, 0, 1, LegendItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+                this.getMap_Legend(),
+                "map", null, 0, 1, LegendItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         initEClass(iLegendItemEClass, ILegendItem.class,
                 "ILegendItem", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
