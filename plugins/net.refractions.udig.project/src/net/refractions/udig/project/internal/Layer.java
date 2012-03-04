@@ -190,32 +190,30 @@ public interface Layer
     public Map<Interaction, Boolean> getInteractionMap();
 
     /**
-     * Returns the value of the '<em><b>Map</b></em>' reference.
-     * It is bidirectional and its opposite is '{@link net.refractions.udig.project.internal.Map#getLayers <em>Layers</em>}'.
+     * Returns the value of the '<em><b>Shown</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Map</em>' reference isn't clear,
+     * If the meaning of the '<em>Shown</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Map</em>' reference.
-     * @see #setMap(net.refractions.udig.project.internal.Map)
-     * @see net.refractions.udig.project.internal.ProjectPackage#getLayer_Map()
-     * @see net.refractions.udig.project.internal.Map#getLayers
-     * @model opposite="layers"
+     * @return the value of the '<em>Shown</em>' attribute.
+     * @see #setShown(boolean)
+     * @see net.refractions.udig.project.internal.ProjectPackage#getLayer_Shown()
+     * @model
      * @generated
      */
-    net.refractions.udig.project.internal.Map getMap();
+    boolean isShown();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getMap <em>Map</em>}' reference.
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#isShown <em>Shown</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Map</em>' reference.
-     * @see #getMap()
+     * @param value the new value of the '<em>Shown</em>' attribute.
+     * @see #isShown()
      * @generated
      */
-    void setMap( net.refractions.udig.project.internal.Map value );
+    void setShown( boolean value );
 
     /**
      * Set interaction applicability.
@@ -253,6 +251,24 @@ public interface Layer
      * @deprecated use setInteraction(Interaction.SELECT, value)
      */
     void setSelectable( boolean value );
+
+    /**
+     * Gets the name from the associated metadata.
+     * 
+     * @return the name from the associated metadata
+     * @uml.property name="name"
+     * @model
+     */
+    public String getName();
+
+    /**
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getName <em>Name</em>}' attribute.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @param value the new value of the '<em>Name</em>' attribute.
+     * @see #getName()
+     * @generated
+     */
+    void setName( String value );
 
     /**
      * Returns the layer reference information..
@@ -330,6 +346,27 @@ public interface Layer
      * @model transient="true" changeable="false"
      */
     public List<IGeoResource> getGeoResources();
+
+    /**
+     * ImageDescriptor for this Layer.
+     * <p>
+     * Note we need to do the decorator exention on Layer to reflect status.
+     * 
+     * @return Custom glyph - or null if none available.
+     * @uml.property name="glyph"
+     * @model transient="true"
+     */
+    public ImageDescriptor getIcon();
+
+    /**
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getIcon <em>Icon</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Icon</em>' attribute.
+     * @see #getIcon()
+     * @generated
+     */
+    void setIcon( ImageDescriptor value );
 
     /**
      * Query that selects all the features for the layer.

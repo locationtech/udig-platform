@@ -75,7 +75,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -295,16 +294,6 @@ public class MapImpl extends EObjectImpl implements Map {
     protected EList<ILegendItem> legend;
 
     /**
-     * The cached value of the '{@link #getLayers() <em>Layers</em>}' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getLayers()
-     * @generated
-     * @ordered
-     */
-    protected EList<Layer> layers;
-
-    /**
      * <p>
      * A Listener to be passed on to the command manager. Will be notified of command completion.
      * </p>
@@ -452,8 +441,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 msgs = ((InternalEObject) newProjectInternal).eInverseAdd(this,
                         ProjectPackage.PROJECT__ELEMENTS_INTERNAL, Project.class, msgs);
             msgs = basicSetProjectInternal(newProjectInternal, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__PROJECT_INTERNAL, newProjectInternal, newProjectInternal));
@@ -507,8 +495,7 @@ public class MapImpl extends EObjectImpl implements Map {
      */
     @SuppressWarnings({"unchecked", "deprecation"})
     public void setContextModel( ContextModel newContextModel ) {
-        if (contextModel != null)
-            contextModel.eAdapters().remove(contextModelListener);
+        if (contextModel != null) contextModel.eAdapters().remove(contextModelListener);
         if (newContextModel != null) {
             newContextModel.eAdapters().add(contextModelListener);
         }
@@ -529,8 +516,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 msgs = ((InternalEObject) newContextModel).eInverseAdd(this,
                         ProjectPackage.CONTEXT_MODEL__MAP, ContextModel.class, msgs);
             msgs = basicSetContextModel(newContextModel, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__CONTEXT_MODEL, newContextModel, newContextModel));
@@ -596,8 +582,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 msgs = ((InternalEObject) newViewportModelInternal).eInverseAdd(this,
                         RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL, ViewportModel.class, msgs);
             msgs = basicSetViewportModelInternal(newViewportModelInternal, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL, newViewportModelInternal,
@@ -672,8 +657,7 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     public URI getID() {
-        if (eResource() == null)
-            return URI.createFileURI(getName());
+        if (eResource() == null) return URI.createFileURI(getName());
         return eResource().getURI();
     }
 
@@ -700,8 +684,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 }
             }
             if (getLayersInternal() != EMPTY_LIST) {
-                if (bounds.isNull())
-                    return getDefaultBounds();
+                if (bounds.isNull()) return getDefaultBounds();
 
             }
             return bounds;
@@ -734,8 +717,7 @@ public class MapImpl extends EObjectImpl implements Map {
      */
     public static ReferencedEnvelope toReferencedEnvelope( Extent extent,
             CoordinateReferenceSystem crs ) {
-        if (extent == null)
-            return null;
+        if (extent == null) return null;
         Collection< ? extends GeographicExtent> elems = extent.getGeographicElements();
         for( GeographicExtent extent2 : elems ) {
             ReferencedEnvelope env = null;
@@ -823,8 +805,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated NOT
      */
     public LayerFactory getLayerFactory() {
-        if (layerFactory == null)
-            setLayerFactory(ProjectFactory.eINSTANCE.createLayerFactory());
+        if (layerFactory == null) setLayerFactory(ProjectFactory.eINSTANCE.createLayerFactory());
         return layerFactory;
     }
 
@@ -861,8 +842,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 msgs = ((InternalEObject) newLayerFactory).eInverseAdd(this,
                         ProjectPackage.LAYER_FACTORY__MAP, LayerFactory.class, msgs);
             msgs = basicSetLayerFactory(newLayerFactory, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__LAYER_FACTORY, newLayerFactory, newLayerFactory));
@@ -979,8 +959,7 @@ public class MapImpl extends EObjectImpl implements Map {
          * @see org.eclipse.emf.common.notify.impl.NotificationImpl#add(org.eclipse.emf.common.notify.Notification)
          */
         public boolean add( Notification newNotification ) {
-            if (notifications.contains(newNotification))
-                return false;
+            if (notifications.contains(newNotification)) return false;
 
             notifications.add(newNotification);
             Collections.sort(notifications, new Comparator<Notification>(){
@@ -1010,8 +989,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated NOT
      */
     public void redo() {
-        if (commandManager == null || !commandManager.hasForwardHistory())
-            return;
+        if (commandManager == null || !commandManager.hasForwardHistory()) return;
         commandManager.redo(true);
         notifyCommandStackChange();
     }
@@ -1022,8 +1000,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated NOT
      */
     public void undo() {
-        if (commandManager == null || !commandManager.hasBackHistory())
-            return;
+        if (commandManager == null || !commandManager.hasBackHistory()) return;
         commandManager.undo(true);
         notifyCommandStackChange();
     }
@@ -1034,8 +1011,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated NOT
      */
     public void backwardHistory() {
-        if (navCommandManager == null || !navCommandManager.hasBackHistory())
-            return;
+        if (navCommandManager == null || !navCommandManager.hasBackHistory()) return;
         navCommandManager.undo(true);
     }
 
@@ -1045,8 +1021,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated NOT
      */
     public void forwardHistory() {
-        if (navCommandManager == null || !navCommandManager.hasForwardHistory())
-            return;
+        if (navCommandManager == null || !navCommandManager.hasForwardHistory()) return;
         navCommandManager.redo(true);
     }
 
@@ -1055,7 +1030,6 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- end-user-doc -->
      * @generated
      */
-    @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
             NotificationChain msgs ) {
@@ -1092,9 +1066,6 @@ public class MapImpl extends EObjectImpl implements Map {
                 msgs = ((InternalEObject) renderManagerInternal).eInverseRemove(this,
                         RenderPackage.RENDER_MANAGER__MAP_INTERNAL, RenderManager.class, msgs);
             return basicSetRenderManagerInternal((RenderManager) otherEnd, msgs);
-        case ProjectPackage.MAP__LAYERS:
-            return ((InternalEList<InternalEObject>) (InternalEList< ? >) getLayers()).basicAdd(
-                    otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -1124,8 +1095,6 @@ public class MapImpl extends EObjectImpl implements Map {
             return basicSetBlackBoardInternal(null, msgs);
         case ProjectPackage.MAP__LEGEND:
             return ((InternalEList< ? >) getLegend()).basicRemove(otherEnd, msgs);
-        case ProjectPackage.MAP__LAYERS:
-            return ((InternalEList< ? >) getLayers()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -1141,8 +1110,7 @@ public class MapImpl extends EObjectImpl implements Map {
         case ProjectPackage.MAP__NAME:
             return getName();
         case ProjectPackage.MAP__PROJECT_INTERNAL:
-            if (resolve)
-                return getProjectInternal();
+            if (resolve) return getProjectInternal();
             return basicGetProjectInternal();
         case ProjectPackage.MAP__CONTEXT_MODEL:
             return getContextModel();
@@ -1161,8 +1129,7 @@ public class MapImpl extends EObjectImpl implements Map {
         case ProjectPackage.MAP__EDIT_MANAGER_INTERNAL:
             return getEditManagerInternal();
         case ProjectPackage.MAP__RENDER_MANAGER_INTERNAL:
-            if (resolve)
-                return getRenderManagerInternal();
+            if (resolve) return getRenderManagerInternal();
             return basicGetRenderManagerInternal();
         case ProjectPackage.MAP__COLOUR_SCHEME:
             return getColourScheme();
@@ -1170,8 +1137,6 @@ public class MapImpl extends EObjectImpl implements Map {
             return getBlackBoardInternal();
         case ProjectPackage.MAP__LEGEND:
             return getLegend();
-        case ProjectPackage.MAP__LAYERS:
-            return getLayers();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -1222,10 +1187,6 @@ public class MapImpl extends EObjectImpl implements Map {
             getLegend().clear();
             getLegend().addAll((Collection< ? extends ILegendItem>) newValue);
             return;
-        case ProjectPackage.MAP__LAYERS:
-            getLayers().clear();
-            getLayers().addAll((Collection< ? extends Layer>) newValue);
-            return;
         }
         super.eSet(featureID, newValue);
     }
@@ -1274,9 +1235,6 @@ public class MapImpl extends EObjectImpl implements Map {
         case ProjectPackage.MAP__LEGEND:
             getLegend().clear();
             return;
-        case ProjectPackage.MAP__LAYERS:
-            getLayers().clear();
-            return;
         }
         super.eUnset(featureID);
     }
@@ -1324,8 +1282,6 @@ public class MapImpl extends EObjectImpl implements Map {
             return blackBoardInternal != null;
         case ProjectPackage.MAP__LEGEND:
             return legend != null && !legend.isEmpty();
-        case ProjectPackage.MAP__LAYERS:
-            return layers != null && !layers.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -1377,8 +1333,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 msgs = ((InternalEObject) newEditManagerInternal).eInverseAdd(this,
                         ProjectPackage.EDIT_MANAGER__MAP_INTERNAL, EditManager.class, msgs);
             msgs = basicSetEditManagerInternal(newEditManagerInternal, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__EDIT_MANAGER_INTERNAL, newEditManagerInternal,
@@ -1445,8 +1400,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 msgs = ((InternalEObject) newRenderManagerInternal).eInverseAdd(this,
                         RenderPackage.RENDER_MANAGER__MAP_INTERNAL, RenderManager.class, msgs);
             msgs = basicSetRenderManagerInternal(newRenderManagerInternal, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__RENDER_MANAGER_INTERNAL, newRenderManagerInternal,
@@ -1484,8 +1438,7 @@ public class MapImpl extends EObjectImpl implements Map {
     @SuppressWarnings("unchecked")
     public void setRenderManagerInternal( RenderManager newRenderManager ) {
         setRenderManagerInternalGen(newRenderManager);
-        if (newRenderManager != null)
-            newRenderManager.eAdapters().add(adapter);
+        if (newRenderManager != null) newRenderManager.eAdapters().add(adapter);
         if (getViewportModel() != null) {
             getViewportModelInternal().setRenderManagerInternal(newRenderManager);
         }
@@ -1564,8 +1517,7 @@ public class MapImpl extends EObjectImpl implements Map {
                         EOPPOSITE_FEATURE_BASE - ProjectPackage.MAP__BLACK_BOARD_INTERNAL, null,
                         msgs);
             msgs = basicSetBlackBoardInternal(newBlackBoardInternal, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__BLACK_BOARD_INTERNAL, newBlackBoardInternal,
@@ -1586,26 +1538,12 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public List<Layer> getLayers() {
-        if (layers == null) {
-            layers = new EObjectWithInverseResolvingEList<Layer>(Layer.class, this,
-                    ProjectPackage.MAP__LAYERS, ProjectPackage.LAYER__MAP);
-        }
-        return layers;
-    }
-
-    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
     public String toString() {
-        if (eIsProxy())
-            return super.toString();
+        if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: "); //$NON-NLS-1$
@@ -1627,8 +1565,7 @@ public class MapImpl extends EObjectImpl implements Map {
     public Object getAdapter( Class adapter ) {
         for( Iterator i = eAdapters().iterator(); i.hasNext(); ) {
             Object o = i.next();
-            if (adapter.isAssignableFrom(o.getClass()))
-                return o;
+            if (adapter.isAssignableFrom(o.getClass())) return o;
         }
 
         /*
@@ -1688,8 +1625,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     @SuppressWarnings("unchecked")
     public List<Layer> getLayersInternal() {
-        if (getContextModel() == null)
-            return EMPTY_LIST;
+        if (getContextModel() == null) return EMPTY_LIST;
         return getContextModel().getLayers();
     }
 
@@ -1803,32 +1739,30 @@ public class MapImpl extends EObjectImpl implements Map {
 
     public void lowerLayer( Layer layer ) {
         int index = getLayersInternal().indexOf(layer);
-        if (index == 0)
-            return;
+        if (index == 0) return;
         ((LayersList2) getLayersInternal()).move(index--, index);
     }
     public void raiseLayer( Layer layer ) {
         int index = getLayersInternal().indexOf(layer);
-        if (index > getLayersInternal().size() - 2)
-            return;
+        if (index > getLayersInternal().size() - 2) return;
         ((LayersList2) getLayersInternal()).move(index++, index);
     }
 
-    public void sendToFrontLayer( Layer layer ) {
+    public void sendToFrontLayer( Layer layer) {
         int index = getLayersInternal().indexOf(layer);
         ((LayersList2) getLayersInternal()).move(getLayersInternal().size() - 1, index);
     }
-
-    public void sendToBackLayer( Layer layer ) {
+    
+    public void sendToBackLayer( Layer layer) {
         int index = getLayersInternal().indexOf(layer);
         ((LayersList2) getLayersInternal()).move(0, index);
     }
-
-    public void sendToIndexLayer( Layer layer, int index ) {
+    
+    public void sendToIndexLayer( Layer layer, int index) {
         int currentIndex = getLayersInternal().indexOf(layer);
         ((LayersList2) getLayersInternal()).move(index, currentIndex);
     }
-
+    
     private SpatialOperator localize( SimpleFeatureType schema, SpatialOperator filter ) {
         DuplicatingFilterVisitor copier = new DuplicatingFilterVisitor();
         return (SpatialOperator) filter.accept(copier, null);
@@ -1871,8 +1805,7 @@ public class MapImpl extends EObjectImpl implements Map {
         LAYERS: for( Layer layer : getLayersInternal() ) {
             if (layer == selected) {
                 Filter newFilter = layer.createBBoxFilter(boundingBox, null);
-                if (newFilter == null)
-                    continue LAYERS;
+                if (newFilter == null) continue LAYERS;
                 layer.setFilter(newFilter);
             } else {
                 layer.setFilter(Filter.EXCLUDE);
@@ -1891,8 +1824,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 newFilter = layer.createBBoxFilter(boundingBox, null);
                 newFilterCopy = layer.createBBoxFilter(boundingBox, null);
 
-                if (newFilter == null)
-                    continue LAYERS;
+                if (newFilter == null) continue LAYERS;
                 if (oldFilter == null || oldFilter == Filter.EXCLUDE
                         || oldFilter.equals(Filter.EXCLUDE)) {
                     layer.setFilter(newFilter);
@@ -1985,8 +1917,7 @@ public class MapImpl extends EObjectImpl implements Map {
         List lists = new ArrayList();
         for( Iterator iter = getLayersInternal().iterator(); iter.hasNext(); ) {
             Object obj = iter.next();
-            if (type.isAssignableFrom(obj.getClass()))
-                lists.add(obj);
+            if (type.isAssignableFrom(obj.getClass())) lists.add(obj);
         }
         return lists;
     }

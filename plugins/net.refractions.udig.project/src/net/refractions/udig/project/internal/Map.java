@@ -279,23 +279,6 @@ public interface Map extends ProjectElement, IMap {
     List<ILegendItem> getLegend();
 
     /**
-     * Returns the value of the '<em><b>Layers</b></em>' reference list.
-     * The list contents are of type {@link net.refractions.udig.project.internal.Layer}.
-     * It is bidirectional and its opposite is '{@link net.refractions.udig.project.internal.Layer#getMap <em>Map</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Internal layer list sorted by zorder used to control the rendering system.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Layers</em>' reference list.
-     * @see net.refractions.udig.project.internal.ProjectPackage#getMap_Layers()
-     * @see net.refractions.udig.project.internal.Layer#getMap
-     * @model opposite="map"
-     * @generated
-     */
-    List<Layer> getLayers();
-
-    /**
      * Returns all the layers contained in the map. The list is mutable and events will be raised if
      * the list is modified.
      * 
@@ -339,22 +322,22 @@ public interface Map extends ProjectElement, IMap {
      * 
      * @param layer The layer whose rendering order will be modified
      */
-    public void sendToFrontLayer( Layer layer );
+    public void sendToFrontLayer( Layer layer);
     /**
      * Decreases the ZOrder of the layer so it is rendered last with incomparison to the other
      * layers. If the Layer is at the top of the render list(last to be drawn) it is not affected.
      * 
      * @param layer The layer whose rendering order will be modified
      */
-    public void sendToBackLayer( Layer layer );
+    public void sendToBackLayer( Layer layer);
     /**
      * Sets the ZOrder of the layer to the specified index so it is rendered relative to the new
      * ordering created by the change.
      * 
      * @param layer The layer whose rendering order will be modified
      */
-    public void sendToIndexLayer( Layer layer, int index );
-
+    public void sendToIndexLayer( Layer layer, int index);
+    
     /**
      * Select all selectable layers, with a BoundingBox Geometry filter. Boundingbox must be in the
      * same CRS as the ViewportModel

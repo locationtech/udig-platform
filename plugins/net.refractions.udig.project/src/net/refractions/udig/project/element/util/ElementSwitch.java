@@ -79,14 +79,10 @@ public class ElementSwitch<T> extends Switch<T> {
         case ElementPackage.PROJECT_ELEMENT_ADAPTER: {
             ProjectElementAdapter projectElementAdapter = (ProjectElementAdapter) theEObject;
             T result = caseProjectElementAdapter(projectElementAdapter);
-            if (result == null)
-                result = caseProjectElement(projectElementAdapter);
-            if (result == null)
-                result = caseIProjectElement(projectElementAdapter);
-            if (result == null)
-                result = caseIAdaptable(projectElementAdapter);
-            if (result == null)
-                result = defaultCase(theEObject);
+            if (result == null) result = caseProjectElement(projectElementAdapter);
+            if (result == null) result = caseIProjectElement(projectElementAdapter);
+            if (result == null) result = caseIAdaptable(projectElementAdapter);
+            if (result == null) result = defaultCase(theEObject);
             return result;
         }
         default:

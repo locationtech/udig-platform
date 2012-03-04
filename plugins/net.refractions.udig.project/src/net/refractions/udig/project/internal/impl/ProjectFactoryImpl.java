@@ -892,8 +892,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         value = value + numColours + ";"; //$NON-NLS-1$
         HashMap colourMap = instance.getColourMap();
         for( int i = 0; i < numItems; i++ ) {
-            if (i > 0)
-                value = value + ","; //$NON-NLS-1$
+            if (i > 0) value = value + ","; //$NON-NLS-1$
             value = value + colourMap.get(i);
         }
         value = value + ";"; //$NON-NLS-1$
@@ -1000,8 +999,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
      */
     public String convertReferencedEnvelopeToString( EDataType eDataType, Object instanceValue ) {
         Envelope env = (Envelope) instanceValue;
-        if (env.isNull())
-            return ""; //$NON-NLS-1$
+        if (env.isNull()) return ""; //$NON-NLS-1$
 
         String envString = env.getMinX()
                 + "," + env.getMaxX() + "," + env.getMinY() + "," + env.getMaxY(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -1188,7 +1186,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         map.setProjectInternal(owner);
         map.setViewportModelInternal(RenderFactory.eINSTANCE.createViewportModel());
         runMapCreationInterceptors(map);
-        if (!layers.isEmpty()) {
+        if (!layers.isEmpty()){
             map.getLayersInternal().addAll(layers);
         }
         return map;

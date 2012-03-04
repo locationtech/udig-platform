@@ -45,7 +45,6 @@ import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.internal.CatalogRef;
 import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.ProjectFactory;
 import net.refractions.udig.project.internal.ProjectPackage;
@@ -295,8 +294,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                         }
                         if (bounds2 == null || bounds2.isNull()
                                 || !bounds2.contains((Envelope) featureEvent.getBounds())) {
-                            if (bounds2 == null)
-                                bounds2 = new ReferencedEnvelope(getCRS());
+                            if (bounds2 == null) bounds2 = new ReferencedEnvelope(getCRS());
                             bounds = bounds2;
                         }
                     }
@@ -388,8 +386,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected void fireLayerChange( LayerEvent event ) {
         for( ILayerListener listener : listeners ) {
             try {
-                if (listener != null)
-                    listener.refresh(event);
+                if (listener != null) listener.refresh(event);
             } catch (Throwable t) {
                 ProjectPlugin.log("", t); //$NON-NLS-1$
             }
@@ -397,8 +394,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     protected void zorderNotify( int old, int current ) {
-        if (old == current)
-            return;
+        if (old == current) return;
         ENotificationImpl notification = new ENotificationImpl(LayerImpl.this, Notification.SET,
                 ProjectPackage.LAYER__ZORDER, old, current, old == current);
         LayerImpl.this.eNotify(notification);
@@ -418,8 +414,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @generated
      */
     public ContextModel getContextModel() {
-        if (eContainerFeatureID() != ProjectPackage.LAYER__CONTEXT_MODEL)
-            return null;
+        if (eContainerFeatureID() != ProjectPackage.LAYER__CONTEXT_MODEL) return null;
         return (ContextModel) eContainer();
     }
 
@@ -445,14 +440,12 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 throw new IllegalArgumentException(
                         "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
             NotificationChain msgs = null;
-            if (eInternalContainer() != null)
-                msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
             if (newContextModel != null)
                 msgs = ((InternalEObject) newContextModel).eInverseAdd(this,
                         ProjectPackage.CONTEXT_MODEL__LAYERS, ContextModel.class, msgs);
             msgs = basicSetContextModel(newContextModel, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.LAYER__CONTEXT_MODEL, newContextModel, newContextModel));
@@ -464,8 +457,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @model
      */
     public int getZorder() {
-        if (getContextModel() == null)
-            return Integer.MAX_VALUE;
+        if (getContextModel() == null) return Integer.MAX_VALUE;
         return getMap().getMapLayers().indexOf(this);
     }
 
@@ -487,6 +479,26 @@ public class LayerImpl extends EObjectImpl implements Layer {
         else
             ((EList) getMapInternal().getLayersInternal()).move(newZorder, getMapInternal()
                     .getLayersInternal().indexOf(this));
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
+    public void setName( String newName ) {
+        String oldName = name;
+        name = newName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__NAME,
+                    oldName, name));
     }
 
     /**
@@ -592,11 +604,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
         assert assertNotInDisplayAccess();
 
-        if (eIsProxy() || getMap() == null)
-            return geoResources == null ? NULL : geoResources;
+        if (eIsProxy() || getMap() == null) return geoResources == null ? NULL : geoResources;
 
-        if (geoResources != null || geoResources == NULL)
-            return geoResources;
+        if (geoResources != null || geoResources == NULL) return geoResources;
 
         geoResourceLock.lock();
         gettingResources.set(true);
@@ -607,8 +617,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 return NULL;
             }
 
-            if (geoResources != null && geoResources != NULL)
-                return geoResources;
+            if (geoResources != null && geoResources != NULL) return geoResources;
 
             if (!catalogRef.isLoaded()) {
                 catalogRef.load();
@@ -626,8 +635,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                             List<IResolve> resources = connections.find(id.toURL(), monitor);
                             for( IResolve resolve : resources ) {
                                 if (resolve.getStatus() == Status.BROKEN
-                                        || resolve.getStatus() == Status.BROKEN)
-                                    continue;
+                                        || resolve.getStatus() == Status.BROKEN) continue;
                                 if (resolve instanceof IGeoResource) {
                                     LayerResource resource = new LayerResource(LayerImpl.this,
                                             (IGeoResource) resolve);
@@ -703,8 +711,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     public <T> IGeoResource getGeoResource( Class<T> clazz ) {
         List<IGeoResource> resources = getGeoResources();
         for( IGeoResource resource : resources ) {
-            if (resource.canResolve(clazz))
-                return resource;
+            if (resource.canResolve(clazz)) return resource;
         }
 
         return null;
@@ -745,8 +752,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     public <E> E getResource( Class<E> resourceType, IProgressMonitor monitor ) throws IOException {
 
         IProgressMonitor monitor2 = monitor;
-        if (monitor2 == null)
-            monitor2 = ProgressManager.instance().get();
+        if (monitor2 == null) monitor2 = ProgressManager.instance().get();
         try {
             for( IGeoResource georesource : getGeoResources() ) {
                 if (georesource.canResolve(resourceType)) {
@@ -766,8 +772,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @generated NOT
      */
     public CatalogRef getCatalogRef() {
-        if (catalogRef.getLayer() != this)
-            catalogRef.setLayer(this);
+        if (catalogRef.getLayer() != this) catalogRef.setLayer(this);
         return catalogRef;
     }
 
@@ -833,8 +838,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                         .eInverseAdd(this, EOPPOSITE_FEATURE_BASE
                                 - ProjectPackage.LAYER__STYLE_BLACKBOARD, null, msgs);
             msgs = basicSetStyleBlackboard(newStyleBlackboard, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.LAYER__STYLE_BLACKBOARD, newStyleBlackboard, newStyleBlackboard));
@@ -866,10 +870,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @generated NOT
      */
     public int getStatus() {
-        if (geoResources == NULL || status == ILayer.ERROR)
-            return status;
-        if (isUnknownCRS())
-            return ILayer.WARNING;
+        if (geoResources == NULL || status == ILayer.ERROR) return status;
+        if (isUnknownCRS()) return ILayer.WARNING;
 
         return status;
     }
@@ -941,10 +943,17 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     public <T> boolean hasResource( Class<T> resourceType ) {
         for( IGeoResource resource : getGeoResources() ) {
-            if (resource.canResolve(resourceType))
-                return true;
+            if (resource.canResolve(resourceType)) return true;
         }
         return false;
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
+    public ImageDescriptor getIcon() {
+        return icon;
     }
 
     /**
@@ -954,6 +963,19 @@ public class LayerImpl extends EObjectImpl implements Layer {
      */
     public ImageDescriptor getGlyph() {
         return getIcon();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setIcon( ImageDescriptor newIcon ) {
+        ImageDescriptor oldIcon = icon;
+        icon = newIcon;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__ICON,
+                    oldIcon, icon));
     }
 
     /**
@@ -985,8 +1007,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @generated NOT
      */
     public String toString() {
-        if (eIsProxy())
-            return super.toString();
+        if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer();
         result.append(" (name: "); //$NON-NLS-1$
@@ -1017,6 +1038,16 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     private volatile int status;
+
+    /**
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected static final String NAME_EDEFAULT = null;
 
     /**
      * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc -->
@@ -1249,14 +1280,44 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected EMap<Interaction, Boolean> interactionMap;
 
     /**
-     * The cached value of the '{@link #getMap() <em>Map</em>}' reference.
+     * The default value of the '{@link #isShown() <em>Shown</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getMap()
+     * @see #isShown()
      * @generated
      * @ordered
      */
-    protected Map map;
+    protected static final boolean SHOWN_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isShown() <em>Shown</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isShown()
+     * @generated
+     * @ordered
+     */
+    protected boolean shown = SHOWN_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getIcon() <em>Icon</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIcon()
+     * @generated
+     * @ordered
+     */
+    protected static final ImageDescriptor ICON_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getIcon() <em>Icon</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIcon()
+     * @generated
+     * @ordered
+     */
+    protected ImageDescriptor icon = ICON_EDEFAULT;
 
     private volatile String statusMessage = Messages.LayerImpl_status;
 
@@ -1374,8 +1435,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 setStatus = true;
             }
         }
-        if (setStatus)
-            setStatus(status);
+        if (setStatus) setStatus(status);
     }
 
     /**
@@ -1545,7 +1605,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public java.util.Map<Interaction, Boolean> getInteractionMap() {
+    public Map<Interaction, Boolean> getInteractionMap() {
         if (interactionMap == null) {
             interactionMap = new EcoreEMap<Interaction, Boolean>(
                     ProjectPackage.Literals.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY,
@@ -1553,6 +1613,28 @@ public class LayerImpl extends EObjectImpl implements Layer {
                     ProjectPackage.LAYER__INTERACTION_MAP);
         }
         return interactionMap.map();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isShown() {
+        return shown;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setShown( boolean newShown ) {
+        boolean oldShown = shown;
+        shown = newShown;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__SHOWN,
+                    oldShown, shown));
     }
 
     /**
@@ -1567,8 +1649,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         try {
             for( Iterator i = adapters.iterator(); i.hasNext(); ) {
                 Object o = i.next();
-                if (adapter.isAssignableFrom(o.getClass()))
-                    return o;
+                if (adapter.isAssignableFrom(o.getClass())) return o;
             }
         } finally {
             if (adapters instanceof SynchronizedEList) {
@@ -1597,8 +1678,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     public CoordinateReferenceSystem getCRS( IProgressMonitor monitor ) {
 
-        if (cRS != null)
-            return cRS;
+        if (cRS != null) return cRS;
         return getCRSInternal(monitor);
     }
 
@@ -1611,14 +1691,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
             NotificationChain msgs ) {
         switch( featureID ) {
         case ProjectPackage.LAYER__CONTEXT_MODEL:
-            if (eInternalContainer() != null)
-                msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
             return basicSetContextModel((ContextModel) otherEnd, msgs);
-        case ProjectPackage.LAYER__MAP:
-            if (map != null)
-                msgs = ((InternalEObject) map).eInverseRemove(this, ProjectPackage.MAP__LAYERS,
-                        Map.class, msgs);
-            return basicSetMap((Map) otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -1638,8 +1712,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__INTERACTION_MAP:
             return ((InternalEList< ? >) ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap())
                     .eMap()).basicRemove(otherEnd, msgs);
-        case ProjectPackage.LAYER__MAP:
-            return basicSetMap(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -1675,6 +1747,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return getZorder();
         case ProjectPackage.LAYER__STATUS:
             return getStatus();
+        case ProjectPackage.LAYER__NAME:
+            return getName();
         case ProjectPackage.LAYER__CATALOG_REF:
             return getCatalogRef();
         case ProjectPackage.LAYER__ID:
@@ -1704,10 +1778,10 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 return ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap()).eMap();
             else
                 return getInteractionMap();
-        case ProjectPackage.LAYER__MAP:
-            if (resolve)
-                return getMap();
-            return basicGetMap();
+        case ProjectPackage.LAYER__SHOWN:
+            return isShown();
+        case ProjectPackage.LAYER__ICON:
+            return getIcon();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -1734,6 +1808,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return;
         case ProjectPackage.LAYER__STATUS:
             setStatus((Integer) newValue);
+            return;
+        case ProjectPackage.LAYER__NAME:
+            setName((String) newValue);
             return;
         case ProjectPackage.LAYER__CATALOG_REF:
             setCatalogRef((CatalogRef) newValue);
@@ -1770,8 +1847,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
             ((EStructuralFeature.Setting) ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap())
                     .eMap()).set(newValue);
             return;
-        case ProjectPackage.LAYER__MAP:
-            setMap((Map) newValue);
+        case ProjectPackage.LAYER__SHOWN:
+            setShown((Boolean) newValue);
+            return;
+        case ProjectPackage.LAYER__ICON:
+            setIcon((ImageDescriptor) newValue);
             return;
         }
         super.eSet(featureID, newValue);
@@ -1798,6 +1878,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return;
         case ProjectPackage.LAYER__STATUS:
             setStatus(STATUS_EDEFAULT);
+            return;
+        case ProjectPackage.LAYER__NAME:
+            setName(NAME_EDEFAULT);
             return;
         case ProjectPackage.LAYER__CATALOG_REF:
             setCatalogRef(CATALOG_REF_EDEFAULT);
@@ -1832,8 +1915,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__INTERACTION_MAP:
             getInteractionMap().clear();
             return;
-        case ProjectPackage.LAYER__MAP:
-            setMap((Map) null);
+        case ProjectPackage.LAYER__SHOWN:
+            setShown(SHOWN_EDEFAULT);
+            return;
+        case ProjectPackage.LAYER__ICON:
+            setIcon(ICON_EDEFAULT);
             return;
         }
         super.eUnset(featureID);
@@ -1856,6 +1942,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return zorder != ZORDER_EDEFAULT;
         case ProjectPackage.LAYER__STATUS:
             return status != STATUS_EDEFAULT;
+        case ProjectPackage.LAYER__NAME:
+            return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         case ProjectPackage.LAYER__CATALOG_REF:
             return CATALOG_REF_EDEFAULT == null ? catalogRef != null : !CATALOG_REF_EDEFAULT
                     .equals(catalogRef);
@@ -1886,8 +1974,10 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return maxScaleDenominator != MAX_SCALE_DENOMINATOR_EDEFAULT;
         case ProjectPackage.LAYER__INTERACTION_MAP:
             return interactionMap != null && !interactionMap.isEmpty();
-        case ProjectPackage.LAYER__MAP:
-            return map != null;
+        case ProjectPackage.LAYER__SHOWN:
+            return shown != SHOWN_EDEFAULT;
+        case ProjectPackage.LAYER__ICON:
+            return ICON_EDEFAULT == null ? icon != null : !ICON_EDEFAULT.equals(icon);
         }
         return super.eIsSet(featureID);
     }
@@ -1901,8 +1991,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     private CoordinateReferenceSystem getCRSInternal( IProgressMonitor monitor ) {
         try {
             CoordinateReferenceSystem crs = getGeoResource().getInfo(monitor).getCRS();
-            if (crs != null)
-                return crs;
+            if (crs != null) return crs;
         } catch (Exception e) {
             ProjectPlugin.log(null, e);
         }
@@ -1921,10 +2010,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     public void refresh( Envelope bounds ) {
-        if (!isVisible())
-            return;
-        if (getMap() == null || getMap().getRenderManager() == null)
-            return;
+        if (!isVisible()) return;
+        if (getMap() == null || getMap().getRenderManager() == null) return;
         Envelope transformedbounds = bounds;
         if (bounds != null) {
             try {
@@ -2004,8 +2091,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
             try {
                 IGeoResourceInfo info = resource.getInfo(monitor);
                 Envelope tmp = null;
-                if (info != null)
-                    tmp = info.getBounds();
+                if (info != null) tmp = info.getBounds();
 
                 if (tmp instanceof ReferencedEnvelope
                         && ((ReferencedEnvelope) tmp).getCoordinateReferenceSystem() != null) {
@@ -2036,8 +2122,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         FilterFactory2 factory = (FilterFactory2) CommonFactoryFinder.getFilterFactory(GeoTools
                 .getDefaultHints());
         Filter bboxFilter = null;
-        if (!hasResource(FeatureSource.class))
-            return Filter.EXCLUDE;
+        if (!hasResource(FeatureSource.class)) return Filter.EXCLUDE;
         try {
 
             Envelope bbox;
@@ -2062,8 +2147,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      */
     public net.refractions.udig.project.internal.Map getMapInternal() {
         ContextModel context = getContextModel();
-        if (context == null)
-            return null;
+        if (context == null) return null;
         return context.getMap();
     }
 
@@ -2072,56 +2156,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
      */
     public IMap getMap() {
         return getMapInternal();
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Map basicGetMap() {
-        return map;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetMap( Map newMap, NotificationChain msgs ) {
-        Map oldMap = map;
-        map = newMap;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-                    ProjectPackage.LAYER__MAP, oldMap, newMap);
-            if (msgs == null)
-                msgs = notification;
-            else
-                msgs.add(notification);
-        }
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setMap( Map newMap ) {
-        if (newMap != map) {
-            NotificationChain msgs = null;
-            if (map != null)
-                msgs = ((InternalEObject) map).eInverseRemove(this, ProjectPackage.MAP__LAYERS,
-                        Map.class, msgs);
-            if (newMap != null)
-                msgs = ((InternalEObject) newMap).eInverseAdd(this, ProjectPackage.MAP__LAYERS,
-                        Map.class, msgs);
-            msgs = basicSetMap(newMap, msgs);
-            if (msgs != null)
-                msgs.dispatch();
-        } else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__MAP,
-                    newMap, newMap));
     }
 
     /**
@@ -2164,10 +2198,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @uml.property name="statusMessage"
      */
     public String getStatusMessage() {
-        if (geoResources == NULL || status == ILayer.ERROR)
-            return statusMessage;
-        if (isUnknownCRS())
-            return Messages.LayerImpl_unkownCRS;
+        if (geoResources == NULL || status == ILayer.ERROR) return statusMessage;
+        if (isUnknownCRS()) return Messages.LayerImpl_unkownCRS;
         return statusMessage;
     }
 
@@ -2187,8 +2219,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     void resetConnection( IResolveDelta delta ) {
-        if (PlatformUI.getWorkbench().isClosing() || getMap() == null)
-            return;
+        if (PlatformUI.getWorkbench().isClosing() || getMap() == null) return;
 
         warned = false;
         if (delta.getKind() == Kind.CHANGED) {
@@ -2212,8 +2243,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 }
             }
             // no change
-            if (delta.getNewValue().equals(delta.getOldValue()))
-                return;
+            if (delta.getNewValue().equals(delta.getOldValue())) return;
 
             if (delta.getNewValue() instanceof Envelope) {
 
@@ -2266,8 +2296,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return;
         }
 
-        if (geoResources == null)
-            return;
+        if (geoResources == null) return;
 
         if (gettingResources.get()) {
             return;
@@ -2285,8 +2314,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
             ID affected = hit.getID();
             ID id = getResourceID();
-            if (id == null)
-                return;
+            if (id == null) return;
 
             List<IGeoResource> resources = geoResources;
             for( IGeoResource resource : resources ) {
@@ -2306,17 +2334,14 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     public static int doComparison( ILayer layer, ILayer layer2 ) {
-        if (layer2 == null)
-            return 1;
+        if (layer2 == null) return 1;
 
-        if (layer2 == layer)
-            return 0;
+        if (layer2 == layer) return 0;
 
         int i1 = layer.getZorder();
         int i2 = layer2.getZorder();
 
-        if (i1 == i2)
-            return 0;
+        if (i1 == i2) return 0;
         return i1 < i2 ? -1 : 1;
     }
 
