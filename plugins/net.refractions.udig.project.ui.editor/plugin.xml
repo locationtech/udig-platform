@@ -21,13 +21,6 @@
             class="net.refractions.udig.project.ui.internal.LayersView"
             id="net.refractions.udig.project.ui.layerManager">
       </view>
-      <view
-            category="net.refractions.udig.project.ui.project"
-            class="net.refractions.udig.project.ui.internal.LegendView"
-            icon="icons/eview16/legend_view.gif"
-            id="net.refractions.udig.project.ui.legendManager"
-            name="%LegendManager.name">
-      </view>
    </extension>
    <extension
          point="org.eclipse.ui.editors">

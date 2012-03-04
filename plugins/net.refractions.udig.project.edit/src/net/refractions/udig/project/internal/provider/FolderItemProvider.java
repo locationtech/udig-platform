@@ -185,17 +185,16 @@ public class FolderItemProvider extends ItemProviderAdapter
     }
 
     /**
-     * This returns the label text for the adapted class. If the name attribute of the object is
-     * null or with length 0, return the object type as string, else return the name attribute.
-     * 
-     * @generated not 
+     * This returns the label text for the adapted class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
      */
     @Override
     public String getText( Object object ) {
         String label = ((Folder) object).getName();
-        return label == null || label.length() == 0 ? 
-                getString("_UI_Folder_type") : //$NON-NLS-1$
-                label;
+        return label == null || label.length() == 0 ? getString("_UI_Folder_type") : //$NON-NLS-1$
+                getString("_UI_Folder_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

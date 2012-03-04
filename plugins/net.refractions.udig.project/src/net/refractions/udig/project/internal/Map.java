@@ -315,29 +315,7 @@ public interface Map extends ProjectElement, IMap {
      * @param layer The layer whose rendering order will be modified
      */
     public void raiseLayer( Layer layer );
-    /**
-     * Increases the ZOrder of the layer so it is rendered first with incomparison to the other
-     * layers. If the Layer is at the bottom of the render list(first to be drawn) it is not
-     * affected.
-     * 
-     * @param layer The layer whose rendering order will be modified
-     */
-    public void sendToFrontLayer( Layer layer);
-    /**
-     * Decreases the ZOrder of the layer so it is rendered last with incomparison to the other
-     * layers. If the Layer is at the top of the render list(last to be drawn) it is not affected.
-     * 
-     * @param layer The layer whose rendering order will be modified
-     */
-    public void sendToBackLayer( Layer layer);
-    /**
-     * Sets the ZOrder of the layer to the specified index so it is rendered relative to the new
-     * ordering created by the change.
-     * 
-     * @param layer The layer whose rendering order will be modified
-     */
-    public void sendToIndexLayer( Layer layer, int index);
-    
+
     /**
      * Select all selectable layers, with a BoundingBox Geometry filter. Boundingbox must be in the
      * same CRS as the ViewportModel
