@@ -33,7 +33,6 @@ import java.util.Set;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.ContextModelListenerAdapter;
 import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerListListenerAdapter;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.ProjectPlugin;
@@ -123,7 +122,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
     /**
      * Watches the layer add / delete / change of zorder and style changes.
      */
-    LayerListListenerAdapter layerListAdapter = RenderManagerAdapters.createContextModelListener(this);
+    ContextModelListenerAdapter contextModelAdapter = RenderManagerAdapters.createContextModelListener(this);
     
     /**
      * Watches the viewport model and class refresh(null) (triggers redrawing of the layers). 
@@ -138,7 +137,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
      * and morphing the events into something for the map to be updated with?
      * 
      */
-    private Adapter viewportModelChangeListener = RenderManagerAdapters.createViewportModelChangeListener(this, viewportListener,layerListAdapter);
+    private Adapter viewportModelChangeListener = RenderManagerAdapters.createViewportModelChangeListener(this, viewportListener,contextModelAdapter);
 
     /**
      * Listens for layer made visible change events and upates
@@ -672,8 +671,8 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             }
         }
         
-        if (!getMapInternal().eAdapters().contains(layerListAdapter)){
-            getMapInternal().eAdapters().add(layerListAdapter);
+        if (!getMapInternal().getContextModel().eAdapters().contains(contextModelAdapter)){
+            getMapInternal().getContextModel().eAdapters().add(contextModelAdapter);
         }
 
         refreshImage();
@@ -870,7 +869,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
     private void removeAdapters(EObject obj) {
         obj.eAdapters().remove(this.viewportListener);
         obj.eAdapters().remove(this.viewportModelChangeListener);
-        obj.eAdapters().remove(this.layerListAdapter);
+        obj.eAdapters().remove(this.contextModelAdapter);
         obj.eAdapters().remove(this.renderExecutorListener);
         obj.eAdapters().remove(this.selectionListener);
     }

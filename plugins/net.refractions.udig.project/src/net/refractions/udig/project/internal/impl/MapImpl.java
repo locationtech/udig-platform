@@ -23,7 +23,6 @@ import java.util.concurrent.locks.Lock;
 
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.IFolder;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMapCompositionListener;
 import net.refractions.udig.project.IMapListener;
@@ -364,27 +363,7 @@ public class MapImpl extends EObjectImpl implements Map {
         addMapListenerAdapter();
         setContextModel(new ContextModelImpl());
     }
-    //
-    // EMF Overrides
-    //
-    /** MapImpl uses a {@link SynchronizedEList} to maintain its list of adapters */
-    private volatile SynchronizedEList<Adapter> eAdapters;
-    
-    @Override
-    /**
-     * MapImpl uses a {@link SynchronizedEList} to maintain its list of adapters.
-     */
-    public SynchronizedEList<Adapter> eAdapters() {
-        if (eAdapters == null) {
-            synchronized (this) {
-                if (eAdapters == null) {
-                    eAdapters = new SynchronizedEList<Adapter>(super.eAdapters());
-                }
-            }
-        }
-        return eAdapters;
-    }
-    
+
     /**
      * Adds an adapter that fires the events to IMapListeners
      */
@@ -978,7 +957,7 @@ public class MapImpl extends EObjectImpl implements Map {
             ENotificationImpl notifications = new BatchNotification(this, eventType,
                     ProjectPackage.MAP_FEATURE_COUNT + 1);
             // Create layer notifications
-            for( Layer layer : getLayers() ) {
+            for( Layer layer : getContextModel().getLayers() ) {
                 EStructuralFeature feature = layer.eClass().getEStructuralFeature(featureID);
                 ENotificationImpl notification = new ENotificationImpl((InternalEObject) layer,
                         eventType, featureID, null, layer.eGet(feature));
@@ -1614,30 +1593,7 @@ public class MapImpl extends EObjectImpl implements Map {
         }
         return legend;
     }
-    /**
-     * List of all legend items (collected by navigating the tree in depth first order).
-     * <p>
-     * Depth first list of legend items; can be used to check if a legend item is present
-     * anywhere in the tree.
-     * <p>
-     * @return list of all legend items
-     */
-    public List<LegendItem> allItems( List<LegendItem> list ){
-        List<LegendItem> items = new ArrayList<LegendItem>();
-        if( list != null ){
-            for( LegendItem item : list ){
-                items.add( item );
-                if( item instanceof IFolder ){
-                    IFolder folder = (IFolder) item;
-                    List<?> contents = folder.getItems();
-                    List<LegendItem> subList = allItems( (List<LegendItem>) contents);
-                    items.addAll(subList);
-                }
-            }
-        }
-        return items;
-    }
-    
+
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated not
@@ -1652,20 +1608,17 @@ public class MapImpl extends EObjectImpl implements Map {
                 @Override
                 protected void didAdd( int index, Layer layer ) {
                     List<LegendItem> legend = getLegend();
-                    List<LegendItem> allItems = allItems( legend );
-                    
                     // consider synchronisation here?
-                    if( !allItems.contains(layer)){
-                        // legend.add( layer );
-                    }
+                    if( !legend.contains(layer)){
+                        legend.add( layer );
+                    }   
                     super.didAdd(index, layer);
                 }  
                 @Override
                 protected void didRemove( int index, Layer layer ) {
                     List<LegendItem> legend = getLegend();
-                    List<LegendItem> allItems = allItems( legend );
-                    if( allItems.contains(layer)){
-                        // legend.remove( layer );
+                    if( legend.contains(layer)){
+                        legend.remove( layer );
                     }
                     super.didRemove(index, layer);
                 }
@@ -1700,15 +1653,9 @@ public class MapImpl extends EObjectImpl implements Map {
      */
     @SuppressWarnings("unchecked")
     public Object getAdapter( Class adapter ) {
-        try {
-            eAdapters().lock();
-            for( Iterator i = eAdapters().iterator(); i.hasNext(); ) {
-                Object o = i.next();
-                if (adapter.isAssignableFrom(o.getClass())) return o;
-            }
-        }
-        finally {
-            eAdapters().unlock();
+        for( Iterator i = eAdapters().iterator(); i.hasNext(); ) {
+            Object o = i.next();
+            if (adapter.isAssignableFrom(o.getClass())) return o;
         }
 
         /*

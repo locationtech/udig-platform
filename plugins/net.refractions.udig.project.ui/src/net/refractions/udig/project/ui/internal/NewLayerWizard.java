@@ -49,9 +49,7 @@ public class NewLayerWizard extends Wizard implements INewWizard {
 
                 for( int i = 0; i < layers.size(); i++ ) {
                     Layer layer = (Layer) layers.get(i);
-                    
-                    // Ensure Layer is added to both layers and legend
-                    map.getLayers().add(layer);
+                    map.getContextModel().getLayers().add(layer);
                 }
             }
         });

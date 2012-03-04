@@ -428,11 +428,10 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
      * 
      * @generated NOT
      */
-    public Collection<? extends EStructuralFeature> getChildrenFeatures( Object object ) {
+    public Collection getChildrenFeatures( Object object ) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
-            childrenFeatures.add( ProjectPackage.eINSTANCE.getMap_Layers() );
-            // childrenFeatures.add(ProjectPackage.eINSTANCE.getMap_ContextModel());
+            childrenFeatures.add(ProjectPackage.eINSTANCE.getMap_ContextModel());
         }
         return childrenFeatures;
     }
@@ -474,46 +473,38 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
     protected net.refractions.udig.project.internal.provider.LoadingPlaceHolder getLoadingItem() {
         return LOADING_LAYER;
     };
-    
-    /**
-     * Appears to bridge the gap from Map to list of layers (formally MapContext).
-     */
+
     protected ChildFetcher createChildFetcher() {
         return new ChildFetcher(this){
-            
             protected void notifyChanged() {
                 MapItemProvider.this.notifyChanged(new ENotificationImpl((InternalEObject) parent,
-                        Notification.SET, ProjectPackage.MAP__LAYERS, LOADING_LAYER, null));
-//                MapItemProvider.this.notifyChanged(new ENotificationImpl((InternalEObject) parent,
-//                        Notification.SET, ProjectPackage.MAP__CONTEXT_MODEL, LOADING_LAYER, null));
+                        Notification.SET, ProjectPackage.MAP__CONTEXT_MODEL, LOADING_LAYER, null));
             }
             @SuppressWarnings("unchecked")
             @Override
             protected IStatus run( IProgressMonitor monitor ) {
-//                if (parent instanceof Map) {
-//                    
-//                    Map map = (Map) parent;
-//                    boolean found = false;
-//                    SynchronizedEList<Adapter> adapters = (SynchronizedEList<Adapter>) map.eAdapters();
-//                    adapters.lock();
-//                    try {
-//                        for( Iterator<Adapter> iter = adapters.iterator(); iter.hasNext(); ) {
-//                            Adapter next = iter.next();
-//                            if (next instanceof ContextModelItemProvider){
-//                                ContextModelItemProvider provider = (ContextModelItemProvider) next;
-//                                if( provider.getAdapterFactory() == getAdapterFactory()){
-//                                    found = true;
-//                                }
-//                            }
-//                        }
-//                    } finally {
-//                        adapters.unlock();
-//                    }
-//                    if (!found) {
-//                        ContextModelItemProvider provider = new ContextModelItemProvider(getAdapterFactory());
-//                        adapters.add(provider);
-//                    }
-//                }
+                if (parent instanceof Map) {
+                    Map map = (Map) parent;
+                    boolean found = false;
+                    SynchronizedEList adapters = (SynchronizedEList) map.getContextModel()
+                            .eAdapters();
+                    adapters.lock();
+                    try {
+                        for( Iterator<Adapter> iter = adapters.iterator(); iter.hasNext(); ) {
+                            Adapter next = iter.next();
+                            if (next instanceof ContextModelItemProvider
+                                    && ((ContextModelItemProvider) next).getAdapterFactory() == getAdapterFactory())
+                                found = true;
+                        }
+                    } finally {
+                        adapters.unlock();
+                    }
+                    if (!found) {
+                        ContextModelItemProvider provider = new ContextModelItemProvider(
+                                getAdapterFactory());
+                        adapters.add(provider);
+                    }
+                }
 
                 IStatus result = super.run(monitor);
                 return result;
