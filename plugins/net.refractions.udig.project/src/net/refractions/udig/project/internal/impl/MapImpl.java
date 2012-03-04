@@ -38,7 +38,6 @@ import net.refractions.udig.project.internal.Blackboard;
 import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.ContextModelListenerAdapter;
 import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerFactory;
 import net.refractions.udig.project.internal.LegendItem;
@@ -117,16 +116,16 @@ import com.vividsolutions.jts.geom.Envelope;
  * Project element used by MapEditorInput.
  * <p>
  * For more information please see *net.refractions.udig.project.internal.ui.mapEditorInput*.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
  */
 public class MapImpl extends EObjectImpl implements Map {
     /**
-     * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
      * @see #getName()
      * @generated NOT
      * @ordered
@@ -134,9 +133,9 @@ public class MapImpl extends EObjectImpl implements Map {
     protected static final String NAME_EDEFAULT = "";
 
     /**
-     * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * 
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
      * @see #getName()
      * @generated NOT
      * @ordered
@@ -146,7 +145,6 @@ public class MapImpl extends EObjectImpl implements Map {
     /**
      * The cached value of the '{@link #getProjectInternal() <em>Project Internal</em>}' reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see #getProjectInternal()
      * @generated not
      * @ordered
@@ -154,9 +152,8 @@ public class MapImpl extends EObjectImpl implements Map {
     protected volatile Project projectInternal = null;
 
     /**
-     * The cached value of the '{@link #getContextModel() <em>Context Model</em>}' containment
-     * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The cached value of the '{@link #getContextModel() <em>Context Model</em>}' containment reference.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #getContextModel()
      * @generated not
      * @ordered
@@ -166,7 +163,7 @@ public class MapImpl extends EObjectImpl implements Map {
     /**
      * The default value of the '{@link #getAbstract() <em>Abstract</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getAbstract()
      * @generated NOT
      * @ordered
@@ -176,7 +173,7 @@ public class MapImpl extends EObjectImpl implements Map {
     /**
      * The cached value of the '{@link #getAbstract() <em>Abstract</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getAbstract()
      * @generated not
      * @ordered
@@ -184,9 +181,8 @@ public class MapImpl extends EObjectImpl implements Map {
     protected volatile String abstract_ = ABSTRACT_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getNavCommandStack() <em>Nav Command Stack</em>}'
-     * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The default value of the '{@link #getNavCommandStack() <em>Nav Command Stack</em>}' attribute.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #getNavCommandStack()
      * @generated
      * @ordered
@@ -194,9 +190,8 @@ public class MapImpl extends EObjectImpl implements Map {
     protected static final NavCommandStack NAV_COMMAND_STACK_EDEFAULT = null;
 
     /**
-     * The default value of the '{@link #getCommandStack() <em>Command Stack</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The default value of the '{@link #getCommandStack() <em>Command Stack</em>}' attribute.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #getCommandStack()
      * @generated
      * @ordered
@@ -204,9 +199,8 @@ public class MapImpl extends EObjectImpl implements Map {
     protected static final CommandStack COMMAND_STACK_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getLayerFactory() <em>Layer Factory</em>}' containment
-     * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The cached value of the '{@link #getLayerFactory() <em>Layer Factory</em>}' containment reference.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #getLayerFactory()
      * @generated not
      * @ordered
@@ -214,9 +208,8 @@ public class MapImpl extends EObjectImpl implements Map {
     protected volatile LayerFactory layerFactory = null;
 
     /**
-     * The cached value of the '{@link #getViewportModelInternal() <em>Viewport Model Internal</em>}
-     * ' containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The cached value of the '{@link #getViewportModelInternal() <em>Viewport Model Internal</em>}' containment reference.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #getViewportModelInternal()
      * @generated not
      * @ordered
@@ -224,9 +217,9 @@ public class MapImpl extends EObjectImpl implements Map {
     protected volatile ViewportModel viewportModelInternal = null;
 
     /**
-     * The default value of the '{@link #getColorPalette() <em>Color Palette</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The default value of the '{@link #getColorPalette() <em>Color Palette</em>}' attribute.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getColorPalette()
      * @generated NOT
      * @ordered
@@ -236,7 +229,7 @@ public class MapImpl extends EObjectImpl implements Map {
     /**
      * The cached value of the '{@link #getColorPalette() <em>Color Palette</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getColorPalette()
      * @generated not
      * @ordered
@@ -246,29 +239,27 @@ public class MapImpl extends EObjectImpl implements Map {
                     .getString(PreferenceConstants.P_DEFAULT_PALETTE));
 
     /**
-     * The cached value of the '{@link #getEditManagerInternal() <em>Edit Manager Internal</em>}'
-     * containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The cached value of the '{@link #getEditManagerInternal() <em>Edit Manager Internal</em>}' containment reference.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #getEditManagerInternal()
-     * @generated not
+     * @generated not 
      * @ordered
      */
     protected volatile EditManager editManagerInternal = null;
 
     /**
-     * The cached value of the '{@link #getRenderManagerInternal() <em>Render Manager Internal</em>}
-     * ' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The cached value of the '{@link #getRenderManagerInternal() <em>Render Manager Internal</em>}' reference.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #getRenderManagerInternal()
-     * @generated not
+     * @generated not 
      * @ordered
      */
     protected volatile RenderManager renderManagerInternal = null;
 
     /**
-     * The default value of the '{@link #getColourScheme() <em>Colour Scheme</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The default value of the '{@link #getColourScheme() <em>Colour Scheme</em>}' attribute.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getColourScheme()
      * @generated NOT
      * @ordered
@@ -280,17 +271,16 @@ public class MapImpl extends EObjectImpl implements Map {
     /**
      * The cached value of the '{@link #getColourScheme() <em>Colour Scheme</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getColourScheme()
-     * @generated not
+     * @generated not 
      * @ordered
      */
     protected volatile ColourScheme colourScheme = ColourScheme.getDefault(getColorPalette());
 
     /**
-     * The cached value of the '{@link #getBlackBoardInternal() <em>Black Board Internal</em>}'
-     * containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The cached value of the '{@link #getBlackBoardInternal() <em>Black Board Internal</em>}' containment reference.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see #getBlackBoardInternal()
      * @generated not
      * @ordered
@@ -299,8 +289,8 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * The cached value of the '{@link #getLegend() <em>Legend</em>}' containment reference list.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getLegend()
      * @generated
      * @ordered
@@ -308,9 +298,9 @@ public class MapImpl extends EObjectImpl implements Map {
     protected EList<LegendItem> legend;
 
     /**
-     * The cached value of the '{@link #getLayers() <em>Layers</em>}' reference list. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The cached value of the '{@link #getLayers() <em>Layers</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getLayers()
      * @generated
      * @ordered
@@ -321,7 +311,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * <p>
      * A Listener to be passed on to the command manager. Will be notified of command completion.
      * </p>
-     * 
+     *
      * @author aalam
      * @since 0.6.0
      */
@@ -334,7 +324,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
         /**
          * CommandManager will call this function once the command is completed.
-         * 
+         *
          * @param commandType
          */
         public void commandExecuted( int commandType ) {
@@ -358,7 +348,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public MapImpl() {
@@ -376,7 +366,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -387,7 +376,7 @@ public class MapImpl extends EObjectImpl implements Map {
     /**
      * Retrieves this map's project, searching its parents until it finds one, or returns null if it
      * can't find one.
-     * 
+     *
      * @uml.property name="projectInternal"
      */
     public Project getProjectInternal() {
@@ -407,7 +396,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Project getProjectInternalGen() {
@@ -426,7 +414,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Project basicGetProjectInternal() {
@@ -435,7 +422,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public NotificationChain basicSetProjectInternal( Project newProjectInternal,
@@ -455,7 +441,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated NOT
      */
     public void setProjectInternal( Project newProjectInternal ) {
@@ -478,7 +463,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="contextModel"
      * @generated NOT
      */
@@ -498,7 +483,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @SuppressWarnings("deprecation")
@@ -554,7 +538,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="viewportModelInternal"
      * @generated NOT
      */
@@ -566,7 +550,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public NotificationChain basicSetViewportModelInternal( ViewportModel newViewportModelInternal,
@@ -587,7 +570,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="viewportModelInternal"
      */
     @SuppressWarnings("unchecked")
@@ -601,7 +584,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setViewportModelInternalGen( ViewportModel newViewportModelInternal ) {
@@ -623,7 +605,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated NOT
      */
     public BrewerPalette getColorPalette() {
@@ -639,7 +620,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setColorPalette( BrewerPalette newColorPalette ) {
@@ -652,7 +632,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public String getAbstract() {
@@ -661,7 +640,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setAbstract( String newAbstract ) {
@@ -674,7 +652,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public String getName() {
@@ -683,7 +660,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setName( String newName ) {
@@ -747,9 +723,8 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     /**
-     * Takes an Extent, usually from a {@link CoordinateReferenceSystem}, and converts it to a
-     * ReferencedEnvelope
-     * 
+     * Takes an Extent, usually from a {@link CoordinateReferenceSystem}, and converts it to a ReferencedEnvelope
+     *
      * @param extent the extent to convert.
      * @param crs the desired CRS of the ReferencedEnvelope.
      * @return
@@ -806,7 +781,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public NavCommandStack getNavCommandStack() {
@@ -823,7 +798,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public CommandStack getCommandStack() {
@@ -839,7 +814,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="layerFactory"
      * @generated NOT
      */
@@ -850,7 +825,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public NotificationChain basicSetLayerFactory( LayerFactory newLayerFactory,
@@ -870,7 +844,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setLayerFactory( LayerFactory newLayerFactory ) {
@@ -891,7 +864,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     private void sendCommand( MapCommand command, boolean async ) {
@@ -900,7 +873,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void sendCommandInternal( MapCommand command, boolean async ) {
@@ -913,7 +886,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     private void sendCommand( EditCommand command, boolean async ) {
@@ -922,7 +895,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     private void sendCommand( NavCommand command, boolean async ) {
@@ -963,7 +936,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * Creates and fires a batch notification.
-     * 
+     *
      * @param featureID the id of the layer's feature that has changed
      * @param eventType the type of event that has occurred (see {@linkplain Notification})
      */
@@ -1026,7 +999,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void redo() {
@@ -1037,7 +1010,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void undo() {
@@ -1048,7 +1021,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void backwardHistory() {
@@ -1058,7 +1031,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void forwardHistory() {
@@ -1067,8 +1040,8 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -1113,8 +1086,8 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -1142,8 +1115,8 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -1186,8 +1159,8 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -1240,8 +1213,8 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -1291,8 +1264,8 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     @Override
@@ -1341,7 +1314,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="editManagerInternal"
      * @generated NOT
      */
@@ -1354,7 +1327,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public NotificationChain basicSetEditManagerInternal( EditManager newEditManagerInternal,
@@ -1375,7 +1347,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setEditManagerInternal( EditManager newEditManagerInternal ) {
@@ -1397,7 +1368,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public RenderManager getRenderManagerInternal() {
@@ -1416,7 +1386,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public RenderManager basicGetRenderManagerInternal() {
@@ -1425,7 +1394,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public NotificationChain basicSetRenderManagerInternal( RenderManager newRenderManagerInternal,
@@ -1446,7 +1414,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setRenderManagerInternalGen( RenderManager newRenderManagerInternal ) {
@@ -1505,7 +1472,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public ColourScheme getColourScheme() {
@@ -1514,7 +1480,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setColourScheme( ColourScheme newColourScheme ) {
@@ -1527,6 +1492,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /*
      * (non-Javadoc)
+     *
      * @see net.refractions.udig.project.IMap#getBlackboard()
      */
     public IBlackboard getBlackboard() {
@@ -1535,7 +1501,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Blackboard getBlackBoardInternal() {
@@ -1544,7 +1509,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public NotificationChain basicSetBlackBoardInternal( Blackboard newBlackBoardInternal,
@@ -1565,7 +1529,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setBlackBoardInternal( Blackboard newBlackBoardInternal ) {
@@ -1588,8 +1551,8 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public List<LegendItem> getLegend() {
@@ -1601,8 +1564,8 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public List<Layer> getLayers() {
@@ -1614,7 +1577,6 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -1645,9 +1607,9 @@ public class MapImpl extends EObjectImpl implements Map {
         }
 
         /*
-         * Adapt to an IWorkbenchAdapter. Other aspects of Eclipse can read the properties we
-         * provide access to. (example: Property page dialogs can read the label and display that in
-         * their title.)
+         * Adapt to an IWorkbenchAdapter. Other aspects of Eclipse can read the
+         * properties we provide access to. (example: Property page dialogs
+         * can read the label and display that in their title.)
          */
         if (adapter.isAssignableFrom(IWorkbenchAdapter.class)) {
             return new WorkbenchAdapter(){
@@ -1701,37 +1663,8 @@ public class MapImpl extends EObjectImpl implements Map {
 
     @SuppressWarnings("unchecked")
     public List<Layer> getLayersInternal() {
-        if (true) {
-            return getContextModel().getLayers(); // replace me!
-        }
-        if (false) {
-            return getLayers(); // custom list class we can update legend items here
-        } else {
-            List<Layer> layers = new ArrayList<Layer>();
-            copyLayersFromLegendItems(getLegend(), layers);
-
-            // sort by z oder
-            // example layer1 is in position 3 and layer2 is in position 5 so we should return -2
-            Collections.sort(layers, new Comparator<Layer>(){
-                public int compare( Layer layer1, Layer layer2 ) {
-                    return layer1.getZorder() - layer2.getZorder();
-                }
-            });
-            return Collections.unmodifiableList(layers);
-        }
-    }
-    /** Recursive depth-first search of legend item list; returning the layers */
-    private void copyLayersFromLegendItems( List<LegendItem> items, List<Layer> layers ) {
-        for( LegendItem item : items ) {
-            if (item instanceof Layer) {
-                layers.add((Layer) item);
-            } else if (item instanceof Folder) {
-                Folder folder = (Folder) item;
-                copyLayersFromLegendItems(folder.getItems(), layers);
-            } else {
-                // ignore item must be a fish?
-            }
-        }
+        if (getContextModel() == null) return EMPTY_LIST;
+        return getContextModel().getLayers();
     }
 
     public void sendCommandSync( MapCommand command ) {

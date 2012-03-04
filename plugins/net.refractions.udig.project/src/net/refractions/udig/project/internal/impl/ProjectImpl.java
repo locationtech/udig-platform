@@ -130,9 +130,10 @@ public class ProjectImpl extends EObjectImpl implements Project {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated not
      */
-    public List<ProjectElement> getElementsInternal() {
+    @SuppressWarnings("unchecked")
+    public List getElementsInternal() {
         if (elementsInternal == null) {
-            elementsInternal = new SynchronizedEObjectWithInverseResolvingEList<ProjectElement>(
+            elementsInternal = new SynchronizedEObjectWithInverseResolvingEList(
                     ProjectElement.class, this, ProjectPackage.PROJECT__ELEMENTS_INTERNAL,
                     ProjectPackage.PROJECT_ELEMENT__PROJECT_INTERNAL){
 
@@ -140,13 +141,13 @@ public class ProjectImpl extends EObjectImpl implements Project {
                 private static final long serialVersionUID = 3978658123285628492L;
 
                 @Override
-                protected void didAdd( int index, ProjectElement newObject ) {
+                protected void didAdd( int index, Object newObject ) {
                     createResourceAndAddElement(ProjectImpl.this, (ProjectElement) newObject);
                     super.didAdd(index, newObject);
                 }
 
                 @Override
-                protected void didSet( int index, ProjectElement newObject, ProjectElement oldObject ) {
+                protected void didSet( int index, Object newObject, Object oldObject ) {
                     createResourceAndAddElement(ProjectImpl.this, (ProjectElement) newObject);
                     super.didSet(index, newObject, oldObject);
                 }
