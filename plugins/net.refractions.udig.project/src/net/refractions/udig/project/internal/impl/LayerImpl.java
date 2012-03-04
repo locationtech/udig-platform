@@ -289,7 +289,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
                         }
                         if (bounds2 == null || bounds2.isNull()
                                 || !bounds2.contains((Envelope) featureEvent.getBounds())) {
-                            if (bounds2 == null) bounds2 = new ReferencedEnvelope(getCRS());
+                            if (bounds2 == null)
+                                bounds2 = new ReferencedEnvelope(getCRS());
                             bounds = bounds2;
                         }
                     }
@@ -381,7 +382,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected void fireLayerChange( LayerEvent event ) {
         for( ILayerListener listener : listeners ) {
             try {
-                if (listener != null) listener.refresh(event);
+                if (listener != null)
+                    listener.refresh(event);
             } catch (Throwable t) {
                 ProjectPlugin.log("", t); //$NON-NLS-1$
             }
@@ -389,7 +391,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     protected void zorderNotify( int old, int current ) {
-        if (old == current) return;
+        if (old == current)
+            return;
         ENotificationImpl notification = new ENotificationImpl(LayerImpl.this, Notification.SET,
                 ProjectPackage.LAYER__ZORDER, old, current, old == current);
         LayerImpl.this.eNotify(notification);
@@ -475,7 +478,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @generated
      */
     public ContextModel getContextModel() {
-        if (eContainerFeatureID() != ProjectPackage.LAYER__CONTEXT_MODEL) return null;
+        if (eContainerFeatureID() != ProjectPackage.LAYER__CONTEXT_MODEL)
+            return null;
         return (ContextModel) eContainer();
     }
 
@@ -501,12 +505,14 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 throw new IllegalArgumentException(
                         "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
             NotificationChain msgs = null;
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
             if (newContextModel != null)
                 msgs = ((InternalEObject) newContextModel).eInverseAdd(this,
                         ProjectPackage.CONTEXT_MODEL__LAYERS, ContextModel.class, msgs);
             msgs = basicSetContextModel(newContextModel, msgs);
-            if (msgs != null) msgs.dispatch();
+            if (msgs != null)
+                msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.LAYER__CONTEXT_MODEL, newContextModel, newContextModel));
@@ -518,7 +524,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @model
      */
     public int getZorder() {
-        if (getContextModel() == null) return Integer.MAX_VALUE;
+        if (getContextModel() == null)
+            return Integer.MAX_VALUE;
         return getMap().getMapLayers().indexOf(this);
     }
 
@@ -645,9 +652,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
         assert assertNotInDisplayAccess();
 
-        if (eIsProxy() || getMap() == null) return geoResources == null ? NULL : geoResources;
+        if (eIsProxy() || getMap() == null)
+            return geoResources == null ? NULL : geoResources;
 
-        if (geoResources != null || geoResources == NULL) return geoResources;
+        if (geoResources != null || geoResources == NULL)
+            return geoResources;
 
         geoResourceLock.lock();
         gettingResources.set(true);
@@ -658,7 +667,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 return NULL;
             }
 
-            if (geoResources != null && geoResources != NULL) return geoResources;
+            if (geoResources != null && geoResources != NULL)
+                return geoResources;
 
             if (!catalogRef.isLoaded()) {
                 catalogRef.load();
@@ -676,7 +686,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
                             List<IResolve> resources = connections.find(id.toURL(), monitor);
                             for( IResolve resolve : resources ) {
                                 if (resolve.getStatus() == Status.BROKEN
-                                        || resolve.getStatus() == Status.BROKEN) continue;
+                                        || resolve.getStatus() == Status.BROKEN)
+                                    continue;
                                 if (resolve instanceof IGeoResource) {
                                     LayerResource resource = new LayerResource(LayerImpl.this,
                                             (IGeoResource) resolve);
@@ -752,7 +763,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     public <T> IGeoResource getGeoResource( Class<T> clazz ) {
         List<IGeoResource> resources = getGeoResources();
         for( IGeoResource resource : resources ) {
-            if (resource.canResolve(clazz)) return resource;
+            if (resource.canResolve(clazz))
+                return resource;
         }
 
         return null;
@@ -793,7 +805,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     public <E> E getResource( Class<E> resourceType, IProgressMonitor monitor ) throws IOException {
 
         IProgressMonitor monitor2 = monitor;
-        if (monitor2 == null) monitor2 = ProgressManager.instance().get();
+        if (monitor2 == null)
+            monitor2 = ProgressManager.instance().get();
         try {
             for( IGeoResource georesource : getGeoResources() ) {
                 if (georesource.canResolve(resourceType)) {
@@ -813,7 +826,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @generated NOT
      */
     public CatalogRef getCatalogRef() {
-        if (catalogRef.getLayer() != this) catalogRef.setLayer(this);
+        if (catalogRef.getLayer() != this)
+            catalogRef.setLayer(this);
         return catalogRef;
     }
 
@@ -879,7 +893,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
                         .eInverseAdd(this, EOPPOSITE_FEATURE_BASE
                                 - ProjectPackage.LAYER__STYLE_BLACKBOARD, null, msgs);
             msgs = basicSetStyleBlackboard(newStyleBlackboard, msgs);
-            if (msgs != null) msgs.dispatch();
+            if (msgs != null)
+                msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.LAYER__STYLE_BLACKBOARD, newStyleBlackboard, newStyleBlackboard));
@@ -911,8 +926,10 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @generated NOT
      */
     public int getStatus() {
-        if (geoResources == NULL || status == ILayer.ERROR) return status;
-        if (isUnknownCRS()) return ILayer.WARNING;
+        if (geoResources == NULL || status == ILayer.ERROR)
+            return status;
+        if (isUnknownCRS())
+            return ILayer.WARNING;
 
         return status;
     }
@@ -984,7 +1001,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     public <T> boolean hasResource( Class<T> resourceType ) {
         for( IGeoResource resource : getGeoResources() ) {
-            if (resource.canResolve(resourceType)) return true;
+            if (resource.canResolve(resourceType))
+                return true;
         }
         return false;
     }
@@ -1027,7 +1045,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @generated NOT
      */
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer();
         result.append(" (name: "); //$NON-NLS-1$
@@ -1349,6 +1368,16 @@ public class LayerImpl extends EObjectImpl implements Layer {
      */
     protected EMap<Interaction, Boolean> interactionMap;
 
+    /**
+     * The cached value of the '{@link #getMap() <em>Map</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMap()
+     * @generated
+     * @ordered
+     */
+    protected Map map;
+
     private volatile String statusMessage = Messages.LayerImpl_status;
 
     /**
@@ -1465,7 +1494,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 setStatus = true;
             }
         }
-        if (setStatus) setStatus(status);
+        if (setStatus)
+            setStatus(status);
     }
 
     /**
@@ -1657,7 +1687,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
         try {
             for( Iterator i = adapters.iterator(); i.hasNext(); ) {
                 Object o = i.next();
-                if (adapter.isAssignableFrom(o.getClass())) return o;
+                if (adapter.isAssignableFrom(o.getClass()))
+                    return o;
             }
         } finally {
             if (adapters instanceof SynchronizedEList) {
@@ -1686,7 +1717,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     public CoordinateReferenceSystem getCRS( IProgressMonitor monitor ) {
 
-        if (cRS != null) return cRS;
+        if (cRS != null)
+            return cRS;
         return getCRSInternal(monitor);
     }
 
@@ -1698,12 +1730,15 @@ public class LayerImpl extends EObjectImpl implements Layer {
     public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
             NotificationChain msgs ) {
         switch( featureID ) {
-        case ProjectPackage.LAYER__MAP:
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
-            return basicSetMap((Map) otherEnd, msgs);
         case ProjectPackage.LAYER__CONTEXT_MODEL:
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
             return basicSetContextModel((ContextModel) otherEnd, msgs);
+        case ProjectPackage.LAYER__MAP:
+            if (map != null)
+                msgs = ((InternalEObject) map).eInverseRemove(this, ProjectPackage.MAP__LAYERS,
+                        Map.class, msgs);
+            return basicSetMap((Map) otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -1716,8 +1751,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
     public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
             NotificationChain msgs ) {
         switch( featureID ) {
-        case ProjectPackage.LAYER__MAP:
-            return basicSetMap(null, msgs);
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             return basicSetContextModel(null, msgs);
         case ProjectPackage.LAYER__STYLE_BLACKBOARD:
@@ -1725,6 +1758,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__INTERACTION_MAP:
             return ((InternalEList< ? >) ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap())
                     .eMap()).basicRemove(otherEnd, msgs);
+        case ProjectPackage.LAYER__MAP:
+            return basicSetMap(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -1736,9 +1771,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
     @Override
     public NotificationChain eBasicRemoveFromContainerFeature( NotificationChain msgs ) {
         switch( eContainerFeatureID() ) {
-        case ProjectPackage.LAYER__MAP:
-            return eInternalContainer().eInverseRemove(this, ProjectPackage.MAP__LEGEND, Map.class,
-                    msgs);
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             return eInternalContainer().eInverseRemove(this, ProjectPackage.CONTEXT_MODEL__LAYERS,
                     ContextModel.class, msgs);
@@ -1759,8 +1791,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return getIcon();
         case ProjectPackage.LAYER__NAME:
             return getName();
-        case ProjectPackage.LAYER__MAP:
-            return getMap();
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             return getContextModel();
         case ProjectPackage.LAYER__FILTER:
@@ -1800,6 +1830,10 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 return ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap()).eMap();
             else
                 return getInteractionMap();
+        case ProjectPackage.LAYER__MAP:
+            if (resolve)
+                return getMap();
+            return basicGetMap();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -1820,9 +1854,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return;
         case ProjectPackage.LAYER__NAME:
             setName((String) newValue);
-            return;
-        case ProjectPackage.LAYER__MAP:
-            setMap((Map) newValue);
             return;
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             setContextModel((ContextModel) newValue);
@@ -1874,6 +1905,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
             ((EStructuralFeature.Setting) ((EMap.InternalMapView<Interaction, Boolean>) getInteractionMap())
                     .eMap()).set(newValue);
             return;
+        case ProjectPackage.LAYER__MAP:
+            setMap((Map) newValue);
+            return;
         }
         super.eSet(featureID, newValue);
     }
@@ -1893,9 +1927,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return;
         case ProjectPackage.LAYER__NAME:
             setName(NAME_EDEFAULT);
-            return;
-        case ProjectPackage.LAYER__MAP:
-            setMap((Map) null);
             return;
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             setContextModel((ContextModel) null);
@@ -1945,6 +1976,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__INTERACTION_MAP:
             getInteractionMap().clear();
             return;
+        case ProjectPackage.LAYER__MAP:
+            setMap((Map) null);
+            return;
         }
         super.eUnset(featureID);
     }
@@ -1962,8 +1996,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return ICON_EDEFAULT == null ? icon != null : !ICON_EDEFAULT.equals(icon);
         case ProjectPackage.LAYER__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-        case ProjectPackage.LAYER__MAP:
-            return getMap() != null;
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             return getContextModel() != null;
         case ProjectPackage.LAYER__FILTER:
@@ -2004,6 +2036,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return maxScaleDenominator != MAX_SCALE_DENOMINATOR_EDEFAULT;
         case ProjectPackage.LAYER__INTERACTION_MAP:
             return interactionMap != null && !interactionMap.isEmpty();
+        case ProjectPackage.LAYER__MAP:
+            return map != null;
         }
         return super.eIsSet(featureID);
     }
@@ -2047,8 +2081,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 return ProjectPackage.LEGEND_ITEM__ICON;
             case ProjectPackage.LAYER__NAME:
                 return ProjectPackage.LEGEND_ITEM__NAME;
-            case ProjectPackage.LAYER__MAP:
-                return ProjectPackage.LEGEND_ITEM__MAP;
             default:
                 return -1;
             }
@@ -2095,8 +2127,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 return ProjectPackage.LAYER__ICON;
             case ProjectPackage.LEGEND_ITEM__NAME:
                 return ProjectPackage.LAYER__NAME;
-            case ProjectPackage.LEGEND_ITEM__MAP:
-                return ProjectPackage.LAYER__MAP;
             default:
                 return -1;
             }
@@ -2113,7 +2143,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     private CoordinateReferenceSystem getCRSInternal( IProgressMonitor monitor ) {
         try {
             CoordinateReferenceSystem crs = getGeoResource().getInfo(monitor).getCRS();
-            if (crs != null) return crs;
+            if (crs != null)
+                return crs;
         } catch (Exception e) {
             ProjectPlugin.log(null, e);
         }
@@ -2132,8 +2163,10 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     public void refresh( Envelope bounds ) {
-        if (!isVisible()) return;
-        if (getMap() == null || getMap().getRenderManager() == null) return;
+        if (!isVisible())
+            return;
+        if (getMap() == null || getMap().getRenderManager() == null)
+            return;
         Envelope transformedbounds = bounds;
         if (bounds != null) {
             try {
@@ -2213,7 +2246,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
             try {
                 IGeoResourceInfo info = resource.getInfo(monitor);
                 Envelope tmp = null;
-                if (info != null) tmp = info.getBounds();
+                if (info != null)
+                    tmp = info.getBounds();
 
                 if (tmp instanceof ReferencedEnvelope
                         && ((ReferencedEnvelope) tmp).getCoordinateReferenceSystem() != null) {
@@ -2244,7 +2278,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
         FilterFactory2 factory = (FilterFactory2) CommonFactoryFinder.getFilterFactory(GeoTools
                 .getDefaultHints());
         Filter bboxFilter = null;
-        if (!hasResource(FeatureSource.class)) return Filter.EXCLUDE;
+        if (!hasResource(FeatureSource.class))
+            return Filter.EXCLUDE;
         try {
 
             Envelope bbox;
@@ -2269,7 +2304,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
      */
     public net.refractions.udig.project.internal.Map getMapInternal() {
         ContextModel context = getContextModel();
-        if (context == null) return null;
+        if (context == null)
+            return null;
         return context.getMap();
     }
 
@@ -2285,8 +2321,26 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- end-user-doc -->
      * @generated
      */
+    public Map basicGetMap() {
+        return map;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public NotificationChain basicSetMap( Map newMap, NotificationChain msgs ) {
-        msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.LAYER__MAP, msgs);
+        Map oldMap = map;
+        map = newMap;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+                    ProjectPackage.LAYER__MAP, oldMap, newMap);
+            if (msgs == null)
+                msgs = notification;
+            else
+                msgs.add(notification);
+        }
         return msgs;
     }
 
@@ -2296,18 +2350,17 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @generated
      */
     public void setMap( Map newMap ) {
-        if (newMap != eInternalContainer()
-                || (eContainerFeatureID() != ProjectPackage.LAYER__MAP && newMap != null)) {
-            if (EcoreUtil.isAncestor(this, newMap))
-                throw new IllegalArgumentException(
-                        "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
+        if (newMap != map) {
             NotificationChain msgs = null;
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            if (map != null)
+                msgs = ((InternalEObject) map).eInverseRemove(this, ProjectPackage.MAP__LAYERS,
+                        Map.class, msgs);
             if (newMap != null)
-                msgs = ((InternalEObject) newMap).eInverseAdd(this, ProjectPackage.MAP__LEGEND,
+                msgs = ((InternalEObject) newMap).eInverseAdd(this, ProjectPackage.MAP__LAYERS,
                         Map.class, msgs);
             msgs = basicSetMap(newMap, msgs);
-            if (msgs != null) msgs.dispatch();
+            if (msgs != null)
+                msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__MAP,
                     newMap, newMap));
@@ -2353,8 +2406,10 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @uml.property name="statusMessage"
      */
     public String getStatusMessage() {
-        if (geoResources == NULL || status == ILayer.ERROR) return statusMessage;
-        if (isUnknownCRS()) return Messages.LayerImpl_unkownCRS;
+        if (geoResources == NULL || status == ILayer.ERROR)
+            return statusMessage;
+        if (isUnknownCRS())
+            return Messages.LayerImpl_unkownCRS;
         return statusMessage;
     }
 
@@ -2374,7 +2429,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     void resetConnection( IResolveDelta delta ) {
-        if (PlatformUI.getWorkbench().isClosing() || getMap() == null) return;
+        if (PlatformUI.getWorkbench().isClosing() || getMap() == null)
+            return;
 
         warned = false;
         if (delta.getKind() == Kind.CHANGED) {
@@ -2398,7 +2454,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 }
             }
             // no change
-            if (delta.getNewValue().equals(delta.getOldValue())) return;
+            if (delta.getNewValue().equals(delta.getOldValue()))
+                return;
 
             if (delta.getNewValue() instanceof Envelope) {
 
@@ -2451,7 +2508,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return;
         }
 
-        if (geoResources == null) return;
+        if (geoResources == null)
+            return;
 
         if (gettingResources.get()) {
             return;
@@ -2469,7 +2527,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
             ID affected = hit.getID();
             ID id = getResourceID();
-            if (id == null) return;
+            if (id == null)
+                return;
 
             List<IGeoResource> resources = geoResources;
             for( IGeoResource resource : resources ) {
@@ -2489,14 +2548,17 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     public static int doComparison( ILayer layer, ILayer layer2 ) {
-        if (layer2 == null) return 1;
+        if (layer2 == null)
+            return 1;
 
-        if (layer2 == layer) return 0;
+        if (layer2 == layer)
+            return 0;
 
         int i1 = layer.getZorder();
         int i2 = layer2.getZorder();
 
-        if (i1 == i2) return 0;
+        if (i1 == i2)
+            return 0;
         return i1 < i2 ? -1 : 1;
     }
 

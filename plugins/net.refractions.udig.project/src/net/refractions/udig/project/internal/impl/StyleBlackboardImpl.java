@@ -115,7 +115,8 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      */
     public Object get( String styleId ) {
         StyleEntry entry = getEntry(styleId);
-        if (entry == null) return null;
+        if (entry == null)
+            return null;
         return getObject(entry);
     }
 
@@ -180,7 +181,8 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
             contentLock.unlock();
         }
 
-        if (entry == null) return null;
+        if (entry == null)
+            return null;
         return getObject(entry);
     }
 
@@ -332,7 +334,8 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
          * .IExtension, org.eclipse.core.runtime.IConfigurationElement)
          */
         public void process( IExtension extension, IConfigurationElement element ) throws Exception {
-            if (found) return;
+            if (found)
+                return;
 
             StyleContent styleContent = (StyleContent) element.createExecutableExtension("class"); //$NON-NLS-1$
             style = styleContent.load(url, monitor);
@@ -617,7 +620,8 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     public boolean isSelected( String styleId ) {
         StyleEntry entry = getEntry(styleId);
 
-        if (entry != null && entry.isSelected()) return true;
+        if (entry != null && entry.isSelected())
+            return true;
         return false;
     }
 

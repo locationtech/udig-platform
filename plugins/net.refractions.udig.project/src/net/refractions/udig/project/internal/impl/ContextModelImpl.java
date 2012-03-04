@@ -83,7 +83,8 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * @generated
      */
     public Map getMap() {
-        if (eContainerFeatureID() != ProjectPackage.CONTEXT_MODEL__MAP) return null;
+        if (eContainerFeatureID() != ProjectPackage.CONTEXT_MODEL__MAP)
+            return null;
         return (Map) eContainer();
     }
 
@@ -108,12 +109,14 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
                 throw new IllegalArgumentException(
                         "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
             NotificationChain msgs = null;
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
             if (newMap != null)
                 msgs = ((InternalEObject) newMap).eInverseAdd(this,
                         ProjectPackage.MAP__CONTEXT_MODEL, Map.class, msgs);
             msgs = basicSetMap(newMap, msgs);
-            if (msgs != null) msgs.dispatch();
+            if (msgs != null)
+                msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.CONTEXT_MODEL__MAP, newMap, newMap));
@@ -133,7 +136,8 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
             return ((InternalEList<InternalEObject>) (InternalEList< ? >) getLayers()).basicAdd(
                     otherEnd, msgs);
         case ProjectPackage.CONTEXT_MODEL__MAP:
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
             return basicSetMap((Map) otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);

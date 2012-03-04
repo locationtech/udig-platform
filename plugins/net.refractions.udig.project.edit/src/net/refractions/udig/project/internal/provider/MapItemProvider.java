@@ -514,14 +514,16 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
 
     @Override
     protected Collection< ? extends Object> getConcreteChildren( Object object ) {
-        if (object instanceof Map) return ((Map) object).getMapLayers();
+        if (object instanceof Map)
+            return ((Map) object).getMapLayers();
         throw new IllegalArgumentException("Object must be a Map.  Was: " + object); //$NON-NLS-1$
     }
 
     @Override
     public Object getChild( Object object, int childIndex ) {
         Map map = (Map) object;
-        if (childIndex >= map.getMapLayers().size()) return null;
+        if (childIndex >= map.getMapLayers().size())
+            return null;
         return map.getMapLayers().get(childIndex);
     }
 
@@ -544,7 +546,8 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
             if (resource != null) {
                 String toString = resource.toString();
                 int lastSlash = toString.lastIndexOf(File.pathSeparator);
-                if (lastSlash == -1) lastSlash = 0;
+                if (lastSlash == -1)
+                    lastSlash = 0;
                 label = toString.substring(lastSlash);
             }
         }
@@ -563,7 +566,8 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
                 || (notification.getNewValue() != null && notification.getNewValue().equals(
                         notification.getOldValue()))
                 || (notification.getOldValue() != null && notification.getOldValue().equals(
-                        notification.getNewValue()))) return;
+                        notification.getNewValue())))
+            return;
 
         switch( notification.getFeatureID(Map.class) ) {
         case ProjectPackage.MAP__NAME:

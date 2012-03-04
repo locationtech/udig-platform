@@ -17,17 +17,13 @@
 package net.refractions.udig.project.internal.impl;
 
 import net.refractions.udig.project.internal.LegendItem;
-import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 /**
@@ -40,7 +36,6 @@ import org.eclipse.jface.resource.ImageDescriptor;
  *   <li>{@link net.refractions.udig.project.internal.impl.LegendItemImpl#isShown <em>Shown</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.impl.LegendItemImpl#getIcon <em>Icon</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.impl.LegendItemImpl#getName <em>Name</em>}</li>
- *   <li>{@link net.refractions.udig.project.internal.impl.LegendItemImpl#getMap <em>Map</em>}</li>
  * </ul>
  * </p>
  *
@@ -149,95 +144,6 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Map getMap() {
-        if (eContainerFeatureID() != ProjectPackage.LEGEND_ITEM__MAP) return null;
-        return (Map) eContainer();
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetMap( Map newMap, NotificationChain msgs ) {
-        msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.LEGEND_ITEM__MAP, msgs);
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setMap( Map newMap ) {
-        if (newMap != eInternalContainer()
-                || (eContainerFeatureID() != ProjectPackage.LEGEND_ITEM__MAP && newMap != null)) {
-            if (EcoreUtil.isAncestor(this, newMap))
-                throw new IllegalArgumentException(
-                        "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
-            NotificationChain msgs = null;
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
-            if (newMap != null)
-                msgs = ((InternalEObject) newMap).eInverseAdd(this, ProjectPackage.MAP__LEGEND,
-                        Map.class, msgs);
-            msgs = basicSetMap(newMap, msgs);
-            if (msgs != null) msgs.dispatch();
-        } else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LEGEND_ITEM__MAP,
-                    newMap, newMap));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
-        case ProjectPackage.LEGEND_ITEM__MAP:
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
-            return basicSetMap((Map) otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
-        case ProjectPackage.LEGEND_ITEM__MAP:
-            return basicSetMap(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eBasicRemoveFromContainerFeature( NotificationChain msgs ) {
-        switch( eContainerFeatureID() ) {
-        case ProjectPackage.LEGEND_ITEM__MAP:
-            return eInternalContainer().eInverseRemove(this, ProjectPackage.MAP__LEGEND, Map.class,
-                    msgs);
-        }
-        return super.eBasicRemoveFromContainerFeature(msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public ImageDescriptor getIcon() {
         return icon;
     }
@@ -291,8 +197,6 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
             return getIcon();
         case ProjectPackage.LEGEND_ITEM__NAME:
             return getName();
-        case ProjectPackage.LEGEND_ITEM__MAP:
-            return getMap();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -313,9 +217,6 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
             return;
         case ProjectPackage.LEGEND_ITEM__NAME:
             setName((String) newValue);
-            return;
-        case ProjectPackage.LEGEND_ITEM__MAP:
-            setMap((Map) newValue);
             return;
         }
         super.eSet(featureID, newValue);
@@ -338,9 +239,6 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
         case ProjectPackage.LEGEND_ITEM__NAME:
             setName(NAME_EDEFAULT);
             return;
-        case ProjectPackage.LEGEND_ITEM__MAP:
-            setMap((Map) null);
-            return;
         }
         super.eUnset(featureID);
     }
@@ -359,8 +257,6 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
             return ICON_EDEFAULT == null ? icon != null : !ICON_EDEFAULT.equals(icon);
         case ProjectPackage.LEGEND_ITEM__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-        case ProjectPackage.LEGEND_ITEM__MAP:
-            return getMap() != null;
         }
         return super.eIsSet(featureID);
     }
@@ -372,7 +268,8 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (shown: "); //$NON-NLS-1$

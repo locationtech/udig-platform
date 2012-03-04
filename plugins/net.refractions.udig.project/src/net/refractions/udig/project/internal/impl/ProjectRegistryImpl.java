@@ -102,7 +102,8 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
         }
 
         for( Iterator<Project> iter = projects.iterator(); iter.hasNext(); ) {
-            if (iter.next().eResource() == null) iter.remove();
+            if (iter.next().eResource() == null)
+                iter.remove();
         }
         return projects;
     }
@@ -124,8 +125,10 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      */
     public Project getCurrentProject() {
         Project p = getCurrentProjectGen();
-        if (p == null && getProjects().size() > 0) p = getProjects().get(0);
-        if (p == null) p = getDefaultProject();
+        if (p == null && getProjects().size() > 0)
+            p = getProjects().get(0);
+        if (p == null)
+            p = getDefaultProject();
         return p;
     }
 
@@ -273,13 +276,15 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     private Project findProject( URI uri ) {
         List<Project> projects = getProjects();
         for( Project project : projects ) {
-            if (isURIEqual(project.eResource().getURI(), uri)) return project;
+            if (isURIEqual(project.eResource().getURI(), uri))
+                return project;
         }
         return null;
     }
 
     public static boolean isURIEqual( URI uri, URI uri2 ) {
-        if (uri.equals(uri2)) return true;
+        if (uri.equals(uri2))
+            return true;
 
         String uriString = uri.toString();
         String uri2String = uri2.toString();
@@ -351,7 +356,8 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     public Object eGet( int featureID, boolean resolve, boolean coreType ) {
         switch( featureID ) {
         case ProjectPackage.PROJECT_REGISTRY__CURRENT_PROJECT:
-            if (resolve) return getCurrentProject();
+            if (resolve)
+                return getCurrentProject();
             return basicGetCurrentProject();
         case ProjectPackage.PROJECT_REGISTRY__PROJECTS:
             return getProjects();
@@ -551,7 +557,8 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
             }
             if (projectRegistry.eResource() == null
                     || projectRegistry.eResource().getResourceSet() != resourceSet
-                    || resourceSet == null) throw new AssertionError();
+                    || resourceSet == null)
+                throw new AssertionError();
         }
         return projectRegistry;
     }

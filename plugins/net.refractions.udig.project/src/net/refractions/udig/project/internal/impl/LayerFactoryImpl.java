@@ -88,7 +88,8 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
      * @generated
      */
     public Map getMap() {
-        if (eContainerFeatureID() != ProjectPackage.LAYER_FACTORY__MAP) return null;
+        if (eContainerFeatureID() != ProjectPackage.LAYER_FACTORY__MAP)
+            return null;
         return (Map) eContainer();
     }
 
@@ -113,12 +114,14 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
                 throw new IllegalArgumentException(
                         "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
             NotificationChain msgs = null;
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
             if (newMap != null)
                 msgs = ((InternalEObject) newMap).eInverseAdd(this,
                         ProjectPackage.MAP__LAYER_FACTORY, Map.class, msgs);
             msgs = basicSetMap(newMap, msgs);
-            if (msgs != null) msgs.dispatch();
+            if (msgs != null)
+                msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.LAYER_FACTORY__MAP, newMap, newMap));
@@ -134,7 +137,8 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
             NotificationChain msgs ) {
         switch( featureID ) {
         case ProjectPackage.LAYER_FACTORY__MAP:
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
             return basicSetMap((Map) otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -247,7 +251,8 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
                 IGeoResource entry = (IGeoResource) obj;
                 Layer ref = createLayer(entry);
 
-                if (ref != null) layers.add(ref);
+                if (ref != null)
+                    layers.add(ref);
             }
         }
         return layers;
@@ -263,7 +268,8 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
 
             ref = createLayer(entry);
 
-            if (ref != null) layers.add(ref);
+            if (ref != null)
+                layers.add(ref);
         }
         return layers;
     }

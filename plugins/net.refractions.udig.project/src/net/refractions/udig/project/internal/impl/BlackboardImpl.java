@@ -207,7 +207,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         if (!initialized) {
             initialize();
         }
-        if (key == null) return null;
+        if (key == null)
+            return null;
 
         // look up the entry
         BlackboardEntry entry = blackboard.get(key);
@@ -271,7 +272,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     }
 
     public Object remove( String key ) {
-        if (key == null) return null;
+        if (key == null)
+            return null;
 
         // look up the entry
         BlackboardEntry entry = blackboard.remove(key);
@@ -453,7 +455,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
         // search for provider matching key
         for( IProvider<Object> provider : providers ) {
-            if (provider.getKey() != null && provider.getKey().equals(key)) return provider;
+            if (provider.getKey() != null && provider.getKey().equals(key))
+                return provider;
         }
 
         return null;

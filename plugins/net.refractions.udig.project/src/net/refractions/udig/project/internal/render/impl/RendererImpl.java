@@ -115,7 +115,8 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
     public String getName() {
         if (name == null) {
             ILayer layer = getContext().getLayer();
-            if (layer == null) return ""; //$NON-NLS-1$
+            if (layer == null)
+                return ""; //$NON-NLS-1$
             if (layer instanceof SelectionLayer)
                 return MessageFormat.format(Messages.RendererImpl_selectionFor,
                         new Object[]{layer.getName()});
@@ -281,7 +282,8 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
      */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (state: "); //$NON-NLS-1$

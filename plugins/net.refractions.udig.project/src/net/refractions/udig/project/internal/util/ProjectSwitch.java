@@ -97,113 +97,149 @@ public class ProjectSwitch<T> extends Switch<T> {
         case ProjectPackage.CONTEXT_MODEL: {
             ContextModel contextModel = (ContextModel) theEObject;
             T result = caseContextModel(contextModel);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case ProjectPackage.EDIT_MANAGER: {
             EditManager editManager = (EditManager) theEObject;
             T result = caseEditManager(editManager);
-            if (result == null) result = caseIEditManager(editManager);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = caseIEditManager(editManager);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case ProjectPackage.LAYER: {
             Layer layer = (Layer) theEObject;
             T result = caseLayer(layer);
-            if (result == null) result = caseILayer(layer);
-            if (result == null) result = caseIAdaptable(layer);
-            if (result == null) result = caseIBlockingAdaptable(layer);
-            if (result == null) result = caseIResolveChangeListener(layer);
-            if (result == null) result = caseLegendItem(layer);
-            if (result == null) result = caseILegendItem(layer);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = caseILayer(layer);
+            if (result == null)
+                result = caseIAdaptable(layer);
+            if (result == null)
+                result = caseIBlockingAdaptable(layer);
+            if (result == null)
+                result = caseIResolveChangeListener(layer);
+            if (result == null)
+                result = caseLegendItem(layer);
+            if (result == null)
+                result = caseILegendItem(layer);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case ProjectPackage.MAP: {
             Map map = (Map) theEObject;
             T result = caseMap(map);
-            if (result == null) result = caseProjectElement(map);
-            if (result == null) result = caseIMap(map);
-            if (result == null) result = caseIProjectElement(map);
-            if (result == null) result = caseIAdaptable(map);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = caseProjectElement(map);
+            if (result == null)
+                result = caseIMap(map);
+            if (result == null)
+                result = caseIProjectElement(map);
+            if (result == null)
+                result = caseIAdaptable(map);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case ProjectPackage.PROJECT: {
             Project project = (Project) theEObject;
             T result = caseProject(project);
-            if (result == null) result = caseIProject(project);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = caseIProject(project);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case ProjectPackage.PROJECT_ELEMENT: {
             ProjectElement projectElement = (ProjectElement) theEObject;
             T result = caseProjectElement(projectElement);
-            if (result == null) result = caseIProjectElement(projectElement);
-            if (result == null) result = caseIAdaptable(projectElement);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = caseIProjectElement(projectElement);
+            if (result == null)
+                result = caseIAdaptable(projectElement);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case ProjectPackage.PROJECT_REGISTRY: {
             ProjectRegistry projectRegistry = (ProjectRegistry) theEObject;
             T result = caseProjectRegistry(projectRegistry);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case ProjectPackage.STYLE_BLACKBOARD: {
             StyleBlackboard styleBlackboard = (StyleBlackboard) theEObject;
             T result = caseStyleBlackboard(styleBlackboard);
-            if (result == null) result = caseIStyleBlackboard(styleBlackboard);
-            if (result == null) result = caseCloneable(styleBlackboard);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = caseIStyleBlackboard(styleBlackboard);
+            if (result == null)
+                result = caseCloneable(styleBlackboard);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case ProjectPackage.STYLE_ENTRY: {
             StyleEntry styleEntry = (StyleEntry) theEObject;
             T result = caseStyleEntry(styleEntry);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case ProjectPackage.LAYER_FACTORY: {
             LayerFactory layerFactory = (LayerFactory) theEObject;
             T result = caseLayerFactory(layerFactory);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case ProjectPackage.BLACKBOARD: {
             Blackboard blackboard = (Blackboard) theEObject;
             T result = caseBlackboard(blackboard);
-            if (result == null) result = caseIBlackboard(blackboard);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = caseIBlackboard(blackboard);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case ProjectPackage.BLACKBOARD_ENTRY: {
             BlackboardEntry blackboardEntry = (BlackboardEntry) theEObject;
             T result = caseBlackboardEntry(blackboardEntry);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case ProjectPackage.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY: {
             @SuppressWarnings("unchecked")
             java.util.Map.Entry<Interaction, Boolean> interactionToEBooleanObjectMapEntry = (java.util.Map.Entry<Interaction, Boolean>) theEObject;
             T result = caseInteractionToEBooleanObjectMapEntry(interactionToEBooleanObjectMapEntry);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case ProjectPackage.FOLDER: {
             Folder folder = (Folder) theEObject;
             T result = caseFolder(folder);
-            if (result == null) result = caseIFolder(folder);
-            if (result == null) result = caseLegendItem(folder);
-            if (result == null) result = caseILegendItem(folder);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = caseIFolder(folder);
+            if (result == null)
+                result = caseLegendItem(folder);
+            if (result == null)
+                result = caseILegendItem(folder);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         case ProjectPackage.LEGEND_ITEM: {
             LegendItem legendItem = (LegendItem) theEObject;
             T result = caseLegendItem(legendItem);
-            if (result == null) result = caseILegendItem(legendItem);
-            if (result == null) result = defaultCase(theEObject);
+            if (result == null)
+                result = caseILegendItem(legendItem);
+            if (result == null)
+                result = defaultCase(theEObject);
             return result;
         }
         default:

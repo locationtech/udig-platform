@@ -271,7 +271,8 @@ public class BlackboardEntryImpl extends EObjectImpl implements BlackboardEntry 
      */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (memento: "); //$NON-NLS-1$
