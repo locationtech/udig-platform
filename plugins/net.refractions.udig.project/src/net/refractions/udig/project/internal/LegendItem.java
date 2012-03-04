@@ -32,6 +32,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
  *   <li>{@link net.refractions.udig.project.internal.LegendItem#isShown <em>Shown</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.LegendItem#getIcon <em>Icon</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.LegendItem#getName <em>Name</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.LegendItem#getMap <em>Map</em>}</li>
  * </ul>
  * </p>
  *
@@ -66,6 +67,32 @@ public interface LegendItem extends EObject, ILegendItem {
      * @generated
      */
     void setName( String value );
+
+    /**
+     * Returns the value of the '<em><b>Map</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Map</em>' container reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Map</em>' reference.
+     * @see #setMap(Map)
+     * @see net.refractions.udig.project.internal.ProjectPackage#getLegendItem_Map()
+     * @model
+     * @generated
+     */
+    Map getMap();
+
+    /**
+     * Sets the value of the '{@link net.refractions.udig.project.internal.LegendItem#getMap <em>Map</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Map</em>' reference.
+     * @see #getMap()
+     * @generated
+     */
+    void setMap( Map value );
 
     /**
      * Returns the value of the '<em><b>Icon</b></em>' attribute.

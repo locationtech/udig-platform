@@ -886,15 +886,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getLayer_Map() {
-        return (EReference) layerEClass.getEStructuralFeatures().get(18);
-    }
-
-    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -1328,6 +1319,15 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getLegendItem_Map() {
+        return (EReference) legendItemEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EAttribute getLegendItem_Shown() {
         return (EAttribute) legendItemEClass.getEStructuralFeatures().get(0);
     }
@@ -1696,7 +1696,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         createEAttribute(layerEClass, LAYER__MIN_SCALE_DENOMINATOR);
         createEAttribute(layerEClass, LAYER__MAX_SCALE_DENOMINATOR);
         createEReference(layerEClass, LAYER__INTERACTION_MAP);
-        createEReference(layerEClass, LAYER__MAP);
 
         mapEClass = createEClass(MAP);
         createEReference(mapEClass, MAP__CONTEXT_MODEL);
@@ -1771,6 +1770,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         createEAttribute(legendItemEClass, LEGEND_ITEM__SHOWN);
         createEAttribute(legendItemEClass, LEGEND_ITEM__ICON);
         createEAttribute(legendItemEClass, LEGEND_ITEM__NAME);
+        createEReference(legendItemEClass, LEGEND_ITEM__MAP);
 
         iLegendItemEClass = createEClass(ILEGEND_ITEM);
 
@@ -2029,11 +2029,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 this.getInteractionToEBooleanObjectMapEntry(),
                 null,
                 "interactionMap", null, 0, -1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEReference(
-                getLayer_Map(),
-                this.getMap(),
-                this.getMap_Layers(),
-                "map", null, 0, 1, Layer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         op = addEOperation(layerEClass, this.getQuery(), "getQuery", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEBoolean(), "selection", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -2102,7 +2097,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         initEReference(
                 getMap_Layers(),
                 this.getLayer(),
-                this.getLayer_Map(),
+                null,
                 "layers", null, 0, -1, Map.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         op = addEOperation(mapEClass, this.getReferencedEnvelope(),
@@ -2312,6 +2307,11 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 getLegendItem_Name(),
                 ecorePackage.getEString(),
                 "name", null, 0, 1, LegendItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEReference(
+                getLegendItem_Map(),
+                this.getMap(),
+                null,
+                "map", null, 0, 1, LegendItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         initEClass(iLegendItemEClass, ILegendItem.class,
                 "ILegendItem", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

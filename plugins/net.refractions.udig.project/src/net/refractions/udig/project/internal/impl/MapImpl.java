@@ -184,8 +184,9 @@ public class MapImpl extends EObjectImpl implements Map {
     protected volatile String abstract_ = ABSTRACT_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getNavCommandStack() <em>Nav Command Stack</em>}' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The default value of the '{@link #getNavCommandStack() <em>Nav Command Stack</em>}'
+     * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see #getNavCommandStack()
      * @generated
      * @ordered
@@ -299,6 +300,7 @@ public class MapImpl extends EObjectImpl implements Map {
     /**
      * The cached value of the '{@link #getLegend() <em>Legend</em>}' containment reference list.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see #getLegend()
      * @generated
      * @ordered
@@ -374,6 +376,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
@@ -404,6 +407,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public Project getProjectInternalGen() {
@@ -422,6 +426,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public Project basicGetProjectInternal() {
@@ -430,6 +435,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public NotificationChain basicSetProjectInternal( Project newProjectInternal,
@@ -492,6 +498,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @SuppressWarnings("deprecation")
@@ -559,6 +566,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public NotificationChain basicSetViewportModelInternal( ViewportModel newViewportModelInternal,
@@ -593,6 +601,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public void setViewportModelInternalGen( ViewportModel newViewportModelInternal ) {
@@ -630,6 +639,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public void setColorPalette( BrewerPalette newColorPalette ) {
@@ -642,6 +652,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public String getAbstract() {
@@ -650,6 +661,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public void setAbstract( String newAbstract ) {
@@ -662,6 +674,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public String getName() {
@@ -670,6 +683,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public void setName( String newName ) {
@@ -836,6 +850,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public NotificationChain basicSetLayerFactory( LayerFactory newLayerFactory,
@@ -855,6 +870,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public void setLayerFactory( LayerFactory newLayerFactory ) {
@@ -1052,6 +1068,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -1091,15 +1108,13 @@ public class MapImpl extends EObjectImpl implements Map {
                 msgs = ((InternalEObject) renderManagerInternal).eInverseRemove(this,
                         RenderPackage.RENDER_MANAGER__MAP_INTERNAL, RenderManager.class, msgs);
             return basicSetRenderManagerInternal((RenderManager) otherEnd, msgs);
-        case ProjectPackage.MAP__LAYERS:
-            return ((InternalEList<InternalEObject>) (InternalEList< ? >) getLayers()).basicAdd(
-                    otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
@@ -1122,14 +1137,13 @@ public class MapImpl extends EObjectImpl implements Map {
             return basicSetBlackBoardInternal(null, msgs);
         case ProjectPackage.MAP__LEGEND:
             return ((InternalEList< ? >) getLegend()).basicRemove(otherEnd, msgs);
-        case ProjectPackage.MAP__LAYERS:
-            return ((InternalEList< ? >) getLayers()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
@@ -1173,6 +1187,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -1226,6 +1241,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
@@ -1276,6 +1292,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
@@ -1337,6 +1354,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public NotificationChain basicSetEditManagerInternal( EditManager newEditManagerInternal,
@@ -1357,6 +1375,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public void setEditManagerInternal( EditManager newEditManagerInternal ) {
@@ -1378,6 +1397,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public RenderManager getRenderManagerInternal() {
@@ -1396,6 +1416,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public RenderManager basicGetRenderManagerInternal() {
@@ -1404,6 +1425,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public NotificationChain basicSetRenderManagerInternal( RenderManager newRenderManagerInternal,
@@ -1424,6 +1446,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public void setRenderManagerInternalGen( RenderManager newRenderManagerInternal ) {
@@ -1482,6 +1505,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public ColourScheme getColourScheme() {
@@ -1490,6 +1514,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public void setColourScheme( ColourScheme newColourScheme ) {
@@ -1510,6 +1535,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public Blackboard getBlackBoardInternal() {
@@ -1518,6 +1544,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public NotificationChain basicSetBlackBoardInternal( Blackboard newBlackBoardInternal,
@@ -1538,6 +1565,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public void setBlackBoardInternal( Blackboard newBlackBoardInternal ) {
@@ -1561,74 +1589,32 @@ public class MapImpl extends EObjectImpl implements Map {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated not
+     * 
+     * @generated
      */
     public List<LegendItem> getLegend() {
         if (legend == null) {
             legend = new EObjectContainmentEList<LegendItem>(LegendItem.class, this,
-                    ProjectPackage.MAP__LEGEND){
-                private static final long serialVersionUID = -6875550278640296364L;
-                @Override
-                protected void didAdd( int index, LegendItem legendItem ) {
-                    if (legendItem instanceof Layer) {
-                        Layer layer = (Layer) legendItem;
-                        List<Layer> layers = getLayers();
-                        if (!layers.contains(layer)) {
-                            layers.add(layer);
-                        }
-                    }
-                    super.didAdd(index, legendItem);
-                }
-                protected void didRemove( int index, LegendItem legendItem ) {
-                    if (legendItem instanceof Layer) {
-                        Layer layer = (Layer) legendItem;
-                        List<Layer> layers = getLayers();
-                        if (layers.contains(layer)) {
-                            layers.remove(layer);
-                        }
-                    }
-                    super.didRemove(index, legendItem);
-                }
-            };
+                    ProjectPackage.MAP__LEGEND);
         }
         return legend;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated not
+     * 
+     * @generated
      */
     public List<Layer> getLayers() {
         if (layers == null) {
-            // may need to set this in the constructor like context model does for thread safety
-            // We are trying to hook up to the legend item list which 'contains' the layers with respect
-            // to loading and saving.
-            layers = new LayersList2(Layer.class, this, ProjectPackage.MAP__LAYERS, ProjectPackage.LAYER__MAP){
-                private static final long serialVersionUID = 9150730058783499833L;
-                @Override
-                protected void didAdd( int index, Layer layer ) {
-                    List<LegendItem> legend = getLegend();
-                    // consider synchronisation here?
-                    if( !legend.contains(layer)){
-                        legend.add( layer );
-                    }   
-                    super.didAdd(index, layer);
-                }  
-                @Override
-                protected void didRemove( int index, Layer layer ) {
-                    List<LegendItem> legend = getLegend();
-                    if( legend.contains(layer)){
-                        legend.remove( layer );
-                    }
-                    super.didRemove(index, layer);
-                }
-            };
+            layers = new EObjectResolvingEList<Layer>(Layer.class, this, ProjectPackage.MAP__LAYERS);
         }
         return layers;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
@@ -1709,18 +1695,43 @@ public class MapImpl extends EObjectImpl implements Map {
      * @see net.refractions.udig.project.IMap#getMapLayers()
      */
     @SuppressWarnings("unchecked")
-    public List<ILayer> getMapLayers() {
-        List<?> layersInternal = getLayersInternal();
-        return Collections.unmodifiableList((List<ILayer>)layersInternal);
+    public List getMapLayers() {
+        return Collections.unmodifiableList(getLayersInternal());
     }
 
+    @SuppressWarnings("unchecked")
     public List<Layer> getLayersInternal() {
-        // return getContextModel().getLayers(); // replace me!
-        // OPTION 1 - make layers list contain references to the layers contained in legend item list
-        // OPTION 2 - make a read only getLayersInternal - not so good as code expects to modify it
-        //
-        // We have chosen option 1 (using a custom layer and legend item list to keep 'em in sync
-        return getLayers(); // custom list class we can update legend items here
+        if (true) {
+            return getContextModel().getLayers(); // replace me!
+        }
+        if (false) {
+            return getLayers(); // custom list class we can update legend items here
+        } else {
+            List<Layer> layers = new ArrayList<Layer>();
+            copyLayersFromLegendItems(getLegend(), layers);
+
+            // sort by z oder
+            // example layer1 is in position 3 and layer2 is in position 5 so we should return -2
+            Collections.sort(layers, new Comparator<Layer>(){
+                public int compare( Layer layer1, Layer layer2 ) {
+                    return layer1.getZorder() - layer2.getZorder();
+                }
+            });
+            return Collections.unmodifiableList(layers);
+        }
+    }
+    /** Recursive depth-first search of legend item list; returning the layers */
+    private void copyLayersFromLegendItems( List<LegendItem> items, List<Layer> layers ) {
+        for( LegendItem item : items ) {
+            if (item instanceof Layer) {
+                layers.add((Layer) item);
+            } else if (item instanceof Folder) {
+                Folder folder = (Folder) item;
+                copyLayersFromLegendItems(folder.getItems(), layers);
+            } else {
+                // ignore item must be a fish?
+            }
+        }
     }
 
     public void sendCommandSync( MapCommand command ) {

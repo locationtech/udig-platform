@@ -281,7 +281,6 @@ public interface Map extends ProjectElement, IMap {
     /**
      * Returns the value of the '<em><b>Layers</b></em>' reference list.
      * The list contents are of type {@link net.refractions.udig.project.internal.Layer}.
-     * It is bidirectional and its opposite is '{@link net.refractions.udig.project.internal.Layer#getMap <em>Map</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -289,8 +288,7 @@ public interface Map extends ProjectElement, IMap {
      * <!-- end-model-doc -->
      * @return the value of the '<em>Layers</em>' reference list.
      * @see net.refractions.udig.project.internal.ProjectPackage#getMap_Layers()
-     * @see net.refractions.udig.project.internal.Layer#getMap
-     * @model opposite="map"
+     * @model
      * @generated
      */
     List<Layer> getLayers();
