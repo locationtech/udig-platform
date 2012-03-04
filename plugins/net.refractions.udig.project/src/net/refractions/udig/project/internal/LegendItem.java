@@ -29,9 +29,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link net.refractions.udig.project.internal.LegendItem#getName <em>Name</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.LegendItem#isShown <em>Shown</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.LegendItem#getIcon <em>Icon</em>}</li>
- *   <li>{@link net.refractions.udig.project.internal.LegendItem#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *

@@ -59,8 +59,8 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addMementoPropertyDescriptor(object);
             addKeyPropertyDescriptor(object);
+            addMementoPropertyDescriptor(object);
             addObjectClassPropertyDescriptor(object);
             addObjectPropertyDescriptor(object);
         }
@@ -181,8 +181,8 @@ public class BlackboardEntryItemProvider extends ItemProviderAdapter
         updateChildren(notification);
 
         switch( notification.getFeatureID(BlackboardEntry.class) ) {
-        case ProjectPackage.BLACKBOARD_ENTRY__MEMENTO:
         case ProjectPackage.BLACKBOARD_ENTRY__KEY:
+        case ProjectPackage.BLACKBOARD_ENTRY__MEMENTO:
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT_CLASS:
         case ProjectPackage.BLACKBOARD_ENTRY__OBJECT:
             fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),

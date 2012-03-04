@@ -32,18 +32,21 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * The following features are supported:
  * <ul>
  *   <li>{@link net.refractions.udig.project.internal.Folder#getItems <em>Items</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.Folder#getName <em>Name</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.Folder#isShown <em>Shown</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.Folder#getIcon <em>Icon</em>}</li>
  * </ul>
  * </p>
  *
  * @see net.refractions.udig.project.internal.ProjectPackage#getFolder()
- * @model superTypes="net.refractions.udig.project.internal.IFolder net.refractions.udig.project.internal.LegendItem"
+ * @model superTypes="net.refractions.udig.project.internal.IFolder"
  * @generated
  */
-public interface Folder extends IFolder, LegendItem {
+public interface Folder extends EObject, IFolder {
 
     /**
      * Returns the value of the '<em><b>Items</b></em>' containment reference list.
-     * The list contents are of type {@link net.refractions.udig.project.internal.LegendItem}.
+     * The list contents are of type {@link net.refractions.udig.project.ILegendItem}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Items</em>' containment reference list isn't clear,
@@ -52,8 +55,86 @@ public interface Folder extends IFolder, LegendItem {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Items</em>' containment reference list.
      * @see net.refractions.udig.project.internal.ProjectPackage#getFolder_Items()
-     * @model containment="true"
+     * @model type="net.refractions.udig.project.internal.ILegendItem" containment="true"
      * @generated
      */
-    List<LegendItem> getItems();
+    List<ILegendItem> getItems();
+
+    /**
+     * Returns the value of the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Name</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Name</em>' attribute.
+     * @see #setName(String)
+     * @see net.refractions.udig.project.internal.ProjectPackage#getFolder_Name()
+     * @model
+     * @generated
+     */
+    String getName();
+
+    /**
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Folder#getName <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Name</em>' attribute.
+     * @see #getName()
+     * @generated
+     */
+    void setName( String value );
+
+    /**
+     * Returns the value of the '<em><b>Icon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Glyph</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Icon</em>' attribute.
+     * @see #setIcon(ImageDescriptor)
+     * @see net.refractions.udig.project.internal.ProjectPackage#getFolder_Icon()
+     * @model dataType="net.refractions.udig.project.internal.ImageDescriptor"
+     * @generated
+     */
+    ImageDescriptor getIcon();
+
+    /**
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Folder#getIcon <em>Icon</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Icon</em>' attribute.
+     * @see #getIcon()
+     * @generated
+     */
+    void setIcon( ImageDescriptor value );
+
+    /**
+     * Returns the value of the '<em><b>Shown</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Shown</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Shown</em>' attribute.
+     * @see #setShown(boolean)
+     * @see net.refractions.udig.project.internal.ProjectPackage#getFolder_Shown()
+     * @model
+     * @generated
+     */
+    boolean isShown();
+
+    /**
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Folder#isShown <em>Shown</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Shown</em>' attribute.
+     * @see #isShown()
+     * @generated
+     */
+    void setShown( boolean value );
 } // Folder

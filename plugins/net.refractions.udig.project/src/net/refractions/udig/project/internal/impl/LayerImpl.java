@@ -26,8 +26,6 @@ import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolveChangeListener;
-import net.refractions.udig.core.IBlockingAdaptable;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveChangeEvent;
@@ -39,7 +37,6 @@ import net.refractions.udig.catalog.util.SearchIDDeltaVisitor;
 import net.refractions.udig.core.Pair;
 import net.refractions.udig.core.internal.CorePlugin;
 import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.IMap;
@@ -48,7 +45,6 @@ import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.internal.CatalogRef;
 import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.ProjectFactory;
@@ -65,7 +61,6 @@ import net.refractions.udig.ui.ProgressManager;
 import net.refractions.udig.ui.UDIGDisplaySafeLock;
 import net.refractions.udig.ui.palette.ColourScheme;
 
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -130,54 +125,64 @@ import com.vividsolutions.jts.geom.GeometryFactory;
  */
 public class LayerImpl extends EObjectImpl implements Layer {
     /**
-     * The default value of the '{@link #isShown() <em>Shown</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isShown()
-     * @generated
+     * The default value of the '{@link #getFilter() <em>Filter</em>}' attribute.
+     * 
+     * @see #getFilter()
+     * @generated NOT
      * @ordered
      */
-    protected static final boolean SHOWN_EDEFAULT = false;
+    protected static final Filter FILTER_EDEFAULT = Filter.EXCLUDE;
 
     /**
-     * The cached value of the '{@link #isShown() <em>Shown</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isShown()
-     * @generated
+     * The cached value of the '{@link #getFilter() <em>Filter</em>}' attribute. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * 
+     * @see #getFilter()
+     * @generated NOT
      * @ordered
      */
-    protected boolean shown = SHOWN_EDEFAULT;
+    protected volatile Filter filter = FILTER_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getIcon() <em>Icon</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getIcon()
-     * @generated
+     * The cached value of the '{@link #getStyleBlackboard() <em>Style Blackboard</em>}' containment
+     * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see #getStyleBlackboard()
+     * @generated NOT
      * @ordered
      */
-    protected static final ImageDescriptor ICON_EDEFAULT = null;
+    protected volatile StyleBlackboard styleBlackboard = ProjectFactory.eINSTANCE
+            .createStyleBlackboard();
 
     /**
-     * The cached value of the '{@link #getIcon() <em>Icon</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getIcon()
+     * The default value of the '{@link #getZorder() <em>Zorder</em>}' attribute. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see #getZorder()
      * @generated
      * @ordered
      */
-    protected ImageDescriptor icon = ICON_EDEFAULT;
+    protected static final int ZORDER_EDEFAULT = 0;
 
     /**
-     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getName()
+     * The cached value of the '{@link #getZorder() <em>Zorder</em>}' attribute.
+     * <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * @see #getZorder()
      * @generated
      * @ordered
      */
-    protected static final String NAME_EDEFAULT = null;
+    protected int zorder = ZORDER_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getStatus() <em>Status</em>}' attribute. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see #getStatus()
+     * @generated
+     * @ordered
+     */
+    protected static final int STATUS_EDEFAULT = 0;
 
     /**
      * The following adapter registers itself with a contextmodel when one is assigned it also
@@ -406,72 +411,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
     @Override
     protected EClass eStaticClass() {
         return ProjectPackage.Literals.LAYER;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean isShown() {
-        return shown;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setShown( boolean newShown ) {
-        boolean oldShown = shown;
-        shown = newShown;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__SHOWN,
-                    oldShown, shown));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ImageDescriptor getIcon() {
-        return icon;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setIcon( ImageDescriptor newIcon ) {
-        ImageDescriptor oldIcon = icon;
-        icon = newIcon;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__ICON,
-                    oldIcon, icon));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setName( String newName ) {
-        String oldName = name;
-        name = newName;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__NAME,
-                    oldName, name));
     }
 
     /**
@@ -1077,6 +1016,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
         }
     }
 
+    private volatile int status;
+
     /**
      * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1086,68 +1027,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @ordered
      */
     protected volatile String name = NAME_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #getFilter() <em>Filter</em>}' attribute.
-     * 
-     * @see #getFilter()
-     * @generated NOT
-     * @ordered
-     */
-    protected static final Filter FILTER_EDEFAULT = Filter.EXCLUDE;
-
-    /**
-     * The cached value of the '{@link #getFilter() <em>Filter</em>}' attribute. <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
-     * 
-     * @see #getFilter()
-     * @generated NOT
-     * @ordered
-     */
-    protected volatile Filter filter = FILTER_EDEFAULT;
-
-    /**
-     * The cached value of the '{@link #getStyleBlackboard() <em>Style Blackboard</em>}' containment
-     * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #getStyleBlackboard()
-     * @generated NOT
-     * @ordered
-     */
-    protected volatile StyleBlackboard styleBlackboard = ProjectFactory.eINSTANCE
-            .createStyleBlackboard();
-
-    /**
-     * The default value of the '{@link #getZorder() <em>Zorder</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #getZorder()
-     * @generated
-     * @ordered
-     */
-    protected static final int ZORDER_EDEFAULT = 0;
-
-    /**
-     * The cached value of the '{@link #getZorder() <em>Zorder</em>}' attribute.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
-     * @see #getZorder()
-     * @generated
-     * @ordered
-     */
-    protected int zorder = ZORDER_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #getStatus() <em>Status</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see #getStatus()
-     * @generated
-     * @ordered
-     */
-    protected static final int STATUS_EDEFAULT = 0;
-
-    private volatile int status;
 
     /**
      * The default value of the '{@link #getCatalogRef() <em>Catalog Ref</em>}' attribute. <!--
@@ -1786,12 +1665,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
     @Override
     public Object eGet( int featureID, boolean resolve, boolean coreType ) {
         switch( featureID ) {
-        case ProjectPackage.LAYER__SHOWN:
-            return isShown();
-        case ProjectPackage.LAYER__ICON:
-            return getIcon();
-        case ProjectPackage.LAYER__NAME:
-            return getName();
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             return getContextModel();
         case ProjectPackage.LAYER__FILTER:
@@ -1847,15 +1720,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
     @Override
     public void eSet( int featureID, Object newValue ) {
         switch( featureID ) {
-        case ProjectPackage.LAYER__SHOWN:
-            setShown((Boolean) newValue);
-            return;
-        case ProjectPackage.LAYER__ICON:
-            setIcon((ImageDescriptor) newValue);
-            return;
-        case ProjectPackage.LAYER__NAME:
-            setName((String) newValue);
-            return;
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             setContextModel((ContextModel) newValue);
             return;
@@ -1920,15 +1784,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
     @Override
     public void eUnset( int featureID ) {
         switch( featureID ) {
-        case ProjectPackage.LAYER__SHOWN:
-            setShown(SHOWN_EDEFAULT);
-            return;
-        case ProjectPackage.LAYER__ICON:
-            setIcon(ICON_EDEFAULT);
-            return;
-        case ProjectPackage.LAYER__NAME:
-            setName(NAME_EDEFAULT);
-            return;
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             setContextModel((ContextModel) null);
             return;
@@ -1991,12 +1846,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
     @Override
     public boolean eIsSet( int featureID ) {
         switch( featureID ) {
-        case ProjectPackage.LAYER__SHOWN:
-            return shown != SHOWN_EDEFAULT;
-        case ProjectPackage.LAYER__ICON:
-            return ICON_EDEFAULT == null ? icon != null : !ICON_EDEFAULT.equals(icon);
-        case ProjectPackage.LAYER__NAME:
-            return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             return getContextModel() != null;
         case ProjectPackage.LAYER__FILTER:
@@ -2041,98 +1890,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return map != null;
         }
         return super.eIsSet(featureID);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public int eBaseStructuralFeatureID( int derivedFeatureID, Class< ? > baseClass ) {
-        if (baseClass == IAdaptable.class) {
-            switch( derivedFeatureID ) {
-            default:
-                return -1;
-            }
-        }
-        if (baseClass == IBlockingAdaptable.class) {
-            switch( derivedFeatureID ) {
-            default:
-                return -1;
-            }
-        }
-        if (baseClass == IResolveChangeListener.class) {
-            switch( derivedFeatureID ) {
-            default:
-                return -1;
-            }
-        }
-        if (baseClass == ILegendItem.class) {
-            switch( derivedFeatureID ) {
-            default:
-                return -1;
-            }
-        }
-        if (baseClass == LegendItem.class) {
-            switch( derivedFeatureID ) {
-            case ProjectPackage.LAYER__SHOWN:
-                return ProjectPackage.LEGEND_ITEM__SHOWN;
-            case ProjectPackage.LAYER__ICON:
-                return ProjectPackage.LEGEND_ITEM__ICON;
-            case ProjectPackage.LAYER__NAME:
-                return ProjectPackage.LEGEND_ITEM__NAME;
-            default:
-                return -1;
-            }
-        }
-        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public int eDerivedStructuralFeatureID( int baseFeatureID, Class< ? > baseClass ) {
-        if (baseClass == IAdaptable.class) {
-            switch( baseFeatureID ) {
-            default:
-                return -1;
-            }
-        }
-        if (baseClass == IBlockingAdaptable.class) {
-            switch( baseFeatureID ) {
-            default:
-                return -1;
-            }
-        }
-        if (baseClass == IResolveChangeListener.class) {
-            switch( baseFeatureID ) {
-            default:
-                return -1;
-            }
-        }
-        if (baseClass == ILegendItem.class) {
-            switch( baseFeatureID ) {
-            default:
-                return -1;
-            }
-        }
-        if (baseClass == LegendItem.class) {
-            switch( baseFeatureID ) {
-            case ProjectPackage.LEGEND_ITEM__SHOWN:
-                return ProjectPackage.LAYER__SHOWN;
-            case ProjectPackage.LEGEND_ITEM__ICON:
-                return ProjectPackage.LAYER__ICON;
-            case ProjectPackage.LEGEND_ITEM__NAME:
-                return ProjectPackage.LAYER__NAME;
-            default:
-                return -1;
-            }
-        }
-        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
     /**

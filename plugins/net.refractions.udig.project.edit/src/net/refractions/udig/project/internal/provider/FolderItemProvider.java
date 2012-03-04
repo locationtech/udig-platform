@@ -72,9 +72,9 @@ public class FolderItemProvider extends ItemProviderAdapter
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
+            addNamePropertyDescriptor(object);
             addShownPropertyDescriptor(object);
             addIconPropertyDescriptor(object);
-            addNamePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -90,10 +90,10 @@ public class FolderItemProvider extends ItemProviderAdapter
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
                         getResourceLocator(),
-                        getString("_UI_LegendItem_name_feature"), //$NON-NLS-1$
+                        getString("_UI_Folder_name_feature"), //$NON-NLS-1$
                         getString(
-                                "_UI_PropertyDescriptor_description", "_UI_LegendItem_name_feature", "_UI_LegendItem_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LEGEND_ITEM__NAME, true, false, false,
+                                "_UI_PropertyDescriptor_description", "_UI_Folder_name_feature", "_UI_Folder_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        ProjectPackage.Literals.FOLDER__NAME, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
@@ -108,10 +108,10 @@ public class FolderItemProvider extends ItemProviderAdapter
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
                         getResourceLocator(),
-                        getString("_UI_LegendItem_shown_feature"), //$NON-NLS-1$
+                        getString("_UI_Folder_shown_feature"), //$NON-NLS-1$
                         getString(
-                                "_UI_PropertyDescriptor_description", "_UI_LegendItem_shown_feature", "_UI_LegendItem_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LEGEND_ITEM__SHOWN, true, false, false,
+                                "_UI_PropertyDescriptor_description", "_UI_Folder_shown_feature", "_UI_Folder_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        ProjectPackage.Literals.FOLDER__SHOWN, true, false, false,
                         ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
     }
 
@@ -126,10 +126,10 @@ public class FolderItemProvider extends ItemProviderAdapter
                 .add(createItemPropertyDescriptor(
                         ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
                         getResourceLocator(),
-                        getString("_UI_LegendItem_icon_feature"), //$NON-NLS-1$
+                        getString("_UI_Folder_icon_feature"), //$NON-NLS-1$
                         getString(
-                                "_UI_PropertyDescriptor_description", "_UI_LegendItem_icon_feature", "_UI_LegendItem_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.Literals.LEGEND_ITEM__ICON, true, false, false,
+                                "_UI_PropertyDescriptor_description", "_UI_Folder_icon_feature", "_UI_Folder_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        ProjectPackage.Literals.FOLDER__ICON, true, false, false,
                         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
@@ -209,9 +209,9 @@ public class FolderItemProvider extends ItemProviderAdapter
         updateChildren(notification);
 
         switch( notification.getFeatureID(Folder.class) ) {
+        case ProjectPackage.FOLDER__NAME:
         case ProjectPackage.FOLDER__SHOWN:
         case ProjectPackage.FOLDER__ICON:
-        case ProjectPackage.FOLDER__NAME:
             fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
                     false, true));
             return;

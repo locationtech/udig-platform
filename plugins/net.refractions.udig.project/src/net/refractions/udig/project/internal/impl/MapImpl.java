@@ -40,7 +40,6 @@ import net.refractions.udig.project.internal.ContextModelListenerAdapter;
 import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.internal.LegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.Project;
@@ -293,7 +292,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated
      * @ordered
      */
-    protected EList<LegendItem> legend;
+    protected EList<ILegendItem> legend;
 
     /**
      * The cached value of the '{@link #getLayers() <em>Layers</em>}' reference list.
@@ -1221,7 +1220,7 @@ public class MapImpl extends EObjectImpl implements Map {
             return;
         case ProjectPackage.MAP__LEGEND:
             getLegend().clear();
-            getLegend().addAll((Collection< ? extends LegendItem>) newValue);
+            getLegend().addAll((Collection< ? extends ILegendItem>) newValue);
             return;
         case ProjectPackage.MAP__LAYERS:
             getLayers().clear();
@@ -1578,9 +1577,9 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- end-user-doc -->
      * @generated
      */
-    public List<LegendItem> getLegend() {
+    public List<ILegendItem> getLegend() {
         if (legend == null) {
-            legend = new EObjectContainmentEList<LegendItem>(LegendItem.class, this,
+            legend = new EObjectContainmentEList<ILegendItem>(ILegendItem.class, this,
                     ProjectPackage.MAP__LEGEND);
         }
         return legend;
