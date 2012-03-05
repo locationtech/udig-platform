@@ -1068,6 +1068,16 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected volatile String name = NAME_EDEFAULT;
 
     /**
+     * The cached value of the '{@link #getMap() <em>Map</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMap()
+     * @generated
+     * @ordered
+     */
+    protected Map map;
+
+    /**
      * The default value of the '{@link #getFilter() <em>Filter</em>}' attribute.
      * 
      * @see #getFilter()
@@ -1698,9 +1708,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
     public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
             NotificationChain msgs ) {
         switch( featureID ) {
-        case ProjectPackage.LAYER__MAP:
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
-            return basicSetMap((Map) otherEnd, msgs);
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
             return basicSetContextModel((ContextModel) otherEnd, msgs);
@@ -1716,8 +1723,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
     public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
             NotificationChain msgs ) {
         switch( featureID ) {
-        case ProjectPackage.LAYER__MAP:
-            return basicSetMap(null, msgs);
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             return basicSetContextModel(null, msgs);
         case ProjectPackage.LAYER__STYLE_BLACKBOARD:
@@ -1736,9 +1741,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
     @Override
     public NotificationChain eBasicRemoveFromContainerFeature( NotificationChain msgs ) {
         switch( eContainerFeatureID() ) {
-        case ProjectPackage.LAYER__MAP:
-            return eInternalContainer().eInverseRemove(this, ProjectPackage.MAP__LEGEND, Map.class,
-                    msgs);
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             return eInternalContainer().eInverseRemove(this, ProjectPackage.CONTEXT_MODEL__LAYERS,
                     ContextModel.class, msgs);
@@ -1760,7 +1762,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__NAME:
             return getName();
         case ProjectPackage.LAYER__MAP:
-            return getMap();
+            if (resolve) return getMap();
+            return basicGetMap();
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             return getContextModel();
         case ProjectPackage.LAYER__FILTER:
@@ -1963,7 +1966,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         case ProjectPackage.LAYER__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         case ProjectPackage.LAYER__MAP:
-            return getMap() != null;
+            return map != null;
         case ProjectPackage.LAYER__CONTEXT_MODEL:
             return getContextModel() != null;
         case ProjectPackage.LAYER__FILTER:
@@ -2285,9 +2288,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetMap( Map newMap, NotificationChain msgs ) {
-        msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.LAYER__MAP, msgs);
-        return msgs;
+    public Map basicGetMap() {
+        return map;
     }
 
     /**
@@ -2296,21 +2298,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @generated
      */
     public void setMap( Map newMap ) {
-        if (newMap != eInternalContainer()
-                || (eContainerFeatureID() != ProjectPackage.LAYER__MAP && newMap != null)) {
-            if (EcoreUtil.isAncestor(this, newMap))
-                throw new IllegalArgumentException(
-                        "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
-            NotificationChain msgs = null;
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
-            if (newMap != null)
-                msgs = ((InternalEObject) newMap).eInverseAdd(this, ProjectPackage.MAP__LEGEND,
-                        Map.class, msgs);
-            msgs = basicSetMap(newMap, msgs);
-            if (msgs != null) msgs.dispatch();
-        } else if (eNotificationRequired())
+        Map oldMap = map;
+        map = newMap;
+        if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LAYER__MAP,
-                    newMap, newMap));
+                    oldMap, map));
     }
 
     /**

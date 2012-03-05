@@ -104,6 +104,16 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
     protected String name = NAME_EDEFAULT;
 
     /**
+     * The cached value of the '{@link #getMap() <em>Map</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMap()
+     * @generated
+     * @ordered
+     */
+    protected Map map;
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -150,8 +160,16 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * @generated
      */
     public Map getMap() {
-        if (eContainerFeatureID() != ProjectPackage.LEGEND_ITEM__MAP) return null;
-        return (Map) eContainer();
+        if (map != null && map.eIsProxy()) {
+            InternalEObject oldMap = (InternalEObject) map;
+            map = (Map) eResolveProxy(oldMap);
+            if (map != oldMap) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+                            ProjectPackage.LEGEND_ITEM__MAP, oldMap, map));
+            }
+        }
+        return map;
     }
 
     /**
@@ -159,9 +177,8 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetMap( Map newMap, NotificationChain msgs ) {
-        msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.LEGEND_ITEM__MAP, msgs);
-        return msgs;
+    public Map basicGetMap() {
+        return map;
     }
 
     /**
@@ -170,67 +187,11 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * @generated
      */
     public void setMap( Map newMap ) {
-        if (newMap != eInternalContainer()
-                || (eContainerFeatureID() != ProjectPackage.LEGEND_ITEM__MAP && newMap != null)) {
-            if (EcoreUtil.isAncestor(this, newMap))
-                throw new IllegalArgumentException(
-                        "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
-            NotificationChain msgs = null;
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
-            if (newMap != null)
-                msgs = ((InternalEObject) newMap).eInverseAdd(this, ProjectPackage.MAP__LEGEND,
-                        Map.class, msgs);
-            msgs = basicSetMap(newMap, msgs);
-            if (msgs != null) msgs.dispatch();
-        } else if (eNotificationRequired())
+        Map oldMap = map;
+        map = newMap;
+        if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ProjectPackage.LEGEND_ITEM__MAP,
-                    newMap, newMap));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
-        case ProjectPackage.LEGEND_ITEM__MAP:
-            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
-            return basicSetMap((Map) otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            NotificationChain msgs ) {
-        switch( featureID ) {
-        case ProjectPackage.LEGEND_ITEM__MAP:
-            return basicSetMap(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eBasicRemoveFromContainerFeature( NotificationChain msgs ) {
-        switch( eContainerFeatureID() ) {
-        case ProjectPackage.LEGEND_ITEM__MAP:
-            return eInternalContainer().eInverseRemove(this, ProjectPackage.MAP__LEGEND, Map.class,
-                    msgs);
-        }
-        return super.eBasicRemoveFromContainerFeature(msgs);
+                    oldMap, map));
     }
 
     /**
@@ -292,7 +253,8 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
         case ProjectPackage.LEGEND_ITEM__NAME:
             return getName();
         case ProjectPackage.LEGEND_ITEM__MAP:
-            return getMap();
+            if (resolve) return getMap();
+            return basicGetMap();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -360,7 +322,7 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
         case ProjectPackage.LEGEND_ITEM__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         case ProjectPackage.LEGEND_ITEM__MAP:
-            return getMap() != null;
+            return map != null;
         }
         return super.eIsSet(featureID);
     }

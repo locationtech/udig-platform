@@ -557,7 +557,7 @@ public interface ProjectPackage extends EPackage {
     int LAYER__NAME = ILAYER_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Map</b></em>' container reference.
+     * The feature id for the '<em><b>Map</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -1210,7 +1210,7 @@ public interface ProjectPackage extends EPackage {
     int FOLDER__NAME = IFOLDER_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Map</b></em>' container reference.
+     * The feature id for the '<em><b>Map</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -1283,7 +1283,7 @@ public interface ProjectPackage extends EPackage {
     int LEGEND_ITEM__NAME = ILEGEND_ITEM_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Map</b></em>' container reference.
+     * The feature id for the '<em><b>Map</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -2554,10 +2554,10 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLegendItem_Name();
 
     /**
-     * Returns the meta object for the container reference '{@link net.refractions.udig.project.internal.LegendItem#getMap <em>Map</em>}'.
+     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.LegendItem#getMap <em>Map</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Map</em>'.
+     * @return the meta object for the reference '<em>Map</em>'.
      * @see net.refractions.udig.project.internal.LegendItem#getMap()
      * @see #getLegendItem()
      * @generated
@@ -3754,7 +3754,7 @@ public interface ProjectPackage extends EPackage {
         EAttribute LEGEND_ITEM__NAME = eINSTANCE.getLegendItem_Name();
 
         /**
-         * The meta object literal for the '<em><b>Map</b></em>' container reference feature.
+         * The meta object literal for the '<em><b>Map</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
