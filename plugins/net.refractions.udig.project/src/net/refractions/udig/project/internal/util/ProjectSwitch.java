@@ -122,6 +122,10 @@ public class ProjectSwitch<T> extends Switch<T> {
             if (result == null)
                 result = caseIResolveChangeListener(layer);
             if (result == null)
+                result = caseLegendItem(layer);
+            if (result == null)
+                result = caseILegendItem(layer);
+            if (result == null)
                 result = defaultCase(theEObject);
             return result;
         }
@@ -221,6 +225,10 @@ public class ProjectSwitch<T> extends Switch<T> {
             T result = caseFolder(folder);
             if (result == null)
                 result = caseIFolder(folder);
+            if (result == null)
+                result = caseLegendItem(folder);
+            if (result == null)
+                result = caseILegendItem(folder);
             if (result == null)
                 result = defaultCase(theEObject);
             return result;

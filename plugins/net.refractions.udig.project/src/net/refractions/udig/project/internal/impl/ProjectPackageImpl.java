@@ -1205,7 +1205,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getBlackboardEntry_Key() {
-        return (EAttribute) blackboardEntryEClass.getEStructuralFeatures().get(0);
+        return (EAttribute) blackboardEntryEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -1213,7 +1213,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getBlackboardEntry_Memento() {
-        return (EAttribute) blackboardEntryEClass.getEStructuralFeatures().get(1);
+        return (EAttribute) blackboardEntryEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -1310,33 +1310,6 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getFolder_Name() {
-        return (EAttribute) folderEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getFolder_Shown() {
-        return (EAttribute) folderEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getFolder_Icon() {
-        return (EAttribute) folderEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EClass getLegendItem() {
         return legendItemEClass;
     }
@@ -1347,7 +1320,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLegendItem_Name() {
-        return (EAttribute) legendItemEClass.getEStructuralFeatures().get(0);
+        return (EAttribute) legendItemEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -1356,7 +1329,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLegendItem_Shown() {
-        return (EAttribute) legendItemEClass.getEStructuralFeatures().get(1);
+        return (EAttribute) legendItemEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -1365,7 +1338,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     public EAttribute getLegendItem_Icon() {
-        return (EAttribute) legendItemEClass.getEStructuralFeatures().get(2);
+        return (EAttribute) legendItemEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -1775,8 +1748,8 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         createEReference(blackboardEClass, BLACKBOARD__ENTRIES);
 
         blackboardEntryEClass = createEClass(BLACKBOARD_ENTRY);
-        createEAttribute(blackboardEntryEClass, BLACKBOARD_ENTRY__KEY);
         createEAttribute(blackboardEntryEClass, BLACKBOARD_ENTRY__MEMENTO);
+        createEAttribute(blackboardEntryEClass, BLACKBOARD_ENTRY__KEY);
         createEAttribute(blackboardEntryEClass, BLACKBOARD_ENTRY__OBJECT_CLASS);
         createEAttribute(blackboardEntryEClass, BLACKBOARD_ENTRY__OBJECT);
 
@@ -1794,14 +1767,11 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
 
         folderEClass = createEClass(FOLDER);
         createEReference(folderEClass, FOLDER__ITEMS);
-        createEAttribute(folderEClass, FOLDER__NAME);
-        createEAttribute(folderEClass, FOLDER__SHOWN);
-        createEAttribute(folderEClass, FOLDER__ICON);
 
         legendItemEClass = createEClass(LEGEND_ITEM);
-        createEAttribute(legendItemEClass, LEGEND_ITEM__NAME);
         createEAttribute(legendItemEClass, LEGEND_ITEM__SHOWN);
         createEAttribute(legendItemEClass, LEGEND_ITEM__ICON);
+        createEAttribute(legendItemEClass, LEGEND_ITEM__NAME);
 
         iLegendItemEClass = createEClass(ILEGEND_ITEM);
 
@@ -1880,6 +1850,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         layerEClass.getESuperTypes().add(this.getIAdaptable());
         layerEClass.getESuperTypes().add(this.getIBlockingAdaptable());
         layerEClass.getESuperTypes().add(this.getIResolveChangeListener());
+        layerEClass.getESuperTypes().add(this.getLegendItem());
         mapEClass.getESuperTypes().add(this.getProjectElement());
         mapEClass.getESuperTypes().add(this.getIMap());
         projectEClass.getESuperTypes().add(this.getIProject());
@@ -1889,6 +1860,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         styleBlackboardEClass.getESuperTypes().add(this.getCloneable());
         blackboardEClass.getESuperTypes().add(this.getIBlackboard());
         folderEClass.getESuperTypes().add(this.getIFolder());
+        folderEClass.getESuperTypes().add(this.getLegendItem());
         legendItemEClass.getESuperTypes().add(this.getILegendItem());
 
         // Initialize classes and features; add operations and parameters
@@ -2126,7 +2098,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 "blackBoardInternal", null, 0, 1, Map.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEReference(
                 getMap_Legend(),
-                this.getILegendItem(),
+                this.getLegendItem(),
                 null,
                 "legend", null, 0, -1, Map.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEReference(
@@ -2282,13 +2254,13 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         initEClass(blackboardEntryEClass, BlackboardEntry.class,
                 "BlackboardEntry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEAttribute(
-                getBlackboardEntry_Key(),
-                ecorePackage.getEString(),
-                "key", null, 0, 1, BlackboardEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
                 getBlackboardEntry_Memento(),
                 ecorePackage.getEString(),
                 "memento", null, 0, 1, BlackboardEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getBlackboardEntry_Key(),
+                ecorePackage.getEString(),
+                "key", null, 0, 1, BlackboardEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEAttribute(
                 getBlackboardEntry_ObjectClass(),
                 ecorePackage.getEJavaClass(),
@@ -2324,28 +2296,12 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 "Folder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEReference(
                 getFolder_Items(),
-                this.getILegendItem(),
+                this.getLegendItem(),
                 null,
                 "items", null, 0, -1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getFolder_Name(),
-                ecorePackage.getEString(),
-                "name", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getFolder_Shown(),
-                ecorePackage.getEBoolean(),
-                "shown", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getFolder_Icon(),
-                this.getImageDescriptor(),
-                "icon", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         initEClass(legendItemEClass, LegendItem.class,
                 "LegendItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-        initEAttribute(
-                getLegendItem_Name(),
-                ecorePackage.getEString(),
-                "name", null, 0, 1, LegendItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
         initEAttribute(
                 getLegendItem_Shown(),
                 ecorePackage.getEBoolean(),
@@ -2354,6 +2310,10 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 getLegendItem_Icon(),
                 this.getImageDescriptor(),
                 "icon", null, 0, 1, LegendItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        initEAttribute(
+                getLegendItem_Name(),
+                ecorePackage.getEString(),
+                "name", null, 0, 1, LegendItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         initEClass(iLegendItemEClass, ILegendItem.class,
                 "ILegendItem", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

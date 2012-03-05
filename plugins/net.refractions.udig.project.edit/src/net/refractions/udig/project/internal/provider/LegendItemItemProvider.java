@@ -70,9 +70,9 @@ public class LegendItemItemProvider extends ItemProviderAdapter
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addNamePropertyDescriptor(object);
             addShownPropertyDescriptor(object);
             addIconPropertyDescriptor(object);
+            addNamePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -177,9 +177,9 @@ public class LegendItemItemProvider extends ItemProviderAdapter
         updateChildren(notification);
 
         switch( notification.getFeatureID(LegendItem.class) ) {
-        case ProjectPackage.LEGEND_ITEM__NAME:
         case ProjectPackage.LEGEND_ITEM__SHOWN:
         case ProjectPackage.LEGEND_ITEM__ICON:
+        case ProjectPackage.LEGEND_ITEM__NAME:
             fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),
                     false, true));
             return;

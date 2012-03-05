@@ -33,33 +33,15 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link net.refractions.udig.project.internal.impl.LegendItemImpl#getName <em>Name</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.impl.LegendItemImpl#isShown <em>Shown</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.impl.LegendItemImpl#getIcon <em>Icon</em>}</li>
+ *   <li>{@link net.refractions.udig.project.internal.impl.LegendItemImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class LegendItemImpl extends EObjectImpl implements LegendItem {
-    /**
-     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getName()
-     * @generated
-     * @ordered
-     */
-    protected static final String NAME_EDEFAULT = null;
-    /**
-     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getName()
-     * @generated
-     * @ordered
-     */
-    protected String name = NAME_EDEFAULT;
     /**
      * The default value of the '{@link #isShown() <em>Shown</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -97,6 +79,24 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
      * @ordered
      */
     protected ImageDescriptor icon = ICON_EDEFAULT;
+    /**
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected static final String NAME_EDEFAULT = null;
+    /**
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected String name = NAME_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -191,12 +191,12 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
     @Override
     public Object eGet( int featureID, boolean resolve, boolean coreType ) {
         switch( featureID ) {
-        case ProjectPackage.LEGEND_ITEM__NAME:
-            return getName();
         case ProjectPackage.LEGEND_ITEM__SHOWN:
             return isShown();
         case ProjectPackage.LEGEND_ITEM__ICON:
             return getIcon();
+        case ProjectPackage.LEGEND_ITEM__NAME:
+            return getName();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -209,14 +209,14 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
     @Override
     public void eSet( int featureID, Object newValue ) {
         switch( featureID ) {
-        case ProjectPackage.LEGEND_ITEM__NAME:
-            setName((String) newValue);
-            return;
         case ProjectPackage.LEGEND_ITEM__SHOWN:
             setShown((Boolean) newValue);
             return;
         case ProjectPackage.LEGEND_ITEM__ICON:
             setIcon((ImageDescriptor) newValue);
+            return;
+        case ProjectPackage.LEGEND_ITEM__NAME:
+            setName((String) newValue);
             return;
         }
         super.eSet(featureID, newValue);
@@ -230,14 +230,14 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
     @Override
     public void eUnset( int featureID ) {
         switch( featureID ) {
-        case ProjectPackage.LEGEND_ITEM__NAME:
-            setName(NAME_EDEFAULT);
-            return;
         case ProjectPackage.LEGEND_ITEM__SHOWN:
             setShown(SHOWN_EDEFAULT);
             return;
         case ProjectPackage.LEGEND_ITEM__ICON:
             setIcon(ICON_EDEFAULT);
+            return;
+        case ProjectPackage.LEGEND_ITEM__NAME:
+            setName(NAME_EDEFAULT);
             return;
         }
         super.eUnset(featureID);
@@ -251,12 +251,12 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
     @Override
     public boolean eIsSet( int featureID ) {
         switch( featureID ) {
-        case ProjectPackage.LEGEND_ITEM__NAME:
-            return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         case ProjectPackage.LEGEND_ITEM__SHOWN:
             return shown != SHOWN_EDEFAULT;
         case ProjectPackage.LEGEND_ITEM__ICON:
             return ICON_EDEFAULT == null ? icon != null : !ICON_EDEFAULT.equals(icon);
+        case ProjectPackage.LEGEND_ITEM__NAME:
+            return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         }
         return super.eIsSet(featureID);
     }
@@ -272,12 +272,12 @@ public class LegendItemImpl extends EObjectImpl implements LegendItem {
             return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (name: "); //$NON-NLS-1$
-        result.append(name);
-        result.append(", shown: "); //$NON-NLS-1$
+        result.append(" (shown: "); //$NON-NLS-1$
         result.append(shown);
         result.append(", icon: "); //$NON-NLS-1$
         result.append(icon);
+        result.append(", name: "); //$NON-NLS-1$
+        result.append(name);
         result.append(')');
         return result.toString();
     }

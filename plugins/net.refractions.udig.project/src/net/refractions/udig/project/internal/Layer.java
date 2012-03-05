@@ -41,11 +41,11 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  */
 public interface Layer
         extends
-            EObject,
             ILayer,
             IAdaptable,
             IBlockingAdaptable,
-            IResolveChangeListener {
+            IResolveChangeListener,
+            LegendItem {
 
     /**
      * Returns the owning ContextModel object
