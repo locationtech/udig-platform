@@ -557,22 +557,13 @@ public interface ProjectPackage extends EPackage {
     int LAYER__NAME = ILAYER_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Map</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int LAYER__MAP = ILAYER_FEATURE_COUNT + 3;
-
-    /**
      * The feature id for the '<em><b>Context Model</b></em>' container reference. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
      * @ordered
      */
-    int LAYER__CONTEXT_MODEL = ILAYER_FEATURE_COUNT + 4;
+    int LAYER__CONTEXT_MODEL = ILAYER_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Filter</b></em>' attribute.
@@ -581,7 +572,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__FILTER = ILAYER_FEATURE_COUNT + 5;
+    int LAYER__FILTER = ILAYER_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Style Blackboard</b></em>' containment reference. <!--
@@ -590,7 +581,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__STYLE_BLACKBOARD = ILAYER_FEATURE_COUNT + 6;
+    int LAYER__STYLE_BLACKBOARD = ILAYER_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Zorder</b></em>' attribute.
@@ -599,7 +590,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__ZORDER = ILAYER_FEATURE_COUNT + 7;
+    int LAYER__ZORDER = ILAYER_FEATURE_COUNT + 6;
 
     /**
      * The feature id for the '<em><b>Status</b></em>' attribute.
@@ -608,7 +599,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__STATUS = ILAYER_FEATURE_COUNT + 8;
+    int LAYER__STATUS = ILAYER_FEATURE_COUNT + 7;
 
     /**
      * The feature id for the '<em><b>Catalog Ref</b></em>' attribute.
@@ -617,7 +608,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__CATALOG_REF = ILAYER_FEATURE_COUNT + 9;
+    int LAYER__CATALOG_REF = ILAYER_FEATURE_COUNT + 8;
 
     /**
      * The feature id for the '<em><b>ID</b></em>' attribute.
@@ -626,7 +617,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__ID = ILAYER_FEATURE_COUNT + 10;
+    int LAYER__ID = ILAYER_FEATURE_COUNT + 9;
 
     /**
      * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -635,7 +626,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__VISIBLE = ILAYER_FEATURE_COUNT + 11;
+    int LAYER__VISIBLE = ILAYER_FEATURE_COUNT + 10;
 
     /**
      * The feature id for the '<em><b>Geo Resource</b></em>' attribute.
@@ -644,7 +635,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__GEO_RESOURCE = ILAYER_FEATURE_COUNT + 12;
+    int LAYER__GEO_RESOURCE = ILAYER_FEATURE_COUNT + 11;
 
     /**
      * The feature id for the '<em><b>Geo Resources</b></em>' attribute list. <!--
@@ -653,7 +644,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__GEO_RESOURCES = ILAYER_FEATURE_COUNT + 13;
+    int LAYER__GEO_RESOURCES = ILAYER_FEATURE_COUNT + 12;
 
     /**
      * The feature id for the '<em><b>CRS</b></em>' attribute.
@@ -662,7 +653,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__CRS = ILAYER_FEATURE_COUNT + 14;
+    int LAYER__CRS = ILAYER_FEATURE_COUNT + 13;
 
     /**
      * The feature id for the '<em><b>Properties</b></em>' reference.
@@ -671,7 +662,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__PROPERTIES = ILAYER_FEATURE_COUNT + 15;
+    int LAYER__PROPERTIES = ILAYER_FEATURE_COUNT + 14;
 
     /**
      * The feature id for the '<em><b>Colour Scheme</b></em>' attribute.
@@ -680,7 +671,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__COLOUR_SCHEME = ILAYER_FEATURE_COUNT + 16;
+    int LAYER__COLOUR_SCHEME = ILAYER_FEATURE_COUNT + 15;
 
     /**
      * The feature id for the '<em><b>Default Color</b></em>' attribute.
@@ -689,7 +680,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__DEFAULT_COLOR = ILAYER_FEATURE_COUNT + 17;
+    int LAYER__DEFAULT_COLOR = ILAYER_FEATURE_COUNT + 16;
 
     /**
      * The feature id for the '<em><b>SimpleFeature Changes</b></em>' attribute list. <!--
@@ -698,7 +689,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__FEATURE_CHANGES = ILAYER_FEATURE_COUNT + 18;
+    int LAYER__FEATURE_CHANGES = ILAYER_FEATURE_COUNT + 17;
 
     /**
      * The feature id for the '<em><b>Min Scale Denominator</b></em>' attribute.
@@ -707,7 +698,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__MIN_SCALE_DENOMINATOR = ILAYER_FEATURE_COUNT + 19;
+    int LAYER__MIN_SCALE_DENOMINATOR = ILAYER_FEATURE_COUNT + 18;
 
     /**
      * The feature id for the '<em><b>Max Scale Denominator</b></em>' attribute.
@@ -716,7 +707,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__MAX_SCALE_DENOMINATOR = ILAYER_FEATURE_COUNT + 20;
+    int LAYER__MAX_SCALE_DENOMINATOR = ILAYER_FEATURE_COUNT + 19;
 
     /**
      * The feature id for the '<em><b>Interaction Map</b></em>' map.
@@ -725,7 +716,16 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LAYER__INTERACTION_MAP = ILAYER_FEATURE_COUNT + 21;
+    int LAYER__INTERACTION_MAP = ILAYER_FEATURE_COUNT + 20;
+
+    /**
+     * The feature id for the '<em><b>Map</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LAYER__MAP = ILAYER_FEATURE_COUNT + 21;
 
     /**
      * The number of structural features of the '<em>Layer</em>' class.
@@ -1210,22 +1210,13 @@ public interface ProjectPackage extends EPackage {
     int FOLDER__NAME = IFOLDER_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Map</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int FOLDER__MAP = IFOLDER_FEATURE_COUNT + 3;
-
-    /**
      * The feature id for the '<em><b>Items</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int FOLDER__ITEMS = IFOLDER_FEATURE_COUNT + 4;
+    int FOLDER__ITEMS = IFOLDER_FEATURE_COUNT + 3;
 
     /**
      * The number of structural features of the '<em>Folder</em>' class.
@@ -1234,7 +1225,7 @@ public interface ProjectPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FOLDER_FEATURE_COUNT = IFOLDER_FEATURE_COUNT + 5;
+    int FOLDER_FEATURE_COUNT = IFOLDER_FEATURE_COUNT + 4;
 
     /**
      * The number of structural features of the '<em>ILegend Item</em>' class.
@@ -1283,22 +1274,13 @@ public interface ProjectPackage extends EPackage {
     int LEGEND_ITEM__NAME = ILEGEND_ITEM_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Map</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int LEGEND_ITEM__MAP = ILEGEND_ITEM_FEATURE_COUNT + 3;
-
-    /**
      * The number of structural features of the '<em>Legend Item</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LEGEND_ITEM_FEATURE_COUNT = ILEGEND_ITEM_FEATURE_COUNT + 4;
+    int LEGEND_ITEM_FEATURE_COUNT = ILEGEND_ITEM_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '<em>Coordinate</em>' data type.
@@ -2032,6 +2014,17 @@ public interface ProjectPackage extends EPackage {
     EReference getLayer_InteractionMap();
 
     /**
+     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.Layer#getMap <em>Map</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Map</em>'.
+     * @see net.refractions.udig.project.internal.Layer#getMap()
+     * @see #getLayer()
+     * @generated
+     */
+    EReference getLayer_Map();
+
+    /**
      * Returns the meta object for class '{@link net.refractions.udig.project.internal.Map <em>Map</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Map</em>'.
@@ -2552,17 +2545,6 @@ public interface ProjectPackage extends EPackage {
      * @generated
      */
     EAttribute getLegendItem_Name();
-
-    /**
-     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.LegendItem#getMap <em>Map</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Map</em>'.
-     * @see net.refractions.udig.project.internal.LegendItem#getMap()
-     * @see #getLegendItem()
-     * @generated
-     */
-    EReference getLegendItem_Map();
 
     /**
      * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.LegendItem#isShown <em>Shown</em>}'.
@@ -3297,6 +3279,14 @@ public interface ProjectPackage extends EPackage {
         EReference LAYER__INTERACTION_MAP = eINSTANCE.getLayer_InteractionMap();
 
         /**
+         * The meta object literal for the '<em><b>Map</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference LAYER__MAP = eINSTANCE.getLayer_Map();
+
+        /**
          * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.MapImpl <em>Map</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3752,14 +3742,6 @@ public interface ProjectPackage extends EPackage {
          * @generated
          */
         EAttribute LEGEND_ITEM__NAME = eINSTANCE.getLegendItem_Name();
-
-        /**
-         * The meta object literal for the '<em><b>Map</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference LEGEND_ITEM__MAP = eINSTANCE.getLegendItem_Map();
 
         /**
          * The meta object literal for the '<em><b>Shown</b></em>' attribute feature.
