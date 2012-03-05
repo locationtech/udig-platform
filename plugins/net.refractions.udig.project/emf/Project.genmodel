@@ -99,7 +99,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/minScaleDenominator"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/maxScaleDenominator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Layer/interactionMap"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference internal.ecore#//Layer/map"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference internal.ecore#//Layer/fred"/>
       <genOperations ecoreOperation="internal.ecore#//Layer/getQuery">
         <genParameters ecoreParameter="internal.ecore#//Layer/getQuery/selection"/>
       </genOperations>
