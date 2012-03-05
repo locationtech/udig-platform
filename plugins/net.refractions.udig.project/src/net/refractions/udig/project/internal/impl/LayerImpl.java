@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -2313,7 +2312,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * @see net.refractions.udig.project.ILayer#getMap()
      */
-    public IMap getMap() {
+    public Map getMap() {
         return getMapInternal();
     }
 

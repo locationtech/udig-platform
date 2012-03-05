@@ -31,6 +31,6 @@ public interface IFolder extends ILegendItem {
      * Example:<code>folder.getChildren().get(3); // the third item in the folder</code>
      * @return LegendItems contained by this IFolder
      */
-    List<ILegendItem> getItems();
+    List<? extends ILegendItem> getItems();
 
 }

@@ -112,7 +112,7 @@ public final class LegendViewCheckboxUtils {
 
                     final Map map = view.getCurrentMap();
                     final CheckboxTreeViewer viewer = view.getViewer();
-                    final List<ILegendItem> legendItems = map.getLegend();
+                    final List<? extends ILegendItem> legendItems = map.getLegend();
 
                     for( ILegendItem legendItem : legendItems ) {
                         if (legendItem instanceof Folder) {
