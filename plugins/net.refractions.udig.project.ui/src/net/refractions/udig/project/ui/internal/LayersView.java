@@ -536,7 +536,39 @@ public class LayersView extends ViewPart
         @SuppressWarnings("unchecked")
         public void notifyChanged( final Notification msg ) {
 
-            if (msg.getNotifier() instanceof ContextModel) {
+            if (msg.getNotifier() instanceof Map) {
+                Map map = (Map) msg.getNotifier();
+
+                if (getCurrentMap() != map) {
+                    // Just in case
+                    map.removeDeepAdapter(this);
+                    return;
+                }
+
+                if (PlatformUI.getWorkbench().isClosing()){
+                    map.eAdapters().remove(this);
+                }
+
+                if (msg.getFeatureID(Map.class) == ProjectPackage.MAP__LAYERS) {
+                    switch( msg.getEventType() ) {
+                    case Notification.ADD: {
+                        Layer layer = (Layer) msg.getNewValue();
+                        updateCheckbox(layer);
+                        break;
+                    }
+                    case Notification.ADD_MANY: {
+                        updateCheckboxes();
+                        break;
+                    }
+                    case Notification.SET: {
+                        Layer layer = (Layer) msg.getNewValue();
+                        updateCheckbox(layer);
+                        break;
+                    }
+                    }
+                }
+            }
+            else if (msg.getNotifier() instanceof ContextModel) {
                 ContextModel contextModel = (ContextModel) msg.getNotifier();
                 Map map = contextModel.getMap();
 

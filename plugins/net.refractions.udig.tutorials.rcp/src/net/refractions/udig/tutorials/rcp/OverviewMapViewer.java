@@ -8,6 +8,7 @@ import java.util.List;
 import net.refractions.udig.catalog.wmsc.server.WMSTileSet;
 import net.refractions.udig.project.internal.ContextModelListenerAdapter;
 import net.refractions.udig.project.internal.Layer;
+import net.refractions.udig.project.internal.LayerListListenerAdapter;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.render.IViewportModelListener;
@@ -57,7 +58,7 @@ public class OverviewMapViewer {
     private Map mainmap = null;
 
     private IViewportModelListener viewportListener = null;
-    private ContextModelListenerAdapter contextListener = null;
+    private LayerListListenerAdapter contextListener = null;
     private IMapDisplayListener mapDisplayListener = null;
     
     private IDrawCommand rectDrawCommand = null;
@@ -148,7 +149,7 @@ public class OverviewMapViewer {
      */
     private void addContextListener(){
         final Map overviewmap = this.mapviewer.getMap();
-        contextListener = new ContextModelListenerAdapter(){
+        contextListener = new LayerListListenerAdapter(){
             protected void layerAdded( Notification msg ) {
                 updateMapAndRefresh(msg);
             }
@@ -169,7 +170,7 @@ public class OverviewMapViewer {
                 updateMapAndRefresh(msg);
             }
 
-            protected void glyphChanged( Notification msg ) {
+            protected void iconChanged( Notification msg ) {
                 updateMapAndRefresh(msg);
             }
 
@@ -182,12 +183,12 @@ public class OverviewMapViewer {
             }
            
             private void updateMapAndRefresh(Notification msg){
-                overviewmap.getContextModel().eNotify(msg);
+                overviewmap.eNotify(msg);
                 ReferencedEnvelope bnds = findNewOverviewZoom(mainmap.getViewportModel().getBounds(), mainmap.getRenderManager().getMapDisplay(), mapviewer.getMap().getViewportModel().getBounds());
                 mapviewer.getMap().getViewportModelInternal().setBounds(bnds);                
             }
         };
-        mainmap.getContextModel().eAdapters().add(contextListener);
+        mainmap.eAdapters().add(contextListener);
         
         //add a deep listener to listen to layer hide/show events
         Adapter layerVisibilityAdapter = new AdapterImpl(){
@@ -262,7 +263,7 @@ public class OverviewMapViewer {
             mainmap.getViewportModelInternal().removeViewportModelListener(viewportListener);
         }
         if (contextListener != null){
-            mainmap.getContextModel().eAdapters().remove(contextListener);
+            mainmap.eAdapters().remove(contextListener);
         }
         if (mapDisplayListener != null){
             mapviewer.getViewport().removePaneListener(mapDisplayListener);

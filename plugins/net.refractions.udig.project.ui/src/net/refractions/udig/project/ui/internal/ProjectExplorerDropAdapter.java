@@ -59,7 +59,7 @@ public class ProjectExplorerDropAdapter extends ViewerDropAdapter {
             /*
              * If all the layers belong to the target map, do nothing.
              */
-            if (map.getContextModel().getLayers().containsAll(layers)) {
+            if (map.getLayers().containsAll(layers)) {
                 return false;
             }
             copyToMap(map, layers);
@@ -81,7 +81,9 @@ public class ProjectExplorerDropAdapter extends ViewerDropAdapter {
 
     private void copyToMap( Map map, List<Layer> layers ) {
         Collection<Layer> clonedLayers = EcoreUtil.copyAll(layers);
-        map.getContextModel().getLayers().addAll(clonedLayers);
+        
+        map.getLayers().addAll(clonedLayers);
+        // We are depending on someone watching getLayers() and adding the items to the legend at the same time
     }
 
     private List<Layer> getLayers( Object data ) {

@@ -28,9 +28,14 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+/**
+ * Job used to fetch children in the background; stored in a {@link AbstractLazyLoadingItemProvider}.
+ */
 class ChildFetcher extends Job {
 
+    /** Provider used to fetch children one at a time */
     private AbstractLazyLoadingItemProvider provider;
+    
     private ChildFetcher() {
         super("Fetcher"); //$NON-NLS-1$
         setSystem(true);
@@ -65,6 +70,10 @@ class ChildFetcher extends Job {
     private volatile List<Object> childrenInternal; 
     Object parent;
     protected volatile boolean dataReady;
+    
+    /**
+     * Job fetches children one at a time using {@link #hasNext()} and {@link #next()}.
+     */
     @Override
     protected IStatus run( IProgressMonitor monitor ) {
         long start=System.currentTimeMillis();

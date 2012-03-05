@@ -10,8 +10,10 @@ import java.util.Collection;
 import java.util.List;
 
 import net.refractions.udig.project.internal.ContextModel;
+import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectPackage;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
@@ -145,12 +147,30 @@ public class ContextModelItemProvider extends ItemProviderAdapter
                 for( Object object : adapters ) {
                     if (object instanceof MapItemProvider) {
                         MapItemProvider mapItemProvider = ((MapItemProvider) object);
-                        //                        mapItemProvider.updateChildList(notification);
+                        //  mapItemProvider.updateChildList(notification);
                         mapItemProvider.getChildFetcher().notifyChanged();
                         break;
                     }
                 }
-            } else {
+            }
+            else if (notifier instanceof Map) {
+                if (notification.getFeatureID(Map.class) != ProjectPackage.MAP__LAYERS){
+                    return;
+                }
+                // we need to tell the map item provider that the layers have changed.
+                Map model = (Map) notifier;
+                
+                EList<Adapter> adapters = model.eAdapters();
+                for( Object object : adapters ) {
+                    if (object instanceof MapItemProvider) {
+                        MapItemProvider mapItemProvider = ((MapItemProvider) object);
+                        //  mapItemProvider.updateChildList(notification);
+                        mapItemProvider.getChildFetcher().notifyChanged();
+                        break;
+                    }
+                }
+            }
+            else {
                 ProjectEditPlugin
                         .log("notifier is not a contextModel as expect.  It is a " + notifier.getClass().getSimpleName(), null); //$NON-NLS-1$
             }

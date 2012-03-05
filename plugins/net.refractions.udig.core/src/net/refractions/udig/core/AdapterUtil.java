@@ -21,7 +21,6 @@ import net.refractions.udig.core.internal.CorePlugin;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
-import org.geotools.data.shapefile.ShapefileDataStore;
 
 /**
  * Methods to help manage adapters

@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolveChangeListener;
 import net.refractions.udig.core.IBlockingAdaptable;
@@ -24,8 +23,6 @@ import net.refractions.udig.ui.palette.ColourScheme;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.data.FeatureEvent;
 import org.geotools.data.Query;
 import org.geotools.geometry.jts.ReferencedEnvelope;

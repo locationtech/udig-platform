@@ -19,6 +19,7 @@ import java.util.Set;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.ContextModelListenerAdapter;
 import net.refractions.udig.project.internal.Layer;
+import net.refractions.udig.project.internal.LayerListListenerAdapter;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.ProjectPlugin;
@@ -72,8 +73,7 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 	/**
 	 * Watches the layer add / delete / change of zorder and style changes.
 	 */
-	ContextModelListenerAdapter contextModelAdapter = RenderManagerAdapters
-			.createContextModelListener(this);
+	LayerListListenerAdapter layerListAdapter = RenderManagerAdapters.createLayerListListener(this);
 	/**
 	 * Watches the viewport model and triggers some kind of refresh. This is the
 	 * bounds and the crs changing; panning zooming swooshing and other assorted
@@ -88,7 +88,7 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 	 * 
 	 */
 	private Adapter viewportModelChangeListener = RenderManagerAdapters
-            .createViewportModelChangeListener(this, viewportListener, contextModelAdapter);
+            .createViewportModelChangeListener(this, viewportListener, layerListAdapter);
 
 	/**
 	 * Collection of contexts used to draw the images.
@@ -269,10 +269,8 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 		getRendererCreator().reset();
 		validateRendererConfiguration();
 
-		if (!getMapInternal().getContextModel().eAdapters().contains(
-				contextModelAdapter))
-			getMapInternal().getContextModel().eAdapters().add(
-					contextModelAdapter);
+		if (!getMapInternal().eAdapters().contains(layerListAdapter))
+			getMapInternal().eAdapters().add(layerListAdapter);
 
 		try {
 			getRenderExecutor().setRenderBounds(bounds);
@@ -320,7 +318,7 @@ public class RenderManagerDynamic extends RenderManagerImpl {
 	private void removeAdapters(EObject obj) {
 		obj.eAdapters().remove(this.viewportListener);
 		obj.eAdapters().remove(this.viewportModelChangeListener);
-		obj.eAdapters().remove(this.contextModelAdapter);
+		obj.eAdapters().remove(this.layerListAdapter);
 		obj.eAdapters().remove(this.renderExecutorListener);
 		obj.eAdapters().remove(this.selectionListener);
 	}

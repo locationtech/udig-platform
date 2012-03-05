@@ -116,7 +116,11 @@ public class TiledRendererCreatorImpl implements RendererCreator {
      * <p>This is the event that maintains the layers list.</p>
      */
     public void changed( Notification msg ) {
-        if (((msg.getNotifier() instanceof ContextModel || msg.getNotifier() instanceof RenderManager) 
+        if (((msg.getNotifier() instanceof net.refractions.udig.project.internal.Map || msg.getNotifier() instanceof RenderManager) && msg
+                .getFeatureID(net.refractions.udig.project.internal.Map.class) == ProjectPackage.MAP__LAYERS))  {
+            handleMapCompositionEvent(msg);
+        }
+        else if (((msg.getNotifier() instanceof ContextModel || msg.getNotifier() instanceof RenderManager) 
                 && msg.getFeatureID(ContextModel.class) == ProjectPackage.CONTEXT_MODEL__LAYERS)) {
             handleMapCompositionEvent(msg);
         }
