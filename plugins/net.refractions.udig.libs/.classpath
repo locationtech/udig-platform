@@ -44,7 +44,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-opengis-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-process-8-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-process-feature-8-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-process-feature-8-SNAPSHOT.jar" sourcepath="/Users/leviputna/.m2/repository/org/geotools/gt-process-feature/8-SNAPSHOT/gt-process-feature-8-SNAPSHOT-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-process-geometry-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-process-raster-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-property-8-SNAPSHOT.jar"/>
