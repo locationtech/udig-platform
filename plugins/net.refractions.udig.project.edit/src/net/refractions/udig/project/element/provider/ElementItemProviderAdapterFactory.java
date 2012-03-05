@@ -199,7 +199,8 @@ public class ElementItemProviderAdapterFactory extends ElementAdapterFactory
      * @generated
      */
     public void dispose() {
-        if (projectElementAdapterItemProvider != null) projectElementAdapterItemProvider.dispose();
+        if (projectElementAdapterItemProvider != null)
+            projectElementAdapterItemProvider.dispose();
     }
 
 }

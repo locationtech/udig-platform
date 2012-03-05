@@ -138,8 +138,10 @@ public final class ProjectEditPlugin extends EMFPlugin {
      */
     public static void trace( String message, Throwable e ) {
         if (getPlugin().isDebugging()) {
-            if (message != null) System.out.println(message);
-            if (e != null) e.printStackTrace();
+            if (message != null)
+                System.out.println(message);
+            if (e != null)
+                e.printStackTrace();
         }
     }
     /**

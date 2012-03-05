@@ -788,7 +788,8 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * @generated
      */
     public void createPackageContents() {
-        if (isCreated) return;
+        if (isCreated)
+            return;
         isCreated = true;
 
         // Create classes and their features
@@ -875,7 +876,8 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      */
     @SuppressWarnings("unchecked")
     public void initializePackageContents() {
-        if (isInitialized) return;
+        if (isInitialized)
+            return;
         isInitialized = true;
 
         // Initialize package

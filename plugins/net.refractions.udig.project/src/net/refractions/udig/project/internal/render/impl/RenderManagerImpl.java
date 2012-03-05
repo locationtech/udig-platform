@@ -265,7 +265,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
                 msgs = ((InternalEObject) newMapInternal).eInverseAdd(this,
                         ProjectPackage.MAP__RENDER_MANAGER_INTERNAL, Map.class, msgs);
             msgs = basicSetMapInternal(newMapInternal, msgs);
-            if (msgs != null) msgs.dispatch();
+            if (msgs != null)
+                msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     RenderPackage.RENDER_MANAGER__MAP_INTERNAL, newMapInternal, newMapInternal));
@@ -378,7 +379,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
                         RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL, ViewportModel.class,
                         msgs);
             msgs = basicSetViewportModelInternal(newViewportModelInternal, msgs);
-            if (msgs != null) msgs.dispatch();
+            if (msgs != null)
+                msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     RenderPackage.RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL,
@@ -499,7 +501,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
         case RenderPackage.RENDER_MANAGER__MAP_DISPLAY:
             return getMapDisplay();
         case RenderPackage.RENDER_MANAGER__MAP_INTERNAL:
-            if (resolve) return getMapInternal();
+            if (resolve)
+                return getMapInternal();
             return basicGetMapInternal();
         case RenderPackage.RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL:
             return getViewportModelInternal();
@@ -577,7 +580,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     }
 
     public void checkState() throws IllegalStateException {
-        if (disposed) throw new IllegalStateException("RenderManager is disposed"); //$NON-NLS-1$
+        if (disposed)
+            throw new IllegalStateException("RenderManager is disposed"); //$NON-NLS-1$
     }
 
     /**
@@ -586,7 +590,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+        if (eIsProxy())
+            return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (mapDisplay: "); //$NON-NLS-1$
@@ -671,7 +676,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     public void stopRendering() {
         checkState();
-        if (getRenderExecutor() != null) getRenderExecutor().stopRendering();
+        if (getRenderExecutor() != null)
+            getRenderExecutor().stopRendering();
     }
 
     public boolean isDisposed() {
@@ -680,7 +686,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     public RenderedImage getImage() {
         if (renderExecutor == null || renderExecutor.getState() == IRenderer.NEVER
-                || getRenderExecutor().getContext() == null) return null;
+                || getRenderExecutor().getContext() == null)
+            return null;
         //        try {
         //            ((CompositeRendererImpl)getRenderExecutor()).refreshImage();
         //        } catch (RenderException e) {
@@ -720,7 +727,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      */
     public boolean areLayersRelatedByContext( ILayer layer, ILayer contained ) {
         //they are the same; so they are related
-        if (layer == contained) return true;
+        if (layer == contained)
+            return true;
 
         //for each renderer check the contexts
         for( Iterator<IRenderer> iterator = getRenderers().iterator(); iterator.hasNext(); ) {

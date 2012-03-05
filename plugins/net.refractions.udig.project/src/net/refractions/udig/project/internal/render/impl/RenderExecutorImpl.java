@@ -82,7 +82,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
                 //                styleBlackboardChanged(msg);
                 break;
             case ProjectPackage.LAYER__VISIBLE:
-                if (executor.getContext().getLayer() instanceof SelectionLayer) return;
+                if (executor.getContext().getLayer() instanceof SelectionLayer)
+                    return;
                 if (msg.getNewBooleanValue())
                     layerVisible(layer, msg);
                 else
@@ -114,7 +115,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         protected void layerVisible( Layer layer, Notification msg ) {
             RenderContext context2 = executor.getContext();
             context2.getLabelPainter().enableLayer(context2.getLayer().getID().toString());
-            if (executor.getState() == IRenderer.RENDERING) return;
+            if (executor.getState() == IRenderer.RENDERING)
+                return;
             if (executor.getState() != IRenderer.DONE || executor.dirty) {
                 RenderManager renderManager = (RenderManager) layer.getMapInternal()
                         .getRenderManager();
@@ -266,7 +268,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
             exc.printStackTrace();
         }
 
-        if (getRenderer().getState() != DISPOSED) getRenderer().setState(DISPOSED);
+        if (getRenderer().getState() != DISPOSED)
+            getRenderer().setState(DISPOSED);
     }
 
     /**
@@ -282,7 +285,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * @generated NOT
      */
     public void stopRendering() {
-        if (renderJob.cancel()) return;
+        if (renderJob.cancel())
+            return;
         final AtomicBoolean done = new AtomicBoolean(renderJob.cancel());
         IJobChangeListener listener = new JobChangeAdapter(){
             @Override
@@ -323,12 +327,14 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      */
     public void render( Graphics2D destination, IProgressMonitor monitor ) throws RenderException {
 
-        if (getState() == DISPOSED) return;
+        if (getState() == DISPOSED)
+            return;
         getRenderer().render(destination, validateMonitor(monitor));
     }
 
     private IProgressMonitor validateMonitor( IProgressMonitor monitor ) {
-        if (monitor != null) return monitor;
+        if (monitor != null)
+            return monitor;
 
         return new NullProgressMonitor();
     }
@@ -337,7 +343,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * @see net.refractions.udig.project.internal.render.Renderer#getContext()
      */
     public RenderContext getContext() {
-        if (getRenderer() == null) return null;
+        if (getRenderer() == null)
+            return null;
         return (RenderContext) getRenderer().getContext();
     }
 
@@ -505,7 +512,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         if (getState() == DISPOSED || !getRenderer().getContext().isVisible()) {
             dirty = true;
             getContext().getLayer().setStatus(ILayer.DONE);
-            if (getRenderer().getState() != IRenderer.DONE) getRenderer().setState(IRenderer.DONE);
+            if (getRenderer().getState() != IRenderer.DONE)
+                getRenderer().setState(IRenderer.DONE);
             return;
         }
 
@@ -527,7 +535,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     @Override
     public String toString() {
         String selection = ""; //$NON-NLS-1$
-        if (getContext().getLayer() instanceof SelectionLayer) selection = "Selection "; //$NON-NLS-1$
+        if (getContext().getLayer() instanceof SelectionLayer)
+            selection = "Selection "; //$NON-NLS-1$
         return getContext().getMap().getName()
                 + ":" + selection + (getRenderer() != null ? getRenderer().getName() : "null"); //$NON-NLS-1$ //$NON-NLS-2$
     }
