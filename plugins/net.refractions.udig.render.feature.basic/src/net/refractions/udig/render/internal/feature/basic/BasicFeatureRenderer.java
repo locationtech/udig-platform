@@ -38,7 +38,6 @@ import net.refractions.udig.ui.ProgressManager;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
@@ -46,13 +45,9 @@ import org.geotools.data.crs.ForceCoordinateSystemFeatureResults;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.SchemaException;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.map.DefaultMapContext;
-import org.geotools.map.DefaultMapLayer;
 import org.geotools.map.FeatureLayer;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
-import org.geotools.map.MapContext;
-import org.geotools.map.MapLayer;
 import org.geotools.map.MapViewport;
 import org.geotools.renderer.GTRenderer;
 import org.geotools.renderer.RenderListener;
@@ -356,9 +351,6 @@ public class BasicFeatureRenderer extends RendererImpl {
             // lower right
             paintArea.add(  Math.max(min.x, max.x) + expandPaintAreaBy,
                             Math.max(min.y, max.y) + expandPaintAreaBy);
-
-            graphics.setBackground(new Color(0,0,0,0));
-            graphics.clearRect(paintArea.x, paintArea.y, paintArea.width, paintArea.height);
 
             validBounds=getContext().worldBounds(paintArea);
 
