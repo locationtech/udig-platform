@@ -1269,30 +1269,45 @@ public class CatalogImpl extends ICatalog {
         List<IService> availableServices = new ArrayList<IService>();//services already in catalog
 
         IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
-
+        
+        // IOException used to report a problem connecting; usually we only have one
+        // Service willing to try with a given set of parameters so this works out okay
+        //
+        IOException eek = null;
         try {
 
             if (params != null && !params.isEmpty()) {
-                Set<IService> results = new HashSet<IService>(factory.createService(params));
+                List<IService> createdServices = factory.createService(params);
+                Set<IService> results = new HashSet<IService>(createdServices);
+                if( results.isEmpty() ){
+                    return createdServices; // nothing was willing to try connecting!
+                }
                 for( IService service : results ) {
-                    
-                    IServiceInfo info = service.getInfo(new SubProgressMonitor(monitor, 10));
-                    
-                    if (info == null) {
-                        CatalogPlugin.trace("unable to connect to " + service.getID(), null);
-                        continue; // skip unable to connect
+                    try {
+                        IServiceInfo info = service.getInfo(new SubProgressMonitor(monitor, 10));
+                        if (info == null) {
+                            CatalogPlugin.trace("unable to connect to " + service.getID(), null);
+                            continue; // skip unable to connect
+                        }
+                        availableServices.add(service);
                     }
-
-                    availableServices.add(service);
+                    catch( Throwable t ){
+                        // unable to use the service - getInfo did not return correctly!
+                        if( t instanceof IOException ){
+                            eek = (IOException) t;
+                        }
+                        else {
+                            t.printStackTrace();
+                        }
+                    }
                 }
 
             }
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         } finally {
             monitor.done();
+        }
+        if( eek != null ){
+            throw eek; // unable to connect due to error!
         }
         
         return prioritise(availableServices, monitor); //return a prioritise list

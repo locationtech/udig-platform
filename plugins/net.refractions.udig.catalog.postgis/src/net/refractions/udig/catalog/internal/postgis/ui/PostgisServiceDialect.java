@@ -27,7 +27,7 @@ public class PostgisServiceDialect extends DatabaseServiceDialect {
 
     public PostgisServiceDialect() {
         super(SCHEMA, DATABASE, HOST, PORT, USER, PASSWD, PostgisServiceExtension2
-                .getPram(DBTYPE.key), "postgisng", "jdbc.postgis", new DatabaseWizardLocalization()); //$NON-NLS-1$
+                .getPram(DBTYPE.key), "postgis", "jdbc.postgis", new DatabaseWizardLocalization()); //$NON-NLS-1$
 
     }
     @Override
