@@ -38,21 +38,21 @@ import org.eclipse.emf.ecore.InternalEObject;
  * Wraps a EList and makes sure that when a layer is added the layer interceptor is fired and a deep
  * adapter is added.
  * <p>
- * This is used to go from an object (Map or ContextModel) to a list of layers; and set up the inverse relationship
- * so that layer.getMap() works.
+ * This is used to go from an object (Map or ContextModel) to a list of layers (it does not set up a reverse relationship)
+ * so you will need to figure out how to call layer.setMap yourself.
  * 
  * @author Jesse
  * @since 1.1.0
  */
-class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList<Layer> {
+class LayersList3 extends SynchronizedEObjectResolvingEList<Layer> {
 
     /** long serialVersionUID field */
     private static final long serialVersionUID = 4584718175140573610L;
 
     private Collection<Adapter> deepAdapters = new CopyOnWriteArraySet<Adapter>();
 
-    public LayersList2( Class<Layer> dataClass, InternalEObject owner, int featureID, int inverseFeatureID ) {
-        super(dataClass, owner, featureID, inverseFeatureID);
+    public LayersList3( Class<Layer> dataClass, InternalEObject owner, int featureID ) {
+        super(dataClass, owner, featureID );
     }
 
     /**
