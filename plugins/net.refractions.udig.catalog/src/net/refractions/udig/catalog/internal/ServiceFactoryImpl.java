@@ -236,6 +236,8 @@ public class ServiceFactoryImpl extends IServiceFactory {
             ServiceExtension serviceExtension = entry.getValue();
             try {
                 // Attempt to construct a service, and add to the list if available.
+                
+                // Put a break point here to watch every serviceExtension try and connect
                 IService service = serviceExtension.createService(null, connectionParameters);
                 if (service != null) {
                     CatalogImpl.runInterceptor(service, ServiceInterceptor.CREATED_ID);
