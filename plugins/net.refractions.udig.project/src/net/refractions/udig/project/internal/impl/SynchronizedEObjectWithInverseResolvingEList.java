@@ -24,25 +24,30 @@ import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 
 /**
  * Synchronizes reads and writes but not within synchronization block during notification. When
- * iterating make sure to use: synchronized( list ){ do iterations }
+ * iterating make sure to use:<pre>
+ * synchronized( list ){
+ *   for( Object item : list ){
+ *      // do iterations
+ *   }
+ * }</pre>
  * 
  * @author Jesse
  * @since 1.1.0
  */
-public class SynchronizedEObjectWithInverseResolvingEList extends EObjectWithInverseResolvingEList {
+public class SynchronizedEObjectWithInverseResolvingEList<E> extends EObjectWithInverseResolvingEList<E> {
 
     /** long serialVersionUID field */
     private static final long serialVersionUID = -7051345525714825128L;
 
     private transient final Lock              lock             = new UDIGDisplaySafeLock();
 
-    public SynchronizedEObjectWithInverseResolvingEList( Class dataClass, InternalEObject owner,
+    public SynchronizedEObjectWithInverseResolvingEList( Class<E> dataClass, InternalEObject owner,
             int featureID, int inverseFeatureID ) {
         super(dataClass, owner, featureID, inverseFeatureID);
     }
 
     @Override
-    protected Object assign( int index, Object object ) {
+    protected E assign( int index, E object ) {
         lock.lock();
         try {
             return super.assign(index, object);
@@ -52,7 +57,7 @@ public class SynchronizedEObjectWithInverseResolvingEList extends EObjectWithInv
     }
 
     @Override
-    protected Object doRemove( int index ) {
+    protected E doRemove( int index ) {
         lock.lock();
         try {
             return super.doRemove(index);
@@ -72,7 +77,7 @@ public class SynchronizedEObjectWithInverseResolvingEList extends EObjectWithInv
     }
 
     @Override
-    public Object get( int index ) {
+    public E get( int index ) {
         lock.lock();
         try {
             return super.get(index);
@@ -92,7 +97,7 @@ public class SynchronizedEObjectWithInverseResolvingEList extends EObjectWithInv
     }
 
     @Override
-    public boolean containsAll( Collection collection ) {
+    public boolean containsAll( Collection<?> collection ) {
         lock.lock();
         try {
             return super.containsAll(collection);
