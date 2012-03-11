@@ -308,11 +308,6 @@
 		<!-- additional untested plugins so we can connect using generic geotools datastore -->
 		<dependency>
 			<groupId>org.geotools</groupId>
-			<artifactId>gt-postgis-versioned</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
 			<artifactId>gt-property</artifactId>
 			<version>${geotools.version}</version>
 		</dependency>
