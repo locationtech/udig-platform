@@ -7,6 +7,7 @@ import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.IFolder;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ILayerLegendItem;
 import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProject;
@@ -21,6 +22,7 @@ import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerFactory;
+import net.refractions.udig.project.internal.LayerLegendItem;
 import net.refractions.udig.project.internal.LegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Project;
@@ -214,12 +216,20 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
             return createFolderAdapter();
         }
         @Override
+        public Adapter caseILayerLegendItem( ILayerLegendItem object ) {
+            return createILayerLegendItemAdapter();
+        }
+        @Override
         public Adapter caseLegendItem( LegendItem object ) {
             return createLegendItemAdapter();
         }
         @Override
         public Adapter caseILegendItem( ILegendItem object ) {
             return createILegendItemAdapter();
+        }
+        @Override
+        public Adapter caseLayerLegendItem( LayerLegendItem object ) {
+            return createLayerLegendItemAdapter();
         }
         @Override
         public Adapter defaultCase( EObject object ) {
@@ -469,6 +479,20 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.ILayerLegendItem <em>ILayer Legend Item</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see net.refractions.udig.project.ILayerLegendItem
+     * @generated
+     */
+    public Adapter createILayerLegendItemAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.LegendItem <em>Legend Item</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -493,6 +517,20 @@ public class ProjectAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createILegendItemAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link net.refractions.udig.project.internal.LayerLegendItem <em>Layer Legend Item</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see net.refractions.udig.project.internal.LayerLegendItem
+     * @generated
+     */
+    public Adapter createLayerLegendItemAdapter() {
         return null;
     }
 

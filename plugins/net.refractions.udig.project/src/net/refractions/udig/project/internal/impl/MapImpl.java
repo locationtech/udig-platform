@@ -40,6 +40,7 @@ import net.refractions.udig.project.internal.ContextModelListenerAdapter;
 import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerFactory;
+import net.refractions.udig.project.internal.LegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.Project;

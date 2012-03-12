@@ -12,6 +12,7 @@ import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.IFolder;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ILayerLegendItem;
 import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProject;
@@ -26,6 +27,7 @@ import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerFactory;
+import net.refractions.udig.project.internal.LayerLegendItem;
 import net.refractions.udig.project.internal.LegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Project;
@@ -192,6 +194,8 @@ public class ProjectSwitch<T> extends Switch<T> {
             Folder folder = (Folder) theEObject;
             T result = caseFolder(folder);
             if (result == null) result = caseIFolder(folder);
+            if (result == null) result = caseLegendItem(folder);
+            if (result == null) result = caseILegendItem(folder);
             if (result == null) result = defaultCase(theEObject);
             return result;
         }
@@ -199,6 +203,15 @@ public class ProjectSwitch<T> extends Switch<T> {
             LegendItem legendItem = (LegendItem) theEObject;
             T result = caseLegendItem(legendItem);
             if (result == null) result = caseILegendItem(legendItem);
+            if (result == null) result = defaultCase(theEObject);
+            return result;
+        }
+        case ProjectPackage.LAYER_LEGEND_ITEM: {
+            LayerLegendItem layerLegendItem = (LayerLegendItem) theEObject;
+            T result = caseLayerLegendItem(layerLegendItem);
+            if (result == null) result = caseLegendItem(layerLegendItem);
+            if (result == null) result = caseILayerLegendItem(layerLegendItem);
+            if (result == null) result = caseILegendItem(layerLegendItem);
             if (result == null) result = defaultCase(theEObject);
             return result;
         }
@@ -442,6 +455,21 @@ public class ProjectSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>ILayer Legend Item</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>ILayer Legend Item</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseILayerLegendItem( ILayerLegendItem object ) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Legend Item</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -468,6 +496,21 @@ public class ProjectSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseILegendItem( ILegendItem object ) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Layer Legend Item</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Layer Legend Item</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseLayerLegendItem( LayerLegendItem object ) {
         return null;
     }
 
