@@ -159,7 +159,20 @@ public class FolderImpl extends EObjectImpl implements Folder {
     public String getName() {
         return name;
     }
-
+    
+    /**
+     * Look up the MapImpl that is containing this legend item.
+     * 
+     * @return MapImpl or null if we have not been added to a map yet.
+     */
+    public MapImpl getMapInternal(){
+        InternalEObject container = eContainer;
+        while( container != null && !(container instanceof MapImpl)){
+            container = container.eInternalContainer();
+        }
+        return (MapImpl) container;
+    }
+    
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

@@ -321,6 +321,37 @@ public class ToolManager implements IToolManager {
 		return null;
 	}
 
+	
+    /**
+     * Find a tool proxy with the provided ID.
+     * <p>This searches modal tools, background tools, and
+     * action tools</p>
+     * @param toolID toolId to search for
+     * @return ToolProxy of tool if found or null
+     */
+	public ToolProxy findToolProxy(String toolID) {
+		for(ModalToolCategory category : modalCategories){
+			for (ModalItem item : category) {
+				if(toolID.equals(item.getId())){
+					return (ToolProxy)item;
+				}
+			}
+		}
+		for(ActionToolCategory category : actionCategories){
+			for (ModalItem item : category) {
+				if(toolID.equals(item.getId())){
+					return (ToolProxy)item;
+				}
+			}
+		}
+		for(ToolProxy item : backgroundTools){
+			if(toolID.equals(item.getId())){
+				return (ToolProxy)item;
+			}
+		}
+		return null;
+	}
+	
     private void addToModalCategory( String categoryId, ToolProxy proxy ) {
         if( filterTool(categoryId, proxy, ModalToolCategory.class) ){
             return;

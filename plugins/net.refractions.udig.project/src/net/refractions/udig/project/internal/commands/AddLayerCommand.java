@@ -72,10 +72,12 @@ public class AddLayerCommand extends AbstractCommand implements UndoableMapComma
      */
     public void run( IProgressMonitor monitor ) throws Exception {
         selectedLayer=getMap().getEditManager().getSelectedLayer();
-        if (index < 0 || index > getMap().getLayersInternal().size())
+        if (index < 0 || index > getMap().getLayersInternal().size()){
             getMap().getLayersInternal().add(layer);
-        else
+        }
+        else{
             getMap().getLayersInternal().add(index, layer);
+        }
     }
 
     /**

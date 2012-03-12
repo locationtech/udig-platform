@@ -20,6 +20,7 @@ import java.util.concurrent.locks.Lock;
 import net.refractions.udig.ui.UDIGDisplaySafeLock;
 
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 
 /**
@@ -34,16 +35,16 @@ import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
  * @author Jesse
  * @since 1.1.0
  */
-public class SynchronizedEObjectWithInverseResolvingEList<E> extends EObjectWithInverseResolvingEList<E> {
+public class SynchronizedEObjectResolvingEList<E> extends EObjectResolvingEList<E> {
 
     /** long serialVersionUID field */
     private static final long serialVersionUID = -7051345525714825128L;
 
     private transient final Lock              lock             = new UDIGDisplaySafeLock();
 
-    public SynchronizedEObjectWithInverseResolvingEList( Class<E> dataClass, InternalEObject owner,
-            int featureID, int inverseFeatureID ) {
-        super(dataClass, owner, featureID, inverseFeatureID);
+    public SynchronizedEObjectResolvingEList( Class<E> dataClass, InternalEObject owner,
+            int featureID ) {
+        super(dataClass, owner, featureID );
     }
 
     @Override
