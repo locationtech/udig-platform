@@ -33,6 +33,7 @@ import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerFactory;
+import net.refractions.udig.project.internal.LayerLegendItem;
 import net.refractions.udig.project.internal.LegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Project;
@@ -152,6 +153,8 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
             return createFolder();
         case ProjectPackage.LEGEND_ITEM:
             return createLegendItem();
+        case ProjectPackage.LAYER_LEGEND_ITEM:
+            return createLayerLegendItem();
         default:
             throw new IllegalArgumentException(
                     "The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -425,6 +428,16 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
     public LegendItem createLegendItem() {
         LegendItemImpl legendItem = new LegendItemImpl();
         return legendItem;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public LayerLegendItem createLayerLegendItem() {
+        LayerLegendItemImpl layerLegendItem = new LayerLegendItemImpl();
+        return layerLegendItem;
     }
 
     /**
@@ -1186,7 +1199,7 @@ public class ProjectFactoryImpl extends EFactoryImpl implements ProjectFactory {
         map.setProjectInternal(owner);
         map.setViewportModelInternal(RenderFactory.eINSTANCE.createViewportModel());
         runMapCreationInterceptors(map);
-        if (!layers.isEmpty()){
+        if (!layers.isEmpty()) {
             map.getLayersInternal().addAll(layers);
         }
         return map;

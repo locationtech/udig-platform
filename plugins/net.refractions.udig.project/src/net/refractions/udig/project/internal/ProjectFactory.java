@@ -143,6 +143,15 @@ public interface ProjectFactory extends EFactory {
     LegendItem createLegendItem();
 
     /**
+     * Returns a new object of class '<em>Layer Legend Item</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Layer Legend Item</em>'.
+     * @generated
+     */
+    LayerLegendItem createLayerLegendItem();
+
+    /**
      * Returns a new object of class '<em>Edit Manager</em>'.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->

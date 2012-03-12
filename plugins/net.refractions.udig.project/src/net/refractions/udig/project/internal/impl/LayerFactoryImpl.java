@@ -361,11 +361,11 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
         ICatalog localCatalog = local;
         ID layerResourceID = layer.getResourceID();
         IProgressMonitor monitor = ProgressManager.instance().get();
-        List<IResolve> resolves = localCatalog.find(layerResourceID, monitor );
-        if( resolves.isEmpty() ){
+        List<IResolve> resolves = localCatalog.find(layerResourceID, monitor);
+        if (resolves.isEmpty()) {
             // Identifier lookup is being inconsistent; this often happens when code trips up over
             // converting URLs to and from Files
-            throw new IOException("Could not find "+layerResourceID +" in local catalog");
+            throw new IOException("Could not find " + layerResourceID + " in local catalog");
         }
         EList resources = new EDataTypeUniqueEList(IGeoResource.class, this,
                 ProjectPackage.LAYER__GEO_RESOURCES);
@@ -386,7 +386,7 @@ public class LayerFactoryImpl extends EObjectImpl implements LayerFactory {
         }
         // This is the total list of resources capable of providing information
         ((LayerImpl) layer).geoResources = resources;
-        
+
         // This is the "best" match; usually the one the user supplied
         layer.setGeoResource(preferredResource);
 
