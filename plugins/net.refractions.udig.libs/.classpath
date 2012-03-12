@@ -127,7 +127,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/opendap-2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.w3.xlink-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/picocontainer-1.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/postgis-driver-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/postgresql-8.4-701.jdbc3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/scannotation-1.0.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-api-1.5.6.jar"/>
