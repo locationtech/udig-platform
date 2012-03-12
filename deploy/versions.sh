@@ -8,7 +8,7 @@ export BASE=`dirname $0`
 export INSTALLER=${BASE}/installer
 export TARGET=${BASE}/target
 #export TARGET=${BASE}/../features/net.refractions.udig-product/target/products/
-export VERSION=1.3.1
+export VERSION=1.3-SNAPSHOT
 export BUILD=${BASE}/build
 
 # net.refractions.udig.libs "qualifier" for SDK (used to update libs source reference
