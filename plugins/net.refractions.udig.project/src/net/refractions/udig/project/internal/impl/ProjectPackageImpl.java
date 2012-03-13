@@ -18,6 +18,7 @@ import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.IFolder;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ILayerLegendItem;
 import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IProject;
@@ -41,6 +42,7 @@ import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerFactory;
+import net.refractions.udig.project.internal.LayerLegendItem;
 import net.refractions.udig.project.internal.LegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Project;
@@ -279,6 +281,13 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass iLayerLegendItemEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EClass legendItemEClass = null;
 
     /**
@@ -287,6 +296,13 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * @generated
      */
     private EClass iLegendItemEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass layerLegendItemEClass = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1318,26 +1334,8 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getFolder_Name() {
-        return (EAttribute) folderEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getFolder_Shown() {
-        return (EAttribute) folderEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getFolder_Icon() {
-        return (EAttribute) folderEClass.getEStructuralFeatures().get(3);
+    public EClass getILayerLegendItem() {
+        return iLayerLegendItemEClass;
     }
 
     /**
@@ -1383,6 +1381,24 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      */
     public EClass getILegendItem() {
         return iLegendItemEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getLayerLegendItem() {
+        return layerLegendItemEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getLayerLegendItem_Layer() {
+        return (EReference) layerLegendItemEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -1802,9 +1818,8 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
 
         folderEClass = createEClass(FOLDER);
         createEReference(folderEClass, FOLDER__ITEMS);
-        createEAttribute(folderEClass, FOLDER__NAME);
-        createEAttribute(folderEClass, FOLDER__SHOWN);
-        createEAttribute(folderEClass, FOLDER__ICON);
+
+        iLayerLegendItemEClass = createEClass(ILAYER_LEGEND_ITEM);
 
         legendItemEClass = createEClass(LEGEND_ITEM);
         createEAttribute(legendItemEClass, LEGEND_ITEM__NAME);
@@ -1812,6 +1827,9 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         createEAttribute(legendItemEClass, LEGEND_ITEM__ICON);
 
         iLegendItemEClass = createEClass(ILEGEND_ITEM);
+
+        layerLegendItemEClass = createEClass(LAYER_LEGEND_ITEM);
+        createEReference(layerLegendItemEClass, LAYER_LEGEND_ITEM__LAYER);
 
         // Create data types
         coordinateEDataType = createEDataType(COORDINATE);
@@ -1896,7 +1914,10 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
         styleBlackboardEClass.getESuperTypes().add(this.getCloneable());
         blackboardEClass.getESuperTypes().add(this.getIBlackboard());
         folderEClass.getESuperTypes().add(this.getIFolder());
+        folderEClass.getESuperTypes().add(this.getLegendItem());
         legendItemEClass.getESuperTypes().add(this.getILegendItem());
+        layerLegendItemEClass.getESuperTypes().add(this.getLegendItem());
+        layerLegendItemEClass.getESuperTypes().add(this.getILayerLegendItem());
 
         // Initialize classes and features; add operations and parameters
         initEClass(comparableEClass, Object.class,
@@ -2336,18 +2357,9 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
                 this.getILegendItem(),
                 null,
                 "items", null, 0, -1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getFolder_Name(),
-                ecorePackage.getEString(),
-                "name", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getFolder_Shown(),
-                ecorePackage.getEBoolean(),
-                "shown", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-        initEAttribute(
-                getFolder_Icon(),
-                this.getImageDescriptor(),
-                "icon", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+        initEClass(iLayerLegendItemEClass, ILayerLegendItem.class,
+                "ILayerLegendItem", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
         initEClass(legendItemEClass, LegendItem.class,
                 "LegendItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -2366,6 +2378,14 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
 
         initEClass(iLegendItemEClass, ILegendItem.class,
                 "ILegendItem", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+        initEClass(layerLegendItemEClass, LayerLegendItem.class,
+                "LayerLegendItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(
+                getLayerLegendItem_Layer(),
+                this.getLayer(),
+                null,
+                "layer", null, 1, 1, LayerLegendItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
         // Initialize data types
         initEDataType(coordinateEDataType, Coordinate.class,
