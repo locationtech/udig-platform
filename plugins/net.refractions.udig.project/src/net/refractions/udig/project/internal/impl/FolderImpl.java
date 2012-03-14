@@ -18,23 +18,21 @@ package net.refractions.udig.project.internal.impl;
 
 import java.util.Collection;
 import java.util.List;
+
 import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LegendItem;
-import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jface.resource.ImageDescriptor;
 
@@ -45,9 +43,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getName <em>Name</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#isShown <em>Shown</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getIcon <em>Icon</em>}</li>
- *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getName <em>Name</em>}</li>
  *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getItems <em>Items</em>}</li>
  * </ul>
  * </p>
@@ -64,6 +62,7 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * @ordered
      */
     protected static final boolean SHOWN_EDEFAULT = false;
+    
     /**
      * The cached value of the '{@link #isShown() <em>Shown</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -122,7 +121,7 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * @generated
      * @ordered
      */
-    protected EList<LegendItem> items;
+    protected EList<ILegendItem> items;
 
     /**
      * <!-- begin-user-doc -->
@@ -148,13 +147,13 @@ public class FolderImpl extends EObjectImpl implements Folder {
      * <!-- end-user-doc -->
      * @generated not
      */
-    public List<LegendItem> getItems() {
+    public List<ILegendItem> getItems() {
         if (items == null) {
-            items = new EObjectContainmentEList<LegendItem>(LegendItem.class, this,
+            items = new EObjectContainmentEList<ILegendItem>(ILegendItem.class, this,
                     ProjectPackage.FOLDER__ITEMS){
                 private static final long serialVersionUID = -4822822903930615987L;
                 @Override
-                protected void didAdd( int index, LegendItem legendItem ) {
+                protected void didAdd( int index, ILegendItem legendItem ) {
                     if (legendItem instanceof Layer) {
                         Layer layer = (Layer) legendItem;
                         List<Layer> layers = getMapInternal().getLayersInternal();
@@ -164,7 +163,7 @@ public class FolderImpl extends EObjectImpl implements Folder {
                     }
                     super.didAdd(index, legendItem);
                 }
-                protected void didRemove( int index, LegendItem legendItem ) {
+                protected void didRemove( int index, ILegendItem legendItem ) {
                     if (legendItem instanceof Layer) {
                         Layer layer = (Layer) legendItem;
                         List<Layer> layers = getMapInternal().getLayersInternal();
@@ -281,12 +280,12 @@ public class FolderImpl extends EObjectImpl implements Folder {
     @Override
     public Object eGet( int featureID, boolean resolve, boolean coreType ) {
         switch( featureID ) {
+        case ProjectPackage.FOLDER__NAME:
+            return getName();
         case ProjectPackage.FOLDER__SHOWN:
             return isShown();
         case ProjectPackage.FOLDER__ICON:
             return getIcon();
-        case ProjectPackage.FOLDER__NAME:
-            return getName();
         case ProjectPackage.FOLDER__ITEMS:
             return getItems();
         }
@@ -302,18 +301,18 @@ public class FolderImpl extends EObjectImpl implements Folder {
     @Override
     public void eSet( int featureID, Object newValue ) {
         switch( featureID ) {
+        case ProjectPackage.FOLDER__NAME:
+            setName((String) newValue);
+            return;
         case ProjectPackage.FOLDER__SHOWN:
             setShown((Boolean) newValue);
             return;
         case ProjectPackage.FOLDER__ICON:
             setIcon((ImageDescriptor) newValue);
             return;
-        case ProjectPackage.FOLDER__NAME:
-            setName((String) newValue);
-            return;
         case ProjectPackage.FOLDER__ITEMS:
             getItems().clear();
-            getItems().addAll((Collection< ? extends LegendItem>) newValue);
+            getItems().addAll((Collection< ? extends ILegendItem>) newValue);
             return;
         }
         super.eSet(featureID, newValue);
@@ -327,14 +326,14 @@ public class FolderImpl extends EObjectImpl implements Folder {
     @Override
     public void eUnset( int featureID ) {
         switch( featureID ) {
+        case ProjectPackage.FOLDER__NAME:
+            setName(NAME_EDEFAULT);
+            return;
         case ProjectPackage.FOLDER__SHOWN:
             setShown(SHOWN_EDEFAULT);
             return;
         case ProjectPackage.FOLDER__ICON:
             setIcon(ICON_EDEFAULT);
-            return;
-        case ProjectPackage.FOLDER__NAME:
-            setName(NAME_EDEFAULT);
             return;
         case ProjectPackage.FOLDER__ITEMS:
             getItems().clear();
@@ -351,12 +350,12 @@ public class FolderImpl extends EObjectImpl implements Folder {
     @Override
     public boolean eIsSet( int featureID ) {
         switch( featureID ) {
+        case ProjectPackage.FOLDER__NAME:
+            return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         case ProjectPackage.FOLDER__SHOWN:
             return shown != SHOWN_EDEFAULT;
         case ProjectPackage.FOLDER__ICON:
             return ICON_EDEFAULT == null ? icon != null : !ICON_EDEFAULT.equals(icon);
-        case ProjectPackage.FOLDER__NAME:
-            return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         case ProjectPackage.FOLDER__ITEMS:
             return items != null && !items.isEmpty();
         }
@@ -378,12 +377,12 @@ public class FolderImpl extends EObjectImpl implements Folder {
         }
         if (baseClass == LegendItem.class) {
             switch( derivedFeatureID ) {
+            case ProjectPackage.FOLDER__NAME:
+                return ProjectPackage.LEGEND_ITEM__NAME;
             case ProjectPackage.FOLDER__SHOWN:
                 return ProjectPackage.LEGEND_ITEM__SHOWN;
             case ProjectPackage.FOLDER__ICON:
                 return ProjectPackage.LEGEND_ITEM__ICON;
-            case ProjectPackage.FOLDER__NAME:
-                return ProjectPackage.LEGEND_ITEM__NAME;
             default:
                 return -1;
             }
@@ -406,12 +405,12 @@ public class FolderImpl extends EObjectImpl implements Folder {
         }
         if (baseClass == LegendItem.class) {
             switch( baseFeatureID ) {
+            case ProjectPackage.LEGEND_ITEM__NAME:
+                return ProjectPackage.FOLDER__NAME;
             case ProjectPackage.LEGEND_ITEM__SHOWN:
                 return ProjectPackage.FOLDER__SHOWN;
             case ProjectPackage.LEGEND_ITEM__ICON:
                 return ProjectPackage.FOLDER__ICON;
-            case ProjectPackage.LEGEND_ITEM__NAME:
-                return ProjectPackage.FOLDER__NAME;
             default:
                 return -1;
             }

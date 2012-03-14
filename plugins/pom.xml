@@ -112,7 +112,6 @@
     <module>eu.udig.catalog.csw</module>
     <module>eu.udig.catalog.jgrass</module>
     <module>eu.udig.catalog.teradata</module>
-    <module>eu.udig.libs.teradata</module>
     <module>eu.udig.mapquest.apiwrapper</module>
     <module>eu.udig.omsbox</module>
     <module>eu.udig.style.advanced</module>

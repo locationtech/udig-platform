@@ -55,5 +55,7 @@ public interface Folder extends IFolder, LegendItem {
      * @model containment="true"
      * @generated
      */
-    List<LegendItem> getItems();
+
+    List<ILegendItem> getItems();
+
 } // Folder

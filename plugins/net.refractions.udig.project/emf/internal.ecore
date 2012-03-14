@@ -220,8 +220,10 @@
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="Folder" eSuperTypes="#//IFolder #//LegendItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
-        eType="#//LegendItem" containment="true" resolveProxies="false"/>
+        eType="#//ILegendItem" containment="true" resolveProxies="false"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ILayerLegendItem" instanceClassName="net.refractions.udig.project.ILayerLegendItem"
+      abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="LegendItem" eSuperTypes="#//ILegendItem">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="shown" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="icon" eType="#//ImageDescriptor"/>
@@ -262,4 +264,7 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Color" instanceClassName="java.awt.Color"/>
   <eClassifiers xsi:type="ecore:EDataType" name="BrewerPalette" instanceClassName="org.geotools.brewer.color.BrewerPalette"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Interaction" instanceClassName="net.refractions.udig.project.Interaction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LayerLegendItem" eSuperTypes="#//LegendItem #//ILayerLegendItem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layer" lowerBound="1" eType="#//Layer"/>
+  </eClassifiers>
 </ecore:EPackage>

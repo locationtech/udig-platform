@@ -336,6 +336,29 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.LayerLegendItem} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected LayerLegendItemItemProvider layerLegendItemItemProvider;
+
+    /**
+     * This creates an adapter for a {@link net.refractions.udig.project.internal.LayerLegendItem}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createLayerLegendItemAdapter() {
+        if (layerLegendItemItemProvider == null) {
+            layerLegendItemItemProvider = new LayerLegendItemItemProvider(this);
+        }
+
+        return layerLegendItemItemProvider;
+    }
+
+    /**
      * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.EditManager} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

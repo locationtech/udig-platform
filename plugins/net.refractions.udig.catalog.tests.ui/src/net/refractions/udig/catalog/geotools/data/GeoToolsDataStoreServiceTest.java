@@ -41,7 +41,7 @@ import org.opengis.feature.type.Name;
  * @author Jody Garnett
  * @since 1.2.0
  */
-public class GeoToolsDataStoreService {
+public class GeoToolsDataStoreServiceTest {
     private static Activator activator;
     private static ServiceFactoryImpl serviceFactory;
     private static IRepository local;
@@ -59,7 +59,7 @@ public class GeoToolsDataStoreService {
         // DataStoreServiceExtension extension = new DataStoreServiceExtension();
         DataStoreServiceExtension serviceExtension = serviceFactory.serviceImplementation(DataStoreServiceExtension.class);
         
-        URL target = GeoToolsDataStoreService.class.getResource("test-data/sample_data.properties");
+        URL target = GeoToolsDataStoreServiceTest.class.getResource("test-data/sample_data.properties");
         if( "bundleresource".equals(target.getProtocol())){
             target = FileLocator.toFileURL( target );
         }
