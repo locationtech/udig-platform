@@ -14,7 +14,7 @@
  *    Lesser General Public License for more details.
  *
  */
-package net.refractions.udig.filter;
+package net.refractions.udig.ui.filter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -68,7 +68,7 @@ import org.opengis.filter.expression.Expression;
  * @author Jody
  * @since 1.2.0
  */
-public class FilterViewer extends Viewer {
+public class FilterCQLEditorPart extends Viewer {
     /**
      * This is the expression we are working on here.
      * <p>
@@ -96,7 +96,7 @@ public class FilterViewer extends Viewer {
             validate();
             String after = filter != null ? CQL.toCQL(filter) : "(empty)";
             if (filter != null && !Utilities.equals(before, after)) {
-                fireSelectionChanged(new SelectionChangedEvent(FilterViewer.this, getSelection()));
+                fireSelectionChanged(new SelectionChangedEvent(FilterCQLEditorPart.this, getSelection()));
             }
         }
         public void keyPressed( KeyEvent e ) {
@@ -107,7 +107,7 @@ public class FilterViewer extends Viewer {
 
     private FunctionContentProposalProvider proposalProvider;
 
-    public FilterViewer( Composite parent ) {
+    public FilterCQLEditorPart( Composite parent ) {
         this(parent, SWT.SINGLE);
     }
     /**
@@ -127,7 +127,7 @@ public class FilterViewer extends Viewer {
      * @param parent
      * @param none
      */
-    public FilterViewer( Composite parent, int style ) {
+    public FilterCQLEditorPart( Composite parent, int style ) {
         text = new Text(parent, style);
         feedback = new ControlDecoration(text, SWT.TOP | SWT.LEFT);
 
