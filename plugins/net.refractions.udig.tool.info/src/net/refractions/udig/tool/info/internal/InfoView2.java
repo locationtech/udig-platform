@@ -588,7 +588,9 @@ public class InfoView2 extends SearchPart {
             public void run() {
                 getDetails().showPage(information);
                 Tree tree = ((TreeViewer) viewer).getTree();
-                tree.removeAll();
+                if (tree != null && !tree.isDisposed()) {
+                    tree.removeAll();
+                }
             }
         });
     }
