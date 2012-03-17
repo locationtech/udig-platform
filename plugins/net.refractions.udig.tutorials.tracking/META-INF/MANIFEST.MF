@@ -6,8 +6,8 @@ Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: net.refractions.udig.tutorials.tracking.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- net.refractions.udig.project.ui;bundle-version="1.2.0",
- net.refractions.udig.mapgraphic;bundle-version="1.2.0"
+ net.refractions.udig.project.ui,
+ net.refractions.udig.mapgraphic
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: net.refractions.udig.tutorials.tracking,

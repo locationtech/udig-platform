@@ -8,30 +8,21 @@
  */
 package net.refractions.udig.catalog.imageio;
 
-import it.geosolutions.imageio.gdalframework.GDALUtilities;
-
 import java.io.File;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ServiceExtension2;
 import net.refractions.udig.catalog.URLUtils;
+import net.refractions.udig.catalog.imageio.internal.GDALFormatProvider;
 import net.refractions.udig.catalog.imageio.internal.Messages;
 
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.coverage.grid.io.GridFormatFactorySpi;
-import org.geotools.coverageio.gdal.dted.DTEDFormatFactory;
-import org.geotools.coverageio.gdal.ecw.ECWFormatFactory;
-import org.geotools.coverageio.gdal.erdasimg.ErdasImgFormatFactory;
-import org.geotools.coverageio.gdal.mrsid.MrSIDFormatFactory;
-import org.geotools.coverageio.gdal.nitf.NITFFormatFactory;
 
 /**
  * Provides the interface to the catalog service extension point.
@@ -44,75 +35,15 @@ import org.geotools.coverageio.gdal.nitf.NITFFormatFactory;
  * @author Daniele Romagnoli, GeoSolutions
  * @author Jody Garnett
  * @author Simone Giannecchini, GeoSolutions
+ * @author Frank Gasdorf
  * 
  * @since 0.6.0
  */
 public class ImageServiceExtension implements ServiceExtension2 {
 	/** <code>URL_PARAM</code> field */
-	public final static String URL_PARAM = "URL"; //$NON-NLS-1$
+	public static final String URL_PARAM = "URL"; //$NON-NLS-1$
 
-	/** The inner MrSID Format factory*/
-	static final Map<String,GridFormatFactorySpi> factories;
-	static final Map<String,List<String>>	fileExtensions;
-
-    public static final String TYPE = "imageio"; //$NON-NLS-1$
-	static{
-		// 
-		factories= new HashMap<String, GridFormatFactorySpi>();
-		fileExtensions=new HashMap<String, List<String>>();
-		
-		// 
-		if(GDALUtilities.isGDALAvailable())
-		{
-			//
-			// add all drivers
-			//
-			
-			// mrsid
-			String driverCode="MrSID";
-			if(GDALUtilities.isDriverAvailable(driverCode))
-			{
-				factories.put(driverCode, new MrSIDFormatFactory());
-				fileExtensions.put(driverCode, Collections.singletonList("sid"));
-			}
-			
-			
-			// ecw
-			driverCode="ECW";
-			if(GDALUtilities.isDriverAvailable(driverCode))
-			{
-				factories.put(driverCode, new ECWFormatFactory());
-				fileExtensions.put(driverCode, Collections.singletonList("ecw"));
-			}		
-			
-
-			
-			// DTED
-			driverCode="DTED";
-			if(GDALUtilities.isDriverAvailable(driverCode))
-			{
-				factories.put(driverCode, new DTEDFormatFactory());
-				fileExtensions.put(driverCode,Arrays.asList("dt0","dt1", "dt2"));
-			}		
-			
-			
-			// HFA
-			driverCode="HFA";
-			if(GDALUtilities.isDriverAvailable(driverCode))
-			{
-				factories.put(driverCode, new ErdasImgFormatFactory());
-				fileExtensions.put(driverCode,Arrays.asList("dt0","dt1", "dt2"));
-			}	
-			
-			// NITF
-			driverCode="NITF";
-			if(GDALUtilities.isDriverAvailable(driverCode))
-			{
-				factories.put(driverCode, new NITFFormatFactory());
-				fileExtensions.put(driverCode,Arrays.asList("jp2","j2k"));
-			}			
-		}
-	}
+	public static final String TYPE = "imageio"; //$NON-NLS-1$
 
 	/**
 	 * Construct <code>ImageServiceExtension</code>.
@@ -160,7 +91,7 @@ public class ImageServiceExtension implements ServiceExtension2 {
 	 * @return Default instance of MrSIDFormatFactory
 	 */
 	public synchronized static GridFormatFactorySpi getFactory(final String formatName) {
-		return ImageServiceExtension.factories.get(formatName);
+		return GDALFormatProvider.factories.get(formatName);
 	}
 
 	/**
@@ -235,14 +166,11 @@ public class ImageServiceExtension implements ServiceExtension2 {
 		int split = filename.lastIndexOf(".");
 		String fileExt = split == -1 ? "" : filename.substring( split+1 );
 		String found = null;
-		FOUND: for( List<String> extensionList : fileExtensions.values() ){
-		    for( String extension : extensionList ){
-		        if( fileExt.equalsIgnoreCase( extension )){
-		            found = extension;
-		            break FOUND;
-		        }
-		    }
+		
+		if (GDALFormatProvider.supportedExtensions.contains(fileExt.toLowerCase())) {
+			found = fileExt;
 		}
+
 		if( found == null ){
 		    return Messages.ImageServiceExtension_geotoolsDisagrees;
 		}
@@ -257,7 +185,7 @@ public class ImageServiceExtension implements ServiceExtension2 {
 	}
 
 	private static GridFormatFactorySpi getFactoryForObject(URL id, File file) {
-		for(GridFormatFactorySpi spi: factories.values())
+		for(GridFormatFactorySpi spi: GDALFormatProvider.factories.values())
 		{	
 			//we know that the factory is avaiable
 			final AbstractGridFormat format = (AbstractGridFormat) spi.createFormat();

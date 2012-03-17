@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
 
+import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.command.CommandStack;
@@ -39,18 +40,22 @@ import com.vividsolutions.jts.geom.Envelope;
  */
 public interface Map extends ProjectElement, IMap {
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
      * Return's the map's context model
      * 
      * @return the map's context model
      * @model containment="true" opposite="map" many="false" settable="false"
      */
     public ContextModel getContextModel();
+
+    /**
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Map#getContextModel <em>Context Model</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Context Model</em>' containment reference.
+     * @see #getContextModel()
+     * @generated
+     */
+    void setContextModel( ContextModel value );
 
     /**
      * Returns the Viewport model for this map.
@@ -91,7 +96,7 @@ public interface Map extends ProjectElement, IMap {
      * @model
      */
     public ColourScheme getColourScheme();
-    
+
     /**
      * Sets the value of the '{@link net.refractions.udig.project.internal.Map#getColourScheme <em>Colour Scheme</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -99,15 +104,15 @@ public interface Map extends ProjectElement, IMap {
      * @see #getColourScheme()
      * @generated
      */
-    public void setColourScheme( ColourScheme value );
-    
+    void setColourScheme( ColourScheme value );
+
     /**
      * Iterates through the current layers and returns the default colours in use.
      *
      * @return 
      */
     List<Color> getMapDefaultColours();
-    
+
     /**
      * Returns the map's abstract
      * 
@@ -258,6 +263,22 @@ public interface Map extends ProjectElement, IMap {
     void setBlackBoardInternal( Blackboard value );
 
     /**
+     * Returns the value of the '<em><b>Legend</b></em>' containment reference list.
+     * The list contents are of type {@link net.refractions.udig.project.ILegendItem}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Legend</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Legend</em>' containment reference list.
+     * @see net.refractions.udig.project.internal.ProjectPackage#getMap_Legend()
+     * @model type="net.refractions.udig.project.internal.ILegendItem" containment="true"
+     * @generated
+     */
+    List<ILegendItem> getLegend();
+
+    /**
      * Returns all the layers contained in the map. The list is mutable and events will be raised if
      * the list is modified.
      * 
@@ -271,21 +292,21 @@ public interface Map extends ProjectElement, IMap {
      *
      * @param adapter adapter to add as a deep adapter
      */
-    public void addDeepAdapter(Adapter adapter);
+    public void addDeepAdapter( Adapter adapter );
     /**
      * Removes the adapter from all layers and context model.
      *
      *@see #addDeepAdapter(Adapter)
      * @param adapter adapter to remove.
      */
-    public void removeDeepAdapter(Adapter adapter);
+    public void removeDeepAdapter( Adapter adapter );
     /**
      * Increases the ZOrder of the layer so it is rendered earlier with incomparison to the other
      * layers. If the Layer is at the bottom of the render list(first to be drawn) it is not
      * affected.
      * 
      * @param layer The layer whose rendering order will be modified
-    */
+     */
     public void lowerLayer( Layer layer );
     /**
      * Decreases the ZOrder of the layer so it is rendered later with incomparison to the other
@@ -341,7 +362,7 @@ public interface Map extends ProjectElement, IMap {
      *        current selection.
      */
     public void select( Filter filter, boolean add );
-    
+
     /**
      * Makes a selection in a specified layer of this map (not necessarily a selected layer ).
      * Does nothing if the specified layer does not belong to this map.
@@ -349,6 +370,6 @@ public interface Map extends ProjectElement, IMap {
      * @param filter
      * @param layer
      */
-    public void select (Filter filter, ILayer layer);
+    public void select( Filter filter, ILayer layer );
 
 }

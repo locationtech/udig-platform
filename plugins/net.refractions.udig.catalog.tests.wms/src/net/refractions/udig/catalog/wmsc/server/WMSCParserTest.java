@@ -1,3 +1,17 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2011, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.catalog.wmsc.server;
 
 import static org.junit.Assert.assertFalse;
@@ -15,7 +29,7 @@ public class WMSCParserTest {
 
     @Test
     public void testGeoWebCache() throws Exception {
-        URL url = WMSCParserTest.class.getResource("wmscCapabilities3.xml");
+        //URL url = WMSCParserTest.class.getResource("wmscCapabilities3.xml");
         InputStream stream = WMSCParserTest.class.getResourceAsStream("wmscCapabilities3.xml");
         // String xml = WMSCCapabilitiesResponse.convertStreamToString(stream);
 
@@ -65,7 +79,7 @@ public class WMSCParserTest {
     }
     @Test
     public void testEsriMapCapabilities() throws Exception {
-        URL url = WMSCParserTest.class.getResource("esrimapCapabilities.xml");
+        //URL url = WMSCParserTest.class.getResource("esrimapCapabilities.xml");
         InputStream stream = WMSCParserTest.class.getResourceAsStream("esrimapCapabilities.xml");
         // String xml = WMSCCapabilitiesResponse.convertStreamToString(stream);
 
@@ -82,7 +96,7 @@ public class WMSCParserTest {
     }
     @Test
     public void testTiledVendorSpecificNested() throws Exception {
-        URL url = WMSCParserTest.class.getResource("tiledVendorSpecificNested.xml");
+        //URL url = WMSCParserTest.class.getResource("tiledVendorSpecificNested.xml");
         InputStream stream = WMSCParserTest.class.getResourceAsStream("tiledVendorSpecificNested.xml");
         // String xml = WMSCCapabilitiesResponse.convertStreamToString(stream);
 

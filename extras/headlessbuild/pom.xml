@@ -1,27 +1,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>net.refractions.udig</groupId>
-	<artifactId>headlessbuild</artifactId>
-	<version>0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
-	<inceptionYear>2008</inceptionYear>
-	<properties>
-		<scala.version>2.7.1</scala.version>
-		<!-- available targets are clean,update,app,sdk and package  -->
-		<targets>update,app,package,sdk</targets>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>net.pragmaticdesign</groupId>
-			<artifactId>scant</artifactId>
-			<version>0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.scala-lang</groupId>
-			<artifactId>scala-library</artifactId>
-			<version>${scala.version}</version>
-		</dependency>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.refractions.udig</groupId>
+    <artifactId>headlessbuild</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <inceptionYear>2008</inceptionYear>
+    <properties>
+        <scala.version>2.7.1</scala.version>
+        <!-- available targets are clean,update,app,sdk and package  -->
+        <targets>update,app,package,sdk</targets>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>net.pragmaticdesign</groupId>
+            <artifactId>scant</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
         <dependency>
             <groupId>ant</groupId>
             <artifactId>ant-jakarta-regexp</artifactId>
@@ -32,91 +32,91 @@
             <artifactId>ant-jakarta-oro</artifactId>
             <version>1.6.1</version>
         </dependency>
-		<dependency>
+        <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-ant-tasks</artifactId>
             <version>2.0.9</version>
         </dependency>
-		<dependency>
-			<groupId>org.scalaforge</groupId>
-			<artifactId>scalax</artifactId>
-			<version>0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.scala-tools</groupId>
-			<artifactId>maven-scala-plugin</artifactId>
-			<version>2.7-JESSE</version>
-		</dependency>
-	</dependencies>
-	<build>
-	  <defaultGoal>compile</defaultGoal>
-		<sourceDirectory>src/main/scala</sourceDirectory>
-		<testSourceDirectory>src/test/scala</testSourceDirectory>
-		<plugins>
-			<plugin>
-				<groupId>org.scala-tools</groupId>
-				<artifactId>maven-scala-plugin</artifactId>
-			    <version>2.7-JESSE</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-							<!-- uncomment this when we have tests
-							<goal>testCompile</goal> -->
-							<goal>script</goal>
-						</goals>
-						<phase>compile</phase>
-					</execution>
-				</executions>
-				<configuration>
-					<scalaVersion>${scala.version}</scalaVersion>
-					<scriptFile>src/script/scala/main.scala</scriptFile>
-					<removeFromClasspath>ant-1.6.2.jar</removeFromClasspath>
-					<keepGeneratedScript>true</keepGeneratedScript>
-				</configuration>
-			</plugin>
-<!--			<plugin>
-				<groupId>org.scala-tools</groupId>
-				<artifactId>maven-scala-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>script</goal>
-						</goals>
-						<phase>package</phase>
-					</execution>
-				</executions>
-				<configuration>
-					<scalaVersion>${scala.version}</scalaVersion>
-					<scriptFile>src/script/scala/main.scala</scriptFile>
-					<removeFromClasspath>ant-1.6.2.jar</removeFromClasspath>
-					<keepGeneratedScript>true</keepGeneratedScript>
-				</configuration>
-			</plugin> -->
-		</plugins>
-	</build>
-	<repositories>
-		<repository>
-			<id>refractions</id>
-			<name>Refractions Maven2 Repository</name>
-			<url>http://lists.refractions.net/m2</url>
-		</repository>
-		<repository>
-			<id>scala-tools.org</id>
-			<name>Scala-Tools Maven2 Repository</name>
-			<url>http://scala-tools.org/repo-releases</url>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>refractions</id>
-			<name>Refractions Maven2 Repository</name>
-			<url>http://lists.refractions.net/m2</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>scala-tools.org</id>
-			<name>Scala-Tools Maven2 Repository</name>
-			<url>http://scala-tools.org/repo-releases</url>
-		</pluginRepository>
-	</pluginRepositories>
+        <dependency>
+            <groupId>org.scalaforge</groupId>
+            <artifactId>scalax</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-tools</groupId>
+            <artifactId>maven-scala-plugin</artifactId>
+            <version>2.7-JESSE</version>
+        </dependency>
+    </dependencies>
+    <build>
+      <defaultGoal>compile</defaultGoal>
+        <sourceDirectory>src/main/scala</sourceDirectory>
+        <testSourceDirectory>src/test/scala</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>2.7-JESSE</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <!-- uncomment this when we have tests
+                            <goal>testCompile</goal> -->
+                            <goal>script</goal>
+                        </goals>
+                        <phase>compile</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <scalaVersion>${scala.version}</scalaVersion>
+                    <scriptFile>src/script/scala/main.scala</scriptFile>
+                    <removeFromClasspath>ant-1.6.2.jar</removeFromClasspath>
+                    <keepGeneratedScript>true</keepGeneratedScript>
+                </configuration>
+            </plugin>
+<!--            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>script</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <scalaVersion>${scala.version}</scalaVersion>
+                    <scriptFile>src/script/scala/main.scala</scriptFile>
+                    <removeFromClasspath>ant-1.6.2.jar</removeFromClasspath>
+                    <keepGeneratedScript>true</keepGeneratedScript>
+                </configuration>
+            </plugin> -->
+        </plugins>
+    </build>
+    <repositories>
+        <repository>
+            <id>refractions</id>
+            <name>Refractions Maven2 Repository</name>
+            <url>http://lists.refractions.net/m2</url>
+        </repository>
+        <repository>
+            <id>scala-tools.org</id>
+            <name>Scala-Tools Maven2 Repository</name>
+            <url>http://scala-tools.org/repo-releases</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>refractions</id>
+            <name>Refractions Maven2 Repository</name>
+            <url>http://lists.refractions.net/m2</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>scala-tools.org</id>
+            <name>Scala-Tools Maven2 Repository</name>
+            <url>http://scala-tools.org/repo-releases</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

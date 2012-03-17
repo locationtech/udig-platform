@@ -43,6 +43,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * 
  * @author Emily Gouge
  * @since 1.2.0
+ * @deprecated PanTool with Tool Options now covers this case
  */
 public class FixedScalePan extends AbstractModalTool implements ModalTool {
     private boolean dragging=false;

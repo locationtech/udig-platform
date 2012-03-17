@@ -22,6 +22,7 @@ import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.ui.palette.ColourScheme;
 
@@ -206,15 +207,15 @@ public class LayerDecorator implements Layer, InternalEObject {
     /*
      * @see net.refractions.udig.project.Layer#isApplicable(java.lang.String)
      */
-    public boolean isApplicable( Interaction interaction ) {
-        return layer.isApplicable(interaction);
+    public boolean getInteraction( Interaction interaction ) {
+        return layer.getInteraction(interaction);
     }
 
     /*
      * @see net.refractions.udig.project.Layer#setApplicable(java.lang.String, boolean)
      */
-    public void setApplicable( Interaction interaction, boolean isApplicable ) {
-        layer.setApplicable(interaction, isApplicable);
+    public void setInteraction( Interaction interaction, boolean isApplicable ) {
+        layer.setInteraction(interaction, isApplicable);
     }
 
     /*
@@ -297,15 +298,15 @@ public class LayerDecorator implements Layer, InternalEObject {
     /*
      * @see net.refractions.udig.project.Layer#getGlyph()
      */
-    public ImageDescriptor getGlyph() {
-        return layer.getGlyph();
+    public ImageDescriptor getIcon() {
+        return layer.getIcon();
     }
 
     /*
      * @see net.refractions.udig.project.Layer#setGlyph(org.eclipse.jface.resource.ImageDescriptor)
      */
-    public void setGlyph( ImageDescriptor value ) {
-        layer.setGlyph(value);
+    public void setIcon( ImageDescriptor value ) {
+        layer.setIcon(value);
     }
 
     /*
@@ -878,6 +879,23 @@ public class LayerDecorator implements Layer, InternalEObject {
 
     public int eDerivedOperationID( int baseOperationID, Class< ? > baseClass ) {   
         return interalObject.eDerivedOperationID(baseOperationID, baseClass);
+    }
+
+    @Override
+    public java.util.Map<Interaction, Boolean> getInteractionMap() {
+        return layer.getInteractionMap();
+    }
+
+    @Override
+    public boolean isShown() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void setShown( boolean value ) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

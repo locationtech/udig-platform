@@ -33,34 +33,34 @@ import org.geotools.data.DataAccessFactory.Param;
  * @since 1.1.0
  */
 public abstract class AbstractDataStoreServiceExtension implements
-		ServiceExtension2 {
+        ServiceExtension2 {
 
-	protected class ParamInfo {
+    protected class ParamInfo {
 
-		public String the_schema;
-		public Integer the_port;
-		public String host;
-		public String the_database;
-		public String password;
-		public String username;
-		public String protocol;
+        public String the_schema;
+        public Integer the_port;
+        public String host;
+        public String the_database;
+        public String password;
+        public String username;
+        public String protocol;
 
-		public ParamInfo(String protocol, String username, String password,
-				String host, String the_database, Integer the_port,
-				String the_schema) {
-			this.protocol = protocol;
-			this.username = username;
-			this.password = password;
-			this.the_database = the_database;
-			this.host = host;
-			this.the_port = the_port;
-			this.the_schema = the_schema;
+        public ParamInfo(String protocol, String username, String password,
+                String host, String the_database, Integer the_port,
+                String the_schema) {
+            this.protocol = protocol;
+            this.username = username;
+            this.password = password;
+            this.the_database = the_database;
+            this.host = host;
+            this.the_port = the_port;
+            this.the_schema = the_schema;
 
-		}
+        }
 
-	}
+    }
 
-	public final String reasonForFailure( Map<String, Serializable> params ) {
+    public final String reasonForFailure( Map<String, Serializable> params ) {
         String parameterProcessingResult=processParameters(params, getDataStoreFactory().getParametersInfo());
         if( parameterProcessingResult!=null )
             return parameterProcessingResult;
@@ -158,19 +158,19 @@ public abstract class AbstractDataStoreServiceExtension implements
         if( the_schema==null )
             the_schema="public"; //$NON-NLS-1$
 
-		String userInfo = url.getUserInfo() == null ? "" : url.getUserInfo(); //$NON-NLS-1$
-		String username;
-		String password;
-		if (userInfo.contains(":")) { //$NON-NLS-1$
-			int indexOf = userInfo.indexOf(':', 1);
-			username = userInfo.substring(0, indexOf);
-			password = userInfo.substring(indexOf + 1, userInfo.length());
-		} else {
-			username = userInfo;
-			password = ""; //$NON-NLS-1$
-		}
-		return new ParamInfo(url.getProtocol(), username, password, host,
-				the_database, the_port, the_schema);
-	}
+        String userInfo = url.getUserInfo() == null ? "" : url.getUserInfo(); //$NON-NLS-1$
+        String username;
+        String password;
+        if (userInfo.contains(":")) { //$NON-NLS-1$
+            int indexOf = userInfo.indexOf(':', 1);
+            username = userInfo.substring(0, indexOf);
+            password = userInfo.substring(indexOf + 1, userInfo.length());
+        } else {
+            username = userInfo;
+            password = ""; //$NON-NLS-1$
+        }
+        return new ParamInfo(url.getProtocol(), username, password, host,
+                the_database, the_port, the_schema);
+    }
 
 }

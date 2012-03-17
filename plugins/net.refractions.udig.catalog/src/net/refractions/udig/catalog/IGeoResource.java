@@ -20,10 +20,13 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
 /**
@@ -235,6 +238,20 @@ public abstract class IGeoResource implements IResolve {
         }
         return info;
     }
+    
+    /**
+     * Returns a copy of the map of this resource's persistent properties. Returns an empty map if
+     * this resource has no persistent properties.
+     * 
+     * @return The map containing the persistent properties where the key is the
+     *         {@link QualifiedName} of the property and the value is the {@link String} value of
+     *         the property.
+     */
+    public Map<String, Serializable> getPersistentProperties() {
+    	ID id = this.getID();
+        Map<String, Serializable> properties = service.getPersistentProperties( id );
+        return properties;
+    }
 
     /**
      * Returns parent for this GeoResource.
@@ -373,12 +390,14 @@ public abstract class IGeoResource implements IResolve {
             title = info.getTitle();
             if (title != null && service != null) {
                 // cache the title for when we are not connected
-                service.getPersistentProperties().put(getID().toString() + "_title", title); //$NON-NLS-1$
+                Map<String, Serializable> persistentProperties = getPersistentProperties();
+                persistentProperties.put("title", title); //$NON-NLS-1$
             }
         }
         if (title == null && service != null) {
             // let us grab the title from the cache
-            Serializable s = service.getPersistentProperties().get(getID().toString() + "_title"); //$NON-NLS-1$
+            Map<String, Serializable> persistentProperties = getPersistentProperties();
+            Serializable s = persistentProperties.get("title"); //$NON-NLS-1$
             title = (s != null ? s.toString() : null);
         }
         return title;

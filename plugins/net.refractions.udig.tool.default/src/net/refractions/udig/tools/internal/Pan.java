@@ -38,6 +38,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
+ * @deprecated PanTool with Tool Options now covers this case
  */
 public class Pan extends AbstractModalTool implements ModalTool {
     private boolean dragging=false;

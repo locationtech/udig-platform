@@ -26,9 +26,12 @@ import java.util.Map;
 import net.refractions.udig.catalog.AbstractDataStoreServiceExtension;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ServiceExtension;
+import net.refractions.udig.catalog.URLUtils;
 import net.refractions.udig.catalog.shp.internal.Messages;
 
+import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFactorySpi;
+import org.geotools.data.DataUtilities;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 
 /**
@@ -39,10 +42,10 @@ import org.geotools.data.shapefile.ShapefileDataStoreFactory;
  */
 public class ShpServiceExtension extends AbstractDataStoreServiceExtension implements ServiceExtension {
 
-	// this is for backwards compatibility with 1.1.x.  The parameter key was 
-	// changed in geotools since 2.2
+    // this is for backwards compatibility with 1.1.x.  The parameter key was 
+    // changed in geotools since 2.2
     private static final String OLD_URLP_KEY = "shapefile url"; //$NON-NLS-1$
-	private static ShapefileDataStoreFactory shpDSFactory;
+    private static ShapefileDataStoreFactory shpDSFactory;
 
     public static ShapefileDataStoreFactory getSHPDSFactory(){
         if(shpDSFactory == null)
@@ -51,15 +54,18 @@ public class ShpServiceExtension extends AbstractDataStoreServiceExtension imple
     }
     
     public IService createService( URL id, Map<String,Serializable> params ) {
-    	if( params.containsKey(OLD_URLP_KEY)){
-    		params.put(ShapefileDataStoreFactory.URLP.key, params.get(OLD_URLP_KEY));
-    		params.remove(OLD_URLP_KEY);
-    	}
+        if( params.containsKey(OLD_URLP_KEY)){
+            params.put(ShapefileDataStoreFactory.URLP.key, params.get(OLD_URLP_KEY));
+            params.remove(OLD_URLP_KEY);
+        }
         if(params.containsKey(ShapefileDataStoreFactory.URLP.key) ){
             // shapefile ...
 
             URL url = null;
-            if(params.get(ShapefileDataStoreFactory.URLP.key) instanceof URL){
+            if(params.get(ShapefileDataStoreFactory.URLP.key) == null) {
+                return null;
+            } else if (params.get(ShapefileDataStoreFactory.URLP.key) instanceof URL){
+            
                 url = (URL)params.get(ShapefileDataStoreFactory.URLP.key);
             }else{
                 try {
@@ -73,29 +79,41 @@ public class ShpServiceExtension extends AbstractDataStoreServiceExtension imple
             }
             String file=url.getFile();
             file=file.toLowerCase();
-            if( !(file.endsWith(".shp") || file.endsWith(".shx") ||file.endsWith(".qix")  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-            		|| file.endsWith(".dbf"))) //$NON-NLS-1$
-            		return null;
-                if(id == null){
+            if (!(file.endsWith(".shp") || file.endsWith(".shx") || file.endsWith(".qix") || file
+                    .endsWith(".dbf"))) {
+                return null;
+            }
+            
+            if( getSHPDSFactory().canProcess(params)){
+                if (id == null) {
                     return new ShpServiceImpl(url,params);
                 }
-                return new ShpServiceImpl(id,params);
+                else {
+                    return new ShpServiceImpl(id,params);
+                }
+            }
         }
         return null;
     }
 
     public Map<String,Serializable> createParams( URL url ) {
-        URL url2=url;
-        if ( !isSupportedExtension(url) )
-                return null;
+        if ( !isSupportedExtension(url) ){
+           return null;
+        }
+        URL cleanedShapeURL = toShpURL( url );
         
-        url2 = toShpURL(url2);
-        if( url2==null )
-            return null;
-        if(getSHPDSFactory().canProcess(url2)){
-            // shapefile
+        if( cleanedShapeURL==null ){
+            return null; // file did not exist or was not valid
+        }
+        
+        if(getSHPDSFactory().canProcess(cleanedShapeURL)){
+            // shape file
+            File file = URLUtils.urlToFile( cleanedShapeURL );
+            if( !file.exists() ){
+                return null; // file does not exist?
+            }
             HashMap<String,Serializable> params = new HashMap<String,Serializable>();
-            params.put(ShapefileDataStoreFactory.URLP.key,url2); 
+            params.put(ShapefileDataStoreFactory.URLP.key,cleanedShapeURL); 
             return params;
         }
         return null;
@@ -108,31 +126,51 @@ public class ShpServiceExtension extends AbstractDataStoreServiceExtension imple
         return (file.endsWith(".shp") || file.endsWith(".shx") ||file.endsWith(".qix")  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
                 || file.endsWith(".dbf")); //$NON-NLS-1$
     }
-
-    @SuppressWarnings("deprecation") // file.toURL is deprecated in Java 6
-	private URL toShpURL( URL url) {
-        URL url2=url;
+    
+    /**
+     * Has a go at cleaning the provided URL and ensuring it is a file
+     */
+    private URL toShpURL( URL url) {
+        File file = URLUtils.urlToFile( url );
+        URL shpURL = URLUtils.fileToURL(file);
+        if( shpURL != null ){
+            return shpURL; // clean!
+        }
+        // previous approach tries to duplicate the functionality of URLUtils above; using it as a fallback
+        String authority = url.getAuthority();
+        String path = url.getPath();
         
-        String auth = url.getAuthority();
-        String urlFile = url2.getPath();
-        if (auth != null && auth.length() != 0) {
-        	urlFile = "//"+auth+urlFile; //$NON-NLS-1$
+        if (authority != null && authority.length() != 0) {
+            path = "//"+authority+path; //$NON-NLS-1$
         }
-        if( !urlFile.toLowerCase().endsWith(".shp") ){ //$NON-NLS-1$
-            urlFile = urlFile.substring(0, urlFile.lastIndexOf('.') )+".shp"; //$NON-NLS-1$
+        if( !path.toLowerCase().endsWith(".shp") ){ //$NON-NLS-1$
+            path = path.substring(0, path.lastIndexOf('.') )+".shp"; //$NON-NLS-1$
         }
-        try {
-            File file = new File(urlFile);
-            url2 = file.toURL();
-        } catch (MalformedURLException e) {
-            return null;
-        }
-        return url2;
+        file = new File(path);
+        shpURL = URLUtils.fileToURL(file);
+        return shpURL; // clean!
     }
 
     @Override
     protected String doOtherChecks( Map<String, Serializable> params ) {
-        return null;
+        ShapefileDataStoreFactory factory = getSHPDSFactory();
+        if( !factory.canProcess(params) ) {
+            // this is tough we don't have a good error message out of the geotools factory canProcess method
+            // So we will try (and fail!) to connect ...
+            DataStore datastore = null;
+            try {
+                datastore = factory.createDataStore(params);
+            }
+            catch (Throwable t){
+                return t.getLocalizedMessage(); // We cannot connect because of this ...
+            }
+            finally {
+                if( datastore != null){
+                    datastore.dispose();
+                }
+            }
+        }
+        return null; // apparently we can connect
     }
 
     @Override

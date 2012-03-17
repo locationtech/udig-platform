@@ -19,6 +19,7 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectPackage;
+import net.refractions.udig.project.internal.render.RenderFactory;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.render.RenderManager;
 import net.refractions.udig.project.internal.render.RenderPackage;
@@ -185,7 +186,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @ordered
      */
     protected SortedSet<Double> preferredScaleDenominators;
-    
+
     private SortedSet<Double> defaultScaleDenominators = null;
 
     /**
@@ -275,10 +276,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     public void setCRS( CoordinateReferenceSystem newCRS ) {
         double scale = getScaleDenominator();
-        if (newCRS == null)
-            throw new IllegalArgumentException("A CRS cannot be null"); //$NON-NLS-1$
-        if (newCRS.equals(cRS))
-            return;
+        if (newCRS == null) throw new IllegalArgumentException("A CRS cannot be null"); //$NON-NLS-1$
+        if (newCRS.equals(cRS)) return;
         CoordinateReferenceSystem oldCRS = getCRS();
         if (getBounds().isNull() || !validState()) {
             setCRSGen(newCRS);
@@ -365,48 +364,52 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         return bounds;
     }
 
-    public void setBounds( ReferencedEnvelope newBounds) {
-    	setBounds(newBounds, false);
+    public void setBounds( ReferencedEnvelope newBounds ) {
+        setBounds(newBounds, false);
     }
     public void setBounds( ReferencedEnvelope newBounds, boolean forceContainBBoxZoom ) {
         setCRS(newBounds.getCoordinateReferenceSystem());
-        setBoundsInternal(newBounds,forceContainBBoxZoom);
+        setBoundsInternal(newBounds, forceContainBBoxZoom);
     }
 
-    public void setBounds( Envelope newBounds) {
-    	setBoundsInternal(newBounds, false);
+    public void setBounds( Envelope newBounds ) {
+        setBoundsInternal(newBounds, false);
     }
-    public void setBoundsInternal( Envelope newBounds, boolean forceContainBBoxZoom) {
-    	Envelope finalBounds = newBounds;
-    	if(getDefaultPreferredScaleDenominators() != getPreferredScaleDenominators() && validState()) {
-    		IMapDisplay mapDisplay = getRenderManagerInternal().getMapDisplay();
-    		ReferencedEnvelope referenced;
-			if(newBounds instanceof ReferencedEnvelope) {
-    			referenced = (ReferencedEnvelope) newBounds;
-    		} else {
-    			referenced = new ReferencedEnvelope(newBounds,getCRS());
-    		}
-			double scale = ScaleUtils.calculateScaleDenominator(referenced, mapDisplay.getDisplaySize(), mapDisplay.getDPI());
-			scale = ScaleUtils.calculateClosestScale(getPreferredScaleDenominators(),scale,ScaleUtils.zoomClosenessPreference());
-			
-			finalBounds = ScaleUtils.calculateBoundsFromScale(scale, mapDisplay.getDisplaySize(), mapDisplay.getDPI(), referenced);
-			if(forceContainBBoxZoom && !finalBounds.contains(newBounds)) {
-				Iterator<Double> tail = getPreferredScaleDenominators().tailSet(scale).iterator();
-				// the tail will include scale because scale is one of the elements in the set.  So drop that
-				tail.next();
-				Double nextLargest = tail.next();
-				if(nextLargest != null) {
-					finalBounds = ScaleUtils.calculateBoundsFromScale(nextLargest, mapDisplay.getDisplaySize(), mapDisplay.getDPI(), referenced);
-				}
-			}
-    	}
-    	
+    public void setBoundsInternal( Envelope newBounds, boolean forceContainBBoxZoom ) {
+        Envelope finalBounds = newBounds;
+        if (getDefaultPreferredScaleDenominators() != getPreferredScaleDenominators()
+                && validState()) {
+            IMapDisplay mapDisplay = getRenderManagerInternal().getMapDisplay();
+            ReferencedEnvelope referenced;
+            if (newBounds instanceof ReferencedEnvelope) {
+                referenced = (ReferencedEnvelope) newBounds;
+            } else {
+                referenced = new ReferencedEnvelope(newBounds, getCRS());
+            }
+            double scale = ScaleUtils.calculateScaleDenominator(referenced,
+                    mapDisplay.getDisplaySize(), mapDisplay.getDPI());
+            scale = ScaleUtils.calculateClosestScale(getPreferredScaleDenominators(), scale,
+                    ScaleUtils.zoomClosenessPreference());
+
+            finalBounds = ScaleUtils.calculateBoundsFromScale(scale, mapDisplay.getDisplaySize(),
+                    mapDisplay.getDPI(), referenced);
+            if (forceContainBBoxZoom && !finalBounds.contains(newBounds)) {
+                Iterator<Double> tail = getPreferredScaleDenominators().tailSet(scale).iterator();
+                // the tail will include scale because scale is one of the elements in the set.  So drop that
+                tail.next();
+                Double nextLargest = tail.next();
+                if (nextLargest != null) {
+                    finalBounds = ScaleUtils.calculateBoundsFromScale(nextLargest,
+                            mapDisplay.getDisplaySize(), mapDisplay.getDPI(), referenced);
+                }
+            }
+        }
+
         Envelope oldBounds = bounds == null ? new Envelope() : bounds;
         if (!getBounds().isNull() && !Double.isNaN(getAspectRatio())
                 && !Double.isNaN(finalBounds.getWidth()) && !Double.isNaN(finalBounds.getHeight())) {
             double nRatio = finalBounds.getWidth() / finalBounds.getHeight();
-            if (Double.isNaN(nRatio))
-                nRatio = 0.0;
+            if (Double.isNaN(nRatio)) nRatio = 0.0;
             double dRatio = getAspectRatio();
             if (validState() && Math.abs(nRatio - dRatio) > ACCURACY) {
                 // Returning the same newBounds box is ok, but sometimes causes an infinite loop if
@@ -415,8 +418,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                 // x-axis solves the problem.
                 final double arbitraryChange = 2 * 0.0000001;
                 finalBounds.init(finalBounds.getMinX() - (arbitraryChange),
-                        (finalBounds.getMaxX() + arbitraryChange), finalBounds.getMinY(), finalBounds
-                                .getMaxY());
+                        (finalBounds.getMaxX() + arbitraryChange), finalBounds.getMinY(),
+                        finalBounds.getMaxY());
 
                 zoomToBox(finalBounds);
                 return;
@@ -490,8 +493,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @generated NOT
      */
     public double getAspectRatio() {
-        if (!validState())
-            return Double.NaN;
+        if (!validState()) return Double.NaN;
         return getRenderManagerInternal().getMapDisplay().getWidth()
                 / (double) getRenderManagerInternal().getMapDisplay().getHeight();
     }
@@ -514,8 +516,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @generated
      */
     public Map getMapInternal() {
-        if (eContainerFeatureID() != RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL)
-            return null;
+        if (eContainerFeatureID() != RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL) return null;
         return (Map) eContainer();
     }
 
@@ -541,14 +542,12 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                 throw new IllegalArgumentException(
                         "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
             NotificationChain msgs = null;
-            if (eInternalContainer() != null)
-                msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
             if (newMapInternal != null)
                 msgs = ((InternalEObject) newMapInternal).eInverseAdd(this,
                         ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL, Map.class, msgs);
             msgs = basicSetMapInternal(newMapInternal, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL, newMapInternal, newMapInternal));
@@ -631,8 +630,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                         RenderPackage.RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL, RenderManager.class,
                         msgs);
             msgs = basicSetRenderManagerInternal(newRenderManagerInternal, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL,
@@ -649,14 +647,12 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     private double getXPixelToWorldScale() {
-        if (!validState())
-            return Double.NaN;
+        if (!validState()) return Double.NaN;
         return getWidth() / getRenderManagerInternal().getMapDisplay().getWidth();
     }
 
     private double getYPixelToWorldScale() {
-        if (!validState())
-            return Double.NaN;
+        if (!validState()) return Double.NaN;
         return getHeight() / getRenderManagerInternal().getMapDisplay().getHeight();
     }
 
@@ -675,8 +671,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @generated NOT
      */
     public AffineTransform worldToScreenTransform() {
-        if (!validState())
-            return null;
+        if (!validState()) return null;
         // set up the affine transform and calculate scale values
         return worldToScreenTransform(getBounds(), getRenderManagerInternal().getMapDisplay()
                 .getDisplaySize());
@@ -686,22 +681,19 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @see ViewportModel#worldToScreenTransform(Envelope, Dimension)
      */
     public AffineTransform worldToScreenTransform( Envelope mapExtent, Dimension screenSize ) {
-        if (!validState())
-            return null;
+        if (!validState()) return null;
 
         return ScaleUtils.worldToScreenTransform(mapExtent, screenSize);
     }
 
     public Point worldToPixel( Coordinate coord ) {
-        if (!validState())
-            return null;
+        if (!validState()) return null;
         return ScaleUtils.worldToPixel(coord, getBounds(), getRenderManagerInternal()
                 .getMapDisplay().getDisplaySize());
     }
 
     public Coordinate pixelToWorld( int x, int y ) {
-        if (!validState())
-            return null;
+        if (!validState()) return null;
 
         return ScaleUtils.pixelToWorld(x, y, getBounds(), getRenderManagerInternal()
                 .getMapDisplay().getDisplaySize());
@@ -713,8 +705,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @generated NOT
      */
     public ViewportModel panUsingScreenCoords( int xpixels, int ypixels ) {
-        if (!validState())
-            return this;
+        if (!validState()) return this;
         panUsingWorldCoords(xpixels * getXPixelToWorldScale(), -ypixels * getYPixelToWorldScale());
         return this;
     }
@@ -726,9 +717,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      */
     public ViewportModel panUsingWorldCoords( double x, double y ) {
         Envelope bounds = getBounds();
-        setBounds(bounds.getMinX() + x, bounds.getMaxX() + x, bounds.getMinY() + y, bounds
-                .getMaxY()
-                + y);
+        setBounds(bounds.getMinX() + x, bounds.getMaxX() + x, bounds.getMinY() + y,
+                bounds.getMaxY() + y);
         return this;
     }
 
@@ -763,33 +753,46 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      */
     public void zoomToExtent() {
         try {
-            if (!validState())
-                return;
-            
+            if (!validState()) return;
+
             ReferencedEnvelope bounds2 = new ReferencedEnvelope(getCRS());
-            
+
             // check the limit service
             IAOIService aOIService = PlatformGIS.getAOIService();
             ReferencedEnvelope extent = aOIService.getExtent();
-            
+
             if (extent != null && !extent.isNull() && !extent.isEmpty()) {
-            	bounds2 = new ReferencedEnvelope(extent);
+                bounds2 = new ReferencedEnvelope(extent);
             } else {
                 boolean hasVisibleLayer = false;
-	            // search the map for visible layers and construct a bounds from those layers.
-	            // otherwise default to what the map's extent is.
-	            List<ILayer> layers = getMap().getMapLayers();
-	            for( ILayer layer : layers ) {
-	                ReferencedEnvelope layerBounds = layer.getBounds(ProgressManager.instance().get(),
-	                        getCRS());
-	                if (layer.isVisible() && !layerBounds.isNull()) {
-	                    hasVisibleLayer = true;
-	                    bounds2.expandToInclude(ScaleUtils.fitToMinAndMax(layerBounds, layer));
-	                }
-	            }	
-	            if (!hasVisibleLayer) {
-	                bounds2 = getMap().getBounds(ProgressManager.instance().get());
-	            }
+                // search the map for visible layers and construct a bounds from those layers.
+                // otherwise default to what the map's extent is.
+                List<ILayer> layers = getMap().getMapLayers();
+                for( ILayer layer : layers ) {
+                    ReferencedEnvelope layerBounds = layer.getBounds(ProgressManager.instance()
+                            .get(), getCRS());
+                    if (layer.isVisible() && !layerBounds.isNull()) {
+                        hasVisibleLayer = true;
+                        // consider zooming in (or zooming out) to a scale the layer is visible
+                        ReferencedEnvelope fitted = ScaleUtils.fitToMinAndMax(layerBounds, layer);
+                        if (fitted.getCoordinateReferenceSystem() == bounds2
+                                .getCoordinateReferenceSystem()) {
+                            bounds2.expandToInclude(fitted);
+                        } else if (bounds2.getCoordinateReferenceSystem() == layerBounds
+                                .getCoordinateReferenceSystem()) {
+                            // We have a small problem here? Should do the fitting
+                            // before transform to viewport CRS
+
+                            // use layerBounds which should match
+                            bounds2.expandToInclude(layerBounds);
+                        } else {
+                            // ignore as it probably does not have a CRS
+                        }
+                    }
+                }
+                if (!hasVisibleLayer) {
+                    bounds2 = getMap().getBounds(ProgressManager.instance().get());
+                }
             }
 
             if (bounds2.getCoordinateReferenceSystem() == null || getCRS() == null
@@ -815,8 +818,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      */
     @Override
     public String toString() {
-        if (eIsProxy())
-            return super.toString();
+        if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (cRS: "); //$NON-NLS-1$
@@ -844,8 +846,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      * @see net.refractions.udig.project.render.displayAdapter.IMapDisplayListener#sizeChanged(net.refractions.udig.project.render.displayAdapter.MapDisplayEvent)
      */
     public void sizeChanged( final MapDisplayEvent event ) {
-        if (event.getSize().width < 1 || event.getSize().height < 1)
-            return;
+        if (event.getSize().width < 1 || event.getSize().height < 1) return;
 
         Runnable handler = new Runnable(){
             public void run() {
@@ -904,8 +905,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     private boolean newSizeIsSmaller( MapDisplayEvent event ) {
-        if (event.getOldSize() == null)
-            return false;
+        if (event.getOldSize() == null) return false;
         return event.getOldSize().width > event.getSize().width
                 && event.getOldSize().height > event.getSize().height;
     }
@@ -947,8 +947,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             NotificationChain msgs ) {
         switch( featureID ) {
         case RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL:
-            if (eInternalContainer() != null)
-                msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
             return basicSetMapInternal((Map) otherEnd, msgs);
         case RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL:
             if (renderManagerInternal != null)
@@ -1184,8 +1183,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         try {
             IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
             int i = store.getInt(PreferenceConstants.P_DEFAULT_CRS);
-            if (i == -1)
-                return CRS.decode("EPSG:4326");//$NON-NLS-1$
+            if (i == -1) return CRS.decode("EPSG:4326");//$NON-NLS-1$
             return CRS.decode("EPSG:" + i); //$NON-NLS-1$
         } catch (FactoryException e) {
             return ViewportModel.BAD_DEFAULT;
@@ -1236,45 +1234,45 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         }
         RenderManager renderManager = getRenderManagerInternal();
         ReferencedEnvelope bounds2 = getBounds();
-        if (renderManager == null || renderManager.getMapDisplay() == null)
-            return -1;
+        if (renderManager == null || renderManager.getMapDisplay() == null) return -1;
 
         IMapDisplay display = renderManager.getMapDisplay();
-        return ScaleUtils.calculateScaleDenominator(bounds2, display.getDisplaySize(), display
-                .getDPI());
+        return ScaleUtils.calculateScaleDenominator(bounds2, display.getDisplaySize(),
+                display.getDPI());
 
     }
-    
+
     public synchronized SortedSet<Double> getDefaultPreferredScaleDenominators() {
-    	if (defaultScaleDenominators == null) {
-    		TreeSet<Double> scales = new TreeSet<Double>();
-    		scales.add(1000000.0);
-    		scales.add(100000.0);
-    		scales.add(50000.0);
-    		scales.add(20000.0);
-    		scales.add(10000.0);
-    		scales.add(5000.0);
-    		scales.add(2500.0);
-    		scales.add(1000.0);
-			defaultScaleDenominators = Collections.unmodifiableSortedSet(scales);
-		}
+        if (defaultScaleDenominators == null) {
+            TreeSet<Double> scales = new TreeSet<Double>();
+            scales.add(1000000.0);
+            scales.add(100000.0);
+            scales.add(50000.0);
+            scales.add(20000.0);
+            scales.add(10000.0);
+            scales.add(5000.0);
+            scales.add(2500.0);
+            scales.add(1000.0);
+            defaultScaleDenominators = Collections.unmodifiableSortedSet(scales);
+        }
 
         return defaultScaleDenominators;
     }
-    
+
     public SortedSet<Double> getPreferredScaleDenominators() {
-    	if(preferredScaleDenominators == null) {
-    		return getDefaultPreferredScaleDenominators();
-    	}
+        if (preferredScaleDenominators == null) {
+            return getDefaultPreferredScaleDenominators();
+        }
         return preferredScaleDenominators;
     }
 
     public void setPreferredScaleDenominators( SortedSet<Double> newPreferredScaleDenominators ) {
         SortedSet<Double> oldPreferredScaleDenominators = preferredScaleDenominators;
-        if(newPreferredScaleDenominators == getDefaultPreferredScaleDenominators()) {
-        	preferredScaleDenominators = null;
+        if (newPreferredScaleDenominators == getDefaultPreferredScaleDenominators()) {
+            preferredScaleDenominators = null;
         } else {
-        	preferredScaleDenominators = Collections.unmodifiableSortedSet(new TreeSet<Double>(newPreferredScaleDenominators));
+            preferredScaleDenominators = Collections.unmodifiableSortedSet(new TreeSet<Double>(
+                    newPreferredScaleDenominators));
         }
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,

@@ -237,8 +237,8 @@ public class GeometryCreationUtil {
         } catch (Exception e) {
             EditPlugin.log("Not a critical problem, just an FYI", e); //$NON-NLS-1$
         }
-        LinearRing[] holes = new LinearRing[currentGeom.getHoles().size()];
-        int i = 0;
+        List<LinearRing> currentHoles = new ArrayList<LinearRing>();
+        
         for( PrimitiveShape shape : currentGeom.getHoles() ) {
             Coordinate[] coordArray = shape.coordArray();
 
@@ -250,10 +250,10 @@ public class GeometryCreationUtil {
             if (!(coordArray.length <= 2) && !CGAlgorithms.isCCW(coordArray)) {
                 hole = JTSUtilities.reverseRing((LinearRing) hole);
             }
-            holes[i] = hole;
-            i++;
+            currentHoles.add(hole);
         }
         GeometryFactory factory = new GeometryFactory();
+        LinearRing[] holes = currentHoles.toArray(new LinearRing[currentHoles.size()]);
         return factory.createPolygon(shell, holes);
     }
 

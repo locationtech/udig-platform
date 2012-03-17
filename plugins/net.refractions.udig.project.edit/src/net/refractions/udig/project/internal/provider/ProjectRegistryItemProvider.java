@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -25,10 +26,9 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a
- * {@link net.refractions.udig.project.internal.ProjectRegistry} object. <!-- begin-user-doc -->
+ * This is the item provider adapter for a {@link net.refractions.udig.project.internal.ProjectRegistry} object.
+ * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
  * @generated
  */
 public class ProjectRegistryItemProvider extends ItemProviderAdapter
@@ -39,16 +39,9 @@ public class ProjectRegistryItemProvider extends ItemProviderAdapter
             IItemLabelProvider,
             IItemPropertySource {
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
-     * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!--
+     * This constructs an instance from a factory and a notifier.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     public ProjectRegistryItemProvider( AdapterFactory adapterFactory ) {
@@ -87,9 +80,9 @@ public class ProjectRegistryItemProvider extends ItemProviderAdapter
     }
 
     /**
-     * This adds a property descriptor for the Projects feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Projects feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addProjectsPropertyDescriptor( Object object ) {
@@ -100,14 +93,14 @@ public class ProjectRegistryItemProvider extends ItemProviderAdapter
                         getString("_UI_ProjectRegistry_projects_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_ProjectRegistry_projects_feature", "_UI_ProjectRegistry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getProjectRegistry_Projects(), true, null, null,
-                        null));
+                        ProjectPackage.Literals.PROJECT_REGISTRY__PROJECTS, true, false, false,
+                        null, null, null));
     }
 
     /**
-     * This adds a property descriptor for the Current Project feature. <!-- begin-user-doc --> <!--
+     * This adds a property descriptor for the Current Project feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     protected void addCurrentProjectPropertyDescriptor( Object object ) {
@@ -118,17 +111,28 @@ public class ProjectRegistryItemProvider extends ItemProviderAdapter
                         getString("_UI_ProjectRegistry_currentProject_feature"), //$NON-NLS-1$
                         getString(
                                 "_UI_PropertyDescriptor_description", "_UI_ProjectRegistry_currentProject_feature", "_UI_ProjectRegistry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        ProjectPackage.eINSTANCE.getProjectRegistry_CurrentProject(), true, null,
-                        null, null));
+                        ProjectPackage.Literals.PROJECT_REGISTRY__CURRENT_PROJECT, true, false,
+                        false, null, null, null));
     }
 
     /**
-     * This returns ProjectRegistry.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * This returns ProjectRegistry.gif.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Object getImage( Object object ) {
-        return getResourceLocator().getImage("full/obj16/ProjectRegistry"); //$NON-NLS-1$
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/ProjectRegistry")); //$NON-NLS-1$
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected boolean shouldComposeCreationImage() {
+        return true;
     }
 
     /**
@@ -161,11 +165,12 @@ public class ProjectRegistryItemProvider extends ItemProviderAdapter
     }
 
     /**
-     * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!--
+     * Return the resource locator for this item provider's resources.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
+    @Override
     public ResourceLocator getResourceLocator() {
         return ProjectEditPlugin.INSTANCE;
     }

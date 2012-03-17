@@ -1,3 +1,17 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2007-2011, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.catalog.wmsc.server;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,6 +23,7 @@ import net.refractions.udig.catalog.internal.PreferenceConstants;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.ows.AbstractOpenWebService;
 
 import com.vividsolutions.jts.geom.Envelope;
 
@@ -39,7 +54,7 @@ public class TileRangeOnDisk extends AbstractTileRange {
      * @param requestTileWorkQueue Queue of worker threads that can be used to fetch tiles
      * @param writeTileWorkQueue Queue used to write tiles out to disk
 	 */
-	public TileRangeOnDisk(TiledWebMapServer server, TileSet tileset,
+	public TileRangeOnDisk(AbstractOpenWebService<?,?> server, TileSet tileset,
 			Envelope bounds, Map<String, Tile> tiles, TileWorkerQueue requestTileWorkQueue,
 			TileWorkerQueue writeTileWorkQueue) {
 		this(server, tileset, bounds, tiles, requestTileWorkQueue, writeTileWorkQueue,
@@ -59,7 +74,7 @@ public class TileRangeOnDisk extends AbstractTileRange {
      * @param writeTileWorkQueue
      * @param tileImageReadWriter
      */
-    public TileRangeOnDisk(TiledWebMapServer server, TileSet tileset,
+    public TileRangeOnDisk(AbstractOpenWebService<?,?> server, TileSet tileset,
             Envelope bounds, Map<String, Tile> tiles, TileWorkerQueue requestTileWorkQueue,
             TileWorkerQueue writeTileWorkQueue, TileImageReadWriter tileImageReadWriter) {
         super(server, tileset, bounds, tiles, requestTileWorkQueue);
@@ -92,7 +107,7 @@ public class TileRangeOnDisk extends AbstractTileRange {
 	        for( Iterator<Entry<String, Tile>> iterator = tilesWaitingToLoad.entrySet().iterator(); iterator.hasNext(); ) {
 	            Entry<String, Tile> tileentry = (Entry<String, Tile>) iterator.next();
 	            Tile tile = tileentry.getValue();
-	            if (tileReadWriter.tileFileExists(tile, filetype)) {
+	            if (tileReadWriter.tileFileExists(tile, filetype) && !tileReadWriter.isTileStale(tile, filetype)) {
 	            	boolean success = tileReadWriter.readTile(tile, filetype);
 	            	if (success) {
 	            		tilesToRemove.put(tileentry.getKey(), tile);

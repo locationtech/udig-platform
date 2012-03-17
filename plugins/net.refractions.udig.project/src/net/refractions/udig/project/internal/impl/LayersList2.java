@@ -37,19 +37,21 @@ import org.eclipse.emf.ecore.InternalEObject;
 /**
  * Wraps a EList and makes sure that when a layer is added the layer interceptor is fired and a deep
  * adapter is added.
+ * <p>
+ * This is used to go from an object (Map or ContextModel) to a list of layers; and set up the inverse relationship
+ * so that layer.getMap() works.
  * 
  * @author Jesse
  * @since 1.1.0
  */
-class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
+class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList<Layer> {
 
     /** long serialVersionUID field */
     private static final long serialVersionUID = 4584718175140573610L;
 
     private Collection<Adapter> deepAdapters = new CopyOnWriteArraySet<Adapter>();
 
-    @SuppressWarnings("unchecked")
-    public LayersList2( Class dataClass, InternalEObject owner, int featureID, int inverseFeatureID ) {
+    public LayersList2( Class<Layer> dataClass, InternalEObject owner, int featureID, int inverseFeatureID ) {
         super(dataClass, owner, featureID, inverseFeatureID);
     }
 
@@ -58,7 +60,6 @@ class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
      * 
      * @param adapter adapter to add to all layers.
      */
-    @SuppressWarnings("unchecked")
     public void addDeepAdapter( Adapter adapter ) {
         deepAdapters.add(adapter);
         if (!owner.eAdapters().contains(adapter))
@@ -83,15 +84,13 @@ class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    protected void didAdd( int index, Object newObject ) {
+    protected void didAdd( int index, Layer newObject ) {
         super.didAdd(index, newObject);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public NotificationChain inverseAdd( Object object, NotificationChain notifications ) {
+    public NotificationChain inverseAdd( Layer object, NotificationChain notifications ) {
         NotificationChain notificationChain = super.inverseAdd(object, notifications);
         if (ProjectPlugin.isDebugging(Trace.MODEL))
             ProjectPlugin
@@ -104,7 +103,7 @@ class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
     }
 
     @Override
-    protected Object assign( int index, Object object ) {
+    protected Layer assign( int index, Layer object ) {
         if (!(object instanceof Layer))
             throw new AssertionError("Can only add " + Layer.class.getName() + " to a map.  Was: " //$NON-NLS-1$ //$NON-NLS-2$
                     + object.getClass().getName());
@@ -114,13 +113,16 @@ class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
                     .trace(
                             getClass(),
                             "Adding " + ((Layer) object).getID() + " to map " + getMap().getName() + " at location: " + index, null); //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
-        Object object2 = super.assign(index, object);
+        Layer object2 = super.assign(index, object);
         if (ProjectPlugin.isDebugging(Trace.MODEL))
             ProjectPlugin.trace(getClass(), "Resulting list=" + this, null); //$NON-NLS-1$
 
         return object2;
     }
-
+    /**
+     * Used to look up the map when describing events during tracing 
+     * @return current map
+     */
     private IMap getMap() {
         if (owner instanceof IMap)
             return (IMap) owner;
@@ -130,7 +132,7 @@ class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
     }
 
     @Override
-    protected Object doRemove( int index ) {
+    protected Layer doRemove( int index ) {
         Object toRemove = get(index);
         runRemoveInterceptor(toRemove);
 
@@ -155,16 +157,14 @@ class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
         super.doClear();
     }
 
-    @SuppressWarnings("unchecked")
-    private void removeAllInterceptors( Collection c ) {
-        for( Iterator iter = c.iterator(); iter.hasNext(); ) {
+    private void removeAllInterceptors( Collection<?> c ) {
+        for( Iterator<?> iter = c.iterator(); iter.hasNext(); ) {
             Layer element = (Layer) iter.next();
             runLayerInterceptor(element, "layerRemoved"); //$NON-NLS-1$
             element.eAdapters().removeAll(deepAdapters);
         }
     }
 
-    @SuppressWarnings("unchecked")
     private void runAddInterceptors( Object element ) {
         Layer layer = (Layer) element;
         for( Adapter deepAdapter : deepAdapters ) {
@@ -174,7 +174,6 @@ class LayersList2 extends SynchronizedEObjectWithInverseResolvingEList {
         runLayerInterceptor(layer, LayerInterceptor.ADDED_ID);
     }
 
-    @SuppressWarnings("unchecked")
     private void runRemoveInterceptor( Object remove ) {
         if (remove == null || !contains(remove))
             return;

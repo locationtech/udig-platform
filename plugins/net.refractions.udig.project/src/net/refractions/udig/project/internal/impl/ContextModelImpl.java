@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.opengis.filter.Filter;
@@ -40,7 +41,7 @@ import com.vividsolutions.jts.geom.Envelope;
 @SuppressWarnings("deprecation")
 public class ContextModelImpl extends EObjectImpl implements ContextModel {
 
-    private LayersList2 layers=new LayersList2(Layer.class, this,
+    private LayersList2 layers = new LayersList2(Layer.class, this,
             ProjectPackage.CONTEXT_MODEL__LAYERS, ProjectPackage.LAYER__CONTEXT_MODEL);
 
     @SuppressWarnings("unchecked")
@@ -48,13 +49,13 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
         super();
     }
 
-    
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     protected EClass eStaticClass() {
-        return ProjectPackage.eINSTANCE.getContextModel();
+        return ProjectPackage.Literals.CONTEXT_MODEL;
     }
 
     /**
@@ -64,7 +65,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
     @SuppressWarnings("unchecked")
     public List<Layer> getLayers() {
         return layers;
-        
+
     }
 
     /**
@@ -82,9 +83,18 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * @generated
      */
     public Map getMap() {
-        if (eContainerFeatureID != ProjectPackage.CONTEXT_MODEL__MAP)
-            return null;
-        return (Map) eContainer;
+        if (eContainerFeatureID() != ProjectPackage.CONTEXT_MODEL__MAP) return null;
+        return (Map) eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetMap( Map newMap, NotificationChain msgs ) {
+        msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.CONTEXT_MODEL__MAP, msgs);
+        return msgs;
     }
 
     /**
@@ -92,30 +102,149 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * @generated
      */
     public void setMap( Map newMap ) {
-        if (newMap != eContainer
-                || (eContainerFeatureID != ProjectPackage.CONTEXT_MODEL__MAP && newMap != null)) {
-            if (EcoreUtil.isAncestor(this, (EObject) newMap))
+        if (newMap != eInternalContainer()
+                || (eContainerFeatureID() != ProjectPackage.CONTEXT_MODEL__MAP && newMap != null)) {
+            if (EcoreUtil.isAncestor(this, newMap))
                 throw new IllegalArgumentException(
                         "Recursive containment not allowed for " + toString()); //$NON-NLS-1$
             NotificationChain msgs = null;
-            if (eContainer != null)
-                msgs = eBasicRemoveFromContainer(msgs);
+            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
             if (newMap != null)
                 msgs = ((InternalEObject) newMap).eInverseAdd(this,
                         ProjectPackage.MAP__CONTEXT_MODEL, Map.class, msgs);
-            msgs = eBasicSetContainer((InternalEObject) newMap, ProjectPackage.CONTEXT_MODEL__MAP,
-                    msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            msgs = basicSetMap(newMap, msgs);
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.CONTEXT_MODEL__MAP, newMap, newMap));
     }
 
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
+            NotificationChain msgs ) {
+        switch( featureID ) {
+        case ProjectPackage.CONTEXT_MODEL__LAYERS:
+            return ((InternalEList<InternalEObject>) (InternalEList< ? >) getLayers()).basicAdd(
+                    otherEnd, msgs);
+        case ProjectPackage.CONTEXT_MODEL__MAP:
+            if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+            return basicSetMap((Map) otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
+            NotificationChain msgs ) {
+        switch( featureID ) {
+        case ProjectPackage.CONTEXT_MODEL__LAYERS:
+            return ((InternalEList< ? >) getLayers()).basicRemove(otherEnd, msgs);
+        case ProjectPackage.CONTEXT_MODEL__MAP:
+            return basicSetMap(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eBasicRemoveFromContainerFeature( NotificationChain msgs ) {
+        switch( eContainerFeatureID() ) {
+        case ProjectPackage.CONTEXT_MODEL__MAP:
+            return eInternalContainer().eInverseRemove(this, ProjectPackage.MAP__CONTEXT_MODEL,
+                    Map.class, msgs);
+        }
+        return super.eBasicRemoveFromContainerFeature(msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
+        switch( featureID ) {
+        case ProjectPackage.CONTEXT_MODEL__LAYERS:
+            return getLayers();
+        case ProjectPackage.CONTEXT_MODEL__MAP:
+            return getMap();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet( int featureID, Object newValue ) {
+        switch( featureID ) {
+        case ProjectPackage.CONTEXT_MODEL__LAYERS:
+            getLayers().clear();
+            getLayers().addAll((Collection< ? extends Layer>) newValue);
+            return;
+        case ProjectPackage.CONTEXT_MODEL__MAP:
+            setMap((Map) newValue);
+            return;
+        }
+        super.eSet(featureID, newValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset( int featureID ) {
+        switch( featureID ) {
+        case ProjectPackage.CONTEXT_MODEL__LAYERS:
+            getLayers().clear();
+            return;
+        case ProjectPackage.CONTEXT_MODEL__MAP:
+            setMap((Map) null);
+            return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet( int featureID ) {
+        switch( featureID ) {
+        case ProjectPackage.CONTEXT_MODEL__LAYERS:
+            return layers != null && !layers.isEmpty();
+        case ProjectPackage.CONTEXT_MODEL__MAP:
+            return getMap() != null;
+        }
+        return super.eIsSet(featureID);
+    }
+
     public void addDeepAdapter( Adapter adapter ) {
         getMap().addDeepAdapter(adapter);
     }
-    
+
     public void removeDeepAdapter( Adapter adapter ) {
         getMap().removeDeepAdapter(adapter);
     }
@@ -140,116 +269,6 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @SuppressWarnings("unchecked")
-    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID, Class baseClass,
-            NotificationChain msgs ) {
-        if (featureID >= 0) {
-            switch( eDerivedStructuralFeatureID(featureID, baseClass) ) {
-            case ProjectPackage.CONTEXT_MODEL__LAYERS:
-                return ((InternalEList) getLayers()).basicAdd(otherEnd, msgs);
-            case ProjectPackage.CONTEXT_MODEL__MAP:
-                if (eContainer != null)
-                    msgs = eBasicRemoveFromContainer(msgs);
-                return eBasicSetContainer(otherEnd, ProjectPackage.CONTEXT_MODEL__MAP, msgs);
-            default:
-                return eDynamicInverseAdd(otherEnd, featureID, baseClass, msgs);
-            }
-        }
-        if (eContainer != null)
-            msgs = eBasicRemoveFromContainer(msgs);
-        return eBasicSetContainer(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @SuppressWarnings("unchecked")
-    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            Class baseClass, NotificationChain msgs ) {
-        if (featureID >= 0) {
-            switch( eDerivedStructuralFeatureID(featureID, baseClass) ) {
-            case ProjectPackage.CONTEXT_MODEL__LAYERS:
-                return ((InternalEList) getLayers()).basicRemove(otherEnd, msgs);
-            case ProjectPackage.CONTEXT_MODEL__MAP:
-                return eBasicSetContainer(null, ProjectPackage.CONTEXT_MODEL__MAP, msgs);
-            default:
-                return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-            }
-        }
-        return eBasicSetContainer(null, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain eBasicRemoveFromContainer( NotificationChain msgs ) {
-        if (eContainerFeatureID >= 0) {
-            switch( eContainerFeatureID ) {
-            case ProjectPackage.CONTEXT_MODEL__MAP:
-                return eContainer.eInverseRemove(this, ProjectPackage.MAP__CONTEXT_MODEL,
-                        Map.class, msgs);
-            default:
-                return eDynamicBasicRemoveFromContainer(msgs);
-            }
-        }
-        return eContainer.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - eContainerFeatureID, null,
-                msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
-        case ProjectPackage.CONTEXT_MODEL__LAYERS:
-            return getLayers();
-        case ProjectPackage.CONTEXT_MODEL__MAP:
-            return getMap();
-        }
-        return eDynamicGet(eFeature, resolve);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @SuppressWarnings("unchecked")
-    public void eSet( EStructuralFeature eFeature, Object newValue ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
-        case ProjectPackage.CONTEXT_MODEL__LAYERS:
-            getLayers().clear();
-            getLayers().addAll((Collection) newValue);
-            return;
-        case ProjectPackage.CONTEXT_MODEL__MAP:
-            setMap((Map) newValue);
-            return;
-        }
-        eDynamicSet(eFeature, newValue);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public void eUnset( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
-        case ProjectPackage.CONTEXT_MODEL__LAYERS:
-            getLayers().clear();
-            return;
-        case ProjectPackage.CONTEXT_MODEL__MAP:
-            setMap((Map) null);
-            return;
-        }
-        eDynamicUnset(eFeature);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated NOT
      */
     public boolean eIsSet( EStructuralFeature eFeature ) {
@@ -260,17 +279,6 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
             return getMap() != null;
         }
         return eDynamicIsSet(eFeature);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public String toString() {
-        if (eIsProxy())
-            return super.toString();
-
-        return "Layers"+getLayers().toString(); //$NON-NLS-1$
     }
 
     /**
@@ -290,7 +298,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
     }
 
     public void select( Envelope boundingBox, boolean and ) {
-        getMap().select(boundingBox,and);
+        getMap().select(boundingBox, and);
     }
 
     public void select( Filter filter ) {
@@ -298,17 +306,17 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
     }
 
     public void select( Filter filter, boolean and ) {
-        getMap().select(filter,and);
+        getMap().select(filter, and);
     }
 
     private volatile EList eAdapters;
-    
+
     @Override
     public EList eAdapters() {
-        if( eAdapters==null ){
+        if (eAdapters == null) {
             synchronized (this) {
-                if( eAdapters==null ){
-                    eAdapters=new SynchronizedEList(super.eAdapters()) ;
+                if (eAdapters == null) {
+                    eAdapters = new SynchronizedEList(super.eAdapters());
                 }
             }
         }

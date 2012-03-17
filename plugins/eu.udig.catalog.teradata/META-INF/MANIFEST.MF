@@ -6,9 +6,8 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: eu.udig.catalog.teradata.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- net.refractions.udig.catalog;bundle-version="1.2.0",
- net.refractions.udig.catalog.ui;bundle-version="1.2.0",
- eu.udig.libs.teradata
+ net.refractions.udig.catalog,
+ net.refractions.udig.catalog.ui
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: eu.udig.catalog.teradata

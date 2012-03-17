@@ -7,14 +7,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.ConsoleHandler;
-import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import javax.imageio.spi.ImageReaderSpi;
 
-import org.eclipse.core.internal.runtime.InternalPlatform;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -68,7 +65,8 @@ public class Activator implements BundleActivator {
     public static String JDBC_DATA_TRACE_FINE = "net.refractions.udig.libs/debug/data/jdbc/fine";
     public static String JDBC_TRACE_FINE = "net.refractions.udig.libs/debug/jdbc/fine";
 
-    public void start( final BundleContext context ) throws Exception {
+    @SuppressWarnings("deprecation")
+	public void start( final BundleContext context ) throws Exception {
         if (Platform.getOS().equals(Platform.OS_WIN32)) {
             try {
                 // PNG native support is not very good .. this turns it off
@@ -139,7 +137,7 @@ public class Activator implements BundleActivator {
         if (context == null) {
             return false;
         }
-        ServiceTracker debugTracker = new ServiceTracker(context, DebugOptions.class.getName(),
+        ServiceTracker<DebugOptions,Object> debugTracker = new ServiceTracker<DebugOptions,Object>(context, DebugOptions.class.getName(),
                 null);
         debugTracker.open();
 
@@ -148,8 +146,7 @@ public class Activator implements BundleActivator {
             return false;
         }
         // if platform debugging is enabled, check to see if this plugin is enabled for debugging
-        return debugOptions.isDebugEnabled() ? InternalPlatform.getDefault().getBooleanOption(key,
-                false) : false;
+        return debugOptions.isDebugEnabled() ? debugOptions.getBooleanOption(key,false) : false;
     }
 
     public static void initializeReferencingModule( IProgressMonitor monitor ) {
@@ -187,9 +184,9 @@ public class Activator implements BundleActivator {
         load(ReferencingFactoryFinder.getMathTransformFactories(null));
         monitor.worked(4);
     }
-    @SuppressWarnings("unchecked")
-    static private void load( Set coordinateOperationAuthorityFactories ) {
-        for( Iterator iter = coordinateOperationAuthorityFactories.iterator(); iter.hasNext(); ) {
+
+    static private void load( Set<?> coordinateOperationAuthorityFactories ) {
+        for( Iterator<?> iter = coordinateOperationAuthorityFactories.iterator(); iter.hasNext(); ) {
             iter.next();
         }
     }

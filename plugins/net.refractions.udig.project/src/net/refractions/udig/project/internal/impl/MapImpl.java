@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import net.refractions.udig.project.ILegendItem;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.locks.Lock;
 
@@ -39,6 +40,7 @@ import net.refractions.udig.project.internal.ContextModelListenerAdapter;
 import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerFactory;
+import net.refractions.udig.project.internal.LegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.Project;
@@ -64,6 +66,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -72,6 +75,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Display;
@@ -114,12 +119,6 @@ import com.vividsolutions.jts.geom.Envelope;
  * @generated
  */
 public class MapImpl extends EObjectImpl implements Map {
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc
@@ -233,8 +232,8 @@ public class MapImpl extends EObjectImpl implements Map {
      * @ordered
      */
     protected volatile BrewerPalette colorPalette = PlatformGIS.getColorBrewer().getPalette(
-            ProjectPlugin.getPlugin().getPreferenceStore().getString(
-                    PreferenceConstants.P_DEFAULT_PALETTE));
+            ProjectPlugin.getPlugin().getPreferenceStore()
+                    .getString(PreferenceConstants.P_DEFAULT_PALETTE));
 
     /**
      * The cached value of the '{@link #getEditManagerInternal() <em>Edit Manager Internal</em>}' containment reference.
@@ -284,6 +283,16 @@ public class MapImpl extends EObjectImpl implements Map {
      * @ordered
      */
     protected volatile Blackboard blackBoardInternal = null;
+
+    /**
+     * The cached value of the '{@link #getLegend() <em>Legend</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getLegend()
+     * @generated
+     * @ordered
+     */
+    protected EList<ILegendItem> legend;
 
     /**
      * <p>
@@ -346,8 +355,9 @@ public class MapImpl extends EObjectImpl implements Map {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     protected EClass eStaticClass() {
-        return ProjectPackage.eINSTANCE.getMap();
+        return ProjectPackage.Literals.MAP;
     }
 
     /**
@@ -377,8 +387,8 @@ public class MapImpl extends EObjectImpl implements Map {
      */
     public Project getProjectInternalGen() {
         if (projectInternal != null && projectInternal.eIsProxy()) {
-            Project oldProjectInternal = projectInternal;
-            projectInternal = (Project) eResolveProxy((InternalEObject) projectInternal);
+            InternalEObject oldProjectInternal = (InternalEObject) projectInternal;
+            projectInternal = (Project) eResolveProxy(oldProjectInternal);
             if (projectInternal != oldProjectInternal) {
                 if (eNotificationRequired())
                     eNotify(new ENotificationImpl(this, Notification.RESOLVE,
@@ -432,8 +442,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 msgs = ((InternalEObject) newProjectInternal).eInverseAdd(this,
                         ProjectPackage.PROJECT__ELEMENTS_INTERNAL, Project.class, msgs);
             msgs = basicSetProjectInternal(newProjectInternal, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__PROJECT_INTERNAL, newProjectInternal, newProjectInternal));
@@ -487,8 +496,7 @@ public class MapImpl extends EObjectImpl implements Map {
      */
     @SuppressWarnings({"unchecked", "deprecation"})
     public void setContextModel( ContextModel newContextModel ) {
-        if (contextModel != null)
-            contextModel.eAdapters().remove(contextModelListener);
+        if (contextModel != null) contextModel.eAdapters().remove(contextModelListener);
         if (newContextModel != null) {
             newContextModel.eAdapters().add(contextModelListener);
         }
@@ -509,8 +517,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 msgs = ((InternalEObject) newContextModel).eInverseAdd(this,
                         ProjectPackage.CONTEXT_MODEL__MAP, ContextModel.class, msgs);
             msgs = basicSetContextModel(newContextModel, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__CONTEXT_MODEL, newContextModel, newContextModel));
@@ -576,8 +583,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 msgs = ((InternalEObject) newViewportModelInternal).eInverseAdd(this,
                         RenderPackage.VIEWPORT_MODEL__MAP_INTERNAL, ViewportModel.class, msgs);
             msgs = basicSetViewportModelInternal(newViewportModelInternal, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL, newViewportModelInternal,
@@ -590,8 +596,8 @@ public class MapImpl extends EObjectImpl implements Map {
      */
     public BrewerPalette getColorPalette() {
         if (colorPalette == null) {
-            String defaultPalette = ProjectPlugin.getPlugin().getPreferenceStore().getString(
-                    PreferenceConstants.P_DEFAULT_PALETTE);
+            String defaultPalette = ProjectPlugin.getPlugin().getPreferenceStore()
+                    .getString(PreferenceConstants.P_DEFAULT_PALETTE);
             if (defaultPalette == null || !PlatformGIS.getColorBrewer().hasPalette(defaultPalette))
                 defaultPalette = "Dark2"; //failsafe default //$NON-NLS-1$
             colorPalette = PlatformGIS.getColorBrewer().getPalette(defaultPalette);
@@ -606,9 +612,6 @@ public class MapImpl extends EObjectImpl implements Map {
     public void setColorPalette( BrewerPalette newColorPalette ) {
         BrewerPalette oldColorPalette = colorPalette;
         colorPalette = newColorPalette;
-        if (colourScheme.getColourPalette() != colorPalette) {
-            colourScheme.setColourPalette(colorPalette);
-        }
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__COLOR_PALETTE, oldColorPalette, colorPalette));
@@ -655,8 +658,7 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     public URI getID() {
-        if (eResource() == null)
-            return URI.createFileURI(getName());
+        if (eResource() == null) return URI.createFileURI(getName());
         return eResource().getURI();
     }
 
@@ -683,8 +685,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 }
             }
             if (getLayersInternal() != EMPTY_LIST) {
-                if (bounds.isNull())
-                    return getDefaultBounds();
+                if (bounds.isNull()) return getDefaultBounds();
 
             }
             return bounds;
@@ -717,16 +718,15 @@ public class MapImpl extends EObjectImpl implements Map {
      */
     public static ReferencedEnvelope toReferencedEnvelope( Extent extent,
             CoordinateReferenceSystem crs ) {
-        if (extent == null)
-            return null;
+        if (extent == null) return null;
         Collection< ? extends GeographicExtent> elems = extent.getGeographicElements();
         for( GeographicExtent extent2 : elems ) {
             ReferencedEnvelope env = null;
             if (extent2 instanceof GeographicBoundingBox) {
                 GeographicBoundingBox box = (GeographicBoundingBox) extent2;
-                env = new ReferencedEnvelope(box.getWestBoundLongitude(), box
-                        .getEastBoundLongitude(), box.getSouthBoundLatitude(), box
-                        .getNorthBoundLatitude(), DefaultGeographicCRS.WGS84);
+                env = new ReferencedEnvelope(box.getWestBoundLongitude(),
+                        box.getEastBoundLongitude(), box.getSouthBoundLatitude(),
+                        box.getNorthBoundLatitude(), DefaultGeographicCRS.WGS84);
             } else if (extent2 instanceof BoundingPolygon) {
                 BoundingPolygon boundingpoly = (BoundingPolygon) extent2;
                 Collection< ? extends Geometry> polygons = boundingpoly.getPolygons();
@@ -806,8 +806,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated NOT
      */
     public LayerFactory getLayerFactory() {
-        if (layerFactory == null)
-            setLayerFactory(ProjectFactory.eINSTANCE.createLayerFactory());
+        if (layerFactory == null) setLayerFactory(ProjectFactory.eINSTANCE.createLayerFactory());
         return layerFactory;
     }
 
@@ -844,8 +843,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 msgs = ((InternalEObject) newLayerFactory).eInverseAdd(this,
                         ProjectPackage.LAYER_FACTORY__MAP, LayerFactory.class, msgs);
             msgs = basicSetLayerFactory(newLayerFactory, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__LAYER_FACTORY, newLayerFactory, newLayerFactory));
@@ -933,7 +931,7 @@ public class MapImpl extends EObjectImpl implements Map {
         if (eNotificationRequired()) {
             // create bas notification
             ENotificationImpl notifications = new BatchNotification(this, eventType,
-                    ProjectPackage.MAP__BATCH_EVENT);
+                    ProjectPackage.MAP_FEATURE_COUNT + 1);
             // Create layer notifications
             for( Layer layer : getContextModel().getLayers() ) {
                 EStructuralFeature feature = layer.eClass().getEStructuralFeature(featureID);
@@ -962,8 +960,7 @@ public class MapImpl extends EObjectImpl implements Map {
          * @see org.eclipse.emf.common.notify.impl.NotificationImpl#add(org.eclipse.emf.common.notify.Notification)
          */
         public boolean add( Notification newNotification ) {
-            if (notifications.contains(newNotification))
-                return false;
+            if (notifications.contains(newNotification)) return false;
 
             notifications.add(newNotification);
             Collections.sort(notifications, new Comparator<Notification>(){
@@ -993,8 +990,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated NOT
      */
     public void redo() {
-        if (commandManager == null || !commandManager.hasForwardHistory())
-            return;
+        if (commandManager == null || !commandManager.hasForwardHistory()) return;
         commandManager.redo(true);
         notifyCommandStackChange();
     }
@@ -1005,8 +1001,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated NOT
      */
     public void undo() {
-        if (commandManager == null || !commandManager.hasBackHistory())
-            return;
+        if (commandManager == null || !commandManager.hasBackHistory()) return;
         commandManager.undo(true);
         notifyCommandStackChange();
     }
@@ -1017,8 +1012,7 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated NOT
      */
     public void backwardHistory() {
-        if (navCommandManager == null || !navCommandManager.hasBackHistory())
-            return;
+        if (navCommandManager == null || !navCommandManager.hasBackHistory()) return;
         navCommandManager.undo(true);
     }
 
@@ -1028,9 +1022,269 @@ public class MapImpl extends EObjectImpl implements Map {
      * @generated NOT
      */
     public void forwardHistory() {
-        if (navCommandManager == null || !navCommandManager.hasForwardHistory())
-            return;
+        if (navCommandManager == null || !navCommandManager.hasForwardHistory()) return;
         navCommandManager.redo(true);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID,
+            NotificationChain msgs ) {
+        switch( featureID ) {
+        case ProjectPackage.MAP__PROJECT_INTERNAL:
+            if (projectInternal != null)
+                msgs = ((InternalEObject) projectInternal).eInverseRemove(this,
+                        ProjectPackage.PROJECT__ELEMENTS_INTERNAL, Project.class, msgs);
+            return basicSetProjectInternal((Project) otherEnd, msgs);
+        case ProjectPackage.MAP__CONTEXT_MODEL:
+            if (contextModel != null)
+                msgs = ((InternalEObject) contextModel).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
+                        - ProjectPackage.MAP__CONTEXT_MODEL, null, msgs);
+            return basicSetContextModel((ContextModel) otherEnd, msgs);
+        case ProjectPackage.MAP__LAYER_FACTORY:
+            if (layerFactory != null)
+                msgs = ((InternalEObject) layerFactory).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
+                        - ProjectPackage.MAP__LAYER_FACTORY, null, msgs);
+            return basicSetLayerFactory((LayerFactory) otherEnd, msgs);
+        case ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL:
+            if (viewportModelInternal != null)
+                msgs = ((InternalEObject) viewportModelInternal).eInverseRemove(this,
+                        EOPPOSITE_FEATURE_BASE - ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL, null,
+                        msgs);
+            return basicSetViewportModelInternal((ViewportModel) otherEnd, msgs);
+        case ProjectPackage.MAP__EDIT_MANAGER_INTERNAL:
+            if (editManagerInternal != null)
+                msgs = ((InternalEObject) editManagerInternal).eInverseRemove(this,
+                        EOPPOSITE_FEATURE_BASE - ProjectPackage.MAP__EDIT_MANAGER_INTERNAL, null,
+                        msgs);
+            return basicSetEditManagerInternal((EditManager) otherEnd, msgs);
+        case ProjectPackage.MAP__RENDER_MANAGER_INTERNAL:
+            if (renderManagerInternal != null)
+                msgs = ((InternalEObject) renderManagerInternal).eInverseRemove(this,
+                        RenderPackage.RENDER_MANAGER__MAP_INTERNAL, RenderManager.class, msgs);
+            return basicSetRenderManagerInternal((RenderManager) otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
+            NotificationChain msgs ) {
+        switch( featureID ) {
+        case ProjectPackage.MAP__PROJECT_INTERNAL:
+            return basicSetProjectInternal(null, msgs);
+        case ProjectPackage.MAP__CONTEXT_MODEL:
+            return basicSetContextModel(null, msgs);
+        case ProjectPackage.MAP__LAYER_FACTORY:
+            return basicSetLayerFactory(null, msgs);
+        case ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL:
+            return basicSetViewportModelInternal(null, msgs);
+        case ProjectPackage.MAP__EDIT_MANAGER_INTERNAL:
+            return basicSetEditManagerInternal(null, msgs);
+        case ProjectPackage.MAP__RENDER_MANAGER_INTERNAL:
+            return basicSetRenderManagerInternal(null, msgs);
+        case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
+            return basicSetBlackBoardInternal(null, msgs);
+        case ProjectPackage.MAP__LEGEND:
+            return ((InternalEList< ? >) getLegend()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
+        switch( featureID ) {
+        case ProjectPackage.MAP__NAME:
+            return getName();
+        case ProjectPackage.MAP__PROJECT_INTERNAL:
+            if (resolve) return getProjectInternal();
+            return basicGetProjectInternal();
+        case ProjectPackage.MAP__CONTEXT_MODEL:
+            return getContextModel();
+        case ProjectPackage.MAP__ABSTRACT:
+            return getAbstract();
+        case ProjectPackage.MAP__NAV_COMMAND_STACK:
+            return getNavCommandStack();
+        case ProjectPackage.MAP__COMMAND_STACK:
+            return getCommandStack();
+        case ProjectPackage.MAP__LAYER_FACTORY:
+            return getLayerFactory();
+        case ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL:
+            return getViewportModelInternal();
+        case ProjectPackage.MAP__COLOR_PALETTE:
+            return getColorPalette();
+        case ProjectPackage.MAP__EDIT_MANAGER_INTERNAL:
+            return getEditManagerInternal();
+        case ProjectPackage.MAP__RENDER_MANAGER_INTERNAL:
+            if (resolve) return getRenderManagerInternal();
+            return basicGetRenderManagerInternal();
+        case ProjectPackage.MAP__COLOUR_SCHEME:
+            return getColourScheme();
+        case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
+            return getBlackBoardInternal();
+        case ProjectPackage.MAP__LEGEND:
+            return getLegend();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet( int featureID, Object newValue ) {
+        switch( featureID ) {
+        case ProjectPackage.MAP__NAME:
+            setName((String) newValue);
+            return;
+        case ProjectPackage.MAP__PROJECT_INTERNAL:
+            setProjectInternal((Project) newValue);
+            return;
+        case ProjectPackage.MAP__CONTEXT_MODEL:
+            setContextModel((ContextModel) newValue);
+            return;
+        case ProjectPackage.MAP__ABSTRACT:
+            setAbstract((String) newValue);
+            return;
+        case ProjectPackage.MAP__LAYER_FACTORY:
+            setLayerFactory((LayerFactory) newValue);
+            return;
+        case ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL:
+            setViewportModelInternal((ViewportModel) newValue);
+            return;
+        case ProjectPackage.MAP__COLOR_PALETTE:
+            setColorPalette((BrewerPalette) newValue);
+            return;
+        case ProjectPackage.MAP__EDIT_MANAGER_INTERNAL:
+            setEditManagerInternal((EditManager) newValue);
+            return;
+        case ProjectPackage.MAP__RENDER_MANAGER_INTERNAL:
+            setRenderManagerInternal((RenderManager) newValue);
+            return;
+        case ProjectPackage.MAP__COLOUR_SCHEME:
+            setColourScheme((ColourScheme) newValue);
+            return;
+        case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
+            setBlackBoardInternal((Blackboard) newValue);
+            return;
+        case ProjectPackage.MAP__LEGEND:
+            getLegend().clear();
+            getLegend().addAll((Collection< ? extends ILegendItem>) newValue);
+            return;
+        }
+        super.eSet(featureID, newValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset( int featureID ) {
+        switch( featureID ) {
+        case ProjectPackage.MAP__NAME:
+            setName(NAME_EDEFAULT);
+            return;
+        case ProjectPackage.MAP__PROJECT_INTERNAL:
+            setProjectInternal((Project) null);
+            return;
+        case ProjectPackage.MAP__CONTEXT_MODEL:
+            setContextModel((ContextModel) null);
+            return;
+        case ProjectPackage.MAP__ABSTRACT:
+            setAbstract(ABSTRACT_EDEFAULT);
+            return;
+        case ProjectPackage.MAP__LAYER_FACTORY:
+            setLayerFactory((LayerFactory) null);
+            return;
+        case ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL:
+            setViewportModelInternal((ViewportModel) null);
+            return;
+        case ProjectPackage.MAP__COLOR_PALETTE:
+            setColorPalette(COLOR_PALETTE_EDEFAULT);
+            return;
+        case ProjectPackage.MAP__EDIT_MANAGER_INTERNAL:
+            setEditManagerInternal((EditManager) null);
+            return;
+        case ProjectPackage.MAP__RENDER_MANAGER_INTERNAL:
+            setRenderManagerInternal((RenderManager) null);
+            return;
+        case ProjectPackage.MAP__COLOUR_SCHEME:
+            setColourScheme(COLOUR_SCHEME_EDEFAULT);
+            return;
+        case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
+            setBlackBoardInternal((Blackboard) null);
+            return;
+        case ProjectPackage.MAP__LEGEND:
+            getLegend().clear();
+            return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet( int featureID ) {
+        switch( featureID ) {
+        case ProjectPackage.MAP__NAME:
+            return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+        case ProjectPackage.MAP__PROJECT_INTERNAL:
+            return projectInternal != null;
+        case ProjectPackage.MAP__CONTEXT_MODEL:
+            return contextModel != null;
+        case ProjectPackage.MAP__ABSTRACT:
+            return ABSTRACT_EDEFAULT == null ? abstract_ != null : !ABSTRACT_EDEFAULT
+                    .equals(abstract_);
+        case ProjectPackage.MAP__NAV_COMMAND_STACK:
+            return NAV_COMMAND_STACK_EDEFAULT == null
+                    ? getNavCommandStack() != null
+                    : !NAV_COMMAND_STACK_EDEFAULT.equals(getNavCommandStack());
+        case ProjectPackage.MAP__COMMAND_STACK:
+            return COMMAND_STACK_EDEFAULT == null
+                    ? getCommandStack() != null
+                    : !COMMAND_STACK_EDEFAULT.equals(getCommandStack());
+        case ProjectPackage.MAP__LAYER_FACTORY:
+            return layerFactory != null;
+        case ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL:
+            return viewportModelInternal != null;
+        case ProjectPackage.MAP__COLOR_PALETTE:
+            return COLOR_PALETTE_EDEFAULT == null ? colorPalette != null : !COLOR_PALETTE_EDEFAULT
+                    .equals(colorPalette);
+        case ProjectPackage.MAP__EDIT_MANAGER_INTERNAL:
+            return editManagerInternal != null;
+        case ProjectPackage.MAP__RENDER_MANAGER_INTERNAL:
+            return renderManagerInternal != null;
+        case ProjectPackage.MAP__COLOUR_SCHEME:
+            return COLOUR_SCHEME_EDEFAULT == null ? colourScheme != null : !COLOUR_SCHEME_EDEFAULT
+                    .equals(colourScheme);
+        case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
+            return blackBoardInternal != null;
+        case ProjectPackage.MAP__LEGEND:
+            return legend != null && !legend.isEmpty();
+        }
+        return super.eIsSet(featureID);
     }
 
     /**
@@ -1080,8 +1334,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 msgs = ((InternalEObject) newEditManagerInternal).eInverseAdd(this,
                         ProjectPackage.EDIT_MANAGER__MAP_INTERNAL, EditManager.class, msgs);
             msgs = basicSetEditManagerInternal(newEditManagerInternal, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__EDIT_MANAGER_INTERNAL, newEditManagerInternal,
@@ -1094,8 +1347,8 @@ public class MapImpl extends EObjectImpl implements Map {
      */
     public RenderManager getRenderManagerInternal() {
         if (renderManagerInternal != null && renderManagerInternal.eIsProxy()) {
-            RenderManager oldRenderManagerInternal = renderManagerInternal;
-            renderManagerInternal = (RenderManager) eResolveProxy((InternalEObject) renderManagerInternal);
+            InternalEObject oldRenderManagerInternal = (InternalEObject) renderManagerInternal;
+            renderManagerInternal = (RenderManager) eResolveProxy(oldRenderManagerInternal);
             if (renderManagerInternal != oldRenderManagerInternal) {
                 if (eNotificationRequired())
                     eNotify(new ENotificationImpl(this, Notification.RESOLVE,
@@ -1148,8 +1401,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 msgs = ((InternalEObject) newRenderManagerInternal).eInverseAdd(this,
                         RenderPackage.RENDER_MANAGER__MAP_INTERNAL, RenderManager.class, msgs);
             msgs = basicSetRenderManagerInternal(newRenderManagerInternal, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__RENDER_MANAGER_INTERNAL, newRenderManagerInternal,
@@ -1187,8 +1439,7 @@ public class MapImpl extends EObjectImpl implements Map {
     @SuppressWarnings("unchecked")
     public void setRenderManagerInternal( RenderManager newRenderManager ) {
         setRenderManagerInternalGen(newRenderManager);
-        if (newRenderManager != null)
-            newRenderManager.eAdapters().add(adapter);
+        if (newRenderManager != null) newRenderManager.eAdapters().add(adapter);
         if (getViewportModel() != null) {
             getViewportModelInternal().setRenderManagerInternal(newRenderManager);
         }
@@ -1267,8 +1518,7 @@ public class MapImpl extends EObjectImpl implements Map {
                         EOPPOSITE_FEATURE_BASE - ProjectPackage.MAP__BLACK_BOARD_INTERNAL, null,
                         msgs);
             msgs = basicSetBlackBoardInternal(newBlackBoardInternal, msgs);
-            if (msgs != null)
-                msgs.dispatch();
+            if (msgs != null) msgs.dispatch();
         } else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET,
                     ProjectPackage.MAP__BLACK_BOARD_INTERNAL, newBlackBoardInternal,
@@ -1276,260 +1526,25 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain eInverseAdd( InternalEObject otherEnd, int featureID, Class baseClass,
-            NotificationChain msgs ) {
-        if (featureID >= 0) {
-            switch( eDerivedStructuralFeatureID(featureID, baseClass) ) {
-            case ProjectPackage.MAP__PROJECT_INTERNAL:
-                if (projectInternal != null)
-                    msgs = ((InternalEObject) projectInternal).eInverseRemove(this,
-                            ProjectPackage.PROJECT__ELEMENTS_INTERNAL, Project.class, msgs);
-                return basicSetProjectInternal((Project) otherEnd, msgs);
-            case ProjectPackage.MAP__CONTEXT_MODEL:
-                if (contextModel != null)
-                    msgs = ((InternalEObject) contextModel).eInverseRemove(this,
-                            EOPPOSITE_FEATURE_BASE - ProjectPackage.MAP__CONTEXT_MODEL, null, msgs);
-                return basicSetContextModel((ContextModel) otherEnd, msgs);
-            case ProjectPackage.MAP__LAYER_FACTORY:
-                if (layerFactory != null)
-                    msgs = ((InternalEObject) layerFactory).eInverseRemove(this,
-                            EOPPOSITE_FEATURE_BASE - ProjectPackage.MAP__LAYER_FACTORY, null, msgs);
-                return basicSetLayerFactory((LayerFactory) otherEnd, msgs);
-            case ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL:
-                if (viewportModelInternal != null)
-                    msgs = ((InternalEObject) viewportModelInternal).eInverseRemove(this,
-                            EOPPOSITE_FEATURE_BASE - ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL,
-                            null, msgs);
-                return basicSetViewportModelInternal((ViewportModel) otherEnd, msgs);
-            case ProjectPackage.MAP__EDIT_MANAGER_INTERNAL:
-                if (editManagerInternal != null)
-                    msgs = ((InternalEObject) editManagerInternal).eInverseRemove(this,
-                            EOPPOSITE_FEATURE_BASE - ProjectPackage.MAP__EDIT_MANAGER_INTERNAL,
-                            null, msgs);
-                return basicSetEditManagerInternal((EditManager) otherEnd, msgs);
-            case ProjectPackage.MAP__RENDER_MANAGER_INTERNAL:
-                if (renderManagerInternal != null)
-                    msgs = ((InternalEObject) renderManagerInternal).eInverseRemove(this,
-                            RenderPackage.RENDER_MANAGER__MAP_INTERNAL, RenderManager.class, msgs);
-                return basicSetRenderManagerInternal((RenderManager) otherEnd, msgs);
-            default:
-                return eDynamicInverseAdd(otherEnd, featureID, baseClass, msgs);
-            }
+    public List<ILegendItem> getLegend() {
+        if (legend == null) {
+            legend = new EObjectContainmentEList<ILegendItem>(ILegendItem.class, this,
+                    ProjectPackage.MAP__LEGEND);
         }
-        if (eContainer != null)
-            msgs = eBasicRemoveFromContainer(msgs);
-        return eBasicSetContainer(otherEnd, featureID, msgs);
+        return legend;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            Class baseClass, NotificationChain msgs ) {
-        if (featureID >= 0) {
-            switch( eDerivedStructuralFeatureID(featureID, baseClass) ) {
-            case ProjectPackage.MAP__PROJECT_INTERNAL:
-                return basicSetProjectInternal(null, msgs);
-            case ProjectPackage.MAP__CONTEXT_MODEL:
-                return basicSetContextModel(null, msgs);
-            case ProjectPackage.MAP__LAYER_FACTORY:
-                return basicSetLayerFactory(null, msgs);
-            case ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL:
-                return basicSetViewportModelInternal(null, msgs);
-            case ProjectPackage.MAP__EDIT_MANAGER_INTERNAL:
-                return basicSetEditManagerInternal(null, msgs);
-            case ProjectPackage.MAP__RENDER_MANAGER_INTERNAL:
-                return basicSetRenderManagerInternal(null, msgs);
-            case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
-                return basicSetBlackBoardInternal(null, msgs);
-            default:
-                return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-            }
-        }
-        return eBasicSetContainer(null, featureID, msgs);
-    }
-
-    /**
-     * EMF will generate to this method instead of eGet
-     *
-     * @generated
-     */
-    public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
-        case ProjectPackage.MAP__NAME:
-            return getName();
-        case ProjectPackage.MAP__PROJECT_INTERNAL:
-            if (resolve)
-                return getProjectInternal();
-            return basicGetProjectInternal();
-        case ProjectPackage.MAP__CONTEXT_MODEL:
-            return getContextModel();
-        case ProjectPackage.MAP__ABSTRACT:
-            return getAbstract();
-        case ProjectPackage.MAP__NAV_COMMAND_STACK:
-            return getNavCommandStack();
-        case ProjectPackage.MAP__COMMAND_STACK:
-            return getCommandStack();
-        case ProjectPackage.MAP__LAYER_FACTORY:
-            return getLayerFactory();
-        case ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL:
-            return getViewportModelInternal();
-        case ProjectPackage.MAP__COLOR_PALETTE:
-            return getColorPalette();
-        case ProjectPackage.MAP__EDIT_MANAGER_INTERNAL:
-            return getEditManagerInternal();
-        case ProjectPackage.MAP__RENDER_MANAGER_INTERNAL:
-            if (resolve)
-                return getRenderManagerInternal();
-            return basicGetRenderManagerInternal();
-        case ProjectPackage.MAP__COLOUR_SCHEME:
-            return getColourScheme();
-        case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
-            return getBlackBoardInternal();
-        }
-        return eDynamicGet(eFeature, resolve);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public void eSet( EStructuralFeature eFeature, Object newValue ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
-        case ProjectPackage.MAP__NAME:
-            setName((String) newValue);
-            return;
-        case ProjectPackage.MAP__PROJECT_INTERNAL:
-            setProjectInternal((Project) newValue);
-            return;
-        case ProjectPackage.MAP__CONTEXT_MODEL:
-            setContextModel((ContextModel) newValue);
-            return;
-        case ProjectPackage.MAP__ABSTRACT:
-            setAbstract((String) newValue);
-            return;
-        case ProjectPackage.MAP__LAYER_FACTORY:
-            setLayerFactory((LayerFactory) newValue);
-            return;
-        case ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL:
-            setViewportModelInternal((ViewportModel) newValue);
-            return;
-        case ProjectPackage.MAP__COLOR_PALETTE:
-            setColorPalette((BrewerPalette) newValue);
-            return;
-        case ProjectPackage.MAP__EDIT_MANAGER_INTERNAL:
-            setEditManagerInternal((EditManager) newValue);
-            return;
-        case ProjectPackage.MAP__RENDER_MANAGER_INTERNAL:
-            setRenderManagerInternal((RenderManager) newValue);
-            return;
-        case ProjectPackage.MAP__COLOUR_SCHEME:
-            setColourScheme((ColourScheme) newValue);
-            return;
-        case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
-            setBlackBoardInternal((Blackboard) newValue);
-            return;
-        }
-        eDynamicSet(eFeature, newValue);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public void eUnset( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
-        case ProjectPackage.MAP__NAME:
-            setName(NAME_EDEFAULT);
-            return;
-        case ProjectPackage.MAP__PROJECT_INTERNAL:
-            setProjectInternal((Project) null);
-            return;
-        case ProjectPackage.MAP__CONTEXT_MODEL:
-            setContextModel((ContextModel) null);
-            return;
-        case ProjectPackage.MAP__ABSTRACT:
-            setAbstract(ABSTRACT_EDEFAULT);
-            return;
-        case ProjectPackage.MAP__LAYER_FACTORY:
-            setLayerFactory((LayerFactory) null);
-            return;
-        case ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL:
-            setViewportModelInternal((ViewportModel) null);
-            return;
-        case ProjectPackage.MAP__COLOR_PALETTE:
-            setColorPalette(COLOR_PALETTE_EDEFAULT);
-            return;
-        case ProjectPackage.MAP__EDIT_MANAGER_INTERNAL:
-            setEditManagerInternal((EditManager) null);
-            return;
-        case ProjectPackage.MAP__RENDER_MANAGER_INTERNAL:
-            setRenderManagerInternal((RenderManager) null);
-            return;
-        case ProjectPackage.MAP__COLOUR_SCHEME:
-            setColourScheme(COLOUR_SCHEME_EDEFAULT);
-            return;
-        case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
-            setBlackBoardInternal((Blackboard) null);
-            return;
-        }
-        eDynamicUnset(eFeature);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean eIsSet( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
-        case ProjectPackage.MAP__NAME:
-            return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-        case ProjectPackage.MAP__PROJECT_INTERNAL:
-            return projectInternal != null;
-        case ProjectPackage.MAP__CONTEXT_MODEL:
-            return contextModel != null;
-        case ProjectPackage.MAP__ABSTRACT:
-            return ABSTRACT_EDEFAULT == null ? abstract_ != null : !ABSTRACT_EDEFAULT
-                    .equals(abstract_);
-        case ProjectPackage.MAP__NAV_COMMAND_STACK:
-            return NAV_COMMAND_STACK_EDEFAULT == null
-                    ? getNavCommandStack() != null
-                    : !NAV_COMMAND_STACK_EDEFAULT.equals(getNavCommandStack());
-        case ProjectPackage.MAP__COMMAND_STACK:
-            return COMMAND_STACK_EDEFAULT == null
-                    ? getCommandStack() != null
-                    : !COMMAND_STACK_EDEFAULT.equals(getCommandStack());
-        case ProjectPackage.MAP__LAYER_FACTORY:
-            return layerFactory != null;
-        case ProjectPackage.MAP__VIEWPORT_MODEL_INTERNAL:
-            return viewportModelInternal != null;
-        case ProjectPackage.MAP__COLOR_PALETTE:
-            return COLOR_PALETTE_EDEFAULT == null ? colorPalette != null : !COLOR_PALETTE_EDEFAULT
-                    .equals(colorPalette);
-        case ProjectPackage.MAP__EDIT_MANAGER_INTERNAL:
-            return editManagerInternal != null;
-        case ProjectPackage.MAP__RENDER_MANAGER_INTERNAL:
-            return renderManagerInternal != null;
-        case ProjectPackage.MAP__COLOUR_SCHEME:
-            return COLOUR_SCHEME_EDEFAULT == null ? colourScheme != null : !COLOUR_SCHEME_EDEFAULT
-                    .equals(colourScheme);
-        case ProjectPackage.MAP__BLACK_BOARD_INTERNAL:
-            return blackBoardInternal != null;
-        }
-        return eDynamicIsSet(eFeature);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
+    @Override
     public String toString() {
-        if (eIsProxy())
-            return super.toString();
+        if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: "); //$NON-NLS-1$
@@ -1551,8 +1566,7 @@ public class MapImpl extends EObjectImpl implements Map {
     public Object getAdapter( Class adapter ) {
         for( Iterator i = eAdapters().iterator(); i.hasNext(); ) {
             Object o = i.next();
-            if (adapter.isAssignableFrom(o.getClass()))
-                return o;
+            if (adapter.isAssignableFrom(o.getClass())) return o;
         }
 
         /*
@@ -1612,8 +1626,7 @@ public class MapImpl extends EObjectImpl implements Map {
 
     @SuppressWarnings("unchecked")
     public List<Layer> getLayersInternal() {
-        if (getContextModel() == null)
-            return EMPTY_LIST;
+        if (getContextModel() == null) return EMPTY_LIST;
         return getContextModel().getLayers();
     }
 
@@ -1726,15 +1739,13 @@ public class MapImpl extends EObjectImpl implements Map {
     }
     public void lowerLayer( Layer layer ) {
         int index = getLayersInternal().indexOf(layer);
-        if (index == 0)
-            return;
+        if (index == 0) return;
         ((LayersList2) getLayersInternal()).move(index--, index);
     }
 
     public void raiseLayer( Layer layer ) {
         int index = getLayersInternal().indexOf(layer);
-        if (index > getLayersInternal().size() - 2)
-            return;
+        if (index > getLayersInternal().size() - 2) return;
         ((LayersList2) getLayersInternal()).move(index++, index);
     }
 
@@ -1780,8 +1791,7 @@ public class MapImpl extends EObjectImpl implements Map {
         LAYERS: for( Layer layer : getLayersInternal() ) {
             if (layer == selected) {
                 Filter newFilter = layer.createBBoxFilter(boundingBox, null);
-                if (newFilter == null)
-                    continue LAYERS;
+                if (newFilter == null) continue LAYERS;
                 layer.setFilter(newFilter);
             } else {
                 layer.setFilter(Filter.EXCLUDE);
@@ -1800,8 +1810,7 @@ public class MapImpl extends EObjectImpl implements Map {
                 newFilter = layer.createBBoxFilter(boundingBox, null);
                 newFilterCopy = layer.createBBoxFilter(boundingBox, null);
 
-                if (newFilter == null)
-                    continue LAYERS;
+                if (newFilter == null) continue LAYERS;
                 if (oldFilter == null || oldFilter == Filter.EXCLUDE
                         || oldFilter.equals(Filter.EXCLUDE)) {
                     layer.setFilter(newFilter);
@@ -1894,8 +1903,7 @@ public class MapImpl extends EObjectImpl implements Map {
         List lists = new ArrayList();
         for( Iterator iter = getLayersInternal().iterator(); iter.hasNext(); ) {
             Object obj = iter.next();
-            if (type.isAssignableFrom(obj.getClass()))
-                lists.add(obj);
+            if (type.isAssignableFrom(obj.getClass())) lists.add(obj);
         }
         return lists;
     }

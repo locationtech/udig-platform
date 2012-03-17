@@ -23,6 +23,7 @@ import net.refractions.udig.aoi.IAOIService;
 import net.refractions.udig.aoi.IAOIStrategy;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.internal.Messages;
@@ -131,7 +132,7 @@ public class SetAOILayerCommand extends AbstractCommand implements UndoableMapCo
         if( selectedLayer == null){
             return; // nothing to do!
         }
-        if (!selectedLayer.isApplicable(ILayer.Interaction.AOI)){
+        if (!selectedLayer.getInteraction(Interaction.AOI)){
             return; // eek!
         }
         // use the bbox to see if we hit anything!

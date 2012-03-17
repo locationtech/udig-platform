@@ -106,12 +106,12 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
         return childrenFeatures;
     }
 
-//    @Override
-//    protected Collection< ? extends Object> getConcreteChildren( Object object ) {
-//        if( object instanceof IProject )
-//            return ((IProject)object).getElements();
-//        return super.getConcreteChildren(object);
-//    }
+    //    @Override
+    //    protected Collection< ? extends Object> getConcreteChildren( Object object ) {
+    //        if( object instanceof IProject )
+    //            return ((IProject)object).getElements();
+    //        return super.getConcreteChildren(object);
+    //    }
     /**
      * This returns Project.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -130,7 +130,7 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
     public String getText( Object object ) {
         String label = ((Project) object).getName();
         return label == null || label.length() == 0 ? "Project" : //$NON-NLS-1$
-                label; 
+                label;
     }
 
     /**
@@ -140,8 +140,6 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
         return true;
     }
 
-    
-    
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached
      * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
@@ -169,17 +167,15 @@ public class ProjectItemProvider extends AbstractLazyLoadingItemProvider
         return ProjectEditPlugin.INSTANCE;
     }
 
-	@Override
-	protected Collection< ? extends Object> getConcreteChildren( Object object ) {
+    @Override
+    protected Collection< ? extends Object> getConcreteChildren( Object object ) {
         if (object instanceof IProject) {
-            List<IProjectElement> elements = new ArrayList<IProjectElement>(((IProject) object)
-                    .getElements());
+            List<IProjectElement> elements = new ArrayList<IProjectElement>(
+                    ((IProject) object).getElements());
             return elements;
         }
 
         return super.getConcreteChildren(object);
     }
-    
-    
 
 }

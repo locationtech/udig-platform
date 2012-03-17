@@ -6,5 +6,10 @@ Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.junit,
  net.refractions.udig.catalog.wms,
- net.refractions.udig.libs
+ net.refractions.udig.libs,
+ net.refractions.udig.catalog,
+ net.refractions.udig.project.ui
 Export-Package: net.refractions.udig.catalog.wmsc.server
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Activator: net.refractions.udig.catalog.tests.wmsc.Activator
+Bundle-ActivationPolicy: lazy

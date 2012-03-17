@@ -1,3 +1,18 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2008-2011, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
+
 package net.refractions.udig.catalog.wmsc.server;
 
 import java.awt.Color;
@@ -7,13 +22,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.apache.commons.collections.MapUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.ows.AbstractOpenWebService;
 
 import com.vividsolutions.jts.geom.Envelope;
 
@@ -34,7 +50,7 @@ public abstract class AbstractTileRange implements TileRange {
 
     protected Map<String, Tile> allTiles;
     protected Envelope bounds;
-    protected TiledWebMapServer server;
+    protected AbstractOpenWebService<?,?> server;
     protected TileSet tileset;
     protected TileWorkerQueue requestTileWorkQueue; // queue of threads for requesting tiles
     protected boolean using_threadpools = false;  // set in the constructor
@@ -62,7 +78,7 @@ public abstract class AbstractTileRange implements TileRange {
      * @param tiles The tiles that we wish to fetch; must be from the provided tileset
      * @param requestTileWorkQueue Queue of worker threads that can be used to fetch tiles
      */
-    public AbstractTileRange(TiledWebMapServer server, TileSet tileset, Envelope bounds, 
+    public AbstractTileRange(AbstractOpenWebService<?,?> server, TileSet tileset, Envelope bounds, 
             Map<String, Tile> tiles, TileWorkerQueue requestTileWorkQueue) {
         this.server = server;
         this.tileset = tileset;

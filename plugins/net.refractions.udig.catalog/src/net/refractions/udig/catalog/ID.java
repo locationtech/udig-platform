@@ -303,7 +303,31 @@ public class ID implements Serializable {
         result = prime * result + ((typeQualifier == null) ? 0 : typeQualifier.hashCode());
         return result;
     }
-
+    
+    public boolean equals( ID other, boolean stripChildRef ){
+        if( stripChildRef ){
+            String strip1 = stripChildRef();
+            String strip2 = other.stripChildRef();
+            return strip1.equals( strip2 );
+        }
+        else {
+            return equals( id );
+        }
+    }
+    private String stripChildRef() {
+        int splitHash = id.indexOf("#"); // search for first #
+        if( splitHash != -1 ){
+            int splitSlash = id.indexOf("/", splitHash );
+            if( splitSlash != -1 ){
+                return id.substring(0, splitSlash );
+            }
+            else {
+                return id.substring(0,splitHash);
+            }
+        }
+        return id;
+    }
+    
     @Override
     public boolean equals( Object obj ) {
         if (this == obj)
@@ -345,6 +369,12 @@ public class ID implements Serializable {
         return id.contains("localhost");
     }
     
+    /**
+     * @return true if ID represents a child
+     */
+    public boolean isChild() {
+        return id.toString().contains("#");
+    }
     /**
      * @return true if ID represents a File
      */

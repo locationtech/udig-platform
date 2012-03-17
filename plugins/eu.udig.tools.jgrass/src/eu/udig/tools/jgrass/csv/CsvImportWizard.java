@@ -190,7 +190,7 @@ public class CsvImportWizard extends Wizard implements INewWizard {
             } else if (typeIndex == 1) {
                 yIndex = i;
             } else {
-                Class class1 = typesMap.get(typesArray[typeIndex]);
+                Class<?> class1 = typesMap.get(typesArray[typeIndex]);
                 b.add(fieldName, class1);
             }
         }
@@ -200,53 +200,62 @@ public class CsvImportWizard extends Wizard implements INewWizard {
         Collection<Integer> orderedTypeIndexes = fieldsAndTypesIndex.values();
         Integer[] orderedTypeIndexesArray = (Integer[]) orderedTypeIndexes.toArray(new Integer[orderedTypeIndexes.size()]);
 
-        BufferedReader bR = new BufferedReader(new FileReader(csvFile));
-        String line = null;
-        int featureId = 0;
-        pm.beginTask("Importing raw data", -1);
-        while( (line = bR.readLine()) != null ) {
-            pm.worked(1);
-            if (line.startsWith("#")) {
-                continue;
-            }
-
-            SimpleFeatureBuilder builder = new SimpleFeatureBuilder(featureType);
-            Object[] values = new Object[fieldNames.size() - 1];
-
-            String[] lineSplit = line.split(separator);
-            double x = Double.parseDouble(lineSplit[xIndex]);
-            double y = Double.parseDouble(lineSplit[yIndex]);
-            Point point = gf.createPoint(new Coordinate(x, y));
-            values[0] = point;
-
-            int objIndex = 1;
-            for( int i = 0; i < lineSplit.length; i++ ) {
-                if (i == xIndex || i == yIndex) {
+        BufferedReader bR = null;
+        try {
+            bR = new BufferedReader(new FileReader(csvFile));
+            String line = null;
+            int featureId = 0;
+            pm.beginTask("Importing raw data", -1);
+            while( (line = bR.readLine()) != null ) {
+                pm.worked(1);
+                line = line.trim();
+                if (line.length() == 0) {
+                    continue;
+                }
+                if (line.startsWith("#")) {
                     continue;
                 }
 
-                String value = lineSplit[i];
-                int typeIndex = orderedTypeIndexesArray[i];
-                String typeName = typesArray[typeIndex];
-                if (typeName.equals(typesArray[3])) {
-                    values[objIndex] = value;
-                } else if (typeName.equals(typesArray[4])) {
-                    values[objIndex] = new Double(value);
-                } else if (typeName.equals(typesArray[5])) {
-                    values[objIndex] = new Integer(value);
-                } else {
-                    throw new IllegalArgumentException("An undefined value type was found");
-                }
-                objIndex++;
-            }
-            builder.addAll(values);
+                SimpleFeatureBuilder builder = new SimpleFeatureBuilder(featureType);
+                Object[] values = new Object[fieldNames.size() - 1];
 
-            SimpleFeature feature = builder.buildFeature(featureType.getTypeName() + "." + featureId);
-            featureId++;
-            newCollection.add(feature);
+                String[] lineSplit = line.split(separator);
+                double x = Double.parseDouble(lineSplit[xIndex]);
+                double y = Double.parseDouble(lineSplit[yIndex]);
+                Point point = gf.createPoint(new Coordinate(x, y));
+                values[0] = point;
+
+                int objIndex = 1;
+                for( int i = 0; i < lineSplit.length; i++ ) {
+                    if (i == xIndex || i == yIndex) {
+                        continue;
+                    }
+
+                    String value = lineSplit[i];
+                    int typeIndex = orderedTypeIndexesArray[i];
+                    String typeName = typesArray[typeIndex];
+                    if (typeName.equals(typesArray[3])) {
+                        values[objIndex] = value;
+                    } else if (typeName.equals(typesArray[4])) {
+                        values[objIndex] = new Double(value);
+                    } else if (typeName.equals(typesArray[5])) {
+                        values[objIndex] = new Integer(value);
+                    } else {
+                        throw new IllegalArgumentException("An undefined value type was found");
+                    }
+                    objIndex++;
+                }
+                builder.addAll(values);
+
+                SimpleFeature feature = builder.buildFeature(featureType.getTypeName() + "." + featureId);
+                featureId++;
+                newCollection.add(feature);
+            }
+        } finally {
+            if (bR != null)
+                bR.close();
+            pm.done();
         }
-        bR.close();
-        pm.done();
 
         return newCollection;
     }

@@ -1,8 +1,23 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2007-2011, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.catalog.wmsc.server;
 
 import java.util.List;
 import java.util.Map;
 
+import org.geotools.data.ows.AbstractOpenWebService;
 import org.geotools.data.ows.CRSEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -79,6 +94,12 @@ public interface TileSet {
 	 *        "0.5 0.25 0.125")
 	 */
 	public abstract void setResolutions(String res);
+
+	/**
+	 * Sets the server for this tileset
+	 * @param server
+	 */
+	public abstract void setServer(AbstractOpenWebService<?,?> server);
 
 	/**
 	 * @return the number of zoom levels supported by the tile set
@@ -176,6 +197,5 @@ public interface TileSet {
 	/**
 	 * @return server
 	 */
-	public abstract TiledWebMapServer getServer();
-
+	public abstract AbstractOpenWebService<?,?> getServer();
 }

@@ -161,26 +161,26 @@ public class WMTScaleZoomLevelMatcher {
         if (!Double.isNaN(tempScaleList[zoomLevel])) {
             return tempScaleList[zoomLevel];
         }
-        
+
         try {
             ReferencedEnvelope centerTileBounds = getBoundsOfCenterTileInMapCrs(zoomLevel, wmtSource);
-            
+
             double scale = ScaleUtils.calculateScaleDenominator(
                     centerTileBounds, 
                     new Dimension(wmtSource.getTileWidth(), wmtSource.getTileHeight()),
                     DPI);
             // cache the scale
             tempScaleList[zoomLevel] = scale;
-            
+
             return scale;
         } catch (Exception exc) {
             WMTPlugin.trace("[WMTRenderJob.getOptimumScaleFromZoomLevel] Failed for: " + zoomLevel, exc); //$NON-NLS-1$
         }
-        
+
         // in case of error, return fallback zoom-level
         return wmtSource.getScaleList()[zoomLevel];
     }
-    
+
     public double getOptimumScaleFromZoomLevel(int zoomLevel, WMTSource wmtSource) {
         double[] tempScaleList = new double[wmtSource.getScaleList().length];
         Arrays.fill(tempScaleList, Double.NaN);

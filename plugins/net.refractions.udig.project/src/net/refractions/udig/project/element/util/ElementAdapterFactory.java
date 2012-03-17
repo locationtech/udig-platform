@@ -6,6 +6,7 @@
 package net.refractions.udig.project.element.util;
 
 import net.refractions.udig.project.IProjectElement;
+import net.refractions.udig.project.element.*;
 import net.refractions.udig.project.element.ElementPackage;
 import net.refractions.udig.project.element.ProjectElementAdapter;
 import net.refractions.udig.project.internal.ProjectElement;
@@ -25,13 +26,6 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public class ElementAdapterFactory extends AdapterFactoryImpl {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
     /**
      * The cached model package.
      * <!-- begin-user-doc -->
@@ -60,6 +54,7 @@ public class ElementAdapterFactory extends AdapterFactoryImpl {
      * @return whether this factory is applicable for the type of the object.
      * @generated
      */
+    @Override
     public boolean isFactoryForType( Object object ) {
         if (object == modelPackage) {
             return true;
@@ -71,25 +66,30 @@ public class ElementAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * The switch the delegates to the <code>createXXX</code> methods.
+     * The switch that delegates to the <code>createXXX</code> methods.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected ElementSwitch modelSwitch = new ElementSwitch(){
-        public Object caseProjectElementAdapter( ProjectElementAdapter object ) {
+    protected ElementSwitch<Adapter> modelSwitch = new ElementSwitch<Adapter>(){
+        @Override
+        public Adapter caseProjectElementAdapter( ProjectElementAdapter object ) {
             return createProjectElementAdapterAdapter();
         }
-        public Object caseIProjectElement( IProjectElement object ) {
+        @Override
+        public Adapter caseIProjectElement( IProjectElement object ) {
             return createIProjectElementAdapter();
         }
-        public Object caseIAdaptable( IAdaptable object ) {
+        @Override
+        public Adapter caseIAdaptable( IAdaptable object ) {
             return createIAdaptableAdapter();
         }
-        public Object caseProjectElement( ProjectElement object ) {
+        @Override
+        public Adapter caseProjectElement( ProjectElement object ) {
             return createProjectElementAdapter();
         }
-        public Object defaultCase( EObject object ) {
+        @Override
+        public Adapter defaultCase( EObject object ) {
             return createEObjectAdapter();
         }
     };
@@ -102,8 +102,9 @@ public class ElementAdapterFactory extends AdapterFactoryImpl {
      * @return the adapter for the <code>target</code>.
      * @generated
      */
+    @Override
     public Adapter createAdapter( Notifier target ) {
-        return (Adapter) modelSwitch.doSwitch((EObject) target);
+        return modelSwitch.doSwitch((EObject) target);
     }
 
     /**

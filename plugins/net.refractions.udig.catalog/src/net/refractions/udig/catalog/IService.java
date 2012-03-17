@@ -148,10 +148,17 @@ public abstract class IService implements IResolve {
     protected static IServiceInfo INFO_UNAVAILABLE = new IServiceInfo();
     
     /**
-     * Used to save persisted properties; please see ServiceParameterPersister for details.
+     * Used to save persisted properties; please see {@link ServiceParameterPersister} for details.
      */
-    private Map<String, Serializable> properties = Collections
-            .synchronizedMap(new HashMap<String, Serializable>());
+    private Map<String, Serializable> properties = Collections.synchronizedMap(new HashMap<String, Serializable>());
+    
+    /**
+     * Used to save persisted properties for child resources; please see {@link ServiceParameterPersister} for details.
+     * <p>
+     * This is strictly a staging area and these values are copied into the IGeoResource after it is created.
+     */
+    Map<ID,Map<String, Serializable>> resourceProperties =  Collections.synchronizedMap(new HashMap<ID,Map<String, Serializable>>() );
+    
     /**
      * This is a protected field; that is laziy created when getInfo is called.
      */
@@ -384,15 +391,34 @@ public abstract class IService implements IResolve {
     public abstract Map<String, Serializable> getConnectionParams();
 
     /**
-     * Returns a copy of the map of this resource's persistent properties. Returns an empty map if
+     * Map of servies's persistent properties (may be empty).
+     * 
+     * @see ServiceParameterPersister for restrictions of values that can be stored
+     * @return The map containing the persistent properties for this service.
+     */
+    public Map<String, Serializable> getPersistentProperties() {
+        return properties;
+    }
+    /**
+     * Map of indicated resource's persistent properties. Returns an empty map if
      * this resource has no persistent properties.
      * 
+     * @see ServiceParameterPersister for restrictions of values that can be stored
+     * @param child ID of child properties requested
      * @return The map containing the persistent properties where the key is the
      *         {@link QualifiedName} of the property and the value is the {@link String} value of
      *         the property.
      */
-    public Map<String, Serializable> getPersistentProperties() {
-        return properties;
+    public synchronized Map<String, Serializable> getPersistentProperties(ID child) {
+    	if( resourceProperties.containsKey(child)){
+    		Map<String, Serializable> properties = resourceProperties.get(child);
+    		return properties;
+    	}
+    	else {
+    		Map<String, Serializable> properties = Collections.synchronizedMap(new HashMap<String, Serializable>());
+    		resourceProperties.put(child, properties);
+    		return properties;
+    	}
     }
 
     /**
