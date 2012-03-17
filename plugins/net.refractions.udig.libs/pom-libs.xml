@@ -714,7 +714,15 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- omsbox dependencies -->
+		<!-- 
+             omsbox dependencies 
+             ===================
+
+             Note that these do not necessarily need to be 
+             added to the libs runtime environment.
+             The spatial toolbox needs them to be there as 
+             library but will pick them on its own.
+        -->
 
 		<!-- tools.jar provided by refresh.xml -->
 		<!-- <dependency>
@@ -757,6 +765,16 @@
 			<groupId>org.fusesource.jansi</groupId>
 			<artifactId>jansi</artifactId>
 			<version>1.3</version>
+		</dependency>
+        <dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math</artifactId>
+			<version>2.2</version>
+		</dependency>
+        <dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-grid</artifactId>
+			<version>${geotools.version}</version>
 		</dependency>
 	</dependencies>
 
