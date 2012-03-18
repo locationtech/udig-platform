@@ -115,7 +115,6 @@ public class BBoxSelection extends SimpleTool implements ModalTool {
         }else{
         	command = new BBoxSelectionCommand(bounds, BBoxSelectionCommand.NONE);
         }
-        	
         
         getContext().sendASyncCommand(command);
 		selecting = false;

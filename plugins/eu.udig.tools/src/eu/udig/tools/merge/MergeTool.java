@@ -181,7 +181,7 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 		
     }
     
-    private void executeBBoxDraw(final Point start, final MapMouseEvent e){
+    private void removeBBox(final Point start, final MapMouseEvent e){
 
 		int x1 = Math.min(start.x, e.x);
 		int y1 = Math.min(start.y, e.y);
@@ -196,12 +196,10 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 		Envelope bounds = new Envelope(c1, c2);
 
 		MapCommand command;
-		if (e.isModifierDown(MapMouseEvent.MOD2_DOWN_MASK)) {
-			command = new BBoxSelectionCommand(bounds, BBoxSelectionCommand.ADD);
-		} else if (e.isModifierDown(MapMouseEvent.MOD1_DOWN_MASK)) {
-			command = new BBoxSelectionCommand(bounds,
-					BBoxSelectionCommand.SUBTRACT);
+		if (e.isModifierDown(MapMouseEvent.MOD1_DOWN_MASK)) {
+			command = new BBoxSelectionCommand(bounds, BBoxSelectionCommand.NONE);
 		} else {
+			// remove the bounding box selection
 			command = new BBoxSelectionCommand(bounds,
 					BBoxSelectionCommand.NONE);
 		}
@@ -216,7 +214,8 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 	 * This hook is used to catch two events:
 	 * <lu>
 	 * <li>Bbox drawing action to select one or more features was finished</li>
-	 * <li>Select one feature using control key and mouse pressed.</li>
+	 * <li>select individual feature for click (press and release in the same position)</li>
+	 * <li>Unselect one feature using control key and mouse pressed.</li>
 	 * </lu>
 	 */
     @Override
@@ -224,11 +223,10 @@ public class MergeTool extends SimpleTool  implements ModalTool{
     	
     	if(e.button != MapMouseEvent.BUTTON1){
     		return;
-    	}
+    	}    	
     	// draw the selection box 
     	Point start = this.mergeContext.getBBoxStartPoint();
-		executeBBoxDraw(start, e);
-
+    	
 		// search an existent view or open a new one
 		if(! this.mergeContext.isMergeViewActive() ){
 			openMergeView(e.x, e.y, this.mergeContext);
@@ -237,38 +235,39 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 
 		assert mergeView !=null;
 		
-		// set the selected features in the merge view
+		// presents the selected features in the map and the merge view
 		ILayer selectedLayer = getContext().getSelectedLayer();
-		if (!e.isControlDown()) {
+		if (!start.equals(e.getPoint())) { // selection using a bbox
+
+			removeBBox(start, e);
 
 			displayFeaturesUnderBBox(e, selectedLayer, mergeView);
 
-		} else {
-			// a control key + mouse press has occurred. Then the feature
-			// under the cursor must be added or removed from the merge feature
-			// list.
-// TODO
-//			if (isFeatureSelectedUnderCursor(e)) {
-//
-//				displayFeatureOnView(e, selectedLayer, mergeView);
-//			} else {
-//				removeFeatureFromView(e, selectedLayer, mergeView);
-//			}
+		} else { 
+			if ( start.equals(e.getPoint()) &&  e.isControlDown()) {
+				removeFeatureFromView(e, selectedLayer, mergeView);
+			} else { // it is a click action then select
+				displayFeatureOnView(e, selectedLayer, mergeView);
+			}
 		}
     }
     
 
 	private void removeFeatureFromView(MapMouseEvent e, ILayer selectedLayer,
 			MergeView mergeView) {
-		// TODO Auto-generated method stub
 		
+		
+		// unselect the feature
+		Envelope bound = buildBoundForPoint(e.getPoint()); 
+
+		MapCommand command = new BBoxSelectionCommand(bound, BBoxSelectionCommand.SUBTRACT);
+		getContext().sendASyncCommand(command);
+		selectionBoxCommand.setValid(false);
+		getContext().getViewportPane().repaint();	
+	
+		// TODO remove the feature from the view
 	}
 
-	private boolean isFeatureSelectedUnderCursor(MapMouseEvent e) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	
 	/**
 	 * Display the feature selected on the view
 	 * 
@@ -281,7 +280,15 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 			ILayer selectedLayer, 
 			MergeView mergeView) {
 
-		Envelope bound = getContext().getBoundingBox(e.getPoint(), 3); // FIXME it should be a better solution to retrieve the feature under the cursor
+		Envelope bound = buildBoundForPoint(e.getPoint()); 
+
+		// show selection in Map
+		MapCommand command = new BBoxSelectionCommand(bound, BBoxSelectionCommand.NONE);
+		getContext().sendASyncCommand(command);
+		selectionBoxCommand.setValid(false);
+		getContext().getViewportPane().repaint();
+
+		// retrieve the feature and present its data in the merge view
 		Filter filterSelectedFeatures = selectFeaturesUnderBBox(e, bound, getContext());
 		try {
 			List<SimpleFeature> selectedFeatures = Util.retrieveFeatures(filterSelectedFeatures, selectedLayer);
@@ -293,6 +300,10 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 			e1.printStackTrace();
 		}
 		
+	}
+
+	private Envelope buildBoundForPoint(Point p) {
+		return getContext().getBoundingBox(p, 3);
 	}
 
     /**
@@ -379,20 +390,26 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 	 * @return {@link Filter} filter that contains the selected features 
 	 */
 	private Filter selectFeaturesUnderBBox(	MapMouseEvent 	e,
-												Envelope 		boundDrawn,
-												IToolContext 	context) {
+											Envelope 		boundDrawn,
+											IToolContext 	context) {
 		MapCommand command;
 		
 		// updates the merge context with bounds
 		this.mergeContext.addBound(boundDrawn);
-		
 
-		if (e.isModifierDown(MapMouseEvent.MOD2_DOWN_MASK)) {
-			command = context.getSelectionFactory().createBBoxSelectionCommand(boundDrawn, BBoxSelectionCommand.ADD);
-		} else if (e.isControlDown()) {
-			command = context.getSelectionFactory().createBBoxSelectionCommand(boundDrawn, BBoxSelectionCommand.SUBTRACT);
+//		if (e.isModifierDown(MapMouseEvent.MOD2_DOWN_MASK)) {
+//			command = context.getSelectionFactory().createBBoxSelectionCommand(boundDrawn, BBoxSelectionCommand.ADD);
+//		} else if (e.isControlDown()) {
+//			command = context.getSelectionFactory().createBBoxSelectionCommand(boundDrawn, BBoxSelectionCommand.SUBTRACT);
+//		} else {
+//			command = context.getSelectionFactory().createBBoxSelectionCommand(boundDrawn, BBoxSelectionCommand.NONE);
+//		}
+		if (e.isControlDown()) {
+			command = context.getSelectionFactory().createBBoxSelectionCommand(
+					boundDrawn, BBoxSelectionCommand.ADD);
 		} else {
-			command = context.getSelectionFactory().createBBoxSelectionCommand(boundDrawn, BBoxSelectionCommand.NONE);
+			command = context.getSelectionFactory().createBBoxSelectionCommand(
+					boundDrawn, BBoxSelectionCommand.NONE);
 		}
 		getContext().sendSyncCommand(command);
 
