@@ -180,13 +180,18 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 		context.getViewportPane().repaint();		
 		
     }
-    
-    private void removeBBox(final Point start, final MapMouseEvent e){
+    /**
+     * Remove the bbox drawn 
+     * 
+     * @param start
+     * @param end 	
+     */
+    private void removeBBox(final Point start, final Point end){
 
-		int x1 = Math.min(start.x, e.x);
-		int y1 = Math.min(start.y, e.y);
-		int x2 = Math.abs(e.x - start.x);
-		int y2 = Math.abs(start.y - e.y);
+		int x1 = Math.min(start.x, end.x);
+		int y1 = Math.min(start.y, end.y);
+		int x2 = Math.abs(end.x - start.x);
+		int y2 = Math.abs(start.y - end.y);
 		
 		Coordinate c1 = context.getMap().getViewportModel()
 				.pixelToWorld(x1, y1);
@@ -195,15 +200,9 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 
 		Envelope bounds = new Envelope(c1, c2);
 
-		MapCommand command;
-		if (e.isModifierDown(MapMouseEvent.MOD1_DOWN_MASK)) {
-			command = new BBoxSelectionCommand(bounds, BBoxSelectionCommand.NONE);
-		} else {
-			// remove the bounding box selection
-			command = new BBoxSelectionCommand(bounds,
-					BBoxSelectionCommand.NONE);
-		}
-		getContext().sendASyncCommand(command);
+		// remove the bounding box selection
+		MapCommand cmd = new BBoxSelectionCommand(bounds, BBoxSelectionCommand.NONE);
+		getContext().sendASyncCommand(cmd);
 
 		selectionBoxCommand.setValid(false);
 		getContext().getViewportPane().repaint();
@@ -239,7 +238,7 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 		ILayer selectedLayer = getContext().getSelectedLayer();
 		if (!start.equals(e.getPoint())) { // selection using a bbox
 
-			removeBBox(start, e);
+			removeBBox(start, e.getPoint());
 
 			displayFeaturesUnderBBox(e, selectedLayer, mergeView);
 
