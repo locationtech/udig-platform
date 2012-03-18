@@ -22,7 +22,6 @@
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="net.refractions.udig.catalog" version="1.2.0" match="greaterOrEqual"/>
       <import plugin="net.refractions.udig.catalog.ui" version="1.2.0" match="greaterOrEqual"/>
-      <import plugin="eu.udig.libs.teradata" version="1.2.0" match="greaterOrEqual"/>
       <import plugin="net.refractions.udig.libs"/>
    </requires>
 
