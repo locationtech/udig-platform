@@ -444,8 +444,9 @@ class MergeComposite extends Composite {
 	 */
 	public void display() {
 
-		assert mergeBuilder != null : "the merge builder was not been set"; //$NON-NLS-1$
-
+		//assert mergeBuilder != null : "the merge builder was not been set"; //$NON-NLS-1$
+		this.mergeBuilder = getMergeBuilder();
+		
 		// presents the source in tree view
 		populateSourceFeaturesView();
 
@@ -465,14 +466,16 @@ class MergeComposite extends Composite {
 //		tableMergeFeature.clearAll();
 //	}
 
-	/**
-	 * Set the builder and adds a change listener.
-	 * 
-	 * @param mergeBuilder
-	 */
-//	private void setBuilder(MergeFeatureBuilder mergeBuilder) {
+//	/**
+//	 * Set the builder and adds a change listener.
+//	 */
+//	private MergeFeatureBuilder getBuilder() {
 //
-//		this.mergeBuilder = mergeBuilder;
+//		if(this.mergeBuilder != null){
+//			return this.mergeBuilder;
+//		}
+//		// it is required a new builder
+//		this.mergeBuilder = new MergeFeatureBuilder(this.mergeView.getContext().getSelectedLayer());
 //		this.mergeBuilder
 //				.addChangeListener(new MergeFeatureBuilder.ChangeListener() {
 //
@@ -490,6 +493,7 @@ class MergeComposite extends Composite {
 //		mergeGeometryChanged(mergeBuilder);
 //
 //		// display();
+//		return this.mergeBuilder;
 //
 //	}
 
@@ -976,26 +980,25 @@ class MergeComposite extends Composite {
 	 * @return {@link MergeFeatureBuilder}
 	 */
 	public MergeFeatureBuilder getMergeBuilder() {
-		if (this.mergeBuilder == null) {
-			// create a new merge builder
-			this.mergeBuilder = new MergeFeatureBuilder(this.mergeView.getContext()
-					.getSelectedLayer());
+		if (this.mergeBuilder != null) 
+			return this.mergeBuilder;
 
-			this.mergeBuilder
-					.addChangeListener(new MergeFeatureBuilder.ChangeListener() {
+		// create a new merge builder
+		this.mergeBuilder = new MergeFeatureBuilder(this.mergeView.getContext()
+				.getSelectedLayer());
 
-						public void attributeChanged(
-								MergeFeatureBuilder builder,
-								int attributeIndex, Object oldValue) {
+		this.mergeBuilder
+				.addChangeListener(new MergeFeatureBuilder.ChangeListener() {
 
-							if (attributeIndex == builder
-									.getDefaultGeometryIndex()) {
-								mergeGeometryChanged(builder);
-							}
-							changed();
+					public void attributeChanged(MergeFeatureBuilder builder,
+							int attributeIndex, Object oldValue) {
+
+						if (attributeIndex == builder.getDefaultGeometryIndex()) {
+							mergeGeometryChanged(builder);
 						}
-					});
-		}
+						changed();
+					}
+				});
 		return this.mergeBuilder;
 	}
 }

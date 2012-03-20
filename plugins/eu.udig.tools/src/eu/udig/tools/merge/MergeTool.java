@@ -34,7 +34,6 @@ import net.refractions.udig.project.ui.AnimationUpdater;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.IToolContext;
 import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.project.ui.tool.SimpleTool;
 import net.refractions.udig.tools.edit.animation.MessageBubble;
@@ -161,8 +160,6 @@ public class MergeTool extends SimpleTool  implements ModalTool{
     /**
      * Uses the position of last event as second corner of bbox drawn to 
      * select one or more features.
-     * 
-     * FIXME it looks like this hook method is not called
      */
     @Override
     protected void onMouseDragged( MapMouseEvent e ) {
@@ -218,9 +215,9 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 	 * </lu>
 	 */
     @Override
-    protected void onMouseReleased(MapMouseEvent e) {
+    protected void onMouseReleased(MapMouseEvent mouseEvent) {
     	
-    	if(e.button != MapMouseEvent.BUTTON1){
+    	if(mouseEvent.button != MapMouseEvent.BUTTON1){
     		return;
     	}    	
     	// draw the selection box 
@@ -228,7 +225,7 @@ public class MergeTool extends SimpleTool  implements ModalTool{
     	
 		// search an existent view or open a new one
 		if(! this.mergeContext.isMergeViewActive() ){
-			openMergeView(e.x, e.y, this.mergeContext);
+			openMergeView(mouseEvent.x, mouseEvent.y, this.mergeContext);
 		}
 		MergeView mergeView = this.mergeContext.getMergeView();
 
@@ -236,36 +233,17 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 		
 		// presents the selected features in the map and the merge view
 		ILayer selectedLayer = getContext().getSelectedLayer();
-		if (!start.equals(e.getPoint())) { // selection using a bbox
+		if (!start.equals(mouseEvent.getPoint())) { // selection using a bbox
 
-			removeBBox(start, e.getPoint());
+			removeBBox(start, mouseEvent.getPoint());
+			displayFeaturesUnderBBox(mouseEvent.getPoint(), selectedLayer, mergeView);
 
-			displayFeaturesUnderBBox(e, selectedLayer, mergeView);
-
-		} else { 
-			if ( start.equals(e.getPoint()) &&  e.isControlDown()) {
-				removeFeatureFromView(e, selectedLayer, mergeView);
-			} else { // it is a click action then select
-				displayFeatureOnView(e, selectedLayer, mergeView);
+		} else { // selection using click over the a feature
+			if ( start.equals(mouseEvent.getPoint()) &&  !mouseEvent.isControlDown() ) {
+				displayFeatureOnView(mouseEvent, selectedLayer, mergeView);
 			}
 		}
     }
-    
-
-	private void removeFeatureFromView(MapMouseEvent e, ILayer selectedLayer,
-			MergeView mergeView) {
-		
-		
-		// unselect the feature
-		Envelope bound = buildBoundForPoint(e.getPoint()); 
-
-		MapCommand command = new BBoxSelectionCommand(bound, BBoxSelectionCommand.SUBTRACT);
-		getContext().sendASyncCommand(command);
-		selectionBoxCommand.setValid(false);
-		getContext().getViewportPane().repaint();	
-	
-		// TODO remove the feature from the view
-	}
 
 	/**
 	 * Display the feature selected on the view
@@ -282,13 +260,9 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 		Envelope bound = buildBoundForPoint(e.getPoint()); 
 
 		// show selection in Map
-		MapCommand command = new BBoxSelectionCommand(bound, BBoxSelectionCommand.NONE);
-		getContext().sendASyncCommand(command);
-		selectionBoxCommand.setValid(false);
-		getContext().getViewportPane().repaint();
+		Filter filterSelectedFeatures = selectFeaturesUnderBBox(bound, BBoxSelectionCommand.NONE);
 
 		// retrieve the feature and present its data in the merge view
-		Filter filterSelectedFeatures = selectFeaturesUnderBBox(e, bound, getContext());
 		try {
 			List<SimpleFeature> selectedFeatures = Util.retrieveFeatures(filterSelectedFeatures, selectedLayer);
 			
@@ -307,11 +281,11 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 
     /**
      * Presents the features selected using the bbox interaction in the merge view
-     * @param e
+     * @param xyMouse
      * @param selectedLayer
      * @param mergeView
      */
-	private void displayFeaturesUnderBBox(MapMouseEvent e, ILayer selectedLayer, MergeView mergeView) {
+	private void displayFeaturesUnderBBox(Point xyMouse, ILayer selectedLayer, MergeView mergeView) {
 
 		Filter filterSelectedFeatures;
 		Envelope bound;
@@ -321,19 +295,19 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 									.pixelToWorld(
 											mergeContext.getBBoxStartPoint().x,
 											mergeContext.getBBoxStartPoint().y);
-		Coordinate endPoint = viewportModel.pixelToWorld(e.getPoint().x, e.getPoint().y);
+		Coordinate endPoint = viewportModel.pixelToWorld(xyMouse.x, xyMouse.y);
 
 		if (startPoint.equals2D(endPoint)) {
 			// when it was a click(start and end coordinates are equal)
 			// get a little bbox around this point.
-			bound = getContext().getBoundingBox(e.getPoint(), 3);
+			bound = getContext().getBoundingBox(xyMouse, 3);
 		} else {
 			bound = new Envelope(startPoint, endPoint);
 		}
 
 		// builds a command to show the features selected to merge
 		try {
-			filterSelectedFeatures = selectFeaturesUnderBBox(e, bound, getContext());
+			filterSelectedFeatures = selectFeaturesUnderBBox( bound, BBoxSelectionCommand.NONE);
 			List<SimpleFeature>  selectedFeatures = Util.retrieveFeatures(filterSelectedFeatures, selectedLayer);
 			
 			mergeView.addSourceFeatures(selectedFeatures);
@@ -356,7 +330,6 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 	private void openMergeView(int eventX, int eventY, MergeContext mergeContext) {
 		
 		try{
-
 			MergeView view = (MergeView)ApplicationGIS.getView(true, MergeView.ID);
 			if(view == null){
 				// crates a new merge view
@@ -379,37 +352,20 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 	}
 
 	/**
-	 * 
 	 * Selects the features under the bbox. This method builds a command to show the features selected to merge
 	 * 
-	 * @param e				mouse event
 	 * @param boundDrawn 	the drawn bbox by the usr
 	 * @param context 
 	 * 
 	 * @return {@link Filter} filter that contains the selected features 
 	 */
-	private Filter selectFeaturesUnderBBox(	MapMouseEvent 	e,
-											Envelope 		boundDrawn,
-											IToolContext 	context) {
-		MapCommand command;
+	private Filter selectFeaturesUnderBBox(	Envelope 		boundDrawn,
+											int 			SelectionType) {
 		
 		// updates the merge context with bounds
 		this.mergeContext.addBound(boundDrawn);
 
-//		if (e.isModifierDown(MapMouseEvent.MOD2_DOWN_MASK)) {
-//			command = context.getSelectionFactory().createBBoxSelectionCommand(boundDrawn, BBoxSelectionCommand.ADD);
-//		} else if (e.isControlDown()) {
-//			command = context.getSelectionFactory().createBBoxSelectionCommand(boundDrawn, BBoxSelectionCommand.SUBTRACT);
-//		} else {
-//			command = context.getSelectionFactory().createBBoxSelectionCommand(boundDrawn, BBoxSelectionCommand.NONE);
-//		}
-		if (e.isControlDown()) {
-			command = context.getSelectionFactory().createBBoxSelectionCommand(
-					boundDrawn, BBoxSelectionCommand.ADD);
-		} else {
-			command = context.getSelectionFactory().createBBoxSelectionCommand(
-					boundDrawn, BBoxSelectionCommand.NONE);
-		}
+		MapCommand command = context.getSelectionFactory().createBBoxSelectionCommand( boundDrawn, SelectionType);
 		getContext().sendSyncCommand(command);
 
 		SelectionBoxCommand selectionBoxCommand = this.mergeContext.getSelectionBoxCommand();

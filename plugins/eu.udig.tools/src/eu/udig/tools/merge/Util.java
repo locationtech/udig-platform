@@ -51,8 +51,8 @@ final class Util {
 
 		Query query = new Query(typename, filter);
 
-		SimpleFeatureCollection features = source.getFeatures(query);
-		//SimpleFeatureCollection features = source.getFeatures(); //FIXME Hack done to continue the merge tool devel (It is necessary to solve this issue)
+		//SimpleFeatureCollection features = source.getFeatures(query);
+		SimpleFeatureCollection features = source.getFeatures(); //FIXME Hack done to continue the merge tool devel (It is necessary to solve this issue)
 		
 		List<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
 		FeatureIterator<SimpleFeature> iter = null;
@@ -74,7 +74,7 @@ final class Util {
 
 		ILayer selectedLayer = context.getSelectedLayer();
 
-		FeatureSource source = selectedLayer.getResource(FeatureSource.class, null);
+		FeatureSource<SimpleFeatureType, SimpleFeature> source = selectedLayer.getResource(FeatureSource.class, null);
 
 		String typename = source.getSchema().getName().toString();
 
