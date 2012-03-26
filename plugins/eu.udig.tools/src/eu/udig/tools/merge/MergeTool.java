@@ -72,7 +72,7 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 
 	private static final Logger LOGGER = Logger.getLogger(MergeTool.class.getName());
 
-	private MergeContext		mergeContext = MergeContext.getInstance();
+	private MergeContext		mergeContext;
 
 	private SelectionBoxCommand selectionBoxCommand = null;
 
@@ -92,10 +92,11 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 	public void setActive(final boolean active) {
 
 		super.setActive(active);
-
-		this.mergeContext.setToolContext(getContext());
-
+		
 		if(active){
+			this.mergeContext = MergeContext.getInstance();
+			this.mergeContext.setToolContext(getContext());
+
 			// feedback to the user indeed that he can select some features to merege
 			StatusBar.setStatusBarMessage(this.mergeContext.getToolContext(), "");//$NON-NLS-1$
 			if (this.mergeContext.getToolContext().getMapLayers().size() > 0) {
@@ -114,6 +115,7 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 				
 				closeMergeView();
 			}
+			this.mergeContext = null;
 		}
 	}
 
@@ -142,6 +144,8 @@ public class MergeTool extends SimpleTool  implements ModalTool{
     @Override
     protected void onMousePressed( MapMouseEvent e ) {
     
+    	if(!isActive()) return;
+
     	if(e.button != MapMouseEvent.BUTTON1){
     		return;
     	}
@@ -164,6 +168,8 @@ public class MergeTool extends SimpleTool  implements ModalTool{
     @Override
     protected void onMouseDragged( MapMouseEvent e ) {
         
+    	if(!isActive()) return;
+
     	// draw the selection box 
     	Point start = this.mergeContext.getBBoxStartPoint();
     	if (start == null) {
@@ -216,7 +222,9 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 	 */
     @Override
     protected void onMouseReleased(MapMouseEvent mouseEvent) {
-    	
+
+    	if(!isActive()) return;
+
     	if(mouseEvent.button != MapMouseEvent.BUTTON1){
     		return;
     	}    	

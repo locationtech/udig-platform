@@ -14,6 +14,7 @@
  */
 package eu.udig.tools.merge.internal.view;
 
+import java.util.Collections;
 import java.util.EventListener;
 import java.util.LinkedList;
 import java.util.List;
@@ -109,7 +110,7 @@ class MergeFeatureBuilder {
 	private SimpleFeatureType			featureType;
 	
 	/** maintains a list of features. A feature cannot be two times in the list*/
-	private List<SimpleFeature>			sourceFeatures = new LinkedList<SimpleFeature>();
+	private List<SimpleFeature>			sourceFeatures = Collections.synchronizedList( new LinkedList<SimpleFeature>() );
 	
 	/** the attributes of the merge feature (in other words the feature to build)*/
 	private Object[]					mergedFeature;
@@ -501,22 +502,18 @@ class MergeFeatureBuilder {
 
 	
 	public List<SimpleFeature> getSourceFeatures(){
-		return this.sourceFeatures;
+		
+		List<SimpleFeature> clone = new LinkedList<SimpleFeature>(this.sourceFeatures);
+		return clone;
 	}
 
 	public void removeFromSourceFeatures(SimpleFeature selectedFeature) {
 		
-		assert !sourceFeatures.isEmpty(): "the sources feature list cannot be empty"; //$NON-NLS-1$
-			
 		sourceFeatures.remove(selectedFeature);
 	}
 	public synchronized void removeFromSourceFeatures(List<SimpleFeature> featureList) {
 		
-		assert !sourceFeatures.isEmpty(): "the sources feature list cannot be empty"; //$NON-NLS-1$
-			
-		for (SimpleFeature feature : featureList) {
-			sourceFeatures.remove(feature);
-		}
+		sourceFeatures.removeAll(featureList);
 	}
 
 	/**
@@ -583,8 +580,9 @@ class MergeFeatureBuilder {
 			
 			Geometry union;
 			
-			union = GeometryUtil.geometryUnion(DataUtilities.collection(sourceFeatures));
-
+			synchronized(sourceFeatures){
+				union = GeometryUtil.geometryUnion(DataUtilities.collection(sourceFeatures));
+			}
 			union = GeometryUtil.adapt(union,(Class<? extends Geometry>) expectedGeometryType);
 			
 			return union;

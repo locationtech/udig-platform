@@ -62,7 +62,7 @@ class SplitGeometryBehaviour implements Behaviour {
     /**
      * Returns an {@link UndoableMapCommand} that's responsible of using the
      * {@link EditToolHandler handler}'s current shape (as a LineString) to split the features of
-     * the current layer that intersects the trimming line.
+     * the current layer that intersects the splitting line.
      * <p>
      * When a feature's geometry is split, the original Feature will be deleted and as many new
      * Features as geometries result from the split will be created, with the same attributes than

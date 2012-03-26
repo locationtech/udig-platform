@@ -43,7 +43,7 @@ import eu.udig.tools.merge.internal.view.MergeView;
  */
 public class MergeContext {
 
-	private static final MergeContext THIS = new MergeContext();
+	//private static final MergeContext THIS = new MergeContext();
 	
 	private Point				bboxStartPoint	= null;
 	private SelectionBoxCommand	selectionBoxCommand	= new SelectionBoxCommand();
@@ -64,7 +64,7 @@ public class MergeContext {
 	 * 
 	 */
 	public static MergeContext getInstance(){
-		return THIS;
+		return new MergeContext();
 	}
 	
 	public IToolContext getToolContext() {

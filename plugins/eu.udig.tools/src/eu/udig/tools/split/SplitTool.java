@@ -37,7 +37,6 @@ import net.refractions.udig.tools.edit.behaviour.StartEditingBehaviour;
 import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
 import net.refractions.udig.tools.edit.support.ShapeType;
 
-import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiLineString;
 import com.vividsolutions.jts.geom.MultiPolygon;
@@ -47,7 +46,7 @@ import eu.udig.tools.internal.i18n.Messages;
 import eu.udig.tools.internal.ui.util.StatusBar;
 
 /**
- * Splits one or more SimpleFeature using a {@link SplitGeometryBehaviour} to
+ * Splits one or more Feature using a {@link SplitGeometryBehaviour} to
  * accomplish the task once the user finished drawing the splitting line.
  * <p>
  * Users can use this tool to either:
@@ -93,8 +92,8 @@ public class SplitTool extends AbstractEditTool {
 	}
 
 	/**
-	 * Initializes the list of Behaviours to run when the current edit has been
-	 * accepted. Acceptance is signalled by a double click or the Enter key
+	 * Initializes the list of Behaviours to run when the current edition change has been
+	 * accepted. Acceptance is informed by a double click or the Enter key
 	 * 
 	 * @param acceptBehaviours
 	 *            an empty list
@@ -120,7 +119,7 @@ public class SplitTool extends AbstractEditTool {
 	/**
 	 * Initializes the Event Behaviours that are run when an event occurs. Since
 	 * this can be complex a helper class is provided to build the complex
-	 * datastructure of Behaviours.
+	 * data structure of the Behaviours.
 	 * 
 	 * @see EditToolConfigurationHelper
 	 * @param helper

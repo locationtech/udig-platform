@@ -92,14 +92,12 @@ import eu.udig.tools.internal.ui.util.MapUtil;
  */
 final class SplitFeaturesCommand extends AbstractCommand implements UndoableMapCommand {
 
-    private static final String className = SplitFeaturesCommand.class.getName();
+	private static final String className = SplitFeaturesCommand.class.getName();
     
 	/* Edit tool handler used by the tools. */
 	private EditToolHandler		handler;
 	/* The selected layer. */
 	private ILayer				selectedLayer;
-	// private static final Logger LOGGER =
-	// Logger.getLogger(SplitFeaturesCommand.class.getName());
 
 	/**
 	 * Composite command used to aggregate the set of feature delete and create

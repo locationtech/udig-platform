@@ -26,6 +26,8 @@ import org.opengis.filter.Or;
 
 import com.vividsolutions.jts.geom.Envelope;
 
+import eu.udig.tools.internal.ui.util.LayerUtil;
+
 /**
  * @author Mauricio Pazos
  *
@@ -43,16 +45,35 @@ final class Util {
 	 * @return List of {@link SimpleFeature}}
 	 * @throws IOException
 	 */
+//	public static List<SimpleFeature> retrieveFeatures(Filter filter, ILayer layer) throws IOException {
+//
+//		SimpleFeatureSource source = (SimpleFeatureSource) layer.getResource(FeatureSource.class, null);
+//
+//		String typename = source.getSchema().getName().toString();
+//
+//		Query query = new Query(typename, filter);
+//
+//		//SimpleFeatureCollection features = source.getFeatures(query);
+//		SimpleFeatureCollection features = source.getFeatures(); //FIXME Hack done to continue the merge tool devel (It is necessary to solve this issue)
+//		
+//		List<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
+//		FeatureIterator<SimpleFeature> iter = null;
+//		try {
+//			iter = features.features();
+//			while (iter.hasNext()) {
+//				SimpleFeature f = iter.next();
+//				featureList.add(f);
+//			}
+//		} finally {
+//			if (iter != null) {
+//				iter.close();
+//			}
+//		}
+//		return featureList;
+//	}
 	public static List<SimpleFeature> retrieveFeatures(Filter filter, ILayer layer) throws IOException {
 
-		SimpleFeatureSource source = (SimpleFeatureSource) layer.getResource(FeatureSource.class, null);
-
-		String typename = source.getSchema().getName().toString();
-
-		Query query = new Query(typename, filter);
-
-		//SimpleFeatureCollection features = source.getFeatures(query);
-		SimpleFeatureCollection features = source.getFeatures(); //FIXME Hack done to continue the merge tool devel (It is necessary to solve this issue)
+		FeatureCollection<SimpleFeatureType, SimpleFeature> features = LayerUtil.getSelectedFeatures(layer, filter);
 		
 		List<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
 		FeatureIterator<SimpleFeature> iter = null;
@@ -69,6 +90,8 @@ final class Util {
 		}
 		return featureList;
 	}
+	
+	
 	
 	public static List<SimpleFeature> retrieveFeaturesInBBox(List<Envelope> bbox, IToolContext context) throws IOException {
 

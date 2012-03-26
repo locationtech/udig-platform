@@ -25,7 +25,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-charts-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-coverage-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-cql-8-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-data-8-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-data-8-SNAPSHOT.jar" sourcepath="/home/mauro/.m2/repository/org/geotools/gt-data/8-SNAPSHOT/gt-data-8-SNAPSHOT-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-h2-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-geotiff-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-graph-8-SNAPSHOT.jar"/>
@@ -53,7 +53,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-process-raster-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-property-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-referencing-8-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-render-8-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-render-8-SNAPSHOT.jar" sourcepath="/home/mauro/.m2/repository/org/geotools/gt-render/8-SNAPSHOT/gt-render-8-SNAPSHOT-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-renderer-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-svg-8-SNAPSHOT.jar"/>

@@ -167,6 +167,7 @@ public class UDIGSimpleFeatureStore implements SimpleFeatureStore, UDIGStore {
     public void setTransaction( Transaction transaction ) {
         throw new IllegalArgumentException(Messages.UDIGFeatureStore_0
                 + Messages.UDIGFeatureStore_1);
+        
     }
     
     /** Called when commitRollbackCompleted to restore Transaction.AUTO_COMMIT */
