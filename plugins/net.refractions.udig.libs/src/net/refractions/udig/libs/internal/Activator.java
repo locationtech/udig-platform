@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.osgi.service.debug.DebugOptions;
+import org.geotools.data.DataUtilities;
 import org.geotools.factory.GeoTools;
 import org.geotools.factory.Hints;
 import org.geotools.factory.Hints.Key;
@@ -32,8 +33,10 @@ import org.geotools.referencing.ReferencingFactoryFinder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.referencing.factory.PropertyAuthorityFactory;
 import org.geotools.referencing.factory.ReferencingFactoryContainer;
+import org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory;
 import org.geotools.resources.image.ImageUtilities;
 import org.geotools.util.logging.Logging;
+import org.jfree.chart.urls.URLUtilities;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
@@ -219,6 +222,17 @@ public class Activator implements BundleActivator {
             URL epsg = null;
             Location configLocaiton = Platform.getInstallLocation();
             Location dataLocation = Platform.getInstanceLocation();
+            
+            // Unpack the database in the correct location
+            if( configLocaiton != null ){
+                URL databaseDirectoryUrl = new URL( configLocaiton.getURL(), "Databases" );
+                File directory = DataUtilities.urlToFile( databaseDirectoryUrl );
+                boolean created = directory.exists() || directory.mkdirs();
+                if( created ){
+                System.out.println("Unpacking EPSG database into "+directory);
+                    System.setProperty( ThreadedHsqlEpsgFactory.DIRECTORY_KEY, directory.toString() );
+                }
+            }
             if (dataLocation != null) {
                 try {
                     URL url = dataLocation.getURL();

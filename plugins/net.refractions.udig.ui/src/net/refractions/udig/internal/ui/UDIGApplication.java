@@ -172,7 +172,7 @@ public class UDIGApplication implements IApplication {
         boolean unpacked = false; // Check ThreadedHsqlEpsgFactory.isUnpacked() when available 
         if( unpacked ){
             // if there is not going to be a long delay don't annoy users with a dialog
-            Activator.initializeReferencingModule( null );            
+            Activator.initializeReferencingModule( null );
         }
         else {
             // We are going to take a couple of minutes to set this up
