@@ -38,7 +38,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.WorkbenchAdvisor;
-import org.geotools.referencing.factory.epsg.ThreadedH2EpsgFactory;
 import org.osgi.framework.Bundle;
 
 /**
@@ -170,9 +169,9 @@ public class UDIGApplication implements IApplication {
         final Bundle bundle = Platform.getBundle(Activator.ID);
         
         // We should kick the libs plugin to load the EPSG database now
-        if( ThreadedH2EpsgFactory.isUnpacked()){
-            // if there is not going to be a long delay
-            // don't annoy users with a dialog
+        boolean unpacked = false; // Check ThreadedHsqlEpsgFactory.isUnpacked() when available 
+        if( unpacked ){
+            // if there is not going to be a long delay don't annoy users with a dialog
             Activator.initializeReferencingModule( null );            
         }
         else {

@@ -342,6 +342,7 @@ public class Activator implements BundleActivator {
             // Show EPSG authority chain if in debug mode
             //
             if (Platform.inDebugMode()) {
+            	System.out.println("Coordinate Reference System definitions supplied by:");
                 CRS.main(new String[]{"-dependencies"}); //$NON-NLS-1$
             }
             // Verify EPSG authority configured correctly
@@ -376,14 +377,6 @@ public class Activator implements BundleActivator {
         DirectPosition there = new DirectPosition2D(WGS84, -123.47009173007372, 48.54326498732153);
 
         DirectPosition check = transform.transform(here, new GeneralDirectPosition(WGS84));
-        // DirectPosition doubleCheck = transform.inverse().transform( check, new
-        // GeneralDirectPosition(BC_ALBERS) );
-        // if( !check.equals(there)){
-        // String msg =
-        // "Referencing failed to produce expected transformation; check that axis order settings are correct.";
-        // System.out.println( msg );
-        // //throw new FactoryException(msg);
-        // }
         double delta = Math.abs(check.getOrdinate(0) - there.getOrdinate(0))
                 + Math.abs(check.getOrdinate(1) - there.getOrdinate(1));
         if (delta > 0.0001) {
