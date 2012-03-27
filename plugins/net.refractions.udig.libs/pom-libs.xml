@@ -211,11 +211,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.geotools</groupId>
-			<artifactId>gt-epsg-h2</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
 			<artifactId>gt-geotiff</artifactId>
 			<version>${geotools.version}</version>
 		</dependency>
@@ -480,14 +475,14 @@
 			<version>1.1.3</version>
 			<scope>provided</scope>
 		</dependency>
-
-		<!-- These GeoTools dependencies are required for compile only - we are using gt-epsg-h2 -->
+		<!-- We are using EPSG database converted into a local HSQL pure java database -->
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-epsg-hsql</artifactId>
 			<version>${geotools.version}</version>
-			<scope>provided</scope>
 		</dependency>
+
+		<!-- These GeoTools dependencies are required for compile only we are using gt-epsg-hsql-->
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-epsg-wkt</artifactId>
