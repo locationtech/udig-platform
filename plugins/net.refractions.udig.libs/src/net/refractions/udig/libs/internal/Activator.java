@@ -1,6 +1,7 @@
 package net.refractions.udig.libs.internal;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -158,7 +159,9 @@ public class Activator implements BundleActivator {
             monitor = new NullProgressMonitor();
 
         monitor.beginTask(Messages.Activator_EPSG_DATABASE, 100);
-
+        
+        unpackEPSGDatabase();
+        
         searchEPSGProperties(bundle, new SubProgressMonitor(monitor, 20));
 
         loadEPSG(bundle, new SubProgressMonitor(monitor, 60));
@@ -193,7 +196,61 @@ public class Activator implements BundleActivator {
             iter.next();
         }
     }
-
+    /**
+     * Location of the EPSG database; defaults to a folder in the {@link Platform#getInstallLocation()}.
+     * <p>
+     * You can check to see if this file exists to determine if the database is already unpacked.
+     * 
+     * @return folder used for the EPSG database
+     */
+    public static File epsgDatabaseFile(){
+        // unpack into the shared configuration location
+        try {
+            Location configLocaiton = Platform.getInstallLocation();
+            File config = DataUtilities.urlToFile( configLocaiton.getURL() );
+            if( config.canWrite() ){
+                URL databaseDirectoryUrl = new URL( configLocaiton.getURL(), "Databases" );
+                File directory = DataUtilities.urlToFile( databaseDirectoryUrl );
+                File epsgDirectory = new File( directory, "v" + ThreadedHsqlEpsgFactory.VERSION );
+                
+                return epsgDirectory;
+            }
+        } catch (MalformedURLException e) {
+            // unable to use the config directory - perhaps the user does not have permission
+        }
+        // if that did not work unpack into the user's data directory
+        try {
+            Location dataLocation = Platform.getInstanceLocation();
+            File config = DataUtilities.urlToFile( dataLocation.getURL() );
+            if( config.canWrite() ){
+                URL databaseDirectoryUrl = new URL( dataLocation.getURL(), "Databases" );
+                File directory = DataUtilities.urlToFile( databaseDirectoryUrl );
+                File epsgDirectory = new File( directory, "v" + ThreadedHsqlEpsgFactory.VERSION );
+                
+                return epsgDirectory;
+            }
+        } catch (MalformedURLException e) {
+            // unable to use instance location - ie the data directory
+        }
+        return null; // database location not known - temporary directory will be used
+    }
+    
+    public static void unpackEPSGDatabase(){
+        File file = epsgDatabaseFile();
+        if( file == null ){
+            // default geotools temporary directory will be used
+            return;
+        }
+        File directory = file.getParentFile();
+        boolean created = directory.exists() || directory.mkdirs();
+        if( created ){
+            if( isDebugging() ){
+                System.out.println("EPSG database location: "+file);
+            }
+            System.setProperty( ThreadedHsqlEpsgFactory.DIRECTORY_KEY, directory.toString() );
+        }
+    }
+    
     /**
      * Will load the EPSG database; this will trigger the unpacking of the EPSG database (which may
      * take several minutes); and check in a few locations for an epsg.properties file to load: the
@@ -223,16 +280,6 @@ public class Activator implements BundleActivator {
             Location configLocaiton = Platform.getInstallLocation();
             Location dataLocation = Platform.getInstanceLocation();
             
-            // Unpack the database in the correct location
-            if( configLocaiton != null ){
-                URL databaseDirectoryUrl = new URL( configLocaiton.getURL(), "Databases" );
-                File directory = DataUtilities.urlToFile( databaseDirectoryUrl );
-                boolean created = directory.exists() || directory.mkdirs();
-                if( created ){
-                System.out.println("Unpacking EPSG database into "+directory);
-                    System.setProperty( ThreadedHsqlEpsgFactory.DIRECTORY_KEY, directory.toString() );
-                }
-            }
             if (dataLocation != null) {
                 try {
                     URL url = dataLocation.getURL();
