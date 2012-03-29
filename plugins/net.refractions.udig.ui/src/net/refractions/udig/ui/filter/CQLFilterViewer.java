@@ -88,7 +88,7 @@ public class CQLFilterViewer extends IFilterViewer {
      * Text box to allow the user to enter a value to base a filter on
      */
     private Text value;
-
+    private Combo operation;
     private Button insert;
 
     /**
