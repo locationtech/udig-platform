@@ -27,6 +27,7 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.type.Name;
 
 /**
@@ -54,7 +55,7 @@ public class GeoToolsDataStoreServiceTest {
         local = CatalogPlugin.getDefault().getLocal();
 
     }
-    @Ignore
+    @Test
     public void testDataStoreServiceExtension() throws Exception {
         // DataStoreServiceExtension extension = new DataStoreServiceExtension();
         DataStoreServiceExtension serviceExtension = serviceFactory.serviceImplementation(DataStoreServiceExtension.class);
@@ -92,7 +93,7 @@ public class GeoToolsDataStoreServiceTest {
             assertNotNull(id);
             IGeoResourceInfo grinfo = resource.getInfo(new NullProgressMonitor());
             assertNotNull(grinfo);
-            assertEquals("GeoResource title matches filename", "sample_data", grinfo.getTitle());
+            assertEquals("GeoResource title matches filename", "sample data", grinfo.getTitle());
         }
         
     }
