@@ -79,7 +79,6 @@
                 <module>net.refractions.udig.tutorials.mapgraphic</module>
                 <module>net.refractions.udig.tutorials.raster</module>
                 <module>net.refractions.udig.tutorials.rcp</module>
-                <module>net.refractions.udig.tutorials.rcp-feature</module>
                 <module>net.refractions.udig.tutorials.render.csv</module>
                 <module>net.refractions.udig.tutorials.shpexport</module>
                 <module>net.refractions.udig.tutorials.style.color</module>
@@ -90,6 +89,10 @@
                 <module>net.refractions.udig.tutorials.urladapter</module>
                 <module>net.refractions.udig.tutorials.workbench</module>
                 <module>net.refractions.udig_tutorials.custom-feature</module>
+                
+                <!-- build example feature after plugins -->
+                <module>net.refractions.udig.tutorials.rcp-feature</module>
+
                 <!-- SDK -->
                 <module>net.refractions.udig.libs.source</module>
              </modules>
