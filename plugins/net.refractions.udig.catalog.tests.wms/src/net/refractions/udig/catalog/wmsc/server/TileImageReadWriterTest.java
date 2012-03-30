@@ -19,6 +19,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -32,18 +34,42 @@ import org.geotools.data.ows.AbstractOpenWebService;
 import org.geotools.data.ows.Specification;
 import org.geotools.data.wms.WMS1_1_1;
 import org.geotools.ows.ServiceException;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class TileImageReadWriterTest {
     
-    static String serverURL = "http://localhost:8080/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities"; //$NON-NLS-1$
+    static URL serverURL = null; // default to offline
     
+    @BeforeClass 
+    public static void available() throws Exception {
+        URL url = new URL( "http://localhost:8080/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities");
+        
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        
+        try {
+            int responseCode = connection.getResponseCode();
+            if( 200 == responseCode ){
+                serverURL = url;
+            }
+            else {
+                System.out.println("Unable to run TileImageReadWriterTest: HTTP Response Code "+responseCode+" "+url);
+                serverURL = null;
+            }
+        }
+        catch( ConnectException refused ){
+            System.out.println("Unable to run TileImageReadWriterTest: "+refused );
+            serverURL = null;
+        }
+        
+    }
     @Test
     public void testIsStale() throws Exception {
         Activator instance = Activator.getDefault();
         assertNotNull("Run as a JUnit Plug-in Test", instance); //$NON-NLS-1$
-
-        MockTiledWebMapServer service = new MockTiledWebMapServer(new URL(serverURL));
+        
+        if(serverURL == null ) return; // skip as we are offline
+        MockTiledWebMapServer service = new MockTiledWebMapServer( serverURL );
         
         TileImageReadWriter tileReadWriter = new TileImageReadWriter(service, "resources"); //$NON-NLS-1$
 
@@ -65,7 +91,8 @@ public class TileImageReadWriterTest {
         Activator instance = Activator.getDefault();
         assertNotNull("Run as a JUnit Plug-in Test", instance); //$NON-NLS-1$
 
-        MockTiledWebMapServer service = new MockTiledWebMapServer(new URL(serverURL));
+        if(serverURL == null ) return; // skip as we are offline
+        MockTiledWebMapServer service = new MockTiledWebMapServer( serverURL );
         
         TileImageReadWriter tileReadWriter = new TileImageReadWriter(service, "resources"); //$NON-NLS-1$
 
@@ -143,7 +170,7 @@ public class TileImageReadWriterTest {
         @Override
         public URI getSource() {
             try {
-                return new URI(serverURL);
+                return serverURL.toURI();
             } catch (URISyntaxException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
