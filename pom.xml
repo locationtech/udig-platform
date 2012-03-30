@@ -55,7 +55,7 @@ will do better to review the stack trace with a checkout of the Tycho code in ha
 error messages are often misleading and evil.
 
 To quickly build the product:
-   mvn install
+   mvn install -Pproduct
 
 The build supports the use of profiles - to run a normal build with tests:
   mvn install -Dall -Ptest
