@@ -20,28 +20,10 @@ import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.expression.Expression;
 
 /**
- * A JFace Style Expression Viewer that can be used to show an Expression
- * to a user (using whatever SWT widgets are appropriate) and allow modification.
- * <p>
- * Initially we will just use a Text control; gradually working up to PropertyName, Integer and
- * Color Expressions. In each case the Expression may be retrieved by simple get/set methods
- * and we will provide some kind of consistent change notification.
- * <p>
- * Choosing which widgets to use will be based on constants; much like MapViewer switches
- * implementations. If there is something specific we need to handle (like say restrictions
- * based on FeatureType we may need to break out different ExpressionViewers kind of like
- * how Tree and TreeTable viewers work.
- * </p>
- * <p>
- * Remember that although Viewers are a wrapper around some SWT Control or Composite you still
- * have direct access using the getControl() method so that you can do your layout data thing.
- * </p>
- * <p>
- * Future directions from Mark:
- * <ul>
- * <li>
- * @author jive
- * @since 1.1.0
+ * ExpressionViewer with Slider controls to allow the user to change the colour attribute of an Expression
+ * 
+ * @author Scott
+ * @since 1.3.0
  */
 public class RGBExpressionViewer extends IExpressionViewer {
 
@@ -67,21 +49,15 @@ public class RGBExpressionViewer extends IExpressionViewer {
     boolean isRequired;
     private SimpleFeatureType type;
     
-    //public RGBExpressionViewer(Composite parent) {
-    //    this( parent, SWT.SINGLE );
-    //}
-    
     private SelectionListener listener = new SelectionListener(){
 
         @Override
         public void widgetSelected( SelectionEvent e ) {
-            // TODO Auto-generated method stub
             validate();
         }
 
         @Override
         public void widgetDefaultSelected( SelectionEvent e ) {
-            // TODO Auto-generated method stub
             
         }
     };

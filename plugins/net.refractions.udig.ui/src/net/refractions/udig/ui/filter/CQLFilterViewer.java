@@ -32,8 +32,10 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
 /**
- * TODO add details
- * @author leviputna
+ * A JFace Style Filter Viewer that can be used to build a Filter. Has both a text box for manually
+ * entering a Filter and a series of combo boxes to allow the user to build their own filter
+ * 
+ * @author Scott Henderson
  * @since 1.3.0
  */
 public class CQLFilterViewer extends IFilterViewer {
@@ -44,7 +46,7 @@ public class CQLFilterViewer extends IFilterViewer {
      * empty expression.
      */
     protected Filter filter = Filter.EXCLUDE;
-    
+
     protected Composite control;
 
     /**
@@ -52,10 +54,22 @@ public class CQLFilterViewer extends IFilterViewer {
      * Composite.
      */
     private Text text;
-    
+
+    /**
+     * Combo box to allow the user to select an attribute to base a filter on
+     */
     private Combo attribute;
-    private Text value;
+
+    /**
+     * Combo box to allow the user to select an operation to apply to an attribute
+     */
     private Combo operation;
+
+    /**
+     * Text box to allow the user to enter a value to base a filter on
+     */
+    private Text value;
+
     private Button insert;
 
     /**
@@ -82,9 +96,6 @@ public class CQLFilterViewer extends IFilterViewer {
 
     private FunctionContentProposalProvider proposalProvider;
 
-//    public CQLFilterHelper( Composite parent ) {
-//        this(parent, SWT.SINGLE);
-//    }
     /**
      * Creates an ExpressionViewer using the provided style.
      * <ul>
@@ -105,7 +116,7 @@ public class CQLFilterViewer extends IFilterViewer {
     public CQLFilterViewer( Composite parent, int style ) {
         super(parent, style);
         control = new Composite(parent, style);
-        
+
         text = new Text(control, SWT.BORDER);
         text.setBounds(10, 10, 430, 60);
         feedback = new ControlDecoration(text, SWT.TOP | SWT.LEFT);
@@ -114,12 +125,12 @@ public class CQLFilterViewer extends IFilterViewer {
         proposalProvider.setFiltering(true);
         ContentProposalAdapter adapter = new ContentProposalAdapter(text, new TextContentAdapter(),
                 proposalProvider, null, null);
-        
-        //Need to set adapter to replace existing text. Default is insert.
+
+        // Need to set adapter to replace existing text. Default is insert.
         adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
-        
+
         text.addKeyListener(keyListener);
-        
+
         Label lblAttribute = new Label(control, SWT.NONE);
         lblAttribute.setBounds(10, 85, 55, 15);
         lblAttribute.setText("Attribute");
@@ -144,27 +155,27 @@ public class CQLFilterViewer extends IFilterViewer {
 
         value = new Text(control, SWT.BORDER);
         value.setBounds(241, 105, 91, 23);
-        
+
         insert = new Button(control, SWT.NONE);
         insert.setBounds(354, 103, 75, 25);
         insert.setText("Insert");
         insert.addSelectionListener(new SelectionListener(){
-            
+
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 StringBuffer str = new StringBuffer();
                 str.append(attribute.getText() + " " + operation.getText() + " " + value.getText());
-                text.setText(str.toString());    
+                text.setText(str.toString());
                 validate();
             }
-            
+
             @Override
             public void widgetDefaultSelected( SelectionEvent e ) {
                 // TODO Auto-generated method stub
-                
+
             }
         });
-        
+
     }
 
     /**
@@ -282,8 +293,7 @@ public class CQLFilterViewer extends IFilterViewer {
 
     @Override
     public ISelection getSelection() {
-        if (filter == null)
-            return null;
+        if (filter == null) return null;
 
         IStructuredSelection selection = new StructuredSelection(filter);
         return selection;
@@ -294,8 +304,7 @@ public class CQLFilterViewer extends IFilterViewer {
         if (text != null && !text.isDisposed()) {
             text.getDisplay().asyncExec(new Runnable(){
                 public void run() {
-                    if (text == null || text.isDisposed())
-                        return;
+                    if (text == null || text.isDisposed()) return;
                     String cql = CQL.toCQL(filter);
                     text.setText(cql);
                 }
@@ -364,7 +373,7 @@ public class CQLFilterViewer extends IFilterViewer {
             feedback.setDescriptionText(warning);
             feedback.show();
         }
-        
+
         if (text != null && !text.isDisposed()) {
             text.setToolTipText(warning);
         }
@@ -377,26 +386,27 @@ public class CQLFilterViewer extends IFilterViewer {
      * </p>
      */
     public void feedback( String error, Exception eek ) {
-        
+
         if (text != null && !text.isDisposed()) {
             text.setToolTipText(error + ":" + eek);
         }
     }
     /**
      * Feature Type to use for attribute names.
+     * 
      * @param type
      */
     public void setSchema( SimpleFeatureType type ) {
-        if( type == null ){
+        if (type == null) {
             return;
         }
         Set<String> names = new HashSet<String>();
-        for( AttributeDescriptor attribute : type.getAttributeDescriptors()){
-            names.add( attribute.getLocalName() );
+        for( AttributeDescriptor attribute : type.getAttributeDescriptors() ) {
+            names.add(attribute.getLocalName());
         }
-        proposalProvider.setExtra( names );
+        proposalProvider.setExtra(names);
     }
-    
+
     @Override
     public Boolean canProcess( Object input ) {
         // TODO Auto-generated method stub
@@ -410,7 +420,7 @@ public class CQLFilterViewer extends IFilterViewer {
     @Override
     public void setExpected( Class< ? > binding ) {
         // TODO Auto-generated method stub
-        
+
     }
     @Override
     public Class< ? > getExpected() {
