@@ -25,7 +25,8 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 
 /**
- * @author leviputna (QPWS)
+ * Abstract class for creating a UI that allows the user to create and edit Filters
+ * @author Scott
  * @since 1.3.0
  */
 public abstract class IFilterViewer extends Viewer {
@@ -33,14 +34,14 @@ public abstract class IFilterViewer extends Viewer {
     protected boolean required = true;
 
     /**
-     * 
+     * Default constructor. Calls <code>IFilterViewer( Composite parent, SWT.SINGLE )</code>
      */
     public IFilterViewer( Composite parent) {
         this(parent, SWT.SINGLE);
     }
     
     /**
-     * 
+     * Constructor
      */
     public IFilterViewer( Composite parent, int style ) {
         
@@ -49,15 +50,15 @@ public abstract class IFilterViewer extends Viewer {
     /**
      * Set the input for this Filter.
      * 
-     * @param input Expression, String or other data object to use as the input for this filter
+     * @param input Filter, String or other data object to use as the input for this filter
      */
     public abstract void setInput( Object input );
 
     /**
-     * Provides access to the Expression being used by this filter.
+     * Provides access to the Filter being used by this filter.
      * <p>
      * 
-     * @return Expression being filter; may be Expression.NIL if empty (but will not be null)
+     * @return Filter being filter; may be Filter.EXCLUDE if empty (but will not be null)
      */
     public abstract Filter getInput();
 
@@ -107,19 +108,78 @@ public abstract class IFilterViewer extends Viewer {
      */
     public abstract Boolean canProcess( Object input );
     
+    /**
+     * Returns the controller of the viewer. Used for setting size etc
+     */
     public abstract Control getControl();
     
+    /**
+     * The isRequired flag will be used to determine the default decoration to show (if there is no
+     * warning or error to take precedence).
+     * <p>
+     * Please note that if this is a required field Filter.EXLCUDE is not considered to be a valid
+     * state.
+     * </p>
+     * 
+     * @param isRequired true if this is a required field
+     */
     public abstract void setRequired(boolean required);
     
+    /**
+     * Sets a new selection for this viewer and optionally makes it visible.
+     * <p>
+     * Subclasses must implement this method.
+     * </p>
+     *
+     * @param selection the new selection
+     * @param reveal <code>true</code> if the selection is to be made
+     *   visible, and <code>false</code> otherwise
+     */
     public abstract void setSelection(ISelection selection, boolean reveal);
+    
+    /**
+     * Provide the feedback that everything is fine.
+     * <p>
+     * This method will make use of an associated ControlDecoration if available; if not it will
+     * make use of a tooltip or something.
+     * </p>
+     */
     public abstract void feedback();
+    
+    /**
+     * Provide the feedback that everything is fine.
+     * <p>
+     * This method will make use of an associated ControlDecoration if available; if not it will
+     * make use of a tooltip or something.
+     * </p>
+     */
     public abstract void feedback(String warning);
+    
+    /**
+     * Provide the feedback that everything is fine.
+     * <p>
+     * This method will make use of an associated ControlDecoration if available; if not it will
+     * make use of a tooltip or something.
+     * </p>
+     */
     public abstract void feedback(String exception, Exception eek);
 
-    // context!
-    public abstract void setSchema(SimpleFeatureType schema); // pass in context to list attributes name
+    /**
+     * Feature Type to use for attribute names.
+     * @param type
+     */
+    public abstract void setSchema(SimpleFeatureType schema);
+    
+    /**
+     * Feature Type used by the FilterViewer
+     * @param type
+     */
     public abstract SimpleFeatureType getSchema(); 
+    
+    
     public abstract void setExpected( Class<?> binding );
-    public abstract Class<?> getExpected(); // Expected class - example Colour
+    
+    
+    public abstract Class<?> getExpected();
 
 }

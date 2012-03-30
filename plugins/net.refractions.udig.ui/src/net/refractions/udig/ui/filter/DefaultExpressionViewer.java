@@ -43,12 +43,10 @@ import org.opengis.filter.expression.Expression;
  * Remember that although Viewers are a wrapper around some SWT Control or Composite you still
  * have direct access using the getControl() method so that you can do your layout data thing.
  * </p>
- * <p>
- * Future directions from Mark:
  * <ul>
  * <li>
  * @author jive
- * @since 1.1.0
+ * @since 1.3.0
  */
 public class DefaultExpressionViewer extends IExpressionViewer {
     /**

@@ -14,8 +14,10 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 
 /**
- * TODO add details
- * @author leviputna
+ * FilterViewer with a simple radio button enabling the user to choose between Filter.INCLUDE and
+ * Filter.Exclude
+ * 
+ * @author Scott
  * @since 1.3.0
  */
 public class IncludeFilterViewer extends IFilterViewer {
@@ -26,11 +28,11 @@ public class IncludeFilterViewer extends IFilterViewer {
      * empty expression.
      */
     protected Filter filter = Filter.EXCLUDE;
-    
+
     protected Composite control;
-    
+
     protected Button enableButton;
-    
+
     protected Button disableButton;
 
     /**
@@ -61,26 +63,26 @@ public class IncludeFilterViewer extends IFilterViewer {
     public IncludeFilterViewer( Composite parent, int style ) {
         super(parent, style);
         control = new Composite(parent, style);
-        
+
         Label filterLabel = new Label(control, SWT.NONE);
         filterLabel.setBounds(10, 10, 55, 15);
         filterLabel.setText("Filter:");
-        
+
         enableButton = new Button(control, SWT.RADIO);
-        enableButton.addSelectionListener(new SelectionAdapter() {
+        enableButton.addSelectionListener(new SelectionAdapter(){
             @Override
-            public void widgetSelected(SelectionEvent e) {
+            public void widgetSelected( SelectionEvent e ) {
                 filter = Filter.INCLUDE;
             }
         });
-        
+
         enableButton.setBounds(20, 31, 90, 16);
         enableButton.setText("Enable");
-        
+
         disableButton = new Button(control, SWT.RADIO);
-        disableButton.addSelectionListener(new SelectionAdapter() {
+        disableButton.addSelectionListener(new SelectionAdapter(){
             @Override
-            public void widgetSelected(SelectionEvent e) {
+            public void widgetSelected( SelectionEvent e ) {
                 filter = Filter.EXCLUDE;
             }
         });
@@ -157,8 +159,7 @@ public class IncludeFilterViewer extends IFilterViewer {
 
     @Override
     public ISelection getSelection() {
-        if (filter == null)
-            return null;
+        if (filter == null) return null;
 
         IStructuredSelection selection = new StructuredSelection(filter);
         return selection;
@@ -166,7 +167,7 @@ public class IncludeFilterViewer extends IFilterViewer {
 
     @Override
     public void refresh() {
-        if(filter == Filter.INCLUDE){
+        if (filter == Filter.INCLUDE) {
             enableButton.setSelection(true);
             disableButton.setSelection(false);
         } else {
@@ -190,7 +191,7 @@ public class IncludeFilterViewer extends IFilterViewer {
      */
     @Override
     public void setInput( Object input ) {
-        if(input instanceof Filter){
+        if (input instanceof Filter) {
             filter = (Filter) input;
         }
         refresh();
@@ -209,7 +210,7 @@ public class IncludeFilterViewer extends IFilterViewer {
      * </p>
      */
     public void feedback() {
-        
+
     }
     /**
      * Provide the feedback that everything is fine.
@@ -229,16 +230,17 @@ public class IncludeFilterViewer extends IFilterViewer {
      * </p>
      */
     public void feedback( String error, Exception eek ) {
-        
+
     }
     /**
      * Feature Type to use for attribute names.
+     * 
      * @param type
      */
     public void setSchema( SimpleFeatureType type ) {
 
     }
-    
+
     @Override
     public Boolean canProcess( Object input ) {
         // TODO Auto-generated method stub
@@ -252,7 +254,7 @@ public class IncludeFilterViewer extends IFilterViewer {
     @Override
     public void setExpected( Class< ? > binding ) {
         // TODO Auto-generated method stub
-        
+
     }
     @Override
     public Class< ? > getExpected() {
