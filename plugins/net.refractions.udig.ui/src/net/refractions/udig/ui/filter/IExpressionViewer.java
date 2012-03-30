@@ -9,7 +9,7 @@ import org.geotools.data.Parameter;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.expression.Expression;
 
-abstract class IExpressionViewer extends Viewer {
+public abstract class IExpressionViewer extends Viewer {
     
     /** Maximum value (may be used by a spinner or slider) */
     public static int MIN = 0;
