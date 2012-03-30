@@ -1,0 +1,107 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Spanish Users Guide : Herramienta Fusión</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Spanish Users Guide : Herramienta Fusión -->
+       <h1>Herramienta Fusión</h1>
+       
+<p><img src="download/attachments/7962781/merge_feature_mode.gif" align="absmiddle" border="0"/> Fusiona geometrías y atributos de varios Features</p>
+
+<p>La <em>Herramienta Fusión</em> funciona seleccionando un grupo de features para ser fusionados en uno solo. Permite establecer la geometría y atributos del Feature fusionado. La geometría puede ser tanto la <b>unión geométrica</b> de las geometrías de los features a fusionar, como la geometría única de uno de los features a fusionar.</p>
+
+<h2><a name="HerramientaFusi%C3%B3n-C%C3%B3mousarlaHerramientaFusi%C3%B3n%3A"></a>Cómo usar la Herramienta Fusión:</h2>
+
+<ol>
+	<li>Seleccionar la <b>Herramienta Fusión</b> en la categoría de herramientas de feature de la barra de herramientas.
+<br clear="all" />
+Puedes usar la tecla <b>F</b> para circular por las herramientas de feature disponibles.</li>
+	<li>Dibujar un cuadro que cubra uno o más features.</li>
+	<li>La vista <b>Fusión de Features</b> mostrará dos columnas:
+	<ul>
+		<li>Fuente: estos son los features que van a ser combinados; comprobar los atributos que deseas que aparezcan en el resultado.</li>
+		<li>Fusión de Features: Esta es la Geometría resultante.</li>
+	</ul>
+	</li>
+	<li>Para hacer una Fusión necesitas dos o más features.</li>
+	<li>Puedes continuar seleccionando más features dibujando un <em>BBox</em>.</li>
+	<li>Pulsar <b>Finalizar</b> para llevar a cabo la operación.</li>
+	<li>Puedes inspeccionar tu trabajo en el Editor de Mapa.</li>
+	<li>Para guardar los cambios pulsa <b>Editar &gt; Guardar</b> de la barra de menú.</li>
+</ol>
+
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962781/Merge1.png' target='Merge1.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962781/Merge1.png", "Merge1.png", "height=909,width=1048,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962781/Merge1.png" align="left" border="0"/></a><br clear="all" /></p>
+
+<h2><a name="HerramientaFusi%C3%B3n-Comportamiento"></a>Comportamiento</h2>
+
+<p>La <em>Herramienta Fusión</em> opera sobre la capa actual. Una vez que la <em>Herramienta Fusión</em> es seleccionada, puedes dibujar un <em>Bounding Box</em> para seleccionar los Features a fusionar. Se abrirá una vista para que puedas especificar exactamente de los Features seleccionados los valores de sus atributos que han de ser asumidos por el <em>Feature resultante</em>.</p>
+
+<p>Puede darse el caso de que la <em>unión geométrica</em> produzca una geometría cuyo tipo no sea compatible con los tipos de geometría permitidos declarados en el <em>FeatureType de la Capa</em>. Por ejemplo, fusionar dos <em>Polygons</em> que no se tocan en una <em>Capa</em> polígono podría producir un <em>MultiPolygon</em>. En este caso, asignar la unión geométrica al fusionado atributo de geometría del <em>Feature</em> no será posible, pero una de las geometrías de los <em>Features</em> fuente puede ser establecida a través de la <em>Vista de Fusión</em>.</p>
+
+<p>Cuando la <em>Herramienta Fusión</em> procede a crear el nuevo Feature fusionado, aquellos de los que proviene serán eliminados al mismo tiempo.</p>
+
+<p>Hay que recordar que la <em>Herramienta Fusión</em> no guarda el resultado, sino que le permite deshacer la operación si se desea, o guardar los cambios en el repositorio de datos de fondo como normalmente haría con uDig.</p>
+<div class='panelMacro'><table class='infoMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/information.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td>
+<p><b>Sistema de Referencia de Coordenadas (CRS)</b></p>
+
+<p>Cuando a la <em>Herramienta Fusión</em> se le ordena crear una nueva geometría como la unión de geometrías de los <em>Features</em> de entrada, la unión se realiza en el <em>CRS</em> actual de la <em>Capa</em>.</p></td></tr></table></div>
+<p><br clear="all" />
+<br clear="all" /></p>
+
+<h2><a name="HerramientaFusi%C3%B3n-EjemplodeUso"></a>Ejemplo de Uso</h2>
+
+<p>Seleccionar la <em>Herramienta Fusión</em> desde la lista desplegable como se muestra en la <em>Figura 1</em>.<br/>
+<a href='http://udig.refractions.net/confluence//download/attachments/7962781/merge_1_select_tool.png' target='merge_1_select_tool.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962781/merge_1_select_tool.png", "merge_1_select_tool.png", "height=108,width=158,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962781/merge_1_select_tool.png" align="left" border="0"/></a><br clear="all" />
+<b>Figura 1. Seleccionar la Herramienta Fusión.</b>
+<br clear="all" />
+<br clear="all" />
+Dibujar el <em>Bounding Box</em> que será usado como filtro para seleccionar el <em>Feature</em> a ser fusionado. Al menos dos <em>Features</em> han de ser seleccionados para realizar una Fusión, pero la vista se abrirá aunque solo haya seleccionado un Feature.<br/>
+<a href='http://udig.refractions.net/confluence//download/attachments/7962781/merge_2_select_features.png' target='merge_2_select_features.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962781/merge_2_select_features.png", "merge_2_select_features.png", "height=572,width=813,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962781/merge_2_select_features.png" align="left" border="0"/></a><br clear="all" />
+<b>Figura 2. Seleccionando los Features a fusionar.</b>
+<br clear="all" />
+<br clear="all" />
+Una vez que suelte el botón del ratón, los <em>features</em> que coincidan con el <em>Bounding Box</em> serán buscados y se mostrará la <em>Vista de Fusión</em>.<br/>
+La <em>Figura 3</em> muestra la <em>Vista de Fusión</em>, que consiste en dos paneles.<br/>
+El panel de la izquierda es el panel de <em>Fuente</em> y presenta los <em>features</em> seleccionados, sus atributos, y permite seleccionar valores de atributo de los features de fuente para ser asignados al <em>Feature fusionado</em>.</p>
+
+<p>El panel de la derecha se llama panel de <em>Fusión de Features</em> y presenta los atributos del <em>feature</em> que va a ser creado como el resultado de establecer sus atributos a través de los <em>Features fuente</em>.</p>
+
+<p>Cuando se abre la <em>Vista de fusión</em>, el panel de <em>Fusión de Feature</em> es rellenado con los atributos del primer feature <em>Fuente</em> que sea encontrado (el primero por arriba en el panel de <em>Fuente</em>). El atributo de geometría del <em>Feature fusionado</em> asume el valor de la unión geométrica de las geometrías de los Features fuente, y si eso no es posible debido a un conflicto de tipo con el <em>FeatureType</em> de la capa, asume el valor de la geometría del primer Feature.<br/>
+<a href='http://udig.refractions.net/confluence//download/attachments/7962781/MergeDialog1.png' target='MergeDialog1.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962781/MergeDialog1.png", "MergeDialog1.png", "height=586,width=775,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962781/MergeDialog1.png" align="left" border="0"/></a><br clear="all" />
+<b>Figura 3. Vista de Fusión.</b>
+<br clear="all" />
+<br clear="all" />
+Mientras se abre la <em>Vista de Fusión</em>, el usuario puede establecer los atributos específicos en <em>Fusión de Features</em> para asumir los valores de otros <em>Features fuente</em> aparte de aquel que esté primero, activando los <em>checkbox</em> correspondientes al atributo deseado que se encuentre en <em>Fuente</em>.</p>
+
+<p>También es posible seleccionar todo el conjunto de atributos de una única <em>Fuente</em> activando el <em>checkbox</em> correspondiente a la deseada <em>Fuente</em>.</p>
+
+<p>La <em>Figura 4</em> muestra como dos atributos, <tt>SOVEREIGN</tt> y <tt>COLOR_MAP</tt> han sido asignados a la <em>Fusión de Features</em> desde otra <em>Fuente</em> aparte de aquella por defecto.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962781/MergeDialog2.png' target='MergeDialog2.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962781/MergeDialog2.png", "MergeDialog2.png", "height=586,width=775,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962781/MergeDialog2.png" align="left" border="0"/></a><br clear="all" />
+<b>Figura 4. Vista de Fusión con atributos especificados por el usuario.</b>
+<br clear="all" />
+<br clear="all" />
+Finalmente, cuando haya terminado de establecer los valores de los atributos geométricos y no geométricos para la <em>Fusión de Features</em>, pulse el botón de <em>Finalizar</em> en la <em>Vista de Fusión</em>.<br/>
+La <em>Herramienta Fusión</em> creará la nueva <em>Fusión de Features</em> y eliminará las <em>Fuentes</em> en un paso único e irreversible.</p>
+
+<p>El <em>Mapa</em> en la <em>Figura 5</em> muestra como los dos edificios del ejemplo han sido fusionados en uno solo, y la <em>Vista de Tabla</em> con el <em>Feature</em> recién creado.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962781/merge_5_merged_result.png' target='merge_5_merged_result.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962781/merge_5_merged_result.png", "merge_5_merged_result.png", "height=572,width=813,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962781/merge_5_merged_result.png" align="left" border="0"/></a><br clear="all" />
+<b>Figura 5. Resultado de la fusión</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<h3><a name="HerramientaFusi%C3%B3n-A%C3%B1adiryeliminarfeatures."></a>Añadir y eliminar features.</h3>
+
+<p>Para añadir más features para ser fusionados, selecciona aquellos features deseados mediante un <em>Bounding Box</em> y serán añadidos a la vista.<br/>
+Para eliminar features, selecciona el feature a eliminar y haz click en el botón <em>Borrar</em> o dibuja un bounding box con la tecla Ctrl presionada y esos features seran eliminados.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962781/MergeDelete.png' target='MergeDelete.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962781/MergeDelete.png", "MergeDelete.png", "height=324,width=779,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962781/MergeDelete.png" align="left" border="0"/></a><br clear="all" />
+<b>Figura 6. Botón Borrar</b></p>
+
+<small>(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.</small>
+    </body>
+</html>

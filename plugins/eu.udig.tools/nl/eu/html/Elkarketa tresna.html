@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Basque User Guide : Elkarketa tresna</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Basque User Guide : Elkarketa tresna -->
+       <h1>Elkarketa tresna</h1>
+       
+<p><img src="download/attachments/7962870/merge_feature_mode.gif" align="absmiddle" border="0"/> Feature batzuen geometriak eta atributuak elkartzen ditu.</p>
+
+<p><em>Elkarketa tresna</em> feature talde bat aukeratuz bakar batean elkartzeko erabiltzen da. Elkartutako Featurearen geometria eta ezaugarriak ezartzea uzten du. Geometria, bai elkartzeko featuren geometrien <b>elkarketa geometrikoa</b> eta bai elkartzeko featuretariko baten geometria bakarra izan daiteke.</p>
+
+<h2><a name="Elkarketatresna-NolaerabiliElkarketatresna%3A"></a>Nola erabili Elkarketa tresna:</h2>
+
+<ol>
+	<li>Tresnen barratik featurearen tresnen mailan <b>Elkarketa tresna</b> aukeratu.
+<br clear="all" />
+<b>F</b> tekla erabili dezakezu feature erabilgarrien tresnetatik ibiltzeko.</li>
+	<li>Feature bat edo gehiago betetzen dituen karratu bat marraztu.</li>
+	<li><b>Featureen elkarketa</b> bistak bi zutabe erakutsiko ditu:
+	<ul>
+		<li>Jatorria: feature hauek dira elkartuak izango direnak; emaitzean agertzea nahi dituzun ezaugarriak egiaztatu.</li>
+		<li>Featuren elkarketa: Hauemaitzako geometria da.</li>
+	</ul>
+	</li>
+	<li>Elkarketa bat egiteko feature bat edo gehiago behar duzu.</li>
+	<li>Feature gehiago aukeratzen jarrai dezakezu <em>Bbox</em> bat marrazten.</li>
+	<li><b>Amaitu</b> sakatu eragiketa aurrera eramateko.</li>
+	<li>Zure lana Editore Mapan aztertu dezakezu.</li>
+	<li>Aldaketak gordetzeko <b>Editatu &gt; Gorde</b> sakatu menu barratik.</li>
+</ol>
+
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962870/Merge1.png' target='Merge1.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962870/Merge1.png", "Merge1.png", "height=910,width=1052,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962870/Merge1.png" align="left" border="0"/></a><br clear="all" /></p>
+
+<h2><a name="Elkarketatresna-Portaera"></a>Portaera</h2>
+
+<p><em>Elkarketa tresnak</em> jadaneko geruzan burutzen du. <em>Elkarketa tresnak</em> aukeratua denean, <em>Bounding Box</em> bat marraztu dezakezu elkartzeko diren Featureak aukeratzeko. Bista bat zabalduko da aukeratutako Featuretatik beraien berezitasunen balioak <em>emaitzako Featureagatik</em> jasoak izan behar direnak zehatu ahal izateko.</p>
+
+<p>Izan daiteke <em>elkartze geometrikoak</em> <em>Geruzako FeatureTypean</em> azaltzen diren baimendutako geometri motekin bateragarri ez den geometria bat sortzea. Adibidez, poligono <em>Geruza</em> baten ikutzen ez diren bi <em>Polygon</em>-k <em>MultiPolygon</em> bat sortu ahalko luke. Kasu honetan, elkartze geometrikoa <em>Featurearen</em> geometriaren elkartutako berezitasuna asignatzea ez da posible izango, baina jatorrizko <em>Featuren</em> geometria bat <em>Elkarketa tresnaren</em> bidez ezarria izan daiteke.</p>
+
+<p><em>Elkarketa tresnak</em> elkartutako Feature berri bat sortzera doanean, jatorria duten haiek ezabatuak izango dira une berberean.  </p>
+
+<p>Gogoratu behar da <em>Elkarketa tresnak</em> ez duela emaitzarik gordetzen, nahi izanez gero eragiketa desegitea uzten bait du, edo barnealdeko datuak dauden tokian aldaketak gorde uDig-ek normalean egingo lukeen bezala.</p>
+<div class='panelMacro'><table class='infoMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/information.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td>
+<p><b>Koordenatu Erreferentzi Sistema (CRS)</b></p>
+
+<p><em>Elkarketa tresnari</em> sarrerako <em>Featuren</em> geometrien elkartzea bezalako geometria berri bat sortzea agintzen zaionean, elkarketa <em>Geruzako</em> jadaneko <em>CRS</em> -an burutuko da.</p></td></tr></table></div>
+<p><br clear="all" />
+<br clear="all" /></p>
+
+<h2><a name="Elkarketatresna-Erabileraadibidea"></a>Erabilera adibidea</h2>
+
+<p><em>Elkarketa tresna</em> aukeratu hedatze zerrendatik 1 irudian agertzen den bezala.<br/>
+<a href='http://udig.refractions.net/confluence//download/attachments/7962870/merge_1_select_tool.png' target='merge_1_select_tool.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962870/merge_1_select_tool.png", "merge_1_select_tool.png", "height=108,width=217,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962870/merge_1_select_tool.png" align="left" border="0"/></a><br clear="all" />
+<b>1 irudia. <em>Elkarketa tresna</em> aukeratu.</b>
+<br clear="all" />
+<br clear="all" />
+Elkartua izango den <em>Featurea</em> aukeratzeko filtro bezala erabiliko den <em>Bounding Box</em>-a marraztu.<br/>
+<a href='http://udig.refractions.net/confluence//download/attachments/7962870/merge_2_select_features.png' target='merge_2_select_features.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962870/merge_2_select_features.png", "merge_2_select_features.png", "height=572,width=813,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962870/merge_2_select_features.png" align="left" border="0"/></a><br clear="all" />
+<b>2 irudia. Elkartzeko Featureak aukeratzen.</b>
+<br clear="all" />
+<br clear="all" />
+Saguaren botoia askatzean, <em>Bounding Box</em>-arekin bat egiten duten <em>featureak</em> bilatuak izango dira eta <em>Elkarketa Bista</em> agertuko da.<br/>
+<em>3 irudiak</em> <em>Elkarketa Bista</em> erakusten du, bi paneletan datzana.<br/>
+Ezkerraldeko panela <em>Jatorriko</em> panela da eta aukeratutako <em>featureak</em> eta bere berezitasunak erakusten ditu, eta jatorrizko featuren berezitasunen balioak aukeratzen uzten ditu <em>elkartutako Featureari</em> asignatuak izateko.</p>
+
+<p>Eskuinaldeko panela <em>Featuren Elkarketa</em> panela deitzen da eta <em>jatorrizko Featuregatik</em> bere berezitasunak ezartzearen emaitza bezala sortua izango den <em>featurearen</em> berezitasunak erakusten ditu. </p>
+
+<p><em>Elkarketa bista</em> zabaltzen denean, <em>Featurearen elkarketa</em> panela aurkitua izango den lehen <em>Jatorriko</em> featurearen berezitasunekin betea izango da (<em>Jatorriko</em> panelean goitik lehenengoa). <em>Elkartutako Featurearen</em> geometri berezitasunak jatorriko Featuren geometrien elkartze geometrikoaren balioa gain hartzen du, eta geruzako <em>FeatureType</em>-arekin motako gatazka baten ondorioz hori posible ez bada, lehenengo Featurearen geometriaren balioa gain hartuko du.<br/>
+<a href='http://udig.refractions.net/confluence//download/attachments/7962870/MergeDialog1.png' target='MergeDialog1.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962870/MergeDialog1.png", "MergeDialog1.png", "height=577,width=779,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962870/MergeDialog1.png" align="left" border="0"/></a><br clear="all" /></p>
+
+<p><b>3 irudia. Elkarketa bista.</b>
+<br clear="all" />
+<br clear="all" />
+<em>Elkarketa bista</em> zabaltzen den bitartean, erabiltzaileak <em>Featuren Elkarketan</em> berezitasun espezifikoak ezarri ditzake lehenengo dagoenaren gainerako beste <em>jatorri Feature</em> batzuen balioak gain hartzeko, <em>Jatorrian</em> aurkitzen den nahi den berezitasuri dagozkion <em>checkbox</em>-ak aktibatzen.</p>
+
+<p><em>Jatorri</em> bakar bateko berezitasun multsoa ere aukeratu daiteke nahi den <em>Jatorriari</em> dagokion <em>checkbox</em>-a aktibatuz. </p>
+
+<p><em>4 irudiak</em> nola bi berezitasun lehen huraz gain beste <em>Jatorri</em> batetik <em>Featuren Elkarketara</em> asignatuak izan diren erakusten du.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962870/MergeDialog2.png' target='MergeDialog2.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962870/MergeDialog2.png", "MergeDialog2.png", "height=577,width=779,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962870/MergeDialog2.png" align="left" border="0"/></a><br clear="all" />
+<b>4 irudia. Elkarketa Bista erabiltzaileagatik ezarritako berezitasunekin.</b>
+<br clear="all" />
+<br clear="all" />
+Azkenik, <em>Featuren Elkarketarako</em> berezitasun geometriko eta ez geometrikoen balioak ezartzen amaitzen duzunean, <em>Amaitu</em> botoia sakatu <em>Elkarketa Bistan</em>. <em>Elkarketa tresnak</em> <em>Featuren elkarketa</em> berria sortuko du eta <em>Jatorriak</em> ezabatuko ditu urrats bakar eta atzeraezin batean.</p>
+
+<p><em>5 irudian</em> <em>Mapak</em> adibideko bi eraikin nola bakar batean elkartuak izan diren erakusten du, eta <em>Taula Bista</em> <em>Feature</em> sortu berriarekin.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962870/merge_5_merged_result.png' target='merge_5_merged_result.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962870/merge_5_merged_result.png", "merge_5_merged_result.png", "height=572,width=813,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962870/merge_5_merged_result.png" align="left" border="0"/></a><br clear="all" />
+<b>5 irudia. Elkarketaren emaitza.</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<h3><a name="Elkarketatresna-Featureakgehituetaezabatu."></a>Featureak gehitu eta ezabatu.</h3>
+
+<p>Elkartzeko feature gehiago gehitzeko, <em>Bounding Box</em> baten bidez nahi dituzun featureak aukeratu eta bistara gehituak izango dira.<br/>
+Featureak ezabatzeko, aukeratu ezabatu nahi duzun featurea eta <em>Ezabatu</em> botoian klik egin ezazu edo <em>Bounding Box</em> baten bidez Ctrl tekla sakatuz, aukeratutako featureak ezabatuko dira.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962870/MergeDelete.png' target='MergeDelete.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962870/MergeDelete.png", "MergeDelete.png", "height=324,width=779,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962870/MergeDelete.png" align="left" border="0"/></a><br clear="all" />
+<b>6 irudia. Ezabatu botoia.</b></p>
+
+<small>(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.</small>
+    </body>
+</html>
+
