@@ -402,12 +402,14 @@ public class CQLFilterViewer extends IFilterViewer {
             return;
         }
         Set<String> names = new HashSet<String>();
+
         for( AttributeDescriptor att : type.getAttributeDescriptors() ) {
             //add to Text area
             names.add(att.getLocalName());
             //add to combo box
             attribute.add(att.getLocalName());
         }
+
         proposalProvider.setExtra(names);
     }
 
