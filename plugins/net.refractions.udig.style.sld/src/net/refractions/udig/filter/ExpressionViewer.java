@@ -128,6 +128,9 @@ public class ExpressionViewer extends Viewer {
                 proposalProvider,
                 null, null);
         
+        //Need to set adapter to replace existing text. Default is insert.
+        adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+        
         text.addKeyListener(keyListener);
     }
     
