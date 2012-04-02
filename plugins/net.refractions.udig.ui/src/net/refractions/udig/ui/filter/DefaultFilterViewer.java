@@ -87,6 +87,11 @@ public class DefaultFilterViewer extends IFilterViewer {
      */
     private boolean isRequired;
 
+    /**
+     * The schema being used
+     */
+    private SimpleFeatureType schema;
+
     private KeyListener keyListener = new KeyListener(){
         public void keyReleased( KeyEvent e ) {
             // we can try and parse this puppy; and issue a selection changed
@@ -95,7 +100,8 @@ public class DefaultFilterViewer extends IFilterViewer {
             validate();
             String after = filter != null ? CQL.toCQL(filter) : "(empty)";
             if (filter != null && !Utilities.equals(before, after)) {
-                fireSelectionChanged(new SelectionChangedEvent(DefaultFilterViewer.this, getSelection()));
+                fireSelectionChanged(new SelectionChangedEvent(DefaultFilterViewer.this,
+                        getSelection()));
             }
         }
         public void keyPressed( KeyEvent e ) {
@@ -135,10 +141,10 @@ public class DefaultFilterViewer extends IFilterViewer {
         proposalProvider.setFiltering(true);
         ContentProposalAdapter adapter = new ContentProposalAdapter(text, new TextContentAdapter(),
                 proposalProvider, null, null);
-        
-        //Need to set adapter to replace existing text. Default is insert.
+
+        // Need to set adapter to replace existing text. Default is insert.
         adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
-        
+
         text.addKeyListener(keyListener);
     }
 
@@ -257,8 +263,7 @@ public class DefaultFilterViewer extends IFilterViewer {
 
     @Override
     public ISelection getSelection() {
-        if (filter == null)
-            return null;
+        if (filter == null) return null;
 
         IStructuredSelection selection = new StructuredSelection(filter);
         return selection;
@@ -269,8 +274,7 @@ public class DefaultFilterViewer extends IFilterViewer {
         if (text != null && !text.isDisposed()) {
             text.getDisplay().asyncExec(new Runnable(){
                 public void run() {
-                    if (text == null || text.isDisposed())
-                        return;
+                    if (text == null || text.isDisposed()) return;
                     String cql = CQL.toCQL(filter);
                     text.setText(cql);
                 }
@@ -359,19 +363,21 @@ public class DefaultFilterViewer extends IFilterViewer {
     }
     /**
      * Feature Type to use for attribute names.
+     * 
      * @param type
      */
     public void setSchema( SimpleFeatureType type ) {
-        if( type == null ){
+        if (type == null) {
             return;
         }
         Set<String> names = new HashSet<String>();
-        for( AttributeDescriptor attribute : type.getAttributeDescriptors()){
-            names.add( attribute.getLocalName() );
+        for( AttributeDescriptor attribute : type.getAttributeDescriptors() ) {
+            names.add(attribute.getLocalName());
         }
-        proposalProvider.setExtra( names );
+        proposalProvider.setExtra(names);
+        schema = type;
     }
-    
+
     @Override
     public Boolean canProcess( Object input ) {
         // TODO Auto-generated method stub
@@ -379,13 +385,12 @@ public class DefaultFilterViewer extends IFilterViewer {
     }
     @Override
     public SimpleFeatureType getSchema() {
-        // TODO Auto-generated method stub
-        return null;
+        return schema;
     }
     @Override
     public void setExpected( Class< ? > binding ) {
         // TODO Auto-generated method stub
-        
+
     }
     @Override
     public Class< ? > getExpected() {

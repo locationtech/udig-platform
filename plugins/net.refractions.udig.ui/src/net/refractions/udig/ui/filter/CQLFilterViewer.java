@@ -77,6 +77,11 @@ public class CQLFilterViewer extends IFilterViewer {
      */
     private boolean isRequired;
 
+    /**
+     * The schema being used
+     */
+    private SimpleFeatureType schema;
+
     private KeyListener keyListener = new KeyListener(){
         public void keyReleased( KeyEvent e ) {
             // we can try and parse this puppy; and issue a selection changed
@@ -398,15 +403,17 @@ public class CQLFilterViewer extends IFilterViewer {
      */
     public void setSchema( SimpleFeatureType type ) {
 
+        schema = type;
+
         if (type == null) {
             return;
         }
         Set<String> names = new HashSet<String>();
 
         for( AttributeDescriptor att : type.getAttributeDescriptors() ) {
-            //add to Text area
+            // add to Text area
             names.add(att.getLocalName());
-            //add to combo box
+            // add to combo box
             attribute.add(att.getLocalName());
         }
 
@@ -418,11 +425,12 @@ public class CQLFilterViewer extends IFilterViewer {
         // TODO Auto-generated method stub
         return null;
     }
+
     @Override
     public SimpleFeatureType getSchema() {
-        // TODO Auto-generated method stub
-        return null;
+        return schema;
     }
+
     @Override
     public void setExpected( Class< ? > binding ) {
         // TODO Auto-generated method stub

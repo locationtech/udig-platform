@@ -23,8 +23,8 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
     static {
         proposals = new TreeSet<String>();
         FunctionFinder functionFinder = new FunctionFinder(null);
-        
-        for( FunctionName function : functionFinder.getAllFunctionDescriptions() ){
+
+        for( FunctionName function : functionFinder.getAllFunctionDescriptions() ) {
             proposals.add(function.getName().toLowerCase());
         }
     }
@@ -92,7 +92,7 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
             if (contentProposals == null) {
                 final int LENGTH = proposals.size() + (extras == null ? 0 : extras.size());
 
-                contentProposals = new IContentProposal[ LENGTH ];
+                contentProposals = new IContentProposal[LENGTH];
                 int i = 0;
                 if (extras != null && !extras.isEmpty()) {
                     for( String extra : extras ) {

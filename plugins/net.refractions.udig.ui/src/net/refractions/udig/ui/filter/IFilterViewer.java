@@ -26,6 +26,7 @@ import org.opengis.filter.Filter;
 
 /**
  * Abstract class for creating a UI that allows the user to create and edit Filters
+ * 
  * @author Scott
  * @since 1.3.0
  */
@@ -36,15 +37,15 @@ public abstract class IFilterViewer extends Viewer {
     /**
      * Default constructor. Calls <code>IFilterViewer( Composite parent, SWT.SINGLE )</code>
      */
-    public IFilterViewer( Composite parent) {
+    public IFilterViewer( Composite parent ) {
         this(parent, SWT.SINGLE);
     }
-    
+
     /**
      * Constructor
      */
     public IFilterViewer( Composite parent, int style ) {
-        
+
     }
 
     /**
@@ -99,20 +100,20 @@ public abstract class IFilterViewer extends Viewer {
     /**
      * Check to see if we can filter the given input
      * <p>
-     * Note that the decision on whather FilterEditor canProcess() should be informed by the presence of
-     * attributes it design to work with.
+     * Note that the decision on whather FilterEditor canProcess() should be informed by the
+     * presence of attributes it design to work with.
      * </p>
      * 
      * @param input the imput that this filterEditor will take
      * @return
      */
     public abstract Boolean canProcess( Object input );
-    
+
     /**
      * Returns the controller of the viewer. Used for setting size etc
      */
     public abstract Control getControl();
-    
+
     /**
      * The isRequired flag will be used to determine the default decoration to show (if there is no
      * warning or error to take precedence).
@@ -123,20 +124,20 @@ public abstract class IFilterViewer extends Viewer {
      * 
      * @param isRequired true if this is a required field
      */
-    public abstract void setRequired(boolean required);
-    
+    public abstract void setRequired( boolean required );
+
     /**
      * Sets a new selection for this viewer and optionally makes it visible.
      * <p>
      * Subclasses must implement this method.
      * </p>
-     *
+     * 
      * @param selection the new selection
-     * @param reveal <code>true</code> if the selection is to be made
-     *   visible, and <code>false</code> otherwise
+     * @param reveal <code>true</code> if the selection is to be made visible, and
+     *        <code>false</code> otherwise
      */
-    public abstract void setSelection(ISelection selection, boolean reveal);
-    
+    public abstract void setSelection( ISelection selection, boolean reveal );
+
     /**
      * Provide the feedback that everything is fine.
      * <p>
@@ -145,7 +146,7 @@ public abstract class IFilterViewer extends Viewer {
      * </p>
      */
     public abstract void feedback();
-    
+
     /**
      * Provide the feedback that everything is fine.
      * <p>
@@ -153,8 +154,8 @@ public abstract class IFilterViewer extends Viewer {
      * make use of a tooltip or something.
      * </p>
      */
-    public abstract void feedback(String warning);
-    
+    public abstract void feedback( String warning );
+
     /**
      * Provide the feedback that everything is fine.
      * <p>
@@ -162,24 +163,24 @@ public abstract class IFilterViewer extends Viewer {
      * make use of a tooltip or something.
      * </p>
      */
-    public abstract void feedback(String exception, Exception eek);
+    public abstract void feedback( String exception, Exception eek );
 
     /**
      * Feature Type to use for attribute names.
+     * 
      * @param type
      */
-    public abstract void setSchema(SimpleFeatureType schema);
-    
+    public abstract void setSchema( SimpleFeatureType schema );
+
     /**
      * Feature Type used by the FilterViewer
+     * 
      * @param type
      */
-    public abstract SimpleFeatureType getSchema(); 
-    
-    
-    public abstract void setExpected( Class<?> binding );
-    
-    
-    public abstract Class<?> getExpected();
+    public abstract SimpleFeatureType getSchema();
+
+    public abstract void setExpected( Class< ? > binding );
+
+    public abstract Class< ? > getExpected();
 
 }
