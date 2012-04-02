@@ -115,6 +115,7 @@ public class ExpressionViewer extends Viewer {
      * @param none
      */
     public ExpressionViewer( Composite parent, int style ) {
+        System.out.println("Expression Viewer");
         text = new Text( parent, style );
         feedback = new ControlDecoration(text, SWT.TOP | SWT.LEFT);
         
@@ -173,6 +174,7 @@ public class ExpressionViewer extends Viewer {
      * @return true if the field is valid
      */
     public boolean validate(){
+        System.out.println("Expression Viewer validate");
         FieldDecorationRegistry decorations = FieldDecorationRegistry.getDefault();        
         try {
             expr = ECQL.toExpression( text.getText() );
@@ -232,6 +234,7 @@ public class ExpressionViewer extends Viewer {
      */
     @Override
     public Expression getInput() {
+        System.out.println("Expression: " + expr);
         return expr;
     }
     
