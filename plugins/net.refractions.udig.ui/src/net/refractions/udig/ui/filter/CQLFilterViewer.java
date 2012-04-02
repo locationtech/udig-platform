@@ -397,12 +397,16 @@ public class CQLFilterViewer extends IFilterViewer {
      * @param type
      */
     public void setSchema( SimpleFeatureType type ) {
+
         if (type == null) {
             return;
         }
         Set<String> names = new HashSet<String>();
-        for( AttributeDescriptor attribute : type.getAttributeDescriptors() ) {
-            names.add(attribute.getLocalName());
+        for( AttributeDescriptor att : type.getAttributeDescriptors() ) {
+            //add to Text area
+            names.add(att.getLocalName());
+            //add to combo box
+            attribute.add(att.getLocalName());
         }
         proposalProvider.setExtra(names);
     }
