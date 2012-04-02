@@ -5,26 +5,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.opengis.filter.expression.Expression;
 
 /**
- * A JFace Style Expression Viewer that can be used to show an Filter to a user (using whatever SWT
- * widgets are appropriate) and allow modification.
- * <p>
- * Initially we will just use a Text control; gradually working up to PropertyName, Integer and
- * Color Expressions. In each case the Filter may be retrieved by simple get/set methods and we will
- * provide some kind of consistent change notification.
- * <p>
- * Choosing which widgets to use will be based on constants; much like MapViewer switches
- * implementations. If there is something specific we need to handle (like say restrictions based on
- * FeatureType we may need to break out different ExpressionViewers kind of like how Tree and
- * TreeTable viewers work.
- * </p>
- * <p>
- * Remember that although Viewers are a wrapper around some SWT Control or Composite you still have
- * direct access using the getControl() method so that you can do your layout data thing.
- * </p>
- * <p>
- * Future directions from Mark:
- * <ul>
- * <li>
+ * Factory class that takes an Expression and returns the appropriate ExpressionViewer. 
  * 
  * @author Scott
  * @since 1.3.0
