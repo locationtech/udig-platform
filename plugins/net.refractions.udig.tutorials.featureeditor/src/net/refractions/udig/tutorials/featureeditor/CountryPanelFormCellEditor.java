@@ -32,15 +32,13 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -71,12 +69,10 @@ import org.opengis.feature.simple.SimpleFeature;
  * 
  * @author Naz Chan
  */
-public class CountryPanelForm
+public class CountryPanelFormCellEditor
         implements
             KeyListener,
-            ISelectionChangedListener,
-            FocusListener,
-            MouseListener {
+            ISelectionChangedListener {
 
     /** Attribute name for attribute NAME_FORMA */
     public final static String NAME_FORMA = "NAME_FORMA";
@@ -92,9 +88,11 @@ public class CountryPanelForm
 
     /** Attribute name for attribute TYPE */
     public final static String TYPE = "TYPE";
+    public final static String TYPE_LBL = "Status";
     public final static String TYPE_SOV_LBL = "Sovereign Country";
     public final static String TYPE_COU_LBL = "Country";
-
+    public final static String[] TYPE_OPTS = new String[] {TYPE_SOV_LBL, TYPE_COU_LBL};
+    
     /** Attribute name for attribute MAP_COLOR */
     public final static String COLOR_MAP = "MAP_COLOR";
     public final static String COLOR_MAP_LBL = "Map Color";
@@ -106,6 +104,8 @@ public class CountryPanelForm
         }
     }
 
+    public final static String REMARKS_LBL = "Remarks";
+    
     /**
      * Used to construct UI
      */
@@ -122,7 +122,7 @@ public class CountryPanelForm
     private Text nameSort;
     private Text nameFormal;
     private Text population;
-    private Button type;
+    private CCombo type;
     private ComboViewer colorMap;
 
     private Action apply;
@@ -166,7 +166,7 @@ public class CountryPanelForm
         layout.minNumColumns = MIN_COLS;
         form.getBody().setLayout(layout);
         toolkit.decorateFormHeading(form.getForm());
-
+        
         final Section section = toolkit.createSection(form.getBody(), SECTION_STYLE);
         section.setText("Country Details");
         section.setDescription("Update country details below.");
@@ -183,42 +183,50 @@ public class CountryPanelForm
 
         // SWT Widgets
         Label label = toolkit.createLabel(client, NAME_FORMA_LBL, LABEL_STYLE);
-        nameFormal = toolkit.createText(client, "", FIELD_STYLE);
+        FormTextCellEditor nameFormalEditor = new FormTextCellEditor(client, form.getMessageManager());
+        nameFormal = (Text) nameFormalEditor.getControl();
         nameFormal.setData(NAME_FORMA_LBL);
-        nameFormal.addFocusListener(this);
         nameFormal.addKeyListener(this);
         GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
         layoutData.horizontalSpan = 3;
         nameFormal.setLayoutData(layoutData);
 
         label = toolkit.createLabel(client, NAME_SORT_LBL, LABEL_STYLE);
-        nameSort = toolkit.createText(client, "", FIELD_STYLE);
+        FormTextCellEditor nameSortEditor = new FormTextCellEditor(client, form.getMessageManager());
+        nameSort = (Text) nameSortEditor.getControl();
         nameSort.setData(NAME_SORT_LBL);
-        nameSort.addFocusListener(this);
         nameSort.addKeyListener(this);
         layoutData = new GridData(GridData.FILL_HORIZONTAL);
         layoutData.horizontalSpan = 3;
         nameSort.setLayoutData(layoutData);
 
         label = toolkit.createLabel(client, POP_EST_LBL, LABEL_STYLE);
-        population = toolkit.createText(client, "", FIELD_STYLE);
+        FormTextCellEditor populationEditor = new FormTextCellEditor(client, form.getMessageManager());
+        population = (Text) populationEditor.getControl();
         population.setData(POP_EST_LBL);
-        population.addFocusListener(this);
         population.addKeyListener(this);
         layoutData = new GridData(GridData.FILL_HORIZONTAL);
         layoutData.horizontalSpan = 3;
         population.setLayoutData(layoutData);
-
-        label = toolkit.createLabel(client, "", LABEL_STYLE);
-        type = toolkit.createButton(client, TYPE_SOV_LBL, SWT.CHECK);
-        type.addMouseListener(this);
-        layoutData = new GridData(GridData.FILL_HORIZONTAL);
+        
+        label = toolkit.createLabel(client, TYPE_LBL, LABEL_STYLE);
+        FormComboBoxCellEditor typeEditor = new FormComboBoxCellEditor(client, TYPE_OPTS, form.getMessageManager());
+        type = (CCombo) typeEditor.getControl();
+        type.addSelectionListener(new SelectionAdapter(){
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                setEnabled(true);
+            }
+        });
+        layoutData = new GridData();
         layoutData.horizontalSpan = 3;
         type.setLayoutData(layoutData);
         
         // JFace Viewer
-        label = toolkit.createLabel(client, "Color Map:", LABEL_STYLE);
-        colorMap = new ComboViewer(client, FIELD_STYLE);
+        label = toolkit.createLabel(client, COLOR_MAP_LBL, LABEL_STYLE);
+        FormComboBoxCellEditor colorEditor = new FormComboBoxCellEditor(client, new String[]{}, form.getMessageManager());
+        CCombo colorCombo = (CCombo) colorEditor.getControl();
+        colorMap = new ComboViewer(colorCombo);
         colorMap.addSelectionChangedListener(this);
         layoutData = new GridData();
         layoutData.horizontalSpan = 3;
@@ -233,9 +241,10 @@ public class CountryPanelForm
                 return null;
             }
             public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
-                // for dynamic content we would register listeners here
+                // For dynamic content we would register listeners here
             }
             public void dispose() {
+                // Nothing
             }
         });
         colorMap.setLabelProvider(new LabelProvider(){
@@ -261,8 +270,11 @@ public class CountryPanelForm
         clientOther.setLayout(sectionLayout);
         sectionOther.setClient(clientOther);
 
-        Label remarksLbl = toolkit.createLabel(clientOther, "Remarks:", LABEL_STYLE);
-        Text remarks = toolkit.createText(clientOther, "", FIELD_STYLE);
+        Label remarksLbl = toolkit.createLabel(clientOther, REMARKS_LBL, LABEL_STYLE);
+        FormTextCellEditor remarksEditor = new FormTextCellEditor(clientOther, form.getMessageManager());
+        Text remarks = (Text) remarksEditor.getControl();
+        remarks.setData(REMARKS_LBL);
+        remarks.addKeyListener(this);
         layoutData = new GridData(GridData.FILL_HORIZONTAL);
         layoutData.horizontalSpan = 3;
         remarks.setLayoutData(layoutData);
@@ -317,37 +329,6 @@ public class CountryPanelForm
         setEnabled(true);
     }
 
-    @Override
-    public void focusGained( FocusEvent e ) {
-        // Nothing
-    }
-
-    @Override
-    public void focusLost( FocusEvent e ) {
-        final Object control = e.getSource();
-        if (control == population) {
-            isValid(population);
-            isNumber(population);
-        } else {
-            isValid((Text) control);
-        }
-    }
-
-    @Override
-    public void mouseDoubleClick( MouseEvent e ) {
-        // Nothing
-    }
-
-    @Override
-    public void mouseDown( MouseEvent e ) {
-        // Nothing
-    }
-
-    @Override
-    public void mouseUp( MouseEvent e ) {
-        setEnabled(true);
-    }
-
     public void setEditFeature( SimpleFeature newFeature, IToolContext newcontext ) {
         this.context = newcontext;
         oldFeature = newFeature;
@@ -383,7 +364,11 @@ public class CountryPanelForm
 
             // Set UI value for TYPE
             String typeStr = (String) oldFeature.getAttribute(TYPE);
-            type.setSelection(TYPE_SOV_LBL.equalsIgnoreCase(typeStr));
+            int selectedIndex = 0;
+            if (TYPE_COU_LBL.equalsIgnoreCase(typeStr)) {
+                selectedIndex = 1;
+            }
+            type.select(selectedIndex);
 
             // Set UI value for COLOR_MAP
             Double colorText = (Double) oldFeature.getAttribute(COLOR_MAP);
@@ -418,7 +403,7 @@ public class CountryPanelForm
                 editedFeature.setAttribute(POP_EST, Double.valueOf(population.getText()));
 
                 // Set feature value for TYPE
-                editedFeature.setAttribute(TYPE, type.getSelection() ? TYPE_SOV_LBL : TYPE_COU_LBL);
+                editedFeature.setAttribute(TYPE, (type.getSelectionIndex() == 0) ? TYPE_SOV_LBL : TYPE_COU_LBL);
 
                 // Set feature value for COLOR_MAP
                 StructuredSelection colorSelection = (StructuredSelection) colorMap.getSelection();
