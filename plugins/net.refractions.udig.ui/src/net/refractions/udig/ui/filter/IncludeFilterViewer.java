@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.geotools.filter.text.ecql.ECQL;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 
@@ -21,6 +22,25 @@ import org.opengis.filter.Filter;
  * @since 1.3.0
  */
 public class IncludeFilterViewer extends IFilterViewer {
+    /**
+     * Factory used for the general purpose CQLFilterViewer.
+     * @author jody
+     * @since 1.2.0
+     */
+    public static class Factory extends FilterViewerFactory {
+        @Override
+        public int appropriate( SimpleFeatureType schema, Filter filter ) {
+            // we are general purpose and will ignore schema
+            if( filter == Filter.EXCLUDE || filter == Filter.EXCLUDE ){
+                return APPROPRIATE;
+            }
+            return INCOMPLETE;
+        }
+        public IFilterViewer createViewer( Composite parent, int style ) {
+            return new IncludeFilterViewer(parent, style);
+        }
+    }
+    
     /**
      * This is the expression we are working on here.
      * <p>
@@ -134,7 +154,13 @@ public class IncludeFilterViewer extends IFilterViewer {
      * @return true if the field is valid
      */
     public boolean validate() {
-        return true;
+        if( enableButton.getSelection() && !disableButton.getSelection()){
+            return true; // Filter.INCLUDE represented!
+        }
+        else if( !enableButton.getSelection() && disableButton.getSelection()){
+            return true; // Filter.EXLCUDE represented!
+        }
+        return false; // unable to represent current filter
     }
 
     /**
@@ -143,7 +169,12 @@ public class IncludeFilterViewer extends IFilterViewer {
      * @return Validation message
      */
     public String getValidationMessage() {
-
+        if( enableButton.getSelection() && disableButton.getSelection()){
+            return "Unable to represent "+ECQL.toCQL(filter);
+        }
+        else if( !enableButton.getSelection() && !disableButton.getSelection()){
+            return "Unable to represent "+ECQL.toCQL(filter);
+        }
         return null; // all good then
     }
     /**
@@ -159,8 +190,9 @@ public class IncludeFilterViewer extends IFilterViewer {
 
     @Override
     public ISelection getSelection() {
-        if (filter == null) return null;
-
+        if (filter == null) {
+            return null; // filter should not be null?
+        }
         IStructuredSelection selection = new StructuredSelection(filter);
         return selection;
     }
@@ -170,9 +202,14 @@ public class IncludeFilterViewer extends IFilterViewer {
         if (filter == Filter.INCLUDE) {
             enableButton.setSelection(true);
             disableButton.setSelection(false);
-        } else {
+        } else if( filter == Filter.EXCLUDE ){
             enableButton.setSelection(false);
             disableButton.setSelection(true);
+        }
+        else {
+            // we have a warning as the filter does not match our abilities
+            enableButton.setSelection(false);
+            disableButton.setSelection(false);
         }
     }
 
@@ -193,6 +230,11 @@ public class IncludeFilterViewer extends IFilterViewer {
     public void setInput( Object input ) {
         if (input instanceof Filter) {
             filter = (Filter) input;
+            refresh();
+        }
+        else {
+            // Filter input required? Should we throw an IllegalArgumentException?
+            // throw new IllegalArgumentException("Filter input required - "+input.getClass() );
         }
         refresh();
     }

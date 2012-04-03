@@ -40,6 +40,16 @@ import org.opengis.filter.expression.Expression;
  */
 public class CQLFilterViewer extends IFilterViewer {
     /**
+     * Factory used for the general purpose CQLFilterViewer.
+     * @author jody
+     * @since 1.2.0
+     */
+    public static class Factory extends FilterViewerFactory {
+        public IFilterViewer createViewer( Composite parent, int style ) {
+            return new CQLFilterViewer(parent, style);
+        }
+    }
+    /**
      * This is the expression we are working on here.
      * <p>
      * We are never going to be "null"; Expression.EXCLUDE is used to indicate an intentionally
