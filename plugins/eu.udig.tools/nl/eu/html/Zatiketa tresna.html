@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Basque User Guide : Zatiketa tresna</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Basque User Guide : Zatiketa tresna -->
+       <h1>Zatiketa tresna</h1>
+       <p> <img src="download/attachments/7962866/split_feature_mode.gif" align="absmiddle" border="0"/> Lerro batez gurutzaturiko featureak zatitzen ditu.</p>
+
+<p><em>Zatiketa tresnak</em> bi edo gehiago ataletan zatitzen ditu featureak erabiltzaileak mozketa lerro bat bezala marrazturiko lerro bat erabiliz.</p>
+
+<h2><a name="Zatiketatresna-Portaera"></a>Portaera</h2>
+
+<p><em>Zatiketa tresnak</em> jadaneko Geruzatik aukeratutako featuren gainean burutzen du. <em>Bounding Box</em> bidezko aukeraketa edo beste edozein featuren aukeraketa metodo bat erabili daiteke,  <em>Zatiketa tresna</em> erabili aurretik zatitzeko featureak mugatzeko.  Jadaneko geruzak ez badu inongo aukeraketarik, <em>Zatiketa tresnak</em> edozein Featureren gainean burutuko du jadaneko geruzan, zeinen lehen geometria <em>ebaketa lerroagatik</em> gurutzatua izango den.</p>
+
+<p><em>Zatiketa tresna</em> feature bat zatitzen doanean,  zatitzeko den featurea ezabatuko du eta zatiketatik sortuko diren hainbat zati berri besteko feature sortuko ditu.</p>
+
+<p>Gogoratu beharra dago <em>Zatiketa tresnak</em> ez duela emaitza gordetzen, nahi izanez gero eragiketa desegitea uzten bait dizu, edo aldaketak gorde barnealdeko datuen tokira uDig-ek normalean egingo lukeen bezala.</p>
+
+<h3><a name="Zatiketatresna-Ikustendenagordetzenda"></a>Ikusten dena gordetzen da</h3>
+
+<p>Ikusten dena gordetzen dela zaintzearen helburuarekin, eta ondorioz erabiltzaileak burutzen dituen ekintzekin bat izatea, <em>Zatiketa tresnarekin</em> sorturiko geometriak lehenbizi <b>maparen CRS-an</b> sortuak izango dira, eta gero barreneko CRS-ari proiektatuak izango dira gordetzeko. <br/>
+Honekin emaitzako geometriak erabiltzaileak marrazturiko lerroagatik moztuak direla ziurtatzen da, aurkakoa eginez emaitza desberdinera eraman bait dezake maparen CRS-ak eta datuak desberdinak bait dira.</p>
+
+<h2><a name="Zatiketatresna-Erabilera"></a>Erabilera</h2>
+
+<p><em>Zatiketa tresna</em> aukeratu hedatze zerrendatik <em>1 irudian</em> agertzen den bezala.</p>
+
+<p><img src="download/attachments/7962866/split_1.png" align="absmiddle" border="0"/><br clear="all" />
+<b>1 irudia. Zatiketa tresna aukeratzen.</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<p>Mozketa lerroa bezala erabiliko den lerroa marraztu, zatitu nahi diren geometriak mozten direla ziurtatuz, <em>2 irudian</em> agertzen den bezala.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962866/split_2.png' target='split_2.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962866/split_2.png", "split_2.png", "height=492,width=822,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962866/split_2.png" align="left" border="0"/></a><br clear="all" />
+<b>2 irudia. Mozketa lerroa marraztu LineString-a zatitzeko.</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<p>Klik bikoitza egin mozketa lerroaren azken erpina gehitzeko eta zatiketa eragiketari jardun dezan adierazteko.<br/>
+<em>3 irudiak</em> nola mozketa lerroagatik gurutzatua izan den jadaneko geruzako LineString-a bitan zatitua izan den erakusten du.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962866/split_3.png' target='split_3.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962866/split_3.png", "split_3.png", "height=492,width=822,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962866/split_3.png" align="left" border="0"/></a><br clear="all" />
+<b>3 irudia. Bitan zatitutako LineString-a.</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<p>Hurrengoa poligono bat nola hainbat ataletan zatitu erakusten duen beste adibide bat da.<br/>
+<em>4 irudiak</em> jadaneko geruzan aurretik aukeratutako poligono baten gainean marrazturiko <em>mozketa lerro</em> bat erakusten du. Taula Bistak aukeratutako poligonoen berezitasun datuak erakusten ditu.  </p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962866/split_4.png' target='split_4.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962866/split_4.png", "split_4.png", "height=571,width=812,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962866/split_4.png" align="left" border="0"/></a><br clear="all" />
+<b>Figura 4. Dividiendo un polígono seleccionado</b><br/>
+<b>4 irudia. Aukeratutako poligono bat zatitzen.</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<p><em>5 irudiak</em> oraintsu sortutako poligonoak erakusten ditu <em>mozketa lerroa</em> amaitu eta zatiketa eragiketarekin jardun ondoren.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962866/split_5.png' target='split_5.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962866/split_5.png", "split_5.png", "height=571,width=812,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962866/split_5.png" align="left" border="0"/></a><br clear="all" />
+<b>5 irudia. Poligono bat zatitzearen emaitza.</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<p><em>6 irudian</em> <em>Taula Bistan</em>  oraintsu sorturiko Featuren berezitasun datuak ikusi daitezke, <em>Bounding Box</em> baten bitartez emaitzako poligonoak aukeratu ondoren. Egiaztatu espero zen bezala euretariko bakoitzak Feature ID berri bat izatea, eta jatorrizko Featurearen berezitasun datu berberak eduki dezaten.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962866/split_6.png' target='split_6.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962866/split_6.png", "split_6.png", "height=571,width=812,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962866/split_6.png" align="left" border="0"/></a><br clear="all" />
+<b>6 irudia. Gorde gabeko feature berriak sortuak.</b></p>
+
+
+<small>(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.</small>
+    </body>
+</html>
+

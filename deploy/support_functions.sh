@@ -23,10 +23,12 @@ function assemble() {
             echo "Extracting ${TARGET}/udig-${VERSION}.${EXT}.zip"
             unzip -q -d ${BUILD}/${PLATFORM} ${TARGET}/udig-${VERSION}.${EXT}.zip
 
-            echo "Preparing ${BUILD}/${PLATFORM}"
+            echo "Preparing ${BUILD}/${PLATFORM} with ${JRE}/${PLATFORM_JRE}"
 
             extract_jre
-
+            
+            
+            echo "Preparing ${BUILD}/${PLATFORM} with start up scripts and html files"
             prepare_resources
 
             echo "Assemble ${BUILD}/udig-${VERSION}.${EXT}.zip"
@@ -44,10 +46,11 @@ function prepare_resources () {
     for opt in `find ../plugins/ -name .options` ; do cat $opt >> ${BUILD}/${PLATFORM}/udig/debug-options ; done
     cp ${BASE}/udig-1.3.x.html ${BUILD}/${PLATFORM}/udig/udig-${VERSION}.html
     cat ../plugins/net.refractions.udig.libs/.options >> ${BUILD}/${PLATFORM}/udig/.options
+    mkdir -p ${BUILD}/${PLATFORM}/udig/dropins
     if [[ $PLATFORM == linux* ]] ; then
         cp udig.sh ${BUILD}/${PLATFORM}/udig
         cp udig-clean.sh ${BUILD}/${PLATFORM}/udig
-        cp udig-debug.sh ${BUILD}/${PLATFORM}/udig        
+        cp udig-debug.sh ${BUILD}/${PLATFORM}/udig
     fi
     if [[ $PLATFORM == win* ]] ; then
         cp *.bat ${BUILD}/${PLATFORM}/udig
@@ -107,14 +110,21 @@ function windows_installer () {
 function extract_jre () {
 
     if [[ $PLATFORM == linux* ]] ; then
+        echo "Looking for ${JRE}/${PLATFORM_JRE}.tar.gz"
         if [ -f ${JRE}/${PLATFORM_JRE}.tar.gz ] ; then
             echo "Extracting ${JRE}/${PLATFORM_JRE}.tar.gz"
             tar xzf ${JRE}/${PLATFORM_JRE}.tar.gz -C ${BUILD}/${PLATFORM}/udig
+        else
+            echo "${JRE}/${PLATFORM_JRE}.tar.gz not found - user will require their own JRE"
+            exit
         fi
     else
+        echo "Looking for ${JRE}/${PLATFORM_JRE}.zip"
         if [ -f ${JRE}/${PLATFORM_JRE}.zip ] ; then
             echo "Extracting ${JRE}/${PLATFORM_JRE}.zip ..."
             unzip -q -d ${BUILD}/${PLATFORM}/udig ${JRE}/${PLATFORM_JRE}.zip
+        else
+            echo "${JRE}/${PLATFORM_JRE}.zip not found - user will require their own JRE"
         fi
     fi
 }

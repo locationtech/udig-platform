@@ -30,3 +30,6 @@ export JRE_LIN64=jre1.6.0_25.lin64_gdal_ecw
 echo "Release Version:  ${VERSION}"
 echo "Available for release:"
 ls ${TARGET}
+
+echo "Available JREs:"
+ls ${JRE}
