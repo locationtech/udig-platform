@@ -13,10 +13,11 @@ import org.opengis.feature.simple.SimpleFeature;
 public class CountryView extends ViewPart implements IUDIGView {
 
     // CountryPanel panel = new CountryPanel();
-    CountryPanelForm panel = new CountryPanelForm();
+    // CountryPanelForm panel = new CountryPanelForm();
+    CountryPanelFormCellEditor panel = new CountryPanelFormCellEditor();
     FormToolkit toolkit;
     private IToolContext context;
-    
+
     public void createPartControl( Composite parent ) {
         // panel.createControl(parent);
         this.toolkit = new FormToolkit(parent.getDisplay());
@@ -27,7 +28,7 @@ public class CountryView extends ViewPart implements IUDIGView {
     public void init( IViewSite site ) throws PartInitException {
         super.init(site);
     }
-    
+
     public void setFocus() {
         panel.setFocus();
     }
@@ -43,5 +44,5 @@ public class CountryView extends ViewPart implements IUDIGView {
     public void editFeatureChanged( SimpleFeature feature ) {
         panel.setEditFeature(feature, context);
     }
-    
+
 }
