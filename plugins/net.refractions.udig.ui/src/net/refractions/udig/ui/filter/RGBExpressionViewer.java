@@ -15,9 +15,11 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.text.cql2.CQL;
+import org.geotools.util.Converters;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Literal;
 
 /**
  * ExpressionViewer with Slider controls to allow the user to change the colour attribute of an
@@ -35,7 +37,14 @@ public class RGBExpressionViewer extends IExpressionViewer {
     public static class Factory extends ExpressionViewerFactory {
         @Override
         public int appropriate( SimpleFeatureType schema, Expression expression ) {
-            return COMPLETE;
+            if( expression instanceof Literal){
+                Literal literal = (Literal) expression;
+                Color color = literal.evaluate(null,Color.class);
+                if( color != null ){
+                    return APPROPRIATE;
+                }
+            }
+            return INCOMPLETE;
         }
         @Override
         public IExpressionViewer createViewer( Composite parent, int style ) {
