@@ -34,7 +34,7 @@ public class IncludeFilterViewer extends IFilterViewer {
         @Override
         public int appropriate( SimpleFeatureType schema, Filter filter ) {
             // we are general purpose and will ignore schema
-            if( filter == Filter.EXCLUDE || filter == Filter.EXCLUDE ){
+            if( filter == Filter.EXCLUDE || filter == Filter.INCLUDE ){
                 return APPROPRIATE;
             }
             return INCOMPLETE;
