@@ -27,7 +27,21 @@ import org.opengis.filter.expression.Expression;
  * @since 1.3.0
  */
 public class RGBExpressionViewer extends IExpressionViewer {
-
+    /**
+     * Factory used for the general purpose DefaultExpressionViewer.
+     * @author jody
+     * @since 1.2.0
+     */
+    public static class Factory extends ExpressionViewerFactory {
+        @Override
+        public int appropriate( SimpleFeatureType schema, Expression expression ) {
+            return COMPLETE;
+        }
+        @Override
+        public IExpressionViewer createViewer( Composite parent, int style ) {
+            return new RGBExpressionViewer(parent, style);
+        }
+    }
     /**
      * This is the expression we are working on here.
      * <p>

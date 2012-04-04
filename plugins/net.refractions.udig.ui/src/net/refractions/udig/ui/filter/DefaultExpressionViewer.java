@@ -51,6 +51,21 @@ import org.opengis.filter.expression.Expression;
  */
 public class DefaultExpressionViewer extends IExpressionViewer {
     /**
+     * Factory used for the general purpose DefaultExpressionViewer.
+     * @author jody
+     * @since 1.2.0
+     */
+    public static class Factory extends ExpressionViewerFactory {
+        @Override
+        public int appropriate( SimpleFeatureType schema, Expression expression ) {
+            return COMPLETE;
+        }
+        @Override
+        public IExpressionViewer createViewer( Composite parent, int style ) {
+            return new DefaultExpressionViewer(parent, style);
+        }
+    }
+    /**
      * This is the expression we are working on here.
      * <p>
      * We are never going to be "null"; Expression.NIL is used to indicate an intentionally empty
