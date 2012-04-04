@@ -28,6 +28,9 @@ public class IncludeFilterViewer extends IFilterViewer {
      * @since 1.2.0
      */
     public static class Factory extends FilterViewerFactory {
+        /**
+         * Only {@link FilterViewerFactory#APPROPRIATE} for INCLUDE and EXCLUDE.
+         */
         @Override
         public int appropriate( SimpleFeatureType schema, Filter filter ) {
             // we are general purpose and will ignore schema
@@ -36,6 +39,7 @@ public class IncludeFilterViewer extends IFilterViewer {
             }
             return INCOMPLETE;
         }
+        @Override
         public IFilterViewer createViewer( Composite parent, int style ) {
             return new IncludeFilterViewer(parent, style);
         }

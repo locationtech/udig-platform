@@ -68,6 +68,16 @@ import org.opengis.filter.expression.Expression;
  * @since 1.2.0
  */
 public class DefaultFilterViewer extends IFilterViewer {
+    public static class Factory extends FilterViewerFactory {
+        @Override
+        public int appropriate( SimpleFeatureType schema, Filter filter ) {
+            return COMPLETE;
+        }
+        @Override
+        public IFilterViewer createViewer( Composite parent, int style ) {
+            return new DefaultFilterViewer(parent, style);
+        }
+    }
     /**
      * This is the expression we are working on here.
      * <p>

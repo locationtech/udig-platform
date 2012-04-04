@@ -34,7 +34,9 @@ import org.opengis.filter.expression.Expression;
 /**
  * A JFace Style Filter Viewer that can be used to build a Filter. Has both a text box for manually
  * entering a Filter and a series of combo boxes to allow the user to build their own filter
- * 
+ * <p>
+ * This is a slightly more friendly version of {@link DefaultFilterViewer} (which only has a simple text box).
+ * </p>
  * @author Scott Henderson
  * @since 1.3.0
  */
@@ -45,6 +47,13 @@ public class CQLFilterViewer extends IFilterViewer {
      * @since 1.2.0
      */
     public static class Factory extends FilterViewerFactory {
+        @Override
+        /**
+         * Slightly prefer CQLFilterViewer to DefaultFilterViewer.
+         */
+        public int appropriate( SimpleFeatureType schema, Filter filter ) {
+            return COMPLETE+1;
+        }
         public IFilterViewer createViewer( Composite parent, int style ) {
             return new CQLFilterViewer(parent, style);
         }
