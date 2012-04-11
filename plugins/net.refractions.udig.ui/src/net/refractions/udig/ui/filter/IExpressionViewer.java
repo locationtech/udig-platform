@@ -27,6 +27,16 @@ public abstract class IExpressionViewer extends Viewer {
     public static String ELEMENT = Parameter.ELEMENT;
 
     /**
+     * Indicates this expression is required to be non null
+     */
+    protected boolean isRequired;
+    
+    /**
+     * FeatureType we are working against if known.
+     */
+    protected SimpleFeatureType schema;
+
+    /**
      * Default constructor. Calls <code>IExpressionViewer( Composite parent, SWT.SINGLE )</code>
      */
     public IExpressionViewer( Composite parent ) {
@@ -55,12 +65,19 @@ public abstract class IExpressionViewer extends Viewer {
      * 
      * @param isRequired true if this is a required field
      */
-    public abstract void setRequired( boolean required );
+    public void setRequired( boolean required ){
+        this.isRequired = required;
+    }
 
     /**
+     * The isRequired flag will be used to determine the default decoration to show (if there is no
+     * warning or error to take precedence).
+     * <p>
      * @return true if this is a required field
      */
-    public abstract boolean isRequired();
+    public boolean isRequired(){
+        return isRequired;
+    }
 
     /**
      * Used to check for any validation messages (such as required field etc...)
@@ -85,7 +102,7 @@ public abstract class IExpressionViewer extends Viewer {
     public abstract ISelection getSelection();
 
     /**
-     * Refreshes this viewer completely with information freshly obtained from this viewer's model.
+     * Refreshes this viewer completely with information freshly obtained from this viewer's input (ie an Expression)..
      */
     public abstract void refresh();
 
@@ -141,14 +158,18 @@ public abstract class IExpressionViewer extends Viewer {
      * 
      * @param type
      */
-    public abstract void setSchema( SimpleFeatureType schema );
+    public void setSchema( SimpleFeatureType schema ){
+        this.schema = schema;
+    }
 
     /**
      * Feature Type used by the ExpressionViewer
      * 
      * @param type
      */
-    public abstract SimpleFeatureType getSchema();
+    public SimpleFeatureType getSchema(){
+        return schema;
+    }
 
     public abstract void setExpected( Class< ? > binding );
 
