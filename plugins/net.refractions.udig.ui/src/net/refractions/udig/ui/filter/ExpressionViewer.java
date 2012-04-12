@@ -55,19 +55,19 @@ public class ExpressionViewer extends IExpressionViewer {
 
     private Label label;
 
-    public ExpressionViewer( Composite parent ) {
+    public ExpressionViewer(Composite parent) {
         this(parent, SWT.DEFAULT);
     }
 
-    public ExpressionViewer( Composite parent, int style ) {
+    public ExpressionViewer(Composite parent, int style) {
         super(parent, style);
         control = new Composite(parent, SWT.DEFAULT);
 
         choice = new ComboViewer(control);
         choice.setContentProvider(ArrayContentProvider.getInstance());
-        choice.setLabelProvider(new LabelProvider(){
+        choice.setLabelProvider(new LabelProvider() {
             @Override
-            public String getText( Object element ) {
+            public String getText(Object element) {
                 if (element instanceof ExpressionViewerFactory) {
                     ExpressionViewerFactory factory = (ExpressionViewerFactory) element;
                     return factory.getDisplayName();
@@ -80,72 +80,72 @@ public class ExpressionViewer extends IExpressionViewer {
         ExpressionViewerFactory currentFactory = factories.get(0);
         choice.setSelection(new StructuredSelection(currentFactory));
 
-        flip = new PageBook(control,  SWT.DEFAULT );
-        
+        flip = new PageBook(control, SWT.DEFAULT);
+
         label = new Label(flip, SWT.DEFAULT);
         label.setText("--");
-        
+
         // use SWT.DEFALT as we are expecting to be "inline" ...
         delegate = currentFactory.createViewer(flip, SWT.DEFAULT);
-        
-        pages = new HashMap<ExpressionViewerFactory,IExpressionViewer>();
-        pages.put( currentFactory, delegate );
+
+        pages = new HashMap<ExpressionViewerFactory, IExpressionViewer>();
+        pages.put(currentFactory, delegate);
     }
 
     private synchronized static List<ExpressionViewerFactory> factories() {
         if (list == null) {
-//            list = new ArrayList<ExpressionViewerFactory>();
-//            list.add(new DefaultExpressionViewer.Factory());
+            // list = new ArrayList<ExpressionViewerFactory>();
+            // list.add(new DefaultExpressionViewer.Factory());
             IExtensionRegistry registery = Platform.getExtensionRegistry();
-            IConfigurationElement[] stuff = registery.getConfigurationElementsFor(FILTER_VIEWER_EXTENSION);
-            for( IConfigurationElement config : stuff ){
-                if( "expressionViewer".equals( config.getName() )){
+            IConfigurationElement[] stuff = registery
+                    .getConfigurationElementsFor(FILTER_VIEWER_EXTENSION);
+            for (IConfigurationElement config : stuff) {
+                if ("expressionViewer".equals(config.getName())) {
                     try {
                         ExpressionViewerFactory factory;
-                        factory = (ExpressionViewerFactory) config.createExecutableExtension("class");
-                        factory.init( config );
-                    
-                        list.add( factory );
+                        factory = (ExpressionViewerFactory) config
+                                .createExecutableExtension("class");
+                        factory.init(config);
+
+                        list.add(factory);
                     } catch (CoreException e) {
                         String pluginId = config.getContributor().getName();
-                        IStatus status = new Status(IStatus.WARNING, pluginId, e.getMessage(), e );
-                        UiPlugin.log( status );
+                        IStatus status = new Status(IStatus.WARNING, pluginId, e.getMessage(), e);
+                        UiPlugin.log(status);
                     }
-                }
-                else {
+                } else {
                     // skip as it is probably a filterViewer element
                 }
             }
         }
         return list;
     }
+
     /** Called by the combo box when the user has changed what factory they want to use */
-    protected void changeDelegate( ExpressionViewerFactory factory ){
+    protected void changeDelegate(ExpressionViewerFactory factory) {
         IExpressionViewer page;
-        if( pages.containsKey(factory)){
+        if (pages.containsKey(factory)) {
             page = pages.get(factory);
+        } else {
+            page = factory.createViewer(control, SWT.DEFAULT);
         }
-        else {
-            page = factory.createViewer( control, SWT.DEFAULT );
-        }
-        if( delegate == page ){
+        if (delegate == page) {
             // no change what are you doing!
             return;
         }
-        if( delegate != null ){
+        if (delegate != null) {
             // stop listening!
         }
-        if( page != null ){
+        if (page != null) {
             delegate = page;
             // hook up new delegate!
-            delegate.setSchema( schema );
-            flip.showPage( delegate.getControl() );
-        }
-        else {
-            flip.showPage( label );
+            delegate.setSchema(schema);
+            flip.showPage(delegate.getControl());
+        } else {
+            flip.showPage(label);
         }
     }
-    
+
     public void feedback() {
         delegate.feedback();
     }
@@ -162,15 +162,15 @@ public class ExpressionViewer extends IExpressionViewer {
         return delegate.getSelection();
     }
 
-    public void addHelpListener( HelpListener listener ) {
+    public void addHelpListener(HelpListener listener) {
         delegate.addHelpListener(listener);
     }
 
-    public void addSelectionChangedListener( ISelectionChangedListener listener ) {
+    public void addSelectionChangedListener(ISelectionChangedListener listener) {
         delegate.addSelectionChangedListener(listener);
     }
 
-    public boolean equals( Object obj ) {
+    public boolean equals(Object obj) {
         return delegate.equals(obj);
     }
 
@@ -178,11 +178,11 @@ public class ExpressionViewer extends IExpressionViewer {
         return control;
     }
 
-    public void feedback( String warning ) {
+    public void feedback(String warning) {
         delegate.feedback(warning);
     }
 
-    public void feedback( String exception, Exception eek ) {
+    public void feedback(String exception, Exception eek) {
         delegate.feedback(exception, eek);
     }
 
@@ -190,11 +190,11 @@ public class ExpressionViewer extends IExpressionViewer {
         return delegate.getSchema();
     }
 
-    public Class< ? > getExpected() {
+    public Class<?> getExpected() {
         return delegate.getExpected();
     }
 
-    public Object getData( String key ) {
+    public Object getData(String key) {
         return delegate.getData(key);
     }
 
@@ -202,7 +202,7 @@ public class ExpressionViewer extends IExpressionViewer {
         return delegate.hashCode();
     }
 
-    public void setRequired( boolean required ) {
+    public void setRequired(boolean required) {
         delegate.setRequired(required);
     }
 
@@ -214,44 +214,44 @@ public class ExpressionViewer extends IExpressionViewer {
         delegate.refresh();
     }
 
-    public void setInput( Object input ) {
+    public void setInput(Object input) {
         delegate.setInput(input);
     }
 
-    public void setSelection( ISelection selection, boolean reveal ) {
+    public void setSelection(ISelection selection, boolean reveal) {
         delegate.setSelection(selection, reveal);
     }
 
-    public void setSchema( SimpleFeatureType schema ) {
+    public void setSchema(SimpleFeatureType schema) {
         this.schema = schema;
         delegate.setSchema(schema);
     }
 
-    public void setExpected( Class< ? > binding ) {
+    public void setExpected(Class<?> binding) {
         delegate.setExpected(binding);
     }
 
-    public void removeHelpListener( HelpListener listener ) {
+    public void removeHelpListener(HelpListener listener) {
         delegate.removeHelpListener(listener);
     }
 
-    public void removeSelectionChangedListener( ISelectionChangedListener listener ) {
+    public void removeSelectionChangedListener(ISelectionChangedListener listener) {
         delegate.removeSelectionChangedListener(listener);
     }
 
-    public Item scrollDown( int x, int y ) {
+    public Item scrollDown(int x, int y) {
         return delegate.scrollDown(x, y);
     }
 
-    public Item scrollUp( int x, int y ) {
+    public Item scrollUp(int x, int y) {
         return delegate.scrollUp(x, y);
     }
 
-    public void setData( String key, Object value ) {
+    public void setData(String key, Object value) {
         delegate.setData(key, value);
     }
 
-    public void setSelection( ISelection selection ) {
+    public void setSelection(ISelection selection) {
         delegate.setSelection(selection);
     }
 

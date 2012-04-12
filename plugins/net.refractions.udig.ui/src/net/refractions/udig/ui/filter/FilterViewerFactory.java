@@ -67,6 +67,7 @@ public abstract class FilterViewerFactory {
      * @see FilterViewerFactory#appropriate
      */
     public final int APPROPRIATE = 50;
+
     /**
      * Moving beyond general purpose we have a viewer that is able to supply some sensible defaults
      * based on what the user is up to.
@@ -103,7 +104,7 @@ public abstract class FilterViewerFactory {
      * 
      * @return
      */
-    void init( IConfigurationElement config ) {
+    void init(IConfigurationElement config) {
         this.config = config;
     }
 
@@ -115,7 +116,7 @@ public abstract class FilterViewerFactory {
     /**
      * Expected Filter or {@link Filter} for a general purpose viewer.
      */
-    public Class< ? > getBinding() {
+    public Class<?> getBinding() {
         return Filter.class;
     }
 
@@ -132,12 +133,14 @@ public abstract class FilterViewerFactory {
      * <li>{@link #PERFECT}</li>
      * </ul>
      * 
-     * @param schema FeatureType being considered (may be ignored by general purpose FilterViewers capable of working with any content)
+     * @param schema FeatureType being considered (may be ignored by general purpose FilterViewers
+     *        capable of working with any content)
      * @param filter Existing filter provided by user, may be null
      */
-    public int appropriate( SimpleFeatureType schema, Filter filter ) {
+    public int appropriate(SimpleFeatureType schema, Filter filter) {
         return INCOMPLETE; // default to listing the viewer but not recomending it
     }
+
     /**
      * Create the requested IFilterViewer using the supplied composite as a parent.
      * <p>
@@ -149,12 +152,12 @@ public abstract class FilterViewerFactory {
      * </ul>
      * <p>
      * This method simply creates the viewer; client code is expected to call
-     * {@link Viewer#setInput(filter )} prior to use. For more information please see the
-     * JFace {@link Viewer} class.
+     * {@link Viewer#setInput(filter )} prior to use. For more information please see the JFace
+     * {@link Viewer} class.
      * 
      * @param composite
      * @param style
      * @return requested viewer
      */
-    public abstract IFilterViewer createViewer( Composite composite, int style );
+    public abstract IFilterViewer createViewer(Composite composite, int style);
 }

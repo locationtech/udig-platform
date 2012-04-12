@@ -24,7 +24,7 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
         proposals = new TreeSet<String>();
         FunctionFinder functionFinder = new FunctionFinder(null);
 
-        for( FunctionName function : functionFinder.getAllFunctionDescriptions() ) {
+        for (FunctionName function : functionFinder.getAllFunctionDescriptions()) {
             proposals.add(function.getName().toLowerCase());
         }
     }
@@ -60,7 +60,7 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
      * @return the array of Objects that represent valid proposals for the field given its current
      *         content.
      */
-    public IContentProposal[] getProposals( String contents, int position ) {
+    public IContentProposal[] getProposals(String contents, int position) {
         String word = contents.substring(0, position);
         int start = contents.lastIndexOf(" ", position);
         if (start != -1) {
@@ -74,14 +74,14 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
         if (filterProposals) {
             ArrayList<IContentProposal> list = new ArrayList<IContentProposal>();
             if (extras != null) {
-                for( String extra : extras ) {
+                for (String extra : extras) {
                     if (extra.length() >= word.length()
                             && extra.substring(0, word.length()).equalsIgnoreCase(word)) {
                         list.add(makeContentProposal(extra));
                     }
                 }
             }
-            for( String proposal : proposals ) {
+            for (String proposal : proposals) {
                 if (proposal.length() >= word.length()
                         && proposal.substring(0, word.length()).equalsIgnoreCase(word)) {
                     list.add(makeContentProposal(proposal));
@@ -95,12 +95,12 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
                 contentProposals = new IContentProposal[LENGTH];
                 int i = 0;
                 if (extras != null && !extras.isEmpty()) {
-                    for( String extra : extras ) {
+                    for (String extra : extras) {
                         contentProposals[i] = makeContentProposal(extra);
                         i++;
                     }
                 }
-                for( String proposal : proposals ) {
+                for (String proposal : proposals) {
                     contentProposals[i] = makeContentProposal(proposal);
                     i++;
                 }
@@ -108,6 +108,7 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
             return contentProposals;
         }
     }
+
     /**
      * Set the boolean that controls whether proposals are filtered according to the current field
      * content.
@@ -117,7 +118,7 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
      *        proposals should remain the same, ignoring the field content.
      * @since 3.3
      */
-    public void setFiltering( boolean filterProposals ) {
+    public void setFiltering(boolean filterProposals) {
         this.filterProposals = filterProposals;
         // Clear any cached proposals.
         contentProposals = null;
@@ -126,8 +127,8 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
     /*
      * Make an IContentProposal for showing the specified String.
      */
-    private IContentProposal makeContentProposal( final String proposal ) {
-        return new IContentProposal(){
+    private IContentProposal makeContentProposal(final String proposal) {
+        return new IContentProposal() {
             public String getContent() {
                 return proposal;
             }
@@ -146,7 +147,7 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
         };
     }
 
-    public void setExtra( Set<String> names ) {
+    public void setExtra(Set<String> names) {
         this.extras = names;
         this.contentProposals = null;
     }

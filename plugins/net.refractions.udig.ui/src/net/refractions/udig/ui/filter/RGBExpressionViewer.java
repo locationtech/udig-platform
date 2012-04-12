@@ -2,6 +2,7 @@ package net.refractions.udig.ui.filter;
 
 import java.awt.Color;
 
+import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -29,28 +30,32 @@ import org.opengis.filter.expression.Literal;
  * @since 1.3.0
  */
 public class RGBExpressionViewer extends IExpressionViewer {
+
     /**
      * Factory used for the general purpose DefaultExpressionViewer.
+     * 
      * @author jody
      * @since 1.2.0
      */
     public static class Factory extends ExpressionViewerFactory {
         @Override
-        public int appropriate( SimpleFeatureType schema, Expression expression ) {
-            if( expression instanceof Literal){
+        public int appropriate(SimpleFeatureType schema, Expression expression) {
+            if (expression instanceof Literal) {
                 Literal literal = (Literal) expression;
-                Color color = literal.evaluate(null,Color.class);
-                if( color != null ){
+                Color color = literal.evaluate(null, Color.class);
+                if (color != null) {
                     return APPROPRIATE;
                 }
             }
             return INCOMPLETE;
         }
+
         @Override
-        public IExpressionViewer createViewer( Composite parent, int style ) {
+        public IExpressionViewer createViewer(Composite parent, int style) {
             return new RGBExpressionViewer(parent, style);
         }
     }
+
     /**
      * This is the expression we are working on here.
      * <p>
@@ -61,50 +66,68 @@ public class RGBExpressionViewer extends IExpressionViewer {
 
     Composite control;
 
+    private ControlDecoration feedback;
+
     protected Scale red;
+
+    protected Text redVal;
+
     protected Scale blue;
+
+    protected Text blueVal;
+
     protected Scale green;
 
-    protected Text hex;
-    protected Text redVal;
-    protected Text blueVal;
     protected Text greenVal;
 
+    protected Text hex;
+
     boolean isRequired;
+
     private SimpleFeatureType type;
 
-    private SelectionListener listener = new SelectionListener(){
-
+    private SelectionListener listener = new SelectionListener() {
         @Override
-        public void widgetSelected( SelectionEvent e ) {
+        public void widgetSelected(SelectionEvent e) {
             validate();
         }
 
         @Override
-        public void widgetDefaultSelected( SelectionEvent e ) {
+        public void widgetDefaultSelected(SelectionEvent e) {
 
         }
     };
 
-    public RGBExpressionViewer( Composite parent, int style ) {
+    private Class<?> expected;
+
+    protected void listen(boolean listen) {
+        if (listen) {
+            red.addSelectionListener(listener);
+            green.addSelectionListener(listener);
+            blue.addSelectionListener(listener);
+        } else {
+            red.removeSelectionListener(listener);
+            green.removeSelectionListener(listener);
+            blue.removeSelectionListener(listener);
+        }
+    }
+
+    public RGBExpressionViewer(Composite parent, int style) {
         super(parent);
         control = new Composite(parent, style);
 
         red = new Scale(control, SWT.NONE);
         red.setBounds(71, 8, 170, 38);
-        red.addSelectionListener(listener);
         red.setMaximum(MAX);
         red.setMinimum(MIN);
 
         green = new Scale(control, SWT.NONE);
         green.setBounds(71, 52, 170, 38);
-        green.addSelectionListener(listener);
         green.setMaximum(MAX);
         green.setMinimum(MIN);
 
         blue = new Scale(control, SWT.NONE);
         blue.setBounds(71, 96, 170, 38);
-        blue.addSelectionListener(listener);
         blue.setMaximum(MAX);
         blue.setMinimum(MIN);
 
@@ -127,6 +150,8 @@ public class RGBExpressionViewer extends IExpressionViewer {
         lblHex.setText("Hex");
         lblHex.setBounds(10, 154, 55, 15);
 
+        feedback = new ControlDecoration(hex, SWT.TOP | SWT.LEFT);
+
         redVal = new Text(control, SWT.BORDER);
         redVal.setBounds(247, 17, 40, 21);
 
@@ -135,6 +160,8 @@ public class RGBExpressionViewer extends IExpressionViewer {
 
         blueVal = new Text(control, SWT.BORDER);
         blueVal.setBounds(247, 105, 40, 21);
+
+        listen(true);
     }
 
     @Override
@@ -152,7 +179,7 @@ public class RGBExpressionViewer extends IExpressionViewer {
      * 
      * @param isRequired true if this is a required field
      */
-    public void setRequired( boolean isRequired ) {
+    public void setRequired(boolean isRequired) {
         this.isRequired = isRequired;
     }
 
@@ -162,7 +189,6 @@ public class RGBExpressionViewer extends IExpressionViewer {
     }
 
     public boolean validate() {
-
         int r = red.getSelection();
         int g = green.getSelection();
         int b = blue.getSelection();
@@ -183,7 +209,6 @@ public class RGBExpressionViewer extends IExpressionViewer {
 
     @Override
     public String getValidationMessage() {
-
         return null;
     }
 
@@ -194,7 +219,8 @@ public class RGBExpressionViewer extends IExpressionViewer {
 
     @Override
     public ISelection getSelection() {
-        if (expr == null) return null;
+        if (expr == null)
+            return null;
 
         IStructuredSelection selection = new StructuredSelection(expr);
         return selection;
@@ -203,18 +229,45 @@ public class RGBExpressionViewer extends IExpressionViewer {
     @Override
     public void refresh() {
         if (hex != null && !hex.isDisposed()) {
-            hex.getDisplay().asyncExec(new Runnable(){
+            hex.getDisplay().asyncExec(new Runnable() {
                 public void run() {
-                    if (hex == null || hex.isDisposed()) return;
-                    String cql = CQL.toCQL(expr);
-                    hex.setText(cql);
+                    if (hex == null || hex.isDisposed()) {
+                        return; // must of been disposed while we are in the queue
+                    }
+                    try {
+                        listen(false); // don't listen while updating controls
+                        if (expr instanceof Literal) {
+                            Literal literal = (Literal) expr;
+                            Color color = literal.evaluate(null, Color.class);
+                            if (color != null) {
+                                red.setSelection(color.getRed());
+                                redVal.setText(String.valueOf(color.getRed()));
+                                green.setSelection(color.getGreen());
+                                greenVal.setText(String.valueOf(color.getGreen()));
+                                blue.setSelection(color.getBlue());
+                                blueVal.setText(String.valueOf(color.getBlue()));
+                                String text = Converters.convert(color, String.class);
+                                if (text != null) {
+                                    hex.setText(text);
+                                } else {
+                                    hex.setText(Integer.toHexString(color.getRGB()));
+                                }
+                                return; // literal color displayed!
+                            }
+                        }
+                        String cql = CQL.toCQL(expr);
+                        hex.setText(cql);
+                        feedback("Used to define a color");
+                    } finally {
+                        listen(true);
+                    }
                 }
             });
         }
     }
 
     @Override
-    public void setInput( Object input ) {
+    public void setInput(Object input) {
         if (input instanceof Expression) {
             expr = (Expression) input;
             refresh();
@@ -222,49 +275,64 @@ public class RGBExpressionViewer extends IExpressionViewer {
     }
 
     @Override
-    public void setSelection( ISelection selection, boolean reveal ) {
-        // TODO Auto-generated method stub
+    public void setSelection(ISelection selection, boolean reveal) {
+        if (selection instanceof StructuredSelection) {
+            StructuredSelection structuredSelection = (StructuredSelection) selection;
+            Object value = structuredSelection.getFirstElement();
 
+            if (value instanceof Expression) {
+                setInput((Expression) value);
+            }
+        }
     }
 
     @Override
     public void feedback() {
-        // TODO Auto-generated method stub
-
+        feedback.hide();
     }
 
     @Override
-    public void feedback( String warning ) {
-        // TODO Auto-generated method stub
-
+    public void feedback(String warning) {
+        if (feedback != null) {
+            feedback.setDescriptionText(warning);
+            feedback.show();
+        }
+        if (hex != null && !hex.isDisposed()) {
+            hex.setToolTipText(warning);
+        }
     }
 
     @Override
-    public void feedback( String exception, Exception eek ) {
-        // TODO Auto-generated method stub
-
+    public void feedback(String warning, Exception eek) {
+        if (feedback != null) {
+            feedback.setDescriptionText(warning);
+            feedback.show();
+        }
+        if (hex != null && !hex.isDisposed()) {
+            hex.setToolTipText(warning + ":" + eek);
+        }
     }
 
     @Override
-    public void setSchema( SimpleFeatureType schema ) {
+    public void setSchema(SimpleFeatureType schema) {
         this.type = schema;
     }
 
     @Override
     public SimpleFeatureType getSchema() {
-
         return type;
     }
 
     @Override
-    public void setExpected( Class< ? > binding ) {
-        // TODO Auto-generated method stub
-
+    public void setExpected(Class<?> binding) {
+        if (!Color.class.isAssignableFrom(binding)) {
+            feedback("Used to define color");
+        }
+        this.expected = binding;
     }
 
     @Override
-    public Class< ? > getExpected() {
-        // TODO Auto-generated method stub
-        return null;
+    public Class<?> getExpected() {
+        return expected;
     }
 }

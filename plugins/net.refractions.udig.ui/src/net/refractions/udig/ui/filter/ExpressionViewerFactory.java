@@ -60,6 +60,7 @@ public abstract class ExpressionViewerFactory {
      * @see ExpressionViewerFactory#appropriate
      */
     public final int APPROPRIATE = 50;
+
     /**
      * Moving beyond general purpose we have a viewer that is able to supply some sensible defaults
      * based on what the user is up to.
@@ -90,7 +91,7 @@ public abstract class ExpressionViewerFactory {
      * 
      * @return
      */
-    void init( IConfigurationElement config ) {
+    void init(IConfigurationElement config) {
         this.config = config;
     }
 
@@ -103,7 +104,7 @@ public abstract class ExpressionViewerFactory {
      * Expected Expression value example using either Literal (Color, Integer) or Expression class
      * such as PropertyName.
      */
-    Class< ? > getBinding() {
+    Class<?> getBinding() {
         return Object.class;
     }
 
@@ -124,9 +125,10 @@ public abstract class ExpressionViewerFactory {
      *        ExpressionViewer capable of working with any content)
      * @param expr Existing expression provided by user, may be null
      */
-    public int appropriate( SimpleFeatureType schema, Expression expr ){
+    public int appropriate(SimpleFeatureType schema, Expression expr) {
         return INCOMPLETE; // default to listing the viewer but not recomending it
     }
+
     /**
      * Create the requested {@link IExpressionViewer} using the supplied composite as a parent.
      * <p>
@@ -138,12 +140,12 @@ public abstract class ExpressionViewerFactory {
      * </ul>
      * <p>
      * This method simply creates the viewer; client code is expected to call
-     * {@link Viewer#setInput(filter )} prior to use. For more information please see the
-     * JFace {@link Viewer} class.
+     * {@link Viewer#setInput(filter )} prior to use. For more information please see the JFace
+     * {@link Viewer} class.
      * 
      * @param composite
      * @param style
      * @return requested viewer
      */
-    public abstract IExpressionViewer createViewer( Composite composite, int style );
+    public abstract IExpressionViewer createViewer(Composite composite, int style);
 }

@@ -24,6 +24,7 @@ import org.opengis.filter.Filter;
 public class IncludeFilterViewer extends IFilterViewer {
     /**
      * Factory used for the general purpose CQLFilterViewer.
+     * 
      * @author jody
      * @since 1.2.0
      */
@@ -32,19 +33,20 @@ public class IncludeFilterViewer extends IFilterViewer {
          * Only {@link FilterViewerFactory#APPROPRIATE} for INCLUDE and EXCLUDE.
          */
         @Override
-        public int appropriate( SimpleFeatureType schema, Filter filter ) {
+        public int appropriate(SimpleFeatureType schema, Filter filter) {
             // we are general purpose and will ignore schema
-            if( filter == Filter.EXCLUDE || filter == Filter.INCLUDE ){
+            if (filter == Filter.EXCLUDE || filter == Filter.INCLUDE) {
                 return APPROPRIATE;
             }
             return INCOMPLETE;
         }
+
         @Override
-        public IFilterViewer createViewer( Composite parent, int style ) {
+        public IFilterViewer createViewer(Composite parent, int style) {
             return new IncludeFilterViewer(parent, style);
         }
     }
-    
+
     /**
      * This is the expression we are working on here.
      * <p>
@@ -64,9 +66,10 @@ public class IncludeFilterViewer extends IFilterViewer {
      */
     private boolean isRequired;
 
-    public IncludeFilterViewer( Composite parent ) {
+    public IncludeFilterViewer(Composite parent) {
         this(parent, SWT.SINGLE);
     }
+
     /**
      * Creates an ExpressionViewer using the provided style.
      * <ul>
@@ -84,7 +87,7 @@ public class IncludeFilterViewer extends IFilterViewer {
      * @param parent
      * @param none
      */
-    public IncludeFilterViewer( Composite parent, int style ) {
+    public IncludeFilterViewer(Composite parent, int style) {
         super(parent, style);
         control = new Composite(parent, style);
 
@@ -93,9 +96,9 @@ public class IncludeFilterViewer extends IFilterViewer {
         filterLabel.setText("Filter:");
 
         enableButton = new Button(control, SWT.RADIO);
-        enableButton.addSelectionListener(new SelectionAdapter(){
+        enableButton.addSelectionListener(new SelectionAdapter() {
             @Override
-            public void widgetSelected( SelectionEvent e ) {
+            public void widgetSelected(SelectionEvent e) {
                 filter = Filter.INCLUDE;
             }
         });
@@ -104,9 +107,9 @@ public class IncludeFilterViewer extends IFilterViewer {
         enableButton.setText("Enable");
 
         disableButton = new Button(control, SWT.RADIO);
-        disableButton.addSelectionListener(new SelectionAdapter(){
+        disableButton.addSelectionListener(new SelectionAdapter() {
             @Override
-            public void widgetSelected( SelectionEvent e ) {
+            public void widgetSelected(SelectionEvent e) {
                 filter = Filter.EXCLUDE;
             }
         });
@@ -124,6 +127,7 @@ public class IncludeFilterViewer extends IFilterViewer {
     public Control getControl() {
         return control;
     }
+
     /**
      * The isRequired flag will be used to determine the default decoration to show (if there is no
      * warning or error to take precedence).
@@ -134,7 +138,7 @@ public class IncludeFilterViewer extends IFilterViewer {
      * 
      * @param isRequired true if this is a required field
      */
-    public void setRequired( boolean isRequired ) {
+    public void setRequired(boolean isRequired) {
         this.isRequired = isRequired;
     }
 
@@ -158,10 +162,9 @@ public class IncludeFilterViewer extends IFilterViewer {
      * @return true if the field is valid
      */
     public boolean validate() {
-        if( enableButton.getSelection() && !disableButton.getSelection()){
+        if (enableButton.getSelection() && !disableButton.getSelection()) {
             return true; // Filter.INCLUDE represented!
-        }
-        else if( !enableButton.getSelection() && disableButton.getSelection()){
+        } else if (!enableButton.getSelection() && disableButton.getSelection()) {
             return true; // Filter.EXLCUDE represented!
         }
         return false; // unable to represent current filter
@@ -173,14 +176,14 @@ public class IncludeFilterViewer extends IFilterViewer {
      * @return Validation message
      */
     public String getValidationMessage() {
-        if( enableButton.getSelection() && disableButton.getSelection()){
-            return "Unable to represent "+ECQL.toCQL(filter);
-        }
-        else if( !enableButton.getSelection() && !disableButton.getSelection()){
-            return "Unable to represent "+ECQL.toCQL(filter);
+        if (enableButton.getSelection() && disableButton.getSelection()) {
+            return "Unable to represent " + ECQL.toCQL(filter);
+        } else if (!enableButton.getSelection() && !disableButton.getSelection()) {
+            return "Unable to represent " + ECQL.toCQL(filter);
         }
         return null; // all good then
     }
+
     /**
      * Provides access to the Expression being used by this viewer.
      * <p>
@@ -206,11 +209,10 @@ public class IncludeFilterViewer extends IFilterViewer {
         if (filter == Filter.INCLUDE) {
             enableButton.setSelection(true);
             disableButton.setSelection(false);
-        } else if( filter == Filter.EXCLUDE ){
+        } else if (filter == Filter.EXCLUDE) {
             enableButton.setSelection(false);
             disableButton.setSelection(true);
-        }
-        else {
+        } else {
             // we have a warning as the filter does not match our abilities
             enableButton.setSelection(false);
             disableButton.setSelection(false);
@@ -231,12 +233,11 @@ public class IncludeFilterViewer extends IFilterViewer {
      * @param input Expression or String to use as the input for this viewer
      */
     @Override
-    public void setInput( Object input ) {
+    public void setInput(Object input) {
         if (input instanceof Filter) {
             filter = (Filter) input;
             refresh();
-        }
-        else {
+        } else {
             // Filter input required? Should we throw an IllegalArgumentException?
             // throw new IllegalArgumentException("Filter input required - "+input.getClass() );
         }
@@ -244,7 +245,7 @@ public class IncludeFilterViewer extends IFilterViewer {
     }
 
     @Override
-    public void setSelection( ISelection selection, boolean reveal ) {
+    public void setSelection(ISelection selection, boolean reveal) {
         // do nothing by default
     }
 
@@ -258,6 +259,7 @@ public class IncludeFilterViewer extends IFilterViewer {
     public void feedback() {
 
     }
+
     /**
      * Provide the feedback that everything is fine.
      * <p>
@@ -265,9 +267,10 @@ public class IncludeFilterViewer extends IFilterViewer {
      * make use of a tooltip or something.
      * </p>
      */
-    public void feedback( String warning ) {
+    public void feedback(String warning) {
 
     }
+
     /**
      * Provide the feedback that everything is fine.
      * <p>
@@ -275,35 +278,39 @@ public class IncludeFilterViewer extends IFilterViewer {
      * make use of a tooltip or something.
      * </p>
      */
-    public void feedback( String error, Exception eek ) {
+    public void feedback(String error, Exception eek) {
 
     }
+
     /**
      * Feature Type to use for attribute names.
      * 
      * @param type
      */
-    public void setSchema( SimpleFeatureType type ) {
+    public void setSchema(SimpleFeatureType type) {
 
     }
 
     @Override
-    public Boolean canProcess( Object input ) {
+    public Boolean canProcess(Object input) {
         // TODO Auto-generated method stub
         return null;
     }
+
     @Override
     public SimpleFeatureType getSchema() {
         // TODO Auto-generated method stub
         return null;
     }
+
     @Override
-    public void setExpected( Class< ? > binding ) {
+    public void setExpected(Class<?> binding) {
         // TODO Auto-generated method stub
 
     }
+
     @Override
-    public Class< ? > getExpected() {
+    public Class<?> getExpected() {
         // TODO Auto-generated method stub
         return null;
     }

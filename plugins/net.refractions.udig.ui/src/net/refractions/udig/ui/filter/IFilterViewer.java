@@ -37,14 +37,14 @@ public abstract class IFilterViewer extends Viewer {
     /**
      * Default constructor. Calls <code>IFilterViewer( Composite parent, SWT.SINGLE )</code>
      */
-    public IFilterViewer( Composite parent ) {
+    public IFilterViewer(Composite parent) {
         this(parent, SWT.SINGLE);
     }
 
     /**
      * Constructor
      */
-    public IFilterViewer( Composite parent, int style ) {
+    public IFilterViewer(Composite parent, int style) {
 
     }
 
@@ -53,7 +53,7 @@ public abstract class IFilterViewer extends Viewer {
      * 
      * @param input Filter, String or other data object to use as the input for this filter
      */
-    public abstract void setInput( Object input );
+    public abstract void setInput(Object input);
 
     /**
      * Provides access to the Filter being used by this filter.
@@ -107,7 +107,7 @@ public abstract class IFilterViewer extends Viewer {
      * @param input the imput that this filterEditor will take
      * @return
      */
-    public abstract Boolean canProcess( Object input );
+    public abstract Boolean canProcess(Object input);
 
     /**
      * Returns the controller of the viewer. Used for setting size etc
@@ -124,7 +124,7 @@ public abstract class IFilterViewer extends Viewer {
      * 
      * @param isRequired true if this is a required field
      */
-    public abstract void setRequired( boolean required );
+    public abstract void setRequired(boolean required);
 
     /**
      * Sets a new selection for this viewer and optionally makes it visible.
@@ -136,7 +136,7 @@ public abstract class IFilterViewer extends Viewer {
      * @param reveal <code>true</code> if the selection is to be made visible, and
      *        <code>false</code> otherwise
      */
-    public abstract void setSelection( ISelection selection, boolean reveal );
+    public abstract void setSelection(ISelection selection, boolean reveal);
 
     /**
      * Provide the feedback that everything is fine.
@@ -154,7 +154,7 @@ public abstract class IFilterViewer extends Viewer {
      * make use of a tooltip or something.
      * </p>
      */
-    public abstract void feedback( String warning );
+    public abstract void feedback(String warning);
 
     /**
      * Provide the feedback that everything is fine.
@@ -163,14 +163,14 @@ public abstract class IFilterViewer extends Viewer {
      * make use of a tooltip or something.
      * </p>
      */
-    public abstract void feedback( String exception, Exception eek );
+    public abstract void feedback(String exception, Exception eek);
 
     /**
      * Feature Type to use for attribute names.
      * 
      * @param type
      */
-    public abstract void setSchema( SimpleFeatureType schema );
+    public abstract void setSchema(SimpleFeatureType schema);
 
     /**
      * Feature Type used by the FilterViewer
@@ -179,8 +179,8 @@ public abstract class IFilterViewer extends Viewer {
      */
     public abstract SimpleFeatureType getSchema();
 
-    public abstract void setExpected( Class< ? > binding );
+    public abstract void setExpected(Class<?> binding);
 
-    public abstract Class< ? > getExpected();
+    public abstract Class<?> getExpected();
 
 }

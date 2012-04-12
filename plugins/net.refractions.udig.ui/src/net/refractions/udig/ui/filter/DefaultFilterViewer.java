@@ -70,14 +70,16 @@ import org.opengis.filter.expression.Expression;
 public class DefaultFilterViewer extends IFilterViewer {
     public static class Factory extends FilterViewerFactory {
         @Override
-        public int appropriate( SimpleFeatureType schema, Filter filter ) {
+        public int appropriate(SimpleFeatureType schema, Filter filter) {
             return COMPLETE;
         }
+
         @Override
-        public IFilterViewer createViewer( Composite parent, int style ) {
+        public IFilterViewer createViewer(Composite parent, int style) {
             return new DefaultFilterViewer(parent, style);
         }
     }
+
     /**
      * This is the expression we are working on here.
      * <p>
@@ -102,8 +104,8 @@ public class DefaultFilterViewer extends IFilterViewer {
      */
     private SimpleFeatureType schema;
 
-    private KeyListener keyListener = new KeyListener(){
-        public void keyReleased( KeyEvent e ) {
+    private KeyListener keyListener = new KeyListener() {
+        public void keyReleased(KeyEvent e) {
             // we can try and parse this puppy; and issue a selection changed
             // event when we actually have an expression that works
             String before = filter != null ? CQL.toCQL(filter) : "(empty)";
@@ -114,7 +116,8 @@ public class DefaultFilterViewer extends IFilterViewer {
                         getSelection()));
             }
         }
-        public void keyPressed( KeyEvent e ) {
+
+        public void keyPressed(KeyEvent e) {
         }
     };
 
@@ -122,9 +125,10 @@ public class DefaultFilterViewer extends IFilterViewer {
 
     private FunctionContentProposalProvider proposalProvider;
 
-    public DefaultFilterViewer( Composite parent ) {
+    public DefaultFilterViewer(Composite parent) {
         this(parent, SWT.SINGLE);
     }
+
     /**
      * Creates an ExpressionViewer using the provided style.
      * <ul>
@@ -142,7 +146,7 @@ public class DefaultFilterViewer extends IFilterViewer {
      * @param parent
      * @param none
      */
-    public DefaultFilterViewer( Composite parent, int style ) {
+    public DefaultFilterViewer(Composite parent, int style) {
         super(parent, style);
         text = new Text(parent, style);
         feedback = new ControlDecoration(text, SWT.TOP | SWT.LEFT);
@@ -168,6 +172,7 @@ public class DefaultFilterViewer extends IFilterViewer {
     public Text getControl() {
         return text;
     }
+
     /**
      * The isRequired flag will be used to determine the default decoration to show (if there is no
      * warning or error to take precedence).
@@ -178,7 +183,7 @@ public class DefaultFilterViewer extends IFilterViewer {
      * 
      * @param isRequired true if this is a required field
      */
-    public void setRequired( boolean isRequired ) {
+    public void setRequired(boolean isRequired) {
         this.isRequired = isRequired;
     }
 
@@ -260,6 +265,7 @@ public class DefaultFilterViewer extends IFilterViewer {
         }
         return null; // all good then
     }
+
     /**
      * Provides access to the Expression being used by this viewer.
      * <p>
@@ -273,7 +279,8 @@ public class DefaultFilterViewer extends IFilterViewer {
 
     @Override
     public ISelection getSelection() {
-        if (filter == null) return null;
+        if (filter == null)
+            return null;
 
         IStructuredSelection selection = new StructuredSelection(filter);
         return selection;
@@ -282,9 +289,10 @@ public class DefaultFilterViewer extends IFilterViewer {
     @Override
     public void refresh() {
         if (text != null && !text.isDisposed()) {
-            text.getDisplay().asyncExec(new Runnable(){
+            text.getDisplay().asyncExec(new Runnable() {
                 public void run() {
-                    if (text == null || text.isDisposed()) return;
+                    if (text == null || text.isDisposed())
+                        return;
                     String cql = CQL.toCQL(filter);
                     text.setText(cql);
                 }
@@ -306,7 +314,7 @@ public class DefaultFilterViewer extends IFilterViewer {
      * @param input Expression or String to use as the input for this viewer
      */
     @Override
-    public void setInput( Object input ) {
+    public void setInput(Object input) {
         if (input instanceof Filter) {
             filter = (Filter) input;
             refresh();
@@ -318,7 +326,7 @@ public class DefaultFilterViewer extends IFilterViewer {
                 // feedback that things are bad
             }
             // use the text as provided
-            text.getDisplay().asyncExec(new Runnable(){
+            text.getDisplay().asyncExec(new Runnable() {
                 public void run() {
                     text.setText(txt);
                 }
@@ -327,7 +335,7 @@ public class DefaultFilterViewer extends IFilterViewer {
     }
 
     @Override
-    public void setSelection( ISelection selection, boolean reveal ) {
+    public void setSelection(ISelection selection, boolean reveal) {
         // do nothing by default
     }
 
@@ -341,6 +349,7 @@ public class DefaultFilterViewer extends IFilterViewer {
     public void feedback() {
         feedback.hide();
     }
+
     /**
      * Provide the feedback that everything is fine.
      * <p>
@@ -348,7 +357,7 @@ public class DefaultFilterViewer extends IFilterViewer {
      * make use of a tooltip or something.
      * </p>
      */
-    public void feedback( String warning ) {
+    public void feedback(String warning) {
         if (feedback != null) {
             feedback.setDescriptionText(warning);
             feedback.show();
@@ -358,6 +367,7 @@ public class DefaultFilterViewer extends IFilterViewer {
             control.setToolTipText(warning);
         }
     }
+
     /**
      * Provide the feedback that everything is fine.
      * <p>
@@ -365,23 +375,24 @@ public class DefaultFilterViewer extends IFilterViewer {
      * make use of a tooltip or something.
      * </p>
      */
-    public void feedback( String error, Exception eek ) {
+    public void feedback(String error, Exception eek) {
         Control control = getControl();
         if (control != null && !control.isDisposed()) {
             control.setToolTipText(error + ":" + eek);
         }
     }
+
     /**
      * Feature Type to use for attribute names.
      * 
      * @param type
      */
-    public void setSchema( SimpleFeatureType type ) {
+    public void setSchema(SimpleFeatureType type) {
         if (type == null) {
             return;
         }
         Set<String> names = new HashSet<String>();
-        for( AttributeDescriptor attribute : type.getAttributeDescriptors() ) {
+        for (AttributeDescriptor attribute : type.getAttributeDescriptors()) {
             names.add(attribute.getLocalName());
         }
         proposalProvider.setExtra(names);
@@ -389,21 +400,24 @@ public class DefaultFilterViewer extends IFilterViewer {
     }
 
     @Override
-    public Boolean canProcess( Object input ) {
+    public Boolean canProcess(Object input) {
         // TODO Auto-generated method stub
         return null;
     }
+
     @Override
     public SimpleFeatureType getSchema() {
         return schema;
     }
+
     @Override
-    public void setExpected( Class< ? > binding ) {
+    public void setExpected(Class<?> binding) {
         // TODO Auto-generated method stub
 
     }
+
     @Override
-    public Class< ? > getExpected() {
+    public Class<?> getExpected() {
         // TODO Auto-generated method stub
         return null;
     }

@@ -19,10 +19,13 @@ public abstract class IExpressionViewer extends Viewer {
 
     /** Maximum value (may be used by a spinner or slider) */
     public static int MIN = 0;
+
     /** Minium value (may be used by a spinner or slider) */
     public static int MAX = 255;
+
     /** Used to list sample values */
     public static String OPTIONS = Parameter.OPTIONS;
+
     /** Used to indicate List element type */
     public static String ELEMENT = Parameter.ELEMENT;
 
@@ -30,7 +33,7 @@ public abstract class IExpressionViewer extends Viewer {
      * Indicates this expression is required to be non null
      */
     protected boolean isRequired;
-    
+
     /**
      * FeatureType we are working against if known.
      */
@@ -39,14 +42,14 @@ public abstract class IExpressionViewer extends Viewer {
     /**
      * Default constructor. Calls <code>IExpressionViewer( Composite parent, SWT.SINGLE )</code>
      */
-    public IExpressionViewer( Composite parent ) {
+    public IExpressionViewer(Composite parent) {
         this(parent, SWT.SINGLE);
     }
 
     /**
      * Constructor. All UI components should be added here.
      */
-    public IExpressionViewer( Composite parent, int style ) {
+    public IExpressionViewer(Composite parent, int style) {
 
     }
 
@@ -65,7 +68,7 @@ public abstract class IExpressionViewer extends Viewer {
      * 
      * @param isRequired true if this is a required field
      */
-    public void setRequired( boolean required ){
+    public void setRequired(boolean required) {
         this.isRequired = required;
     }
 
@@ -73,9 +76,10 @@ public abstract class IExpressionViewer extends Viewer {
      * The isRequired flag will be used to determine the default decoration to show (if there is no
      * warning or error to take precedence).
      * <p>
+     * 
      * @return true if this is a required field
      */
-    public boolean isRequired(){
+    public boolean isRequired() {
         return isRequired;
     }
 
@@ -102,7 +106,8 @@ public abstract class IExpressionViewer extends Viewer {
     public abstract ISelection getSelection();
 
     /**
-     * Refreshes this viewer completely with information freshly obtained from this viewer's input (ie an Expression)..
+     * Refreshes this viewer completely with information freshly obtained from this viewer's input
+     * (ie an Expression)..
      */
     public abstract void refresh();
 
@@ -112,7 +117,7 @@ public abstract class IExpressionViewer extends Viewer {
      * @param input Expression, String or other data object to use as the input for this
      *        ExpressionViewer
      */
-    public abstract void setInput( Object input );
+    public abstract void setInput(Object input);
 
     /**
      * Sets a new selection for this viewer and optionally makes it visible.
@@ -124,7 +129,7 @@ public abstract class IExpressionViewer extends Viewer {
      * @param reveal <code>true</code> if the selection is to be made visible, and
      *        <code>false</code> otherwise
      */
-    public abstract void setSelection( ISelection selection, boolean reveal );
+    public abstract void setSelection(ISelection selection, boolean reveal);
 
     /**
      * Provide the feedback that everything is fine.
@@ -142,7 +147,7 @@ public abstract class IExpressionViewer extends Viewer {
      * make use of a tooltip or something.
      * </p>
      */
-    public abstract void feedback( String warning );
+    public abstract void feedback(String warning);
 
     /**
      * Provide the feedback that everything is fine.
@@ -151,14 +156,14 @@ public abstract class IExpressionViewer extends Viewer {
      * make use of a tooltip or something.
      * </p>
      */
-    public abstract void feedback( String exception, Exception eek );
+    public abstract void feedback(String exception, Exception eek);
 
     /**
      * Feature Type to use for attribute names.
      * 
      * @param type
      */
-    public void setSchema( SimpleFeatureType schema ){
+    public void setSchema(SimpleFeatureType schema) {
         this.schema = schema;
     }
 
@@ -167,12 +172,12 @@ public abstract class IExpressionViewer extends Viewer {
      * 
      * @param type
      */
-    public SimpleFeatureType getSchema(){
+    public SimpleFeatureType getSchema() {
         return schema;
     }
 
-    public abstract void setExpected( Class< ? > binding );
+    public abstract void setExpected(Class<?> binding);
 
-    public abstract Class< ? > getExpected();
+    public abstract Class<?> getExpected();
 
 }
