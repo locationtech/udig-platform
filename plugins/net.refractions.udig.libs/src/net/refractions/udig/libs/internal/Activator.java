@@ -69,6 +69,9 @@ public class Activator implements BundleActivator {
     public static String JDBC_DATA_TRACE_FINE = "net.refractions.udig.libs/debug/data/jdbc/fine";
     public static String JDBC_TRACE_FINE = "net.refractions.udig.libs/debug/jdbc/fine";
 
+    private static final String DATABASES_FOLDER_NAME = "databases";
+    private static final String EPSG_DATABASEFOLDER_PREFIX = "epsg_v";
+
     @SuppressWarnings("deprecation")
 	public void start( final BundleContext context ) throws Exception {
         if (Platform.getOS().equals(Platform.OS_WIN32)) {
@@ -206,33 +209,31 @@ public class Activator implements BundleActivator {
     public static File epsgDatabaseFile(){
         // unpack into the shared configuration location
         try {
-            Location configLocaiton = Platform.getInstallLocation();
-            File config = DataUtilities.urlToFile( configLocaiton.getURL() );
-            if( config.canWrite() ){
-                URL databaseDirectoryUrl = new URL( configLocaiton.getURL(), "Databases" );
-                File directory = DataUtilities.urlToFile( databaseDirectoryUrl );
-                File epsgDirectory = new File( directory, "v" + ThreadedHsqlEpsgFactory.VERSION );
-                
-                return epsgDirectory;
-            }
+            Location configLocation = Platform.getInstallLocation();
+            return doEpsg(configLocation);
         } catch (MalformedURLException e) {
             // unable to use the config directory - perhaps the user does not have permission
         }
         // if that did not work unpack into the user's data directory
         try {
             Location dataLocation = Platform.getInstanceLocation();
-            File config = DataUtilities.urlToFile( dataLocation.getURL() );
-            if( config.canWrite() ){
-                URL databaseDirectoryUrl = new URL( dataLocation.getURL(), "Databases" );
-                File directory = DataUtilities.urlToFile( databaseDirectoryUrl );
-                File epsgDirectory = new File( directory, "v" + ThreadedHsqlEpsgFactory.VERSION );
-                
-                return epsgDirectory;
-            }
+            return doEpsg(dataLocation);
         } catch (MalformedURLException e) {
             // unable to use instance location - ie the data directory
         }
         return null; // database location not known - temporary directory will be used
+    }
+    
+    private static File doEpsg(Location configLocation) throws MalformedURLException{
+        File config = DataUtilities.urlToFile( configLocation.getURL() );
+        if( config.canWrite() ){
+            URL databaseDirectoryUrl = new URL( configLocation.getURL(), DATABASES_FOLDER_NAME );
+            File directory = DataUtilities.urlToFile( databaseDirectoryUrl );
+            File epsgDirectory = new File( directory, EPSG_DATABASEFOLDER_PREFIX + ThreadedHsqlEpsgFactory.VERSION );
+            
+            return epsgDirectory;
+        }
+        return null;
     }
     
     public static void unpackEPSGDatabase(){
