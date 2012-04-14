@@ -16,12 +16,18 @@
  */
 package net.refractions.udig.ui.filter;
 
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.fieldassist.FieldDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.geotools.filter.text.cql2.CQL;
+import org.geotools.util.Utilities;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 
@@ -29,27 +35,23 @@ import org.opengis.filter.Filter;
  * Used to create and edit Filters. Used to package up several controls following the {@link Viewer}
  * convention of a constructor to create the controls, an input providing context to help editing, and a
  * selection to set and retrieve the value being worked on.
- * <p>
- * Subclasses are expected to support:
- * <ul>
- * <li>{@link #setInput(Object)} supporting FilterInput or FeatureType</li>
- * <li>{@link #setSelection(ISelection)} and {@link #getSelection()} to retrieve the {@link Filter} being edited</li>
- * </ul>
+ * 
  * @see FilterInput Used to provide context (such as feature type to suggest attribute names)
  * @author Scott
- * @since 1.3.0
+ * @author Jody Garnett
+ * @since 1.3.2
  */
 public abstract class IFilterViewer extends Viewer {
     
     /**
      * Input provided to help when creating a Filter.
      */
-    FilterInput input;
+    protected FilterInput input;
     
     /**
      * Filter being edited.
      */
-    Filter filter;
+    protected Filter filter;
     
     /**
      * Default constructor. Calls <code>IFilterViewer( Composite parent, SWT.SINGLE )</code>
@@ -59,7 +61,13 @@ public abstract class IFilterViewer extends Viewer {
     }
 
     /**
-     * Constructor
+     * Constructor allowing minimal control of style.
+     * <p>
+     * The following are supported at this time:
+     * <ul>
+     * <li>{@link SWT#SINGLE}: Consider to be a single line</li>
+     * <li>{@link SWT#MULTI}: Viewer can take additional height</li>
+     * </ul>
      */
     public IFilterViewer(Composite parent, int style) {
     }
@@ -87,11 +95,20 @@ public abstract class IFilterViewer extends Viewer {
         }
     }
 
+    @Override
+    public FilterInput getInput() {
+        return input;
+    }
     /**
-     * Provides access to the Filter being used by this filter.
+     * Refreshes this viewer completely with information freshly obtained from {@link #input} and {@link #filter}.
+     */
+    public abstract void refresh();
+    
+    /**
+     * Direct access to the Filter being defined.
      * <p>
      * 
-     * @return Filter being filter; may be Filter.EXCLUDE if empty (but will not be null)
+     * @return Filter being defined
      */
     public Filter getFilter(){
         return filter;
@@ -100,92 +117,169 @@ public abstract class IFilterViewer extends Viewer {
     /**
      * Returns the current selection for this provider.
      * 
-     * @return Current filter from {@link #getFilter()}
+     * @return Current filter from {@link #getFilter()} or {@link StructuredSelection#EMPTY} if not defined
      */
     public ISelection getSelection(){
         if( filter != null ){
             return new StructuredSelection( filter );
         }
-        return new StructuredSelection();
+        return StructuredSelection.EMPTY;
     }
-    
-
-
     /**
-     * Refreshes this viewer completely with information freshly obtained from this viewer's model.
-     */
-    public abstract void refresh();
-
-    /**
-     * Checks that the filter is valid using {@link IFilterViewer#isValid()} and update the UI to
-     * desplay any error messages using {@link IFilterViewer#getValidationMessage()} if not valid.
-     * 
-     * @return true if the filter is valid
-     */
-    public abstract boolean validate();
-
-    /**
-     * Used to check for any validation messages (such as required field etc...)
-     * 
-     * @return Validation message
-     */
-    public abstract String getValidationMessage();
-
-
-    /**
-     * Check to see if we can filter the given input
-     * <p>
-     * Note that the decision on whather FilterEditor canProcess() should be informed by the
-     * presence of attributes it design to work with.
-     * </p>
-     * 
-     * @param input the imput that this filterEditor will take
-     * @return
-     */
-    public abstract Boolean canProcess(Object input);
-
-    /**
-     * Returns the controller of the viewer. Used for setting size etc
-     */
-    public abstract Control getControl();
-
-    /**
-     * Sets a new selection for this viewer and optionally makes it visible.
+     * Sets a new filter for this viewer; called from {@link #setSelection(ISelection)}
+     * to update viewer to show filter contents.
      * <p>
      * Subclasses must implement this method.
      * </p>
+     * @param filter
+     */
+    public abstract void setFilter( Filter filter );
+    
+    /**
+     * Used internally to update the filter and issue a {@link SelectionChangedEvent}.
      * 
-     * @param selection the new selection
+     * @param newFilter
+     */
+    protected void internalUpdate(Filter newFilter) {
+        if( this.filter == newFilter ){
+            return;
+        }
+        String before = filter != null ? CQL.toCQL(filter) : "(empty)";
+        String after = newFilter != null ? CQL.toCQL(newFilter) : "(empty)";
+        if (!Utilities.equals(before, after)){
+            this.filter = newFilter;
+            StructuredSelection selection = newFilter != null ? new StructuredSelection( newFilter) : StructuredSelection.EMPTY;
+            fireSelectionChanged( new SelectionChangedEvent( this, selection ) );
+        }
+    }
+    /**
+     * Extracts a filter from the selection making use of {@link #setFilter(Filter)} to update the viewer.
+     * 
+     * @param selection Selection defining Filter
      * @param reveal <code>true</code> if the selection is to be made visible, and
      *        <code>false</code> otherwise
      */
-    public abstract void setSelection(ISelection selection, boolean reveal);
-
+    public void setSelection(ISelection selection, boolean reveal){
+        if( selection != null && selection instanceof StructuredSelection){
+            StructuredSelection sel = (StructuredSelection) selection;
+            Object element = sel.getFirstElement();
+            if( element instanceof Filter ){
+                setFilter( (Filter) element);
+                return;
+            }
+        }
+        setFilter(Filter.EXCLUDE);
+    }
+    
+    //
+    // Helper methods to assist implementors
+    //
     /**
      * Provide the feedback that everything is fine.
      * <p>
-     * This method will make use of an associated ControlDecoration if available; if not it will
-     * make use of a tooltip or something.
+     * This method will make use of an associated ControlDecoration if available.
      * </p>
      */
-    public abstract void feedback();
+    protected void feedback(){
+        if( input != null && input.getFeedback() != null ){
+            input.getFeedback().hide();
+        }
+    }
 
     /**
-     * Provide the feedback that everything is fine.
+     * Provide warning feedback.
      * <p>
-     * This method will make use of an associated ControlDecoration if available; if not it will
-     * make use of a tooltip or something.
+     * This method will make use of an associated ControlDecoration if available.
      * </p>
      */
-    public abstract void feedback(String warning);
-
+    protected void feedback(String warning){
+        if( input != null && input.getFeedback() != null ){
+            ControlDecoration feedback = input.getFeedback();
+            
+            feedback.setDescriptionText(warning);
+            
+            FieldDecorationRegistry decorations = FieldDecorationRegistry.getDefault();
+            FieldDecoration errorDecoration = decorations.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING);
+            feedback.setImage(errorDecoration.getImage());
+            feedback.show();
+        }
+        Control control = getControl();
+        if (control != null && !control.isDisposed()) {
+            control.setToolTipText(warning);
+        }
+    }
     /**
-     * Provide the feedback that everything is fine.
+     * Provide required feedback.
      * <p>
-     * This method will make use of an associated ControlDecoration if available; if not it will
-     * make use of a tooltip or something.
+     * This method will make use of an associated ControlDecoration if available.
      * </p>
      */
-    public abstract void feedback(String exception, Exception eek);
+    protected void feedback(String warning, boolean isRequired){
+        if( isRequired ){
+            if( input != null && input.getFeedback() != null ){
+                ControlDecoration feedback = input.getFeedback();
+                
+                feedback.setDescriptionText(warning);
+                
+                FieldDecorationRegistry decorations = FieldDecorationRegistry.getDefault();
+                FieldDecoration requiredDecoration = decorations.getFieldDecoration(FieldDecorationRegistry.DEC_REQUIRED);
+                feedback.setImage(requiredDecoration.getImage());
+                feedback.show();
+            }
+            Control control = getControl();
+            if (control != null && !control.isDisposed()) {
+                control.setToolTipText(warning);
+            }
+        }
+        else {
+            feedback( warning );
+        }
+    }
+    /**
+     * Provide error feedback.
+     * <p>
+     * This method will make use of an associated ControlDecoration if available.
+     * </p>
+     */
+    protected void feedback(String error, Throwable exception){
+        if( input != null && input.getFeedback() != null ){
+            ControlDecoration feedback = input.getFeedback();
+            
+            feedback.setDescriptionText(error);
+            // feedback.setImage(ERROR_IMAGE);
+            feedback.show();
+        }
+        Control control = getControl();
+        if (control != null && !control.isDisposed()) {
+            control.setToolTipText(error+":"+exception);
+        }
+    }
 
+//  /**
+//   * Checks that the filter is valid using {@link IFilterViewer#isValid()} and update the UI to
+//   * desplay any error messages using {@link IFilterViewer#getValidationMessage()} if not valid.
+//   * 
+//   * @return true if the filter is valid
+//   */
+//  public abstract boolean validate();
+//
+//  /**
+//   * Used to check for any validation messages (such as required field etc...)
+//   * 
+//   * @return Validation message
+//   */
+//  public abstract String getValidationMessage();
+//
+//
+//  /**
+//   * Check to see if we can filter the given input
+//   * <p>
+//   * Note that the decision on whather FilterEditor canProcess() should be informed by the
+//   * presence of attributes it design to work with.
+//   * </p>
+//   * 
+//   * @param input the imput that this filterEditor will take
+//   * @return
+//   */
+//  public abstract Boolean canProcess(Object input);
 }
