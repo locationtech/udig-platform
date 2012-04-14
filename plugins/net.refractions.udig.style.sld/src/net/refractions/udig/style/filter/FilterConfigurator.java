@@ -7,6 +7,7 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.style.IStyleConfigurator;
 import net.refractions.udig.ui.filter.CQLFilterViewer;
 import net.refractions.udig.ui.filter.FilterInput;
+import net.refractions.udig.ui.filter.IFilterViewer;
 
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -26,7 +27,7 @@ public class FilterConfigurator extends IStyleConfigurator {
 
     //protected Filter filter;
     
-    protected CQLFilterViewer text;
+    protected IFilterViewer text;
 
     /** Will write filter to blackboard on focus lost */
     private ISelectionChangedListener listener = new ISelectionChangedListener(){
