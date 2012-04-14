@@ -405,20 +405,5 @@ public class DefaultFilterViewer extends IFilterViewer {
         return null;
     }
 
-    @Override
-    public SimpleFeatureType getSchema() {
-        return schema;
-    }
 
-    @Override
-    public void setExpected(Class<?> binding) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public Class<?> getExpected() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }

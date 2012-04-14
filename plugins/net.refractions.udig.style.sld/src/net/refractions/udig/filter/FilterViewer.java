@@ -3,6 +3,8 @@ package net.refractions.udig.filter;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.refractions.udig.ui.filter.IFilterViewer;
+
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
@@ -51,6 +53,7 @@ import org.opengis.filter.expression.Expression;
  * 
  * @author Jody
  * @since 1.2.0
+ * @deprecated Please use {@link IFilterViewer}
  */
 public class FilterViewer extends Viewer {
     /**

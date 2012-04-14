@@ -293,25 +293,7 @@ public class IncludeFilterViewer extends IFilterViewer {
 
     @Override
     public Boolean canProcess(Object input) {
-        // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public SimpleFeatureType getSchema() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void setExpected(Class<?> binding) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public Class<?> getExpected() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }

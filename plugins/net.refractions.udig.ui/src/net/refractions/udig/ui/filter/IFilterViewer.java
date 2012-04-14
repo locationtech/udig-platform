@@ -17,6 +17,7 @@
 package net.refractions.udig.ui.filter;
 
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -25,15 +26,31 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 
 /**
- * Abstract class for creating a UI that allows the user to create and edit Filters
- * 
+ * Used to create and edit Filters. Used to package up several controls following the {@link Viewer}
+ * convention of a constructor to create the controls, an input providing context to help editing, and a
+ * selection to set and retrieve the value being worked on.
+ * <p>
+ * Subclasses are expected to support:
+ * <ul>
+ * <li>{@link #setInput(Object)} supporting FilterInput or FeatureType</li>
+ * <li>{@link #setSelection(ISelection)} and {@link #getSelection()} to retrieve the {@link Filter} being edited</li>
+ * </ul>
+ * @see FilterInput Used to provide context (such as feature type to suggest attribute names)
  * @author Scott
  * @since 1.3.0
  */
 public abstract class IFilterViewer extends Viewer {
-
-    protected boolean required = true;
-
+    
+    /**
+     * Input provided to help when creating a Filter.
+     */
+    FilterInput input;
+    
+    /**
+     * Filter being edited.
+     */
+    Filter filter;
+    
     /**
      * Default constructor. Calls <code>IFilterViewer( Composite parent, SWT.SINGLE )</code>
      */
@@ -45,7 +62,6 @@ public abstract class IFilterViewer extends Viewer {
      * Constructor
      */
     public IFilterViewer(Composite parent, int style) {
-
     }
 
     /**
@@ -53,7 +69,23 @@ public abstract class IFilterViewer extends Viewer {
      * 
      * @param input Filter, String or other data object to use as the input for this filter
      */
-    public abstract void setInput(Object input);
+    public void setInput(Object filterInput){
+        if( input == filterInput){
+            return; // no change
+        }
+        if( input == null ){
+            // stop any listeners!
+        }
+        if( filterInput instanceof SimpleFeatureType){
+            input = new FilterInput( (SimpleFeatureType) filterInput );
+        }
+        else if (filterInput instanceof FilterInput ){
+            input = (FilterInput) filterInput;
+        }
+        if( input != null ){
+            // connect any listeners
+        }
+    }
 
     /**
      * Provides access to the Filter being used by this filter.
@@ -61,14 +93,23 @@ public abstract class IFilterViewer extends Viewer {
      * 
      * @return Filter being filter; may be Filter.EXCLUDE if empty (but will not be null)
      */
-    public abstract Filter getInput();
+    public Filter getFilter(){
+        return filter;
+    }
 
     /**
      * Returns the current selection for this provider.
      * 
-     * @return chrrent selection
+     * @return Current filter from {@link #getFilter()}
      */
-    public abstract ISelection getSelection();
+    public ISelection getSelection(){
+        if( filter != null ){
+            return new StructuredSelection( filter );
+        }
+        return new StructuredSelection();
+    }
+    
+
 
     /**
      * Refreshes this viewer completely with information freshly obtained from this viewer's model.
@@ -90,12 +131,6 @@ public abstract class IFilterViewer extends Viewer {
      */
     public abstract String getValidationMessage();
 
-    /**
-     * @return true if this is a required field
-     */
-    public boolean isRequired() {
-        return required;
-    }
 
     /**
      * Check to see if we can filter the given input
@@ -113,18 +148,6 @@ public abstract class IFilterViewer extends Viewer {
      * Returns the controller of the viewer. Used for setting size etc
      */
     public abstract Control getControl();
-
-    /**
-     * The isRequired flag will be used to determine the default decoration to show (if there is no
-     * warning or error to take precedence).
-     * <p>
-     * Please note that if this is a required field Filter.EXLCUDE is not considered to be a valid
-     * state.
-     * </p>
-     * 
-     * @param isRequired true if this is a required field
-     */
-    public abstract void setRequired(boolean required);
 
     /**
      * Sets a new selection for this viewer and optionally makes it visible.
@@ -164,23 +187,5 @@ public abstract class IFilterViewer extends Viewer {
      * </p>
      */
     public abstract void feedback(String exception, Exception eek);
-
-    /**
-     * Feature Type to use for attribute names.
-     * 
-     * @param type
-     */
-    public abstract void setSchema(SimpleFeatureType schema);
-
-    /**
-     * Feature Type used by the FilterViewer
-     * 
-     * @param type
-     */
-    public abstract SimpleFeatureType getSchema();
-
-    public abstract void setExpected(Class<?> binding);
-
-    public abstract Class<?> getExpected();
 
 }

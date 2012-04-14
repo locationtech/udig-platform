@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.refractions.udig.ui.filter.IExpressionViewer;
+import net.refractions.udig.ui.filter.IFilterViewer;
+
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
@@ -56,6 +59,7 @@ import org.opengis.filter.expression.Function;
  * <li>
  * @author jive
  * @since 1.1.0
+ * @deprecated Please use {@link IExpressionViewer}
  */
 public class ExpressionViewer extends Viewer {
     /**
