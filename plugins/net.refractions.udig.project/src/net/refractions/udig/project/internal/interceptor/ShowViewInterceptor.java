@@ -327,9 +327,12 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
             Query viewRestriction;
             if (value instanceof Filter) {
                 Filter filter = (Filter) value;
-                viewRestriction = new DefaultQuery("Feature", filter);
-            } else {
+                viewRestriction = new Query("Feature", filter);
+            } else if (value instanceof Query ){
                 viewRestriction = (Query) value;
+            }
+            else {
+                viewRestriction = Query.ALL;
             }
             Filter filter;
             CoordinateReferenceSystem crs;

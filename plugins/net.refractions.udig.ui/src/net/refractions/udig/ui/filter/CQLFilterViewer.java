@@ -1,21 +1,16 @@
 package net.refractions.udig.ui.filter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
-import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -25,9 +20,9 @@ import org.eclipse.swt.widgets.Text;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
 import org.geotools.filter.text.ecql.ECQL;
-import org.geotools.util.Utilities;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
+import org.opengis.feature.type.AttributeType;
 import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
@@ -35,14 +30,17 @@ import org.opengis.filter.expression.Expression;
  * A JFace Style Filter Viewer that can be used to build a Filter. Has both a text box for manually
  * entering a Filter and a series of combo boxes to allow the user to build their own filter
  * <p>
- * This is a slightly more friendly version of {@link DefaultFilterViewer} (which only has a simple text box).
+ * This is a slightly more friendly version of {@link DefaultFilterViewer} (which only has a simple
+ * text box).
  * </p>
+ * 
  * @author Scott Henderson
  * @since 1.3.0
  */
 public class CQLFilterViewer extends IFilterViewer {
     /**
      * Factory used for the general purpose CQLFilterViewer.
+     * 
      * @author jody
      * @since 1.2.0
      */
@@ -51,13 +49,15 @@ public class CQLFilterViewer extends IFilterViewer {
         /**
          * Slightly prefer CQLFilterViewer to DefaultFilterViewer.
          */
-        public int appropriate( SimpleFeatureType schema, Filter filter ) {
-            return COMPLETE+1;
+        public int appropriate(SimpleFeatureType schema, Filter filter) {
+            return COMPLETE + 1;
         }
-        public IFilterViewer createViewer( Composite parent, int style ) {
+
+        public IFilterViewer createViewer(Composite parent, int style) {
             return new CQLFilterViewer(parent, style);
         }
     }
+
     /**
      * This is the expression we are working on here.
      * <p>
@@ -87,36 +87,18 @@ public class CQLFilterViewer extends IFilterViewer {
     /**
      * Text box to allow the user to enter a value to base a filter on
      */
-    private Text value;
+    private Combo value;
 
     private Button insert;
 
-    /**
-     * Indicates this is a required field
-     */
-    private boolean isRequired;
-
-    /**
-     * The schema being used
-     */
-    private SimpleFeatureType schema;
-
-    private KeyListener keyListener = new KeyListener(){
-        public void keyReleased( KeyEvent e ) {
-            // we can try and parse this puppy; and issue a selection changed
-            // event when we actually have an expression that works
-            String before = filter != null ? CQL.toCQL(filter) : "(empty)";
-            validate();
-            String after = filter != null ? CQL.toCQL(filter) : "(empty)";
-            if (filter != null && !Utilities.equals(before, after)) {
-                fireSelectionChanged(new SelectionChangedEvent(CQLFilterViewer.this, getSelection()));
-            }
+    private KeyListener keyListener = new KeyListener() {
+        public void keyReleased(KeyEvent e) {
+            changed();
         }
-        public void keyPressed( KeyEvent e ) {
+
+        public void keyPressed(KeyEvent e) {
         }
     };
-
-    private ControlDecoration feedback;
 
     private FunctionContentProposalProvider proposalProvider;
 
@@ -137,13 +119,15 @@ public class CQLFilterViewer extends IFilterViewer {
      * @param parent
      * @param none
      */
-    public CQLFilterViewer( Composite parent, int style ) {
+    public CQLFilterViewer(Composite parent, int style) {
         super(parent, style);
         control = new Composite(parent, style);
 
-        text = new Text(control, SWT.BORDER);
+        int textStyle = style == SWT.DEFAULT ? SWT.BORDER : SWT.MULTI | SWT.V_SCROLL | SWT.BORDER;
+
+        text = new Text(control, textStyle);
         text.setBounds(10, 10, 430, 60);
-        feedback = new ControlDecoration(text, SWT.TOP | SWT.LEFT);
+        // feedback = new ControlDecoration(text, SWT.TOP | SWT.LEFT);
 
         proposalProvider = new FunctionContentProposalProvider();
         proposalProvider.setFiltering(true);
@@ -151,7 +135,7 @@ public class CQLFilterViewer extends IFilterViewer {
                 proposalProvider, null, null);
 
         // Need to set adapter to replace existing text. Default is insert.
-        adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+        adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_INSERT);
 
         text.addKeyListener(keyListener);
 
@@ -159,14 +143,57 @@ public class CQLFilterViewer extends IFilterViewer {
         lblAttribute.setBounds(10, 85, 55, 15);
         lblAttribute.setText("Attribute");
 
-        attribute = new Combo(control, SWT.NONE);
+        attribute = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
+        
         attribute.setBounds(10, 105, 91, 23);
+        attribute.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                String attributeName = attribute.getText();
+
+                // populate values based on this attribute
+                if (attributeName != null && getInput() != null && getInput().getSchema() != null) {
+                    SimpleFeatureType schema = getInput().getSchema();
+                    AttributeDescriptor descriptor = schema.getDescriptor(attributeName);
+
+                    value.removeAll();
+
+                    SortedSet<String> options = new TreeSet<String>();
+
+                    Object defaultValue = descriptor.getDefaultValue();
+                    if (defaultValue != null) {
+                        options.add(String.valueOf(defaultValue));
+                    }
+                    AttributeType type = descriptor.getType();
+                    if (Number.class.isAssignableFrom(type.getBinding())) {
+                        options.add("0");
+                        options.add("1");
+                        options.add("2");
+                        options.add("3");
+                        options.add("4");
+                        options.add("5");
+                    }
+                    if (options.isEmpty()) {
+                        value.setEnabled(false);
+                    } else {
+                        value.setEnabled(true);
+                        for (String item : options) {
+                            value.add(item);
+                        }
+                    }
+                } else {
+                    value.removeAll();
+                    value.setEnabled(false);
+                }
+            }
+        });
 
         Label lblOperation = new Label(control, SWT.NONE);
         lblOperation.setBounds(124, 85, 55, 15);
         lblOperation.setText("Operation:");
 
-        operation = new Combo(control, SWT.NONE);
+        operation = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
+
         operation.setBounds(124, 105, 91, 23);
         operation.add("=");
         operation.add("<");
@@ -177,26 +204,46 @@ public class CQLFilterViewer extends IFilterViewer {
         lblValue.setBounds(241, 85, 55, 15);
         lblValue.setText("Value");
 
-        value = new Text(control, SWT.BORDER);
+        value = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
         value.setBounds(241, 105, 91, 23);
 
         insert = new Button(control, SWT.NONE);
         insert.setBounds(354, 103, 75, 25);
         insert.setText("Insert");
-        insert.addSelectionListener(new SelectionListener(){
-
+        insert.addSelectionListener(new SelectionAdapter() {
             @Override
-            public void widgetSelected( SelectionEvent e ) {
-                StringBuffer str = new StringBuffer();
-                str.append(attribute.getText() + " " + operation.getText() + " " + value.getText());
-                text.setText(str.toString());
-                validate();
-            }
+            public void widgetSelected(SelectionEvent e) {
+                if (attribute.isFocusControl() && attribute.getSelectionIndex() != -1) {
+                    String selectedAttribute = attribute.getText();
+                    text.insert(selectedAttribute);
 
-            @Override
-            public void widgetDefaultSelected( SelectionEvent e ) {
-                // TODO Auto-generated method stub
+                    attribute.clearSelection();
+                    changed();
+                    text.setFocus();
+                    return;
+                }
 
+                if (operation.isFocusControl() && operation.getSelectionIndex() != -1) {
+                    String selectedOperation = operation.getText();
+                    text.insert(selectedOperation);
+
+                    operation.clearSelection();
+
+                    changed();
+                    text.setFocus();
+                    return;
+                }
+
+                if (value.isFocusControl() && value.getSelectionIndex() != -1) {
+                    String selectedValue = value.getText();
+                    text.insert(selectedValue);
+
+                    value.clearSelection();
+
+                    changed();
+                    text.setFocus();
+                    return;
+                }
             }
         });
 
@@ -212,25 +259,12 @@ public class CQLFilterViewer extends IFilterViewer {
     public Control getControl() {
         return control;
     }
-    /**
-     * The isRequired flag will be used to determine the default decoration to show (if there is no
-     * warning or error to take precedence).
-     * <p>
-     * Please note that if this is a required field Expression.NIL is not considered to be a valid
-     * state.
-     * </p>
-     * 
-     * @param isRequired true if this is a required field
-     */
-    public void setRequired( boolean isRequired ) {
-        this.isRequired = isRequired;
-    }
 
-    /**
-     * @return true if this is a required field
-     */
-    public boolean isRequired() {
-        return isRequired;
+    protected void changed() {
+        Filter parsedFilter = validate();
+        if (parsedFilter != null) {
+            internalUpdate(parsedFilter);
+        }
     }
 
     /**
@@ -245,204 +279,63 @@ public class CQLFilterViewer extends IFilterViewer {
      * 
      * @return true if the field is valid
      */
-    public boolean validate() {
-        FieldDecorationRegistry decorations = FieldDecorationRegistry.getDefault();
+    protected Filter validate() {
+        Filter parsedFilter;
         try {
-            filter = ECQL.toFilter(text.getText());
+            parsedFilter = ECQL.toFilter(text.getText());
         } catch (CQLException e) {
-            filter = null;
-            feedback.setDescriptionText(e.getSyntaxError());
-            feedback.setImage(decorations.getFieldDecoration(FieldDecorationRegistry.DEC_ERROR)
-                    .getImage());
-            feedback.show();
-            return false;
+            feedback(e.getLocalizedMessage(), e);
+            return null;
         }
-        if (filter == null) {
-            feedback.setDescriptionText("(empty)");
-            feedback.setImage(decorations.getFieldDecoration(FieldDecorationRegistry.DEC_ERROR)
-                    .getImage());
-            feedback.show();
-
-            return false; // so not valid!
+        if (parsedFilter == null) {
+            feedback("(empty)");
+            return null;
         }
-        if (isRequired && filter == Expression.NIL) {
-            feedback.setDescriptionText("Required");
-            feedback.setImage(decorations.getFieldDecoration(FieldDecorationRegistry.DEC_REQUIRED)
-                    .getImage());
-            feedback.show();
-
-            return false;
+        if (input != null && input.isRequired() && filter == Expression.NIL) {
+            feedback("Required", true);
+            return null;
         }
-        feedback.setDescriptionText(null);
-        feedback.setImage(null);
-        feedback.hide();
-        return true;
-    }
-
-    /**
-     * Used to check for any validation messages (such as required field etc...)
-     * 
-     * @return Validation message
-     */
-    public String getValidationMessage() {
-        FieldDecorationRegistry decorations = FieldDecorationRegistry.getDefault();
-        if (feedback.getImage() == decorations
-                .getFieldDecoration(FieldDecorationRegistry.DEC_ERROR).getImage()) {
-            String errorMessage = feedback.getDescriptionText();
-            if (errorMessage == null) {
-                errorMessage = "invalid";
-            }
-            return errorMessage;
-        }
-        if (feedback.getImage() == decorations.getFieldDecoration(
-                FieldDecorationRegistry.DEC_REQUIRED).getImage()) {
-            String requiredMessage = feedback.getDescriptionText();
-            if (requiredMessage == null) {
-                requiredMessage = "invalid";
-            }
-            return requiredMessage;
-        }
-        return null; // all good then
-    }
-    /**
-     * Provides access to the Expression being used by this viewer.
-     * <p>
-     * 
-     * @return Expression being viewed; may be Expression.NIL if empty (but will not be null)
-     */
-    @Override
-    public Filter getInput() {
-        return filter;
-    }
-
-    @Override
-    public ISelection getSelection() {
-        if (filter == null) return null;
-
-        IStructuredSelection selection = new StructuredSelection(filter);
-        return selection;
+        feedback();
+        return parsedFilter;
     }
 
     @Override
     public void refresh() {
-        if (text != null && !text.isDisposed()) {
-            text.getDisplay().asyncExec(new Runnable(){
-                public void run() {
-                    if (text == null || text.isDisposed()) return;
-                    String cql = CQL.toCQL(filter);
-                    text.setText(cql);
-                }
-            });
+        if (input != null) {
+            SortedSet<String> names = new TreeSet<String>(input.toPropertyList());
+            proposalProvider.setExtra(names);
+
+            attribute.setItems(names.toArray(new String[names.size()]));
+
         }
+        refreshFilter();
     }
 
-    /**
-     * Set the input for this viewer.
-     * <p>
-     * This viewer accepts several alternative forms of input to get started:
-     * <ul>
-     * <li>Expression - is used directly
-     * <li>String - is parsed by ECQL.toExpression; and if successful it is used
-     * </ul>
-     * If you have other suggestions (PropertyName could be provided by an AttributeType for
-     * example) please ask on the mailing list.
-     * 
-     * @param input Expression or String to use as the input for this viewer
-     */
-    @Override
-    public void setInput( Object input ) {
-        if (input instanceof Filter) {
-            filter = (Filter) input;
-            refresh();
-        } else if (input instanceof String) {
-            final String txt = (String) input;
-            try {
-                filter = ECQL.toFilter(txt);
-            } catch (CQLException e) {
-                // feedback that things are bad
-            }
-            // use the text as provided
-            text.getDisplay().asyncExec(new Runnable(){
+    private void refreshFilter() {
+        if (text != null && !text.isDisposed()) {
+            text.getDisplay().asyncExec(new Runnable() {
                 public void run() {
-                    text.setText(txt);
+                    if (text == null || text.isDisposed())
+                        return;
+
+                    if (filter == null) {
+                        text.setText("");
+                    } else {
+                        String cql = CQL.toCQL(filter);
+                        text.setText(cql);
+                    }
                 }
             });
         }
     }
 
     @Override
-    public void setSelection( ISelection selection, boolean reveal ) {
-        // do nothing by default
-    }
-
-    /**
-     * Provide the feedback that everything is fine.
-     * <p>
-     * This method will make use of an associated ControlDecoration if available; if not it will
-     * make use of a tooltip or something.
-     * </p>
-     */
-    public void feedback() {
-        feedback.hide();
-    }
-    /**
-     * Provide the feedback that everything is fine.
-     * <p>
-     * This method will make use of an associated ControlDecoration if available; if not it will
-     * make use of a tooltip or something.
-     * </p>
-     */
-    public void feedback( String warning ) {
-        if (feedback != null) {
-            feedback.setDescriptionText(warning);
-            feedback.show();
-        }
-
-        if (text != null && !text.isDisposed()) {
-            text.setToolTipText(warning);
-        }
-    }
-    /**
-     * Provide the feedback that everything is fine.
-     * <p>
-     * This method will make use of an associated ControlDecoration if available; if not it will
-     * make use of a tooltip or something.
-     * </p>
-     */
-    public void feedback( String error, Exception eek ) {
-
-        if (text != null && !text.isDisposed()) {
-            text.setToolTipText(error + ":" + eek);
-        }
-    }
-    /**
-     * Feature Type to use for attribute names.
-     * 
-     * @param type
-     */
-    public void setSchema( SimpleFeatureType type ) {
-
-        schema = type;
-
-        if (type == null) {
+    public void setFilter(Filter filter) {
+        if (this.filter == filter) {
             return;
         }
-        Set<String> names = new HashSet<String>();
-
-        for( AttributeDescriptor att : type.getAttributeDescriptors() ) {
-            // add to Text area
-            names.add(att.getLocalName());
-            // add to combo box
-            attribute.add(att.getLocalName());
-        }
-
-        proposalProvider.setExtra(names);
+        this.filter = filter;
+        refreshFilter();
+        fireSelectionChanged(new SelectionChangedEvent(CQLFilterViewer.this, getSelection()));
     }
-
-    @Override
-    public Boolean canProcess( Object input ) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
 }
