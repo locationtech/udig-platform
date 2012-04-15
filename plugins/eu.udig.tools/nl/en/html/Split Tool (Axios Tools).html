@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Split Tool (Axios Tools)</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Split Tool (Axios Tools) -->
+       <h1>Split Tool (Axios Tools)</h1>
+       <p> <img src="download/attachments/2719819/split_feature_mode.gif" align="absmiddle" border="0"/> Splits features crossed by a line string</p>
+
+<p>The <em>Split Tool</em> performs the division of features into two or more using a line string drawn by the user as the splitting line.</p>
+
+<h2><a name="SplitTool%28AxiosTools%29-Behaviour"></a>Behaviour</h2>
+
+<p>The <em>Split Tool</em> operates upon the selected features of the current Layer. You can use the <em>Bounding Box Selection</em> tool or any other feature selection method, to limit the features to split prior to use the <em>Split Tool</em>. If the current layer has no selection set, the <em>Split Tool</em> will operate over any Feature in the current layer whose default geometry is crossed by the <em>splitting line</em>.</p>
+
+<p>When the <em>Split Tool</em> proceeds to divide a feature, it will delete the feature being divided and create as many new features as parts the splitting results in.</p>
+
+<p>Note that the <em>Split Tool</em> does not commits the result, but lets you undo the operation if desired, or commit the changes to the backend data repository as you would normally do in uDig.</p>
+
+<h3><a name="SplitTool%28AxiosTools%29-Visualconsistency"></a>Visual consistency</h3>
+
+<p>In order to preserve visual consistency, and thus be consistent with what the user is doing, the geometries created by the <em>Split Tool</em> will be first created in the Map's CRS, and then projected to the backend CRS for storage. This is to ensure the resulting geometries are cut following the line drawn by the user, as doing it the opposite way may lead to a different result if the map and the data CRS's differ.</p>
+
+<h2><a name="SplitTool%28AxiosTools%29-Usage"></a>Usage</h2>
+
+<p>Select the <em>Split Tool</em> from the drop down buttons list as shown in <em>Figure 1</em>.</p>
+
+<p><img src="download/attachments/2719819/split_1.png" align="absmiddle" border="0"/><br/>
+<b>Figure 1, selecting the Split Tool</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<p>Draw the line string to be used as the splitting line, making sure it crosses the geometries you want to divide, as shown in <em>Figure 2</em>.</p>
+
+<p><img src="download/attachments/2719819/split_2.png" align="absmiddle" border="0"/><br/>
+<b>Figure 2 draw split line to divide a LineString</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<p>Double click to add the last splitting line vertex and indicate the split operation to proceed.<br/>
+<em>Figure 3</em> shows how the LineString on the current layer that were crossed by the splitting line was divided in two.</p>
+
+<p><img src="download/attachments/2719819/split_3.png" align="absmiddle" border="0"/><br/>
+<b>Figure 3 LineString divided in two</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<p>The following is another example to split a polygon in various parts.<br/>
+<em>Figure 4</em> shows a <em>splitting line</em> being drawn over a previously selected polygon on the current Layer. The Table View shows the attribute data of the selected polygon.</p>
+
+<p><img src="download/attachments/2719819/split_4.png" align="absmiddle" border="0"/><br/>
+<b>Figure 4 splitting a selected polygon</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<p><em>Figure 5</em> shows the newly created polygons once the <em>splitting line</em> is finished and the split operation proceeded.</p>
+
+<p><img src="download/attachments/2719819/split_5.png" align="absmiddle" border="0"/><br/>
+<b>Figure 5 result of splitting a polygon</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<p>In <em>Figure 6</em> you can see the newly created Features attribute data on the <em>Table View</em>, after selecting the resulting polygons with the _<em>Bounding Box Selection</em> tool. Note each of them have a new Feature ID as expected, and share the same attribute data of the original Feature.</p>
+
+<p><img src="download/attachments/2719819/split_6.png" align="absmiddle" border="0"/><br/>
+<b>Figure 6 new uncommited features created</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<h3><a name="SplitTool%28AxiosTools%29-Addingvertextoneighborfeatures"></a>Adding vertex to neighbor features</h3>
+
+<p>Split tool will add vertex to neighbor features on the next case:<br/>
+-The feature with the added vertex won't be split.<br/>
+-The feature with the new vertex must be touching a feature that has been split.</p>
+
+<p>On the next example we are going to split the feature that lies inside.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/2719819/split-doing.png' target='split-doing.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/2719819/split-doing.png", "split-doing.png", "height=752,width=917,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/2719819/split-doing.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 7 before adding a vertex</b></p>
+
+<p>The inside feature is modified and 2 vertexes are added to the outside feature.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/2719819/split-after1.png' target='split-after1.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/2719819/split-after1.png", "split-after1.png", "height=721,width=918,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/2719819/split-after1.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 8, 2 vertexes were added</b></p>
+
+<small>(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.</small>
+    </body>
+</html>

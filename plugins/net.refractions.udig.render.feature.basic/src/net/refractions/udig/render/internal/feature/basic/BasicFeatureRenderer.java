@@ -36,6 +36,7 @@ import net.refractions.udig.render.feature.basic.internal.Messages;
 import net.refractions.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.geotools.data.FeatureSource;
@@ -80,7 +81,9 @@ public class BasicFeatureRenderer extends RendererImpl {
     protected MapContent map = null;
 
     protected Layer[] layers = null;
-
+    /**
+     * Listens to the rendering process; and reports progress to our IProgressMonitor.
+     */
     protected BasicRenderListener listener = new BasicRenderListener();
 
     public BasicFeatureRenderer() {
@@ -107,7 +110,7 @@ public class BasicFeatureRenderer extends RendererImpl {
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public void render( Graphics2D destination, IProgressMonitor monitor ) throws RenderException {
-        render(destination, getContext().getImageBounds(), monitor);
+        render(destination, getContext().getImageBounds(), monitor, false);
     }
 
     private final static int NOT_INITIALIZED = -2;
@@ -273,22 +276,36 @@ public class BasicFeatureRenderer extends RendererImpl {
         Graphics2D graphics = null;
         try {
             graphics = getContext().getImage().createGraphics();
-            render(graphics, getRenderBounds(), monitor);
+            render(graphics, getRenderBounds(), monitor, true);
         } finally {
             if (graphics != null)
                 graphics.dispose();
         }
     }
-
+    /**
+     * Internal method used to draw into the provided graphics.
+     * 
+     * @param graphics
+     * @param bounds
+     * @param monitor
+     * @param clear
+     * @throws RenderException
+     */
     @SuppressWarnings("unchecked")
-    private void render( Graphics2D graphics, ReferencedEnvelope bounds, IProgressMonitor monitor )
+    private void render( Graphics2D graphics, ReferencedEnvelope bounds, IProgressMonitor monitor, boolean clear)
             throws RenderException {
+        
+        if( monitor == null ){
+            monitor = new NullProgressMonitor();
+        }
+        
         getContext().setStatus(ILayer.WAIT);
         getContext().setStatusMessage(Messages.BasicFeatureRenderer_rendering_status);
         String endMessage = null;
         int endStatus = ILayer.DONE;
         try {
-
+            monitor.beginTask("rendering features", 100);
+            
             if (getContext().getLayer().getSchema() == null
                     || getContext().getLayer().getSchema().getGeometryDescriptor() == null) {
                 endStatus = ILayer.WARNING;
@@ -296,18 +313,19 @@ public class BasicFeatureRenderer extends RendererImpl {
                 return;
             }
 
-            prepareDraw(monitor);
+            prepareDraw( new SubProgressMonitor(monitor, 2));
 
-            if (monitor.isCanceled())
+            if (monitor.isCanceled()){
                 return;
+            }
             // setFeatureLoading(monitor);
+            ReferencedEnvelope validBounds = validateBounds(bounds, new SubProgressMonitor(monitor, 3), getContext());
 
-            ReferencedEnvelope validBounds = validateBounds(bounds, monitor, getContext());
-
-            if (validBounds.isNull())
+            if (validBounds.isNull()){
                 return;
-
+            }
             try {
+                monitor.setTaskName("rendering features - area");
                 validBounds.transform(getContext().getLayer().getCRS(), true);
             } catch (TransformException te) {
                 RendererPlugin.log("viewable area is available in the layer CRS", te); //$NON-NLS-1$
@@ -323,10 +341,12 @@ public class BasicFeatureRenderer extends RendererImpl {
             } catch (FactoryException e) {
                 throw (RenderException) new RenderException().initCause(e);
             }
-
-            listener.init(monitor);
+            
+            listener.init( new SubProgressMonitor( monitor,90) );
             setQueries();
-
+            
+            monitor.worked(5);
+            
             Point min = getContext().worldToPixel(
                     new Coordinate(validBounds.getMinX(), validBounds
                             .getMinY()));
@@ -351,7 +371,12 @@ public class BasicFeatureRenderer extends RendererImpl {
             // lower right
             paintArea.add(  Math.max(min.x, max.x) + expandPaintAreaBy,
                             Math.max(min.y, max.y) + expandPaintAreaBy);
-
+            
+            if( clear ){ // if partial update on live screen
+                graphics.setBackground(new Color(0,0,0,0));
+                graphics.clearRect(paintArea.x, paintArea.y, paintArea.width, paintArea.height);
+            }
+            
             validBounds=getContext().worldBounds(paintArea);
 
             MapViewport mapViewport = new MapViewport( validBounds );
@@ -451,6 +476,7 @@ public class BasicFeatureRenderer extends RendererImpl {
                     getContext().setStatusMessage(Messages.BasicFeatureRenderer_noFeatures);
                 }
             }
+            monitor.done();
         }
     }
 

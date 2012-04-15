@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Spanish Users Guide : Herramienta Arco</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Spanish Users Guide : Herramienta Arco -->
+       <h1>Herramienta Arco</h1>
+       
+<p><img src="download/attachments/7962779/arc_tool.gif" align="absmiddle" border="0"/> Crea un linestring que se asemeja a un arco dados tres puntos de control (punto inicial, eje y punto final).</p>
+
+<p>La <em>Herramienta Arco</em> permite crear un Feature cuya geometría es una aproximación lineal de la circunferencia de un arco, especificando tres puntos que definen dos cuerdas de arco consecutivas.
+<br clear="all" /></p>
+
+<h2><a name="HerramientaArco-Comportamiento"></a>Comportamiento</h2>
+
+<p><br clear="all" />
+La <em>Herramienta Arco</em> es una herramienta de <em>creación</em> de Features y funciona sobre la capa seleccionada actualmente, así pues la capa seleccionada debe permitir crear geometrías de tipo LineString, tanto si el tipo de feature los especifica como LineString o MultiLineString.
+<br clear="all" />
+Cuando la <em>Herramienta Arco</em> procede a crear el nuevo Feature, no guarda los cambios, permitiendo al usuario deshacer la operación, establecer los valores de los atributos del Feature o guardar los cambios  como normalmente se hace en uDig.
+<br clear="all" /></p>
+
+<h3><a name="HerramientaArco-Consistenciavisual"></a>Consistencia visual</h3>
+
+<p><br clear="all" />
+Con el fin de preservar la consistencia visual, y por lo tanto ser consistente con las acciones que lleva a cabo el usuario, la geometría creada por la <em>Herramienta Arco</em> será primeramente creada en el <b>CRS del mapa</b>, y después proyectada al CRS de fondo para ser almacenada. Esto permite al usuario crear el arco  en el CRS deseado estableciendo el CRS del mapa como uno afín a sus propositos. Un efecto secundario será, que si los datos y el CRS del mapa difieren, la geometría será un arco de circunferencia en el CRS del mapa pero probablemente no lo sea en el CRS de los datos.
+<br clear="all" /></p>
+
+<h2><a name="HerramientaArco-Uso"></a>Uso</h2>
+
+<p><br clear="all" />
+Como se muestra en la <em>Figura 1</em>, para comenzar a usar la <em>Herramienta Arco</em> primero debes seleccionarlo desde el menú desplegable en la barra de herramientas de edición de uDig.<br/>
+<img src="download/attachments/7962779/arc_1-es.png" align="left" border="0"/><br clear="all" />
+<b>Figura 1. Seleccionar</b> <b><em>Herramienta Arco</em></b>
+<br clear="all" />
+<br clear="all" />
+Una vez que la herramienta es seleccionada, necesita especificar tres puntos que definan el arco. Para cualquiera de los tres puntos puede usar el area de <b>snap</b>, si es activado, con el fin de seleccionar automáticamente el vértice más cercano de otro Feature.<br/>
+La <em>Figura 2</em> muestra el resultante cuando se han especificado tan solo dos puntos. Podrá ver el arco resultante en cualquier momento hasta que el tercer punto sea especificado.</p>
+
+<p><img src="download/attachments/7962779/arc_2.png" align="left" border="0"/><br clear="all" />
+<b>Figura 2. Especificar puntos de control</b>
+<br clear="all" />
+<br clear="all" />
+Con un solo click, especifique el tercer punto y el Feature con una geometría de arco se creará como se muestra en la <em>Figura 3</em>. La geometría resultante será un LineString aproximado del verdadero arco.<br/>
+<img src="download/attachments/7962779/arc_3.png" align="left" border="0"/><br clear="all" />
+<b>Figura 3. Arco creado tras especificar el tercer punto</b></p>
+
+<small>(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.</small>
+    </body>
+</html>

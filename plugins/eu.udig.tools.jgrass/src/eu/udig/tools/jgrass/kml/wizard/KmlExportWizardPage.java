@@ -86,7 +86,7 @@ public class KmlExportWizardPage extends WizardPage {
         outFolderButton.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
 
             public void widgetSelected( org.eclipse.swt.events.SelectionEvent e ) {
-                FileDialog saveKmlDialog = new FileDialog(outFolderButton.getShell(), SWT.OPEN);
+                FileDialog saveKmlDialog = new FileDialog(outFolderButton.getShell(), SWT.SAVE);
                 saveKmlDialog.setFilterExtensions(new String[]{"*.kml"}); //$NON-NLS-1$
                 String path = saveKmlDialog.open();
                 if (path == null || path.length() < 1) {

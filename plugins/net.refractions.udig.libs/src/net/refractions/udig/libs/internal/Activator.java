@@ -1,6 +1,7 @@
 package net.refractions.udig.libs.internal;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,6 +21,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.osgi.service.debug.DebugOptions;
+import org.geotools.data.DataUtilities;
 import org.geotools.factory.GeoTools;
 import org.geotools.factory.Hints;
 import org.geotools.factory.Hints.Key;
@@ -32,8 +34,10 @@ import org.geotools.referencing.ReferencingFactoryFinder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.referencing.factory.PropertyAuthorityFactory;
 import org.geotools.referencing.factory.ReferencingFactoryContainer;
+import org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory;
 import org.geotools.resources.image.ImageUtilities;
 import org.geotools.util.logging.Logging;
+import org.jfree.chart.urls.URLUtilities;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
@@ -64,6 +68,9 @@ public class Activator implements BundleActivator {
     public static String ID = "net.refractions.udig.libs"; //$NON-NLS-1$
     public static String JDBC_DATA_TRACE_FINE = "net.refractions.udig.libs/debug/data/jdbc/fine";
     public static String JDBC_TRACE_FINE = "net.refractions.udig.libs/debug/jdbc/fine";
+
+    private static final String DATABASES_FOLDER_NAME = "databases";
+    private static final String EPSG_DATABASEFOLDER_PREFIX = "epsg_v";
 
     @SuppressWarnings("deprecation")
 	public void start( final BundleContext context ) throws Exception {
@@ -155,7 +162,9 @@ public class Activator implements BundleActivator {
             monitor = new NullProgressMonitor();
 
         monitor.beginTask(Messages.Activator_EPSG_DATABASE, 100);
-
+        
+        unpackEPSGDatabase();
+        
         searchEPSGProperties(bundle, new SubProgressMonitor(monitor, 20));
 
         loadEPSG(bundle, new SubProgressMonitor(monitor, 60));
@@ -190,7 +199,59 @@ public class Activator implements BundleActivator {
             iter.next();
         }
     }
-
+    /**
+     * Location of the EPSG database; defaults to a folder in the {@link Platform#getInstallLocation()}.
+     * <p>
+     * You can check to see if this file exists to determine if the database is already unpacked.
+     * 
+     * @return folder used for the EPSG database
+     */
+    public static File epsgDatabaseFile(){
+        // unpack into the shared configuration location
+        try {
+            Location configLocation = Platform.getInstallLocation();
+            return doEpsg(configLocation);
+        } catch (MalformedURLException e) {
+            // unable to use the config directory - perhaps the user does not have permission
+        }
+        // if that did not work unpack into the user's data directory
+        try {
+            Location dataLocation = Platform.getInstanceLocation();
+            return doEpsg(dataLocation);
+        } catch (MalformedURLException e) {
+            // unable to use instance location - ie the data directory
+        }
+        return null; // database location not known - temporary directory will be used
+    }
+    
+    private static File doEpsg(Location configLocation) throws MalformedURLException{
+        File config = DataUtilities.urlToFile( configLocation.getURL() );
+        if( config.canWrite() ){
+            URL databaseDirectoryUrl = new URL( configLocation.getURL(), DATABASES_FOLDER_NAME );
+            File directory = DataUtilities.urlToFile( databaseDirectoryUrl );
+            File epsgDirectory = new File( directory, EPSG_DATABASEFOLDER_PREFIX + ThreadedHsqlEpsgFactory.VERSION );
+            
+            return epsgDirectory;
+        }
+        return null;
+    }
+    
+    public static void unpackEPSGDatabase(){
+        File file = epsgDatabaseFile();
+        if( file == null ){
+            // default geotools temporary directory will be used
+            return;
+        }
+        File directory = file.getParentFile();
+        boolean created = directory.exists() || directory.mkdirs();
+        if( created ){
+            if( isDebugging() ){
+                System.out.println("EPSG database location: "+file);
+            }
+            System.setProperty( ThreadedHsqlEpsgFactory.DIRECTORY_KEY, directory.toString() );
+        }
+    }
+    
     /**
      * Will load the EPSG database; this will trigger the unpacking of the EPSG database (which may
      * take several minutes); and check in a few locations for an epsg.properties file to load: the
@@ -219,6 +280,7 @@ public class Activator implements BundleActivator {
             URL epsg = null;
             Location configLocaiton = Platform.getInstallLocation();
             Location dataLocation = Platform.getInstanceLocation();
+            
             if (dataLocation != null) {
                 try {
                     URL url = dataLocation.getURL();
@@ -342,6 +404,7 @@ public class Activator implements BundleActivator {
             // Show EPSG authority chain if in debug mode
             //
             if (Platform.inDebugMode()) {
+            	System.out.println("Coordinate Reference System definitions supplied by:");
                 CRS.main(new String[]{"-dependencies"}); //$NON-NLS-1$
             }
             // Verify EPSG authority configured correctly
@@ -376,14 +439,6 @@ public class Activator implements BundleActivator {
         DirectPosition there = new DirectPosition2D(WGS84, -123.47009173007372, 48.54326498732153);
 
         DirectPosition check = transform.transform(here, new GeneralDirectPosition(WGS84));
-        // DirectPosition doubleCheck = transform.inverse().transform( check, new
-        // GeneralDirectPosition(BC_ALBERS) );
-        // if( !check.equals(there)){
-        // String msg =
-        // "Referencing failed to produce expected transformation; check that axis order settings are correct.";
-        // System.out.println( msg );
-        // //throw new FactoryException(msg);
-        // }
         double delta = Math.abs(check.getOrdinate(0) - there.getOrdinate(0))
                 + Math.abs(check.getOrdinate(1) - there.getOrdinate(1));
         if (delta > 0.0001) {

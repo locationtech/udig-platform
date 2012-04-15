@@ -1,5 +1,7 @@
 package net.refractions.udig.catalog.tests.ui.workflow;
 
+import static org.junit.Assert.*;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,10 +23,13 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.After;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
+import org.junit.Test;
 
 @Ignore
-public class ConnectionTest extends TestCase {
+public class ConnectionTest {
 	Shell shell;
 
 	WorkflowWizard wizard;
@@ -36,12 +41,6 @@ public class ConnectionTest extends TestCase {
 	ConnectionPageDecorator page;
 
 	private Workflow workflow;
-
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		
-	}
 
     private void init( String urlString ) {
         ArrayList<String> l = new ArrayList<String>();
@@ -64,12 +63,13 @@ public class ConnectionTest extends TestCase {
 		dialog.setBlockOnOpen(true);
     }
 
-	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		if (!shell.isDisposed())
 			shell.dispose();
 	}
 	
+	@Test
 	public void testButtonState() {
         init("net.refractions.udig.catalog.ui.WMS"); //$NON-NLS-1$
 
@@ -91,6 +91,7 @@ public class ConnectionTest extends TestCase {
 		driver.cancel();
 	}
 	
+	   @Test
 	public void testWorkbenchSelection() {
         init("net.refractions.udig.catalog.ui.WMS"); //$NON-NLS-1$
 
@@ -121,7 +122,7 @@ public class ConnectionTest extends TestCase {
 		assertFalse(a1.fail);
 		driver.cancel();
 	}
-
+	    @Test
 	public void testConnection() {
         init("net.refractions.udig.catalog.ui.WMS"); //$NON-NLS-1$
 
