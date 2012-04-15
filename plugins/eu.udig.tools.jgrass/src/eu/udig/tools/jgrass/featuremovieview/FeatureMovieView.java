@@ -58,7 +58,9 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
+import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
@@ -84,6 +86,8 @@ public class FeatureMovieView extends ViewPart {
     private Button playButton;
     private Label currentFidValue;
 
+    private String previousLayerName = "";
+
     public FeatureMovieView() {
         ImageDescriptor playImageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
                 "icons/play.gif");
@@ -107,9 +111,12 @@ public class FeatureMovieView extends ViewPart {
 
         playButton = new Button(playGroup, SWT.PUSH);
         playButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        playButton.setText("Play");
+        playButton.setText("start");
         playButton.setImage(playImage);
         playButton.addSelectionListener(new SelectionAdapter(){
+            private CoordinateReferenceSystem crs;
+            private SimpleFeatureIterator featureIterator;
+
             public void widgetSelected( SelectionEvent e ) {
                 if (isRunning) {
                     // stop it
@@ -124,11 +131,23 @@ public class FeatureMovieView extends ViewPart {
                     if (selectedLayer != null) {
                         SimpleFeatureSource featureSource;
                         try {
-                            featureSource = (SimpleFeatureSource) selectedLayer.getResource(FeatureSource.class,
-                                    new SubProgressMonitor(new NullProgressMonitor(), 1));
-                            SimpleFeatureCollection featureCollection = featureSource.getFeatures();
-                            final CoordinateReferenceSystem crs = featureCollection.getSchema().getCoordinateReferenceSystem();
-                            final SimpleFeatureIterator featureIterator = featureCollection.features();
+                            String name = selectedLayer.getName();
+                            if (featureIterator == null || !name.equals(previousLayerName) || !featureIterator.hasNext()) {
+                                // restart
+                                if (featureIterator != null) {
+                                    featureIterator.close();
+                                }
+                                featureSource = (SimpleFeatureSource) selectedLayer.getResource(FeatureSource.class,
+                                        new SubProgressMonitor(new NullProgressMonitor(), 1));
+                                if (featureSource == null) {
+                                    noProperLayerSelected();
+                                    return;
+                                }
+                                SimpleFeatureCollection featureCollection = featureSource.getFeatures();
+                                crs = featureCollection.getSchema().getCoordinateReferenceSystem();
+                                featureIterator = featureCollection.features();
+                                previousLayerName = name;
+                            }
 
                             new Thread(new Runnable(){
                                 public void run() {
@@ -160,6 +179,11 @@ public class FeatureMovieView extends ViewPart {
                                         Envelope envelope = geometry.getEnvelopeInternal();
                                         envelope.expandBy(zoomBuffer);
                                         ReferencedEnvelope ref = new ReferencedEnvelope(envelope, crs);
+                                        try {
+                                            ref = ref.transform(activeMap.getViewportModel().getCRS(), true);
+                                        } catch (Exception e1) {
+                                            // ignore
+                                        }
 
                                         UndoableMapCommand selectCommand = SelectionCommandFactory.getInstance()
                                                 .createFIDSelectCommand(selectedLayer, currentFeature);
@@ -181,11 +205,15 @@ public class FeatureMovieView extends ViewPart {
                             e1.printStackTrace();
                         }
                     } else {
-                        MessageDialog.openWarning(getSite().getShell(), "NO LAYER SELECTED",
-                                "A feature layer needs to be selected to use the tool.");
-                        stop();
+                        noProperLayerSelected();
                     }
                 }
+            }
+
+            private void noProperLayerSelected() {
+                MessageDialog.openWarning(getSite().getShell(), "NO LAYER SELECTED",
+                        "A feature layer needs to be selected to use the tool.");
+                stop();
             }
 
         });
@@ -235,10 +263,12 @@ public class FeatureMovieView extends ViewPart {
 
     private synchronized void start() {
         playButton.setImage(stopImage);
+        playButton.setText("stop");
         isRunning = true;
     }
     private synchronized void stop() {
         playButton.setImage(playImage);
+        playButton.setText("start");
         isRunning = false;
     }
 
