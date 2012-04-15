@@ -23,7 +23,10 @@ import java.util.List;
 
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.command.UndoableMapCommand;
+import net.refractions.udig.project.command.factory.SelectionCommandFactory;
 import net.refractions.udig.project.internal.command.navigation.ZoomCommand;
+import net.refractions.udig.project.internal.commands.selection.SelectCommand;
 import net.refractions.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -50,6 +53,7 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.filter.FidFilterImpl;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -116,7 +120,7 @@ public class FeatureMovieView extends ViewPart {
                     start();
 
                     final IMap activeMap = ApplicationGIS.getActiveMap();
-                    ILayer selectedLayer = activeMap.getEditManager().getSelectedLayer();
+                    final ILayer selectedLayer = activeMap.getEditManager().getSelectedLayer();
                     if (selectedLayer != null) {
                         SimpleFeatureSource featureSource;
                         try {
@@ -157,7 +161,10 @@ public class FeatureMovieView extends ViewPart {
                                         envelope.expandBy(zoomBuffer);
                                         ReferencedEnvelope ref = new ReferencedEnvelope(envelope, crs);
 
+                                        UndoableMapCommand selectCommand = SelectionCommandFactory.getInstance()
+                                                .createFIDSelectCommand(selectedLayer, currentFeature);
                                         ZoomCommand zoomCommand = new ZoomCommand(ref);
+                                        activeMap.sendCommandASync(selectCommand);
                                         activeMap.sendCommandASync(zoomCommand);
                                         activeMap.getRenderManager().refresh(null);
                                         try {
