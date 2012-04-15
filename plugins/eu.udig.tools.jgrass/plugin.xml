@@ -49,6 +49,15 @@
             name="Navigation"
             restorable="true">
       </view>
+      <view
+            allowMultiple="false"
+            class="eu.udig.tools.jgrass.featuremovieview.FeatureMovieView"
+            fastViewWidthRatio="0.20"
+            icon="icons/movieview.gif"
+            id="eu.udig.tools.jgrass.featuremovieview.FeatureMovieView"
+            name="Feature Movie View"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.exportWizards">
