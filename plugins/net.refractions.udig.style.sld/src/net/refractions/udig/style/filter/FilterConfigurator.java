@@ -1,5 +1,6 @@
 package net.refractions.udig.style.filter;
 
+import net.miginfocom.layout.LC;
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.filter.FilterViewer;
 import net.refractions.udig.project.ProjectBlackboardConstants;
@@ -78,14 +79,15 @@ public class FilterConfigurator extends IStyleConfigurator {
 
     @Override
     public void createControl( Composite parent ) {
-        parent.setLayout(new MigLayout("", "[right]10[left, grow]", "[c,grow 75,fill]"));
+        MigLayout layout = new MigLayout("", "[right]10[left, grow]", "[top,grow]");
+        parent.setLayout(layout);
 
         Label label = new Label(parent, SWT.SINGLE );
         label.setText("Filter");
 
         ControlDecoration decoration = new ControlDecoration(label, SWT.RIGHT | SWT.TOP );
         text = new CQLFilterViewer(parent, SWT.MULTI );
-        text.getControl().setLayoutData("growx, growy, span, wrap");
+        text.getControl().setLayoutData("growx, growy, span");
         
         FilterInput input = new FilterInput();
         input.setFeedback( decoration );

@@ -142,7 +142,6 @@ public class DefaultExpressionViewer extends IExpressionViewer {
         FunctionFinder ff = new FunctionFinder(null);
 
         proposalProvider = new FunctionContentProposalProvider();
-        proposalProvider.setFiltering(true);
         ContentProposalAdapter adapter = new ContentProposalAdapter(text, new TextContentAdapter(),
                 proposalProvider, null, null);
 
