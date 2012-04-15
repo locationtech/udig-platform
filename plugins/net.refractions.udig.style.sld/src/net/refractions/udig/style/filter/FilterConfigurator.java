@@ -1,12 +1,11 @@
 package net.refractions.udig.style.filter;
 
-import net.miginfocom.layout.LC;
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.filter.FilterViewer;
 import net.refractions.udig.project.ProjectBlackboardConstants;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.style.IStyleConfigurator;
 import net.refractions.udig.ui.filter.CQLFilterViewer;
+import net.refractions.udig.ui.filter.DefaultFilterViewer;
 import net.refractions.udig.ui.filter.FilterInput;
 import net.refractions.udig.ui.filter.IFilterViewer;
 
@@ -86,7 +85,7 @@ public class FilterConfigurator extends IStyleConfigurator {
         label.setText("Filter");
 
         ControlDecoration decoration = new ControlDecoration(label, SWT.RIGHT | SWT.TOP );
-        text = new CQLFilterViewer(parent, SWT.MULTI );
+        text = new DefaultFilterViewer(parent, SWT.MULTI );
         text.getControl().setLayoutData("growx, growy, span");
         
         FilterInput input = new FilterInput();
