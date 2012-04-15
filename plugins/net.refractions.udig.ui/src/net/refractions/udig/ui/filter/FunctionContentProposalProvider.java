@@ -35,11 +35,6 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
      */
     private IContentProposal[] contentProposals;
 
-    /*
-     * Boolean that tracks whether filtering is used.
-     */
-    private boolean filterProposals = false;
-
     private Set<String> extras;
 
     /**
@@ -62,75 +57,46 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
      */
     public IContentProposal[] getProposals(String contents, int position) {
         String word = contents.substring(0, position);
-        int start = contents.lastIndexOf(" ", position);
+        int start = word.lastIndexOf(" ", position);
         if (start != -1) {
             word = contents.substring(start, position);
         }
         word = word.trim();
+        int prefixLength = word.length();
         if (word.length() == 0) {
             return new IContentProposal[0];
         }
-
-        if (filterProposals) {
-            ArrayList<IContentProposal> list = new ArrayList<IContentProposal>();
-            if (extras != null) {
-                for (String extra : extras) {
-                    if (extra.length() >= word.length()
-                            && extra.substring(0, word.length()).equalsIgnoreCase(word)) {
-                        list.add(makeContentProposal(extra));
-                    }
+        
+        ArrayList<IContentProposal> list = new ArrayList<IContentProposal>();
+        if (extras != null) {
+            for (String extra : extras) {
+                if (extra.length() >= word.length()
+                        && extra.substring(0, word.length()).equalsIgnoreCase(word)) {
+                    list.add(makeContentProposal(extra, prefixLength));
                 }
             }
-            for (String proposal : proposals) {
-                if (proposal.length() >= word.length()
-                        && proposal.substring(0, word.length()).equalsIgnoreCase(word)) {
-                    list.add(makeContentProposal(proposal));
-                }
-            }
-            return (IContentProposal[]) list.toArray(new IContentProposal[list.size()]);
-        } else {
-            if (contentProposals == null) {
-                final int LENGTH = proposals.size() + (extras == null ? 0 : extras.size());
-
-                contentProposals = new IContentProposal[LENGTH];
-                int i = 0;
-                if (extras != null && !extras.isEmpty()) {
-                    for (String extra : extras) {
-                        contentProposals[i] = makeContentProposal(extra);
-                        i++;
-                    }
-                }
-                for (String proposal : proposals) {
-                    contentProposals[i] = makeContentProposal(proposal);
-                    i++;
-                }
-            }
-            return contentProposals;
         }
-    }
-
-    /**
-     * Set the boolean that controls whether proposals are filtered according to the current field
-     * content.
-     * 
-     * @param filterProposals <code>true</code> if the proposals should be filtered to show only
-     *        those that match the current contents of the field, and <code>false</code> if the
-     *        proposals should remain the same, ignoring the field content.
-     * @since 3.3
-     */
-    public void setFiltering(boolean filterProposals) {
-        this.filterProposals = filterProposals;
-        // Clear any cached proposals.
-        contentProposals = null;
+        for (String proposal : proposals) {
+            if (proposal.length() >= word.length()
+                    && proposal.substring(0, word.length()).equalsIgnoreCase(word)) {
+                list.add(makeContentProposal(proposal, prefixLength));
+            }
+        }
+        return (IContentProposal[]) list.toArray(new IContentProposal[list.size()]);
     }
 
     /*
      * Make an IContentProposal for showing the specified String.
      */
-    private IContentProposal makeContentProposal(final String proposal) {
+    private IContentProposal makeContentProposal(final String proposal,final int prefixLength) {
         return new IContentProposal() {
             public String getContent() {
-                return proposal;
+                if( prefixLength < proposal.length() ){
+                    return proposal.substring(prefixLength);
+                }
+                else {
+                    return proposal;
+                }
             }
 
             public String getDescription() {
@@ -138,11 +104,11 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
             }
 
             public String getLabel() {
-                return null;
+                return proposal;
             }
 
             public int getCursorPosition() {
-                return proposal.length();
+                return proposal.length() - prefixLength;
             }
         };
     }

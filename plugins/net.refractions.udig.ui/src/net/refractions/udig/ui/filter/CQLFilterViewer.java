@@ -7,6 +7,7 @@ import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -27,22 +28,41 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
 /**
- * A JFace Style Filter Viewer that can be used to build a Filter. Has both a text box for manually
- * entering a Filter and a series of combo boxes to allow the user to build their own filter
+ * Simple {@link IFilterViewer} which uses a {@link Text} to edit a Filter using Constraint Query
+ * Language.
  * <p>
- * This is a slightly more friendly version of {@link DefaultFilterViewer} (which only has a simple
- * text box).
- * </p>
+ * This represents a simple, full featured, filter viewer and can be extended as a starting point
+ * for your own implementation.
+ * <p>
+ * If you would like to extend this viewer please keep in mind that the constructor will add a
+ * single Text control to the provided composite. You can make use of this in your own
+ * implementation as follows:
  * 
- * @author Scott Henderson
+ * <pre>
+ * public MyFilterViewer( Composite composite, int style ){
+ *     super( panel = new Composite( parent), style );
+ *     ...
+ * }
+ * </pre>
+ * <p>
+ * Each time the text is successfully parsed the {@link #getFilter()} is is updated with the latest
+ * value and a {@link SelectionEvent} sent out - usin the {@link #internalUpdate(Filter)} method.
+ * <p>
+ * Suggestions are provided as you type using {@link #proposalProvider}. The {@link #refresh()}
+ * method is called each time {@link #setInput(Object)} is used to change the {@link FilterInput}
+ * giving you a chance to call {@link FunctionContentProposalProvider#setExtra(java.util.Set)} with
+ * any suggestions you would like to add into the mix.
+ * 
+ * @author Jody Garnett
  * @since 1.3.0
  */
 public class CQLFilterViewer extends IFilterViewer {
     /**
-     * Factory used for the general purpose CQLFilterViewer.
+     * Factory used to create our basic CQLFilterViewer as a bare bones
+     * {@link FilterViewerFactory#COMPLETE} implementation capable of editing any filter.
      * 
-     * @author jody
-     * @since 1.2.0
+     * @author Jody Garnett
+     * @since 1.3.2
      */
     public static class Factory extends FilterViewerFactory {
         @Override
@@ -59,44 +79,14 @@ public class CQLFilterViewer extends IFilterViewer {
     }
 
     /**
-     * This is the expression we are working on here.
-     * <p>
-     * We are never going to be "null"; Expression.EXCLUDE is used to indicate an intentionally
-     * empty expression.
+     * The text widget used to enter CQL; each time it is successfully parsed the filter will be
+     * updated and a selection changed event sent out.
      */
-    protected Filter filter = Filter.EXCLUDE;
+    protected Text text;
 
-    protected Composite control;
-
-    /**
-     * This is our internal widget we are sharing with the outside world; in many cases it will be a
-     * Composite.
-     */
-    private Text text;
-
-    /**
-     * Combo box to allow the user to select an attribute to base a filter on
-     */
-    private Combo attribute;
-
-    /**
-     * Combo box to allow the user to select an operation to apply to an attribute
-     */
-    private Combo operation;
-
-    /**
-     * Text box to allow the user to enter a value to base a filter on
-     */
-    private Combo value;
-
-    private Button insert;
-
-    private KeyListener keyListener = new KeyListener() {
+    private KeyListener keyListener = new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
             changed();
-        }
-
-        public void keyPressed(KeyEvent e) {
         }
     };
 
@@ -105,148 +95,38 @@ public class CQLFilterViewer extends IFilterViewer {
     /**
      * Creates an ExpressionViewer using the provided style.
      * <ul>
-     * <li>SWT.SINGLE - A simple text field showing the expression using extended CQL notation; may
-     * be shown as a combo box if either a FeatureType or DialogSettings are provided
-     * <li>SWT.MULTI - A multi line text field; may be shown as an ExpressionBuilder later on
-     * <li>SWT.READ_ONLY - read only
+     * <li>SWT.SINGLE - A simple text field showing the expression using extended CQL notation
      * <li>
-     * <li>SWT.WRAP - useful with SWT.MULTI
-     * <li>SWT.LEFT - alignment
-     * <li>SWT.RIGHT - alignment
-     * <li>SWT.CENTER - alignment
+     * <li>SWT.MULTI - A multi line text field</li>
+     * <li>SWT.READ_ONLY - read only display of a filter</li>
      * </ul>
      * 
      * @param parent
-     * @param none
+     * @param style
      */
     public CQLFilterViewer(Composite parent, int style) {
         super(parent, style);
-        control = new Composite(parent, style);
 
-        int textStyle = style == SWT.DEFAULT ? SWT.BORDER : SWT.MULTI | SWT.V_SCROLL | SWT.BORDER;
-
-        text = new Text(control, textStyle);
-        text.setBounds(10, 10, 430, 60);
-        // feedback = new ControlDecoration(text, SWT.TOP | SWT.LEFT);
-
+        if ((style & SWT.SINGLE) != 0) {
+            text = new Text(parent, SWT.SINGLE | SWT.BORDER);
+        }
+        else if ((style & SWT.MULTI) != 0) {
+            text = new Text(parent, SWT.MULTI|SWT.WRAP|SWT.BORDER|SWT.V_SCROLL);
+        }
+        else { // SWT.DEFAULT for example
+            text = new Text(parent, SWT.SINGLE | SWT.BORDER);
+        }
+        
         proposalProvider = new FunctionContentProposalProvider();
-        proposalProvider.setFiltering(true);
-        ContentProposalAdapter adapter = new ContentProposalAdapter(text, new TextContentAdapter(),
+        TextContentAdapter contentAdapter = new TextContentAdapter();
+        
+        ContentProposalAdapter adapter = new ContentProposalAdapter(text, contentAdapter,
                 proposalProvider, null, null);
 
         // Need to set adapter to replace existing text. Default is insert.
         adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_INSERT);
 
         text.addKeyListener(keyListener);
-
-        Label lblAttribute = new Label(control, SWT.NONE);
-        lblAttribute.setBounds(10, 85, 55, 15);
-        lblAttribute.setText("Attribute");
-
-        attribute = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
-        
-        attribute.setBounds(10, 105, 91, 23);
-        attribute.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                String attributeName = attribute.getText();
-
-                // populate values based on this attribute
-                if (attributeName != null && getInput() != null && getInput().getSchema() != null) {
-                    SimpleFeatureType schema = getInput().getSchema();
-                    AttributeDescriptor descriptor = schema.getDescriptor(attributeName);
-
-                    value.removeAll();
-
-                    SortedSet<String> options = new TreeSet<String>();
-
-                    Object defaultValue = descriptor.getDefaultValue();
-                    if (defaultValue != null) {
-                        options.add(String.valueOf(defaultValue));
-                    }
-                    AttributeType type = descriptor.getType();
-                    if (Number.class.isAssignableFrom(type.getBinding())) {
-                        options.add("0");
-                        options.add("1");
-                        options.add("2");
-                        options.add("3");
-                        options.add("4");
-                        options.add("5");
-                    }
-                    if (options.isEmpty()) {
-                        value.setEnabled(false);
-                    } else {
-                        value.setEnabled(true);
-                        for (String item : options) {
-                            value.add(item);
-                        }
-                    }
-                } else {
-                    value.removeAll();
-                    value.setEnabled(false);
-                }
-            }
-        });
-
-        Label lblOperation = new Label(control, SWT.NONE);
-        lblOperation.setBounds(124, 85, 55, 15);
-        lblOperation.setText("Operation:");
-
-        operation = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
-
-        operation.setBounds(124, 105, 91, 23);
-        operation.add("=");
-        operation.add("<");
-        operation.add(">");
-        operation.add("LIKE");
-
-        Label lblValue = new Label(control, SWT.NONE);
-        lblValue.setBounds(241, 85, 55, 15);
-        lblValue.setText("Value");
-
-        value = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
-        value.setBounds(241, 105, 91, 23);
-
-        insert = new Button(control, SWT.NONE);
-        insert.setBounds(354, 103, 75, 25);
-        insert.setText("Insert");
-        insert.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                if (attribute.isFocusControl() && attribute.getSelectionIndex() != -1) {
-                    String selectedAttribute = attribute.getText();
-                    text.insert(selectedAttribute);
-
-                    attribute.clearSelection();
-                    changed();
-                    text.setFocus();
-                    return;
-                }
-
-                if (operation.isFocusControl() && operation.getSelectionIndex() != -1) {
-                    String selectedOperation = operation.getText();
-                    text.insert(selectedOperation);
-
-                    operation.clearSelection();
-
-                    changed();
-                    text.setFocus();
-                    return;
-                }
-
-                if (value.isFocusControl() && value.getSelectionIndex() != -1) {
-                    String selectedValue = value.getText();
-                    text.insert(selectedValue);
-
-                    value.clearSelection();
-
-                    changed();
-                    text.setFocus();
-                    return;
-                }
-            }
-        });
-
     }
 
     /**
@@ -257,9 +137,12 @@ public class CQLFilterViewer extends IFilterViewer {
      * @return
      */
     public Control getControl() {
-        return control;
+        return text;
     }
 
+    /**
+     * Called when a key is pressed to check if the filter has changed.
+     */
     protected void changed() {
         Filter parsedFilter = validate();
         if (parsedFilter != null) {
@@ -304,13 +187,22 @@ public class CQLFilterViewer extends IFilterViewer {
         if (input != null) {
             SortedSet<String> names = new TreeSet<String>(input.toPropertyList());
             proposalProvider.setExtra(names);
-
-            attribute.setItems(names.toArray(new String[names.size()]));
-
         }
         refreshFilter();
     }
 
+    /** Used to supply a filter for display or editing */
+    @Override
+    public void setFilter(Filter filter) {
+        if (this.filter == filter) {
+            return;
+        }
+        this.filter = filter;
+        refreshFilter();
+        fireSelectionChanged(new SelectionChangedEvent(CQLFilterViewer.this, getSelection()));
+    }
+
+    /** Called to update the viewer text control to display the provided filter */
     private void refreshFilter() {
         if (text != null && !text.isDisposed()) {
             text.getDisplay().asyncExec(new Runnable() {
@@ -329,13 +221,4 @@ public class CQLFilterViewer extends IFilterViewer {
         }
     }
 
-    @Override
-    public void setFilter(Filter filter) {
-        if (this.filter == filter) {
-            return;
-        }
-        this.filter = filter;
-        refreshFilter();
-        fireSelectionChanged(new SelectionChangedEvent(CQLFilterViewer.this, getSelection()));
-    }
 }
