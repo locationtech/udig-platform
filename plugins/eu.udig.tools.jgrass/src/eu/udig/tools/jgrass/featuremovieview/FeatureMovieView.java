@@ -48,6 +48,8 @@ public class FeatureMovieView extends ViewPart {
     private Image stopImage;
     private Text zoomBufferText;
     private double zoomBuffer;
+    private Text timerText;
+    private double timer;
 
     public FeatureMovieView() {
         ImageDescriptor playImageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
@@ -107,6 +109,30 @@ public class FeatureMovieView extends ViewPart {
         });
         updateZoomBuffer();
 
+        Label timerLabel = new Label(paramsGroup, SWT.NONE);
+        timerLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        timerLabel.setText("Timer interval in seconds");
+
+        timerText = new Text(paramsGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        timerText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        timerText.setText("");
+        timerText.addModifyListener(new ModifyListener(){
+            public void modifyText( ModifyEvent e ) {
+                updateTimer();
+            }
+        });
+        updateTimer();
+
+    }
+
+    private void updateTimer() {
+        String text = timerText.getText();
+        try {
+            timer = Double.parseDouble(text);
+        } catch (Exception e) {
+            timer = 4.0;
+            timerText.setText(timer + "");
+        }
     }
 
     private void updateZoomBuffer() {
