@@ -180,7 +180,7 @@ public class FeatureMovieView extends ViewPart {
 
         Button gotoButton = new Button(playGroup, SWT.PUSH);
         gotoButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        gotoButton.setText("Goto");
+        gotoButton.setText("goto");
         gotoButton.setImage(gotoImage);
         gotoButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
@@ -249,7 +249,7 @@ public class FeatureMovieView extends ViewPart {
         Group infoGroup = new Group(parent, SWT.NONE);
         infoGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         infoGroup.setLayout(new GridLayout(1, true));
-        infoGroup.setText("current Feature Info");
+        infoGroup.setText("Current Feature Info");
 
         currentFeatureInfo = new Label(infoGroup, SWT.NONE);
         currentFeatureInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
