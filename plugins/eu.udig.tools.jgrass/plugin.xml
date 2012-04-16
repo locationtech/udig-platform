@@ -55,7 +55,7 @@
             fastViewWidthRatio="0.20"
             icon="icons/movieview.gif"
             id="eu.udig.tools.jgrass.featuremovieview.FeatureMovieView"
-            name="Feature Movie View"
+            name="Feature Walker View"
             restorable="true">
       </view>
    </extension>
