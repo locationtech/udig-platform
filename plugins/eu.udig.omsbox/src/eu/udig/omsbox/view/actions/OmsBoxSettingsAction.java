@@ -63,7 +63,7 @@ public class OmsBoxSettingsAction implements IViewActionDelegate {
             final List<String> resources = dialog.getSelectedResources();
             IRunnableWithProgress operation = new IRunnableWithProgress(){
                 public void run( IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
-                    pm.beginTask("Loading modules from libraries...", IProgressMonitor.UNKNOWN);
+                    pm.beginTask(OmsBoxView.LOADING_MODULES_FROM_LIBRARIES, IProgressMonitor.UNKNOWN);
                     try {
 
                         OmsModulesManager manager = OmsModulesManager.getInstance();
@@ -81,7 +81,7 @@ public class OmsBoxSettingsAction implements IViewActionDelegate {
                     }
                 }
             };
-            PlatformGIS.runInProgressDialog("Load modules", true, operation, true);
+            PlatformGIS.runInProgressDialog(OmsBoxView.SPATIAL_TOOLBOX, true, operation, true);
 
         }
     }
