@@ -18,6 +18,7 @@
 package eu.udig.omsbox.core;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -30,6 +31,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.osgi.service.datalocation.Location;
+import org.geotools.data.DataUtilities;
 
 import oms3.Access;
 import oms3.ComponentAccess;
@@ -74,9 +79,30 @@ public class OmsModulesManager {
         for( String jar : retrieveSavedJars ) {
             addJar(jar);
         }
+
+        /*
+         * and also search in a folder inside the installation
+         * folder for some library jars
+         */
+        Location installLocation = Platform.getInstallLocation();
+        File installFolder = DataUtilities.urlToFile(installLocation.getURL());
+        if (installFolder != null && installFolder.exists()) {
+            File omsboxLibsFolder = new File(installFolder, "omsbox");
+            OmsBoxPlugin.log("Searching module libraries in: " + omsboxLibsFolder.getAbsolutePath());
+            if (omsboxLibsFolder.exists()) {
+                File[] extraJars = omsboxLibsFolder.listFiles(new FilenameFilter(){
+                    public boolean accept( File dir, String name ) {
+                        return name.endsWith(".jar");
+                    }
+                });
+                for( File extraJar : extraJars ) {
+                    addJar(extraJar.getAbsolutePath());
+                }
+            }
+        }
     }
 
-    public static OmsModulesManager getInstance() {
+    public synchronized static OmsModulesManager getInstance() {
         if (modulesManager == null) {
             modulesManager = new OmsModulesManager();
         }

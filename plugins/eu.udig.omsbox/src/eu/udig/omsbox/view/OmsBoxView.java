@@ -364,13 +364,21 @@ public class OmsBoxView extends ViewPart {
      * Resfresh the viewer.
      */
     public void relayout() {
-        Display.getDefault().syncExec(new Runnable(){
-            public void run() {
+        IRunnableWithProgress operation = new IRunnableWithProgress(){
+            public void run( IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
+                pm.beginTask("", IProgressMonitor.UNKNOWN);
                 HashMap<String, List<ModuleDescription>> availableModules = OmsModulesManager.getInstance().browseModules(false);
-                List<ViewerFolder> viewerFolders = ViewerFolder.hashmap2ViewerFolders(availableModules);
-                modulesViewer.setInput(viewerFolders);
+                final List<ViewerFolder> viewerFolders = ViewerFolder.hashmap2ViewerFolders(availableModules);
+
+                Display.getDefault().syncExec(new Runnable(){
+                    public void run() {
+                        modulesViewer.setInput(viewerFolders);
+                    }
+                });
+                pm.done();
             }
-        });
+        };
+        PlatformGIS.runInProgressDialog("Spatial Toolbox library gathering...", true, operation, true);
     }
 
     /**
