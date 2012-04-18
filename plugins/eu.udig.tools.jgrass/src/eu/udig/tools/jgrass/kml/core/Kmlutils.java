@@ -17,15 +17,9 @@
  */
 package eu.udig.tools.jgrass.kml.core;
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.List;
-
-import net.refractions.udig.project.ui.ApplicationGIS;
+import java.io.FileOutputStream;
 
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.FeatureCollection;
@@ -33,8 +27,6 @@ import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
-import org.geotools.feature.type.GeometryDescriptorImpl;
-import org.geotools.feature.type.GeometryTypeImpl;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.kml.KML;
 import org.geotools.kml.KMLConfiguration;
@@ -44,9 +36,6 @@ import org.geotools.xml.Encoder;
 import org.geotools.xml.StreamingParser;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.GeometryDescriptor;
-import org.opengis.feature.type.GeometryType;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 
@@ -119,17 +108,13 @@ public class Kmlutils {
 
         Encoder encoder = new Encoder(new KMLConfiguration());
         encoder.setIndenting(true);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        encoder.encode(newCollection, KML.kml, out);
 
-        String kmlString = new String(out.toByteArray());
-        BufferedWriter bW = null;
+        FileOutputStream fos = new FileOutputStream(kmlFile);
+
         try {
-            bW = new BufferedWriter(new FileWriter(kmlFile));
-            bW.write(kmlString);
+            encoder.encode(newCollection, KML.kml, fos);
         } finally {
-            if (bW != null)
-                bW.close();
+            fos.close();
         }
     }
 
