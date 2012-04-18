@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Label;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.filter.text.cql2.CQL;
+import org.geotools.filter.text.ecql.ECQL;
 import org.geotools.util.Utilities;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -25,24 +26,23 @@ import org.opengis.filter.Filter;
 public class FilterConfigurator extends IStyleConfigurator {
     public static String STYLE_ID = ProjectBlackboardConstants.LAYER__DATA_QUERY;
 
-    //protected Filter filter;
-    
-    protected IFilterViewer text;
+    /** Viewer used to store the current filter; it will only be changed by the user */
+    protected IFilterViewer filterViewer;
 
     /** Will write filter to blackboard on focus lost */
     private ISelectionChangedListener listener = new ISelectionChangedListener(){
         public void selectionChanged( SelectionChangedEvent event ) {
-            if( text == null || text.getControl() == null ||  text.getControl().isDisposed() ){
+            if( filterViewer == null || filterViewer.getControl() == null ||  filterViewer.getControl().isDisposed() ){
                 return; // nothing to see
             }
             
             Filter oldValue = getStyleFilter();
-            Filter filter = text.getFilter();
+            Filter filter = filterViewer.getFilter();
             if( filter == null ){
                 return; // invalid
             }
-            String before = filter != null ? CQL.toCQL(oldValue) : "(empty)";
-            String after = filter != null ? CQL.toCQL(filter) : "(empty)";
+            String before = filter != null ? ECQL.toCQL(oldValue) : "(empty)";
+            String after = filter != null ? ECQL.toCQL(filter) : "(empty)";
             if (!Utilities.equals(before, after)){
                 valueChanged(oldValue, filter);
             }
@@ -78,21 +78,24 @@ public class FilterConfigurator extends IStyleConfigurator {
 
     @Override
     public void createControl( Composite parent ) {
-        MigLayout layout = new MigLayout("", "[right]10[left, grow]", "[top,grow]");
+        MigLayout layout = new MigLayout("insets panel", "[][fill]", "[fill][]");
         parent.setLayout(layout);
 
         Label label = new Label(parent, SWT.SINGLE );
         label.setText("Filter");
-
+        label.setLayoutData("cell 0 0,aligny top");
+        
         ControlDecoration decoration = new ControlDecoration(label, SWT.RIGHT | SWT.TOP );
-        text = new DefaultFilterViewer(parent, SWT.MULTI );
-        text.getControl().setLayoutData("growx, growy, span");
+        filterViewer = new DefaultFilterViewer(parent, SWT.MULTI );
+        filterViewer.getControl().setLayoutData("cell 1 0,grow,width 200:100%:100%,height 60:100%:100%");
         
         FilterInput input = new FilterInput();
         input.setFeedback( decoration );
-        text.setInput(input);
-        text.refresh();
-        
+        filterViewer.setInput(input);
+        filterViewer.refresh();
+//        label = new Label(parent, SWT.SINGLE );
+//        label.setText("Tip: Use the apply button below to preview the selected content");
+//        label.setLayoutData("cell 0 1 2 1,left,grow x");
         listen(true);
     }
 
@@ -106,31 +109,31 @@ public class FilterConfigurator extends IStyleConfigurator {
 
     public void listen( boolean listen ) {
         if (listen) {
-            text.addSelectionChangedListener(listener);
+            filterViewer.addSelectionChangedListener(listener);
         } else {
-            text.removeSelectionChangedListener(listener);
+            filterViewer.removeSelectionChangedListener(listener);
         }
     }
     
     @Override
     protected void refresh() {
-        if (text == null || text.getControl() == null || text.getControl().isDisposed()) {
+        if (filterViewer == null || filterViewer.getControl() == null || filterViewer.getControl().isDisposed()) {
             return;
         }
         SimpleFeatureType type = getLayer().getSchema();
-        text.getInput().setSchema( type );
+        filterViewer.getInput().setSchema( type );
         
         final Filter style = getStyleFilter();
 
-        text.getControl().getDisplay().asyncExec(new Runnable(){
+        filterViewer.getControl().getDisplay().asyncExec(new Runnable(){
             public void run() {
-                if (text == null || text.getControl() == null || text.getControl().isDisposed()) {
+                if (filterViewer == null || filterViewer.getControl() == null || filterViewer.getControl().isDisposed()) {
                     return;
                 }
                 try {
                     listen(false);
-                    text.setFilter( style );
-                    text.refresh();
+                    filterViewer.setFilter( style );
+                    filterViewer.refresh();
                 } finally {
                     listen(true);
                 }
@@ -140,9 +143,9 @@ public class FilterConfigurator extends IStyleConfigurator {
 
     @Override
     public void dispose() {
-        if (text != null) {
+        if (filterViewer != null) {
             listen(false);
-            text = null;
+            filterViewer = null;
         }
         super.dispose();
     }

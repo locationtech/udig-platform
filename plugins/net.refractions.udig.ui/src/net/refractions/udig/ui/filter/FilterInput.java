@@ -16,9 +16,21 @@ import org.opengis.feature.type.AttributeType;
  * Example:
  * 
  * <pre>
- * filterViewer.setInput(new IFilterViewer.Input(schema, true))
+ * // Rule filter is used to turn a rule on or off on a feature by feature basis
+ * FilterInput ruleInput = new FilterInput();
+ * ruleInput.setRequired(false);
+ * ruleInput.setSchema(featureType);
+ * 
+ * Label label = new Label( composite, SWT.DEFAULT );
+ * IExpressionViewer ruleFilterViewer = new CQLFilterViewer(composite, SWT.MULTI);
+ * ruleFilterViewer.setInput(ruleInput);
+ * 
+ * // Acts as a normal viewer with direct access to Filter
+ * ruleFilterViewer.setFilter(filter);
+ * 
+ * // The selection being the edited Filter (you can listen for selection changes)
+ * ruleFilterViewer.setSelection(new StructuredSelection(filter));
  * </pre>
- * <p>
  * 
  * @author Jody Garnett
  */
