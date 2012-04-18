@@ -75,6 +75,9 @@ import eu.udig.omsbox.view.widgets.ModuleGui;
  */
 public class OmsBoxView extends ViewPart {
 
+    public static final String SPATIAL_TOOLBOX = "Spatial Toolbox...";
+    public static final String LOADING_MODULES_FROM_LIBRARIES = "Loading modules from libraries...";
+
     public static final String ID = "eu.udig.omsbox.view.DatabaseView"; //$NON-NLS-1$
 
     private Composite modulesGuiComposite;
@@ -366,7 +369,7 @@ public class OmsBoxView extends ViewPart {
     public void relayout() {
         IRunnableWithProgress operation = new IRunnableWithProgress(){
             public void run( IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
-                pm.beginTask("", IProgressMonitor.UNKNOWN);
+                pm.beginTask(LOADING_MODULES_FROM_LIBRARIES, IProgressMonitor.UNKNOWN);
                 HashMap<String, List<ModuleDescription>> availableModules = OmsModulesManager.getInstance().browseModules(false);
                 final List<ViewerFolder> viewerFolders = ViewerFolder.hashmap2ViewerFolders(availableModules);
 
@@ -378,7 +381,7 @@ public class OmsBoxView extends ViewPart {
                 pm.done();
             }
         };
-        PlatformGIS.runInProgressDialog("Spatial Toolbox library gathering...", true, operation, true);
+        PlatformGIS.runInProgressDialog(SPATIAL_TOOLBOX, true, operation, true);
     }
 
     /**
