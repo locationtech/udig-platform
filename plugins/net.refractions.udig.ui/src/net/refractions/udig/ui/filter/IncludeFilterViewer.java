@@ -38,7 +38,7 @@ public class IncludeFilterViewer extends IFilterViewer {
             if (filter == Filter.EXCLUDE || filter == Filter.INCLUDE) {
                 return APPROPRIATE;
             }
-            return INCOMPLETE;
+            return INCOMPLETE; // only able to display INCLUDE and EXCLDUE
         }
 
         @Override

@@ -10,20 +10,16 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.graphics.FontMetrics;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
 import org.geotools.filter.text.ecql.ECQL;
 import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.AttributeType;
 import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
@@ -93,7 +89,24 @@ public class CQLFilterViewer extends IFilterViewer {
     private FunctionContentProposalProvider proposalProvider;
 
     /**
-     * Creates an ExpressionViewer using the provided style.
+     * Used to configure {@link Text#setSize(int, int)} in terms of a number of rows and columns
+     * (with the calculation based on the current font).
+     * <p>
+     * This size is used as the "preferred" size when the layout manager is doing its work.
+     * 
+     * @param numberOfColumns
+     * @param numberOfRows
+     */
+    protected void setPreferredTextSize( int numberOfColumns, int numberOfRows ){
+        GC gc = new GC (text);
+        FontMetrics fm = gc.getFontMetrics ();
+        int width = 30 * fm.getAverageCharWidth ();
+        int height = fm.getHeight ();
+        gc.dispose();
+        text.setSize (text.computeSize (width, height));
+    }
+    /**
+     * Creates an FilterViewer using the provided style.
      * <ul>
      * <li>SWT.SINGLE - A simple text field showing the expression using extended CQL notation
      * <li>
@@ -108,15 +121,26 @@ public class CQLFilterViewer extends IFilterViewer {
         super(parent, style);
 
         if ((style & SWT.SINGLE) != 0) {
-            text = new Text(parent, SWT.SINGLE | SWT.BORDER);
+            int textStyle = SWT.SINGLE | SWT.BORDER;
+            text = new Text(parent, textStyle);
+            if( (style & SWT.READ_ONLY) != 0 ){
+                textStyle |= SWT.READ_ONLY;
+            }
+            // setPreferredTextSize(30,1 );
         }
         else if ((style & SWT.MULTI) != 0) {
-            text = new Text(parent, SWT.MULTI|SWT.WRAP|SWT.BORDER|SWT.V_SCROLL);
+            int textStyle = SWT.MULTI|SWT.WRAP|SWT.BORDER|SWT.V_SCROLL;
+            if( (style & SWT.READ_ONLY) != 0 ){
+                textStyle |= SWT.READ_ONLY;
+            }
+            text = new Text(parent, textStyle);
+            setPreferredTextSize(60,3);
         }
         else { // SWT.DEFAULT for example
             text = new Text(parent, SWT.SINGLE | SWT.BORDER);
+            setPreferredTextSize(30,1 );
         }
-        
+
         proposalProvider = new FunctionContentProposalProvider();
         TextContentAdapter contentAdapter = new TextContentAdapter();
         
@@ -130,7 +154,7 @@ public class CQLFilterViewer extends IFilterViewer {
     }
 
     /**
-     * This is the widget used to display the Expression; its parent has been provided in the
+     * This is the widget used to display the Filter; its parent has been provided in the
      * ExpressionViewer's constructor; but you may need direct access to it in order to set layout
      * data etc.
      * 
@@ -149,7 +173,33 @@ public class CQLFilterViewer extends IFilterViewer {
             internalUpdate(parsedFilter);
         }
     }
-
+    /** Workaround to support INCLUDE / EXCLUDE pending https://jira.codehaus.org/browse/GEOT-4110 */
+    protected Filter toFilter( String txt ) throws CQLException{
+        if( txt == null ){
+            return null;
+        }
+        else if( "INCLDUE".equals( txt.trim() )){
+            return Filter.INCLUDE;
+        }
+        else if( "EXCLUDE".equals( txt.trim() )){
+            return Filter.EXCLUDE;
+        }
+        return ECQL.toFilter(txt);
+    }
+    /** Workaround to support INCLUDE / EXCLUDE pending https://jira.codehaus.org/browse/GEOT-4110 */
+    protected String toCQL(Filter filter) {
+        if( filter == null ){
+            return null;
+        }
+        else if( filter == Filter.INCLUDE ){
+            return "INCLUDE";
+        }
+        else if( filter == Filter.EXCLUDE ){
+            return "EXCLUDE";
+        }
+        return ECQL.toCQL(filter);
+    }
+    
     /**
      * Check if the expr is valid.
      * <p>
@@ -165,7 +215,7 @@ public class CQLFilterViewer extends IFilterViewer {
     protected Filter validate() {
         Filter parsedFilter;
         try {
-            parsedFilter = ECQL.toFilter(text.getText());
+            parsedFilter = toFilter(text.getText());
         } catch (CQLException e) {
             feedback(e.getLocalizedMessage(), e);
             return null;
@@ -213,12 +263,13 @@ public class CQLFilterViewer extends IFilterViewer {
                     if (filter == null) {
                         text.setText("");
                     } else {
-                        String cql = CQL.toCQL(filter);
+                        String cql = toCQL(filter);
                         text.setText(cql);
                     }
                 }
             });
         }
     }
+
 
 }
