@@ -158,7 +158,7 @@ public class OmsScriptExecutor {
         arguments.add(ramExpr);
 
         // modules jars
-        String[] modulesJars = OmsBoxPlugin.getDefault().retrieveSavedJars();
+        List<String> modulesJars = OmsModulesManager.getInstance().getModulesJars();
         StringBuilder sb = new StringBuilder();
         for( String moduleJar : modulesJars ) {
             sb.append(File.pathSeparator).append(moduleJar);
