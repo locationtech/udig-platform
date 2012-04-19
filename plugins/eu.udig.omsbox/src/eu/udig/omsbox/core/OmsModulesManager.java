@@ -74,10 +74,16 @@ public class OmsModulesManager {
     private URLClassLoader jarClassloader;
 
     private OmsModulesManager() {
+        getModulesJars();
+    }
+
+    public List<String> getModulesJars() {
+        List<String> jarsPathList = new ArrayList<String>();
         // add jars from preferences
         String[] retrieveSavedJars = OmsBoxPlugin.getDefault().retrieveSavedJars();
         for( String jar : retrieveSavedJars ) {
             addJar(jar);
+            jarsPathList.add(jar);
         }
 
         /*
@@ -97,9 +103,11 @@ public class OmsModulesManager {
                 });
                 for( File extraJar : extraJars ) {
                     addJar(extraJar.getAbsolutePath());
+                    jarsPathList.add(extraJar.getAbsolutePath());
                 }
             }
         }
+        return jarsPathList;
     }
 
     public synchronized static OmsModulesManager getInstance() {
