@@ -1,5 +1,7 @@
 package net.refractions.udig.ui.filter;
 
+import java.util.HashMap;
+
 import net.miginfocom.swt.MigLayout;
 
 import org.eclipse.jface.dialogs.PopupDialog;
@@ -62,44 +64,40 @@ public class FilterViewer extends IFilterViewer {
      */
     private PageBook pageBook;
 
-    // private ComboViewer viewerCombo;
-
     /**
      * Id of the viewer set by the user using the provided combo; may be supplied as an initial hint
      * or saved and restored using IMemento or DialogSettings in order to preserve user context.
      */
     private String viewerId;
-
+    
+    /**
+     * Remember the style used so we can pass it on when we create a delegate
+     */
     private int style;
 
     private SelectionListener menuListener = new SelectionAdapter() {
         @Override
         public void widgetSelected(SelectionEvent e) {
-            for (MenuItem item : menu.getItems()) {
-                if (item == e.widget) {
-                    // this is the one we are selecting!
-                    // we need to change to match
-                    if (!item.getSelection()) {
-                        // select this one
-                        item.removeSelectionListener(this);
-                        item.setSelection(true);
-                        item.addSelectionListener(this);
-                    }
-                } else {
-                    if (item.getSelection()) {
-                        // unselect this one
-                        item.removeSelectionListener(this);
-                        item.setSelection(false);
-                        item.addSelectionListener(this);
-                    }
-                }
-            }
+            MenuItem menuItem = (MenuItem) e.widget;
+            
+            Object data = menuItem.getData();
+            boolean selected = menuItem.getSelection();
 
+            if( selected && data instanceof String ){
+                showViewer( (String) data );
+            }
         }
     };
 
     private Menu menu;
 
+    private HashMap<String, IFilterViewer> pages;
+
+    private Label placeholder;
+
+    public FilterViewer(Composite parent) {
+        this( parent, SWT.DEFAULT );
+    }
     /**
      * Creates an FilterViewer using the provided style.
      * <ul>
@@ -113,18 +111,22 @@ public class FilterViewer extends IFilterViewer {
      * @param style
      */
     public FilterViewer(Composite parent, int style) {
-        super(parent, style);
         control = new Composite(parent, SWT.NO_SCROLL);
         control.setLayout(new MigLayout("insets 0", "[fill][]", "[fill]"));
-
+        
         pageBook = new PageBook(control, SWT.NO_SCROLL);
-
-        pageBook.setLayoutData("cell 0 0,grow,width 200:100%:100%,height 16:75%:90%");
-
+        pageBook.setLayoutData("cell 0 0,grow,width 200:100%:100%,height 18:75%:100%");
+        
+        placeholder = new Label( pageBook, SWT.DEFAULT );
+        placeholder.setText("Choose filter editor");
+        
         delegate = new DefaultFilterViewer(pageBook, style);
         delegate.addSelectionChangedListener(listener);
         pageBook.showPage(delegate.getControl());
-
+        
+        this.pages = new HashMap<String,IFilterViewer>();
+        pages.put("builder", delegate );
+        
         Label config = new Label(control, SWT.SINGLE);
         config.setImage(JFaceResources.getImage(PopupDialog.POPUP_IMG_MENU));
         config.setLayoutData("cell 1 0,aligny top,height 16!, width 16!");
@@ -133,15 +135,13 @@ public class FilterViewer extends IFilterViewer {
         MenuItem builderMenuItem = new MenuItem(menu, SWT.RADIO);
         builderMenuItem.setSelection(true);
         builderMenuItem.setText("Builder");
-        builderMenuItem.setData("Builder");
+        builderMenuItem.setData("builder");
         builderMenuItem.addSelectionListener(menuListener);
 
         MenuItem cqlMenuItem = new MenuItem(menu, SWT.RADIO);
         cqlMenuItem.setText("Constratin Query Language");
-        cqlMenuItem.setData("CQL");
+        cqlMenuItem.setData("cql");
         cqlMenuItem.addSelectionListener(menuListener);
-
-        //config.getControl().setMenu(menu);
 
         config.addMouseListener(new MouseAdapter() {
             public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
@@ -149,6 +149,99 @@ public class FilterViewer extends IFilterViewer {
             }
         });
         this.style = style;
+    }
+
+    protected void showViewer(String newViewerId) {
+        if( newViewerId == null ){
+            // show place holder label or default to CQL
+            newViewerId = "cql";
+        }
+        this.viewerId = newViewerId;
+        
+        // update the menu - (bad design) yes we could of just generated this on the fly
+        for (MenuItem item : menu.getItems()) {
+            if( item.getData().equals( viewerId ) ){
+                // this is the one we are selecting!
+                // we need to change to match
+                if (!item.getSelection()) {
+                    // select this one
+                    item.removeSelectionListener(menuListener);
+                    item.setSelection(true);
+                    item.addSelectionListener(menuListener);
+                }
+            } else {
+                if (item.getSelection()) { // unselect this one
+                    item.removeSelectionListener(menuListener);
+                    item.setSelection(false);
+                    item.addSelectionListener(menuListener);
+                }
+            }
+        }
+        // update the pagebook if needed
+        IFilterViewer viewer = getViewer( this.viewerId );
+        
+        String cqlText = null;
+        if( delegate instanceof CQLFilterViewer ){
+            CQLFilterViewer cqlViewer = (CQLFilterViewer) delegate;
+            cqlText = cqlViewer.text.getText();
+        }
+        
+        if( viewer == null ){
+            pageBook.showPage(placeholder);
+        }
+        else {
+            // configure viewer before display!
+            FilterInput currentInput = getInput();
+            Filter currentFilter = getFilter();
+
+            viewer.setInput( currentInput );
+            viewer.setFilter( currentFilter );
+            viewer.refresh();
+            
+            // if available we can carry over the users text - typos and all
+            if( cqlText != null && viewer instanceof CQLFilterViewer){
+                CQLFilterViewer cqlViewer = (CQLFilterViewer) viewer;
+                cqlViewer.text.setText( cqlText );
+            }
+            // show page and listen to it for changes
+            pageBook.showPage(viewer.getControl());
+            viewer.addSelectionChangedListener(listener);
+        }
+        if( delegate != null ){
+            // showPage has already hidden delegate.getControl()
+            // so now we need to unplug it
+            delegate.removeSelectionChangedListener( listener );
+            delegate.setInput(null);
+        }
+        delegate = viewer;
+    }
+    /**
+     * Lookup viewer implementation for the provided viewerId.
+     * <p>
+     * The viewer will be created if needed; however it will not be hooked
+     * up with {@link #setInput}, {@link #setFilter} and {@link #addSelectionChangedListener}
+     * as this is done by {@link #showViewer(String)} when on an as needed basis.
+     * 
+     * @param viewerId
+     * @return IFilterViewer or null if not available
+     */
+    private IFilterViewer getViewer(String lookupId) {
+        IFilterViewer viewer = pages.get( lookupId );
+        if( viewer != null ){
+            // already constructed
+            return viewer;
+        }
+        if( "builder".equals( lookupId )){
+            viewer = new DefaultFilterViewer( pageBook, this.style );
+            pages.put( "builder", viewer );
+            return viewer;
+        }
+        else if ("cql".equals( lookupId ) ){
+            viewer = new CQLFilterViewer( pageBook, this.style );
+            pages.put( "cql", viewer );
+            return viewer;
+        }
+        return null; // user has requested an unknown id - please display placeholder
     }
 
     public void setViewerId(String id) {

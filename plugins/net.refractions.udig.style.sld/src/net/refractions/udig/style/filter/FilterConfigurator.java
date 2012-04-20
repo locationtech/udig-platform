@@ -120,7 +120,8 @@ public class FilterConfigurator extends IStyleConfigurator {
             return;
         }
         SimpleFeatureType type = getLayer().getSchema();
-        filterViewer.getInput().setSchema( type );
+        FilterInput filterInput = filterViewer.getInput();
+        filterInput.setSchema( type );
         
         final Filter style = getStyleFilter();
 

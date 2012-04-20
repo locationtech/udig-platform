@@ -8,6 +8,7 @@ import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.geotools.filter.FunctionFinder;
 import org.opengis.filter.capability.FunctionName;
+import org.opengis.parameter.Parameter;
 
 /**
  * SimpleContentProposalProvider is a class designed to map a static list of Strings to content
@@ -19,13 +20,15 @@ import org.opengis.filter.capability.FunctionName;
 @SuppressWarnings("deprecation")
 class FunctionContentProposalProvider implements IContentProposalProvider {
 
-    public static Set<String> proposals;
+    protected static Set<String> proposals;
+
+    protected static FunctionFinder functionFinder;
     static {
         proposals = new TreeSet<String>();
-        FunctionFinder functionFinder = new FunctionFinder(null);
+        functionFinder = new FunctionFinder(null);
 
         for (FunctionName function : functionFinder.getAllFunctionDescriptions()) {
-            proposals.add(function.getName().toLowerCase());
+            proposals.add(function.getName());
         }
     }
 
@@ -33,7 +36,7 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
      * The proposals mapped to IContentProposal. Cached for speed in the case where filtering is not
      * used.
      */
-    private IContentProposal[] contentProposals;
+    // private IContentProposal[] contentProposals;
 
     private Set<String> extras;
 
@@ -66,20 +69,21 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
         if (word.length() == 0) {
             return new IContentProposal[0];
         }
-        
+
         ArrayList<IContentProposal> list = new ArrayList<IContentProposal>();
         if (extras != null) {
             for (String extra : extras) {
                 if (extra.length() >= word.length()
-                        && extra.substring(0, word.length()).equalsIgnoreCase(word)) {
+                        && extra.substring(0, word.length()).equals(word)) {
                     list.add(makeContentProposal(extra, prefixLength));
                 }
             }
         }
         for (String proposal : proposals) {
             if (proposal.length() >= word.length()
-                    && proposal.substring(0, word.length()).equalsIgnoreCase(word)) {
-                list.add(makeContentProposal(proposal, prefixLength));
+                    && proposal.substring(0, word.length()).equals(word)) {
+                IContentProposal contentProposal = makeContentProposal(proposal, prefixLength);
+                list.add(contentProposal);
             }
         }
         return (IContentProposal[]) list.toArray(new IContentProposal[list.size()]);
@@ -88,19 +92,112 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
     /*
      * Make an IContentProposal for showing the specified String.
      */
-    private IContentProposal makeContentProposal(final String proposal,final int prefixLength) {
+    private IContentProposal makeContentProposal(final String proposal, final int prefixLength) {
         return new IContentProposal() {
             public String getContent() {
-                if( prefixLength < proposal.length() ){
+                if (prefixLength < proposal.length()) {
                     return proposal.substring(prefixLength);
-                }
-                else {
+                } else {
                     return proposal;
                 }
             }
 
             public String getDescription() {
+                FunctionName description = functionFinder.findFunctionDescription(proposal);
+                if (description != null) {
+                    StringBuilder builder = new StringBuilder();
+
+                    builder.append(description.getName());
+                    String seperator = null;
+                    if (description.getArguments() != null && !description.getArguments().isEmpty()) {
+                        for (Parameter<?> param : description.getArguments()) {
+                            if (seperator == null) {
+                                builder.append("(");
+                                seperator = ",";
+                            } else {
+                                builder.append(seperator);
+                            }
+                            builder.append(param.getName());
+                        }
+
+                        builder.append(")\nWhere:\n");
+                        for (Parameter<?> param : description.getArguments()) {
+                            builder.append("  ");
+                            describeParameter(builder, param);
+                            builder.append("\n");
+                        }
+                    }
+                    if (description.getReturn() != null) {
+                        builder.append("Result:\n");
+                        Parameter<?> param = description.getReturn();
+                        
+                        builder.append(" ");
+                        describeParameter(builder, param);
+                        builder.append("\n");
+                    }
+                    return builder.toString();
+                }
                 return null;
+            }
+
+            private void describeParameter(StringBuilder builder, Parameter<?> param) {
+                builder.append(param.getName());
+                builder.append(" ");
+                if( param.getType() != Object.class ){
+                    builder.append( param.getType().getSimpleName() );
+                    builder.append(" ");
+                }
+                
+                builder.append(": ");
+                if (param.isRequired()) {
+                    builder.append("Required ");
+                }
+                if ( param.getMinOccurs() == 1 && param.getMaxOccurs() == 1){
+                    // ignore
+                }
+                else if ( param.getMinOccurs() == 0 && param.getMaxOccurs() == 1){
+                    builder.append("Optional ");
+                }
+                else {
+                    builder.append("(");
+                    builder.append(param.getMinOccurs());
+                    builder.append("-");
+                    if (param.getMaxOccurs() < 0 || param.getMaxOccurs() == Integer.MAX_VALUE ) {
+                        builder.append("unbound");
+                    } else {
+                        builder.append(param.getMaxOccurs());
+                    }
+                    builder.append(") ");
+                }
+                if (param.getDescription() != null) {
+                    builder.append(param.getDescription());
+                    builder.append(" ");
+                }
+                
+                if( param instanceof org.geotools.data.Parameter){
+                    // advanced tips!
+                    org.geotools.data.Parameter<?> parameter = (org.geotools.data.Parameter<?>) param;
+                    if( parameter.metadata.containsKey( parameter.OPTIONS )){
+                        builder.append( " Options: ");
+                        builder.append( parameter.metadata.get( parameter.OPTIONS ));
+                        builder.append(" ");
+                    }
+                    if( parameter.metadata.containsKey( parameter.LENGTH )){
+                        builder.append( " Length: ");
+                        builder.append( parameter.metadata.get( parameter.LENGTH ));
+                        builder.append(" ");
+                    }
+                    if( parameter.metadata.containsKey( parameter.MIN )){
+                        builder.append( " Min: ");
+                        builder.append( parameter.metadata.get( parameter.MIN ));
+                        builder.append(" ");
+                    }
+                    if( parameter.metadata.containsKey( parameter.MAX )){
+                        builder.append( " Max: ");
+                        builder.append( parameter.metadata.get( parameter.MAX ));
+                        builder.append(" ");
+                    }
+                }
             }
 
             public String getLabel() {
@@ -115,6 +212,6 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
 
     public void setExtra(Set<String> names) {
         this.extras = names;
-        this.contentProposals = null;
+        // this.contentProposals = null;
     }
 }

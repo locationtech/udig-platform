@@ -96,9 +96,9 @@ public class DefaultExpressionViewer extends IExpressionViewer {
         public void keyReleased(KeyEvent e) {
             // we can try and parse this puppy; and issue a selection changed
             // event when we actually have an expression that works
-            String before = expr != null ? CQL.toCQL(expr) : "(empty)";
+            String before = expr != null ? ECQL.toCQL(expr) : "(empty)";
             validate();
-            String after = expr != null ? CQL.toCQL(expr) : "(empty)";
+            String after = expr != null ? ECQL.toCQL(expr) : "(empty)";
             if (expr != null && !Utilities.equals(before, after)) {
                 fireSelectionChanged(new SelectionChangedEvent(DefaultExpressionViewer.this,
                         getSelection()));

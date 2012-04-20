@@ -138,7 +138,7 @@ public abstract class FilterViewerFactory {
      * @param filter Existing filter provided by user, may be null
      */
     public int appropriate(SimpleFeatureType schema, Filter filter) {
-        return INCOMPLETE; // default to listing the viewer but not recomending it
+        return INCOMPLETE; // default to listing the viewer but not recommending it
     }
 
     /**
