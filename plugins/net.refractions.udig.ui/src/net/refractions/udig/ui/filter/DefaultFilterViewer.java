@@ -16,37 +16,23 @@
  */
 package net.refractions.udig.ui.filter;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.miginfocom.swt.MigLayout;
 
-import org.eclipse.jface.fieldassist.ContentProposalAdapter;
-import org.eclipse.jface.fieldassist.TextContentAdapter;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
-import org.geotools.filter.text.cql2.CQL;
-import org.geotools.filter.text.cql2.CQLException;
-import org.geotools.filter.text.ecql.ECQL;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.AttributeType;
 import org.opengis.filter.Filter;
-import org.opengis.filter.expression.Expression;
 
 /**
  * A very simple {@link IFilterViewer} using a text with Constraint Query Language and a few combo
@@ -61,7 +47,9 @@ import org.opengis.filter.expression.Expression;
  */
 public class DefaultFilterViewer extends CQLFilterViewer {
     /**
-     * Factory hooked into eclipse extension point.
+     * Factory used to hook this into filterViewer extension point.
+     * 
+     * @see FilterViewer for details of programatic use
      * 
      * @author Jody Garnett
      * @since 1.3.2
@@ -71,6 +59,7 @@ public class DefaultFilterViewer extends CQLFilterViewer {
         public int appropriate(SimpleFeatureType schema, Filter filter) {
             return COMPLETE;
         }
+        @Override
         public IFilterViewer createViewer(Composite parent, int style) {
             return new DefaultFilterViewer(parent, style);
         }
@@ -139,6 +128,16 @@ public class DefaultFilterViewer extends CQLFilterViewer {
             }
         }
     };
+    
+//    private SelectionAdapter insertTextListener = new SelectionAdapter() {
+//        public void widgetSelected(SelectionEvent e) {
+//            Combo combo = (Combo) e.widget;
+//            String insertText = combo.getText();
+//            if( insertText != null ){
+//                text.insert( insertText );
+//            }
+//        };
+//    };
 
     /**
      * Creates ExpressionViewer using the provided style.

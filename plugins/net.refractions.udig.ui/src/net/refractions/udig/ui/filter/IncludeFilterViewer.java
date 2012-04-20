@@ -23,10 +23,10 @@ import org.opengis.filter.Filter;
  */
 public class IncludeFilterViewer extends IFilterViewer {
     /**
-     * Factory used for the general purpose CQLFilterViewer.
+     * Factory used for the general purpose IncludeFilterViewer.
      * 
-     * @author jody
-     * @since 1.2.0
+     * @author Jody Garnett
+     * @since 1.3.2
      */
     public static class Factory extends FilterViewerFactory {
         /**
@@ -40,7 +40,6 @@ public class IncludeFilterViewer extends IFilterViewer {
             }
             return INCOMPLETE; // only able to display INCLUDE and EXCLDUE
         }
-
         @Override
         public IFilterViewer createViewer(Composite parent, int style) {
             return new IncludeFilterViewer(parent, style);
@@ -77,8 +76,6 @@ public class IncludeFilterViewer extends IFilterViewer {
      * @param none
      */
     public IncludeFilterViewer(Composite parent, int style) {
-        super(parent, style);
-        
         control = new Composite(parent, style);
         
         enableButton = new Button(control, SWT.RADIO);

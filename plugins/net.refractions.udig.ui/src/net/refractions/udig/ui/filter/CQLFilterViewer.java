@@ -13,6 +13,7 @@ import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -118,8 +119,6 @@ public class CQLFilterViewer extends IFilterViewer {
      * @param style
      */
     public CQLFilterViewer(Composite parent, int style) {
-        super(parent, style);
-
         if ((style & SWT.SINGLE) != 0) {
             int textStyle = SWT.SINGLE | SWT.BORDER;
             text = new Text(parent, textStyle);
@@ -149,7 +148,7 @@ public class CQLFilterViewer extends IFilterViewer {
 
         // Need to set adapter to replace existing text. Default is insert.
         adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_INSERT);
-
+        adapter.setPopupSize( new Point( 400, 300 ));
         text.addKeyListener(keyListener);
     }
 
