@@ -64,10 +64,10 @@ public class CQLFilterViewer extends IFilterViewer {
     public static class Factory extends FilterViewerFactory {
         @Override
         /**
-         * Slightly prefer CQLFilterViewer to DefaultFilterViewer.
+         * Consider CQLFilterViewer a fallback plan.
          */
         public int appropriate(SimpleFeatureType schema, Filter filter) {
-            return COMPLETE + 1;
+            return COMPLETE - 1;
         }
 
         public IFilterViewer createViewer(Composite parent, int style) {
@@ -220,12 +220,10 @@ public class CQLFilterViewer extends IFilterViewer {
             return null;
         }
         if (parsedFilter == null) {
-            feedback("(empty)");
-            return null;
-        }
-        if (input != null && input.isRequired() && filter == Expression.NIL) {
-            feedback("Required", true);
-            return null;
+            if (input != null && input.isRequired() ) {
+                feedback("Required", true);
+                return null;
+            }
         }
         feedback();
         return parsedFilter;
@@ -261,9 +259,11 @@ public class CQLFilterViewer extends IFilterViewer {
 
                     if (filter == null) {
                         text.setText("");
+                        feedback("Empty");
                     } else {
                         String cql = toCQL(filter);
                         text.setText(cql);
+                        feedback();
                     }
                 }
             });

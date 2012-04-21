@@ -59,7 +59,7 @@ ExpressionViewers used to generate a value on demand (for use when defining a Fi
 
    <element name="filterViewer">
       <complexType>
-         <attribute name="id" type="string">
+         <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
                   
@@ -78,7 +78,7 @@ Example: CQL or Include
                </appInfo>
             </annotation>
          </attribute>
-         <attribute name="class" type="string">
+         <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
                   
@@ -103,7 +103,7 @@ Example: CQL or Include
 
    <element name="expressionViewer">
       <complexType>
-         <attribute name="id" type="string">
+         <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
                   
@@ -122,7 +122,7 @@ Example: CQL or Crayons
                </appInfo>
             </annotation>
          </attribute>
-         <attribute name="class" type="string">
+         <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
                   
@@ -193,7 +193,6 @@ IncludeFilterViewer is an easy to follow example offering two toggle buttons all
 To contribute an expression viewer you will need to implement IExpressionViewer and ExpressionViewerFactory.
 
 RGBExpressionViewer is an easy to follow example allowing the user to edit a Color using red, green and blue values.
-
       </documentation>
    </annotation>
 
@@ -203,7 +202,6 @@ RGBExpressionViewer is an easy to follow example allowing the user to edit a Col
       </appInfo>
       <documentation>
          To use a FilterViewer in your own code you can either use the implementation directly; or offer the user a choice by dropping in the general purpose DefaultFilterViewer (which allows the user to switch between the avaialle implementations using a combo box).
-
       </documentation>
    </annotation>
 

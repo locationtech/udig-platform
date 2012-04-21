@@ -211,8 +211,13 @@ public abstract class IFilterViewer extends Viewer {
                 feedback.setDescriptionText(warning);
                 
                 FieldDecorationRegistry decorations = FieldDecorationRegistry.getDefault();
-                FieldDecoration requiredDecoration = decorations.getFieldDecoration(FieldDecorationRegistry.DEC_REQUIRED);
-                feedback.setImage(requiredDecoration.getImage());
+                if( isRequired ){
+                    FieldDecoration requiredDecoration = decorations.getFieldDecoration(FieldDecorationRegistry.DEC_REQUIRED);
+                    feedback.setImage(requiredDecoration.getImage());
+                } else {
+                    FieldDecoration warningDecoration = decorations.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING );
+                    feedback.setImage(warningDecoration.getImage());
+                }
                 feedback.show();
             }
             Control control = getControl();
@@ -235,7 +240,9 @@ public abstract class IFilterViewer extends Viewer {
             ControlDecoration feedback = input.getFeedback();
             
             feedback.setDescriptionText(error);
-            // feedback.setImage(ERROR_IMAGE);
+            FieldDecorationRegistry decorations = FieldDecorationRegistry.getDefault();
+            FieldDecoration warningDecoration = decorations.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING);
+            feedback.setImage(warningDecoration.getImage());
             feedback.show();
         }
         Control control = getControl();

@@ -108,6 +108,21 @@ public abstract class FilterViewerFactory {
         this.config = config;
     }
 
+    /**
+     * Id provided as part of {@link #config} used to refer to this
+     * factory.
+     * <p>
+     * At the current time this is used to uniquely identify popup menu items (used to choose
+     * a filterViewer) and used by {@link FilterViewer#getViewerId()} allowing
+     * client code to reference the current viewer when saving our DialogSettings.
+     * 
+     * @return id used to identify this viewer
+     */
+    public String getId(){
+        String id = config.getAttribute("id");
+        return id;
+    }
+    
     public String getDisplayName() {
         String name = config.getAttribute("name");
         return name;

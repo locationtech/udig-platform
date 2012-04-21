@@ -1,14 +1,33 @@
 package net.refractions.udig.ui.filter;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import net.miginfocom.swt.MigLayout;
+import net.refractions.udig.internal.ui.UiPlugin;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.action.ContributionItem;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuListener2;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.PopupDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -86,14 +105,24 @@ public class FilterViewer extends IFilterViewer {
             if( selected && data instanceof String ){
                 showViewer( (String) data );
             }
+            if( selected && data instanceof ContributionItem ){
+                ContributionItem item = (ContributionItem) data;
+                
+                showViewer( (String) item.getId() );
+            }
         }
     };
 
-    private Menu menu;
+    // private Menu menu;
 
+    /** Cache of viewers responsible filter display and input */
     private HashMap<String, IFilterViewer> pages;
 
+    /** Placeholder displayed to request the user choose a viewer */
     private Label placeholder;
+
+    /** Label offering the popup menu symbol */
+    private Label config;
 
     public FilterViewer(Composite parent) {
         this( parent, SWT.DEFAULT );
@@ -117,7 +146,7 @@ public class FilterViewer extends IFilterViewer {
         pageBook = new PageBook(control, SWT.NO_SCROLL);
         pageBook.setLayoutData("cell 0 0,grow,width 200:100%:100%,height 18:75%:100%");
         
-        placeholder = new Label( pageBook, SWT.DEFAULT );
+        placeholder = new Label( pageBook, SWT.SINGLE );
         placeholder.setText("Choose filter editor");
         
         delegate = new DefaultFilterViewer(pageBook, style);
@@ -127,25 +156,29 @@ public class FilterViewer extends IFilterViewer {
         this.pages = new HashMap<String,IFilterViewer>();
         pages.put("builder", delegate );
         
-        Label config = new Label(control, SWT.SINGLE);
+        config = new Label(control, SWT.SINGLE);
         config.setImage(JFaceResources.getImage(PopupDialog.POPUP_IMG_MENU));
         config.setLayoutData("cell 1 0,aligny top,height 16!, width 16!");
         
-        menu = new Menu( config );
-        MenuItem builderMenuItem = new MenuItem(menu, SWT.RADIO);
-        builderMenuItem.setSelection(true);
-        builderMenuItem.setText("Builder");
-        builderMenuItem.setData("builder");
-        builderMenuItem.addSelectionListener(menuListener);
-
-        MenuItem cqlMenuItem = new MenuItem(menu, SWT.RADIO);
-        cqlMenuItem.setText("Constratin Query Language");
-        cqlMenuItem.setData("cql");
-        cqlMenuItem.addSelectionListener(menuListener);
-
+        createContextMenu( config );
+//        menu = new Menu( config );
+//        MenuItem builderMenuItem = new MenuItem(menu, SWT.RADIO);
+//        builderMenuItem.setSelection(true);
+//        builderMenuItem.setText("Builder");
+//        builderMenuItem.setData("builder");
+//        builderMenuItem.addSelectionListener(menuListener);
+//
+//        MenuItem cqlMenuItem = new MenuItem(menu, SWT.RADIO);
+//        cqlMenuItem.setText("Constratin Query Language");
+//        cqlMenuItem.setData("cql");
+//        cqlMenuItem.addSelectionListener(menuListener);
+//
         config.addMouseListener(new MouseAdapter() {
             public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
-                menu.setVisible(true);
+                Menu menu = config.getMenu();
+                if( menu != null ){
+                    menu.setVisible(true);
+                }
             }
         });
         this.style = style;
@@ -159,24 +192,25 @@ public class FilterViewer extends IFilterViewer {
         this.viewerId = newViewerId;
         
         // update the menu - (bad design) yes we could of just generated this on the fly
-        for (MenuItem item : menu.getItems()) {
-            if( item.getData().equals( viewerId ) ){
-                // this is the one we are selecting!
-                // we need to change to match
-                if (!item.getSelection()) {
-                    // select this one
-                    item.removeSelectionListener(menuListener);
-                    item.setSelection(true);
-                    item.addSelectionListener(menuListener);
-                }
-            } else {
-                if (item.getSelection()) { // unselect this one
-                    item.removeSelectionListener(menuListener);
-                    item.setSelection(false);
-                    item.addSelectionListener(menuListener);
-                }
-            }
-        }
+//        for (MenuItem item : menu.getItems()) {
+//            if( item.getData().equals( viewerId ) ){
+//                // this is the one we are selecting!
+//                // we need to change to match
+//                if (!item.getSelection()) {
+//                    // select this one
+//                    item.removeSelectionListener(menuListener);
+//                    item.setSelection(true);
+//                    item.addSelectionListener(menuListener);
+//                }
+//            } else {
+//                if (item.getSelection()) { // unselect this one
+//                    item.removeSelectionListener(menuListener);
+//                    item.setSelection(false);
+//                    item.addSelectionListener(menuListener);
+//                }
+//            }
+//        }
+        
         // update the pagebook if needed
         IFilterViewer viewer = getViewer( this.viewerId );
         
@@ -190,10 +224,12 @@ public class FilterViewer extends IFilterViewer {
             pageBook.showPage(placeholder);
         }
         else {
+            feedback(); // clear any warnings
+            
             // configure viewer before display!
             FilterInput currentInput = getInput();
             Filter currentFilter = getFilter();
-
+            
             viewer.setInput( currentInput );
             viewer.setFilter( currentFilter );
             viewer.refresh();
@@ -231,15 +267,13 @@ public class FilterViewer extends IFilterViewer {
             // already constructed
             return viewer;
         }
-        if( "builder".equals( lookupId )){
-            viewer = new DefaultFilterViewer( pageBook, this.style );
-            pages.put( "builder", viewer );
-            return viewer;
-        }
-        else if ("cql".equals( lookupId ) ){
-            viewer = new CQLFilterViewer( pageBook, this.style );
-            pages.put( "cql", viewer );
-            return viewer;
+        for( FilterViewerFactory factory : filterViewerFactoryList() ){
+            if( factory.getId().equals( lookupId )){
+                viewer = factory.createViewer( pageBook, this.style );
+                pages.put( factory.getId(), viewer );
+                
+                return viewer;
+            }
         }
         return null; // user has requested an unknown id - please display placeholder
     }
@@ -296,5 +330,81 @@ public class FilterViewer extends IFilterViewer {
         }
         fireSelectionChanged(new SelectionChangedEvent(FilterViewer.this, getSelection()));
     }
+    
+    private void createContextMenu( Control control ){
+        final MenuManager menuManager = new MenuManager();
+        menuManager.setRemoveAllWhenShown(true); // we are going to generate
+        
+        menuManager.addMenuListener( new IMenuListener() {
+            public void menuAboutToShow(IMenuManager manager) {
+                
+                for( FilterViewerFactory factory : filterViewerFactory( getInput() ) ){
+                    FilterViewerFactoryContributionItem contributionItem = new FilterViewerFactoryContributionItem(factory);
+                    menuManager.add( contributionItem );
+                }
+            }
+        });
+        Menu menu = menuManager.createContextMenu( control );
+        control.setMenu( menu );
+    }
+    
+    class FilterViewerFactoryContributionItem extends ContributionItem {
+        
+        private FilterViewerFactory factory;
+        
+        FilterViewerFactoryContributionItem( FilterViewerFactory factory ){
+            setId( factory.getId() );
+            this.factory = factory;
+        }
+        @Override
+        public void fill(Menu menu, int index) {
+            MenuItem item = new MenuItem( menu, SWT.RADIO, index );
+            
+            item.setText( factory.getDisplayName() );
+            item.setData( factory.getId() );
+            item.setSelection( factory.getId().equals( viewerId ) );
+            item.addSelectionListener( menuListener );
+        }
+    }
+    //
+    // Factory and Extension Point Support
+    //
+    /** Extension point ID */
+    public static final String FILTER_VIEWER_EXTENSION = "net.refractions.udig.ui.filterViewer";
 
+    private static List<FilterViewerFactory> filterViewerFactoryList;
+    
+    private static List<FilterViewerFactory> filterViewerFactory( FilterInput input ){
+        return filterViewerFactoryList();
+    }
+    
+    private synchronized static List<FilterViewerFactory> filterViewerFactoryList() {
+        if (filterViewerFactoryList == null) {
+            ArrayList<FilterViewerFactory> list = new ArrayList<FilterViewerFactory>();
+            
+            IExtensionRegistry registery = Platform.getExtensionRegistry();
+            IExtensionPoint extensionPoint = registery.getExtensionPoint(FILTER_VIEWER_EXTENSION);
+            
+            IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
+            for (IConfigurationElement configuration : configurationElements) {
+                if ("filterViewer".equals(configuration.getName())) {
+                    try {
+                        FilterViewerFactory factory;
+                        factory = (FilterViewerFactory) configuration.createExecutableExtension("class");
+                        factory.init(configuration);
+
+                        list.add(factory);
+                    } catch (CoreException e) {
+                        String pluginId = configuration.getContributor().getName();
+                        IStatus status = new Status(IStatus.WARNING, pluginId, e.getMessage(), e);
+                        UiPlugin.log(status);
+                    }
+                } else {
+                    // skip as it is probably a expressionViewer element
+                }
+            }
+            filterViewerFactoryList = Collections.unmodifiableList( list );
+        }
+        return filterViewerFactoryList;
+    }
 }

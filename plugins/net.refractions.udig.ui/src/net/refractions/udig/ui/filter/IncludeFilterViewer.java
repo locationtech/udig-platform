@@ -46,24 +46,11 @@ public class IncludeFilterViewer extends IFilterViewer {
         }
     }
 
-    /**
-     * This is the expression we are working on here.
-     * <p>
-     * We are never going to be "null"; Expression.EXCLUDE is used to indicate an intentionally
-     * empty expression.
-     */
-    protected Filter filter = Filter.EXCLUDE;
-
     protected Composite control;
 
     protected Button enableButton;
 
     protected Button disableButton;
-
-    /**
-     * Indicates this is a required field
-     */
-    private boolean isRequired;
 
     public IncludeFilterViewer(Composite parent) {
         this(parent, SWT.SINGLE);
@@ -83,6 +70,7 @@ public class IncludeFilterViewer extends IFilterViewer {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 internalUpdate(Filter.INCLUDE);
+                feedback();
             }
         });
 
@@ -94,6 +82,7 @@ public class IncludeFilterViewer extends IFilterViewer {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 internalUpdate( Filter.EXCLUDE);
+                feedback();
             }
         });
         disableButton.setBounds(20, 53, 90, 16);
@@ -142,7 +131,7 @@ public class IncludeFilterViewer extends IFilterViewer {
             enableButton.setSelection(false);
             disableButton.setSelection(false);
             
-            feedback("Dynamic filter not shown");
+            feedback("Unable to display dynamic filter: \n" + ECQL.toCQL(filter)+ "\nUse this display to replace, or change using the pop up menu.");
         }
     }
 

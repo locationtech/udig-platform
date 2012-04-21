@@ -4,7 +4,6 @@ import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.project.ProjectBlackboardConstants;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.style.IStyleConfigurator;
-import net.refractions.udig.ui.filter.DefaultFilterViewer;
 import net.refractions.udig.ui.filter.FilterInput;
 import net.refractions.udig.ui.filter.FilterViewer;
 import net.refractions.udig.ui.filter.IFilterViewer;
@@ -82,7 +81,7 @@ public class FilterConfigurator extends IStyleConfigurator {
 
         Label label = new Label(parent, SWT.SINGLE );
         label.setText("Filter");
-        label.setLayoutData("cell 0 0,aligny top");
+        label.setLayoutData("cell 0 0,aligny top, gapx 0 unrelated"); // unrelated spacing after to leave room for label decoration
         
         ControlDecoration decoration = new ControlDecoration(label, SWT.RIGHT | SWT.TOP );
         filterViewer = new FilterViewer(parent, SWT.MULTI );
