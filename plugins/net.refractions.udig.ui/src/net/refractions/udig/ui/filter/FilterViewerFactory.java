@@ -32,7 +32,7 @@ public abstract class FilterViewerFactory {
      * 
      * @see FilterViewerFactory#appropriate
      */
-    public final int NOT_APPROPRIATE = 0;
+    public final static int NOT_APPROPRIATE = 0;
 
     /**
      * Unable to display or edit all the provided information.
@@ -44,7 +44,7 @@ public abstract class FilterViewerFactory {
      * 
      * @see FilterViewerFactory#appropriate
      */
-    public final int INCOMPLETE = 10;
+    public final static int INCOMPLETE = 1;
 
     /**
      * General purpose Viewer tjat allows the user to view and edit the provided filter (although
@@ -54,7 +54,7 @@ public abstract class FilterViewerFactory {
      * 
      * @see FilterViewerFactory#appropriate
      */
-    public final int COMPLETE = 30;
+    public final static int COMPLETE = 25;
 
     /**
      * Custom viewer able to work with the provided filter.
@@ -66,7 +66,7 @@ public abstract class FilterViewerFactory {
      * 
      * @see FilterViewerFactory#appropriate
      */
-    public final int APPROPRIATE = 50;
+    public static final int APPROPRIATE = 50;
 
     /**
      * Moving beyond general purpose we have a viewer that is able to supply some sensible defaults
@@ -84,7 +84,7 @@ public abstract class FilterViewerFactory {
      * 
      * @see FilterViewerFactory#appropriate
      */
-    public final int FRIENDLY = 70;
+    public final static int FRIENDLY = 75;
 
     /**
      * An exact match - used for custom viewers that make some of the more complicated functions
@@ -95,8 +95,23 @@ public abstract class FilterViewerFactory {
      * 
      * @see FilterViewerFactory#appropriate
      */
-    public final int PERFECT = 100;
+    public final static int PERFECT = 100;
 
+    public static int toCategory(int appropriate) {
+        if (appropriate <= NOT_APPROPRIATE) {
+            return NOT_APPROPRIATE;
+        } else if (appropriate < COMPLETE) {
+            return INCOMPLETE;
+        } else if (appropriate < APPROPRIATE) {
+            return COMPLETE;
+        } else if (appropriate < FRIENDLY) {
+            return APPROPRIATE;
+        } else if (appropriate < PERFECT) {
+            return FRIENDLY;
+        } else {
+            return PERFECT;
+        }
+    }
     private IConfigurationElement config;
 
     /**

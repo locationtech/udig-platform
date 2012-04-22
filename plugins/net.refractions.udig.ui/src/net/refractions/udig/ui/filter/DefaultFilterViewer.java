@@ -57,7 +57,7 @@ public class DefaultFilterViewer extends CQLFilterViewer {
     public static class Factory extends FilterViewerFactory {
         @Override
         public int appropriate(SimpleFeatureType schema, Filter filter) {
-            return COMPLETE;
+            return COMPLETE+1;
         }
         @Override
         public IFilterViewer createViewer(Composite parent, int style) {

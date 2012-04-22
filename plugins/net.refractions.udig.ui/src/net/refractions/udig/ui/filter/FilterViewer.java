@@ -2,6 +2,7 @@ package net.refractions.udig.ui.filter;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuListener2;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.PopupDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -41,6 +43,8 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.part.PageBook;
+import org.geotools.filter.FilterFactory;
+import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 
 /**
@@ -161,18 +165,7 @@ public class FilterViewer extends IFilterViewer {
         config.setLayoutData("cell 1 0,aligny top,height 16!, width 16!");
         
         createContextMenu( config );
-//        menu = new Menu( config );
-//        MenuItem builderMenuItem = new MenuItem(menu, SWT.RADIO);
-//        builderMenuItem.setSelection(true);
-//        builderMenuItem.setText("Builder");
-//        builderMenuItem.setData("builder");
-//        builderMenuItem.addSelectionListener(menuListener);
-//
-//        MenuItem cqlMenuItem = new MenuItem(menu, SWT.RADIO);
-//        cqlMenuItem.setText("Constratin Query Language");
-//        cqlMenuItem.setData("cql");
-//        cqlMenuItem.addSelectionListener(menuListener);
-//
+
         config.addMouseListener(new MouseAdapter() {
             public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
                 Menu menu = config.getMenu();
@@ -187,29 +180,9 @@ public class FilterViewer extends IFilterViewer {
     protected void showViewer(String newViewerId) {
         if( newViewerId == null ){
             // show place holder label or default to CQL
-            newViewerId = "cql";
+            newViewerId = "net.refractions.udig.ui.cqlFilterViewer";
         }
         this.viewerId = newViewerId;
-        
-        // update the menu - (bad design) yes we could of just generated this on the fly
-//        for (MenuItem item : menu.getItems()) {
-//            if( item.getData().equals( viewerId ) ){
-//                // this is the one we are selecting!
-//                // we need to change to match
-//                if (!item.getSelection()) {
-//                    // select this one
-//                    item.removeSelectionListener(menuListener);
-//                    item.setSelection(true);
-//                    item.addSelectionListener(menuListener);
-//                }
-//            } else {
-//                if (item.getSelection()) { // unselect this one
-//                    item.removeSelectionListener(menuListener);
-//                    item.setSelection(false);
-//                    item.addSelectionListener(menuListener);
-//                }
-//            }
-//        }
         
         // update the pagebook if needed
         IFilterViewer viewer = getViewer( this.viewerId );
@@ -302,6 +275,11 @@ public class FilterViewer extends IFilterViewer {
         if (delegate != null) {
             delegate.refresh();
         }
+        List<FilterViewerFactory> list = filterViewerFactory( getInput(), getFilter() );
+         if( !list.isEmpty() ){
+             FilterViewerFactory factory = list.get(0);
+             showViewer(factory.getId());
+         }
     }
 
     @Override
@@ -337,9 +315,19 @@ public class FilterViewer extends IFilterViewer {
         
         menuManager.addMenuListener( new IMenuListener() {
             public void menuAboutToShow(IMenuManager manager) {
-                
-                for( FilterViewerFactory factory : filterViewerFactory( getInput() ) ){
+                int current = -1;
+                for( FilterViewerFactory factory : filterViewerFactory( getInput(), getFilter() ) ){
+                    int currentScore = factory.appropriate(getInput().getSchema(), getFilter() );
+                    int category = FilterViewerFactory.toCategory( currentScore );
+                    if( current == -1 ){
+                        current = category;
+                    }
+                    else if( current != category ){
+                        menuManager.add( new Separator("appropriate "+current));
+                        current = category;
+                    }
                     FilterViewerFactoryContributionItem contributionItem = new FilterViewerFactoryContributionItem(factory);
+                    
                     menuManager.add( contributionItem );
                 }
             }
@@ -364,6 +352,12 @@ public class FilterViewer extends IFilterViewer {
             item.setData( factory.getId() );
             item.setSelection( factory.getId().equals( viewerId ) );
             item.addSelectionListener( menuListener );
+            
+            int appropriate = factory.appropriate( getInput().getSchema(), getFilter() );
+            
+            if( appropriate == FilterViewerFactory.NOT_APPROPRIATE ){
+                item.setEnabled(false);
+            }
         }
     }
     //
@@ -374,8 +368,17 @@ public class FilterViewer extends IFilterViewer {
 
     private static List<FilterViewerFactory> filterViewerFactoryList;
     
-    private static List<FilterViewerFactory> filterViewerFactory( FilterInput input ){
-        return filterViewerFactoryList();
+    private static List<FilterViewerFactory> filterViewerFactory( final FilterInput input, final Filter filter ){
+        List<FilterViewerFactory> list = new ArrayList<FilterViewerFactory>( filterViewerFactoryList() );
+        Collections.sort( list, new Comparator<FilterViewerFactory>(){
+            public int compare(FilterViewerFactory factory1, FilterViewerFactory factory2) {
+                int factory1Score = factory1.appropriate( input.getSchema(), filter );
+                int factory2Score = factory2.appropriate( input.getSchema(), filter );
+                
+                return factory2Score - factory1Score;
+            }
+        });
+        return list;
     }
     
     private synchronized static List<FilterViewerFactory> filterViewerFactoryList() {

@@ -67,7 +67,7 @@ public class CQLFilterViewer extends IFilterViewer {
          * Consider CQLFilterViewer a fallback plan.
          */
         public int appropriate(SimpleFeatureType schema, Filter filter) {
-            return COMPLETE - 1;
+            return COMPLETE;
         }
 
         public IFilterViewer createViewer(Composite parent, int style) {
