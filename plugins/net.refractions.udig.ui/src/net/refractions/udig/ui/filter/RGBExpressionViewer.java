@@ -1,10 +1,15 @@
 package net.refractions.udig.ui.filter;
 
 import java.awt.Color;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import net.refractions.udig.ui.filter.ViewerFactory.Appropriate;
 
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -16,6 +21,7 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.text.cql2.CQL;
+import org.geotools.filter.text.ecql.ECQL;
 import org.geotools.util.Converters;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory2;
@@ -30,6 +36,8 @@ import org.opengis.filter.expression.Literal;
  * @since 1.3.0
  */
 public class RGBExpressionViewer extends IExpressionViewer {
+    private final int MIN = 0;
+    private final int MAX = 255;
 
     /**
      * Factory used for the general purpose DefaultExpressionViewer.
@@ -39,15 +47,15 @@ public class RGBExpressionViewer extends IExpressionViewer {
      */
     public static class Factory extends ExpressionViewerFactory {
         @Override
-        public int appropriate(SimpleFeatureType schema, Expression expression) {
+        public int score(ExpressionInput input, Expression expression) {
             if (expression instanceof Literal) {
                 Literal literal = (Literal) expression;
                 Color color = literal.evaluate(null, Color.class);
                 if (color != null) {
-                    return APPROPRIATE;
+                    return Appropriate.APPROPRIATE.getScore();
                 }
             }
-            return INCOMPLETE;
+            return Appropriate.INCOMPLETE.getScore();
         }
 
         @Override
@@ -56,17 +64,7 @@ public class RGBExpressionViewer extends IExpressionViewer {
         }
     }
 
-    /**
-     * This is the expression we are working on here.
-     * <p>
-     * We are never going to be "null"; Expression.NIL is used to indicate an intentionally empty
-     * expression.
-     */
-    protected Expression expr = Expression.NIL;
-
     Composite control;
-
-    private ControlDecoration feedback;
 
     protected Scale red;
 
@@ -81,24 +79,22 @@ public class RGBExpressionViewer extends IExpressionViewer {
     protected Text greenVal;
 
     protected Text hex;
-
-    boolean isRequired;
-
-    private SimpleFeatureType type;
-
+    
+    /**
+     * Used to {@link #validate()} when any of the Scale controls change.
+     */
     private SelectionListener listener = new SelectionListener() {
         @Override
         public void widgetSelected(SelectionEvent e) {
-            validate();
+            Expression newExpression = validate();
+            if( newExpression != null ){
+                internalUpdate( newExpression );
+            }
         }
-
         @Override
         public void widgetDefaultSelected(SelectionEvent e) {
-
         }
     };
-
-    private Class<?> expected;
 
     protected void listen(boolean listen) {
         if (listen) {
@@ -113,7 +109,6 @@ public class RGBExpressionViewer extends IExpressionViewer {
     }
 
     public RGBExpressionViewer(Composite parent, int style) {
-        super(parent);
         control = new Composite(parent, style);
 
         red = new Scale(control, SWT.NONE);
@@ -145,12 +140,10 @@ public class RGBExpressionViewer extends IExpressionViewer {
 
         hex = new Text(control, SWT.BORDER);
         hex.setBounds(71, 151, 170, 18);
-
+        
         Label lblHex = new Label(control, SWT.NONE);
         lblHex.setText("Hex");
         lblHex.setBounds(10, 154, 55, 15);
-
-        feedback = new ControlDecoration(hex, SWT.TOP | SWT.LEFT);
 
         redVal = new Text(control, SWT.BORDER);
         redVal.setBounds(247, 17, 40, 21);
@@ -169,26 +162,7 @@ public class RGBExpressionViewer extends IExpressionViewer {
         return control;
     }
 
-    /**
-     * The isRequired flag will be used to determine the default decoration to show (if there is no
-     * warning or error to take precedence).
-     * <p>
-     * Please note that if this is a required field Expression.NIL is not considered to be a valid
-     * state.
-     * </p>
-     * 
-     * @param isRequired true if this is a required field
-     */
-    public void setRequired(boolean isRequired) {
-        this.isRequired = isRequired;
-    }
-
-    @Override
-    public boolean isRequired() {
-        return isRequired;
-    }
-
-    public boolean validate() {
+    public Expression validate() {
         int r = red.getSelection();
         int g = green.getSelection();
         int b = blue.getSelection();
@@ -202,32 +176,36 @@ public class RGBExpressionViewer extends IExpressionViewer {
         hex.setText(hexStr);
 
         FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
-        expr = ff.literal(hexStr);
+        Expression expression = ff.literal(hexStr);
 
-        return true;
+        return expression;
     }
-
+    /** Used to supply a filter for display or editing */
     @Override
-    public String getValidationMessage() {
-        return null;
+    public void setExpression(Expression expression) {
+        if (this.expression == expression) {
+            return;
+        }
+        this.expression = expression;
+        refreshExpression();
+        fireSelectionChanged(new SelectionChangedEvent(this, getSelection()));
     }
-
-    @Override
-    public Expression getInput() {
-        return expr;
-    }
-
-    @Override
-    public ISelection getSelection() {
-        if (expr == null)
-            return null;
-
-        IStructuredSelection selection = new StructuredSelection(expr);
-        return selection;
-    }
-
     @Override
     public void refresh() {
+        if (input != null) {
+            boolean isColor = Color.class.isAssignableFrom( input.getBinding() );
+            if( isColor ){
+                feedback();
+                control.setEnabled(true);
+            }
+            else {
+                feedback("Used with colour");
+                control.setEnabled(false);
+            }
+        }
+        refreshExpression();
+    }
+    public void refreshExpression() {
         if (hex != null && !hex.isDisposed()) {
             hex.getDisplay().asyncExec(new Runnable() {
                 public void run() {
@@ -236,10 +214,13 @@ public class RGBExpressionViewer extends IExpressionViewer {
                     }
                     try {
                         listen(false); // don't listen while updating controls
+                        Expression expr = getExpression();
+
                         if (expr instanceof Literal) {
                             Literal literal = (Literal) expr;
                             Color color = literal.evaluate(null, Color.class);
                             if (color != null) {
+                                feedback();
                                 red.setSelection(color.getRed());
                                 redVal.setText(String.valueOf(color.getRed()));
                                 green.setSelection(color.getGreen());
@@ -255,22 +236,14 @@ public class RGBExpressionViewer extends IExpressionViewer {
                                 return; // literal color displayed!
                             }
                         }
-                        String cql = CQL.toCQL(expr);
+                        String cql = ECQL.toCQL(expr);
                         hex.setText(cql);
-                        feedback("Used to define a color");
+                        feedback("Used to define a colour.\n"+cql+"\nYou can replace the current value");
                     } finally {
                         listen(true);
                     }
                 }
             });
-        }
-    }
-
-    @Override
-    public void setInput(Object input) {
-        if (input instanceof Expression) {
-            expr = (Expression) input;
-            refresh();
         }
     }
 
@@ -286,53 +259,4 @@ public class RGBExpressionViewer extends IExpressionViewer {
         }
     }
 
-    @Override
-    public void feedback() {
-        feedback.hide();
-    }
-
-    @Override
-    public void feedback(String warning) {
-        if (feedback != null) {
-            feedback.setDescriptionText(warning);
-            feedback.show();
-        }
-        if (hex != null && !hex.isDisposed()) {
-            hex.setToolTipText(warning);
-        }
-    }
-
-    @Override
-    public void feedback(String warning, Exception eek) {
-        if (feedback != null) {
-            feedback.setDescriptionText(warning);
-            feedback.show();
-        }
-        if (hex != null && !hex.isDisposed()) {
-            hex.setToolTipText(warning + ":" + eek);
-        }
-    }
-
-    @Override
-    public void setSchema(SimpleFeatureType schema) {
-        this.type = schema;
-    }
-
-    @Override
-    public SimpleFeatureType getSchema() {
-        return type;
-    }
-
-    @Override
-    public void setExpected(Class<?> binding) {
-        if (!Color.class.isAssignableFrom(binding)) {
-            feedback("Used to define color");
-        }
-        this.expected = binding;
-    }
-
-    @Override
-    public Class<?> getExpected() {
-        return expected;
-    }
 }

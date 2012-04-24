@@ -1,6 +1,20 @@
 package net.refractions.udig.ui.filter;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import net.refractions.udig.internal.ui.UiPlugin;
+import net.refractions.udig.ui.filter.ViewerFactory.Appropriate;
+
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -13,121 +27,36 @@ import org.opengis.filter.expression.Expression;
  * @author Scott
  * @since 1.3.0
  */
-@SuppressWarnings("restriction")
-public abstract class ExpressionViewerFactory {
+public abstract class ExpressionViewerFactory extends ViewerFactory<IExpressionViewer> {
 
     /**
-     * Value used to indicate ExpressionViewer cannot be used in this context.
+     * Percentage between 0-100 saying how well this viewer can process the provided object.
      * <p>
-     * An example would be a ExpressionViewer for editing colours that could not be used when
-     * defining line width.
+     * The default implementation assumes {@link ExpressionInput} and {@link Express} in order to
+     * call {@link #score(ExpressionInput, Expression)} below.
      * 
-     * @see ExpressionViewerFactory#appropriate
+     * @param input Assumed to be {@link ExpressionInput}
+     * @param value Assumed to be {@link Express}
+     * @return score between 0-100 indicating suitability
      */
-    public final int NOT_APPROPRIATE = 0;
+    public int score(Object input, Object value) {
+        ExpressionInput expressionInput = safeCast(input, ExpressionInput.class);
+        Expression expression = safeCast(value, Expression.class);
 
-    /**
-     * Unable to display or edit all the provided information.
-     * <p>
-     * This FilterViewer should be listed as an option in case the user wants to replace their
-     * current expression - however they unable to use this viewer to display the provided
-     * expression.
-     * <p>
-     * This is a tricky thing to communicate; suggest a small warning label decorator to indicate
-     * that the two are out of sync; until such time as the user uses the viewer to repalce the
-     * current expression.
-     * 
-     * @see ExpressionViewerFactory#appropriate
-     */
-    public final int INCOMPLETE = 10;
-
-    /**
-     * Viewer allows the user to view and edit the provided expression (although perhaps not in the
-     * most easy to use manner). Used for DefaultExpressionViewer offering direct CQL access
-     * 
-     * @see ExpressionViewerFactory#appropriate
-     */
-    public final int COMPLETE = 30;
-
-    /**
-     * Viewer both complete and appropriate for the content provided.
-     * <p>
-     * Example would be a general purpose color viewer that is able to show the provided literal
-     * color.
-     * <p>
-     * This is often the best "general purpose" viewer available.
-     * 
-     * @see ExpressionViewerFactory#appropriate
-     */
-    public final int APPROPRIATE = 50;
-
-    /**
-     * Moving beyond general purpose we have a viewer that is able to supply some sensible defaults
-     * based on what the user is up to.
-     * <p>
-     * Most content specific viewers fall into this category - offering a nice "fill in the blank"
-     * style viewer expressed in domain model terms.
-     * <p>
-     * An example would be a road specific viewer that is able to recommend several standard road
-     * widths.
-     * 
-     * @see ExpressionViewerFactory#appropriate
-     */
-    public final int FRIENDLY = 70;
-
-    /**
-     * An exact match - used for custom viewers that make some of the more complicated functions
-     * easier to use. Examples would be Interpolate, Categorize or a LabelViewer based around the
-     * concatenate function.
-     * 
-     * @see ExpressionViewerFactory#appropriate
-     */
-    public final int PERFECT = 100;
-
-    private IConfigurationElement config;
-
-    /**
-     * Configuration from extension point of things like display name and binding
-     * 
-     * @return
-     */
-    void init(IConfigurationElement config) {
-        this.config = config;
-    }
-
-    String getDisplayName() {
-        String name = config.getAttribute("name");
-        return name;
-    }
-
-    /**
-     * Expected Expression value example using either Literal (Color, Integer) or Expression class
-     * such as PropertyName.
-     */
-    Class<?> getBinding() {
-        return Object.class;
+        return score(expressionInput, expression);
     }
 
     /**
      * Percentage between 0-100 saying how well this viewer can process the provided object.
      * <p>
-     * We have some predefined constants if you would like to make your code more readable:
-     * <ul>
-     * <li>{@link #NOT_APPROPRIATE}</li>
-     * <li>{@link #INCOMPLETE}</li>
-     * <li>{@link #COMPLETE}</li>
-     * <li>{@link #APPROPRIATE}</li>
-     * <li>{@link #FRIENDLY}</li>
-     * <li>{@link #PERFECT}</li>
-     * </ul>
+     * The default implementation assumes {@link ExpressionInput} and {@link Express} in order to
+     * call {@link #score(ExpressionInput, Expression)} below.
      * 
-     * @param schema FeatureType being considered (may be ignored by general purpose
-     *        ExpressionViewer capable of working with any content)
-     * @param expr Existing expression provided by user, may be null
+     * @param input Context used to assist the user in defining an expresison
+     * @param expr {@link Expression} displayed to the user for editing
+     * @return score between 0-100 indicating suitability
      */
-    public int appropriate(SimpleFeatureType schema, Expression expr) {
-        return INCOMPLETE; // default to listing the viewer but not recomending it
-    }
+    public abstract int score(ExpressionInput input, Expression expr);
 
     /**
      * Create the requested {@link IExpressionViewer} using the supplied composite as a parent.
@@ -148,4 +77,79 @@ public abstract class ExpressionViewerFactory {
      * @return requested viewer
      */
     public abstract IExpressionViewer createViewer(Composite composite, int style);
+
+    //
+    // Factory and Extension Point Support
+    //
+    /** General purpose {@link IFilterViewer} suitable for use as a default */
+    public static final String CQL_EXPRESSION_VIEWER = "net.refractions.udig.ui.filter.cqlExpressionViewer";
+
+    /** Extension point ID each "expressionViewer" will be processed into our {@link #factoryList()} */
+    public static final String FILTER_VIEWER_EXTENSION = FilterViewerFactory.FILTER_VIEWER_EXTENSION;
+
+    /**
+     * Internal factory list, read-only access provided by {@link #factoryList()}.
+     */
+    private static List<ExpressionViewerFactory> factoryList;
+
+    /**
+     * Short list {@link ExpressionViewerFactory} suitable for the editing a expression in the provided context.
+     * 
+     * @param input context information for editing
+     * @param expression expression presented to the user for editing
+     * @return
+     */
+    public static List<ExpressionViewerFactory> factoryList(
+            final ExpressionInput input, final Expression expression) {
+        List<ExpressionViewerFactory> list = new ArrayList<ExpressionViewerFactory>(factoryList());
+        Collections.sort(list, new Comparator<ExpressionViewerFactory>() {
+            public int compare(ExpressionViewerFactory factory1, ExpressionViewerFactory factory2) {
+                int factory1Score = factory1.score(input, expression);
+                int factory2Score = factory2.score(input, expression);
+
+                return factory2Score - factory1Score;
+            }
+        });
+        return list;
+    }
+    /**
+     * List of {@link ExpressionViewerFactory} declared using {@link #FILTER_VIEWER_EXTENSION} extension.
+     * <p>
+     * Note because these factories are active objects (each with an implementation of {@link #score(ExpressionInput, Expression)}
+     * which we need to call) they are not handled in the traditional eclipse "proxy" style. This is a known violation of the
+     * Eclipse House rules (that will force each plugin implementing a {@link ExpressionViewerFactory} to be loaded - very bad).
+     * 
+     * @return Complete list of factories provided by {@link #FILTER_VIEWER_EXTENSION} extension
+     */
+    public synchronized static List<ExpressionViewerFactory> factoryList() {
+        if (factoryList == null) {
+            ArrayList<ExpressionViewerFactory> list = new ArrayList<ExpressionViewerFactory>();
+
+            IExtensionRegistry registery = Platform.getExtensionRegistry();
+            IExtensionPoint extensionPoint = registery.getExtensionPoint(FILTER_VIEWER_EXTENSION);
+
+            IConfigurationElement[] configurationElements = extensionPoint
+                    .getConfigurationElements();
+            for (IConfigurationElement configuration : configurationElements) {
+                if ("expressionViewer".equals(configuration.getName())) {
+                    try {
+                        ExpressionViewerFactory factory;
+                        factory = (ExpressionViewerFactory) configuration
+                                .createExecutableExtension("class");
+                        factory.init(configuration);
+
+                        list.add(factory);
+                    } catch (CoreException e) {
+                        String pluginId = configuration.getContributor().getName();
+                        IStatus status = new Status(IStatus.WARNING, pluginId, e.getMessage(), e);
+                        UiPlugin.log(status);
+                    }
+                } else {
+                    // skip as it is probably a expressionViewer element
+                }
+            }
+            factoryList = Collections.unmodifiableList(list);
+        }
+        return factoryList;
+    }
 }

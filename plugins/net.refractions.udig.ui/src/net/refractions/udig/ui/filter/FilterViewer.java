@@ -153,12 +153,12 @@ public class FilterViewer extends IFilterViewer {
         placeholder = new Label( pageBook, SWT.SINGLE );
         placeholder.setText("Choose filter editor");
         
-        delegate = new DefaultFilterViewer(pageBook, style);
+        delegate = new CQLFilterViewer(pageBook, style);
         delegate.addSelectionChangedListener(listener);
         pageBook.showPage(delegate.getControl());
         
         this.pages = new HashMap<String,IFilterViewer>();
-        pages.put("builder", delegate );
+        pages.put( FilterViewerFactory.CQL_FILTER_VIEWER, delegate );
         
         config = new Label(control, SWT.SINGLE);
         config.setImage(JFaceResources.getImage(PopupDialog.POPUP_IMG_MENU));
@@ -180,11 +180,11 @@ public class FilterViewer extends IFilterViewer {
     protected void showViewer(String newViewerId) {
         if( newViewerId == null ){
             // show place holder label or default to CQL
-            newViewerId = "net.refractions.udig.ui.cqlFilterViewer";
+            newViewerId = FilterViewerFactory.CQL_FILTER_VIEWER;
         }
         this.viewerId = newViewerId;
         
-        // update the pagebook if needed
+        // update the page book if needed
         IFilterViewer viewer = getViewer( this.viewerId );
         
         String cqlText = null;
@@ -317,7 +317,7 @@ public class FilterViewer extends IFilterViewer {
             public void menuAboutToShow(IMenuManager manager) {
                 int current = -1;
                 for( FilterViewerFactory factory : filterViewerFactory( getInput(), getFilter() ) ){
-                    int currentScore = factory.appropriate(getInput().getSchema(), getFilter() );
+                    int currentScore = factory.appropriate(getInput(), getFilter() );
                     int category = FilterViewerFactory.toCategory( currentScore );
                     if( current == -1 ){
                         current = category;
@@ -353,7 +353,7 @@ public class FilterViewer extends IFilterViewer {
             item.setSelection( factory.getId().equals( viewerId ) );
             item.addSelectionListener( menuListener );
             
-            int appropriate = factory.appropriate( getInput().getSchema(), getFilter() );
+            int appropriate = factory.appropriate( getInput(), getFilter() );
             
             if( appropriate == FilterViewerFactory.NOT_APPROPRIATE ){
                 item.setEnabled(false);
@@ -372,8 +372,8 @@ public class FilterViewer extends IFilterViewer {
         List<FilterViewerFactory> list = new ArrayList<FilterViewerFactory>( filterViewerFactoryList() );
         Collections.sort( list, new Comparator<FilterViewerFactory>(){
             public int compare(FilterViewerFactory factory1, FilterViewerFactory factory2) {
-                int factory1Score = factory1.appropriate( input.getSchema(), filter );
-                int factory2Score = factory2.appropriate( input.getSchema(), filter );
+                int factory1Score = factory1.appropriate( input, filter );
+                int factory2Score = factory2.appropriate( input, filter );
                 
                 return factory2Score - factory1Score;
             }

@@ -1,67 +1,66 @@
+/*
+ *    uDig - User Friendly Desktop Internet GIS client
+ *    http://udig.refractions.net
+ *    (C) 2004, Refractions Research Inc.
+ *
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation;
+ *    version 2.1 of the License.
+ *
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *    Lesser General Public License for more details.
+ *
+ */
 package net.refractions.udig.ui.filter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-import org.eclipse.jface.fieldassist.ContentProposalAdapter;
-import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
-import org.eclipse.jface.fieldassist.TextContentAdapter;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
+import net.miginfocom.swt.MigLayout;
+import net.refractions.udig.ui.filter.ViewerFactory.Appropriate;
+
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Text;
-import org.geotools.filter.FunctionFinder;
-import org.geotools.filter.text.cql2.CQL;
-import org.geotools.filter.text.cql2.CQLException;
-import org.geotools.filter.text.ecql.ECQL;
-import org.geotools.util.Utilities;
+import org.eclipse.swt.widgets.Label;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
+import org.opengis.feature.type.AttributeType;
+import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
 /**
- * A JFace Style Expression Viewer that can be used to show an Expression to a user (using whatever
- * SWT widgets are appropriate) and allow modification.
- * <p>
- * Initially we will just use a Text control; gradually working up to PropertyName, Integer and
- * Color Expressions. In each case the Expression may be retrieved by simple get/set methods and we
- * will provide some kind of consistent change notification.
- * <p>
- * Choosing which widgets to use will be based on constants; much like MapViewer switches
- * implementations. If there is something specific we need to handle (like say restrictions based on
- * FeatureType we may need to break out different ExpressionViewers kind of like how Tree and
- * TreeTable viewers work.
- * </p>
+ * A very simple {@link IFilterViewer} using a text with Constraint Query Language and a few combo
+ * boxes to help with suggestions.
  * <p>
  * Remember that although Viewers are a wrapper around some SWT Control or Composite you still have
  * direct access using the getControl() method so that you can do your layout data thing.
  * </p>
- * <ul>
- * <li>
  * 
- * @author jive
- * @since 1.3.0
+ * @author Jody Garnett
+ * @since 1.2.0
  */
-public class DefaultExpressionViewer extends IExpressionViewer {
+public class DefaultExpressionViewer extends CQLExpressionViewer {
     /**
-     * Factory used for the general purpose DefaultExpressionViewer.
+     * Factory used to hook this into filterViewer extension point.
      * 
-     * @author jody
-     * @since 1.2.0
+     * @see FilterViewer for details of programatic use
+     * 
+     * @author Jody Garnett
+     * @since 1.3.2
      */
     public static class Factory extends ExpressionViewerFactory {
         @Override
-        public int appropriate(SimpleFeatureType schema, Expression expression) {
-            return COMPLETE;
+        public int score(ExpressionInput input, Expression expression) {
+            return Appropriate.COMPLETE.getScore( 1 );
         }
-
         @Override
         public IExpressionViewer createViewer(Composite parent, int style) {
             return new DefaultExpressionViewer(parent, style);
@@ -71,334 +70,228 @@ public class DefaultExpressionViewer extends IExpressionViewer {
     /**
      * This is the expression we are working on here.
      * <p>
-     * We are never going to be "null"; Expression.NIL is used to indicate an intentionally empty
-     * expression.
+     * We are never going to be "null"; Expression.EXCLUDE is used to indicate an intentionally
+     * empty expression.
      */
-    protected Expression expr = Expression.NIL;
+    protected Filter filter = Filter.EXCLUDE;
+
+    protected Composite control;
 
     /**
-     * This is our internal widget we are sharing with the outside world; in many cases it will be a
-     * Composite.
+     * Combo box to allow the user to select an attribute to base a filter on
      */
-    private Text text;
+    protected Combo attribute;
 
     /**
-     * Indicates this is a required field
+     * Combo box to allow the user to select an operation to apply to an attribute
      */
-    private boolean isRequired;
+    protected Combo operation;
 
     /**
-     * The schema being used
+     * Text box to allow the user to enter a value to base a filter on
      */
-    private SimpleFeatureType type;
+    protected Combo value;
 
-    private KeyListener keyListener = new KeyListener() {
-        public void keyReleased(KeyEvent e) {
-            // we can try and parse this puppy; and issue a selection changed
-            // event when we actually have an expression that works
-            String before = expr != null ? ECQL.toCQL(expr) : "(empty)";
-            validate();
-            String after = expr != null ? ECQL.toCQL(expr) : "(empty)";
-            if (expr != null && !Utilities.equals(before, after)) {
-                fireSelectionChanged(new SelectionChangedEvent(DefaultExpressionViewer.this,
-                        getSelection()));
+    protected Button insert;
+
+    private SelectionAdapter insertButtonListener = new SelectionAdapter() {
+        @Override
+        public void widgetSelected(SelectionEvent e) {
+            if (attribute.isFocusControl() && attribute.getSelectionIndex() != -1) {
+                String selectedAttribute = attribute.getText();
+                text.insert(selectedAttribute);
+
+                attribute.clearSelection();
+                changed();
+                text.setFocus();
+                return;
+            }
+
+            if (operation.isFocusControl() && operation.getSelectionIndex() != -1) {
+                String selectedOperation = operation.getText();
+                text.insert(selectedOperation);
+
+                operation.clearSelection();
+
+                changed();
+                text.setFocus();
+                return;
+            }
+
+            if (value.isFocusControl() && value.getSelectionIndex() != -1) {
+                String selectedValue = value.getText();
+                text.insert(selectedValue);
+
+                value.clearSelection();
+
+                changed();
+                text.setFocus();
+                return;
             }
         }
-
-        public void keyPressed(KeyEvent e) {
-        }
     };
-
-    private ControlDecoration feedback;
-
-    private FunctionContentProposalProvider proposalProvider;
-
-    public DefaultExpressionViewer(Composite parent) {
-        this(parent, SWT.SINGLE);
-    }
+    
+//    private SelectionAdapter insertTextListener = new SelectionAdapter() {
+//        public void widgetSelected(SelectionEvent e) {
+//            Combo combo = (Combo) e.widget;
+//            String insertText = combo.getText();
+//            if( insertText != null ){
+//                text.insert( insertText );
+//            }
+//        };
+//    };
 
     /**
-     * Creates an ExpressionViewer using the provided style.
+     * Creates ExpressionViewer using the provided style.
      * <ul>
-     * <li>SWT.SINGLE - A simple text field showing the expression using extended CQL notation; may
-     * be shown as a combo box if either a FeatureType or DialogSettings are provided
-     * <li>SWT.MULTI - A multi line text field; may be shown as an ExpressionBuilder later on
-     * <li>SWT.READ_ONLY - read only
-     * <li>
-     * <li>SWT.WRAP - useful with SWT.MULTI
-     * <li>SWT.LEFT - alignment
-     * <li>SWT.RIGHT - alignment
-     * <li>SWT.CENTER - alignment
+     * <li>SWT.SINGLE - viewer is restricted to a single line</li>
+     * <li>SWT.MULTI - viewer is able to assume additional vertical space is available</li>
+     * <li>SWT.READ_ONLY - read only</li>
      * </ul>
      * 
-     * @param parent
-     * @param none
+     * @param parent composite viewer is being added to
+     * @param style used to layout the viewer
      */
     public DefaultExpressionViewer(Composite parent, int style) {
-        super(parent, style);
-        text = new Text(parent, style);
-        feedback = new ControlDecoration(text, SWT.TOP | SWT.LEFT);
+        super(new Composite(parent, SWT.NONE), style);
+        
+        control = text.getParent();
+        
+        boolean multiLine = (SWT.MULTI & style) != 0;
+        
+        // ATTRIBUTE
+        Label lblAttribute = null;
+        if( multiLine ){
+            lblAttribute = new Label(control, SWT.NONE);
+            lblAttribute.setText("Attribute");
+        }
+        attribute = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
+        attribute.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                String attributeName = attribute.getText();
 
-        FunctionFinder ff = new FunctionFinder(null);
+                // populate values based on this attribute
+                if (attributeName != null && getInput() != null && getInput().getSchema() != null) {
+                    SimpleFeatureType schema = getInput().getSchema();
+                    AttributeDescriptor descriptor = schema.getDescriptor(attributeName);
+                    
+                    SortedSet<String> suggestedValues = generateSuggestedValues( descriptor );
 
-        proposalProvider = new FunctionContentProposalProvider();
-        ContentProposalAdapter adapter = new ContentProposalAdapter(text, new TextContentAdapter(),
-                proposalProvider, null, null);
+                    value.removeAll();
+                    if (suggestedValues.isEmpty()) {
+                        value.setEnabled(false);
+                    } else {
+                        value.setEnabled(true);
+                        for (String item : suggestedValues) {
+                            value.add(item);
+                        }
+                    }
+                } else {
+                    value.removeAll();
+                    value.setEnabled(false);
+                }
+            }
+        });
+        
+        // OPPERATIONS
+        Label lblOperation = null;
+        if( multiLine){
+            lblOperation = new Label(control, SWT.NONE);
+            lblOperation.setText("Operation:");
+        }
+        operation = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
+        operation.add("=");
+        operation.add("<");
+        operation.add(">");
+        operation.add("LIKE");
+        
+        // VALUE COMBO
+        Label lblValue = null;
+        if( multiLine){
+            lblValue = new Label(control, SWT.NONE);
+            lblValue.setText("Value");
+        }        
+        value = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
+        value.setEnabled(false); // need to select an attribute before we can suggest values
+        
+        // INSERT BUTTON
+        insert = new Button(control, SWT.NONE);
+        insert.setText("Insert");
+        insert.addSelectionListener(insertButtonListener);
+        
+        if( multiLine ){
+            MigLayout layout = new MigLayout("insets 0", "[][][][][][][grow]", "[grow][]");
+            control.setLayout( layout);
+            
+            text.setLayoutData("span,grow,width 200:100%:100%,height 60:100%:100%");
+            setPreferredTextSize(40,5);
+            
+            lblAttribute.setLayoutData("cell 0 1,alignx trailing,gapx related");
+            attribute.setLayoutData("cell 1 1,wmin 60,alignx left,gapx rel");
+            
+            lblOperation.setLayoutData("cell 2 1,alignx trailing,gapx related");
+            operation.setLayoutData("cell 3 1,wmin 60,alignx left,gapx rel");            
 
-        text.addKeyListener(keyListener);
+            lblValue.setLayoutData( "cell 4 1,alignx trailing,gapx related");
+            value.setLayoutData("cell 5 1,wmin 60,alignx left,gapx related");
+            
+            insert.setLayoutData("cell 6 1,alignx left,gapx unrel");
+        }
+        else {
+            control.setLayout( new MigLayout("insets 0, flowx", "", ""));
+
+            text.setLayoutData("grow,width 200:70%:100%, gap unrelated");
+            attribute.setLayoutData("width 90:20%:100%, gap related");
+            operation.setLayoutData("width 60:10%:100%, gap related");
+            value.setLayoutData("width 60:10%:100%, gap related");
+            insert.setLayoutData("gap related");
+        }
+    }
+    /**
+     * Used to supply a list of suggested values; given the provided attribtue descriptor.
+     * 
+     * @param descriptor
+     * @return list of suggested values (may be empty if no values are suggested)
+     */
+    protected SortedSet<String> generateSuggestedValues(AttributeDescriptor descriptor) {
+        SortedSet<String> options = new TreeSet<String>();
+
+        Object defaultValue = descriptor.getDefaultValue();
+        if (defaultValue != null) {
+            options.add(String.valueOf(defaultValue));
+        }
+        AttributeType type = descriptor.getType();
+        if (Number.class.isAssignableFrom(type.getBinding())) {
+            options.add("0");
+            options.add("1");
+            options.add("2");
+            options.add("3");
+            options.add("4");
+            options.add("5");
+        }
+        return options;
     }
 
     /**
-     * This is the widget used to display the Expression; its parent has been provided in the
+     * This is the widget used to display the Filter; its parent has been provided in the
      * ExpressionViewer's constructor; but you may need direct access to it in order to set layout
      * data etc.
      * 
-     * @return
+     * @return control used to display the filter
      */
-    public Text getControl() {
-        return text;
+    public Control getControl() {
+        return control;
     }
-
-    /**
-     * The isRequired flag will be used to determine the default decoration to show (if there is no
-     * warning or error to take precedence).
-     * <p>
-     * Please note that if this is a required field Expression.NIL is not considered to be a valid
-     * state.
-     * </p>
-     * 
-     * @param isRequired true if this is a required field
-     */
-    public void setRequired(boolean isRequired) {
-        this.isRequired = isRequired;
-    }
-
-    /**
-     * @return true if this is a required field
-     */
-    public boolean isRequired() {
-        return isRequired;
-    }
-
-    /**
-     * Check if the expr is valid.
-     * <p>
-     * The default implementation checks that the expr is not null (which would be an error); and
-     * that if isRequired is true that a required decoration is shown.
-     * <p>
-     * Subclasses can overide to perform additional checks (say for entering dates). They should
-     * take care to use the feedback decoration in order to indicate to the user any problems
-     * encountered.
-     * 
-     * @return true if the field is valid
-     */
-    public boolean validate() {
-        FieldDecorationRegistry decorations = FieldDecorationRegistry.getDefault();
-        try {
-            expr = ECQL.toExpression(text.getText());
-        } catch (CQLException e) {
-            expr = null;
-            feedback.setDescriptionText(e.getSyntaxError());
-            feedback.setImage(decorations.getFieldDecoration(FieldDecorationRegistry.DEC_ERROR)
-                    .getImage());
-            feedback.show();
-            return false;
-        }
-        if (expr == null) {
-            feedback.setDescriptionText("(empty)");
-            feedback.setImage(decorations.getFieldDecoration(FieldDecorationRegistry.DEC_ERROR)
-                    .getImage());
-            feedback.show();
-
-            return false; // so not valid!
-        }
-        if (isRequired && expr == Expression.NIL) {
-            feedback.setDescriptionText("Required");
-            feedback.setImage(decorations.getFieldDecoration(FieldDecorationRegistry.DEC_REQUIRED)
-                    .getImage());
-            feedback.show();
-
-            return false;
-        }
-        feedback.setDescriptionText(null);
-        feedback.setImage(null);
-        feedback.hide();
-        return true;
-    }
-
-    /**
-     * Used to check for any validation messages (such as required field etc...)
-     * 
-     * @return Validation message
-     */
-    public String getValidationMessage() {
-        FieldDecorationRegistry decorations = FieldDecorationRegistry.getDefault();
-        if (feedback.getImage() == decorations
-                .getFieldDecoration(FieldDecorationRegistry.DEC_ERROR).getImage()) {
-            String errorMessage = feedback.getDescriptionText();
-            if (errorMessage == null) {
-                errorMessage = "invalid";
-            }
-            return errorMessage;
-        }
-        if (feedback.getImage() == decorations.getFieldDecoration(
-                FieldDecorationRegistry.DEC_REQUIRED).getImage()) {
-            String requiredMessage = feedback.getDescriptionText();
-            if (requiredMessage == null) {
-                requiredMessage = "invalid";
-            }
-            return requiredMessage;
-        }
-        return null; // all good then
-    }
-
-    /**
-     * Provides access to the Expression being used by this viewer.
-     * <p>
-     * 
-     * @return Expression being viewed; may be Expression.NIL if empty (but will not be null)
-     */
-    @Override
-    public Expression getInput() {
-        return expr;
-    }
-
-    @Override
-    public ISelection getSelection() {
-        if (expr == null)
-            return null;
-
-        IStructuredSelection selection = new StructuredSelection(expr);
-        return selection;
-    }
-
+    
     @Override
     public void refresh() {
-        if (text != null && !text.isDisposed()) {
-            text.getDisplay().asyncExec(new Runnable() {
-                public void run() {
-                    if (text == null || text.isDisposed())
-                        return;
-                    String cql = CQL.toCQL(expr);
-                    text.setText(cql);
-                }
-            });
+        super.refresh(); // update text field suggestions
+        
+        if (input != null) {
+            SortedSet<String> names = new TreeSet<String>(input.toPropertyList());
+            attribute.setItems(names.toArray(new String[names.size()]));
         }
     }
 
-    /**
-     * Set the input for this viewer.
-     * <p>
-     * This viewer accepts several alternative forms of input to get started:
-     * <ul>
-     * <li>Expression - is used directly
-     * <li>String - is parsed by ECQL.toExpression; and if successful it is used
-     * </ul>
-     * If you have other suggestions (PropertyName could be provided by an AttributeType for
-     * example) please ask on the mailing list.
-     * 
-     * @param input Expression or String to use as the input for this viewer
-     */
-    @Override
-    public void setInput(Object input) {
-        if (input instanceof Expression) {
-            expr = (Expression) input;
-            refresh();
-        } else if (input instanceof String) {
-            final String txt = (String) input;
-            try {
-                expr = ECQL.toExpression(txt);
-            } catch (CQLException e) {
-                // feedback that things are bad
-            }
-            // use the text as provided
-            text.getDisplay().asyncExec(new Runnable() {
-                public void run() {
-                    text.setText(txt);
-                }
-            });
-        }
-    }
-
-    @Override
-    public void setSelection(ISelection selection, boolean reveal) {
-        // do nothing by default
-    }
-
-    /**
-     * Provide the feedback that everything is fine.
-     * <p>
-     * This method will make use of an associated ControlDecoration if available; if not it will
-     * make use of a tooltip or something.
-     * </p>
-     */
-    public void feedback() {
-        feedback.hide();
-    }
-
-    /**
-     * Provide the feedback that everything is fine.
-     * <p>
-     * This method will make use of an associated ControlDecoration if available; if not it will
-     * make use of a tooltip or something.
-     * </p>
-     */
-    public void feedback(String warning) {
-        if (feedback != null) {
-            feedback.setDescriptionText(warning);
-            feedback.show();
-        }
-        Control control = getControl();
-        if (control != null && !control.isDisposed()) {
-            control.setToolTipText(warning);
-        }
-    }
-
-    /**
-     * Provide the feedback that everything is fine.
-     * <p>
-     * This method will make use of an associated ControlDecoration if available; if not it will
-     * make use of a tooltip or something.
-     * </p>
-     */
-    public void feedback(String error, Exception eek) {
-        Control control = getControl();
-        if (control != null && !control.isDisposed()) {
-            control.setToolTipText(error + ":" + eek);
-        }
-    }
-
-    /**
-     * Feature Type to use for attribute names.
-     * 
-     * @param type
-     */
-    public void setSchema(SimpleFeatureType type) {
-        if (type == null) {
-            return;
-        }
-        Set<String> names = new HashSet<String>();
-        for (AttributeDescriptor attribute : type.getAttributeDescriptors()) {
-            names.add(attribute.getLocalName());
-        }
-        proposalProvider.setExtra(names);
-        this.type = type;
-    }
-
-    @Override
-    public SimpleFeatureType getSchema() {
-        return type;
-    }
-
-    @Override
-    public void setExpected(Class<?> binding) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public Class<?> getExpected() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }

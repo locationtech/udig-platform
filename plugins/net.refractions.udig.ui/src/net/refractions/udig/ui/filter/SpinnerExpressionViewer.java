@@ -3,6 +3,8 @@ package net.refractions.udig.ui.filter;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.refractions.udig.ui.filter.ViewerFactory.Appropriate;
+
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -16,11 +18,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.text.cql2.CQLException;
 import org.geotools.filter.text.ecql.ECQL;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.PropertyDescriptor;
+import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Literal;
 import org.opengis.filter.expression.PropertyName;
@@ -50,27 +54,30 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
      */
     public static class Factory extends ExpressionViewerFactory {
         @Override
-        public int appropriate(SimpleFeatureType schema, Expression expression) {
+        public int score(ExpressionInput input, Expression expression) {
             if (expression instanceof Literal) {
                 Literal literal = (Literal) expression;
                 Double number = literal.evaluate(null, Double.class);
                 if (number != null) {
                     if (number >= 0 && number <= 1.0) {
-                        return APPROPRIATE;
+                        return Appropriate.COMPLETE.getScore();
                     }
                 }
             }
             if (expression instanceof PropertyName) {
                 PropertyName name = (PropertyName) expression;
-                AttributeDescriptor descriptor = schema.getDescriptor(name.getPropertyName());
-                if (descriptor != null) {
-                    Class<?> binding = descriptor.getType().getBinding();
-                    if (Number.class.isAssignableFrom(binding)) {
-                        return APPROPRIATE;
+                if( input != null && input.getSchema() != null ){
+                    SimpleFeatureType schema = input.getSchema();
+                    AttributeDescriptor descriptor = schema.getDescriptor(name.getPropertyName());
+                    if (descriptor != null) {
+                        Class<?> binding = descriptor.getType().getBinding();
+                        if (Number.class.isAssignableFrom(binding)) {
+                            return Appropriate.COMPLETE.getScore();
+                        }
                     }
                 }
             }
-            return INCOMPLETE;
+            return Appropriate.INCOMPLETE.getScore();
         }
 
         @Override
@@ -78,14 +85,6 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
             return new SpinnerExpressionViewer(parent, style);
         }
     }
-
-    /**
-     * This is the expression we are working on here.
-     * <p>
-     * We are never going to be "null"; Expression.NIL is used to indicate an intentionally empty
-     * expression.
-     */
-    protected Expression expr = Expression.NIL;
 
     Composite control;
 
@@ -95,28 +94,19 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
 
     protected Text text;
 
-    boolean isRequired;
-
-    private SimpleFeatureType type;
-
     private SelectionListener listener = new SelectionListener() {
-
         @Override
         public void widgetSelected(SelectionEvent e) {
-            validate();
+            Expression newExpression = validate();
+            internalUpdate(newExpression);
         }
-
         @Override
         public void widgetDefaultSelected(SelectionEvent e) {
 
         }
     };
 
-    private Class<?> binding;
-
     public SpinnerExpressionViewer(Composite parent, int style) {
-        super(parent);
-
         control = new Composite(parent, style);
         combo = new ComboViewer(control, SWT.DEFAULT);
         combo.setContentProvider(ArrayContentProvider.getInstance());
@@ -139,62 +129,71 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
         spinner.setEnabled(false);
     }
 
-    @Override
-    public Control getControl() {
-        return control;
-    }
-
-    public boolean validate() {
-        return true;
-    }
-
-    @Override
-    public String getValidationMessage() {
+    protected Expression validate() {
+        if( !combo.getSelection().isEmpty() ){
+            Object selection = ((StructuredSelection)combo.getSelection()).getFirstElement();
+            if( selection != NONE ){
+                if ( selection instanceof String){
+                    String propertyName = (String) selection;
+                    FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
+                    
+                    return ff.property( propertyName );
+                }
+                // confused ... sigh
+            }
+            
+        }
         return null;
     }
 
     @Override
-    public Expression getInput() {
-        return expr;
+    public Control getControl() {
+        return control;
     }
-
-    @Override
-    public ISelection getSelection() {
-        if (expr == null) {
-            return null;
-        }
-        IStructuredSelection selection = new StructuredSelection(expr);
-        return selection;
-    }
-
+    
+    /**
+     * Mostly used to update the combo with {@link FilterInput#getNumericPropertyList()} if available.
+     */
     @Override
     public void refresh() {
+        if( input != null ){
+            combo.setInput( input.getNumericPropertyList() );
+            combo.getControl().setEnabled(true);
+        }
+        else {
+            combo.setInput(null);
+            combo.getControl().setEnabled(false);
+        }
+    }
+    
+    public void refreshExpression() {
+        Expression expr = getExpression();
         if (expr instanceof PropertyName) {
             PropertyName property = (PropertyName) expr;
             String name = property.getPropertyName();
-            refresh(null, name, null);
+            refreshControls(null, name, null);
             return;
         } else if (expr instanceof Literal) {
             Literal literal = (Literal) expr;
             Double percent = literal.evaluate(null, Double.class);
             if (percent != null) {
-                refresh(percent, null, null);
+                refreshControls(percent, null, null);
                 return;
             }
         }
         // We cannot display this expression - put up a warning
         String message = ECQL.toCQL(expr);
-        refresh(null, null, message);
+        refreshControls(null, null, message);
     }
 
-    protected void refresh(final Double percent, final String propertyName, final String message) {
+    protected void refreshControls(final Double percent, final String propertyName, final String message) {
         if (control != null && !control.isDisposed()) {
             control.getDisplay().asyncExec(new Runnable() {
                 public void run() {
                     if (control == null || control.isDisposed()) {
                         return; // must of been disposed while in the display thread queue
                     }
-                    combo.setInput(toNumericAttributeList(schema));
+                    combo.setInput(input.getNumericPropertyList());
 
                     if (percent != null) {
                         spinner.setEnabled(true);
@@ -223,92 +222,11 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
     }
 
     @Override
-    public void setInput(Object input) {
-        if (input instanceof Expression) {
-            if (!input.equals(expr)) {
-                expr = (Expression) input;
-                refresh();
-            }
-        } else if (input instanceof String) {
-            String text = (String) input;
-            try {
-                Expression inputExpression = ECQL.toExpression(text);
-                if (inputExpression == null) {
-                    inputExpression = Expression.NIL;
-                }
-                if (!inputExpression.equals(expr)) {
-                    expr = (Expression) input;
-                    refresh();
-                }
-                refresh();
-            } catch (CQLException e) {
-                throw new IllegalStateException("ExpressionViewer requires Expression for input");
-            }
-        } else {
-            throw new IllegalStateException("ExpressionViewer requires Expression for input");
+    public void setExpression(Expression newExpression) {
+        if (!newExpression.equals(this.expression)) {
+            this.expression = (Expression) input;
+            refreshExpression();
         }
     }
 
-    @Override
-    public void setSelection(ISelection selection, boolean reveal) {
-        if (selection instanceof StructuredSelection) {
-            StructuredSelection structuredSelection = (StructuredSelection) selection;
-            Object value = structuredSelection.getFirstElement();
-
-            if (value instanceof Expression) {
-                setInput((Expression) value);
-            }
-        }
-    }
-
-    @Override
-    public void feedback() {
-
-    }
-
-    @Override
-    public void feedback(String warning) {
-
-    }
-
-    @Override
-    public void feedback(String exception, Exception eek) {
-
-    }
-
-    @Override
-    public void setSchema(SimpleFeatureType schema) {
-        this.type = schema;
-    }
-
-    private List<String> toNumericAttributeList(SimpleFeatureType schema) {
-        final List<String> options = new ArrayList<String>();
-        if (schema != null) {
-            for (AttributeDescriptor descriptor : schema.getAttributeDescriptors()) {
-                if (Number.class.isAssignableFrom(descriptor.getType().getBinding())) {
-                    options.add(descriptor.getLocalName());
-                }
-            }
-        }
-        options.add(NONE);
-        return options;
-    }
-
-    @Override
-    public SimpleFeatureType getSchema() {
-        return type;
-    }
-
-    @Override
-    public void setExpected(Class<?> binding) {
-        if (!Number.class.isAssignableFrom(binding)) {
-            feedback("Used to enter numbers");
-        }
-        this.binding = binding;
-    }
-
-    @Override
-    public Class<?> getExpected() {
-        return this.binding;
-    }
 }

@@ -1,259 +1,362 @@
 package net.refractions.udig.ui.filter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.internal.ui.UiPlugin;
+import net.refractions.udig.ui.filter.ViewerFactory.Appropriate;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.action.ContributionItem;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.PopupDialog;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.HelpListener;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.part.PageBook;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.expression.Expression;
 
+/**
+ * {@link IExpressionViewer} allowing user to switch between implementations.
+ * <p>
+ * Note this implementation makes use of {@link ExpressionViewerFactory} when creating each viewer. We ask that
+ * you remember the "viewerId" in dialog settings or IMento so the user is not forced to choose
+ * which viewer is displayed each time. You can also use this facility as a hint when configuring
+ * the viewer for use.
+ * 
+ * <pre>
+ * ExpressionViewer viewer = new ExpressionViewer(composite, SWT.MULTI);
+ * viewer.getControl().setLayoutData("grow, gap unrelated");
+ * </pre>
+ * 
+ * You will need to consult the extension point for the list of valid viewerIds.
+ * 
+ * @author Jody Garnett
+ * @since 1.3.2
+ */
 public class ExpressionViewer extends IExpressionViewer {
-    /** Extension point ID */
-    public static final String FILTER_VIEWER_EXTENSION = "net.refractions.udig.ui.filterViewer";
+    /**
+     * IExpressionViewer currently displayed in {@link #pageBook}.
+     */
+    protected IExpressionViewer delegate;
 
-    private static ArrayList<ExpressionViewerFactory> list;
+    private ISelectionChangedListener listener = new ISelectionChangedListener() {
+        @Override
+        public void selectionChanged(SelectionChangedEvent event) {
+            internalUpdate(delegate.getExpression());
+            // The above internalUpdate will issue a fireSelectionChanged(event)
+        }
+    };
+
+    /** Control used to display {@link #pageBook} and {@link #viewerCombo}. */
+    Composite control;
 
     /**
-     * ExpressionViewer we are currently delegating to.
+     * PageBook acting as our control; used to switch between available implementations.
      */
-    IExpressionViewer delegate;
+    private PageBook pageBook;
 
-    ComboViewer choice;
+    /**
+     * Id of the viewer set by the user using the provided combo; may be supplied as an initial hint
+     * or saved and restored using IMemento or DialogSettings in order to preserve user context.
+     */
+    private String viewerId;
+    
+    /**
+     * Remember the style used so we can pass it on when we create a delegate
+     */
+    private int style;
 
-    private SimpleFeatureType schema;
+    private SelectionListener menuListener = new SelectionAdapter() {
+        @Override
+        public void widgetSelected(SelectionEvent e) {
+            MenuItem menuItem = (MenuItem) e.widget;
+            
+            Object data = menuItem.getData();
+            boolean selected = menuItem.getSelection();
 
-    private Composite control;
+            if( selected && data instanceof String ){
+                showViewer( (String) data );
+            }
+            if( selected && data instanceof ContributionItem ){
+                ContributionItem item = (ContributionItem) data;
+                
+                showViewer( (String) item.getId() );
+            }
+        }
+    };
 
-    private PageBook flip;
+    /** Cache of viewers responsible expression display and input */
+    private HashMap<String, IExpressionViewer> pages;
 
-    private Map<ExpressionViewerFactory, IExpressionViewer> pages;
+    /** Place holder displayed to request the user choose a viewer */
+    private Label placeholder;
 
-    private Label label;
+    /** Label offering the popup menu symbol */
+    private Label config;
 
     public ExpressionViewer(Composite parent) {
-        this(parent, SWT.DEFAULT);
+        this( parent, SWT.DEFAULT );
     }
-
+    /**
+     * Creates an ExpressionViewer using the provided style.
+     * <ul>
+     * <li>SWT.SINGLE - A simple text field showing the expression using extended CQL notation
+     * <li>
+     * <li>SWT.MULTI - A multi line text field</li>
+     * <li>SWT.READ_ONLY - read only display of a expression</li>
+     * </ul>
+     * 
+     * @param parent
+     * @param style
+     */
     public ExpressionViewer(Composite parent, int style) {
-        super(parent, style);
-        control = new Composite(parent, SWT.DEFAULT);
-
-        choice = new ComboViewer(control);
-        choice.setContentProvider(ArrayContentProvider.getInstance());
-        choice.setLabelProvider(new LabelProvider() {
-            @Override
-            public String getText(Object element) {
-                if (element instanceof ExpressionViewerFactory) {
-                    ExpressionViewerFactory factory = (ExpressionViewerFactory) element;
-                    return factory.getDisplayName();
+        control = new Composite(parent, SWT.NO_SCROLL);
+        control.setLayout(new MigLayout("insets 0", "[fill][]", "[fill]"));
+        
+        pageBook = new PageBook(control, SWT.NO_SCROLL);
+        pageBook.setLayoutData("cell 0 0,grow,width 200:100%:100%,height 18:75%:100%");
+        
+        placeholder = new Label( pageBook, SWT.SINGLE );
+        placeholder.setText("Choose expression editor");
+        
+        delegate = new CQLExpressionViewer(pageBook, style);
+        delegate.addSelectionChangedListener(listener);
+        pageBook.showPage(delegate.getControl());
+        
+        this.pages = new HashMap<String,IExpressionViewer>();
+        pages.put("net.refractions.udig.ui.cqlExpressionViewer", delegate );
+        
+        config = new Label(control, SWT.SINGLE);
+        config.setImage(JFaceResources.getImage(PopupDialog.POPUP_IMG_MENU));
+        config.setLayoutData("cell 1 0,aligny top,height 16!, width 16!");
+        
+        createContextMenu( config );
+        config.addMouseListener(new MouseAdapter() {
+            public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
+                Menu menu = config.getMenu();
+                if( menu != null ){
+                    menu.setVisible(true);
                 }
-                return super.getText(element);
             }
         });
-        List<ExpressionViewerFactory> factories = factories();
-        choice.setInput(factories);
-        ExpressionViewerFactory currentFactory = factories.get(0);
-        choice.setSelection(new StructuredSelection(currentFactory));
-
-        flip = new PageBook(control, SWT.DEFAULT);
-
-        label = new Label(flip, SWT.DEFAULT);
-        label.setText("--");
-
-        // use SWT.DEFALT as we are expecting to be "inline" ...
-        delegate = currentFactory.createViewer(flip, SWT.DEFAULT);
-
-        pages = new HashMap<ExpressionViewerFactory, IExpressionViewer>();
-        pages.put(currentFactory, delegate);
+        this.style = style;
     }
 
-    private synchronized static List<ExpressionViewerFactory> factories() {
-        if (list == null) {
-            // list = new ArrayList<ExpressionViewerFactory>();
-            // list.add(new DefaultExpressionViewer.Factory());
-            IExtensionRegistry registery = Platform.getExtensionRegistry();
-            IConfigurationElement[] stuff = registery
-                    .getConfigurationElementsFor(FILTER_VIEWER_EXTENSION);
-            for (IConfigurationElement config : stuff) {
-                if ("expressionViewer".equals(config.getName())) {
-                    try {
-                        ExpressionViewerFactory factory;
-                        factory = (ExpressionViewerFactory) config
-                                .createExecutableExtension("class");
-                        factory.init(config);
-
-                        list.add(factory);
-                    } catch (CoreException e) {
-                        String pluginId = config.getContributor().getName();
-                        IStatus status = new Status(IStatus.WARNING, pluginId, e.getMessage(), e);
-                        UiPlugin.log(status);
-                    }
-                } else {
-                    // skip as it is probably a filterViewer element
-                }
+    protected void showViewer(String newViewerId) {
+        if( newViewerId == null ){
+            // show place holder label or default to CQL
+            newViewerId = "net.refractions.udig.ui.cqlExpressionViewer";
+        }
+        this.viewerId = newViewerId;
+        
+        // update the pagebook if needed
+        IExpressionViewer viewer = getViewer( this.viewerId );
+        
+        String cqlText = null;
+        if( delegate instanceof CQLExpressionViewer ){
+            CQLExpressionViewer cqlViewer = (CQLExpressionViewer) delegate;
+            cqlText = cqlViewer.text.getText();
+        }
+        
+        if( viewer == null ){
+            pageBook.showPage(placeholder);
+        }
+        else {
+            feedback(); // clear any warnings
+            
+            // configure viewer before display!
+            ExpressionInput currentInput = getInput();
+            Expression currentExpression = getExpression();
+            
+            viewer.setInput( currentInput );
+            viewer.setExpression( currentExpression );
+            viewer.refresh();
+            
+            // if available we can carry over the users text - typos and all
+            if( cqlText != null && viewer instanceof CQLExpressionViewer){
+                CQLExpressionViewer cqlViewer = (CQLExpressionViewer) viewer;
+                cqlViewer.text.setText( cqlText );
+            }
+            // show page and listen to it for changes
+            pageBook.showPage(viewer.getControl());
+            viewer.addSelectionChangedListener(listener);
+        }
+        if( delegate != null ){
+            // showPage has already hidden delegate.getControl()
+            // so now we need to unplug it
+            delegate.removeSelectionChangedListener( listener );
+            delegate.setInput(null);
+        }
+        delegate = viewer;
+    }
+    /**
+     * Lookup viewer implementation for the provided viewerId.
+     * <p>
+     * The viewer will be created if needed; however it will not be hooked
+     * up with {@link #setInput}, {@link #setExpression} and {@link #addSelectionChangedListener}
+     * as this is done by {@link #showViewer(String)} when on an as needed basis.
+     * 
+     * @param viewerId
+     * @return IExpressionViewer or null if not available
+     */
+    private IExpressionViewer getViewer(String lookupId) {
+        IExpressionViewer viewer = pages.get( lookupId );
+        if( viewer != null ){
+            // already constructed
+            return viewer;
+        }
+        for( ExpressionViewerFactory factory : ExpressionViewerFactory.factoryList() ){
+            if( factory.getId().equals( lookupId )){
+                viewer = factory.createViewer( pageBook, this.style );
+                pages.put( factory.getId(), viewer );
+                
+                return viewer;
             }
         }
-        return list;
+        return null; // user has requested an unknown id - please display placeholder
     }
 
-    /** Called by the combo box when the user has changed what factory they want to use */
-    protected void changeDelegate(ExpressionViewerFactory factory) {
-        IExpressionViewer page;
-        if (pages.containsKey(factory)) {
-            page = pages.get(factory);
-        } else {
-            page = factory.createViewer(control, SWT.DEFAULT);
-        }
-        if (delegate == page) {
-            // no change what are you doing!
-            return;
-        }
-        if (delegate != null) {
-            // stop listening!
-        }
-        if (page != null) {
-            delegate = page;
-            // hook up new delegate!
-            delegate.setSchema(schema);
-            flip.showPage(delegate.getControl());
-        } else {
-            flip.showPage(label);
-        }
+    public void setViewerId(String id) {
+        this.viewerId = id;
     }
 
-    public void feedback() {
-        delegate.feedback();
+    public String getViewerId() {
+        return viewerId;
     }
 
-    public String getValidationMessage() {
-        return delegate.getValidationMessage();
-    }
-
-    public Expression getInput() {
-        return delegate.getInput();
-    }
-
-    public ISelection getSelection() {
-        return delegate.getSelection();
-    }
-
-    public void addHelpListener(HelpListener listener) {
-        delegate.addHelpListener(listener);
-    }
-
-    public void addSelectionChangedListener(ISelectionChangedListener listener) {
-        delegate.addSelectionChangedListener(listener);
-    }
-
-    public boolean equals(Object obj) {
-        return delegate.equals(obj);
-    }
-
+    /**
+     * This is the widget used to display the Expression; its parent has been provided in the
+     * ExpressionViewer's constructor; but you may need direct access to it in order to set layout
+     * data etc.
+     * 
+     * @return
+     */
     public Control getControl() {
         return control;
     }
 
-    public void feedback(String warning) {
-        delegate.feedback(warning);
-    }
-
-    public void feedback(String exception, Exception eek) {
-        delegate.feedback(exception, eek);
-    }
-
-    public SimpleFeatureType getSchema() {
-        return delegate.getSchema();
-    }
-
-    public Class<?> getExpected() {
-        return delegate.getExpected();
-    }
-
-    public Object getData(String key) {
-        return delegate.getData(key);
-    }
-
-    public int hashCode() {
-        return delegate.hashCode();
-    }
-
-    public void setRequired(boolean required) {
-        delegate.setRequired(required);
-    }
-
-    public boolean isRequired() {
-        return delegate.isRequired();
-    }
-
+    @Override
     public void refresh() {
-        delegate.refresh();
+        if (delegate != null) {
+            delegate.refresh();
+        }
+        List<ExpressionViewerFactory> list = ExpressionViewerFactory.factoryList( getInput(), getExpression() );
+         if( !list.isEmpty() ){
+             ExpressionViewerFactory factory = list.get(0);
+             showViewer(factory.getId());
+         }
     }
 
-    public void setInput(Object input) {
-        delegate.setInput(input);
+    @Override
+    public void setInput(Object expressionInput) {
+        super.setInput(expressionInput);
+        if (delegate != null) {
+            delegate.setInput(expressionInput);
+        }
     }
 
-    public void setSelection(ISelection selection, boolean reveal) {
-        delegate.setSelection(selection, reveal);
+    /** Used to supply a expression for display or editing */
+    @Override
+    public void setExpression(Expression expression) {
+        if (this.expression == expression) {
+            return;
+        }
+        this.expression = expression;
+        if (delegate != null && delegate.getControl() != null
+                && !delegate.getControl().isDisposed()) {
+            try {
+                delegate.removeSelectionChangedListener(listener);
+                delegate.setExpression(expression);
+            } finally {
+                delegate.addSelectionChangedListener(listener);
+            }
+        }
+        fireSelectionChanged(new SelectionChangedEvent(ExpressionViewer.this, getSelection()));
     }
-
-    public void setSchema(SimpleFeatureType schema) {
-        this.schema = schema;
-        delegate.setSchema(schema);
+    
+    private void createContextMenu( Control control ){
+        final MenuManager menuManager = new MenuManager();
+        menuManager.setRemoveAllWhenShown(true); // we are going to generate
+        
+        menuManager.addMenuListener( new IMenuListener() {
+            public void menuAboutToShow(IMenuManager manager) {
+                Appropriate current = null;
+                for( ExpressionViewerFactory factory : ExpressionViewerFactory.factoryList( getInput(), getExpression() ) ){
+                    int currentScore = factory.score(getInput(), getExpression() );
+                    Appropriate category = Appropriate.valueOf( currentScore );
+                    if( current == null ){
+                        current = category;
+                    }
+                    else if( current != category ){
+                        menuManager.add( new Separator( current.name() ));
+                        current = category;
+                    }
+                    ExpressionViewerFactoryContributionItem contributionItem = new ExpressionViewerFactoryContributionItem(factory);
+                    
+                    menuManager.add( contributionItem );
+                }
+            }
+        });
+        Menu menu = menuManager.createContextMenu( control );
+        control.setMenu( menu );
     }
-
-    public void setExpected(Class<?> binding) {
-        delegate.setExpected(binding);
-    }
-
-    public void removeHelpListener(HelpListener listener) {
-        delegate.removeHelpListener(listener);
-    }
-
-    public void removeSelectionChangedListener(ISelectionChangedListener listener) {
-        delegate.removeSelectionChangedListener(listener);
-    }
-
-    public Item scrollDown(int x, int y) {
-        return delegate.scrollDown(x, y);
-    }
-
-    public Item scrollUp(int x, int y) {
-        return delegate.scrollUp(x, y);
-    }
-
-    public void setData(String key, Object value) {
-        delegate.setData(key, value);
-    }
-
-    public void setSelection(ISelection selection) {
-        delegate.setSelection(selection);
-    }
-
-    public String toString() {
-        return delegate.toString();
+    
+    class ExpressionViewerFactoryContributionItem extends ContributionItem {
+        
+        private ExpressionViewerFactory factory;
+        
+        ExpressionViewerFactoryContributionItem( ExpressionViewerFactory factory ){
+            setId( factory.getId() );
+            this.factory = factory;
+        }
+        @Override
+        public void fill(Menu menu, int index) {
+            MenuItem item = new MenuItem( menu, SWT.RADIO, index );
+            
+            item.setText( factory.getDisplayName() );
+            item.setData( factory.getId() );
+            item.setSelection( factory.getId().equals( viewerId ) );
+            item.addSelectionListener( menuListener );
+            
+            int score = factory.score( getInput(), getExpression() );
+            
+            if( Appropriate.valueOf(score) == Appropriate.NOT_APPROPRIATE ){
+                item.setEnabled(false);
+            }
+        }
     }
 
 }

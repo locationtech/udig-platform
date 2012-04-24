@@ -167,7 +167,7 @@ public abstract class FilterViewerFactory {
      *        capable of working with any content)
      * @param filter Existing filter provided by user, may be null
      */
-    public int appropriate(SimpleFeatureType schema, Filter filter) {
+    public int appropriate(FilterInput input, Filter filter) {
         return INCOMPLETE; // default to listing the viewer but not recommending it
     }
 
@@ -190,4 +190,14 @@ public abstract class FilterViewerFactory {
      * @return requested viewer
      */
     public abstract IFilterViewer createViewer(Composite composite, int style);
+    
+    //
+    // Factory and Extension Point Support
+    //
+    /** General purpose {@link IFilterViewer} suitable for use as a default */
+    public static final String CQL_FILTER_VIEWER = "net.refractions.udig.ui.filter.cqlFilterViewer";
+
+    /** Extension point ID each "expressionViewer" will be processed into our {@link #factoryList()} */
+    public static final String FILTER_VIEWER_EXTENSION = "net.refractions.udig.ui.filter.filterViewer";
+
 }

@@ -56,7 +56,7 @@ public class DefaultFilterViewer extends CQLFilterViewer {
      */
     public static class Factory extends FilterViewerFactory {
         @Override
-        public int appropriate(SimpleFeatureType schema, Filter filter) {
+        public int appropriate(FilterInput input, Filter filter) {
             return COMPLETE+1;
         }
         @Override
@@ -64,15 +64,9 @@ public class DefaultFilterViewer extends CQLFilterViewer {
             return new DefaultFilterViewer(parent, style);
         }
     }
-
     /**
-     * This is the expression we are working on here.
-     * <p>
-     * We are never going to be "null"; Expression.EXCLUDE is used to indicate an intentionally
-     * empty expression.
+     * Composite used as our control; allowing client code change layout data.
      */
-    protected Filter filter = Filter.EXCLUDE;
-
     protected Composite control;
 
     /**

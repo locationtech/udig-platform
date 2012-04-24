@@ -421,26 +421,55 @@
        </aoi>
     </extension>
     <extension
-          id="net.refractions.udig.ui.filterViewers"
+          id="net.refractions.udig.ui.filter.filterViewers"
           name="uDig UI Filter Viewers"
           point="net.refractions.udig.ui.filterViewer">
        <filterViewer
              class="net.refractions.udig.ui.filter.CQLFilterViewer$Factory"
-             description="General purpose Constraint Query Language filter support"
-             id="net.refractions.udig.ui.cqlFilterViewer"
+             description="General purpose Constraint Query Language filter definition"
+             id="net.refractions.udig.ui.filter.cqlFilterViewer"
              name="Constraint Query Language">
        </filterViewer>
        <filterViewer
              class="net.refractions.udig.ui.filter.DefaultFilterViewer$Factory"
              description="Builder to assist with Filter definition"
-             id="net.refractions.udig.ui.builderFilterViewer"
-             name="Filter Builder">
+             id="net.refractions.udig.ui.filter.builderFilterViewer"
+             name="Builder">
        </filterViewer>
        <filterViewer
              class="net.refractions.udig.ui.filter.IncludeFilterViewer$Factory"
              description="Choose between Enable and Disable filters"
-             id="net.refractions.udig.ui.includeFilterViewer"
+             id="net.refractions.udig.ui.filter.includeFilterViewer"
              name="Enable">
+       </filterViewer>
+    </extension>
+    <extension
+          id="net.refractions.udig.ui.filter.expressionViewers"
+          name="uDig UI Expression Viewers"
+          point="net.refractions.udig.ui.filterViewer">
+       <filterViewer
+             class="net.refractions.udig.ui.filter.CQLExpressionViewer$Factory"
+             description="General purpose Constraint Query Language expression definition"
+             id="net.refractions.udig.ui.filter.cqlExpressionViewer"
+             name="Constraint Query Language">
+       </filterViewer>
+       <filterViewer
+             class="net.refractions.udig.ui.filter.DefaultExpressionViewer$Factory"
+             description="Builder to assist with expression definition"
+             id="net.refractions.udig.ui.filter.builderExpressionViewer"
+             name="Builder">
+       </filterViewer>
+       <filterViewer
+             class="net.refractions.udig.ui.filter.RGBExpressionViewer$Factory"
+             description="RGB Color definition"
+             id="net.refractions.udig.ui.filter.rgbExpressionViewer"
+             name="RGB Colour">
+       </filterViewer>
+       <filterViewer
+             class="net.refractions.udig.ui.filter.SpinnerExpressionViewer$Factory"
+             description="Number definition"
+             id="net.refractions.udig.ui.filter.rgbExpressionViewer"
+             name="Number">
        </filterViewer>
     </extension>
 </plugin>

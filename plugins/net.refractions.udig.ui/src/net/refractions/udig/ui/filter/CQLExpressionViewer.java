@@ -25,7 +25,7 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
 /**
- * Simple {@link IFilterViewer} which uses a {@link Text} to edit a Filter using Constraint Query
+ * Simple {@link IExpressionViewer} which uses a {@link Text} to edit a Filter using Constraint Query
  * Language.
  * <p>
  * This represents a simple, full featured, filter viewer and can be extended as a starting point
@@ -53,25 +53,25 @@ import org.opengis.filter.expression.Expression;
  * @author Jody Garnett
  * @since 1.3.0
  */
-public class CQLFilterViewer extends IFilterViewer {
+public class CQLExpressionViewer extends IExpressionViewer {
     /**
      * Factory used to create our basic CQLFilterViewer as a bare bones
-     * {@link FilterViewerFactory#COMPLETE} implementation capable of editing any filter.
+     * {@link ExpressionViewerFactory#COMPLETE} implementation capable of editing any filter.
      * 
      * @author Jody Garnett
      * @since 1.3.2
      */
-    public static class Factory extends FilterViewerFactory {
-        @Override
+    public static class Factory extends ExpressionViewerFactory {
         /**
          * Consider CQLFilterViewer a fallback plan.
          */
-        public int appropriate(FilterInput input, Filter filter) {
-            return COMPLETE;
+        @Override
+        public int score(ExpressionInput input, Expression expression) {
+            return Appropriate.COMPLETE.getScore();
         }
 
-        public IFilterViewer createViewer(Composite parent, int style) {
-            return new CQLFilterViewer(parent, style);
+        public IExpressionViewer createViewer(Composite parent, int style) {
+            return new CQLExpressionViewer(parent, style);
         }
     }
 
@@ -118,7 +118,7 @@ public class CQLFilterViewer extends IFilterViewer {
      * @param parent
      * @param style
      */
-    public CQLFilterViewer(Composite parent, int style) {
+    public CQLExpressionViewer(Composite parent, int style) {
         if ((style & SWT.SINGLE) != 0) {
             int textStyle = SWT.SINGLE | SWT.BORDER;
             text = new Text(parent, textStyle);
@@ -167,36 +167,30 @@ public class CQLFilterViewer extends IFilterViewer {
      * Called when a key is pressed to check if the filter has changed.
      */
     protected void changed() {
-        Filter parsedFilter = validate();
+        Expression parsedFilter = validate();
         if (parsedFilter != null) {
             internalUpdate(parsedFilter);
         }
     }
     /** Workaround to support INCLUDE / EXCLUDE pending https://jira.codehaus.org/browse/GEOT-4110 */
-    protected Filter toFilter( String txt ) throws CQLException{
+    protected Expression toExpression( String txt ) throws CQLException{
         if( txt == null ){
             return null;
         }
-        else if( "INCLDUE".equals( txt.trim() )){
-            return Filter.INCLUDE;
+        else if( "".equals( txt.trim() )){
+            return Expression.NIL;
         }
-        else if( "EXCLUDE".equals( txt.trim() )){
-            return Filter.EXCLUDE;
-        }
-        return ECQL.toFilter(txt);
+        return ECQL.toExpression(txt);
     }
-    /** Workaround to support INCLUDE / EXCLUDE pending https://jira.codehaus.org/browse/GEOT-4110 */
-    protected String toCQL(Filter filter) {
-        if( filter == null ){
+    /** Workaround to support Expression.NIL and null */
+    protected String toCQL(Expression expression) {
+        if( expression == null ){
             return null;
         }
-        else if( filter == Filter.INCLUDE ){
-            return "INCLUDE";
+        else if( expression == Expression.NIL ){
+            return "";
         }
-        else if( filter == Filter.EXCLUDE ){
-            return "EXCLUDE";
-        }
-        return ECQL.toCQL(filter);
+        return ECQL.toCQL(expression);
     }
     
     /**
@@ -211,10 +205,10 @@ public class CQLFilterViewer extends IFilterViewer {
      * 
      * @return true if the field is valid
      */
-    protected Filter validate() {
-        Filter parsedFilter;
+    protected Expression validate() {
+        Expression parsedFilter;
         try {
-            parsedFilter = toFilter(text.getText());
+            parsedFilter = toExpression(text.getText());
         } catch (CQLException e) {
             feedback(e.getLocalizedMessage(), e);
             return null;
@@ -235,33 +229,33 @@ public class CQLFilterViewer extends IFilterViewer {
             SortedSet<String> names = new TreeSet<String>(input.toPropertyList());
             proposalProvider.setExtra(names);
         }
-        refreshFilter();
+        refreshExpression();
     }
 
     /** Used to supply a filter for display or editing */
     @Override
-    public void setFilter(Filter filter) {
-        if (this.filter == filter) {
+    public void setExpression(Expression expression) {
+        if (this.expression == expression) {
             return;
         }
-        this.filter = filter;
-        refreshFilter();
-        fireSelectionChanged(new SelectionChangedEvent(CQLFilterViewer.this, getSelection()));
+        this.expression = expression;
+        refreshExpression();
+        fireSelectionChanged(new SelectionChangedEvent(CQLExpressionViewer.this, getSelection()));
     }
 
     /** Called to update the viewer text control to display the provided filter */
-    private void refreshFilter() {
+    private void refreshExpression() {
         if (text != null && !text.isDisposed()) {
             text.getDisplay().asyncExec(new Runnable() {
                 public void run() {
                     if (text == null || text.isDisposed())
                         return;
 
-                    if (filter == null) {
+                    if (expression == null) {
                         text.setText("");
                         feedback("Empty");
                     } else {
-                        String cql = toCQL(filter);
+                        String cql = toCQL(expression);
                         text.setText(cql);
                         feedback();
                     }
