@@ -142,7 +142,7 @@ public class CQLExpressionViewer extends IExpressionViewer {
             setPreferredTextSize(30,1 );
         }
         
-        text.setEditable( isReadOnly );
+        text.setEditable( !isReadOnly );
         
         proposalProvider = new FunctionContentProposalProvider();
         TextContentAdapter contentAdapter = new TextContentAdapter();
