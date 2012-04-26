@@ -29,6 +29,10 @@ import org.opengis.filter.expression.Expression;
  */
 public abstract class ExpressionViewerFactory extends ViewerFactory<IExpressionViewer> {
 
+    @Override
+    public Class<?> getBinding() {
+        return Expression.class;
+    }
     /**
      * Percentage between 0-100 saying how well this viewer can process the provided object.
      * <p>
@@ -101,15 +105,15 @@ public abstract class ExpressionViewerFactory extends ViewerFactory<IExpressionV
      */
     public static List<ExpressionViewerFactory> factoryList(
             final ExpressionInput input, final Expression expression) {
-        List<ExpressionViewerFactory> list = new ArrayList<ExpressionViewerFactory>(factoryList());
-        Collections.sort(list, new Comparator<ExpressionViewerFactory>() {
-            public int compare(ExpressionViewerFactory factory1, ExpressionViewerFactory factory2) {
-                int factory1Score = factory1.score(input, expression);
-                int factory2Score = factory2.score(input, expression);
-
-                return factory2Score - factory1Score;
+        List<ExpressionViewerFactory> list = new ArrayList<ExpressionViewerFactory>();
+        for( ExpressionViewerFactory factory : factoryList()){
+            int score = factory.score( input, expression );
+            if( Appropriate.valueOf( score ) == Appropriate.NOT_APPROPRIATE ){
+                continue; // skip this one 
             }
-        });
+            list.add( factory );
+        }
+        Collections.sort(list, new ViewerFactoryComparator( input, expression ) );
         return list;
     }
     /**

@@ -362,7 +362,7 @@
              targetClass="net.refractions.udig.catalog.IGeoResource">
           <enablement>
              <adaptsTo
-                   target="org.geotools.data.FeatureSource">
+                   target="org.geotools.data.simple.SimpleFeatureSource">
              </adaptsTo>
           </enablement>
        </operation>

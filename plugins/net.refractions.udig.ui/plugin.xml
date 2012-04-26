@@ -447,29 +447,29 @@
           id="net.refractions.udig.ui.filter.expressionViewers"
           name="uDig UI Expression Viewers"
           point="net.refractions.udig.ui.filterViewer">
-       <filterViewer
+       <expressionViewer
              class="net.refractions.udig.ui.filter.CQLExpressionViewer$Factory"
              description="General purpose Constraint Query Language expression definition"
              id="net.refractions.udig.ui.filter.cqlExpressionViewer"
              name="Constraint Query Language">
-       </filterViewer>
-       <filterViewer
+       </expressionViewer>
+       <expressionViewer
              class="net.refractions.udig.ui.filter.DefaultExpressionViewer$Factory"
              description="Builder to assist with expression definition"
              id="net.refractions.udig.ui.filter.builderExpressionViewer"
              name="Builder">
-       </filterViewer>
-       <filterViewer
+       </expressionViewer>
+       <expressionViewer
              class="net.refractions.udig.ui.filter.RGBExpressionViewer$Factory"
              description="RGB Color definition"
              id="net.refractions.udig.ui.filter.rgbExpressionViewer"
              name="RGB Colour">
-       </filterViewer>
-       <filterViewer
+       </expressionViewer>
+       <expressionViewer
              class="net.refractions.udig.ui.filter.SpinnerExpressionViewer$Factory"
              description="Number definition"
              id="net.refractions.udig.ui.filter.rgbExpressionViewer"
              name="Number">
-       </filterViewer>
+       </expressionViewer>
     </extension>
 </plugin>

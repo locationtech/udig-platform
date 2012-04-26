@@ -33,6 +33,9 @@ import org.opengis.filter.Filter;
  * @since 1.3.2
  */
 public abstract class ViewerFactory<V extends Viewer> {
+    /**
+     * TDOD fill me out
+     */
     public static enum Appropriate {
 
         /**
@@ -133,7 +136,7 @@ public abstract class ViewerFactory<V extends Viewer> {
          * 
          * <pre>
          * // offers complete control, slightly recommended over general purpose CQL entry
-         * return COMPLETE.getScore(2)
+         * return COMPLETE.getScore(2);
          * </pre>
          * 
          * @see #valueOf(int)
@@ -188,7 +191,7 @@ public abstract class ViewerFactory<V extends Viewer> {
      * The implementation uses {@link ViewerFactory#appropriate} to define the ordering.
      * 
      */
-    public static class ViewerFactoryComparator implements Comparator<ViewerFactory> {
+    public static class ViewerFactoryComparator implements Comparator<ViewerFactory<?>> {
         private Object input;
 
         private Object value;
@@ -199,7 +202,7 @@ public abstract class ViewerFactory<V extends Viewer> {
         }
 
         @Override
-        public int compare(ViewerFactory factory1, ViewerFactory factory2) {
+        public int compare(ViewerFactory<?> factory1, ViewerFactory<?> factory2) {
             int factory1Score = factory1 != null ? factory1.score(input, value) : -1;
             int factory2Score = factory2 != null ? factory2.score(input, value) : -1;
 
@@ -235,7 +238,10 @@ public abstract class ViewerFactory<V extends Viewer> {
         String id = config.getAttribute("id");
         return id;
     }
-
+    /**
+     * Display name used to allow the user to select this implementation from a list.
+     * @return display name (human readable translated)
+     */
     public String getDisplayName() {
         String name = config.getAttribute("name");
         return name;

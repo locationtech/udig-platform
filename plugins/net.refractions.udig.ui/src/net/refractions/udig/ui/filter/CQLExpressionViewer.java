@@ -42,7 +42,7 @@ import org.opengis.filter.expression.Expression;
  * }
  * </pre>
  * <p>
- * Each time the text is successfully parsed the {@link #getFilter()} is is updated with the latest
+ * Each time the text is successfully parsed the {@link #getFilter()} is updated with the latest
  * value and a {@link SelectionEvent} sent out - usin the {@link #internalUpdate(Filter)} method.
  * <p>
  * Suggestions are provided as you type using {@link #proposalProvider}. The {@link #refresh()}
@@ -55,8 +55,8 @@ import org.opengis.filter.expression.Expression;
  */
 public class CQLExpressionViewer extends IExpressionViewer {
     /**
-     * Factory used to create our basic CQLFilterViewer as a bare bones
-     * {@link ExpressionViewerFactory#COMPLETE} implementation capable of editing any filter.
+     * Factory used to create our basic CQLExpressionViewer as a bare bones
+     * {@link Appropriate#COMPLETE} implementation capable of editing any expression.
      * 
      * @author Jody Garnett
      * @since 1.3.2
@@ -119,17 +119,19 @@ public class CQLExpressionViewer extends IExpressionViewer {
      * @param style
      */
     public CQLExpressionViewer(Composite parent, int style) {
+        boolean isReadOnly = (style & SWT.READ_ONLY) != 0;
+
         if ((style & SWT.SINGLE) != 0) {
             int textStyle = SWT.SINGLE | SWT.BORDER;
-            text = new Text(parent, textStyle);
-            if( (style & SWT.READ_ONLY) != 0 ){
+            if( isReadOnly ){
                 textStyle |= SWT.READ_ONLY;
             }
-            // setPreferredTextSize(30,1 );
+            text = new Text(parent, textStyle);
+            setPreferredTextSize(30,1 );
         }
         else if ((style & SWT.MULTI) != 0) {
             int textStyle = SWT.MULTI|SWT.WRAP|SWT.BORDER|SWT.V_SCROLL;
-            if( (style & SWT.READ_ONLY) != 0 ){
+            if( isReadOnly ){
                 textStyle |= SWT.READ_ONLY;
             }
             text = new Text(parent, textStyle);
@@ -139,7 +141,9 @@ public class CQLExpressionViewer extends IExpressionViewer {
             text = new Text(parent, SWT.SINGLE | SWT.BORDER);
             setPreferredTextSize(30,1 );
         }
-
+        
+        text.setEditable( isReadOnly );
+        
         proposalProvider = new FunctionContentProposalProvider();
         TextContentAdapter contentAdapter = new TextContentAdapter();
         
@@ -172,7 +176,7 @@ public class CQLExpressionViewer extends IExpressionViewer {
             internalUpdate(parsedFilter);
         }
     }
-    /** Workaround to support INCLUDE / EXCLUDE pending https://jira.codehaus.org/browse/GEOT-4110 */
+    /** Workaround to support Expression.NIL as a repesenation of "" */
     protected Expression toExpression( String txt ) throws CQLException{
         if( txt == null ){
             return null;
@@ -203,24 +207,24 @@ public class CQLExpressionViewer extends IExpressionViewer {
      * take care to use the feedback decoration in order to indicate to the user any problems
      * encountered.
      * 
-     * @return true if the field is valid
+     * @return validated Expression provided by user or null if they are still editing
      */
     protected Expression validate() {
-        Expression parsedFilter;
+        Expression parsedExpr;
         try {
-            parsedFilter = toExpression(text.getText());
+            parsedExpr = toExpression(text.getText());
         } catch (CQLException e) {
             feedback(e.getLocalizedMessage(), e);
             return null;
         }
-        if (parsedFilter == null) {
+        if (parsedExpr == null || parsedExpr == Expression.NIL) {
             if (input != null && input.isRequired() ) {
                 feedback("Required", true);
                 return null;
             }
         }
         feedback();
-        return parsedFilter;
+        return parsedExpr;
     }
 
     @Override
@@ -229,22 +233,21 @@ public class CQLExpressionViewer extends IExpressionViewer {
             SortedSet<String> names = new TreeSet<String>(input.toPropertyList());
             proposalProvider.setExtra(names);
         }
-        refreshExpression();
+        refreshText();
     }
 
-    /** Used to supply a filter for display or editing */
     @Override
     public void setExpression(Expression expression) {
         if (this.expression == expression) {
             return;
         }
         this.expression = expression;
-        refreshExpression();
+        refreshText();
         fireSelectionChanged(new SelectionChangedEvent(CQLExpressionViewer.this, getSelection()));
     }
 
-    /** Called to update the viewer text control to display the provided filter */
-    private void refreshExpression() {
+    /** Called to update the viewer text control to display the provided expression */
+    private void refreshText() {
         if (text != null && !text.isDisposed()) {
             text.getDisplay().asyncExec(new Runnable() {
                 public void run() {

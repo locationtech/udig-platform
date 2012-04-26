@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Text;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.text.cql2.CQLException;
 import org.geotools.filter.text.ecql.ECQL;
+import org.geotools.util.Converters;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.PropertyDescriptor;
@@ -37,8 +38,8 @@ import org.opengis.filter.expression.PropertyName;
  * This implementation has a spinner which is enabled when a range (0 to 100%) is provided; an
  * Attribute combo which is enabled when a schema is provided.
  * 
- * @author Scott
- * @since 1.3.0
+ * @author Jody Garnett
+ * @since 1.3.2
  */
 public class SpinnerExpressionViewer extends IExpressionViewer {
     /**
@@ -47,20 +48,28 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
     public static final String NONE = "- none -";
 
     /**
-     * Factory used for the general purpose DefaultExpressionViewer.
+     * Factory SpinnerExpressionViewer is restricted to working with literal numbers and numeric PropertyName expressions.
      * 
-     * @author jody
-     * @since 1.2.0
+     * @author Jody Garnett
+     * @since 1.3.2
      */
     public static class Factory extends ExpressionViewerFactory {
         @Override
         public int score(ExpressionInput input, Expression expression) {
+            if( input != null ){
+                Class<?> binding = input.getBinding();
+                
+                if( !Number.class.isAssignableFrom( binding )){
+                    return Appropriate.NOT_APPROPRIATE.getScore();
+                }
+            }
             if (expression instanceof Literal) {
                 Literal literal = (Literal) expression;
                 Double number = literal.evaluate(null, Double.class);
+                
                 if (number != null) {
                     if (number >= 0 && number <= 1.0) {
-                        return Appropriate.COMPLETE.getScore();
+                        return Appropriate.APPROPRIATE.getScore();
                     }
                 }
             }
@@ -72,7 +81,7 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
                     if (descriptor != null) {
                         Class<?> binding = descriptor.getType().getBinding();
                         if (Number.class.isAssignableFrom(binding)) {
-                            return Appropriate.COMPLETE.getScore();
+                            return Appropriate.APPROPRIATE.getScore();
                         }
                     }
                 }
@@ -156,6 +165,7 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
      */
     @Override
     public void refresh() {
+        // combo update if we have numeric attributes
         if( input != null ){
             combo.setInput( input.getNumericPropertyList() );
             combo.getControl().setEnabled(true);
@@ -163,6 +173,26 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
         else {
             combo.setInput(null);
             combo.getControl().setEnabled(false);
+        }
+        // spinnter if we have min and max
+        if( input != null ){
+            Object min = input.getMin();
+            Object max = input.getMax();
+            if( min instanceof Number && max instanceof Number){
+                int minInt = ((Number)min).intValue();
+                int maxInt = ((Number)max).intValue();
+                
+                spinner.setMinimum(minInt);
+                spinner.setMaximum(maxInt);
+                
+                spinner.setEnabled( true );
+            }
+            else {
+                spinner.setEnabled(false);
+            }
+        }
+        else {
+            spinner.setEnabled(false);
         }
     }
     
