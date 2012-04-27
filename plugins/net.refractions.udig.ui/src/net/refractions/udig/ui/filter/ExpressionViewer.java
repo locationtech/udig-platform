@@ -193,6 +193,7 @@ public class ExpressionViewer extends IExpressionViewer {
         
         if( viewer == null ){
             pageBook.showPage(placeholder);
+            // pageBook.setSize( placeholder.)
         }
         else {
             feedback(); // clear any warnings
@@ -204,7 +205,7 @@ public class ExpressionViewer extends IExpressionViewer {
             viewer.setInput( currentInput );
             viewer.setExpression( currentExpression );
             viewer.refresh();
-            
+            viewer.getControl().getParent().layout();
             // if available we can carry over the users text - typos and all
             if( cqlText != null && viewer instanceof CQLExpressionViewer){
                 CQLExpressionViewer cqlViewer = (CQLExpressionViewer) viewer;

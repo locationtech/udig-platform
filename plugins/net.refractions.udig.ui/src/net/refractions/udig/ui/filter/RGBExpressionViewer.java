@@ -110,7 +110,8 @@ public class RGBExpressionViewer extends IExpressionViewer {
 
     public RGBExpressionViewer(Composite parent, int style) {
         control = new Composite(parent, style);
-
+        control.setSize(400, 400);
+        
         red = new Scale(control, SWT.NONE);
         red.setBounds(71, 8, 170, 38);
         red.setMaximum(MAX);

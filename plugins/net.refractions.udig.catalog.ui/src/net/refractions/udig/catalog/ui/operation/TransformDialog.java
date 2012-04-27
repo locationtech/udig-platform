@@ -13,6 +13,8 @@ import net.refractions.udig.core.StaticProvider;
 import net.refractions.udig.core.internal.ExtensionPointList;
 import net.refractions.udig.ui.filter.CQLExpressionViewer;
 import net.refractions.udig.ui.filter.ExpressionInput;
+import net.refractions.udig.ui.filter.ExpressionViewer;
+import net.refractions.udig.ui.filter.IExpressionViewer;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -136,7 +138,7 @@ public class TransformDialog extends Dialog {
         }
     };
 
-    private CQLExpressionViewer expression;
+    private IExpressionViewer expression;
 
     private ISelectionChangedListener expressionListener = new ISelectionChangedListener() {
         public void selectionChanged(SelectionChangedEvent event) {
@@ -299,7 +301,7 @@ public class TransformDialog extends Dialog {
         table = new TableViewer(panel, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
         table.setContentProvider(ArrayContentProvider.getInstance());
         table.getControl().setLayoutData(
-                "cell 0 1 1 5, grow, height 200:pref:100%,width 300:pref:100%");
+                "cell 0 1 1 5, grow, height 200:50%:50%,width 300:pref:100%");
 
         TableViewerColumn column = new TableViewerColumn(table, SWT.NONE);
         column.getColumn().setWidth(100);
@@ -350,7 +352,7 @@ public class TransformDialog extends Dialog {
         label.setText("Definition");
         label.setLayoutData("cell 0 6 2 1, width pref!,left");
 
-        feedbackDecorator = new ControlDecoration(label, SWT.LEFT | SWT.TOP);
+        feedbackDecorator = new ControlDecoration(label, SWT.RIGHT|SWT.TOP);
 
         name = new Text(panel, SWT.SINGLE | SWT.BORDER);
         name.setEditable(true);
@@ -358,13 +360,15 @@ public class TransformDialog extends Dialog {
         name.setLayoutData("cell 0 7 2 1");
         name.setEnabled(false);
 
-        expression = new CQLExpressionViewer(panel, SWT.MULTI);
-        expression.getControl().setLayoutData(
-                "cell 0 8 2 1,height 60:pref:100%,width 300:pref:100%");
-        expression.addSelectionChangedListener(expressionListener);
-        expression.getControl().setEnabled(false);
         ExpressionInput expressionInput = new ExpressionInput(schema,true);
         expressionInput.setFeedback(feedbackDecorator);
+
+        expression = new ExpressionViewer(panel, SWT.MULTI);
+        expression.setInput(expressionInput);
+        expression.getControl().setLayoutData(
+                "cell 0 8 2 1,height 200:50%:50%,width 300:pref:100%");
+        expression.getControl().setEnabled(false);
+        expression.addSelectionChangedListener(expressionListener);
         
         label = new Label(panel, SWT.LEFT);
         label.setText("How would you like to handle the result:");

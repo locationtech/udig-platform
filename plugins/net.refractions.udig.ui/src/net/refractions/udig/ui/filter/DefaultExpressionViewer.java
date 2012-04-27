@@ -201,10 +201,10 @@ public class DefaultExpressionViewer extends CQLExpressionViewer {
             lblOperation.setText("Operation:");
         }
         operation = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
-        operation.add("=");
-        operation.add("<");
-        operation.add(">");
-        operation.add("LIKE");
+        operation.add("+");
+        operation.add("-");
+        operation.add("*");
+        operation.add("/");
         
         // VALUE COMBO
         Label lblValue = null;

@@ -198,6 +198,6 @@ public abstract class FilterViewerFactory {
     public static final String CQL_FILTER_VIEWER = "net.refractions.udig.ui.filter.cqlFilterViewer";
 
     /** Extension point ID each "expressionViewer" will be processed into our {@link #factoryList()} */
-    public static final String FILTER_VIEWER_EXTENSION = "net.refractions.udig.ui.filter.filterViewer";
+    public static final String FILTER_VIEWER_EXTENSION = "net.refractions.udig.ui.filterViewer";
 
 }
