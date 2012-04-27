@@ -212,7 +212,11 @@ public class Messages extends NLS {
     public static String LayerSelectionPage_title;
 
     
-	static {
+	public static String TransformDialog_Post_Action_Prompt;
+    public static String TransformDialog_Title;
+
+
+    static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
 	}
