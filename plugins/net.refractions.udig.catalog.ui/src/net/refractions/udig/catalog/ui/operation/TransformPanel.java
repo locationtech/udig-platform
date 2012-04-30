@@ -20,6 +20,7 @@ import java.util.List;
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.ui.internal.Messages;
+import net.refractions.udig.internal.ui.UDigByteAndLocalTransfer;
 import net.refractions.udig.ui.filter.ExpressionInput;
 import net.refractions.udig.ui.filter.ExpressionViewer;
 import net.refractions.udig.ui.filter.FilterViewer;
@@ -30,11 +31,23 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSource;
+import org.eclipse.swt.dnd.DragSourceAdapter;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.DropTargetAdapter;
+import org.eclipse.swt.dnd.DropTargetEvent;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -46,7 +59,10 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.part.PluginTransfer;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.text.ecql.ECQL;
 import org.geotools.process.feature.gs.TransformProcess;
@@ -148,12 +164,12 @@ public class TransformPanel extends Composite {
                 if (definition == null) {
                     name.setText("");
                     expression.setExpression(Expression.NIL);
-                    
+
                     enable(false);
                 } else {
                     name.setText(definition.name);
                     expression.setExpression(definition.expression);
-                    
+
                     enable(true);
                 }
             } finally {
@@ -354,10 +370,56 @@ public class TransformPanel extends Composite {
         table.getTable().setLinesVisible(true);
         table.addSelectionChangedListener(tableListener);
 
+        Transfer[] types = new Transfer[] { UDigByteAndLocalTransfer.getInstance() };
+        table.addDragSupport(DND.DROP_MOVE | DND.DROP_DEFAULT, types, new DragSourceAdapter() {
+            @Override
+            public void dragSetData(DragSourceEvent event) {
+                IStructuredSelection selection = (IStructuredSelection) table.getSelection();
+
+                if (UDigByteAndLocalTransfer.getInstance().isSupportedType(event.dataType)) {
+                    event.data = selection.getFirstElement();
+                }
+            }
+        });
+
+        table.addDropSupport(DND.DROP_MOVE | DND.DROP_DEFAULT, types, new ViewerDropAdapter(table) {
+
+            @Override
+            public boolean validateDrop(Object target, int operation, TransferData transferType) {
+                if (target instanceof Definition) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            @Override
+            public boolean performDrop(Object data) {
+                if (data instanceof Definition) {
+                    listen(false);
+
+                    int location = getCurrentLocation();
+                    int index = transform.indexOf(getCurrentTarget());
+                    if (location == LOCATION_AFTER)
+                        index++;
+
+                    Definition definition = (Definition) data;
+                    transform.remove(definition);
+                    transform.add(index, definition);
+                    table.refresh();
+                    table.setSelection(new StructuredSelection(definition));
+
+                    listen(true);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         definitionLabel = new Label(this, SWT.LEFT);
         definitionLabel.setText("Definition");
         definitionLabel.setLayoutData("cell 0 6 2 1, width pref!,left");
-        
+
         feedbackDecorator = new ControlDecoration(definitionLabel, SWT.RIGHT | SWT.TOP);
 
         name = new Text(this, SWT.SINGLE | SWT.BORDER);
@@ -370,7 +432,7 @@ public class TransformPanel extends Composite {
         expression.getControl()
                 .setLayoutData("cell 0 8 2 1,height 200:50%:50%,width 300:pref:100%");
         expression.addSelectionChangedListener(expressionListener);
-        
+
         // start up with nothing selected
         table.setSelection(StructuredSelection.EMPTY);
         enable(false);
@@ -386,12 +448,13 @@ public class TransformPanel extends Composite {
             expression.removeSelectionChangedListener(expressionListener);
         }
     }
+
     protected void enable(boolean isEditEnable) {
         definitionLabel.setEnabled(isEditEnable);
         name.setEnabled(isEditEnable);
         expression.getControl().setEnabled(isEditEnable);
     }
-    
+
     protected Definition selectedDefinition() {
         ISelection selectedRow = table.getSelection();
         if (!selectedRow.isEmpty() && selectedRow instanceof StructuredSelection) {
