@@ -389,7 +389,9 @@ public class TransformPanel extends Composite {
                     System.out.println(location);
                     System.out.println(getCurrentTarget().toString());
                     int index = transform.indexOf(getCurrentTarget());
-
+                    
+                    if (location == LOCATION_BEFORE)
+                        index--;
 
                     Definition definition = (Definition) data;
                     transform.remove(definition);
