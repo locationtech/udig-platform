@@ -368,6 +368,7 @@ public class TransformPanel extends Composite {
             }
         });
 
+        //drag drop order support
         table.addDropSupport(DND.DROP_MOVE | DND.DROP_DEFAULT, types, new ViewerDropAdapter(table) {
 
             @Override
@@ -385,9 +386,10 @@ public class TransformPanel extends Composite {
                     listen(false);
 
                     int location = getCurrentLocation();
+                    System.out.println(location);
+                    System.out.println(getCurrentTarget().toString());
                     int index = transform.indexOf(getCurrentTarget());
-                    if (location == LOCATION_AFTER)
-                        index++;
+
 
                     Definition definition = (Definition) data;
                     transform.remove(definition);
