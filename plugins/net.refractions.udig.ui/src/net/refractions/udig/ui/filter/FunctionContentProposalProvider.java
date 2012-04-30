@@ -1,15 +1,20 @@
 package net.refractions.udig.ui.filter;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.geotools.filter.FunctionFinder;
+import org.geotools.filter.text.generated.parsers.CQLParser;
+import org.geotools.filter.text.generated.parsers.ECQLParser;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.parameter.Parameter;
 
+import static org.geotools.data.Parameter.*;
 /**
  * SimpleContentProposalProvider is a class designed to map a static list of Strings to content
  * proposals.
@@ -17,7 +22,6 @@ import org.opengis.parameter.Parameter;
  * @see IContentProposalProvider
  * @since 3.2
  */
-@SuppressWarnings("deprecation")
 class FunctionContentProposalProvider implements IContentProposalProvider {
 
     protected static Set<String> proposals;
@@ -36,10 +40,9 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
      * The proposals mapped to IContentProposal. Cached for speed in the case where filtering is not
      * used.
      */
-    // private IContentProposal[] contentProposals;
-
     private Set<String> extras;
 
+    private Set<String> grammer;
     /**
      * Construct a SimpleContentProposalProvider whose content proposals are always the specified
      * array of Objects.
@@ -47,6 +50,35 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
      * @param proposals the array of Strings to be returned whenever proposals are requested.
      */
     public FunctionContentProposalProvider() {
+        grammer = generateGrammer(true);
+    }
+    /**
+     * Construct a SimpleContentProposalProvider whose content proposals are always the specified
+     * array of Objects.
+     * 
+     * @param proposals the array of Strings to be returned whenever proposals are requested.
+     */
+    public FunctionContentProposalProvider(boolean includeFilterTokens) {
+        grammer = generateGrammer(includeFilterTokens);
+    }
+    
+    private Set<String> generateGrammer(boolean includeFilter) {
+        Set<String> generate = new HashSet<String>();
+        for( String tokenImage : CQLParser.tokenImage ){
+            if( tokenImage.startsWith("\"")){
+                String token = tokenImage.substring(1,tokenImage.length()-1);
+                if( token.isEmpty() ) continue;
+                if( Character.isLetter( token.charAt(0) ) ){
+                    if( includeFilter ) {
+                        generate.add(token.toUpperCase());
+                    }
+                }
+                else {
+                    generate.add(token);
+                }
+            }
+        }
+        return generate;
     }
 
     /**
@@ -73,16 +105,23 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
         ArrayList<IContentProposal> list = new ArrayList<IContentProposal>();
         if (extras != null) {
             for (String extra : extras) {
-                if (extra.length() >= word.length()
+                if (extra.length() > word.length()
                         && extra.substring(0, word.length()).equals(word)) {
                     list.add(makeContentProposal(extra, prefixLength));
                 }
             }
         }
         for (String proposal : proposals) {
-            if (proposal.length() >= word.length()
+            if (proposal.length() > word.length()
                     && proposal.substring(0, word.length()).equals(word)) {
                 IContentProposal contentProposal = makeContentProposal(proposal, prefixLength);
+                list.add(contentProposal);
+            }
+        }
+        for(String token : grammer ){
+            if (token.length() > word.length()
+                    && token.substring(0, word.length()).equals(word)) {
+                IContentProposal contentProposal = makeContentProposal(token, prefixLength);
                 list.add(contentProposal);
             }
         }
@@ -177,24 +216,24 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
                 if( param instanceof org.geotools.data.Parameter){
                     // advanced tips!
                     org.geotools.data.Parameter<?> parameter = (org.geotools.data.Parameter<?>) param;
-                    if( parameter.metadata.containsKey( parameter.OPTIONS )){
+                    if( parameter.metadata.containsKey( OPTIONS )){
                         builder.append( " Options: ");
-                        builder.append( parameter.metadata.get( parameter.OPTIONS ));
+                        builder.append( parameter.metadata.get( OPTIONS ));
                         builder.append(" ");
                     }
-                    if( parameter.metadata.containsKey( parameter.LENGTH )){
+                    if( parameter.metadata.containsKey( LENGTH )){
                         builder.append( " Length: ");
-                        builder.append( parameter.metadata.get( parameter.LENGTH ));
+                        builder.append( parameter.metadata.get( LENGTH ));
                         builder.append(" ");
                     }
-                    if( parameter.metadata.containsKey( parameter.MIN )){
+                    if( parameter.metadata.containsKey( MIN )){
                         builder.append( " Min: ");
-                        builder.append( parameter.metadata.get( parameter.MIN ));
+                        builder.append( parameter.metadata.get( MIN ));
                         builder.append(" ");
                     }
-                    if( parameter.metadata.containsKey( parameter.MAX )){
+                    if( parameter.metadata.containsKey( MAX )){
                         builder.append( " Max: ");
-                        builder.append( parameter.metadata.get( parameter.MAX ));
+                        builder.append( parameter.metadata.get( MAX ));
                         builder.append(" ");
                     }
                 }

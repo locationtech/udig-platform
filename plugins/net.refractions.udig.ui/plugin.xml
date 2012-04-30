@@ -468,7 +468,7 @@
        <expressionViewer
              class="net.refractions.udig.ui.filter.SpinnerExpressionViewer$Factory"
              description="Number definition"
-             id="net.refractions.udig.ui.filter.rgbExpressionViewer"
+             id="net.refractions.udig.ui.filter.spinnerExpressionViewer"
              name="Number">
        </expressionViewer>
     </extension>

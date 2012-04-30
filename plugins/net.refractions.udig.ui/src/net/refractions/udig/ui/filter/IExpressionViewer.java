@@ -24,9 +24,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.ecql.ECQL;
 import org.geotools.util.Utilities;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -178,6 +176,9 @@ public abstract class IExpressionViewer extends Viewer {
         }
     }
 
+    protected void feedbackReplace( Expression expression ){
+        feedback("Unable to display dynamic expression: \n" + ECQL.toCQL(expression)+ "\nEdit to replace expression.");
+    }
     /**
      * Provide warning feedback.
      * <p>

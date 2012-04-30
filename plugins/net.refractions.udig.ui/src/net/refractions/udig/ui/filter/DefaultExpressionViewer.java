@@ -20,7 +20,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.ui.filter.ViewerFactory.Appropriate;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -153,10 +152,16 @@ public class DefaultExpressionViewer extends CQLExpressionViewer {
      * @param style used to layout the viewer
      */
     public DefaultExpressionViewer(Composite parent, int style) {
-        super(new Composite(parent, SWT.NONE), style);
-        
-        control = text.getParent();
-        
+        super(new Composite(parent, SWT.NO_SCROLL){
+            @Override
+            public void setEnabled(boolean enabled) {
+                super.setEnabled(enabled);
+                for( Control child : getChildren() ){
+                    child.setEnabled(enabled);
+                }
+            }
+        }, style);
+        control = text.getParent(); // refers to to the composite created above
         boolean multiLine = (SWT.MULTI & style) != 0;
         
         // ATTRIBUTE
@@ -224,7 +229,7 @@ public class DefaultExpressionViewer extends CQLExpressionViewer {
             MigLayout layout = new MigLayout("insets 0", "[][][][][][][grow]", "[grow][]");
             control.setLayout( layout);
             
-            text.setLayoutData("span,grow,width 200:100%:100%,height 60:100%:100%");
+            text.setLayoutData("cell 0 0,span,grow,width 200:100%:100%,height 60:100%:100%");
             setPreferredTextSize(40,5);
             
             lblAttribute.setLayoutData("cell 0 1,alignx trailing,gapx related");

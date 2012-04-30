@@ -17,10 +17,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.ContributionItem;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuListener2;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
@@ -29,22 +26,17 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.part.PageBook;
-import org.geotools.filter.FilterFactory;
-import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 
 /**
@@ -144,7 +136,27 @@ public class FilterViewer extends IFilterViewer {
      * @param style
      */
     public FilterViewer(Composite parent, int style) {
-        control = new Composite(parent, SWT.NO_SCROLL);
+        control = new Composite(parent, SWT.NO_SCROLL){
+            @Override
+            public void setEnabled(boolean enabled) {
+                super.setEnabled(enabled);
+                config.setEnabled(enabled);
+                if( delegate != null ){
+                    config.setEnabled(enabled);
+                }
+                if( input != null && input.getFeedback() != null && input.getFeedback().getControl() != null ){
+                    Control feedbackLabel = input.getFeedback().getControl();
+                    Display display = feedbackLabel.getDisplay();
+                    feedbackLabel.setEnabled(enabled);
+                    if( enabled ){
+                        feedbackLabel.setForeground(display.getSystemColor(SWT.COLOR_TITLE_FOREGROUND));
+                    }
+                    else {
+                        feedbackLabel.setForeground(display.getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND));
+                    }
+                }
+            }
+        };
         control.setLayout(new MigLayout("insets 0", "[fill][]", "[fill]"));
         
         pageBook = new PageBook(control, SWT.NO_SCROLL);
@@ -250,11 +262,11 @@ public class FilterViewer extends IFilterViewer {
         }
         return null; // user has requested an unknown id - please display placeholder
     }
-
-    public void setViewerId(String id) {
-        this.viewerId = id;
-    }
-
+    /**
+     * ViewerId currently shown (as selected by the user)
+     * 
+     * @return viewerId currently shown (as selected by the user)
+     */
     public String getViewerId() {
         return viewerId;
     }
@@ -272,6 +284,10 @@ public class FilterViewer extends IFilterViewer {
 
     @Override
     public void refresh() {
+        if( viewerId == null && getInput() != null && getInput().getViewerId() != null ){
+            // if the user has not already chosen a viewer; use the one marked down from dialog settings
+            showViewer( getInput().getViewerId() );
+        }
         if (delegate != null) {
             delegate.refresh();
         }

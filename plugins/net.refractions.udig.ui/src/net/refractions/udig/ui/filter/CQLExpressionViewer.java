@@ -17,10 +17,8 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
-import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
 import org.geotools.filter.text.ecql.ECQL;
-import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
@@ -144,7 +142,7 @@ public class CQLExpressionViewer extends IExpressionViewer {
         
         text.setEditable( !isReadOnly );
         
-        proposalProvider = new FunctionContentProposalProvider();
+        proposalProvider = new FunctionContentProposalProvider(false);
         TextContentAdapter contentAdapter = new TextContentAdapter();
         
         ContentProposalAdapter adapter = new ContentProposalAdapter(text, contentAdapter,

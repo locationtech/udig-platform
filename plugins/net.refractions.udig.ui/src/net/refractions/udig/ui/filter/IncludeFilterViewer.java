@@ -1,17 +1,12 @@
 package net.refractions.udig.ui.filter;
 
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.geotools.filter.text.ecql.ECQL;
-import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 
 /**
@@ -131,7 +126,7 @@ public class IncludeFilterViewer extends IFilterViewer {
             enableButton.setSelection(false);
             disableButton.setSelection(false);
             
-            feedback("Unable to display dynamic filter: \n" + ECQL.toCQL(filter)+ "\nUse this display to replace, or change using the pop up menu.");
+            feedbackReplace( filter );
         }
     }
 

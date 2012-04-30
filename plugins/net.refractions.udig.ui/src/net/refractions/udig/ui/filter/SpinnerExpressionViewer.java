@@ -1,27 +1,23 @@
 package net.refractions.udig.ui.filter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.refractions.udig.ui.filter.ViewerFactory.Appropriate;
+import net.miginfocom.swt.MigLayout;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.filter.text.cql2.CQLException;
 import org.geotools.filter.text.ecql.ECQL;
-import org.geotools.util.Converters;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.PropertyDescriptor;
@@ -59,7 +55,7 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
             if( input != null ){
                 Class<?> binding = input.getBinding();
                 
-                if( !Number.class.isAssignableFrom( binding )){
+                if( !binding.isAssignableFrom(Double.class)){
                     return Appropriate.NOT_APPROPRIATE.getScore();
                 }
             }
@@ -111,12 +107,34 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
         }
         @Override
         public void widgetDefaultSelected(SelectionEvent e) {
+        }
+    };
 
+    private ISelectionChangedListener comboListener = new ISelectionChangedListener() {
+        public void selectionChanged(SelectionChangedEvent event) {
+            Expression newExpression = validate();
+            internalUpdate(newExpression);
         }
     };
 
     public SpinnerExpressionViewer(Composite parent, int style) {
-        control = new Composite(parent, style);
+        boolean multiLine = (SWT.MULTI & style) != 0;
+        boolean readOnly = (SWT.READ_ONLY & style) != 0;
+        
+        control = new Composite(parent, SWT.NO_SCROLL){
+          @Override
+            public void setEnabled(boolean enabled) {
+                super.setEnabled(enabled);
+                combo.getControl().setEnabled(enabled);
+                spinner.setEnabled(enabled);
+                text.setEnabled(enabled);
+            }
+        };
+        Label comboLabel=null;
+        if( multiLine){
+            comboLabel = new Label(control, SWT.NONE);
+            comboLabel.setText("Numeric:");
+        } 
         combo = new ComboViewer(control, SWT.DEFAULT);
         combo.setContentProvider(ArrayContentProvider.getInstance());
         combo.setLabelProvider(new LabelProvider() {
@@ -130,16 +148,60 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
             }
         });
         combo.getControl().setEnabled(false);
-
+        
+        Label spinnerLabel=null;
+        if( multiLine){
+            spinnerLabel = new Label(control, SWT.NONE);
+            spinnerLabel.setText("Value:");
+        } 
         spinner = new Spinner(control, SWT.DEFAULT);
         spinner.setMinimum(0);
         spinner.setMaximum(100);
         spinner.setIncrement(10);
         spinner.setEnabled(false);
+        
+        Label textLabel=null;
+        if( multiLine){
+            textLabel = new Label(control, SWT.NONE);
+            textLabel.setText("Text:");
+        }
+        text = new Text(control,SWT.SINGLE | SWT.READ_ONLY | SWT.BORDER | SWT.NO_SCROLL );
+        text.setEditable(false);
+        
+        if( multiLine ){
+            control.setLayout(new MigLayout("insets 0","[][][grow]","[]"));
+            
+            comboLabel.setLayoutData("cell 0 0, alignx trailing");
+            combo.getControl().setLayoutData("cell 1 0, width 200:30%:100%,gap related");
+            
+            spinnerLabel.setLayoutData("cell 0 1, alignx trailing");
+            spinner.setLayoutData("cell 1 1, width 200:30%:300%,gap related");
+            
+            textLabel.setLayoutData("cell 0 2, alignx trailing");
+            text.setLayoutData("cell 1 2, grow,width 200:pref:100%,gap related");
+        }
+        else {
+            control.setLayout(new MigLayout("insets 0","flowx",""));
+            combo.getControl().setLayoutData("width 200:30%:100%");
+            spinner.setLayoutData("width 200:30%:300%,gap unrelated");
+            text.setLayoutData("grow,width 200:pref:100%,gap unrelated");
+        }
+        listen(true);
+    }
+
+    private void listen(boolean listen) {
+        if( listen){
+            spinner.addSelectionListener(listener);
+            combo.addSelectionChangedListener(comboListener);
+        }
+        else {
+            spinner.removeSelectionListener(listener);
+            combo.removeSelectionChangedListener(comboListener);
+        }
     }
 
     protected Expression validate() {
-        if( !combo.getSelection().isEmpty() ){
+        if( combo.getControl().isEnabled() &&  !combo.getSelection().isEmpty() ){
             Object selection = ((StructuredSelection)combo.getSelection()).getFirstElement();
             if( selection != NONE ){
                 if ( selection instanceof String){
@@ -148,9 +210,13 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
                     
                     return ff.property( propertyName );
                 }
-                // confused ... sigh
             }
+        }
+        if( spinner.isEnabled() ){
+            int number = spinner.getSelection();
+            FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
             
+            return ff.literal( ((double)number)/100.0);
         }
         return null;
     }
@@ -166,34 +232,43 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
     @Override
     public void refresh() {
         // combo update if we have numeric attributes
-        if( input != null ){
-            combo.setInput( input.getNumericPropertyList() );
-            combo.getControl().setEnabled(true);
-        }
-        else {
-            combo.setInput(null);
-            combo.getControl().setEnabled(false);
-        }
-        // spinnter if we have min and max
-        if( input != null ){
-            Object min = input.getMin();
-            Object max = input.getMax();
-            if( min instanceof Number && max instanceof Number){
-                int minInt = ((Number)min).intValue();
-                int maxInt = ((Number)max).intValue();
-                
-                spinner.setMinimum(minInt);
-                spinner.setMaximum(maxInt);
-                
-                spinner.setEnabled( true );
+        try {
+            listen(false);
+            if( input != null ){
+                combo.setInput( input.toNumericPropertyList() );
+                combo.getControl().setEnabled(true);
+            }
+            else {
+                combo.setInput(null);
+                combo.getControl().setEnabled(false);
+            }
+            // spinner if we have min and max
+            if( input != null ){
+                Object min = input.getMin();
+                Object max = input.getMax();
+                if( min instanceof Number && max instanceof Number){
+                    int minInt = ((Number)min).intValue();
+                    int maxInt = ((Number)max).intValue();
+                    
+                    spinner.setMinimum(minInt);
+                    spinner.setMaximum(maxInt);
+                    
+                    spinner.setEnabled( true );
+                }
+                else {
+                    spinner.setEnabled(false);
+                }
             }
             else {
                 spinner.setEnabled(false);
             }
+            text.setEnabled(false);
         }
-        else {
-            spinner.setEnabled(false);
+        finally {
+            listen(true);
         }
+
+        refreshExpression();
     }
     
     public void refreshExpression() {
@@ -202,40 +277,57 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
             PropertyName property = (PropertyName) expr;
             String name = property.getPropertyName();
             refreshControls(null, name, null);
+            feedback();
             return;
         } else if (expr instanceof Literal) {
             Literal literal = (Literal) expr;
             Double percent = literal.evaluate(null, Double.class);
             if (percent != null) {
                 refreshControls(percent, null, null);
+                feedback();
                 return;
             }
         }
         // We cannot display this expression - put up a warning
         String message = ECQL.toCQL(expr);
         refreshControls(null, null, message);
+        feedbackReplace( expr );
     }
 
-    protected void refreshControls(final Double percent, final String propertyName, final String message) {
+    protected void refreshControls(final Double number, final String propertyName, final String message) {
         if (control != null && !control.isDisposed()) {
             control.getDisplay().asyncExec(new Runnable() {
                 public void run() {
                     if (control == null || control.isDisposed()) {
                         return; // must of been disposed while in the display thread queue
                     }
+                    boolean isPercent = input != null && input.isPercent();
+                    
                     combo.setInput(input.getNumericPropertyList());
 
-                    if (percent != null) {
+                    if (number != null) {
                         spinner.setEnabled(true);
-                        int number = (int) (percent * 100.0);
-                        spinner.setSelection(number);
+                        int value;
+                        if(isPercent){
+                            value = (int) (number * 100.0);
+                        }
+                        else {
+                            value = (int) Math.round( number );
+                        }
+                        spinner.setSelection(value);
                         if (message == null) {
-                            text.setText(number + "%");
+                            if( isPercent ){
+                                text.setText( value +"%");
+                            }
+                            else {
+                                text.setText( String.valueOf(value) );
+                            }
                         }
                     } else {
                         spinner.setEnabled(false);
-                        spinner.setSelection(100);
+                        spinner.setSelection(0);
                     }
+                    
                     if (propertyName != null) {
                         StructuredSelection selection = new StructuredSelection(propertyName);
                         combo.setSelection(selection, true);
@@ -254,7 +346,7 @@ public class SpinnerExpressionViewer extends IExpressionViewer {
     @Override
     public void setExpression(Expression newExpression) {
         if (!newExpression.equals(this.expression)) {
-            this.expression = (Expression) input;
+            this.expression = newExpression;
             refreshExpression();
         }
     }

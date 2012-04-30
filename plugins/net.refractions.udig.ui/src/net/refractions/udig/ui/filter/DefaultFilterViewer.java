@@ -145,7 +145,14 @@ public class DefaultFilterViewer extends CQLFilterViewer {
      * @param style used to layout the viewer
      */
     public DefaultFilterViewer(Composite parent, int style) {
-        super(new Composite(parent, SWT.NONE), style);
+        super(new Composite(parent, SWT.NO_SCROLL){
+            public void setEnabled(boolean enabled) {
+                super.setEnabled(enabled);
+                for( Control child : getChildren() ){
+                    child.setEnabled(enabled);
+                }
+            }
+        }, style);
         
         control = text.getParent();
         

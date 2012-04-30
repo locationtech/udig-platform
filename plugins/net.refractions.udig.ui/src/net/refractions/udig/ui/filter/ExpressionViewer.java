@@ -1,23 +1,11 @@
 package net.refractions.udig.ui.filter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.ui.filter.ViewerFactory.Appropriate;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -25,27 +13,19 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.PopupDialog;
 import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.HelpListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.part.PageBook;
-import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.expression.Expression;
 
 /**
@@ -143,9 +123,21 @@ public class ExpressionViewer extends IExpressionViewer {
      * @param style
      */
     public ExpressionViewer(Composite parent, int style) {
-        control = new Composite(parent, SWT.NO_SCROLL);
-        control.setLayout(new MigLayout("insets 0", "[fill][]", "[fill]"));
+        control = new Composite(parent, SWT.NO_SCROLL){
+            public void setEnabled(boolean enabled) {
+                super.setEnabled(enabled);
+                config.setEnabled(enabled);
+                if( delegate != null ){
+                    config.setEnabled(enabled);
+                }
+                if( input != null && input.getFeedback() != null && input.getFeedback().getControl() != null ){
+                    input.getFeedback().getControl().setEnabled(enabled);
+                }
+            }
+        };
         
+        control.setLayout(new MigLayout("insets 0", "[fill][]", "[fill]"));
+
         pageBook = new PageBook(control, SWT.NO_SCROLL);
         pageBook.setLayoutData("cell 0 0,grow,width 200:100%:100%,height 18:75%:100%");
         
@@ -157,7 +149,7 @@ public class ExpressionViewer extends IExpressionViewer {
         pageBook.showPage(delegate.getControl());
         
         this.pages = new HashMap<String,IExpressionViewer>();
-        pages.put("net.refractions.udig.ui.cqlExpressionViewer", delegate );
+        pages.put( ExpressionViewerFactory.CQL_EXPRESSION_VIEWER, delegate );
         
         config = new Label(control, SWT.SINGLE);
         config.setImage(JFaceResources.getImage(PopupDialog.POPUP_IMG_MENU));
@@ -250,10 +242,11 @@ public class ExpressionViewer extends IExpressionViewer {
         return null; // user has requested an unknown id - please display placeholder
     }
 
-    public void setViewerId(String id) {
-        this.viewerId = id;
-    }
-
+    /**
+     * ViewerId currently shown (as selected by the user)
+     * 
+     * @return viewerId currently shown (as selected by the user)
+     */
     public String getViewerId() {
         return viewerId;
     }
@@ -271,6 +264,10 @@ public class ExpressionViewer extends IExpressionViewer {
 
     @Override
     public void refresh() {
+        if( viewerId == null && getInput() != null && getInput().getViewerId() != null ){
+            // if the user has not already chosen a viewer; use the one marked down from dialog settings
+            showViewer( getInput().getViewerId() );
+        }
         if (delegate != null) {
             delegate.refresh();
         }

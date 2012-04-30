@@ -1,14 +1,8 @@
 package net.refractions.udig.ui.filter;
 
 import java.awt.Color;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
-import net.refractions.udig.ui.filter.ViewerFactory.Appropriate;
-
-import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
@@ -20,10 +14,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.ecql.ECQL;
 import org.geotools.util.Converters;
-import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Literal;
@@ -239,7 +231,8 @@ public class RGBExpressionViewer extends IExpressionViewer {
                         }
                         String cql = ECQL.toCQL(expr);
                         hex.setText(cql);
-                        feedback("Used to define a colour.\n"+cql+"\nYou can replace the current value");
+                        
+                        feedbackReplace( expr );
                     } finally {
                         listen(true);
                     }

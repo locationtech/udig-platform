@@ -50,6 +50,8 @@ public class ExpressionInput extends FilterInput {
 
     private Object defaultLiteral;
 
+    private boolean percent;
+
     public ExpressionInput() {
         this(null);
     }
@@ -143,7 +145,34 @@ public class ExpressionInput extends FilterInput {
     public Comparable<?> getMax() {
         return max;
     }
-
+    /**
+     * Used to flag an expression that is expected to be treated as a percentage.
+     * <p>
+     * This setting can be used to ask viewers to rener the value as a percentage( example: 50%).
+     * <p>
+     * For consistency it is expected that:<pre>input.setMin(0);
+     * input.setMax(1.0);</pre>
+     * @return flag indicating input is expected to be a percentage.
+     */
+    public boolean isPercent(){
+        return percent;
+    }
+    /**
+     * Used to flag an expression so that numeric values are treated as a percentage.
+     * <p>
+     * This setting can be used to ask viewers to display the value as a percentage( example: 50%).
+     * <p>
+     * For consistency this method calls input.setMin(0) and setMax(1.0).
+     * 
+     * @return flag indicating input is expected to be a percentage.
+     */
+    public void setPercent(boolean percent) {
+        this.percent = percent;
+        if( percent ){
+            setMin(0.0);
+            setMax(1.0);
+        }
+    }
     /**
      * Maximum ranged value; used when entering a literal value.
      * <p>
@@ -191,6 +220,54 @@ public class ExpressionInput extends FilterInput {
 
     public List<Object> getOptions() {
         return options;
+    }
+    @Override
+    public String toString() {
+        StringBuilder build = new StringBuilder();
+        build.append( getClass().getSimpleName() );
+        build.append(" ");
+        if( required ){
+            build.append("required ");
+        }
+        if( viewerId != null ){
+            build.append(" viewerId:");
+            build.append( viewerId );
+            build.append(" ");
+        }
+        if( feedback != null ){
+            build.append( " feedback:" );
+            build.append(feedback.getControl().getClass().getSimpleName() );
+            build.append(" ");
+        }
+        if( schema != null ){
+            build.append(" schema:");
+            build.append( schema.getTypeName() );
+            build.append(" ");
+        }
+        if( binding != null ){
+            build.append(" binding:");
+            build.append( binding.getSimpleName() );
+            build.append(" " );
+        }
+        if( defaultLiteral != null ){
+            build.append(" default:");
+            build.append( defaultLiteral );
+            build.append(" " );
+        }
+        if( min != null || max != null ){
+            build.append("limit: ");
+            build.append( min );
+            build.append(" .. ");
+            build.append( max );
+            build.append(" ");
+        }
+        if( options != null ){
+            build.append(" options:");
+            build.append( options );
+            build.append(" " );
+            
+        }
+        return build.toString();
     }
 
 }

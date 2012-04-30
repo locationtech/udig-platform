@@ -24,9 +24,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.ecql.ECQL;
 import org.geotools.util.Utilities;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -174,7 +172,9 @@ public abstract class IFilterViewer extends Viewer {
             input.getFeedback().hide();
         }
     }
-
+    protected void feedbackReplace( Filter filter ){
+        feedback("Unable to display dynamic filter: \n" + ECQL.toCQL(filter)+ "\nEdit to replace filter.");
+    }
     /**
      * Provide warning feedback.
      * <p>

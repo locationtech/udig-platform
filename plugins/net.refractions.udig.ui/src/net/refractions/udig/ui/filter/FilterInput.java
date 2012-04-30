@@ -42,12 +42,15 @@ public class FilterInput {
 
     protected ControlDecoration feedback;
 
-    private List<String> propertyList;
+    protected List<String> propertyList;
 
-    private List<String> numericPropertyList;
+    protected List<String> numericPropertyList;
 
-    private List<String> stringPropertyList;
+    protected List<String> stringPropertyList;
 
+    /** Requested viewer (for example stored in property list). Use null to auto select */
+    protected String viewerId;
+    
     public FilterInput() {
         this(null);
     }
@@ -246,5 +249,44 @@ public class FilterInput {
      */
     public void setFeedback(ControlDecoration feedback) {
         this.feedback = feedback;
+    }
+    /**
+     * Viewer requested for initial display (for example saved in dialog settings).
+     * @return viewerId requested for initial display
+     */
+    public String getViewerId() {
+        return viewerId;
+    }
+    /**
+     * Viewer requested for initial display (for example saved in dialog settings).
+     * @param viewerId Viewer requested for initial display
+     */
+    public void setViewerId(String viewerId) {
+        this.viewerId = viewerId;
+    }
+    @Override
+    public String toString() {
+        StringBuilder build = new StringBuilder();
+        build.append( getClass().getSimpleName() );
+        build.append(" ");
+        if( required ){
+            build.append("required ");
+        }
+        if( viewerId != null ){
+            build.append(" viewerId:");
+            build.append( viewerId );
+            build.append(" ");
+        }
+        if( feedback != null ){
+            build.append( " feedback:" );
+            build.append(feedback.getControl().getClass().getSimpleName() );
+            build.append(" ");
+        }
+        if( schema != null ){
+            build.append(" schema:");
+            build.append( schema.getTypeName() );
+            build.append(" ");
+        }
+        return build.toString();
     }
 }

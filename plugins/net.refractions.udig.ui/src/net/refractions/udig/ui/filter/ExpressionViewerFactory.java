@@ -2,11 +2,9 @@ package net.refractions.udig.ui.filter;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.ui.filter.ViewerFactory.Appropriate;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -18,7 +16,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.expression.Expression;
 
 /**
