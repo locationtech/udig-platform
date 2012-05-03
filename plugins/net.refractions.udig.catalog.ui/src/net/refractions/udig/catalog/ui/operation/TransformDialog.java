@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
@@ -90,13 +91,15 @@ public class TransformDialog extends Dialog {
         setShellStyle(SWT.RESIZE | SWT.DIALOG_TRIM | SWT.CLOSE);
     }
 
+    protected Point getInitialSize() {
+        return new Point(500, 500);
+    }
     @Override
     protected Control createDialogArea(Composite parent) {
         getShell().setText(Messages.TransformDialog_Title);
 
         Composite dialogArea = (Composite) super.createDialogArea(parent);
         dialogArea.setLayoutData( new GridData(SWT.FILL, SWT.FILL, true, true) );
-        dialogArea.setSize(500, 400);
         
         dialogArea.setLayout( new MigLayout("flowy") );
         

@@ -24,6 +24,11 @@ then
         echo "Extracting ${TARGET}/udig-${VERSION}-sdk.zip"
         unzip -q -d ${BUILD}/sdk ${TARGET}/udig-${VERSION}-sdk.zip
         
+        if [ -d ${BUILD}/sdk/eclipse ]
+        then
+            mv ${BUILD}/sdk/eclipse ${BUILD}/sdk/udig_sdk
+        fi
+        
         echo "Prepairing ${BUILD}/sdk"
         rm -rf ${BUILD}/sdk/udig_sdk/*.app
         rm ${BUILD}/sdk/udig_sdk/*.exe
