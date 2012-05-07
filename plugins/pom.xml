@@ -113,6 +113,7 @@
     <module>com.lowagie.itext</module>
     <module>com.mapquest</module>
     <module>eu.udig.catalog.csw</module>
+    <module>eu.udig.catalog.kml</module>
     <module>eu.udig.catalog.jgrass</module>
     <module>eu.udig.catalog.teradata</module>
     <module>eu.udig.mapquest.apiwrapper</module>

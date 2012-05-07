@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package eu.udig.tools.jgrass.kml.wizard;
+package eu.udig.catalog.kml.wizard;
 
 import java.io.File;
 
@@ -33,8 +33,11 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import eu.udig.catalog.kml.internal.Messages;
+
 /**
  * @author Andrea Antonello (www.hydrologis.com)
+ * @author Frank Gasdorf
  */
 public class KmlExportWizardPage extends WizardPage {
     public static final String ID = "eu.udig.tools.jgrass.kml.wizard.KmlExportWizardPage"; //$NON-NLS-1$
@@ -46,8 +49,8 @@ public class KmlExportWizardPage extends WizardPage {
 
     public KmlExportWizardPage() {
         super(ID);
-        setTitle("Export kml");
-        setDescription("Export feature layer to kml");
+        setTitle(Messages.getString("KmlExportWizardPage.windowTitle")); //$NON-NLS-1$
+        setDescription(Messages.getString("KmlExportWizardPage.description")); //$NON-NLS-1$
     }
 
     public void createControl( Composite parent ) {
@@ -67,14 +70,14 @@ public class KmlExportWizardPage extends WizardPage {
         GridData selectedLayerLabelGd = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
         selectedLayerLabelGd.horizontalSpan = 3;
         selectedLayerLabel.setLayoutData(selectedLayerLabelGd);
-        selectedLayerLabel.setText("Selected layer to export: " + selectedLayer.getName());
+        selectedLayerLabel.setText(Messages.getString("KmlExportWizardPage.selectedLayerToExportLabel") + selectedLayer.getName()); //$NON-NLS-1$
 
         /*
          * output file
          */
         Label outFileLabel = new Label(mainComposite, SWT.NONE);
         outFileLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        outFileLabel.setText("Kml file to save");
+        outFileLabel.setText(Messages.getString("KmlExportWizardPage.outFileLabel")); //$NON-NLS-1$
 
         outFileText = new Text(mainComposite, SWT.BORDER);
         outFileText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));

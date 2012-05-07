@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package eu.udig.tools.jgrass.kml.wizard;
+package eu.udig.catalog.kml.wizard;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -42,11 +42,12 @@ import org.geotools.data.simple.SimpleFeatureCollection;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-import eu.udig.tools.jgrass.JGrassToolsPlugin;
-import eu.udig.tools.jgrass.kml.core.Kmlutils;
-
+import eu.udig.catalog.kml.core.KmlToolPlugin;
+import eu.udig.catalog.kml.core.KmlUtils;
+import eu.udig.catalog.kml.internal.Messages;
 /**
  * @author Andrea Antonello - www.hydrologis.com
+ * @author Frank Gasdorf
  */
 public class KmlImportWizard extends Wizard implements INewWizard {
 
@@ -61,11 +62,11 @@ public class KmlImportWizard extends Wizard implements INewWizard {
     }
 
     public void init( IWorkbench workbench, IStructuredSelection selection ) {
-        setWindowTitle("Kml file import");
-        setDefaultPageImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
+        setWindowTitle(Messages.getString("KmlImportWizard.windowTitle")); //$NON-NLS-1$
+        setDefaultPageImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(KmlToolPlugin.PLUGIN_ID,
                 "icons/icon_kml48.png")); //$NON-NLS-1$
         setNeedsProgressMonitor(true);
-        mainPage = new KmlImportWizardPage("Kml file import", params); //$NON-NLS-1$
+        mainPage = new KmlImportWizardPage(Messages.getString("KmlImportWizard.KmlFilImportPageName"), params); //$NON-NLS-1$
     }
 
     public void addPages() {
@@ -88,24 +89,25 @@ public class KmlImportWizard extends Wizard implements INewWizard {
 
             public void run( IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
                 try {
-                    SimpleFeatureCollection collection = Kmlutils.kmlFile2FeatureCollection(kmlFile);
+                    SimpleFeatureCollection collection = KmlUtils.kmlFile2FeatureCollection(kmlFile);
 
                     IGeoResource resource = CatalogPlugin.getDefault().getLocalCatalog()
                             .createTemporaryResource(collection.getSchema());
 
+                    @SuppressWarnings("unchecked")
                     FeatureStore<SimpleFeatureType, SimpleFeature> store = resource.resolve(FeatureStore.class, pm);
                     store.addFeatures(collection);
 
                     ApplicationGIS.addLayersToMap(ApplicationGIS.getActiveMap(), Collections.singletonList(resource), -1);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    String message = "An error occurred during KML to feature layer conversion.";
-                    ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassToolsPlugin.PLUGIN_ID, e);
+                    String message = Messages.getString("KmlImportWizard.error.ExceptionDuringKMLToFeatureLayer"); //$NON-NLS-1$
+                    ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, KmlToolPlugin.PLUGIN_ID, e);
                 }
             }
         };
 
-        PlatformGIS.runInProgressDialog("Importing kml data", true, operation, true);
+        PlatformGIS.runInProgressDialog(Messages.getString("KmlImportWizard.taskImportKmlDataMessage"), true, operation, true); //$NON-NLS-1$
 
         return true;
     }
