@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import eu.udig.catalog.kml.core.KmlUtils;
 import eu.udig.catalog.kml.internal.Messages;
 
 /**
@@ -90,7 +91,8 @@ public class KmlExportWizardPage extends WizardPage {
 
             public void widgetSelected( org.eclipse.swt.events.SelectionEvent e ) {
                 FileDialog saveKmlDialog = new FileDialog(outFolderButton.getShell(), SWT.SAVE);
-                saveKmlDialog.setFilterExtensions(new String[]{"*.kml"}); //$NON-NLS-1$
+                saveKmlDialog.setFilterExtensions(KmlUtils.SUPPORTED_FILE_EXTENSIONS);
+                saveKmlDialog.setOverwrite(true);
                 String path = saveKmlDialog.open();
                 if (path == null || path.length() < 1) {
                     outFileText.setText(""); //$NON-NLS-1$

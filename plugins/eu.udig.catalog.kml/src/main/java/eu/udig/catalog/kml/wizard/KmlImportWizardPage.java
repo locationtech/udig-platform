@@ -70,9 +70,7 @@ public class KmlImportWizardPage extends WizardPage {
         kmlButton.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
             public void widgetSelected( org.eclipse.swt.events.SelectionEvent e ) {
                 FileDialog fileDialog = new FileDialog(kmlButton.getShell(), SWT.OPEN);
-                fileDialog.setFilterExtensions(new String [] {
-                        toFilterExtension(KmlUtils.KML_FILE_EXTENSION), 
-                        toFilterExtension(KmlUtils.KMZ_FILE_EXTENSION)});
+                fileDialog.setFilterExtensions(KmlUtils.SUPPORTED_FILE_EXTENSIONS);
                 String path = fileDialog.open();
                 if (path != null) {
                     File f = new File(path);
@@ -105,10 +103,6 @@ public class KmlImportWizardPage extends WizardPage {
             KmlImportWizard.canFinish = false;
         }
         getWizard().getContainer().updateButtons();
-    }
-
-    private String toFilterExtension(String fileExtension) {
-        return "*." + fileExtension;  //$NON-NLS-1$
     }
 
 }

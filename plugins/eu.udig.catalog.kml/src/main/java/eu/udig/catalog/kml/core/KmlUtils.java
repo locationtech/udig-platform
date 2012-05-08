@@ -17,14 +17,14 @@
  */
 package eu.udig.catalog.kml.core;
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.FeatureCollection;
@@ -63,6 +63,10 @@ public class KmlUtils {
     public static final String KML_FILE_EXTENSION = "kml"; //$NON-NLS-1$
     
     public static final String KMZ_FILE_EXTENSION = "kmz"; //$NON-NLS-1$
+
+    public static final String[] SUPPORTED_FILE_EXTENSIONS = new String [] {
+                        toFilterExtension(KmlUtils.KML_FILE_EXTENSION), 
+                        toFilterExtension(KmlUtils.KMZ_FILE_EXTENSION)};
 
     /**
      * Transform a kml file in a {@link SimpleFeatureCollection}.
@@ -134,20 +138,33 @@ public class KmlUtils {
             newCollection.add(f);
         }
 
-        Encoder encoder = new Encoder(new KMLConfiguration());
-        encoder.setIndenting(true);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        encoder.encode(newCollection, KML.kml, out);
-
-        String kmlString = new String(out.toByteArray());
-        BufferedWriter bW = null;
+        OutputStream fos = null;
         try {
-            bW = new BufferedWriter(new FileWriter(kmlFile));
-            bW.write(kmlString);
+            if (kmlFile.getName().toLowerCase().endsWith(KMZ_FILE_EXTENSION)) {
+                String fileName = kmlFile.getName();
+                String entryName = fileName.replace(KMZ_FILE_EXTENSION, KML_FILE_EXTENSION);
+                
+                ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(kmlFile));
+                zos.putNextEntry(new ZipEntry(entryName)); //$NON-NLS-1$
+                fos = zos;
+            } else {
+                fos = new FileOutputStream(kmlFile);
+            }
+    
+            Encoder encoder = new Encoder(new KMLConfiguration());
+            encoder.setIndenting(true);
+    
+            encoder.encode(newCollection, KML.kml, fos);
         } finally {
-            if (bW != null)
-                bW.close();
+            if (fos != null) {
+                fos.close();
+                fos = null;
+            }
         }
+    }
+
+    private static String toFilterExtension(String fileExtension) {
+        return "*." + fileExtension;  //$NON-NLS-1$
     }
 
 }
