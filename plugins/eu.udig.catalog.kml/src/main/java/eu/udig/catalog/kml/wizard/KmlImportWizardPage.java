@@ -1,6 +1,6 @@
 /*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
  * (C) HydroloGIS - www.hydrologis.com 
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org 
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -66,7 +66,7 @@ public class KmlImportWizardPage extends WizardPage {
         kmlText.setText(""); //$NON-NLS-1$
         final Button kmlButton = new Button(inputGroup, SWT.PUSH);
         kmlButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        kmlButton.setText(Messages.getString("KmlImportWizardPage.chooseFileButtonLabel")); //$NON-NLS-1$
+        kmlButton.setText(Messages.getString("KmlWizardPages.chooseFileButtonLabel")); //$NON-NLS-1$
         kmlButton.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
             public void widgetSelected( org.eclipse.swt.events.SelectionEvent e ) {
                 FileDialog fileDialog = new FileDialog(kmlButton.getShell(), SWT.OPEN);

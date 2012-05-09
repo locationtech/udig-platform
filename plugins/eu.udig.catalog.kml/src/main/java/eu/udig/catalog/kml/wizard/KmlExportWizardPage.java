@@ -30,6 +30,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -43,7 +44,6 @@ import eu.udig.catalog.kml.internal.Messages;
 public class KmlExportWizardPage extends WizardPage {
     public static final String ID = "eu.udig.tools.jgrass.kml.wizard.KmlExportWizardPage"; //$NON-NLS-1$
 
-    private Text outFileText;
     private IGeoResource geoResource;
 
     private String filePath;
@@ -57,9 +57,7 @@ public class KmlExportWizardPage extends WizardPage {
     public void createControl( Composite parent ) {
 
         Composite mainComposite = new Composite(parent, SWT.NONE);
-        GridLayout gridLayout = new GridLayout(3, false);
-        gridLayout.verticalSpacing = 10;
-        mainComposite.setLayout(gridLayout);
+        mainComposite.setLayout(new GridLayout());
 
         ILayer selectedLayer = ApplicationGIS.getActiveMap().getEditManager().getSelectedLayer();
         geoResource = selectedLayer.getGeoResource();
@@ -73,20 +71,21 @@ public class KmlExportWizardPage extends WizardPage {
         selectedLayerLabel.setLayoutData(selectedLayerLabelGd);
         selectedLayerLabel.setText(Messages.getString("KmlExportWizardPage.selectedLayerToExportLabel") + selectedLayer.getName()); //$NON-NLS-1$
 
-        /*
-         * output file
-         */
-        Label outFileLabel = new Label(mainComposite, SWT.NONE);
-        outFileLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        outFileLabel.setText(Messages.getString("KmlExportWizardPage.outFileLabel")); //$NON-NLS-1$
+        Group inputGroup = new Group(mainComposite, SWT.None);
+        inputGroup.setText(Messages.getString("KmlExportWizardPage.outFileLabel")); //$NON-NLS-1$
+        inputGroup.setLayout(new GridLayout(2, false));
+        inputGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        GridData gridData1 = new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
+        gridData1.horizontalSpan = 2;
 
-        outFileText = new Text(mainComposite, SWT.BORDER);
-        outFileText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        outFileText.setEditable(false);
+        final Text kmlText = new Text(inputGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        kmlText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        kmlText.setText(""); //$NON-NLS-1$
+        kmlText.setEditable(false);
 
-        final Button outFolderButton = new Button(mainComposite, SWT.PUSH);
+        final Button outFolderButton = new Button(inputGroup, SWT.PUSH);
         outFolderButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        outFolderButton.setText("..."); //$NON-NLS-1$
+        outFolderButton.setText(Messages.getString("KmlWizardPages.chooseFileButtonLabel")); //$NON-NLS-1$
         outFolderButton.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
 
             public void widgetSelected( org.eclipse.swt.events.SelectionEvent e ) {
@@ -95,9 +94,9 @@ public class KmlExportWizardPage extends WizardPage {
                 saveKmlDialog.setOverwrite(true);
                 String path = saveKmlDialog.open();
                 if (path == null || path.length() < 1) {
-                    outFileText.setText(""); //$NON-NLS-1$
+                    kmlText.setText(""); //$NON-NLS-1$
                 } else {
-                    outFileText.setText(path);
+                    kmlText.setText(path);
                     filePath = path;
                 }
                 checkFinish();
