@@ -431,7 +431,8 @@ public class BasicFeatureRenderer extends RendererImpl {
             if (monitor.isCanceled()){
                 return;
             }
-            if( paintArea == null || paintArea.isEmpty() || validBounds == null || validBounds.isEmpty() || validBounds.isNull() ){
+            if( paintArea == null || paintArea.isEmpty() || validBounds == null || validBounds.isEmpty() || validBounds.isNull() || validBounds.getWidth() <=0 || validBounds.getHeight()<=0 ){
+                System.out.println("nothing to draw");
                 // nothing to draw yet
             }
             else {
