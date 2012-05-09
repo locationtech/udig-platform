@@ -25,12 +25,14 @@ import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
+ * 
+ * @author Andrea Antonello (www.hydrologis.com)
  * @author Frank Gasdorf
  */
 public class KmlToolPlugin extends AbstractUdigUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "eu.udig.tools.kml"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "eu.udig.catalog.kml"; //$NON-NLS-1$
 
     // The shared instance
     private static KmlToolPlugin plugin;

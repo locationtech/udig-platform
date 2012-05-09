@@ -39,7 +39,7 @@ import eu.udig.catalog.kml.internal.Messages;
  */
 public class KmlImportWizardPage extends WizardPage {
 
-    public static final String ID = "KmlImportWizardPage"; //$NON-NLS-1$
+    public static final String ID = "eu.udig.catalog.kml.wizard.KmlImportWizardPage"; //$NON-NLS-1$
     private File inFile = null;
 
     private boolean inIsOk = false;

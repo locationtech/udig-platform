@@ -42,7 +42,7 @@ import eu.udig.catalog.kml.internal.Messages;
  * @author Frank Gasdorf
  */
 public class KmlExportWizardPage extends WizardPage {
-    public static final String ID = "eu.udig.tools.jgrass.kml.wizard.KmlExportWizardPage"; //$NON-NLS-1$
+    public static final String ID = "eu.udig.catalog.kml.wizard.KmlExportWizardPage"; //$NON-NLS-1$
 
     private IGeoResource geoResource;
 
