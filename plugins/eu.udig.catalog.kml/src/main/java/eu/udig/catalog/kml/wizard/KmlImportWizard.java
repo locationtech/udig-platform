@@ -36,7 +36,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.opengis.feature.simple.SimpleFeature;
@@ -45,6 +44,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import eu.udig.catalog.kml.core.KmlToolPlugin;
 import eu.udig.catalog.kml.core.KmlUtils;
 import eu.udig.catalog.kml.internal.Messages;
+import eu.udig.catalog.kml.internal.ui.ImageConstants;
 /**
  * @author Andrea Antonello - www.hydrologis.com
  * @author Frank Gasdorf
@@ -63,8 +63,7 @@ public class KmlImportWizard extends Wizard implements INewWizard {
 
     public void init( IWorkbench workbench, IStructuredSelection selection ) {
         setWindowTitle(Messages.getString("KmlImportWizard.windowTitle")); //$NON-NLS-1$
-        setDefaultPageImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(KmlToolPlugin.PLUGIN_ID,
-                "icons/icon_kml48.png")); //$NON-NLS-1$
+        setDefaultPageImageDescriptor(KmlToolPlugin.getDefault().getImageDescriptor(ImageConstants.IMPORTKML_WIZ));
         setNeedsProgressMonitor(true);
         mainPage = new KmlImportWizardPage(Messages.getString("KmlImportWizard.KmlFilImportPageName"), params); //$NON-NLS-1$
     }

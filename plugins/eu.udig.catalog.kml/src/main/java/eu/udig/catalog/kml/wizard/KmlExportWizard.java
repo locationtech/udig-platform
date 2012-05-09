@@ -32,7 +32,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -40,6 +39,7 @@ import org.joda.time.format.DateTimeFormatter;
 import eu.udig.catalog.kml.core.KmlToolPlugin;
 import eu.udig.catalog.kml.core.KmlUtils;
 import eu.udig.catalog.kml.internal.Messages;
+import eu.udig.catalog.kml.internal.ui.ImageConstants;
 
 /**
  * @author Andrea Antonello (www.hydrologis.com)
@@ -57,8 +57,7 @@ public class KmlExportWizard extends Wizard implements IExportWizard {
 
     public void init( IWorkbench workbench, IStructuredSelection selection ) {
         setWindowTitle(Messages.getString("KmlExportWizard.windowTitle")); //$NON-NLS-1$
-        setDefaultPageImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(KmlToolPlugin.PLUGIN_ID,
-                "icons/export_wiz.png")); //$NON-NLS-1$
+        setDefaultPageImageDescriptor(KmlToolPlugin.getDefault().getImageDescriptor(ImageConstants.EXPORTKML_WIZ));
         setNeedsProgressMonitor(true);
 
         mainPage = new KmlExportWizardPage();

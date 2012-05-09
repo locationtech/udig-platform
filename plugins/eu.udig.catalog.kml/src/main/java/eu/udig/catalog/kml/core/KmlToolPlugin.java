@@ -1,6 +1,6 @@
 /*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
  * (C) HydroloGIS - www.hydrologis.com 
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org 
  * 
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Library General Public License as published by the Free
@@ -18,14 +18,17 @@
  */
 package eu.udig.catalog.kml.core;
 
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import net.refractions.udig.core.AbstractUdigUIPlugin;
+
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
  * @author Frank Gasdorf
  */
-public class KmlToolPlugin extends AbstractUIPlugin {
+public class KmlToolPlugin extends AbstractUdigUIPlugin {
 
     // The plug-in ID
     public static final String PLUGIN_ID = "eu.udig.tools.kml"; //$NON-NLS-1$
@@ -64,6 +67,11 @@ public class KmlToolPlugin extends AbstractUIPlugin {
      */
     public static KmlToolPlugin getDefault() {
         return plugin;
+    }
+
+    @Override
+    public IPath getIconPath() {
+        return new Path(DEFAULT_ICON_PATH);
     }
 
 }
