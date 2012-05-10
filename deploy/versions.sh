@@ -21,9 +21,6 @@ export PRODUCT_SDK_TARGET=${BASE}/../features/net.refractions.udig_sdk-product/t
 # example: QUALIFIER=1.3.2.201201031509
 export TAG=1.3.1
 
-# grab the qualifier after doing your target export; it is based on todays date
-export QUALIFIER=1.3.2.201204302357
-
 # Build Resources
 export JRE=${BASE}/jre
 
@@ -55,8 +52,18 @@ ls ${TARGET}/*.zip
 echo "Available JREs:"
 ls ${JRE}
 
-echo "Expected Qualifier: ${QUALIFIER} checking for ${TARGET}/udig-${VERSION}-sdk.zip"
+# The QUALIFIER is based on the time of the build - we will grab the value from the SDK
+# (We use this value to ensure the net.refractions.udig.libs source code loads correctly)
+export QUALIFIER=1.3.2.qualifier
+
+echo "Assigning SDK ${QUALIFIER} qualifier - checking for SDK"
 if [ -f ${TARGET}/udig-${VERSION}-sdk.zip ] 
 then
+    echo "Extracting QUALIFIER from ${TARGET}/udig-${VERSION}-sdk.zip"
+
     unzip -l ${TARGET}/udig-${VERSION}-sdk.zip | grep libs_
+    
+    
+    export QUALIFIER=`unzip -l ${TARGET}/udig-${VERSION}-sdk.zip | grep libs_ | cut -d '_' -f 2 | sed s/.jar//`
+    echo "Assigned Qualifier is now: ${QUALIFIER}"
 fi
