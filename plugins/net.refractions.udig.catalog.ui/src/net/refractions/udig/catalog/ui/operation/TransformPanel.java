@@ -14,8 +14,13 @@
  */
 package net.refractions.udig.catalog.ui.operation;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.internal.ui.UDigByteAndLocalTransfer;
@@ -23,7 +28,11 @@ import net.refractions.udig.ui.filter.ExpressionInput;
 import net.refractions.udig.ui.filter.ExpressionViewer;
 import net.refractions.udig.ui.filter.IExpressionViewer;
 
+import org.eclipse.core.runtime.ListenerList;
+import org.eclipse.core.runtime.Preferences.IPropertyChangeListener;
 import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.util.SafeRunnable;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
@@ -67,7 +76,15 @@ import org.opengis.filter.expression.Expression;
  */
 public class TransformPanel extends Composite {
 
-    private ControlDecoration decoration;
+    /**
+     * A definition value has been modified
+     */
+    public static final String MODIFY = "Modify";
+
+    /**
+     * The list of definitions has been reorded
+     */
+    public static final String ORDER = "Order";
 
     private static final String NO_CONTENT = "--";
 
@@ -84,6 +101,13 @@ public class TransformPanel extends Composite {
     private SimpleFeatureType schema;
 
     private Composite composite;
+
+    /**
+     * List of change listeners
+     * 
+     * @see #fireChanged
+     */
+    private ListenerList changedListeners = new ListenerList();
 
     static List<Definition> createDefaultTransformDefinition(SimpleFeatureType featureType) {
         FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
@@ -116,6 +140,8 @@ public class TransformPanel extends Composite {
 
                 // refresh the display, including labels and display the row if needed
                 table.refresh(definition, true, true);
+                ;
+                fireChanged(new ChangeEvent(transform));
             }
         }
     };
@@ -186,6 +212,35 @@ public class TransformPanel extends Composite {
         // setup the table part of the panel
         createExpressionTable(parent);
         this.listen(true);
+    }
+
+    /*
+     * (non-Javadoc) Method declared on ISelectionProvider.
+     */
+    public void addChangedListener(ChangeListener listener) {
+        changedListeners.add(listener);
+    }
+
+    /*
+     * (non-Javadoc) Method declared on ISelectionProvider.
+     */
+    public void removeChangedListener(ChangeListener listener) {
+        changedListeners.remove(listener);
+    }
+
+    /**
+     * Notifies any selection changed listeners that the viewer's selection has changed. Only
+     * listeners registered at the time this method is called are notified.
+     * 
+     * @param changeEvent a selection changed event
+     * 
+     * @see ISelectionChangedListener#selectionChanged
+     */
+    protected void fireChanged(final ChangeEvent changeEvent) {
+        Object[] listeners = changedListeners.getListeners();
+        for (int i = 0; i < listeners.length; ++i) {
+            ((ChangeListener) listeners[i]).stateChanged(changeEvent);
+        }
     }
 
     public void setInput(SimpleFeature sample) {
@@ -368,7 +423,7 @@ public class TransformPanel extends Composite {
             }
         });
 
-        //drag drop order support
+        // drag drop order support
         table.addDropSupport(DND.DROP_MOVE | DND.DROP_DEFAULT, types, new ViewerDropAdapter(table) {
 
             @Override
@@ -385,11 +440,10 @@ public class TransformPanel extends Composite {
                 if (data instanceof Definition) {
                     listen(false);
 
-                    int location = getCurrentLocation();
-                    System.out.println(location);
-                    System.out.println(getCurrentTarget().toString());
                     int index = transform.indexOf(getCurrentTarget());
 
+                    // if (location == LOCATION_BEFORE)
+                    // index--;
 
                     Definition definition = (Definition) data;
                     transform.remove(definition);
