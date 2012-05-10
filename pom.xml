@@ -66,7 +66,7 @@ Defines the appropriate p2 update repository
   mvn install -PudigProfile (on by default)
 
 Gathers the tutorials and source code for the software developers kit
-  mvn install -Psdk (included by -Dall)
+  mvn install -Dall -Psdk
 
 Includes test plugins (this is optional):
   mvn install -Ptest

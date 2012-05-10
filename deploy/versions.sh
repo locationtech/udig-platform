@@ -22,7 +22,7 @@ export PRODUCT_SDK_TARGET=${BASE}/../features/net.refractions.udig_sdk-product/t
 export TAG=1.3.1
 
 # grab the qualifier after doing your target export; it is based on todays date
-export QUALIFIER=1.3.1.201201031509
+export QUALIFIER=1.3.2.201204302357
 
 # Build Resources
 export JRE=${BASE}/jre
