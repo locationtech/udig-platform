@@ -3,6 +3,7 @@ package net.refractions.udig.catalog.internal.wmt.tile;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -145,15 +146,17 @@ public abstract class WMTTile implements Tile{
                     bufImage = ImageIO.read(connection.getInputStream());
                     
                     //bufImage = ImageIO.read(url);
-                    if (bufImage != null) {
-                        setBufferedImageInternal(bufImage);
-                        setTileState(WMTTile.OK);
-                    }else{
-                        // create an error buffered image
-                        setBufferedImageInternal(createErrorImage());
-                        setTileState(WMTTile.INERROR);
-                    }
                 }else{
+                    File file = new File(url.toExternalForm()); 
+                    if (file.exists()) {
+                        bufImage = ImageIO.read(file);
+                    }
+                }
+                if (bufImage != null) {
+                    setBufferedImageInternal(bufImage);
+                    setTileState(WMTTile.OK);
+                }else{
+                    // create an error buffered image
                     setBufferedImageInternal(createErrorImage());
                     setTileState(WMTTile.INERROR);
                 }

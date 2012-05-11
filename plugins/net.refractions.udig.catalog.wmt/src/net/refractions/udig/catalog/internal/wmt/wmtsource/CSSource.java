@@ -135,12 +135,40 @@ public class CSSource extends OSMSource{
         url = url.replace(TAG_X, Integer.toString(x));
         url = url.replace(TAG_Y, Integer.toString(y));
         
+        if (!url.startsWith("http")) {
+            File file = new File(url);
+            if (!file.exists()) {
+                // try in tms mode
+                int[] tmsTiles = googleTile2TmsTile(x, y, zoomLevel);
+                x = tmsTiles[0];
+                y = tmsTiles[1];
+                url = templateUrl.replace(TAG_ZOOM, Integer.toString(zoomLevel));
+                url = url.replace(TAG_X, Integer.toString(x));
+                url = url.replace(TAG_Y, Integer.toString(y));
+            }
+        }
+        
         return url;
     }
 
     @Override
     public String getBaseUrl() {
         return null; // not in use
+    }
+    
+    
+    /**
+     * Converts Google tile coordinates to TMS Tile coordinates.
+     * 
+     * <p>Code copied from: http://code.google.com/p/gmap-tile-generator/</p>
+     * 
+     * @param tx the x tile number.
+     * @param ty the y tile number.
+     * @param zoom the current zoom level.
+     * @return the converted values.
+     */
+    public static int[] googleTile2TmsTile( int tx, int ty, int zoom ) {
+        return new int[]{tx, (int) ((Math.pow(2, zoom) - 1) - ty)};
     }
 
 }
