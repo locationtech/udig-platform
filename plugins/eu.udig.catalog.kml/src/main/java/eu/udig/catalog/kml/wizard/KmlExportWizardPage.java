@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package eu.udig.tools.jgrass.kml.wizard;
+package eu.udig.catalog.kml.wizard;
 
 import java.io.File;
 
@@ -30,32 +30,34 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import eu.udig.catalog.kml.core.KmlUtils;
+import eu.udig.catalog.kml.internal.Messages;
+
 /**
  * @author Andrea Antonello (www.hydrologis.com)
+ * @author Frank Gasdorf
  */
 public class KmlExportWizardPage extends WizardPage {
-    public static final String ID = "eu.udig.tools.jgrass.kml.wizard.KmlExportWizardPage"; //$NON-NLS-1$
+    public static final String ID = "eu.udig.catalog.kml.wizard.KmlExportWizardPage"; //$NON-NLS-1$
 
-    private Text outFileText;
     private IGeoResource geoResource;
 
     private String filePath;
 
     public KmlExportWizardPage() {
         super(ID);
-        setTitle("Export kml");
-        setDescription("Export feature layer to kml");
+        setTitle(Messages.getString("KmlExportWizardPage.windowTitle")); //$NON-NLS-1$
+        setDescription(Messages.getString("KmlExportWizardPage.description")); //$NON-NLS-1$
     }
 
     public void createControl( Composite parent ) {
 
         Composite mainComposite = new Composite(parent, SWT.NONE);
-        GridLayout gridLayout = new GridLayout(3, false);
-        gridLayout.verticalSpacing = 10;
-        mainComposite.setLayout(gridLayout);
+        mainComposite.setLayout(new GridLayout());
 
         ILayer selectedLayer = ApplicationGIS.getActiveMap().getEditManager().getSelectedLayer();
         geoResource = selectedLayer.getGeoResource();
@@ -67,32 +69,34 @@ public class KmlExportWizardPage extends WizardPage {
         GridData selectedLayerLabelGd = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
         selectedLayerLabelGd.horizontalSpan = 3;
         selectedLayerLabel.setLayoutData(selectedLayerLabelGd);
-        selectedLayerLabel.setText("Selected layer to export: " + selectedLayer.getName());
+        selectedLayerLabel.setText(Messages.getString("KmlExportWizardPage.selectedLayerToExportLabel") + selectedLayer.getName()); //$NON-NLS-1$
 
-        /*
-         * output file
-         */
-        Label outFileLabel = new Label(mainComposite, SWT.NONE);
-        outFileLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        outFileLabel.setText("Kml file to save");
+        Group inputGroup = new Group(mainComposite, SWT.None);
+        inputGroup.setText(Messages.getString("KmlExportWizardPage.outFileLabel")); //$NON-NLS-1$
+        inputGroup.setLayout(new GridLayout(2, false));
+        inputGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
+        GridData gridData1 = new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
+        gridData1.horizontalSpan = 2;
 
-        outFileText = new Text(mainComposite, SWT.BORDER);
-        outFileText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        outFileText.setEditable(false);
+        final Text kmlText = new Text(inputGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        kmlText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        kmlText.setText(""); //$NON-NLS-1$
+        kmlText.setEditable(false);
 
-        final Button outFolderButton = new Button(mainComposite, SWT.PUSH);
+        final Button outFolderButton = new Button(inputGroup, SWT.PUSH);
         outFolderButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        outFolderButton.setText("..."); //$NON-NLS-1$
+        outFolderButton.setText(Messages.getString("KmlWizardPages.chooseFileButtonLabel")); //$NON-NLS-1$
         outFolderButton.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
 
             public void widgetSelected( org.eclipse.swt.events.SelectionEvent e ) {
                 FileDialog saveKmlDialog = new FileDialog(outFolderButton.getShell(), SWT.SAVE);
-                saveKmlDialog.setFilterExtensions(new String[]{"*.kml"}); //$NON-NLS-1$
+                saveKmlDialog.setFilterExtensions(KmlUtils.SUPPORTED_FILE_EXTENSIONS);
+                saveKmlDialog.setOverwrite(true);
                 String path = saveKmlDialog.open();
                 if (path == null || path.length() < 1) {
-                    outFileText.setText(""); //$NON-NLS-1$
+                    kmlText.setText(""); //$NON-NLS-1$
                 } else {
-                    outFileText.setText(path);
+                    kmlText.setText(path);
                     filePath = path;
                 }
                 checkFinish();

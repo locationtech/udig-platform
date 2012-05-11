@@ -69,9 +69,11 @@ public class MemoryGeoResourceImpl extends IGeoResource implements ITransientRes
         if (adaptee == null)
             return false;
 
-        return adaptee.isAssignableFrom(IGeoResourceInfo.class) || adaptee.isAssignableFrom(FeatureStore.class)
-                || adaptee.isAssignableFrom(FeatureSource.class) || adaptee.isAssignableFrom(IService.class)
-                || adaptee.isAssignableFrom(ITransientResolve.class) || super.canResolve(adaptee);
+        return adaptee.isAssignableFrom(ITransientResolve.class) || adaptee.isAssignableFrom(IService.class)
+                || adaptee.isAssignableFrom(IGeoResource.class) || adaptee.isAssignableFrom(IGeoResourceInfo.class)
+                || adaptee.isAssignableFrom(SimpleFeatureStore.class) || adaptee.isAssignableFrom(SimpleFeatureSource.class)
+                || adaptee.isAssignableFrom(FeatureStore.class) || adaptee.isAssignableFrom(FeatureSource.class) 
+                || adaptee.isAssignableFrom(SimpleFeatureType.class) || super.canResolve(adaptee);
     }
 
     public Status getStatus() {

@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package eu.udig.tools.jgrass.kml.wizard;
+package eu.udig.catalog.kml.wizard;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,34 +32,18 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.geotools.coverage.grid.GridCoverage2D;
-import org.geotools.coverage.grid.io.AbstractGridFormat;
-import org.geotools.coverage.grid.io.imageio.GeoToolsWriteParams;
-import org.geotools.coverage.processing.Operations;
-import org.geotools.data.FeatureStore;
 import org.geotools.data.simple.SimpleFeatureSource;
-import org.geotools.gce.arcgrid.ArcGridFormat;
-import org.geotools.gce.arcgrid.ArcGridWriteParams;
-import org.geotools.gce.arcgrid.ArcGridWriter;
-import org.geotools.gce.geotiff.GeoTiffFormat;
-import org.geotools.gce.geotiff.GeoTiffWriteParams;
-import org.geotools.gce.geotiff.GeoTiffWriter;
-import org.geotools.referencing.CRS;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.opengis.coverage.grid.GridCoverage;
-import org.opengis.parameter.GeneralParameterValue;
-import org.opengis.parameter.ParameterValueGroup;
-import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-import org.opengis.referencing.operation.MathTransform;
 
-import eu.udig.tools.jgrass.JGrassToolsPlugin;
-import eu.udig.tools.jgrass.kml.core.Kmlutils;
+import eu.udig.catalog.kml.core.KmlToolPlugin;
+import eu.udig.catalog.kml.core.KmlUtils;
+import eu.udig.catalog.kml.internal.Messages;
+import eu.udig.catalog.kml.internal.ui.ImageConstants;
 
 /**
  * @author Andrea Antonello (www.hydrologis.com)
+ * @author Frank Gasdorf
  */
 public class KmlExportWizard extends Wizard implements IExportWizard {
 
@@ -72,9 +56,8 @@ public class KmlExportWizard extends Wizard implements IExportWizard {
     }
 
     public void init( IWorkbench workbench, IStructuredSelection selection ) {
-        setWindowTitle("Kml export");
-        setDefaultPageImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
-                "icons/export_wiz.png")); //$NON-NLS-1$
+        setWindowTitle(Messages.getString("KmlExportWizard.windowTitle")); //$NON-NLS-1$
+        setDefaultPageImageDescriptor(KmlToolPlugin.getDefault().getImageDescriptor(ImageConstants.EXPORTKML_WIZ));
         setNeedsProgressMonitor(true);
 
         mainPage = new KmlExportWizardPage();
@@ -99,27 +82,28 @@ public class KmlExportWizard extends Wizard implements IExportWizard {
                 /*
                  * finally do some processing
                  */
-                pm.beginTask("Exporting map...", IProgressMonitor.UNKNOWN);
+                pm.beginTask(Messages.getString("KmlExportWizard.taskExportingMap"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                 try {
                     if (geoResource.canResolve(SimpleFeatureSource.class)) {
+
                         SimpleFeatureSource featureStore = (SimpleFeatureSource) geoResource.resolve(SimpleFeatureSource.class,
                                 pm);
-                        Kmlutils.writeKml(new File(filePath), featureStore.getFeatures());
+                        KmlUtils.writeKml(new File(filePath), featureStore.getFeatures());
                     } else {
-                        throw new IOException("The selected resource is not a feature layer: " + geoResource.getTitle());
+                        throw new IOException(Messages.getString("KmlExportWizard.error.ResourceIsNotAFeatureLayer") + geoResource.getTitle()); //$NON-NLS-1$
                     }
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    String message = "An error occurred while exporting the resource: " + geoResource.getTitle();
-                    ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassToolsPlugin.PLUGIN_ID, e);
+                    String message = Messages.getString("KmlExportWizard.error.ErrorOccuredWhileExproting") + geoResource.getTitle(); //$NON-NLS-1$
+                    ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, KmlToolPlugin.PLUGIN_ID, e);
                 }
                 pm.done();
 
             }
         };
 
-        PlatformGIS.runInProgressDialog("Exporting to kml...", true, operation, true);
+        PlatformGIS.runInProgressDialog(Messages.getString("KmlExportWizard.taskExportingToKML"), true, operation, true); //$NON-NLS-1$
         return true;
     }
 
