@@ -1,5 +1,6 @@
 package net.refractions.udig.catalog.internal.wmt.wmtsource;
 
+import java.io.File;
 import java.util.Arrays;
 
 import net.refractions.udig.catalog.internal.wmt.WMTPlugin;
@@ -38,7 +39,13 @@ public class CSSource extends OSMSource{
         int nextToLastPos = resourceId.substring(0, lastPos).lastIndexOf('/');
         zoomMinValue = resourceId.substring(nextToLastPos + 1, lastPos);
         
-        this.templateUrl = "http://" + resourceId.substring(0, nextToLastPos); //$NON-NLS-1$
+        String tmpUrlPath = resourceId.substring(0, nextToLastPos);
+        String tmpUrlNoZXY = tmpUrlPath.split("\\{")[0];
+        if (!new File(tmpUrlNoZXY).exists()) {
+            this.templateUrl = "http://" + tmpUrlPath; //$NON-NLS-1$
+        }else{
+            this.templateUrl = tmpUrlPath; //$NON-NLS-1$
+        }
         this.id = generateId();
         
         int zoomMin, zoomMax;        

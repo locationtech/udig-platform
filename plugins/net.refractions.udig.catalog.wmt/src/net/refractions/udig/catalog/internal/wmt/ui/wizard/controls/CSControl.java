@@ -38,8 +38,13 @@ public class CSControl extends WMTWizardControl {
         
         String urlText = txtUrl.getText().trim();
         if (validUrl(urlText)) {
+            
+            if (urlText.startsWith("http")) {
+                urlText=urlText.substring(7);// strip out http://
+            }
+            
             URL url = WMTSource.getCustomServerServiceUrl(
-                    urlText.substring(7), // strip out http://
+                    urlText, 
                     spZoomMin.getText(),
                     spZoomMax.getText());      
             
@@ -56,7 +61,7 @@ public class CSControl extends WMTWizardControl {
         if (!url.contains(CSSource.TAG_X)) return false;
         if (!url.contains(CSSource.TAG_Y)) return false;
         
-        return url.toLowerCase().startsWith("http://"); //$NON-NLS-1$
+        return true;//url.toLowerCase().startsWith("http://"); //$NON-NLS-1$
     }
     
     @Override
