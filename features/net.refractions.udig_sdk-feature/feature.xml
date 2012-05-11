@@ -61,27 +61,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
    <includes
          id="net.refractions.udig_tutorials-feature"
          version="0.0.0"/>
-
-   <includes
-         id="net.refractions.udig_application.source-feature"
-         version="0.0.0"/>
-
-   <includes
-         id="net.refractions.udig_base.source-feature"
-         version="0.0.0"/>
-
-   <includes
-         id="net.refractions.udig_platform.source-feature"
-         version="0.0.0"/>
-
-   <includes
-         id="net.refractions.udig_printing.source-feature"
-         version="0.0.0"/>
-
-   <includes
-         id="net.refractions.udig_tutorials.source-feature"
-         version="0.0.0"/>
-
+         
    <includes
          id="org.eclipse.xsd.source"
          version="0.0.0"/>
