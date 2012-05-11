@@ -58,6 +58,8 @@ public class CSSource extends OSMSource {
             this.templateUrl = "http://" + tmpUrlPath; //$NON-NLS-1$
         } else {
             this.templateUrl = tmpUrlPath; //$NON-NLS-1$
+            String name2 = new File(tmpUrlNoZXY).getName();
+            setName(name2);
         }
         this.id = generateId();
 

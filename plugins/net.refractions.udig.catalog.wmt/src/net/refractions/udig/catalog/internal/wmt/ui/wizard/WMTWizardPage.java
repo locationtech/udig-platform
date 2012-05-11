@@ -247,7 +247,7 @@ public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnect
 
     private void createTreeControl( final Composite composite ) {
         tree = new Tree(composite, SWT.BORDER | SWT.CHECK);
-        tree.setLayoutData(new RowData(200, 442));
+        tree.setLayoutData(new RowData(300, 442));
         tree.addListener(SWT.Selection, new org.eclipse.swt.widgets.Listener(){
             public void handleEvent( Event event ) {
                 TreeItem item = (TreeItem) event.item;
