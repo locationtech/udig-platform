@@ -28,6 +28,11 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * @author fgdrf
  */
 public abstract class AbstractUdigUIPlugin extends AbstractUIPlugin {
+    
+    /**
+     * the default Icon path to access images
+     */
+    public static final String DEFAULT_ICON_PATH = "icons/";
 
     /**
      * The constructor.
