@@ -12,10 +12,12 @@ import net.refractions.udig.catalog.wmt.internal.Messages;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.program.Program;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -31,6 +33,7 @@ public class CSControl extends WMTWizardControl {
     private Spinner spZoomMin;
     private Spinner spZoomMax;
     private Text txtUrl;
+    private Button typeButton;
     
     @Override
     public IService getService() {
@@ -38,10 +41,17 @@ public class CSControl extends WMTWizardControl {
         
         String urlText = txtUrl.getText().trim();
         if (validUrl(urlText)) {
+            
+            if (urlText.startsWith("http")) {
+                urlText=urlText.substring(7);// strip out http://
+            }
+            
             URL url = WMTSource.getCustomServerServiceUrl(
-                    urlText.substring(7), // strip out http://
+                    urlText, 
                     spZoomMin.getText(),
-                    spZoomMax.getText());      
+                    spZoomMax.getText(),
+                    typeButton.getSelection() ? "TMS" : null
+                    );      
             
             WMTService service = serviceExtension.createService(url, serviceExtension.createParams(url));
             
@@ -56,7 +66,7 @@ public class CSControl extends WMTWizardControl {
         if (!url.contains(CSSource.TAG_X)) return false;
         if (!url.contains(CSSource.TAG_Y)) return false;
         
-        return url.toLowerCase().startsWith("http://"); //$NON-NLS-1$
+        return true;//url.toLowerCase().startsWith("http://"); //$NON-NLS-1$
     }
     
     @Override
@@ -86,6 +96,13 @@ public class CSControl extends WMTWizardControl {
         txtUrl.setLayoutData(new RowData(380, 20));
         txtUrl.setText(Messages.Wizard_CS_UrlDefault);
         //endregion
+        
+        // type
+        typeButton = new Button(control, SWT.CHECK);
+        typeButton.setLayoutData(new RowData(380, 20));
+        typeButton.setText("Handle as TMS as opposed to Google tile schema.");
+        // end type
+        
         
         //region Zoom-Range
         Composite compositeRow = new Composite(control, SWT.NONE);

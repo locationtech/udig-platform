@@ -13,6 +13,7 @@ import net.refractions.udig.catalog.internal.wmt.WMTPlugin;
 import net.refractions.udig.catalog.internal.wmt.WMTService;
 import net.refractions.udig.catalog.internal.wmt.WMTServiceExtension;
 import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.CSControl;
+import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.JGrasstoolsTmsFolderControl;
 import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.MQControl;
 import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.OSMCloudMadeControl;
 import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.OSMControl;
@@ -53,17 +54,15 @@ import org.eclipse.swt.widgets.TreeItem;
  */
 public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnectionPage {
 
-      
     private WMTServiceExtension serviceExtension;
     private Tree tree;
     private StackLayout stackLayoutInfoBox;
     private Composite infoBox;
     private Composite childControl;
-    
 
     public WMTWizardPage() {
-        super(Messages.Wizard_Title); 
-        
+        super(Messages.Wizard_Title);
+
         serviceExtension = new WMTServiceExtension();
     }
 
@@ -75,8 +74,7 @@ public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnect
     public boolean leavingPage() {
         // Skip the resource selection wizard page
         IRunnableWithProgress runnable = new IRunnableWithProgress(){
-            public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                    InterruptedException {
+            public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
                 getWizard().getWorkflow().next();
             }
         };
@@ -92,112 +90,111 @@ public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnect
         return super.leavingPage();
     }
 
-    //region Get selected GeoResources/Services
-    //region GeoResources
+    // region Get selected GeoResources/Services
+    // region GeoResources
     /**
      * Builds a list of all selected GeoResources
      */
     @Override
-    public Collection<URL> getResourceIDs() {        
-        Collection<URL> resourceIDs = new LinkedList<URL>();        
+    public Collection<URL> getResourceIDs() {
+        Collection<URL> resourceIDs = new LinkedList<URL>();
         getSelectedResources(resourceIDs, tree);
-        
+
         return resourceIDs;
     }
-    
+
     /**
      * Loops the Tree-View for selected GeoResources
      *
      * @param resourceIDs
      * @param tree
      */
-    private void getSelectedResources(Collection<URL> resourceIDs, Tree tree) {
-        for (int i = 0; i < tree.getItemCount(); i++) {
+    private void getSelectedResources( Collection<URL> resourceIDs, Tree tree ) {
+        for( int i = 0; i < tree.getItemCount(); i++ ) {
             TreeItem treeItem = tree.getItem(i);
-            
+
             if (treeItem.getChecked() || treeItem.getGrayed()) {
                 getSelectedResources(resourceIDs, treeItem);
             }
         }
     }
-    
+
     /**
      * Loops a TreeItem for selected GeoResources
      *
      * @param resourceIDs
      * @param treeItem Selected TreeItem
      */
-    private void getSelectedResources(Collection<URL> resourceIDs, TreeItem treeItem) {
-        if(treeItem.getData() instanceof WMTWizardTreeItemData) {
+    private void getSelectedResources( Collection<URL> resourceIDs, TreeItem treeItem ) {
+        if (treeItem.getData() instanceof WMTWizardTreeItemData) {
             WMTWizardTreeItemData itemData = (WMTWizardTreeItemData) treeItem.getData();
-            
+
             IGeoResource geoResource = itemData.getGeoResource();
-            
+
             if (geoResource != null) {
-                WMTPlugin.debug("[Wizard.getSelectedResources] adding " +  //$NON-NLS-1$
+                WMTPlugin.debug("[Wizard.getSelectedResources] adding " + //$NON-NLS-1$
                         geoResource.getIdentifier(), Trace.WIZARD);
-                
+
                 resourceIDs.add(geoResource.getIdentifier());
             }
         }
-        
 
-        for (int i = 0; i < treeItem.getItemCount(); i++) {
+        for( int i = 0; i < treeItem.getItemCount(); i++ ) {
             TreeItem childItem = treeItem.getItem(i);
-            
+
             if (childItem.getChecked() || childItem.getGrayed()) {
                 getSelectedResources(resourceIDs, childItem);
             }
         }
     }
-    //endregion
-    
-    //region Services
+    // endregion
+
+    // region Services
     /**
      * Loops the tree and returns selected services.
      */
     @Override
-    public Collection<IService> getServices() {        
+    public Collection<IService> getServices() {
         Collection<IService> services = new ArrayList<IService>();
-        
-        for (int i = 0; i < tree.getItemCount(); i++) {
+
+        for( int i = 0; i < tree.getItemCount(); i++ ) {
             TreeItem parentItem = tree.getItem(i);
-            
+
             /**
              * only check children if parent is checked
              * or grayed (which means that not all children are checked)
              */
             if (parentItem.getChecked() || parentItem.getGrayed()) {
                 addItemData(services, parentItem.getData());
-                
-                for (int j = 0; j < parentItem.getItemCount(); j++) {
+
+                for( int j = 0; j < parentItem.getItemCount(); j++ ) {
                     TreeItem childItem = parentItem.getItem(j);
-                    
+
                     if (childItem.getChecked()) {
                         addItemData(services, childItem.getData());
-                    }                    
+                    }
                 }
-                
+
             }
-        }        
-        
+        }
+
         return services;
     }
-    
-    private void addItemData(Collection<IService> services, Object data) {
+
+    private void addItemData( Collection<IService> services, Object data ) {
         if (data instanceof WMTWizardTreeItemData) {
             WMTWizardTreeItemData itemData = (WMTWizardTreeItemData) data;
-            
+
             IService service = itemData.getService();
-            
+
             if (service != null) {
                 services.add(service);
             }
         }
     }
-    //endregion
-    
-    //region Adding Services to the Tree-View
+    // endregion
+
+    // region Adding Services to the Tree-View
     /**
      * Creates a service from a given WMTSource class,
      * adds this service to a new TreeItem as data object
@@ -206,67 +203,66 @@ public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnect
      * @param treeItem The parent TreeItem.
      * @param sourceClass The class for which the service should be created.
      */
-    private void addWMTSourceToTree(TreeItem treeItem, Class<? extends WMTSource> sourceClass,
-            WMTWizardControl controlFactory) {
+    private void addWMTSourceToTree( TreeItem treeItem, Class< ? extends WMTSource> sourceClass, WMTWizardControl controlFactory ) {
         TreeItem newTreeItem = new TreeItem(treeItem, SWT.NONE);
-        
+
         WMTService service = serviceExtension.createService(sourceClass);
-        
+
         newTreeItem.setText(service.getName());
-        
+
         WMTWizardTreeItemData data = new WMTWizardTreeItemData(service, controlFactory);
         newTreeItem.setData(data);
-        //newTreeItem.setData(service);
+        // newTreeItem.setData(service);
     }
-    //endregion
-    
-    public void createControl(Composite parent) {
+    // endregion
+
+    public void createControl( Composite parent ) {
         // only when this is called for the first time
-        if (tree != null && !tree.isDisposed()) return;
-            
+        if (tree != null && !tree.isDisposed())
+            return;
+
         childControl = new Composite(parent, SWT.NONE);
         final Composite composite = childControl;
         composite.setLayout(new RowLayout());
-        setControl(composite); 
-        
+        setControl(composite);
+
         createTreeControl(composite);
-        
+
         TreeItem osm = addOsmOptions();
-//        addMapQuestOptions();
+        // addMapQuestOptions();
         addWorldWindOptions();
         addNasaOptions();
-        
-        // Enable first service for usability reasons 
+
+        // Enable first service for usability reasons
         osm.getItems()[0].setChecked(true);
         tree.setSelection(osm.getItems()[0]);
         displayInfoControl(osm.getItems()[0]);
         osm.setChecked(true);
         osm.setGrayed(true);
-        //endregion
-
+        // endregion
 
         composite.pack();
 
-      }
+    }
 
-	private void createTreeControl(final Composite composite) {
-		tree = new Tree(composite, SWT.BORDER | SWT.CHECK);
-        tree.setLayoutData(new RowData(200, 442));
+    private void createTreeControl( final Composite composite ) {
+        tree = new Tree(composite, SWT.BORDER | SWT.CHECK);
+        tree.setLayoutData(new RowData(300, 442));
         tree.addListener(SWT.Selection, new org.eclipse.swt.widgets.Listener(){
-            public void handleEvent(Event event) {
+            public void handleEvent( Event event ) {
                 TreeItem item = (TreeItem) event.item;
-                
+
                 displayInfoControl(item);
-                
+
                 if (event.detail == SWT.CHECK) {
                     // Check child items
                     boolean checked = item.getChecked();
                     checkItems(item, checked);
                     checkPath(item.getParentItem(), checked, false);
-                    
+
                     // now update the buttons
                     if (noItemChecked()) {
-                        setPageComplete(false); 
+                        setPageComplete(false);
                     } else {
                         setPageComplete(true);
                     }
@@ -274,83 +270,89 @@ public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnect
                 }
             }
         });
-        
+
         infoBox = new Composite(composite, SWT.NONE);
         stackLayoutInfoBox = new StackLayout();
         infoBox.setLayout(stackLayoutInfoBox);
         infoBox.setLayoutData(new RowData(430, 470));
-	}
+    }
 
-	private TreeItem addOsmOptions() {
-		TreeItem osm = new TreeItem(tree, SWT.NONE);
+    private TreeItem addOsmOptions() {
+        TreeItem osm = new TreeItem(tree, SWT.NONE);
         osm.setText(OSMSource.NAME);
-        
+
         OSMControl osmControlFactory = new OSMControl();
         addWMTSourceToTree(osm, OSMMapnikSource.class, osmControlFactory);
         addWMTSourceToTree(osm, OSMOsmarenderSource.class, osmControlFactory);
         addWMTSourceToTree(osm, OSMCycleMapSource.class, osmControlFactory);
-        
+
         OSMCloudMadeControl osmCloudMadeControlFactory = new OSMCloudMadeControl();
-        TreeItem cloudMadeTreeItem = new TreeItem(osm, SWT.NONE);        
+        TreeItem cloudMadeTreeItem = new TreeItem(osm, SWT.NONE);
         cloudMadeTreeItem.setText(OSMCloudMadeSource.NAME);
         WMTWizardTreeItemData dataCloudMade = new WMTWizardTreeItemData(null, osmCloudMadeControlFactory);
         cloudMadeTreeItem.setData(dataCloudMade);
-        
+
         CSControl osmCSControlFactory = new CSControl();
-        TreeItem csTreeItem = new TreeItem(osm, SWT.NONE);        
+        TreeItem csTreeItem = new TreeItem(osm, SWT.NONE);
         csTreeItem.setText(Messages.Wizard_CS_Title);
         WMTWizardTreeItemData dataCS = new WMTWizardTreeItemData(null, osmCSControlFactory);
         csTreeItem.setData(dataCS);
 
-        osm.setExpanded(true);
-		return osm;
-	}
+        JGrasstoolsTmsFolderControl jgrasstoolsTmsControlFactory = new JGrasstoolsTmsFolderControl();
+        TreeItem jgrasstoolsTmsTreeItem = new TreeItem(osm, SWT.NONE);
+        jgrasstoolsTmsTreeItem.setText("JGrasstools TMS folder");
+        WMTWizardTreeItemData dataJGTms = new WMTWizardTreeItemData(null, jgrasstoolsTmsControlFactory);
+        jgrasstoolsTmsTreeItem.setData(dataJGTms);
 
-	private void addNasaOptions() {
-		TreeItem nasa = new TreeItem(tree, SWT.NONE);
+        osm.setExpanded(true);
+        return osm;
+    }
+
+    private void addNasaOptions() {
+        TreeItem nasa = new TreeItem(tree, SWT.NONE);
         nasa.setText(NASASource.NAME);
-        
+
         NASASourceManager nasaManager = NASASourceManager.getInstance();
-        
+
         nasaManager.buildWizardTree(nasa);
 
         nasa.setExpanded(true);
-	}
+    }
 
-	private void addWorldWindOptions() {
-		TreeItem ww = new TreeItem(tree, SWT.NONE);
+    private void addWorldWindOptions() {
+        TreeItem ww = new TreeItem(tree, SWT.NONE);
         ww.setText(Messages.Wizard_Ww_Example_Title);
 
         WWControl wwControlFactory = new WWControl();
-        TreeItem wwTreeItem = new TreeItem(ww, SWT.NONE);        
+        TreeItem wwTreeItem = new TreeItem(ww, SWT.NONE);
         wwTreeItem.setText(Messages.Wizard_Ww_Example_Demis_Title);
         WMTWizardTreeItemData dataWW = new WMTWizardTreeItemData(null, wwControlFactory);
         wwTreeItem.setData(dataWW);
-        
-        ww.setExpanded(true);
-	}
 
-	private void addMapQuestOptions() {
-		MQControl mqControlFactory = new MQControl();
+        ww.setExpanded(true);
+    }
+
+    private void addMapQuestOptions() {
+        MQControl mqControlFactory = new MQControl();
         TreeItem mq = new TreeItem(tree, SWT.NONE);
         mq.setText(MQSource.NAME);
 
         addWMTSourceToTree(mq, MQSource.class, mqControlFactory);
 
         mq.setExpanded(true);
-	}
-    
-    //region GUI helper methods    
-    private void displayInfoControl(TreeItem item) {
+    }
+
+    // region GUI helper methods
+    private void displayInfoControl( TreeItem item ) {
         if (item.getData() != null && (item.getData() instanceof WMTWizardTreeItemData)) {
             WMTWizardTreeItemData itemData = (WMTWizardTreeItemData) item.getData();
-            
+
             stackLayoutInfoBox.topControl = itemData.getControlFactory().getControl(infoBox);
             infoBox.layout();
             childControl.pack();
-         }
+        }
     }
-    
+
     /**
      * Loops the tree and counts checked items
      * 
@@ -358,25 +360,25 @@ public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnect
      */
     private boolean noItemChecked() {
         int selectedItemCount = 0;
-        
-        for (int i = 0; i < tree.getItemCount(); i++) {
+
+        for( int i = 0; i < tree.getItemCount(); i++ ) {
             TreeItem parentItem = tree.getItem(i);
-            
+
             if (parentItem.getChecked() || parentItem.getGrayed()) {
-                for (int j = 0; j < parentItem.getItemCount(); j++) {
+                for( int j = 0; j < parentItem.getItemCount(); j++ ) {
                     TreeItem childItem = parentItem.getItem(j);
-                    
+
                     if (childItem.getChecked()) {
                         selectedItemCount++;
-                    }                    
-                }                
+                    }
+                }
             }
-        }           
-            
+        }
+
         return selectedItemCount <= 0;
     }
-    
-    //region Check children when parent is checked
+
+    // region Check children when parent is checked
     /**
      * GUI: helper method for Tree
      * 
@@ -388,14 +390,15 @@ public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnect
      * @param checked
      * @param grayed
      */
-    private void checkPath(TreeItem item, boolean checked, boolean grayed) {
-        if (item == null) return;
+    private void checkPath( TreeItem item, boolean checked, boolean grayed ) {
+        if (item == null)
+            return;
         if (grayed) {
             checked = true;
         } else {
             int index = 0;
             TreeItem[] items = item.getItems();
-            while (index < items.length) {
+            while( index < items.length ) {
                 TreeItem child = items[index];
                 if (child.getGrayed() || checked != child.getChecked()) {
                     checked = grayed = true;
@@ -419,21 +422,20 @@ public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnect
      * @param item
      * @param checked
      */
-    private void checkItems(TreeItem item, boolean checked) {
+    private void checkItems( TreeItem item, boolean checked ) {
         item.setGrayed(false);
         item.setChecked(checked);
         TreeItem[] items = item.getItems();
-        for (int i = 0; i < items.length; i++) {
+        for( int i = 0; i < items.length; i++ ) {
             checkItems(items[i], checked);
         }
     }
-    //endregion
-    //endregion
-    
+    // endregion
+    // endregion
+
     void close() {
-        if( getContainer()!=null && getContainer().getShell()!=null && !getContainer().getShell().isDisposed() ){
+        if (getContainer() != null && getContainer().getShell() != null && !getContainer().getShell().isDisposed()) {
             getContainer().getShell().close();
         }
     }
 }
-

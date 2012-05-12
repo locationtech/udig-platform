@@ -3,8 +3,10 @@ package net.refractions.udig.catalog.internal.wmt.tile;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -135,14 +137,21 @@ public abstract class WMTTile implements Tile{
                 URL url = getUrl();
                 WMTPlugin.log("WMT GetTile: "+ url, null);  //$NON-NLS-1$
                 
-                HttpURLConnection connection = null;
-                connection = (HttpURLConnection) url.openConnection();  
-                setConnectionParams(connection);
-
-                
-                bufImage = ImageIO.read(connection.getInputStream());
-                
-                //bufImage = ImageIO.read(url);
+                URLConnection openConnection = url.openConnection();
+                if (openConnection!=null) {
+                    HttpURLConnection connection = null;
+                    connection = (HttpURLConnection) openConnection;  
+                    setConnectionParams(connection);
+                    
+                    bufImage = ImageIO.read(connection.getInputStream());
+                    
+                    //bufImage = ImageIO.read(url);
+                }else{
+                    File file = new File(url.toExternalForm()); 
+                    if (file.exists()) {
+                        bufImage = ImageIO.read(file);
+                    }
+                }
                 if (bufImage != null) {
                     setBufferedImageInternal(bufImage);
                     setTileState(WMTTile.OK);
@@ -151,6 +160,7 @@ public abstract class WMTTile implements Tile{
                     setBufferedImageInternal(createErrorImage());
                     setTileState(WMTTile.INERROR);
                 }
+                
             } catch (Exception e1) {
                 // create an error buffered image
                 setBufferedImageInternal(createErrorImage());
