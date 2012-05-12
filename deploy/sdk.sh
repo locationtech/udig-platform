@@ -17,6 +17,11 @@ then
        mkdir -p ${BUILD}/sdk
     fi
     
+    if [ ! -f ${BUILD}/udig-${VERSION}.html ]
+    then
+        cp ${BASE}/udig-1.3.x.html ${BUILD}/udig-${VERSION}.html
+    fi
+            
     if [ ! -f ${BUILD}/udig-${VERSION}-sdk.zip ]
     then
         echo "Building  ${BUILD}/udig-${VERSION}-sdk.zip ..."
