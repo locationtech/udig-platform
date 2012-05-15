@@ -828,7 +828,7 @@
                          <configuration>
                              <classifier>sources</classifier>
                              <overWrite>true</overWrite>
-                             <outputDirectory>${basedir}/lib/sources</outputDirectory>
+                             <outputDirectory>${basedir}/../net.refractions.udig.libs.source/src/net.refractions.udig.libs_1.3.1.qualifier/lib</outputDirectory>
                              <overWriteReleases>true</overWriteReleases>
                              <overWriteSnapshots>true</overWriteSnapshots>
                              <excludeScope>provided</excludeScope>
