@@ -141,15 +141,14 @@ public class FilterStyle {
                 }
                 String the_geom = schema.getGeometryDescriptor().getName().getLocalPart();
                 Filter spatialFilter = ff.intersects( ff.property(the_geom), ff.literal( geometry ) );            
-    //            if( filter != null ){
-    //                return ff.and( filter, spatialFilter );
-    //            }
-    //            else {
-    //                return spatialFilter;
-    //            }
-                filter = Filters.and(ff,  filter, spatialFilter);
-                
-                return filter;
+                if( filter != null ){
+                    return ff.and( filter, spatialFilter );
+                }
+                else {
+                    return spatialFilter;
+                }
+//                filter = Filters.and(ff,  filter, spatialFilter);
+//                return filter;
             }
             catch (MismatchedDimensionException e) {
                 // could not filter by AOI

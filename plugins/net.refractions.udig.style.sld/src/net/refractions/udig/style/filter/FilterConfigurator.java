@@ -51,6 +51,9 @@ public class FilterConfigurator extends IStyleConfigurator {
 
     public static String STYLE_ID = ProjectBlackboardConstants.LAYER__STYLE_FILTER;
     
+    /** 
+     * Data object responsible for holding on to the filter/query information used to mix in with the basic feature renderer
+     */
     FilterStyle filterStyle = null;
         
     /** Toggle to indicate interest in the current area of interest */
@@ -79,7 +82,7 @@ public class FilterConfigurator extends IStyleConfigurator {
                 return; // nothing to see
             }
             
-            Filter oldValue = getStyleFilter();
+            Filter oldValue = getFilterStyle().getFilter();
             Filter filter = filterViewer.getFilter();
             if( filter == null ){
                 return; // invalid
@@ -96,39 +99,44 @@ public class FilterConfigurator extends IStyleConfigurator {
     public FilterConfigurator() {
     }
 
-    /**
-     * Update the internal filter; will set tooltip text as required in the event the filter does
-     * not parse.
-     */
-    public boolean checkValid(){
-        if( text == null || text.getControl() == null ||  text.getControl().isDisposed() ){
-            return false; // nothing to see
-        }
-        if( text.validate() ){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+//    /**
+//     * Update the internal filter; will set tooltip text as required in the event the filter does
+//     * not parse.
+//     */
+//    public boolean checkValid(){
+//        if( text == null || text.getControl() == null ||  text.getControl().isDisposed() ){
+//            return false; // nothing to see
+//        }
+//        if( text.validate() ){
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    }
+    
+    
     public void externalUpdate() {
-        if( text == null || text.getControl() == null ||  text.getControl().isDisposed() ){
+        if( aoiButton == null || aoiButton.isDisposed() ){
             return; // nothing to see
         }
+        
         Filter filter = filterStyle.getFilter();
+        boolean aoi = filterStyle.isAoiFilter();
+        
         boolean changed = false;
-        if( !text.getInput().equals(filter)){
-            filterStyle.setFilter( text.getInput() );
+        if( !filterViewer.getFilter().equals(filter)){
+            filterStyle.setFilter( filterViewer.getFilter() );
             changed = true;
         }
-        boolean aoi = filterStyle.isAoiFilter();
         if( aoiButton.getSelection() != aoi ){
             filterStyle.setAoiFilter( aoiButton.getSelection());
             changed = true;
         }
-        
         if( changed ){
-            getStyleBlackboard().put(STYLE_ID, filterStyle ); // this will cause FilterContent to rewrite our memento
+            // this will cause FilterContent to rewrite our memento
+            // the actual change won't go out until "apply" or "okay" is pressed
+            getStyleBlackboard().put(STYLE_ID, filterStyle ); 
         }
     }
 
@@ -142,6 +150,7 @@ public class FilterConfigurator extends IStyleConfigurator {
 
     protected FilterStyle getFilterStyle() {
         Layer layer = getLayer();
+
         assert (canStyle(layer));
         
         FilterStyle current = (FilterStyle) getStyleBlackboard().get(STYLE_ID);
@@ -171,22 +180,31 @@ public class FilterConfigurator extends IStyleConfigurator {
 //        label = new Label(parent, SWT.SINGLE );
 //        label.setText("Tip: Use the apply button below to preview the selected content");
 //        label.setLayoutData("cell 0 1 2 1,left,grow x");
+
         listen(true);
 
 
-// Area of Interest filter button
-aoiButton = new Button(parent, SWT.CHECK);
-aoiButton.setText("Area of Interest");
-aoiButton.addSelectionListener(aoiListener);
-
-listenAOI(true);
-}
+        // Area of Interest filter button
+        aoiButton = new Button(parent, SWT.CHECK);
+        aoiButton.setText("Area of Interest");
+        aoiButton.addSelectionListener(aoiListener);
+        
+        listenAOI(true);
+    }
 
     protected void valueChanged( Filter oldValue, Filter newValue ) {
         if (oldValue == newValue || (oldValue != null && oldValue.equals(newValue))) {
             // nothing to change here
         } else {
             getStyleBlackboard().put(STYLE_ID, newValue);
+        }
+    }
+
+    public void listen( boolean listen ) {
+        if (listen) {
+            filterViewer.addSelectionChangedListener(listener);
+        } else {
+            filterViewer.removeSelectionChangedListener(listener);
         }
     }
     
@@ -204,7 +222,8 @@ listenAOI(true);
     protected void refresh() {
         if (filterViewer == null || filterViewer.getControl() == null || filterViewer.getControl().isDisposed()) {
             return;
-
+        }
+        
         if( this.aoiButton == null || this.aoiButton.isDisposed()){
             return; // we are shut down and thus ignoring this request to update the ui
         }
@@ -212,7 +231,6 @@ listenAOI(true);
         FilterInput filterInput = filterViewer.getInput();
         filterInput.setSchema( type );
         
-        final Filter style = getStyleFilter();
         final FilterStyle style = getFilterStyle();
 
         filterViewer.getControl().getDisplay().asyncExec(new Runnable(){
@@ -220,25 +238,17 @@ listenAOI(true);
                 if (filterViewer == null || filterViewer.getControl() == null || filterViewer.getControl().isDisposed()) {
                     return;
                 }
-if( aoiButton == null || aoiButton.isDisposed()){
-return; // we are shut down and thus ignoring this request to update the ui
-}
+                if( aoiButton == null || aoiButton.isDisposed()){
+                    return; // we are shut down and thus ignoring this request to update the ui
+                }
                 try {
                     listen(false);
-                    filterViewer.setFilter( style );
+                    filterViewer.setFilter( style.getFilter() );
                     filterViewer.refresh();
-                    
-                    Filter filter = style.getFilter();
-                    if( filter == null ){
-                        // we are going to default to INCLUDE
-                        text.setInput( Filter.INCLUDE );
-                    }
-                    else {
-                        text.setInput( filter );
-                    }
                 } finally {
-                    listenText(true);
+                    listen(true);
                 }
+                
                 try {
                     listenAOI(false);
                     aoiButton.setSelection(style.isAoiFilter());
@@ -255,9 +265,9 @@ return; // we are shut down and thus ignoring this request to update the ui
         if (filterViewer != null) {
             listen(false);
             filterViewer = null;
-        if (text != null) {
-            listenText(false);
-            text = null;
+        }
+        if (aoiButton != null) {
+            listenAOI(false);
         }
         super.dispose();
     }
