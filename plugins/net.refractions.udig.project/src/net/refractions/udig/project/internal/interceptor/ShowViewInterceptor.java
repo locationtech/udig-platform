@@ -75,9 +75,10 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
     /**
      * The key that is checked to see if a filter is on the Map Blackboard or
      * the Layer Properties.
+     * <p>
+     * @see ProjectBlackboardConstants#LAYER__DATA_QUERY
      */
     public static final String KEY = ProjectBlackboardConstants.LAYER__DATA_QUERY;
-
 
     /**
      * True if the provided value any sort of filter.

@@ -92,7 +92,7 @@ public final class FilterContent extends StyleContent {
             String cql = CQL.toCQL(filter);
             memento.putString("cql", cql);
         }
-        if (aoiFilter == true) {
+        if (aoiFilter != null && aoiFilter == true) {
             memento.putString("aoi", "true");
         }
         memento.putString("type", "FilterContent"); //$NON-NLS-1$ //$NON-NLS-2$

@@ -34,9 +34,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.geotools.data.FeatureSource;
-import org.geotools.data.Query;
-import org.geotools.filter.text.ecql.ECQL;
-import org.geotools.util.Utilities;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 
@@ -48,14 +45,10 @@ public class FilterConfigurator extends IStyleConfigurator {
 
     /** Viewer used to store the current filter; it will only be changed by the user */
     protected IFilterViewer filterViewer;
-
+    
+    /** Constant used to store FilterStyle on the layer blackboard */
     public static String STYLE_ID = ProjectBlackboardConstants.LAYER__STYLE_FILTER;
     
-    /** 
-     * Data object responsible for holding on to the filter/query information used to mix in with the basic feature renderer
-     */
-    FilterStyle filterStyle = null;
-        
     /** Toggle to indicate interest in the current area of interest */
     protected Button aoiButton;
     
@@ -68,7 +61,7 @@ public class FilterConfigurator extends IStyleConfigurator {
             if( aoiButton == null || aoiButton.isDisposed() ){
                 return; // ignore me!
             }
-            externalUpdate();
+            valueChanged();
         }
         @Override
         public void widgetDefaultSelected( SelectionEvent e ) {
@@ -81,62 +74,41 @@ public class FilterConfigurator extends IStyleConfigurator {
             if( filterViewer == null || filterViewer.getControl() == null ||  filterViewer.getControl().isDisposed() ){
                 return; // nothing to see
             }
-            
             Filter oldValue = getFilterStyle().getFilter();
             Filter filter = filterViewer.getFilter();
             if( filter == null ){
                 return; // invalid
             }
-            String before = filter != null ? ECQL.toCQL(oldValue) : "(empty)";
-            String after = filter != null ? ECQL.toCQL(filter) : "(empty)";
-            if (!Utilities.equals(before, after)){
-                valueChanged(oldValue, filter);
+            if( !IFilterViewer.same( oldValue, filter ) ){
+                valueChanged();
             }
-            externalUpdate();
+            else {
+                // ignore 
+            }
         }
     };
 
+
     public FilterConfigurator() {
     }
-
-//    /**
-//     * Update the internal filter; will set tooltip text as required in the event the filter does
-//     * not parse.
-//     */
-//    public boolean checkValid(){
-//        if( text == null || text.getControl() == null ||  text.getControl().isDisposed() ){
-//            return false; // nothing to see
-//        }
-//        if( text.validate() ){
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-//    }
     
-    
-    public void externalUpdate() {
+    public void valueChanged() {
         if( aoiButton == null || aoiButton.isDisposed() ){
             return; // nothing to see
         }
+        FilterStyle style = getFilterStyle();
+        Filter filter = style.getFilter();
+        boolean isAoiFilter = style.isAoiFilter();
         
-        Filter filter = filterStyle.getFilter();
-        boolean aoi = filterStyle.isAoiFilter();
-        
-        boolean changed = false;
-        if( !filterViewer.getFilter().equals(filter)){
-            filterStyle.setFilter( filterViewer.getFilter() );
-            changed = true;
-        }
-        if( aoiButton.getSelection() != aoi ){
-            filterStyle.setAoiFilter( aoiButton.getSelection());
-            changed = true;
-        }
-        if( changed ){
+        if( (filterViewer.getFilter() == null || !filterViewer.getFilter().equals(filter)) ||
+                aoiButton.getSelection() != isAoiFilter ){
+            FilterStyle newFilterStyle = new FilterStyle( style );
+            newFilterStyle.setFilter( filterViewer.getFilter() );
+            newFilterStyle.setAoiFilter( aoiButton.getSelection());
+
             // this will cause FilterContent to rewrite our memento
             // the actual change won't go out until "apply" or "okay" is pressed
-            getStyleBlackboard().put(STYLE_ID, filterStyle ); 
+            getStyleBlackboard().put(STYLE_ID, newFilterStyle ); 
         }
     }
 
@@ -147,7 +119,13 @@ public class FilterConfigurator extends IStyleConfigurator {
         }
         return false;
     }
-
+    /**
+     * Grab the FilterStyle from the style blackboard.
+     * <p>
+     * An empty FilterStyle will be returned if required.
+     * 
+     * @return FilterStyle from style blackboard, an empty FilterStyle will be returned if required.
+     */
     protected FilterStyle getFilterStyle() {
         Layer layer = getLayer();
 
@@ -181,43 +159,25 @@ public class FilterConfigurator extends IStyleConfigurator {
 //        label.setText("Tip: Use the apply button below to preview the selected content");
 //        label.setLayoutData("cell 0 1 2 1,left,grow x");
 
-        listen(true);
-
-
         // Area of Interest filter button
         aoiButton = new Button(parent, SWT.CHECK);
         aoiButton.setText("Area of Interest");
+        aoiButton.setLayoutData("cell 0 1 2 1, left, grow x" );
         aoiButton.addSelectionListener(aoiListener);
-        
-        listenAOI(true);
-    }
 
-    protected void valueChanged( Filter oldValue, Filter newValue ) {
-        if (oldValue == newValue || (oldValue != null && oldValue.equals(newValue))) {
-            // nothing to change here
-        } else {
-            getStyleBlackboard().put(STYLE_ID, newValue);
-        }
+        listen(true);
     }
 
     public void listen( boolean listen ) {
         if (listen) {
             filterViewer.addSelectionChangedListener(listener);
+            aoiButton.addSelectionListener(aoiListener);
         } else {
             filterViewer.removeSelectionChangedListener(listener);
+            aoiButton.removeSelectionListener(aoiListener);
         }
     }
-    
-    private void listenAOI( boolean listen ) {
-        if (aoiButton != null && !aoiButton.isDisposed()) {
-            if (listen) {
-                aoiButton.addSelectionListener(aoiListener);
-            } else {
-                aoiButton.removeSelectionListener(aoiListener);
-            }
-        }
-    }
-    
+        
     @Override
     protected void refresh() {
         if (filterViewer == null || filterViewer.getControl() == null || filterViewer.getControl().isDisposed()) {
@@ -236,26 +196,19 @@ public class FilterConfigurator extends IStyleConfigurator {
         filterViewer.getControl().getDisplay().asyncExec(new Runnable(){
             public void run() {
                 if (filterViewer == null || filterViewer.getControl() == null || filterViewer.getControl().isDisposed()) {
-                    return;
-                }
-                if( aoiButton == null || aoiButton.isDisposed()){
                     return; // we are shut down and thus ignoring this request to update the ui
                 }
                 try {
                     listen(false);
+                    
                     filterViewer.setFilter( style.getFilter() );
                     filterViewer.refresh();
+                    
+                    aoiButton.setSelection( style.isAoiFilter() );
                 } finally {
                     listen(true);
                 }
-                
-                try {
-                    listenAOI(false);
-                    aoiButton.setSelection(style.isAoiFilter());
-                } finally {
-                    listenAOI(true);
-                }
-                FilterConfigurator.this.filterStyle = style; // remember this so we can check if changed
+
             }
         });
     }
@@ -265,9 +218,7 @@ public class FilterConfigurator extends IStyleConfigurator {
         if (filterViewer != null) {
             listen(false);
             filterViewer = null;
-        }
-        if (aoiButton != null) {
-            listenAOI(false);
+            aoiButton = null;
         }
         super.dispose();
     }

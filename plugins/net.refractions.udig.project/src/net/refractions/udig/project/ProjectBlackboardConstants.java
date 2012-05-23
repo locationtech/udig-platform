@@ -98,9 +98,10 @@ public interface ProjectBlackboardConstants {
      * @see #LAYER__PREFERRED_RENDERER
      */
     String LAYER__LAST_RESORT_RENDERER=RendererCreator.LAST_RESORT_RENDERER_ID;
+    
     /**
-     * If a filter or a query is on a layer's blackboard under the key: the {@link #LAYER__DATA_QUERY} then the
-     * interceptor {@link ShowViewInterceptor} will return the "view" see {@link DataStore#getView(Query)}.
+     * If a {@link Filter} or a {@link Query} is on a layer's blackboard under the key: the {@link #LAYER__DATA_QUERY}
+     * then the interceptor {@link ShowViewInterceptor} will return the "view" see {@link DataStore#getView(Query)}.
      *    
      * In addition Renderers should attempt to use the query to filter what is displayed:
      * <p>If a filter is in the layer {@link StyleBlackboard} then the filter will only apply to that layer.  </p>

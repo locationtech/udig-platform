@@ -62,6 +62,7 @@ import org.geotools.styling.Style;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.filter.Filter;
 import org.opengis.geometry.BoundingBox;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -163,7 +164,11 @@ public class BasicFeatureRenderer extends RendererImpl {
             FilterStyle filterStyle = (FilterStyle) styleBlackboard.get(ProjectBlackboardConstants.LAYER__STYLE_FILTER);
             query = new Query();
             query.setTypeName(schema.getTypeName());
-            query.setFilter( filterStyle.toFilter(schema) );
+            
+            Filter filter = filterStyle.toFilter(schema);
+            if( filter != Filter.INCLUDE ){
+                query.setFilter( filter );
+            }
         }
 
         CoordinateReferenceSystem dataCRS = schema.getCoordinateReferenceSystem();
