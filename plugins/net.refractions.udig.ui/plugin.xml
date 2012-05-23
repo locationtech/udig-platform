@@ -4,7 +4,7 @@
 
 
    <extension-point id="dataWizards" name="%dataWizards.name" schema="schema/dataWizards.exsd"/>
-   <extension-point id="operation" name="operation" schema="schema/operation.exsd"/>
+   <extension-point id="operation" name="Operation" schema="schema/operation.exsd"/>
    <extension-point id="newObjectAction" name="newObjectAction" schema="schema/newObjectAction.exsd"/>
    <extension-point id="dropAction" name="Drop Action" schema="schema/dropAction.exsd"/>
    <extension-point id="dropTransfers" name="Drop Transfers" schema="schema/dropTransfer.exsd"/>
