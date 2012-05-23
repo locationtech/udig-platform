@@ -24,6 +24,7 @@ import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.Filters;
 import org.geotools.geometry.jts.JTS;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.opengis.feature.type.FeatureType;
 import org.opengis.filter.Filter;
@@ -132,23 +133,24 @@ public class FilterStyle {
         if( isAoiFilter() ){
             try {
                 IAOIService aoiService = PlatformGIS.getAOIService();
-                CoordinateReferenceSystem crs = aoiService.getExtent().getCoordinateReferenceSystem();
-                Geometry geometry = aoiService.getGeometry();
-                CoordinateReferenceSystem dataCRS = schema.getCoordinateReferenceSystem();
-                if (!crs.equals(dataCRS)) {
-                    MathTransform transform = CRS.findMathTransform(crs, dataCRS);
-                    geometry = JTS.transform(geometry, transform);
+                ReferencedEnvelope extent = aoiService.getExtent();
+                if( extent != null ){
+                    CoordinateReferenceSystem crs = extent.getCoordinateReferenceSystem();
+                    Geometry geometry = aoiService.getGeometry();
+                    CoordinateReferenceSystem dataCRS = schema.getCoordinateReferenceSystem();
+                    if (!CRS.equalsIgnoreMetadata(crs,dataCRS)) {
+                        MathTransform transform = CRS.findMathTransform(crs, dataCRS);
+                        geometry = JTS.transform(geometry, transform);
+                    }
+                    String the_geom = schema.getGeometryDescriptor().getName().getLocalPart();
+                    Filter spatialFilter = ff.intersects( ff.property(the_geom), ff.literal( geometry ) );
+                    if( filter != null ){
+                        return ff.and( filter, spatialFilter );
+                    }
+                    else {
+                        return spatialFilter;
+                    }
                 }
-                String the_geom = schema.getGeometryDescriptor().getName().getLocalPart();
-                Filter spatialFilter = ff.intersects( ff.property(the_geom), ff.literal( geometry ) );            
-                if( filter != null ){
-                    return ff.and( filter, spatialFilter );
-                }
-                else {
-                    return spatialFilter;
-                }
-//                filter = Filters.and(ff,  filter, spatialFilter);
-//                return filter;
             }
             catch (MismatchedDimensionException e) {
                 // could not filter by AOI
