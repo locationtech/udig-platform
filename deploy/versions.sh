@@ -61,9 +61,9 @@ if [ -f ${TARGET}/udig-${VERSION}-sdk.zip ]
 then
     echo "Extracting QUALIFIER from ${TARGET}/udig-${VERSION}-sdk.zip"
 
-    unzip -l ${TARGET}/udig-${VERSION}-sdk.zip | grep libs_
+    # unzip -l target/udig-1.3-SNAPSHOT-sdk.zip | grep libs_.*MANIFEST.MF
     
-    
-    export QUALIFIER=`unzip -l ${TARGET}/udig-${VERSION}-sdk.zip | grep libs_ | cut -d '_' -f 2 | sed s/.jar//`
+    #     export QUALIFIER=`unzip -l ${TARGET}/udig-${VERSION}-sdk.zip | grep libs_.*MANIFEST.MF | cut -d '_' -f 2 | sed s/.jar//`
+    export QUALIFIER=`unzip -l ${TARGET}/udig-${VERSION}-sdk.zip | grep libs_.*MANIFEST.MF | cut -d '_' -f 3 | cut -d '/' -f 1`
     echo "Assigned Qualifier is now: ${QUALIFIER}"
 fi

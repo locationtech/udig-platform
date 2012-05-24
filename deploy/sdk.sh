@@ -15,6 +15,10 @@ then
     then
        echo "Creating ${BUILD}/sdk"
        mkdir -p ${BUILD}/sdk
+    else
+        echo "Clearing ${BUILD}/sdk"
+        rm -rf -d ${BUILD}/sdk
+        mkdir -p ${BUILD}/sdk
     fi
     
     if [ ! -f ${BUILD}/udig-${VERSION}.html ]
