@@ -1,10 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Java Advanced Imaging & Image I/O
+Bundle-Name: JAI & Image I/O Plugin
 Bundle-SymbolicName: javax.media.jai_imageio;singleton:=true
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.4
 Bundle-Version: 1.1.3
+Eclipse-BuddyPolicy: registered, ext
 Bundle-ClassPath: jai_codec-1.1.3.jar,
  jai_core-1.1.3.jar,
  mlibwrapper_jai.jar,
