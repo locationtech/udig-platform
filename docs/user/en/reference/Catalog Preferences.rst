@@ -1,0 +1,37 @@
+
+
+
+Catalog Preferences
+~~~~~~~~~~~~~~~~~~~
+
+The catalog preferences allow the behavior of the catalog to be set.
+
+
+
+
+
+Available Preferences
+~~~~~~~~~~~~~~~~~~~~~
+
+
++ Save Temporary Data Types - When checked temporary feature types
+  that have been defined will be saved between sessions. The data is not
+  saved, however, only the feature type definition and the entry in the
+  catalog.
+
+    + Example: If a user creates a new FeatureType via the **Layer >
+      Create** menu item a layer is typically added to the open map and an
+      entry is added to the catalog. If this preference is not checked the
+      entry will be removed from the catalog on shutdown.
+
+
+
+
++ `ArcSDE Preference Page`_
++ `DB2 Preferences`_
+
+
+.. _ArcSDE Preference Page: ArcSDE Preference Page.html
+.. _DB2 Preferences: DB2 Preferences.html
+
+

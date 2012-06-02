@@ -1,0 +1,32 @@
+
+
+
+Creating a Project
+~~~~~~~~~~~~~~~~~~
+
+
+
+Creating a Project
+==================
+
+Here are some instructions for creating a simple project. New projects
+and maps can be created using several different approaches. In this
+section spatial information will be manipulated using three different
+approaches:
+
+
++ `File Menu`_
++ `New Button`_
++ `Context Menu`_
+
+
+A project can be created using the **File** menu. Once the project has
+been created a Map can be created as well. There are more ways to
+locate information then are listed here, we are simply introducing you
+to the several user interface conventions.
+
+.. _New Button: Using new to add a Map to a Project.html
+.. _Context Menu: Using the Context menu to add a Map to a Project.html
+.. _File Menu: Using the File menu to add a new Map.html
+
+

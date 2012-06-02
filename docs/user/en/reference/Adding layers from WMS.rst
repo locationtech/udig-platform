@@ -1,0 +1,108 @@
+
+
+
+Adding layers from WMS
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+Adding layers from a Web Map Server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To import Web Map Server layer(s) you can either :
+
+There are a number of options for adding a layer to your map.
+
+
+
+Toolbar
+=======
+
+1. Press the **New** button on the toolbar to show the Add Layer
+Wizard
+> 1. Select the <b>Add< b> item from the **Layer** menu to show the
+Add Layer Wizard.
+> 2. Use the <b>Add Layer< b> wizard to select a service providing
+data
+> 3. Select the resource you wish to display<br > 4. A style will be
+automatically created for you and the layer added to your map
+
+
+
+Menu
+====
+
+Using **Layer** menu:
+> 1. Select the <b>Add< b> item from the **Layer** menu to show the
+Add Layer Wizard.
+> 2. Use the <b>Add Layer< b> wizard to select a service providing
+data
+> 3. Select the resource you wish to display<br > 4. A style will be
+automatically created for you and the layer added to your map
+
+Using **File** menu:
+
+1. Select the **File > New > Layer** from the file menu
+> 2. Use the <b>Add Layer< b> wizard to select a service providing
+data
+> 3. Select the resource you wish to display<br > 4. A style will be
+automatically created for you and the layer added to your map
+
+
+
+Using Filesystem
+================
+
+From filesystem to **Layer View**:
+> 1. You can directly drag a file (such as an image or shapefile) into
+the <b>Layer view< b>
+> 2. You can specify exactly where in the Layer view you wish the add
+the Layer<br > 3. The layer will be created with a default style and
+added to your Map
+
+From filesystem to **Map editor**:
+> 1. You can directly drag a file (such as an image or shapefile) onto
+an open map<br > 3. The layer will be created with a default style and
+added to your Map
+
+
+
+Using a Browser
+===============
+
+You can quickly add a layer from a web browser (or the embedded **Web
+view**):
+> 1. Drag the URL of a WMS or WFS into the <b>Layer view< b>
+> 2. You can specify exactly where in the Layer view you wish to add
+the Layer<br > 3. The resource selection page will open up to allow
+you to choose which layers to add
+> 4. The layer(s) will be created (with a default style) and added to
+your map< p>
+
+#. Select Web Map Server Cannot resolve external resource into
+   attachment. from the Wizard and press Next
+#. Enter your WMS getcapabilitites URL or select recent WMS and press
+   Open > WMS Link can be found <a href="http: /www.skylab-
+   mobilesystems.com/en/wms_serverlist.html">here or `Test servers`_ >
+   <img src="download attachments/4464/importwms.jpg" align="absmiddle"
+   border="0"/>
+#. Select layer(s) that will compose the new map and press **Finish**
+   > <img src="download attachments/4464/importwmslayers.jpg"
+   align="absmiddle" border="0"/>
+#. WMS Layers will be added to the Catalog and a new map containing
+   selected layers will show up. > <img src="download
+   attachments/4464/impotedwms.jpg" align="absmiddle" border="0"/>
+
+
+`Service`_
+> <a href="Web Map Server.html" title="Web Map Server">Web Map Server<
+a>
+
+`Drag and Drop`_
+
+
+.. _Test servers: http://udig.refractions.net:8080/confluence/display/UDIG/Test+Servers
+.. _Service: Service.html
+.. _Drag and Drop: Drag and Drop.html
+
+

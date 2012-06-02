@@ -1,0 +1,41 @@
+
+
+
+Configure table view to list the contents of a polygon
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We can use a AOI layer with the table view to list the contents of a
+selected polygon.
+
+
+#. Use layer preferences to configure your polygon layer as a **AOI**
+   layer.
+#. Open the **AOI** view and choose **AOI Layer**
+#. Use the **AOI Selection** tool to choose a polygon. You can use
+   Shift to select more than one polygon
+#. Open the **Table** view to list the contents of a layer.
+#. Choose the **AOI** filter on the **Table** view toolbar.
+#. You can use the **AOI Selection** tool to quickly navigate through
+   your data.
+
+
+An example with the sample data set is:
+
+
++ Use countries as the AOI layer
++ Select Italy with the AOI tool
++ Use the table view to show the cities within Italy
+
+
+`Configure a AOI layer`_
+
+`Area of Interest`_
+
+`Table view`_
+> <a href="AOI view.html" title="AOI view">AOI view< a>
+
+.. _Area of Interest: Area of Interest.html
+.. _Table view: Table view.html
+.. _Configure a AOI layer: Configure a AOI layer.html
+
+
