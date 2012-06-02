@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Style Layer Descriptor</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Style Layer Descriptor -->
+       <h3>Style Layer Descriptor</h3>
+       <p>The <b>Style Layer Descriptor</b> file format is an XML document defined by the Open Geospatial Consortium. Style Layer Descriptor documents defines how Features are rendered on to the screen.</p>
+
+<p>You can use your own Style Layer Descriptor documents in several ways:</p>
+<ul class="alternate" type="square">
+	<li>Select the <b>XML</b> page of the <a href="Style Editor dialog.html" title="Style Editor dialog">Style Editor dialog</a> and directly modify what is being used directly</li>
+	<li>Any sld file associated with a shapefile will be picked up and used</li>
+	<li>You can import and export SLD files from the <a href="Style Editor dialog.html" title="Style Editor dialog">Style Editor dialog</a></li>
+	<li>you can drop an SLD file directly onto a Layer</li>
+</ul>
+
+
+  <img src="http://udig.refractions.net/image/EN/ngrelr.gif">
+
+<p><a href="Style Editor dialog.html" title="Style Editor dialog">Style Editor dialog</a><br/>
+<a href="http://www.opengeospatial.org/standards/sld">Styled Layer Descriptor</a> (OGC Specification)<br/>
+<a href="http://www.opengeospatial.org/standards/symbol">Symbology Encoding</a> (OGC Specification)<br/>
+<a href="http://lyceum.massgis.state.ma.us/wiki/doku.php?id=wms:sld:home">SLD Examples (from MassGIS)</a><br/>
+<a href="http://geoserver.org/display/GEOSDOC/SLD+Intro+Tutorial">SLD Intro Tutorial (from GeoServer)</a><br/>
+<a href="http://geoserver.org/display/GEOSDOC/OGC+SLD+Explanations+and+Samples">SLD Samples (from GeoServer)</a></p>
+
+<h1><a name="StyleLayerDescriptor-Example"></a>Example</h1>
+
+<p>You can use a function to choose a color, the following example can be used with the countries.shp file.</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-xml"><span class="code-tag">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;</span>
+&lt;sld:StyledLayerDescriptor
+   xmlns=<span class="code-quote">"http://www.opengis.net/sld"</span>
+   <span class="code-keyword">xmlns:sld</span>=<span class="code-quote">"http://www.opengis.net/sld"</span>
+   <span class="code-keyword">xmlns:ogc</span>=<span class="code-quote">"http://www.opengis.net/ogc"</span>
+   <span class="code-keyword">xmlns:gml</span>=<span class="code-quote">"http://www.opengis.net/gml"</span>
+   version=<span class="code-quote">"1.0.0"</span>&gt;
+    <span class="code-tag">&lt;sld:UserLayer&gt;</span>
+        <span class="code-tag">&lt;sld:LayerFeatureConstraints&gt;</span>
+            <span class="code-tag">&lt;sld:FeatureTypeConstraint/&gt;</span>
+        <span class="code-tag">&lt;/sld:LayerFeatureConstraints&gt;</span>
+        <span class="code-tag">&lt;sld:UserStyle&gt;</span>
+            <span class="code-tag">&lt;sld:Name&gt;</span>Default Styler<span class="code-tag">&lt;/sld:Name&gt;</span>
+            <span class="code-tag">&lt;sld:Title/&gt;</span>
+            <span class="code-tag">&lt;sld:IsDefault&gt;</span>1<span class="code-tag">&lt;/sld:IsDefault&gt;</span>
+            <span class="code-tag">&lt;sld:FeatureTypeStyle&gt;</span>
+                <span class="code-tag">&lt;sld:Name&gt;</span>simple<span class="code-tag">&lt;/sld:Name&gt;</span>
+                <span class="code-tag">&lt;sld:FeatureTypeName&gt;</span>Feature<span class="code-tag">&lt;/sld:FeatureTypeName&gt;</span>
+                <span class="code-tag">&lt;sld:SemanticTypeIdentifier&gt;</span>generic:geometry<span class="code-tag">&lt;/sld:SemanticTypeIdentifier&gt;</span>
+                <span class="code-tag">&lt;sld:SemanticTypeIdentifier&gt;</span>simple<span class="code-tag">&lt;/sld:SemanticTypeIdentifier&gt;</span>
+                <span class="code-tag">&lt;sld:Rule&gt;</span>
+                    <span class="code-tag">&lt;sld:PolygonSymbolizer&gt;</span>
+                        <span class="code-tag">&lt;sld:Fill&gt;</span>
+                            <span class="code-tag">&lt;sld:CssParameter name=<span class="code-quote">"fill"</span>&gt;</span>
+                                <span class="code-tag">&lt;ogc:Function name=<span class="code-quote">"if_then_else"</span>&gt;</span>
+                                    <span class="code-tag">&lt;ogc:Function name=<span class="code-quote">"equalTo"</span>&gt;</span>
+                                        <span class="code-tag">&lt;ogc:PropertyName&gt;</span>LANDLOCKED<span class="code-tag">&lt;/ogc:PropertyName&gt;</span>
+                                        <span class="code-tag">&lt;ogc:Literal&gt;</span>Y<span class="code-tag">&lt;/ogc:Literal&gt;</span>
+                                    <span class="code-tag">&lt;/ogc:Function&gt;</span>
+                                    <span class="code-tag">&lt;ogc:Literal&gt;</span>#FFFF00<span class="code-tag">&lt;/ogc:Literal&gt;</span>
+                                    <span class="code-tag">&lt;ogc:Literal&gt;</span>#0000FF<span class="code-tag">&lt;/ogc:Literal&gt;</span>
+                                <span class="code-tag">&lt;/ogc:Function&gt;</span>
+                            <span class="code-tag">&lt;/sld:CssParameter&gt;</span>
+                            <span class="code-tag">&lt;sld:CssParameter name=<span class="code-quote">"fill-opacity"</span>&gt;</span>0.5<span class="code-tag">&lt;/sld:CssParameter&gt;</span>
+                        <span class="code-tag">&lt;/sld:Fill&gt;</span>
+                    <span class="code-tag">&lt;/sld:PolygonSymbolizer&gt;</span>
+                <span class="code-tag">&lt;/sld:Rule&gt;</span>
+            <span class="code-tag">&lt;/sld:FeatureTypeStyle&gt;</span>
+        <span class="code-tag">&lt;/sld:UserStyle&gt;</span>
+    <span class="code-tag">&lt;/sld:UserLayer&gt;</span>
+<span class="code-tag">&lt;/sld:StyledLayerDescriptor&gt;</span></pre>
+</div></div>
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

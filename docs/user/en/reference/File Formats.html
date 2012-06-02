@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : File Formats</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : File Formats -->
+       <h3>File Formats</h3>
+       <p>uDig supports a number of common spatial file formats. Each format defines a way that spatial data can be persisted to the file system.</p>
+
+<p>Contents:</p>
+<ul><li><a href="GeoTIFF.html" title="GeoTIFF">GeoTIFF</a></li><li><a href="GML.html" title="GML">GML</a></li><li><a href="Shapefile.html" title="Shapefile">Shapefile</a></li><li><a href="World Plus Image.html" title="World Plus Image">World Plus Image</a></li></ul>
+
+<h1><a name="FileFormats-HandlingofFilesinuDig"></a>Handling of Files in uDig</h1>
+
+<p>When a file is added into the uDig application it shows up in the <a href="Catalog view.html" title="Catalog view">Catalog view</a> as a <a href="Service.html" title="Service">Service</a>. You can think of the file as providing the service; you can open up the service entry to see the content being provided by the file.</p>
+
+<p>While this devision does not make much sense for a shapefile; it is more useful when working with rich formats like GML which can contain several kinds of content.</p>
+
+<p>You should also keep in mind that the data is not imported into the uDig application; we are reading it from disk each and every time. You may see increased performance if you bring data off network drives onto your local machine.</p>
+
+<h1><a name="FileFormats-GISDataandtheuseofFileSets"></a>GIS Data and the use of File Sets</h1>
+
+<p>Please note that due to the age of the GIS industry many spatial file formats actually consist of a group of files with the same name (and different extensions). Please be aware of this and make sure to copy all the files in a "set" when moving your data around on disk.</p>
+
+<p>Here are two quick examples:</p>
+<ul>
+	<li>The Shapefile file format where a "filename.shp", "filename.dbf" and "filename.prj" are used to capture vector information, the attributes associated with the shapes, and where the shapes should be drawn on the map.</li>
+	<li>The World plus Image format where "filename.jpeg", "filename".jgw" and "filename.prj" are used to represent raster data and define where it should be drawn on the map.</li>
+</ul>
+
+
+  <img src="http://udig.refractions.net/image/EN/ngrelc.gif">
+
+<p><a href="Service.html" title="Service">Service</a></p>
+
+  <img src="http://udig.refractions.net/image/EN/ngrelr.gif">
+
+<p><a href="Files page.html" title="Files page">Files page</a><br/>
+<a href="Catalog view.html" title="Catalog view">Catalog view</a></p>
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

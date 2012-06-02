@@ -1,0 +1,158 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Map to Image Wizard</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Map to Image Wizard -->
+       <h3>Map to Image Wizard</h3>
+       <p>This wizard allows you to export a map as a world plus image format. The images will be added to the catalog when the wizard is completed.</p>
+
+<h2><a name="MaptoImageWizard-MapSelectionPage"></a>Map Selection Page</h2>
+
+<p>The initial <b>Map Selection</b> page indicates which maps will be exported.</p>
+
+<p><img src="download/attachments/11855/ExportMapToImage.png" align="absmiddle" border="0"/></p>
+
+<h3><a name="MaptoImageWizard-ExportDirectory"></a>Export Directory</h3>
+
+<p>Directory in which the images will be saved.</p>
+
+<h3><a name="MaptoImageWizard-SelectedMaps"></a>Selected Maps</h3>
+
+<p>List of maps available selected for export.</p>
+<ul>
+	<li>Name: Name of map being exported; this will be used as the image filename</li>
+	<li>Scale: You can change the scale the map will be exported in, the default value is the scale of the map on screen.</li>
+</ul>
+
+
+<h3><a name="MaptoImageWizard-Add"></a>Add</h3>
+
+<p>Used to add an additional <b>Map</b> to the selected map list. Press this button will open a <b>Map Selector</b> allowing you to explore the open projects and select one more more maps.</p>
+
+<p><img src="download/attachments/11855/MapSelector.png" align="absmiddle" border="0"/></p>
+
+<h3><a name="MaptoImageWizard-Remove"></a>Remove</h3>
+
+<p>Remove a map from the list.</p>
+
+<h3><a name="MaptoImageWizard-ResetScale"></a>Reset Scale</h3>
+
+<p>Reset scale to the value currently displayed on screen.</p>
+
+<h2><a name="MaptoImageWizard-ImageSettingsPage"></a>Image Settings Page</h2>
+
+<p>This page is used to define the image file to be exported. </p>
+
+<p><img src="download/attachments/11855/ImageSettings.png" align="absmiddle" border="0"/></p>
+
+<h3><a name="MaptoImageWizard-WorldPlusImageFormats"></a>World Plus Image Formats</h3>
+
+<p>You can choose between several supported formats:</p>
+<ul>
+	<li>PNG</li>
+	<li>TIF</li>
+	<li>JPEG</li>
+	<li>JPEG 2000</li>
+	<li>GIF</li>
+	<li>...</li>
+</ul>
+
+
+<h3><a name="MaptoImageWizard-Selection"></a>Selection</h3>
+
+<p>Allows you to choose how to render any selected features on the current map:</p>
+<ul>
+	<li>Draw selections as overlays - selections are drawn over top of existing map content, in appearance this is similar to the Map Editor</li>
+	<li>Only draw selections - allows you to quickly make an image of just the features you have selected</li>
+	<li>Draw selections when available</li>
+	<li>Ignore selections</li>
+</ul>
+
+
+<h3><a name="MaptoImageWizard-Height"></a>Height</h3>
+
+<p>Height of the resulting image.</p>
+
+<h3><a name="MaptoImageWizard-Width"></a>Width</h3>
+
+<p>Width of the resulting image.</p>
+
+<h3><a name="MaptoImageWizard-Maintainmapaspectratio"></a>Maintain map aspect ratio</h3>
+
+<ul>
+	<li>checked: Map will appear in the same proportions as it does on the screen. Additional content may be shown around in order to generate an image of the requested size.</li>
+	<li>unchecked: Map will be distorted into the request image size</li>
+</ul>
+
+
+<h2><a name="MaptoImageWizard-PDFParameters"></a>PDF Parameters</h2>
+
+<p>Support for generating an Adobe PDF document has been added as an experimental option. When generating a PDF document the size of paper selected is used to determine the output resolution.</p>
+
+<p><img src="download/attachments/11855/ImageSettingsPDF.png" align="absmiddle" border="0"/></p>
+
+<p>The following additional parameters are available when exporting to PDF.</p>
+
+<h3><a name="MaptoImageWizard-PaperSize"></a>Paper Size</h3>
+
+<p>Metric an imperial paper sizes are available.</p>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<td class='confluenceTd'> LETTER </td>
+<td class='confluenceTd'> 8.5 inches by 11 inches </td>
+</tr>
+<tr>
+<td class='confluenceTd'> LEGAL </td>
+<td class='confluenceTd'> 8.5 inches by 14 inches </td>
+</tr>
+<tr>
+<td class='confluenceTd'> A0 </td>
+<td class='confluenceTd'> 	841 mm by 1189 mm </td>
+</tr>
+<tr>
+<td class='confluenceTd'> A1 </td>
+<td class='confluenceTd'> 594 mm by 841 mm </td>
+</tr>
+<tr>
+<td class='confluenceTd'> A2 </td>
+<td class='confluenceTd'> 420 mm by 594 mm </td>
+</tr>
+<tr>
+<td class='confluenceTd'> A3 </td>
+<td class='confluenceTd'> 297 mm by 420 </td>
+</tr>
+<tr>
+<td class='confluenceTd'> A4 </td>
+<td class='confluenceTd'> 210 mm by 297 mm</td>
+</tr>
+</tbody></table>
+
+<h3><a name="MaptoImageWizard-Landscape"></a>Landscape</h3>
+
+<p>Determine paper orientation.</p>
+
+<h3><a name="MaptoImageWizard-Margins"></a>Margins</h3>
+
+<p>Paper margines set in millimeters.</p>
+
+  <img src="http://udig.refractions.net/image/EN/ngrelt.gif">
+
+<ul>
+	<li><a href="World Plus Image.html" title="World Plus Image">World Plus Image</a></li>
+</ul>
+
+
+  <img src="http://udig.refractions.net/image/EN/ngrelc.gif">
+
+<ul>
+	<li><a href="http://en.wikipedia.org/wiki/Image:A_size_illustration2_with_letter_and_legal.svg">page sizes</a></li>
+</ul>
+
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

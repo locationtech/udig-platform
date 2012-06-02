@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Image Georeferencing view</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Image Georeferencing view -->
+       <h3>Image Georeferencing view</h3>
+       <h2><a name="ImageGeoreferencingview-Introduction"></a>Introduction</h2>
+
+<p>The Image Georeferencing view is used to georeference an image using a set of coordinates and the desired CRS.</p>
+
+<p>To enable the Image Georeferencing view, go to <em>Window-&gt;Show view-&gt; Other...-&gt;Select Image Georeferencing</em> under the <em>Other</em> folder.<br/>
+<div align="center"><a href='http://udig.refractions.net/confluence//download/attachments/13238886/select-view.jpeg' target='select-view.jpeg' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/13238886/select-view.jpeg", "select-view.jpeg", "height=460,width=385,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/13238886/select-view.jpeg" border="0"/></a></div></p>
+
+<p>A map with a valid CRS is needed for the Image Georeferencing view to be able to run. Open a new map, load the layer you would like to use as georeferenced base. The coordinates we'll use in the future will be based on the same CRS as the map.</p>
+
+<h2><a name="ImageGeoreferencingview-Features"></a>Features</h2>
+
+<p>The figure shows the Image Georeferencing View integrated in the uDig desktop. This new tool allows you to load an image, specify a set of marks in it and associate the set of coordinates for each one.<br/>
+<div align="center"><a href='http://udig.refractions.net/confluence//download/attachments/13238886/georeferncing-view.png' target='georeferncing-view.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/13238886/georeferncing-view.png", "georeferncing-view.png", "height=950,width=814,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/13238886/georeferncing-view.png" border="0"/></a></div></p>
+
+<h2><a name="ImageGeoreferencingview-SampleUsage"></a>Sample Usage</h2>
+
+<p>We are going to make an image georeferencing operation using uDig + Axios Image Georeferencing software.</p>
+
+
+<h3><a name="ImageGeoreferencingview-Step1"></a>Step 1</h3>
+
+<p>Click on the <b><em>Open file</em></b> button and load the image you would like to georeference. After that, the tools to manipulate the image will be activated.<br/>
+<div align="center"><a href='http://udig.refractions.net/confluence//download/attachments/13238886/view-with-image.jpeg' target='view-with-image.jpeg' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/13238886/view-with-image.jpeg", "view-with-image.jpeg", "height=435,width=1037,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/13238886/view-with-image.jpeg" border="0"/></a></div></p>
+
+<p>We have the following tools: <em>Add new mark, delete mark, move mark, zoom in, zoom out, pan the image, delete all marks and fit to canvas.</em> Move around the image using the pan tool and zoom in/out to be accurate while adding marks.</p>
+
+<h3><a name="ImageGeoreferencingview-Step2"></a>Step 2</h3>
+
+<p>Add marks to the image, we need at least 6 of them. Select the <b><em>add new mark</em></b> tool and add the first mark.<br/>
+<div align="center"><a href='http://udig.refractions.net/confluence//download/attachments/13238886/add-mark.jpeg' target='add-mark.jpeg' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/13238886/add-mark.jpeg", "add-mark.jpeg", "height=436,width=1037,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/13238886/add-mark.jpeg" border="0"/></a></div></p>
+
+<p>After the first mark is added, the tools that manipulate the ground control points in the map are enabled. These tools are: <em>Add ground control point, delete ground control point, move ground control point and delete all ground control points.</em></p>
+
+<h3><a name="ImageGeoreferencingview-Step3"></a>Step 3</h3>
+
+<p>Select the tool <b><em>add ground control point</em></b>. Click on the corresponding place on the map to add a ground control point. After that, it'll show the coordinates on the coordinates table.<br/>
+<div align="center"><a href='http://udig.refractions.net/confluence//download/attachments/13238886/add-gcp.jpeg' target='add-gcp.jpeg' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/13238886/add-gcp.jpeg", "add-gcp.jpeg", "height=971,width=1300,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/13238886/add-gcp.jpeg" border="0"/></a></div></p>
+
+<p>Repeat steps 3 and 4 until we have at least 6 marks with their associated ground control points.<br/>
+<div align="center"><a href='http://udig.refractions.net/confluence//download/attachments/13238886/add-gcp6.jpeg' target='add-gcp6.jpeg' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/13238886/add-gcp6.jpeg", "add-gcp6.jpeg", "height=971,width=1300,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/13238886/add-gcp6.jpeg" border="0"/></a></div></p>
+
+<h3><a name="ImageGeoreferencingview-Step4"></a>Step 4</h3>
+
+<p>Only one thing left to be able to perform the georeferencing operation, specify the output file. Click on the <b><em>Browse</em></b> button and specify the save file location.<br/>
+<div align="center"><a href='http://udig.refractions.net/confluence//download/attachments/13238886/save-file.jpeg' target='save-file.jpeg' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/13238886/save-file.jpeg", "save-file.jpeg", "height=632,width=962,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/13238886/save-file.jpeg" border="0"/></a></div></p>
+
+<h3><a name="ImageGeoreferencingview-Step5"></a>Step 5</h3>
+
+<p>Now that all the parameters are fulfilled, click on the <b><em>run</em></b> button and perform the Image Georeferencing operation.<br/>
+<div align="center"><a href='http://udig.refractions.net/confluence//download/attachments/13238886/run.jpeg' target='run.jpeg' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/13238886/run.jpeg", "run.jpeg", "height=437,width=1038,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/13238886/run.jpeg" border="0"/></a></div></p>
+
+<p>The result of the operation:<br/>
+<div align="center"><a href='http://udig.refractions.net/confluence//download/attachments/13238886/result.jpeg' target='result.jpeg' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/13238886/result.jpeg", "result.jpeg", "height=971,width=1300,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/13238886/result.jpeg" border="0"/></a></div></p>
+
+<h2><a name="ImageGeoreferencingview-Tips"></a>Tips</h2>
+
+<ul class="alternate" type="square">
+	<li>You can add a ground control point using the add ground control point tool or directly inserting its coordinate in the table. Same for move and delete.</li>
+	<li>You can save/load your marks and their associated ground control points using the load/save buttons that are located next to the run button.</li>
+	<li>You can zoom in/out the image using the mouse wheel whenever you want.</li>
+</ul>
+
+
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

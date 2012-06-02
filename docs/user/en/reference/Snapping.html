@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Snapping</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Snapping -->
+       <h3>Snapping</h3>
+       <h3><a name="Snapping-VertexSnapping"></a>Vertex Snapping</h3>
+
+<p>When vertex snapping is active moving vertices, or adding vertices, will search the area around the mouse cursor for another vertex.  If there is a vertex within the set snap radius then the moved or created vertex's location will be set to the neighboring vertex's location.  </p>
+
+<p><div align="center"><img src="download/attachments/8847/snaptopoint.png" border="0"/></div></p>
+
+<p>In the above image the vertex would snap to the red point feature, as long as the correct snap behaviour is set.  The red circle in the image indicates the area that will be searched.  The snap radius can be set in the <a href="Edit Tool Preferences.html" title="Edit Tool Preferences">Edit Tool Preferences</a> or by holding ALT while rotating the mouse wheel.  <br/>
+<b>Note:</b> One of the edit tools must be active to set the snap radius using the mouse tool. <br/>
+<b>Tip:</b> The color of the snap area can be set in the <a href="Edit Tool Preferences.html" title="Edit Tool Preferences">Edit Tool Preferences</a>.  The feedback color indicates the color of the snap area.</p>
+
+<h3><a name="Snapping-SnapBehavior"></a>Snap Behavior</h3>
+<p>There are different ways that snapping can behave, for example the snapping can snap to a grid (defined by the user) or it can snap to the nearest vertex on the current layer.<br/>
+The normal snapping choices are as follows:</p>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<td class='confluenceTd'>No Snapping</td>
+<td class='confluenceTd'>Snapping is turned off.  <b>DEFAULT</b></td>
+</tr>
+<tr>
+<td class='confluenceTd'>Selected Features</td>
+<td class='confluenceTd'>Will snap to vertices that are part of a feature that has been added to the <a href="EditBlackboard.html" title="EditBlackboard">EditBlackboard</a> (has been selected)</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Current Layer</td>
+<td class='confluenceTd'>Searches for the closest vertex in the current layer</td>
+</tr>
+<tr>
+<td class='confluenceTd'>All Layers</td>
+<td class='confluenceTd'>Searches for the closest vertex in all editable layers</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Grid</td>
+<td class='confluenceTd'>Snaps to the nearest grid intersection</td>
+</tr>
+</tbody></table>
+<p><b>Note:</b> The Grid can only be seen if the grid map graphic is added (<b>Layer &gt; Grid</b>)<br/>
+<b>Tip:</b> The size of the grid can be changed in the <a href="Edit Tool Preferences.html" title="Edit Tool Preferences">Edit Tool Preferences</a>.</p>
+
+<p>There is two different ways to change the snap behavior:</p>
+<ol>
+	<li>In the <a href="Edit Tool Preferences.html" title="Edit Tool Preferences">Edit Tool Preferences</a> which can be found in the <b>Window &gt; Preferences</b> menu.</li>
+	<li>While an edit to is <em>active</em> press CTRL+SHIFT+S.  This will cycle through the available snap behaviors.  A small pop-up will display the new behavior.</li>
+</ol>
+
+
+  <img src="http://udig.refractions.net/image/EN/ngrelr.gif">
+
+<ul>
+	<li><a href="Edit Tool Preferences.html" title="Edit Tool Preferences">Edit Tool Preferences</a></li>
+</ul>
+
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

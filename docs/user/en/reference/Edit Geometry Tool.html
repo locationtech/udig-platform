@@ -1,0 +1,122 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Edit Geometry Tool</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Edit Geometry Tool -->
+       <h3>Edit Geometry Tool</h3>
+       <h3><a name="EditGeometryTool-EditGeometryTool%21"></a>Edit Geometry Tool &#8211;  <span class="error">Cannot resolve external resource into attachment.</span></h3>
+
+
+<p>The Edit Geometry Tool can add, remove, select and move vertices.  It can also move geometries.  The functionality illustrated on this page is also available when using the <a href="Polygon Creation Tool.html" title="Polygon Creation Tool">Polygon Creation Tool</a>, <a href="Line Creation Tool.html" title="Line Creation Tool">Line Creation Tool</a> and <a href="Point Creation Tool.html" title="Point Creation Tool">Point Creation Tool</a></p>
+
+<ol>
+	<li>Create a map using the sample data.
+	<ol>
+		<li>Add <b>bc_border.shp</b> to new map</li>
+		<li>Add <b>bc_hospitals.shp</b></li>
+		<li>Add <b>bc_municipality.shp</b></li>
+	</ol>
+	</li>
+	<li>Zoom into a small area of the map.<br/>
+<img src="download/attachments/3571/tooledit1.png" align="absmiddle" border="0"/></li>
+	<li>Select the layer in the Layers view that you wish to edit (bc_municipality)</li>
+	<li>Using the <b>Edit Geometry</b> tool, select a municipality.<br/>
+<img src="download/attachments/3571/tooleditfeature.png" align="absmiddle" border="0"/></li>
+	<li>You can use the <b>Feature Edit</b> tool to move points. Move your mouse over a vertex.  Click and drag the vertex.<br/>
+<b>Tip:</b> The circle around the point is the current snap area.  For more information about snapping click <a href="Snapping.html" title="Snapping">here</a>.<br/>
+<img src="download/attachments/3571/movevertex.png" align="absmiddle" border="0"/></li>
+	<li>You can also create new points with the <b>Feature Edit</b> tool. Click on a straight line where there is no vertex. A vertex will appear and it can be moved.<br/>
+<img src="download/attachments/3571/addvertex.png" align="absmiddle" border="0"/></li>
+	<li>To delete a vertex select a vertex and press the delete key or select <b>Edit &gt; Delete</b>.<br/>
+<img src="download/attachments/3571/removevertex.png" align="absmiddle" border="0"/></li>
+	<li>Multiple vertices can be selected by dragging selection box around multiple vertices.<br/>
+<img src="download/attachments/3571/selectmanyvertex.png" align="absmiddle" border="0"/></li>
+	<li>All selected vertices can be moved or deleted together<br/>
+<img src="download/attachments/3571/movemany.png" align="absmiddle" border="0"/></li>
+	<li>The geometry can be moved as a whole by holding down <b>CTRL+ALT</b> and dragging the geometry.<br/>
+<img src="download/attachments/3571/movegeometry.png" align="absmiddle" border="0"/></li>
+	<li>Once the geometry has been modified as much as desired the changes can be <em>accepted</em> by
+	<ol>
+		<li>Double clicking the left mouse button</li>
+		<li>Selecting another tool</li>
+		<li>Clicking the commit button.<br/>
+<img src="download/attachments/3571/accept.png" align="absmiddle" border="0"/></li>
+	</ol>
+	</li>
+</ol>
+
+
+<p>Any operation/change performed can be undone by <b>CTRL+Z</b> or <b>Edit &gt; Undo</b>.  Undone changes can be redone by <b>CTRL+Y</b> or <b>Edit &gt; Redo</b>.</p>
+
+<p>You may also wish to look at the Feature Editor, in order to change attribute information. </p>
+
+<h3><a name="EditGeometryTool-Tips"></a>Tips</h3>
+<ul>
+	<li>Advanced Editing Mode can be used to reduce the amount of tool switching that is required.  For example adding vertices can be performed with the Edit Geometry Tool in advanced mode.</li>
+	<li>Multiple Geometries can be added to the <a href="EditBlackboard.html" title="EditBlackboard">EditBlackboard</a> and edited together.
+	<ul>
+		<li><b>Shift-click</b> adds features to the <a href="EditBlackboard.html" title="EditBlackboard">EditBlackboard</a></li>
+		<li><b>Alt-click</b> adds/removes features</li>
+	</ul>
+	</li>
+	<li>Esc (or Esc-Esc depending on the platform) clears <a href="EditBlackboard.html" title="EditBlackboard">EditBlackboard</a>.</li>
+	<li>If two selected features share a vertex moving the vertex will move the vertex on both features.</li>
+	<li>Use <a href="Snapping.html" title="Snapping">Snapping</a> to snap to existing features.</li>
+	<li>A line can split by
+	<ol>
+		<li>Selecting a line (select bc_borders and select a line)<br/>
+<img src="download/attachments/3571/selectline.png" align="absmiddle" border="0"/></li>
+		<li>Adding a vertex at location where the split will take place using the <a href="Add Vertex Tool.html" title="Add Vertex Tool">Add Vertex Tool</a><br/>
+<img src="download/attachments/3571/addlinevertex.png" align="absmiddle" border="0"/></li>
+		<li>The split can now be done by:
+		<ol>
+			<li>Selecting <b>Edit &gt; Split Line</b><br/>
+<img src="download/attachments/3571/editmenu.png" align="absmiddle" border="0"/></li>
+			<li>Or right clicking and selecting <b>Operations &gt; Split Line</b> from the context menu.<br/>
+<img src="download/attachments/3571/contextmenu.png" align="absmiddle" border="0"/></li>
+		</ol>
+		</li>
+	</ol>
+	</li>
+</ul>
+
+
+  <img src="http://udig.refractions.net/image/EN/ngrelr.gif">
+
+<ul>
+	<li>Advanced Edit Mode</li>
+	<li><a href="EditBlackboard.html" title="EditBlackboard">EditBlackboard</a></li>
+	<li><a href="Snapping.html" title="Snapping">Snapping</a></li>
+	<li><a href="Using Vertex Tools.html" title="Using Vertex Tools">Using Vertex Tools</a>
+	<ul>
+		<li><a href="Add Vertex Tool.html" title="Add Vertex Tool">Add Vertex Tool</a></li>
+		<li><a href="Remove Vertex Tool.html" title="Remove Vertex Tool">Remove Vertex Tool</a></li>
+		<li><a href="Hole Cutter.html" title="Hole Cutter">Hole Cutter</a></li>
+	</ul>
+	</li>
+	<li><a href="Using Geometry Creation Tools.html" title="Using Geometry Creation Tools">Using Geometry Creation Tools</a>
+	<ul>
+		<li><a href="Polygon Creation Tool.html" title="Polygon Creation Tool">Polygon Creation Tool</a></li>
+		<li><a href="Line Creation Tool.html" title="Line Creation Tool">Line Creation Tool</a></li>
+		<li><a href="Point Creation Tool.html" title="Point Creation Tool">Point Creation Tool</a></li>
+		<li><a href="Draw Geometry Tool.html" title="Draw Geometry Tool">Draw Geometry Tool</a></li>
+		<li><a href="Rectangle Tool.html" title="Rectangle Tool">Rectangle Tool</a></li>
+		<li><a href="Ellipse Tool.html" title="Ellipse Tool">Ellipse Tool</a></li>
+	</ul>
+	</li>
+	<li><a href="Using Feature Edit Tools.html" title="Using Feature Edit Tools">Using Feature Edit Tools</a>
+	<ul>
+		<li><a href="Fill Tool.html" title="Fill Tool">Fill Tool</a></li>
+		<li><a href="Split Tool.html" title="Split Tool">Split Tool</a></li>
+		<li><a href="Delete Tool.html" title="Delete Tool">Delete Tool</a></li>
+	</ul>
+	</li>
+</ul>
+
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

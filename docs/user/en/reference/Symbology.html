@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Symbology</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Symbology -->
+       <h3>Symbology</h3>
+       <p>Symbology is the cartographic practice of representing information using symbols (and colours) on a Map.  The <a href="Legend.html" title="Legend">Legend</a> offers a quick summery of the symbology used for a <a href="Map.html" title="Map">Map</a>, often presenting important layers of information in groups for easy reference.</p>
+
+<p>For Layers with complicated symbology (perhaps listing icons, or changing colour based on attribute) the symbology will change on a feature by feature basis to reflect the values being communicated by the map.</p>
+
+<h2><a name="Symbology-GeneralCartography"></a>General Cartography</h2>
+
+<p>Maps produced for general use showing a wide range of features. The maps are often produced against a set standard as part of a series.</p>
+
+<p>The definition of the symbology used is provided by an organisation or government body; often with very exacting requirements that can difficult to reproduce exactly!</p>
+
+<p>Examples:</p>
+
+<ul>
+	<li>Maps used for emergency response will often dictate the set of symbols used (in keeping with the training of the operators)</li>
+	<li>Maps used for nautical navigation where lives are at risk based on the exact interpretation of the map provided. You will often find datasets containing a disclaimer that their information is not suitable for this purpose.</li>
+</ul>
+
+
+<h2><a name="Symbology-ThematicCartography"></a>Thematic Cartography</h2>
+
+<p>This is the most common use for a desktop mapping application such as uDig. In this case the map is produced in order communicate information around a specific dataset; with a map of the physical location serving as a background.</p>
+
+<ul>
+	<li>Choropleth: differences in colour or shading used qualitative differences in an attribute.
+	<ul>
+		<li>Useful when the polygons are all roughly the same size; or you run the risk of making larger polygons appear more important.</li>
+		<li>A Dasymetric map is the opposite of this where the features are generated in order all be a similar size.</li>
+	</ul>
+	</li>
+	<li>Proportional Symbol: Change point symbol size based on an attribute to illustrate relative values. ** Remember when mapping an attribute to symbol size (i.e. radius) the visual effect is not linear and you may wish to adjust accordingly.</li>
+	<li>Contour: A great way to render raster values such as height or atmospheric pressure where lines are drawn along the edge of value changes revealing shapes in the underling data; and the distance between these lines showing a rapid change in value.</li>
+	<li>Dot: used to represent individual observations or measurements</li>
+</ul>
+
+
+<p>These maps are often used for purposes such as exploring data or scientific visualisation. Depending on the dataset and information being communicated a number of techniques may be employed.</p>
+
+  <img src="http://udig.refractions.net/image/EN/ngrelc.gif">
+
+<p><a href="Legend.html" title="Legend">Legend</a><br/>
+<a href="http://en.wikipedia.org/wiki/Cartography#Map_types">Cartography - Map Type (wikipedia)</a><br/>
+<a href="http://en.wikipedia.org/wiki/Thematic_map">Thematic map (wikipedia)</a></p>
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

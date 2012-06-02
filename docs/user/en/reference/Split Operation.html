@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Split Operation</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Split Operation -->
+       <h3>Split Operation</h3>
+       <p>Split a polygon layer using a LineString layer</p>
+
+<p>The <em>Split Operation</em> takes the features from the <em>split layer</em> (source) and uses the LineString features from the <em>using layer</em> to split them.</p>
+
+<p>The result of the <em>Split Operation</em> could be stored on a new layer, on an existent layer or on the previously used source layer.</p>
+
+<h2><a name="SplitOperation-SampleUsage"></a>Sample Usage</h2>
+
+<p>On this example we are going to do an split operation with the polygon layer edificios.shp and the lineString layer carre1.shp.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/8388972/split-before.png' target='split-before.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/8388972/split-before.png", "split-before.png", "height=768,width=898,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/8388972/split-before.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 1. Before operation.</b></p>
+
+<p>Go to the <em>Spatial Operations</em> View, and select <em>Split</em> from the <em>Operations list</em> .<br/>
+The <em>Split Operation</em>'s specific input options will show up.</p>
+
+<p>Now is time to indicate the operation's inputs, as shown in <em>Figure 2</em>:</p>
+<ul class="alternate" type="square">
+	<li><b>Select the</b> <b><em>Source</em></b><br/>
+From the <em>Split layer</em> drop down, select the Layer containing the Features to Split, this one will be our source layer.</li>
+	<li><b>Select the</b> <b><em>Using</em></b><br/>
+From the <em>Using Layer</em> drop down, select the layer to use as splitting mask.</li>
+	<li><b>Select the</b> <b><em>Result</em></b><br/>
+At the <em>Result Layer</em> drop down, a tentative Layer name will be proposed for the layer the operation will create. You can change the name or select an existing Layer where to store the results. Also, you can select the used source layer.</li>
+</ul>
+
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/8388972/split-ui.png' target='split-ui.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/8388972/split-ui.png", "split-ui.png", "height=321,width=871,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/8388972/split-ui.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 2. Define input and target layers.</b></p>
+
+<ul class="alternate" type="square">
+	<li><b>Perform the operation</b><br/>
+Once the input and target layers are defined, press the <em>Perform</em> button at the <em>Spatial Operations</em> View tool bar. The operation will begin processing and its progress will be shown up on a progress dialog, as shown in <em>Figure 3</em>. The operation may take a while to complete, depending on the amount and complexity of the input geometries.</li>
+</ul>
+
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/8388972/split-progress.png' target='split-progress.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/8388972/split-progress.png", "split-progress.png", "height=243,width=562,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/8388972/split-progress.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 3. Progress dialog.</b></p>
+
+<p>Shows the newly created Layer (Split-1) added to the map, with the Features resulting of applying the split operation between the <em>Split</em> and <em>Using</em> Layers.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/8388972/split-after.png' target='split-after.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/8388972/split-after.png", "split-after.png", "height=450,width=892,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/8388972/split-after.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 4. Result Layer.</b></p>
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

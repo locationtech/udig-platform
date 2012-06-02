@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Shapefile</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Shapefile -->
+       <h3>Shapefile</h3>
+       <h2><a name="Shapefile-Shapefile"></a>Shapefile</h2>
+
+<p>A Shapefile is a common file format which contains numerous features of the same type.  Each shapefile has but a single feature type.</p>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>&nbsp;</th>
+<th class='confluenceTh'> The classic three files </th>
+</tr>
+<tr>
+<td class='confluenceTd'> filename.shp </td>
+<td class='confluenceTd'> shapes </td>
+</tr>
+<tr>
+<td class='confluenceTd'> filename.shx </td>
+<td class='confluenceTd'> shapes to attributes index </td>
+</tr>
+<tr>
+<td class='confluenceTd'> filename.dbf </td>
+<td class='confluenceTd'> attributes </td>
+</tr>
+<tr>
+<th class='confluenceTh'>&nbsp;</th>
+<th class='confluenceTh'> Basic metadata </th>
+</tr>
+<tr>
+<td class='confluenceTd'> filename.prj </td>
+<td class='confluenceTd'> projection </td>
+</tr>
+<tr>
+<th class='confluenceTh'>&nbsp;</th>
+<th class='confluenceTh'> Open source extensions </th>
+</tr>
+<tr>
+<td class='confluenceTd'> filename.qix </td>
+<td class='confluenceTd'> quadtree spatial index </td>
+</tr>
+<tr>
+<td class='confluenceTd'> filename.fix </td>
+<td class='confluenceTd'> feature id index </td>
+</tr>
+<tr>
+<td class='confluenceTd'> filename.sld </td>
+<td class='confluenceTd'> style-layer-descriptor style xml object </td>
+</tr>
+<tr>
+<th class='confluenceTh'>&nbsp;</th>
+<th class='confluenceTh'> ESRI extensions </th>
+</tr>
+<tr>
+<td class='confluenceTd'> filename.sbn </td>
+<td class='confluenceTd'> attribute index </td>
+</tr>
+<tr>
+<td class='confluenceTd'> filename.sbx </td>
+<td class='confluenceTd'> spatial index </td>
+</tr>
+<tr>
+<td class='confluenceTd'> filename.lyr </td>
+<td class='confluenceTd'>  arcmap-only style object </td>
+</tr>
+<tr>
+<td class='confluenceTd'> filename.avl </td>
+<td class='confluenceTd'> arcview style object  </td>
+</tr>
+<tr>
+<td class='confluenceTd'> filename.shp.xml </td>
+<td class='confluenceTd'> fgdc metadata </td>
+</tr>
+</tbody></table>
+
+<p>You can save any changes made to your shapefiles appearance by choosing export from the Style dialog and saving a <b>sld</b> file.</p>
+
+<p>If you are having trouble displaying your shapefile with other layers you may be lacking a <b>prj</b> file. You may wish to look up a resonable projection using the uDig CRS dialog (righ click on a map) and cut &amp; paste the result into a <b>prj</b> file using a text editor.</p>
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

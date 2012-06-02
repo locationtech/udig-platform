@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Buffer Operation</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Buffer Operation -->
+       <h3>Buffer Operation</h3>
+       <p>Computes a buffer area around the selected geometries.</p>
+
+<p>The <em>Buffer Operation</em> takes the features from a <em>source</em> <b>vector</b> layer and creates a buffer area of a specified distance around, storing the result on a <em>Result Layer</em>.<br/>
+If the <em>source layer</em> has features selected, the operation will be performed against them, otherwise, the features from the whole Layer will be used.<br/>
+The <em>Source Layer</em> is not modified by any means. A new <em>Result Layer</em> is created by default, or the user can specify an existing editable vector layer where to store the results.</p>
+
+<h2><a name="BufferOperation-SampleUsage"></a>Sample Usage</h2>
+
+<table class="sectionMacro" border="0" cellpadding="5" cellspacing="0" width="100%"><tbody><tr>
+<td class="confluenceTd"  valign="top"></td>
+<p>Go to the <em>Spatial Operations</em> View, and select <em>Buffer</em> from the <em>Operation</em> drop down.</p>
+
+<p>The Buffer Operation's specific input options will show up.</p>
+<ul class="alternate" type="square">
+	<li><b>Select the</b> <b><em>Source Layer</em></b><br/>
+On the <em>Source Layer</em> drop down, select the <em>Layer</em> you want to create the buffered area from. By default, the currently selected <em>Layer</em> in the <em>Layers View</em> will be chosen for you.</li>
+</ul>
+
+
+<ul class="alternate" type="square">
+	<li><b>Select the</b> <b><em>Result Layer</em></b><br/>
+The <em>Result Layer</em> drop down will contain a proposed Layer name for the Layer to be created to hold the operation's results. You can leave it as is, type another Layer name, or select an existing Layer from the <em>Result Layer</em> drop down. In the later case, the operation's result will be stored on the selected Layer.</li>
+</ul>
+
+
+<ul class="alternate" type="square">
+	<li><b>Set the</b> <b><em>Buffer Width</em></b> <b>and</b> <b><em>Units</em></b><br/>
+At the <em>Options</em> section, specify the scalar value for the computation of the width of the buffer area around the source Features, and select which unit of measure the buffer width shall be considered in. You can choose between the current <b>Map</b> units, the <b>Layer</b> units or even to choose another unit of measure from the <em>Units</em> drop down.</li>
+</ul>
+
+
+<ul class="alternate" type="square">
+	<li><b>Perform the operation</b><br/>
+Now you're ready to go. Press the <b><em>Perform</em></b> button from the View's tool bar and the operation will begin.</li>
+</ul>
+</tr></tbody></table>
+<p><a href='http://udig.refractions.net/confluence//download/attachments/2719844/buffer_1.png' target='buffer_1.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/2719844/buffer_1.png", "buffer_1.png", "height=966,width=1040,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/2719844/buffer_1.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 1 Buffer Operation user interface</b></p>
+<td class="confluenceTd"  valign="top">
+<table class="sectionMacro" border="0" cellpadding="5" cellspacing="0" width="100%"><tbody><tr>
+<p>Once you press the <em>Perform</em> button, the operation progress will be shown up on a progress dialog, as shown in <em>Figure 2</em>. The operation may take a while to complete, depending on the amount and complexity of the input geometries.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/2719844/buffer_3.png' target='buffer_3.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/2719844/buffer_3.png", "buffer_3.png", "height=340,width=560,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/2719844/buffer_3.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 2 Progress Dialog</b></p></tr></tbody></table></td>
+<p>Once the Operation finishes, if a new Layer were created to hold the result, it will be automatically added to the current Map.</p>
+
+<p><em>Figure 3</em> shows the newly created Layer (<em>Buffer-1</em>, in green) added to the map, with <b>one</b> Feature whose Geometry is the aggregated result of applying the specified buffer to the default geometries in the source Features.</p>
+<td class="confluenceTd"  valign="top"></td>
+<p><a href='http://udig.refractions.net/confluence//download/attachments/2719844/buffer_4.png' target='buffer_4.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/2719844/buffer_4.png", "buffer_4.png", "height=657,width=530,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/2719844/buffer_4.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 3 Result Layer</b></p>
+<td class="confluenceTd"  valign="top">
+<table class="sectionMacro" border="0" cellpadding="5" cellspacing="0" width="100%"><tbody><tr>
+
+<h2><a name="BufferOperation-AdvancedOptions"></a>Advanced Options</h2>
+
+<p>The <em>Buffer Operation</em> contains a couple advanced options you can set to control certain aspects of the process.</p>
+
+<p>For instance, <em>Figure 4</em> shows the setting controls for the <b>Merge Features</b> and <b>Segments per quadrant</b> advanced options.</p>
+
+<p><img src="download/attachments/2719844/buffer_5_no_merge.png" align="absmiddle" border="0"/><br/>
+<b>Figure 4. Advanced Options</b></p></tr></tbody></table></td>
+<ul class="alternate" type="square">
+	<li><b><em>Merge Features</em></b><br/>
+The <em>Merge Features</em> options controls whether to create a single aggregate geometry for the whole source Features set, or to create a new Feature in the <em>Result Layer</em> per source Feature. By default, this option is <em>checked</em> and a single aggregate Geometry is created. <em>Figure 5</em> shows the result (<em>Buffer-2</em> Layer, in red) of applying the same buffer width than the example above, but with the <em>Merge Features</em> option unchecked.</li>
+</ul>
+
+
+<ul class="alternate" type="square">
+	<li><b><em>Segments per quadrant</em></b><br/>
+The <em>Segments per quadrant</em> option allows a fine grained control over how many straight segments shall be used to approximate a quarter circle. This is parameter affects how the rounded areas over vertexes are built, as uDig uses linear approximations of curves.</li>
+</ul>
+
+
+<p><td class="confluenceTd"  valign="top"></td> <a href='http://udig.refractions.net/confluence//download/attachments/2719844/buffer_6_no_merge_result.png' target='buffer_6_no_merge_result.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/2719844/buffer_6_no_merge_result.png", "buffer_6_no_merge_result.png", "height=707,width=530,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/2719844/buffer_6_no_merge_result.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 5. Result of operation with</b> <b><em>Merge Features</em></b> <b>unchecked.</b></p>
+<td class="confluenceTd"  valign="top"></td>
+<table class="sectionMacro" border="0" cellpadding="5" cellspacing="0" width="100%"><tbody><tr></tr></tbody></table>
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

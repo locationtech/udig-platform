@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Adding a column to a shapefile</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Adding a column to a shapefile -->
+       <h3>Adding a column to a shapefile</h3>
+       <p>You can use the <a href="Transform operation.html" title="Transform operation">Transform operation</a> to generate additional attributes and then export the resulting scratch layer.</p>
+
+<ol>
+	<li>Select the contents of your shape file:
+	<ul>
+		<li>Exapand the shapefile entry in the catalog view and select the contents</li>
+		<li>Select the layer (if you happen to have the shape file on screen)</li>
+	</ul>
+	</li>
+	<li>Run the <a href="Transform operation.html" title="Transform operation">Transform operation</a>:
+	<ul>
+		<li>Right click to bring up the context menu and choose <b>Operations &gt; Transform</b></li>
+		<li>From the menu bar <b>Edit &gt; All Operations</b> to open the <a href="Operations dialog.html" title="Operations dialog">Operations dialog</a> then select  <b>Resource &gt; Transform</b> and press <b>Operate</b></li>
+	</ul>
+	</li>
+	<li>This operation will open the <a href="Transform dialog.html" title="Transform dialog">Transform dialog</a> listing the current attributes along with a definition of how to populate them.</li>
+	<li>Select where you would like to add an attribute</li>
+	<li>Press the <b>Add</b> button to create a new entry</li>
+	<li>Fill in the name of your new Attribute</li>
+	<li>Fill in the <a href="Expression viewer.html" title="Expression viewer">Expression viewer</a> to define the values for your new attribute.
+	<ul>
+		<li>Use <a href="Constraint Query Language.html" title="Constraint Query Language">Constraint Query Language</a> to define your expression</li>
+		<li>You can choose different options using the arrow to the right</li>
+	</ul>
+	</li>
+	<li>Choose how you would like to handle the result: <b>Add to Catalog</b>
+	<ul>
+		<li>Add to Map: can be used when processing a layer, in addition to adding to the catalog the result is immediately added to the Map as a preview.</li>
+		<li>Add to Catalog: the results are saved into the <b>Scratch</b> working area</li>
+	</ul>
+	</li>
+	<li>Press <b>OK</b> to start the transform
+	<ul>
+		<li>A new <b>Scratch</b> entry containing the result of the operation has been added to the scratch service in the <b>Catalog view</b>.</li>
+	</ul>
+	</li>
+	<li>Right click on the above scratch entry in the catalog view and select <b>Export</b> to open the <a href="Export Wizard.html" title="Export Wizard">Export Wizard</a></li>
+	<li>Choose <b>Resource to Shapefile</b> and press <b>Next&gt;</b></li>
+	<li>Provide a destination directory for your new shapefile</li>
+	<li>Ensure that your scratch entry is checked off for export</li>
+	<li>Press <b>Finish</b></li>
+	<li>The new shapefile is now available in the <b>Catalog view</b></li>
+</ol>
+
+
+<p>You can define additional columns using any CQL expression, please be advised that the shapefile format can only support one geometry column.</p>
+
+  <img src="http://udig.refractions.net/image/EN/ngrelc.gif">
+
+<ul>
+	<li><a href="Constraint Query Language.html" title="Constraint Query Language">Constraint Query Language</a></li>
+</ul>
+
+
+  <img src="http://udig.refractions.net/image/EN/ngrelr.gif">
+
+<ul>
+	<li><a href="Transform operation.html" title="Transform operation">Transform operation</a></li>
+	<li><a href="Catalog view.html" title="Catalog view">Catalog view</a></li>
+	<li><a href="Resource to Shapefile Wizard.html" title="Resource to Shapefile Wizard">Resource to Shapefile Wizard</a></li>
+</ul>
+
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

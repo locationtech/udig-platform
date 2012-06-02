@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : The Processing Region</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : The Processing Region -->
+       <h3>The Processing Region</h3>
+       <p>The <b>Processing Region</b> Decoration is used to show the region on which processing is limited.</p>
+
+<p>Through that you make sure that even if you have a map of resolution 1x1 meter and size of 60000x60000 (which would kill your machine if running analyses on it) it gets downsized and re-sampled to the needed resolution and boundaries.</p>
+
+<p>In the following image you can see the <b>Processing Region</b> set to the bounds and resolution of a raster map:</p>
+
+<p><div align="center"><img src="download/attachments/13238608/01_processing_region.png" border="0"/></div></p>
+
+<p>If we have a look into the <b>Processing Region</b> style, we can manually change the settings of the region, which means we can change:</p>
+
+<ul>
+	<li>north, south, east, west bounds</li>
+	<li>number of row and cols</li>
+	<li>x and y resolution</li>
+</ul>
+
+
+<p>Obviously the rows/cols and resolution are connected and since the number of columns and rows can only be an integer number, every time resolution is changed, everything is recalculated to work properly.</p>
+
+<p>It is also possible to set the region to the bounds and resolution of an available raster map or vector map. </p>
+
+<p><div align="center"><img src="download/attachments/13238608/02_region_setting_manual.png" border="0"/></div></p>
+
+<p>One might want to select his region interactively through a bounding box, and that is what the <b>Processing Region</b> tool if there for:</p>
+
+<p><div align="center"><img src="download/attachments/13238608/03_region_setting_box.png" border="0"/></div></p>
+
+<p>Through that tool the <b>Processing Region</b> is set to the bounding box drawn on the map. Since usually people want to align on the initial grip (usually the native data grid), when the user releases the tool, the region is snapped to the original grid, leaving the resolution untouched:</p>
+
+<p><div align="center"><img src="download/attachments/13238608/04_region_set.png" border="0"/></div></p>
+
+<p>The <b>Processing Region</b> can then be considered in the Spatial Toolbox.</p>
+
+<p>Let's assume for example that you want to work only on a small part of the map (the smaller box we created a few steps ago). You open the Spatial Toolbox, select the module you want to execute (here aspect) and you select the toggle button on the view bar, that will force to work on the processing region instead of the whole map:</p>
+
+<p><div align="center"><img src="download/attachments/13238608/05_aspect.png" border="0"/></div></p>
+
+<p>And voila', the process was executed only on the part defined by the <b>Processing Region</b>:</p>
+
+<p><div align="center"><img src="download/attachments/13238608/06_aspect_calculated.png" border="0"/></div></p>
+
+
+
+
+
+
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

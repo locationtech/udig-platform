@@ -1,0 +1,388 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Constraint Query Language</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Constraint Query Language -->
+       <h3>Constraint Query Language</h3>
+       <p>The Constraint Query Language is used to define expressions and filters in several parts of the uDig application.</p>
+
+<div>
+<ul>
+    <li><a href='#ConstraintQueryLanguage-Filters'>Filters</a></li>
+<ul>
+    <li><a href='#ConstraintQueryLanguage-Comparisons'>Comparisons</a></li>
+    <li><a href='#ConstraintQueryLanguage-Text'>Text</a></li>
+    <li><a href='#ConstraintQueryLanguage-Null'>Null</a></li>
+    <li><a href='#ConstraintQueryLanguage-Exists'>Exists</a></li>
+    <li><a href='#ConstraintQueryLanguage-Between'>Between</a></li>
+    <li><a href='#ConstraintQueryLanguage-SpatialRelationships'>Spatial Relationships</a></li>
+    <li><a href='#ConstraintQueryLanguage-Time'>Time</a></li>
+    <li><a href='#ConstraintQueryLanguage-CompoundAttributes'>Compound Attributes</a></li>
+</ul>
+    <li><a href='#ConstraintQueryLanguage-Expressions'>Expressions</a></li>
+<ul>
+    <li><a href='#ConstraintQueryLanguage-Literals'>Literals</a></li>
+    <li><a href='#ConstraintQueryLanguage-Geometry'>Geometry</a></li>
+    <li><a href='#ConstraintQueryLanguage-Attribute'>Attribute</a></li>
+    <li><a href='#ConstraintQueryLanguage-Math'>Math</a></li>
+    <li><a href='#ConstraintQueryLanguage-Functions'>Functions</a></li>
+</ul>
+    <li><a href='#ConstraintQueryLanguage-ExtendedCQL'>Extended CQL</a></li>
+<ul>
+    <li><a href='#ConstraintQueryLanguage-FeatureID'>Feature ID</a></li>
+</ul>
+</ul></div>
+
+<p>The CQL syntax is defined as part of the <a href="http://www.opengeospatial.org/standards/cat">OGC Catalog specification</a> (in much the same way the well-known-text representation of geometry is defined as part of the Simple Feature for SQL specification).</p>
+
+<h1><a name="ConstraintQueryLanguage-Filters"></a>Filters</h1>
+
+<p>A <b>Filters</b> is used to test content, similar in spirit to a WHERE statement in SQL. Filters are used to define the selected Features in a uDig layer.</p>
+
+<h2><a name="ConstraintQueryLanguage-Comparisons"></a>Comparisons</h2>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">CITY = 'Nelson'</pre>
+</div></div>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 &lt; (1 + ((2 / 3) * 4))</pre>
+</div></div>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 &lt; abs(ATTR2)</pre>
+</div></div>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 &lt; 10 AND ATTR2 &lt; 2 OR ATTR3 &gt; 10</pre>
+</div></div>
+
+<h2><a name="ConstraintQueryLanguage-Text"></a>Text</h2>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 LIKE 'abc%'</pre>
+</div></div>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 NOT LIKE 'abc%'</pre>
+</div></div>
+
+<h2><a name="ConstraintQueryLanguage-Null"></a>Null</h2>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 IS NULL</pre>
+</div></div>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 IS NOT NULL</pre>
+</div></div>
+
+<h2><a name="ConstraintQueryLanguage-Exists"></a>Exists</h2>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 EXISTS</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 DOES-NOT-EXIST</pre>
+</div></div>
+
+<h2><a name="ConstraintQueryLanguage-Between"></a>Between</h2>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 BETWEEN 10 AND 20</pre>
+</div></div>
+
+<h2><a name="ConstraintQueryLanguage-SpatialRelationships"></a>Spatial Relationships</h2>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">CONTAINS(ATTR1, POINT(1 2))</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">CROSS(ATTR1, LINESTRING(1 2, 10 15))</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">INTERSECT(ATTR1, GEOMETRYCOLLECTION (POINT (10 10),POINT (30 30),LINESTRING (15 15, 20 20)) )</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">BBOX(ATTR1, 10,20,30,40)</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">DWITHIN(ATTR1, POINT(1 2), 10, kilometers)</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">BBOX(ATTR1, 10,20,30,40)</pre>
+</div></div>
+
+<h2><a name="ConstraintQueryLanguage-Time"></a>Time</h2>
+
+<p>Before a date.</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 BEFORE 2006-11-30T01:30:00Z</pre>
+</div></div>
+<p>Before a period</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 BEFORE 2006-11-30T01:30:00Z/2006-12-31T01:30:00Z</pre>
+</div></div>
+<p>After a date.</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 AFTER 2006-11-30T01:30:00Z</pre>
+</div></div>
+<p>After a period</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 AFTER 2006-11-30T01:30:00Z/2006-12-31T01:30:00Z</pre>
+</div></div>
+<p>Temporal predicate with dutation (ten day after 2006-11-30T01:30:00Z )</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 AFTER 2006-11-30T01:30:00Z/P10D</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 AFTER 2006-11-30T01:30:00Z/T10H</pre>
+</div></div>
+<p>During predicate</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ATTR1 DURING 2006-11-30T01:30:00Z/2006-12-31T01:30:00Z</pre>
+</div></div>
+
+<h2><a name="ConstraintQueryLanguage-CompoundAttributes"></a>Compound Attributes</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">gmd:MD_Metadata.gmd:identificationInfo.gmd:MD_DataIdentification.gmd:<span class="code-keyword">abstract</span> LIKE  'abc%'</pre>
+</div></div>
+
+<h1><a name="ConstraintQueryLanguage-Expressions"></a>Expressions</h1>
+
+<p>Expressions are used to extract a value similar in spirit to a SELECT statement in SQL. Unlike SQL expressions are strictly untyped; the following produces the same result:</p>
+<ul>
+	<li>sin( 0 )</li>
+	<li>sin( 0.0 )</li>
+	<li>sin( '0' )</li>
+</ul>
+
+
+<p>In many cases you will see several functions defined with similar names; differing only in how they interpret the provided argument expressions. The functions functions that produce a boolean value are <b>very</b> similar to a filter.</p>
+
+<h2><a name="ConstraintQueryLanguage-Literals"></a>Literals</h2>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">1</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">3.14159</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">'abc'</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">2006-11-30T01:30:00Z</pre>
+</div></div>
+
+<h2><a name="ConstraintQueryLanguage-Geometry"></a>Geometry</h2>
+
+<p>Geometry literals are provided in Well Known Text format:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">POINT(1 2)</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">LINESTRING (15 15, 20 20)</pre>
+</div></div>
+
+<p>This is the same format used by <a href="PostGIS.html" title="PostGIS">PostGIS</a> and other applications.</p>
+
+<h2><a name="ConstraintQueryLanguage-Attribute"></a>Attribute</h2>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">NAME</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">prefix:name</pre>
+</div></div>
+
+<h2><a name="ConstraintQueryLanguage-Math"></a>Math</h2>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">1 + 1</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">1 + 2 * 3</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">(1 + 2) * 3</pre>
+</div></div>
+
+<h2><a name="ConstraintQueryLanguage-Functions"></a>Functions</h2>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">sin( pi() / 4 )</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">sin( toRadians( ANGLE ) )</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">getX( pointN( THE_GEOM, 0 ) )</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">area( THE_GEOM )</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">ID()</pre>
+</div></div>
+
+<p>Function List:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java"><span class="code-object">double</span> Area(Geometry)   <span class="code-comment">// alternate implementation
+</span><span class="code-object">double</span> area(Geometry)
+<span class="code-object">long</span> abs( number )      <span class="code-comment">// number treated as <span class="code-object">long</span>
+</span><span class="code-object">double</span> abs_2( number )  <span class="code-comment">// number treated as <span class="code-object">double</span>
+</span><span class="code-object">float</span> abs_3( number )   <span class="code-comment">// number treated as <span class="code-object">float</span>
+</span><span class="code-object">int</span> abs_4( number )    <span class="code-comment">// number treated as <span class="code-object">int</span>
+</span><span class="code-object">double</span> acos( cos )     
+<span class="code-object">double</span> asin( sin )     
+<span class="code-object">double</span> atan( tan )     
+<span class="code-object">double</span> atan2( x, y )    <span class="code-comment">// convert x, y to theta
+</span><span class="code-object">boolean</span> between( value, min, max )
+boundary(Geometry)
+boundaryDimension(Geometry)
+buffer(Geometry, <span class="code-object">double</span>)
+bufferWithSegments(Geometry, <span class="code-object">double</span>, <span class="code-object">int</span>)
+<span class="code-object">double</span> ceil( number )
+centroid(Geometry)
+contains(Geometry, Geometry)
+convexHull(Geometry)
+<span class="code-object">double</span> cos( radians ) 
+crosses(Geometry, Geometry)
+difference(Geometry, Geometry)
+dimension(Geometry)
+disjoint(Geometry, Geometry)
+distance(Geometry, Geometry)
+double2bool(<span class="code-object">double</span>)
+endPoint(Geometry)
+envelope(Geometry)
+equalsExact(Geometry, Geometry)
+equalsExactTolerance(Geometry, Geometry, <span class="code-object">double</span>)
+equalTo(<span class="code-object">Object</span>, <span class="code-object">Object</span>)
+<span class="code-object">double</span> exp( number )
+exteriorRing(Geometry)
+<span class="code-object">double</span> floor( number )
+<span class="code-object">String</span> geometryType(Geometry)
+Geometry geomFromWKT(<span class="code-object">String</span>)
+<span class="code-object">double</span> geomLength(Geometry)
+Geometry getGeometryN(Geometry, <span class="code-object">int</span>)
+<span class="code-object">double</span> getX( Point )
+<span class="code-object">double</span> getY( Point )
+<span class="code-object">boolean</span> greaterEqualThan(<span class="code-object">Object</span>, <span class="code-object">Object</span>)
+<span class="code-object">boolean</span> greaterThan(<span class="code-object">Object</span>, <span class="code-object">Object</span>)
+<span class="code-object">double</span> IEEEremainder( dividend, divisor )
+value if_then_else(<span class="code-object">boolean</span>, value, value )
+in2(value, <span class="code-object">Object</span>, <span class="code-object">Object</span>) <span class="code-comment">// tests to is <span class="code-keyword">if</span> value is equal to one of the listed objects
+</span>in3(value, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>)
+in4(value, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>)
+in5(value, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>)
+in6(value, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>)
+in7(value, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>)
+in8(value, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>)
+in9(value, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>)
+in10(value, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>, <span class="code-object">Object</span>)
+<span class="code-object">boolean</span> int2bbool(<span class="code-object">int</span>)
+<span class="code-object">double</span> int2ddouble(<span class="code-object">int</span>)
+Point interiorPoint(Geometry)
+LinearRing interiorRingN(Geometry, <span class="code-object">int</span>)
+Geometry intersection(Geometry, Geometry)
+<span class="code-object">boolean</span> intersects(Geometry, Geometry)
+<span class="code-object">boolean</span> isClosed(Geometry)
+<span class="code-object">boolean</span> isEmpty(Geometry)
+isLike(<span class="code-object">String</span>, <span class="code-object">String</span>)
+isNull(<span class="code-object">Object</span>)
+isRing(Geometry)
+isSimple(Geometry)
+isValid(Geometry)
+isWithinDistance(Geometry, Geometry, <span class="code-object">double</span>)
+lessEqualThan(<span class="code-object">Object</span>, <span class="code-object">Object</span>)
+lessThan(<span class="code-object">Object</span>, <span class="code-object">Object</span>)
+<span class="code-object">double</span> log( number )
+<span class="code-object">double</span> max( number, number )
+<span class="code-object">float</span> max_2( number, number )
+<span class="code-object">int</span> max_3( number, number )
+<span class="code-object">long</span> max_4( number, number )
+<span class="code-object">double</span> min( number, number )
+<span class="code-object">float</span> min_2( number, number )
+<span class="code-object">int</span> min_3( number, number )
+<span class="code-object">long</span> min_4( number, number )
+not(<span class="code-object">boolean</span>)
+notEqualTo(<span class="code-object">Object</span>, <span class="code-object">Object</span>)
+numGeometries(Geometry)
+numInteriorRing(Geometry)
+numPoints(Geometry)
+overlaps(Geometry, Geometry)
+parseBoolean(<span class="code-object">String</span>)
+parseDouble(<span class="code-object">String</span>)
+parseInt(<span class="code-object">String</span>)
+pointN(Geometry, <span class="code-object">int</span>)
+<span class="code-object">double</span> pow( base, exponent )
+<span class="code-object">double</span> random()
+<span class="code-object">String</span> relate(Geometry, Geometry)
+<span class="code-object">boolean</span> relatePattern(Geometry, Geometry, <span class="code-object">String</span>)
+<span class="code-object">double</span> rint( number ) <span class="code-comment">// closest integer
+</span><span class="code-object">int</span> round( number )
+<span class="code-object">long</span> round_2( number )
+<span class="code-object">int</span> roundDouble( number ) <span class="code-comment">// number is treated as a <span class="code-object">double</span>
+</span><span class="code-object">double</span> sin( radians )
+<span class="code-object">double</span> sqrt( number )
+startPoint(Geometry)
+strConcat(<span class="code-object">String</span>, <span class="code-object">String</span>)
+strEndsWith(<span class="code-object">String</span>, <span class="code-object">String</span>)
+strEqualsIgnoreCase(<span class="code-object">String</span>, <span class="code-object">String</span>)
+strIndexOf(<span class="code-object">String</span>, <span class="code-object">String</span>)
+strLastIndexOf(<span class="code-object">String</span>, <span class="code-object">String</span>)
+strLength(<span class="code-object">String</span>)
+strMatches(<span class="code-object">String</span>, <span class="code-object">String</span>)
+strStartsWith(<span class="code-object">String</span>, <span class="code-object">String</span>)
+strSubstring(<span class="code-object">String</span>, <span class="code-object">int</span>, <span class="code-object">int</span>)
+strSubstringStart(<span class="code-object">String</span>, <span class="code-object">int</span>)
+strTrim(<span class="code-object">String</span>)
+symDifference(Geometry, Geometry)
+<span class="code-object">double</span> tan( radians )
+touches(Geometry, Geometry)
+<span class="code-object">double</span> toDegrees( radians )
+<span class="code-object">double</span> toRadians( degrees )
+<span class="code-object">String</span> toWKT(Geometry)
+union(Geometry, Geometry)
+within(Geometry, Geometry)</pre>
+</div></div>
+
+<h1><a name="ConstraintQueryLanguage-ExtendedCQL"></a>Extended CQL</h1>
+
+<p>The common query language cannot quite do everything we would like it to. The following extensions are not strictly common query language (so please do not expect them to work with other applications).</p>
+
+<h2><a name="ConstraintQueryLanguage-FeatureID"></a>Feature ID</h2>
+
+<p>You can select against a feature identifier using:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">IN ('river.1', 'river.2')</pre>
+</div></div>
+
+<p>Or if you have an integer type as feature id:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">IN (300, 301)</pre>
+</div></div>
+
+  <img src="http://udig.refractions.net/image/EN/ngrelt.gif">
+
+<ul>
+	<li><a href="Selection using CQL.html" title="Selection using CQL">Selection using CQL</a></li>
+</ul>
+
+
+  <img src="http://udig.refractions.net/image/EN/ngrelr.gif">
+
+<ul>
+	<li><a href="Table view.html" title="Table view">Table view</a></li>
+	<li>Reshape Operation</li>
+	<li><a href="http://www.opengeospatial.org/standards/cat">OGC Catalog Specification</a></li>
+</ul>
+
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

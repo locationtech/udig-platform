@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Hole Cut Operation</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Hole Cut Operation -->
+       <h3>Hole Cut Operation</h3>
+       <p>Makes a hole inside a polygon feature using a lineString feature</p>
+
+<p>The <em>Hole Operation</em> takes the features from the <em>Hole layer</em> and uses the LineString features from the <em>Using</em> to make a hole inside them. The LineString feature must be contained inside the polygon feature.</p>
+
+<p>The result of the <em>Hole Operation</em> could be stored on a new layer, on an existent layer or on the previously used source layer. </p>
+
+
+<h2><a name="HoleCutOperation-SampleUsage"></a>Sample Usage</h2>
+
+<p>On this example we are going to do a fill operation with the polygon layer edificios.shp and the lineString layer carre1.shp.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/8388994/hole-before.png' target='hole-before.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/8388994/hole-before.png", "hole-before.png", "height=762,width=893,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/8388994/hole-before.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 1. Before operation.</b></p>
+
+<p>Go to the <em>Spatial Operations</em> View, and select <em>Hole</em> from the <em>Operations list</em> .<br/>
+The <em>Hole Operation</em>'s specific input options will show up.</p>
+
+<p>Now it's time to indicate the operation's inputs, as shown in <em>Figure 2</em>:</p>
+<ul class="alternate" type="square">
+	<li><b>Select the</b> <b><em>Source</em></b><br/>
+Select the desired Polygon or MultiPolygon layer to use.</li>
+	<li><b>Select the</b> <b><em>Using</em></b><br/>
+Select the LineString or MultiLineString layer that will make holes in. </li>
+	<li><b>Select the</b> <b><em>Result</em></b><br/>
+At the <em>Result Layer</em> drop down, a tentative Layer name will be proposed for the layer created by the operation. You can change the name or select an existing Layer where to store the results. This combo will only load existent Polygon or MultiPolygon layer.</li>
+</ul>
+
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/8388994/hole-ui.png' target='hole-ui.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/8388994/hole-ui.png", "hole-ui.png", "height=305,width=888,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/8388994/hole-ui.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 2. Define input and target layers.</b></p>
+
+<ul class="alternate" type="square">
+	<li><b>Perform the operation</b><br/>
+Once the input and target layers are defined, press the <em>Perform</em> button at the <em>Spatial Operations</em> View tool bar. The operation will begin processing and its progress will be shown up on a progress dialog, as shown in <em>Figure 3</em>. The operation may take a while to complete, depending on the amount and complexity of the input geometries.</li>
+</ul>
+
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/8388994/hole-progress.png' target='hole-progress.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/8388994/hole-progress.png", "hole-progress.png", "height=243,width=562,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/8388994/hole-progress.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 3. Progress dialog.</b></p>
+
+<p>Shows the newly created Layer (Hole_1) added to the map, with the Features resulting of applying the Hole operation between the <em>Hole layer</em>  and the <em>Using layer</em>.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/8388994/hole-after.png' target='hole-after.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/8388994/hole-after.png", "hole-after.png", "height=420,width=905,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/8388994/hole-after.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 4. Result Layer.</b></p>
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

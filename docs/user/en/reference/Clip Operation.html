@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Clip Operation</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Clip Operation -->
+       <h3>Clip Operation</h3>
+       <p>Computes the geometric difference between two Layers.</p>
+
+<p>The <em>Clip Operation</em> takes the features from a <em>Clipping</em> <b>vector</b> <em>Layer</em> and a <em>Source</em> <b>vector</b> <em>Layer</em> and uses them to compute the geometric difference between the <em>Source</em> and the <em>Clipping</em> layers, and stores the result on a third <em>Layer</em>.</p>
+
+<p>It is possible to use the selected features, if a selection is set, on both the <em>clipping</em> and the <em>source</em> Layers to limit the scope of the operation.</p>
+
+<p>Neither of the Layers used to compute the difference gets modified by any means, but a third Layer is created by default, or the user could select an existing Layer where to store the result.</p>
+
+<h2><a name="ClipOperation-SampleUsage"></a>Sample Usage</h2>
+
+<p>We'll start this usage example by selecting a single feature from the <em>municipalities</em> <em>layer</em> which we'll use as the clipping mask against the <em>voting areas</em> <em>layer</em>.<br/>
+<em>Figure 1</em> shows the selected Feature, "Victoria" on the municipalities layer.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/2719847/clip_1_select_clip_mask.png' target='clip_1_select_clip_mask.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/2719847/clip_1_select_clip_mask.png", "clip_1_select_clip_mask.png", "height=447,width=522,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/2719847/clip_1_select_clip_mask.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 1. Define clip mask through BBox selection.</b></p>
+
+<p>Now go to the <em>Spatial Operations</em> View, and select <em>Clip</em> from the <em>Operation</em> drop down.<br/>
+The <em>Clip Operation</em>'s specific input options will show up.</p>
+
+<p>Now is time to indicate the operation's inputs, as shown in <em>Figure 2</em>:</p>
+<ul class="alternate" type="square">
+	<li><b>Select the</b> <b><em>Source</em></b> <b>Layer</b><br/>
+From the <em>Layer to Clip</em> drop down, select the Layer containing the Features to apply the difference to with the clipping Layer.</li>
+	<li><b>Select the</b> <b><em>Using</em></b> <b>Layer</b><br/>
+From the <em>Using Layer</em> drop down, select the layer to use as cutting mask.</li>
+	<li><b>Select the</b> <b><em>Result</em></b> <b>Layer</b><br/>
+At the <em>Result Layer</em> drop down, a tentative Layer name will be proposed for the layer the operation will create. You can change the name or select an existing Layer where to store the results.<br/>
+<a href='http://udig.refractions.net/confluence//download/attachments/2719847/clip_2_input_params.png' target='clip_2_input_params.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/2719847/clip_2_input_params.png", "clip_2_input_params.png", "height=318,width=924,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/2719847/clip_2_input_params.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 2. Define input and target layers.</b></li>
+</ul>
+
+
+<ul class="alternate" type="square">
+	<li><b>Perform the operation</b><br/>
+Once the input and target layers are defined, press the <em>Perform</em> button at the <em>Spatial Operations</em> View tool bar. The operation will begin processing and its progress will be shown up on a progress dialog, as shown in <em>Figure 3</em>. The operation may take a while to complete, depending on the amount and complexity of the input geometries.</li>
+</ul>
+
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/2719847/clip_3_progress.png' target='clip_3_progress.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/2719847/clip_3_progress.png", "clip_3_progress.png", "height=259,width=590,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/2719847/clip_3_progress.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 3. Progress dialog.</b></p>
+
+<p>Once the Operation finishes, if a new Layer were created to hold the result, it will be automatically added to the current Map.</p>
+
+<p><em>Figure 4</em> shows the newly created Layer (Clip-1, in green) added to the map, with the Features resulting of applying the difference between the <em>Source</em> and <em>Clipping</em> Layers.<br/>
+<a href='http://udig.refractions.net/confluence//download/attachments/2719847/clip_4_result.png' target='clip_4_result.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/2719847/clip_4_result.png", "clip_4_result.png", "height=524,width=523,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/2719847/clip_4_result.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 4. Result Layer</b></p>
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

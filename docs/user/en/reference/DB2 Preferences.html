@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : DB2 Preferences</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : DB2 Preferences -->
+       <h3>DB2 Preferences</h3>
+       <p>Since DB2 is a proprietary database uDig is not shipped with the DB2 jdbc drivers.  The DB2 preference provides a way to point uDig to the driver jar files.  </p>
+<ol>
+	<li>Open the preferences in 1 of the following 2 ways:
+	<ol>
+		<li>If you have never set the jdbc driver before adding a DB2 Layer or importing DB2 service into the catalog will open the DB2 preferences page.</li>
+		<li>Open the Workbench Preferences under <b>Window &gt; Preferences...</b><br/>
+<img src="download/attachments/6023/db2Preferences.jpg" align="absmiddle" border="0"/></li>
+	</ol>
+	</li>
+	<li>Enter location of the JDBC driver or Browse to the file.  The driver is typically called db2jcc.jar.</li>
+	<li>Enter location of the license jar or Browse to the file.  The driver is typically called db2jcc_license_cu.jar.</li>
+	<li>Press Apply.  This will copy the files into uDig.<br/>
+<img src="download/attachments/6023/restart.jpg" align="absmiddle" border="0"/></li>
+	<li>If you wish to use DB2 press OK to restart application.  If the application is not restarted the new jars will not be found and exceptions will occur when you try to add layers.</li>
+	<li>If application is restart you may now add DB2 data.</li>
+</ol>
+
+
+<p>Since the drivers are copied into the uDig updating the drivers will require the following steps:</p>
+<ol>
+	<li>Open the Workbench Preferences under <b>Window &gt; Preferences...</b></li>
+	<li>Select DB2 preferences</li>
+	<li>If the location of the JDBC driver has changed enter new location of the driver or Browse to the file.  If not leave the saved settings.</li>
+	<li>If the location of the license jar has changed enter new location of the jar fileor Browse to the file.  If not leave the saved settings.</li>
+	<li>Press apply and agree to restart Application.</li>
+</ol>
+
+
+
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>

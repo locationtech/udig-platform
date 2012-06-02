@@ -1,0 +1,335 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Running uDig</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Running uDig -->
+       <h3>Running uDig</h3>
+       <p>This page covers some of the options you have when starting up uDig. We also cover a few platform specific issues.</p>
+<div>
+<ul>
+    <li><a href='#RunninguDig-TheUDIGApplication'>The UDIG Application</a></li>
+<ul>
+    <li><a href='#RunninguDig-Workspace'>Workspace</a></li>
+    <li><a href='#RunninguDig-Configuration'>Configuration</a></li>
+    <li><a href='#RunninguDig-Language'>Language</a></li>
+    <li><a href='#RunninguDig-Java'>Java</a></li>
+    <li><a href='#RunninguDig-GotMemory'>Got Memory</a></li>
+    <li><a href='#RunninguDig-ProxySettings'>Proxy Settings</a></li>
+</ul>
+    <li><a href='#RunninguDig-Windows'>Windows</a></li>
+<ul>
+    <li><a href='#RunninguDig-uDigdoesnotworkonWindows2000'>uDig does not work on Windows 2000</a></li>
+</ul>
+    <li><a href='#RunninguDig-MaxOSX'>Max OS X</a></li>
+    <li><a href='#RunninguDig-Linux'>Linux</a></li>
+<ul>
+    <li><a href='#RunninguDig-Fedora10XULRunnerLibraryConflict'>Fedora 10 XULRunner Library Conflict</a></li>
+    <li><a href='#RunninguDig-Advancedgraphics%3Atodisableornot%3F'>Advanced graphics: to disable or not?</a></li>
+    <li><a href='#RunninguDig-Theuglycursors%28UDIG785Cursorsonnonwindowsplatformsaremangled'>The ugly cursors (UDIG-785 Cursors on non--windows platforms are mangled)</a></li>
+    <li><a href='#RunninguDig-InfoandHelprequirea%22Pure%22MozillaBrowser%28UDIG698'>Info and Help require a "Pure" Mozilla Browser ( UDIG-698: Linux MOZILLA_FIVE_HOME required for Information tool )</a></li>
+    <li><a href='#RunninguDig-AbouttheInternalBrowser'>About the Internal Browser</a></li>
+    <li><a href='#RunninguDig-Thezoomwindowisopaquewhenadvancedgraphicsaredisabled'>The zoom window is opaque when advanced graphics are disabled</a></li>
+    <li><a href='#RunninguDig-CanIusemyOwnJava%3F'>Can I use my Own Java?</a></li>
+    <li><a href='#RunninguDig-JREfoldervsJAVAHOME'>JRE folder vs JAVA_HOME</a></li>
+</ul>
+</ul></div>
+<p>The command line options can be set up either:</p>
+<ul>
+	<li>on the short cut used to start uDig</li>
+	<li>by modifying the udig.ini file (useful for macosx users)</li>
+</ul>
+
+
+<h1><a name="RunninguDig-TheUDIGApplication"></a>The UDIG Application</h1>
+
+<p>After you install, or unzip, the uDig application in a directory you can start the application by running:</p>
+<ul>
+	<li>udig.exe on Windows systems</li>
+	<li>udig on Linux systems</li>
+</ul>
+
+
+<p>By default the windows install creates the following short cut:</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>C:\Program Files\uDig\1.1\eclipse\udig.exe"
+  -data "%HOMEDRIVE%%HOMEPATH%\uDig\"
+  -configuration "%APPDATA%\udig\uDig1.1\"
+  -vm "C:\Program Files\uDig\1.1\eclipse\jre\bin\javaw.exe"
+</pre>
+</div></div>
+
+<h2><a name="RunninguDig-Workspace"></a>Workspace</h2>
+
+<p>By default uDig will store your work in your home directory:</p>
+<ul>
+	<li>C:\Documents and Settings\User\My Documents\udig on Windows XP</li>
+	<li>C:\Users\User\udig on Windows Vista</li>
+	<li>&#126;user/udig-workspace on Linux</li>
+</ul>
+
+
+<p>You can change the location of your workspace using a command line option:</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>udig -data &lt;workspace location&gt;
+</pre>
+</div></div>
+
+<h2><a name="RunninguDig-Configuration"></a>Configuration</h2>
+
+<p>The application configuration is stored; by default in the configuration folder</p>
+<ul>
+	<li>C:\Program Files\uDig\1.1\configuration</li>
+</ul>
+
+
+<p>If you want to run from a network share; or a from a CD you can ask the configuration to be stored elsewhere:</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>udig -configuration &lt;configuration location&gt;
+</pre>
+</div></div>
+<p>Storing the configuration directory in the users home directory is a good option when working off a CD</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>udig -configuration %USERPROFILE%\.udig
+</pre>
+</div></div>
+
+<h2><a name="RunninguDig-Language"></a>Language</h2>
+
+<p>The application will run in your current language by default (assuming we have a translation for that langauge).</p>
+
+<p>To change the language to English use the following:</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>udig -nl en
+</pre>
+</div></div>
+<p>To change the language to German:</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>udig -nl de
+</pre>
+</div></div>
+<p>To change the language to Korean:</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>udig -nl ko
+</pre>
+</div></div>
+<p>To change the language to Basque:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">udig -nl eu</pre>
+</div></div>
+<p>To change the language to Italian:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">udig -nl it</pre>
+</div></div>
+<p>To change the language to Spanish:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">udig -nl es</pre>
+</div></div>
+<p>The community is working on additional translations - if you are interested in volunteering please the instructions are available <a href="http://udig.refractions.net/confluence//display/ADMIN/Adding+Translations" title="Adding Translations">here</a>.</p>
+
+<h2><a name="RunninguDig-Java"></a>Java</h2>
+
+<p>The application will use the version of Java specified on the command line:</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>udig -vm &lt;jre location&gt;
+</pre>
+</div></div>
+<p>If you say nothing it will pick up the <b>jre</b> folder next to the udig application executable. Failing that it will try and find java on the path or by checking JAVA_HOME.</p>
+
+<h2><a name="RunninguDig-GotMemory"></a>Got Memory</h2>
+
+<p>We have made every effort to make uDig work in a low memory environment, the default application is very careful to stream information from the disk or Internet to the screen.</p>
+
+<p>But we are still working with geospatial information - and that can get very large. Some editing operations will benefit from the addition of more memory.</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>udig -vmargs -Xmx756m
+</pre>
+</div></div>
+<table class='confluenceTable'><tbody>
+<tr>
+<td class='confluenceTd'> Minimum Tested </td>
+<td class='confluenceTd'> udig &#45;vmargs &#45;Xmx64m </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Default </td>
+<td class='confluenceTd'> udig &#45;vmargs &#45;Xmx512m </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Maximum Tested </td>
+<td class='confluenceTd'> udig &#45;vmargs &#45;Xmx1536m </td>
+</tr>
+</tbody></table>
+
+<h2><a name="RunninguDig-ProxySettings"></a>Proxy Settings</h2>
+
+<p>We make use of normal Java proxy settings; here is an example</p>
+<div class="panel" style="border-width: 1px;"><div class="panelContent">
+<p>udig.exe &#45;vmargs &#45;DproxySet=true &#45;DproxyPort=8080 &#45;DproxyHost=192.168.20.1</p>
+</div></div>
+<p>The same thing could be accomplished by modifying your udig.ini file as shown:</p>
+<div class="panel" style="border-width: 1px;"><div class="panelContent">
+<p>&#45;vmargs<br/>
+&#45;Xmx386M<br/>
+&#45;Dosgi.parentClassloader=ext<br/>
+&#45;DproxySet=true<br/>
+&#45;DproxyHost=192.168.20.1<br/>
+&#45;DproxyPort=8080</p>
+</div></div>
+<p>&nbsp;If requires you can also add a Proxy User and Password.</p>
+<div class="panel" style="border-width: 1px;"><div class="panelContent">
+<p>&#45;DproxyUser=&lt;userid&gt;<br/>
+&#45;DproxyPassword=&lt;password&gt;</p>
+</div></div>
+<p>You can also be specific and provide different ports for http, socks and ftp proxy servers:</p>
+<div class="panel" style="border-width: 1px;"><div class="panelContent">
+<p>&#45;Dhttp.proxyPort=8080<br/>
+&#45;Dhttp.proxyHost=192.168.20.1<br/>
+&#45;DsocksProxyHost=192.168.20.1<br/>
+&#45;DsocksProxyPort=8080<br/>
+&#45;DftpProxySet=true<br/>
+&#45;DftpProxyHost=192.168.20.1<br/>
+&#45;DftpProxyPort=8080</p>
+</div></div>
+
+<h1><a name="RunninguDig-Windows"></a>Windows</h1>
+
+
+<h2><a name="RunninguDig-uDigdoesnotworkonWindows2000"></a>uDig does not work on Windows 2000</h2>
+
+<p>A: You will need to download the <b>GDI&#43;</b> dll and place it in either:</p>
+<ul>
+	<li>the correct windows folder as per the installation instructions</li>
+	<li>the udig folder <b>jre/bin</b> (this is useful if you you are packaging up a uDig based application for hundreds of windows 2000 machines)</li>
+</ul>
+
+
+<p>A web search shows this page where you can download a GDI plus installer:</p>
+<ul>
+	<li><a href="http://www.microsoft.com/downloads/details.aspx?familyid=6A63AB9C-DF12-4D41-933C-BE590FEAA05A&amp;displaylang=en">Platform SDK Redistributable: GDI&#43;</a></li>
+</ul>
+
+
+<p>This use of <b>GDI&#43;</b> is the same problem that forces Vista into a "Downgraded Graphical Experience" - we expect it to be solved after Eclipse 3.3 is released.</p>
+
+<h1><a name="RunninguDig-MaxOSX"></a>Max OS X</h1>
+
+<p>To start uDig on a Mac double click on the uDig application.</p>
+
+<p>To change any of the above mentioned command line operations you will need to edit the udig.ini file inside of the application bundle.</p>
+<ol>
+	<li>Control-click on the the uDig Application to bring up a pop up menu</li>
+	<li>Choose "Show Package Contents"</li>
+	<li>Locate the udig.ini file in <b>Contents/MacOS</b></li>
+	<li>Use your text editor to modify udig.ini</li>
+</ol>
+
+
+<p>You can also run udig from the command line using the symbolic link provided.</p>
+
+<h1><a name="RunninguDig-Linux"></a>Linux</h1>
+
+<p>Here we try to shed some light on some known issues about uDig in Linux.</p>
+
+<h2><a name="RunninguDig-Fedora10XULRunnerLibraryConflict"></a>Fedora 10 XULRunner Library Conflict</h2>
+
+<p>The XULRunner library is used for Mozilla browser integration - and we can run into conflicts if you have the Fedora 10 Firefox package is installed or or a conflict between 32bin and 64 bit versions of the library.</p>
+
+<p>This conflict effects Eclipse 3.3 based applications such as uDig 1.1.1 and results in the JRE crashing - see <a href="http://jira.codehaus.org/browse/UDIG-1429">UDIG-1429</a> for details.</p>
+
+<p>The workaround is to explicitly document which library to use on the command line:</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>udig -configuration ~/.udig -vmargs -Dorg.eclipse.swt.browser.XULRunnerPath=/usr/bin/xulrunner
+</pre>
+</div></div>
+<p>As with any of these command line settings you can also add them to the udig.ini file.</p>
+
+<h2><a name="RunninguDig-Advancedgraphics%3Atodisableornot%3F"></a>Advanced graphics: to disable or not?</h2>
+
+<p><a href="http://jira.codehaus.org/browse/UDIG-1110">UDIG-1110</a>: this is a conflict between SWT and Cairo 1.2.x, which usually causes the map to not be visible.  Until these two camps sort out their problems, uDig will be caught in the crossfire (and we have to disable "advanced graphics").  This problem should be resolved when a) we upgrade eclipse version uDig is based on and b) you upgrade your linux distribution.</p>
+
+<p>Due to a known problem in one of the supporting libraries, when first started uDig shows a pop-up window recommending that Linux users disable advanced graphics (check the version of your cairo package to be certain).</p>
+
+<p>Q: Under what conditions is this necessary, and for what user interface features are there problems?</p>
+
+<p>Cairo 1.2.x = Map in not visible<br/>
+Cairo 1.4.x = black edges?</p>
+
+<p>Q: Is there a work-around?</p>
+
+<p>A: Disable advanced graphics to make the map visible, but draw slowly.</p>
+
+<p>Q: Perhaps downloading some extra package and installing it manually?</p>
+<ul class="alternate" type="square">
+	<li>upgrade cairo?</li>
+	<li>upgrade eclipse?</li>
+</ul>
+
+
+<h2><a name="RunninguDig-Theuglycursors%28UDIG785Cursorsonnonwindowsplatformsaremangled"></a>The ugly cursors (<a href="http://jira.codehaus.org/browse/UDIG-785">UDIG-785 Cursors on non--windows platforms are mangled</a>)</h2>
+
+<p>Linux <a href="http://jira.codehaus.org/browse/UDIG-785">doesn't support udig's cursors</a>.</p>
+
+<p>Q: Would it be possible to have also a set of b/w cursors which are simpler, but at least they do not look ugly in linux?</p>
+
+<p>A: Yes we are limited by time and artwork, specifically we need two black and white bmp files (one for the image and one for the mask). The current cursors are using the GIF format which is apparently a problem.</p>
+
+<p>If you have time please attach the artwork to the UDIG-785 (or email them to the developers list).</p>
+
+<h2><a name="RunninguDig-InfoandHelprequirea%22Pure%22MozillaBrowser%28UDIG698"></a>Info and Help require a "Pure" Mozilla Browser ( <a href="http://jira.codehaus.org/browse/UDIG-698">UDIG-698</a>: Linux MOZILLA_FIVE_HOME required for Information tool )</h2>
+
+<p>uDig uses a web browser to display its help documents and also to show the attribute information about a feature selected from the map using the Info tool.</p>
+
+<h2><a name="RunninguDig-AbouttheInternalBrowser"></a>About the Internal Browser</h2>
+
+<p>For several functions uDig will make use of an internal (or embedded browser).</p>
+<ul>
+	<li>Info View - browser used to display details obtained from a Web Map Server</li>
+	<li>Web Catalog - browser used to display a search service</li>
+	<li>Help - browser used to display this guide</li>
+</ul>
+
+
+<p>On the Linux platform eclipse tries to launch the Mozilla browser.  But recent Linux distributions ship with a "custom" copy of Firefox so uDig does not recognize it.</p>
+
+<p>Because uDig runs inside eclipse, the Standard Widget Toolkit FAQ at <a href="http://www.eclipse.org/swt/faq.php#browserlinux">http://www.eclipse.org/swt/faq.php#browserlinux</a> may indicate which web browser to install in case this information is not displayed correctly.</p>
+
+<p>Q: How to fix this?</p>
+
+<p>A: Download and Install Mozilla</p>
+
+<p>(i don't think this is necessary - see <a href="http://jira.codehaus.org/browse/UDIG-698">UDIG-698</a>)</p>
+
+<p>Ubuntu 8.04 systems that have the Firefox 3 rc1 update installed will need to also install the xulrunner or xulrunner-gnome-support package to use the information tool. The latter package can be installed using the command:</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>sudo apt-get install xulrunner-gnome-support
+</pre>
+</div></div>
+
+<h2><a name="RunninguDig-Thezoomwindowisopaquewhenadvancedgraphicsaredisabled"></a>The zoom window is opaque when advanced graphics are disabled</h2>
+
+<p>If the advanced graphics are disabled, the zoom box is opaque yellow, not translucent as it is under Windows.</p>
+
+<p>A: Understood, should we use a dither pattern? as a temporary measure?</p>
+
+<h2><a name="RunninguDig-CanIusemyOwnJava%3F"></a>Can I use my Own Java?</h2>
+
+<p>A: Yes you can (but please make sure it has <b>Java Advanced Imaging</b> and <b>Java Imaging IO</b> installed.</p>
+
+<p>You can specify a different version on the command line:</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>udig -vm vmPath
+</pre>
+</div></div>
+<p>You should also be able to mess around with the udig.ini file in a manner similar to the command line options.</p>
+
+<p>This is a useful technique if you ever get a failure "JVM terminated. Exit code=1"; we have only noticed this when a really old JVM is available.</p>
+
+<h2><a name="RunninguDig-JREfoldervsJAVAHOME"></a>JRE folder vs JAVA_HOME</h2>
+
+<p>uDig will pick up the <b>jre</b> folder included in the download, if you rename this (say to <b>jre2</b>) it will be forced look at your <b>JAVA_HOME</b> environmental variable.</p>
+
+<!--<small>(c) Copyright (c) 2004-2012 Refractions Research Inc. and others.</small>-->
+    </body>
+</html>
