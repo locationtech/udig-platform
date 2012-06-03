@@ -192,19 +192,6 @@ GNU Lesser General Public License for more details.
          unpack="false"/>
 
    <plugin
-         id="com.mapquest"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="eu.udig.mapquest.apiwrapper"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="eu.udig.style.jgrass"
          download-size="0"
          install-size="0"
