@@ -397,10 +397,12 @@ public abstract class WMTSource {
      * @param scale The map scale.
      * @param scaleFactor The scale-factor (0-100): scale up or down?
      * @param recommendedZoomLevel Always use the calculated zoom-level, do not use the one the user selected
+     * @param tileLimitWarning 
      * @return The list of found tiles.
      */
     public Map<String, Tile> cutExtentIntoTiles(WMTRenderJob renderJob, 
-            int scaleFactor, boolean recommendedZoomLevel, WMTLayerProperties layerProperties) {        
+            int scaleFactor, boolean recommendedZoomLevel, WMTLayerProperties layerProperties,
+            int tileLimitWarning) {        
         // only continue, if we have tiles that cover the requested extent
         if (!renderJob.getMapExtentTileCrs().intersects((Envelope) getBounds())) {
             return Collections.emptyMap();
@@ -445,6 +447,9 @@ public abstract class WMTSource {
                     movingTile = rightNeighbour;
                 } else {
                     break;
+                }
+                if (tileList.size()>tileLimitWarning) {
+                    return Collections.emptyMap();
                 }
             } while(tileList.size() < maxNumberOfTiles);
 

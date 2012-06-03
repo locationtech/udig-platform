@@ -33,7 +33,7 @@ public class WWSourceTest extends TestCase {
         
         Map<String, Tile> tiles1 = wwSource.cutExtentIntoTiles(renderJob1, 
                 50, 
-                true, null);
+                true, null, 1000);
         assertEquals(true, tiles1.isEmpty());
         
         // bounds of the QuadTileSet are inside the extent
@@ -43,7 +43,7 @@ public class WWSourceTest extends TestCase {
                 wwSource);
         Map<String, Tile> tiles2 = wwSource.cutExtentIntoTiles(renderJob2, 
                 50, 
-                true, null);
+                true, null, 1000);
         assertEquals(1, tiles2.size());
     }
     
