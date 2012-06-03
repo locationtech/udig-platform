@@ -59,8 +59,8 @@ public class WMTPlugin extends AbstractUIPlugin {
 	 * or 'key' if not found.
 	 */
 	public static String getResourceString(String key) {
-		ResourceBundle bundle = WMTPlugin.getDefault().getResourceBundle();
 		try {
+		    ResourceBundle bundle = WMTPlugin.getDefault().getResourceBundle();
 			return (bundle != null) ? bundle.getString(key) : key;
 		} catch (MissingResourceException e) {
 			return key;

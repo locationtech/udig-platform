@@ -1,5 +1,6 @@
 package eu.udig.mapquest.apiwrapper;
 
+
 import java.text.DecimalFormat;
 
 import com.mapquest.DisplayState;
