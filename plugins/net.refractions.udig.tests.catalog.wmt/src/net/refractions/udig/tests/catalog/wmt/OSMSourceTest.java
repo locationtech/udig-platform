@@ -145,7 +145,7 @@ public class OSMSourceTest extends TestCase{
                 150000000, 
                 source);
         
-        Map<String, Tile> tiles = source.cutExtentIntoTiles(renderJob1, 50, true, layerProp);
+        Map<String, Tile> tiles = source.cutExtentIntoTiles(renderJob1, 50, true, layerProp, 1000);
         
         assertEquals(16, tiles.size());
     }
