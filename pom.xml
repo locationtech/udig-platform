@@ -62,6 +62,9 @@ The build supports the use of profiles - to run a normal build with tests:
 
 The following profiles are defined:
 
+Builds documentation (requires sphinx-build is installed):
+  mvn install -Pdocs
+  
 Defines the appropriate p2 update repository
   mvn install -PudigProfile (on by default)
 
@@ -85,6 +88,13 @@ Includes the ossim feaure (this may be dead code)
 
     -->    
     <profiles>
+        <profile>
+            <id>docs</id>
+            <modules>
+                 <module>docs</module>
+             </modules>
+        </profile>
+        
         <profile>
             <id>udigProfile</id>
             <activation>
@@ -229,20 +239,35 @@ Includes the ossim feaure (this may be dead code)
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-			<plugin>
-			   	<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			   <executions>
-			      <execution>
-			         <id>the-execution-id</id>
-			         <phase>none</phase>
-			      </execution>
-			   </executions>			
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+               <executions>
+                  <execution>
+                     <id>the-execution-id</id>
+                     <phase>none</phase>
+                  </execution>
+               </executions>			
+            </plugin>
+            <!-- 
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-source-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <executions>
+                  <execution>
+                    <id>plugin-source</id>
+                    <goals>
+                      <goal>plugin-source</goal>
+                    </goals>
+                  </execution>
+                </executions>
+              </plugin>
+              -->
         </plugins>
     </build>
     <reporting>

@@ -86,6 +86,14 @@ public abstract class IFilterViewer extends Viewer {
     public FilterInput getInput() {
         return input;
     }
+    
+    public static boolean same( Filter before, Filter after ){
+        String beforeCql = before != null ? ECQL.toCQL(before) : "(empty)";
+        String afterCql = after != null ? ECQL.toCQL(after) : "(empty)";
+        
+        return Utilities.equals(beforeCql, afterCql);
+    }
+    
     /**
      * Refreshes this viewer completely with information freshly obtained from {@link #input} and {@link #filter}.
      */

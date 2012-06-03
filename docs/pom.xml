@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   You need to install sphinx (and Python) for this module to build.
+   
+   The ant build.xml file takes care of checking if sphinx-build is available 
+   on the path - and if avaialble it uses it to genrate the docs.
+   
+   Clean build using maven:
+   
+   mvn clean install
+   
+   Just build one:
+   
+   mvn install -Puser
+   mvn clean install -Pdevel
+   
+   You can also use ant directly:
+   
+   ant clean
+   ant full
+   ant user
+   ant devel
+   
+   This class also contains scripts used to prep and convert.
+   
+   mvn exec:java -Dexec.mainClass="docs.ConvertConfluence" -Dexec.args="?"
+   mvn exec:java -Dexec.mainClass="docs.ConvertConfluence" -Dexec.args="~/Desktop/EN/ ~/Desktop/user"
+   
+   You will probably have to copy the images over yourself.
+   -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                                 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>udig-tycho</artifactId>
+    <groupId>net.refractions</groupId>
+    <version>1.3.0-SNAPSHOT</version>
+  </parent>
+  
+	<!-- =========================================================== -->
+	<!-- Module Description -->
+	<!-- =========================================================== -->
+	<artifactId>docs</artifactId>
+	<name>uDig Documentation</name>
+
+    <description>
+     Documentation generation for the uDig project including user guide and developer guide.
+    </description>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>1.6.5</version>
+          </dependency>
+          <dependency>
+            <groupId>ant-contrib</groupId>
+            <artifactId>ant-contrib</artifactId>
+            <version>1.0b3</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>compile</id>
+            <phase>compile</phase>
+            <configuration>
+              <tasks>
+                <ant antfile="build.xml" dir="${basedir}" target="${target}">
+                  <property name="build.directory" value="${build.directory}"/>
+                  <property name="project.version" value="0.3.0"/>
+                </ant>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <properties>
+     <target>full</target>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>devel</id>
+      <properties>
+        <target>devel</target>
+      </properties>
+    </profile>
+    <profile>
+      <id>user</id>
+      <properties>
+        <target>user</target>
+      </properties>
+    </profile>
+  </profiles>
+  
+</project>
