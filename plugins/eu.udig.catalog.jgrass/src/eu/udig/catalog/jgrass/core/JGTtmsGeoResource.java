@@ -33,6 +33,7 @@ import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.ISharedImages;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -215,7 +216,8 @@ public class JGTtmsGeoResource extends IGeoResource {
      */
     class JGTtmsGeoResourceInfo extends IGeoResourceInfo {
         public JGTtmsGeoResourceInfo( IProgressMonitor monitor ) {
-            this.name = tmsPropertiesFile.getName();
+            String baseName = FilenameUtils.getBaseName(tmsPropertiesFile.getName());
+            this.name = baseName;
             this.title = this.name;
             this.description = this.name;
 

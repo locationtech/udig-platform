@@ -38,6 +38,7 @@ import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.ISharedImages;
 import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
 
+import org.apache.commons.io.FilenameUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.referencing.CRS;
@@ -80,7 +81,7 @@ public class JGTtmsService extends IService {
         this.params = params;
 
         // get the file url from the connection parameters
-        url = (URL) this.params.get(JGrassServiceExtension.KEY);
+        url = (URL) this.params.get(JGTtmsServiceExtension.KEY);
         id = new ID(url);
 
         tmsPropertiesFile = URLUtils.urlToFile(url);
@@ -132,7 +133,6 @@ public class JGTtmsService extends IService {
 
     public List< ? extends IGeoResource> resources( IProgressMonitor monitor ) throws IOException {
         // seed the potentially null field
-        members(monitor);
         List<JGTtmsGeoResource> children = new ArrayList<JGTtmsGeoResource>();
         JGTtmsGeoResource resource = new JGTtmsGeoResource(this, url);
         children.add(resource);
@@ -181,7 +181,8 @@ public class JGTtmsService extends IService {
     class JGTtmsServiceInfo extends IServiceInfo {
         public JGTtmsServiceInfo() {
             File serviceFile = getFile();
-            this.title = serviceFile.getName();
+            String baseName = FilenameUtils.getBaseName(serviceFile.getName());
+            this.title = baseName;
             this.description = "JGrassTools TMS service (" + this.title + ")";
         }
 

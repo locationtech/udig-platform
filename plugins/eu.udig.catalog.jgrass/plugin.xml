@@ -6,6 +6,10 @@
       <service
             class="eu.udig.catalog.jgrass.core.JGrassServiceExtension"
             id="eu.udig.catalog.jgrass.jgservice"/>
+      <service
+            class="eu.udig.catalog.jgrass.core.JGTtmsServiceExtension"
+            id="eu.udig.catalog.jgrass.jgttmsservice">
+      </service>
    </extension>
    <extension
          point="net.refractions.udig.catalog.ui.connectionFactory">
@@ -21,10 +25,20 @@
             name="%wizard.name"/>
    </extension>
    <extension
+         point="net.refractions.udig.catalog.ui.connectionFactory">
+      <factory
+            class="eu.udig.catalog.jgrass.core.JGTtmsConnectionFactory"
+            id="eu.udig.catalog.jgrass.core.JGTtmsConnectionFactory"/>
+   </extension>
+   <extension
          point="net.refractions.udig.catalog.ui.fileFormat">
       <fileService
             fileExtension="*.jgrass"
             name="%fileService.name"/>
+      <fileService
+            fileExtension="*.mapurl"
+            name="JGrasstools TMS">
+      </fileService>
    </extension>
    <extension
          id="net.refractions.udig.catalog.shp.jgrasstofileresolver"
