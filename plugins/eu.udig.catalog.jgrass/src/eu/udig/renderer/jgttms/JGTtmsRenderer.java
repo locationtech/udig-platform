@@ -66,34 +66,6 @@ public class JGTtmsRenderer extends RendererImpl {
 
     private static GlobalMercator gm = new GlobalMercator();
     private static final String EPSG_MERCATOR = "EPSG:3857";
-    /**
-     * A list that represents a mapping between OSM zoom-levels and map scale.
-     * <pre>
-     * see: 
-     * http://blogs.esri.com/Support/blogs/mappingcenter/archive/2009/03/19/How-can-you-tell-what-map-scales-are-shown-for-online-maps_3F00_.aspx
-     * </pre>
-     */
-    // public static double[] scaleList = {//
-    // Double.NaN, //
-    // Double.NaN, //
-    // 147914381, //
-    // 73957190, //
-    // 36978595, //
-    // 18489297, //
-    // 9244648, //
-    // 4622324, //
-    // 2311162, //
-    // 1155581, //
-    // 577790, //
-    // 288895, //
-    // 144447, //
-    // 72223, //
-    // 36111, //
-    // 18055, //
-    // 9027, //
-    // 4513, //
-    // 2256 //
-    // };
 
     /**
      * http://wiki.openstreetmap.org/wiki/FAQ#What_is_the_map_scale_for_a_particular_zoom_level_of_the_map.3F
@@ -143,6 +115,7 @@ public class JGTtmsRenderer extends RendererImpl {
 
             final IGeoResource resource = getContext().getGeoResource();
             if (resource == null || !resource.canResolve(JGTtmsGeoResource.class)) {
+                getContext().setStatus(ILayer.DONE);
                 return;
             }
             JGTtmsGeoResource jgtTmsGeoResource = resource.resolve(JGTtmsGeoResource.class, monitor);
@@ -180,12 +153,13 @@ public class JGTtmsRenderer extends RendererImpl {
                 }
             }
             if (tileNum > 30) {
-                throw new RuntimeException("Too many tiles needed for this zoomlevel");
+                getContext().setStatus(ILayer.DONE);
+                getContext().setStatusMessage("Too many tiles needed for this zoomlevel");
+                return;
             }
 
             for( int i = startXTile; i <= endXTile; i++ ) {
                 for( int j = startYTile; j <= endYTile; j++ ) {
-                    tileNum++;
 
                     double west = i / Math.pow(2.0, z) * 360.0 - 180;
                     double nn = Math.PI - (2.0 * Math.PI * j) / Math.pow(2.0, z);
@@ -193,12 +167,6 @@ public class JGTtmsRenderer extends RendererImpl {
                     double east = (i + 1) / Math.pow(2.0, z) * 360.0 - 180;
                     nn = Math.PI - (2.0 * Math.PI * (j + 1)) / Math.pow(2.0, z);
                     double south = Math.toDegrees(Math.atan(Math.sinh(nn)));
-
-                    // double[] bounds = gm.TileLatLonBounds(i, j, z);
-                    // double west = bounds[0];
-                    // double south = bounds[1];
-                    // double east = bounds[2];
-                    // double north = bounds[3];
 
                     ReferencedEnvelope tileBounds = new ReferencedEnvelope(west, east, south, north, latLongCrs);
 
@@ -263,27 +231,7 @@ public class JGTtmsRenderer extends RendererImpl {
         try {
             AffineTransform worldToScreen = RendererUtilities.worldToScreenTransform(tileMapCrsEnvelope, tileSize);
             GridCoverageRenderer paint = new GridCoverageRenderer(mapCrs, tileMapCrsEnvelope, tileSize, worldToScreen);
-
             paint.paint(graphics, coverage, style);
-
-            // if (true) {
-            // /* for testing draw border around tiles */
-            // graphics.setColor(Color.BLACK);
-            // graphics.drawLine((int) tileSize.getMinX(), (int) tileSize.getMinY(), (int)
-            // tileSize.getMinX(),
-            // (int) tileSize.getMaxY());
-            // graphics.drawLine((int) tileSize.getMinX(), (int) tileSize.getMinY(), (int)
-            // tileSize.getMaxX(),
-            // (int) tileSize.getMinY());
-            // graphics.drawLine((int) tileSize.getMaxX(), (int) tileSize.getMinY(), (int)
-            // tileSize.getMaxX(),
-            // (int) tileSize.getMaxY());
-            // graphics.drawLine((int) tileSize.getMinX(), (int) tileSize.getMaxY(), (int)
-            // tileSize.getMaxX(),
-            // (int) tileSize.getMaxY());
-            // graphics.drawString("blah", ((int) tileSize.getMaxX() - 113), ((int)
-            // tileSize.getMaxY() - 113));
-            // }
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -319,21 +267,6 @@ public class JGTtmsRenderer extends RendererImpl {
             }
         }
         throw new RuntimeException();
-    }
-
-    private RenderingHints getRenderingHints( Graphics2D g2d ) {
-        // setting rendering hints
-        RenderingHints hints = new RenderingHints(Collections.EMPTY_MAP);
-        hints.add(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED));
-        hints.add(new RenderingHints(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE));
-        hints.add(new RenderingHints(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED));
-        hints.add(new RenderingHints(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED));
-        hints.add(new RenderingHints(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR));
-        hints.add(new RenderingHints(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE));
-        hints.add(new RenderingHints(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_OFF));
-        hints.add(new RenderingHints(JAI.KEY_INTERPOLATION, new InterpolationNearest()));
-        g2d.addRenderingHints(hints);
-        return hints;
     }
 
     public void render( IProgressMonitor monitor ) throws RenderException {

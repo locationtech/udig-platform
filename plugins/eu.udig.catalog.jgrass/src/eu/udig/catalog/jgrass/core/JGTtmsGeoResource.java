@@ -18,6 +18,7 @@
  */
 package eu.udig.catalog.jgrass.core;
 
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -39,6 +40,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.GeodeticCalculator;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -233,9 +236,22 @@ public class JGTtmsGeoResource extends IGeoResource {
             this.description = this.name;
 
             try {
-                Envelope env = new Envelope(tmsProperties.centerPoint);
-                env.expandBy(1000.0); // TODO when bounds are realy available change this
-                bounds = new ReferencedEnvelope(env, tmsCrs);
+                Coordinate c = tmsProperties.centerPoint;
+                Envelope env = new Envelope(c);
+                // TODO when bounds are really available change this
+                GeodeticCalculator gc = new GeodeticCalculator(tmsCrs);
+                gc.setStartingGeographicPoint(c.x, c.y);
+                gc.setDirection(-45, 10000.0);
+                Point2D p1 = gc.getDestinationGeographicPoint();
+                env.expandToInclude(p1.getX(), p1.getY());
+                gc.setDirection(135, 10000.0);
+                Point2D p2 = gc.getDestinationGeographicPoint();
+                env.expandToInclude(p2.getX(), p2.getY());
+
+                ReferencedEnvelope tmpBounds = new ReferencedEnvelope(env, DefaultGeographicCRS.WGS84);
+                bounds = tmpBounds.transform(tmsCrs, true);
+
+                // bounds = new ReferencedEnvelope(env, tmsCrs);
                 super.icon = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.GRID_OBJ);
             } catch (Exception e) {
                 super.icon = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/problem.gif"); //$NON-NLS-1$
