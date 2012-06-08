@@ -263,5 +263,18 @@
          </description>
       </renderer>
    </extension>
+   <extension
+         id="JGTtmsRenderer"
+         name="JGTtmsRenderer"
+         point="net.refractions.udig.project.renderer">
+      <renderer
+            class="eu.udig.renderer.jgttms.JGTtmsRenderMetricsFactory"
+            id="eu.udig.renderer.jgttms.jgttmsrenderer"
+            name="JGrasstools TMS Renderer">
+         <description>
+            A renderer for JGrasstools TMS layers.
+         </description>
+      </renderer>
+   </extension>
 
 </plugin>

@@ -140,7 +140,7 @@ public class JGTtmsService extends IService {
     }
 
     public URL getIdentifier() {
-        return url;
+        return id.toURL();
     }
 
     public ID getID() {

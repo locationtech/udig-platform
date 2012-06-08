@@ -20,6 +20,7 @@ package eu.udig.catalog.jgrass.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -142,6 +143,10 @@ public class JGTtmsGeoResource extends IGeoResource {
         return tmsProperties;
     }
 
+    public JGTtmsProperties getTmsProperties() {
+        return tmsProperties;
+    }
+
     public <T> boolean canResolve( Class<T> adaptee ) {
         // garbage in, garbage out
         if (adaptee == null)
@@ -184,11 +189,17 @@ public class JGTtmsGeoResource extends IGeoResource {
     // }
 
     public URL getIdentifier() {
-        return url;
+        String urlString = URLUtils.urlToString(url, false);
+        try {
+            return new URL(urlString + "#/" + getTitle());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public ID getID() {
-        return new ID(url);
+        return new ID(getIdentifier());
     }
 
     public IService service( IProgressMonitor monitor ) throws IOException {
