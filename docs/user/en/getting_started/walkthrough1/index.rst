@@ -24,7 +24,7 @@ uDig Walkthrough 1
     InformationRequest
     WebView
     Re-projection
-    WhattodoNext?
+    WhattodoNext
 
 .. |10000000000001370000012ECF2386E2_png| image:: images/10000000000001370000012ECF2386E2.png
     :width: 2.799cm
