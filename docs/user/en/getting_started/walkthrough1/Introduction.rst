@@ -1,0 +1,40 @@
+Introduction
+-----------------------------------
+
+Welcome to the User-friendly Internet Desktop GIS (uDig) application!
+
+uDig is collaborative effort brought together by a diverse project management committee from organizations across the world:
+
+* Andrea Antonello,
+  (Italy)
+
+
+* Jesse Eichar,
+  (Switzerland)
+
+
+* Jody Garnett,
+  (Australia)
+
+
+* Mauricio Pazos (Spain)
+
+
+uDig was originally started by
+in Canada with funding from
+Canada.
+
+uDig is intended to be used in conjunction with your existing investment in spatial information. We are of the opinion that data (your data) is what is important. To that end we support a wide range of formats, compatibility with a range of spatial databases and accessing of information services such as WMS and WFS. This information is combined with excellent desktop integration.
+
+The use of an open source license (
+) allows the uDig project to be used by your organization with no per seat license.
+Any fixes you make to the core uDig codebase; do have to be passed on to your users. May we recommend submitting a patch as an easy way to accomplish this goal.
+
+For more information and a selection of case studies:
+
+* 
+
+* 
+
+
+In addition to supporting an open source license, uDig is also offers an open development model with clear procedures allowing your team to take part.
