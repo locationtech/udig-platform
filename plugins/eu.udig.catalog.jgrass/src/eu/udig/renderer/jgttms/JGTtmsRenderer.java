@@ -21,15 +21,11 @@ package eu.udig.renderer.jgttms;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Collections;
 
 import javax.imageio.ImageIO;
-import javax.media.jai.InterpolationNearest;
-import javax.media.jai.JAI;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.ILayer;
@@ -62,7 +58,8 @@ import eu.udig.catalog.jgrass.core.JGTtmsProperties;
  */
 public class JGTtmsRenderer extends RendererImpl {
 
-    private static final String THE_MAP_IS_OUTSIDE_OF_THE_VISIBLE_REGION = "The map is outside of the visible region.";
+    // private static final String THE_MAP_IS_OUTSIDE_OF_THE_VISIBLE_REGION =
+    // "The map is outside of the visible region.";
 
     private static GlobalMercator gm = new GlobalMercator();
     private static final String EPSG_MERCATOR = "EPSG:3857";
@@ -191,7 +188,12 @@ public class JGTtmsRenderer extends RendererImpl {
                         continue;
                     }
 
-                    BufferedImage image = ImageIO.read(imageFile);
+                    String imgPath = imageFile.getAbsolutePath();
+                    BufferedImage image = ImageCache.getInstance().getImage(imgPath);
+                    if (image == null) {
+                        image = ImageIO.read(imageFile);
+                        ImageCache.getInstance().addImage(imgPath, image);
+                    }
 
                     ReferencedEnvelope mercatorTileBounds = tileBounds.transform(mercatorCrs, true);
                     renderTile(g2d, image, mercatorTileBounds, rasterSymbolizer);
@@ -275,7 +277,7 @@ public class JGTtmsRenderer extends RendererImpl {
     }
 
     public void dispose() {
-        // do nothing
+        ImageCache.getInstance().dispose();
     }
 
 }
