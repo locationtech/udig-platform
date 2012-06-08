@@ -18,7 +18,6 @@
  */
 package eu.udig.renderer.jgttms;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -74,26 +73,51 @@ public class JGTtmsRenderer extends RendererImpl {
      * http://blogs.esri.com/Support/blogs/mappingcenter/archive/2009/03/19/How-can-you-tell-what-map-scales-are-shown-for-online-maps_3F00_.aspx
      * </pre>
      */
-    public static double[] scaleList = {//
-    Double.NaN, //
-            Double.NaN, //
-            147914381, //
-            73957190, //
-            36978595, //
-            18489297, //
-            9244648, //
-            4622324, //
-            2311162, //
-            1155581, //
-            577790, //
-            288895, //
-            144447, //
-            72223, //
-            36111, //
-            18055, //
-            9027, //
-            4513, //
-            2256 //
+    // public static double[] scaleList = {//
+    // Double.NaN, //
+    // Double.NaN, //
+    // 147914381, //
+    // 73957190, //
+    // 36978595, //
+    // 18489297, //
+    // 9244648, //
+    // 4622324, //
+    // 2311162, //
+    // 1155581, //
+    // 577790, //
+    // 288895, //
+    // 144447, //
+    // 72223, //
+    // 36111, //
+    // 18055, //
+    // 9027, //
+    // 4513, //
+    // 2256 //
+    // };
+
+    /**
+     * http://wiki.openstreetmap.org/wiki/FAQ#What_is_the_map_scale_for_a_particular_zoom_level_of_the_map.3F
+     */
+    public static double[][] scaleList = {//
+    // Zoom level,Scale at 72dpi (equator), Meters per pixel (equator),Mpp at 45 degrees (Milano,
+    // Lyon, Zagreb) , Mpp at 60 degrees (Stockholm, Oslo)
+            {18, 1693, 0.597164, 0.844525, 1.194329}, //
+            {17, 3385, 1.194329, 1.689051, 2.388657}, //
+            {16, 6771, 2.388657, 3.378103, 4.777314}, //
+            {15, 14000, 4.777314, 6.756207, 9.554629}, //
+            {14, 27000, 9.554629, 13.512415, 19.109257}, //
+            {13, 54000, 19.109257, 27.024829, 38.218514}, //
+            {12, 108000, 38.218514, 54.049659, 76.437028}, //
+            {11, 217000, 76.437028, 108.099318, 152.874057}, //
+            {10, 433000, 152.874057, 216.198638, 305.748113}, //
+            {9, 867000, 305.748113, 432.397274, 611.496226}, //
+            {8, 2000000, 611.496226, 864.794549, 1222.992453}, //
+            {7, 3000000, 1222.992453, 1729.589100, 2445.984905}, //
+            {6, 7000000, 2445.984905, 3459.178199, 4891.969810}, //
+            {5, 14000000, 4891.969810, 6918.356399, 9783.939621}, //
+            {4, 28000000, 9783.939621, 13836.712800, 19567.879241}, //
+            {3, 55000000, 19567.879241, 27673.425598, 39135.758482}, //
+            {2, 111000000, 39135.758482, 55346.851197, 78271.516964}//
     };
 
     public void render( Graphics2D g2d, IProgressMonitor monitor ) throws RenderException {
@@ -109,7 +133,7 @@ public class JGTtmsRenderer extends RendererImpl {
                 renderREnv = context.getImageBounds();
             }
 
-            // ReferencedEnvelope mercatorREnv = renderREnv.transform(mercatorCrs, true);
+            ReferencedEnvelope mercatorREnv = renderREnv.transform(mercatorCrs, true);
             ReferencedEnvelope latlongREnv = renderREnv.transform(latLongCrs, true);
 
             Point upperLeft = currentContext.worldToPixel(new Coordinate(renderREnv.getMinX(), renderREnv.getMinY()));
@@ -125,10 +149,13 @@ public class JGTtmsRenderer extends RendererImpl {
             JGTtmsProperties tmsProperties = jgtTmsGeoResource.getTmsProperties();
             RasterSymbolizer rasterSymbolizer = CommonFactoryFinder.getStyleFactory(null).createRasterSymbolizer();
 
-            double scale = getContext().getViewportModel().getScaleDenominator();
-            int nearestZoomLevel = getZoomLevelFromScale(scale);
+            // double scale = getContext().getViewportModel().getScaleDenominator();
 
-            nearestZoomLevel = 13;
+            double widthMeters = mercatorREnv.getWidth();
+            int widthPixels = screenSize.width;
+
+            double metersXPixel = widthMeters / widthPixels;
+            int nearestZoomLevel = getZoomLevelMetersXPixel(metersXPixel, latlongREnv.centre().y);
 
             // get tiles range
             double w = latlongREnv.getMinX();
@@ -269,21 +296,29 @@ public class JGTtmsRenderer extends RendererImpl {
      * @param tempScaleList
      * @return
      */
-    public int getZoomLevelFromScale( double scale ) {
+    public int getZoomLevelMetersXPixel( double metersXPixel, double lat ) {
+        int column = 3;
+        if (lat > -30 && lat < 30) {
+            column = 2;
+        }
+        if (lat < -75 || lat > 75) {
+            column = 4;
+        }
 
-        // Start with the most detailed zoom-level and search the best-fitting one
-        int zoomLevel = scaleList.length - 1;
-
-        for( int i = scaleList.length - 2; i >= 0; i-- ) {
-            if (Double.isNaN(scaleList[i])) {
-                break;
-            }
-            zoomLevel = i;
-            if (scale > scaleList[i]) {
-                break;
+        if (metersXPixel <= scaleList[0][column]) {
+            return (int) scaleList[0][0];
+        } else if (metersXPixel >= scaleList[scaleList.length - 1][column]) {
+            return (int) scaleList[scaleList.length - 1][0];
+        } else {
+            for( int i = 0; i < scaleList.length - 1; i++ ) {
+                double s1 = scaleList[i][column];
+                double s2 = scaleList[i + 1][column];
+                if (metersXPixel >= s1 && metersXPixel < s2) {
+                    return (int) scaleList[i + 1][0];
+                }
             }
         }
-        return zoomLevel;
+        throw new RuntimeException();
     }
 
     private RenderingHints getRenderingHints( Graphics2D g2d ) {
