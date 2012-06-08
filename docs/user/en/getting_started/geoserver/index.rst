@@ -2,14 +2,14 @@ GeoServer Install
 =================
 
 |100002010000013E000000F87A9818C9_png|
-|10000000000001370000012ECF2386E2_png|
+|logo_refractions_png|
 |10000201000000EA000000EA7E065A05_png|
 
 
-|10000000000003130000009AAAA8E4AA_png|
+|background_trees_png|
 
 
-.. |10000000000001370000012ECF2386E2_png| image:: images/10000000000001370000012ECF2386E2.png
+.. |logo_refractions_png| image:: images/logo_refractions.png
     :width: 2.799cm
     :height: 2.718cm
 
@@ -18,7 +18,7 @@ GeoServer Install
     :width: 2.69cm
     :height: 2.101cm
 
-.. |10000000000003130000009AAAA8E4AA_png| image:: images/10000000000003130000009AAAA8E4AA.png
+.. |background_trees_png| image:: images/background_trees.png
     :width: 21.026cm
     :height: 4.121cm
 
@@ -64,7 +64,7 @@ GeoServer is a Java application – if you do not already have Java on your syst
 
 * Congratulations Java is now installed.
 
-  |1000000000000202000001884F938CB6_png|
+  |java_install_success_png|
 
 .. |10000000000002020000018860D0E3B4_png| image:: images/10000000000002020000018860D0E3B4.png
     :width: 7.459cm
@@ -74,7 +74,7 @@ GeoServer is a Java application – if you do not already have Java on your syst
     :width: 7.459cm
     :height: 5.69cm
 
-.. |1000000000000202000001884F938CB6_png| image:: images/1000000000000202000001884F938CB6.png
+.. |java_install_success_png| image:: images/java_install_success.png
     :width: 7.459cm
     :height: 5.69cm
 
@@ -114,7 +114,7 @@ GeoServer as a normal application.
 
 * GeoServer will store your configuration in a “data directory”, the default location will work fine. Press *Next* to continue.
 
-  |10000000000002010000018F59671AE4_png|
+  |installer_data_dir_png|
 
 
 * GeoServer provides a web based configuration system allowing you to administer the application remotely. Please accept the default credentials (admin and geoserver) for the purpose of this tutorial.
@@ -188,7 +188,7 @@ GeoServer as a normal application.
     :height: 5.791cm
 
 
-.. |10000000000002010000018F59671AE4_png| image:: images/10000000000002010000018F59671AE4.png
+.. |installer_data_dir_png| image:: images/installer_data_dir.png
     :width: 7.451cm
     :height: 5.791cm
 
@@ -246,7 +246,7 @@ In this section you will learn how to start GeoServer, and explore its editing a
 
 * Click Start->Programs >GeoServer 2.0.1 >Start GeoServer
 
-  |10000000000000E40000008B8FF2A8C8_png|
+  |start_geoserver_png|
 
 * When starting for the first time you will need to grant the Firewall permission for GeoServer to open a port.
 
@@ -271,7 +271,7 @@ In this section you will learn how to start GeoServer, and explore its editing a
 
 * The welcome screen now has a great many more options than in previous versions.
 
-  |10000000000003920000028E0917F97E_png|
+  |geoserver_welcome_admin_png|
 
 * You may notice that this GeoServer belongs to “The ancient geographes INC”. Let us go in and fix that up.
 
@@ -290,7 +290,7 @@ In this section you will learn how to start GeoServer, and explore its editing a
     :width: 9.92cm
     :height: 7.1cm
 
-.. |10000000000003920000028E0917F97E_png| image:: images/10000000000003920000028E0917F97E.png
+.. |geoserver_welcome_admin_png| image:: images/geoserver_welcome_admin.png
     :width: 13.27cm
     :height: 9.49cm
 
@@ -310,7 +310,7 @@ In this section you will learn how to start GeoServer, and explore its editing a
     :width: 14.439cm
     :height: 6.56cm
 
-.. |10000000000000E40000008B8FF2A8C8_png| image:: images/10000000000000E40000008B8FF2A8C8.png
+.. |start_geoserver_png| image:: images/start_geoserver.png
     :width: 4.41cm
     :height: 2.69cm
 
