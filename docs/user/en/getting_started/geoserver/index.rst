@@ -1,9 +1,9 @@
 GeoServer Install
 =================
 
-|100002010000013E000000F87A9818C9_png|
+|lisasoft_logo_png|
 |logo_refractions_png|
-|10000201000000EA000000EA7E065A05_png|
+|geoserver_logo_png|
 
 
 |background_trees_png|
@@ -14,7 +14,7 @@ GeoServer Install
     :height: 2.718cm
 
 
-.. |100002010000013E000000F87A9818C9_png| image:: images/100002010000013E000000F87A9818C9.png
+.. |lisasoft_logo_png| image:: images/lisasoft_logo.png
     :width: 2.69cm
     :height: 2.101cm
 
@@ -23,7 +23,7 @@ GeoServer Install
     :height: 4.121cm
 
 
-.. |10000201000000EA000000EA7E065A05_png| image:: images/10000201000000EA000000EA7E065A05.png
+.. |geoserver_logo_png| image:: images/geoserver_logo.png
     :width: 4.055cm
     :height: 4.055cm
 
@@ -55,22 +55,22 @@ GeoServer is a Java application – if you do not already have Java on your syst
 
 * Double-click the installer (jre_7u1-windows-i586.exe is used in this example) and accept the license agreement.
 
-  |100000000000020200000188E1DCF669_png|
+  |jre_welcome_png|
 
 
 * Press the Install but to get going.
 
-  |10000000000002020000018860D0E3B4_png|
+  |jre_installing_png|
 
 * Congratulations Java is now installed.
 
   |java_install_success_png|
 
-.. |10000000000002020000018860D0E3B4_png| image:: images/10000000000002020000018860D0E3B4.png
+.. |jre_installing_png| image:: images/jre_installing.png
     :width: 7.459cm
     :height: 5.69cm
 
-.. |100000000000020200000188E1DCF669_png| image:: images/100000000000020200000188E1DCF669.png
+.. |jre_welcome_png| image:: images/jre_welcome.png
     :width: 7.459cm
     :height: 5.69cm
 
@@ -90,21 +90,21 @@ GeoServer as a normal application.
 
 * Double-click the geoserver installer to start.
   
-  |10000000000002010000018FD6A7E79C_png|
+  |installer_welcome_png|
 
 * G eoServer is released under the GPL license, press “I Agree” to contunue.
 
-  |10000000000002010000018F72837274_png|
+  |installer_license_png|
 
 
 * GeoServer will install into the *Programmers Files* directory, press *Next* to continue.
 
-  |10000000000002010000018F5E22EE7A_png|
+  |installer_location_png|
 
 
 * Press *Next* to create the default start menu folder
 
-  |10000000000002010000018F8FD06244_png|
+  |installer_menu_png|
 
 
 * GeoServer select your current Java Runtime Environment. Press Next to continue.
@@ -119,66 +119,66 @@ GeoServer as a normal application.
 
 * GeoServer provides a web based configuration system allowing you to administer the application remotely. Please accept the default credentials (admin and geoserver) for the purpose of this tutorial.
 
-  |10000000000002010000018F5D64B4D5_png|
+  |installer_admin_png|
 
 
 * You can also choose the port for the service, 8080 will be fine for this tutorial.
 
-  |10000000000002010000018FC0424ECF_png|
+  |installer_port_png|
 
 
 * We now get to choose “Run Manually” (as we are just interested in evaluating GeoServer at this time).
 
-  |10000000000002010000018F66C9983F_png|
+  |installer_type_png|
 
 * You can review your settings and then press *Finish* to install GeoServer.
 
-  |10000000000002010000018F6ED92A92_png|
+  |installer_ready_png|
 
 * Please wait while GeoServer installs.
 
-  |10000000000002010000018F9E8E423F_png|
+  |installer_installing_png|
 
 * Thank you for installing GeoServer!
 
-  |10000000000002010000018FC9C3F697_png|
+  |installer_finish_png|
 
-.. |10000000000002010000018F5D64B4D5_png| image:: images/10000000000002010000018F5D64B4D5.png
+.. |installer_admin_png| image:: images/installer_admin.png
     :width: 7.451cm
     :height: 5.791cm
 
 
-.. |10000000000002010000018F72837274_png| image:: images/10000000000002010000018F72837274.png
+.. |installer_license_png| image:: images/installer_license.png
     :width: 7.451cm
     :height: 5.791cm
 
 
-.. |10000000000002010000018FC9C3F697_png| image:: images/10000000000002010000018FC9C3F697.png
+.. |installer_finish_png| image:: images/installer_finish.png
     :width: 7.451cm
     :height: 5.791cm
 
 
-.. |10000000000002010000018FC0424ECF_png| image:: images/10000000000002010000018FC0424ECF.png
+.. |installer_port_png| image:: images/installer_port.png
     :width: 7.451cm
     :height: 5.791cm
 
 
-.. |10000000000002010000018F5E22EE7A_png| image:: images/10000000000002010000018F5E22EE7A.png
+.. |installer_location_png| image:: images/installer_location.png
     :width: 7.451cm
     :height: 5.791cm
 
 
-.. |10000000000002010000018F66C9983F_png| image:: images/10000000000002010000018F66C9983F.png
+.. |installer_type_png| image:: images/installer_type.png
     :width: 7.451cm
     :height: 5.791cm
 
 
-.. |10000000000002010000018FD6A7E79C_png| image:: images/10000000000002010000018FD6A7E79C.png
+.. |installer_welcome_png| image:: images/installer_welcome.png
     :width: 7.451cm
     :height: 5.791cm
 
 
-.. |10000000000002010000018F8FD06244_png| image:: images/10000000000002010000018F8FD06244.png
+.. |installer_menu_png| image:: images/installer_menu.png
     :width: 7.451cm
     :height: 5.791cm
 
@@ -193,12 +193,12 @@ GeoServer as a normal application.
     :height: 5.791cm
 
 
-.. |10000000000002010000018F9E8E423F_png| image:: images/10000000000002010000018F9E8E423F.png
+.. |installer_installing_png| image:: images/installer_installing.png
     :width: 7.451cm
     :height: 5.791cm
 
 
-.. |10000000000002010000018F6ED92A92_png| image:: images/10000000000002010000018F6ED92A92.png
+.. |installer_ready_png| image:: images/installer_ready.png
     :width: 7.451cm
     :height: 5.791cm
 
@@ -216,26 +216,26 @@ AJAX library.
 
 * In the *tasmania* row click on the *OpenLayers* link.
 
-  |10000000000003E4000001C3AF04C7C2_png|
+  |web_preview_png|
 
 * Click on the highlighted OpenLayers link at the bottom to open a new tab. As this Open Layers
   application is started up you can watch the GeoServer console respond to queries.
   
-  |10000000000002A50000018649F451DE_png|
+  |console_getmap_png|
 
 * This will bring up a web application put together with “Open Layers”.
 
-  |100000000000020D000001EDF5529B51_png|
+  |tasmania_png|
 
-.. |100000000000020D000001EDF5529B51_png| image:: images/100000000000020D000001EDF5529B51.png
+.. |tasmania_png| image:: images/tasmania.png
     :width: 10.16cm
     :height: 9.541cm
 
-.. |10000000000002A50000018649F451DE_png| image:: images/10000000000002A50000018649F451DE.png
+.. |console_getmap_png| image:: images/console_getmap.png
     :width: 11.46cm
     :height: 6.6cm
 
-.. |10000000000003E4000001C3AF04C7C2_png| image:: images/10000000000003E4000001C3AF04C7C2.png
+.. |web_preview_png| image:: images/web_preview.png
     :width: 14.46cm
     :height: 6.549cm
 
@@ -250,23 +250,23 @@ In this section you will learn how to start GeoServer, and explore its editing a
 
 * When starting for the first time you will need to grant the Firewall permission for GeoServer to open a port.
 
-  |100000000000021D0000018373C3F1BA_png|
+  |firewwall_png|
 
 
 * GeoServer will open up a console running the Jetty Application Server; please wait until
   Jetty indicates it is listening on port 8080 as shown below.
   
-  |10000000000002A500000186248DC573_png|
+  |console_start_png|
 
 * You can use the start menu to open the
   “GeoServer Web Admin Page”.
   The web browser will open:
   
-  |10000000000003E3000001C42B919F62_png|
+  |welcome_png|
 
 * We need to login before we can use the configuration screen. Fill in “admin” and “geoserver” along the top of the screen and press “Login”.
 
-  |10000000000003E30000005E5EECAAB8_png|
+  |web_login_png|
 
 
 * The welcome screen now has a great many more options than in previous versions.
@@ -278,15 +278,15 @@ In this section you will learn how to start GeoServer, and explore its editing a
 
 * Click on *Contact Information* and fill in the details for your organisation.
   
-  |100000000000035E0000028EE27AF6FB_png|
+  |web_contact_png|
 
 * Press the *Submit* button, you will be returned to the Welcome screen and you can see the contact organization has been changed.
 
 * In a similar fashion change the title of the WMS to “Local Web Map Server”.
 
-  |10000000000003E5000001C3577CBA2B_png|
+  |web_config_wms_png|
 
-.. |100000000000021D0000018373C3F1BA_png| image:: images/100000000000021D0000018373C3F1BA.png
+.. |firewwall_png| image:: images/firewwall.png
     :width: 9.92cm
     :height: 7.1cm
 
@@ -294,19 +294,19 @@ In this section you will learn how to start GeoServer, and explore its editing a
     :width: 13.27cm
     :height: 9.49cm
 
-.. |10000000000002A500000186248DC573_png| image:: images/10000000000002A500000186248DC573.png
+.. |console_start_png| image:: images/console_start.png
     :width: 12.42cm
     :height: 6.271cm
 
-.. |10000000000003E5000001C3577CBA2B_png| image:: images/10000000000003E5000001C3577CBA2B.png
+.. |web_config_wms_png| image:: images/web_config_wms.png
     :width: 14.469cm
     :height: 6.549cm
 
-.. |10000000000003E30000005E5EECAAB8_png| image:: images/10000000000003E30000005E5EECAAB8.png
+.. |web_login_png| image:: images/web_login.png
     :width: 14.439cm
     :height: 1.36cm
 
-.. |10000000000003E3000001C42B919F62_png| image:: images/10000000000003E3000001C42B919F62.png
+.. |welcome_png| image:: images/welcome.png
     :width: 14.439cm
     :height: 6.56cm
 
@@ -314,7 +314,7 @@ In this section you will learn how to start GeoServer, and explore its editing a
     :width: 4.41cm
     :height: 2.69cm
 
-.. |100000000000035E0000028EE27AF6FB_png| image:: images/100000000000035E0000028EE27AF6FB.png
+.. |web_contact_png| image:: images/web_contact.png
     :width: 12.51cm
     :height: 9.49cm
 
