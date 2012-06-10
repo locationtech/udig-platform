@@ -1,61 +1,56 @@
 Online Documentation and Tutorials
------------------------------------
+----------------------------------
 
 In this section you will open up the online tutorial, and access reference information.
 
-* Open up the
-  Help menu
-  and select
-  Help Contents
-  |10000000000000B3000000B68A19E4B4_png|
+.. sidebar:: Shortcut
 
+   You can access the tutorials directly by pressing :guilabel:`Getting Started` on the welcome screen.
+   
+1. Open up the :guilabel:`Help` menu and select :guilabel:`Help Contents`
+ 
+   |10000000000000B3000000B68A19E4B4_png|
 
-* The windows firewall will need to allow the help application to startup.
-  |100000000000021D000001A7709444A6_png|
+2. The windows firewall will need to allow the help application to startup.
+  
+   |100000000000021D000001A7709444A6_png|
 
+3. This will bring up the online help system; the help system is a web application that makes use of a :guilabel:`Contents`
+   view to allow you to navigate between :guilabel:`Pages`.
+   
+   |100000000000040000000175BF0FDF7A_png|
+   
+   * |100000000000001500000014B6FBBDB8_png| Show in Table of Contents find your place in the table of contents.
 
-* This will bring up the online help system; the help system is a web application that makes use of a
-  Contents
-  view to allow you to navigate between
-  Pages
-  .
-  |100000000000040000000175BF0FDF7A_png|
-  |100000000000001500000014B6FBBDB8_png|
-
-  Show in Table of Contents
-  find your place in the table of contents
-
-
-* The Contents view organizes Pages into Books. The following books are included with the uDig application
-
-
-* User Guide
-
-
-* Live User Guide
-  – live access to the uDig web site
-
-
+4. The :guilabel:`Contents` view organizes :guilabel:`Pages` into :guilabel:`Books`.
+   
+   The following books are included with the uDig application:
+   
+   * User Guide
+   * Live User Guide - direct access to uDig web site
+   
+   More book may be included when you install additional features.
+  
 Help Categories
 ---------------
 
 You can access additional reference information in the following categories:
 
 * Getting Started
+
   |100000000000024E00000068BD314370_png|
 
-
 * Concepts
+
   |100000000000021A0000006ABFB123F6_png|
 
-
 * Tasks
+
   |100000000000024B00000077E6A87224_png|
 
-
 * Reference
-  |100000000000024E0000007A15E71D0F_png|
 
+  |100000000000024E0000007A15E71D0F_png|
 
 .. |100000000000001500000014B6FBBDB8_png| image:: images/100000000000001500000014B6FBBDB8.png
     :width: 0.556cm
