@@ -5,23 +5,13 @@ GeoServer Install
 |logo_refractions_png|
 |geoserver_logo_png|
 
-
-|background_trees_png|
-
-
 .. |logo_refractions_png| image:: images/logo_refractions.png
     :width: 2.799cm
     :height: 2.718cm
 
-
 .. |lisasoft_logo_png| image:: images/lisasoft_logo.png
     :width: 2.69cm
     :height: 2.101cm
-
-.. |background_trees_png| image:: images/background_trees.png
-    :width: 21.026cm
-    :height: 4.121cm
-
 
 .. |geoserver_logo_png| image:: images/geoserver_logo.png
     :width: 4.055cm
@@ -109,7 +99,7 @@ GeoServer as a normal application.
 
 * GeoServer select your current Java Runtime Environment. Press Next to continue.
 
-  |10000000000002010000018F59AC2A52_png|
+  |installer_jre_png|
 
 
 * GeoServer will store your configuration in a “data directory”, the default location will work fine. Press *Next* to continue.
@@ -183,7 +173,7 @@ GeoServer as a normal application.
     :height: 5.791cm
 
 
-.. |10000000000002010000018F59AC2A52_png| image:: images/10000000000002010000018F59AC2A52.png
+.. |installer_jre_png| image:: images/installer_jre.png
     :width: 7.451cm
     :height: 5.791cm
 
