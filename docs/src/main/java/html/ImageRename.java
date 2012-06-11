@@ -25,8 +25,13 @@ import javax.swing.JFileChooser;
  * 
  * <pre>
  * 10000000000002010000018F5D64B4D5.png=installer_admin.png
- * 10000000000002010000018F5E22EE7A.png=installer_location.png
+ * 10000000000002010000018F5E22EE7A.png=installer_location
+ * 1000000000000081000001924E854422.jpg=splash_screen
+ * 10000000000001010000007AC9F16190.png
  * </pre>
+ * Files will be renamed if a new name is defined, the rename will preserving their extension.
+ * <p>
+ * The renames will also be used to update the RST files (as long as the final file exists).
  * <p>
  * You need to do a bit of set up prior to running this program:
  * <ul>
@@ -157,9 +162,17 @@ public class ImageRename {
         }
         return path;
     }
+    
+    String extension(String path) {
+        int split = path.lastIndexOf('.');
+        if (split != -1) {
+            return path.substring(split);
+        }
+        return "";
+    }
 
     /**
-     * Move the indicated images, returns a map of the search and repalce to perform.
+     * Move the indicated images, returns a map of the search and replace to perform.
      * 
      * @param images
      * @param list
@@ -169,12 +182,14 @@ public class ImageRename {
         Map<String, String> renamed = new HashMap<String, String>();
         for (Entry<Object, Object> entry : list.entrySet()) {
             String from = trimExtension((String) entry.getKey());
+            String extension = extension( (String) entry.getKey() );
+            
             String to = trimExtension((String) entry.getValue());
 
             if( to.isEmpty() ) continue; // skip
             
-            File file = new File(images, from + ".png");
-            File move = new File(images, to + ".png");
+            File file = new File(images, from + extension);
+            File move = new File(images, to + extension);
             
             if (!file.exists()) {
                 // checking if it was already moved ...
