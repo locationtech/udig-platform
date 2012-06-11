@@ -1,16 +1,20 @@
 Connecting to a Web Map Server
------------------------------------
+------------------------------
 
 In this section you will learn how to drag and drop a Web Map Server (WMS) link into uDig for the purpose of viewing its layers.
 
 1. There are many ways to load map data into uDig, including drag and drop.
-   To drag a Web Map Server (WMS) link into uDig, open up a web browser.
 
-2. Please connect to the Walkthrough 1 page with your web browser:
-   `Walkthrough 1 <http://udig.refractions.net/confluence/display/EN/Walkthrough+1>`_
-
-3. We are going to use the link to:
+2. To demonstrate we will use the *DM Solutions WMS* Web Map Service. 
+   
+   The Web Map Service protocol is used to publish layers of information.
+   
+3. We are going to use a link to the *GetCapabilities* document which lists the
+   available layers: 
    `DM Solutions WMS <http://www2.dmsolutions.ca/cgi-bin/mswms_gmap?Service=WMS&VERSION=1.1.0&REQUEST=GetCapabilities>`_
+
+   This link is also avaialble from the Walkthrough 1 page:
+   `Walkthrough 1 <http://udig.refractions.net/confluence/display/EN/Walkthrough+1>`_
       
 4. For most browsers you can simply drag the link into the :guilabel:`Layers` view
         
@@ -32,63 +36,85 @@ In this section you will learn how to drag and drop a Web Map Server (WMS) link 
 
 6. The map layers will now render in the :guilabel:`Map` editor.
    
-   |100000000000040000000300A11D76C3_png|
+   |10000000000004000000030027731BCF_png|
 
-   Notice the bottom right corner of the uDig Application will display a :guilabel:`processing` notice
-   while it is requesting and drawing the layers.
+Map Editor
+----------
+
+The :guilabel:`Map` editor is used to display a map on screen. You can open several Maps
+and the :guilabel:`Layers` view will list the contents of the currently selected editor.
+
+1. The :guilabel:`Map` editor is used to display the visible layers.
    
-   * Text and progress bar indicate rendering status
-   * Click on the icon to open the :guilabel:`Progress` view to monitor (and cancel) background processes such as rendering.
-
-7. When the layers are done rendering, the :guilabel:`Map` editor will display the visible layers
- 
    |10000000000004000000030027731BCF_png|
    
-8. Now that you have some data on screen try the navigation tools along the top of the tool palette.
+2. :guilabel:`Map` interaction is controled by the selected :guilabel:`Tool`
+   in the :guilabel:`Palette` on the right hand side of the screen.
+   
+   Try the navigation tools along the top of the tool :guilabel:`Palette`.
    
    * |zoom_mode| Zoom (keyboard short cut :kbd:`z`)
      Click or drag the left button to zoom in, or right button to zoom out.
    
    * |pan_mode| Pan (keyboard short cut :kbd:`p`)
      Click and drag to move the display.
-
-   **Mouse Wheel**: The mouse scroll wheel can be used to zoom in and out quickly regardless of the currently selected tool.
    
-9. The remaining tools are organised into drawers according to function.
+   Several shortcuts are always available:
    
-   You can open and close the drawers by clicking on their title. Drawers will close automatically as you switch between drawers. You can also pin a drawer open for easy access.
- 
+   * **Mouse Wheel**: used to zoom in and out quickly
+   
+   * **Middle Button**: Used to quickly pan the display
+   
+3. The :guilabel:`Palette` organises tools into drawers according to function.
+   
    |1000000000000081000001924E854422_png|
+   
+   * You can open and close the drawers by clicking on their title.
+   * Drawers will close automatically as you switch between drawers. Although you
+     can also pin a drawer open for easy access.
+   * Available tools change depending on the currently selected layer
 
-   Available tools change depending on the currently selected layer.
+4. Right click on a drawer to customise the size of the icons used; and how much
+   information is displayed in the :guilabel:`Palette`.
+   
+   |10000000000000820000018F9C5F08A7_png|
 
-10. You can right click on a drawer to customise the size of the icons used; and how much information you wish to see in the palette.
+5. The :guilabel:`Map` editor lists common commands in the :guilabel:`toolbar`
+   along the top of the screen.
+   
+   * |zoom_extent_co| Extent: zoom out to show all enabled layers
+   
+   * |zoom_in_co| Zoom In
     
-    |10000000000000820000018F9C5F08A7_png|
+   * |zoom_out_co| Zoom Out
+    
+   * |cancel_all_co| Stop Rendering
+    
+   * |refresh_co| Refresh Map
 
-11. In addition to the palette the map has a toolbar along the top of the screen for common actions.
-    
-    * |zoom_extent_co| Extent: zoom out to show all enabled layers
-    
-    * |zoom_in_co| Zoom In
-    
-    * |zoom_out_co| Zoom Out
-    
-    * |cancel_all_co| Stop Rendering
-    
-    * |refresh_co| Refresh Map
-    
-12. The :guilabel:`Layers` view shows the order in which layers are drawn. Please select the
-    :guilabel:`Elevation/Bathymetry` layer and use the :guilabel:`Move down` button from the
-    :guilabel:`Layer` view toolbar to move selected layer to the bottom of the list.
-    
-    |100000000000015D00000073FDB25240_png|
+6. Press the |refresh_co| :guilabel:`Refresh` button, and watch the :guilabel:`processing` information
+   displayed in the bottom right corner of the workbench.
+   
+   |100000000000040000000300A11D76C3_png|
+   
+   * Description and progress bar indicate rendering status
+   * Button to open the :guilabel:`Progress` view providing more detail when
+     several layers are rendering at once and the ability to cancel any long
+     running activities.
 
-    **Drag and Drop** You can also drag layers up and down in the layer view to change the order.
-
-13. The order is now changed.
+7. The :guilabel:`Layers` view shows the order in which layers are drawn. Please select the
+   :guilabel:`Elevation/Bathymetry` layer and use the :guilabel:`Move down` button from the
+   :guilabel:`Layer` view toolbar to move selected layer to the bottom of the list.
     
-    |100000000000015D00000073252C5C23_png|
+   |100000000000015D00000073FDB25240_png|
+
+   **Drag and Drop** You can also drag layers up and down in the layer view to change the order.
+
+8. The order is now changed.
+   
+   |100000000000015D00000073252C5C23_png|
+
+9. You can also use the checkboxes next to each Layer to turn them on and off.
 
 .. |pan_mode| image:: /images/navigation_tools/pan_mode.gif
 
