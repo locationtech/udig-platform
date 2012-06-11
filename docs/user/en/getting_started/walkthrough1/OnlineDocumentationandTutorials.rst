@@ -32,7 +32,7 @@ In this section you will open up the online tutorial, and access reference infor
    More book may be included when you install additional features.
   
 Help Categories
----------------
+^^^^^^^^^^^^^^^
 
 You can access additional reference information in the following categories:
 

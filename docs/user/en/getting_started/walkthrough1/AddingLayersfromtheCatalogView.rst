@@ -5,48 +5,36 @@ In this section you will learn how to add additional layers to your map from a p
 
 Adding a Layer from a previously connected WMS:
 
-* In the
-  Catalog
-  view of uDig expand the Catalog record for the
-  GMap WMS Demo Server
-  by clicking on the triangle beside the record
-  .
-  Right-click on
-  Railroads
-  and select
-  Add to Current Map
-  .
-  |10000000000002EF000000EB4154A6E9_png|
+1. In the :guilabel:`Catalog` view expand the record for the
+   :guilabel:`GMap WMS Demo Server` by clicking on the triangle beside the record.
 
+2. Right-click on :guilabel:`Railroads` and select :guilabel:`Add to Current Map`.
 
-* The new layer will appear in the
-  Layers
-  view, and it will automatically start to render. When it finishes rendering, you should see a new
-  Railroads
-  layer drawn as purple lines.
-  |10000000000004000000030092D7F1D9_png|
+   |10000000000002EF000000EB4154A6E9_png|
 
+3. The new layer will appear in the :guilabel:`Layers` view and automatically start to render.
+   
+   |10000000000004000000030092D7F1D9_png|
+   
+   When it finishes rendering, you should see a new :guilabel:`Railroads` layer drawn on screen.
 
-* The catalog also comes equipped with a built in service called “Decoration”. Select
-  Decoration > Scalebar
-  in the Catalog view and drag this layer onto the Map
-  |10000000000002F70000029466C467D3_png|
+4. The catalog also comes equipped with a built in service called :guilabel:`Decoration`.
+   
+   Select :guilabel:`Decoration > Scalebar` in the :guilabel:`Catalog` view and drag this
+   layer onto the Map
+   
+   |10000000000002F70000029466C467D3_png|
 
+   The Scalebar is added to the top left corner of your map.
 
-* The Scalebar is added to the top left corner of your map.
-
-
-* You can now close the Map Editor using the small
-  x
-  next to the map name. Available maps including this one are shown in the
-  Projects
-  view.
-
+5. You can now close the Map Editor using the small :guilabel:`x` next to the map name.
+  
+6. Available maps including this one are shown in the :guilabel:`Projects` view if you
+   would like to open your map again.
 
 .. |10000000000002EF000000EB4154A6E9_png| image:: images/10000000000002EF000000EB4154A6E9.png
     :width: 12.719cm
     :height: 3.979cm
-
 
 .. |10000000000002F70000029466C467D3_png| image:: images/10000000000002F70000029466C467D3.png
     :width: 11cm
