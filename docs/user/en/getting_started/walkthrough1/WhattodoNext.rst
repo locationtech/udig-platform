@@ -7,7 +7,7 @@ This is just the start of what uDig can do!
 
 * Try out the :doc:`North Arrow` decorator and change projections in order to see how it works.
 
-  |100000000000026C0000018BE3CEFED9_png|
+  |north_arrow_png|
 
 * There is more great data available in the data directory - have a look !
   
@@ -46,52 +46,52 @@ One of the nice things about uDig is the ease to download and install additional
 
 1. Open up :guilabel:`Help > Find and Install`
    
-   |10000000000001D1000000D27D89B6DA_png|
+   |menubar_help_install_png|
 
 2. Select :guilabel:`Search for New Features to Install` and press :guilabel:`Next`.
    
-   |10000000000002750000013D3A5ED79C_png|
+   |update_site_search_png|
 
 3. Press the :guilabel:`New Remote Site` button and type the following parameters:
    
    * Name: :kbd:`uDig Community Updates`
    * URL: :kbd:`http://udig.refractions.net/update/1.2/community`
    
-   |1000020100000166000000B09D072A10_png|
+   |update_site_png|
 
 4. Check the new :guilabel:`uDig Community Updates` option and press :guilabel:`Finish`
    
-   |10000201000002770000029DF0ED262D_png|
+   |update_site_install_png|
 
 5. Please wait while the program checks the update site for new features.
    
-   |100002010000025B000000F5B04A0404_png|
+   |update_stie_checking_png|
 
 6. Once the program finishes getting the complete list of plug-ins, you will see something like this:
    
-   |100002010000025A00000229706BBF67_png|
+   |update_site_search_results_png|
 
 
 7. Check the latest *es.axios.udig.editingtools* version from the list and press :guilabel:`Next`.
 
 8. Accept the terms in the license agreement and press :guilabel:`Next`.
   
-   |100002010000025A000002294F137721_png|
+   |update_site_license_png|
 
 
 8. Finally confirm the installation location and press :guilabel:`Finish`.
    
-   |100002010000025A000002292818B80D_png|
+   |update_site_installation_png|
 
 
 9. Many of the community features have not been formally signed, please click :guilabel:`Install All` 
    when presented with a warning.
    
-   |100002010000025A000001F11BE2F1C2_png|
+   |update_site_verification_png|
 
 10. You will need to :guilabel:`Restart` when the installation finishes.
 
-    |100002010000025B00000098C874C9A5_png|
+    |update_site_restart_png|
 
 11. You may have noticed some new options in the toolbar, such as the merge tool described in the next section. 
 
@@ -103,24 +103,24 @@ Merge
 2. Load a test layer, like :guilabel:`countries` and select the
    :guilabel:`Merge` tool,
     
-   |100000000000035C0000009FF4CBA78B_png|
+   |merge_tool_palette_png|
 
 3. Select some features in your layer.
    
-   |10000000000002200000025226C9A962_png|
+   |merge_png|
    
-   |1000000000000220000002533D172BB1_png|
+   |merge_select_png|
 
 4. A new View called :guilabel:`Merge Tool` will appear in the lower box.
    
-   |10000000000003FC0000014FB2C974F4_png|
+   |merge_view_png|
 
 5. Click on the green check :guilabel:`Apply` button  in the :guilabel:`Merge` view toolbar
    to run the merge of the features.
    
 6. The result will be something like this:
    
-   |10000000000002210000024330223155_png|
+   |merge_result_png|
 
 Adding a Layer from PostGIS
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -141,15 +141,15 @@ open source PostgreSQL database. uDig handles other databases like Oracle and DB
 
 1. In the File menu, select :guilabel:`New > New Map`.
    
-   |10000000000001680000009E5CAF954B_png|
+   |menubar_new_map_png|
 
 2. In the :guilabel:`Projects` view, right-click on your map and select :guilabel:`Add`.
    
-   |10000000000001260000011268DE12AC_png|
+   |projects_map_add_png|
 
 3. Select :guilabel:`PostGIS` as the data source and click :guilabel:`Next`.
    
-   |100000000000020D000001AD21F4CAF3_png|
+   |postgis_wizard_png|
 
 4. Enter the following connection information:
    
@@ -161,7 +161,7 @@ open source PostgreSQL database. uDig handles other databases like Oracle and DB
   
   Once the connection information is entered press :guilabel:`Next`.
   
-  |100000000000020D000001ADB9E75C01_png|
+  |postgis_connect_png|
 
 
 5. This page lists the databases available to the current user.
@@ -171,7 +171,7 @@ open source PostgreSQL database. uDig handles other databases like Oracle and DB
    
    * Database: :kbd:`demo-bc`
    
-   |100000000000020D000001DC5AC9B824_png|
+   |postgis_list_png|
 
 7. We can now press the :guilabel:`List` button to list the available tables. Please choose
    
@@ -185,131 +185,131 @@ open source PostgreSQL database. uDig handles other databases like Oracle and DB
    
    We can press :guilabel:`Finish` to add these layers to our Map.
    
-   |100000000000020D0000018256DA3A32_png|
+   |postgis_resource_selection_png|
 
 9. It may take a short while to fully render since you are zoomed out so far.
    
 10. Head on over the the :guilabel:`Layer` view and right click on
     :guilabel:`bc_hospitals` layer and choose :guilabel:`Zoom to Layer`
     
-    |1000000000000405000003056AEA1FCC_png|
+    |postgis_zoom_to_layer_png|
     
     The map will now zoom in to show the extent of the :guilabel:`bc_hospitals` layer.
 
 11. You can return to your previous position in the world by selecting Back in the Navigation menu.
 
 
-.. |100002010000025B000000F5B04A0404_png| image:: images/100002010000025B000000F5B04A0404.png
+.. |update_stie_checking_png| image:: images/update_stie_checking.png
     :width: 10.361cm
     :height: 4.018cm
 
 
-.. |10000201000002770000029DF0ED262D_png| image:: images/10000201000002770000029DF0ED262D.png
+.. |update_site_install_png| image:: images/update_site_install.png
     :width: 8.53cm
     :height: 9.197cm
 
 
-.. |1000000000000405000003056AEA1FCC_png| image:: images/1000000000000405000003056AEA1FCC.png
+.. |postgis_zoom_to_layer_png| image:: images/postgis_zoom_to_layer.png
     :width: 14.52cm
     :height: 10.91cm
 
 
-.. |100000000000035C0000009FF4CBA78B_png| image:: images/100000000000035C0000009FF4CBA78B.png
+.. |merge_tool_palette_png| image:: images/merge_tool_palette.png
     :width: 12.577cm
     :height: 2.508cm
 
 
-.. |100000000000026C0000018BE3CEFED9_png| image:: images/100000000000026C0000018BE3CEFED9.png
+.. |north_arrow_png| image:: images/north_arrow.png
     :width: 11.479cm
     :height: 7.31cm
 
 
-.. |1000000000000220000002533D172BB1_png| image:: images/1000000000000220000002533D172BB1.png
+.. |merge_select_png| image:: images/merge_select.png
     :width: 5.916cm
     :height: 7.121cm
 
 
-.. |10000000000001D1000000D27D89B6DA_png| image:: images/10000000000001D1000000D27D89B6DA.png
+.. |menubar_help_install_png| image:: images/menubar_help_install.png
     :width: 8.61cm
     :height: 3.889cm
 
 
-.. |1000020100000166000000B09D072A10_png| image:: images/1000020100000166000000B09D072A10.png
+.. |update_site_png| image:: images/update_site.png
     :width: 6.618cm
     :height: 3.226cm
 
 
-.. |100000000000020D000001AD21F4CAF3_png| image:: images/100000000000020D000001AD21F4CAF3.png
+.. |postgis_wizard_png| image:: images/postgis_wizard.png
     :width: 8.89cm
     :height: 7.26cm
 
 
-.. |100000000000020D000001DC5AC9B824_png| image:: images/100000000000020D000001DC5AC9B824.png
+.. |postgis_list_png| image:: images/postgis_list.png
     :width: 9.631cm
     :height: 8.729cm
 
 
-.. |100000000000020D000001ADB9E75C01_png| image:: images/100000000000020D000001ADB9E75C01.png
+.. |postgis_connect_png| image:: images/postgis_connect.png
     :width: 9.631cm
     :height: 7.87cm
 
 
-.. |100000000000020D0000018256DA3A32_png| image:: images/100000000000020D0000018256DA3A32.png
+.. |postgis_resource_selection_png| image:: images/postgis_resource_selection.png
     :width: 9.631cm
     :height: 7.08cm
 
 
-.. |10000000000001260000011268DE12AC_png| image:: images/10000000000001260000011268DE12AC.png
+.. |projects_map_add_png| image:: images/projects_map_add.png
     :width: 4.979cm
     :height: 4.641cm
 
 
-.. |10000000000002750000013D3A5ED79C_png| image:: images/10000000000002750000013D3A5ED79C.png
+.. |update_site_search_png| image:: images/update_site_search.png
     :width: 13.31cm
     :height: 6.71cm
 
 
-.. |100002010000025A000001F11BE2F1C2_png| image:: images/100002010000025A000001F11BE2F1C2.png
+.. |update_site_verification_png| image:: images/update_site_verification.png
     :width: 9.627cm
     :height: 8.225cm
 
 
-.. |100002010000025A00000229706BBF67_png| image:: images/100002010000025A00000229706BBF67.png
+.. |update_site_search_results_png| image:: images/update_site_search_results.png
     :width: 10.116cm
     :height: 9.594cm
 
 
-.. |100002010000025A000002294F137721_png| image:: images/100002010000025A000002294F137721.png
+.. |update_site_license_png| image:: images/update_site_license.png
     :width: 10.343cm
     :height: 10.045cm
 
 
-.. |100002010000025B00000098C874C9A5_png| image:: images/100002010000025B00000098C874C9A5.png
+.. |update_site_restart_png| image:: images/update_site_restart.png
     :width: 11.374cm
     :height: 2.822cm
 
 
-.. |10000000000003FC0000014FB2C974F4_png| image:: images/10000000000003FC0000014FB2C974F4.png
+.. |merge_view_png| image:: images/merge_view.png
     :width: 13.173cm
     :height: 4.313cm
 
 
-.. |10000000000002210000024330223155_png| image:: images/10000000000002210000024330223155.png
+.. |merge_result_png| image:: images/merge_result.png
     :width: 9.629cm
     :height: 10.643cm
 
 
-.. |10000000000002200000025226C9A962_png| image:: images/10000000000002200000025226C9A962.png
+.. |merge_png| image:: images/merge.png
     :width: 5.916cm
     :height: 7.121cm
 
 
-.. |10000000000001680000009E5CAF954B_png| image:: images/10000000000001680000009E5CAF954B.png
+.. |menubar_new_map_png| image:: images/menubar_new_map.png
     :width: 6.669cm
     :height: 2.93cm
 
 
-.. |100002010000025A000002292818B80D_png| image:: images/100002010000025A000002292818B80D.png
+.. |update_site_installation_png| image:: images/update_site_installation.png
     :width: 9.516cm
     :height: 9.243cm
 

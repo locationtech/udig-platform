@@ -5,7 +5,7 @@ In this section, you will learn how to use the :guilabel:`Info` tool.
 
 1. Open up our first map labeled :guilabel:`Cities`.
    
-   |100000000000012E000000FEE45169D4_png|
+   |projects_open_png|
 
    * You can also double click on the :guilabel:`Cities` map in the :guilabel:`Projects`
      view to open it.
@@ -21,7 +21,7 @@ In this section, you will learn how to use the :guilabel:`Info` tool.
    
 4. Click on a green park; to request more information from the Web Map Service.
    
-   |10000000000002E60000028ED379F49B_jpg|
+   |setup_loading_jpg|
 
 5. The :guilabel:`Information` view is opened, listing details about the :guilabel:`Park`
    layer at the location specified.
@@ -51,7 +51,7 @@ You can also use the :guilabel:`Information` view to quickly review feature and 
 3. The right pane of the :guilabel:`Information` view is used to explore the attributes of
    the country you clicked on. 
    
-   |10000000000002EF000002964327B9F6_png|
+   |info_feature_png|
    
    * You will see the information view flash the country to remind you of the area
      you clicked. This is useful when sorting through several featuers on different
@@ -65,24 +65,24 @@ You can also use the :guilabel:`Information` view to quickly review feature and 
    
    Pick the :guilabel:`NE1_50M_SR_W` raster layer to review the RGB values.
    
-   |10000000000002EF000000E97376715B_png|
+   |info_raster_png|
 
-.. |100000000000012E000000FEE45169D4_png| image:: images/100000000000012E000000FEE45169D4.png
+.. |projects_open_png| image:: images/projects_open.png
     :width: 4.38cm
     :height: 3.679cm
 
 
-.. |10000000000002E60000028ED379F49B_jpg| image:: images/10000000000002E60000028ED379F49B.jpg
+.. |setup_loading_jpg| image:: images/setup_loading.jpg
     :width: 10.77cm
     :height: 9.49cm
 
 
-.. |10000000000002EF000002964327B9F6_png| image:: images/10000000000002EF000002964327B9F6.png
+.. |info_feature_png| image:: images/info_feature.png
     :width: 10.901cm
     :height: 9.61cm
 
 
-.. |10000000000002EF000000E97376715B_png| image:: images/10000000000002EF000000E97376715B.png
+.. |info_raster_png| image:: images/info_raster.png
     :width: 10.901cm
     :height: 3.38cm
 

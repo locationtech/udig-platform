@@ -14,7 +14,7 @@ by attribute values.
 2. Select your new map in the :guilabel:`Projects` view, and right click to choose
   :guilabel:`Rename`.
   
-  |100000000000012600000100A3BFB98C_jpg|
+  |projects_map_rename_jpg|
 
 3. Enter the name :kbd:`Natural Earth` and press :guilabel:`OK`.
 
@@ -22,7 +22,7 @@ by attribute values.
 
 5. Choose :guilabel:`Files` from the provided list and press :guilabel:`Next`.
  
-   |100000000000020D00000203728201CC_png|
+   |add_data_files_png|
 
 7. Select the following files from your data directory:
 
@@ -31,7 +31,7 @@ by attribute values.
    
    On windows hold down the control key to selecting multiple files.
    
-   |1000000000000280000002075AA28808_png|
+   |file_dialog_multiselect_png|
 
 8. Press :guilabel:`Open` and both layers will be added to your map and
    rendered with a default style.
@@ -43,7 +43,7 @@ by attribute values.
 10. Right click on the countries layer and select :guilabel:`Change Style`
     to open the :guilabel:`Style Editor`.
     
-    |100000000000014A00000111DE88E6CF_png|
+    |layers_change_style_png|
 
 11. The :guilabel:`Style Editor` is arranged into a series of pages.
     
@@ -56,7 +56,7 @@ by attribute values.
     * Enable labels by checking the :guilabel:`enable/disable labelling` checkbox
     * In the list to the far right of :guilabel:`label` choose the :guilabel:`NAME` attribute
     
-    |10000000000003F5000002C307148CF1_png|
+    |style_polygon_label_png|
     
 14. You can press the :guilabel:`Apply` button to see what your map will look like with labels
 
@@ -75,7 +75,7 @@ for a layer based on attribute values.
    * :guilabel:`Attribute`: Select the :guilabel:`POP_EST` attribute.
    * :guilabel:`Normalize`: Select the :guilabel:`GDP_MD_EST` attribute.
 
-   |10000000000002E6000001D0C3BF163B_png|
+   |style_theme_normalize_png|
     
 2. Filter the available colour palettes to show a subset of those available:
    
@@ -83,14 +83,14 @@ for a layer based on attribute values.
    * Press the :guilabel:`Colour-blind`, :guilabel:`LCD` and :guilabel:`CRT` buttons
    * Select the :guilabel:`light orange to dark red` color palette
    
-   |10000000000002E20000025740AFFEC9_png|
+   |style_theme_filter_png|
    
    These options show palettes which are a ramp of color suitable for viewing by color
    blind people on either an LCD or CRT monitor.
 
 3. Press the :guilabel:`OK` button
    
-   |10000000000002F5000001A9713A4194_png|
+   |themed_map_png|
 
 4. The countries layer is now displayed as theme of population data normalized by gross domestic
    product as a quick measure of population productivity.
@@ -102,7 +102,7 @@ You can use a legend to review the colours and symbology used to illustrate your
  
 1. From the menubar select :guilabel:`Layer > Legend`.
     
-    |1000000000000166000000D890C47BCC_png|
+    |menubar_legend_png|
     
 2. The :guilabel:`Legend` decorator offers a quick summary of your themed data.
 
@@ -117,7 +117,7 @@ The Mylar functionality is used to focus on the selected layer.
     
 2. Select each layer and observe the effect.
    
-   |1000000000000402000002FE20171B5A_png|
+   |mylar_png|
     
 3. The Mylar effect is used to focus on the selected layer by fading out everything else.
 
@@ -130,7 +130,7 @@ Layout and Perspectives
      
    * Use using the zoom tool to explore the world while the editor is maximized.
    
-   |100000000000040000000300208450BB_png|
+   |editor_maximized_png|
 
    * Your :guilabel:`Layer` view is still available as a fast view the left hand side of the screen.
      Press :guilabel:`Layer` view button to slide the :guilabel:`layer` view on and off the screen as needed.
@@ -154,64 +154,64 @@ Layout and Perspectives
    * Use the menubar :guilabel:`Window > Reset Perspective` to restore any views you accidentally closed
      during experimentation.
    
-   |10000000000003AA000000BA587A941A_png|
+   |menubar_window_reset_perspective_png|
 
-.. |1000000000000166000000D890C47BCC_png| image:: images/1000000000000166000000D890C47BCC.png
+.. |menubar_legend_png| image:: images/menubar_legend.png
     :width: 5.2cm
     :height: 3.129cm
 
 
-.. |10000000000002E20000025740AFFEC9_png| image:: images/10000000000002E20000025740AFFEC9.png
+.. |style_theme_filter_png| image:: images/style_theme_filter.png
     :width: 10.71cm
     :height: 8.691cm
 
 
-.. |10000000000002E6000001D0C3BF163B_png| image:: images/10000000000002E6000001D0C3BF163B.png
+.. |style_theme_normalize_png| image:: images/style_theme_normalize.png
     :width: 10.77cm
     :height: 6.729cm
 
 
-.. |100000000000012600000100A3BFB98C_jpg| image:: images/100000000000012600000100A3BFB98C.jpg
+.. |projects_map_rename_jpg| image:: images/projects_map_rename.jpg
     :width: 6.219cm
     :height: 5.42cm
 
 
-.. |10000000000003F5000002C307148CF1_png| image:: images/10000000000003F5000002C307148CF1.png
+.. |style_polygon_label_png| image:: images/style_polygon_label.png
     :width: 14.7cm
     :height: 10.261cm
 
 
-.. |10000000000003AA000000BA587A941A_png| image:: images/10000000000003AA000000BA587A941A.png
+.. |menubar_window_reset_perspective_png| image:: images/menubar_window_reset_perspective.png
     :width: 14.891cm
     :height: 2.949cm
 
 
-.. |1000000000000402000002FE20171B5A_png| image:: images/1000000000000402000002FE20171B5A.png
+.. |mylar_png| image:: images/mylar.png
     :width: 14.91cm
     :height: 11.12cm
 
 
-.. |1000000000000280000002075AA28808_png| image:: images/1000000000000280000002075AA28808.png
+.. |file_dialog_multiselect_png| image:: images/file_dialog_multiselect.png
     :width: 13.46cm
     :height: 10.389cm
 
 
-.. |100000000000040000000300208450BB_png| image:: images/100000000000040000000300208450BB.png
+.. |editor_maximized_png| image:: images/editor_maximized.png
     :width: 14.861cm
     :height: 11.15cm
 
 
-.. |100000000000014A00000111DE88E6CF_png| image:: images/100000000000014A00000111DE88E6CF.png
+.. |layers_change_style_png| image:: images/layers_change_style.png
     :width: 5.241cm
     :height: 4.33cm
 
 
-.. |100000000000020D00000203728201CC_png| image:: images/100000000000020D00000203728201CC.png
+.. |add_data_files_png| image:: images/add_data_files.png
     :width: 7.62cm
     :height: 7.47cm
 
 
-.. |10000000000002F5000001A9713A4194_png| image:: images/10000000000002F5000001A9713A4194.png
+.. |themed_map_png| image:: images/themed_map.png
     :width: 10.991cm
     :height: 6.17cm
 

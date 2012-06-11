@@ -27,7 +27,7 @@ You can work directly with files from the file system.
 
 5. Drag and Drop the file :guilabel:`10m_land.shp` onto your open :guilabel:`Map`
    
-   |100000000000040100000303FBBE0454_png|
+   |file_dnd_png|
 
   The map will take the size of the first layer added to it.
 
@@ -39,7 +39,7 @@ You can work directly with files from the file system.
    
    Add the :guilabel:`10m_ocean.shp` shapefile to your map.
    
-   |100000000000040100000303F53E8033_png|
+   |file_add_png|
    
    The application will automatically:
    
@@ -48,12 +48,12 @@ You can work directly with files from the file system.
    * Perform any reprojection required on the fly allowing you to view layers side by side
    
 
-.. |100000000000040100000303F53E8033_png| image:: images/100000000000040100000303F53E8033.png
+.. |file_add_png| image:: images/file_add.png
     :width: 14.91cm
     :height: 11.269cm
 
 
-.. |100000000000040100000303FBBE0454_png| image:: images/100000000000040100000303FBBE0454.png
+.. |file_dnd_png| image:: images/file_dnd.png
     :width: 14.88cm
     :height: 11.19cm
 

@@ -5,15 +5,15 @@ Earlier we learned how to work with content from the Catalog view, in this secti
 
 1. On the :guilabel:`Catalog` view please press the :guilabel:`Import` button:
    
-   |10000000000002F0000000E7DC81AE6C_png|
+   |catalog_ocean_png|
    
 2. Select :guilabel:`Other > Data` and press :guilabel:`Next`.
    
-   |100000000000020D000001965AB3110A_png|
+   |import_data_png|
 
 3. Choose :guilabel:`Web Map Server` from the list and press :guilabel:`Next`.
    
-   |100000000000020D000002034717BE22_png|
+   |imort_wms_png|
 
 
 4. This time we are going to import an OpenGeo demo Web Map Server using the following Capabilities document:
@@ -22,7 +22,7 @@ Earlier we learned how to work with content from the Catalog view, in this secti
 
    You can copy and paste the above URL into the provided field:
 
-   |100000000000020D000001274D6A1AB8_png|
+   |wms_wizard_png|
 
 5. Press :guilabel:`Finish` to import the Web Map Server into the :guilabel:`Catalog` view.
    
@@ -30,42 +30,42 @@ Earlier we learned how to work with content from the Catalog view, in this secti
 
 7. Drag and Drop the :guilabel:`bluemarble` layer directly onto :guilabel:`Map` editor.
    
-   |10000000000003A9000002C44034F690_png|
+   |catalog_dnd_map_png|
 
 8. Earlier we used the the layer view to reorder using the up and down buttons,
    this time we will drag the layers into the right order.
 
 9. Select the :guilabel:`Blue Marble` layer in the layer view and drag it to the bottom of the list.
    
-   |10000000000001010000007AC9F16190_png|
+   |layers_dnd_png|
 
 
-.. |10000000000003A9000002C44034F690_png| image:: images/10000000000003A9000002C44034F690.png
+.. |catalog_dnd_map_png| image:: images/catalog_dnd_map.png
     :width: 14.87cm
     :height: 11.24cm
 
 
-.. |10000000000001010000007AC9F16190_png| image:: images/10000000000001010000007AC9F16190.png
+.. |layers_dnd_png| image:: images/layers_dnd.png
     :width: 3.731cm
     :height: 1.769cm
 
 
-.. |100000000000020D000001274D6A1AB8_png| image:: images/100000000000020D000001274D6A1AB8.png
+.. |wms_wizard_png| image:: images/wms_wizard.png
     :width: 9.721cm
     :height: 5.459cm
 
 
-.. |100000000000020D000002034717BE22_png| image:: images/100000000000020D000002034717BE22.png
+.. |imort_wms_png| image:: images/imort_wms.png
     :width: 7.62cm
     :height: 7.47cm
 
 
-.. |10000000000002F0000000E7DC81AE6C_png| image:: images/10000000000002F0000000E7DC81AE6C.png
+.. |catalog_ocean_png| image:: images/catalog_ocean.png
     :width: 10.91cm
     :height: 3.35cm
 
 
-.. |100000000000020D000001965AB3110A_png| image:: images/100000000000020D000001965AB3110A.png
+.. |import_data_png| image:: images/import_data.png
     :width: 7.62cm
     :height: 5.89cm
 

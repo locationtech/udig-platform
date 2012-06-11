@@ -18,7 +18,7 @@ In this section you will learn how to drag and drop a Web Map Server (WMS) link 
       
 4. For most browsers you can simply drag the link into the :guilabel:`Layers` view
         
-   |1000000000000388000002E2E485918D_png|
+   |wms_dnd_png|
 
    * If your browser does not support dragging layers please :guilabel:`copy` the link and then select the
      :guilabel:`Layers` view and paste.
@@ -32,11 +32,11 @@ In this section you will learn how to drag and drop a Web Map Server (WMS) link 
 5. The :guilabel:`Add Layers` wizard will appear asking you what layers from this WMS you want to show in your map. Select
    :guilabel:`Elevation/Bathymetry, Parks, Cities` and press the :guilabel:`Finish` button.
   
-   |100000000000020D000001E7638F1787_png|
+   |wms_resource_selection_png|
 
 6. The map layers will now render in the :guilabel:`Map` editor.
    
-   |10000000000004000000030027731BCF_png|
+   |wms_render_png|
 
 Map Editor
 ----------
@@ -46,7 +46,7 @@ and the :guilabel:`Layers` view will list the contents of the currently selected
 
 1. The :guilabel:`Map` editor is used to display the visible layers.
    
-   |10000000000004000000030027731BCF_png|
+   |wms_render_png|
    
 2. :guilabel:`Map` interaction is controled by the selected :guilabel:`Tool`
    in the :guilabel:`Palette` on the right hand side of the screen.
@@ -67,7 +67,7 @@ and the :guilabel:`Layers` view will list the contents of the currently selected
    
 3. The :guilabel:`Palette` organises tools into drawers according to function.
    
-   |1000000000000081000001924E854422_png|
+   |palette_png|
    
    * You can open and close the drawers by clicking on their title.
    * Drawers will close automatically as you switch between drawers. Although you
@@ -77,7 +77,7 @@ and the :guilabel:`Layers` view will list the contents of the currently selected
 4. Right click on a drawer to customise the size of the icons used; and how much
    information is displayed in the :guilabel:`Palette`.
    
-   |10000000000000820000018F9C5F08A7_png|
+   |palette_large_png|
 
 5. The :guilabel:`Map` editor lists common commands in the :guilabel:`toolbar`
    along the top of the screen.
@@ -95,7 +95,7 @@ and the :guilabel:`Layers` view will list the contents of the currently selected
 6. Press the |refresh_co| :guilabel:`Refresh` button, and watch the :guilabel:`processing` information
    displayed in the bottom right corner of the workbench.
    
-   |100000000000040000000300A11D76C3_png|
+   |map_editor_refresh_png|
    
    * Description and progress bar indicate rendering status
    * Button to open the :guilabel:`Progress` view providing more detail when
@@ -106,13 +106,13 @@ and the :guilabel:`Layers` view will list the contents of the currently selected
    :guilabel:`Elevation/Bathymetry` layer and use the :guilabel:`Move down` button from the
    :guilabel:`Layer` view toolbar to move selected layer to the bottom of the list.
     
-   |100000000000015D00000073FDB25240_png|
+   |layers_down_png|
 
    **Drag and Drop** You can also drag layers up and down in the layer view to change the order.
 
 8. The order is now changed.
    
-   |100000000000015D00000073252C5C23_png|
+   |layers_down_moved_png|
 
 9. You can also use the checkboxes next to each Layer to turn them on and off.
 
@@ -131,47 +131,47 @@ and the :guilabel:`Layers` view will list the contents of the currently selected
 .. |refresh_co| image:: /images/navigation_tools/refresh_co.gif
 
 
-.. |10000000000000820000018F9C5F08A7_png| image:: images/10000000000000820000018F9C5F08A7.png
+.. |palette_large_png| image:: images/palette_large.png
     :width: 1.891cm
     :height: 5.791cm
 
 
-.. |1000000000000081000001924E854422_png| image:: images/1000000000000081000001924E854422.png
+.. |palette_png| image:: images/palette.png
     :width: 1.87cm
     :height: 5.83cm
 
 
-.. |10000000000004000000030027731BCF_png| image:: images/10000000000004000000030027731BCF.png
+.. |wms_render_png| image:: images/wms_render.png
     :width: 14.861cm
     :height: 11.15cm
 
 
-.. |100000000000040000000300A11D76C3_png| image:: images/100000000000040000000300A11D76C3.png
+.. |map_editor_refresh_png| image:: images/map_editor_refresh.png
     :width: 14.861cm
     :height: 11.15cm
 
 
-.. |100000000000015D00000073FDB25240_png| image:: images/100000000000015D00000073FDB25240.png
+.. |layers_down_png| image:: images/layers_down.png
     :width: 5.911cm
     :height: 1.951cm
 
 
-.. |100002000000001000000010BAAA234E_png| image:: images/100002000000001000000010BAAA234E.png
+.. |zoom_extent_co_png| image:: images/zoom_extent_co.png
     :width: 0.423cm
     :height: 0.423cm
 
 
-.. |1000000000000388000002E2E485918D_png| image:: images/1000000000000388000002E2E485918D.png
+.. |wms_dnd_png| image:: images/wms_dnd.png
     :width: 13.12cm
     :height: 10.71cm
 
 
-.. |100000000000015D00000073252C5C23_png| image:: images/100000000000015D00000073252C5C23.png
+.. |layers_down_moved_png| image:: images/layers_down_moved.png
     :width: 5.911cm
     :height: 1.951cm
 
 
-.. |100000000000020D000001E7638F1787_png| image:: images/100000000000020D000001E7638F1787.png
+.. |wms_resource_selection_png| image:: images/wms_resource_selection.png
     :width: 8.89cm
     :height: 8.25cm
 

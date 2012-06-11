@@ -13,7 +13,7 @@ as you browse online catalogs.
    
 3. Click on the WMS link for :guilabel:`dm solutions`.
    
-   |10000000000002ED000000E7401F10FD_png|
+   |web_view_png|
 
 
 4. The :guilabel:`Add Layer` wizard will open (uDig automatically recognize
@@ -22,26 +22,26 @@ as you browse online catalogs.
    Choose the :guilabel:`Parks`, :guilabel:`Provice`, :guilabel:`Roads`
    and :guilabel:`Cities` layers and press :guilabel:`Finish`.
    
-   |100000000000020D0000020CADCB84A7_png|
+   |web_view_resource_selection_png|
    
    * You can use the :guilabel:`Web` view with your own website
      for easy spatial visualization.
 
 5. We will use this map in the next section as we explore reprojection.
    
-   |100000000000026A000001A7C3E82350_png|
+   |web_canada_png|
 
-.. |10000000000002ED000000E7401F10FD_png| image:: images/10000000000002ED000000E7401F10FD.png
+.. |web_view_png| image:: images/web_view.png
     :width: 10.871cm
     :height: 3.35cm
 
 
-.. |100000000000026A000001A7C3E82350_png| image:: images/100000000000026A000001A7C3E82350.png
+.. |web_canada_png| image:: images/web_canada.png
     :width: 8.969cm
     :height: 6.14cm
 
 
-.. |100000000000020D0000020CADCB84A7_png| image:: images/100000000000020D0000020CADCB84A7.png
+.. |web_view_resource_selection_png| image:: images/web_view_resource_selection.png
     :width: 7.62cm
     :height: 7.601cm
 

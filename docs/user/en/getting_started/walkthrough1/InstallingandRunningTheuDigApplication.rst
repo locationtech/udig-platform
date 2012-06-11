@@ -7,7 +7,7 @@ Windows install:
 
 1. Double-click the installer.
    
-   |10000000000001010000004A0154CA1C_jpg|
+   |setup_loading_jpg|
 
 .. sidebar:
    
@@ -15,7 +15,7 @@ Windows install:
 
 2. The installer will allow you to install uDig into the directory of your choice.
 
-   |10000000000002010000018D3239B7A8_png|
+   |installer_welcome_png|
 
 .. sidebar:
    
@@ -25,72 +25,72 @@ Windows install:
 
 3. We have a number of license agreements to click through.
 
-   |10000000000002010000018D4705E51A_png|
+   |installer_license_png|
 
 
 4. By default uDig will be installed into your Program Files directory.
  
-   |10000000000002010000018D91156BB7_png|
+   |installer_location_png|
 
 
 5. Shortcuts will be created in your start menu.
 
-   |10000000000002010000018DE7B09EA2_png|
+   |installer_start_menu_png|
 
 
 6. Please wait while uDig is installed.
 
-   |10000000000002010000018DDA60EF0C_png|
+   |installer_installing_png|
 
 
 7. Congratulations you have installed uDig!
 
-   |10000000000002010000018D37DA6824_png|
+   |installer_finish_png|
 
    We have a known issue telling Windows 7 that the installation was successful. Please click “This program installed correctly”.
 
-   |10000000000001B000000161357B2F45_png|
+   |installer_warning_png|
 
 8. If you are working in a corporate environment with a firewall please review the following page for details on proxy configuration.
 
    :doc:`/Running uDig`
 
-.. |10000000000002010000018D37DA6824_png| image:: images/10000000000002010000018D37DA6824.png
+.. |installer_finish_png| image:: images/installer_finish.png
     :width: 7.451cm
     :height: 5.761cm
 
 
-.. |10000000000002010000018D3239B7A8_png| image:: images/10000000000002010000018D3239B7A8.png
+.. |installer_welcome_png| image:: images/installer_welcome.png
     :width: 7.451cm
     :height: 5.761cm
 
 
-.. |10000000000002010000018D4705E51A_png| image:: images/10000000000002010000018D4705E51A.png
+.. |installer_license_png| image:: images/installer_license.png
     :width: 7.451cm
     :height: 5.761cm
 
 
-.. |10000000000002010000018D91156BB7_png| image:: images/10000000000002010000018D91156BB7.png
+.. |installer_location_png| image:: images/installer_location.png
     :width: 7.451cm
     :height: 5.761cm
 
 
-.. |10000000000001010000004A0154CA1C_jpg| image:: images/10000000000001010000004A0154CA1C.jpg
+.. |setup_loading_jpg| image:: images/setup_loading.jpg
     :width: 5.44cm
     :height: 1.57cm
 
 
-.. |10000000000001B000000161357B2F45_png| image:: images/10000000000001B000000161357B2F45.png
+.. |installer_warning_png| image:: images/installer_warning.png
     :width: 7.999cm
     :height: 6.541cm
 
 
-.. |10000000000002010000018DE7B09EA2_png| image:: images/10000000000002010000018DE7B09EA2.png
+.. |installer_start_menu_png| image:: images/installer_start_menu.png
     :width: 7.451cm
     :height: 5.761cm
 
 
-.. |10000000000002010000018DDA60EF0C_png| image:: images/10000000000002010000018DDA60EF0C.png
+.. |installer_installing_png| image:: images/installer_installing.png
     :width: 7.451cm
     :height: 5.761cm
 
