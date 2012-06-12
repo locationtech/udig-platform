@@ -1,2 +1,2 @@
-Walkthrogh 2
-============
+Walkthrough 2
+=============

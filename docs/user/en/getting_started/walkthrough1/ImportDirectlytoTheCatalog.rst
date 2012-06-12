@@ -13,10 +13,11 @@ Earlier we learned how to work with content from the Catalog view, in this secti
 
 3. Choose :guilabel:`Web Map Server` from the list and press :guilabel:`Next`.
    
-   |imort_wms_png|
+  .. image:: images/import_wms.png
+    :width: 7.62cm
+    :height: 7.47cm
 
-
-.. sidebar:: Note
+.. sidebar:: Copy URL
 
   You can copy the URL from the walkthrough page (http://demo.opengeo.org/geoserver/ows?service=wms&version=1.1.1&request=GetCapabilities).
 
@@ -56,9 +57,6 @@ Earlier we learned how to work with content from the Catalog view, in this secti
     :height: 5.459cm
 
 
-.. |imort_wms_png| image:: images/imort_wms.png
-    :width: 7.62cm
-    :height: 7.47cm
 
 
 .. |catalog_ocean_png| image:: images/catalog_ocean.png
