@@ -1,5 +1,5 @@
 /*
- * uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004,
+ * uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004-2012,
  * Refractions Research Inc. This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by the Free Software
  * Foundation; version 2.1 of the License. This library is distributed in the hope that it will be
@@ -32,7 +32,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * @author Jesse
  * @since 1.0.0
  */
-public interface ILayer extends Comparable<ILayer> {
+public interface ILayer extends ILegendItem, Comparable<ILayer> {
 
     /**
      * Indicates the crs that will be used if the layer does not declare a crs. This crs is wgs84
@@ -71,60 +71,6 @@ public interface ILayer extends Comparable<ILayer> {
      */
     public static final int WORKING = 5;
 
-    /**
-     * The set of layer interaction properties.
-     * <p>
-     * We have not decided yet if tools should check that the layer supports the required
-     * interaction; or if it can be handled by a tool category.
-     * 
-     * @author paul.pfeiffer
-     * @version 1.3.0
-     */
-    public static enum Interaction {
-        VISIBLE("interaction_visible"),
-        BACKGROUND("interaction_background"),
-        INFO ("interaction_information"),
-        SELECT ("interaction_select"),
-        EDIT ("interaction_edit"),
-        AOI ("interaction_aoi");
-        
-        private String key;
-        
-        private Interaction(String k) {
-            key = k;
-        }
-        
-        /**
-         * Get the key that is used to store and retrieve values from the layer blackboard
-         * @return key
-         */
-        public String getKey() {
-            return key;
-        }
-        
-        /**
-         * Gets the layer interaction property relevant to the supplied key (or toolCategoryId).
-         * 
-         * @param layerInteraction
-         * @return interaction
-         */
-        public static Interaction getInteraction(String layerInteraction) {
-            // check for deprecated ProjectBlackboardConstants
-            if (layerInteraction.equals(ProjectBlackboardConstants.LAYER__EDIT_APPLICABILITY)
-                    || layerInteraction.equals(ProjectBlackboardConstants.LAYER__FEATURES_ADD_APPLICABILITY)
-                    || layerInteraction.equals(ProjectBlackboardConstants.LAYER__FEATURES_MODIFY_APPLICABILITY)
-                    || layerInteraction.equals(ProjectBlackboardConstants.LAYER__FEATURES_REMOVE_APPLICABILITY)) {
-                return Interaction.EDIT;
-            }
-            for( Interaction interaction : Interaction.values() ){
-                if( layerInteraction.equals( interaction.getKey() ) ){
-                    return interaction;
-                }
-            }
-            return null;
-        }
-    }
-    
     /** Listen to changes on this layer.  Each listener can only be added once*/
     public void addListener( ILayerListener listener );
 
@@ -300,7 +246,7 @@ public interface ILayer extends Comparable<ILayer> {
      * @param interaction
      * @return
      */
-    public boolean isApplicable( Interaction interaction );
+    public boolean getInteraction( Interaction interaction );
 
     /**
      * Gets the name from the associated metadata.
@@ -337,7 +283,7 @@ public interface ILayer extends Comparable<ILayer> {
      * 
      * @return Custom glyph - or null if none available.
      */
-    public ImageDescriptor getGlyph();
+    public ImageDescriptor getIcon();
 
     /**
      * Query that selects all the features for the layer.

@@ -1,0 +1,209 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="net.refractions.udig.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="net.refractions.udig.ui" id="filterViewer" name="FilterViewer"/>
+      </appInfo>
+      <documentation>
+         Extension Point for creating a custom Filter or Expression viewer
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+         <documentation>
+            Used to contribute additional viewers for use with the OGC Filter specification.
+
+Filter Viewers are avaialble in two flacours:
+
+FilterViewers used to select content (for use or display)
+
+ExpressionViewers used to generate a value on demand (for use when defining a Filter, or defining a Color when used in rendering).
+         </documentation>
+      </annotation>
+      <complexType>
+         <choice minOccurs="0" maxOccurs="unbounded">
+            <element ref="expressionViewer"/>
+            <element ref="filterViewer"/>
+         </choice>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="filterViewer">
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Display name shown to users allowing them to select this filter viewer.
+
+Example: CQL or Include
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.ui.filter.FilterViewerFactory:"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string">
+            <annotation>
+               <documentation>
+                  Quick description of this viewer allowing the user to choose.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="expressionViewer">
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Display name shown to users allowing them to select this expression viewer.
+
+Example: CQL or Crayons
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.ui.filter.ExpressionViewerFactory:"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string">
+            <annotation>
+               <documentation>
+                  Quick description of this viewer allowing the user to choose.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         1.3.2
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         To contribute additional viewers into your application use the extension point as shown below:
+&lt;pre&gt;
+&lt;extension id=&quot;net.refractions.udig.tutorial.viewers&quot;
+           point=&quot;net.refractions.udig.ui.filterViewer&quot;
+           name=&quot;Custom Filter Viewers&quot;&gt;
+    &lt;filterViewer
+        id=&quot;roadCondition&quot;
+        name=&quot;Road Condition&quot;
+        class=&quot;net.refractions.udig.tutorial.viewer.RoadConditionFilterViewerFactory&quot;
+        description=&quot;Filter sample road dataset using a graphical display of road condition&quot;/&gt;
+    &lt;expressionViewer
+        id=&quot;crayons&quot;
+        name=&quot;Crayons&quot;
+        class=&quot;net.refractions.udig.tutorial.viewer.CrayonExpressionViewerFactory&quot;
+        description=&quot;Define color using all the crayons in the box&quot;/&gt;
+&lt;/extension&gt;
+&lt;/pre&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiinfo"/>
+      </appInfo>
+      <documentation>
+         To contribute a filter viewer  you will need to provide an implementation of IFilterViewer (used to edit a provided Filter) and FilterViewerFactory used to determine when your FilterViewer can be succcessfully applied.
+
+Several FilterViewers are available out of the box. You may use these as a starting poitn for your own implementation.
+
+IncludeFilterViewer is an easy to follow example offering two toggle buttons allowing users to enable or disable content.
+
+To contribute an expression viewer you will need to implement IExpressionViewer and ExpressionViewerFactory.
+
+RGBExpressionViewer is an easy to follow example allowing the user to edit a Color using red, green and blue values.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         To use a FilterViewer in your own code you can either use the implementation directly; or offer the user a choice by dropping in the general purpose DefaultFilterViewer (which allows the user to switch between the avaialle implementations using a combo box).
+      </documentation>
+   </annotation>
+
+
+</schema>

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.ProjectBlackboardConstants;
 import net.refractions.udig.project.internal.EditManager;
@@ -180,7 +181,7 @@ public class UDIGSimpleFeatureStore implements SimpleFeatureStore, UDIGStore {
      * This method is responsible for setting the transaction prior to use.
      */
     private void setTransactionInternal() {
-        if (!layer.isApplicable(ILayer.Interaction.EDIT)) {
+        if (!layer.getInteraction(Interaction.EDIT)) {
             String message = "Attempted to open a transaction on a non-editable layer (Aborted)";
             IllegalStateException illegalStateException = new IllegalStateException( message );
             ProjectPlugin.log(message, illegalStateException);

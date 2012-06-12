@@ -248,7 +248,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
                     return;
                 }
                 switch( msg.getFeatureID(Layer.class) ) {
-                case ProjectPackage.LAYER__GLYPH:
+                case ProjectPackage.LAYER__ICON:
                 case ProjectPackage.LAYER__STYLE_BLACKBOARD:
                 case ProjectPackage.LAYER__NAME:
                 case ProjectPackage.LAYER__GEO_RESOURCES:
@@ -548,7 +548,9 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
         //
         IGeoResourceInfo info = null;
         try {
-            info = layer.getGeoResources().get(0).getInfo(null);
+            if( !layer.getGeoResources().isEmpty() ){
+                info = layer.getGeoResources().get(0).getInfo(null);
+            }
         } catch (IOException e) {
             //
         }
@@ -645,7 +647,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
             return null;
 
         Layer layer = (Layer) element;
-        if (layer.getGlyph() != null)
+        if (layer.getIcon() != null)
             return null; // don't replace user's glyph
 
         ImageDescriptor icon = (ImageDescriptor) layer.getProperties().get(GENERATED_ICON);

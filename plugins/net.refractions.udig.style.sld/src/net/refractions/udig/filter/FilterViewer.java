@@ -1,15 +1,13 @@
 package net.refractions.udig.filter;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
+
+import net.refractions.udig.ui.filter.IFilterViewer;
 
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
-import org.eclipse.jface.fieldassist.IContentProposal;
-import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -22,8 +20,6 @@ import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.filter.FunctionFinder;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
 import org.geotools.filter.text.ecql.ECQL;
@@ -32,7 +28,6 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
-import org.opengis.filter.expression.Function;
 
 /**
  * A JFace Style Expression Viewer that can be used to show an Filter to a user (using whatever SWT
@@ -58,6 +53,7 @@ import org.opengis.filter.expression.Function;
  * 
  * @author Jody
  * @since 1.2.0
+ * @deprecated Please use {@link IFilterViewer}
  */
 public class FilterViewer extends Viewer {
     /**
@@ -126,7 +122,10 @@ public class FilterViewer extends Viewer {
         proposalProvider.setFiltering(true);
         ContentProposalAdapter adapter = new ContentProposalAdapter(text, new TextContentAdapter(),
                 proposalProvider, null, null);
-
+        
+        //Need to set adapter to replace existing text. Default is insert.
+        adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+        
         text.addKeyListener(keyListener);
     }
 

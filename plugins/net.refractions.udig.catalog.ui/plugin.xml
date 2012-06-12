@@ -362,7 +362,19 @@
              targetClass="net.refractions.udig.catalog.IGeoResource">
           <enablement>
              <adaptsTo
-                   target="org.geotools.data.FeatureSource">
+                   target="org.geotools.data.simple.SimpleFeatureSource">
+             </adaptsTo>
+          </enablement>
+       </operation>
+       <operation
+             categoryId="net.refractions.udig.catalog.ui.operation.resourceCategory"
+             class="net.refractions.udig.catalog.ui.operation.TransformOperation"
+             id="net.refractions.udig.catalog.ui.operation.transform"
+             name="%Transform"
+             targetClass="net.refractions.udig.catalog.IGeoResource">
+          <enablement>
+             <adaptsTo
+                   target="org.geotools.data.simple.SimpleFeatureSource">
              </adaptsTo>
           </enablement>
        </operation>

@@ -6,17 +6,21 @@ Bundle-Version: 1.2.0
 Bundle-Activator: net.refractions.udig.catalog.internal.wmt.WMTPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
-Export-Package: net.refractions.udig.catalog.internal.wmt,
+Export-Package: com.mapquest,
+ eu.udig.mapquest.apiwrapper,
+ net.refractions.udig.catalog.internal.wmt,
  net.refractions.udig.catalog.internal.wmt.tile,
+ net.refractions.udig.catalog.internal.wmt.ui.preferences,
  net.refractions.udig.catalog.internal.wmt.ui.properties,
+ net.refractions.udig.catalog.internal.wmt.ui.view,
  net.refractions.udig.catalog.internal.wmt.ui.wizard,
  net.refractions.udig.catalog.internal.wmt.ui.wizard.controls,
  net.refractions.udig.catalog.internal.wmt.wmtsource,
  net.refractions.udig.catalog.internal.wmt.wmtsource.ww,
- net.refractions.udig.catalog.internal.wmt.ww
+ net.refractions.udig.catalog.internal.wmt.ww,
+ net.refractions.udig.catalog.wmt.internal
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- eu.udig.mapquest.apiwrapper,
  net.refractions.udig.catalog,
  net.refractions.udig.catalog.ui,
  net.refractions.udig.ui,
@@ -26,4 +30,6 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.catalog.wms
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: mq.jar,
+ .
 

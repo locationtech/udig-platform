@@ -224,17 +224,27 @@ public abstract class WMTSource {
      * @param serverUrl
      * @param zoomMin
      * @param zoomMax
+     * @param type if !=null it contains the tiles schema different from google's.
      * @return
      */
-    public static URL getCustomServerServiceUrl(String serverUrl, String zoomMin, String zoomMax) {
+    public static URL getCustomServerServiceUrl(String serverUrl, String zoomMin, String zoomMax, String type) {
         URL url = getRelatedServiceUrl(CSSource.class);
         
         try {
+            StringBuilder sb = new StringBuilder();
+            sb.append(url.toExternalForm());
+            sb.append("/");
+            sb.append(serverUrl);
+            sb.append("/");
+            sb.append(zoomMin);
+            sb.append("/");
+            sb.append(zoomMax);
+            if (type!=null) {
+                sb.append("/");
+                sb.append(type);
+            }
             url = new URL(null, 
-                    url.toExternalForm() + "/" + //$NON-NLS-1$
-                    serverUrl + "/" + //$NON-NLS-1$
-                    zoomMin + "/" + //$NON-NLS-1$
-                    zoomMax,
+                    sb.toString(),
                     CorePlugin.RELAXED_HANDLER); 
         }
         catch(MalformedURLException exc) {
@@ -387,10 +397,12 @@ public abstract class WMTSource {
      * @param scale The map scale.
      * @param scaleFactor The scale-factor (0-100): scale up or down?
      * @param recommendedZoomLevel Always use the calculated zoom-level, do not use the one the user selected
+     * @param tileLimitWarning 
      * @return The list of found tiles.
      */
     public Map<String, Tile> cutExtentIntoTiles(WMTRenderJob renderJob, 
-            int scaleFactor, boolean recommendedZoomLevel, WMTLayerProperties layerProperties) {        
+            int scaleFactor, boolean recommendedZoomLevel, WMTLayerProperties layerProperties,
+            int tileLimitWarning) {        
         // only continue, if we have tiles that cover the requested extent
         if (!renderJob.getMapExtentTileCrs().intersects((Envelope) getBounds())) {
             return Collections.emptyMap();
@@ -435,6 +447,9 @@ public abstract class WMTSource {
                     movingTile = rightNeighbour;
                 } else {
                     break;
+                }
+                if (tileList.size()>tileLimitWarning) {
+                    return Collections.emptyMap();
                 }
             } while(tileList.size() < maxNumberOfTiles);
 

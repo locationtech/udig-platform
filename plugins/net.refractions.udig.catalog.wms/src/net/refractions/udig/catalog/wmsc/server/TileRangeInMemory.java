@@ -18,6 +18,8 @@ package net.refractions.udig.catalog.wmsc.server;
 
 import java.util.Map;
 
+import org.geotools.data.ows.AbstractOpenWebService;
+
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
@@ -44,7 +46,7 @@ public class TileRangeInMemory extends AbstractTileRange {
      * @param tiles The tiles that we wish to fetch; must be from the provided tileset
      * @param requestTileWorkQueue Queue of worker threads that can be used to fetch tiles
      */
-    public TileRangeInMemory(TiledWebMapServer server, TileSet tileset, Envelope bounds, 
+    public TileRangeInMemory(AbstractOpenWebService server, TileSet tileset, Envelope bounds, 
             Map<String, Tile> tiles, TileWorkerQueue requestTileWorkQueue) {
         super(server, tileset, bounds, tiles, requestTileWorkQueue);
     }

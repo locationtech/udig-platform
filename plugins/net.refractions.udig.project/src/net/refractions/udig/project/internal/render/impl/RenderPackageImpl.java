@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.geotools.data.Query;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -242,6 +243,13 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
     private EDataType dateTimeEDataType = null;
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EDataType illegalArgumentExceptionEDataType = null;
+
+    /**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -286,6 +294,9 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
                 .get(eNS_URI) : new RenderPackageImpl());
 
         isInited = true;
+
+        // Initialize simple dependencies
+        EcorePackage.eINSTANCE.eClass();
 
         // Obtain or create and register interdependencies
         ElementPackageImpl theElementPackage = (ElementPackageImpl) (EPackage.Registry.INSTANCE
@@ -742,6 +753,15 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EDataType getIllegalArgumentException() {
+        return illegalArgumentExceptionEDataType;
+    }
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated public EDataType getInfoList() { return infoListEDataType; }
@@ -768,8 +788,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      * @generated
      */
     public void createPackageContents() {
-        if (isCreated)
-            return;
+        if (isCreated) return;
         isCreated = true;
 
         // Create classes and their features
@@ -839,6 +858,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
         sortedSetEDataType = createEDataType(SORTED_SET);
         referencedEnvelopeEDataType = createEDataType(REFERENCED_ENVELOPE);
         dateTimeEDataType = createEDataType(DATE_TIME);
+        illegalArgumentExceptionEDataType = createEDataType(ILLEGAL_ARGUMENT_EXCEPTION);
     }
 
     /**
@@ -855,8 +875,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
      */
     @SuppressWarnings("unchecked")
     public void initializePackageContents() {
-        if (isInitialized)
-            return;
+        if (isInitialized) return;
         isInitialized = true;
 
         // Initialize package
@@ -1009,7 +1028,7 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
         addEParameter(op, ecorePackage.getEDouble(), "maxx", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEDouble(), "miny", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEDouble(), "maxy", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-        //addEException(op, theProjectPackage.getIllegalArgumentException());
+        addEException(op, this.getIllegalArgumentException());
 
         addEOperation(viewportModelEClass, this.getAffineTransform(),
                 "worldToScreenTransform", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -1036,6 +1055,11 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
         op = addEOperation(viewportModelEClass, this.getViewportModel(),
                 "zoom", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
         addEParameter(op, ecorePackage.getEDouble(), "zoom", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+        op = addEOperation(viewportModelEClass, this.getViewportModel(),
+                "zoom", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, ecorePackage.getEDouble(), "zoom", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+        addEParameter(op, this.getCoordinate(), "fixedPoint", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
         addEOperation(viewportModelEClass, null, "zoomToExtent", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
@@ -1104,6 +1128,8 @@ public class RenderPackageImpl extends EPackageImpl implements RenderPackage {
                 "ReferencedEnvelope", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
         initEDataType(dateTimeEDataType, DateTime.class,
                 "DateTime", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEDataType(illegalArgumentExceptionEDataType, IllegalArgumentException.class,
+                "IllegalArgumentException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
         // Create resource
         createResource(eNS_URI);

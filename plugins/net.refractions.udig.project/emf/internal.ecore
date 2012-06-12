@@ -64,8 +64,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="zorder" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         transient="true" defaultValueLiteral="0"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="selectable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-        defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogRef" eType="#//CatalogRef"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="iD" eType="#//URL" iD="true"/>
@@ -74,8 +72,6 @@
         transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="geoResources" upperBound="-1"
         eType="#//IGeoResource" changeable="false" transient="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="glyph" eType="#//ImageDescriptor"
-        transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cRS" eType="#//CoordinateReferenceSystem"
         transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" eType="#//IBlackboard"
@@ -86,6 +82,11 @@
         eType="#//FeatureEvent" transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="minScaleDenominator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxScaleDenominator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interactionMap" upperBound="-1"
+        eType="#//InteractionToEBooleanObjectMapEntry" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shown" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="icon" eType="#//ImageDescriptor"
+        transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Map" eSuperTypes="#//ProjectElement #//IMap">
     <eOperations name="getBounds" eType="#//ReferencedEnvelope">
@@ -118,6 +119,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="colourScheme" eType="#//ColourScheme"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="blackBoardInternal" eType="#//Blackboard"
         containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="legend" upperBound="-1"
+        eType="#//ILegendItem" containment="true" resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//IProject">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -203,9 +206,30 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IResolveChangeListener" instanceClassName="net.refractions.udig.catalog.IResolveChangeListener"
       abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IStyleBlackboard" instanceClassName="net.refractions.udig.project.IStyleBlackboard"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InteractionToEBooleanObjectMapEntry"
+      instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="#//Interaction"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBooleanObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IFolder" instanceClassName="net.refractions.udig.project.IFolder"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Folder" eSuperTypes="#//IFolder #//LegendItem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
+        eType="#//ILegendItem" containment="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ILayerLegendItem" instanceClassName="net.refractions.udig.project.ILayerLegendItem"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LegendItem" eSuperTypes="#//ILegendItem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shown" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="icon" eType="#//ImageDescriptor"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ILegendItem" instanceClassName="net.refractions.udig.project.ILegendItem"
+      abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Coordinate" instanceClassName="com.vividsolutions.jts.geom.Coordinate"/>
   <eClassifiers xsi:type="ecore:EDataType" name="MapDisplay" instanceClassName="net.refractions.udig.project.render.displayAdapter.IMapDisplay"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="FeatureResults" instanceClassName="org.geotools.data.FeatureResults"/>
   <eClassifiers xsi:type="ecore:EDataType" name="List" instanceClassName="java.util.List"/>
   <eClassifiers xsi:type="ecore:EDataType" name="AffineTransform" instanceClassName="java.awt.geom.AffineTransform"/>
   <eClassifiers xsi:type="ecore:EDataType" name="NavCommandStack" instanceClassName="net.refractions.udig.project.command.NavCommandStack"/>
@@ -213,7 +237,6 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Filter" instanceClassName="org.opengis.filter.Filter"/>
   <eClassifiers xsi:type="ecore:EDataType" name="CoordinateReferenceSystem" instanceClassName="org.opengis.referencing.crs.CoordinateReferenceSystem"/>
   <eClassifiers xsi:type="ecore:EDataType" name="CommandStack" instanceClassName="net.refractions.udig.project.command.CommandStack"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Feature" instanceClassName="org.geotools.feature.SimpleFeature"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="java.awt.Point"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Adapter" instanceClassName="org.eclipse.emf.common.notify.Adapter"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IProgressMonitor" instanceClassName="org.eclipse.core.runtime.IProgressMonitor"/>
@@ -237,6 +260,8 @@
   <eClassifiers xsi:type="ecore:EDataType" name="IOException" instanceClassName="java.io.IOException"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Color" instanceClassName="java.awt.Color"/>
   <eClassifiers xsi:type="ecore:EDataType" name="BrewerPalette" instanceClassName="org.geotools.brewer.color.BrewerPalette"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IStyleBlackboard" instanceClassName="net.refractions.udig.project.IStyleBlackboard"
-      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Interaction" instanceClassName="net.refractions.udig.project.Interaction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LayerLegendItem" eSuperTypes="#//LegendItem #//ILayerLegendItem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layer" lowerBound="1" eType="#//Layer"/>
+  </eClassifiers>
 </ecore:EPackage>

@@ -15,14 +15,28 @@ then
     then
        echo "Creating ${BUILD}/sdk"
        mkdir -p ${BUILD}/sdk
+    else
+        echo "Clearing ${BUILD}/sdk"
+        rm -rf -d ${BUILD}/sdk
+        mkdir -p ${BUILD}/sdk
     fi
     
+    if [ ! -f ${BUILD}/udig-${VERSION}.html ]
+    then
+        cp ${BASE}/udig-1.3.x.html ${BUILD}/udig-${VERSION}.html
+    fi
+            
     if [ ! -f ${BUILD}/udig-${VERSION}-sdk.zip ]
     then
         echo "Building  ${BUILD}/udig-${VERSION}-sdk.zip ..."
         
         echo "Extracting ${TARGET}/udig-${VERSION}-sdk.zip"
         unzip -q -d ${BUILD}/sdk ${TARGET}/udig-${VERSION}-sdk.zip
+        
+        if [ -d ${BUILD}/sdk/eclipse ]
+        then
+            mv ${BUILD}/sdk/eclipse ${BUILD}/sdk/udig_sdk
+        fi
         
         echo "Prepairing ${BUILD}/sdk"
         rm -rf ${BUILD}/sdk/udig_sdk/*.app

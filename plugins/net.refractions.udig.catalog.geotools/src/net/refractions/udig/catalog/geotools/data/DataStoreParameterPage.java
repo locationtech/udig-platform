@@ -1,3 +1,17 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2010-2012, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.catalog.geotools.data;
 
 import java.io.File;
@@ -9,8 +23,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.miginfocom.swt.MigLayout;
+import net.refractions.udig.catalog.geotools.Activator;
 import net.refractions.udig.catalog.internal.ui.CatalogImport.CatalogImportWizard;
 import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
 import net.refractions.udig.catalog.ui.UDIGConnectionPage;
@@ -27,14 +43,14 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PlatformUI;
 import org.geotools.data.DataAccessFactory;
-import org.geotools.data.DataUtilities;
 import org.geotools.data.DataAccessFactory.Param;
+import org.geotools.data.DataUtilities;
 
 public class DataStoreParameterPage extends AbstractUDIGImportPage implements UDIGConnectionPage {
 
@@ -130,8 +146,27 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
                         field.setToolTipText("Required");
                         connectionParameters.remove(param.key);
                     } else {
-                        field.setToolTipText("Value: "+value);                    
-                        connectionParameters.put(param.key, (Serializable) value);
+                        field.setToolTipText("Value: "+value);
+                        
+                        if( value instanceof Serializable){
+                            // we are good to go
+                            connectionParameters.put(param.key, (Serializable) value);
+                        }
+                        else {
+                            // Ask the param to give us a string representation
+                            try {
+                                String txt = param.text(value);
+                                
+                                connectionParameters.put(param.key, txt);
+                            }
+                            catch (Throwable t ){
+                                // must be something scary like JDBC Connection Pool -- ignoring!
+                                if( Activator.getDefault().isDebugging() ){
+                                    System.out.println( Activator.PLUGIN_ID + " could not write out "+param.key+" connection param:"+t);
+                                    t.printStackTrace();
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -197,6 +232,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
             }
             Text field = addField(getControl(), param);
             fields.put(param, field);
+            //sync(param, field);
         }
         
         Label seperator = new Label(getControl(), SWT.HORIZONTAL | SWT.SEPARATOR );
@@ -247,7 +283,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         super.dispose();
     }
 
-    protected Text addField( final Composite parent, Param param ) {
+    protected Text addField( final Composite parent, final Param param ) {
         Label label = new Label(parent, SWT.RIGHT);
         String name = param.title == null ? param.key : param.title.toString();
         String suffix = param.required ? "*:" : ":";
@@ -259,16 +295,11 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         final String EXTENSION = (String) (param.metadata != null
                 ? param.metadata.get(Param.EXT)
                 : null);
-        final Integer LENGTH = (Integer) (param.metadata != null
-                ? param.metadata.get(Param.LENGTH)
-                : null);
-        final Object MIN = (param.metadata != null ? param.metadata.get(Param.MIN) : null);
-        final Object MAX = (param.metadata != null ? param.metadata.get(Param.MAX) : null);
-
+        
         if (param.isPassword()) {
             field = new Text(parent, SWT.SINGLE | SWT.BORDER | SWT.PASSWORD);
             field.setLayoutData("span, growx, wrap unrelated");
-        } else if (File.class.isAssignableFrom(param.type)) {
+        } else if (File.class.isAssignableFrom(param.type) || URL.class.isAssignableFrom(param.type)) {
             field = new Text(parent, SWT.SINGLE | SWT.BORDER);
             field.setLayoutData("growx");
             Button button = new Button(parent, SWT.DEFAULT);
@@ -277,42 +308,7 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
             final Text target = field;
             button.addSelectionListener(new SelectionListener(){
                 public void widgetSelected( SelectionEvent e ) {
-                    FileDialog browse = new FileDialog(parent.getShell(), SWT.OPEN);
-                    if (EXTENSION != null) {
-                        browse.setFilterExtensions(new String[]{EXTENSION});
-                    }
-                    String path = browse.open();
-                    if (path != null) {
-                        target.setText(path);
-                        
-                        sync((Param) target.getData(), target);
-                    }
-                }
-                public void widgetDefaultSelected( SelectionEvent e ) {
-                    widgetSelected(e);
-                }
-            });
-        } else if (URL.class.isAssignableFrom(param.type)) {
-            field = new Text(parent, SWT.SINGLE | SWT.BORDER);
-            field.setLayoutData("growx");
-            Button button = new Button(parent, SWT.DEFAULT);
-            button.setText("Browse");
-            button.setLayoutData("wrap unrelated");
-            final Text target = field;
-            button.addSelectionListener(new SelectionListener(){
-                public void widgetSelected( SelectionEvent e ) {
-                    FileDialog browse = new FileDialog(parent.getShell(), SWT.OPEN);
-                    if (EXTENSION != null) {
-                        browse.setFilterExtensions(new String[]{EXTENSION});
-                    }
-                    String path = browse.open();
-                    if (path != null) {
-                        File file = new File(path);
-                        URL url = DataUtilities.fileToURL(file);                        
-                        target.setText( url.toString() );
-
-                        sync((Param) target.getData(), target);
-                    }
+                	getPathAndSynchWithText(EXTENSION, parent, target, param.type);
                 }
                 public void widgetDefaultSelected( SelectionEvent e ) {
                     widgetSelected(e);
@@ -321,7 +317,9 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         } else {
             field = new Text(parent, SWT.SINGLE | SWT.BORDER);
             field.setLayoutData("span, growx, wrap unrelated");
+            
         }
+        
         field.setData(param);
         
         if( "dbtype".equals( param.key)){
@@ -330,20 +328,76 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
         }
 
         Object value = null;
+        
         if (getParams() != null && getParams().containsKey(param.key)) {
             value = getParams().get(param.key);
         }
-        if( value == null && param.required && param.sample != null ){
-            value = param.sample;
+        
+        if( value == null){
+            value = param.getDefaultValue();
         }
+        
+        
+        
         String text = value != null ? param.text(value) : "";
         if (value != null) {
             field.setText(text);
         }
+        
         return field;
     }
 
-    protected synchronized List<Param> getParameterInfo() {
+    @SuppressWarnings("rawtypes")
+    protected void getPathAndSynchWithText( String extension, Composite parent, Text target,
+            Class targetClass ) {
+        String path = null;
+        if (extension != null) {
+            FileDialog browse = new FileDialog(parent.getShell(), SWT.OPEN);
+            browse.setFilterExtensions(new String[]{wrapExtension(extension)});
+            path = browse.open();
+        } else {
+            DirectoryDialog browse = new DirectoryDialog(parent.getShell(), SWT.OPEN);
+            path = browse.open();
+        }
+
+        if (path != null) {
+            String text = null;
+            if (File.class.isAssignableFrom(targetClass)) {
+                text = path;
+            } else if (URL.class.isAssignableFrom(targetClass)) {
+                File file = new File(path);
+                URL url = DataUtilities.fileToURL(file);
+                text = url.toString();
+            }
+
+            if (text != null) {
+                target.setText(text);
+            }
+
+            sync((Param) target.getData(), target);
+        }
+    }
+
+    /**
+     * Concatenate "*." with the given extension. Excepted values are '.xxx',
+     * '*.xxx' and 'xxx', the return value will always '*.xxx' for all variations.
+     * 
+     * @param extension
+     * @return prefixed extension that looks like '*.xxx' for given values '*.xxx',
+     *         '.xxx' and 'xxx'
+     */
+    protected String wrapExtension(String extension) {
+        if (extension != null) {
+            int index = extension.lastIndexOf('.');
+            return "*."
+                    + (index >= 0 && extension.length() > index + 1 ? extension
+                            .substring(index + 1) : extension);
+        }
+        return null;
+    }
+
+
+	protected synchronized List<Param> getParameterInfo() {
         if (paramFactory == getPreviousPage().getFactory()) {
             return paramInfo;
         }
@@ -366,14 +420,45 @@ public class DataStoreParameterPage extends AbstractUDIGImportPage implements UD
 
     @Override
     public boolean canFlipToNextPage() {
-        boolean flip = super.canFlipToNextPage();
-        if (flip) {
-            // validate user input (usually checking state of ui)
-            if (isParametersComplete(false)) {
-                return true;
-            }
+        // validate user input (usually checking state of ui)
+        if (isParametersComplete(false)) {
+            return true;
         }
+
         return false;
+    }
+    
+    @Override
+    public boolean leavingPage() {
+
+        // TODO: we should be checking that we can make a connection however that is currently
+        // blocking the UI and causing the wizard to not finish.
+        syncParameters();
+        return true;
+    }
+
+//    @Override
+//    public boolean isPageComplete(){
+//        syncParameters();
+//        
+//        if (canFlipToNextPage()) {
+//            return true;
+//        }
+//        
+//        return false;
+//    }
+    
+    /**
+     * This method synchronises the value of all fields with the connection parameters, this allows 
+     * for the validation of fields that have been populated by other methods besides keyboard input. 
+     * E.g (Copy past, Drag drop ...)
+     */
+    private void syncParameters(){
+        for (Entry<Param, Text> field : fields.entrySet()) {
+            Param param = field.getKey();
+            Text textField = field.getValue();
+            sync(param, textField);
+        }
     }
 
     /**

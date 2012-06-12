@@ -81,10 +81,10 @@ public class BasicWMSRenderer2Test extends AbstractProjectUITestCase {
                 viewportCRS);
         assertEquals(DefaultGeographicCRS.WGS84, bbox.getCoordinateReferenceSystem());
         
-        assertEquals(-180.0, bbox.getMinX(), ACCURACY);
-        assertEquals(-90.0, bbox.getMinY(), ACCURACY);
-        assertEquals(180.0, bbox.getMaxX(), ACCURACY);
-        assertEquals(90.0, bbox.getMaxY(), ACCURACY);
+        assertEquals(0.0, bbox.getMinX(), ACCURACY);
+        assertEquals(0.0, bbox.getMinY(), ACCURACY);
+        assertEquals(100.0, bbox.getMaxX(), ACCURACY);
+        assertEquals(20.0, bbox.getMaxY(), ACCURACY);
     }
 
     public void testCalculateRequestBBox_ViewportContained() throws Exception {

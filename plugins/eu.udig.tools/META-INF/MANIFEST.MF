@@ -2,7 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: eu.udig.tools; singleton:=true
+<<<<<<< HEAD
 Bundle-Version: 1.0.0.qualifier
+=======
+Bundle-Version: 1.3.2.qualifier
+>>>>>>> 5dc9a8a8f685247d5c11a84d071e82f5b937d29e
 Bundle-Activator: eu.udig.tools.Activator
 Bundle-Vendor: uDig Community
 Require-Bundle: org.eclipse.ui,

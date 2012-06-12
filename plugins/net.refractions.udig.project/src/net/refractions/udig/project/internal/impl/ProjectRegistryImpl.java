@@ -53,10 +53,13 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  */
 public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry {
     /**
+     * The cached value of the '{@link #getCurrentProject() <em>Current Project</em>}' reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @see #getCurrentProject()
      * @generated
+     * @ordered
      */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
+    protected Project currentProject;
 
     /**
      * The cached value of the '{@link #getProjects() <em>Projects</em>}' reference list. <!--
@@ -70,15 +73,6 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     protected List projects = null;
 
     /**
-     * The cached value of the '{@link #getCurrentProject() <em>Current Project</em>}' reference.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see #getCurrentProject()
-     * @generated
-     * @ordered
-     */
-    protected Project currentProject = null;
-
-    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -90,8 +84,9 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     protected EClass eStaticClass() {
-        return ProjectPackage.eINSTANCE.getProjectRegistry();
+        return ProjectPackage.Literals.PROJECT_REGISTRY;
     }
 
     /**
@@ -105,10 +100,9 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
             projects = new EObjectResolvingEList(Project.class, this,
                     ProjectPackage.PROJECT_REGISTRY__PROJECTS);
         }
-        
-        for( Iterator<Project> iter=projects.iterator(); iter.hasNext(); ) {
-            if( iter.next().eResource()==null )
-                iter.remove();
+
+        for( Iterator<Project> iter = projects.iterator(); iter.hasNext(); ) {
+            if (iter.next().eResource() == null) iter.remove();
         }
         return projects;
     }
@@ -130,10 +124,8 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      */
     public Project getCurrentProject() {
         Project p = getCurrentProjectGen();
-        if (p == null && getProjects().size() > 0)
-            p = getProjects().get(0);
-        if (p == null)
-            p = getDefaultProject();
+        if (p == null && getProjects().size() > 0) p = getProjects().get(0);
+        if (p == null) p = getDefaultProject();
         return p;
     }
 
@@ -143,8 +135,8 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      */
     public Project getCurrentProjectGen() {
         if (currentProject != null && currentProject.eIsProxy()) {
-            Project oldCurrentProject = currentProject;
-            currentProject = (Project) eResolveProxy((InternalEObject) currentProject);
+            InternalEObject oldCurrentProject = (InternalEObject) currentProject;
+            currentProject = (Project) eResolveProxy(oldCurrentProject);
             if (currentProject != oldCurrentProject) {
                 if (eNotificationRequired())
                     eNotify(new ENotificationImpl(this, Notification.RESOLVE,
@@ -191,45 +183,46 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     public Project getProject( URI uri ) {
         // There is a sporatic bug here. Remove this try/catch when it is fixed.
         try {
-            if (findProject(uri) != null){
+            if (findProject(uri) != null) {
                 // already available!
                 return findProject(uri);
             }
 
             URI projectURI = URI.createURI(uri.toString());
-            
+
             final ProjectRegistry registry = getProjectRegistry();
             Resource registryResource = registry.eResource();
             if (registryResource == null) {
                 System.out.println("Registery was unable to load"); //$NON-NLS-1$
                 throw new Error(Messages.ProjectRegistryImpl_load_error);
             }
-           
+
             URI registryURI = registryResource.getURI();
             projectURI.deresolve(registryURI, true, true, true);
-            
-            ResourceSet registeryResourceSet = registryResource.getResourceSet();            
+
+            ResourceSet registeryResourceSet = registryResource.getResourceSet();
             Resource projectResource = registeryResourceSet.createResource(projectURI);
             try {
                 projectResource.load(null);
             } catch (IOException e1) {
                 // resource doesn't exist. That is ok.
             }
-            
+
             Project incomingProject = null;
             if (projectResource.getContents().isEmpty()) {
                 // new file being created!
-                if( projectURI.isFile() ){
+                if (projectURI.isFile()) {
                     // check to see if it exists; we don't like empty existing files
-                    File file = new File( projectURI.toFileString() );
-                    if( file.exists() ){
-                        if(!file.delete())
-                        throw new NullPointerException("Unable to load "+uri+" file was empty");
-                    }                    
+                    File file = new File(projectURI.toFileString());
+                    if (file.exists()) {
+                        if (!file.delete())
+                            throw new NullPointerException("Unable to load " + uri
+                                    + " file was empty");
+                    }
                 }
                 // creating a new project from the new project wizard
                 incomingProject = createProject(uri, projectResource);
-                
+
             } else {
                 // Go through list of resources
                 EList<EObject> contents = projectResource.getContents();
@@ -239,21 +232,22 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
                         break;
                     }
                 }
-                if( incomingProject == null ){
+                if (incomingProject == null) {
                     // this project was not saved with a project file?
                     // (does it represent an individial map? we are not sure)
-                    throw new NullPointerException("Unable to load "+uri+" - does not contain a project");
+                    throw new NullPointerException("Unable to load " + uri
+                            + " - does not contain a project");
                 }
-//                if (incomingProject == null) {
-//                    incomingProject = createProject(uri, resource);
-//                    List<ProjectElement> eContents = incomingProject.getElementsInternal();
-//                    for( EObject eObject : contents ) {
-//                        if (eObject instanceof MapImpl) {
-//                            MapImpl tmpMap = (MapImpl) eObject;
-//                            eContents.add(tmpMap);
-//                        }
-//                    }
-//                }
+                //                if (incomingProject == null) {
+                //                    incomingProject = createProject(uri, resource);
+                //                    List<ProjectElement> eContents = incomingProject.getElementsInternal();
+                //                    for( EObject eObject : contents ) {
+                //                        if (eObject instanceof MapImpl) {
+                //                            MapImpl tmpMap = (MapImpl) eObject;
+                //                            eContents.add(tmpMap);
+                //                        }
+                //                    }
+                //                }
             }
 
             final Project newProject = incomingProject;
@@ -279,33 +273,31 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     private Project findProject( URI uri ) {
         List<Project> projects = getProjects();
         for( Project project : projects ) {
-            if (isURIEqual(project.eResource().getURI(), uri) )
-                return project;
+            if (isURIEqual(project.eResource().getURI(), uri)) return project;
         }
         return null;
     }
 
     public static boolean isURIEqual( URI uri, URI uri2 ) {
-        if( uri.equals(uri2) )
-            return true;
-        
-        String uriString=uri.toString();
-        String uri2String=uri2.toString();
-        uriString=replaceBackSlashes(uriString);
-        uri2String=replaceBackSlashes(uri2String);
+        if (uri.equals(uri2)) return true;
 
-        uriString=uriString.replace("://", ":/");  //$NON-NLS-1$//$NON-NLS-2$
-        uri2String=uri2String.replace("://", ":/");  //$NON-NLS-1$//$NON-NLS-2$
+        String uriString = uri.toString();
+        String uri2String = uri2.toString();
+        uriString = replaceBackSlashes(uriString);
+        uri2String = replaceBackSlashes(uri2String);
+
+        uriString = uriString.replace("://", ":/"); //$NON-NLS-1$//$NON-NLS-2$
+        uri2String = uri2String.replace("://", ":/"); //$NON-NLS-1$//$NON-NLS-2$
         return uriString.equals(uri2String);
     }
 
     private static String replaceBackSlashes( String uriString ) {
-        StringBuffer buffer=new StringBuffer(uriString.length());
+        StringBuffer buffer = new StringBuffer(uriString.length());
         for( int i = 0; i < uriString.length(); i++ ) {
             char charAt = uriString.charAt(i);
-            if( charAt=='\\' )
+            if (charAt == '\\')
                 buffer.append('/');
-            else{
+            else {
                 buffer.append(charAt);
             }
         }
@@ -329,67 +321,72 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      */
     public Project getProject( String projectPath ) {
         URL url;
-        if( projectPath.startsWith("file:")) { //$NON-NLS-1$
+        if (projectPath.startsWith("file:")) { //$NON-NLS-1$
             try {
-                url = new URL( projectPath ); // actually already a URL!
+                url = new URL(projectPath); // actually already a URL!
             } catch (MalformedURLException e) {
-                System.err.println("Unable to turn "+projectPath+" into a URL to load");
+                System.err.println("Unable to turn " + projectPath + " into a URL to load");
                 return null; // not a project                
             }
-        }
-        else {
-            File file = new File( projectPath );
-            url = URLUtils.fileToURL( file );
+        } else {
+            File file = new File(projectPath);
+            url = URLUtils.fileToURL(file);
             // projectPath = "file://" + projectPath; //$NON-NLS-1$
         }
-        
-        final String uriText = url.toExternalForm() + File.separatorChar + ProjectRegistry.PROJECT_FILE; //$NON-NLS-1$
+
+        final String uriText = url.toExternalForm() + File.separatorChar
+                + ProjectRegistry.PROJECT_FILE; //$NON-NLS-1$
         final URI uri = URI.createURI(uriText);
-        
+
         Project project = getProject(uri);
         return project;
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
+        switch( featureID ) {
         case ProjectPackage.PROJECT_REGISTRY__CURRENT_PROJECT:
-            if (resolve)
-                return getCurrentProject();
+            if (resolve) return getCurrentProject();
             return basicGetCurrentProject();
         case ProjectPackage.PROJECT_REGISTRY__PROJECTS:
             return getProjects();
         }
-        return eDynamicGet(eFeature, resolve);
+        return super.eGet(featureID, resolve, coreType);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     @SuppressWarnings("unchecked")
-    public void eSet( EStructuralFeature eFeature, Object newValue ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public void eSet( int featureID, Object newValue ) {
+        switch( featureID ) {
         case ProjectPackage.PROJECT_REGISTRY__CURRENT_PROJECT:
             setCurrentProject((Project) newValue);
             return;
         case ProjectPackage.PROJECT_REGISTRY__PROJECTS:
             getProjects().clear();
-            getProjects().addAll((Collection) newValue);
+            getProjects().addAll((Collection< ? extends Project>) newValue);
             return;
         }
-        eDynamicSet(eFeature, newValue);
+        super.eSet(featureID, newValue);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void eUnset( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public void eUnset( int featureID ) {
+        switch( featureID ) {
         case ProjectPackage.PROJECT_REGISTRY__CURRENT_PROJECT:
             setCurrentProject((Project) null);
             return;
@@ -397,21 +394,23 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
             getProjects().clear();
             return;
         }
-        eDynamicUnset(eFeature);
+        super.eUnset(featureID);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public boolean eIsSet( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public boolean eIsSet( int featureID ) {
+        switch( featureID ) {
         case ProjectPackage.PROJECT_REGISTRY__CURRENT_PROJECT:
             return currentProject != null;
         case ProjectPackage.PROJECT_REGISTRY__PROJECTS:
             return projects != null && !projects.isEmpty();
         }
-        return eDynamicIsSet(eFeature);
+        return super.eIsSet(featureID);
     }
 
     /**
@@ -463,17 +462,17 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     private synchronized static ProjectRegistry load() {
         ProjectRegistry projectRegistry = null;
         try {
-            
+
             IPath registrypath = Platform.getLocation().append(".projectRegistry"); //$NON-NLS-1$
             URI uri = URI.createURI("file://" + registrypath.toOSString()); //$NON-NLS-1$
 
-            projectRegistry = backwardsCompatibility(projectRegistry, registrypath, uri); 
-            
-            if ( projectRegistry==null ) { 
-            
+            projectRegistry = backwardsCompatibility(projectRegistry, registrypath, uri);
+
+            if (projectRegistry == null) {
+
                 // Load the resource through the editing domain.
                 resourceSet = new ResourceSetImpl();
-    
+
                 if (registrypath.toFile().exists()) {
                     Resource resource = resourceSet.getResource(uri, true);
                     resourceSet.eSetDeliver(false);
@@ -486,7 +485,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
                     Resource resource = resourceSet.createResource(uri);
                     if (resource == null)
                         throw new Exception("Unable to load or create ProjectRegistry resource"); //$NON-NLS-1$
-    
+
                     projectRegistry = new ProjectRegistryImpl();
                     resource.getContents().add(projectRegistry);
                 }
@@ -521,17 +520,17 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      */
     private static ProjectRegistry backwardsCompatibility( ProjectRegistry projectRegistry,
             IPath registrypath, URI uri ) {
-        IPath oldregistrypath = ProjectPlugin.getPlugin().getStateLocation().append(
-            "ProjectRegistry"); //$NON-NLS-1$
+        IPath oldregistrypath = ProjectPlugin.getPlugin().getStateLocation()
+                .append("ProjectRegistry"); //$NON-NLS-1$
         URI olduri = URI.createURI("file://" + oldregistrypath.toOSString()); //$NON-NLS-1$
 
-        if( oldregistrypath.toFile().exists() ){
+        if (oldregistrypath.toFile().exists()) {
             resourceSet = new ResourceSetImpl();
             Resource resource = resourceSet.getResource(olduri, true);
             resourceSet.eSetDeliver(false);
             projectRegistry = (ProjectRegistry) resource.getContents().get(0);
 
-            if( projectRegistry!=null ){
+            if (projectRegistry != null) {
                 resourceSet = new ResourceSetImpl();
                 resource = resourceSet.createResource(uri);
                 resource.getContents().add(projectRegistry);
@@ -552,15 +551,14 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
             }
             if (projectRegistry.eResource() == null
                     || projectRegistry.eResource().getResourceSet() != resourceSet
-                    || resourceSet == null)
-                throw new AssertionError();
+                    || resourceSet == null) throw new AssertionError();
         }
         return projectRegistry;
     }
 
     @Override
     public EList<Adapter> eAdapters() {
-    	return SynchronizedEList.create(super.eAdapters());
+        return SynchronizedEList.create(super.eAdapters());
     }
-    
+
 } // ProjectRegistryImpl

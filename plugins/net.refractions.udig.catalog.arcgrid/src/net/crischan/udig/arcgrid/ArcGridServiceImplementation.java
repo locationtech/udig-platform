@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource;
 import net.refractions.udig.catalog.rasterings.AbstractRasterService;
 import net.refractions.udig.catalog.rasterings.AbstractRasterServiceInfo;
@@ -59,20 +58,5 @@ public class ArcGridServiceImplementation extends AbstractRasterService {
 			monitor.done();
 		
 		return list;
-	}
-	/**
-	 * Used by ArcGridGeoResourceImplementation to set
-	 * connection status.
-	 *
-	 * @param message
-	 */
-	void setStatusMessage( Exception message ){
-	    if( message == null ){
-	        super.status = Status.CONNECTED;
-	    }
-	    else {
-	        super.status = Status.BROKEN;
-	        super.message = message;
-	    }
 	}
 }

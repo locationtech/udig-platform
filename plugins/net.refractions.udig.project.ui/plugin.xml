@@ -211,7 +211,7 @@
             objectClass="net.refractions.udig.project.IMap"/>
       <page
             class="net.refractions.udig.project.ui.internal.property.pages.MapCRSPropertyPage"
-            id="net.refractions.udig.project.ui.page1"
+            id="net.refractions.udig.project.ui.property.mapCrs"
             name="%crs.page.name"
             objectClass="net.refractions.udig.project.IMap"/>
       <page
@@ -223,8 +223,18 @@
       <page
             class="net.refractions.udig.project.ui.internal.property.pages.LayerSummary"
             id="net.refractions.udig.configuration.property.layer.summary"
-            name="%LayerSummary.name"
-            objectClass="net.refractions.udig.project.ILayer"/>
+            name="%LayerSummary.name">
+         <enabledWhen>
+            <or>
+               <instanceof
+                     value="net.refractions.udig.project.internal.Layer">
+               </instanceof>
+               <adapt
+                     type="net.refractions.udig.project.internal.Layer">
+               </adapt>
+            </or>
+         </enabledWhen>
+      </page>
       <page
             class="net.refractions.udig.project.ui.internal.property.pages.LayerCRSPropertyPage"
             id="net.refractions.udig.project.ui.layer.crs"
@@ -235,7 +245,28 @@
             class="net.refractions.udig.project.ui.internal.property.pages.LayerInteractionPropertyPage"
             id="net.refractions.udig.project.ui.property.layer.interaction"
             name="Interaction"
-            objectClass="net.refractions.udig.project.internal.Layer">
+            objectClass="net.refractions.udig.project.internal.Layer"
+            selectionFilter="single">
+      </page>
+      <page
+            class="net.refractions.udig.project.ui.tileset.TileSetPropertyPage"
+            id="net.refractions.udig.configuration.property.layer.tileset"
+            name="%tilesetDefine"
+            selectionFilter="single">
+         <enabledWhen>
+            <or>
+               <instanceof
+                     value="net.refractions.udig.project.internal.Layer">
+               </instanceof>
+            </or>
+         </enabledWhen>
+      </page>
+      <page
+            class="net.refractions.udig.project.ui.internal.property.pages.LayerQueryPropertyPage"
+            id="net.refractions.udig.project.ui.property.layer.query"
+            name="Query"
+            objectClass="net.refractions.udig.project.internal.Layer"
+            selectionFilter="single">
       </page>
    </extension>
 
@@ -851,9 +882,10 @@
          <operation
                categoryId="net.refractions.udig.catalog.ui.operation.resourceCategory"
                class="net.refractions.udig.project.ui.operations.example.MultiTargetOp"
-               id="net.refractions.udig.project.ui.resourceSummary"
+               id="net.refractions.udig.project.ui.define.tileset"
                name="%resourceSummary"
-               targetClass="net.refractions.udig.catalog.IGeoResource"/>      
+               targetClass="net.refractions.udig.catalog.IGeoResource">
+         </operation>      
  	</extension>
       
       <extension

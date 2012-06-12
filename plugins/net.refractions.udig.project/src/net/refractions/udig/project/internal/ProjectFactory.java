@@ -18,18 +18,12 @@ import org.eclipse.emf.ecore.EFactory;
  */
 public interface ProjectFactory extends EFactory {
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
      * The singleton instance of the factory.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    ProjectFactory eINSTANCE = new net.refractions.udig.project.internal.impl.ProjectFactoryImpl();
-    
+    ProjectFactory eINSTANCE = net.refractions.udig.project.internal.impl.ProjectFactoryImpl.init();
+
     /**
      * Returns a new object of class '<em>Context Model</em>'.
      * <!-- begin-user-doc --> <!--
@@ -129,6 +123,33 @@ public interface ProjectFactory extends EFactory {
      * @generated
      */
     BlackboardEntry createBlackboardEntry();
+
+    /**
+     * Returns a new object of class '<em>Folder</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Folder</em>'.
+     * @generated
+     */
+    Folder createFolder();
+
+    /**
+     * Returns a new object of class '<em>Legend Item</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Legend Item</em>'.
+     * @generated
+     */
+    LegendItem createLegendItem();
+
+    /**
+     * Returns a new object of class '<em>Layer Legend Item</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Layer Legend Item</em>'.
+     * @generated
+     */
+    LayerLegendItem createLayerLegendItem();
 
     /**
      * Returns a new object of class '<em>Edit Manager</em>'.

@@ -67,15 +67,16 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
      * @author Jesse
      * @since 1.1.0
      */
-    public static class LayerLoadingPlaceHolder extends LayerDecorator implements LoadingPlaceHolder {
-
+    public static class LayerLoadingPlaceHolder extends LayerDecorator
+            implements
+                LoadingPlaceHolder {
 
         public LayerLoadingPlaceHolder( Layer layer ) {
             super(layer);
         }
 
         public Image getImage() {
-            return getGlyph().createImage();
+            return getIcon().createImage();
         }
 
         public String getText() {
@@ -256,7 +257,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
      * 
      * @generated NOT
      */
-    public List getPropertyDescriptors( Object object ) {
+    public List<IItemPropertyDescriptor> getPropertyDescriptors( Object object ) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
             addAbstractPropertyDescriptor(object);
@@ -412,14 +413,10 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
      * @generated NOT
      */
     protected void addBlackBoardInternalPropertyDescriptor( Object object ) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(
-                        ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-                        getResourceLocator(),
-                        "blackboard", 
-                        "blackboard ",
-                        ProjectPackage.eINSTANCE.getMap_BlackBoardInternal(), true, null, null,
-                        null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), "blackboard", "blackboard ",
+                ProjectPackage.eINSTANCE.getMap_BlackBoardInternal(), true, null, null, null));
     }
 
     /**
@@ -462,48 +459,49 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
 
     public static final LayerLoadingPlaceHolder LOADING_LAYER;
     static {
-        LOADING_LAYER=new LayerLoadingPlaceHolder(ProjectFactory.eINSTANCE.createLayer());
-        LOADING_LAYER.setName(Messages.ProjectItemProvider_loading); 
-        Bundle bundle=ProjectEditPlugin.getPlugin().getBundle();
-        
-        IPath path=new Path("icons/full/obj16/Layer.gif"); //$NON-NLS-1$
+        LOADING_LAYER = new LayerLoadingPlaceHolder(ProjectFactory.eINSTANCE.createLayer());
+        LOADING_LAYER.setName(Messages.ProjectItemProvider_loading);
+        Bundle bundle = ProjectEditPlugin.getPlugin().getBundle();
+
+        IPath path = new Path("icons/full/obj16/Layer.gif"); //$NON-NLS-1$
         ImageDescriptor image = ImageDescriptor.createFromURL(FileLocator.find(bundle, path, null));
-        LOADING_LAYER.setGlyph(image);
+        LOADING_LAYER.setIcon(image);
         LOADING_LAYER.setVisible(true);
     }
-    
+
     @SuppressWarnings("unchecked")
     protected net.refractions.udig.project.internal.provider.LoadingPlaceHolder getLoadingItem() {
         return LOADING_LAYER;
     };
-    
+
     protected ChildFetcher createChildFetcher() {
         return new ChildFetcher(this){
             protected void notifyChanged() {
-                MapItemProvider.this.notifyChanged(new ENotificationImpl(
-                        (InternalEObject) parent, Notification.SET,
-                        ProjectPackage.MAP__CONTEXT_MODEL, LOADING_LAYER, null));
+                MapItemProvider.this.notifyChanged(new ENotificationImpl((InternalEObject) parent,
+                        Notification.SET, ProjectPackage.MAP__CONTEXT_MODEL, LOADING_LAYER, null));
             }
             @SuppressWarnings("unchecked")
             @Override
             protected IStatus run( IProgressMonitor monitor ) {
-                if( parent instanceof Map ){
-                    Map map=(Map) parent;
-                    boolean found=false;
-                    SynchronizedEList adapters = (SynchronizedEList) map.getContextModel().eAdapters();
+                if (parent instanceof Map) {
+                    Map map = (Map) parent;
+                    boolean found = false;
+                    SynchronizedEList adapters = (SynchronizedEList) map.getContextModel()
+                            .eAdapters();
                     adapters.lock();
-                    try{
-                        for( Iterator<Adapter> iter=adapters.iterator(); iter.hasNext(); ) {
+                    try {
+                        for( Iterator<Adapter> iter = adapters.iterator(); iter.hasNext(); ) {
                             Adapter next = iter.next();
-                            if( next instanceof ContextModelItemProvider && 
-                                    ((ContextModelItemProvider)next).getAdapterFactory()==getAdapterFactory())
-                                found=true;
+                            if (next instanceof ContextModelItemProvider
+                                    && ((ContextModelItemProvider) next).getAdapterFactory() == getAdapterFactory())
+                                found = true;
                         }
-                    }finally{
+                    } finally {
                         adapters.unlock();
                     }
-                    if( !found ){
-                        ContextModelItemProvider provider=new ContextModelItemProvider(getAdapterFactory());
+                    if (!found) {
+                        ContextModelItemProvider provider = new ContextModelItemProvider(
+                                getAdapterFactory());
                         adapters.add(provider);
                     }
                 }
@@ -511,25 +509,22 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
                 IStatus result = super.run(monitor);
                 return result;
             }
-        };    
+        };
     }
-    
-    
+
     @Override
-    protected Collection<? extends Object> getConcreteChildren( Object object ) {
-        if( object instanceof Map)
-            return ((Map)object).getMapLayers(); 
-        throw new IllegalArgumentException("Object must be a Map.  Was: "+object); //$NON-NLS-1$
+    protected Collection< ? extends Object> getConcreteChildren( Object object ) {
+        if (object instanceof Map) return ((Map) object).getMapLayers();
+        throw new IllegalArgumentException("Object must be a Map.  Was: " + object); //$NON-NLS-1$
     }
 
     @Override
     public Object getChild( Object object, int childIndex ) {
-        Map map=(Map) object;
-        if( childIndex>=map.getMapLayers().size() )
-            return null;
+        Map map = (Map) object;
+        if (childIndex >= map.getMapLayers().size()) return null;
         return map.getMapLayers().get(childIndex);
     }
-    
+
     @Override
     public boolean hasChildren( Object object ) {
         return true;
@@ -543,18 +538,17 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
      */
     public String getText( Object object ) {
         Map map = ((Map) object);
-		String label = map.getName();
-        if( label == null ){
-        	Resource resource = map.eResource();
-        	if( resource !=null ){
-				String toString = resource.toString();
-				int lastSlash = toString.lastIndexOf(File.pathSeparator);
-				if( lastSlash==-1 )
-					lastSlash=0;
-				label = toString.substring(lastSlash);
-        	}
+        String label = map.getName();
+        if (label == null) {
+            Resource resource = map.eResource();
+            if (resource != null) {
+                String toString = resource.toString();
+                int lastSlash = toString.lastIndexOf(File.pathSeparator);
+                if (lastSlash == -1) lastSlash = 0;
+                label = toString.substring(lastSlash);
+            }
         }
-        return label == null || label.length() == 0 ? "Unable to load map" : label; 
+        return label == null || label.length() == 0 ? "Unable to load map" : label;
     }
 
     /**
@@ -565,17 +559,17 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
      * @generated NOT
      */
     public void notifyChanged( Notification notification ) {
-        if( notification.getNewValue()==notification.getOldValue() ||
-                (notification.getNewValue()!=null && notification.getNewValue().equals(notification.getOldValue())) ||
-                (notification.getOldValue()!=null && notification.getOldValue().equals(notification.getNewValue()))
-                )
-            return;
+        if (notification.getNewValue() == notification.getOldValue()
+                || (notification.getNewValue() != null && notification.getNewValue().equals(
+                        notification.getOldValue()))
+                || (notification.getOldValue() != null && notification.getOldValue().equals(
+                        notification.getNewValue()))) return;
 
         switch( notification.getFeatureID(Map.class) ) {
         case ProjectPackage.MAP__NAME:
         case ProjectPackage.MAP__ABSTRACT:
-//        case ProjectPackage.MAP__NAV_COMMAND_STACK:
-//        case ProjectPackage.MAP__COMMAND_STACK:
+            //        case ProjectPackage.MAP__NAV_COMMAND_STACK:
+            //        case ProjectPackage.MAP__COMMAND_STACK:
         case ProjectPackage.MAP__COLOR_PALETTE:
         case ProjectPackage.MAP__COLOUR_SCHEME:
             fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(),

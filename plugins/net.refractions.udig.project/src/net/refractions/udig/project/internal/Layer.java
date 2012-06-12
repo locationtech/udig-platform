@@ -10,6 +10,7 @@ package net.refractions.udig.project.internal;
 import java.awt.Color;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.refractions.udig.catalog.ID;
@@ -18,6 +19,7 @@ import net.refractions.udig.catalog.IResolveChangeListener;
 import net.refractions.udig.core.IBlockingAdaptable;
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.ui.palette.ColourScheme;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -44,12 +46,6 @@ public interface Layer
             IAdaptable,
             IBlockingAdaptable,
             IResolveChangeListener {
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
 
     /**
      * Returns the owning ContextModel object
@@ -97,7 +93,7 @@ public interface Layer
      * @generated
      */
     void setFilter( Filter value );
-        
+
     /**
      * Sets the spatial bounds of this layer. This property is normally
      * derived from the IGeoResourceInfos, but this provides an override. This
@@ -105,7 +101,7 @@ public interface Layer
      *
      * @param bounds a ReferencedEnvelope indicating the new bounds for the layer
      */
-    public void setBounds(ReferencedEnvelope bounds);
+    public void setBounds( ReferencedEnvelope bounds );
 
     /**
      * StyleBlackboard used to persist user supplied appearance settings.
@@ -187,13 +183,45 @@ public interface Layer
      * @param message the status message
      */
     void setStatusMessage( String message );
+
+    /**
+     * @model keyType="Interaction" valueType="java.lang.Boolean" 
+     */
+    public Map<Interaction, Boolean> getInteractionMap();
+
+    /**
+     * Returns the value of the '<em><b>Shown</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Shown</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Shown</em>' attribute.
+     * @see #setShown(boolean)
+     * @see net.refractions.udig.project.internal.ProjectPackage#getLayer_Shown()
+     * @model
+     * @generated
+     */
+    boolean isShown();
+
+    /**
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#isShown <em>Shown</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Shown</em>' attribute.
+     * @see #isShown()
+     * @generated
+     */
+    void setShown( boolean value );
+
     /**
      * Set interaction applicability.
      * 
      * @param interaction of the layer being considered
      * @param isApplicable true if layer is to be used with indicated interaction
      */
-    public void setApplicable( Interaction interaction, boolean isApplicable );
+    public void setInteraction( Interaction interaction, boolean isApplicable );
 
     /**
      * Indicates this layer is capable of selectable.
@@ -210,8 +238,7 @@ public interface Layer
      * Indicates this layer is selectable.
      * 
      * @return <code>true</code> if layer is selectable, <code>false</code> otherwise.
-     * @uml.property name="selectable"
-     * @model default="true"
+     * @deprecated use getInteraction(Interaction.SELECT)
      */
     public boolean isSelectable();
 
@@ -221,7 +248,7 @@ public interface Layer
      * may be ignored for GeoResources that do not support editing. <!-- end-user-doc -->
      * @param value the new value of the '<em>Selectable</em>' attribute.
      * @see #isSelectable()
-     * @generated
+     * @deprecated use setInteraction(Interaction.SELECT, value)
      */
     void setSelectable( boolean value );
 
@@ -329,16 +356,17 @@ public interface Layer
      * @uml.property name="glyph"
      * @model transient="true"
      */
-    public ImageDescriptor getGlyph();
+    public ImageDescriptor getIcon();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getGlyph <em>Glyph</em>}' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @param value the new value of the '<em>Glyph</em>' attribute.
-     * @see #getGlyph()
+     * Sets the value of the '{@link net.refractions.udig.project.internal.Layer#getIcon <em>Icon</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Icon</em>' attribute.
+     * @see #getIcon()
      * @generated
      */
-    void setGlyph( ImageDescriptor value );
+    void setIcon( ImageDescriptor value );
 
     /**
      * Query that selects all the features for the layer.
@@ -413,7 +441,7 @@ public interface Layer
      * 
      * @return
      */
-    Map getMapInternal();
+    net.refractions.udig.project.internal.Map getMapInternal();
 
     /**
      * @return
@@ -429,7 +457,7 @@ public interface Layer
      * @generated
      */
     void setColourScheme( ColourScheme value );
-    
+
     /**
      * @return
      * @uml.property name="defaultColor"
@@ -453,7 +481,6 @@ public interface Layer
      * @model transient='true' type='org.geotools.data.FeatureEvent'
      */
     List<FeatureEvent> getFeatureChanges();
-    
 
     /**
      * Returns the ranges at which the layer is visible

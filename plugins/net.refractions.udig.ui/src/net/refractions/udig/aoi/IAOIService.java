@@ -40,7 +40,8 @@ import com.vividsolutions.jts.geom.Geometry;
 public interface IAOIService {
 
     /**
-     * Get the extent of the current set area
+     * Get the extent of the current set area.
+     * @return Extent of area of interest, or null if not defined
      */
     public ReferencedEnvelope getExtent();
 

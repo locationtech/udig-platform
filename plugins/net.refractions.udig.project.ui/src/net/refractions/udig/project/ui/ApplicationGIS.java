@@ -765,9 +765,11 @@ public class ApplicationGIS {
     public static IMap drawMap(final DrawMapParameter drawMapParams) throws RenderException {
     	final DrawMapParameter params = new DrawMapParameter( drawMapParams );
     	IProgressMonitor monitor = params.monitor;
+    	
         final Map map = (Map) EcoreUtil.copy((EObject) params.toDraw);
         
-        map.getBlackboard().addAll(drawMapParams.toDraw.getBlackboard());        
+        map.getBlackboard().addAll(drawMapParams.toDraw.getBlackboard());
+        
         for (int i = 0; i < map.getMapLayers().size(); i++) {
             ILayer source = params.toDraw.getMapLayers().get(i);
             Layer dest = map.getLayersInternal().get(i);
@@ -786,9 +788,7 @@ public class ApplicationGIS {
 					layer.getGeoResources();
 				}
             	
-            	Color background = (Color) map.getBlackboard().get(
-						ProjectBlackboardConstants.MAP__BACKGROUND_COLOR);
-				
+            	Color background = (Color) map.getBlackboard().get(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR);
             	params.graphics.setBackground(background);
 				if (!drawMapParams.transparent) {
 				    params.graphics.clearRect(0, 0, params.destinationSize.width, params.destinationSize.height);

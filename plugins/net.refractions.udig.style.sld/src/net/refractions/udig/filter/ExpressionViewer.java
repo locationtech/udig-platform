@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.refractions.udig.ui.filter.IExpressionViewer;
+import net.refractions.udig.ui.filter.IFilterViewer;
+
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
@@ -56,6 +59,7 @@ import org.opengis.filter.expression.Function;
  * <li>
  * @author jive
  * @since 1.1.0
+ * @deprecated Please use {@link IExpressionViewer}
  */
 public class ExpressionViewer extends Viewer {
     /**
@@ -115,6 +119,7 @@ public class ExpressionViewer extends Viewer {
      * @param none
      */
     public ExpressionViewer( Composite parent, int style ) {
+        System.out.println("Expression Viewer");
         text = new Text( parent, style );
         feedback = new ControlDecoration(text, SWT.TOP | SWT.LEFT);
         
@@ -126,6 +131,9 @@ public class ExpressionViewer extends Viewer {
                 text, new TextContentAdapter(), 
                 proposalProvider,
                 null, null);
+        
+        //Need to set adapter to replace existing text. Default is insert.
+        adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
         
         text.addKeyListener(keyListener);
     }
@@ -173,6 +181,7 @@ public class ExpressionViewer extends Viewer {
      * @return true if the field is valid
      */
     public boolean validate(){
+        System.out.println("Expression Viewer validate");
         FieldDecorationRegistry decorations = FieldDecorationRegistry.getDefault();        
         try {
             expr = ECQL.toExpression( text.getText() );
@@ -232,6 +241,7 @@ public class ExpressionViewer extends Viewer {
      */
     @Override
     public Expression getInput() {
+        System.out.println("Expression: " + expr);
         return expr;
     }
     

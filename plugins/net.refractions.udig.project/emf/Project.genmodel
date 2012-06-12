@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="uDig - User Friendly Desktop Internet GIS client&#xD;&#xA;http://udig.refractions.net&#xD;&#xA;(C) 2004-2012, Refractions Research Inc.&#xD;&#xA;&#xD;&#xA;This library is free software; you can redistribute it and/or&#xD;&#xA;modify it under the terms of the GNU Lesser General Public&#xD;&#xA;License as published by the Free Software Foundation;&#xD;&#xA;version 2.1 of the License.&#xD;&#xA;&#xD;&#xA;This library is distributed in the hope that it will be useful,&#xD;&#xA;but WITHOUT ANY WARRANTY; without even the implied warranty of&#xD;&#xA;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU&#xD;&#xA;Lesser General Public License for more details.&#xD;&#xA;"
     modelDirectory="/net.refractions.udig.project/src" creationCommands="false" creationIcons="false"
     editDirectory="/net.refractions.udig.project.edit/src" editorDirectory="" modelPluginID="net.refractions.udig.project"
-    templateDirectory="" runtimeJar="true" modelName="Project" modelPluginClass="net.refractions.udig.project.internal.ProjectPlugin"
-    editPluginClass="net.refractions.udig.project.internal.provider.ProjectEditPlugin"
+    templateDirectory="" runtimeJar="true" forceOverwrite="true" modelName="Project"
+    modelPluginClass="net.refractions.udig.project.internal.ProjectPlugin" editPluginClass="net.refractions.udig.project.internal.provider.ProjectEditPlugin"
     editorPluginClass="" nonNLSMarkers="true" suppressEMFTypes="true" codeFormatting="true"
     testsDirectory="" testSuiteClass="" importerID="org.eclipse.emf.importer.java"
-    complianceLevel="5.0" copyrightFields="false">
+    complianceLevel="5.0" copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <foreignModel>@model</foreignModel>
   <genPackages prefix="Element" basePackage="net.refractions.udig.project" disposableProviderFactory="true"
       ecorePackage="element.ecore#/">
@@ -20,7 +20,6 @@
   <genPackages prefix="Project" basePackage="net.refractions.udig.project" ecorePackage="internal.ecore#/">
     <genDataTypes ecoreDataType="internal.ecore#//Coordinate"/>
     <genDataTypes ecoreDataType="internal.ecore#//MapDisplay"/>
-    <genDataTypes ecoreDataType="internal.ecore#//FeatureResults"/>
     <genDataTypes ecoreDataType="internal.ecore#//List"/>
     <genDataTypes ecoreDataType="internal.ecore#//AffineTransform"/>
     <genDataTypes ecoreDataType="internal.ecore#//NavCommandStack"/>
@@ -28,7 +27,6 @@
     <genDataTypes ecoreDataType="internal.ecore#//Filter"/>
     <genDataTypes ecoreDataType="internal.ecore#//CoordinateReferenceSystem"/>
     <genDataTypes ecoreDataType="internal.ecore#//CommandStack"/>
-    <genDataTypes ecoreDataType="internal.ecore#//Feature"/>
     <genDataTypes ecoreDataType="internal.ecore#//Point"/>
     <genDataTypes ecoreDataType="internal.ecore#//Adapter"/>
     <genDataTypes ecoreDataType="internal.ecore#//IProgressMonitor"/>
@@ -52,6 +50,7 @@
     <genDataTypes ecoreDataType="internal.ecore#//IOException"/>
     <genDataTypes ecoreDataType="internal.ecore#//Color"/>
     <genDataTypes ecoreDataType="internal.ecore#//BrewerPalette"/>
+    <genDataTypes ecoreDataType="internal.ecore#//Interaction"/>
     <genClasses ecoreClass="internal.ecore#//Comparable"/>
     <genClasses ecoreClass="internal.ecore#//IMap"/>
     <genClasses ecoreClass="internal.ecore#//ILayer"/>
@@ -87,14 +86,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Layer/styleBlackboard"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/zorder"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/status"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/selectable"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/catalogRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/iD"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/visible"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/geoResource"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/geoResources"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/glyph"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/cRS"/>
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference internal.ecore#//Layer/properties"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/colourScheme"/>
@@ -102,6 +99,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/featureChanges"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/minScaleDenominator"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/maxScaleDenominator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Layer/interactionMap"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/shown"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Layer/icon"/>
       <genOperations ecoreOperation="internal.ecore#//Layer/getQuery">
         <genParameters ecoreParameter="internal.ecore#//Layer/getQuery/selection"/>
       </genOperations>
@@ -121,6 +121,7 @@
       <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EReference internal.ecore#//Map/renderManagerInternal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//Map/colourScheme"/>
       <genFeatures notify="false" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Map/blackBoardInternal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Map/legend"/>
       <genOperations ecoreOperation="internal.ecore#//Map/getBounds">
         <genParameters ecoreParameter="internal.ecore#//Map/getBounds/monitor"/>
       </genOperations>
@@ -197,6 +198,20 @@
     </genClasses>
     <genClasses image="false" ecoreClass="internal.ecore#//IResolveChangeListener"/>
     <genClasses image="false" ecoreClass="internal.ecore#//IStyleBlackboard"/>
+    <genClasses ecoreClass="internal.ecore#//InteractionToEBooleanObjectMapEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//InteractionToEBooleanObjectMapEntry/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//InteractionToEBooleanObjectMapEntry/value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="internal.ecore#//IFolder"/>
+    <genClasses ecoreClass="internal.ecore#//Folder">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference internal.ecore#//Folder/items"/>
+    </genClasses>
+    <genClasses ecoreClass="internal.ecore#//LegendItem">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//LegendItem/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//LegendItem/shown"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute internal.ecore#//LegendItem/icon"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="internal.ecore#//ILegendItem"/>
   </genPackages>
   <genPackages prefix="Render" basePackage="net.refractions.udig.project.internal"
       ecorePackage="render.ecore#/">
@@ -219,6 +234,7 @@
     </genDataTypes>
     <genDataTypes ecoreDataType="render.ecore#//ReferencedEnvelope"/>
     <genDataTypes ecoreDataType="render.ecore#//DateTime"/>
+    <genDataTypes ecoreDataType="render.ecore#//IllegalArgumentException"/>
     <genClasses ecoreClass="render.ecore#//IRenderManager"/>
     <genClasses ecoreClass="render.ecore#//IViewportModel"/>
     <genClasses ecoreClass="render.ecore#//IMultiLayerRenderer"/>
@@ -279,6 +295,10 @@
       </genOperations>
       <genOperations ecoreOperation="render.ecore#//ViewportModel/zoom">
         <genParameters ecoreParameter="render.ecore#//ViewportModel/zoom/zoom"/>
+      </genOperations>
+      <genOperations ecoreOperation="render.ecore#//ViewportModel/zoom.1">
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/zoom.1/zoom"/>
+        <genParameters ecoreParameter="render.ecore#//ViewportModel/zoom.1/fixedPoint"/>
       </genOperations>
       <genOperations ecoreOperation="render.ecore#//ViewportModel/zoomToExtent"/>
       <genOperations ecoreOperation="render.ecore#//ViewportModel/zoomToBox">

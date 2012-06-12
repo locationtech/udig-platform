@@ -26,6 +26,7 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IMapCompositionListener;
+import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.MapCompositionEvent;
 import net.refractions.udig.project.LayerEvent.EventType;
@@ -171,7 +172,7 @@ public class InfoView2 extends SearchPart {
                 ImageDescriptor icon;
                 icon = (ImageDescriptor) layer.getProperties().get("generated icon");
                 if( icon == null ){
-                    icon = layer.getGlyph();
+                    icon = layer.getIcon();
                 }
                 if( icon == null ){
                     IGeoResource resource = layer.getGeoResource();
@@ -357,7 +358,7 @@ public class InfoView2 extends SearchPart {
         	List<ILayer> currentLayerList = ApplicationGIS.getActiveMap().getMapLayers();
         	if (!currentLayerList.contains(layer)) continue;
             if( !layer.isVisible() ) continue;
-            if( !layer.isApplicable(ILayer.Interaction.INFO)) continue;
+            if( !layer.getInteraction(Interaction.INFO)) continue;
             
             //if( !layer.isApplicable( "information" )) continue;
             //add listener to the current layer and add that layer to be processed.
@@ -588,7 +589,9 @@ public class InfoView2 extends SearchPart {
             public void run() {
                 getDetails().showPage(information);
                 Tree tree = ((TreeViewer) viewer).getTree();
-                tree.removeAll();
+                if (tree != null && !tree.isDisposed()) {
+                    tree.removeAll();
+                }
             }
         });
     }

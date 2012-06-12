@@ -49,6 +49,15 @@
             name="Navigation"
             restorable="true">
       </view>
+      <view
+            allowMultiple="false"
+            class="eu.udig.tools.jgrass.featuremovieview.FeatureMovieView"
+            fastViewWidthRatio="0.20"
+            icon="icons/movieview.gif"
+            id="eu.udig.tools.jgrass.featuremovieview.FeatureMovieView"
+            name="Feature Walker View"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.exportWizards">
@@ -57,12 +66,6 @@
             icon="icons/grid_obj.gif"
             id="eu.udig.tools.jgrass.rasterexport.TiffAsciiExportWizard"
             name="Export coverage to tiff or esri ascii">
-      </wizard>
-      <wizard
-            class="eu.udig.tools.jgrass.kml.wizard.KmlExportWizard"
-            icon="icons/icon_kml.png"
-            id="eu.udig.tools.jgrass.kml.wizard.KmlExportWizard"
-            name="Export feature layer to kml">
       </wizard>
    </extension>
    <extension
@@ -161,23 +164,9 @@
             class="eu.udig.tools.jgrass.csv.CsvImportWizard"
             icon="icons/goto_input.gif"
             id="eu.udig.tools.jgrass.csv.CsvImportWizard"
-            name="CSV import">
+            name="%csvImport.wizardName">
          <description>
-            Import a file in the CSV format from the local file system into the workspace.
-         </description>
-      </wizard>
-      <category
-            id="eu.udig.featureimportcategory"
-            name="%import2featurelayer">
-      </category>
-      <wizard
-            category="eu.udig.featureimportcategory"
-            class="eu.udig.tools.jgrass.kml.wizard.KmlImportWizard"
-            icon="icons/icon_kml.png"
-            id="eu.udig.tools.jgrass.kml.wizard.KmlImportWizard"
-            name="Kml to Shapefile import">
-         <description>
-            Import a kml file into the workspace.
+            %csvImport.wizardDescription
          </description>
       </wizard>
    </extension>

@@ -112,7 +112,9 @@ public class WorkflowWizardAdapter extends Wizard implements IImportWizard, IExp
 
     public void handleEvent( Event event ) {
         // this is called when the dialog is closed either by cancel or finish
-        getContainer().getShell().close();
+        if (getContainer() != null && getContainer().getShell() != null) {
+            getContainer().getShell().close();
+        }
     }
 
 }

@@ -27,6 +27,7 @@ import com.vividsolutions.jts.io.WKTWriter;
 public class GeomPropertySource implements IPropertySource2 {
     private static final String TYPE = "TYPE"; //$NON-NLS-1$
     private static final String AREA = "AREA"; //$NON-NLS-1$
+    private static final String LENGTH = "LENGTH"; //$NON-NLS-1$
     private static final String GEOM = "GEOM"; //$NON-NLS-1$
 
     private Geometry geom;
@@ -41,10 +42,12 @@ public class GeomPropertySource implements IPropertySource2 {
     public GeomPropertySource( Geometry geometry ) {
         this.geom = geometry;
         this.original = geometry;
-        propertyDescriptors = new IPropertyDescriptor[2];
+        propertyDescriptors = new IPropertyDescriptor[3];
         propertyDescriptors[0] = new PropertyDescriptor(new ID(AREA), 
                 Messages.GeomPropertySource_area); 
-        propertyDescriptors[1] = new TextPropertyDescriptor(new ID(GEOM), 
+        propertyDescriptors[1] = new PropertyDescriptor(new ID(LENGTH), 
+                Messages.GeomPropertySource_length); 
+        propertyDescriptors[2] = new TextPropertyDescriptor(new ID(GEOM), 
                 Messages.GeomPropertySource_WKT);
     }
 
@@ -73,6 +76,8 @@ public class GeomPropertySource implements IPropertySource2 {
             return geom.getGeometryType();
         if (id.id == AREA)
             return String.valueOf(geom.getArea());
+        if (id.id == LENGTH)
+            return String.valueOf(geom.getLength());
         if (id.id == GEOM) {
             return geomToText();
         }

@@ -34,7 +34,15 @@
         <tycho-provider>org.eclipse.tycho</tycho-provider>
     </properties>
     <!--
-To run a normal build on the command line:
+We need to ask you to download some libs prior to doing a full build:
+   cd plugins/net.refractions.udig.libs
+   mvn clean install -f pom-libs.xml
+   cd ../..
+
+Our maven tests require a bit more memory:
+   export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m"
+
+Once that is done you can a normal build on the command line:
    mvn install -Dall
 
 If you run into any problems (to list debug and stack trace)
@@ -44,19 +52,24 @@ Please note the Tycho maven plugin used to build RCP projects is a a work in pro
 will do better to review the stack trace with a checkout of the Tycho code in hand as the
 error messages are often misleading and evil.
 
-To quickly build the product:
-   mvn install
+The build supports the use of profiles - the following profiles are defined:
 
-The build supports the use of profiles - to run a normal build with tests:
+To run a normal build with tests:
   mvn install -Dall -Ptest
+  
+To quickly build the product:
+   mvn install -Pproduct
 
-The following profiles are defined:
+The product is available in features/net.refractions.udig-product/target
 
+Builds documentation (requires sphinx-build is installed):
+  mvn install -Pdocs
+  
 Defines the appropriate p2 update repository
   mvn install -PudigProfile (on by default)
 
 Gathers the tutorials and source code for the software developers kit
-  mvn install -Psdk (included by -Dall)
+  mvn install -Dall -Psdk
 
 Includes test plugins (this is optional):
   mvn install -Ptest
@@ -75,6 +88,13 @@ Includes the ossim feaure (this may be dead code)
 
     -->    
     <profiles>
+        <profile>
+            <id>docs</id>
+            <modules>
+                 <module>docs</module>
+             </modules>
+        </profile>
+        
         <profile>
             <id>udigProfile</id>
             <activation>
@@ -98,7 +118,7 @@ Includes the ossim feaure (this may be dead code)
                 <repository>
                     <id>indigo-babel-web</id>
                     <layout>p2</layout>
-                    <url>http://download.eclipse.org/technology/babel/update-site/R0.9.0/indigo/</url>
+                    <url>http://download.eclipse.org/technology/babel/update-site/R0.9.1/indigo</url>
                     <releases>
                         <enabled>true</enabled>
                         <updatePolicy>never</updatePolicy>
@@ -111,66 +131,66 @@ Includes the ossim feaure (this may be dead code)
             </repositories>
         </profile>
 
-		<profile>
-			<id>coverage</id>
-			<activation>
-				<property>
-					<name>coverage</name>
-				</property>
-			</activation>
-			<properties>
-				<emma.session.out.file>${project.build.directory}/emma/${project.artifactId}.es</emma.session.out.file>
-				<emma.filter>se.mattiasholmqvist.*</emma.filter>
-				<eclemma.instrument.bundles>se.mattiasholmqvist.tychoexamples.bundle</eclemma.instrument.bundles>
-			</properties>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>build-helper-maven-plugin</artifactId>
-						<version>1.5</version>
-						<executions>
-							<execution>
-								<id>attach-artifacts</id>
-								<phase>package</phase>
-								<goals>
-									<goal>attach-artifact</goal>
-								</goals>
-								<configuration>
-									<artifacts>
-										<artifact>
-											<file>${emma.session.out.file}</file>
-											<type>es</type>
-										</artifact>
-									</artifacts>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
+        <profile>
+            <id>coverage</id>
+            <activation>
+                <property>
+                    <name>coverage</name>
+                </property>
+            </activation>
+            <properties>
+                <emma.session.out.file>${project.build.directory}/emma/${project.artifactId}.es</emma.session.out.file>
+                <emma.filter>se.mattiasholmqvist.*</emma.filter>
+                <eclemma.instrument.bundles>se.mattiasholmqvist.tychoexamples.bundle</eclemma.instrument.bundles>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>attach-artifacts</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>attach-artifact</goal>
+                                </goals>
+                                <configuration>
+                                    <artifacts>
+                                        <artifact>
+                                            <file>${emma.session.out.file}</file>
+                                            <type>es</type>
+                                        </artifact>
+                                    </artifacts>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
 
-					<plugin>
-						<groupId>org.sonatype.tycho</groupId>
-						<artifactId>maven-osgi-test-plugin</artifactId>
-						<version>${tycho-version}</version>
-						<configuration>
-							<systemProperties combine.children="append">
-								<eclemma.help>true</eclemma.help>
-								<emma.session.out.file>${emma.session.out.file}</emma.session.out.file>
-								<emma.filter>${emma.filter}</emma.filter>
-								<eclemma.instrument.bundles>${eclemma.instrument.bundles}</eclemma.instrument.bundles>
-							</systemProperties>
-							<frameworkExtensions>
-								<frameworkExtension>
-									<groupId>se.mattiasholmqvist.tychoexamples</groupId>
-									<artifactId>eclemma.runtime.equinox</artifactId>
-									<version>1.1.0.200908261008</version>
-								</frameworkExtension>
-							</frameworkExtensions>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
+                    <plugin>
+                        <groupId>org.sonatype.tycho</groupId>
+                        <artifactId>maven-osgi-test-plugin</artifactId>
+                        <version>${tycho-version}</version>
+                        <configuration>
+                            <systemProperties combine.children="append">
+                                <eclemma.help>true</eclemma.help>
+                                <emma.session.out.file>${emma.session.out.file}</emma.session.out.file>
+                                <emma.filter>${emma.filter}</emma.filter>
+                                <eclemma.instrument.bundles>${eclemma.instrument.bundles}</eclemma.instrument.bundles>
+                            </systemProperties>
+                            <frameworkExtensions>
+                                <frameworkExtension>
+                                    <groupId>se.mattiasholmqvist.tychoexamples</groupId>
+                                    <artifactId>eclemma.runtime.equinox</artifactId>
+                                    <version>1.1.0.200908261008</version>
+                                </frameworkExtension>
+                            </frameworkExtensions>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
     </profiles>
     
@@ -219,6 +239,35 @@ Includes the ossim feaure (this may be dead code)
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+               <executions>
+                  <execution>
+                     <id>the-execution-id</id>
+                     <phase>none</phase>
+                  </execution>
+               </executions>			
+            </plugin>
+            <!-- 
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-source-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <executions>
+                  <execution>
+                    <id>plugin-source</id>
+                    <goals>
+                      <goal>plugin-source</goal>
+                    </goals>
+                  </execution>
+                </executions>
+              </plugin>
+              -->
         </plugins>
     </build>
     <reporting>

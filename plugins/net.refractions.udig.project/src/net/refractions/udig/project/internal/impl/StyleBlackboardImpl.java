@@ -58,21 +58,13 @@ import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
  */
 public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard {
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public static final String copyright = "uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details."; //$NON-NLS-1$
-
-    /**
      * The cached value of the '{@link #getContent() <em>Content</em>}' containment reference list.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see #getContent()
      * @generated
      * @ordered
      */
-    protected EList<StyleEntry> content = null;
+    protected EList<StyleEntry> content;
 
     Lock contentLock = new UDIGDisplaySafeLock();
 
@@ -88,7 +80,6 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected StyleBlackboardImpl() {
@@ -97,58 +88,22 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
+    @Override
     protected EClass eStaticClass() {
-        return ProjectPackage.eINSTANCE.getStyleBlackboard();
+        return ProjectPackage.Literals.STYLE_BLACKBOARD;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @SuppressWarnings("unchecked")
     public List<StyleEntry> getContent() {
         if (content == null) {
-            content = new EObjectContainmentEList(StyleEntry.class, this,
-                    ProjectPackage.STYLE_BLACKBOARD__CONTENT){
-
-                /** long serialVersionUID field */
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                protected Object assign( int index, Object object ) {
-                    contentLock.lock();
-                    try {
-                        return super.assign(index, object);
-                    } finally {
-                        contentLock.unlock();
-                    }
-                }
-
-                @Override
-                protected void doClear() {
-                    contentLock.lock();
-                    try {
-                        super.doClear();
-                    } finally {
-                        contentLock.unlock();
-                    }
-                }
-
-                @Override
-                protected Object doRemove( int index ) {
-                    contentLock.lock();
-                    try {
-                        return super.doRemove(index);
-                    } finally {
-                        contentLock.unlock();
-                    }
-                }
-
-            };
+            content = new EObjectContainmentEList<StyleEntry>(StyleEntry.class, this,
+                    ProjectPackage.STYLE_BLACKBOARD__CONTENT);
         }
         return content;
     }
@@ -160,8 +115,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      */
     public Object get( String styleId ) {
         StyleEntry entry = getEntry(styleId);
-        if (entry == null)
-            return null;
+        if (entry == null) return null;
         return getObject(entry);
     }
 
@@ -196,18 +150,17 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
                 try {
                     if (se.getStyleClass() == null) {
                         StyleContent styleContent = getStyleContent(se.getID());
-                        if (styleContent != null){
-                            Class<?> type = styleContent.getStyleClass();
-                            if( type == null ){
+                        if (styleContent != null) {
+                            Class< ? > type = styleContent.getStyleClass();
+                            if (type == null) {
                                 se.getStyle(); // force the load
                                 type = styleContent.getStyleClass();
-                                if( type == null ){
+                                if (type == null) {
                                     continue;
                                 }
                             }
-                            se.setStyleClass( type );
-                        }
-                        else {
+                            se.setStyleClass(type);
+                        } else {
                             // this shoudl no longer happen as we have a DEFAULT
                             continue;
                         }
@@ -216,10 +169,10 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
                         entry = se;
                         break;
                     }
-                }
-                catch( Throwable t ){
+                } catch (Throwable t) {
                     // protect against a StyleEntry/StyleContent taking us down
-                    ProjectPlugin.log("Style "+se.getID()+" not restored:"+ t.getLocalizedMessage(), t );
+                    ProjectPlugin.log(
+                            "Style " + se.getID() + " not restored:" + t.getLocalizedMessage(), t);
                 }
 
             }
@@ -227,8 +180,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
             contentLock.unlock();
         }
 
-        if (entry == null)
-            return null;
+        if (entry == null) return null;
         return getObject(entry);
     }
 
@@ -248,12 +200,12 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
                     XMLMemento memento = XMLMemento.createReadRoot(new StringReader(mementoString));
                     Object style = styleContent.load(memento);
                     styleEntry.setStyle(style);
-                    if( style != null ){
-                        styleEntry.setStyleClass( style.getClass() );
+                    if (style != null) {
+                        styleEntry.setStyleClass(style.getClass());
                     }
                 }
             } catch (WorkbenchException e) {
-                ProjectPlugin.getPlugin().log( styleEntry.getID()+":"+e);
+                ProjectPlugin.getPlugin().log(styleEntry.getID() + ":" + e);
                 e.printStackTrace();
             }
         }
@@ -342,7 +294,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      * @generated NOT
      */
     private void loadStyleContent( final String styleId ) {
-        id2content.put( styleId, StyleContent.DEFAULT ); // default to use of we cannot find a specific one
+        id2content.put(styleId, StyleContent.DEFAULT); // default to use of we cannot find a specific one
         ExtensionPointProcessor p = new ExtensionPointProcessor(){
             boolean found = false;
             public void process( IExtension extension, IConfigurationElement element )
@@ -380,8 +332,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
          * .IExtension, org.eclipse.core.runtime.IConfigurationElement)
          */
         public void process( IExtension extension, IConfigurationElement element ) throws Exception {
-            if (found)
-                return;
+            if (found) return;
 
             StyleContent styleContent = (StyleContent) element.createExecutableExtension("class"); //$NON-NLS-1$
             style = styleContent.load(url, monitor);
@@ -499,78 +450,78 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    @SuppressWarnings("unchecked")
+    @Override
     public NotificationChain eInverseRemove( InternalEObject otherEnd, int featureID,
-            Class baseClass, NotificationChain msgs ) {
-        if (featureID >= 0) {
-            switch( eDerivedStructuralFeatureID(featureID, baseClass) ) {
-            case ProjectPackage.STYLE_BLACKBOARD__CONTENT:
-                return ((InternalEList) getContent()).basicRemove(otherEnd, msgs);
-            default:
-                return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-            }
+            NotificationChain msgs ) {
+        switch( featureID ) {
+        case ProjectPackage.STYLE_BLACKBOARD__CONTENT:
+            return ((InternalEList< ? >) getContent()).basicRemove(otherEnd, msgs);
         }
-        return eBasicSetContainer(null, featureID, msgs);
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public Object eGet( EStructuralFeature eFeature, boolean resolve ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public Object eGet( int featureID, boolean resolve, boolean coreType ) {
+        switch( featureID ) {
         case ProjectPackage.STYLE_BLACKBOARD__CONTENT:
             return getContent();
         }
-        return eDynamicGet(eFeature, resolve);
+        return super.eGet(featureID, resolve, coreType);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     @SuppressWarnings("unchecked")
-    public void eSet( EStructuralFeature eFeature, Object newValue ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public void eSet( int featureID, Object newValue ) {
+        switch( featureID ) {
         case ProjectPackage.STYLE_BLACKBOARD__CONTENT:
             getContent().clear();
-            getContent().addAll((Collection) newValue);
+            getContent().addAll((Collection< ? extends StyleEntry>) newValue);
             return;
         }
-        eDynamicSet(eFeature, newValue);
+        super.eSet(featureID, newValue);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void eUnset( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public void eUnset( int featureID ) {
+        switch( featureID ) {
         case ProjectPackage.STYLE_BLACKBOARD__CONTENT:
             getContent().clear();
             return;
         }
-        eDynamicUnset(eFeature);
+        super.eUnset(featureID);
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public boolean eIsSet( EStructuralFeature eFeature ) {
-        switch( eDerivedStructuralFeatureID(eFeature) ) {
+    @Override
+    public boolean eIsSet( int featureID ) {
+        switch( featureID ) {
         case ProjectPackage.STYLE_BLACKBOARD__CONTENT:
             return content != null && !content.isEmpty();
         }
-        return eDynamicIsSet(eFeature);
+        return super.eIsSet(featureID);
     }
 
     /**
@@ -666,8 +617,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     public boolean isSelected( String styleId ) {
         StyleEntry entry = getEntry(styleId);
 
-        if (entry != null && entry.isSelected())
-            return true;
+        if (entry != null && entry.isSelected()) return true;
         return false;
     }
 

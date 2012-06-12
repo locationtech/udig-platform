@@ -24,7 +24,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.geotools.data.DataUtilities;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
@@ -445,6 +447,10 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
      */
     public File getConfigurationsFolder() {
         return getStateLocation().toFile();
+    }
+
+    public static void log( String message ) {
+        getDefault().getLog().log(new Status(IStatus.INFO, PLUGIN_ID, message));
     }
 
 }

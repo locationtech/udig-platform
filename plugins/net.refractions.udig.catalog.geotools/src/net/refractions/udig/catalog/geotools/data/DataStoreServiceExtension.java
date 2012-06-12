@@ -1,7 +1,20 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2010-2012, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.catalog.geotools.data;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.HashMap;
@@ -16,10 +29,10 @@ import net.refractions.udig.catalog.geotools.Activator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.geotools.data.DataAccessFactory;
+import org.geotools.data.DataAccessFactory.Param;
 import org.geotools.data.DataAccessFinder;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.FileDataStoreFactorySpi;
-import org.geotools.data.DataAccessFactory.Param;
 import org.geotools.jdbc.JDBCDataStoreFactory;
 
 /**
@@ -187,46 +200,7 @@ public class DataStoreServiceExtension extends IServiceExtension {
         }
         return null; // could not use
     }
-//    private static Param lookupParam( DataAccessFactory factory, Class< ? > type ) {
-//        if (type == null)
-//            return null;
-//        for( Param param : factory.getParametersInfo() ) {
-//            if (type.isAssignableFrom(param.type)) {
-//                return param;
-//            }
-//        }
-//        return null;
-//    }
-//    private static Param lookupParam( DataAccessFactory factory, String key ) {
-//        if (key == null)
-//            return null;
-//        for( Param param : factory.getParametersInfo() ) {
-//            if (key.equalsIgnoreCase(param.key)) {
-//                return param;
-//            }
-//        }
-//        return null;
-//    }
-
-//    @SuppressWarnings("unchecked")
-//    private static <T> T lookup( DataAccessFactory factory, Map<String, Serializable> params,
-//            Class<T> type ) {
-//        Param param = lookupParam(factory, URL.class);
-//        if (param != null) {
-//            T value;
-//            try {
-//                value = (T) param.lookUp(params); // find the value
-//                if (value != null) {
-//                    return value;
-//                }
-//            } catch (IOException e) {
-//                if (Activator.getDefault().isDebugging()) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//        return null; // not found!
-//    }
+    
 
     public static ID createID( URL providedId, DataAccessFactory factory,
             Map<String, Serializable> params ) {

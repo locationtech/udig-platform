@@ -24,4 +24,4 @@ Export-Package: org.apache.log4j,
  org.apache.log4j.spi,
  org.apache.log4j.varia,
  org.apache.log4j.xml
-Bundle-RequiredExecutionEnvironment: J2SE-1.4
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
