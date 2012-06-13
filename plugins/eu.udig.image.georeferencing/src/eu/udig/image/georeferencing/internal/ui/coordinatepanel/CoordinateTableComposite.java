@@ -17,6 +17,7 @@
  */
 package eu.udig.image.georeferencing.internal.ui.coordinatepanel;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +30,9 @@ import java.util.Set;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.project.ui.internal.tool.display.ModalItem;
+import net.refractions.udig.project.ui.internal.tool.display.ModalToolCategory;
+import net.refractions.udig.project.ui.internal.tool.display.ToolCategory;
 import net.refractions.udig.project.ui.tool.IToolContext;
 import net.refractions.udig.project.ui.tool.Tool;
 
@@ -62,6 +66,10 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.activities.IActivityManager;
+import org.eclipse.ui.activities.IWorkbenchActivitySupport;
+import org.geotools.filter.v1_1.capabilities.Id_CapabilitiesTypeBinding;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -77,6 +85,7 @@ import eu.udig.image.georeferencing.internal.ui.MainComposite;
 import eu.udig.image.georeferencing.internal.ui.MouseSelectionListener;
 import eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.AddCoordinateTool;
 import eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CapturedCoordinateListener;
+import eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue;
 import eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.DeleteCoordinateTool;
 import eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.DeletedCoordinateListener;
 import eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.MoveCoordinateListener;
@@ -325,10 +334,7 @@ public final class CoordinateTableComposite extends Composite implements Observe
 	}
 
 	private void disableToolbar(){
-//		IAction toolAction = ApplicationGIS.getToolManager().getToolAction(AddCoordinateTool.ID, AddCoordinateTool.CATEGORY_ID);
-//		toolAction.setEnabled(false);
-		
-		
+		CoordToolPropertyValue.setVisible(false);
 	}
 	
 	/**
@@ -350,7 +356,7 @@ public final class CoordinateTableComposite extends Composite implements Observe
 
 		final IAction addTool = ApplicationGIS.getToolManager().getToolAction(AddCoordinateTool.ID,
 					AddCoordinateTool.CATEGORY_ID);
-
+		
 		itemAdd = new ToolItem(mapToolBar, SWT.RADIO);
 		itemAdd.setImage(this.registry.get("Add")); //$NON-NLS-1$
 		itemAdd.setToolTipText(Messages.CoordinateTableComposite_itemAddTooltip);
@@ -403,6 +409,9 @@ public final class CoordinateTableComposite extends Composite implements Observe
 
 		setItemsEnabled(false);
 		setCertainItemsEnabled(false);
+
+		// present the coordinate tools in the tool panel
+		CoordToolPropertyValue.setVisible(true);
 	}
 
 	private void setItemsEnabled(boolean enabled) {
