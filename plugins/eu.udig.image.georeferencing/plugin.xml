@@ -5,13 +5,17 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
-            category="Image"
+            category="eu.udig.image.georeferencing.categoryImage"
             class="eu.udig.image.georeferencing.ui.GeoreferencingView"
             icon="icons/etool16/georeferencing.png"
             id="eu.udig.image.georeferencing.ui.GeoreferencingView"
             name="Image Georeferencing"
             restorable="true">
       </view>
+      <category
+            id="eu.udig.image.georeferencing.categoryImage"
+            name="Image">
+      </category>
    </extension>
    <extension
          point="net.refractions.udig.mapgraphic.mapgraphic">
@@ -37,6 +41,40 @@
             onToolbar="false"
             toolCursorId="addCoordinateCursor"
             tooltip="Add a coordinate from the map to the table">
+         <enablement>
+            <and>
+               <property
+                     expectedValue="false"
+                     propertyId="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
+               </property>
+               <or>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.MultiLineString"
+                        propertyId="GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.LineString"
+                        propertyId="GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.MultiPolygon"
+                        propertyId="GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.Polygon"
+                        propertyId="GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.MultiPoint"
+                        propertyId="GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.Point"
+                        propertyId="GeometryType">
+                  </property>
+               </or>
+            </and>
+         </enablement>
       </modalTool>
       <modalTool
             categoryId="eu.udig.image.georeferencing.categorytools"
@@ -47,6 +85,40 @@
             onToolbar="false"
             toolCursorId="deleteCoordinateCursor"
             tooltip="Delete coordinate mark from the map">
+         <enablement>
+            <and>
+               <property
+                     expectedValue="false"
+                     propertyId="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
+               </property>
+               <or>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.MultiLineString"
+                        propertyId="GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.LineString"
+                        propertyId="GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.MultiPolygon"
+                        propertyId="GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.Polygon"
+                        propertyId="GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.MultiPoint"
+                        propertyId="GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.Point"
+                        propertyId="GeometryType">
+                  </property>
+               </or>
+            </and>
+         </enablement>
       </modalTool>
       <modalTool
             categoryId="eu.udig.image.georeferencing.categorytools"
@@ -57,7 +129,47 @@
             onToolbar="false"
             toolCursorId="moveCoordinateCursor"
             tooltip="Move a coordinate mark on the map">
+         <enablement>
+            <and>
+               <property
+                     expectedValue="false"
+                     propertyId="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
+               </property>
+               <or>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.MultiLineString"
+                        propertyId="GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.LineString"
+                        propertyId="GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.MultiPolygon"
+                        propertyId="GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.Polygon"
+                        propertyId="GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.MultiPoint"
+                        propertyId="GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.Point"
+                        propertyId="GeometryType">
+                  </property>
+               </or>
+            </and>
+         </enablement>
       </modalTool>
+      <toolCursor
+            hotspotX="6"
+            hotspotY="6"
+            id="moveCoordinateCursor"
+            image="icons/etool16/movemarker.png">
+      </toolCursor>
       <toolCursor
             hotspotX="6"
             hotspotY="6"
@@ -69,12 +181,6 @@
             hotspotY="14"
             id="deleteCoordinateCursor"
             image="icons/etool16/delete.gif">
-      </toolCursor>
-      <toolCursor
-            hotspotX="6"
-            hotspotY="6"
-            id="moveCoordinateCursor"
-            image="icons/etool16/movemarker.png">
       </toolCursor>
    </extension>
    <extension
@@ -90,6 +196,16 @@
       <initializer
             class="eu.udig.image.georeferencing.internal.preferences.PreferencesInitializer">
       </initializer>
+   </extension>
+   <extension
+         point="net.refractions.udig.ui.objectProperty">
+      <object
+            targetClass="java.lang.Object">
+         <property
+               class="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue"
+               id="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
+         </property>
+      </object>
    </extension>
 
 </plugin>
