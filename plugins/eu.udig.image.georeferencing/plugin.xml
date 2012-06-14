@@ -42,38 +42,10 @@
             toolCursorId="addCoordinateCursor"
             tooltip="Add a coordinate from the map to the table">
          <enablement>
-            <and>
                <property
                      expectedValue="false"
                      propertyId="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
                </property>
-               <or>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.MultiLineString"
-                        propertyId="GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.LineString"
-                        propertyId="GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.MultiPolygon"
-                        propertyId="GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.Polygon"
-                        propertyId="GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.MultiPoint"
-                        propertyId="GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.Point"
-                        propertyId="GeometryType">
-                  </property>
-               </or>
-            </and>
          </enablement>
       </modalTool>
       <modalTool
@@ -86,38 +58,10 @@
             toolCursorId="deleteCoordinateCursor"
             tooltip="Delete coordinate mark from the map">
          <enablement>
-            <and>
                <property
                      expectedValue="false"
                      propertyId="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
                </property>
-               <or>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.MultiLineString"
-                        propertyId="GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.LineString"
-                        propertyId="GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.MultiPolygon"
-                        propertyId="GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.Polygon"
-                        propertyId="GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.MultiPoint"
-                        propertyId="GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.Point"
-                        propertyId="GeometryType">
-                  </property>
-               </or>
-            </and>
          </enablement>
       </modalTool>
       <modalTool
@@ -130,38 +74,10 @@
             toolCursorId="moveCoordinateCursor"
             tooltip="Move a coordinate mark on the map">
          <enablement>
-            <and>
                <property
                      expectedValue="false"
                      propertyId="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
                </property>
-               <or>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.MultiLineString"
-                        propertyId="GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.LineString"
-                        propertyId="GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.MultiPolygon"
-                        propertyId="GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.Polygon"
-                        propertyId="GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.MultiPoint"
-                        propertyId="GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.Point"
-                        propertyId="GeometryType">
-                  </property>
-               </or>
-            </and>
          </enablement>
       </modalTool>
       <toolCursor
