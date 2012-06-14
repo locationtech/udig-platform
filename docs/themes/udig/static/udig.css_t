@@ -13,11 +13,11 @@ html {
     padding: 0px;
 /*
  url(bg-page.png) top left repeat-x;
-*/
     background-attachment: fixed;
     background-image: url(images/site_bg.jpg);
     background-repeat: no-repeat;
     background-position: center bottom;
+*/
 }
 
 body {

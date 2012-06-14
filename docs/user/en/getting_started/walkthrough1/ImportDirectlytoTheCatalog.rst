@@ -13,16 +13,18 @@ Earlier we learned how to work with content from the Catalog view, in this secti
 
 3. Choose :guilabel:`Web Map Server` from the list and press :guilabel:`Next`.
    
-   |imort_wms_png|
+  .. image:: images/import_wms.png
+    :width: 7.62cm
+    :height: 7.47cm
 
+.. sidebar:: Copy URL
+
+  You can copy the URL from the walkthrough page (http://demo.opengeo.org/geoserver/ows?service=wms&version=1.1.1&request=GetCapabilities).
 
 4. This time we are going to import an OpenGeo demo Web Map Server using the following Capabilities document:
 
-   * http://demo.opengeo.org/geoserver/ows?service=wms&version=1.1.1&request=GetCapabilities
-
-   You can copy and paste the above URL into the provided field:
-
-   |wms_wizard_png|
+  .. image:: images/wms_wizard.png
+    :alt: WMS Wizard
 
 5. Press :guilabel:`Finish` to import the Web Map Server into the :guilabel:`Catalog` view.
    
@@ -55,9 +57,6 @@ Earlier we learned how to work with content from the Catalog view, in this secti
     :height: 5.459cm
 
 
-.. |imort_wms_png| image:: images/imort_wms.png
-    :width: 7.62cm
-    :height: 7.47cm
 
 
 .. |catalog_ocean_png| image:: images/catalog_ocean.png

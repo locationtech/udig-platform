@@ -47,4 +47,3 @@ uDig Walkthrough 2
 .. |10000000000003130000009AAAA8E4AA_png| image:: images/10000000000003130000009AAAA8E4AA.png
     :width: 21.026cm
     :height: 4.121cm
-
