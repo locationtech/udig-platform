@@ -22,7 +22,7 @@
 		<fileset dir="${basedir}/../net.refractions.udig.libs/lib/sources" id="jar.sources">
 			<include name="*-sources.jar" />
 		</fileset>
-		<property name="libs_src_dir" value="${basedir}/src/net.refractions.udig.libs_1.3.1.qualifier/lib"/>
+		<property name="libs_src_dir" value="${basedir}/src/net.refractions.udig.libs_1.3.2.qualifier/lib"/>
 		<echo>Copying source jars into ${libs_src_dir} ...</echo>
 		<copy todir="${libs_src_dir}" verbose="true">
 			<fileset refid="jar.sources" />
@@ -36,7 +36,7 @@
 			<include name="*-sources.jar" />
 		</fileset>
 
-		<property name="teradata_src_dir" value="${basedir}/src/eu.udig.libs.teradata_1.3.1.qualifier/gtlib"/>
+		<property name="teradata_src_dir" value="${basedir}/src/eu.udig.libs.teradata_1.3.2.qualifier/gtlib"/>
 		<echo>Copying source jars into ${teradata_src_dir} ...</echo>
 		<copy todir="${teradata_src_dir}" verbose="true">
 			<fileset refid="teradata.sources" />

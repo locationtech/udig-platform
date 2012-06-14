@@ -94,7 +94,7 @@
                 <module>net.refractions.udig.tutorials.rcp-feature</module>
 
                 <!-- SDK -->
-                <module>net.refractions.udig.libs.source</module>
+                <!--module>net.refractions.udig.libs.source</module-->
              </modules>
         </profile>
 
