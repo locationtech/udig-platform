@@ -3,17 +3,18 @@
  */
 package eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools;
 
+import net.refractions.udig.project.ILayer;
 import net.refractions.udig.ui.operations.AbstractPropertyValue;
 
 /**
- * This property is checked by the coordinate tools in order to become visible/invisible
+ * This property is checked by the coordinate tools {@link AddCoordinateTool}, {@link DeleteCoordinateTool} and {@link MoveCoordinateTool} 
+ * in order to become visible/invisible
  * 
  * @author Mauricio Pazos
  *
  */
 public class CoordToolPropertyValue extends AbstractPropertyValue<Object> {
 	
-	public static final String ID ="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue"; //$NON-NLS-1$
 	private static boolean geoRefViewOpen;
 
 	/** 
@@ -36,7 +37,16 @@ public class CoordToolPropertyValue extends AbstractPropertyValue<Object> {
 	 */
 	@Override
 	public boolean isTrue(Object object, String value) {
-		return isVisible();
+		
+		if(!isVisible()) return false;
+		
+		if(ILayer.class.isAssignableFrom(object.getClass())){
+			
+			ILayer layer = (ILayer)object;
+			if(layer.getCRS() == null) return false;
+		}
+		
+		return true;
 	}
 
 

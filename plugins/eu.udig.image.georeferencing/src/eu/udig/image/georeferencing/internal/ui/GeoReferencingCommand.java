@@ -72,8 +72,7 @@ public final class GeoReferencingCommand extends Observable {
 	 * Adds a new mark model to the mark model list and notify the observers
 	 * about this event.
 	 * 
-	 * @param newMark
-	 *            A created mark.
+	 * @param newMark A created mark.
 	 */
 	public void addMark(MarkModel newMark) {
 
@@ -158,30 +157,19 @@ public final class GeoReferencingCommand extends Observable {
 
 		// checks there are X mark in the command
 		if (markList.size() < 6 || !validateCoordinateData()) {
-
 			this.readyToExecute = false;
-		}
-
-		// check crs != null
-		if (this.crsTarget == null) {
+		} else if (this.crsTarget == null) {
 			this.readyToExecute = false;
-		}
-
-		// check image != null
-		if (this.imagePath == null || this.imagePath.equals("")) { //$NON-NLS-1$
+		} else if (this.imagePath == null || this.imagePath.equals("")) { //$NON-NLS-1$
 			this.readyToExecute = false;
-		}
-
-		if (this.outputFileName == null || this.outputFileName.equals("")) { //$NON-NLS-1$
+		} else if (this.outputFileName == null || this.outputFileName.equals("")) { //$NON-NLS-1$
 			this.readyToExecute = false;
 			// if it has already 6 points advice the user that he needs an
 			// output file.
 			if (markList.size() >= 6) {
 				this.setMessage(Messages.GeoReferencingCommand_needOutputFile);
 			}
-		}
-
-		if (this.originalMap == null) {
+		} else if (this.originalMap == null) {
 			this.readyToExecute = false;
 		}
 

@@ -17,7 +17,6 @@
  */
 package eu.udig.image.georeferencing.internal.ui.coordinatepanel;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,11 +27,10 @@ import java.util.Observer;
 import java.util.Set;
 
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.internal.Layer;
+import net.refractions.udig.project.internal.impl.EditManagerImpl;
 import net.refractions.udig.project.render.IViewportModel;
 import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.tool.display.ModalItem;
-import net.refractions.udig.project.ui.internal.tool.display.ModalToolCategory;
-import net.refractions.udig.project.ui.internal.tool.display.ToolCategory;
 import net.refractions.udig.project.ui.tool.IToolContext;
 import net.refractions.udig.project.ui.tool.Tool;
 
@@ -65,11 +63,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.activities.IActivityManager;
-import org.eclipse.ui.activities.IWorkbenchActivitySupport;
-import org.geotools.filter.v1_1.capabilities.Id_CapabilitiesTypeBinding;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -132,14 +125,11 @@ public final class CoordinateTableComposite extends Composite implements Observe
 	private MouseSelectionListener			mapSelectionListener	= null;
 	private MouseSelectionListener			imageSelectionListener	= null;
 
-	private AddCoordinateTool				coordTool				= null;
+	private AddCoordinateTool				addTool				= null;
 	private DeleteCoordinateTool			deleteTool				= null;
 	private MoveCoordinateTool				moveTool				= null;
 
 	private ToolBar							mapToolBar				= null;
-	private ToolItem						itemAdd					= null;
-	private ToolItem						itemDelete				= null;
-	private ToolItem						itemMove				= null;
 	private ImageRegistry					registry				= null;
 
 	private List<MouseSelectionListener>	listeners				= new LinkedList<MouseSelectionListener>();
@@ -170,7 +160,7 @@ public final class CoordinateTableComposite extends Composite implements Observe
 		this.uiThread = Thread.currentThread();
 
 		createListeners();
-		getTools();
+		setCoordinateTools();
 
 		GridLayout gridLayout2 = new GridLayout();
 		gridLayout2.numColumns = 2;
@@ -200,8 +190,6 @@ public final class CoordinateTableComposite extends Composite implements Observe
 			}
 
 			public void activated(boolean active) {
-
-				itemAdd.setSelection(active);
 			}
 		};
 
@@ -217,8 +205,6 @@ public final class CoordinateTableComposite extends Composite implements Observe
 			}
 
 			public void activated(boolean active) {
-
-				itemDelete.setSelection(active);
 			}
 
 		};
@@ -235,9 +221,6 @@ public final class CoordinateTableComposite extends Composite implements Observe
 			}
 
 			public void activated(boolean active) {
-
-				itemMove.setSelection(active);
-
 			}
 		};
 
@@ -300,11 +283,11 @@ public final class CoordinateTableComposite extends Composite implements Observe
 	/**
 	 * Gets a reference to the tools and add the listeners.
 	 */
-	private void getTools() {
+	private void setCoordinateTools() {
 
 		Tool tool = ApplicationGIS.getToolManager().findTool(AddCoordinateTool.ID);
-		this.coordTool = (AddCoordinateTool) tool;
-		this.coordTool.addCapturedCoordinateListener(capturedListener);
+		this.addTool = (AddCoordinateTool) tool;
+		this.addTool.addCapturedCoordinateListener(capturedListener);
 
 		tool = ApplicationGIS.getToolManager().findTool(DeleteCoordinateTool.ID);
 		this.deleteTool = (DeleteCoordinateTool) tool;
@@ -333,9 +316,6 @@ public final class CoordinateTableComposite extends Composite implements Observe
 		crsLabel.setLayoutData(gridData);
 	}
 
-	private void disableToolbar(){
-		CoordToolPropertyValue.setVisible(false);
-	}
 	
 	/**
 	 * Creates the toolbar that contains the tools that interact with the map.
@@ -353,48 +333,6 @@ public final class CoordinateTableComposite extends Composite implements Observe
 		gridData.verticalAlignment = GridData.FILL;
 
 		mapToolBar = new ToolBar(parent, SWT.LEFT_TO_RIGHT);
-
-		final IAction addTool = ApplicationGIS.getToolManager().getToolAction(AddCoordinateTool.ID,
-					AddCoordinateTool.CATEGORY_ID);
-		
-		itemAdd = new ToolItem(mapToolBar, SWT.RADIO);
-		itemAdd.setImage(this.registry.get("Add")); //$NON-NLS-1$
-		itemAdd.setToolTipText(Messages.CoordinateTableComposite_itemAddTooltip);
-		itemAdd.addListener(SWT.Selection, new Listener() {
-
-			public void handleEvent(Event event) {
-
-				addTool.run();
-			}
-		});
-
-		final IAction deleteTool = ApplicationGIS.getToolManager().getToolAction(DeleteCoordinateTool.ID,
-					DeleteCoordinateTool.CATEGORY_ID);
-
-		itemDelete = new ToolItem(mapToolBar, SWT.RADIO);
-		itemDelete.setImage(this.registry.get("Delete")); //$NON-NLS-1$
-		itemDelete.setToolTipText(Messages.CoordinateTableComposite_itemDeleteTooltip);
-		itemDelete.addListener(SWT.Selection, new Listener() {
-
-			public void handleEvent(Event event) {
-
-				deleteTool.run();
-			}
-		});
-
-		final IAction moveTool = ApplicationGIS.getToolManager().getToolAction(MoveCoordinateTool.ID,
-					MoveCoordinateTool.CATEGORY_ID);
-
-		itemMove = new ToolItem(mapToolBar, SWT.RADIO);
-		itemMove.setImage(this.registry.get("Move")); //$NON-NLS-1$
-		itemMove.setToolTipText(Messages.CoordinateTableComposite_itemMoveTooltip);
-		itemMove.addListener(SWT.Selection, new Listener() {
-
-			public void handleEvent(Event event) {
-
-				moveTool.run();
-			}
-		});
 
 		itemDeleteAll = new ToolItem(mapToolBar, SWT.PUSH);
 		itemDeleteAll.setImage(this.registry.get("DeleteAll")); //$NON-NLS-1$
@@ -416,18 +354,13 @@ public final class CoordinateTableComposite extends Composite implements Observe
 
 	private void setItemsEnabled(boolean enabled) {
 
-		itemAdd.setEnabled(enabled);
 	}
 
 	private void setCertainItemsEnabled(boolean enabled) {
 
-		itemDelete.setEnabled(enabled);
-		itemMove.setEnabled(enabled);
 		itemDeleteAll.setEnabled(enabled);
 
 		if (!enabled) {
-			itemDelete.setSelection(false);
-			itemMove.setSelection(false);
 			itemDeleteAll.setSelection(false);
 		}
 	}
@@ -994,10 +927,8 @@ public final class CoordinateTableComposite extends Composite implements Observe
 
 			setRowData(item, mark, newCoord);
 
-		} else if (mark.getXCoord().equals(Double.NaN) && mark.getYCoord().equals(Double.NaN)) { // if
-			// marks
-			// are
-			// empty.
+		} else if (mark.getXCoord().equals(Double.NaN) && mark.getYCoord().equals(Double.NaN)) { 
+			// if marks are empty.
 
 			setRowData(item, mark, newCoord);
 			return true;
@@ -1078,12 +1009,14 @@ public final class CoordinateTableComposite extends Composite implements Observe
 	 */
 	public void close(MainComposite mainComposite) {
 
+		hideCoordinateTools();
+		
 		// remove the listener
-		this.coordTool.removeCapturedCoordinateListener(this.capturedListener);
+		this.addTool.removeCapturedCoordinateListener(this.capturedListener);
 		this.deleteTool.removeDeletedCoordinateListener(this.deletedListener);
 		this.moveTool.removeMoveCoordinateListener(this.moveListener);
 
-		this.coordTool.setActive(false);
+		this.addTool.setActive(false);
 		this.deleteTool.setActive(false);
 		this.moveTool.setActive(false);
 
@@ -1092,8 +1025,19 @@ public final class CoordinateTableComposite extends Composite implements Observe
 			mainComposite.getMapMarkGraphic().deleteMouseSelectionListener(mapSelectionListener);
 			mainComposite.deleteMouseSelectionListenerToImgComposite(imageSelectionListener);
 		}
-		//FIXME HACK
-		disableToolbar();
+	}
+
+	/**
+	 * Hide the coordinate tools
+	 */
+	private void hideCoordinateTools() {
+		
+		// this is a workaround to provoke an event in the layer view that could be catch by the CoordToolPropertyValue  
+		CoordToolPropertyValue.setVisible(false);
+
+		EditManagerImpl editManager = (EditManagerImpl) ApplicationGIS.getActiveMap().getEditManager();
+		Layer layer = editManager.getSelectedLayer();
+		editManager.setSelectedLayerGen(layer);
 	}
 
 	@Override
@@ -1267,7 +1211,6 @@ public final class CoordinateTableComposite extends Composite implements Observe
 			itemMark.updateCoordinatePosition(emptyCoord);
 			
 		}
-		
 		getMainComposite().refreshMapGraphicLayer();
 	}
 }
