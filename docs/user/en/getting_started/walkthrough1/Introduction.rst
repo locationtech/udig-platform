@@ -1,5 +1,5 @@
 Introduction
------------------------------------
+------------
 
 Welcome to the User-friendly Internet Desktop GIS (uDig) application!
 

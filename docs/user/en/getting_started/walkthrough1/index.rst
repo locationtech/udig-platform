@@ -1,5 +1,5 @@
 uDig Walkthrough 1
------------------------------------
+==================
 
 |logo_lisasoft_png|
 |logo_refractions_png|
