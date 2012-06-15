@@ -14,7 +14,7 @@
       </view>
       <category
             id="eu.udig.image.georeferencing.categoryImage"
-            name="Image">
+            name="Imagery">
       </category>
    </extension>
    <extension
