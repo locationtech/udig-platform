@@ -25,11 +25,15 @@ import org.eclipse.swt.graphics.Point;
 import com.vividsolutions.jts.geom.Coordinate;
 
 /**
- * Stores valuable info about each mark or dot.
+ * Stores valuable info about each mark and its associated coordinates.
+ * <p>
+ * The marks are points (x,y) in the image. The coordinates are point in the map CRS.  
+ * </p>
  * 
+ * <p>
  * This class is also an {@link Observable}, so it'll broadcast actions like:
  * New mark, mark modified or mark deleted.
- * 
+ * </p>
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
  * @since 1.0.0

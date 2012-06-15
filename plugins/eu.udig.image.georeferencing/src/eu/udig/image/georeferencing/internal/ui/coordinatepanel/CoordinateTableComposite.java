@@ -34,7 +34,6 @@ import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.tool.IToolContext;
 import net.refractions.udig.project.ui.tool.Tool;
 
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.SWT;
