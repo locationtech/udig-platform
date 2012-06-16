@@ -34,6 +34,7 @@ import java.util.Properties;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.ui.ExceptionDetailsDialog;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -56,9 +57,6 @@ import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -89,8 +87,6 @@ public class ImportGeopaparazziFolderWizard extends Wizard implements IImportWiz
     private CoordinateReferenceSystem mapCrs;
 
     private boolean canFinish = true;
-
-    private DateTimeFormatter dateTimeFormatterYYYYMMDDHHMM = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
     public ImportGeopaparazziFolderWizard() {
         super();
@@ -454,26 +450,45 @@ public class ImportGeopaparazziFolderWizard extends Wizard implements IImportWiz
             }
         }
 
+        // create destination folder
+        String imageFolderName = "media";
+
         File[] listFiles = folder.listFiles();
         List<String> nonTakenFilesList = new ArrayList<String>();
 
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyyMMddHHmmss"); //$NON-NLS-1$
         pm.beginTask("Importing media...", listFiles.length);
-
         try {
 
-            for( File file : listFiles ) {
-                String name = file.getName();
-                if (name.endsWith("jpg") || file.getName().endsWith("JPG") || file.getName().endsWith("png")
-                        || file.getName().endsWith("PNG") || file.getName().endsWith("3gp")) {
+            /*
+             * create the points shapefile
+             */
+
+            File outputPointsShapeFile = new File(outputFolderFile, "mediapoints.shp");
+
+            SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
+            b.setName("geopaparazzinotes");
+            b.setCRS(mapCrs);
+            b.add("the_geom", Point.class);
+            b.add("ALTIMETRY", String.class);
+            b.add("DATE", String.class);
+            b.add("AZIMUTH", Double.class);
+            b.add("IMAGE", String.class);
+            SimpleFeatureType featureType = b.buildFeatureType();
+
+            MathTransform transform = CRS.findMathTransform(DefaultGeographicCRS.WGS84, mapCrs);
+
+            FeatureCollection<SimpleFeatureType, SimpleFeature> newCollection = FeatureCollections.newCollection();
+            for( File imageFile : listFiles ) {
+                String name = imageFile.getName();
+                if (name.endsWith("jpg") || imageFile.getName().endsWith("JPG") || imageFile.getName().endsWith("png")
+                        || imageFile.getName().endsWith("PNG") || imageFile.getName().endsWith("3gp")) {
 
                     String[] nameSplit = name.split("[_\\|.]"); //$NON-NLS-1$
                     String dateString = nameSplit[1];
                     String timeString = nameSplit[2];
-                    DateTime dateTime = formatter.parseDateTime(dateString + timeString);
 
                     Properties locationProperties = new Properties();
-                    String mediaPath = file.getAbsolutePath();
+                    String mediaPath = imageFile.getAbsolutePath();
                     int lastDot = mediaPath.lastIndexOf("."); //$NON-NLS-1$
                     String nameNoExt = mediaPath.substring(0, lastDot);
                     String infoPath = nameNoExt + ".properties"; //$NON-NLS-1$
@@ -488,7 +503,7 @@ public class ImportGeopaparazziFolderWizard extends Wizard implements IImportWiz
                     String lonString = locationProperties.getProperty("longitude"); //$NON-NLS-1$
                     String altimString = locationProperties.getProperty("altim"); //$NON-NLS-1$
 
-                    Double azimuth = null;
+                    Double azimuth = -9999.0;
                     if (azimuthString != null)
                         azimuth = Double.parseDouble(azimuthString);
                     double lat = 0.0;
@@ -503,16 +518,44 @@ public class ImportGeopaparazziFolderWizard extends Wizard implements IImportWiz
                     }
                     double altim = Double.parseDouble(altimString);
 
+                    Coordinate c = new Coordinate(lon, lat);
+                    Point point = gF.createPoint(c);
+
+                    String imageRelativePath = imageFolderName + "/" + imageFile.getName();
+                    File newImageFile = new File(outputFolderFile, imageRelativePath);
+                    FileUtils.copyFile(imageFile, newImageFile);
+
+                    Point reprojectPoint = (Point) JTS.transform(point, transform);
+                    String dateTime = dateString + timeString;
+                    Object[] values = new Object[]{reprojectPoint, String.valueOf(altim), dateTime, azimuth, imageRelativePath};
+
+                    SimpleFeatureBuilder builder = new SimpleFeatureBuilder(featureType);
+                    builder.addAll(values);
+                    SimpleFeature feature = builder.buildFeature(null);
+                    newCollection.add(feature);
                 }
                 pm.worked(1);
             }
+
+            ShapefileDataStoreFactory factory = new ShapefileDataStoreFactory();
+            Map<String, Serializable> params = new HashMap<String, Serializable>();
+            params.put("url", outputPointsShapeFile.toURI().toURL());
+            params.put("create spatial index", Boolean.TRUE);
+            ShapefileDataStore dStore = (ShapefileDataStore) factory.createNewDataStore(params);
+            dStore.createSchema(featureType);
+            dStore.forceSchemaCRS(mapCrs);
+
+            JGrassToolsPlugin.getDefault().writeToShapefile(dStore, newCollection);
+
+            JGrassToolsPlugin.getDefault().addServiceToCatalogAndMap(outputPointsShapeFile.getAbsolutePath(), true, true,
+                    new NullProgressMonitor());
         } finally {
             pm.done();
         }
 
         if (nonTakenFilesList.size() > 0) {
             final StringBuilder sB = new StringBuilder();
-            sB.append("For the following images no *.properties file could be found:\n");
+            sB.append("For the following media no *.properties file could be found:\n");
             for( String p : nonTakenFilesList ) {
                 sB.append(p).append("\n");
             }
@@ -527,7 +570,7 @@ public class ImportGeopaparazziFolderWizard extends Wizard implements IImportWiz
             Display.getDefault().asyncExec(new Runnable(){
                 public void run() {
                     Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-                    MessageDialog.openInformation(shell, "Info", "All photos were successfully imported.");
+                    MessageDialog.openInformation(shell, "Info", "All media were successfully imported.");
                 }
             });
         }
