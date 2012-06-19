@@ -106,7 +106,7 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 				
 			} else {
 				
-				String message = "The layer hasn't got features to merge";
+				String message = "The current Map has no layers. The tool cannot operate.";//$NON-NLS-1$
 				StatusBar.setStatusBarMessage(this.mergeContext.getToolContext(), message); 
 			}
 		} else {
@@ -376,8 +376,8 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 		MapCommand command = context.getSelectionFactory().createBBoxSelectionCommand( boundDrawn, SelectionType);
 		getContext().sendSyncCommand(command);
 
-		SelectionBoxCommand selectionBoxCommand = this.mergeContext.getSelectionBoxCommand();
-		selectionBoxCommand.setValid(true);
+		//SelectionBoxCommand selectionBoxCommand = this.mergeContext.getSelectionBoxCommand();
+		//selectionBoxCommand.setValid(true);
 
 		getContext().getViewportPane().repaint();
 

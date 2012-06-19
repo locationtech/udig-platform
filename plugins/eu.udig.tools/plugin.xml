@@ -44,5 +44,17 @@
    <extension
          point="org.eclipse.help.toc">
    </extension>
+   <extension
+         point="net.refractions.udig.ui.operation">
+      <operation
+            class="eu.udig.tools.merge.MergeOperation"
+            description="Merge the selected features"
+            enablesFor="1"
+            icon="icons/etool16/merge_feature_mode.gif"
+            id="eu.udig.tools.merge.mergeoperation"
+            name="Merge selected"
+            targetClass="org.geotools.data.FeatureSource">
+      </operation>
+   </extension>
 
 </plugin>
