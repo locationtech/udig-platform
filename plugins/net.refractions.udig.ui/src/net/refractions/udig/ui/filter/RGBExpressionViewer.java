@@ -2,6 +2,8 @@ package net.refractions.udig.ui.filter;
 
 import java.awt.Color;
 
+import net.miginfocom.swt.MigLayout;
+
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -12,6 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
+import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.text.ecql.ECQL;
@@ -58,19 +61,16 @@ public class RGBExpressionViewer extends IExpressionViewer {
 
     Composite control;
 
-    protected Scale red;
+    protected Scale redScale;
+    protected Spinner redSpinner;
 
-    protected Text redVal;
+    protected Scale blueScale;
+    protected Spinner blueSpinner;
 
-    protected Scale blue;
+    protected Scale greenScale;
+    protected Spinner greenSpinner;
 
-    protected Text blueVal;
-
-    protected Scale green;
-
-    protected Text greenVal;
-
-    protected Text hex;
+    protected Text colorText;
     
     /**
      * Used to {@link #validate()} when any of the Scale controls change.
@@ -78,7 +78,7 @@ public class RGBExpressionViewer extends IExpressionViewer {
     private SelectionListener listener = new SelectionListener() {
         @Override
         public void widgetSelected(SelectionEvent e) {
-            Expression newExpression = validate();
+            Expression newExpression = validate(e);
             if( newExpression != null ){
                 internalUpdate( newExpression );
             }
@@ -90,63 +90,125 @@ public class RGBExpressionViewer extends IExpressionViewer {
 
     protected void listen(boolean listen) {
         if (listen) {
-            red.addSelectionListener(listener);
-            green.addSelectionListener(listener);
-            blue.addSelectionListener(listener);
+            redSpinner.addSelectionListener(listener);
+            if( redScale != null ){
+                redScale.addSelectionListener(listener);
+            }
+            greenSpinner.addSelectionListener(listener);
+            if( greenScale != null ){
+                greenScale.addSelectionListener(listener);
+            }
+            blueSpinner.addSelectionListener(listener);
+            if( blueScale != null ){
+                blueScale.addSelectionListener(listener);
+            }
         } else {
-            red.removeSelectionListener(listener);
-            green.removeSelectionListener(listener);
-            blue.removeSelectionListener(listener);
+            redSpinner.removeSelectionListener(listener);
+            if( redScale != null ){
+                redScale.removeSelectionListener(listener);
+            }
+            greenSpinner.removeSelectionListener(listener);
+            if( greenScale != null ){
+                greenScale.removeSelectionListener(listener);
+            }
+            blueSpinner.removeSelectionListener(listener);
+            if( blueScale != null ){
+                blueScale.removeSelectionListener(listener);
+            }
         }
     }
 
     public RGBExpressionViewer(Composite parent, int style) {
+        boolean multiLine = (SWT.MULTI & style) != 0;
+        boolean isReadOnly = (style & SWT.READ_ONLY) != 0;
+        
         control = new Composite(parent, style);
         control.setSize(400, 400);
         
-        red = new Scale(control, SWT.NONE);
-        red.setBounds(71, 8, 170, 38);
-        red.setMaximum(MAX);
-        red.setMinimum(MIN);
+        // RED
+        if( multiLine ){
+            redScale = new Scale(control, SWT.HORIZONTAL);
+            redScale.setMaximum(MAX);
+            redScale.setMinimum(MIN);
+            redScale.setEnabled(true);
+        }
+        Label redLabel = new Label(control, SWT.SINGLE);
+        redLabel.setText(multiLine ? "Red" : "R");
 
-        green = new Scale(control, SWT.NONE);
-        green.setBounds(71, 52, 170, 38);
-        green.setMaximum(MAX);
-        green.setMinimum(MIN);
+        redSpinner = new Spinner(control, SWT.BORDER);
+        redSpinner.setMinimum(MIN);
+        redSpinner.setMaximum(MAX);
+        redSpinner.setEnabled(true);
 
-        blue = new Scale(control, SWT.NONE);
-        blue.setBounds(71, 96, 170, 38);
-        blue.setMaximum(MAX);
-        blue.setMinimum(MIN);
-
-        Label lblRed = new Label(control, SWT.NONE);
-        lblRed.setBounds(10, 20, 55, 15);
-        lblRed.setText("Red");
-
-        Label lblGreen = new Label(control, SWT.NONE);
-        lblGreen.setText("Green");
-        lblGreen.setBounds(10, 63, 55, 15);
-
-        Label lblBlue = new Label(control, SWT.NONE);
-        lblBlue.setText("Blue");
-        lblBlue.setBounds(10, 108, 55, 15);
-
-        hex = new Text(control, SWT.BORDER);
-        hex.setBounds(71, 151, 170, 18);
+        // GREEN
+        if( multiLine ){
+            greenScale = new Scale(control, SWT.HORIZONTAL);
+            greenScale.setMaximum(MAX);
+            greenScale.setMinimum(MIN);
+        }
+        Label greenLabel = new Label(control, SWT.SINGLE);
+        greenLabel.setText(multiLine ? "Green" : "G");
         
-        Label lblHex = new Label(control, SWT.NONE);
-        lblHex.setText("Hex");
-        lblHex.setBounds(10, 154, 55, 15);
+        greenSpinner = new Spinner(control, SWT.BORDER);
+        greenSpinner.setDigits(0);
+        greenSpinner.setMinimum(MIN);
+        greenSpinner.setMaximum(MAX);
+        
+        // BLUE
+        if( multiLine ){
+            blueScale = new Scale(control, SWT.HORIZONTAL);
+            blueScale.setMaximum(MAX);
+            blueScale.setMinimum(MIN);
+        }
+        Label blueLabel = new Label(control, SWT.SINGLE);
+        blueLabel.setText(multiLine ? "Blue" : "B");
+        
+        blueSpinner = new Spinner(control, SWT.BORDER);
+        blueSpinner.setDigits(0);
+        blueSpinner.setMinimum(MIN);
+        blueSpinner.setMaximum(MAX);
+        
+        // HEX
+        colorText = new Text(control, SWT.SINGLE|SWT.READ_ONLY|SWT.BORDER);
+        Label hexLabel = new Label(control, SWT.SINGLE);
+        hexLabel.setText("Color");
 
-        redVal = new Text(control, SWT.BORDER);
-        redVal.setBounds(247, 17, 40, 21);
+        
+        if (multiLine) {
+            MigLayout layout = new MigLayout("insets 0", "[][][grow]", "[]");
+            control.setLayout(layout);
+            
+            redLabel.setLayoutData("cell 0 0, alignx trailing, gapx related");
+            redSpinner.setLayoutData("cell 1 0, wmin 60,alignx left, gapx related");
+            redScale.setLayoutData("cell 2 0, grow, width 200:100%:100%");
+            
+            greenLabel.setLayoutData("cell 0 1, alignx trailing, gapx related");
+            greenSpinner.setLayoutData("cell 1 1, wmin 60,alignx left, gapx related");
+            greenScale.setLayoutData("cell 2 1,grow, width 200:100%:100%");
+            
+            blueLabel.setLayoutData("cell 0 2, alignx trailing, gapx related");
+            blueSpinner.setLayoutData("cell 1 2, wmin 60,alignx left, gapx related");
+            blueScale.setLayoutData("cell 2 2,grow, width 200:100%:100%");
+            
+            hexLabel.setLayoutData("cell 0 3, alignx trailing, gapx related");
+            colorText.setLayoutData("cell 2 3 2 1,grow, width 200:100%:100%");
 
-        greenVal = new Text(control, SWT.BORDER);
-        greenVal.setBounds(247, 60, 40, 21);
-
-        blueVal = new Text(control, SWT.BORDER);
-        blueVal.setBounds(247, 105, 40, 21);
-
+        }
+        else {
+            control.setLayout( new MigLayout("insets 0, flowx", "", ""));
+            
+            redLabel.setLayoutData("gap related");
+            redSpinner.setLayoutData("gap unrelated");
+            
+            greenLabel.setLayoutData("gap related");
+            greenSpinner.setLayoutData("gap unrelated");
+            
+            blueLabel.setLayoutData("gap related");
+            blueSpinner.setLayoutData("gap unrelated");
+            
+            hexLabel.setLayoutData("gap related");
+            colorText.setLayoutData("gap unrelated");
+        }   
         listen(true);
     }
 
@@ -154,25 +216,60 @@ public class RGBExpressionViewer extends IExpressionViewer {
     public Control getControl() {
         return control;
     }
-
-    public Expression validate() {
-        int r = red.getSelection();
-        int g = green.getSelection();
-        int b = blue.getSelection();
-
-        redVal.setText(String.valueOf(r));
-        greenVal.setText(String.valueOf(g));
-        blueVal.setText(String.valueOf(b));
-
+    
+    /**
+     * Sync the two controls based on the selection event.
+     * 
+     * @param spinner
+     * @param scalebar
+     * @param e
+     */
+    private void syncSelection( Spinner spinner, Scale scalebar, SelectionEvent e ){
+        if( spinner == null || scalebar == null ){
+            // no need to sync
+            return;
+        }
+        if( spinner == e.getSource() ){
+            int value = spinner.getSelection();
+            scalebar.setSelection( value );
+            scalebar.setEnabled(true);
+        }
+        
+        if( scalebar == e.getSource() ){
+            int value = scalebar.getSelection();
+            spinner.setSelection( value );
+            spinner.setEnabled(true);
+        }
+        
+    }
+    /**
+     * Used to update the expression (if required).
+     * 
+     * @param e Even causing the change
+     * @return Validated expression if avaialble
+     */
+    public Expression validate(SelectionEvent e) {
+        syncSelection( redSpinner, redScale, e );
+        
+        syncSelection( greenSpinner, greenScale, e );
+        
+        syncSelection( blueSpinner, blueScale, e );
+        
+        int r = redSpinner.getSelection();
+        int g = greenSpinner.getSelection();
+        int b = blueSpinner.getSelection();
         Color c = new Color(r, g, b);
-        String hexStr = Integer.toHexString(c.getRGB() & 0x00ffffff);
-        hex.setText(hexStr);
-
+        
+        String cql = "#"+Integer.toHexString(c.getRGB() & 0x00ffffff);
+        colorText.setText(cql);
+        colorText.setEnabled(true);
+        
         FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
-        Expression expression = ff.literal(hexStr);
+        Expression expression = ff.literal(cql);
 
         return expression;
     }
+    
     /** Used to supply a filter for display or editing */
     @Override
     public void setExpression(Expression expression) {
@@ -189,20 +286,30 @@ public class RGBExpressionViewer extends IExpressionViewer {
             boolean isColor = Color.class.isAssignableFrom( input.getBinding() );
             if( isColor ){
                 feedback();
-                control.setEnabled(true);
             }
             else {
                 feedback("Used with colour");
-                control.setEnabled(false);
             }
         }
         refreshExpression();
     }
+    
+    public void refreshSelection( Spinner spinner, Scale scalebar, int selection ){
+        spinner.setValues(selection,  MIN, MAX, 0, 1,5);
+        // spinner.setSelection(selection);
+        if( scalebar != null ){
+            scalebar.setMinimum(MIN);
+            scalebar.setMaximum(MAX);
+            scalebar.setIncrement(1);
+            scalebar.setPageIncrement(5);
+            scalebar.setSelection(selection);
+        }
+    }
     public void refreshExpression() {
-        if (hex != null && !hex.isDisposed()) {
-            hex.getDisplay().asyncExec(new Runnable() {
+        if (colorText != null && !colorText.isDisposed()) {
+            colorText.getDisplay().asyncExec(new Runnable() {
                 public void run() {
-                    if (hex == null || hex.isDisposed()) {
+                    if (colorText == null || colorText.isDisposed()) {
                         return; // must of been disposed while we are in the queue
                     }
                     try {
@@ -214,23 +321,28 @@ public class RGBExpressionViewer extends IExpressionViewer {
                             Color color = literal.evaluate(null, Color.class);
                             if (color != null) {
                                 feedback();
-                                red.setSelection(color.getRed());
-                                redVal.setText(String.valueOf(color.getRed()));
-                                green.setSelection(color.getGreen());
-                                greenVal.setText(String.valueOf(color.getGreen()));
-                                blue.setSelection(color.getBlue());
-                                blueVal.setText(String.valueOf(color.getBlue()));
+                                refreshSelection( redSpinner, redScale, color.getRed() );
+                                refreshSelection( greenSpinner, greenScale, color.getGreen() );
+                                refreshSelection( blueSpinner, blueScale, color.getBlue() );
+                                
                                 String text = Converters.convert(color, String.class);
                                 if (text != null) {
-                                    hex.setText(text);
+                                    colorText.setText(text);
                                 } else {
-                                    hex.setText(Integer.toHexString(color.getRGB()));
+                                    colorText.setText("#"+Integer.toHexString(color.getRGB()));
                                 }
+                                colorText.setEnabled(true);
                                 return; // literal color displayed!
                             }
                         }
                         String cql = ECQL.toCQL(expr);
-                        hex.setText(cql);
+                        colorText.setText(cql);
+                        colorText.setEnabled(false);
+                        
+                        // fill in other controls with 0 as a starting point
+                        refreshSelection( redSpinner, redScale, 0 );
+                        refreshSelection( greenSpinner, greenScale, 0 );
+                        refreshSelection( blueSpinner, blueScale, 0 );
                         
                         feedbackReplace( expr );
                     } finally {
