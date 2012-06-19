@@ -5,6 +5,7 @@ import java.util.List;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ui.AnimationUpdater;
 import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.project.ui.tool.ModalTool;
 import net.refractions.udig.tools.edit.animation.MessageBubble;
 import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
 import net.refractions.udig.ui.operations.IOp;
@@ -33,11 +34,14 @@ public class MergeOperation implements IOp {
         //Turn the filter into a List of features
         List<SimpleFeature> selectedFeatures = Util.retrieveFeatures(filterSelectedFeatures,
                 selectedLayer);
-
-        this.mergeContext = MergeContext.getInstance();
+        
+        ModalTool mergeTool = (ModalTool) ApplicationGIS.getToolManager().findTool(MergeTool.ID);
+        mergeTool.setActive(true);
+        
+        //this.mergeContext = MergeContext.getInstance();
 
         try {
-            //mergeView = (MergeView) ApplicationGIS.getView(true, MergeView.ID);
+            mergeView = (MergeView) ApplicationGIS.getView(true, MergeView.ID);
             if (mergeView == null) {
                 // crates a new merge view
                 IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
@@ -54,6 +58,7 @@ public class MergeOperation implements IOp {
             mergeView.display();
 
         } catch (Exception ex) {
+            System.out.print("Error");
         }
 
         
