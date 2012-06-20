@@ -80,4 +80,9 @@ To start out with lets figure out the name of that city:
     :width: 10.841cm
     :height: 9.49cm
 
+
+  .. note::
+     Not all aspects of a feature are editable. - bounds are derived from the geometry, and ID is dictated the WFS.
+
+
 * Press the :guilabel:`Commit Changes` button, in the tool bar, to send your changes off to the Web Feature Server.
