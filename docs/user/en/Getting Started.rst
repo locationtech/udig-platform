@@ -30,8 +30,3 @@ Tips for using Online Help
    Running uDig
    
 :doc:`Running uDig <Running uDig>` (help for running on windows, linux and macosx)
-
-**Related reference**
-
-`Blueprint for Creating an Open Source Web
-Map <http://mballingercapstone.web.officelive.com/uDig.aspx>`_ (Penn State University)
