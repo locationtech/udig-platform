@@ -13,7 +13,7 @@ To start out with lets figure out the name of that city:
     :width: 4.701cm
     :height: 2.649cm
   
-* Select the :menuselection:`Edit > Delete` command from the menu bar
+* Select the :menuselection:`Edit --> Delete` command from the menu bar
 
 * In the Catalog view expand the GeoServer Web Feature Service (WFS 1.0.0) entry and select **Tasmania cities**.
 

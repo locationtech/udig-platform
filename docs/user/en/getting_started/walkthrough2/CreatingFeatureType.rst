@@ -15,7 +15,7 @@ We are going to create a new feature type to experiment with some of the more in
 * Add the  **tasmanian roads.shp** file you created previously. You can drag and drop the file onto the map, or use
   :menuselection:`Layer --> Add` from the menu bar.
 
-* Select the :menuselection:`Layer -> Create` command from the menu bar.
+* Select the :menuselection:`Layer --> Create` command from the menu bar.
 
   .. image:: images/10000201000002A700000119FDD8B78F.png
     :width: 10.76cm

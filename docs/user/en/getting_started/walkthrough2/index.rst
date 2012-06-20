@@ -21,3 +21,11 @@ uDig Walkthrough 2
     FillTool
     Save
     WhattoDoNext
+
+.. toctree::
+    :hidden:
+   
+    walkthrough2
+
+
+Single Page for all chapters \: :doc:`walkthrough2`
