@@ -9,10 +9,9 @@ menus and toolbars.
 
 **Related concepts**
 
+.. toctree::
+   :maxdepth: 1
 
-:doc:`Workbench`
-
- :doc:`View`
-
- :doc:`Editor`
-
+   Workbench
+   View
+   Editor

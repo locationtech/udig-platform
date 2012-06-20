@@ -5,16 +5,14 @@ uDig User Guide
 .. toctree::
    :maxdepth: 1
 
-   getting_started/index
-   
-* uDig Overview
-* Getting Started
-* Concepts
-* Tasks
-* Reference
-* What is new
-* Tips and Tricks
-* Community
+   uDig Overview
+   Getting Started
+   Concepts
+   Tasks
+   Reference
+   What is new
+   Tips and Tricks
+   Community
 
 Online Help
 

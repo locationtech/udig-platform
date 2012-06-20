@@ -18,22 +18,22 @@ Earth <http://www.naturalearthdata.com>`_ project:
 #. If you have your own GIS data please feel free to experiment. Making use of the above sample data
    will enable you to follow along with this tutorial step by step.
 
-This is actually the full dataset used by `Walkthrough 1 <Walkthrough%201.html>`_. The contents of
+This is actually the full dataset used by :doc:`Walkthrough 1`. The contents of
 this dataset are as follows (in case you want to download higher resolution data):
-`HYP\_50M\_SR\_W.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/raster/HYP_50M_SR_W.zip>`_,
-`10m-populated-places-simple.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-populated-places-simple.zip>`_,
-`10m-admin-0-countries.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-0-countries.zip>`_,
-`10m-admin-1-states-provinces-shp.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-1-states-provinces-shp.zip>`_,
-`10m-urban-area.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-urban-area.zip>`_,
-`10m-geography-regions-polys.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-polys.zip>`_,
-`10m-geography-regions-points.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-points.zip>`_,
-`10m-geography-regions-elevation-points.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-elevation-points.zip>`_,
-`10m-geography-marine-polys.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-marine-polys.zip>`_,
-`10m-land.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-land.zip>`_,
-`10m-ocean.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-ocean.zip>`_,
-`physical/10m-lakes.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-lakes.zip>`_,
-:doc:`10m-rivers-lake-centerlines.zip`
 
+* `HYP\_50M\_SR\_W.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/raster/HYP_50M_SR_W.zip>`_,
+* `10m-populated-places-simple.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-populated-places-simple.zip>`_,
+* `10m-admin-0-countries.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-0-countries.zip>`_,
+* `10m-admin-1-states-provinces-shp.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-1-states-provinces-shp.zip>`_,
+* `10m-urban-area.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-urban-area.zip>`_,
+* `10m-geography-regions-polys.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-polys.zip>`_,
+* `10m-geography-regions-points.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-points.zip>`_,
+* `10m-geography-regions-elevation-points.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-elevation-points.zip>`_,
+* `10m-geography-marine-polys.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-marine-polys.zip>`_,
+* `10m-land.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-land.zip>`_,
+* `10m-ocean.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-ocean.zip>`_,
+* `physical/10m-lakes.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-lakes.zip>`_,
+* `physical/10m-rivers-lake-centerlines.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-rivers-lake-centerlines.zip>`_
 
 uDig Application
 ~~~~~~~~~~~~~~~~
@@ -51,8 +51,8 @@ Welcome View
 
 #. When you start up uDig for the first time the **Welcome** view takes up the entire display. This
    screen has links to tutorials, documentation and the project website.
-#. Click the arrow labelled **Workbench** in the upper right corner, to reveal the contents of the
-   uDig workbench.
+#. Click the arrow labelled **Workbench** in the upper right corner, to reveal the contents of the uDig workbench.
+
     |image1|
 
 You can return to the Welcome view at any time by selecting the **Help > Welcome** from the menu
@@ -107,7 +107,8 @@ much memory the application uses. Unlike most GIS applications uDig can get by w
 of memory. The above shapefile is not loaded into memory, we have a policy of keeping data on disk
 and drawing data like this shapefile onto the screen as needed.
 
-**Tip** You can also drag and drop shapefiles directly into the uDig application!
+.. tip::
+    You can also drag and drop shapefiles directly into the uDig application!
 
 Map
 ~~~
@@ -130,8 +131,9 @@ tool bar along the top of the screen.
    -  You can use **Navigation > Back** and **Navigation > Forward** in the menu bar to cycle though
       previously visited locations.
 
-**Tip:** Most tools allow you to Pan by holding the center button and control the scale using the
-scroll wheel.
+
+.. tip:: 
+    Most tools allow you to Pan by holding the center button and control the scale using the scroll wheel.
 
 Web Map Server
 ~~~~~~~~~~~~~~
@@ -157,7 +159,8 @@ available layers of information that you can mix into your own maps.
 #. Use the |image11| Zoom Tool to move closer to one of the Parks
 #. Switch to the |image12| and click on one the parks to learn more about it
 
-**Tip:** You can switch between the zoom and info tools by pressing **Z** and **I** on the keyboard.
+.. tip:: 
+    You can switch between the zoom and info tools by pressing **Z** and **I** on the keyboard.
 
 Style
 ~~~~~
