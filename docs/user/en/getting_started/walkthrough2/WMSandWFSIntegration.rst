@@ -4,9 +4,9 @@ WMS and WFS Integration
 In this section we will use uDig to display contents from our local Web Feature Server.
 We will also make use of some of the more interesting selection features.
 
-1. Start uDig, from the menubar select :menuselection:`File --> New Map` to create a new map.
+* Start uDig, from the menubar select :menuselection:`File --> New Map` to create a new map.
 
-2. Make sure your local GeoServer is started and ready to go.
+* Make sure your local GeoServer is started and ready to go.
    
    You can run GeoServer from the Start menu.
  
@@ -14,15 +14,15 @@ We will also make use of some of the more interesting selection features.
     :width: 3.889cm
     :height: 2.281cm
 
-3. Navigate to the GeoServer **Welcome** page: `http://localhost:8080/geoserver/ <http://localhost:8080/geoserver/>`_
+* Navigate to the GeoServer **Welcome** page: `http://localhost:8080/geoserver/ <http://localhost:8080/geoserver/>`_
 
-4. Drag and Drop the :guilabel:`WMS 1.1.1 Capabilities` link on to your Map.
+* Drag and Drop the :guilabel:`WMS 1.1.1 Capabilities` link on to your Map.
 
   .. image:: images/10000000000001F60000022CE8FD80B1.png
     :width: 8.5cm
     :height: 9.41cm
 
-5. This will bring up the :guilabel:`Add Data` wizard allowing you to choose which Layers
+* This will bring up the :guilabel:`Add Data` wizard allowing you to choose which Layers
    are added to your map.
    
    Select **Tasmania state boundaries** and **Tasmania cities** and Press the :guilabel:`Finish` button.

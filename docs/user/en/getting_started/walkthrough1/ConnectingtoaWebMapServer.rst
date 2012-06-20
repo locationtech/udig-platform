@@ -3,20 +3,20 @@ Connecting to a Web Map Server
 
 In this section you will learn how to drag and drop a Web Map Server (WMS) link into uDig for the purpose of viewing its layers.
 
-1. There are many ways to load map data into uDig, including drag and drop.
+* There are many ways to load map data into uDig, including drag and drop.
 
-2. To demonstrate we will use the *DM Solutions WMS* Web Map Service. 
+* To demonstrate we will use the *DM Solutions WMS* Web Map Service. 
    
    The Web Map Service protocol is used to publish layers of information.
    
-3. We are going to use a link to the *GetCapabilities* document which lists the
+* We are going to use a link to the *GetCapabilities* document which lists the
    available layers: 
    `DM Solutions WMS <http://www2.dmsolutions.ca/cgi-bin/mswms_gmap?Service=WMS&VERSION=1.1.0&REQUEST=GetCapabilities>`_
 
    This link is also avaialble from the Walkthrough 1 page:
-   `Walkthrough 1 <http://udig.refractions.net/confluence/display/EN/Walkthrough+1>`_
+   :doc:`Walkthrough 1 <../../Walkthrough 1>`
       
-4. For most browsers you can simply drag the link into the :guilabel:`Layers` view
+* For most browsers you can simply drag the link into the :guilabel:`Layers` view
         
    |wms_dnd_png|
 
@@ -29,12 +29,12 @@ In this section you will learn how to drag and drop a Web Map Server (WMS) link 
      in the task bar (to switch applications), and then drop into the :guilabel:`Layers` view.
    
   
-5. The :guilabel:`Add Layers` wizard will appear asking you what layers from this WMS you want to show in your map. Select
+* The :guilabel:`Add Layers` wizard will appear asking you what layers from this WMS you want to show in your map. Select
    :guilabel:`Elevation/Bathymetry, Parks, Cities` and press the :guilabel:`Finish` button.
   
    |wms_resource_selection_png|
 
-6. The map layers will now render in the :guilabel:`Map` editor.
+* The map layers will now render in the :guilabel:`Map` editor.
    
    |wms_render_png|
 
@@ -44,11 +44,11 @@ Map Editor
 The :guilabel:`Map` editor is used to display a map on screen. You can open several Maps
 and the :guilabel:`Layers` view will list the contents of the currently selected editor.
 
-1. The :guilabel:`Map` editor is used to display the visible layers.
+* The :guilabel:`Map` editor is used to display the visible layers.
    
    |wms_render_png|
    
-2. :guilabel:`Map` interaction is controled by the selected :guilabel:`Tool`
+* :guilabel:`Map` interaction is controled by the selected :guilabel:`Tool`
    in the :guilabel:`Palette` on the right hand side of the screen.
    
    Try the navigation tools along the top of the tool :guilabel:`Palette`.
@@ -65,7 +65,7 @@ and the :guilabel:`Layers` view will list the contents of the currently selected
    
    * **Middle Button**: Used to quickly pan the display
    
-3. The :guilabel:`Palette` organises tools into drawers according to function.
+* The :guilabel:`Palette` organises tools into drawers according to function.
    
    |palette_png|
    
@@ -74,12 +74,12 @@ and the :guilabel:`Layers` view will list the contents of the currently selected
      can also pin a drawer open for easy access.
    * Available tools change depending on the currently selected layer
 
-4. Right click on a drawer to customise the size of the icons used; and how much
+* Right click on a drawer to customise the size of the icons used; and how much
    information is displayed in the :guilabel:`Palette`.
    
    |palette_large_png|
 
-5. The :guilabel:`Map` editor lists common commands in the :guilabel:`toolbar`
+* The :guilabel:`Map` editor lists common commands in the :guilabel:`toolbar`
    along the top of the screen.
    
    * |zoom_extent_co| Extent: zoom out to show all enabled layers
@@ -92,7 +92,7 @@ and the :guilabel:`Layers` view will list the contents of the currently selected
     
    * |refresh_co| Refresh Map
 
-6. Press the |refresh_co| :guilabel:`Refresh` button, and watch the :guilabel:`processing` information
+* Press the |refresh_co| :guilabel:`Refresh` button, and watch the :guilabel:`processing` information
    displayed in the bottom right corner of the workbench.
    
    |map_editor_refresh_png|
@@ -102,7 +102,7 @@ and the :guilabel:`Layers` view will list the contents of the currently selected
      several layers are rendering at once and the ability to cancel any long
      running activities.
 
-7. The :guilabel:`Layers` view shows the order in which layers are drawn. Please select the
+* The :guilabel:`Layers` view shows the order in which layers are drawn. Please select the
    :guilabel:`Elevation/Bathymetry` layer and use the :guilabel:`Move down` button from the
    :guilabel:`Layer` view toolbar to move selected layer to the bottom of the list.
     
@@ -110,11 +110,11 @@ and the :guilabel:`Layers` view will list the contents of the currently selected
 
    **Drag and Drop** You can also drag layers up and down in the layer view to change the order.
 
-8. The order is now changed.
+* The order is now changed.
    
    |layers_down_moved_png|
 
-9. You can also use the checkboxes next to each Layer to turn them on and off.
+* You can also use the checkboxes next to each Layer to turn them on and off.
 
 .. |pan_mode| image:: /images/navigation_tools/pan_mode.gif
 
