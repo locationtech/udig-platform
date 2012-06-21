@@ -4,6 +4,12 @@ Walkthrough 2
 This walkthrough covers editing with uDig; installation and use of a Web Feature Server for editing,
 and advanced editing tools.
 
+.. toctree::
+   :maxdepth: 1
+
+   getting_started/geoserver/index
+   getting_started/walkthrough2/index
+
 This walkthrough is available as two pdf documents:
 
 #. `http://udig.refractions.net/files/tutorials/GeoServerInstall.pdf <http://udig.refractions.net/files/tutorials/GeoServerInstall.pdf>`_
@@ -11,11 +17,11 @@ This walkthrough is available as two pdf documents:
 
 Files needed to install GeoServer:
 
-* :doc:`http://geoserver.org/display/GEOS/Download`
+* `GeoServer Download <http://geoserver.org/display/GEOS/Download>`_
 
-* :doc:`http://geoserver.org/display/GEOS/GeoServer+1.6.4`
+* `GeoServer Release 1.6.4 <http://geoserver.org/display/GEOS/GeoServer+1.6.4>`_
 
-* :doc:`http://geoserver.org/display/GEOS/GeoServer+1.4.1`
+* `GeoServer Release 1.4.1 <http://geoserver.org/display/GEOS/GeoServer+1.4.1>`_
 
 * :doc:`Java Development Kit`
 

@@ -22,22 +22,16 @@ The snapping choices included with uDig are as follows:
 
 There are three different ways to change the snap behavior:
 
-* In the
-  which can be found in the
-  Window > Preferences
-  menu.
-  |100000000000027B00000228DB1EB555_png|
+* In the which can be found in the :menuselection:`Window --> Preferences` menu.
 
 
-* While an edit tool is
-  *active*
-  press CTRL+SHIFT+S. This will cycle through the available snap behaviors. A small pop-up will display the new behavior.
-
-
-* You can see a short cut of the tool snapping options in the tool options along the bottom of the map.
-
-
-.. |100000000000027B00000228DB1EB555_png| image:: images/100000000000027B00000228DB1EB555.png
+  .. image:: images/100000000000027B00000228DB1EB555.png
     :width: 11.76cm
     :height: 10.22cm
+
+
+* While an edit tool is **active** press CTRL+SHIFT+S. This will cycle through the available snap behaviors. 
+  A small pop-up will display the new behavior.
+
+* You can see a short cut of the tool snapping options in the tool options along the bottom of the map.
 

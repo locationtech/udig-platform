@@ -7,19 +7,25 @@ source <http://www.opensource.org/docs/definition.php>`_
 with the Eclipse Rich Client (`RCP <http://wiki.eclipse.org/index.php/Rich_Client_Platform>`_)
 technology.
 
--  uDig can be used as a stand-alone application
--  uDig can be extended with RCP "plug-ins"
--  uDig can be used as a plug-in in an existing RCP application
+* uDig can be used as a stand-alone application
+* uDig can be extended with RCP "plug-ins"
+* uDig can be used as a plug-in in an existing RCP application
 
 The help documentation is included in the uDig stand-alone application; and also included in RCP
 applications that make use of uDig technology.
 
-.. figure:: /images/udig_overview/workbench.jpg
+.. image:: images/udig_overview/workbench.jpg
+   :width: 80%
    :align: center
-   :alt: 
 
 Workbench
 ---------
+
+.. toctree::
+   :hidden:
+   
+   Map Perspective
+   Style Perspective
 
 The term workbench refers to the desktop window that is displayed. The workbench contains editors
 and views allowing you to interact with spatial information.
@@ -29,16 +35,16 @@ defines an arrangement of views and editors allowing you to focus on one problem
 
 Out of the box uDig includes:
 
--  `Map Perspective <Map%20Perspective.html>`_ - used to work with and explore spatial information
--  `Style Perspective <Style%20Perspective.html>`_ - used to work on styling spatial data in a
-   distraction free environment
+* :doc:`Map Perspective <Map Perspective>` - used to work with and explore spatial information
+* :doc:`Style Perspective <Style Perspective>` - used to work on styling spatial data in a distraction free environment
 
 **Related concepts**
 
+.. toctree:: Related concepts
+   :maxdepth: 1
+   
+   Perspective
+   View
+   Editor
 
-:doc:`Perspective`
-
- :doc:`View`
-
- :doc:`Editor`
-
+	 

@@ -4,7 +4,10 @@ Walkthrough 1
 Walkthough the installation and use of the uDig application; covers the use of shapefile, Web Map
 Server, PostGIS and Web Feature Server.
 
-* :doc:`getting_started/walkthrough1/index`
+.. toctree::
+   :maxdepth: 1
+
+   getting_started/walkthrough1/index
 
 This walk through makes use of the following downloads:
 
@@ -14,20 +17,15 @@ This walk through makes use of the following downloads:
 
 The following web servies are used:
 
-* `DM Solutions
-WMS <http://www2.dmsolutions.ca/cgi-bin/mswms_gmap?Service=WMS&VERSION=1.1.0&REQUEST=GetCapabilities>`_
+* `DM Solutions WMS <http://www2.dmsolutions.ca/cgi-bin/mswms_gmap?Service=WMS&VERSION=1.1.0&REQUEST=GetCapabilities>`_
 
-* `DM Solutions
-WFS <http://www2.dmsolutions.ca/cgi-bin/mswfs_gmap?version=1.0.0&request=getcapabilities&service=wfs>`_
+* `DM Solutions WFS <http://www2.dmsolutions.ca/cgi-bin/mswfs_gmap?version=1.0.0&request=getcapabilities&service=wfs>`_
 
-* `OpenGeo Demo
-WMS <http://demo.opengeo.org/geoserver/ows?service=wms&version=1.1.1&request=GetCapabilities>`_
+* `OpenGeo Demo WMS <http://demo.opengeo.org/geoserver/ows?service=wms&version=1.1.1&request=GetCapabilities>`_
 
-* `OpenGeo Demo
-WFS <http://demo.opengeo.org/geoserver/ows?service=wfs&version=1.0&request=GetCapabilities>`_
+* `OpenGeo Demo WFS <http://demo.opengeo.org/geoserver/ows?service=wfs&version=1.0&request=GetCapabilities>`_
 
-* `Atlas of
-Canada WMS <http://atlas.gc.ca/cgi-bin/atlaswms_en?VERSION=1.1.1&Request=GetCapabilities&Service=WMS>`_
+* `Atlas of Canada WMS <http://atlas.gc.ca/cgi-bin/atlaswms_en?VERSION=1.1.1&Request=GetCapabilities&Service=WMS>`_
 
 * `Atlas of Canada WFS <http://www.refractions.net:8080/geoserver/wfs/GetCapabilities>`_
 

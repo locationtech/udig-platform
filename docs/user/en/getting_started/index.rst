@@ -5,7 +5,6 @@ Getting Started
 .. toctree::
    :maxdepth: 1
    
-   walkthrough1/index
    geoserver/index
-   
-walkthrough2
+   walkthrough1/index
+   walkthrough2/index

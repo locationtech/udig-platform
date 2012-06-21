@@ -233,27 +233,40 @@ table.index a:hover, table.index a:active {
 /* Rounded corner boxes */
 /* Common declarations */
 div.admonition {
-    -webkit-border-radius: 10px;
-    -khtml-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
+    -webkit-border-radius: 8px;
+    -khtml-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
     border-style: dotted;
     border-width: thin;
-    border-color: #dcdcdc;
-    padding: 10px 15px 10px 15px;
+    border-color: #B8C5CE;
+    padding: 10px 10px 10px 15px;
     margin-bottom: 15px;
     margin-top: 15px;
 }
+
 div.note {
-    padding: 10px 15px 10px 80px;
+    min-height: 40px;
+    background: #CCDBE5;
+/*
+    padding: 10px 10px 10px 80px;
     background: #e4ffde url(alert_info_32.png) 15px 15px no-repeat;
-    min-height: 42px;
+*/
 }
+
+div.hint {
+    min-height: 40px;
+    background: #FAF5E6;
+}
+
 div.warning {
-    padding: 10px 15px 10px 80px;
+    min-height: 40px;
+    background: #FDD;
+/*
     background: #fffbc6 url(alert_warning_32.png) 15px 15px no-repeat;
-    min-height: 42px;
+*/
 }
+
 div.seealso {
     background: #e4ffde;
 }
@@ -302,7 +315,9 @@ ol {
 }
 
 ul {
+/*
     padding-left: 5px;
+*/
     margin-top: 3px;
 }
 
