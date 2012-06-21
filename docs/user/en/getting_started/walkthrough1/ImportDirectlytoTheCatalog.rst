@@ -3,41 +3,46 @@ Import Directly to The Catalog
 
 Earlier we learned how to work with content from the Catalog view, in this section we will import content directly into the catalog.
 
-1. On the :guilabel:`Catalog` view please press the :guilabel:`Import` button:
+* On the :guilabel:`Catalog` view please press the :guilabel:`Import` button:
    
-   |catalog_ocean_png|
-   
-2. Select :guilabel:`Other > Data` and press :guilabel:`Next`.
-   
-   |import_data_png|
+  .. image:: images/catalog_ocean.png
+    :width: 10.91cm
+    :height: 3.35cm
 
-3. Choose :guilabel:`Web Map Server` from the list and press :guilabel:`Next`.
+   
+* Select :menuselection:`Other --> Data` and press :guilabel:`Next`.
+   
+  .. image:: images/import_data.png
+    :width: 7.62cm
+    :height: 5.89cm
+
+* Choose :guilabel:`Web Map Server` from the list and press :guilabel:`Next`.
    
   .. image:: images/import_wms.png
     :width: 7.62cm
     :height: 7.47cm
 
-.. sidebar:: Copy URL
 
-  You can copy the URL from the walkthrough page (http://demo.opengeo.org/geoserver/ows?service=wms&version=1.1.1&request=GetCapabilities).
+  .. note:: 
+     You can copy the `URL <http://demo.opengeo.org/geoserver/ows?service=wms&version=1.1.1&request=GetCapabilities>`_ from the :doc:`Walkthrough 1 <../../Walkthrough 1>` page.
 
-4. This time we are going to import an OpenGeo demo Web Map Server using the following Capabilities document:
+* This time we are going to import an OpenGeo demo Web Map Server using the following Capabilities document:
 
   .. image:: images/wms_wizard.png
     :alt: WMS Wizard
 
-5. Press :guilabel:`Finish` to import the Web Map Server into the :guilabel:`Catalog` view.
+* Press :guilabel:`Finish` to import the Web Map Server into the :guilabel:`Catalog` view.
    
-6. Now that we have imported the WMS into the catalog we can add it to our Map.
+* Now that we have imported the WMS into the catalog we can add it to our Map.
 
-7. Drag and Drop the :guilabel:`bluemarble` layer directly onto :guilabel:`Map` editor.
+* Drag and Drop the :guilabel:`bluemarble` layer directly onto :guilabel:`Map` editor.
    
    |catalog_dnd_map_png|
 
-8. Earlier we used the the layer view to reorder using the up and down buttons,
+* Earlier we used the the layer view to reorder using the up and down buttons,
    this time we will drag the layers into the right order.
 
-9. Select the :guilabel:`Blue Marble` layer in the layer view and drag it to the bottom of the list.
+* Select the :guilabel:`Blue Marble` layer in the layer view and drag it to the bottom of the list.
    
    |layers_dnd_png|
 
@@ -59,12 +64,4 @@ Earlier we learned how to work with content from the Catalog view, in this secti
 
 
 
-.. |catalog_ocean_png| image:: images/catalog_ocean.png
-    :width: 10.91cm
-    :height: 3.35cm
-
-
-.. |import_data_png| image:: images/import_data.png
-    :width: 7.62cm
-    :height: 5.89cm
 

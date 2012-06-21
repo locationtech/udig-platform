@@ -6,7 +6,7 @@ In this section you will learn how to add additional layers to your map from a p
 Adding a Layer from a previously connected WMS:
 
 * In the :guilabel:`Catalog` view expand the record for the
-   :guilabel:`GMap WMS Demo Server` by clicking on the triangle beside the record.
+  :guilabel:`GMap WMS Demo Server` by clicking on the triangle beside the record.
 
 * Right-click on :guilabel:`Railroads` and select :guilabel:`Add to Current Map`.
 
@@ -25,7 +25,7 @@ Adding a Layer from a previously connected WMS:
 
 * The catalog also comes equipped with a built in service called :guilabel:`Decoration`.
    
-   Select :guilabel:`Decoration > Scalebar` in the :guilabel:`Catalog` view and drag this
+   Select :menuselection:`Decoration --> Scalebar` in the :guilabel:`Catalog` view and drag this
    layer onto the Map
    
 

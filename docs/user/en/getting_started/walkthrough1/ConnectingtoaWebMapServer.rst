@@ -9,8 +9,7 @@ In this section you will learn how to drag and drop a Web Map Server (WMS) link 
    
    The Web Map Service protocol is used to publish layers of information.
    
-* We are going to use a link to the *GetCapabilities* document which lists the
-   available layers: 
+* We are going to use a link to the *GetCapabilities* document which lists the available layers: 
    `DM Solutions WMS <http://www2.dmsolutions.ca/cgi-bin/mswms_gmap?Service=WMS&VERSION=1.1.0&REQUEST=GetCapabilities>`_
 
    This link is also avaialble from the Walkthrough 1 page:
@@ -30,7 +29,7 @@ In this section you will learn how to drag and drop a Web Map Server (WMS) link 
    
   
 * The :guilabel:`Add Layers` wizard will appear asking you what layers from this WMS you want to show in your map. Select
-   :guilabel:`Elevation/Bathymetry, Parks, Cities` and press the :guilabel:`Finish` button.
+  :guilabel:`Elevation/Bathymetry, Parks, Cities` and press the :guilabel:`Finish` button.
   
    |wms_resource_selection_png|
 
@@ -49,7 +48,7 @@ and the :guilabel:`Layers` view will list the contents of the currently selected
    |wms_render_png|
    
 * :guilabel:`Map` interaction is controled by the selected :guilabel:`Tool`
-   in the :guilabel:`Palette` on the right hand side of the screen.
+  in the :guilabel:`Palette` on the right hand side of the screen.
    
    Try the navigation tools along the top of the tool :guilabel:`Palette`.
    
@@ -75,12 +74,12 @@ and the :guilabel:`Layers` view will list the contents of the currently selected
    * Available tools change depending on the currently selected layer
 
 * Right click on a drawer to customise the size of the icons used; and how much
-   information is displayed in the :guilabel:`Palette`.
+  information is displayed in the :guilabel:`Palette`.
    
    |palette_large_png|
 
 * The :guilabel:`Map` editor lists common commands in the :guilabel:`toolbar`
-   along the top of the screen.
+  along the top of the screen.
    
    * |zoom_extent_co| Extent: zoom out to show all enabled layers
    
@@ -93,7 +92,7 @@ and the :guilabel:`Layers` view will list the contents of the currently selected
    * |refresh_co| Refresh Map
 
 * Press the |refresh_co| :guilabel:`Refresh` button, and watch the :guilabel:`processing` information
-   displayed in the bottom right corner of the workbench.
+  displayed in the bottom right corner of the workbench.
    
    |map_editor_refresh_png|
    
@@ -103,8 +102,8 @@ and the :guilabel:`Layers` view will list the contents of the currently selected
      running activities.
 
 * The :guilabel:`Layers` view shows the order in which layers are drawn. Please select the
-   :guilabel:`Elevation/Bathymetry` layer and use the :guilabel:`Move down` button from the
-   :guilabel:`Layer` view toolbar to move selected layer to the bottom of the list.
+  :guilabel:`Elevation/Bathymetry` layer and use the :guilabel:`Move down` button from the
+  :guilabel:`Layer` view toolbar to move selected layer to the bottom of the list.
     
    |layers_down_png|
 

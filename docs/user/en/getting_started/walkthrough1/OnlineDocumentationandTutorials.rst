@@ -3,26 +3,25 @@ Online Documentation and Tutorials
 
 In this section you will open up the online tutorial, and access reference information.
 
-.. sidebar:: Shortcut
-
+.. hint::
    You can access the tutorials directly by pressing :guilabel:`Getting Started` on the welcome screen.
    
-1. Open up the :guilabel:`Help` menu and select :guilabel:`Help Contents`
+* Open up the :guilabel:`Help` menu and select :guilabel:`Help Contents`
  
    |menubar_help_contents_png|
 
-2. The windows firewall will need to allow the help application to startup.
+* The windows firewall will need to allow the help application to startup.
   
    |help_firewall_png|
 
-3. This will bring up the online help system; the help system is a web application that makes use of a :guilabel:`Contents`
-   view to allow you to navigate between :guilabel:`Pages`.
+* This will bring up the online help system; the help system is a web application that makes use of a :guilabel:`Contents`
+  view to allow you to navigate between :guilabel:`Pages`.
    
    |help_system_png|
    
    * |help_contents_png| Show in Table of Contents find your place in the table of contents.
 
-4. The :guilabel:`Contents` view organizes :guilabel:`Pages` into :guilabel:`Books`.
+* The :guilabel:`Contents` view organizes :guilabel:`Pages` into :guilabel:`Books`.
    
    The following books are included with the uDig application:
    

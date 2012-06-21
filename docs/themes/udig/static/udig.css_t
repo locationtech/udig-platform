@@ -443,3 +443,11 @@ div.bottomnav {
    border-width: 1px;
    border-style: solid;
 }
+
+.guilabel {
+   font-weight: bold;
+   font-style: normal;
+/*
+   font-size: 1.05em;
+*/
+}
