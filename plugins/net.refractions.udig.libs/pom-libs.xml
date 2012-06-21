@@ -789,13 +789,13 @@
 							<followSymlinks>false</followSymlinks>
 						</fileset>
 						<fileset>
-							<directory>${basedir}/../net.refractions.udig.libs.source/src/net.refractions.udig.libs_1.3.1.qualifier/lib</directory>
+							<directory>${basedir}/../net.refractions.udig.libs.source/src/net.refractions.udig.libs_${project.version}.qualifier/lib</directory>
 							<includes>
 								<include>*.*</include>
 							</includes>
 							<followSymlinks>false</followSymlinks>
 						</fileset>
-					</filesets>					
+					</filesets>
 				</configuration>
 			</plugin>
 			
@@ -828,7 +828,7 @@
                          <configuration>
                              <classifier>sources</classifier>
                              <overWrite>true</overWrite>
-                             <outputDirectory>${basedir}/../net.refractions.udig.libs.source/src/net.refractions.udig.libs_1.3.1.qualifier/lib</outputDirectory>
+                             <outputDirectory>${basedir}/../net.refractions.udig.libs.source/src/net.refractions.udig.libs_${project.version}.qualifier</outputDirectory>
                              <overWriteReleases>true</overWriteReleases>
                              <overWriteSnapshots>true</overWriteSnapshots>
                              <excludeScope>provided</excludeScope>
