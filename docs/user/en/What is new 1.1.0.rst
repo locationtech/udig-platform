@@ -3,17 +3,17 @@ What is new 1.1.0
 
 The following feature are new for uDig 1.1.0:
 
-* :doc:`Map Improvements`
+* `Map Improvements`_
 
-* :doc:`Workflow Improvements`
+* `Workflow Improvements`_
 
-* :doc:`Bookmarks View`
+* `Bookmarks View`_
 
-* :doc:`Data Handling Improvements`
+* `Data Handling Improvements`_
 
-* :doc:`Max OSX`
+* `Max OSX`_
 
-* :doc:`And much more`
+* `And much more`_
 
 
 Map Improvements
@@ -56,21 +56,20 @@ feedback.
 +------------+------------+------------+------------+------------+------------+
 
 In addition to a better user experience there is a complete framework to allow new tools to be
-created. Please visit the community section for instructions on downloading `Axios uDig
-Extensions <Axios%20uDig%20Extensions.html>`_ which feature a selection of advanced editing tools.
+created. Please visit the community section for instructions on downloading :doc:`Axios uDig Extensions` which feature a selection of advanced editing tools.
 
 Scratch Layers
 --------------
 
-You can define and create a new layer by selecting the **Layer > Create** menu item. How ever it is
+You can define and create a new layer by selecting the :menuselection:`Layer --> Create` menu item. How ever it is
 "In-Memory" and is not saved. You can export the layer to a shapefile if you wish to save your work.
 
 Create New Feature Types
 ------------------------
 
-Once you have a Service imported into the catalog you can select the service and select **Operations
-> Edit > Create Feature Type** to define a new feature type in that service. For example: Import a
-Shapefile. select the service in the catalog. Select **Operations > Edit > Create Feature Type** and
+Once you have a Service imported into the catalog you can select the service and select :menuselection:`Operations
+--> Edit --> Create Feature Type` to define a new feature type in that service. For example: Import a
+Shapefile. select the service in the catalog. Select :menuselection:`Operations --> Edit --> Create Feature Type` and
 define the feature type. When you select "OK" a new Shapefile will be created that you can open and
 paste features into from other layers or define new features using the edit tools.
 
@@ -118,7 +117,7 @@ New Map Preferences
 -------------------
 
 Some new preferences have been added for default map creation. For preferences choose the menu item:
-**Window > Preferences**. Some of the new preferences are:
+:menuselection:`Window --> Preferences`. Some of the new preferences are:
 
 -  Map Background color
 -  Render transparencies (on is slower but more attractive)
@@ -133,7 +132,7 @@ Reshape Operation
 
 The reshape operation can be used to manipulate your data in an ad-hoc manner. The reshape operation
 allows you to list the attributes of the output you desire; defining each attribute using a short
-`Constraint Query Language <Constraint%20Query%20Language.html>`_ expression.
+:doc:`Constraint Query Language` expression.
 
 -  To include a column of data; list the attribute name - with the same attribute name as the
    expression

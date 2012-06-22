@@ -134,8 +134,7 @@ An example world.prj is:
 
 **Related reference**
 
-
-* :doc:`ESRI World Image format`
+* `ESRI World Image format <http://www.kralidis.ca/gis/worldfile.htm>`_
 
 * `http://geos.gsi.gov.il/vladi/FEFLOW/help/general/file\_format.html#tfw\_file`_
 

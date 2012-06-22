@@ -36,7 +36,7 @@ Schema
 schema of tables to connect to
 
 Press **Next** to connect to the database. If you are adding data directly to a map you will proceed
-to the `Resource Selection page <Resource%20Selection%20page.html>`_ page.
+to the :doc:`Resource Selection page` page.
 
 Advanced Options
 ----------------

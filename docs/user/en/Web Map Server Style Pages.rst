@@ -1,14 +1,12 @@
 Web Map Server Style Pages
 ##########################
 
-Web Map Servers allow a little bit of control over how content is drawn. The `Style Editor
-dialog <Style%20Editor%20dialog.html>`_ makes use of the following pages when working with a WMS
-Layer.
+Web Map Servers allow a little bit of control over how content is drawn. The :doc:`Style Editor dialog` 
+makes use of the following pages when working with a WMS Layer.
 
-* :doc:`Simple`
+* `Simple`_
 
-* :doc:`WMS Named Style`
-
+* `WMS Named Style`_
 
 The pages displayed depend on the configuration of the web map service you are using.
 

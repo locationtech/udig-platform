@@ -25,9 +25,8 @@ The version of the Teradata plugin that ships with uDig 1.2.2 has some issues th
 performance issues with large data sets and a potential application freeze when editing features.
 There is a patch to address these issues, which can be installed in the following way:
 
--  Follow the instructions to `install a new plugin <Finding%20new%20plugins.html>`_.
--  When asked for the site location (step 5) enter
-   :doc:`http://udig.refractions.net/files/update-teradata/`
+-  Follow the instructions to :doc:`install a new plugin <Finding new plugins>`.
+-  When asked for the site location (step 5) enter `http://udig.refractions.net/files/update-teradata/`_
 
 -  After completing the wizard, restart uDig.
 
@@ -68,7 +67,7 @@ uDig sends the following information as part of a standard request:
 -  Type of statement (i.e. "SELECT", "INSERT", "DELETE")
 
 The only details that can be modified from within uDig is the Name of application and the Connection
-Mode .  See the `Teradata page <Teradata%20page.html>`_ for more details.
+Mode .  See the :doc:`Teradata page` for more details.
 
 Spatial indexes
 ^^^^^^^^^^^^^^^
@@ -219,7 +218,7 @@ archive:
 -  terajdbc4.jar
 -  tdgssconfig.jar
 
-Then navigate to **Layer > Add... > Teradata**. You will be shown a dialog (see below). Insert the
+Then navigate to :menuselection:`Layer --> Add... --> Teradata`. You will be shown a dialog (see below). Insert the
 locations of the two files extracted above into the dialog box and then click **Restart**.
 
 .. figure:: /images/teradata/td_drivers.png
@@ -234,6 +233,6 @@ restart uDig, and try again.
    :align: center
    :alt: 
 
-After uDig restarts, navigate back to **Layer > Add... > Teradata**. If everything was installed
+After uDig restarts, navigate back to :menuselection:`Layer --> Add... --> Teradata`. If everything was installed
 correctly, you will now be shown a dialog box for **Teradata Connection Settings.** Please continue
-on to the `Teradata connection page <Teradata%20page.html>`_ for details.
+on to the :doc:`Teradata connection page <Teradata page>` for details.

@@ -3,13 +3,13 @@ What is new
 
 The following features are new for the uDig 1.3 series:
 
-* :doc:`Area of Interest`
+* `Area of Interest`_
 
-* :doc:`Tool Interaction`
+* `Tool Interaction`_
 
-* :doc:`Tool Palette and Options`
+* `Tool Palette and Options`_
 
-* :doc:`Cheatsheets`
+* `Cheatsheets`_
 
 
 **Related reference**
@@ -23,18 +23,18 @@ The following features are new for the uDig 1.3 series:
 Area of Interest
 ================
 
-We now support the concept of `Area of Interest <Area%20of%20Interest.html>`_:
+We now support the concept of :doc:`Area of Interest`:
 
 -  This replaces the previous default value of "everything"
 -  You can define an area of interest a number of different ways: current screen, a bookmark, the
    current projection
 -  You can use Area of Interest to:
 
-   -  Limit the contents of the `Table view <Table%20view.html>`_
-   -  Limit the area you are searching for new data in the `Search view <Search%20view.html>`_
+   -  Limit the contents of the :doc:`Table view`
+   -  Limit the area you are searching for new data in the :doc:`Search view`
    -  Show All
 
-For more information check out the Tasks section on `Working with AOI <Working%20with%20AOI.html>`_
+For more information check out the Tasks section on :doc:`Working with AOI`
 
 Tool Interaction
 ================

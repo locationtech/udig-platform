@@ -1,7 +1,7 @@
 Feature Style Pages
 ###################
 
-When the `Style Editor dialog <Style%20Editor%20dialog.html>`_ is opened on a feature layer the
+When the :doc:`Style Editor dialog` is opened on a feature layer the
 following pages are available.
 
 * :doc:`Cache`

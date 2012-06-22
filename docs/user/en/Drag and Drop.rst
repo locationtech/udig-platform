@@ -43,7 +43,7 @@ To insert a Service:
 
 #. Press the mouse button on a WMS Capabilities link (in a browser)
 #. Drag the url into the Layer view
-#. Release; a `Resource Selection page <Resource%20Selection%20page.html>`_ will be displayed
+#. Release; a :doc:`Resource Selection page` will be displayed
    allowing you to choose which layers to insert. The service will also be added to the catalog.
 
 Projects View
@@ -71,7 +71,7 @@ Map Editor
 ==========
 
 You can drag a File, URL or Catalog resource onto an open Map Editor; a layer will be added to the
-Map as if you had used the `Add Data wizard <Add%20Data%20wizard.html>`_
+Map as if you had used the :doc:`Add Data wizard`
 
 **Related reference**
 

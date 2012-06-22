@@ -13,8 +13,7 @@ the **AOI Selection** tool.
 **Related tasks**
 
 
-`Configure table view to list the contents of a
-polygon <Configure%20table%20view%20to%20list%20the%20contents%20of%20a%20polygon.html>`_
+:doc:`Configure table view to list the contents of a polygon`
 
 **Related reference**
 

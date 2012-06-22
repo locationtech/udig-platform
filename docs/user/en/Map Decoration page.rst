@@ -7,8 +7,7 @@ The Map Decoration page lets you add decorations to your Map Editor.
    :align: center
    :alt: 
 
-After a map decoration has been added to your map it may be customized using the `Style Editor
-dialog <Style%20Editor%20dialog.html>`_.
+After a map decoration has been added to your map it may be customized using the :doc:`Style Editor dialog`.
 
 Several options are available:
 

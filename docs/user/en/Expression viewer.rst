@@ -1,8 +1,7 @@
 Expression viewer
 #################
 
-Expression viewers are used in `Style Editor dialog <Style%20Editor%20dialog.html>`_ and `Transform
-dialog <Transform%20dialog.html>`_ when a formula is used to calculate a value on a feature by
+Expression viewers are used in :doc:`Style Editor dialog` and :doc:`Transform dialog` when a formula is used to calculate a value on a feature by
 feature basis.
 
 This is a powerful technique that can be used for on the fly styling, or directly for data
@@ -25,8 +24,7 @@ different options will be listed some of which are described below:
 * :doc:`Numbers`
 
 
-When defining an expression you can make use of the full range of `Constraint Query
-Language <Constraint%20Query%20Language.html>`_ functions.
+When defining an expression you can make use of the full range of :doc:`Constraint Query Language` functions.
 
 -  To concatenate several values into a single text output:
 

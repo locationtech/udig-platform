@@ -8,7 +8,7 @@ The Teradata page is used to define a connection to a Teradata database.
    :alt: 
 
 Teradata database support is not enabled by default and requires the Teradata extension to be
-installed prior to use. Please see the `Teradata <Teradata.html>`_ page for more details.
+installed prior to use. Please see the :doc:`Teradata` page for more details.
 
 Connecting to a Teradata database
 ---------------------------------
@@ -87,8 +87,7 @@ each entry for each table to load as a layer, and then click **Next**.
    :align: center
    :alt: 
 
-If you are adding data directly to a map then proceed to the `Resource Selection
-page <Resource%20Selection%20page.html>`_.
+If you are adding data directly to a map then proceed to the :doc:`Resource Selection page`.
 
 **Related concepts**
 
@@ -101,5 +100,5 @@ page <Resource%20Selection%20page.html>`_.
 
 :doc:`Add Data wizard`
 
- :doc:`Resource Selection page`
+:doc:`Resource Selection page`
 

@@ -18,7 +18,7 @@ Available Preferences
    +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
    | No Snapping         | Snapping is turned off. **DEFAULT**                                                                                                       |
    +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-   | Selected Features   | Will snap to vertices that are part of a feature that has been added to the `EditBlackboard <EditBlackboard.html>`_ (has been selected)   |
+   | Selected Features   | Will snap to vertices that are part of a feature that has been added to the :doc:`EditBlackboard` (has been selected)   |
    +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
    | Current Layer       | Searches for the closest vertex in the current layer                                                                                      |
    +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
@@ -36,8 +36,7 @@ Available Preferences
 -  Feedback - The color that the feedback animations will be.
     Default is red.
 
-Note: The color of the outlines of the selected features are set in the `Map
-Preferences <Map%20Preferences.html>`_ by the selection color preference.
+Note: The color of the outlines of the selected features are set in the :doc:`Map Preferences` by the selection color preference.
 
 **Related reference**
 

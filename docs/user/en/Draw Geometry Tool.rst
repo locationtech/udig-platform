@@ -5,8 +5,7 @@ Draw Geometry Tool – Cannot resolve external resource into attachment.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Draw Geometry Tool allows lines, polygons and holes to be drawn in a free-hand manner. The tool
-attempts to determine what geometry should be created by inspecting the `Feature
-Type <Feature%20Type.html>`_ of the layer. If it is a polygon then polygons will be created;
+attempts to determine what geometry should be created by inspecting the :doc:`Feature Type` of the layer. If it is a polygon then polygons will be created;
 similarly lines are created for line layers. If the layer's geometry type is Geometry (ie. can
 contain both lines and polygons) then lines are created unless the draw is finished over the
 starting vertex (the geometry is closed) in which case polygons are created.
@@ -16,14 +15,12 @@ starting vertex (the geometry is closed) in which case polygons are created.
    :alt: 
 
 The tool can create holes in existing polygons as well. In order to do this:
- 1. Select the geometry you wish to edit (Draw tool will select geometries when in `Using Advanced
-Edit Mode <Using%20Advanced%20Edit%20Mode.html>`_
+ 1. Select the geometry you wish to edit (Draw tool will select geometries when in :doc:`Using Advanced Edit Mode`
  2. Draw a hole that is enclosed in the polygon
 
-As with the `Line Creation Tool <Line%20Creation%20Tool.html>`_, the Draw Geometry Tool can extend
+As with the :doc:`Line Creation Tool`, the Draw Geometry Tool can extend
 existing lines:
- 1. Select the geometry you wish to edit (Draw tool will select geometries when in `Using Advanced
-Edit Mode <Using%20Advanced%20Edit%20Mode.html>`_
+ 1. Select the geometry you wish to edit (Draw tool will select geometries when in :doc:`Using Advanced Edit Mode`
  2. Draw a line that continues from the end of selected line.
  **Note:** It has to *start* at the end of the selected line. If a line is ended at an end of the
 selected line a new line will be created rather than extending the selected line.

@@ -5,8 +5,7 @@ Edit Geometry Tool – Cannot resolve external resource into attachment.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Edit Geometry Tool can add, remove, select and move vertices. It can also move geometries. The
-functionality illustrated on this page is also available when using the `Polygon Creation
-Tool <Polygon%20Creation%20Tool.html>`_, `Line Creation Tool <Line%20Creation%20Tool.html>`_ and
+functionality illustrated on this page is also available when using the :doc:`Polygon Creation Tool`, :doc:`Line Creation Tool` and
 :doc:`Point Creation Tool`
 
 
@@ -24,7 +23,7 @@ Tool <Polygon%20Creation%20Tool.html>`_, `Line Creation Tool <Line%20Creation%20
 #. You can use the **Feature Edit** tool to move points. Move your mouse over a vertex. Click and
    drag the vertex.
     **Tip:** The circle around the point is the current snap area. For more information about
-   snapping click `here <Snapping.html>`_.
+   snapping click :doc:`here <Snapping>`.
     |image2|
 #. You can also create new points with the **Feature Edit** tool. Click on a straight line where
    there is no vertex. A vertex will appear and it can be moved.
@@ -54,21 +53,20 @@ Tips
 
 -  Advanced Editing Mode can be used to reduce the amount of tool switching that is required. For
    example adding vertices can be performed with the Edit Geometry Tool in advanced mode.
--  Multiple Geometries can be added to the `EditBlackboard <EditBlackboard.html>`_ and edited
+-  Multiple Geometries can be added to the :doc:`EditBlackboard` and edited
    together.
 
-   -  **Shift-click** adds features to the `EditBlackboard <EditBlackboard.html>`_
+   -  **Shift-click** adds features to the :doc:`EditBlackboard`
    -  **Alt-click** adds/removes features
 
--  Esc (or Esc-Esc depending on the platform) clears `EditBlackboard <EditBlackboard.html>`_.
+-  Esc (or Esc-Esc depending on the platform) clears :doc:`EditBlackboard`.
 -  If two selected features share a vertex moving the vertex will move the vertex on both features.
--  Use `Snapping <Snapping.html>`_ to snap to existing features.
+-  Use :doc:`Snapping` to snap to existing features.
 -  A line can split by
 
    #. Selecting a line (select bc\_borders and select a line)
        |image9|
-   #. Adding a vertex at location where the split will take place using the `Add Vertex
-      Tool <Add%20Vertex%20Tool.html>`_
+   #. Adding a vertex at location where the split will take place using the :doc:`Add Vertex Tool`
        |image10|
    #. The split can now be done by:
 

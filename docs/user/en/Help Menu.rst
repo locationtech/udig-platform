@@ -21,7 +21,7 @@ contains help books, topics, and information related to the Application and inst
 Cheat Sheet
 -----------
 
-Command will open the `Cheat Sheet Selection dialog <Cheat%20Sheet%20Selection%20dialog.html>`_
+Command will open the :doc:`Cheat Sheet Selection dialog`
 allowing you to select a cheat sheet for guided assistance.
 
 Tips and Tricks
@@ -32,7 +32,7 @@ This command will open a list of interesting productivity features that you may 
 Submit Log...
 -------------
 
-This command opens the `Send Log dialog <Send%20Log%20dialog.html>`_ allowing you to send your error
+This command opens the :doc:`Send Log dialog` allowing you to send your error
 log to the development team for review.
 
 Find and Install

@@ -1,7 +1,7 @@
 Filter viewer
 #############
 
-Filter viewers are used in `Style Editor dialog <Style%20Editor%20dialog.html>`_ and other areas
+Filter viewers are used in :doc:`Style Editor dialog` and other areas
 where selecting the content you wish to work with is important. A formula is used to select content
 on a feature by feature basis.
 
@@ -55,8 +55,7 @@ Common examples:
 
        NOT( NAME LIKE 'Can%' )
 
--  You can make use of the full range of `Constraint Query
-   Language <Constraint%20Query%20Language.html>`_ function:
+-  You can make use of the full range of :doc:`Constraint Query Language` function:
 
    ::
 
@@ -121,5 +120,5 @@ Offers an easy way to enable or disable a rule. This is not a general purpose vi
 
        EXCLUDE
 
-This viewer is often used in the `Style Editor dialog <Style%20Editor%20dialog.html>`_ to toggle a
+This viewer is often used in the :doc:`Style Editor dialog` to toggle a
 Rule on or off.

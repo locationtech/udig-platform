@@ -197,7 +197,7 @@ Geometry literals are provided in Well Known Text format:
 
     LINESTRING (15 15, 20 20)
 
-This is the same format used by `PostGIS <PostGIS.html>`_ and other applications.
+This is the same format used by :doc:`PostGIS` and other applications.
 
 Attribute
 '''''''''

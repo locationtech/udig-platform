@@ -72,7 +72,7 @@ Feature Tools
 Edit Commands
 -------------
 
-Many of these same commands are available in the `Edit Menu <Edit%20Menu.html>`_.
+Many of these same commands are available in the :doc:`Edit Menu`.
 
 Commit
 ~~~~~~

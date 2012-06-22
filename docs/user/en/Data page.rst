@@ -1,8 +1,7 @@
 Data page
 #########
 
-The data page allows you to directly import spatial data into the `Catalog
-view <Catalog%20view.html>`_ for later use.
+The data page allows you to directly import spatial data into the :doc:`Catalog view` for later use.
 
 .. figure:: /images/data_page/ImportData.png
    :align: center

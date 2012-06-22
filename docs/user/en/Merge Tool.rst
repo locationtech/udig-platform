@@ -22,8 +22,8 @@ To use the Merge tool:
 #. For doing a Merge you will need 2 or more features.
 #. You can continue selecting more features by drawing a box.
 #. Press **Finish** to perform the operation
-#. You can inspect your work in the `Map editor <Map%20editor.html>`_
-#. To save your work please press **Edit > Commit** from the menu bar
+#. You can inspect your work in the :doc:`Map editor`
+#. To save your work please press :menuselection:`Edit --> Commit` from the menu bar
 
 :doc:`|image1|`
 

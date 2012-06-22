@@ -36,19 +36,16 @@ Contents:
 
 * :doc:`Enabling a Tileset from a WMS Server`
 
--  `Handling Shapefiles with different Character
-   Sets <Handling%20Shapefiles%20with%20different%20Character%20Sets.html>`_
+* :doc:`Handling Shapefiles with different Character Sets`
+
 * :doc:`Importing data`
 
 
 **Related tasks**
 
-
 :doc:`Working with Features`
 
-
 **Related reference**
-
 
 :doc:`Catalog view`
 

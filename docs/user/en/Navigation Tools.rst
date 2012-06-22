@@ -1,10 +1,9 @@
-The category of navigation tools is used to control what is visible in the `Map
-editor <Map%20editor.html>`_.
+The category of navigation tools is used to control what is visible in the :doc:`Map editor`.
 
 Navigation Tools:
 
--  |image0| `Zoom Tool <#NavigationTools-ZoomTool>`_ - z
--  |image1| `Pan Tool <#NavigationTools-PanTool>`_ - p
+-  |image0| `Zoom Tool`_
+-  |image1| `Pan Tool`_
 
 Navigation Commands:
 
@@ -12,12 +11,12 @@ Navigation Commands:
 
 * :doc:`Forward`
 
--  |image2| `Refresh <#NavigationTools-Refresh>`_
--  |image3| `Stop Drawing <#NavigationTools-StopDrawing>`_
--  |image4| `Show All <#NavigationTools-ShowAll>`_
--  |image5| `Zoom In <#NavigationTools-ZoomIn>`_
--  |image6| `Zoom Out <#NavigationTools-ZoomOut>`_
--  |image7| `Zoom to Selection <#NavigationTools-ZoomtoSelection>`_
+-  |image2| `Refresh`_
+-  |image3| `Stop Drawing`_
+-  |image4| `Show All`_
+-  |image5| `Zoom In`_
+-  |image6| `Zoom Out`_
+-  |image7| `Zoom to Selection`_
 
 Navigation Tools
 ----------------
@@ -49,7 +48,7 @@ A drag with the left mouse button down will move the map across the display.
 Navigation Commands
 -------------------
 
-May of these commands may also be found in the `Navigation Menu <Navigation%20Menu.html>`_.
+May of these commands may also be found in the :doc:`Navigation Menu`.
 
 Back
 ~~~~

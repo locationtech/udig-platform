@@ -1,12 +1,11 @@
 PostGIS
 ~~~~~~~
 
-PostGIS adds support for geographic objects to the `PostgreSQL
-database <http://www.postgresql.com/>`_. In effect, PostGIS "spatially enables" the PostgreSQL
-server, allowing it to be used as spatial database for geographic information systems.
+PostGIS adds support for geographic objects to the `PostgreSQL database <http://www.postgresql.com/>`_. 
+In effect, PostGIS "spatially enables" the PostgreSQL server, allowing it to be used as 
+spatial database for geographic information systems.
 
-PostGIS follows the OpenGIS `Simple Features Specification for
-SQL <http://www.opengis.org/docs/99-049.pdf>`_ (SFSQL).
+PostGIS follows the OpenGIS `Simple Features Specification for SQL <http://www.opengis.org/docs/99-049.pdf>`_ (SFSQL).
 
 Geometry Objects
 ^^^^^^^^^^^^^^^^
@@ -47,7 +46,7 @@ GEOMETRYCOLLECTION(POINT(2 3),LINESTRING((2 3,3 4)))
 
 These geometry objects are in accordance with the SFSQL specification mentioned above; the examples
 are given using the "Well Known Text" format - the same format used for selections in uDig (see
-`Constraint Query Language <Constraint%20Query%20Language.html>`_ )
+:doc:`Constraint Query Language` )
 
 Required PostGIS Tables
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -65,10 +64,7 @@ geometry\_columns table.
 
 
 * :doc:`PostGIS page`
-
-* :doc:`http://postgis.refractions.net/`
-
-* :doc:`http://www.postgresql.com/`
-
--  `Introduction to PostGIS <http://www.foss4g2007.org/workshops/W-04/>`_ (FOSS4G 2007 workshop)
+* `http://postgis.refractions.net/`_
+* `http://www.postgresql.com/`_
+* `Introduction to PostGIS <http://www.foss4g2007.org/workshops/W-04/>`_ (FOSS4G 2007 workshop)
 

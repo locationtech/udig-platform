@@ -1,18 +1,18 @@
 Raster Style Pages
 ##################
 
-When the `Style Editor dialog <Style%20Editor%20dialog.html>`_ is opened on a raster layer the
+When the :doc:`Style Editor dialog` is opened on a raster layer the
 following pages are available.
 
-* :doc:`Cache`
+* `Cache`_
 
-* :doc:`Raster Color Mask`
+* `Raster Color Mask`_
 
-* :doc:`Simple Raster`
+* `Simple Raster`_
 
-* :doc:`Single Band Rasters`
+* `Single Band Rasters`_
 
-* :doc:`XML`
+* `XML`_
 
 
 Cache

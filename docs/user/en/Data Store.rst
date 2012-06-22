@@ -1,4 +1,4 @@
 Data Store
 ~~~~~~~~~~
 
-A data store is "generic" service which provides access to `Features <Feature.html>`_.
+A data store is "generic" service which provides access to :doc:`Features`.

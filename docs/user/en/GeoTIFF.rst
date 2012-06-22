@@ -5,7 +5,7 @@ A GeoTIFF is a normal TIFF file that has had spatial information encoded in the 
 fields.
 
 Please note that a TIFF file may also be used without spatial metadata entries; when combined with a
-"world file" it is known as a `World Plus Image <World%20Plus%20Image.html>`_ file.
+"world file" it is known as a :doc:`World Plus Image` file.
 
 **Related reference**
 

@@ -54,9 +54,9 @@ Definition
    of your output format when choosing a name. Many formats such as shape file are unable to handle
    names that contain spaces, punctuation or start with a number.
 
--  **Expression**: The `Constraint Query Language <Constraint%20Query%20Language.html>`_ used to
-   generate the values on output. Use the drop down arrow on the right to cycle the `Expression
-   viewer <Expression%20viewer.html>`_ through several helpful options.
+-  **Expression**: The :doc:`Constraint Query Language` used to
+   generate the values on output. Use the drop down arrow on the right to cycle the :doc:`Expression viewer` 
+   through several helpful options.
 
 How would you like to handle the result
 =======================================
@@ -87,7 +87,7 @@ Cancel the operation, no result will be generated.
 
 :doc:`Transform operation`
 
- :doc:`Operations dialog`
+:doc:`Operations dialog`
 
- :doc:`Expression viewer`
+:doc:`Expression viewer`
 

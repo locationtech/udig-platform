@@ -10,8 +10,7 @@ The Fill tool fills spaces on the current layer that are **not** occupied by exi
  This image shows the fill tool drawing a polygon to fill.
 
 |image1|
- This image shows the resulting geometry (the other features have been deleted with the `Delete
-Tool <Delete%20Tool.html>`_.)
+ This image shows the resulting geometry (the other features have been deleted with the :doc:`Delete Tool`.)
 
 **Related reference**
 

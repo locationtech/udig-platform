@@ -3,14 +3,13 @@ Tracing WMS Calls
 
 Occasionally you will have trouble connecting to a WMS service; here is how to enable tracing.
 
-:doc:`Traceing WMS Requests`
+* `Traceing WMS Requests`_
 
+* `Example Tracing Information`_
 
-* :doc:`Example Tracing Information`
+* `Trouble Shooting a WMS Server`_
 
-* :doc:`Trouble Shooting a WMS Server`
-
-* :doc:`Mac OSX`
+* `Mac OSX`_
 
 
 Traceing WMS Requests
@@ -93,6 +92,4 @@ application from the command line with:
 
 **Related tasks**
 
-
-`View Error Log and Configuration
-Details <View%20Error%20Log%20and%20Configuration%20Details.html>`_
+:doc:`View Error Log and Configuration Details`

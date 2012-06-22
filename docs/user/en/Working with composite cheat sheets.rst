@@ -10,29 +10,19 @@ The panel which appears on the left or on top (depending on the view orientation
 explorer and shows all of the tasks which need to be completed and their state. The lower or right
 panel is called the task detail panel and shows the task which is selected in the explorer.
 
--  `Launching a composite cheat
-   sheet <#Workingwithcompositecheatsheets-Launchingacompositecheatsheet>`_
-* :doc:`Task explorer`
-
-* :doc:`Task detail pane`
-
-* :doc:`Task groups`
-
-* :doc:`Cheat sheet tasks`
-
-* :doc:`Task dependencies`
-
-* :doc:`Skipping`
-
-* :doc:`Restarting`
-
-* :doc:`Closing`
-
+* `Launching a composite cheat sheet`_
+* `Task explorer`_
+* `Task detail pane`_
+* `Task groups`_
+* `Cheat sheet tasks`_
+* `Task dependencies`_
+* `Skipping`_
+* `Restarting`_
+* `Closing`_
 
 **Related reference**
 
-
-Cheat sheet
+:doc:`Cheat sheets`
 
 Launching a composite cheat sheet
 =================================

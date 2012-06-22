@@ -5,16 +5,17 @@ Polygon Creation Tool – Cannot resolve external resource into attachment.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Polygon Creation Tool allows polygons created. To create a polygon simply select a polygon layer
-in the `Layers view <Layers%20view.html>`_ and click to begin a new polygon and continue to click at
+in the :doc:`Layers view` and click to begin a new polygon and continue to click at
 new locations to add more vertices.
  |image0|
- **Note:** Edited polygons are only filled when the fill polygon preference is set in the `Edit Tool
-Performance Preferences <Edit%20Tool%20Performance%20Preferences.html>`_
+ 
+.. note::
+   Edited polygons are only filled when the fill polygon preference is set in the :doc:`Edit Tool Performance Preferences`
 
 Vertex Snapping
 ~~~~~~~~~~~~~~~
 
-By default `snapping <Snapping.html>`_ is turned off however, if desired `snapping <Snapping.html>`_
+By default :doc:`snapping <Snapping>` is turned off however, if desired :doc:`snapping <Snapping>`
 can be used during polygon geometry creation.
 
 -  Polygon creation with snapping to the current layer. Notice that it didn't snap to the hospital
@@ -31,14 +32,14 @@ Advanced Editing
 ~~~~~~~~~~~~~~~~
 
 The Polygon Creation Tool also has an advanced mode that provides all the functionality that the
-`Edit Geometry Tool <Edit%20Geometry%20Tool.html>`_ has, except only polygons can be edited. A
-summary of the advanced editing features are:
+:doc:`Edit Geometry Tool` has, except only polygons can be edited. A summary of the advanced 
+editing features are:
 
 -  Clicking an existing polygon will select it.
 -  Vertices in selected polygons can be moved.
 -  Vertices in selected liness can be added or deleted
 -  Holding CTRL+SHIFT down will allow the entire geometry to be moved.
--  As with the `Edit Geometry Tool <Edit%20Geometry%20Tool.html>`_ the vertex operations can be
+-  As with the :doc:`Edit Geometry Tool` the vertex operations can be
    performed on multiple vertices at once if many vertices are selected.
 
 **Related reference**

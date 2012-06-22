@@ -36,8 +36,8 @@ Web Map Server, and for adding a layer into a Map.
 
 * :doc:`Enabling a Tileset from a WMS Server`
 
--  `Handling Shapefiles with different Character
-   Sets <Handling%20Shapefiles%20with%20different%20Character%20Sets.html>`_
+* :doc:`Handling Shapefiles with different Character Sets`
+
 * :doc:`Importing data`
 
 
@@ -74,18 +74,12 @@ Web Map Server, and for adding a layer into a Map.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
--  `Configure table view to list the contents of a
-   polygon <Configure%20table%20view%20to%20list%20the%20contents%20of%20a%20polygon.html>`_
--  `Configure table view to list the contents of the
-   screen <Configure%20table%20view%20to%20list%20the%20contents%20of%20the%20screen.html>`_
+* :doc:`Configure table view to list the contents of a polygon`
+* :doc:`Configure table view to list the contents of the screen`
 * :doc:`Show the AOI on the map`
-
 * :doc:`Use a bookmark as the AOI`
-
--  `Use a Coordinate Reference System as the
-   AOI <Use%20a%20Coordinate%20Reference%20System%20as%20the%20AOI.html>`_
+* :doc:`Use a Coordinate Reference System as the AOI`
 * :doc:`Use a processing region as the AOI`
-
 * :doc:`Use polygon as the AOI`
 
 
@@ -154,15 +148,10 @@ Web Map Server, and for adding a layer into a Map.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * :doc:`Creating a new Project`
-
 * :doc:`Creating a Project`
-
 * :doc:`Using new to add a Map to a Project`
-
--  `Using the Context menu to add a Map to a
-   Project <Using%20the%20Context%20menu%20to%20add%20a%20Map%20to%20a%20Project.html>`_
--  `Using the File menu to add a new
-   Map <Using%20the%20File%20menu%20to%20add%20a%20new%20Map.html>`_
+* :doc:`Using the Context menu to add a Map to a Project`
+* :doc:`Using the File menu to add a new Map`
 * :doc:`Using the Projects view`
 
 

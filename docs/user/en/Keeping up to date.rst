@@ -1,8 +1,7 @@
 Keeping up to date
 ##################
 
-To check for and install updates to udig start the `Update
-Manager <Working%20with%20the%20Update%20Manager.html>`_ and select **Search for updates of the
+To check for and install updates to udig start the :doc:`Update Manager <Working with the Update Manager>` and select **Search for updates of the
 currently installed features** option.
  |image0|
  If no updates are available a dialog will appear giving a message to that effect. Otherwise a Tree

@@ -18,7 +18,7 @@ functionality:
     |image2|
 -  Vertices in selected holes can be deleted when in Advanced Edit Mode.
     |image3|
--  As with the `Edit Geometry Tool <Edit%20Geometry%20Tool.html>`_ the vertex operations can be
+-  As with the :doc:`Edit Geometry Tool` the vertex operations can be
    performed on multiple vertices at once if many vertices are selected.
 
 **Related reference**

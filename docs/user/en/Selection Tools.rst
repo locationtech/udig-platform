@@ -3,10 +3,10 @@ Selection Tools
 
 Each layer has an associated selection that can be used to isolate content for further interaction.
 
--  |image0| `Box Selection <#SelectionTools-BoxSelection>`_:
--  |image1| `AOI Selection <#SelectionTools-AOISelection>`_:
+-  |image0| `Box Selection`_
+-  |image1| `AOI Selection`_
 
-Map selection may also be defined using the `Table view <Table%20view.html>`_.
+Map selection may also be defined using the :doc:`Table view`.
 
 Box Selection
 -------------

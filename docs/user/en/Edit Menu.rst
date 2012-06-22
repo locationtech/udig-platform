@@ -57,7 +57,7 @@ already in progress.
 All Operations
 --------------
 
-Opens the `Operations dialog <Operations%20dialog.html>`_ allowing you to choose an operation to
+Opens the :doc:`Operations dialog` allowing you to choose an operation to
 perform on the selected object.
 
 The Operations dialog is used to list all operations, while a cut down list of operations provided

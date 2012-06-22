@@ -4,7 +4,7 @@ Home
 uDig User Guide
 ===============
 
-Welcome to `uDig User Guide <uDig%20User%20Guide.html>`_.
+Welcome to :doc:`uDig User Guide`.
 
 :doc:`uDig Overview`
 

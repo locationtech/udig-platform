@@ -6,7 +6,6 @@ issue tracker used by the development team.
 
 **Related tasks**
 
-
 * :doc:`Submit Error Log`
 
 * :doc:`Subscribe to the user list`
@@ -15,12 +14,10 @@ issue tracker used by the development team.
 
 * :doc:`Using the Issue Tracker`
 
--  `View Error Log and Configuration
-   Details <View%20Error%20Log%20and%20Configuration%20Details.html>`_
+* :doc:`View Error Log and Configuration Details`
+
 
 **Related reference**
 
-
 * :doc:`Issue Tracker`
-
 

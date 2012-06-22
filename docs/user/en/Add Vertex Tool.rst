@@ -5,7 +5,7 @@ Add Vertex Tool – Cannot resolve external resource into attachment.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Add Vertex Tool can select geometries and add vertices to those geometries. The workflow is the
-same as adding vertices using the `Edit Geometry Tool <Edit%20Geometry%20Tool.html>`_.
+same as adding vertices using the :doc:`Edit Geometry Tool`.
 
 #. Click a feature to select it. **Tip** if features overlap clicking the same location multiple
    times will cycle through the features at that point.

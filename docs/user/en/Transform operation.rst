@@ -2,7 +2,7 @@ Transform operation
 ###################
 
 The transform operation allows for general manipulation and processing of feature content. The
-transform operation is available from the `Operations dialog <Operations%20dialog.html>`_ or using
+transform operation is available from the :doc:`Operations dialog` or using
 the context menu when selecting feature data.
 
 Selection
@@ -10,17 +10,17 @@ Selection
 
 The operation works with the following selections:
 
--  A selected GeoResource in the `Catalog view <Catalog%20view.html>`_. Please note you will need to
+-  A selected GeoResource in the :doc:`Catalog view`. Please note you will need to
    open up the service in order to select the GeoResource contents it advertises for use. This
    technique is often used to process an entire Shapefile, database table or WFS feature type.
--  A selected Layer in the `Layers view <Layers%20view.html>`_. Please note that the operation will
+-  A selected Layer in the :doc:`Layers view`. Please note that the operation will
    limit itself to the features you have selected on the screen. If you have not selected any
    features (to limit the operation) we assume you wish the entire layer to be processed.
 
 Input
 -----
 
-The operation opens the `Transform dialog <Transform%20dialog.html>`_ which is used to define how
+The operation opens the :doc:`Transform dialog` which is used to define how
 you would like the information processed.
 
 .. figure:: /images/transform_operation/TransformDialog.png
@@ -41,7 +41,7 @@ to your map allowing you to preview the result directly.
 
 :doc:`Working with Features`
 
- :doc:`Working with Layers`
+:doc:`Working with Layers`
 
 
 **Related reference**
@@ -49,9 +49,9 @@ to your map allowing you to preview the result directly.
 
 :doc:`Transform dialog`
 
- :doc:`Operations dialog`
+:doc:`Operations dialog`
 
- :doc:`Layers view`
+:doc:`Layers view`
 
- :doc:`Catalog view`
+:doc:`Catalog view`
 

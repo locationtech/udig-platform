@@ -1,7 +1,7 @@
 Working with Layers
 ###################
 
-The concept of a `Layer <Layer.html>`_ is the central method of working with mapping information. A
+The concept of a :doc:`Layer` is the central method of working with mapping information. A
 layer consists of two parts: the data being displayed and the style controlling how the data is
 rendered.
 
@@ -16,10 +16,8 @@ rendered.
 * :doc:`Feature count`
 
 * :doc:`Using Layer Operations`
-
-
-   * :doc:`Validation`
-
+ 
+ * :doc:`Validation`
 
 * :doc:`Using Resource Summary`
 
@@ -28,10 +26,9 @@ Please note that you can also work directly with the data used by the layer.
 
 **Related tasks**
 
-
 :doc:`Using the Catalog`
 
- :doc:`Working with Maps`
+:doc:`Working with Maps`
 
- :doc:`Using Resource Summary`
+:doc:`Using Resource Summary`
 

@@ -1,7 +1,7 @@
 Legend
 ######
 
-A `Map <Map.html>`_ legend is a quick visual guide to understand the image of the map. As such it
+A :doc:`Map` legend is a quick visual guide to understand the image of the map. As such it
 needs to explain the information being presented; the use of colour on the map, and any symbols or
 icons used.
 
@@ -42,10 +42,9 @@ For Layers that produce complex symbology further detail to explain the symbols 
 **Related concepts**
 
 
-:doc:`Cartography - Legend (Wikipedia)`
+.. :doc:`Cartography - Legend (Wikipedia)`
 
- `NATO Military Symbols For Land Based
-Systems <http://en.wikipedia.org/wiki/NATO_Military_Symbols_for_Land_Based_Systems>`_
+`NATO Military Symbols For Land Based Systems <http://en.wikipedia.org/wiki/NATO_Military_Symbols_for_Land_Based_Systems>`_
 
 **Related reference**
 

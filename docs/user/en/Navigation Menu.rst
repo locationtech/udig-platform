@@ -1,7 +1,7 @@
 Navigation Menu
 ###############
 
-The Navigation Menu allows you to control what the current `Map editor <Map%20editor.html>`_ is
+The Navigation Menu allows you to control what the current :doc:`Map editor` is
 displaying.
 
 .. figure:: /images/navigation_menu/NavigationMenu.png
