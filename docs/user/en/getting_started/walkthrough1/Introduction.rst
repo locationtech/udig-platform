@@ -1,19 +1,19 @@
 Introduction
------------------------------------
+------------
 
 Welcome to the User-friendly Internet Desktop GIS (uDig) application!
 
 uDig is collaborative effort brought together by a diverse project management committee from organizations across the world:
 
-* Andrea Antonello (Italy)
+ * Andrea Antonello (Italy)
 
-* Frank Gasdorf (Germany)
+ * Frank Gasdorf (Germany)
 
-* Jesse Eichar (Switzerland)
+ * Jesse Eichar (Switzerland)
 
-* Jody Garnett (Australia)
+ * Jody Garnett (Australia)
 
-* Mauricio Pazos (Spain)
+ * Mauricio Pazos (Spain)
 
 uDig was originally started by `Refractions Research <http://www.refractions.net/>`_ in Canada with funding from `GeoConnections <http://www.geoconnections.org/>`_ Canada.
 
@@ -24,8 +24,8 @@ Any fixes you make to the core uDig codebase; do have to be passed on to your us
 
 For more information and a selection of case studies:
 
-* http://udig.refractions.net/files/tutorials/uDigCaseStudies.pdf
+ * http://udig.refractions.net/files/tutorials/uDigCaseStudies.pdf
 
-* http://udig.refractions.net/gallery/
+ * http://udig.refractions.net/gallery/
 
 In addition to supporting an open source license, uDig is also offers an open development model with clear procedures allowing your team to take part.

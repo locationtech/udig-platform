@@ -6,7 +6,7 @@ small text file that says where the corners of the image is.
 
 This page specifically covers the combination of a normal image format with a "world" file. A few
 image formats have well known ways of encoding location information in the image "metadata" fields.
-As an example a TIFF file with spatial metadata is known as a `GeoTIFF <GeoTIFF.html>`_.
+As an example a TIFF file with spatial metadata is known as a :doc:`GeoTIFF`.
 
 Image Files
 ^^^^^^^^^^^
@@ -137,6 +137,6 @@ An example world.prj is:
 
 * :doc:`ESRI World Image format`
 
-* :doc:`http://geos.gsi.gov.il/vladi/FEFLOW/help/general/file\_format.html#tfw\_file`
+* `http://geos.gsi.gov.il/vladi/FEFLOW/help/general/file\_format.html#tfw\_file`_
 
 

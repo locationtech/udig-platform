@@ -3,37 +3,22 @@ What is new 1.2.0
 
 The following features are new for the uDig 1.2 series:
 
-* :doc:`Terradata`
-
-* :doc:`Spatial Toolbox`
-
-* :doc:`Generic DataStore`
-
--  `Improved Tools for working with Raster
-   Data <#Whatisnew1.2.0-ImprovedToolsforworkingwithRasterData>`_
-* :doc:`Additional Export wizards`
-
-* :doc:`Additional Import wizards`
-
-* :doc:`New Style Editor Pages`
-
-* :doc:`Additional Raster Formats`
-
-* :doc:`Tile Server Support`
-
-* :doc:`WFS 1.1.0 Support`
-
-* :doc:`Experimental Tiled Renderer`
-
-* :doc:`ArcSDE`
-
-* :doc:`Advanced Symbology`
-
-* :doc:`Framework Improvements`
-
+* `Terradata`_
+* `Spatial Toolbox`_
+* `Generic DataStore`_
+* `Improved Tools for working with Raster Data`_
+* `Additional Export wizards`_
+* `Additional Import wizards`_
+* `New Style Editor Pages`_
+* `Additional Raster Formats`_
+* `Tile Server Support`_
+* `WFS 1.1.0 Support`_
+* `Experimental Tiled Renderer`_
+* `ArcSDE`_
+* `Advanced Symbology`_
+* `Framework Improvements`_
 
 **Related reference**
-
 
 :doc:`What is new 1.1.0`
 
@@ -54,8 +39,7 @@ through Open Modeling Services 3 components.
 
 For more information:
 
--  `Introduction to the Spatial Toolbox <Introduction%20to%20the%20Spatial%20Toolbox.html>`_ -
-   covers the installation and use of JGrass compoenents
+* :doc:`Introduction to the Spatial Toolbox` covers the installation and use of JGrass compoenents
 * :doc:`Spatial Toolbox View`
 
 
@@ -80,25 +64,25 @@ A couple of tools have been added for working with raster data:
 Additional Export wizards
 =========================
 
-The `Export Wizard <Export%20Wizard.html>`_ allows you to export new kinds of information from the
+The :doc:`Export Wizard` allows you to export new kinds of information from the
 uDig catalog for use in other applications.
 
 -  Export coverage to tiff or esri ascii
 -  Export feature layer to kml
 
-These are export wizards available from the \*\ **File > Export**\ \* menu.
+These are export wizards available from the :menuselection:`File --> Export` menu.
 
 Additional Import wizards
 =========================
 
-The `Import Wizard <Import%20Wizard.html>`_ allows you to import new kinds of information into the
+The :doc:`Import Wizard` allows you to import new kinds of information into the
 uDig catalog for use.
 
 -  Allows the easy creation of an image moasic from a directory of images
 -  Import CSV files directly
 -  Convert a KML file to a Shapefile
 
-These are import wizards available from the \*\ **File > Import**\ \* menu.
+These are import wizards available from the :menuselection:`File --> Import` menu.
 
 * :doc:`Import Wizard`
 
@@ -114,7 +98,7 @@ engine.
 * :doc:`Feature Style Pages`
 
 
-.. figure:: /images/what_is_new_1.2.0/Simple-Points-Screen.jpg
+.. figure:: images/what_is_new_1.2.0/Simple-Points-Screen.jpg
    :align: center
    :alt: 
 

@@ -251,9 +251,8 @@ Includes the ossim feaure (this may be dead code)
                      <id>the-execution-id</id>
                      <phase>none</phase>
                   </execution>
-               </executions>			
+               </executions>
             </plugin>
-            <!-- 
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-source-plugin</artifactId>
@@ -267,7 +266,6 @@ Includes the ossim feaure (this may be dead code)
                   </execution>
                 </executions>
               </plugin>
-              -->
         </plugins>
     </build>
     <reporting>

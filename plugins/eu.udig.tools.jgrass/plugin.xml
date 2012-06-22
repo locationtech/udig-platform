@@ -169,6 +169,16 @@
             %csvImport.wizardDescription
          </description>
       </wizard>
+      <wizard
+            category="eu.udig.featureimportcategory"
+            class="eu.udig.tools.jgrass.geopaparazzi.ImportGeopaparazziFolderWizard"
+            icon="icons/geopaparazzi_small.png"
+            id="eu.hydrologis.jgrass.geopaparazziimport"
+            name="%geopapImport.wizardName">
+         <description>
+            %geopapImport.wizardDescription
+         </description>
+      </wizard>
    </extension>
    <extension
          point="org.eclipse.ui.commands">

@@ -49,6 +49,13 @@
         </antcall>
     </target>
 
+    <target name="user-pdf" depends="init">
+        <antcall target="pdf">
+            <param name="id" value="user/en" />
+            <param name="build" value="pdf" />
+        </antcall>
+    </target>
+    
     <target name="devel" depends="init">
         <antcall target="sphinx">
             <param name="id" value="devel/en"/>

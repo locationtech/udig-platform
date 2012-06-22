@@ -20,9 +20,11 @@ Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Export-Package: eu.udig.omsbox,
  eu.udig.omsbox.core,
+ eu.udig.omsbox.processingregion,
  eu.udig.omsbox.ui,
  eu.udig.omsbox.utils,
  eu.udig.omsbox.view,
  eu.udig.omsbox.view.actions,
- eu.udig.omsbox.view.widgets
+ eu.udig.omsbox.view.widgets,
+ i18n.omsbox
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

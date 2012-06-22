@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-<<<<<<< HEAD
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-=======
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
->>>>>>> 5dc9a8a8f685247d5c11a84d071e82f5b937d29e
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src/"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

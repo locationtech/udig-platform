@@ -9,6 +9,6 @@
   </parent>
   <groupId>net.refractions</groupId>
   <artifactId>net.refractions.udig_tutorials-feature</artifactId>
-  <version>1.3.0.qualifier</version>
+  <version>1.3.2.qualifier</version>
   <packaging>eclipse-feature</packaging>
 </project>

@@ -138,6 +138,8 @@ public abstract class IExpressionViewer extends Viewer {
         String after = newExpression != null ? ECQL.toCQL(newExpression) : "(empty)";
         if (!Utilities.equals(before, after)){
             this.expression = newExpression;
+            feedback(); // clear any outstanding feedback as our value matches our display now
+            
             StructuredSelection selection = newExpression != null ? new StructuredSelection( newExpression) : StructuredSelection.EMPTY;
             fireSelectionChanged( new SelectionChangedEvent( this, selection ) );
         }
