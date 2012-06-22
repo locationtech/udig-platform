@@ -40,6 +40,14 @@
             id="eu.udig.tools.merge.internal.view.MergeView"
             name="Merge Features">
       </view>
+      <view
+            allowMultiple="false"
+            category="net.refractions.udig.project.ui.project"
+            class="eu.udig.tools.merge.TestView"
+            icon="icons/etool16/merge_feature_mode.gif"
+            id="eu.udig.tools.merge.TestView"
+            name="Test View">
+      </view>
    </extension>
    <extension
          point="org.eclipse.help.toc">
