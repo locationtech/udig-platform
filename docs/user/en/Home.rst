@@ -33,8 +33,8 @@ everyone to play. So if you see a problem with our online help please comment or
 **Related reference**
 
 
-* :doc:`Live User Guide Wiki`
+* :doc:`Live User Guide Wiki <Home>`
 
-* :doc:`The Eclipse help system`
+* `The Eclipse help system <http://help.eclipse.org/>`_
 
 

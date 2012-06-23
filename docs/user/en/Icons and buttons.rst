@@ -4,17 +4,17 @@ Icons and buttons
 The application has a consistent set of icons and buttons used to refer to information and
 functionality.
 
-* :doc:`Catalog view`
+* `Catalog view`_
 
-* :doc:`Projects view`
+* `Projects view`_
 
-* :doc:`Layers view`
+* `Layers view`_
 
-* :doc:`Toolbar`
+* `Toolbar`_
 
-* :doc:`Map Palette`
+* `Map Palette`_
 
-* :doc:`Page Palette`
+* `Page Palette`_
 
 
 This page offers a quick visual reference and may be used as a starting point to look up more

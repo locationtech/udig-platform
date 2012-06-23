@@ -16,7 +16,6 @@ Adding a Layer from a previously connected WMS:
 
 * The new layer will appear in the :guilabel:`Layers` view and automatically start to render.
    
-
   .. image:: images/wms_railways.png
     :width: 14.861cm
     :height: 11.15cm
