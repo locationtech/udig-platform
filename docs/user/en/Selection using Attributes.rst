@@ -39,6 +39,6 @@ with **$** (end of line)
 
 * :doc:`Selection using CQL`
 
-* :doc:`Regular Expression`
+* `Regular Expression <http://en.wikipedia.org/wiki/Regular_expression>`_
 
 

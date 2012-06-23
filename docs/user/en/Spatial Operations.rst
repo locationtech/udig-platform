@@ -30,10 +30,12 @@ Once you told uDig to open the *Spatial Operations* View, it'll be shown as in *
    :align: center
    :alt: 
 
-Remember Views in **uDig**, as in most RCP based applications are very flexible. So if the standard
-layout does not seem appropriate for you, try changing its position by dragging the tab title,
-setting it as a *Fast View* so its only shown when needed, or set is as a *Detached* view so it
-behaves like a dialog.
+.. tip::
+   Remember Views in **uDig**, as in most RCP based applications are very flexible. So if the standard
+   layout does not seem appropriate for you, try changing its position by dragging the tab title,
+   setting it as a *Fast View* so its only shown when needed, or set is as a *Detached* view so it
+   behaves like a dialog.
+
 
 Spatial Operations
 ------------------
@@ -56,9 +58,6 @@ Check the links bellow for specific user documentation for each of the available
 -  :doc:`Spatial Join Operation` — Creates a new layer containing the
    features from the second layer that match the indicated spatial relation.
 -  :doc:`Split Operation` — Split a polygon layer using a LineString layer
-
-:doc:`Edit`
-
 
 .. |image0| image:: /images/spatial_operations/sp_1.png
 .. |image1| image:: /images/spatial_operations/sp_2.png

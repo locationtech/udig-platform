@@ -6,9 +6,9 @@ The Project Explorer is used to display opened projects, and their contents.
 
 Projects contain:
 
-* :doc:`Maps`
+* :doc:`Map`
 
-* :doc:`Pages`
+* :doc:`Page`
 
 
 You can create a default map as outlined in Getting Started Documentation, or create a Map from a

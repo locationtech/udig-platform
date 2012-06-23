@@ -23,7 +23,7 @@ Welcome to :doc:`uDig User Guide`.
  :doc:`Community`
 
 
-For a quick list of all the pages visit the `Contents <Contents.html>`_
+For a quick list of all the pages visit the :doc:`Contents`
 
 **Online Help**
 

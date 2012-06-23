@@ -8,53 +8,45 @@ relation., following this standard:
  |image0|
  The different Spatial Join Geom operations are:
 
--  Contains
-   ^^^^^^^^
+-  **Contains**
 
  Features in the *Second Layer* lie in the interior of features of the *First Layer* (the inverse of
 Within). *Example:*
  |image1|
 
--  Crosses
-   ^^^^^^^
+-  **Crosses**
 
  The Features share some but not all interior points, and the dimension of the intersection is less
 than that of at least one of the Features. *Example:*
  |image2|
 
--  Disjoint
-   ^^^^^^^^
+-  **Disjoint**
 
  The Features have no point in common. *Example:*
  |image3|
 
--  Equals
-   ^^^^^^
+-  **Equals**
 
  The Features are topologically equal and are overlapped making them match exactly. *Example:*
  |image4|
 
--  Intersects
-   ^^^^^^^^^^
+-  **Intersects**
 
  The Features have at least one point in common (the inverse of Disjoint). *Example:*
  |image5|
 
--  Overlaps
-   ^^^^^^^^
+-  **Overlaps**
 
  The Features share some but not all points in common, and the intersection has the same dimension
 as the Features themselves. *Example:*
  |image6|
 
--  Touches
-   ^^^^^^^
+-  **Touches**
 
  The Features have at least one boundary point in common, but no interior points. *Example:*
  |image7|
 
--  Within
-   ^^^^^^
+-  **Within**
 
  Features in the *First Layer* lie in the interior of the Features in the *Second Layer*. *Example:*
  |image8|

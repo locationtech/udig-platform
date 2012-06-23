@@ -42,16 +42,14 @@ Example Tracing Information
 When connecting to the JPL server and choosing the blue marble layer the following trace was
 produced:
 
-!ENTRY net.refractions.udig.catalog.internal.wms 4 0 2008-09-05 08:26:15.561
- !MESSAGE GetCapabilities:
-:doc:`http://wms.jpl.nasa.gov/wms.cgi?REQUEST=GetCapabilities&VERSION=1.1.1&SERVICE=WMS`
+::
 
+   !ENTRY net.refractions.udig.catalog.internal.wms 4 0 2008-09-05 08:26:15.561
+    !MESSAGE GetCapabilities: `http://wms.jpl.nasa.gov/wms.cgi?REQUEST=GetCapabilities&VERSION=1.1.1&SERVICE=WMS`_
 
-!ENTRY net.refractions.udig.catalog.internal.wms 4 0 2008-09-05 08:26:24.781
- !MESSAGE GetMap: `http://wms.jpl.nasa.gov/wms.cgi?
-SERVICE=WMS&LAYERS=BMNG&EXCEPTIONS=application/vnd.ogc.se\_xml&
-FORMAT=image/png&HEIGHT=357&TRANSPARENT=TRUE&REQUEST=GetMap&BBOX=-180.0,-90.0,180.0,90.0&WIDTH=714&STYLES=default&
-SRS=EPSG:4326&VERSION=1.1.1 <http://wms.jpl.nasa.gov/wms.cgi?SERVICE=WMS&LAYERS=BMNG&EXCEPTIONS=application/vnd.ogc.se_xml&FORMAT=image/png&HEIGHT=357&TRANSPARENT=TRUE&REQUEST=GetMap&BBOX=-180.0,-90.0,180.0,90.0&WIDTH=714&STYLES=default&SRS=EPSG:4326&VERSION=1.1.1>`_
+   !ENTRY net.refractions.udig.catalog.internal.wms 4 0 2008-09-05 08:26:24.781
+    !MESSAGE GetMap: `http://wms.jpl.nasa.gov/wms.cgi?SERVICE=WMS&LAYERS=BMNG&EXCEPTIONS=application/vnd.ogc.se\_xml&FORMAT=image/png&HEIGHT=357&TRANSPARENT=TRUE&REQUEST=GetMap&BBOX=-180.0,-90.0,180.0,90.0&WIDTH=714&STYLES=default&SRS=EPSG:4326&VERSION=1.1.1 <http://wms.jpl.nasa.gov/wms.cgi?SERVICE=WMS&LAYERS=BMNG&EXCEPTIONS=application/vnd.ogc.se_xml&FORMAT=image/png&HEIGHT=357&TRANSPARENT=TRUE&REQUEST=GetMap&BBOX=-180.0,-90.0,180.0,90.0&WIDTH=714&STYLES=default&SRS=EPSG:4326&VERSION=1.1.1>`_ 
+
 
 The URLs mentioned during tracing can be cut and pasted into a browser to verify an error message,
 or see the same image that uDig displayed.

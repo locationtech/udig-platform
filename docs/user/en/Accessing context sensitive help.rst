@@ -43,5 +43,8 @@ Check box
 
 Click the check box (which changes its state) or use the Tab key to bring it into focus.
 
-**Note**: Context-sensitive help via F1 is unavailable from toolbar buttons. Instead, let your mouse
-pointer hover over a toolbar button to view tooltip help for buttons.
+.. note::
+   Context-sensitive help via F1 is unavailable from toolbar buttons. Instead, let your mouse
+   pointer hover over a toolbar button to view tooltip help for buttons.
+
+

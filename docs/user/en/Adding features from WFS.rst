@@ -58,8 +58,7 @@ Select Web Feature Server Cannot resolve external resource into attachment. from
 press **Next**
 
 -  Enter your WFS get capabilitites URL or select recent WFS and press **Next**
-    WFS Servers URLs can be found
-   :doc:`here`
+    WFS Servers URLs can be found `here <http://udig.refractions.net:8080/confluence/display/UDIG/Test+Servers>`_
 
 -  Specify your authentification parameters if you havre any
 

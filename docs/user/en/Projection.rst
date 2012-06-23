@@ -11,7 +11,5 @@ A projection defines mathematically how we represent a round earth onto a flat m
 
 **Related reference**
 
-
-* :doc:`Map Projections`
-
+* `Map Projections <http://en.wikipedia.org/wiki/Map_projection>`_
 

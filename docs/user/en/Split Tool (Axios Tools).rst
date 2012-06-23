@@ -74,19 +74,17 @@ Adding vertex to neighbor features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Split tool will add vertex to neighbor features on the next case:
- -The feature with the added vertex won't be split.
- -The feature with the new vertex must be touching a feature that has been split.
+ - The feature with the added vertex won't be split.
+ - The feature with the new vertex must be touching a feature that has been split.
 
 On the next example we are going to split the feature that lies inside.
 
-:doc:`|image7|`
-
+|image7|
  **Figure 7 before adding a vertex**
 
 The inside feature is modified and 2 vertexes are added to the outside feature.
 
-:doc:`|image8|`
-
+|image8|
  **Figure 8, 2 vertexes were added**
 
 .. |image0| image:: /images/split_tool_(axios_tools)/split_feature_mode.gif
@@ -96,5 +94,8 @@ The inside feature is modified and 2 vertexes are added to the outside feature.
 .. |image4| image:: /images/split_tool_(axios_tools)/split_4.png
 .. |image5| image:: /images/split_tool_(axios_tools)/split_5.png
 .. |image6| image:: /images/split_tool_(axios_tools)/split_6.png
-.. |image7| image:: download/thumbnails/2719819/split-doing.png
-.. |image8| image:: download/thumbnails/2719819/split-after1.png
+.. |image7| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split-doing.png
+  :width: 60%
+
+.. |image8| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split-after1.png
+  :width: 60%

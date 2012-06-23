@@ -53,10 +53,9 @@ on the dataset and information being communicated a number of techniques may be 
 
 **Related concepts**
 
-
 :doc:`Legend`
 
- :doc:`Cartography - Map Type (wikipedia)`
+`Cartography - Map Type (wikipedia) <http://en.wikipedia.org/wiki/Cartography#Map_types>`_
 
- :doc:`Thematic map (wikipedia)`
+`Thematic map (wikipedia) <http://en.wikipedia.org/wiki/Thematic_map>`_
 

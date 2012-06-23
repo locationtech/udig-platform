@@ -19,5 +19,5 @@ issue tracker used by the development team.
 
 **Related reference**
 
-* :doc:`Issue Tracker`
+* `Issue Tracker <http://jira.codehaus.org/browse/UDIG>`_
 

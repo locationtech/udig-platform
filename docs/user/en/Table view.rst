@@ -69,7 +69,7 @@ features, or the first feature, matching the query.
 **Related reference**
 
 
-* :doc:`Regular Expression`
+* `Regular Expression <http://en.wikipedia.org/wiki/Regular_expression>`_
 
 
 .. |image0| image:: /images/table_view/SelectionTool.png

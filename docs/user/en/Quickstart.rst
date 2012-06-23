@@ -55,7 +55,7 @@ Welcome View
 
     |image1|
 
-You can return to the Welcome view at any time by selecting the **Help > Welcome** from the menu
+You can return to the Welcome view at any time by selecting the :menuselection:`Help --> Welcome` from the menu
 bar.
 
 Workbench
@@ -76,7 +76,7 @@ Files
 
 To start out with we are going to load some of the sample data you downloaded earlier.
 
-#. Choose **Layer > Add** from the menu bar to open up the :doc:`Add Data wizard`
+#. Choose :menuselection:`Layer --> Add` from the menu bar to open up the :doc:`Add Data wizard`
 #. Select :doc:`Files` from the list of data sources
 #. Press **Next** to open up a file dialog
 #. Select the following files from your data folder: **countries.shp**
@@ -125,7 +125,7 @@ tool bar along the top of the screen.
 
    -  |image5| Show All, can be used to return to the full extents at any time
    -  |image6| Zoom In and |image7| Zoom Out can be used to change the scale by a fixed amount.
-   -  You can use **Navigation > Back** and **Navigation > Forward** in the menu bar to cycle though
+   -  You can use :menuselection:`Navigation --> Back` and :menuselection:`Navigation --> Forward` in the menu bar to cycle though
       previously visited locations.
 
 
@@ -139,7 +139,7 @@ One of the reasons to use an application like uDig is to access all the great fr
 information available on the web. This section covers the use of **Web Map Servers** which make
 available layers of information that you can mix into your own maps.
 
-#. Select **File > New > New Map** from the menu bar
+#. Select :menuselection:`File --> New --> New Map` from the menu bar
 #. Change to the **Web view**, click on the tab next to the **Catalog view** to reveal the Web view.
 #. Click on the link **WMS:dm solutions** link
     |image8|
@@ -176,7 +176,7 @@ Style
 #. Press **Apply** to see what this looks like on your Map, the Layer view will also be updated to
    reflect the current style
 #. When you are happy with the result you can press **Close** to dismiss the dialog
-#. Some files include style settings, Select **Layer > Add ...** from the menu bar
+#. Some files include style settings, Select :menuselection:`Layer --> Add ...` from the menu bar
 #. Select **Files** from the list of data sources and press **Next**
 #. Using the From the file chooser open up **timezone.shp** and press **Open**
 #. It is a bit hard to see what is going on with the **clouds.jpg** layer providing so much details.

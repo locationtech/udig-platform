@@ -9,7 +9,7 @@ is used to discover information available on public catalog such as the Geo Conn
 portal.
 
 #. Open the **Search** view
-   (if it is not already on screen you can find it in **Window > Views > Search**)
+   (if it is not already on screen you can find it in :menuselection:Window --> Views --> Search`)
 #. Enter a search phrase, in this example we will use **birds**
     |image0|
 #. Select any layer, you can using the right click context menu or drag and drop to add this
@@ -18,8 +18,7 @@ portal.
 
 **Related reference**
 
-
-:doc:`http://geodiscover.cgdi.ca/`
+`http://geodiscover.cgdi.ca/`_
 
 
 .. |image0| image:: /images/using_the_search_view/search.gif

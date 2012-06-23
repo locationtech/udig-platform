@@ -23,7 +23,7 @@ Using **Layer** menu:
 
 Using **File** menu:
 
-1. Select the **File > New > Layer** from the file menu
+1. Select the :menuselection:`File --> New --> Layer` from the file menu
  2. Use the **Add Layer** wizard to select a service providing data
  3. Select the resource you wish to display
  4. A style will be automatically created for you and the layer added to your map

@@ -8,9 +8,9 @@ To submit a new issue:
 
 #. Login to the issue tracker by either:
 
-   -  `Using the Login
+   * `Using the Login
       Screen <http://jira.codehaus.org/secure/Dashboard.jspa?os_destination=%2Fsecure%2FDashboard.jspa>`_
-   * :doc:`Creating a new account`
+   * `Creating a new account <http://jira.codehaus.org/secure/Signup!default.jspa>`_
 
 
 #. Create a new issue:
@@ -25,6 +25,6 @@ Thank you!
 **Related reference**
 
 
-* :doc:`Issue Tracker`
+* `Issue Tracker <http://jira.codehaus.org/browse/UDIG>`_
 
 
