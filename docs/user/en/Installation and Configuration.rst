@@ -8,7 +8,10 @@ configuration.
 The uDig application itself consists of a "workbench window". You can configure the arrangement of
 this display by rearranging the views and editors displayed.
 
-**Related tasks**
+.. toctree::
+   :maxdepth: 1
 
-
+   Running uDig
+   Support
+   Working with the Update Manager
 

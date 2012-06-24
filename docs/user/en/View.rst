@@ -15,20 +15,14 @@ the Workbench window.
 
 **Related concepts**
 
-.. toctree::
-   :maxdepth: 1
-
-   Fast views
-   Using an Editor
+   :doc:`Fast views`
+   :doc:`Using an Editor`
 
 
 **Related tasks**
 
-.. toctree::
-   :maxdepth: 1
-
-   Rearranging tabbed views
-   Rearranging views and editors
-   Creating fast views
-   Working with fast views
-   Maximizing
+   :doc:`Rearranging tabbed views`
+   :doc:`Rearranging views and editors`
+   :doc:`Creating fast views`
+   :doc:`Working with fast views`
+   :doc:`Maximizing`

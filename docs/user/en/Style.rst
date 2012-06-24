@@ -10,9 +10,11 @@ and appearance of grid or scale bar.
 
 Contents:
 
-* :doc:`Style Layer Descriptor`
+. toctree::
+   :maxdepth: 1
 
-* :doc:`Symbology`
+   Style Layer Descriptor
+   Symbology
 
 
 **Related concepts**

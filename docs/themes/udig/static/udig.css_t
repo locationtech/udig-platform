@@ -222,11 +222,20 @@ table.index a:link, table.index a:visited {
     text-decoration: none;
     color: {{ theme_linkcolor }};
 }
+
 table.index a:hover, table.index a:active {
     text-decoration: underline;
     color: {{ theme_hoverlinkcolor }};
 }
 
+table.docutils td, table.docutils th {
+    border: 1px solid #AAA;
+}
+
+caption {
+    display: table-caption;
+    font-weight: bold;
+}
 
 /* Haiku User Guide styles and layout */
 

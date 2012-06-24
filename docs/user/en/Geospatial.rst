@@ -9,19 +9,16 @@ cited reference material if you are interested in learning more.
 
 Contents:
 
-* :doc:`Constraint Query Language`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`Coordinate Reference System`
-
-* :doc:`Feature`
-
-* :doc:`Feature Collection`
-
-* :doc:`Feature Type`
-
-* :doc:`Georeference`
-
-* :doc:`Projection`
+   Constraint Query Language
+   Coordinate Reference System
+   Feature
+   Feature Collection
+   Feature Type
+   Georeference
+   Projection
 
 
 **Related reference**
@@ -29,5 +26,5 @@ Contents:
 
 :doc:`Geospatial`
 
- :doc:`Geospatial Analysis`
+:doc:`Geospatial Analysis`
 

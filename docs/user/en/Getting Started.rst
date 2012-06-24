@@ -24,9 +24,4 @@ Tips for using Online Help
 
 **Related tasks**
 
-.. toctree::
-   :hidden:
-
-   Running uDig
-   
 :doc:`Running uDig <Running uDig>` (help for running on windows, linux and macosx)

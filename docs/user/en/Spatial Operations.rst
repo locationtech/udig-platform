@@ -6,29 +6,36 @@ Introduction
 
 This is the root page of the user documentation for the **uDig** *Spatial Operations* extensions.
 `Axios <http://www.axios.es>`_ is providing under the 
-`Spatial Operations and Editing Tools <http://udig.refractions.net/confluence/display/COM/Spatial+Operations+and+Editing+Tools>`_
-project promoted by the **Diputación Foral de Gipuzkoa**, `**Departamento de Movilidad y Ordenación del Territorio** <http://b5m.gipuzkoa.net/web5000/>`_.
+`Spatial Operations and Editing Tools <http://udig.refractions.net/confluence/display/COM/Spatial+Operations+and+Editing+Tools>`_ project promoted by the **Diputación Foral de Gipuzkoa**, `Departamento de Movilidad y Ordenación del Territorio <http://b5m.gipuzkoa.net/web5000/>`_.
 
 These extensions comprise a set of Spatial Operations, where each of them work over the features of
 one or more input layers and generally populate a new one with the features resulting of applying
 the specific Spatial Operation.
 
-+---------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
-| To enable the *Spatial Operations* view, go to :menuselection:`Window --> Show View --> Other` as shown in *Figure 1*.   | The *Show View* dialog will pop up, then select the *Spatial Operations* item from the tree view as shown in *Figure 2* and press *OK*   |
-+---------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
-| |image2|                                                                                          | |image3|                                                                                                                                 |
-+---------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
-| **Figure 1 Open others views**                                                                    | **Figure 2 Open the Spatial Operations View**                                                                                            |
-+---------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
+.. list-table:: 
+    :header-rows: 0 
+    :class: center 
 
-Once you told uDig to open the *Spatial Operations* View, it'll be shown as in *Figure 3*.
- |image4|
+    * - To enable the *Spatial Operations* view,
+        go to :menuselection:`Window --> Show View --> Other`
+        as shown in *Figure 1*. 
+      - The *Show View* dialog will pop up, then
+        select the *Spatial Operations* item from the tree view
+        as shown in *Figure 2* and press *OK*
 
- **Figure 3 Spatial Operations View**
+    * -  .. image:: images/spatial_operations/sp_1.png
+      -  .. image:: images/spatial_operations/sp_2.png
 
-.. figure:: images/icons/emoticons/information.gif
-   :align: center
-   :alt: 
+    * - **Figure 1 Open others views**
+      - **Figure 2 Open the Spatial Operations View**
+
+Once you told uDig to open the :guilabel:`Spatial Operations` View, it'll be shown as in *Figure 3*.
+
+  .. figure:: /images/spatial_operations/SOoverview.png
+     :width: 60%
+
+     **Figure 3 Spatial Operations View**
+
 
 .. tip::
    Remember Views in **uDig**, as in most RCP based applications are very flexible. So if the standard
@@ -41,6 +48,20 @@ Spatial Operations
 ------------------
 
 Check the links bellow for specific user documentation for each of the available extensions.
+
+.. toctree::
+   :hidden:
+
+   Buffer Operation
+   Clip Operation
+   Dissolve Operation
+   Fill Operation
+   Hole Cut Operation
+   Intersect Operation
+   Polygon to Line Operation
+   Spatial Join Operation
+   Split Operation
+
 
 -  :doc:`Buffer Operation` — Computes a buffer area around the selected
    geometries.
@@ -59,8 +80,3 @@ Check the links bellow for specific user documentation for each of the available
    features from the second layer that match the indicated spatial relation.
 -  :doc:`Split Operation` — Split a polygon layer using a LineString layer
 
-.. |image0| image:: /images/spatial_operations/sp_1.png
-.. |image1| image:: /images/spatial_operations/sp_2.png
-.. |image2| image:: /images/spatial_operations/sp_1.png
-.. |image3| image:: /images/spatial_operations/sp_2.png
-.. |image4| image:: download/thumbnails/2719875/SOoverview.png

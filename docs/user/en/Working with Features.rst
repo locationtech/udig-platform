@@ -5,21 +5,17 @@ You can directly work with individual features using the **Feature Edit** tools.
 the attribute values in the :doc:`Table view` or if available for your dataset a
 Form.
 
-* :doc:`Adding a column to a shapefile`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`Changing the projection of a shapefile`
-
-* :doc:`Processing the Geometry in a Shapefile`
-
-* :doc:`Using Advanced Edit Mode`
-
-* :doc:`Using Feature Edit Tools`
-
-* :doc:`Using Feature operations`
-
-* :doc:`Using Geometry Creation Tools`
-
-* :doc:`Using Vertex Tools`
+   Adding a column to a shapefile
+   Changing the projection of a shapefile
+   Processing the Geometry in a Shapefile
+   Using Advanced Edit Mode
+   Using Feature Edit Tools
+   Using Feature operations
+   Using Geometry Creation Tools
+   Using Vertex Tools
 
 
 To work with a selection of features or an entire dataset please see the related tasks section
@@ -36,9 +32,9 @@ below.
 
 :doc:`Working with Selection`
 
- :doc:`Using the Catalog`
+:doc:`Using the Catalog`
 
- :doc:`Working with Layers`
+:doc:`Working with Layers`
 
 
 **Related reference**

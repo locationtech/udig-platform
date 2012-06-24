@@ -20,25 +20,20 @@ Getting started:
 
 Contents:
 
-* :doc:`Adding features from a Shapefile`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`Adding features from ArcSDE`
 
-* :doc:`Adding Features from DB2`
-
-* :doc:`Adding features from Oracle`
-
-* :doc:`Adding features from PostGIS`
-
-* :doc:`Adding features from WFS`
-
-* :doc:`Adding layers from WMS`
-
-* :doc:`Enabling a Tileset from a WMS Server`
-
-* :doc:`Handling Shapefiles with different Character Sets`
-
-* :doc:`Importing data`
+   Adding features from a Shapefile
+   Adding features from ArcSDE
+   Adding Features from DB2
+   Adding features from Oracle
+   Adding features from PostGIS
+   Adding features from WFS
+   Adding layers from WMS
+   Enabling a Tileset from a WMS Server
+   Handling Shapefiles with different Character Sets
+   Importing data
 
 
 **Related tasks**

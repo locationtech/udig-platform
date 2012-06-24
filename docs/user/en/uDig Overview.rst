@@ -21,12 +21,6 @@ applications that make use of uDig technology.
 Workbench
 ---------
 
-.. toctree::
-   :hidden:
-   
-   Map Perspective
-   Style Perspective
-
 The term workbench refers to the desktop window that is displayed. The workbench contains editors
 and views allowing you to interact with spatial information.
 
@@ -40,11 +34,8 @@ Out of the box uDig includes:
 
 **Related concepts**
 
-.. toctree:: Related concepts
-   :maxdepth: 1
-   
-   Perspective
-   View
-   Editor
+   :doc:`Perspective`
+   :doc:`View`
+   :doc:`Editor`
 
 	 

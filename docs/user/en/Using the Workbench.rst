@@ -9,29 +9,21 @@ selection which are used collaboratively).
 
 Contents:
 
-* :doc:`Closing an editor`
+.. toctree::
+   :maxtdepth: 1
 
-* :doc:`Exiting the workbench`
-
-* :doc:`Rearranging the main toolbar`
-
-* :doc:`Rearranging views and editors`
-
-* :doc:`Using the Catalog view`
-
-* :doc:`Using the help system`
-
-* :doc:`Using the Layers view`
-
-* :doc:`Using the Legend View`
-
-* :doc:`Using the Search view`
-
-* :doc:`Using the Table View`
-
-* :doc:`Working with cheat sheets`
-
-* :doc:`Working with fast views`
+   Closing an editor
+   Exiting the workbench
+   Rearranging the main toolbar
+   Rearranging views and editors
+   Using the Catalog view
+   Using the help system
+   Using the Layers view
+   Using the Legend View
+   Using the Search view
+   Using the Table View
+   Working with cheat sheets
+   Working with fast views
 
 
 **Related concepts**

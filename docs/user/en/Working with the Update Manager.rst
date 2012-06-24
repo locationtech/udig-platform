@@ -2,7 +2,7 @@ Working with the Update Manager
 ===============================
 
 The update manager allows users to search for and download new plugins to install and to search for
-and download updates to the current plugins. The update manager can be started by clicking on :menuselection:`Help --> Find and Install`.
+and download updates to the current plugins. The update manager can be started by clicking on :menuselection:`Help --> Find and Install...`.
  |image0|
 
 **Related tasks**

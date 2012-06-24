@@ -6,13 +6,13 @@ can be persisted to the file system.
 
 Contents:
 
-* :doc:`GeoTIFF`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`GML`
-
-* :doc:`Shapefile`
-
-* :doc:`World Plus Image`
+   GeoTIFF
+   GML
+   Shapefile
+   World Plus Image
 
 
 Handling of Files in uDig

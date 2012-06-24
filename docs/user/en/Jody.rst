@@ -10,7 +10,10 @@ Features Added to the Application
 
 Visual\_feature Feature 1.0.0:
 
-* :doc:`North Arrow`
+.. toctree::
+   :maxdepth: 1
+
+   North Arrow
 
 
 Installation
@@ -21,8 +24,7 @@ Installation
 #. Click on the **New Remote Site** button and provide the following:
 
    -  Name: uDig Community Updates
-   -  URL:
-      :doc:`http://udig.refractions.net/update-community`
+   -  URL: `http://udig.refractions.net/update-community`_
 
 
 #. Place a check mark for **Community Updates** and press **Finish**
