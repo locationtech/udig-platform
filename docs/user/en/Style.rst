@@ -10,7 +10,7 @@ and appearance of grid or scale bar.
 
 Contents:
 
-. toctree::
+.. toctree::
    :maxdepth: 1
 
    Style Layer Descriptor

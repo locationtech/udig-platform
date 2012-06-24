@@ -5,7 +5,7 @@ A Service is a provider of spatial data or spatial services. For example Web Map
 Feature Servers are both services. A service provides resources. From a service a list of children
 (resources) can be obtained.
 
-. toctree::
+.. toctree::
    :maxdepth: 1
 
    Data Store

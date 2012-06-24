@@ -22,18 +22,15 @@ The current options avilable to define a AOI are:
 
 **Related concepts**
 
-
 :doc:`Area of Interest`
 
 
 **Related tasks**
 
-
 :doc:`Working with AOI`
 
 
 **Related reference**
-
 
 :doc:`Selection Tools`
 

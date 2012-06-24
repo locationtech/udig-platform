@@ -15,14 +15,14 @@ the Workbench window.
 
 **Related concepts**
 
-   :doc:`Fast views`
-   :doc:`Using an Editor`
+:doc:`Fast views`
+:doc:`Using an Editor`
 
 
 **Related tasks**
 
-   :doc:`Rearranging tabbed views`
-   :doc:`Rearranging views and editors`
-   :doc:`Creating fast views`
-   :doc:`Working with fast views`
-   :doc:`Maximizing`
+:doc:`Rearranging tabbed views`
+:doc:`Rearranging views and editors`
+:doc:`Creating fast views`
+:doc:`Working with fast views`
+:doc:`Maximizing`
