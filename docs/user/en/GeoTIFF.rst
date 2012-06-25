@@ -9,6 +9,5 @@ Please note that a TIFF file may also be used without spatial metadata entries; 
 
 **Related reference**
 
-
-:doc:`GeoTIFF Revision 1.0`
+`GeoTIFF Revision 1.0 <http://www.remotesensing.org/geotiff/spec/geotiffhome.html>`_
 

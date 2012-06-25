@@ -36,18 +36,17 @@ For Layers that produce complex symbology further detail to explain the symbols 
 
 -  Symbol Definition: When using distinct icons (or glyphs) to represent data points each shape will
    need to be listed along with a definition of what the symbol means.
-    This can be relaxed when using a standard or well under known symbology set such as provided by
+   This can be relaxed when using a standard or well under known symbology set such as provided by
    MIL2525b or Emergency Response symbols for which the operator has been trainined.
 
 **Related concepts**
 
-
-.. :doc:`Cartography - Legend (Wikipedia)`
+`Cartography - Legend (Wikipedia) <http://en.wikipedia.org/wiki/Cartography#Map_types>`_
 
 `NATO Military Symbols For Land Based Systems <http://en.wikipedia.org/wiki/NATO_Military_Symbols_for_Land_Based_Systems>`_
 
-**Related reference**
 
+**Related reference**
 
 :doc:`Legend View`
 

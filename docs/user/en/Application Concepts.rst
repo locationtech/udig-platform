@@ -5,7 +5,7 @@ The following application concepts are used consistently throughout the uDig app
 
 Contents:
 
-..toctree::
+.. toctree::
    :maxdepth: 1
 
    Area of Interest

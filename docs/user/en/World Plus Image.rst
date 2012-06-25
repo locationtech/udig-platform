@@ -15,28 +15,17 @@ An image file is recognized as being in the "World plus Image" format if it is p
 consisting of the following:
 
  
-
-Example
-
-Description
-
-Image File
-
-filename.jpeg
-
-Contains the raster data
-
-World File
-
-filename.jgw
-
-contains the "world file" information letting us know where to draw the raster on the map
-
-PRJ File
-
-filename.prj
-
-Optional file that defines the coordinates used in the "world file" above
++-------------------+-------------------+--------------------------------------------------+
+|                   | **Example**       | **Description**                                  |
++-------------------+-------------------+--------------------------------------------------+
+| Image File        | filename.jpeg     | Contains the raster data                         |
++-------------------+-------------------+--------------------------------------------------+
+| World File        | filename.jgw      | contains the "world file" information letting us |
+|                   |                   | know where to draw the raster on the map         |
++-------------------+-------------------+--------------------------------------------------+
+| PRJ File          | filename.prj      | Optional file that defines the coordinates used  |
+|                   |                   | in the "world file" above                        |
++-------------------+-------------------+--------------------------------------------------+
 
 World and Projection Files for an Image
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -44,61 +33,34 @@ World and Projection Files for an Image
 The extension of a world file is the first and last letters of the image extension with w appended
 at the end.
 
-Format
-
-Files
-
-JEPG
-
-jpeg, jgw with optional prj
-
-TIFF
-
-tiff, tfw with optional prj
++-------------------+-----------------------------+
+| **Format**        | **Files**                   |
++-------------------+-----------------------------+
+| JEPG              | jpeg, jgw with optional prj |
++-------------------+-----------------------------+
+| TIFF              | tiff, tfw with optional prj |
++-------------------+-----------------------------+
 
 The contents of a world file are as follows:
 
-Line
-
-Example
-
-Definition
-
-1
-
-0.0359281435
-
-Horizontal scale for a pixel
-
-2
-
-0.0000000000
-
-Rotation for row, usually zero
-
-3
-
-0.0000000000
-
-Rotation for column, usually zero
-
-4
-
--0.0359281437
-
-Vertical scale for pixel, usually negative as rasters count down from the upper left corner
-
-5
-
--179.9820349282
-
-Translation, usually "easting" location of the upper left pixel (ie column 0)
-
-6
-
-89.9820359281
-
-Translation, usually "northing" location of the upper left pixel (ie row 0)
++-------------------+-------------------+--------------------------------------------------+
+| **Line**          | **Example**       | **Definition**                                   |
++-------------------+-------------------+--------------------------------------------------+
+| 1                 | 0.0359281435      | Horizontal scale for a pixel                     |
++-------------------+-------------------+--------------------------------------------------+
+| 2                 | 0.0000000000      | Rotation for row, usually zero                   |
++-------------------+-------------------+--------------------------------------------------+
+| 3                 | 0.0000000000      | Rotation for column, usually zero                |
++-------------------+-------------------+--------------------------------------------------+
+| 4                 | -0.0359281437     | Vertical scale for pixel, usually negative as    |
+|                   |                   | rasters count down from the upper left corner    |
++-------------------+-------------------+--------------------------------------------------+
+| 5                 | -179.9820349282   | Translation, usually "easting" location of the   |
+|                   |                   | upper left pixel (ie column 0)                   |
++-------------------+-------------------+--------------------------------------------------+
+| 6                 | 89.9820359281     | Translation, usually "northing" location of the  |
+|                   |                   | upper left pixel (ie row 0)                      |
++-------------------+-------------------+--------------------------------------------------+
 
 The Translation information can be thought of as the location of the upper left pixel, this locaiton
 is provided in the units of the projections being used:
@@ -116,7 +78,6 @@ file.
 An example world.jgw
 
 ::
-
      
     0.0359281435
     0.0000000000
@@ -128,14 +89,12 @@ An example world.jgw
 An example world.prj is:
 
 ::
-
      GEOGCS["GCS_WGS_1984", DATUM["WGS_1984", SPHEROID["WGS_1984",6378137,298.257223563]], PRIMEM["Greenwich",0], UNIT["Degree",0.017453292519943295]]
-     
 
 **Related reference**
 
 * `ESRI World Image format <http://www.kralidis.ca/gis/worldfile.htm>`_
 
-* `http://geos.gsi.gov.il/vladi/FEFLOW/help/general/file\_format.html#tfw\_file`_
+* `http://geos.gsi.gov.il/vladi/FEFLOW/help/general/file_format.html#tfw_file`_
 
 

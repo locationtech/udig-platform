@@ -9,19 +9,23 @@ To enable a tileset on a wms layer:
 #. Add any WMS to uDig
 #. Right click on the WMS resource
 #. Go to the Layer Properties
+
+   .. figure:: images/enable_tileset_from_wms/open_dialog.png
+
 #. Click Tileset Properties - on the left menu
-#. Check the checkbox - "Use a Tileset for this resource
+#. Check the checkbox - :guilabel:`Use a Tileset for this resource`
+
+   .. figure:: images/enable_tileset_from_wms/dialog.png
+
 #. Change any of the default items you wish to use
 
 **Related reference**
-
 
 * :doc:`WMS Preferences`
 
 * :doc:`Tileset page`
 
-* :doc:`open\_dialog.png`
 
-* :doc:`dialog.png`
+
 
 
