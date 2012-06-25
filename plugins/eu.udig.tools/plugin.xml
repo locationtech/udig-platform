@@ -38,15 +38,8 @@
             class="eu.udig.tools.merge.internal.view.MergeView"
             icon="icons/etool16/merge_feature_mode.gif"
             id="eu.udig.tools.merge.internal.view.MergeView"
-            name="Merge Features">
-      </view>
-      <view
-            allowMultiple="false"
-            category="net.refractions.udig.project.ui.project"
-            class="eu.udig.tools.merge.TestView"
-            icon="icons/etool16/merge_feature_mode.gif"
-            id="eu.udig.tools.merge.TestView"
-            name="Test View">
+            name="Merge Features"
+            restorable="true">
       </view>
    </extension>
    <extension
@@ -63,6 +56,15 @@
             name="Merge selected"
             targetClass="org.geotools.data.FeatureSource">
       </operation>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="net.refractions.udig.ui.mapPerspective">
+         <viewShortcut
+               id="eu.udig.tools.merge.internal.view.MergeView">
+         </viewShortcut>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

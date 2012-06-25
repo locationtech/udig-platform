@@ -27,7 +27,7 @@ import eu.udig.tools.merge.internal.view.MergeView;
 public class MergeOperation implements IOp {
 
     private MergeContext mergeContext;
-    private MergeView mergeView = null;
+    private MergeView mergeView = new MergeView();
     private List<SimpleFeature> selectedFeatures;
 
     
@@ -45,14 +45,14 @@ public class MergeOperation implements IOp {
 
             public void run() {
                 try {
-                    mergeView = (MergeView) ApplicationGIS.getView(true, MergeTool.ID);
+                    mergeView = (MergeView) ApplicationGIS.getView(true, MergeView.ID);
                     
                     mergeView.addSourceFeatures(selectedFeatures);
     
                     mergeView.display();
                 }
                     catch (Exception ex) {
-                    System.out.print("Error: "+ex.toString());
+                    ex.printStackTrace();
                 }
         }});
         
