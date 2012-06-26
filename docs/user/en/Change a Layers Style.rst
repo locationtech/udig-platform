@@ -98,7 +98,7 @@ Style View
 
 Alternatively, you may use the deprecated "Simple" Style View:
 
-#. Window > Show View > Style
+#. :menuselection:`Window --> Show View --> Style`
 #. Select the desired layer in the Layer View
 #. Edit the attributes of the style.
     |image1|
@@ -106,12 +106,11 @@ Alternatively, you may use the deprecated "Simple" Style View:
 
 **Related concepts**
 
-
 :doc:`Layer`
 
- :doc:`Layers view`
+:doc:`Layers view`
 
- :doc:`Style View`
+:doc:`Style View`
 
 
 .. |image0| image:: /images/change_a_layers_style/change_style_icon.gif

@@ -34,11 +34,10 @@ with **$** (end of line)
 
 **Related reference**
 
+:doc:`Table view`
 
-* :doc:`Table view`
+:doc:`Selection using CQL`
 
-* :doc:`Selection using CQL`
-
-* `Regular Expression <http://en.wikipedia.org/wiki/Regular_expression>`_
+`Regular Expression <http://en.wikipedia.org/wiki/Regular_expression>`_
 
 

@@ -73,7 +73,6 @@ show up.
 
 **Related reference**
 
-* :doc:`DB2 page`
+:doc:`DB2 page`
 
-* :doc:`DB2 Preferences`
-
+:doc:`DB2 Preferences`

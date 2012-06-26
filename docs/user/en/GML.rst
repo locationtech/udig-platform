@@ -31,6 +31,5 @@ document".
 
 **Related reference**
 
-
 `Geography Markup Language <http://www.opengeospatial.org/standards/gml>`_ (we support GML 2.1.2 at
 this time)

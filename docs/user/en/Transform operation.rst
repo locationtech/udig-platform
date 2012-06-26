@@ -38,14 +38,12 @@ to your map allowing you to preview the result directly.
 
 **Related tasks**
 
-
 :doc:`Working with Features`
 
 :doc:`Working with Layers`
 
 
 **Related reference**
-
 
 :doc:`Transform dialog`
 
@@ -54,4 +52,3 @@ to your map allowing you to preview the result directly.
 :doc:`Layers view`
 
 :doc:`Catalog view`
-

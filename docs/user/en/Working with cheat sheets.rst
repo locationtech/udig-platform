@@ -17,9 +17,10 @@ stepping through common tasks.
 
 :doc:`Cheat sheets`
 
+
 **Related tasks**
 
-* :doc:`Working with composite cheat sheets`
+:doc:`Working with composite cheat sheets`
 
 
 Cheat Sheet Selection Dialog

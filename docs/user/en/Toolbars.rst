@@ -43,4 +43,3 @@ There are *three* kinds of toolbars in the Workbench.
 **Related reference**
 
 :doc:`Edit Tools`
-

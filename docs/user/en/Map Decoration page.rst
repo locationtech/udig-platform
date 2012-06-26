@@ -28,7 +28,6 @@ Several options are available:
 
 **Related reference**
 
-
-* :doc:`Style Editor dialog`
+:doc:`Style Editor dialog`
 
 

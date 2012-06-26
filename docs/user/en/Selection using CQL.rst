@@ -22,13 +22,9 @@ Common Query Language Examples
 
 **Related concepts**
 
-
-* :doc:`Constraint Query Language`
+:doc:`Constraint Query Language`
 
 
 **Related reference**
 
-
-* :doc:`Table view`
-
-
+:doc:`Table view`

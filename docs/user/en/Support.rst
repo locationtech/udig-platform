@@ -6,18 +6,18 @@ issue tracker used by the development team.
 
 **Related tasks**
 
-* :doc:`Submit Error Log`
+:doc:`Submit Error Log`
 
-* :doc:`Subscribe to the user list`
+:doc:`Subscribe to the user list`
 
-* :doc:`Tracing WMS Calls`
+:doc:`Tracing WMS Calls`
 
-* :doc:`Using the Issue Tracker`
+:doc:`Using the Issue Tracker`
 
-* :doc:`View Error Log and Configuration Details`
+:doc:`View Error Log and Configuration Details`
 
 
 **Related reference**
 
-* `Issue Tracker <http://jira.codehaus.org/browse/UDIG>`_
+`Issue Tracker <http://jira.codehaus.org/browse/UDIG>`_
 

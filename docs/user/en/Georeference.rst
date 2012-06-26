@@ -11,12 +11,9 @@ automatically.
 
 **Related tasks**
 
-
 :doc:`Georeference an Image`
 
 
 **Related reference**
 
-
 :doc:`Georeferencing Tools`
-

@@ -54,7 +54,6 @@ Opens the Property Dialog for the selected layer.
 
 **Related reference**
 
-
-* :doc:`Layers view`
+:doc:`Layers view`
 
 

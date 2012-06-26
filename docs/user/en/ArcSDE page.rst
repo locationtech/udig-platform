@@ -35,7 +35,4 @@ applicable.
 
 **Related reference**
 
-
-* :doc:`ArcSDE Preference Page`
-
-
+:doc:`ArcSDE Preference Page`

@@ -10,13 +10,11 @@ that can be set for layers.
 
 **Related reference**
 
+:doc:`Project Preferences`
 
-* :doc:`Project Preferences`
+:doc:`Map Preferences`
 
-
-   * :doc:`Map Preferences`
-
-   * :doc:`Printing Preferences`
+:doc:`Printing Preferences`
 
 
 

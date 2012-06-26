@@ -26,8 +26,7 @@ You can copy a selection into a new Layer:
 
 **Related concepts**
 
-
 :doc:`Constraint Query Language`
 
- :doc:`Table view`
+:doc:`Table view`
 

@@ -74,14 +74,11 @@ If you are adding data directly to a map then proceed to the :doc:`Resource Sele
 
 **Related concepts**
 
-
 :doc:`Teradata`
 
 
 **Related reference**
 
-
 :doc:`Add Data wizard`
 
 :doc:`Resource Selection page`
-

@@ -15,23 +15,18 @@ Style
 
 You can change the Font Style of the Legend:
 
-.. figure:: /images/legend_decoration/Legend-Font-Style.jpg
-   :align: center
-   :alt: 
+  .. figure:: /images/legend_decoration/Legend-Font-Style.jpg
 
 You can change the general style of the Legend:
 
- |image0|
+  .. figure:: /images/legend_decoration/Legend-General-Style.jpg
+
   
- You can change the Location style of the Legend:
+You can change the Location style of the Legend:
   
- |image1|
+  .. figure:: /images/legend_decoration/Legend-Location-Style.jpg
   
 
-**Related reference**
+ **Related reference**
 
-
--  Style Editor Dialog
-
-.. |image0| image:: /images/legend_decoration/Legend-General-Style.jpg
-.. |image1| image:: /images/legend_decoration/Legend-Location-Style.jpg
+:doc:`Style Editor dialog`

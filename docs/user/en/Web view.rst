@@ -41,9 +41,8 @@ drag and drop operation.
 
 **Related reference**
 
+:doc:`Drag and Drop`
 
-* :doc:`Drag and Drop`
-
-* `Data Wiki <http://udig.refractions.net/confluence/display/DATA/Home>`_
+`Data Wiki <http://udig.refractions.net/confluence/display/DATA/Home>`_
 
 

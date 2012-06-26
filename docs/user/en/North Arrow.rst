@@ -19,7 +19,6 @@ How to add a North Arrow
 
 **Related reference**
 
-
-* :doc:`Walkthrough 1`
+:doc:`Walkthrough 1`
 
 

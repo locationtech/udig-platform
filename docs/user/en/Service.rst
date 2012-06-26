@@ -19,12 +19,10 @@ Feature Servers are both services. A service provides resources. From a service 
 
 **Related concepts**
 
-
 :doc:`File Formats`
 
 
 **Related reference**
-
 
 :doc:`Catalog view`
 

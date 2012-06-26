@@ -47,16 +47,15 @@ that has the vertex handles and can directly be edited.
 
 **Related reference**
 
+:doc:`EditBlackboard`
 
-* :doc:`EditBlackboard`
+:doc:`Map editor`
 
-* :doc:`Map editor`
+:doc:`Workbench`
 
-* :doc:`Workbench`
+:doc:`Layer`
 
-* :doc:`Layer`
-
-* :doc:`Working with Features`
+:doc:`Working with Features`
 
 
 Boundary Selection

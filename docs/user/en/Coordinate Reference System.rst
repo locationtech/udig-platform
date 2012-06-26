@@ -19,13 +19,11 @@ coordinate reference systems.
 
 **Related concepts**
 
-
 * :doc:`Projection`
 
 
 **Related reference**
 
-
-* :doc:`http://www.epsg.org/`
+* `<http://www.epsg.org/>`_
 
 

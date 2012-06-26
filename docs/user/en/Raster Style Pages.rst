@@ -36,7 +36,6 @@ to indicate areas where no information was recorded.
 
 **Related tasks**
 
-
 :doc:`Set raster transparent color`
 
 
@@ -93,7 +92,6 @@ Validate
 Press this button to check that your XML is valid.
 
 **Related concepts**
-
 
 :doc:`Style Layer Descriptor`
 

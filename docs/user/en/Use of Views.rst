@@ -39,7 +39,6 @@ many features that provide for the creation of a custom work environment.
 
 **Related reference**
 
-
 :doc:`Catalog view`
 
 :doc:`Layers view`

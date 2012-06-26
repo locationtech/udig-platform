@@ -29,8 +29,5 @@ to rearrange views and editors.
 
 **Related reference**
 
-.. toctree::
-   :maxdepth: 1
-
-   Map editor
+:doc:`Map editor`
 

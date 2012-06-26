@@ -45,14 +45,12 @@ configuration options effecting performance.
 
 **Related concepts**
 
-
 :doc:`PostGIS`
 
 
 **Related reference**
 
-
 :doc:`Add Data wizard`
 
- :doc:`Resource Selection page`
+:doc:`Resource Selection page`
 

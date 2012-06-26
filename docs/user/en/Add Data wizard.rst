@@ -44,8 +44,4 @@ You can choose between the following options:
 
 
 After selecting an option you can press **Next** to continue. When you have connected to a service
-you will be asked to fill in the:
-
-* :doc:`Resource Selection page`
-
-
+you will be asked to fill in the :doc:`Resource Selection page`.

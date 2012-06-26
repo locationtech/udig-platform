@@ -9,10 +9,9 @@ with all the upgrades will appear. Select the upgrade you wish to install and cl
 
 **Related tasks**
 
-
 :doc:`Working with the Update Manager`
 
- :doc:`Finding new plugins`
+:doc:`Finding new plugins`
 
 
 .. |image0| image:: /images/keeping_up_to_date/updates.jpg

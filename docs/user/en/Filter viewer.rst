@@ -63,16 +63,14 @@ Common examples:
 
 **Related concepts**
 
-
 :doc:`Constraint Query Language`
 
 
 **Related reference**
 
-
 :doc:`Style Editor dialog`
 
- :doc:`Transform dialog`
+:doc:`Transform dialog`
 
 
 Constraint Query Language

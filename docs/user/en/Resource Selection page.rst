@@ -9,8 +9,7 @@ Check off the layers you wish to add and press **Finish**.
 
 **Related reference**
 
-
-* :doc:`Add Data wizard`
+:doc:`Add Data wizard`
 
 
 .. |image0| image:: /images/resource_selection_page/ResourceSelectionPage.png

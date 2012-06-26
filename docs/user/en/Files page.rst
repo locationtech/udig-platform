@@ -61,8 +61,7 @@ wizard to try again.
 
 **Related concepts**
 
-
-* :doc:`Shapefile`
+:doc:`Shapefile`
 
 
 .. |image0| image:: download/thumbnails/11664/FilesPage.png

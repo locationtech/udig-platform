@@ -19,7 +19,6 @@ A few notes on use:
 
 **Related reference**
 
-
-* :doc:`Palette View`
+:doc:`Palette View`
 
 

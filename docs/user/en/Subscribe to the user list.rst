@@ -5,7 +5,7 @@ An email list is available for questions and comments on the uDig application.
 
 #. Navigate to the following page:
 
-   `http://lists.refractions.net/mailman/listinfo/udig-users`_
+   `<http://lists.refractions.net/mailman/listinfo/udig-users>`_
 
 #. Enter your email address, name and password
 #. Press the **Subscribe** button
@@ -13,7 +13,6 @@ An email list is available for questions and comments on the uDig application.
 
 **Related reference**
 
-
-* `The udig-users Archives <http://lists.refractions.net/pipermail/udig-users/>`_
+`The udig-users Archives <http://lists.refractions.net/pipermail/udig-users/>`_
 
 

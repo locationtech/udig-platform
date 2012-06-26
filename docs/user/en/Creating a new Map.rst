@@ -48,21 +48,19 @@ Catalog
 
 **Related tasks**
 
-
 :doc:`Using new to add a Map to a Project`
 
- :doc:`Using the Context menu to add a Map to a Project`
- :doc:`Using the File menu to add a new Map`
+:doc:`Using the Context menu to add a Map to a Project`
+
+:doc:`Using the File menu to add a new Map`
 
 
 **Related concepts**
 
-
 :doc:`Map`
 
- :doc:`Projection`
+:doc:`Projection`
 
- :doc:`Layer`
+:doc:`Layer`
 
- :doc:`Decorator`
-
+:doc:`Decorator`

@@ -29,7 +29,6 @@ informal summary; or as a starting point for your own custom definition.
 
 **Related concepts**
 
-
 :doc:`Coordinate Reference System`
 
- `Well Known Text <http://en.wikipedia.org/wiki/Well-known_text>`_ (Wikipedia)
+`Well Known Text <http://en.wikipedia.org/wiki/Well-known_text>`_ (Wikipedia)

@@ -28,12 +28,9 @@ Contents:
 
 **Related concepts**
 
-
 :doc:`Workbench`
 
 
 **Related tasks**
 
-
 :doc:`Working with Selection`
-

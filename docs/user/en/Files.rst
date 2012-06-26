@@ -17,6 +17,4 @@ The :doc:`File Formats` available in uDig at present are listed here:
 
 **Related concepts**
 
-
 :doc:`File Formats`
-

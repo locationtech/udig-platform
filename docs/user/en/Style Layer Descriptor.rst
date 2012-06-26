@@ -14,16 +14,16 @@ You can use your own Style Layer Descriptor documents in several ways:
 
 **Related reference**
 
-
 :doc:`Style Editor dialog`
+
 `Styled Layer Descriptor <http://www.opengeospatial.org/standards/sld>`_ (OGC Specification)
+
 `Symbology Encoding <http://www.opengeospatial.org/standards/symbol>`_ (OGC Specification)
  
-.. :doc:`SLD Examples (from MassGIS)`
+`SLD Intro Tutorial (from GeoServer) <http://docs.geoserver.org/stable/en/user/styling/sld-introduction.html>`_
 
-.. :doc:`SLD Intro Tutorial (from GeoServer)`
+`SLD Cookbook with Samples (from GeoServer) <http://docs.geoserver.org/stable/en/user/styling/sld-cookbook/index.html#sld-cookbook>`_
 
-`SLD Samples (fromGeoServer) <http://geoserver.org/display/GEOSDOC/OGC+SLD+Explanations+and+Samples>`_
 
 Example
 =======
@@ -74,4 +74,3 @@ file.
             </sld:UserStyle>
         </sld:UserLayer>
     </sld:StyledLayerDescriptor>
-

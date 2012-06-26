@@ -6,6 +6,4 @@ positions. The boxes can contain different items, such as maps, scalebars, label
 
 **Related concepts**
 
-
 :doc:`Page`
-

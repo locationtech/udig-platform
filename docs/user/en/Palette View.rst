@@ -33,7 +33,4 @@ Additional components may be available depending on the community plug-ins you h
 
 **Related reference**
 
-
-* :doc:`Page editor`
-
-
+:doc:`Page editor`

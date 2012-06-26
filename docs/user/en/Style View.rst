@@ -3,8 +3,7 @@ Style View
 
 The style view allows the style of a layer to be changed directly.
 
-The Style view is not included in the default persepect; you will need to choose **Window > Add
-Views > Style** to open this view.
+The Style view is not included in the default persepect; you will need to choose :menuselection:`Window --> Show View --> Style` to open this view.
 
 .. figure:: /images/style_view/StyleView.png
    :align: center
@@ -14,7 +13,4 @@ The toolbar contains a drop-down list that list all the types of styles availabl
 
 **Related reference**
 
-
-* :doc:`Style Editor dialog`
-
-
+:doc:`Style Editor dialog`

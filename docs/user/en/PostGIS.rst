@@ -48,8 +48,7 @@ geometry_columns table.
 
 **Related reference**
 
-* :doc:`PostGIS page`
-* `<http://postgis.refractions.net/>`_
-* `<http://www.postgresql.com/>`_
-* `Introduction to PostGIS <http://www.foss4g2007.org/workshops/W-04/>`_ (FOSS4G 2007 workshop)
-
+:doc:`PostGIS page`
+`<http://postgis.refractions.net/>`_
+`<http://www.postgresql.com/>`_
+`Introduction to PostGIS <http://www.foss4g2007.org/workshops/W-04/>`_ (FOSS4G 2007 workshop)

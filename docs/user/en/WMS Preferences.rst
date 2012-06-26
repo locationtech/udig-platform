@@ -19,13 +19,12 @@ Available Preferences
 
 **Related reference**
 
+:doc:`Catalog Preferences`
 
-* :doc:`Catalog Preferences`
+:doc:`Project Preferences`
 
-* :doc:`Project Preferences`
+:doc:`Rendering Preferences`
 
-* :doc:`Rendering Preferences`
-
-* :doc:`Tool Preferences`
+:doc:`Tool Preferences`
 
 

@@ -95,10 +95,9 @@ Zoom to the selected features.
 
 **Related reference**
 
+:doc:`Navigation Menu`
 
-* :doc:`Navigation Menu`
-
-* :doc:`Map Menu`
+:doc:`Map Menu`
 
 
 .. |image0| image:: /images/navigation_tools/zoom_mode.gif

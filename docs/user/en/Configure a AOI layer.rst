@@ -12,13 +12,12 @@ the **AOI Selection** tool.
 
 **Related tasks**
 
-
 :doc:`Configure table view to list the contents of a polygon`
+
 
 **Related reference**
 
-
 :doc:`Selection Tools`
 
- :doc:`Interaction Properties page`
+:doc:`Interaction Properties page`
 

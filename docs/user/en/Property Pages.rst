@@ -14,6 +14,4 @@ Contents:
 
 **Related reference**
 
-
 :doc:`Properties dialog`
-

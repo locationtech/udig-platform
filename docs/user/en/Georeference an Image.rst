@@ -68,12 +68,10 @@ Tips
 
 **Related concepts**
 
-
 :doc:`Georeference`
 
 
 **Related reference**
-
 
 :doc:`Georeferencing Tools`
 

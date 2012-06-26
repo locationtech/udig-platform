@@ -23,46 +23,42 @@ functionality:
 
 **Related reference**
 
+:doc:`EditBlackboard`
 
--  Advanced Edit Mode
-* :doc:`EditBlackboard`
+:doc:`Snapping`
 
-* :doc:`Snapping`
-
-* :doc:`Using Vertex Tools`
+:doc:`Using Vertex Tools`
 
 
-   * :doc:`Edit Geometry Tool`
+  * :doc:`Edit Geometry Tool`
 
-   * :doc:`Add Vertex Tool`
+  * :doc:`Add Vertex Tool`
 
-   * :doc:`Remove Vertex Tool`
-
-
-* :doc:`Using Geometry Creation Tools`
+  * :doc:`Remove Vertex Tool`
 
 
-   * :doc:`Polygon Creation Tool`
+:doc:`Using Geometry Creation Tools`
 
-   * :doc:`Line Creation Tool`
+  * :doc:`Polygon Creation Tool`
 
-   * :doc:`Point Creation Tool`
+  * :doc:`Line Creation Tool`
 
-   * :doc:`Draw Geometry Tool`
+  * :doc:`Point Creation Tool`
 
-   * :doc:`Rectangle Tool`
+  * :doc:`Draw Geometry Tool`
 
-   * :doc:`Ellipse Tool`
+  * :doc:`Rectangle Tool`
+
+  * :doc:`Ellipse Tool`
 
 
-* :doc:`Using Feature Edit Tools`
+:doc:`Using Feature Edit Tools`
 
+  * :doc:`Fill Tool`
 
-   * :doc:`Fill Tool`
+  * :doc:`Split Tool`
 
-   * :doc:`Split Tool`
-
-   * :doc:`Delete Tool`
+  * :doc:`Delete Tool`
 
 
 .. |image0| image:: /images/hole_cutter/startholecutting.png

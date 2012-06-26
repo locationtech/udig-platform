@@ -46,7 +46,6 @@ After selecting an option you can press **Next** to continue.
 
 **Related reference**
 
-
-* :doc:`Add Data wizard`
+:doc:`Add Data wizard`
 
 

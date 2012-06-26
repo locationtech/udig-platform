@@ -12,5 +12,3 @@ There are two ways to add tasks:
 .. figure:: /images/tasks_view/TasksView.png
    :align: center
    :alt: 
-
-

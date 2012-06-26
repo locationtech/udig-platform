@@ -12,6 +12,4 @@ Contents:
 
 **Related concepts**
 
-
 :doc:`Perspective`
-

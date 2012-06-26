@@ -8,7 +8,6 @@ Contents
 
 **Related reference**
 
-
-* :doc:`Help Menu`
+:doc:`Help Menu`
 
 

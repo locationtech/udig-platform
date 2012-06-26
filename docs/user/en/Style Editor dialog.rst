@@ -67,7 +67,4 @@ style when loading the layer into another map.
 
 **Related reference**
 
-
-* :doc:`Style View`
-
-
+:doc:`Style View`

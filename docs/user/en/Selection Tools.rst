@@ -30,21 +30,20 @@ The tool works by:
    up until no area of interest is defined)
 -  You can drag to select several features as the area of interest
 
-:doc:`Area of Interest`
-
 
 **Related tasks**
 
+:doc:`Area of Interest`
 
 :doc:`Working with AOI`
 
 
 **Related reference**
 
-
 :doc:`Table view`
 
- Selection Preference page
+:doc:`Selection Preference page`
+
 
 .. |image0| image:: /images/selection_tools/selection_mode.gif
 .. |image1| image:: /images/selection_tools/aoi_mode.png

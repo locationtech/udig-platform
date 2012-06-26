@@ -10,10 +10,11 @@ To try this for yourself:
 #. Toggle the **Advanced Tools** checkbox
 #. Press :guilablel:`OK`
 
-Tip: You can also toggle this setting while editing by pressing CTRL+space.
+.. tip::
+   You can also toggle this setting while editing by pressing CTRL+space.
 
 **Related reference**
 
-* :doc:`Edit Tool Preferences`
+:doc:`Edit Tool Preferences`
 
 

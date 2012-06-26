@@ -41,16 +41,14 @@ When defining an expression you can make use of the full range of :doc:`Constrai
 
 **Related concepts**
 
-
 :doc:`Constraint Query Language`
 
 
 **Related reference**
 
-
 :doc:`Style Editor dialog`
 
- :doc:`Transform dialog`
+:doc:`Transform dialog`
 
 
 Constraint Query Language

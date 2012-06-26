@@ -5,11 +5,9 @@ A projection defines mathematically how we represent a round earth onto a flat m
 
 **Related concepts**
 
-
-* :doc:`Coordinate Reference System`
+:doc:`Coordinate Reference System`
 
 
 **Related reference**
 
-* `Map Projections <http://en.wikipedia.org/wiki/Map_projection>`_
-
+`Map Projections <http://en.wikipedia.org/wiki/Map_projection>`_

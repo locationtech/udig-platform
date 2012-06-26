@@ -43,11 +43,10 @@ Default is dark yellow.
 
 **Related reference**
 
+:doc:`Project Preferences`
 
-* :doc:`Project Preferences`
+:doc:`Layer Preferences`
 
-* :doc:`Layer Preferences`
-
-* :doc:`Printing Preferences`
+:doc:`Printing Preferences`
 
 

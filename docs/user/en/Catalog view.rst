@@ -174,10 +174,9 @@ If you drag a Service onto the screen you will be prompted to choose which layer
 
 **Related reference**
 
+:doc:`Drag and Drop`
 
-* :doc:`Drag and Drop`
-
-* :doc:`Import Wizard`
+:doc:`Import Wizard`
 
 
 .. |image0| image:: /images/catalog_view/import_wiz.gif

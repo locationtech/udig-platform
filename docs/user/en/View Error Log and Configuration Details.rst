@@ -14,4 +14,4 @@ You will want to scroll the the bottom of the file to have a look at recent acti
 
 **Related tasks**
 
-* :doc:`Submit Error Log`
+:doc:`Submit Error Log`

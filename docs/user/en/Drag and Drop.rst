@@ -64,8 +64,9 @@ Creating a new Map from a shapefile:
       the shapefile; the map projection will be based on the **prj** file.
    -  Release it onto an existing Map to insert a layer
 
-**Note:** The resource(s) must be dragged to the exact location in the Projects view hierarchy; they
-cannot be simply dragged and dropped onto a blank area.
+  .. note::
+     The resource(s) must be dragged to the exact location in the Projects view hierarchy; they
+	 cannot be simply dragged and dropped onto a blank area.
 
 Map Editor
 ==========
@@ -75,10 +76,8 @@ Map as if you had used the :doc:`Add Data wizard`
 
 **Related reference**
 
-
 :doc:`Layers view`
 
- :doc:`Projects view`
+:doc:`Projects view`
 
- :doc:`Map editor`
-
+:doc:`Map editor`

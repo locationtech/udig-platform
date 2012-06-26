@@ -10,7 +10,6 @@ it is not backed onto a WMS-C tile cache.
 
 **Related tasks**
 
-
 :doc:`Enabling a Tileset from a WMS Server`
 
 

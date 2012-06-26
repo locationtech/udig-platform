@@ -7,10 +7,10 @@ Introduction
 The Image Georeferencing view is used to georeference an image using a set of coordinates and the
 desired CRS.
 
-To enable the Image Georeferencing view, go to *Window->Show view-> Other...->Select Image
-Georeferencing* under the *Other* folder.
+To enable the Image Georeferencing view, go to :menuselection:`Window --> Show View --> Other...` and 
+choose *Select Image Georeferencing* under the *Other* folder.
 
-:doc:`|image0|`
+|image0|
 
 
 A map with a valid CRS is needed for the Image Georeferencing view to be able to run. Open a new
@@ -24,7 +24,7 @@ The figure shows the Image Georeferencing View integrated in the uDig desktop. T
 you to load an image, specify a set of marks in it and associate the set of coordinates for each
 one.
 
-:doc:`|image1|`
+|image1|
 
 
 Sample Usage
@@ -39,7 +39,7 @@ Step 1
 Click on the ***Open file*** button and load the image you would like to georeference. After that,
 the tools to manipulate the image will be activated.
 
-:doc:`|image2|`
+|image2|
 
 
 We have the following tools: *Add new mark, delete mark, move mark, zoom in, zoom out, pan the
@@ -52,7 +52,7 @@ Step 2
 Add marks to the image, we need at least 6 of them. Select the ***add new mark*** tool and add the
 first mark.
 
-:doc:`|image3|`
+|image3|
 
 
 After the first mark is added, the tools that manipulate the ground control points in the map are
@@ -65,12 +65,12 @@ Step 3
 Select the tool ***add ground control point***. Click on the corresponding place on the map to add a
 ground control point. After that, it'll show the coordinates on the coordinates table.
 
-:doc:`|image4|`
+|image4|
 
 
 Repeat steps 3 and 4 until we have at least 6 marks with their associated ground control points.
 
-:doc:`|image5|`
+|image5|
 
 
 Step 4
@@ -79,7 +79,7 @@ Step 4
 Only one thing left to be able to perform the georeferencing operation, specify the output file.
 Click on the ***Browse*** button and specify the save file location.
 
-:doc:`|image6|`
+|image6|
 
 
 Step 5
@@ -88,12 +88,12 @@ Step 5
 Now that all the parameters are fulfilled, click on the ***run*** button and perform the Image
 Georeferencing operation.
 
-:doc:`|image7|`
+|image7|
 
 
 The result of the operation:
 
-:doc:`|image8|`
+|image8|
 
 
 Tips

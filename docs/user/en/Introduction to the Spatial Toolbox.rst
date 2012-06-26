@@ -4,32 +4,24 @@ Introduction to the Spatial Toolbox
 The Spatial Toolbox View gives the possibility to execute tools from loaded libraries on resources
 visualized in uDig.
 
-`Introduction to the Spatial
-Toolbox <#IntroductiontotheSpatialToolbox-IntroductiontotheSpatialToolbox>`_
+`Introduction to the Spatial Toolbox `_
 
-:doc:`Before you Start`
+`Before you Start`_
 
+`Download the Spearfish example data`_
 
--  `Download the Spearfish example
-   data <#IntroductiontotheSpatialToolbox-DownloadtheSpearfishexampledata>`_
+`The Spatial toolbox View`_
 
-:doc:`The Spatial toolbox View`
+`Installing JGrasstools`_
 
+`Processing`_
 
-:doc:`Installing JGrasstools`
+`Generating Aspect of an Elevation Model`_
 
-
-:doc:`Processing`
-
-
--  `Generating Aspect of an Elevation
-   Model <#IntroductiontotheSpatialToolbox-GeneratingAspectofanElevationModel>`_
-
-:doc:`Things to Try`
+`Things to Try`_
 
 
 **Related reference**
-
 
 :doc:`Spatial Toolbox View`
 

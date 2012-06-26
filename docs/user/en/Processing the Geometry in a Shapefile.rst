@@ -4,25 +4,21 @@ Processing the Geometry in a Shapefile
 You can use the **Reshape** operation to modify the geometry column and then export the resulting
 scratch layer.
 
--  `Converting Polygons to Points using
-   Centroid <#ProcessingtheGeometryinaShapefile-ConvertingPolygonstoPointsusingCentroid>`_
--  `Converting Lines or Points into Polygons using
-   Buffer <#ProcessingtheGeometryinaShapefile-ConvertingLinesorPointsintoPolygonsusingBuffer>`_
+-  `Converting Polygons to Points using Centroid`_
+-  `Converting Lines or Points into Polygons using Buffer`_
 
 **Related concepts**
 
-
-* :doc:`Constraint Query Language`
+:doc:`Constraint Query Language`
 
 
 **Related reference**
 
+:doc:`Transform operation`
 
-* :doc:`Transform operation`
+:doc:`Catalog view`
 
-* :doc:`Catalog view`
-
-* :doc:`Resource to Shapefile Wizard`
+:doc:`Resource to Shapefile Wizard`
 
 
 Converting Polygons to Points using Centroid
@@ -45,7 +41,7 @@ Converting Polygons to Points using Centroid
 #. Right click on the above scratch entry in the catalog view and select **Export** to open the
    :doc:`Export Wizard`
 
-#. Choose **Resource to Shapefile** and press **Next>**
+#. Choose **Resource to Shapefile** and press :guilabel:`Next>`
 #. Provide a destination directory for your new shapefile
 #. Ensure that your scratch entry is checked off for export
 #. Press **Finish**
@@ -75,7 +71,7 @@ Converting Lines or Points into Polygons using Buffer
 #. Right click on the above scratch entry in the catalog view and select **Export** to open the
    :doc:`Export Wizard`
 
-#. Choose **Resource to Shapefile** and press **Next>**
+#. Choose **Resource to Shapefile** and press :guilabel:`Next>`
 #. Provide a destination directory for your new shapefile
 #. Ensure that your scratch entry is checked off for export
 #. Press **Finish**
