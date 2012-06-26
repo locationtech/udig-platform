@@ -29,6 +29,28 @@
             toolCursorId="arrowCursor"
             tooltip="%eu.udig.tools.merge.tooltip">
       </modalTool>
+      <modalTool
+            categoryId="net.refractions.udig.tool.edit.create"
+            class="eu.udig.tools.arc.ArcTool"
+            icon="icons/etool16/arc_tool.gif"
+            id="eu.udig.tools.arc.ArcTool"
+            name="%eu.udig.tools.arc.name"
+            onToolbar="true"
+            toolCursorId="arrowCursor"
+            tooltip="%eu.udig.tools.arc.tooltip">
+         <enablement>
+            <or>
+               <property
+                     expectedValue="com.vividsolutions.jts.geom.LineString"
+                     propertyId="GeometryType">
+               </property>
+               <property
+                     expectedValue="com.vividsolutions.jts.geom.MultiLineString"
+                     propertyId="GeometryType">
+               </property>
+            </or>
+         </enablement>
+      </modalTool>
    </extension>
    <extension
          point="org.eclipse.ui.views">
