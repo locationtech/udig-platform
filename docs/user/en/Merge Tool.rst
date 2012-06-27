@@ -15,9 +15,10 @@ To use the Merge tool:
 #. Draw a box covering one or more features
 #. The **Feature Merge** view will display two columns:
 
-   -  Sources: these are the features that are being combined; check off the attributes you wish to
+   *  Sources: these are the features that are being combined; check off the attributes you wish to
       appear in the result
-   -  Merge Feature: this is the resulting Geometry
+
+   *  Merge Feature: this is the resulting Geometry
 
 #. For doing a Merge you will need 2 or more features.
 #. You can continue selecting more features by drawing a box.
@@ -27,7 +28,6 @@ To use the Merge tool:
 
 .. image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/12276/Merge1.png
    :width: 60%
-
 
 
 Behavior
@@ -133,7 +133,7 @@ bounding box with Ctrl key pushed over the desired feature.
 
  **Figure 6. Delete button**
 
-.. |image0| image:: /images/merge_tool/merge_feature_mode.gif
+.. |image0| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/12276/merge_feature_mode.gif
 .. |image2| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/12276/merge_1_select_tool.png
 .. |image3| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/12276/merge_2_select_features.png
 .. |image4| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/12276/MergeDialog1.png

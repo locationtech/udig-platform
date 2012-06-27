@@ -42,8 +42,6 @@ The tool works by:
 
 :doc:`Table view`
 
-:doc:`Selection Preference page`
-
 
 .. |image0| image:: /images/selection_tools/selection_mode.gif
 .. |image1| image:: /images/selection_tools/aoi_mode.png
