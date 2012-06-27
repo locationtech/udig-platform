@@ -258,6 +258,9 @@
                <instanceof
                      value="net.refractions.udig.project.internal.Layer">
                </instanceof>
+               <adapt
+                     type="net.refractions.udig.project.internal.Layer">
+               </adapt>
             </or>
          </enabledWhen>
       </page>
