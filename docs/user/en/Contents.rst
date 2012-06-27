@@ -1,8 +1,6 @@
 Contents
 ########
 
-:doc:`.bookmarks`
-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :doc:`Community`
@@ -195,12 +193,6 @@ Contents
 
 * :doc:`Walkthrough 2`
 
-
-:doc:`Home`
-
-~~~~~~~~~~~~~~~~~~~
-
-* :doc:`Contents`
 
 
 :doc:`Reference`

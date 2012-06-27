@@ -90,7 +90,7 @@ XML
 Should you need to do something a little more complex than what the simple or theme pages offer, the
 XML page allows you to directly modify the Styled Layer Descriptor document (this describes how you
 would like your layer drawn). The SLD specification outlines the format to use:
-:doc:`http://www.opengeospatial.org/docs/02-070.pdf`
+`<http://www.opengeospatial.org/docs/02-070.pdf>`_
 
 
 Style View
