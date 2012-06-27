@@ -98,6 +98,8 @@ public class FeatureMovieView extends ViewPart {
     private CoordinateReferenceSystem crs;
     private Image gotoImage;
     private Text gotoText;
+    private Image nextImage;
+    private Image previousImage;
 
     public FeatureMovieView() {
         ImageDescriptor playImageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
@@ -109,6 +111,12 @@ public class FeatureMovieView extends ViewPart {
         ImageDescriptor gotoImageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
                 "icons/goto.gif");
         gotoImage = gotoImageDescriptor.createImage();
+        ImageDescriptor nextImageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
+                "icons/shift_r_edit.gif");
+        nextImage = nextImageDescriptor.createImage();
+        ImageDescriptor previousImageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
+                "icons/shift_l_edit.gif");
+        previousImage = previousImageDescriptor.createImage();
 
     }
 
@@ -124,7 +132,7 @@ public class FeatureMovieView extends ViewPart {
         playGroup.setText("Commands");
 
         playButton = new Button(playGroup, SWT.PUSH);
-        playButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        playButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         playButton.setText("start");
         playButton.setImage(playImage);
         playButton.addSelectionListener(new SelectionAdapter(){
@@ -179,7 +187,7 @@ public class FeatureMovieView extends ViewPart {
         featureNumLabel.setText(" - ");
 
         Button gotoButton = new Button(playGroup, SWT.PUSH);
-        gotoButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        gotoButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         gotoButton.setText("goto");
         gotoButton.setImage(gotoImage);
         gotoButton.addSelectionListener(new SelectionAdapter(){
@@ -212,6 +220,72 @@ public class FeatureMovieView extends ViewPart {
         gotoTextGD.widthHint = 20;
         gotoText.setLayoutData(gotoTextGD);
         gotoText.setText("");
+
+        Composite nextPreviousComposite = new Composite(playGroup, SWT.NONE);
+        nextPreviousComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        GridLayout npGL = new GridLayout(2, true);
+        npGL.marginWidth = 0;
+        npGL.marginHeight = 0;
+        nextPreviousComposite.setLayout(npGL);
+
+        Button previousButton = new Button(nextPreviousComposite, SWT.PUSH);
+        previousButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        previousButton.setText("previous");
+        previousButton.setImage(previousImage);
+        previousButton.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                try {
+                    if (index == 1) {
+                        return;
+                    }
+                    // -2 because later 1 is summed
+                    index = index - 2;
+                    if (selectedLayer == null) {
+                        initLayer();
+                    }
+                    int size = featureList.size();
+                    if (index < 0) {
+                        index = 0;
+                    }
+                    if (index > size - 1) {
+                        index = size - 1;
+                    }
+                    goToFeature();
+                } catch (Exception ex) {
+                    gotoText.setText("");
+                    ex.printStackTrace();
+                }
+            }
+        });
+        Button nextButton = new Button(nextPreviousComposite, SWT.PUSH);
+        nextButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        nextButton.setText("next");
+        nextButton.setImage(nextImage);
+        nextButton.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                try {
+                    if (selectedLayer == null) {
+                        initLayer();
+                    }
+                    int size = featureList.size();
+                    if (index == size - 1) {
+                        return;
+                    }
+                    // index stays the same, since later +1 is added
+                    // index = index + 1;
+                    if (index < 0) {
+                        index = 0;;
+                    }
+                    if (index > size - 1) {
+                        index = size - 1;
+                    }
+                    goToFeature();
+                } catch (Exception ex) {
+                    gotoText.setText("");
+                    ex.printStackTrace();
+                }
+            }
+        });
 
         Group paramsGroup = new Group(parent, SWT.NONE);
         paramsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
