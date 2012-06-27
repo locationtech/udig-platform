@@ -75,8 +75,10 @@ selected.
 
 Once you release the mouse button, the *features* matching the bounding box will be looked up and
 the *Merge View* will show up.
- *Figure 3* shows the *Merge View*, which consists of two panels.
- The panel at the left is the *Source Features* panel and presents the selected *features*, their
+
+*Figure 3* shows the *Merge View*, which consists of two panels.
+
+The panel at the left is the *Source Features* panel and presents the selected *features*, their
 attributes, and allows to select attribute values from source features to assign to the *Merge
 Feature*.
 
@@ -88,10 +90,12 @@ first *Source* feature found (the one at the top on the *Source Features* panel)
 attribute of the *Merge Feature* assumes the value of the geometric union of the geometries from the
 source Features, and if that is not possible due to a type conflict with the Layer's *FeatureType*,
 it assumes the value of the geometry from the first Feature.
- |image4|
+ 
+|image4|
 
  **Figure 3. Merge View.**
- While the *Merge View* is opened, the user can set specific attributes in the *Merge Feature* to
+
+While the *Merge View* is opened, the user can set specific attributes in the *Merge Feature* to
 assume the values from other *Source Features* than the one at the top, by activating the checkbox
 corresponding to the desired attribute on the desired *Source Feature*.
 
@@ -107,7 +111,7 @@ the checkbox corresponding to the desired *Source Feature*.
 
 Finally, when you're ready setting the geometric and non geometric attribute values for the *Merge
 Feature*, press the *Finish* button on the *Merge View*.
- The *Merge Tool* will create the new *Merge Feature* and delete the *Source Features* in a single,
+The *Merge Tool* will create the new *Merge Feature* and delete the *Source Features* in a single,
 undoable step.
 
 The *Map* in *Figure 5* shows how the two buildings on this example have been merged into one, and
@@ -122,7 +126,7 @@ Adding and deleting features.
 
 For adding more features to be merged, select those features drawing a bounding box and they will be
 added to the view.
- For deleting features, select the feature to be deleted and click on the delete button or draw a
+For deleting features, select the feature to be deleted and click on the delete button or draw a
 bounding box with Ctrl key pushed over the desired feature.
 
 |image7|
@@ -130,7 +134,6 @@ bounding box with Ctrl key pushed over the desired feature.
  **Figure 6. Delete button**
 
 .. |image0| image:: /images/merge_tool/merge_feature_mode.gif
-
 .. |image2| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/12276/merge_1_select_tool.png
 .. |image3| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/12276/merge_2_select_features.png
 .. |image4| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/12276/MergeDialog1.png
