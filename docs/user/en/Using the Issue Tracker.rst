@@ -24,7 +24,6 @@ Thank you!
 
 **Related reference**
 
-
-* `Issue Tracker <http://jira.codehaus.org/browse/UDIG>`_
+`Issue Tracker <http://jira.codehaus.org/browse/UDIG>`_
 
 

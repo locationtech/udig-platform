@@ -98,12 +98,10 @@ tool.
 
 **Related concepts**
 
-
 :doc:`Georeference`
 
 
 **Related tasks**
-
 
 :doc:`Georeference an Image`
 

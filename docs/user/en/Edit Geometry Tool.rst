@@ -77,46 +77,41 @@ Tips
 
 **Related reference**
 
+:doc:`EditBlackboard`
 
--  Advanced Edit Mode
-* :doc:`EditBlackboard`
+:doc:`Snapping`
 
-* :doc:`Snapping`
+:doc:`Using Vertex Tools`
 
-* :doc:`Using Vertex Tools`
+  * :doc:`Add Vertex Tool`
 
+  * :doc:`Remove Vertex Tool`
 
-   * :doc:`Add Vertex Tool`
-
-   * :doc:`Remove Vertex Tool`
-
-   * :doc:`Hole Cutter`
+  * :doc:`Hole Cutter`
 
 
-* :doc:`Using Geometry Creation Tools`
+:doc:`Using Geometry Creation Tools`
+
+  * :doc:`Polygon Creation Tool`
+
+  * :doc:`Line Creation Tool`
+
+  * :doc:`Point Creation Tool`
+
+  * :doc:`Draw Geometry Tool`
+
+  * :doc:`Rectangle Tool`
+
+  * :doc:`Ellipse Tool`
 
 
-   * :doc:`Polygon Creation Tool`
+:doc:`Using Feature Edit Tools`
 
-   * :doc:`Line Creation Tool`
+  * :doc:`Fill Tool`
 
-   * :doc:`Point Creation Tool`
+  * :doc:`Split Tool`
 
-   * :doc:`Draw Geometry Tool`
-
-   * :doc:`Rectangle Tool`
-
-   * :doc:`Ellipse Tool`
-
-
-* :doc:`Using Feature Edit Tools`
-
-
-   * :doc:`Fill Tool`
-
-   * :doc:`Split Tool`
-
-   * :doc:`Delete Tool`
+  * :doc:`Delete Tool`
 
 
 .. |image0| image:: /images/edit_geometry_tool/tooledit1.png

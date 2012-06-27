@@ -14,6 +14,7 @@ uDig User Guide
    Tips and Tricks
    Community
 
+
 Online Help
 
     The pages here can be edited directly from our github repository. If you spot a mistake, create
@@ -22,5 +23,5 @@ Online Help
 
 **Related reference**
 
-* `The Eclipse help system <http://help.eclipse.org/>`_
+`The Eclipse help system <http://help.eclipse.org/>`_
 

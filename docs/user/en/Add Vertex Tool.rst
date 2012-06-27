@@ -14,43 +14,34 @@ same as adding vertices using the :doc:`Edit Geometry Tool`.
 
 **Related reference**
 
+:doc:`EditBlackboard`
 
-* :doc:`EditBlackboard`
+:doc:`Using Vertex Tools`
 
-* :doc:`Using Vertex Tools`
+  * :doc:`Edit Geometry Tool`
 
+  * :doc:`Remove Vertex Tool`
 
-   * :doc:`Edit Geometry Tool`
+  * :doc:`Hole Cutter`
 
-   * :doc:`Remove Vertex Tool`
+:doc:`Using Geometry Creation Tools`
 
-   * :doc:`Hole Cutter`
+  * :doc:`Polygon Creation Tool`
 
+  * :doc:`Line Creation Tool`
 
-* :doc:`Using Geometry Creation Tools`
+  * :doc:`Point Creation Tool`
 
+  * :doc:`Draw Geometry Tool`
 
-   * :doc:`Polygon Creation Tool`
+  * :doc:`Rectangle Tool`
 
-   * :doc:`Line Creation Tool`
+  * :doc:`Ellipse Tool`
 
-   * :doc:`Point Creation Tool`
+:doc:`Using Feature Edit Tools`
 
-   * :doc:`Draw Geometry Tool`
+  * :doc:`Fill Tool`
 
-   * :doc:`Rectangle Tool`
+  * :doc:`Split Tool`
 
-   * :doc:`Ellipse Tool`
-
-
-* :doc:`Using Feature Edit Tools`
-
-
-   * :doc:`Fill Tool`
-
-   * :doc:`Split Tool`
-
-   * :doc:`Delete Tool`
-
-
-
+  * :doc:`Delete Tool`

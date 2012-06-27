@@ -9,9 +9,6 @@ to editing the visual geometry.
 
 **Related reference**
 
+:doc:`Split Tool`
 
-* :doc:`Split Tool`
-
-* :doc:`Delete Tool`
-
-
+:doc:`Delete Tool`

@@ -12,4 +12,3 @@ The uDig Project is an open source collaboration responsible for:
    capabilities of the uDig SDK
 -  Training and Support for the above technologies are available from a range of suppliers on our
    website
-

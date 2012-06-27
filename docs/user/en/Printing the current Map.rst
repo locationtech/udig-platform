@@ -13,10 +13,9 @@ from there.
 
 **Related concepts**
 
-
 :doc:`Page`
 
- :doc:`Template`
+:doc:`Template`
 
 
 .. |image0| image:: /images/printing_the_current_map/page.jpg

@@ -11,6 +11,5 @@ Contents:
 
 **Related tasks**
 
-
 :doc:`Working with cheat sheets`
 

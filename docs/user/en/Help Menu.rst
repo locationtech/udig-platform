@@ -51,15 +51,11 @@ This command displays information about the product, installed features, and ava
 
 **Related tasks**
 
+:doc:`Submit Error Log`
 
-* :doc:`Submit Error Log`
-
-* :doc:`Finding new plugins`
+:doc:`Finding new plugins`
 
 
 **Related reference**
 
-
-* :doc:`Help contents`
-
-
+:doc:`Help contents`

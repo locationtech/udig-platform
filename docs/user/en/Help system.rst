@@ -35,6 +35,4 @@ Default for 4 Modifier Keys" key binding scheme.
 
 **Related tasks**
 
-
 :doc:`Accessing context sensitive help`
-

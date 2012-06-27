@@ -20,6 +20,9 @@ Here is an example of a map editor in the Workbench:
 **Related concepts**
 
 :doc:`Workbench`
+
 :doc:`Projects view`
+
 :doc:`Catalog view`
+
 :doc:`Map editor`

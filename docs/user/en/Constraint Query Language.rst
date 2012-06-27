@@ -395,16 +395,13 @@ Or if you have an integer type as feature id:
 
 **Related tasks**
 
-
-* :doc:`Selection using CQL`
+:doc:`Selection using CQL`
 
 
 **Related reference**
 
+:doc:`Table view`
 
-* :doc:`Table view`
-
--  Reshape Operation
-* :doc:`OGC Catalog Specification`
+`OGC Catalog Specification <http://www.opengeospatial.org/standards/cat>`_
 
 

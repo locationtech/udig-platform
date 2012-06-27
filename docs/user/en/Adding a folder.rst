@@ -18,14 +18,11 @@ Adding a folder using the context menu
 
 **Related concepts**
 
-
 :doc:`Legend`
 
 
 **Related reference**
 
-
 :doc:`Legend View`
 
- :doc:`Using the Legend View`
-
+:doc:`Using the Legend View`

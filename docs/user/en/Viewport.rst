@@ -8,6 +8,4 @@ You can adjust the viewport using the Navigation menu.
 
 **Related concepts**
 
-
 :doc:`Projection`
-

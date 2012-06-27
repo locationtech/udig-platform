@@ -23,8 +23,6 @@ Contents:
 
 **Related reference**
 
-
 :doc:`Geospatial`
 
 :doc:`Geospatial Analysis`
-

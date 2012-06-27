@@ -44,6 +44,4 @@ Abandon any changes and close the dialog.
 
 **Related reference**
 
-
 :doc:`Property Pages`
-

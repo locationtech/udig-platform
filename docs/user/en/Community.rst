@@ -11,6 +11,4 @@ Community
 
 **Related tasks**
 
-* :doc:`Finding new plugins`
-
-
+:doc:`Finding new plugins`

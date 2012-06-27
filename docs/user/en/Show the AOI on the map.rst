@@ -9,17 +9,14 @@ We can add a map decoration to visually show the extent of the current AOI.
 
 **Related tasks**
 
+:doc:`Adding a layer`
 
-Adding a new layer
 
 **Related concepts**
-
 
 :doc:`Area of Interest`
 
 
 **Related reference**
 
-
 :doc:`AOI view`
-

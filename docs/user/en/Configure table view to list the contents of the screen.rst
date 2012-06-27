@@ -12,14 +12,12 @@ the screen.
 
 **Related concepts**
 
-
 :doc:`Area of Interest`
 
 
 **Related reference**
 
-
 :doc:`Table view`
 
- :doc:`AOI view`
+:doc:`AOI view`
 

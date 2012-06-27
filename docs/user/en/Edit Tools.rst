@@ -86,7 +86,6 @@ Throw out modifications; reverting to the current contents of the server, databa
 
 **Related tasks**
 
-
 :doc:`Working with Features`
 
 

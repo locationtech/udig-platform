@@ -18,7 +18,7 @@ portal.
 
 **Related reference**
 
-`http://geodiscover.cgdi.ca/`_
+`<http://geodiscover.cgdi.ca/>`_
 
 
 .. |image0| image:: /images/using_the_search_view/search.gif

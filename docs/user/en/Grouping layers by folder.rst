@@ -39,14 +39,11 @@ Changing layer position
 
 **Related concepts**
 
-
 :doc:`Legend`
 
 
 **Related reference**
 
-
 :doc:`Legend View`
 
- :doc:`Using the Legend View`
-
+:doc:`Using the Legend View`

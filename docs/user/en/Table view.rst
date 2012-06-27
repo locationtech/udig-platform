@@ -52,24 +52,21 @@ features, or the first feature, matching the query.
 
 **Related concepts**
 
-
 :doc:`Constraint Query Language`
 
 
 **Related tasks**
 
+:doc:`Using the Table View`
 
-* :doc:`Using the Table View`
+:doc:`Selection using Attributes`
 
-* :doc:`Selection using Attributes`
-
-* :doc:`Selection using CQL`
+:doc:`Selection using CQL`
 
 
 **Related reference**
 
-
-* `Regular Expression <http://en.wikipedia.org/wiki/Regular_expression>`_
+`Regular Expression <http://en.wikipedia.org/wiki/Regular_expression>`_
 
 
 .. |image0| image:: /images/table_view/SelectionTool.png

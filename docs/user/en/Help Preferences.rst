@@ -21,16 +21,15 @@ Here is what the Help Preference page looks like:
 
 **Related reference**
 
+:doc:`Catalog Preferences`
 
-* :doc:`Catalog Preferences`
+:doc:`Help Preferences`
 
-* :doc:`Help Preferences`
+:doc:`Project Preferences`
 
-* :doc:`Project Preferences`
+:doc:`Rendering Preferences`
 
-* :doc:`Rendering Preferences`
-
-* :doc:`Tool Preferences`
+:doc:`Tool Preferences`
 
 
 .. |image0| image:: /images/help_preferences/preferenceshelp.gif

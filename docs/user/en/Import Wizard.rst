@@ -20,13 +20,9 @@ You can choose between the following options:
 
 **Related tasks**
 
-
-* :doc:`Importing data`
+:doc:`Importing data`
 
 
 **Related reference**
 
-
-* :doc:`Catalog view`
-
-
+:doc:`Catalog view`

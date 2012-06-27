@@ -15,6 +15,4 @@ Examples:
 
 **Related concepts**
 
-
 :doc:`Style`
-

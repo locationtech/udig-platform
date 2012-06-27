@@ -32,24 +32,24 @@ view pull-down.
 Finally, the contents of a view may have a context menu. This menu is determined by the item
 selected in the view, and thus provides consistent functionaly across all views.
  |image3|
- A view can be displayed by selecting it from the **Window > Show View** menu. Additional views are
+
+A view can be displayed by selecting it from the :menuselection:`Window --> Show View` menu. Additional views are
 available by choosing **Other...** at the bottom of the Show View submenu. This is just one of the
 many features that provide for the creation of a custom work environment.
 
 **Related reference**
 
-
 :doc:`Catalog view`
 
- :doc:`Layers view`
+:doc:`Layers view`
 
- :doc:`Projects view`
+:doc:`Projects view`
 
- :doc:`Search view`
+:doc:`Search view`
 
- :doc:`Help view`
+:doc:`Help view`
 
- :doc:`Web view`
+:doc:`Web view`
 
 
 .. |image0| image:: /images/use_of_views/catalog.gif

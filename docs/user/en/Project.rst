@@ -9,12 +9,9 @@ A UDIG project can be saved to disk.
 
 **Related reference**
 
-
 :doc:`Catalog view`
 
 
 **Related tasks**
 
-
 :doc:`Creating a new Project`
-

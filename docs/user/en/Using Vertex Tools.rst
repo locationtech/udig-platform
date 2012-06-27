@@ -53,7 +53,6 @@ Notes on working with vertex tools:
 
 **Related tasks**
 
-
 :doc:`Using Advanced Edit Mode`
 
 :doc:`Using Geometry Creation Tools`

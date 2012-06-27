@@ -4,7 +4,7 @@ Validation
 Validation allows you to check your data source and helps to identify features which do not conform
 to the test(s) you specify.
 
--  Select a layer from the Layers View and go to **Operations > Validation...**
+-  Select a layer from the Layers View and go to :menuselection:`Operations --> Validation...`
 -  Select a test (***Is Valid Geometry** for example*) from the list and click **New** to create the
    new test.
 -  Customize your test and click **Run**

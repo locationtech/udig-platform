@@ -10,13 +10,11 @@ menu**.
 
 :doc:`Zooming to a layer`
 
- :doc:`Deleting a layer`
+:doc:`Deleting a layer`
 
- :doc:`Change a Layers Style`
+:doc:`Change a Layers Style`
 
 
 **Related reference**
 
-
 :doc:`Layers view`
-

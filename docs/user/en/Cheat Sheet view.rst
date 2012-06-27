@@ -28,16 +28,14 @@ These icons appear in the toolbar:
 
 **Related reference**
 
-
 :doc:`Cheat Sheet Selection dialog`
 
 
 **Related tasks**
 
-
 :doc:`Working with cheat sheets`
 
- :doc:`Working with composite cheat sheets`
+:doc:`Working with composite cheat sheets`
 
 
 .. |image0| image:: /images/cheat_sheet_view/CheatSheet.png

@@ -17,7 +17,7 @@ You can use the Import Wizard to copy data into the applications catalog.
 
 #. Open the :doc:`Import Wizard` by:
 
-   -  Selecting **File > Import** from the menu bar; or
+   -  Selecting :menuselection:`File --> Import` from the menu bar; or
    -  Pressing the |image0| **Import** button on the :doc:`Catalog view`
 
 #. Select **Data** and click **Next**
@@ -29,16 +29,14 @@ dropping them in the :doc:`Catalog view`, or by copying and pasting.
 
 **Related tasks**
 
-
 :doc:`Drag and Drop`
 
 
 **Related reference**
 
-
 :doc:`Import Wizard`
 
- :doc:`Catalog view`
+:doc:`Catalog view`
 
 
 .. |image0| image:: /images/importing_data/import_wiz.gif

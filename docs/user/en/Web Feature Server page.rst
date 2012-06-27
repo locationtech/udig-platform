@@ -47,17 +47,15 @@ You may wish to adjust this delay based of service reliability
 
 **Related concepts**
 
-
-* :doc:`Web Feature Server`
+:doc:`Web Feature Server`
 
 
 **Related reference**
 
+:doc:`Add Data wizard`
 
-* :doc:`Add Data wizard`
+:doc:`Drag and Drop`
 
-* :doc:`Drag and Drop`
-
-* :doc:`Web view`
+:doc:`Web view`
 
 

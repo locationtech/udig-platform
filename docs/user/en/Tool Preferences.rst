@@ -7,23 +7,21 @@ Tool Preferences
 
 **Related reference**
 
-
 Child Preference Pages
 ~~~~~~~~~~~~~~~~~~~~~~
 
-* :doc:`Edit Tool Preferences`
+:doc:`Edit Tool Preferences`
 
-
-   * :doc:`Edit Tool Performance Preferences`
+:doc:`Edit Tool Performance Preferences`
 
 
 Peers
 ~~~~~
 
-* :doc:`Catalog Preferences`
+:doc:`Catalog Preferences`
 
-* :doc:`Project Preferences`
+:doc:`Project Preferences`
 
-* :doc:`Rendering Preferences`
+:doc:`Rendering Preferences`
 
 

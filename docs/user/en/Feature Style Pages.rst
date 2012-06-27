@@ -4,21 +4,21 @@ Feature Style Pages
 When the :doc:`Style Editor dialog` is opened on a feature layer the
 following pages are available.
 
-* :doc:`Cache`
+* `Cache`_
 
-* :doc:`Filter`
+* `Filter`_
 
-* :doc:`Simple Feature`
+* `Simple Feature`_
 
-* :doc:`Simple Lines`
+* `Simple Lines`_
 
-* :doc:`Simple Points`
+* `Simple Points`_
 
-* :doc:`Simple Polygons`
+* `Simple Polygons`_
 
-* :doc:`Theme`
+* `Theme`_
 
-* :doc:`XML`
+* `XML`_
 
 
 Cache
@@ -201,6 +201,4 @@ Press this button to check that your XML is valid.
 
 **Related concepts**
 
-
 :doc:`Style Layer Descriptor`
-

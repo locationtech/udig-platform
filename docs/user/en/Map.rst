@@ -6,7 +6,10 @@ specific resource).
 
 **Related concepts**
 
-   :doc:`Viewport`
-   :doc:`Layer`
-   :doc:`Decorator`
-   :doc:`Projection`
+:doc:`Viewport`
+
+:doc:`Layer`
+
+:doc:`Decorator`
+
+:doc:`Projection`

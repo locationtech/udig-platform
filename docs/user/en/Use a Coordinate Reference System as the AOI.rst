@@ -8,14 +8,11 @@ We can use the extent of the map Coordinate Reference System to define the curre
 
 **Related concepts**
 
-
 :doc:`Area of Interest`
 
- :doc:`Coordinate Reference System`
+:doc:`Coordinate Reference System`
 
 
 **Related reference**
 
-
 :doc:`AOI view`
-

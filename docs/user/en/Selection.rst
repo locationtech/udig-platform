@@ -3,10 +3,10 @@ Selection
 
 Selection is not a simple concept because there are different types of selection.
 
--  Workbench Selection
--  Layer Selection
--  Edit Selection
--  Boundary Selection
+* `Workbench Selection`_
+* `Layer Selection`_
+* `Edit Selection`_
+* `Boundary Selection`_
 
 Workbench Selection
 ^^^^^^^^^^^^^^^^^^^
@@ -15,34 +15,23 @@ The workbench selection is determined by what is selected in the current view. F
 Layers view the selection will always be a layer. In the Project Explorer the selection could be a
 project, map, page, etc... The selection in the Map Editor depends on the tool that is selected.
 
-Tool
-
-Selection
-
-Zoom
-
-The map shown in the map editor
-
-Pan
-
-The map shown in the map editor
-
-Selection
-
-The current layer's selection filter
-
-Information Tools
-
-The map shown in the map editor
-
-Edit Tools
-
-The currently edited feature **or** the currently selected vertices. Depending on whether there are
-selected vertices
-
-Boundary
-
-The current boundary layer's selection filter
++-------------------+------------------------------------------------------------+
+| **Tool**          | **Selection**                                              |
++-------------------+------------------------------------------------------------+
+| Zoom              | The map shown in the map editor                            |
++-------------------+------------------------------------------------------------+
+| Pan               | The map shown in the map editor                            |
++-------------------+------------------------------------------------------------+
+| Selection         | The current layer's selection filter                       |
++-------------------+------------------------------------------------------------+
+| Information Tools | The map shown in the map editor                            |
++-------------------+------------------------------------------------------------+
+| Edit Tools        | The currently edited feature **or** the currently selected |
+|                   | vertices. Depending on whether there are                   |
+|                   | selected vertices                                          |
++-------------------+------------------------------------------------------------+
+| Boundary          | The current boundary layer's selection filter              |
++-------------------+------------------------------------------------------------+
 
 Layer Selection
 ^^^^^^^^^^^^^^^
@@ -58,16 +47,15 @@ that has the vertex handles and can directly be edited.
 
 **Related reference**
 
+:doc:`EditBlackboard`
 
-* :doc:`EditBlackboard`
+:doc:`Map editor`
 
-* :doc:`Map editor`
+:doc:`Workbench`
 
-* :doc:`Workbench`
+:doc:`Layer`
 
-* :doc:`Layer`
-
-* :doc:`Working with Features`
+:doc:`Working with Features`
 
 
 Boundary Selection

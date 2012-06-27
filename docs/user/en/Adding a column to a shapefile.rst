@@ -12,7 +12,7 @@ attributes and then export the resulting scratch layer.
 #. Run the :doc:`Transform operation`:
 
    -  Right click to bring up the context menu and choose **Operations > Transform**
-   -  From the menu bar **Edit > All Operations** to open the :doc:`Operations dialog` then select **Resource > Transform** and press **Operate**
+   -  From the menu bar :menuselection:`Edit --> All Operations` to open the :doc:`Operations dialog` then select :menuselection:`Resource --> Transform` and press **Operate**
 
 #. This operation will open the :doc:`Transform dialog` listing the current
    attributes along with a definition of how to populate them.
@@ -51,17 +51,13 @@ format can only support one geometry column.
 
 **Related concepts**
 
-
-* :doc:`Constraint Query Language`
+:doc:`Constraint Query Language`
 
 
 **Related reference**
 
+:doc:`Transform operation`
 
-* :doc:`Transform operation`
+:doc:`Catalog view`
 
-* :doc:`Catalog view`
-
-* :doc:`Resource to Shapefile Wizard`
-
-
+:doc:`Resource to Shapefile Wizard`

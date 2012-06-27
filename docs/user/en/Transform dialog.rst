@@ -78,16 +78,13 @@ Cancel the operation, no result will be generated.
 
 **Related tasks**
 
-
 :doc:`Using Feature operations`
 
 
 **Related reference**
-
 
 :doc:`Transform operation`
 
 :doc:`Operations dialog`
 
 :doc:`Expression viewer`
-

@@ -44,8 +44,12 @@ There are different ways that snapping can behave, for example the snapping can 
 | Grid                | Snaps to the nearest grid intersection                                                                                                    |
 +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
 
-**Note:** The Grid can only be seen if the grid map graphic is added (**Layer > Grid**)
- **Tip:** The size of the grid can be changed in the :doc:`Edit Tool Preferences`.
+.. note::
+   The Grid can only be seen if the grid map graphic is added (:menuselection:`Layer --> Grid`)
+
+.. tip::
+   The size of the grid can be changed in the :doc:`Edit Tool Preferences`.
+
 
 There is two different ways to change the snap behavior:
 
@@ -56,7 +60,6 @@ There is two different ways to change the snap behavior:
 
 **Related reference**
 
-
-* :doc:`Edit Tool Preferences`
+:doc:`Edit Tool Preferences`
 
 

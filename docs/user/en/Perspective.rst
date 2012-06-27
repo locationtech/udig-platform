@@ -9,6 +9,8 @@ menus and toolbars.
 
 **Related concepts**
 
-   :doc:`Workbench`
-   :doc:`View`
-   :doc:`Editor`
+:doc:`Workbench`
+
+:doc:`View`
+
+:doc:`Editor`

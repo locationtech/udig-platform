@@ -45,14 +45,12 @@ Here are two quick examples:
 
 **Related concepts**
 
-
 :doc:`Service`
 
 
 **Related reference**
 
-
 :doc:`Files page`
 
- :doc:`Catalog view`
+:doc:`Catalog view`
 

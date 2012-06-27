@@ -19,20 +19,16 @@ An example with the sample data set is:
 
 **Related tasks**
 
-
 :doc:`Configure a AOI layer`
 
 
 **Related concepts**
-
 
 :doc:`Area of Interest`
 
 
 **Related reference**
 
-
 :doc:`Table view`
 
- :doc:`AOI view`
-
+:doc:`AOI view`

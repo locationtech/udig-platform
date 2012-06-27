@@ -10,9 +10,6 @@ idea of changing the time or elevation displayed.
 
 **Related tasks**
 
+:doc:`Pan`
 
-* :doc:`Pan`
-
-* :doc:`Zoom`
-
-
+:doc:`Zoom`

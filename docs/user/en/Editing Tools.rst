@@ -5,10 +5,9 @@ Editing Tools Overview
 ======================
 
 This is the root page of the user documentation for the **uDig** *Editing Tools* extensions.
-`Axios <http://www.axios.es>`_ is providing under the `Spatial Operations and Editing
-Tools <http://udig.refractions.net/confluence/display/COM/Spatial+Operations+and+Editing+Tools>`_
-project promoted by the **Diputación Foral de Gipuzkoa**, `**Departamento de Movilidad y Ordenación
-del Territorio** <http://b5m.gipuzkoa.net/web5000/>`_.
+`Axios <http://www.axios.es>`_ is providing under the 
+`Spatial Operations and Editing Tools <http://udig.refractions.net/confluence/display/COM/Spatial+Operations+and+Editing+Tools>`_
+project promoted by the **Diputación Foral de Gipuzkoa**, `Departamento de Movilidad y Ordenación del Territorio <http://b5m.gipuzkoa.net/web5000/>`_.
 
 These extensions comprise some additional tools for the geometry based edition of features.
 

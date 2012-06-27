@@ -13,16 +13,17 @@ Getting started:
 
 * :doc:`Adding a layer`
 
-    Add information directly to your map
+  Add information directly to your map
+  
 * :doc:`Importing data`
 
-    Add information to your catalog for later use
+  Add information to your catalog for later use
+
 
 Contents:
 
 .. toctree::
    :maxdepth: 1
-
 
    Adding features from a Shapefile
    Adding features from ArcSDE
@@ -39,6 +40,7 @@ Contents:
 **Related tasks**
 
 :doc:`Working with Features`
+
 
 **Related reference**
 

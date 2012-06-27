@@ -9,12 +9,17 @@ Available Preferences
 ~~~~~~~~~~~~~~~~~~~~~
 
 -  Snap Radius - Declares how big the radius of the snap circle will be (in pixels) when performing
-   snap operations.
-    Default setting is 30.
-    **Tip:** Snap Radius can also be set by holding ALT and moving the scroll wheel when a edit tool
-   is active.
+   snap operations. Default setting is 30.
+   
+   .. tip:: 
+      Snap Radius can also be set by holding ALT and moving the scroll wheel when a edit tool is active.
+
 -  Snap Behaviour - Declares how vertex snapping behaves.
-    **Tip:** Snap behaviour can also be changed by pressing CTRL+SHIFT+S when a edit tool is active.
+
+   .. tip:: 
+      Snap behaviour can also be changed by pressing CTRL+SHIFT+S when a edit tool is active.
+
+
    +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
    | No Snapping         | Snapping is turned off. **DEFAULT**                                                                                                       |
    +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
@@ -40,23 +45,16 @@ Note: The color of the outlines of the selected features are set in the :doc:`Ma
 
 **Related reference**
 
-
-* :doc:`Snapping`
-
-
-   Child Preference Pages
-   ~~~~~~~~~~~~~~~~~~~~~~
-
-* :doc:`Edit Tool Performance Preferences`
+:doc:`Snapping`
+   
+:doc:`Edit Tool Performance Preferences`
 
 
 Peers
 ~~~~~
 
-* :doc:`Catalog Preferences`
+:doc:`Catalog Preferences`
 
-* :doc:`Project Preferences`
+:doc:`Project Preferences`
 
-* :doc:`Rendering Preferences`
-
-
+:doc:`Rendering Preferences`

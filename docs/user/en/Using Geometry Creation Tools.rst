@@ -26,7 +26,7 @@ starting point when creating a new feature (you will sill need to fill in the at
 
 **Related reference**
 
-* :doc:`Using Geometry Creation Tools`
+:doc:`Using Geometry Creation Tools`
 
-* :doc:`Using Advanced Edit Mode`
+:doc:`Using Advanced Edit Mode`
 
