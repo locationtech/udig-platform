@@ -10,10 +10,11 @@ This quickstart makes use of sample data kindly made available by the `Natural
 Earth <http://www.naturalearthdata.com>`_ project:
 
 #. Right click on the following links and choose **Save Link As...**:
-   :doc:`data\_1\_3.zip`
 
+   `data_1_3.zip <http://udig.refractions.net/files/data/data_1_3.zip>`_ 
 
-   -  If you are using this in a classroom setting or OSGeo live dvd the files should be on your DVD
+   .. note::
+      If you are using this in a classroom setting or OSGeo live dvd the files should be on your DVD
 
 #. If you have your own GIS data please feel free to experiment. Making use of the above sample data
    will enable you to follow along with this tutorial step by step.

@@ -7,16 +7,14 @@ Navigation Tools:
 
 Navigation Commands:
 
-* :doc:`Back`
-
-* :doc:`Forward`
-
--  |image2| `Refresh`_
--  |image3| `Stop Drawing`_
--  |image4| `Show All`_
--  |image5| `Zoom In`_
--  |image6| `Zoom Out`_
--  |image7| `Zoom to Selection`_
+* `Back`_
+* `Forward`_
+*  |image2| `Refresh`_
+*  |image3| `Stop Drawing`_
+*  |image4| `Show All`_
+*  |image5| `Zoom In`_
+*  |image6| `Zoom Out`_
+*  |image7| `Zoom to Selection`_
 
 Navigation Tools
 ----------------
