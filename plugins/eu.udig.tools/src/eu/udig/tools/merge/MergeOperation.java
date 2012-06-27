@@ -27,10 +27,11 @@ import eu.udig.tools.merge.internal.view.MergeView;
 public class MergeOperation implements IOp {
 
     private MergeContext mergeContext;
+
     private MergeView mergeView = new MergeView();
+
     private List<SimpleFeature> selectedFeatures;
 
-    
     @Override
     public void op(Display display, Object target, IProgressMonitor monitor) throws Exception {
 
@@ -41,15 +42,35 @@ public class MergeOperation implements IOp {
         //Turn the filter into a List of features
         selectedFeatures = Util.retrieveFeatures(filterSelectedFeatures, selectedLayer);
         
-        display.asyncExec(new Runnable(){ // <<<== Throws NullPointerException
-
+        mergeView = null;
+        
+        display.asyncExec(new Runnable(){
             public void run() {
-                try {
+                do
+                {
+                    try {
+                        //slow down looping
+                        Thread.sleep(3000);
+                        System.out.print("Waiting for mergeView to be not null/r");
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    //Just loop
+                    //System.out.print("Waiting for mergeView to be not null/n");
+                } while (mergeView == null);
+                
+                mergeView.addSourceFeatures(selectedFeatures);
+                
+                mergeView.display();
+            }
+        });
+        
+        display.asyncExec(new Runnable(){ // <<<== Throws NullPointerException
+            
+            public void run() {
+                try {                   
                     mergeView = (MergeView) ApplicationGIS.getView(true, MergeView.ID);
-                    
-                    mergeView.addSourceFeatures(selectedFeatures);
-    
-                    mergeView.display();
                 }
                     catch (Exception ex) {
                     ex.printStackTrace();
@@ -159,5 +180,4 @@ public class MergeOperation implements IOp {
         
 
     }
-
 }
