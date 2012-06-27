@@ -1,18 +1,27 @@
 Tool Preferences
 ================
 
-.. figure:: /images/tool_preferences/toolpreferences.png
+.. figure:: images/tool_preferences/toolpreferences.png
    :align: center
    :alt: 
 
+
+.. toctree::
+   :maxdepth: 1
+   
+   Edit Tool Preferences
+   Edit Tool Performance Preferences
+
+   
+
 **Related reference**
 
-Child Preference Pages
-~~~~~~~~~~~~~~~~~~~~~~
+.. Child Preference Pages
+.. ~~~~~~~~~~~~~~~~~~~~~~
 
-:doc:`Edit Tool Preferences`
+.. :doc:`Edit Tool Preferences`
 
-:doc:`Edit Tool Performance Preferences`
+.. :doc:`Edit Tool Performance Preferences`
 
 
 Peers

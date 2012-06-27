@@ -256,19 +256,7 @@ Contents
 
    * :doc:`Catalog Preferences`
 
-
-      * :doc:`ArcSDE Preference Page`
-
-      * :doc:`DB2 Preferences`
-
-
    * :doc:`Help Preferences`
-
-   * :doc:`Layer Preferences`
-
-   * :doc:`Map Preferences`
-
-   * :doc:`Printing Preferences`
 
    * :doc:`Project Preferences`
 
@@ -284,8 +272,6 @@ Contents
 
          * :doc:`Snapping`
 
-
-   * :doc:`WMS Preferences`
 
 
 * :doc:`Property Pages`

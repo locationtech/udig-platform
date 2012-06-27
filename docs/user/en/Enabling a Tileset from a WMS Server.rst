@@ -21,6 +21,6 @@ To enable a tileset on a wms layer:
 
 **Related reference**
 
-:doc:`WMS Preferences`
+:ref:`preferences-page-rendering-wms`
 
 :doc:`Tileset page`

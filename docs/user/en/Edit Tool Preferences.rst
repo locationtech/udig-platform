@@ -41,7 +41,10 @@ Available Preferences
 -  Feedback - The color that the feedback animations will be.
     Default is red.
 
-Note: The color of the outlines of the selected features are set in the :doc:`Map Preferences` by the selection color preference.
+
+.. note::
+   The color of the outlines of the selected features are set in the :doc:`Map Preferences` by the selection color preference.
+
 
 **Related reference**
 

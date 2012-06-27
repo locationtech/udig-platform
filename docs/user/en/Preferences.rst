@@ -14,34 +14,24 @@ the filter area in dialog.
 Preference Pages
 ~~~~~~~~~~~~~~~~
 
-* :doc:`Catalog Preferences`
-
-   * :doc:`ArcSDE Preference Page`
-
-   * :doc:`DB2 Preferences`
-
-* :doc:`Help Preferences`
-
-* :doc:`Layer Preferences`
-
-* :doc:`Map Preferences`
-
-* :doc:`Printing Preferences`
-
-* :doc:`Project Preferences`
-
-* :doc:`Rendering Preferences`
-
-* :doc:`Tool Preferences`
-
-   * :doc:`Edit Tool Preferences`
-
-      * :doc:`Edit Tool Performance Preferences`
-
-      * :doc:`Snapping`
+.. toctree::
+   :maxdepth: 2
+   
+   Catalog Preferences
+   Help Preferences
+   Project Preferences
+   Rendering Preferences
+   Tool Preferences
 
 
-* :doc:`WMS Preferences`
+
+.. * :doc:`Tool Preferences`
+
+..   * :doc:`Edit Tool Preferences`
+
+..      * :doc:`Edit Tool Performance Preferences`
+
+..      * :doc:`Snapping`
 
 
 Restore Defaults

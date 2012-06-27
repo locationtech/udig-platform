@@ -10,4 +10,4 @@ backed onto either a WMS or a WMS-C service.
 
 * :doc:`Tileset page`
 
-* :doc:`WMS Preferences`
+* :ref:`preferences-page-rendering-wms`

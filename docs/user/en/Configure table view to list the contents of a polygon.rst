@@ -3,7 +3,7 @@ Configure table view to list the contents of a polygon
 
 We can use a AOI layer with the table view to list the contents of a selected polygon.
 
-#. Use layer preferences to configure your polygon layer as a **AOI** layer.
+#. Use :ref:`preferences-page-project-layer` to configure your polygon layer as a **AOI** layer.
 #. Open the **AOI** view and choose **AOI Layer**
 #. Use the **AOI Selection** tool to choose a polygon. You can use Shift to select more than one
    polygon

@@ -94,4 +94,4 @@ You can quickly add a layer from a web browser (or the embedded **Web view**):
 
 **Related reference**
 
-:doc:`ArcSDE Preference Page`
+:ref:`preferences-page-catalog-arcsde`

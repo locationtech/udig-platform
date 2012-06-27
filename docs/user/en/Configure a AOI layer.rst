@@ -1,7 +1,7 @@
 Configure a AOI layer
 #####################
 
-You can use layer preferences to configure a polygon layer as a background "AOI" layer for use with
+You can use :ref:`preferences-page-project-layer` to configure a polygon layer as a background "AOI" layer for use with
 the **AOI Selection** tool.
 
 #. Right click on the layer in the **Layer** view
