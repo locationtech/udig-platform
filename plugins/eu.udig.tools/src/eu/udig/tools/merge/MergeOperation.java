@@ -47,26 +47,7 @@ public class MergeOperation implements IOp {
         selectedFeatures = Util.retrieveFeatures(filterSelectedFeatures, selectedLayer);
         
         mergeView = mergeContext.getMergeView();
-        
-        /*
-        display.asyncExec(new Runnable(){
-            public void run() {
-                do
-                {
-                    try {
-                        //slow down looping
-                        Thread.sleep(3000);
-                        System.out.print("Waiting for mergeView to be not null/r");
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    //Just loop
-                    //System.out.print("Waiting for mergeView to be not null/n");
-                } while (mergeView == null);
-            }
-        });
-        */
+
         display.asyncExec(new Runnable(){ // <<<== Throws NullPointerException
             
             public void run() {
@@ -81,111 +62,7 @@ public class MergeOperation implements IOp {
                     catch (Exception ex) {
                     ex.printStackTrace();
                 }
-        }});
-        
-        
-        
-        // NO MORE ACTIIVE CODE BEYOND THIS POINT: just cut-n-paste playground
-        
-        
-        /*
-        IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        
-        if (activePage.findView(MergeTool.ID) == null) {
-        try {
-        // open the view
-        activePage.showView(MergeTool.ID);
-        // and maximize it
-        activePage.toggleZoom(activePage.findViewReference(MergeTool.ID));
-        } catch (PartInitException es) {
-        es.printStackTrace();
-        }
-        }
-        */
-        
-        // ModalTool mergeTool = (ModalTool) ApplicationGIS.getToolManager().findTool(MergeTool.ID);
-        // mergeTool.setActive(true);
-        
-                
-        //mergeView.createPartControl
-        
-        //this.mergeContext = MergeContext.getInstance();
-        
-        // Look at the current shell and up its parent
-        // hierarchy for a workbench window.
-        
-        //IWorkbenchPage page = myGetWorkbenchWindow(display).getActivePage();
-        // Look for the window that was last known being
-        // the active one
-        /*
-        WorkbenchWindow win = getActivatedWindow();
-        if (win != null) {
-                return win;
-        }
-        */
-        
-        // IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        
-        /*
-        
-        // Look at the current shell and up its parent
-        // hierarchy for a workbench window.
-        Control shell = display.getActiveShell();
-        while (shell != null) {
-                Object data = shell.getData();
-                if (data instanceof IWorkbenchWindow) {
-                        return (IWorkbenchWindow) data;
-                }
-                shell = shell.getParent();
-        }
-
-        // Look for the window that was last known being
-        // the active one
-        WorkbenchWindow win = getActivatedWindow();
-        if (win != null) {
-                return win;
-        }
-
-        // Look at all the shells and pick the first one
-        // that is a workbench window.
-        Shell shells[] = display.getShells();
-        for (int i = 0; i < shells.length; i++) {
-                Object data = shells[i].getData();
-                if (data instanceof IWorkbenchWindow) {
-                        return (IWorkbenchWindow) data;
-                }
-        }
-        */
-        
-        /*
-        try {
-            
-            mergeView = (MergeView) ApplicationGIS.getView(true, MergeView.ID);
-            if (mergeView == null) {
-                // crates a new merge view
-                //IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-                mergeView = (MergeView) page.findView(MergeView.ID);
-            }
-            assert mergeView != null : "view is null"; //$NON-NLS-1$
-
-            // associates this the merge view with the merge context
-            mergeView.setMergeContext(mergeContext);
-            mergeContext.activeMergeView(mergeView);
-            
-            mergeView = new MergeView();
-            //tW.
-            
-            mergeView.addSourceFeatures(selectedFeatures);
-
-            mergeView.display();
-              
-        } catch (Exception ex) {
-            System.out.print("Error: "+ex.toString());
-        }
-         */
-
-        
-
+        }});   
     }
 
     /**
