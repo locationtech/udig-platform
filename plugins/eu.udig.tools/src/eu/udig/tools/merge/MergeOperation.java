@@ -28,12 +28,16 @@ public class MergeOperation implements IOp {
 
     private MergeContext mergeContext;
 
-    private MergeView mergeView = new MergeView();
+    private MergeView mergeView;
 
     private List<SimpleFeature> selectedFeatures;
 
     @Override
     public void op(Display display, Object target, IProgressMonitor monitor) throws Exception {
+        
+        this.mergeContext = MergeContext.getInstance();
+        //this.mergeContext.setToolContext(getContext());
+        openMergeView(100, 100, mergeContext);
 
         //Get the selected layer
         ILayer selectedLayer = ApplicationGIS.getActiveMap().getEditManager().getSelectedLayer();
@@ -42,8 +46,9 @@ public class MergeOperation implements IOp {
         //Turn the filter into a List of features
         selectedFeatures = Util.retrieveFeatures(filterSelectedFeatures, selectedLayer);
         
-        mergeView = null;
+        mergeView = mergeContext.getMergeView();
         
+        /*
         display.asyncExec(new Runnable(){
             public void run() {
                 do
@@ -59,23 +64,25 @@ public class MergeOperation implements IOp {
                     //Just loop
                     //System.out.print("Waiting for mergeView to be not null/n");
                 } while (mergeView == null);
-                
-                mergeView.addSourceFeatures(selectedFeatures);
-                
-                mergeView.display();
             }
         });
-        
+        */
         display.asyncExec(new Runnable(){ // <<<== Throws NullPointerException
             
             public void run() {
                 try {                   
-                    mergeView = (MergeView) ApplicationGIS.getView(true, MergeView.ID);
+                    //mergeView = (MergeView) ApplicationGIS.getView(true, MergeView.ID);
+                    
+                    mergeView.addSourceFeatures(selectedFeatures);
+                    
+                    mergeView.display();
+                    
                 }
                     catch (Exception ex) {
                     ex.printStackTrace();
                 }
         }});
+        
         
         
         // NO MORE ACTIIVE CODE BEYOND THIS POINT: just cut-n-paste playground
@@ -180,4 +187,36 @@ public class MergeOperation implements IOp {
         
 
     }
+
+    /**
+     * Opens the Merge view
+     * 
+     * @param eventX
+     * @param eventY
+     * @param context
+     */
+    private void openMergeView(int eventX, int eventY, MergeContext mergeContext) {
+
+        MergeView view = null;    
+        try {
+            view = (MergeView) ApplicationGIS.getView(true, MergeView.ID);
+            if (view == null) {
+                // crates a new merge view
+                IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                        .getActivePage();
+                view = (MergeView) page.findView(MergeView.ID);
+            }
+            assert view != null : "view is null"; //$NON-NLS-1$
+
+            // associates this the merge view with the merge context
+            view.setMergeContext(mergeContext);
+            mergeContext.activeMergeView(view);
+
+        } catch (Exception ex) {
+            /*AnimationUpdater.runTimer(getContext().getMapDisplay(), new MessageBubble(eventX,
+                    eventY, "It cannot be merge", //$NON-NLS-1$
+                    PreferenceUtil.instance().getMessageDisplayDelay()));*/
+        }
+    }
+
 }
