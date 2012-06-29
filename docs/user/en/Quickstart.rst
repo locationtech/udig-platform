@@ -41,7 +41,8 @@ uDig Application
 
 #. Choose **uDig 1.1 > uDig** from the start menu
 #. The application will take a few moments to start up
-    |image0|
+
+   |image0|
 
 The uDig application keeps a configuration folder in your home directory, the folder will be created
 the first time the application is launched. If you have any difficulties, or are running uDig on
@@ -54,7 +55,7 @@ Welcome View
    screen has links to tutorials, documentation and the project website.
 #. Click the arrow labelled **Workbench** in the upper right corner, to reveal the contents of the uDig workbench.
 
-    |image1|
+   |image1|
 
 You can return to the Welcome view at any time by selecting the :menuselection:`Help --> Welcome` from the menu
 bar.
@@ -98,7 +99,8 @@ To start out with we are going to load some of the sample data you downloaded ea
 #. You can see the order the layers are drawn in the layer view. Right now the **clouds.jpg** layer
    is drawn ontop of the countries layer.
 #. Select the **clouds.jpg** layer in the catalog view and drag it to the bottom of the list
-    |image2|
+
+   |image2|
 
 **Info:** One of the most common questions asked when uDig is considered for an organization is how
 much memory the application uses. Unlike most GIS applications uDig can get by with a fixed amount
@@ -143,17 +145,22 @@ available layers of information that you can mix into your own maps.
 #. Select :menuselection:`File --> New --> New Map` from the menu bar
 #. Change to the **Web view**, click on the tab next to the **Catalog view** to reveal the Web view.
 #. Click on the link **WMS:dm solutions** link
-    |image8|
+
+   |image8|
+
 #. From the :doc:`Resource Selection page` we are going to choose the
    following layers:
 
    -  Elevation/Bathymetry\*
    -  Parks
    -  Cities
-       |image9|
+
+      |image9|
 
 #. Press **Finish** to add these layers to your map
-    |image10|
+
+   |image10|
+
 #. Use the |image11| Zoom Tool to move closer to one of the Parks
 #. Switch to the |image12| and click on one the parks to learn more about it
 
@@ -172,7 +179,8 @@ Style
    -  Line: Click on the **Color** and change the color to **BLACK**
    -  Fill: uncheck the box to turn off fill
    -  Label: check the box, and choose **CNTRY\_NAME** from the list of attributes
-       |image13|
+
+      |image13|
 
 #. Press **Apply** to see what this looks like on your Map, the Layer view will also be updated to
    reflect the current style
@@ -184,7 +192,9 @@ Style
    Select **Map > Mylar** from the menu bar to focus on the selected layer
 #. Using the Layer view select **timezone**, **countries** and **clouds.jpg** in turn to see the
    effect
-    |image14|
+
+   |image14|
+
 #. You can turn off this effect at any time using **Map > Mylar** from the menu bar
 
 What is Next

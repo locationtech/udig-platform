@@ -17,6 +17,8 @@ that can be set for layers.
    :alt: 
 
    
+.. _preferences-page-project-map:
+
 Map Preferences
 ---------------
 

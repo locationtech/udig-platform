@@ -6,7 +6,8 @@ Line Creation Tool – Cannot resolve external resource into attachment.
 
 The Line Creation Tool allows lines created. To create a line simply select a line layer in the
 :doc:`Layers view` and click to begin a new line.
- |image0|
+
+|image0|
 
 Vertex Snapping
 ~~~~~~~~~~~~~~~
@@ -16,13 +17,18 @@ can be used during geometry creation.
 
 -  Line creation with snapping to the current layer. Notice that it didn't snap to the municipality
    which is in another layer (circled in red)
-    |image1|
+
+   |image1|
+
 -  Line creation with snapping to the all layers. With this snapping it has snapped to the features
    on other layers.
-    |image2|
+
+   |image2|
+
 -  Line creation with snapping to the grid. The grid is only seen when the grid map graphic is on.
    **Layer > Grid**
-    |image3|
+
+   |image3|
 
 Advanced Editing
 ~~~~~~~~~~~~~~~~
@@ -34,9 +40,12 @@ has, except that only lines can be edited. A summary of the advanced editing fea
 -  An existing line can be extended by
 
 #. Clicking on a line to select it
-    |image4|
+
+   |image4|
+
 #. Click on an end point to start extending the line
-    |image5|
+
+   |image5|
 
 -  Vertices in selected lines can be moved.
 -  Vertices in selected lines can be added or deleted

@@ -7,11 +7,11 @@ To try this for yourself:
 
 #. Open up the application preferences using :menuselection:`Window --> Preferences`
 #. Navigate to the :doc:`Edit Tool Preferences` page
-#. Toggle the **Advanced Tools** checkbox
-#. Press :guilablel:`OK`
+#. Toggle the :guilabel:`Advanced Tools` checkbox
+#. Press :guilabel:`OK`
 
 .. tip::
-   You can also toggle this setting while editing by pressing CTRL+space.
+   You can also toggle this setting while editing by pressing :kbd:`CTRL`+:kbd:`SPACE`.
 
 **Related reference**
 

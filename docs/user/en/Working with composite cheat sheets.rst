@@ -81,7 +81,8 @@ The author of a composite cheat sheet can choose to make a task or task group op
 optional it can be skipped, either by right clicking on that task in the task explorer and selecting
 skip from the context menu, or by clicking on the "Skip this task" hyperlink in the task detail
 pane. Skipping a task will allow tasks which depend on this task to be started.
- Order of task completion
+
+Order of task completion
 
 The task detail area will provide hyperlinks which will walk through the tasks in order. It is also
 possible to perform tasks out of order by selecting the task in the task explorer and starting work

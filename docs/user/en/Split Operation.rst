@@ -24,13 +24,13 @@ Go to the *Spatial Operations* View, and select *Split* from the *Operations lis
 
 Now is time to indicate the operation's inputs, as shown in *Figure 2*:
 
--  **Select the** ***Source***
-    From the *Split layer* drop down, select the Layer containing the Features to Split, this one
+-  **Select the Source**
+   From the *Split layer* drop down, select the Layer containing the Features to Split, this one
    will be our source layer.
--  **Select the** ***Using***
+-  **Select the Using**
     From the *Using Layer* drop down, select the layer to use as splitting mask.
--  **Select the** ***Result***
-    At the *Result Layer* drop down, a tentative Layer name will be proposed for the layer the
+-  **Select the Result**
+   At the *Result Layer* drop down, a tentative Layer name will be proposed for the layer the
    operation will create. You can change the name or select an existing Layer where to store the
    results. Also, you can select the used source layer.
 
@@ -38,7 +38,7 @@ Now is time to indicate the operation's inputs, as shown in *Figure 2*:
  **Figure 2. Define input and target layers.**
 
 -  **Perform the operation**
-    Once the input and target layers are defined, press the *Perform* button at the *Spatial
+   Once the input and target layers are defined, press the *Perform* button at the *Spatial
    Operations* View tool bar. The operation will begin processing and its progress will be shown up
    on a progress dialog, as shown in *Figure 3*. The operation may take a while to complete,
    depending on the amount and complexity of the input geometries.
@@ -52,7 +52,7 @@ the split operation between the *Split* and *Using* Layers.
 |image3|
  **Figure 4. Result Layer.**
 
-.. |image0| image:: download/thumbnails/8388972/split-before.png
-.. |image1| image:: download/thumbnails/8388972/split-ui.png
-.. |image2| image:: download/thumbnails/8388972/split-progress.png
-.. |image3| image:: download/thumbnails/8388972/split-after.png
+.. |image0| image:: images/split_operation/split-before.png
+.. |image1| image:: images/split_operation/split-ui.png
+.. |image2| image:: images/split_operation/split-progress.png
+.. |image3| image:: images/split_operation/split-after.png

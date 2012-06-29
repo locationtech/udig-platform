@@ -1,24 +1,25 @@
+Georeferencing Tools
+--------------------
+
 The category of georeferencing tools is used to help you align a plain image file onto a map.
 
-:doc:`Georeferencing Tools`
+.. list-table::
+   :widths: 30 30 30 
+   :header-rows: 1
 
+   * - `Georeferencing Tools`_
+     - `Georeferencing Image Tools`_
+     - `Georeferencing Marker Tools`_
+   * - |image0|
+     - |image3|
+     - |image6|
+   * - |image1|
+     - |image4|
+     - |image7|
+   * - |image2|
+     - |image5|
+     -
 
--  |image0|
--  |image1|
--  |image2|
-
-:doc:`Georeferencing Image Tools`
-
-
--  |image3|
--  |image4|
--  |image5|
-
-:doc:`Georeferencing Marker Tools`
-
-
--  |image6|
--  |image7|
 
 When you have any of the image or marker tools selected, you can right-mouse-click on the map to
 rotate between them.
@@ -31,9 +32,6 @@ rotate between them.
 
 The Load Image, Delete Image and Warp Image tools are not used frequently and must be selected from
 the tool menu as normal.
-
-Georeferencing Tools
---------------------
 
 Load Image
 ~~~~~~~~~~
@@ -106,11 +104,11 @@ tool.
 :doc:`Georeference an Image`
 
 
-.. |image0| image:: /images/georeferencing_tools/ref_load_image.png
-.. |image1| image:: /images/georeferencing_tools/ref_warp_image.png
-.. |image2| image:: /images/georeferencing_tools/ref_delete_image.png
-.. |image3| image:: /images/georeferencing_tools/ref_select_image.png
-.. |image4| image:: /images/georeferencing_tools/ref_move_image.png
-.. |image5| image:: /images/georeferencing_tools/ref_resize_image.png
-.. |image6| image:: /images/georeferencing_tools/ref_place_markers.png
-.. |image7| image:: /images/georeferencing_tools/ref_move_markers.png
+.. |image0| image:: images/georeferencing_tools/ref_load_image.png
+.. |image1| image:: images/georeferencing_tools/ref_warp_image.png
+.. |image2| image:: images/georeferencing_tools/ref_delete_image.png
+.. |image3| image:: images/georeferencing_tools/ref_select_image.png
+.. |image4| image:: images/georeferencing_tools/ref_move_image.png
+.. |image5| image:: images/georeferencing_tools/ref_resize_image.png
+.. |image6| image:: images/georeferencing_tools/ref_place_markers.png
+.. |image7| image:: images/georeferencing_tools/ref_move_markers.png

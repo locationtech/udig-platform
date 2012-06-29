@@ -13,6 +13,15 @@ These extensions comprise some additional tools for the geometry based edition o
 
 Check the links bellow for specific user documentation for each of the available extensions.
 
+.. toctree::
+   :hidden:
+ 
+   Arc Tool
+   Parallel Tool
+   Split Tool (Axios Tools)
+   Trim Line Tool
+
+
 -  :doc:`Arc Tool` — |image0| Creates a linestring approximating an arc given three
    control points (initial point, axis, and end point).
 -  :doc:`Parallel Tool` — |image1| Creates a parallel LineString.

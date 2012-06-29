@@ -23,6 +23,6 @@ Contents:
 
 **Related reference**
 
-:doc:`Geospatial`
+`Geospatial (wikipedia) <http://en.wikipedia.org/wiki/Geospatial>`_
 
-:doc:`Geospatial Analysis`
+`Geospatial Analysis - A comprehensive guide <http://www.spatialanalysisonline.com/>`_

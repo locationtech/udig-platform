@@ -95,6 +95,6 @@ An example world.prj is:
 
 * `ESRI World Image format <http://www.kralidis.ca/gis/worldfile.htm>`_
 
-* `http://geos.gsi.gov.il/vladi/FEFLOW/help/general/file_format.html#tfw_file`_
+* `<http://geos.gsi.gov.il/vladi/FEFLOW/help/general/file_format.html#tfw_file>`_
 
 

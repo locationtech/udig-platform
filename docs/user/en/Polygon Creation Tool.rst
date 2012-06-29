@@ -7,10 +7,12 @@ Polygon Creation Tool – Cannot resolve external resource into attachment.
 The Polygon Creation Tool allows polygons created. To create a polygon simply select a polygon layer
 in the :doc:`Layers view` and click to begin a new polygon and continue to click at
 new locations to add more vertices.
- |image0|
+
+|image0|
  
 .. note::
-   Edited polygons are only filled when the fill polygon preference is set in the :doc:`Edit Tool Performance Preferences`
+   Edited polygons are only filled when the fill polygon preference is set in the 
+   :doc:`Edit Tool Performance Preferences`
 
 Vertex Snapping
 ~~~~~~~~~~~~~~~
@@ -20,13 +22,18 @@ can be used during polygon geometry creation.
 
 -  Polygon creation with snapping to the current layer. Notice that it didn't snap to the hospital
    which is in another layer (circled in red)
-    |image1|
+
+   |image1|
+
 -  Polygon creation with snapping to the all layers. With this snapping it has snapped to the
    hospital on the second layer.
-    |image2|
+
+   |image2|
+
 -  Polygon creation with snapping to the grid. The grid is only seen when the grid map graphic is
    on. **Layer > Grid**
-    |image3|
+
+   |image3|
 
 Advanced Editing
 ~~~~~~~~~~~~~~~~
@@ -86,7 +93,7 @@ editing features are:
    * :doc:`Delete Tool`
 
 
-.. |image0| image:: /images/polygon_creation_tool/createpolygon.png
-.. |image1| image:: /images/polygon_creation_tool/currentlayersnapping.png
-.. |image2| image:: /images/polygon_creation_tool/alllayersnapping.png
-.. |image3| image:: /images/polygon_creation_tool/gridsnapping.png
+.. |image0| image:: images/polygon_creation_tool/createpolygon.png
+.. |image1| image:: images/polygon_creation_tool/currentlayersnapping.png
+.. |image2| image:: images/polygon_creation_tool/alllayersnapping.png
+.. |image3| image:: images/polygon_creation_tool/gridsnapping.png

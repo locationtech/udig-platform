@@ -13,9 +13,11 @@ Operations also directly available from the context menu when selecting informat
 
 The following operations are defined:
 
-* :doc:`Layer Summary operation`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`Transform operation`
+   Layer Summary operation
+   Transform operation
 
 
 Cancel

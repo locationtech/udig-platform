@@ -156,7 +156,7 @@ AJAX library.
 
 
   * Click on the highlighted OpenLayers link at the bottom to open a new tab. As this Open Layers
-  application is started up you can watch the GeoServer console respond to queries.
+    application is started up you can watch the GeoServer console respond to queries.
   
   .. figure:: images/console_getmap.png
     :width: 11.46cm

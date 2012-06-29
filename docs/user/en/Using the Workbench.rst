@@ -10,7 +10,7 @@ selection which are used collaboratively).
 Contents:
 
 .. toctree::
-   :maxtdepth: 1
+   :maxdepth: 1
 
    Closing an editor
    Exiting the workbench

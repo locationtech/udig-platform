@@ -9,13 +9,13 @@ This wizard allows you to import additional information into the uDig applicatio
 
 You can choose between the following options:
 
-* :doc:`CSV Import page`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`Data page`
-
-* :doc:`Import imagery folder as mosaic page`
-
-* :doc:`KML to Shapefile import page`
+   CSV Import page
+   Data page
+   Import imagery folder as mosaic page
+   KML to Shapefile import page
 
 
 **Related tasks**

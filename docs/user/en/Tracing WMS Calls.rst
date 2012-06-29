@@ -77,9 +77,9 @@ The uDig will enter into "version negotiation" with the server using the above i
 Mac OSX
 -------
 
-1. right click on uDig.app and choose "Show Package Contents"
- 2. Navigate to MacOS folder
- 3. Next the the file udig\_internal.ini create the file ".options" as described above.
+#. right click on uDig.app and choose "Show Package Contents"
+#. Navigate to MacOS folder
+#. Next the the file udig\_internal.ini create the file ".options" as described above.
 
 You can either review the application logs located (from the about udig screen); or start the
 application from the command line with:

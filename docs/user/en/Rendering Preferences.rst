@@ -18,11 +18,11 @@ General Preferences
 
 -  Use anti-aliasing - When anti-aliasing is on the map is much smoother and accurate than with it
    off, however it is quite expensive so performance is much worse.
-    Default anti-aliasing is off. However if features that should connect appear to be disconnected
+   Default anti-aliasing is off. However if features that should connect appear to be disconnected
    at small zoom levels then turn on antialiasing as it may be an aliasing issue.
 -  Render transparencies - When unchecked transparencies in the styles will be ignored.
    Transparencies take slightly longer to render.
-    Default is on.
+   Default is on.
 -  Tiling layer rendering (experimental) - Currently this is not quite a tiling system. When panning
    a read-only layer the tiler will only request the required areas as opposed to requesting a full
    rendering of the viewport.

@@ -29,6 +29,5 @@ area can also be resized but views cannot be dragged into the editor area.
    and views until the Workbench has been arranged to satisfaction. The figure below illustrates the
    layout if one editor is dragged and dropped below another.
 
- |image0|
+   .. image:: images/tiling_editors/tilededitors.jpg
 
-.. |image0| image:: /images/tiling_editors/tilededitors.jpg

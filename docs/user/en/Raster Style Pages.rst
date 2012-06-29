@@ -52,7 +52,8 @@ Allows simple control over the rendering of a raster image.
    boundaries to show through the raster.
 -  Scale: Control the scale at which the raster is shown
 -  RGB Channel Selection
-    Provides control over mapping raster channels to Red, Green and Blue channels for display. The
+
+   Provides control over mapping raster channels to Red, Green and Blue channels for display. The
    gamma of each band can be controlled allowing you to adjust how much of a contribution each band
    makes to the final display.
 

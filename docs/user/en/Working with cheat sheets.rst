@@ -20,14 +20,17 @@ stepping through common tasks.
 
 **Related tasks**
 
-:doc:`Working with composite cheat sheets`
+.. toctree::
+   :maxdepth: 1
+
+   Working with composite cheat sheets
 
 
 Cheat Sheet Selection Dialog
 ============================
 
 1. Select :menuselection:`Help --> Cheat sheets` from the menubar
-2. Select one of the available cheat sheets and click **OK**.
+2. Select one of the available cheat sheets and click :guilabel:`OK`
 
 You may also load a cheat sheet content file or from the internet.
 

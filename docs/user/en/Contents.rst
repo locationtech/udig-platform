@@ -1,7 +1,6 @@
 Contents
 ########
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :doc:`Community`
 
@@ -224,10 +223,6 @@ Contents
 
    * :doc:`Data Menu`
 
-
-      * :doc:`WRIS`
-
-
    * :doc:`Edit Menu`
 
    * :doc:`File Menu`
@@ -421,6 +416,7 @@ Contents
       * :doc:`Data page`
 
       - :doc:`Import imagery folder as mosaic page`
+
       * :doc:`KML to Shapefile import page`
 
 
@@ -499,8 +495,10 @@ Contents
 
    * :doc:`Adding layers from WMS`
 
-   -  :doc:`Enabling a Tileset from a WMS Server`
-   -  :doc:`Handling Shapefiles with different Character Sets`
+   * :doc:`Enabling a Tileset from a WMS Server`
+
+   * :doc:`Handling Shapefiles with different Character Sets`
+
    * :doc:`Importing data`
 
 
@@ -575,13 +573,16 @@ Contents
 * :doc:`Working with AOI`
 
 
-   -  :doc:`Configure table view to list the contents of a polygon`
-   -  :doc:`Configure table view to list the contents of the screen`
+   * :doc:`Configure table view to list the contents of a polygon`
+
+   * :doc:`Configure table view to list the contents of the screen`
+
    * :doc:`Show the AOI on the map`
 
    * :doc:`Use a bookmark as the AOI`
 
-   -  :doc:`Use a Coordinate Reference System as the AOI`
+   * :doc:`Use a Coordinate Reference System as the AOI`
+
    * :doc:`Use a processing region as the AOI`
 
    * :doc:`Use polygon as the AOI`
@@ -589,11 +590,12 @@ Contents
 
 * :doc:`Working with Features`
 
-
    * :doc:`Adding a column to a shapefile`
 
-   -  :doc:`Changing the projection of a shapefile`
-   -  :doc:`Processing the Geometry in a Shapefile`
+   * :doc:`Changing the projection of a shapefile`
+
+   * :doc:`Processing the Geometry in a Shapefile`
+
    * :doc:`Using Advanced Edit Mode`
 
    * :doc:`Using Feature Edit Tools`
@@ -695,9 +697,12 @@ Contents
 
    * :doc:`Creating a Project`
 
-   -  :doc:`Using new to add a Map to a Project`
-   -  :doc:`Using the Context menu to add a Map to a Project`
-   -  :doc:`Using the File menu to add a new Map`
+   * :doc:`Using new to add a Map to a Project`
+
+   * :doc:`Using the Context menu to add a Map to a Project`
+
+   * :doc:`Using the File menu to add a new Map`
+
    * :doc:`Using the Projects view`
 
 

@@ -330,7 +330,7 @@ For several functions uDig will make use of an internal (or embedded browser).
 On the Linux platform eclipse tries to launch the Mozilla browser. But recent Linux distributions
 ship with a "custom" copy of Firefox so uDig does not recognize it.
 
-Because uDig runs inside eclipse, the Standard Widget Toolkit FAQ at `http://www.eclipse.org/swt/faq.php#browserlinux`_
+Because uDig runs inside eclipse, the Standard Widget Toolkit FAQ at `<http://www.eclipse.org/swt/faq.php#browserlinux>`_
 
 may indicate which web browser to install in case this information is not displayed correctly.
 

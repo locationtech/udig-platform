@@ -9,10 +9,10 @@ This wizard allows you to export information from the uDig application to a rang
 
 You can choose between the following options:
 
-* :doc:`Layer to Shapefile`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`Map to Image`
-
-* :doc:`Resource to Shapefile`
-
+   Layer to Shapefile Wizard
+   Map to Image Wizard
+   Resource to Shapefile Wizard
 

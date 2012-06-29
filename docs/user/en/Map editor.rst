@@ -34,15 +34,14 @@ map and the Editing draw has tools specifically for editing features.
 
 Tools are arranged into the following categories:
 
-* :doc:`Edit Tools`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`Georeferencing Tools`
-
-* :doc:`Information Tools`
-
-* :doc:`Navigation Tools`
-
-* :doc:`Selection Tools`
+   Edit Tools
+   Georeferencing Tools
+   Information Tools
+   Navigation Tools
+   Selection Tools
 
 
 Context Menu

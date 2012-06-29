@@ -13,11 +13,12 @@ Style Pages
 A tree of style pages for the selected content is displayed. Each page allowing the modification of
 one aspect of the visualization process.
 
-* :doc:`Feature Style Pages`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`Raster Style Pages`
-
-* :doc:`Web Map Server Style Pages`
+   Feature Style Pages
+   Raster Style Pages
+   Web Map Server Style Pages
 
 
 The style pages used by Map Graphics are each unique; for more information please visit:

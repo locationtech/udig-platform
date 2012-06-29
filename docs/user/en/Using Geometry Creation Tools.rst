@@ -4,19 +4,16 @@ Using Geometry Creation Tools
 Geometry Creation Tools are used to create or draw a new Geometry. This geometry is used as the
 starting point when creating a new feature (you will sill need to fill in the attributes).
 
-:doc:`Polygon Creation Tool`
+.. toctree::
+   :maxdepth: 1
 
-:doc:`Line Creation Tool`
-
-:doc:`Point Creation Tool`
-
-:doc:`Draw Geometry Tool`
-
-:doc:`Rectangle Tool`
-
-:doc:`Ellipse Tool`
-
-:doc:`Smart Buffer Tool`
+   Polygon Creation Tool
+   Line Creation Tool
+   Point Creation Tool
+   Draw Geometry Tool
+   Rectangle Tool
+   Ellipse Tool
+   Smart Buffer Tool
 
 
 .. tip::
@@ -25,8 +22,6 @@ starting point when creating a new feature (you will sill need to fill in the at
    entry work while reducing the amount of times you need to switch tools.
 
 **Related reference**
-
-:doc:`Using Geometry Creation Tools`
 
 :doc:`Using Advanced Edit Mode`
 

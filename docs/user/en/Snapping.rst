@@ -21,8 +21,8 @@ while rotating the mouse wheel.
    One of the edit tools must be active to set the snap radius using the mouse tool.
    
 .. tip::
-   The color of the snap area can be set in the :doc:`Edit Tool Preferences`. The feedback color indicates the color of the snap
-   area.
+   The color of the snap area can be set in the :doc:`Edit Tool Preferences`. The feedback 
+   color indicates the color of the snap area.
 
 
 Snap Behavior
@@ -30,7 +30,7 @@ Snap Behavior
 
 There are different ways that snapping can behave, for example the snapping can snap to a grid
 (defined by the user) or it can snap to the nearest vertex on the current layer.
- The normal snapping choices are as follows:
+The normal snapping choices are as follows:
 
 +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
 | No Snapping         | Snapping is turned off. **DEFAULT**                                                                                                       |
@@ -55,7 +55,7 @@ There is two different ways to change the snap behavior:
 
 #. In the :doc:`Edit Tool Preferences` which can be found in the
    :menuselection:`Window --> Preferences` menu.
-#. While an edit to is *active* press CTRL+SHIFT+S. This will cycle through the available snap
+#. While an edit to is *active* press :kbd:`CTRL`+:kbd:`SHIFT`+:kbd:`S`. This will cycle through the available snap
    behaviors. A small pop-up will display the new behavior.
 
 **Related reference**

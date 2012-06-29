@@ -50,7 +50,7 @@ Windows install:
   .. image:: images/installer_finish.png
     :width: 8cm
 
-   We have a known issue telling Windows 7 that the installation was successful. Please click :guilabel:`This program installed correctly`.
+  We have a known issue telling Windows 7 that the installation was successful. Please click :guilabel:`This program installed correctly`.
 
   .. image:: images/installer_warning.png
     :width: 8cm
