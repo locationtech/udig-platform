@@ -65,8 +65,8 @@ Creating a new Map from a shapefile:
    -  Release it onto an existing Map to insert a layer
 
   .. note::
-     The resource(s) must be dragged to the exact location in the Projects view hierarchy; they
-	 cannot be simply dragged and dropped onto a blank area.
+     The resource(s) must be dragged to the exact location in the Projects view hierarchy; they cannot 
+     be simply dragged and dropped onto a blank area.
 
 Map Editor
 ==========
