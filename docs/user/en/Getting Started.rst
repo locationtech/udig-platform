@@ -14,6 +14,14 @@ user interface.
    Introduction to the Spatial Toolbox
 
 
+.. toctree::
+   :hidden:
+
+   getting_started/geoserver/intro_images
+   getting_started/shared/intro_walkthrough
+
+
+
 Tips for using Online Help
 
 -  The back and forward arrows operate like a browser, they will not take you to the next page in

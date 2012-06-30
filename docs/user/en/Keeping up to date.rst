@@ -12,5 +12,8 @@ with all the upgrades will appear. Select the upgrade you wish to install and cl
 
 :doc:`Working with the Update Manager`
 
-:doc:`Finding new plugins`
+.. toctree::
+   :maxdepth: 1
+
+   Finding new plugins
 

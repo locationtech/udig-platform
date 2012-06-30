@@ -14,4 +14,5 @@ this display by rearranging the views and editors displayed.
    Running uDig
    Support
    Working with the Update Manager
+   Keeping up to date
 

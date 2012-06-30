@@ -26,7 +26,10 @@ The components folder lists the boxes that can be added to the current page.
 
 By default uDig ships with the following components:
 
-   * :doc:`Label Box`
+.. toctree::
+   :maxdepth: 1
+
+   Label Box
 
 
 Additional components may be available depending on the community plug-ins you have installed.

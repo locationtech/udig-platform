@@ -9,7 +9,7 @@ to editing the visual geometry.
 
 **Related reference**
 
-.. toctree:
+.. toctree::
    :maxdepth: 1
 
    Delete Tool

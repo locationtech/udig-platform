@@ -520,7 +520,7 @@ Contents
 
       * :doc:`Rearranging tabbed views`
 
-      * :doc:`Rearranging views`
+      * :doc:`Rearranging Views`
 
       * :doc:`Tiling editors`
 

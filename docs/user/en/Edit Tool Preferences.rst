@@ -56,9 +56,7 @@ Available Preferences
    :maxdepth: 1
 
    Edit Tool Performance Preferences
-
-
-:doc:`Snapping`
+   Snapping
    
 
 Peers

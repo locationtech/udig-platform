@@ -15,7 +15,11 @@ the Workbench window.
 
 **Related concepts**
 
-:doc:`Fast views`
+.. toctree::
+   :maxdepth: 1
+
+   Fast views concept
+
 
 :doc:`Using an Editor`
 

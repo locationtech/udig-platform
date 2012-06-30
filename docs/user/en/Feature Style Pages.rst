@@ -16,7 +16,7 @@ following pages are available.
 
 * `Simple Polygons`_
 
-* `Theme`_
+* :ref:`Theme-Subtitle`_
 
 * `XML`_
 
@@ -169,6 +169,8 @@ experimentally tested on live subjects.
 -  Filters: palettes may be filter into those suitable for color blind, CRT monitors, LCD monitors,
    Projectors, the printed page and photocopying.
 -  Palette: choose a palette from the list
+
+.. _Theme-Subtitle:
 
 Theme
 -----

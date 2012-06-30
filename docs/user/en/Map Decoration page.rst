@@ -11,19 +11,16 @@ After a map decoration has been added to your map it may be customized using the
 
 Several options are available:
 
-* :doc:`Grid Decoration`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`JGrass Raster Legend`
-
-* :doc:`JGrass Vector Legend`
-
-* :doc:`Legend Decoration`
-
-* :doc:`North Arrow Decoration`
-
-* :doc:`Scalebar Decoration`
-
-* :doc:`The Processing Region`
+   Grid Decoration
+   JGrass Raster Legend
+   JGrass Vector Legend
+   Legend Decoration
+   North Arrow Decoration
+   Scalebar Decoration
+   The Processing Region
 
 
 **Related reference**

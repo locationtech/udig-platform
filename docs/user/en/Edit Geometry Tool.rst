@@ -103,7 +103,11 @@ Tips
 
 **Related reference**
 
-:doc:`EditBlackboard`
+.. toctree::
+   :maxdepth: 1
+
+   EditBlackboard
+
 
 :doc:`Snapping`
 
