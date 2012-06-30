@@ -6,15 +6,14 @@ issue tracker used by the development team.
 
 **Related tasks**
 
-:doc:`Submit Error Log`
+.. toctree::
+   :maxdepth: 1
 
-:doc:`Subscribe to the user list`
-
-:doc:`Tracing WMS Calls`
-
-:doc:`Using the Issue Tracker`
-
-:doc:`View Error Log and Configuration Details`
+   Submit Error Log
+   Subscribe to the user list
+   Tracing WMS Calls
+   Using the Issue Tracker
+   View Error Log and Configuration Details
 
 
 **Related reference**

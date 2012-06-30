@@ -8,7 +8,7 @@ The Image Georeferencing view is used to georeference an image using a set of co
 desired CRS.
 
 To enable the Image Georeferencing view, go to :menuselection:`Window --> Show View --> Other...` and 
-choose *Select Image Georeferencing* under the *Other* folder.
+choose :guilabel:`Select Image Georeferencing` from the :guilabel:`Other` category.
 
 |image0|
 
@@ -42,9 +42,18 @@ the tools to manipulate the image will be activated.
 |image2|
 
 
-We have the following tools: *Add new mark, delete mark, move mark, zoom in, zoom out, pan the
-image, delete all marks and fit to canvas.* Move around the image using the pan tool and zoom in/out
-to be accurate while adding marks.
+We have the following tools: 
+
+   * Add new mark, 
+   * delete mark, 
+   * move mark, 
+   * zoom in, 
+   * zoom out, 
+   * pan the image, 
+   * delete all marks and 
+   * fit to canvas. 
+
+Move around the image using the pan tool and zoom in/out to be accurate while adding marks.
 
 Step 2
 ~~~~~~
@@ -105,12 +114,30 @@ Tips
    buttons that are located next to the run button.
 -  You can zoom in/out the image using the mouse wheel whenever you want.
 
-.. |image0| image:: download/thumbnails/13238886/select-view.jpeg
-.. |image1| image:: download/thumbnails/13238886/georeferncing-view.png
-.. |image2| image:: download/thumbnails/13238886/view-with-image.jpeg
-.. |image3| image:: download/thumbnails/13238886/add-mark.jpeg
-.. |image4| image:: download/thumbnails/13238886/add-gcp.jpeg
-.. |image5| image:: download/thumbnails/13238886/add-gcp6.jpeg
-.. |image6| image:: download/thumbnails/13238886/save-file.jpeg
-.. |image7| image:: download/thumbnails/13238886/run.jpeg
-.. |image8| image:: download/thumbnails/13238886/result.jpeg
+.. |image0| image:: images/image_georeferencing/select-view.jpeg
+   :width: 40%
+
+.. |image1| image:: images/image_georeferencing/georeferncing-view.png
+   :width: 60%
+
+.. |image2| image:: images/image_georeferencing/view-with-image.jpeg
+   :width: 60%
+
+.. |image3| image:: images/image_georeferencing/add-mark.jpeg
+   :width: 60%
+
+.. |image4| image:: images/image_georeferencing/add-gcp.jpeg
+   :width: 60%
+
+.. |image5| image:: images/image_georeferencing/add-gcp6.jpeg
+   :width: 60%
+
+.. |image6| image:: images/image_georeferencing/save-file.jpeg
+   :width: 60%
+
+.. |image7| image:: images/image_georeferencing/run.jpeg
+   :width: 60%
+
+.. |image8| image:: images/image_georeferencing/result.jpeg
+   :width: 60%
+

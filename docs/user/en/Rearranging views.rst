@@ -6,7 +6,7 @@ The position of the Projects view in the Workbench window can be changed.
 #. Click in the title bar of the Projects view and drag the view across the Workbench window. Do not
    release the mouse button yet.
 
-   |image0|
+   .. image:: /images/rearranging_views/review.gif
 
 #. While still dragging the view around on top of the Workbench window, note that various drop
    cursors appear. These drop cursors (see previous section) indicate where the view will dock in
@@ -20,4 +20,3 @@ The position of the Projects view in the Workbench window can be changed.
    mouse button is released the Projects view will be stacked with the Layers view into a tabbed
    notebook.
 
-.. |image0| image:: /images/rearranging_views/review.gif

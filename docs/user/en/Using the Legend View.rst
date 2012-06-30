@@ -9,17 +9,15 @@ available in this view.
 
 **Related tasks**
 
-:doc:`Adding a folder`
+.. toctree::
+   :maxdepth: 1
 
-:doc:`Grouping layers by folder`
-
-:doc:`Changing a layer's z-order`
-
-:doc:`Show or Hide map graphics layers`
-
-:doc:`Show or hide background layers`
-
-:doc:`Show or hide grid layer on map`
+   Adding a folder
+   Grouping layers by folder
+   Changing a layer's z-order
+   Show or Hide map graphics layers
+   Show or hide background layers
+   Show or hide grid layer on map
 
 
 **Related reference**

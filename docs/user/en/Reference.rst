@@ -17,3 +17,4 @@ Reference for the uDig application describing wizards, views, and shortcuts.
    Property Pages
    Views and editors
    Wizards and Dialogs
+

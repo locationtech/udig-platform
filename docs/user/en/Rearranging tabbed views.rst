@@ -14,5 +14,5 @@ rearranged within a tabbed notebook.
 
 #. Observe that the Projects tab is now to the right of the Locals tab.
 
-   .. |image1| image:: images/rearranging_tabbed_views/tabs2.jpg
+   .. image:: images/rearranging_tabbed_views/tabs2.jpg
 

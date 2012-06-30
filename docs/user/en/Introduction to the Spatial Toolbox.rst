@@ -165,7 +165,7 @@ already loaded from the sample dataset.
 
    .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_10.png
       :width: 80%
-	  :alt:
+      :alt:
    
 #. Please select the Aspect module so we can describe the tabs used to control a service.
 #. inputs tab:
