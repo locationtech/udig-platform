@@ -67,7 +67,7 @@ automatically added to the current Map.
 *Figure 4* shows the newly created Layer (Clip-1, in green) added to the map, with the Features
 resulting of applying the difference between the *Source* and *Clipping* Layers.
 
-.. image:: images/clip_operation/clip_4_result.png
+.. figure:: images/clip_operation/clip_4_result.png
 
    **Figure 4. Result Layer**
 

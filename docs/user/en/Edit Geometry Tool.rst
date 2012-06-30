@@ -16,32 +16,51 @@ functionality illustrated on this page is also available when using the :doc:`Po
    #. Add **bc\_municipality.shp**
 
 #. Zoom into a small area of the map.
-    |image0|
+
+   |image0|
+
 #. Select the layer in the Layers view that you wish to edit (bc\_municipality)
 #. Using the **Edit Geometry** tool, select a municipality.
-    |image1|
+
+   |image1|
+
 #. You can use the **Feature Edit** tool to move points. Move your mouse over a vertex. Click and
    drag the vertex.
-    **Tip:** The circle around the point is the current snap area. For more information about
-   snapping click :doc:`here <Snapping>`.
-    |image2|
+
+   .. tip::
+      The circle around the point is the current snap area. For more information about 
+      snapping click :doc:`here <Snapping>`.
+
+   |image2|
+
 #. You can also create new points with the **Feature Edit** tool. Click on a straight line where
    there is no vertex. A vertex will appear and it can be moved.
-    |image3|
+
+   |image3|
+
 #. To delete a vertex select a vertex and press the delete key or select **Edit > Delete**.
-    |image4|
+
+   |image4|
+
 #. Multiple vertices can be selected by dragging selection box around multiple vertices.
-    |image5|
+
+   |image5|
+
 #. All selected vertices can be moved or deleted together
-    |image6|
+
+   |image6|
+
 #. The geometry can be moved as a whole by holding down **CTRL+ALT** and dragging the geometry.
-    |image7|
+
+   |image7|
+
 #. Once the geometry has been modified as much as desired the changes can be *accepted* by
 
    #. Double clicking the left mouse button
    #. Selecting another tool
    #. Clicking the commit button.
-       |image8|
+
+      |image8|
 
 Any operation/change performed can be undone by **CTRL+Z** or **Edit > Undo**. Undone changes can be
 redone by **CTRL+Y** or **Edit > Redo**.
@@ -65,15 +84,22 @@ Tips
 -  A line can split by
 
    #. Selecting a line (select bc\_borders and select a line)
-       |image9|
+
+      |image9|
+
    #. Adding a vertex at location where the split will take place using the :doc:`Add Vertex Tool`
-       |image10|
+
+      |image10|
+
    #. The split can now be done by:
 
       #. Selecting **Edit > Split Line**
-          |image11|
+
+         |image11|
+
       #. Or right clicking and selecting **Operations > Split Line** from the context menu.
-          |image12|
+
+         |image12|
 
 **Related reference**
 
