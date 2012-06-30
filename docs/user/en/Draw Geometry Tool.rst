@@ -15,17 +15,18 @@ starting vertex (the geometry is closed) in which case polygons are created.
    :alt: 
 
 The tool can create holes in existing polygons as well. In order to do this:
- 1. Select the geometry you wish to edit (Draw tool will select geometries when in :doc:`Using Advanced Edit Mode`
- 2. Draw a hole that is enclosed in the polygon
 
-As with the :doc:`Line Creation Tool`, the Draw Geometry Tool can extend
-existing lines:
- 1. Select the geometry you wish to edit (Draw tool will select geometries when in :doc:`Using Advanced Edit Mode`
- 2. Draw a line that continues from the end of selected line.
+#. Select the geometry you wish to edit (Draw tool will select geometries when in :doc:`Using Advanced Edit Mode`
+#. Draw a hole that is enclosed in the polygon
+
+As with the :doc:`Line Creation Tool`, the Draw Geometry Tool can extend existing lines:
+
+1. Select the geometry you wish to edit (Draw tool will select geometries when in :doc:`Using Advanced Edit Mode`
+#. Draw a line that continues from the end of selected line.
  
    .. note::
       It has to *start* at the end of the selected line. If a line is ended at an end of the
-	  selected line a new line will be created rather than extending the selected line.
+      selected line a new line will be created rather than extending the selected line.
 
 **Related reference**
 

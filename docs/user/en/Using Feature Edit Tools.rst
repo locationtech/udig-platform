@@ -9,6 +9,10 @@ to editing the visual geometry.
 
 **Related reference**
 
-:doc:`Split Tool`
+.. toctree:
+   :maxdepth: 1
 
-:doc:`Delete Tool`
+   Delete Tool
+   Fill Tool
+   Split Tool
+

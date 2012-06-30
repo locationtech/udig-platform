@@ -21,8 +21,9 @@ can be used during point geometry creation.
 Advanced Editing
 ~~~~~~~~~~~~~~~~
 
-The Point Creation Tool also has an advanced mode that provides all the functionality that the :doc:`Edit Geometry Tool` has, except only points can be edited. A summary of
-the advanced editing features are:
+The Point Creation Tool also has an advanced mode that provides all the functionality that the 
+:doc:`Edit Geometry Tool` has, except only points can be edited. A summary of the advanced 
+editing features are:
 
 -  Clicking an existing point will select it.
 -  Vertices in selected points can be moved.
@@ -31,6 +32,7 @@ the advanced editing features are:
 
 
 -  Advanced Edit Mode
+
 * :doc:`EditBlackboard`
 
 * :doc:`Snapping`
@@ -69,6 +71,5 @@ the advanced editing features are:
    * :doc:`Split Tool`
 
    * :doc:`Delete Tool`
-
 
 

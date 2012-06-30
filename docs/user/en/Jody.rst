@@ -19,12 +19,12 @@ Visual\_feature Feature 1.0.0:
 Installation
 ============
 
-#. Open up :menuselection:`Help > Find and Install...` from the menu bar
+#. Open up :menuselection:`Help --> Find and Install...` from the menu bar
 #. Select the **Search for New Features to Install** radio button and press **Next**
 #. Click on the **New Remote Site** button and provide the following:
 
    -  Name: uDig Community Updates
-   -  URL: `http://udig.refractions.net/update-community`_
+   -  URL: `<http://udig.refractions.net/update-community>`_
 
 
 #. Place a check mark for **Community Updates** and press **Finish**

@@ -60,15 +60,20 @@ You can quickly add a layer from a web browser (or the embedded **Web view**):
 
 #. Select Web Map Server Cannot resolve external resource into attachment. from the Wizard and press
    Next
+
 #. Enter your WMS getcapabilitites URL or select recent WMS and press Open
-    WMS Link can be found `here <http://www.skylab-mobilesystems.com/en/wms_serverlist.html>`_ or
+   WMS Link can be found `here <http://www.skylab-mobilesystems.com/en/wms_serverlist.html>`_ or
    `Test servers <http://udig.refractions.net:8080/confluence/display/UDIG/Test+Servers>`_
 
-    |image0|
+   |image0|
+
 #. Select layer(s) that will compose the new map and press **Finish**
-    |image1|
+
+   |image1|
+
 #. WMS Layers will be added to the Catalog and a new map containing selected layers will show up.
-    |image2|
+
+   |image2|
 
 **Related concepts**
 

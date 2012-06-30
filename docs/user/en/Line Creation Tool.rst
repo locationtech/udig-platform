@@ -57,6 +57,7 @@ has, except that only lines can be edited. A summary of the advanced editing fea
 
 
 -  Advanced Edit Mode
+
 * :doc:`EditBlackboard`
 
 * :doc:`Snapping`

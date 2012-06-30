@@ -12,7 +12,7 @@ You can cycle through tools in the same category by pressing the keyboard short 
 
 
 +-------------------------+------------------------------+-----------------------------+
-| Edit Tools (:kbd:`e`)   |  `Create Tools`_ (:kbd:`c`)  | `Feature Tools`_ (:kbd:`f`) |
+| Edit Tools (:kbd:`e`)   |  `Create Tools`_ (:kbd:`c`)  | Feature Tools (:kbd:`f`)    |
 +-------------------------+------------------------------+-----------------------------+
 | |image0| Edit Geometry  | |image4| `Create Polygon`_   | |image10| Delete Feature    |
 +-------------------------+------------------------------+-----------------------------+

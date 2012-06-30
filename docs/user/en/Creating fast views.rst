@@ -18,11 +18,10 @@ Create a fast view using drag and drop as follows.
    button to drop the Projects view onto the shortcut bar.
 
 The shortcut bar now includes a button for the Projects fast view:
- |image0|
+
+.. image:: /images/creating_fast_views/shortcutbar.jpg
 
 To create a fast view using the second approach, start by popping up the context menu over the
 Projects view's tab. From this menu, select Fast View.
- |image1|
 
-.. |image0| image:: /images/creating_fast_views/shortcutbar.jpg
-.. |image1| image:: /images/creating_fast_views/fastviewmenu.jpg
+.. image:: /images/creating_fast_views/fastviewmenu.jpg

@@ -51,8 +51,8 @@ editing features are:
 
 **Related reference**
 
-
 -  Advanced Edit Mode
+
 * :doc:`EditBlackboard`
 
 * :doc:`Snapping`
