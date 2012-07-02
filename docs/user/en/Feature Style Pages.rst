@@ -16,7 +16,7 @@ following pages are available.
 
 * `Simple Polygons`_
 
-* :ref:`Theme-Subtitle`_
+* `Theme Subtitle`_
 
 * `XML`_
 
@@ -170,7 +170,7 @@ experimentally tested on live subjects.
    Projectors, the printed page and photocopying.
 -  Palette: choose a palette from the list
 
-.. _Theme-Subtitle:
+.. _Theme Subtitle:
 
 Theme
 -----

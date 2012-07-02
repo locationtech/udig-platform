@@ -14,13 +14,6 @@ user interface.
    Introduction to the Spatial Toolbox
 
 
-.. toctree::
-   :hidden:
-
-   getting_started/geoserver/intro_images
-   getting_started/shared/intro_walkthrough
-
-
 
 Tips for using Online Help
 

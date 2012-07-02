@@ -3,7 +3,7 @@ uDig User Guide
 ###############
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    uDig Overview
    Getting Started
@@ -13,6 +13,12 @@ uDig User Guide
    What is new
    Tips and Tricks
    Community
+
+
+.. toctree::
+   :maxdepth: 1
+
+   docguide/docguide
 
 
 Online Help

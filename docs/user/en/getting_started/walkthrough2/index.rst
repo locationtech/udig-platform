@@ -1,7 +1,10 @@
 uDig Walkthrough 2
 ==================
 
-.. include:: ../shared/intro_walkthrough.rst
+|refractions_png| |lisasoft_png| |udig_logo_gif|
+
+.. image:: ../images/background.png
+   :width: 100%
 
 .. toctree::
     :maxdepth: 2
@@ -29,3 +32,13 @@ uDig Walkthrough 2
 
 
 Single Page for all chapters \: :doc:`walkthrough2`
+
+.. |refractions_png| image:: ../images/refractions_logo.png
+   :height: 3cm
+
+.. |lisasoft_png| image:: ../images/lisasoft_logo.png
+   :height: 3cm
+
+.. |udig_logo_gif| image:: ../images/udig_logo.gif
+   :height: 3cm
+
