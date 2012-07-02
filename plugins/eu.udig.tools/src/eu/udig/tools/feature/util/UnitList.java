@@ -48,7 +48,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.osgi.framework.Bundle;
 
 import eu.udig.tools.Activator;
-import eu.udig.tools.feature.utils.i18n.Messages;
+import eu.udig.tools.internal.i18n.Messages;
 
 
 /**
