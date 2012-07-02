@@ -43,7 +43,7 @@
     </target>
 
     <target name="user" depends="init">
-        <antcall target="sphinx-ignore-warnings">
+        <antcall target="sphinx">
             <param name="id" value="user/en" />
             <param name="build" value="html" />
         </antcall>
@@ -57,7 +57,7 @@
     </target>
     
     <target name="devel" depends="init">
-        <antcall target="sphinx">
+        <antcall target="sphinx-ignore-warnings">
             <param name="id" value="devel/en"/>
             <param name="build" value="html"/>
         </antcall>
