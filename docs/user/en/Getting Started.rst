@@ -10,7 +10,6 @@ user interface.
    Quickstart
    Walkthrough 1
    Walkthrough 2
-   Merge Tool
    Introduction to the Spatial Toolbox
 
 

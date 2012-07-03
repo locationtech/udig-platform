@@ -15,4 +15,5 @@ to editing the visual geometry.
    Delete Tool
    Fill Tool
    Split Tool
+   Merge Tool
 

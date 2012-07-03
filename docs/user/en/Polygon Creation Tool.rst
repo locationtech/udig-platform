@@ -11,8 +11,7 @@ new locations to add more vertices.
 |image0|
  
 .. note::
-   Edited polygons are only filled when the fill polygon preference is set in the 
-   :doc:`Edit Tool Performance Preferences`
+   Edited polygons are only filled when the fill polygon preference is set in the :doc:`Edit Tool Performance Preferences`
 
 Vertex Snapping
 ~~~~~~~~~~~~~~~

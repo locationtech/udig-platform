@@ -10,7 +10,7 @@ Workbench.
    Drop cursors
    Maximizing
    Rearranging tabbed views
-   Rearranging Views
+   Rearranging views
    Tiling editors
 
 
@@ -20,6 +20,6 @@ Workbench.
 
 .. include:: Rearranging tabbed views.rst
 
-.. include:: Rearranging Views.rst
+.. include:: Rearranging views.rst
 
 .. include:: Tiling editors.rst
