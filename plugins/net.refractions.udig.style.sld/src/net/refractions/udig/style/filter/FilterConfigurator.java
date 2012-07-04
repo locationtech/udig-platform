@@ -96,6 +96,8 @@ public class FilterConfigurator extends IStyleConfigurator {
         if( aoiButton == null || aoiButton.isDisposed() ){
             return; // nothing to see
         }
+        getApplyAction().setEnabled(true);
+        
         FilterStyle style = getFilterStyle();
         Filter filter = style.getFilter();
         boolean isAoiFilter = style.isAoiFilter();
@@ -120,16 +122,15 @@ public class FilterConfigurator extends IStyleConfigurator {
         return false;
     }
     /**
-     * Grab the FilterStyle from the style blackboard.
-     * <p>
-     * An empty FilterStyle will be returned if required.
+     * Grab the FilterStyle from the style blackboard (may be empty).
      * 
-     * @return FilterStyle from style blackboard, an empty FilterStyle will be returned if required.
+     * @return FilterStyle from style blackboard (may be empty)
      */
     protected FilterStyle getFilterStyle() {
         Layer layer = getLayer();
-
-        assert (canStyle(layer));
+        if( !canStyle(layer)){
+            throw new IllegalStateException("Layer "+layer.getName()+" cannot be filtered" );
+        }
         
         FilterStyle current = (FilterStyle) getStyleBlackboard().get(STYLE_ID);
         if (current == null) {
@@ -142,28 +143,30 @@ public class FilterConfigurator extends IStyleConfigurator {
     public void createControl( Composite parent ) {
         MigLayout layout = new MigLayout("insets panel", "[][fill]", "[fill][]");
         parent.setLayout(layout);
-
-        Label label = new Label(parent, SWT.SINGLE );
-        label.setText("Filter");
+        Label label;
+        
+        label = new Label(parent, SWT.SINGLE );
+        label.setText("Automatic Filter");
         label.setLayoutData("cell 0 0,aligny top, gapx 0 unrelated"); // unrelated spacing after to leave room for label decoration
+
+        
+        // Area of Interest filter button
+        aoiButton = new Button(parent, SWT.CHECK);
+        aoiButton.setText("Area of Interest");
+        aoiButton.setLayoutData("cell 1 0 2 1, left, grow x" );
+        
+        label = new Label(parent, SWT.SINGLE );
+        label.setText("Manual Filter");
+        label.setLayoutData("cell 0 1,aligny top, gapx 0 unrelated"); // unrelated spacing after to leave room for label decoration
         
         ControlDecoration decoration = new ControlDecoration(label, SWT.RIGHT | SWT.TOP );
         filterViewer = new FilterViewer(parent, SWT.MULTI );
-        filterViewer.getControl().setLayoutData("cell 1 0,grow,width 200:100%:100%,height 60:100%:100%");
+        filterViewer.getControl().setLayoutData("cell 1 1,grow,width 200:100%:100%,height 60:100%:100%");
         
         FilterInput input = new FilterInput();
         input.setFeedback( decoration );
         filterViewer.setInput(input);
         filterViewer.refresh();
-//        label = new Label(parent, SWT.SINGLE );
-//        label.setText("Tip: Use the apply button below to preview the selected content");
-//        label.setLayoutData("cell 0 1 2 1,left,grow x");
-
-        // Area of Interest filter button
-        aoiButton = new Button(parent, SWT.CHECK);
-        aoiButton.setText("Area of Interest");
-        aoiButton.setLayoutData("cell 0 1 2 1, left, grow x" );
-        aoiButton.addSelectionListener(aoiListener);
 
         listen(true);
     }
@@ -183,7 +186,7 @@ public class FilterConfigurator extends IStyleConfigurator {
         if (filterViewer == null || filterViewer.getControl() == null || filterViewer.getControl().isDisposed()) {
             return;
         }
-        
+        getApplyAction().setEnabled(false);
         if( this.aoiButton == null || this.aoiButton.isDisposed()){
             return; // we are shut down and thus ignoring this request to update the ui
         }
@@ -201,7 +204,9 @@ public class FilterConfigurator extends IStyleConfigurator {
                 try {
                     listen(false);
                     
-                    filterViewer.setFilter( style.getFilter() );
+                    Filter filter = style != null ? style.getFilter() : Filter.INCLUDE;
+                    
+                    filterViewer.setFilter( filter );
                     filterViewer.refresh();
                     
                     aoiButton.setSelection( style.isAoiFilter() );

@@ -26,6 +26,7 @@ import java.util.concurrent.locks.Lock;
 
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
+import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.internal.wms.WmsPlugin;
 import net.refractions.udig.catalog.wmsc.server.Capability;
 import net.refractions.udig.catalog.wmsc.server.TiledWebMapServer;
@@ -235,13 +236,21 @@ public class WMSCServiceImpl extends IService {
      * @return Status of the resource
      */
     public Status getStatus() {
-        if (msg != null) {
-            return Status.BROKEN;
-        }
-        if (wmsc == null) {
-            return Status.NOTCONNECTED;
+        if( wmsc == null ){
+            return super.getStatus();
         }
         return Status.CONNECTED;
+    }
+    
+    @Override
+    public void dispose(IProgressMonitor monitor) {
+        super.dispose(monitor);
+        if( members != null ){
+            members = null;
+        }
+        if( wmsc != null ){
+            wmsc = null;
+        }
     }
 
 }

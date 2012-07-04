@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.internal.Messages;
 import net.refractions.udig.ui.ErrorManager;
 
@@ -147,6 +148,10 @@ public abstract class IService implements IResolve {
      */
     protected static IServiceInfo INFO_UNAVAILABLE = new IServiceInfo();
     
+    /**
+     * Use when implementing {@link #getStatus()}.
+     */
+    protected boolean isDisposed = false;
     /**
      * Used to save persisted properties; please see {@link ServiceParameterPersister} for details.
      */
@@ -327,6 +332,9 @@ public abstract class IService implements IResolve {
      * @see IService#resolve(Class, IProgressMonitor)
      */
     public IServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
+        if( isDisposed ){
+            return null; 
+        }
         if (info == null) { // lazy creation
             synchronized (this) {
                 // support concurrent access
@@ -489,35 +497,76 @@ public abstract class IService implements IResolve {
         buf.append(")"); //$NON-NLS-1$
         return buf.toString();
     }
-
+    
+    /**
+     * Quick partial implementation for IService implementors.
+     * <p>
+     * Example use:<pre> public Status getStatus() {
+     *    if( ds == null ){
+     *        return super.getStatus(); // check isDisposed and getMessage()
+     *    }
+     *    return Status.CONNECTED;
+     * }</pre>
+     * @return DIPOSED, NOTCONNECTED or BROKEN (based on getMessage() being non null)
+     */
+    @Override
+    public Status getStatus() {
+        if( isDisposed ){
+            return Status.DISPOSED;
+        }
+        if( getMessage() != null ){
+            return Status.BROKEN;
+        }
+        return Status.NOTCONNECTED;
+    }
+    protected void finalize() throws Throwable {
+        // clean up connection
+        if( !isDisposed ){
+            CatalogPlugin.trace( getClass().getName()+" being cleaned up by fianlize, without prior call to dispose", null );
+            dispose(new NullProgressMonitor());
+        }
+        super.finalize();
+    }
+    
+    /**
+     * Calls dispose on each member (when connected).
+     * <p>
+     * Subclasses
+     * 
+     */
     public void dispose( IProgressMonitor monitor ) {
+        if( isDisposed ){
+            throw new IllegalStateException("IService.dispose() called, for the second time"); // downgrade to warning?
+        }
         monitor.beginTask(Messages.IService_dispose, 100);
-        List< ? extends IResolve> members = Collections.emptyList();
-        try {
-            if (getStatus() == Status.CONNECTED) {
-                // only ask for members if we are connected (if not we just get an error trying to
-                // connect again)
-                members = members(new SubProgressMonitor(monitor, 1));
-            }
-        } catch (Throwable e) {
-            ErrorManager.get().displayException(e,
-                    "Cleaning up memebers of service: " + getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
-            return;
-        }
-        int steps = (int) ((double) 99 / (double) members.size());
-        for( IResolve resolve : members ) {
+        
+        if (getStatus() == Status.CONNECTED) {
             try {
-                SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, steps);
-                resolve.dispose(subProgressMonitor);
-                subProgressMonitor.done();
+                // only ask for members if we are connected
+                // (if not we just get an error trying to connect again)
+                List< ? extends IResolve> members = members(new SubProgressMonitor(monitor, 1));
+
+                int steps = (int) ((double) 99 / (double) members.size());
+                for( IResolve resolve : members ) {
+                    try {
+                        SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, steps);
+                        resolve.dispose(subProgressMonitor);
+                        subProgressMonitor.done();
+                    } catch (Throwable e) {
+                        ErrorManager
+                                .get()
+                                .displayException(
+                                        e,
+                                        "Error during dispose: " + resolve.getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
+                    }
+                }
             } catch (Throwable e) {
-                ErrorManager
-                        .get()
-                        .displayException(
-                                e,
-                                "Error disposing member of service: " + resolve.getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
+                ErrorManager.get().displayException(e,
+                        "Cleaning up memebers of service: " + getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
+                return;
             }
         }
+        isDisposed = true;
     }
 
 }

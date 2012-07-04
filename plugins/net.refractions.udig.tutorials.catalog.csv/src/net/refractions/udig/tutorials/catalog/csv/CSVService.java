@@ -71,18 +71,21 @@ public class CSVService extends IService {
         }
         return file;
     }
+    
     public Throwable getMessage() {
         return msg;
     }
+    
     public Status getStatus() {
-        //did an error occur
-        if (msg != null)
+        if( isDisposed ){
+            return Status.DISPOSED;
+        }
+        else if (msg != null){
             return Status.BROKEN;
-        
-        //has the file been parsed yet
-        if (file == null)
+        }
+        if (file == null){
             return Status.NOTCONNECTED;
-        
+        }
         return Status.CONNECTED;
     }
     
@@ -95,4 +98,5 @@ public class CSVService extends IService {
         }
         return super.resolve(adaptee, monitor);
     }
+
 }

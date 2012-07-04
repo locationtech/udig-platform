@@ -317,9 +317,12 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
 
     public Query getFeatureQuery() {
         Query query = getLayer().getQuery(getLayer() instanceof SelectionLayer);
-        if( query.getFilter()==Filter.EXCLUDE )
-            return query;
-        FilterFactory ff=CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
+        
+        if( query.getFilter()==Filter.EXCLUDE ){
+            return query; // nothing to draw get out of here!
+        }
+        
+        FilterFactory ff=CommonFactoryFinder.getFilterFactory();
         Object editFilter=getLayer().getBlackboard().get(ProjectBlackboardConstants.MAP__RENDERING_FILTER);
         if (!(editFilter instanceof Filter) ){
             return query;
@@ -339,7 +342,7 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
         } catch (IllegalFilterException e) {
             return query;
         }
-        return new DefaultQuery( query.getTypeName(), query.getNamespace(), newFilter, query.getMaxFeatures(), query.getPropertyNames(), query.getHandle());
+        return new Query( query.getTypeName(), query.getNamespace(), newFilter, query.getMaxFeatures(), query.getPropertyNames(), query.getHandle());
     }
 
     public synchronized void clearImage( Rectangle paintArea ) {

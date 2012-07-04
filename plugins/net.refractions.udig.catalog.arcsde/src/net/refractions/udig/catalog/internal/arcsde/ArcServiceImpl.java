@@ -1,7 +1,7 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+ *    (C) 20042-2012, Refractions Research Inc.
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -12,7 +12,6 @@
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *    Lesser General Public License for more details.
- *
  */
 package net.refractions.udig.catalog.internal.arcsde;
 
@@ -31,6 +30,7 @@ import net.refractions.udig.catalog.IResolveChangeEvent;
 import net.refractions.udig.catalog.IResolveDelta;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
+import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.internal.CatalogImpl;
 import net.refractions.udig.catalog.internal.ResolveChangeEvent;
 import net.refractions.udig.catalog.internal.ResolveDelta;
@@ -49,18 +49,28 @@ import org.geotools.data.DataStore;
  * @since 0.6
  */
 public class ArcServiceImpl extends IService {
-
+    
+    /** Identifier used in Catalog */
     private final URL url;
-
+    
+    /** Current connection error - if any */
     private Throwable msg;
 
+    /**
+     * List vector contents
+     */
     private ArcSDEVectorService vectorService;
+    /**
+     * List raster contents
+     */
     private ArcSDERasterService rasterService;
 
-    // private volatile ISessionPool sessionPool;
-    // private volatile ArcSDEDataStore ds = null;
+    /** List of child members, provided by {@link #vectorService} and {@link #rasterService}. */
     private volatile List<IGeoResource> members;
-
+    
+    /**
+     * ArcSDE DataStore details used for connection.
+     */
     private final ArcSDEDataStoreConfig dataStoreConfig;
 
     /**
@@ -118,7 +128,7 @@ public class ArcServiceImpl extends IService {
         // }
         return super.canResolve(adaptee);
     }
-
+    
     /**
      * @see IService#resources(IProgressMonitor)
      */
@@ -134,12 +144,6 @@ public class ArcServiceImpl extends IService {
                     if (rasterService != null) {
                         members.addAll(rasterService.resources(monitor));
                     }
-                    // final IProgressMonitor nm = new NullProgressMonitor();
-                    // Collections.sort(members, new Comparator<IGeoResource>(){
-                    // public int compare( IGeoResource o1, IGeoResource o2 ) {
-                    // return o1.getInfo(nm).getTitle().compareTo(o2.getInfo(nm).getTitle());
-                    // }
-                    // });
 
                     IResolveDelta delta = new ResolveDelta(this, IResolveDelta.Kind.CHANGED);
                     ((CatalogImpl) CatalogPlugin.getDefault().getLocalCatalog())
@@ -186,12 +190,10 @@ public class ArcServiceImpl extends IService {
      * @see IService#getStatus()
      */
     public Status getStatus() {
-        // return msg != null ? Status.BROKEN : vectorService != null
-        // ? vectorService.getStatus()
-        // : (rasterService != null ? rasterService.getStatus() : Status.NOTCONNECTED);
-        return msg != null ? Status.BROKEN : vectorService != null
-                ? Status.CONNECTED
-                : Status.NOTCONNECTED;
+        if( vectorService == null ){
+            return super.getStatus();
+        }
+        return Status.CONNECTED;
     }
 
     /**
@@ -208,64 +210,6 @@ public class ArcServiceImpl extends IService {
         return url;
     }
 
-    private static class IServiceArcSDEInfo extends IServiceInfo {
-
-        private final URL identifier;
-
-        IServiceArcSDEInfo( final URL identifier, final ArcSDEConnectionConfig connectionConfig ) {
-            // ISessionPool pool = createPool(connectionConfig);
-            // try {
-            // ISession session = pool.getSession(false);
-            // try {
-            //
-            // } finally {
-            // session.dispose();
-            // }
-            // } finally {
-            // pool.close();
-            // }
-            //
-            // this.identifier = identifier;
-            // String[] tns = null;
-            // try {
-            // tns = dataStoreConfig.getTypeNames();
-            // } catch (IOException e) {
-            // ArcsdePlugin.log(null, e);
-            // tns = new String[0];
-            // }
-            // keywords = new String[tns.length + 1];
-            // System.arraycopy(tns, 0, keywords, 1, tns.length);
-            //            keywords[0] = "ArcSDE"; //$NON-NLS-1$
-
-            this.identifier = identifier;
-            try {
-                schema = new URI("arcsde://geotools/gml"); //$NON-NLS-1$
-            } catch (URISyntaxException e) {
-                ArcsdePlugin.log(null, e);
-            }
-            icon = AbstractUIPlugin.imageDescriptorFromPlugin(ArcsdePlugin.ID,
-                    "icons/obj16/arcsde_obj.gif"); //$NON-NLS-1$
-        }
-
-        public String getDescription() {
-            return identifier.toString();
-        }
-
-        public URI getSource() {
-            try {
-                return identifier.toURI();
-            } catch (URISyntaxException e) {
-                // This would be bad
-                throw (RuntimeException) new RuntimeException().initCause(e);
-            }
-        }
-
-        public String getTitle() {
-            return "ARCSDE " + identifier.getHost(); //$NON-NLS-1$
-        }
-
-    }
-
     public ArcSDEDataStoreConfig getDataStoreConfig() {
         return dataStoreConfig;
     }
@@ -276,5 +220,39 @@ public class ArcServiceImpl extends IService {
 
     public ArcSDEVectorService getVectorService() {
         return vectorService;
+    }
+
+    private static class IServiceArcSDEInfo extends IServiceInfo {
+    
+        private final URL identifier;
+    
+        IServiceArcSDEInfo( final URL identifier, final ArcSDEConnectionConfig connectionConfig ) {
+            this.identifier = identifier;
+            try {
+                schema = new URI("arcsde://geotools/gml"); //$NON-NLS-1$
+            } catch (URISyntaxException e) {
+                ArcsdePlugin.log(null, e);
+            }
+            icon = AbstractUIPlugin.imageDescriptorFromPlugin(ArcsdePlugin.ID,
+                    "icons/obj16/arcsde_obj.gif"); //$NON-NLS-1$
+        }
+    
+        public String getDescription() {
+            return identifier.toString();
+        }
+    
+        public URI getSource() {
+            try {
+                return identifier.toURI();
+            } catch (URISyntaxException e) {
+                // This would be bad
+                throw (RuntimeException) new RuntimeException().initCause(e);
+            }
+        }
+    
+        public String getTitle() {
+            return "ARCSDE " + identifier.getHost(); //$NON-NLS-1$
+        }
+    
     }
 }

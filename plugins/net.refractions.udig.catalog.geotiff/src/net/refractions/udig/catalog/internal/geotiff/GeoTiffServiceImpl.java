@@ -81,16 +81,13 @@ public class GeoTiffServiceImpl extends AbstractRasterService {
         return new GeoTiffServiceExtension().createParams(getIdentifier());
     }
 
-    public void dispose( IProgressMonitor monitor ) {
-        // do nothing
-    }
     public synchronized AbstractGridCoverage2DReader getReader() {
-        if(this.reader == null) {
+        if (this.reader == null) {
             try {
                 File file = new File(getIdentifier().toURI());
-                GeoTiffFormat geoTiffFormat = (GeoTiffFormat)getFormat();
-				this.reader = (AbstractGridCoverage2DReader) geoTiffFormat.getReader(file);
-            } catch(Exception ex) {
+                GeoTiffFormat geoTiffFormat = (GeoTiffFormat) getFormat();
+                this.reader = (AbstractGridCoverage2DReader) geoTiffFormat.getReader(file);
+            } catch (Exception ex) {
                 this.message = ex;
             }
         }

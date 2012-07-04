@@ -42,151 +42,136 @@ import org.eclipse.core.runtime.SubProgressMonitor;
  */
 public class CreateAndAddGeoResourceToMap {
 
-	/**
-	 * Q:
-	 * 
-	 * I want to add an image to the map, how do I do that?
-	 * 
-	 * 
-	 * A:
-	 * 
-	 * This example shows how to create an IGeoResource from a URL and add it as
-	 * a layer to the current map.
-	 * 
-	 */
-	public void example(URL url, IProgressMonitor progressMonitor,
-			int addPosition, IMap map) throws IOException {
-		progressMonitor.beginTask("task", 6); //$NON-NLS-1$
-		progressMonitor.worked(1);
+    /**
+     * Q:
+     * 
+     * I want to add an image to the map, how do I do that?
+     * 
+     * 
+     * A:
+     * 
+     * This example shows how to create an IGeoResource from a URL and add it as a layer to the current map.
+     * 
+     */
+    public void example(URL url, IProgressMonitor progressMonitor, int addPosition, IMap map) throws IOException {
+        progressMonitor.beginTask("task", 6); //$NON-NLS-1$
+        progressMonitor.worked(1);
 
-		try {
+        try {
 
-			ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
+            ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
 
-			// first search the local catalog.
-			List<IResolve> matches = catalog.find(url, new SubProgressMonitor(
-					progressMonitor, 2));
+            // first search the local catalog.
+            List<IResolve> matches = catalog.find(url, new SubProgressMonitor(progressMonitor, 2));
 
-			for (IResolve resolve : matches) {
-				if (resolve instanceof ExpectedService) {
-					// found the resource now we have to search it for the
-					// resource we want
-					if (searchServiceForResource(new SubProgressMonitor(
-							progressMonitor, 2), addPosition, map,
-							(IService) resolve))
-						return;
-				} else if (resolve instanceof ExpectedGeoResource) {
-					// yay we found the resource this is too easy:)
+            for (IResolve resolve : matches) {
+                if (resolve instanceof ExpectedService) {
+                    // found the resource now we have to search it for the
+                    // resource we want
+                    if (searchServiceForResource(new SubProgressMonitor(progressMonitor, 2), addPosition, map,
+                            (IService) resolve))
+                        return;
+                } else if (resolve instanceof ExpectedGeoResource) {
+                    // yay we found the resource this is too easy:)
 
-					ApplicationGIS
-							.addLayersToMap(map, Collections
-									.singletonList((IGeoResource) resolve),
-									addPosition);
-					return;
-				}
-			}
+                    ApplicationGIS.addLayersToMap(map, Collections.singletonList((IGeoResource) resolve), addPosition);
+                    return;
+                }
+            }
 
-			// usually only returns 1 service but it may be that multiple
-			// Services know how to interpret the URL
-			List<IService> services = CatalogPlugin.getDefault()
-					.getServiceFactory().createService(url);
-			IService found = null;
-			progressMonitor.worked(1);
+            // usually only returns 1 service but it may be that multiple
+            // Services know how to interpret the URL
+            List<IService> services = CatalogPlugin.getDefault().getServiceFactory().createService(url);
+            IService found = null;
+            progressMonitor.worked(1);
 
-			// find the service you want
-			for (IService service : services) {
-				// determine if the service is the type you are expecting;
-				if (service instanceof ExpectedService) {
-					found = service;
-					break;
-				}
-			}
+            // find the service you want
+            for (IService service : services) {
+                // determine if the service is the type you are expecting;
+                if (service instanceof ExpectedService) {
+                    found = service;
+                    break;
+                }
+            }
 
-			catalog.add(found);
-			searchServiceForResource(
-					new SubProgressMonitor(progressMonitor, 2), addPosition,
-					map, found);
+            catalog.add(found);
+            searchServiceForResource(new SubProgressMonitor(progressMonitor, 2), addPosition, map, found);
 
-		} finally {
-			progressMonitor.done();
-		}
+        } finally {
+            progressMonitor.done();
+        }
 
-	}
+    }
 
-	private boolean searchServiceForResource(IProgressMonitor progressMonitor,
-			int addPosition, IMap map, IService found) throws IOException {
-		List<? extends IGeoResource> resources = found
-				.resources(progressMonitor);
+    private boolean searchServiceForResource(IProgressMonitor progressMonitor, int addPosition, IMap map, IService found)
+            throws IOException {
+        List<? extends IGeoResource> resources = found.resources(progressMonitor);
 
-		// now find the resource you want.
-		for (IGeoResource resource : resources) {
-			if (someLogic(resource)) {
-				// ok we've found it
-				// add the resource to the map and return
-				ApplicationGIS.addLayersToMap(map, Collections
-						.singletonList(resource), addPosition);
-				return true;
-			}
-		}
-		return false;
-	}
+        // now find the resource you want.
+        for (IGeoResource resource : resources) {
+            if (someLogic(resource)) {
+                // ok we've found it
+                // add the resource to the map and return
+                ApplicationGIS.addLayersToMap(map, Collections.singletonList(resource), addPosition);
+                return true;
+            }
+        }
+        return false;
+    }
 
-	private boolean someLogic(IGeoResource resource) {
-		return false;
-	}
+    private boolean someLogic(IGeoResource resource) {
+        return false;
+    }
 
-	private class ExpectedService extends IService {
+    private class ExpectedService extends IService {
 
-		@Override
-		public Map<String, Serializable> getConnectionParams() {
-			return null;
-		}
-
-		@Override
-		public List<? extends IGeoResource> resources(IProgressMonitor monitor)
-				throws IOException {
-			return null;
-		}
-
-		public URL getIdentifier() {
-			return null;
-		}
-
-		public Throwable getMessage() {
-			return null;
-		}
-
-		public Status getStatus() {
-			return null;
-		}
-
-		@Override
-		protected IServiceInfo createInfo(IProgressMonitor monitor)
-				throws IOException {
-			return null;
-		}
-
-	}
-
-	public class ExpectedGeoResource extends IGeoResource {
         @Override
-		public URL getIdentifier() {
-			return null;
-		}
+        public Map<String, Serializable> getConnectionParams() {
+            return null;
+        }
 
-		public Throwable getMessage() {
-			return null;
-		}
+        @Override
+        public List<? extends IGeoResource> resources(IProgressMonitor monitor) throws IOException {
+            return null;
+        }
 
-		public Status getStatus() {
-			return null;
-		}
+        public URL getIdentifier() {
+            return null;
+        }
 
-		@Override
-		protected IGeoResourceInfo createInfo(IProgressMonitor monitor)
-				throws IOException {
-			return null;
-		}
+        public Throwable getMessage() {
+            return null;
+        }
 
-	}
+        public Status getStatus() {
+            return null;
+        }
+
+        @Override
+        protected IServiceInfo createInfo(IProgressMonitor monitor) throws IOException {
+            return null;
+        }
+
+    }
+
+    public class ExpectedGeoResource extends IGeoResource {
+        @Override
+        public URL getIdentifier() {
+            return null;
+        }
+
+        public Throwable getMessage() {
+            return null;
+        }
+
+        public Status getStatus() {
+            return null;
+        }
+
+        @Override
+        protected IGeoResourceInfo createInfo(IProgressMonitor monitor) throws IOException {
+            return null;
+        }
+
+    }
 }
