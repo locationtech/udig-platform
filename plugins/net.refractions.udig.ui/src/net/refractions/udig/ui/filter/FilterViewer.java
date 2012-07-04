@@ -66,7 +66,8 @@ public class FilterViewer extends IFilterViewer {
     private ISelectionChangedListener listener = new ISelectionChangedListener() {
         @Override
         public void selectionChanged(SelectionChangedEvent event) {
-            internalUpdate(delegate.getFilter());
+            Filter delegateFilter = delegate.getFilter();
+            internalUpdate(delegateFilter);
             // The above internalUpdate will issue a fireSelectionChanged(event)
         }
     };
@@ -198,7 +199,9 @@ public class FilterViewer extends IFilterViewer {
         
         // update the page book if needed
         IFilterViewer viewer = getViewer( this.viewerId );
-        
+        if( viewer == delegate ){
+            return; // we already have this one displayed
+        }
         String cqlText = null;
         if( delegate instanceof CQLFilterViewer ){
             CQLFilterViewer cqlViewer = (CQLFilterViewer) delegate;

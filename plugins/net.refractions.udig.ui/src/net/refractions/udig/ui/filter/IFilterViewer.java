@@ -144,7 +144,8 @@ public abstract class IFilterViewer extends Viewer {
         if (!Utilities.equals(before, after)){
             this.filter = newFilter;
             StructuredSelection selection = newFilter != null ? new StructuredSelection( newFilter) : StructuredSelection.EMPTY;
-            fireSelectionChanged( new SelectionChangedEvent( this, selection ) );
+            SelectionChangedEvent selectionEvent = new SelectionChangedEvent( this, selection );
+            fireSelectionChanged( selectionEvent );
         }
     }
     /**
