@@ -34,6 +34,7 @@ import net.refractions.udig.core.internal.CorePlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.geotools.data.postgis.PostgisNGDataStoreFactory;
 import org.geotools.jdbc.JDBCDataStore;
 /**
  * A Folder that represents a schema in a postgis folder. Its members are the tables and are
@@ -150,9 +151,10 @@ public class PostgisSchemaFolder implements IResolveFolder {
         return CatalogPlugin.getDefault().getResolveManager().resolve(this, adaptee, monitor);
     }
 
-    public JDBCDataStore getDataStore() throws IOException {
+    public synchronized JDBCDataStore getDataStore() throws IOException {
     	if(datastore == null) {
-            datastore = PostgisServiceExtension2.getFactory().createDataStore(params);
+            PostgisNGDataStoreFactory factory = PostgisServiceExtension2.getFactory();
+            datastore = factory.createDataStore(params);
     	}
         return datastore;
     }

@@ -16,6 +16,7 @@ import net.refractions.udig.catalog.IResolveDelta;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.ITransientResolve;
+import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.internal.CatalogImpl;
 import net.refractions.udig.catalog.internal.Messages;
 import net.refractions.udig.catalog.internal.ResolveChangeEvent;
@@ -158,6 +159,9 @@ public class MemoryServiceImpl extends IService implements ITransientResolve {
     }
 
     public Status getStatus() {
+        if( isDisposed ){
+            return Status.DISPOSED;
+        }
         return Status.CONNECTED;
     }
 
@@ -217,19 +221,9 @@ public class MemoryServiceImpl extends IService implements ITransientResolve {
     }
 
     public void dispose( IProgressMonitor monitor ) {
-        if (memberList == null)
-            return;
-
-        int steps = (int) ((double) 99 / (double) memberList.size());
-        for( IResolve resolve : memberList ) {
-            try {
-                SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, steps);
-                resolve.dispose(subProgressMonitor);
-                subProgressMonitor.done();
-            } catch (Throwable e) {
-                ErrorManager.get().displayException(e,
-                        "Error disposing members of service: " + getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
-            }
+        super.dispose(monitor);
+        if( memberList != null ){
+            memberList = null;
         }
     }
 
