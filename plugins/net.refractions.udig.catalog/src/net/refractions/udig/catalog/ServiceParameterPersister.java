@@ -70,10 +70,12 @@ public class ServiceParameterPersister {
     }
     
     /**
-     * Using the connection parameter information in the preferences node
-     * restore the state of the local catalog.
+     * Using the connection parameter information in the preferences node restore the state of the local catalog.
      * <p>
-     * The format is roughly:<pre> # for each service ID used as child node
+     * The format is roughly:
+     * 
+     * <pre>
+     * # for each service ID used as child node
      * file://example.shp:
      *   # connect parameters are unmarked
      *   file:
@@ -102,6 +104,7 @@ public class ServiceParameterPersister {
      *          value: (text encoding)
      *          type: (class name)
      * </pre>
+     * 
      * @param node
      */
     public void restore(Preferences node) {

@@ -31,6 +31,7 @@ import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
+import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.db2.DB2Plugin;
 import net.refractions.udig.ui.ErrorManager;
 import net.refractions.udig.ui.UDIGDisplaySafeLock;
@@ -91,20 +92,12 @@ public class DB2Service extends IService {
         }
         return super.resolve(adaptee, monitor);
     }
+    
     public void dispose( IProgressMonitor monitor ) {
-        if (members == null)
-            return;
-
-        int steps = (int) ((double) 99 / (double) members.size());
-        for( IResolve resolve : members ) {
-            try {
-                SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, steps);
-                resolve.dispose(subProgressMonitor);
-                subProgressMonitor.done();
-            } catch (Throwable e) {
-                ErrorManager.get().displayException(e,
-                        "Error disposing members of service: " + getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
-            }
+        super.dispose(monitor);
+        if (ds != null ){
+            ds.dispose();
+            ds = null;
         }
     }
 
@@ -144,7 +137,10 @@ public class DB2Service extends IService {
     }
 
     public Status getStatus() {
-        return msg != null ? Status.BROKEN : ds == null ? Status.NOTCONNECTED : Status.CONNECTED;
+        if( ds == null ){
+            return super.getStatus();
+        }
+        return Status.CONNECTED;
     }
 
     public Throwable getMessage() {
