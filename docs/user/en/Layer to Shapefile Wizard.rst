@@ -29,7 +29,6 @@ List of selected layers:
 
 **Related concepts**
 
-
-* :doc:`Shapefile`
+:doc:`Shapefile`
 
 

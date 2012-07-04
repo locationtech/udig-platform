@@ -3,10 +3,8 @@ Handling Shapefiles with different Character Sets
 
 There are two ways to specify character set information when working with Shapefiles.
 
--  `Default Character Set for the
-   Application <#HandlingShapefileswithdifferentCharacterSets-DefaultCharacterSetfortheApplication>`_
--  `Change Shapefile Character
-   Set <#HandlingShapefileswithdifferentCharacterSets-ChangeShapefileCharacterSet>`_
+-  `Default Character Set for the  Application`_
+-  `Change Shapefile Character Set`_
 
 The shapefile format makes use of a "dbf" database to store attribute data; depending on the
 character set the data is recorded in we will need to interpret the attributes differently.

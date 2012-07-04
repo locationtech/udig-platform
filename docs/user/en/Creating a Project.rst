@@ -7,9 +7,9 @@ different approaches:
 
 * :doc:`File Menu`
 
-* :doc:`New Button`
+* :doc:`New Button <Using new to add a Map to a Project>`
 
-* :doc:`Context Menu`
+* :doc:`Context Menu <Using the Context menu to add a Map to a Project>`
 
 
 A project can be created using the **File** menu. Once the project has been created a Map can be

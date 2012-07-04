@@ -19,10 +19,10 @@ Here is an example of a map editor in the Workbench:
 
 **Related concepts**
 
-.. toctree::
-   :maxdepth: 1
+:doc:`Workbench`
 
-   Workbench
-   Projects view
-   Catalog view
-   Map editor
+:doc:`Projects view`
+
+:doc:`Catalog view`
+
+:doc:`Map editor`

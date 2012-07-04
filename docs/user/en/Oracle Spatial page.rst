@@ -12,7 +12,6 @@ oracle prefreference page.
 
 **Related tasks**
 
-
-* :doc:`Adding features from Oracle`
+:doc:`Adding features from Oracle`
 
 

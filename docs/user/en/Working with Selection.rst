@@ -6,9 +6,10 @@ can be limited to the current selection.
 
 **Related tasks**
 
+.. toctree::
+   :maxdepth: 1
 
-Using the Selection Tool
- :doc:`Selection using Attributes`
+   Selection using Attributes
+   Selection using CQL
 
- :doc:`Selection using CQL`
-
+.. Using the Selection Tool

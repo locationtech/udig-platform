@@ -3,15 +3,13 @@ Perspectives
 
 uDig provides the following perspectives.
 
-Contents:
-
-* :doc:`Map Perspective`
-
-* :doc:`Style Perspective`
+.. toctree::
+   :maxdepth: 1
+   
+   Map Perspective
+   Style Perspective
 
 
 **Related concepts**
 
-
 :doc:`Perspective`
-

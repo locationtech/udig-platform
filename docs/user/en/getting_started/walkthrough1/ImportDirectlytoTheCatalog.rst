@@ -40,7 +40,7 @@ Earlier we learned how to work with content from the Catalog view, in this secti
    |catalog_dnd_map_png|
 
 * Earlier we used the the layer view to reorder using the up and down buttons,
-   this time we will drag the layers into the right order.
+  this time we will drag the layers into the right order.
 
 * Select the :guilabel:`Blue Marble` layer in the layer view and drag it to the bottom of the list.
    

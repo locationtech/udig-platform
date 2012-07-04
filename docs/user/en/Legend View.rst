@@ -10,11 +10,11 @@ layer, export the layer and view layer properties.
 
 Here is what the Legend view looks like:
 
-.. figure:: /images/legend_view/legend_view.png
+.. figure:: images/legend_view/legend_view.png
    :align: center
    :alt: 
 
- Like other views in the Workbench, the Legend view has its own toolbar. Toolbar buttons are
+Like other views in the Workbench, the Legend view has its own toolbar. Toolbar buttons are
 provided to add a new folder, move layers up or down the rendering hierarchy, toggle map graphics
 and/or background layers' visibility in the view, toggle grid's visibility on the map, change the
 style of the selected layer, turn on/off the mylar effect and zoom to the layer.
@@ -22,7 +22,7 @@ style of the selected layer, turn on/off the mylar effect and zoom to the layer.
 Toolbar
 -------
 
-|image0|
+.. image:: /images/legend_view/legend_toolbar.png
   
 
 Add Folder
@@ -151,4 +151,3 @@ Properties
 
 Opens the properties page for the selected item.
 
-.. |image0| image:: /images/legend_view/legend_toolbar.png

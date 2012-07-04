@@ -10,21 +10,25 @@ You can work directly with files from the file system.
 
 * Click on the following link and save the zip file to your local computer.
    
- * `data_1_3.zip <http://udig.refractions.net/files/data/data_1_3.zip>`_ 
+  * `data_1_3.zip <http://udig.refractions.net/files/data/data_1_3.zip>`_ 
    
- This link is also avaialble from the :doc:`Walkthrough 1 <../../Walkthrough 1>` page.
+  This link is also avaialble from the :doc:`Walkthrough 1 <../../Walkthrough 1>` page.
 
 * Unzip the download to create your *data* directory.
    
- * You may wish to create a data directory on your desktop or in your documents folder.
- * On windows the `7-Zip <http://www.7-zip.org/>`_ application is recommended for unzipping files
+  * You may wish to create a data directory on your desktop or in your documents folder.
+  * On windows the `7-Zip <http://www.7-zip.org/>`_ application is recommended for unzipping files
+
 
 * Create an empty Map by selecting :menuselection:`File --> New --> New Map`
   from the :guilabel:`menubar`.
 
 * Drag and Drop the file :guilabel:`10m_land.shp` onto your open :guilabel:`Map`
-   
-   |file_dnd_png|
+
+  .. figure:: images/file_dnd.png
+    :width: 60%
+    :alt:
+
 
   The map will take the size of the first layer added to it.
 
@@ -35,22 +39,16 @@ You can work directly with files from the file system.
   different sources.
    
   Add the :guilabel:`10m_ocean.shp` shapefile to your map.
-   
-  |file_add_png|
-   
+
+  .. figure:: images/file_add.png
+    :width: 60%
+    :alt:
+
+
+
   The application will automatically:
    
   * Make use of any included style layer descriptor file, or generate a default style.
    
   * Perform any reprojection required on the fly allowing you to view layers side by side
    
-
-.. |file_add_png| image:: images/file_add.png
-    :width: 14.91cm
-    :height: 11.269cm
-
-
-.. |file_dnd_png| image:: images/file_dnd.png
-    :width: 14.88cm
-    :height: 11.19cm
-

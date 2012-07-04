@@ -3,26 +3,18 @@ Reference
 
 Reference for the uDig application describing wizards, views, and shortcuts.
 
-Contents:
 
-* :doc:`Drag and Drop`
-
-* :doc:`Filters and Expressions`
-
-* :doc:`Help contents`
-
-* :doc:`Icons and buttons`
-
-* :doc:`Menus`
-
-* :doc:`Perspectives`
-
-* :doc:`Preferences`
-
-* :doc:`Property Pages`
-
-* :doc:`Views and editors`
-
-* :doc:`Wizards and Dialogs`
-
+.. toctree::
+   :maxdepth: 1
+   
+   Drag and Drop
+   Filters and Expressions
+   Help contents
+   Icons and buttons
+   Menus
+   Perspectives
+   Preferences
+   Property Pages
+   Views and editors
+   Wizards and Dialogs
 

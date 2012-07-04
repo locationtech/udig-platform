@@ -286,16 +286,18 @@ public interface ILayer extends ILegendItem, Comparable<ILayer> {
     public ImageDescriptor getIcon();
 
     /**
-     * Query that selects all the features for the layer.
+     * Query used to retrieve the contents of the layer.
      * <p>
      * The selected flag is used with respect to {@link getFilter()}:
      * <ul>
-     * <li><b>false </b>: Query for layers contents
      * <li><b>true </b>: Query for the layer's selected features
+     * <li><b>false </b>: Query for layers contents
      * </ul>
      * </p>
      * <p>
-     * Convenience method
+     * This is a helper method to save client code the trouble of hunting down
+     * the filter associated with this layer, including any overrides provided
+     * by the style blackboard.
      * </p>
      * 
      * @param layer The layer the Query is associated with.

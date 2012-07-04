@@ -27,8 +27,10 @@ Adjust Buffer Size
 Command (Mac) or Alt (Windows) mouse wheel scroll in or out to adjust the amount of buffer your new
 point will have.
 
-**Note:** To allow a smooth scroll at any zoom level buffer will be applied at a rate of one pixel
-per mouse wheel scroll.
+.. note::
+   To allow a smooth scroll at any zoom level buffer will be applied at a rate of one pixel
+   per mouse wheel scroll.
+
 
 .. figure:: /images/smart_buffer_tool/Buffer-Point-1.jpg
    :align: center
@@ -70,8 +72,9 @@ Adjust Buffer Size
 Command (Mac) or Alt (Windows) mouse wheel scroll in or out to adjust the amount of buffer your new
 line will have.
 
-**Note:** To allow a smooth scroll at any zoom level buffer will be applied at a rate of one pixel
-per mouse wheel scroll.
+.. note::
+   To allow a smooth scroll at any zoom level buffer will be applied at a rate of one pixel
+   per mouse wheel scroll.
 
 .. figure:: /images/smart_buffer_tool/Buffer-Line-2.jpg
    :align: center
@@ -98,8 +101,7 @@ You can view the amount of buffer in real world units in the map message box.
 Preferences
 ~~~~~~~~~~~
 
-You can adjust the buffer cap type and several other preferences on the Tools > Edit Tools > Smart
-Buffer Tool preference page.
+You can adjust the buffer cap type and several other preferences on the :menuselection:`Tools --> Edit Tools --> Smart Buffer Tool` preference page.
 
 .. figure:: /images/smart_buffer_tool/Preferences.jpg
    :align: center

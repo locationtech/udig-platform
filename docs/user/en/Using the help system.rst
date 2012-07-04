@@ -6,11 +6,13 @@ and online documentation and interactive cheat sheets.
 
 Contents:
 
-* :doc:`Accessing context sensitive help`
+.. toctree::
+   :maxdepth: 1
+
+   Accessing context sensitive help
 
 
 **Related tasks**
-
 
 :doc:`Working with cheat sheets`
 

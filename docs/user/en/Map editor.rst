@@ -34,23 +34,21 @@ map and the Editing draw has tools specifically for editing features.
 
 Tools are arranged into the following categories:
 
-* :doc:`Edit Tools`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`Georeferencing Tools`
-
-* :doc:`Information Tools`
-
-* :doc:`Navigation Tools`
-
-* :doc:`Selection Tools`
+   Edit Tools
+   Georeferencing Tools
+   Information Tools
+   Navigation Tools
+   Selection Tools
 
 
 Context Menu
 ------------
 
 The context-menu depends on the tool being used (and the kind of content it is working with). The
-context menu is used as a short cut for the operations available in the `Edit
-Menu <Edit%20Menu.html>`_.
+context menu is used as a short cut for the operations available in the :doc:`Edit Menu`.
 
 Status Bar
 ----------

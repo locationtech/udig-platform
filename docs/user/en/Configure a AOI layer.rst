@@ -1,7 +1,7 @@
 Configure a AOI layer
 #####################
 
-You can use layer preferences to configure a polygon layer as a background "AOI" layer for use with
+You can use :ref:`preferences-page-project-layer` to configure a polygon layer as a background "AOI" layer for use with
 the **AOI Selection** tool.
 
 #. Right click on the layer in the **Layer** view
@@ -12,14 +12,12 @@ the **AOI Selection** tool.
 
 **Related tasks**
 
+:doc:`Configure table view to list the contents of a polygon`
 
-`Configure table view to list the contents of a
-polygon <Configure%20table%20view%20to%20list%20the%20contents%20of%20a%20polygon.html>`_
 
 **Related reference**
 
-
 :doc:`Selection Tools`
 
- :doc:`Interaction Properties page`
+:doc:`Interaction Properties page`
 

@@ -23,11 +23,10 @@ Files needed to install GeoServer:
 
 * `GeoServer Release 1.4.1 <http://geoserver.org/display/GEOS/GeoServer+1.4.1>`_
 
-* :doc:`Java Development Kit`
+* `Java Development Kit <http://java.sun.com/javase/downloads/>`_
 
 
-Tips:
-
--  This walkthrough is also available for uDig 1.0 (`GeoServer Install and
+.. tip::
+   This walkthrough is also available for uDig 1.0 (`GeoServer Install and
    Edit <http://udig.refractions.net/docs/geoserverInstallAndEdit.pdf>`_)
 

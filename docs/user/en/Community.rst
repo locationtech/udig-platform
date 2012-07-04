@@ -1,33 +1,14 @@
 Community
 #########
 
-Contents:
+.. toctree::
+   :maxdepth: 3
 
-:doc:`Axios uDig Extensions`
+   Axios uDig Extensions
+   Jody
+   Using the WPS plugin
 
----------------------------------------------------------
-
-* :doc:`Editing Tools`
-
-* :doc:`Image Georeferencing view`
-
-* :doc:`Spatial Operations`
-
-
-:doc:`Jody`
-
--------------------
-
-* :doc:`North Arrow`
-
-
-:doc:`Using the WPS plugin`
-
----------------------------------------------------------
 
 **Related tasks**
 
-
-* :doc:`Finding new plugins`
-
-
+:doc:`Finding new plugins`

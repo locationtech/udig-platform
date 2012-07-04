@@ -23,6 +23,10 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.geotools.brewer.color.BrewerPalette;
 import org.geotools.brewer.color.ColorBrewer;
 
+/**
+ * Used to allow the MapPreferencePage to select a palette to draw on when assigning colours to
+ * new layers.
+ */
 public class PaletteSelectionFieldEditor extends FieldEditor {
 
     TableViewer palettes;

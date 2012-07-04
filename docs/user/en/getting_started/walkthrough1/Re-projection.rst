@@ -41,14 +41,14 @@ into the common coordinate reference system you have selected for your map.
 * The :guilabel:`Coordinate Systems` property page allows you to change the Coordinate Reference
   System of your map. The :guilabel:`Standard CRS` tab allows you to search the predefined coordinate reference systems.
   
-  Please type in :kbd:`4326` and press :kbd:`enter`.
+  Please type in ``4326`` and press :kbd:`ENTER`.
   
   |crs_standard_png|
   
   * This selects the :guilabel:`World Geodetic System 1984` which is commonly
     used to represent lat/lon information.
   
-  * You can also search by name, try typing in :kbd:`WGS84` to list matching projections
+  * You can also search by name, try typing in ``WGS84`` to list matching projections
 
 * You can have a look at the formal definition of :guilabel:`EPSG:4326` by
   switching to the :guilabel:`Custom CRS` tab.

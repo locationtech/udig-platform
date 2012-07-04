@@ -1,7 +1,12 @@
 GeoServer Install
 =================
 
-.. include:: intro_images.rst
+
+|refractions_png| |lisasoft_png| |geoserver_png|
+
+.. image:: ../images/background.png
+   :width: 100%
+
 
 Introduction
 ------------
@@ -156,7 +161,7 @@ AJAX library.
 
 
   * Click on the highlighted OpenLayers link at the bottom to open a new tab. As this Open Layers
-  application is started up you can watch the GeoServer console respond to queries.
+    application is started up you can watch the GeoServer console respond to queries.
   
   .. figure:: images/console_getmap.png
     :width: 11.46cm
@@ -268,3 +273,14 @@ If you finish early here are some challenges.
 
 
   * How can you use GeoServer in your organisation?
+
+
+.. |refractions_png| image:: ../images/refractions_logo.png
+   :height: 3cm
+
+.. |lisasoft_png| image:: ../images/lisasoft_logo.png
+   :height: 3cm
+
+.. |geoserver_png| image:: ../images/geoserver_logo.png
+   :height: 3cm
+

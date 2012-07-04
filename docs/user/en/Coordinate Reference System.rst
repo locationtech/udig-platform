@@ -10,7 +10,7 @@ a coordinate relative to this shape. Coordinates are expressed as measurements a
 axis. The units for this measurement (and indeed the order of the axis) are defined as part of the
 Coordinate Reference System.
 
-A coordinate reference system may also include `Projection <Projection.html>`_ information, define a
+A coordinate reference system may also include :doc:`Projection` information, define a
 valid range for values and so on.
 
 The European Petroleum Standards Group was formed in 1986 to collection the definition of Coordinate
@@ -19,13 +19,11 @@ coordinate reference systems.
 
 **Related concepts**
 
-
 * :doc:`Projection`
 
 
 **Related reference**
 
-
-* :doc:`http://www.epsg.org/`
+* `<http://www.epsg.org/>`_
 
 

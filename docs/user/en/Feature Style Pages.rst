@@ -1,24 +1,24 @@
 Feature Style Pages
 ###################
 
-When the `Style Editor dialog <Style%20Editor%20dialog.html>`_ is opened on a feature layer the
+When the :doc:`Style Editor dialog` is opened on a feature layer the
 following pages are available.
 
-* :doc:`Cache`
+* `Cache`_
 
-* :doc:`Filter`
+* `Filter`_
 
-* :doc:`Simple Feature`
+* `Simple Feature`_
 
-* :doc:`Simple Lines`
+* `Simple Lines`_
 
-* :doc:`Simple Points`
+* `Simple Points`_
 
-* :doc:`Simple Polygons`
+* `Simple Polygons`_
 
-* :doc:`Theme`
+* `Theme Subtitle`_
 
-* :doc:`XML`
+* `XML`_
 
 
 Cache
@@ -170,6 +170,8 @@ experimentally tested on live subjects.
    Projectors, the printed page and photocopying.
 -  Palette: choose a palette from the list
 
+.. _Theme Subtitle:
+
 Theme
 -----
 
@@ -201,6 +203,4 @@ Press this button to check that your XML is valid.
 
 **Related concepts**
 
-
 :doc:`Style Layer Descriptor`
-

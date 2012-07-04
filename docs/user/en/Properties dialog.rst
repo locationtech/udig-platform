@@ -8,7 +8,7 @@ resource.
    :align: center
    :alt: 
 
-The Properties dialog is divided into a series of `Property Pages <Property%20Pages.html>`_, the
+The Properties dialog is divided into a series of :doc:`Property Pages`, the
 specific Property pages available depend on the resource selected.
 
 The following property pages are in use:
@@ -44,6 +44,4 @@ Abandon any changes and close the dialog.
 
 **Related reference**
 
-
 :doc:`Property Pages`
-

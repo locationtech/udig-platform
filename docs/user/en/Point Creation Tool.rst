@@ -5,12 +5,12 @@ Point Creation Tool – Cannot resolve external resource into attachment.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Point Creation Tool allows points created. To create a point simply select a point layer in the
-`Layers view <Layers%20view.html>`_ and click to create a new point.
+:doc:`Layers view` and click to create a new point.
 
 Vertex Snapping
 ~~~~~~~~~~~~~~~
 
-By default `snapping <Snapping.html>`_ is turned off however, if desired `snapping <Snapping.html>`_
+By default :doc:`snapping <Snapping>` is turned off however, if desired :doc:`snapping <Snapping>`
 can be used during point geometry creation.
 
 -  Point creation with snapping to the current layer.
@@ -21,9 +21,9 @@ can be used during point geometry creation.
 Advanced Editing
 ~~~~~~~~~~~~~~~~
 
-The Point Creation Tool also has an advanced mode that provides all the functionality that the `Edit
-Geometry Tool <Edit%20Geometry%20Tool.html>`_ has, except only points can be edited. A summary of
-the advanced editing features are:
+The Point Creation Tool also has an advanced mode that provides all the functionality that the 
+:doc:`Edit Geometry Tool` has, except only points can be edited. A summary of the advanced 
+editing features are:
 
 -  Clicking an existing point will select it.
 -  Vertices in selected points can be moved.
@@ -32,6 +32,7 @@ the advanced editing features are:
 
 
 -  Advanced Edit Mode
+
 * :doc:`EditBlackboard`
 
 * :doc:`Snapping`
@@ -70,6 +71,5 @@ the advanced editing features are:
    * :doc:`Split Tool`
 
    * :doc:`Delete Tool`
-
 
 

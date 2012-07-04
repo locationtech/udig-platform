@@ -4,17 +4,17 @@ Icons and buttons
 The application has a consistent set of icons and buttons used to refer to information and
 functionality.
 
-* :doc:`Catalog view`
+* `Catalog view`_
 
-* :doc:`Projects view`
+* `Projects view`_
 
-* :doc:`Layers view`
+* `Layers view`_
 
-* :doc:`Toolbar`
+* `Toolbar`_
 
-* :doc:`Map Palette`
+* `Map Palette`_
 
-* :doc:`Page Palette`
+* `Page Palette`_
 
 
 This page offers a quick visual reference and may be used as a starting point to look up more
@@ -23,8 +23,8 @@ detailed information.
 Catalog view
 ============
 
-The following icons representing information can appear in the `Catalog view <Catalog%20view.html>`_
-and `Search view <Search%20view.html>`_:
+The following icons representing information can appear in the :doc:`Catalog view`
+and :doc:`Search view`:
 
 Icon
 
@@ -86,7 +86,7 @@ Web Catalog Service
 
 These icons will also be used when importing, exporting or otherwise manipulating data.
 
-The `Catalog view <Catalog%20view.html>`_ toolbar contains:
+The :doc:`Catalog view` toolbar contains:
 
 +------------+----------+
 | |image2|   | Import   |
@@ -97,8 +97,7 @@ The `Catalog view <Catalog%20view.html>`_ toolbar contains:
 Projects view
 =============
 
-The following icons representing your uDig documents can appear in the `Projects
-view <Projects%20view.html>`_:
+The following icons representing your uDig documents can appear in the :doc:`Projects view`:
 
 Icon
 
@@ -119,8 +118,7 @@ Page
 Layers view
 ===========
 
-The following icons representing the contents of your Map can appear in the `Layers
-view <Layers%20view.html>`_:
+The following icons representing the contents of your Map can appear in the :doc:`Layers view`:
 
 Icon
 
@@ -177,7 +175,7 @@ Description
 Map Palette
 ===========
 
-The following tools may appear in the palette for the `Map editor <Map%20editor.html>`_:
+The following tools may appear in the palette for the :doc:`Map editor`:
 
 Icon
 
@@ -186,7 +184,7 @@ Description
 Page Palette
 ============
 
-The following tools may appear in the palette for the `Page editor <Page%20editor.html>`_:
+The following tools may appear in the palette for the :doc:`Page editor`:
 
 Icon
 

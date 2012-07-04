@@ -10,36 +10,26 @@ The panel which appears on the left or on top (depending on the view orientation
 explorer and shows all of the tasks which need to be completed and their state. The lower or right
 panel is called the task detail panel and shows the task which is selected in the explorer.
 
--  `Launching a composite cheat
-   sheet <#Workingwithcompositecheatsheets-Launchingacompositecheatsheet>`_
-* :doc:`Task explorer`
-
-* :doc:`Task detail pane`
-
-* :doc:`Task groups`
-
-* :doc:`Cheat sheet tasks`
-
-* :doc:`Task dependencies`
-
-* :doc:`Skipping`
-
-* :doc:`Restarting`
-
-* :doc:`Closing`
-
+* `Launching a composite cheat sheet`_
+* `Task explorer`_
+* `Task detail pane`_
+* `Task groups`_
+* `Cheat sheet tasks`_
+* `Task dependencies`_
+* `Skipping`_
+* `Restarting`_
+* `Closing`_
 
 **Related reference**
 
-
-Cheat sheet
+:doc:`Cheat sheets`
 
 Launching a composite cheat sheet
 =================================
 
-Composite cheat sheets are launched in the same way as any other cheat sheet by selecting Help >
-Cheat Sheets from the menu bar. If this command is not in the menu, it can be added from Window >
-Customize Perspective > Commands, and check Cheat Sheets.
+Composite cheat sheets are launched in the same way as any other cheat sheet by selecting 
+:menuselection:`Help --> Cheat Sheets` from the menu bar. If this command is not in the menu, 
+it can be added from :menuselection:`Window --> Customize Perspective --> Commands`, and check Cheat Sheets.
 
 Task explorer
 =============
@@ -91,7 +81,8 @@ The author of a composite cheat sheet can choose to make a task or task group op
 optional it can be skipped, either by right clicking on that task in the task explorer and selecting
 skip from the context menu, or by clicking on the "Skip this task" hyperlink in the task detail
 pane. Skipping a task will allow tasks which depend on this task to be started.
- Order of task completion
+
+Order of task completion
 
 The task detail area will provide hyperlinks which will walk through the tasks in order. It is also
 possible to perform tasks out of order by selecting the task in the task explorer and starting work

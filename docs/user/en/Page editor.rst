@@ -3,7 +3,7 @@ Page editor
 
 The page editor is used to set up a map for printed output.
 
-To create a Page for the current map select **File > Print** from the menubar.
+To create a Page for the current map select :menuselection:`File --> Print` from the menubar.
 
 .. figure:: /images/page_editor/PageEditor.png
    :align: center
@@ -19,7 +19,6 @@ A few notes on use:
 
 **Related reference**
 
-
-* :doc:`Palette View`
+:doc:`Palette View`
 
 

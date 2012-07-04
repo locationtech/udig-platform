@@ -6,9 +6,9 @@ and the uDig website.
 
 .. figure:: /images/welcome/Startup2Welcome.png
    :align: center
+   :width: 60%
    :alt: 
 
-You can open up the the Welcome page at any time using **Help > Welcome** from the menu bar.
- |image0|
+You can open up the the Welcome page at any time using :menuselection:`Help --> Welcome` from the menu bar.
 
-.. |image0| image:: /images/welcome/WeclomeTip1.png
+.. image:: /images/welcome/WeclomeTip1.png

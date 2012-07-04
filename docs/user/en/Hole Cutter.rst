@@ -10,62 +10,62 @@ functionality:
 -  Clicking within an existing polygon will start the creation of a hole. Creating a hole is the
    same as creating a polygon using the Polygon Tool except that creation is restricted to within
    the polygon. Notice that the created vertex is within a selected polygon
-    |image0|
+
+   .. image:: /images/hole_cutter/startholecutting.png
+
 -  Clicking an existing hole will select it.
 -  Vertices in selected holes can be moved when in Advanced Edit Mode.
-    |image1|
+
+   .. image:: /images/hole_cutter/holeedit.png
+
 -  Vertices in selected holes can be added when in Advanced Edit Mode.
-    |image2|
+
+   .. image:: /images/hole_cutter/addvertex.png
+
 -  Vertices in selected holes can be deleted when in Advanced Edit Mode.
-    |image3|
--  As with the `Edit Geometry Tool <Edit%20Geometry%20Tool.html>`_ the vertex operations can be
+
+   .. image:: /images/hole_cutter/deletevertex.png
+
+-  As with the :doc:`Edit Geometry Tool` the vertex operations can be
    performed on multiple vertices at once if many vertices are selected.
+
 
 **Related reference**
 
+:doc:`EditBlackboard`
 
--  Advanced Edit Mode
-* :doc:`EditBlackboard`
+:doc:`Snapping`
 
-* :doc:`Snapping`
-
-* :doc:`Using Vertex Tools`
+:doc:`Using Vertex Tools`
 
 
-   * :doc:`Edit Geometry Tool`
+  * :doc:`Edit Geometry Tool`
 
-   * :doc:`Add Vertex Tool`
+  * :doc:`Add Vertex Tool`
 
-   * :doc:`Remove Vertex Tool`
-
-
-* :doc:`Using Geometry Creation Tools`
+  * :doc:`Remove Vertex Tool`
 
 
-   * :doc:`Polygon Creation Tool`
+:doc:`Using Geometry Creation Tools`
 
-   * :doc:`Line Creation Tool`
+  * :doc:`Polygon Creation Tool`
 
-   * :doc:`Point Creation Tool`
+  * :doc:`Line Creation Tool`
 
-   * :doc:`Draw Geometry Tool`
+  * :doc:`Point Creation Tool`
 
-   * :doc:`Rectangle Tool`
+  * :doc:`Draw Geometry Tool`
 
-   * :doc:`Ellipse Tool`
+  * :doc:`Rectangle Tool`
 
-
-* :doc:`Using Feature Edit Tools`
-
-
-   * :doc:`Fill Tool`
-
-   * :doc:`Split Tool`
-
-   * :doc:`Delete Tool`
+  * :doc:`Ellipse Tool`
 
 
-.. |image0| image:: /images/hole_cutter/startholecutting.png
-.. |image1| image:: /images/hole_cutter/holeedit.png
-.. |image2| image:: /images/hole_cutter/addvertex.png
-.. |image3| image:: /images/hole_cutter/deletevertex.png
+:doc:`Using Feature Edit Tools`
+
+  * :doc:`Fill Tool`
+
+  * :doc:`Split Tool`
+
+  * :doc:`Delete Tool`
+

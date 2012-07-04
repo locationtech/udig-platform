@@ -1,19 +1,15 @@
 Property Pages
 ##############
 
-Contents:
-
-* :doc:`Interaction Properties page`
-
-* :doc:`Projection page`
-
-* :doc:`Summary page`
-
-* :doc:`Tileset page`
+.. toctree::
+   :maxdepth: 1
+   
+   Interaction Properties page
+   Projection page
+   Summary page
+   Tileset page
 
 
 **Related reference**
 
-
 :doc:`Properties dialog`
-

@@ -1,8 +1,7 @@
 Web view
 ########
 
-This view displays a web page (located on the `uDig
-wiki <http://udig.refractions.net/confluence/display/DATA/Home>`_) listing sample web services that
+This view displays a web page (located on the `uDig wiki <http://udig.refractions.net/confluence/display/DATA/Home>`_) listing sample web services that
 have been tested with the uDig application.
 
 .. figure:: /images/web_view/WebView.png
@@ -42,9 +41,8 @@ drag and drop operation.
 
 **Related reference**
 
+:doc:`Drag and Drop`
 
-* :doc:`Drag and Drop`
-
-* :doc:`Data Wiki`
+`Data Wiki <http://udig.refractions.net/confluence/display/DATA/Home>`_
 
 

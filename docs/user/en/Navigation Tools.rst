@@ -1,26 +1,23 @@
-The category of navigation tools is used to control what is visible in the `Map
-editor <Map%20editor.html>`_.
+Navigation Tools
+================
+
+The category of navigation tools is used to control what is visible in the :doc:`Map editor`.
 
 Navigation Tools:
 
--  |image0| `Zoom Tool <#NavigationTools-ZoomTool>`_ - z
--  |image1| `Pan Tool <#NavigationTools-PanTool>`_ - p
+-  |image0| `Zoom Tool`_ :kbd:`z`
+-  |image1| `Pan Tool`_ :kbd:`p`
 
 Navigation Commands:
 
-* :doc:`Back`
-
-* :doc:`Forward`
-
--  |image2| `Refresh <#NavigationTools-Refresh>`_
--  |image3| `Stop Drawing <#NavigationTools-StopDrawing>`_
--  |image4| `Show All <#NavigationTools-ShowAll>`_
--  |image5| `Zoom In <#NavigationTools-ZoomIn>`_
--  |image6| `Zoom Out <#NavigationTools-ZoomOut>`_
--  |image7| `Zoom to Selection <#NavigationTools-ZoomtoSelection>`_
-
-Navigation Tools
-----------------
+* `Back`_
+* `Forward`_
+*  |image2| `Refresh`_
+*  |image3| `Stop Drawing`_
+*  |image4| `Show All`_
+*  |image5| `Zoom In`_
+*  |image6| `Zoom Out`_
+*  |image7| `Zoom to Selection`_
 
 Zoom Tool
 ~~~~~~~~~
@@ -49,7 +46,7 @@ A drag with the left mouse button down will move the map across the display.
 Navigation Commands
 -------------------
 
-May of these commands may also be found in the `Navigation Menu <Navigation%20Menu.html>`_.
+May of these commands may also be found in the :doc:`Navigation Menu`.
 
 Back
 ~~~~
@@ -77,13 +74,13 @@ Show All
 
 Sets the zoom so that all available data is displayed.
 
-Zoom-In
+Zoom In
 ~~~~~~~
 
 The Zoom-In button zooms towards the data by a set amount. The center of the zoom is the center of
 the map.
 
-Zoom-Out
+Zoom Out
 ~~~~~~~~
 
 The Zoom-Out button zooms away from the data by a set amount. The center of the zoom is the center
@@ -96,10 +93,9 @@ Zoom to the selected features.
 
 **Related reference**
 
+:doc:`Navigation Menu`
 
-* :doc:`Navigation Menu`
-
-* :doc:`Map Menu`
+:doc:`Map Menu`
 
 
 .. |image0| image:: /images/navigation_tools/zoom_mode.gif

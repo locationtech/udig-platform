@@ -5,16 +5,16 @@ Many edit tools have an advanced mode that provides access to additional edit fe
 
 To try this for yourself:
 
-1. Open up the application preferences using **Window > Preferences**
- 2. Navigate to the `Edit Tool Preferences <Edit%20Tool%20Preferences.html>`_ page
- 3. Toggle the **Advanced Tools** checkbox
- 4. Press OK
+#. Open up the application preferences using :menuselection:`Window --> Preferences`
+#. Navigate to the :doc:`Edit Tool Preferences` page
+#. Toggle the :guilabel:`Advanced Tools` checkbox
+#. Press :guilabel:`OK`
 
-Tip: You can also toggle this setting while editing by pressing CTRL+space.
+.. tip::
+   You can also toggle this setting while editing by pressing :kbd:`CTRL` + :kbd:`SPACE`.
 
 **Related reference**
 
-
-* :doc:`Edit Tool Preferences`
+:doc:`Edit Tool Preferences`
 
 

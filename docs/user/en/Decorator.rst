@@ -9,6 +9,5 @@ north arrow.
 
 **Related concepts**
 
-
 :doc:`Layer`
 

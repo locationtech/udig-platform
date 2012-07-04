@@ -14,24 +14,28 @@ created vertex's location will be set to the neighboring vertex's location.
 
 In the above image the vertex would snap to the red point feature, as long as the correct snap
 behaviour is set. The red circle in the image indicates the area that will be searched. The snap
-radius can be set in the `Edit Tool Preferences <Edit%20Tool%20Preferences.html>`_ or by holding ALT
-while rotating the mouse wheel.
- **Note:** One of the edit tools must be active to set the snap radius using the mouse tool.
- **Tip:** The color of the snap area can be set in the `Edit Tool
-Preferences <Edit%20Tool%20Preferences.html>`_. The feedback color indicates the color of the snap
-area.
+radius can be set in the :doc:`Edit Tool Preferences` or by holding :kbd:`ALT` while rotating 
+the mouse wheel.
+
+.. note::
+   One of the edit tools must be active to set the snap radius using the mouse tool.
+   
+.. tip::
+   The color of the snap area can be set in the :doc:`Edit Tool Preferences`. The feedback 
+   color indicates the color of the snap area.
+
 
 Snap Behavior
 ~~~~~~~~~~~~~
 
 There are different ways that snapping can behave, for example the snapping can snap to a grid
 (defined by the user) or it can snap to the nearest vertex on the current layer.
- The normal snapping choices are as follows:
+The normal snapping choices are as follows:
 
 +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
 | No Snapping         | Snapping is turned off. **DEFAULT**                                                                                                       |
 +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| Selected Features   | Will snap to vertices that are part of a feature that has been added to the `EditBlackboard <EditBlackboard.html>`_ (has been selected)   |
+| Selected Features   | Will snap to vertices that are part of a feature that has been added to the :doc:`EditBlackboard` (has been selected)                     |
 +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
 | Current Layer       | Searches for the closest vertex in the current layer                                                                                      |
 +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
@@ -40,20 +44,22 @@ There are different ways that snapping can behave, for example the snapping can 
 | Grid                | Snaps to the nearest grid intersection                                                                                                    |
 +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
 
-**Note:** The Grid can only be seen if the grid map graphic is added (**Layer > Grid**)
- **Tip:** The size of the grid can be changed in the `Edit Tool
-Preferences <Edit%20Tool%20Preferences.html>`_.
+.. note::
+   The Grid can only be seen if the grid map graphic is added (:menuselection:`Layer --> Grid`)
+
+.. tip::
+   The size of the grid can be changed in the :doc:`Edit Tool Preferences`.
+
 
 There is two different ways to change the snap behavior:
 
-#. In the `Edit Tool Preferences <Edit%20Tool%20Preferences.html>`_ which can be found in the
-   **Window > Preferences** menu.
-#. While an edit to is *active* press CTRL+SHIFT+S. This will cycle through the available snap
+#. In the :doc:`Edit Tool Preferences` which can be found in the
+   :menuselection:`Window --> Preferences` menu.
+#. While an edit to is *active* press :kbd:`CTRL` + :kbd:`SHIFT` + :kbd:`S`. This will cycle through the available snap
    behaviors. A small pop-up will display the new behavior.
 
 **Related reference**
 
-
-* :doc:`Edit Tool Preferences`
+:doc:`Edit Tool Preferences`
 
 

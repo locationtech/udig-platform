@@ -2,8 +2,8 @@ Symbology
 #########
 
 Symbology is the cartographic practice of representing information using symbols (and colours) on a
-Map. The `Legend <Legend.html>`_ offers a quick summery of the symbology used for a
-`Map <Map.html>`_, often presenting important layers of information in groups for easy reference.
+Map. The :doc:`Legend` offers a quick summery of the symbology used for a :doc:`Map` , often presenting 
+important layers of information in groups for easy reference.
 
 For Layers with complicated symbology (perhaps listing icons, or changing colour based on attribute)
 the symbology will change on a feature by feature basis to reflect the values being communicated by
@@ -53,10 +53,9 @@ on the dataset and information being communicated a number of techniques may be 
 
 **Related concepts**
 
-
 :doc:`Legend`
 
- :doc:`Cartography - Map Type (wikipedia)`
+`Cartography - Map Type (wikipedia) <http://en.wikipedia.org/wiki/Cartography#Map_types>`_
 
- :doc:`Thematic map (wikipedia)`
+`Thematic map (wikipedia) <http://en.wikipedia.org/wiki/Thematic_map>`_
 

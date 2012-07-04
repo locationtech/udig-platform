@@ -1,22 +1,14 @@
 Menus
 #####
 
-Contents:
-
-* :doc:`Data Menu`
-
-* :doc:`Edit Menu`
-
-* :doc:`File Menu`
-
-* :doc:`Help Menu`
-
-* :doc:`Layer Menu`
-
-* :doc:`Map Menu`
-
-* :doc:`Navigation Menu`
-
-* :doc:`Window Menu`
-
-
+.. toctree::
+   :maxdepth: 1
+   
+   Data Menu
+   Edit Menu
+   File Menu
+   Help Menu
+   Layer Menu
+   Map Menu
+   Navigation Menu
+   Window Menu

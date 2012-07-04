@@ -7,7 +7,7 @@ the selection tools features can be added to the blackboard.
 -  Clicking on a *non-selected* feature will clear the blackboard and add the feature to the edit
    blackboard.
 -  SHIFT+click will add feaures to the EditBlackboard.
--  CTRL+click will add a *non-selected* feature to the EditBlackboard and will remove a *selected*
+-  :kbd:`CTRL` + click will add a *non-selected* feature to the EditBlackboard and will remove a *selected*
    feature from the EditBlackboard.
 
 There are a few benefits to adding features to the EditBlackboard.

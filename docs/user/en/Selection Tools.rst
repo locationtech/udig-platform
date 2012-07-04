@@ -3,10 +3,10 @@ Selection Tools
 
 Each layer has an associated selection that can be used to isolate content for further interaction.
 
--  |image0| `Box Selection <#SelectionTools-BoxSelection>`_:
--  |image1| `AOI Selection <#SelectionTools-AOISelection>`_:
+-  |image0| `Box Selection`_
+-  |image1| `AOI Selection`_
 
-Map selection may also be defined using the `Table view <Table%20view.html>`_.
+Map selection may also be defined using the :doc:`Table view`.
 
 Box Selection
 -------------
@@ -30,21 +30,18 @@ The tool works by:
    up until no area of interest is defined)
 -  You can drag to select several features as the area of interest
 
-:doc:`Area of Interest`
-
 
 **Related tasks**
 
+:doc:`Area of Interest`
 
 :doc:`Working with AOI`
 
 
 **Related reference**
 
-
 :doc:`Table view`
 
- Selection Preference page
 
 .. |image0| image:: /images/selection_tools/selection_mode.gif
 .. |image1| image:: /images/selection_tools/aoi_mode.png

@@ -12,12 +12,9 @@ We can use a layer feature to define the current boundary.
 
 **Related concepts**
 
-
 :doc:`Area of Interest`
 
 
 **Related reference**
 
-
 :doc:`AOI view`
-

@@ -4,49 +4,44 @@ Running uDig
 This page covers some of the options you have when starting up uDig. We also cover a few platform
 specific issues.
 
-:doc:`The UDIG Application`
+`The UDIG Application`_
+
+* `Workspace`_
+
+* `Configuration`_
+
+* `Language`_
+
+* `Java`_
+
+* `Got Memory`_
+
+* `Proxy Settings`_
+
+`Windows`_
+
+* `uDig does not work on Windows 2000`_
+
+`Max OS X`_
+
+`Linux`_
 
 
-* :doc:`Workspace`
+* `Fedora 10 XULRunner Library Conflict`_
 
-* :doc:`Configuration`
+* `Advanced graphics: to disable or not?`_
 
-* :doc:`Language`
+* `The ugly cursors (UDIG-785 Cursors on non--windows platforms are mangled)`_ 
 
-* :doc:`Java`
+* `Info and Help require a "Pure" Mozilla Browser ( UDIG-698: Linux MOZILLA\_FIVE\_HOME required for Information tool )`_
 
-* :doc:`Got Memory`
+* `About the Internal Browser`_
 
-* :doc:`Proxy Settings`
+* `The zoom window is opaque when advanced graphics are disabled`_
 
+* `Can I use my Own Java?`_
 
-:doc:`Windows`
-
-
-* :doc:`uDig does not work on Windows 2000`
-
-
-:doc:`Max OS X`
-
-
-:doc:`Linux`
-
-
-* :doc:`Fedora 10 XULRunner Library Conflict`
-
-* :doc:`Advanced graphics: to disable or not?`
-
--  `The ugly cursors (UDIG-785 Cursors on non--windows platforms are
-   mangled) <#RunninguDig-Theuglycursors%28UDIG785Cursorsonnonwindowsplatformsaremangled>`_
--  `Info and Help require a "Pure" Mozilla Browser ( UDIG-698: Linux MOZILLA\_FIVE\_HOME required
-   for Information tool ) <#RunninguDig-InfoandHelprequirea%22Pure%22MozillaBrowser%28UDIG698>`_
-* :doc:`About the Internal Browser`
-
--  `The zoom window is opaque when advanced graphics are
-   disabled <#RunninguDig-Thezoomwindowisopaquewhenadvancedgraphicsaredisabled>`_
-* :doc:`Can I use my Own Java?`
-
-* :doc:`JRE folder vs JAVA\_HOME`
+* `JRE folder vs JAVA\_HOME`_
 
 
 The command line options can be set up either:
@@ -335,8 +330,7 @@ For several functions uDig will make use of an internal (or embedded browser).
 On the Linux platform eclipse tries to launch the Mozilla browser. But recent Linux distributions
 ship with a "custom" copy of Firefox so uDig does not recognize it.
 
-Because uDig runs inside eclipse, the Standard Widget Toolkit FAQ at
-:doc:`http://www.eclipse.org/swt/faq.php#browserlinux`
+Because uDig runs inside eclipse, the Standard Widget Toolkit FAQ at `<http://www.eclipse.org/swt/faq.php#browserlinux>`_
 
 may indicate which web browser to install in case this information is not displayed correctly.
 

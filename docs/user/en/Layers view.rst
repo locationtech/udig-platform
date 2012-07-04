@@ -42,7 +42,7 @@ Context menu
 Change Style
 ~~~~~~~~~~~~
 
-Opens the `Style View <Style%20View.html>`_ allowing the layer's style to be changed.
+Opens the :doc:`Style View` allowing the layer's style to be changed.
 
 Zoom To Layer
 ~~~~~~~~~~~~~

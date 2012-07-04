@@ -1,14 +1,14 @@
 Filter viewer
 #############
 
-Filter viewers are used in `Style Editor dialog <Style%20Editor%20dialog.html>`_ and other areas
+Filter viewers are used in :doc:`Style Editor dialog` and other areas
 where selecting the content you wish to work with is important. A formula is used to select content
 on a feature by feature basis.
 
 This is a powerful technique that can be used for on the fly styling, or directly for data
 processing.
 
-.. figure:: /images/filter_viewer/CQLFilterViewer.png
+.. figure:: images/filter_viewer/CQLFilterViewer.png
    :align: center
    :alt: 
 
@@ -16,11 +16,11 @@ You can switch between appropriate options using the drop down arrow on the righ
 Depending on what content you are working with different options will be listed some of which are
 described below:
 
-* :doc:`Constraint Query Language`
+* `Constraint Query Language`_
 
-* :doc:`Builder`
+* `Builder`_
 
-* :doc:`Include`
+* `Include`_
 
 
 Common examples:
@@ -55,8 +55,7 @@ Common examples:
 
        NOT( NAME LIKE 'Can%' )
 
--  You can make use of the full range of `Constraint Query
-   Language <Constraint%20Query%20Language.html>`_ function:
+-  You can make use of the full range of :doc:`Constraint Query Language` function:
 
    ::
 
@@ -64,16 +63,14 @@ Common examples:
 
 **Related concepts**
 
-
 :doc:`Constraint Query Language`
 
 
 **Related reference**
 
-
 :doc:`Style Editor dialog`
 
- :doc:`Transform dialog`
+:doc:`Transform dialog`
 
 
 Constraint Query Language
@@ -81,7 +78,7 @@ Constraint Query Language
 
 This is a plain viewer offering simple constraint query language input.
 
-.. figure:: /images/filter_viewer/CQLFilterViewer.png
+.. figure:: images/filter_viewer/CQLFilterViewer.png
    :align: center
    :alt: 
 
@@ -96,7 +93,7 @@ Builder
 A friendly general purpose viewer offering constraint query language input. Provides a list of
 attributes, operations and values that can be inserted into your filter.
 
-.. figure:: /images/filter_viewer/BuilderFilterViewer.png
+.. figure:: images/filter_viewer/BuilderFilterViewer.png
    :align: center
    :alt: 
 
@@ -105,7 +102,7 @@ Include
 
 Offers an easy way to enable or disable a rule. This is not a general purpose viewer.
 
-.. figure:: /images/filter_viewer/EnableFilterViewer.png
+.. figure:: images/filter_viewer/EnableFilterViewer.png
    :align: center
    :alt: 
 
@@ -121,5 +118,5 @@ Offers an easy way to enable or disable a rule. This is not a general purpose vi
 
        EXCLUDE
 
-This viewer is often used in the `Style Editor dialog <Style%20Editor%20dialog.html>`_ to toggle a
+This viewer is often used in the :doc:`Style Editor dialog` to toggle a
 Rule on or off.

@@ -8,8 +8,7 @@ You can filter the layer using a spatial (or any other Query):
 #. Add your layer
 #. Open the Style Editor
 #. navigate to the Filter page
-#. Add in your spatial filter using `Constraint Query
-   Language <Constraint%20Query%20Language.html>`_
+#. Add in your spatial filter using :doc:`Constraint Query Language`
 
    -  Example: LANDLOCKED = 'true'
    -  Tip: You can define a spatial query using the select tool; and copy the filter out of the
@@ -27,8 +26,7 @@ You can copy a selection into a new Layer:
 
 **Related concepts**
 
-
 :doc:`Constraint Query Language`
 
- :doc:`Table view`
+:doc:`Table view`
 

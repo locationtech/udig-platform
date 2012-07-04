@@ -34,6 +34,7 @@ import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.URLUtils;
+import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.ISharedImages;
 import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
@@ -161,16 +162,10 @@ public class JGTtmsService extends IService {
     }
 
     public Status getStatus() {
-        // error occured
-        if (msg != null) {
-            return Status.BROKEN;
+        if( mapsetMembers == null ){
+            // if the folder hasn't been scanned yet
+            return super.getStatus();
         }
-
-        // if the folder hasn't been scanned yet
-        if (mapsetMembers == null) {
-            return Status.NOTCONNECTED;
-        }
-
         return Status.CONNECTED;
     }
 

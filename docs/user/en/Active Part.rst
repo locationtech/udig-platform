@@ -10,11 +10,11 @@ also determines the contents of the status line. If an editor tab is white it in
 is not active, however views may show information based on the last active editor.
 
 In the image below, the **Projects view** is active.
- |image0|
+
+  .. image:: /images/active_part/view.gif
 
 Clicking on the Catalog view causes the Catalog view title bar to turn blue and the Projects view
 title bar to no longer be blue, as shown below. The Catalog view is now active.
- |image1|
 
-.. |image0| image:: /images/active_part/view.gif
-.. |image1| image:: /images/active_part/viewactive.gif
+  .. image:: /images/active_part/viewactive.gif
+

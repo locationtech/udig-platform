@@ -8,8 +8,11 @@ The rectangle tool is one of the simplest tools. To use it simply drag the mouse
 rectangle and release when the rectangle is the desired size. When the mouse is released a new
 feature is created with rectangle as its geometry.
 
-**Note:** Rectangles can be either polygon or lines.
- **Note:** There are no advanced editing features for the Rectangle Tool.
+.. note::
+   Rectangles can be either polygon or lines.
+   
+   There are no advanced editing features for the Rectangle Tool.
+
 
 **Related reference**
 

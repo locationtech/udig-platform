@@ -19,7 +19,7 @@ Map Operations
 Access operations for the current Map.
 
 The operations listed here are limited by the current perspective; Additional operations are
-available from **File > All Operations**
+available from :menuselection:`File --> All Operations`
 
 Rendering Tools
 ---------------

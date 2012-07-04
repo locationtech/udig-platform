@@ -10,8 +10,8 @@ user interface.
    Quickstart
    Walkthrough 1
    Walkthrough 2
-   Merge Tool
    Introduction to the Spatial Toolbox
+
 
 
 Tips for using Online Help
@@ -24,9 +24,4 @@ Tips for using Online Help
 
 **Related tasks**
 
-.. toctree::
-   :hidden:
-
-   Running uDig
-   
 :doc:`Running uDig <Running uDig>` (help for running on windows, linux and macosx)

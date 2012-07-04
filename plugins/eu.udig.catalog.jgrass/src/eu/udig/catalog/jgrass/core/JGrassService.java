@@ -35,6 +35,7 @@ import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveChangeEvent;
+import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.IResolveChangeEvent.Type;
 import net.refractions.udig.catalog.IResolveDelta;
 import net.refractions.udig.catalog.IResolveDelta.Kind;
@@ -282,16 +283,10 @@ public class JGrassService extends IService {
     }
 
     public Status getStatus() {
-        // error occured
-        if (msg != null) {
-            return Status.BROKEN;
+        if( mapsetMembers == null ){
+            // if the folder hasn't been scanned yet
+            return super.getStatus();
         }
-
-        // if the folder hasn't been scanned yet
-        if (mapsetMembers == null) {
-            return Status.NOTCONNECTED;
-        }
-
         return Status.CONNECTED;
     }
 

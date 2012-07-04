@@ -1,5 +1,5 @@
 Constraint Query Language
-~~~~~~~~~~~~~~~~~~~~~~~~~
+=========================
 
 The Constraint Query Language is used to define expressions and filters in several parts of the uDig
 application.
@@ -10,13 +10,13 @@ well-known-text representation of geometry is defined as part of the Simple Feat
 specification).
 
 Filters
-^^^^^^^
+-------
 
 A **Filters** is used to test content, similar in spirit to a WHERE statement in SQL. Filters are
 used to define the selected Features in a uDig layer.
 
 Comparisons
-'''''''''''
+^^^^^^^^^^^
 
 ::
 
@@ -35,7 +35,7 @@ Comparisons
     ATTR1 < 10 AND ATTR2 < 2 OR ATTR3 > 10
 
 Text
-''''
+^^^^
 
 ::
 
@@ -46,7 +46,7 @@ Text
     ATTR1 NOT LIKE 'abc%'
 
 Null
-''''
+^^^^
 
 ::
 
@@ -57,7 +57,7 @@ Null
     ATTR1 IS NOT NULL
 
 Exists
-''''''
+^^^^^^
 
 ::
 
@@ -68,14 +68,14 @@ Exists
     ATTR1 DOES-NOT-EXIST
 
 Between
-'''''''
+^^^^^^^
 
 ::
 
     ATTR1 BETWEEN 10 AND 20
 
 Spatial Relationships
-'''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -102,7 +102,7 @@ Spatial Relationships
     BBOX(ATTR1, 10,20,30,40)
 
 Time
-''''
+^^^^
 
 Before a date.
 
@@ -145,7 +145,7 @@ During predicate
     ATTR1 DURING 2006-11-30T01:30:00Z/2006-12-31T01:30:00Z
 
 Compound Attributes
-'''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -166,7 +166,7 @@ interpret the provided argument expressions. The functions functions that produc
 are **very** similar to a filter.
 
 Literals
-''''''''
+^^^^^^^^
 
 ::
 
@@ -185,7 +185,7 @@ Literals
     2006-11-30T01:30:00Z
 
 Geometry
-''''''''
+^^^^^^^^
 
 Geometry literals are provided in Well Known Text format:
 
@@ -197,10 +197,10 @@ Geometry literals are provided in Well Known Text format:
 
     LINESTRING (15 15, 20 20)
 
-This is the same format used by `PostGIS <PostGIS.html>`_ and other applications.
+This is the same format used by :doc:`PostGIS` and other applications.
 
 Attribute
-'''''''''
+^^^^^^^^^
 
 ::
 
@@ -211,7 +211,7 @@ Attribute
     prefix:name
 
 Math
-''''
+^^^^
 
 ::
 
@@ -226,7 +226,7 @@ Math
     (1 + 2) * 3
 
 Functions
-^^^^^^^^^
+---------
 
 ::
 
@@ -372,14 +372,14 @@ Function List:
     within(Geometry, Geometry)
 
 Extended CQL
-^^^^^^^^^^^^
+------------
 
 The common query language cannot quite do everything we would like it to. The following extensions
 are not strictly common query language (so please do not expect them to work with other
 applications).
 
 Feature ID
-''''''''''
+^^^^^^^^^^
 
 You can select against a feature identifier using:
 
@@ -395,16 +395,13 @@ Or if you have an integer type as feature id:
 
 **Related tasks**
 
-
-* :doc:`Selection using CQL`
+:doc:`Selection using CQL`
 
 
 **Related reference**
 
+:doc:`Table view`
 
-* :doc:`Table view`
-
--  Reshape Operation
-* :doc:`OGC Catalog Specification`
+`OGC Catalog Specification <http://www.opengeospatial.org/standards/cat>`_
 
 

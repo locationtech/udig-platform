@@ -9,6 +9,6 @@ a map open.
 #. While still holding the mouse button down, move the mouse in any direction.
 #. Release the mouse button.
 
-Using **ctrl+(arrow key)** can also be used to pan.
+Using :kbd:`CTRL` + **(arrow key)** can also be used to pan.
 
 .. |image0| image:: /images/pan/pan-button.gif

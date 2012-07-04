@@ -22,6 +22,4 @@ Feature Metadata
 
 **Related concepts**
 
-
 :doc:`Selection`
-
