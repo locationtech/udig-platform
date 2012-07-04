@@ -133,6 +133,10 @@ public class MapGraphicService extends IService {
         return Status.CONNECTED;
     }
 
+    @Override
+    public void dispose(IProgressMonitor monitor) {
+        // built-in
+    }
     /*
      * @see net.refractions.udig.catalog.IResolve#getMessage()
      */

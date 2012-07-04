@@ -23,6 +23,7 @@ import java.util.Map;
 
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IService;
+import net.refractions.udig.catalog.IResolve.Status;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -107,14 +108,10 @@ public class DataStoreService extends IService {
     }
 
     public Status getStatus() {
-        if (dataStore != null) {
-            return Status.CONNECTED;
+        if( dataStore == null ){
+            return super.getStatus();
         }
-        if (message != null) {
-            return Status.BROKEN;
-        } else {
-            return Status.NOTCONNECTED;
-        }
+        return Status.CONNECTED;
     }
 
     @Override
@@ -137,4 +134,15 @@ public class DataStoreService extends IService {
         return super.resolve(adaptee, monitor);
     }
 
+    @Override
+    public void dispose(IProgressMonitor monitor) {
+        super.dispose(monitor); // clean up members
+        if( dataStore != null ){
+            dataStore.dispose();
+            dataStore = null;
+        }
+        if( resources != null ){
+            resources = null;
+        }
+    }
 }

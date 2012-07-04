@@ -27,6 +27,7 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
+import net.refractions.udig.catalog.IResolve.Status;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.process.ProcessFactory;
@@ -61,12 +62,10 @@ public class LocalProcessService extends IService {
     }
     
     public Status getStatus() {
-        if( folders != null ){
-            return Status.CONNECTED;
+        if( folders == null ){
+            return super.getStatus();
         }
-        else {
-            return Status.NOTCONNECTED;
-        }
+        return Status.CONNECTED;
     }
 
     public Throwable getMessage() {
