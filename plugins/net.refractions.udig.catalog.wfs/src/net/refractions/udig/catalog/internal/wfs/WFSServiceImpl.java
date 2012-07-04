@@ -31,6 +31,7 @@ import net.refractions.udig.catalog.IResolveChangeEvent;
 import net.refractions.udig.catalog.IResolveDelta;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
+import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.internal.CatalogImpl;
 import net.refractions.udig.catalog.internal.ResolveChangeEvent;
 import net.refractions.udig.catalog.internal.ResolveDelta;
@@ -55,7 +56,13 @@ public class WFSServiceImpl extends IService {
 
     private URL identifier = null;
     private Map<String, Serializable> params = null;
+    private volatile List<WFSGeoResourceImpl> members = null;
     protected Lock rLock = new UDIGDisplaySafeLock();
+
+    private Throwable msg = null;
+    private volatile WFSDataStoreFactory dsf;
+    private volatile WFSDataStore ds = null;
+    private static final Lock dsLock = new UDIGDisplaySafeLock();
 
     public WFSServiceImpl( URL identifier, Map<String, Serializable> dsParams ) {
         this.identifier = identifier;
@@ -86,19 +93,13 @@ public class WFSServiceImpl extends IService {
     }
 
     public void dispose( IProgressMonitor monitor ) {
-        if (members == null)
-            return;
-
-        int steps = (int) ((double) 99 / (double) members.size());
-        for( IResolve resolve : members ) {
-            try {
-                SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, steps);
-                resolve.dispose(subProgressMonitor);
-                subProgressMonitor.done();
-            } catch (Throwable e) {
-                ErrorManager.get().displayException(e,
-                        "Error disposing members of service: " + getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
-            }
+        super.dispose(monitor);
+        if (members != null){
+            members = null;
+        }
+        if( ds != null ){
+            ds.dispose();
+            ds = null;
         }
     }
 
@@ -130,8 +131,6 @@ public class WFSServiceImpl extends IService {
         return members;
     }
 
-    private volatile List<WFSGeoResourceImpl> members = null;
-
     @Override
     public IServiceInfo getInfo( IProgressMonitor monitor ) throws IOException {
         return (IServiceInfo) super.getInfo(monitor);
@@ -158,11 +157,6 @@ public class WFSServiceImpl extends IService {
     public Map<String, Serializable> getConnectionParams() {
         return params;
     }
-
-    private Throwable msg = null;
-    private volatile WFSDataStoreFactory dsf;
-    private volatile WFSDataStore ds = null;
-    private static final Lock dsLock = new UDIGDisplaySafeLock();
 
     WFSDataStore getDS( IProgressMonitor monitor ) throws IOException {
         if (ds == null) {
@@ -208,7 +202,10 @@ public class WFSServiceImpl extends IService {
      * @see net.refractions.udig.catalog.IResolve#getStatus()
      */
     public Status getStatus() {
-        return msg != null ? Status.BROKEN : ds == null ? Status.NOTCONNECTED : Status.CONNECTED;
+        if( ds == null ){
+            return super.getStatus();
+        }
+        return Status.CONNECTED;
     }
 
     /*

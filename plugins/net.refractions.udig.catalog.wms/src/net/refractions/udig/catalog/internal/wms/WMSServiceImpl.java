@@ -26,6 +26,7 @@ import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
+import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.wms.internal.Messages;
 import net.refractions.udig.ui.ErrorManager;
 import net.refractions.udig.ui.UDIGDisplaySafeLock;
@@ -75,6 +76,8 @@ public class WMSServiceImpl extends IService {
     private volatile List<IResolve> members;
     private int currentFolderID = 0;
 
+    private static final Lock dsLock = new UDIGDisplaySafeLock();
+
     /**
      * Construct <code>WMSServiceImpl</code>.
      * 
@@ -95,10 +98,11 @@ public class WMSServiceImpl extends IService {
     }
 
     public Status getStatus() {
-        return error != null ? Status.BROKEN : wms == null ? Status.NOTCONNECTED : Status.CONNECTED;
+        if( wms == null ){
+            return super.getStatus();
+        }
+        return Status.CONNECTED;
     }
-    private static final Lock dsLock = new UDIGDisplaySafeLock();
-
     /**
      * Aquire the actual geotools WebMapServer instance.
      * <p>
@@ -205,19 +209,12 @@ public class WMSServiceImpl extends IService {
         return adaptee.isAssignableFrom(WebMapServer.class) || super.canResolve(adaptee);
     }
     public void dispose( IProgressMonitor monitor ) {
-        if (members == null)
-            return;
-
-        int steps = (int) ((double) 99 / (double) members.size());
-        for( IResolve resolve : members ) {
-            try {
-                SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, steps);
-                resolve.dispose(subProgressMonitor);
-                subProgressMonitor.done();
-            } catch (Throwable e) {
-                ErrorManager.get().displayException(e,
-                        "Error disposing members of service: " + getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
-            }
+        super.dispose(monitor);
+        if( members != null ){
+            members = null;
+        }
+        if( wms != null ){
+            wms = null;
         }
     }
 

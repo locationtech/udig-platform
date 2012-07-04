@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
+import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.internal.CatalogImpl;
 import net.refractions.udig.catalog.internal.ResolveChangeEvent;
 import net.refractions.udig.catalog.internal.ResolveDelta;
@@ -55,6 +56,11 @@ public class MySQLServiceImpl extends IService {
     private URL url = null;
     private Map<String, Serializable> params = null;
     protected Lock rLock = new UDIGDisplaySafeLock();
+
+    private volatile List<MySQLGeoResource> members = null;
+    private Throwable msg = null;
+    private volatile JDBCDataStore ds = null;
+    private Lock dsInstantiationLock = new UDIGDisplaySafeLock();
 
     /**
      * Construct <code>MySQLServiceImpl</code>.
@@ -100,19 +106,12 @@ public class MySQLServiceImpl extends IService {
     }
 
     public void dispose( IProgressMonitor monitor ) {
-        if (members == null)
-            return;
-
-        int steps = (int) ((double) 99 / (double) members.size());
-        for( IResolve resolve : members ) {
-            try {
-                SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, steps);
-                resolve.dispose(subProgressMonitor);
-                subProgressMonitor.done();
-            } catch (Throwable e) {
-                ErrorManager.get().displayException(e,
-                        "Error disposing members of service: " + getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
-            }
+        super.dispose(monitor);
+        if( ds != null ){
+            ds.dispose();
+        }
+        if( members != null ){
+            members = null;
         }
     }
 
@@ -137,8 +136,6 @@ public class MySQLServiceImpl extends IService {
         }
         return members;
     }
-    private volatile List<MySQLGeoResource> members = null;
-
     @Override
     public IServiceMySQLInfo getInfo( IProgressMonitor monitor ) throws IOException {
         return (IServiceMySQLInfo) super.getInfo(monitor);
@@ -164,10 +161,6 @@ public class MySQLServiceImpl extends IService {
     public Map<String, Serializable> getConnectionParams() {
         return params;
     }
-    private Throwable msg = null;
-    private volatile JDBCDataStore ds = null;
-    private Lock dsInstantiationLock = new UDIGDisplaySafeLock();
-
     JDBCDataStore getDS() throws IOException {
         boolean changed = false;
         dsInstantiationLock.lock();
@@ -201,7 +194,10 @@ public class MySQLServiceImpl extends IService {
      * @see net.refractions.udig.catalog.IResolve#getStatus()
      */
     public Status getStatus() {
-        return msg != null ? Status.BROKEN : ds == null ? Status.NOTCONNECTED : Status.CONNECTED;
+        if( ds == null ){
+            return super.getStatus();
+        }
+        return Status.CONNECTED;
     }
     /*
      * @see net.refractions.udig.catalog.IResolve#getMessage()
@@ -216,6 +212,7 @@ public class MySQLServiceImpl extends IService {
         return url;
     }
 
+    
     private class IServiceMySQLInfo extends IServiceInfo {
 
         IServiceMySQLInfo( JDBCDataStore resource ) {

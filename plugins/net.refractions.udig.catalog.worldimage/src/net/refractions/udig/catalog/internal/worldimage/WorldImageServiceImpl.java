@@ -100,7 +100,4 @@ public class WorldImageServiceImpl extends AbstractRasterService {
         return params;
     }
 
-    public void dispose( IProgressMonitor monitor ) {
-        // do nothing
-    }
 }
