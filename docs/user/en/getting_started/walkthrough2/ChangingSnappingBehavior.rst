@@ -30,7 +30,7 @@ There are three different ways to change the snap behavior:
     :height: 10.22cm
 
 
-* While an edit tool is **active** press CTRL+SHIFT+S. This will cycle through the available snap behaviors. 
+* While an edit tool is **active** press :kbd:`CTRL` + :kbd:`SHIFT` + :kbd:`S`. This will cycle through the available snap behaviors. 
   A small pop-up will display the new behavior.
 
 * You can see a short cut of the tool snapping options in the tool options along the bottom of the map.

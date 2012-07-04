@@ -14,7 +14,7 @@ General Catalog Preferences
    saved between sessions. The data is not saved, however, only the feature type definition and the
    entry in the catalog.
 
-   -  Example: If a user creates a new FeatureType via the **Layer > Create** menu item a layer is
+   -  Example: If a user creates a new FeatureType via the :menuselection:`Layer --> Create` menu item a layer is
       typically added to the open map and an entry is added to the catalog. If this preference is
       not checked the entry will be removed from the catalog on shutdown.
 

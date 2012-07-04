@@ -17,8 +17,10 @@ any Feature in the current layer whose default geometry is crossed by the *split
 When the *Split Tool* proceeds to divide a feature, it will delete the feature being divided and
 create as many new features as parts the splitting results in.
 
-Note that the *Split Tool* does not commits the result, but lets you undo the operation if desired,
-or commit the changes to the backend data repository as you would normally do in uDig.
+.. note::
+   The *Split Tool* does not commits the result, but lets you undo the operation if desired,
+   or commit the changes to the backend data repository as you would normally do in uDig.
+
 
 Visual consistency
 ~~~~~~~~~~~~~~~~~~

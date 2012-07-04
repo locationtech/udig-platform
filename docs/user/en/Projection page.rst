@@ -24,8 +24,9 @@ Custom CRS
 
 You can supply your own custom coordinate reference system using the "Well Known Text" format.
 
-Note: You can switch to this tab to review a "Standard CRS\* definition using WKT as a quick
-informal summary; or as a starting point for your own custom definition.
+.. note::
+   You can switch to this tab to review a "Standard CRS\* definition using WKT as a quick 
+   informal summary; or as a starting point for your own custom definition.
 
 **Related concepts**
 

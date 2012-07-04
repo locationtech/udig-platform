@@ -40,7 +40,7 @@ Layer Operations
 
 Operations that are applicable to the current layer are listed here.
 
-Additional operations are available from **File > All Operations**
+Additional operations are available from :menuselection:`File --> All Operations`
 
 Change Style
 ~~~~~~~~~~~~

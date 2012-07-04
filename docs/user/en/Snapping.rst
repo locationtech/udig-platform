@@ -14,8 +14,8 @@ created vertex's location will be set to the neighboring vertex's location.
 
 In the above image the vertex would snap to the red point feature, as long as the correct snap
 behaviour is set. The red circle in the image indicates the area that will be searched. The snap
-radius can be set in the :doc:`Edit Tool Preferences` or by holding ALT
-while rotating the mouse wheel.
+radius can be set in the :doc:`Edit Tool Preferences` or by holding :kbd:`ALT` while rotating 
+the mouse wheel.
 
 .. note::
    One of the edit tools must be active to set the snap radius using the mouse tool.
@@ -55,7 +55,7 @@ There is two different ways to change the snap behavior:
 
 #. In the :doc:`Edit Tool Preferences` which can be found in the
    :menuselection:`Window --> Preferences` menu.
-#. While an edit to is *active* press :kbd:`CTRL`+:kbd:`SHIFT`+:kbd:`S`. This will cycle through the available snap
+#. While an edit to is *active* press :kbd:`CTRL` + :kbd:`SHIFT` + :kbd:`S`. This will cycle through the available snap
    behaviors. A small pop-up will display the new behavior.
 
 **Related reference**

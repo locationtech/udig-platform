@@ -47,8 +47,10 @@ geometries from the source *Features* could be set through the *Merge View*.
 When the *Merge Tool* proceeds to create the new, merged Feature, the ones it comes from will be
 deleted at the same time.
 
-Note that the *Merge Tool* does not commit the result, but lets you undo the operation if desired,
-or commit the changes to the backend data repository as you would normally do in uDig.
+.. note::
+   The *Merge Tool* does not commit the result, but lets you undo the operation if desired,
+   or commit the changes to the backend data repository as you would normally do in uDig.
+
 
 .. note::
    **Coordinate Reference System**
@@ -127,7 +129,7 @@ Adding and deleting features.
 For adding more features to be merged, select those features drawing a bounding box and they will be
 added to the view.
 For deleting features, select the feature to be deleted and click on the delete button or draw a
-bounding box with Ctrl key pushed over the desired feature.
+bounding box with :kbd:`CTRL` key pushed over the desired feature.
 
 |image7|
 

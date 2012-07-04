@@ -54,8 +54,8 @@ One of the nice things about uDig is the ease to download and install additional
 
 * Press the :guilabel:`New Remote Site` button and type the following parameters:
   
-  * Name: :kbd:`uDig Community Updates`
-  * URL: :kbd:`http://udig.refractions.net/update/1.2/community`
+  * Name: **uDig Community Updates**
+  * URL: `<http://udig.refractions.net/update/1.2/community>`_
   
   |update_site_png|
 
@@ -137,7 +137,7 @@ Adding a Layer from PostGIS
 This section shows how you can add a Layer from a PostGIS table. PostGIS is an extension to the popular
 open source PostgreSQL database. uDig handles other databases like Oracle and DB2 in a similar manner:
 
-* In the File menu, select :menuselection:`New --> New Map`.
+* Select :menuselection:`File --> New --> New Map` from the menu.
   
   |menubar_new_map_png|
 
@@ -151,10 +151,10 @@ open source PostgreSQL database. uDig handles other databases like Oracle and DB
 
 * Enter the following connection information:
   
-  * Host: :kbd:`www.refractions.net`
-  * Port: :kbd:`5432`
-  * Username: kbd:`demo`
-  * Password: :kbd:`demo`
+  * Host: ``www.refractions.net``
+  * Port: ``5432``
+  * Username: ``demo``
+  * Password: ``demo``
   * Store Password: check
   
   Once the connection information is entered press :guilabel:`Next`.
@@ -165,9 +165,9 @@ open source PostgreSQL database. uDig handles other databases like Oracle and DB
 * This page lists the databases available to the current user.
   
   The www.refractions.net database does not publish a public list so rather than choose from a
-  nice easy list we are going to have to enter in :kbd:`demo-bc` by hand.
+  nice easy list we are going to have to enter in ``demo-bc`` by hand.
   
-  * Database: :kbd:`demo-bc`
+  * Database: ``demo-bc``
   
   |postgis_list_png|
 

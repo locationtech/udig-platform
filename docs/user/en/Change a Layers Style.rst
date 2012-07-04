@@ -6,7 +6,7 @@ The style of a layer may be changed by opening the Style Editor dialog, in one o
 Select a layer in the Layers View and...
 
 -  Click the "Change Style" button |image0|
--  Layer > Change Style...
+-  :menuselection:`Layer --> Change Style...`
 -  Right-click and choose "Change Style..."
 
 Simple

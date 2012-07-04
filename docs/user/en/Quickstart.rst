@@ -39,7 +39,7 @@ this dataset are as follows (in case you want to download higher resolution data
 uDig Application
 ~~~~~~~~~~~~~~~~
 
-#. Choose **uDig 1.1 > uDig** from the start menu
+#. Choose :menuselection:`uDig 1.1 --> uDig` from the start menu
 #. The application will take a few moments to start up
 
    |image0|
@@ -189,13 +189,13 @@ Style
 #. Select **Files** from the list of data sources and press **Next**
 #. Using the From the file chooser open up **timezone.shp** and press **Open**
 #. It is a bit hard to see what is going on with the **clouds.jpg** layer providing so much details.
-   Select **Map > Mylar** from the menu bar to focus on the selected layer
+   Select :menuselection:`Map --> Mylar` from the menu bar to focus on the selected layer
 #. Using the Layer view select **timezone**, **countries** and **clouds.jpg** in turn to see the
    effect
 
    |image14|
 
-#. You can turn off this effect at any time using **Map > Mylar** from the menu bar
+#. You can turn off this effect at any time using :menuselection:`Map --> Mylar` from the menu bar
 
 What is Next
 ~~~~~~~~~~~~

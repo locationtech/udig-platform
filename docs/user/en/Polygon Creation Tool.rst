@@ -44,7 +44,7 @@ editing features are:
 -  Clicking an existing polygon will select it.
 -  Vertices in selected polygons can be moved.
 -  Vertices in selected liness can be added or deleted
--  Holding CTRL+SHIFT down will allow the entire geometry to be moved.
+-  Holding :kbd:`CTRL` + :kbd:`SHIFT` down will allow the entire geometry to be moved.
 -  As with the :doc:`Edit Geometry Tool` the vertex operations can be
    performed on multiple vertices at once if many vertices are selected.
 

@@ -17,7 +17,7 @@ Available Preferences
 -  Snap Behaviour - Declares how vertex snapping behaves.
 
    .. tip:: 
-      Snap behaviour can also be changed by pressing :kbd:`CTRL`+:kbd:`SHIFT`+:kbd:`S` when a edit tool is active.
+      Snap behaviour can also be changed by pressing :kbd:`CTRL` + :kbd:`SHIFT` + :kbd:`S` when a edit tool is active.
 
 
    .. list-table::

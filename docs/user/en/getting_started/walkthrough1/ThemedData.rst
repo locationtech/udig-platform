@@ -15,7 +15,7 @@ by attribute values.
   
   |projects_map_rename_jpg|
 
-* Enter the name :kbd:`Natural Earth` and press :guilabel:`OK`.
+* Enter the name ``Natural Earth`` and press :guilabel:`OK`.
 
 * In the :guilabel:`Layer` menu, select :guilabel:`Add`
 

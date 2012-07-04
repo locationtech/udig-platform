@@ -5,7 +5,7 @@ To print the current map you must first create a Page that allows you to lay it 
 from there.
 
 #. Open the map you wish to print
-#. Press the print button |image0| on the toolbar to create a page (or select File > Print )
+#. Press the print button |image0| on the toolbar to create a page (or select :menuselection:`File --> Print`)
 #. It will ask you what template you wish to create the page from.
     |image1|
 #. Page Editor will be opened showing the arrangement of the Page

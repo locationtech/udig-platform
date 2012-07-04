@@ -47,7 +47,7 @@ The second category of tools involves creating geometry, we will cover line and 
     :height: 3.048cm
 
 
-* Enable snapping by pressing CTRL+SHIFT+S until Snap to features in current layer is 
+* Enable snapping by pressing :kbd:`CTRL` + :kbd:`SHIFT` + :kbd:`S` until Snap to features in current layer is 
   displayed in a dialog.
 
 

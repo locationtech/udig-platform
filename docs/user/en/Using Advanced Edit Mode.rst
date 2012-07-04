@@ -11,7 +11,7 @@ To try this for yourself:
 #. Press :guilabel:`OK`
 
 .. tip::
-   You can also toggle this setting while editing by pressing :kbd:`CTRL`+:kbd:`SPACE`.
+   You can also toggle this setting while editing by pressing :kbd:`CTRL` + :kbd:`SPACE`.
 
 **Related reference**
 

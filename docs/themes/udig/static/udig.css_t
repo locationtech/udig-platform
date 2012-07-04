@@ -461,3 +461,18 @@ div.bottomnav {
    font-size: 1.05em;
 */
 }
+
+.menuselection {
+	font-style: normal;
+	font-size: 1.05em;
+	font-family: Arial,sans-serif;
+	padding: 1px 2px;
+	margin: 0px 4px;
+	background-color: whiteSmoke;
+}
+
+.pre {
+	font-size: 1.4em;
+	padding: 1px 4px;
+	font-family: monospace;
+}

@@ -50,7 +50,7 @@ functionality illustrated on this page is also available when using the :doc:`Po
 
    |image6|
 
-#. The geometry can be moved as a whole by holding down **CTRL+ALT** and dragging the geometry.
+#. The geometry can be moved as a whole by holding down :kbd:`CTRL` + :kbd:`ALT` and dragging the geometry.
 
    |image7|
 
@@ -62,8 +62,8 @@ functionality illustrated on this page is also available when using the :doc:`Po
 
       |image8|
 
-Any operation/change performed can be undone by **CTRL+Z** or **Edit > Undo**. Undone changes can be
-redone by **CTRL+Y** or **Edit > Redo**.
+Any operation/change performed can be undone by :kbd:`CTRL` +  :kbd:`Z` or **Edit > Undo**. Undone changes can be
+redone by :kbd:`CTRL` + :kbd:`Y` or **Edit > Redo**.
 
 You may also wish to look at the Feature Editor, in order to change attribute information.
 
@@ -75,8 +75,8 @@ Tips
 -  Multiple Geometries can be added to the :doc:`EditBlackboard` and edited
    together.
 
-   -  **Shift-click** adds features to the :doc:`EditBlackboard`
-   -  **Alt-click** adds/removes features
+   -  :kbd:`SHIFT` -click adds features to the :doc:`EditBlackboard`
+   -  :kbd:`ALT` -click adds/removes features
 
 -  Esc (or Esc-Esc depending on the platform) clears :doc:`EditBlackboard`.
 -  If two selected features share a vertex moving the vertex will move the vertex on both features.

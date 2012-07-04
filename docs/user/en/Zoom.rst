@@ -18,7 +18,7 @@ In order to use the zoom tool, you must have a map open.
 
 You can also control the Map scale using the **Show Full Map**, **Zoom In** and **Zoom Out**
 buttons, shown below, or by **rolling the mouse wheel**. On platform without a mouse wheel you may
-hold down the ***Alt*** key while dragging the mouse to the left and right.
+hold down the :kbd:`ALT` key while dragging the mouse to the left and right.
 
 |image1|
 
@@ -31,11 +31,11 @@ allowing you to browse backwards and forwards to previous locations.
 Keyboard Shortcuts
 ~~~~~~~~~~~~~~~~~~
 
--  **ALT + left arrow** - Navigate to last view locations
--  **ALT + right arrow** - Navigate forward to the next location in the history
--  **CTRL + =** - Zoom in
--  **CTRL + -** - Zoom out
--  **CTRL + Backspace** - Show all
+-  :kbd:`ALT` + **left arrow** - Navigate to last view locations
+-  :kbd:`ALT` + **right arrow** - Navigate forward to the next location in the history
+-  :kbd:`CTRL` + :kbd:`=` - Zoom in
+-  :kbd:`CTRL` + :kbd:`-` - Zoom out
+-  :kbd:`CTRL` + :kbd:`BACKSPACE` - Show all
 
 .. |image0| image:: /images/zoom/toolzoom.png
 .. |image1| image:: /images/zoom/toolnavigation.gif

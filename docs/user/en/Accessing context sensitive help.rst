@@ -2,7 +2,7 @@ Accessing context sensitive help
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To access the context-sensitive help for a given widget select the widget by putting focus on it
-(see the table below). then press F1 key. On GTK windowing system use Ctrl+F1, and on Carbon 
+(see the table below). then press F1 key. On GTK windowing system use :kbd:`CTRL` + :kbd:`F1`, and on Carbon 
 windowing system use Help key
 instead of F1.
 This displays an infopop with the description of the selected widget, and usually, a list of links

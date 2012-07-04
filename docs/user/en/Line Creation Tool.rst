@@ -49,7 +49,7 @@ has, except that only lines can be edited. A summary of the advanced editing fea
 
 -  Vertices in selected lines can be moved.
 -  Vertices in selected lines can be added or deleted
--  Holding CTRL+SHIFT down will allow the entire geometry to be moved.
+-  Holding :kbd:`CTRL` + :kbd:`SHIFT` down will allow the entire geometry to be moved.
 -  As with the :doc:`Edit Geometry Tool` the vertex operations can be
    performed on multiple vertices at once if many vertices are selected.
 
