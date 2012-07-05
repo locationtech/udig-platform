@@ -17,7 +17,6 @@
 package net.refractions.udig.catalog.internal.oracle;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -35,7 +34,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
-import org.geotools.feature.FeatureIterator;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.jdbc.JDBCDataStore;
 import org.opengis.feature.simple.SimpleFeature;
@@ -110,16 +110,15 @@ public class OracleGeoResource extends IGeoResource {
         if (adaptee.isAssignableFrom(IGeoResource.class)){
             return adaptee.cast(this);
         }
-        if (adaptee.isAssignableFrom(FeatureStore.class)) {
+        if (adaptee.isAssignableFrom(SimpleFeatureStore.class)) {
             JDBCDataStore dataStore = getService().getDS(monitor);
 
-            FeatureSource<SimpleFeatureType, SimpleFeature> fs = dataStore
-                    .getFeatureSource(typename);
+            SimpleFeatureSource fs = dataStore.getFeatureSource(typename);
 
-            if (fs instanceof FeatureStore< ? , ? >){
+            if (fs instanceof SimpleFeatureStore){
                 return adaptee.cast(fs);
             }
-            if (adaptee.isAssignableFrom(FeatureSource.class)) {
+            if (adaptee.isAssignableFrom(SimpleFeatureSource.class)) {
                 dataStore = getService().getDS(monitor);
 
                 return adaptee.cast(dataStore.getFeatureSource(typename));
@@ -134,8 +133,8 @@ public class OracleGeoResource extends IGeoResource {
         if (adaptee == null)
             return false;
         return (adaptee.isAssignableFrom(IGeoResourceInfo.class)
-                || adaptee.isAssignableFrom(FeatureStore.class)
-                || adaptee.isAssignableFrom(FeatureSource.class) || adaptee
+                || adaptee.isAssignableFrom(SimpleFeatureStore.class)
+                || adaptee.isAssignableFrom(SimpleFeatureSource.class) || adaptee
                 .isAssignableFrom(IService.class))
                 || super.canResolve(adaptee);
     }
