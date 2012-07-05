@@ -27,6 +27,11 @@ public class EditLayerProvider implements IBlockingProvider<ILayer> {
         if( map!=null ){
             return map.getEditManager().getEditLayer();
         }
-        return command.getMap().getEditManager().getEditLayer();
+        ILayer editLayer = command.getMap().getEditManager().getEditLayer();
+        if( editLayer == null ){
+            // warning warning!
+            System.out.println("EditLayerProvider is returning null - please select a layer");
+        }
+        return editLayer;
     }
 }
