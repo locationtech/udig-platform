@@ -12,7 +12,6 @@
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *    Lesser General Public License for more details.
- *
  */
 package net.refractions.udig.catalog.imageio;
 
@@ -95,7 +94,4 @@ public class ImageServiceImpl extends AbstractRasterService {
         return new ImageServiceExtension().createParams(getIdentifier());
     }
 
-    public void dispose( IProgressMonitor monitor ) {
-        // do nothing
-    }
 }

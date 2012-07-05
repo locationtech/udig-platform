@@ -7,33 +7,33 @@ holes in polygons.
 
 The following tools feature vertex editing:
 
-:doc:`Edit Geometry Tool`
+.. toctree::
+   :maxdepth: 1
 
- :doc:`Add Vertex Tool`
+   Add Vertex Tool
+   Edit Geometry Tool
+   Hole Cutter
+   Remove Vertex Tool
 
- :doc:`Remove Vertex Tool`
-
- :doc:`Hole Cutter`
 
 
 :doc:`Polygon Creation Tool`
 
- :doc:`Line Creation Tool`
+:doc:`Line Creation Tool`
 
- :doc:`Point Creation Tool`
+:doc:`Point Creation Tool`
 
- :doc:`Draw Geometry Tool`
+:doc:`Draw Geometry Tool`
 
- :doc:`Rectangle Tool`
+:doc:`Rectangle Tool`
 
- :doc:`Ellipse Tool`
-
+:doc:`Ellipse Tool`
 
 :doc:`Fill Tool`
 
- :doc:`Split Tool`
+:doc:`Split Tool`
 
- :doc:`Delete Tool`
+:doc:`Delete Tool`
 
 
 Notes on working with vertex tools:
@@ -53,10 +53,9 @@ Notes on working with vertex tools:
 
 **Related tasks**
 
-
 :doc:`Using Advanced Edit Mode`
 
- :doc:`Using Geometry Creation Tools`
+:doc:`Using Geometry Creation Tools`
 
- :doc:`Using Feature Edit Tools`
+:doc:`Using Feature Edit Tools`
 

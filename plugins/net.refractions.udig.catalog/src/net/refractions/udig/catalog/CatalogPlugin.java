@@ -47,6 +47,8 @@ import org.osgi.service.prefs.BackingStoreException;
  * The main plugin class to be used in the desktop.
  */
 public class CatalogPlugin extends Plugin {
+    private static final String EXTENSION_POINT_ICATALOG = "net.refractions.udig.catalog.ICatalog";
+
     public static final String ID = "net.refractions.udig.catalog"; //$NON-NLS-1$
 
     // The shared instance.
@@ -103,11 +105,8 @@ public class CatalogPlugin extends Plugin {
         try {
             plugin.restoreFromPreferences();
             addSaveLocalCatalogShutdownHook();
-        } catch (BackingStoreException e) {
-            CatalogPlugin.log(null, e);
-            handlerLoadingError(e);
-        } catch (MalformedURLException e) {
-            CatalogPlugin.log(null, e);
+        } catch (Throwable e) {
+            CatalogPlugin.log("Unable to restore catalog:"+e, e);
             handlerLoadingError(e);
         }
     }
@@ -151,7 +150,7 @@ public class CatalogPlugin extends Plugin {
      * 
      * @param e the exception that occurred
      */
-    private void handlerLoadingError( Exception e ) {
+    private void handlerLoadingError( Throwable e ) {
         try {
             File backup = new File(getLocalCatalogFile().getParentFile(), "corruptedLocalCatalog"); //$NON-NLS-1$
             copy(getLocalCatalogFile(), backup);
@@ -192,15 +191,23 @@ public class CatalogPlugin extends Plugin {
         resourceBundle = null;
     }
 
-    /** Load the getLocalCatalogFile() into the local catalog(). */
-    public void restoreFromPreferences() throws BackingStoreException, MalformedURLException {
+    /**
+     * Load the getLocalCatalogFile() into the local catalog() and restore any external catalogs.
+     */
+    public void restoreFromPreferences() {
         try {
-
-            ((CatalogImpl) getLocalCatalog()).loadFromFile(getLocalCatalogFile(),
-                    getServiceFactory());
-            loadCatalogs();
+            if( getLocalCatalog() instanceof CatalogImpl){
+                CatalogImpl localCatalog = (CatalogImpl) getLocalCatalog();
+                localCatalog.loadFromFile(getLocalCatalogFile(), getServiceFactory());
+            }
         } catch (Throwable t) {
-            CatalogPlugin.log(null, new Exception(t));
+            CatalogPlugin.log("Trouble restoring local catalog:"+t, t);
+        }
+        try {
+            loadCatalogs();
+        }
+        catch (Throwable t) {
+            CatalogPlugin.log("Trouble connectin remote catalogs:"+t, t);
         }
     }
     /**
@@ -210,12 +217,14 @@ public class CatalogPlugin extends Plugin {
     private List<ISearch> loadCatalogs() {
         final List<ISearch> availableCatalogs = new LinkedList<ISearch>();
         ExtensionPointUtil.process(getDefault(),
-                "net.refractions.udig.catalog.ICatalog", new ExtensionPointProcessor(){ //$NON-NLS-1$
-                    public void process( IExtension extension, IConfigurationElement element )
-                            throws Exception {
-                        availableCatalogs.add((ISearch) element.createExecutableExtension("class")); //$NON-NLS-1$                 
-                    }
-                });
+            EXTENSION_POINT_ICATALOG, new ExtensionPointProcessor(){
+                public void process( IExtension extension, IConfigurationElement element )
+                        throws Exception {
+                    ISearch externalCatalog = (ISearch) element.createExecutableExtension("class");
+                    availableCatalogs.add(externalCatalog); //$NON-NLS-1$                 
+                }
+            }
+        );
     	return availableCatalogs;
     }
 

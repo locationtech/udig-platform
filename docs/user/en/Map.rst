@@ -6,12 +6,12 @@ specific resource).
 
 **Related concepts**
 
+.. toctree::
+   :maxdepth: 1
 
-:doc:`Viewport`
+   Decorator
+   Layer
+   Legend
+   Viewport
 
- :doc:`Projection`
-
- :doc:`Layer`
-
- :doc:`Decorator`
-
+:doc:`Projection`

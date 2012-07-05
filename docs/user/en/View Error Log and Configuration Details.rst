@@ -3,7 +3,7 @@ View Error Log and Configuration Details
 
 To review the uDig application log file in notepad (or your favourite text editor).
 
-#. Choose **Help > About uDig** from the menu bar
+#. Choose :menuselection:`Help --> About uDig` from the menu bar
 #. Press the **Configuration Details** button, this screen shows all kinds of platform specific
    information
 #. Press the **View Error Log** button
@@ -14,5 +14,4 @@ You will want to scroll the the bottom of the file to have a look at recent acti
 
 **Related tasks**
 
-
-\*\ `Submit Error Log <Submit%20Error%20Log.html>`_
+:doc:`Submit Error Log`

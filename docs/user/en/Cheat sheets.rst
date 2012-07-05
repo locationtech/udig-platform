@@ -13,16 +13,13 @@ search.
 
 **Related reference**
 
-
 :doc:`Cheat Sheet Selection dialog`
 
- :doc:`Cheat Sheet view`
+:doc:`Cheat Sheet view`
 
 
 **Related tasks**
 
-
 :doc:`Working with cheat sheets`
 
- :doc:`Working with composite cheat sheets`
-
+:doc:`Working with composite cheat sheets`

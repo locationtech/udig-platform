@@ -150,7 +150,7 @@ Reset the connection to the selected service.
 Import
 ~~~~~~
 
-Opens the `Import Wizard <Import%20Wizard.html>`_ allowing you to directly import a service into the
+Opens the :doc:`Import Wizard` allowing you to directly import a service into the
 catalog.
 
 Operations
@@ -167,17 +167,16 @@ You can directly drag URLs and Files into the catalog.
 
 Resources can be dragged from the Catalog view into:
 
--  `Map editor <Map%20editor.html>`_ - add layers on top of the existing map
--  `Layers view <Layers%20view.html>`_ - direct add layers in the desired order, not only on top
+-  :doc:`Map editor` - add layers on top of the existing map
+-  :doc:`Layers view` - direct add layers in the desired order, not only on top
 
 If you drag a Service onto the screen you will be prompted to choose which layers to add.
 
 **Related reference**
 
+:doc:`Drag and Drop`
 
-* :doc:`Drag and Drop`
-
-* :doc:`Import Wizard`
+:doc:`Import Wizard`
 
 
 .. |image0| image:: /images/catalog_view/import_wiz.gif

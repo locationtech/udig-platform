@@ -18,13 +18,11 @@ URL to a Web Map Service capabilieis document
 
 **Related concepts**
 
-
-* :doc:`Web Map Server`
+:doc:`Web Map Server`
 
 
 **Related reference**
 
-
-* :doc:`Drag and Drop`
+:doc:`Drag and Drop`
 
 

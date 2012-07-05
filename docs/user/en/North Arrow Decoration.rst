@@ -3,7 +3,11 @@ North Arrow Decoration
 
 The North Arrow Decoration is used to provide an in map indication of where true north is given any
 projection and any orientation.
- |image0|
+
+.. figure:: /images/north_arrow_decoration/North-Arrow-Map-Screen.jpg
+   :align: center
+   :alt:
+
 
 Style
 -----
@@ -14,7 +18,4 @@ lists.refractions.net) to get involved.
 
 **Related reference**
 
-
--  Style Editor Dialog
-
-.. |image0| image:: /images/north_arrow_decoration/North-Arrow-Map-Screen.jpg
+:doc:`Style Editor dialog`

@@ -6,7 +6,7 @@ The style of a layer may be changed by opening the Style Editor dialog, in one o
 Select a layer in the Layers View and...
 
 -  Click the "Change Style" button |image0|
--  Layer > Change Style...
+-  :menuselection:`Layer --> Change Style...`
 -  Right-click and choose "Change Style..."
 
 Simple
@@ -90,7 +90,7 @@ XML
 Should you need to do something a little more complex than what the simple or theme pages offer, the
 XML page allows you to directly modify the Styled Layer Descriptor document (this describes how you
 would like your layer drawn). The SLD specification outlines the format to use:
-:doc:`http://www.opengeospatial.org/docs/02-070.pdf`
+`<http://www.opengeospatial.org/docs/02-070.pdf>`_
 
 
 Style View
@@ -98,7 +98,7 @@ Style View
 
 Alternatively, you may use the deprecated "Simple" Style View:
 
-#. Window > Show View > Style
+#. :menuselection:`Window --> Show View --> Style`
 #. Select the desired layer in the Layer View
 #. Edit the attributes of the style.
     |image1|
@@ -106,12 +106,11 @@ Alternatively, you may use the deprecated "Simple" Style View:
 
 **Related concepts**
 
-
 :doc:`Layer`
 
- :doc:`Layers view`
+:doc:`Layers view`
 
- :doc:`Style View`
+:doc:`Style View`
 
 
 .. |image0| image:: /images/change_a_layers_style/change_style_icon.gif

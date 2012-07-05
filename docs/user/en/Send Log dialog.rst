@@ -35,7 +35,4 @@ Dismiss the dialog without sending.
 
 **Related tasks**
 
-
-* :doc:`Submit Error Log`
-
-
+:doc:`Submit Error Log`

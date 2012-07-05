@@ -141,7 +141,7 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
         else if( data instanceof String ){
             return toCapabilitiesURL( (String) data );
         }
-        else if( ID.cast( data ).toURL() != null ){
+        else if( ID.cast( data ) != null && ID.cast( data ).toURL() != null ){
             return toCapabilitiesURL( ID.cast( data ).toURL() );
         }
         else {

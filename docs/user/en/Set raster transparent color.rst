@@ -14,7 +14,6 @@ background; by marking the background as transparent you can see through to the 
 
 **Related reference**
 
-
 :doc:`Raster Style Pages`
 
 
@@ -23,10 +22,16 @@ Example Use
 
 #. In the original image the white background is opaque preventing you from seeing the elevation map
    layer.
-    |image0|
+
+   .. image:: /images/set_raster_transparent_color/color_mask.png
+      :width: 60%
+
+
 #. This is result of setting transparent color to white; allowing the elevation map in yellow to
    show through:
-    |image1|
 
-.. |image0| image:: /images/set_raster_transparent_color/color_mask.png
-.. |image1| image:: /images/set_raster_transparent_color/color_mask_2.png
+   .. image:: /images/set_raster_transparent_color/color_mask_2.png
+      :width: 60%
+
+
+

@@ -3,12 +3,9 @@ Teradata page
 
 The Teradata page is used to define a connection to a Teradata database.
 
-.. figure:: images/icons/emoticons/warning.gif
-   :align: center
-   :alt: 
-
-Teradata database support is not enabled by default and requires the Teradata extension to be
-installed prior to use. Please see the `Teradata <Teradata.html>`_ page for more details.
+.. note::
+   Teradata database support is not enabled by default and requires the Teradata extension to be
+   installed prior to use. Please see the :doc:`Teradata` page for more details.
 
 Connecting to a Teradata database
 ---------------------------------
@@ -20,56 +17,42 @@ Select the entry titled Teradata and click **Next**.
 This page displays basic information required to connect to a Teradata database. Fill out the
 following form.
 
-Field
 
-Description
++-------------------------+-------------------------------------------------------------+
+| **Field**               | **Description**                                             |
++-------------------------+-------------------------------------------------------------+
+| **Host**                | Host name where the database exists.                        |
+|                         | Can be a URL or IP address.                                 |
++-------------------------+-------------------------------------------------------------+
+| **Port**                | Port number on which to connect to the                      |
+|                         | above host. Default is **1025**.                            |
++-------------------------+-------------------------------------------------------------+
+| **Username**            | User name to use to connect to the database.                |
++-------------------------+-------------------------------------------------------------+
+| **Password**            | Password associated with the above user.                    |
++-------------------------+-------------------------------------------------------------+
+| **Store Password**      | If checked, will store the password for future connections. |
++-------------------------+-------------------------------------------------------------+
+| **Remove Connection**   | Will remove an existing connection from the catalog.        |
++-------------------------+-------------------------------------------------------------+
+| **Optional Parameters** | If checked, will display two new options, listed below.     |
++-------------------------+-------------------------------------------------------------+
 
-Host
 
-Host name where the database exists. Can be a URL or IP address.
-
-Port
-
-Port number on which to connect to the above host. Default is **1025**.
-
-Username
-
-User name to use to connect to the database.
-
-Password
-
-Password associated with the above user.
-
-Store Password
-
-If checked, will store the password for future connections.
-
-Remove Connection
-
-Will remove an existing connection from the catalog.
-
-Optional Parameters
-
-If checked, will display two new options, listed below.
-
-Connection Mode
-
-Options are one of **ANSI** or **Teradata**
-
-Query Band application
-
-The name of the application to be sent as part of the Teradata query band information. Default is
-**uDig**.
+  +-----------------------------+-------------------------------------------------------+
+  | **Connection Mode**         | Options are one of **ANSI** or **Teradata**           |
+  +-----------------------------+-------------------------------------------------------+
+  | **Query Band application**  | The name of the application to be sent as part of the | 
+  |                             | Teradata query band information. Default is **uDig**. |
+  +-----------------------------+-------------------------------------------------------+
 
 Previous connections (if any) will be shown in this dialog as well.
 
-.. figure:: images/icons/emoticons/warning.gif
-   :align: center
-   :alt: 
+.. note::
+   It is recommended that the Teradata database schema is named the same as the Teradata user. Failure
+   to do this may cause problems with feature editing and in some cases may even prevent layers from
+   loading properly.
 
-It is recommended that the Teradata database schema is named the same as the Teradata user. Failure
-to do this may cause problems with feature editing and in some cases may even prevent layers from
-loading properly.
 
 Press **Next** to connect to the database.
 
@@ -87,19 +70,15 @@ each entry for each table to load as a layer, and then click **Next**.
    :align: center
    :alt: 
 
-If you are adding data directly to a map then proceed to the `Resource Selection
-page <Resource%20Selection%20page.html>`_.
+If you are adding data directly to a map then proceed to the :doc:`Resource Selection page`.
 
 **Related concepts**
-
 
 :doc:`Teradata`
 
 
 **Related reference**
 
-
 :doc:`Add Data wizard`
 
- :doc:`Resource Selection page`
-
+:doc:`Resource Selection page`

@@ -5,14 +5,16 @@ We can use the new button to create a new Map for our project:
 
 #. On the toolbar, click the New button. |image0|
 #. A dialog will open allowing you to choose the type of data you want to add to a map.
-    |image1|
-#. Select **Files** and press **Next**
-    (or double click on **Files**)
+
+   |image1|
+
+#. Select :guilabel:`Files` and press :guilabel:`Next` (or double click on :guilabel:`Files`)
 #. Browse to your sample data directory (`sample data <http://udig.refractions.net/docs/data.zip>`_)
-#. Open the directory and select the file lakes.shp
-   (You can select more than one file at a time)
-    |image2|
-#. Press **Open**
+#. Open the directory and select the file lakes.shp (You can select more than one file at a time)
+
+   |image2|
+
+#. Press :guilabel:`Open`
 
 A new map (called Map1) will be opened, contained in the last selected Project.
 

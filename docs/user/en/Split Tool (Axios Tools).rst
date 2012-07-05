@@ -17,8 +17,10 @@ any Feature in the current layer whose default geometry is crossed by the *split
 When the *Split Tool* proceeds to divide a feature, it will delete the feature being divided and
 create as many new features as parts the splitting results in.
 
-Note that the *Split Tool* does not commits the result, but lets you undo the operation if desired,
-or commit the changes to the backend data repository as you would normally do in uDig.
+.. note::
+   The *Split Tool* does not commits the result, but lets you undo the operation if desired,
+   or commit the changes to the backend data repository as you would normally do in uDig.
+
 
 Visual consistency
 ~~~~~~~~~~~~~~~~~~
@@ -44,14 +46,14 @@ want to divide, as shown in *Figure 2*.
  **Figure 2 draw split line to divide a LineString**
 
 Double click to add the last splitting line vertex and indicate the split operation to proceed.
- *Figure 3* shows how the LineString on the current layer that were crossed by the splitting line
+*Figure 3* shows how the LineString on the current layer that were crossed by the splitting line
 was divided in two.
 
 |image3|
  **Figure 3 LineString divided in two**
 
 The following is another example to split a polygon in various parts.
- *Figure 4* shows a *splitting line* being drawn over a previously selected polygon on the current
+*Figure 4* shows a *splitting line* being drawn over a previously selected polygon on the current
 Layer. The Table View shows the attribute data of the selected polygon.
 
 |image4|
@@ -64,7 +66,7 @@ operation proceeded.
  **Figure 5 result of splitting a polygon**
 
 In *Figure 6* you can see the newly created Features attribute data on the *Table View*, after
-selecting the resulting polygons with the \_\ *Bounding Box Selection* tool. Note each of them have
+selecting the resulting polygons with the *Bounding Box Selection* tool. Note each of them have
 a new Feature ID as expected, and share the same attribute data of the original Feature.
 
 |image6|
@@ -74,27 +76,28 @@ Adding vertex to neighbor features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Split tool will add vertex to neighbor features on the next case:
- -The feature with the added vertex won't be split.
- -The feature with the new vertex must be touching a feature that has been split.
+ - The feature with the added vertex won't be split.
+ - The feature with the new vertex must be touching a feature that has been split.
 
 On the next example we are going to split the feature that lies inside.
 
-:doc:`|image7|`
-
+|image7|
  **Figure 7 before adding a vertex**
 
 The inside feature is modified and 2 vertexes are added to the outside feature.
 
-:doc:`|image8|`
-
+|image8|
  **Figure 8, 2 vertexes were added**
 
-.. |image0| image:: /images/split_tool_(axios_tools)/split_feature_mode.gif
-.. |image1| image:: /images/split_tool_(axios_tools)/split_1.png
-.. |image2| image:: /images/split_tool_(axios_tools)/split_2.png
-.. |image3| image:: /images/split_tool_(axios_tools)/split_3.png
-.. |image4| image:: /images/split_tool_(axios_tools)/split_4.png
-.. |image5| image:: /images/split_tool_(axios_tools)/split_5.png
-.. |image6| image:: /images/split_tool_(axios_tools)/split_6.png
-.. |image7| image:: download/thumbnails/2719819/split-doing.png
-.. |image8| image:: download/thumbnails/2719819/split-after1.png
+.. |image0| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split_feature_mode.gif
+.. |image1| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split_1.png
+.. |image2| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split_2.png
+.. |image3| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split_3.png
+.. |image4| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split_4.png
+.. |image5| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split_5.png
+.. |image6| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split_6.png
+.. |image7| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split-doing.png
+  :width: 60%
+
+.. |image8| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split-after1.png
+  :width: 60%

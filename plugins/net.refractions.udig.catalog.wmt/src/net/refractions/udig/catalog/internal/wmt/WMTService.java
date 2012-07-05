@@ -1,3 +1,17 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2010, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.catalog.internal.wmt;
 
 import java.io.IOException;
@@ -21,11 +35,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
+ * Web Map Tile Server support.
  * 
- * TODO Purpose of 
- * <p>
- *
- * </p>
  * @author to.srwn
  * @since 1.1.0
  */
@@ -38,7 +49,9 @@ public class WMTService extends IService {
     private volatile List<IGeoResource> members;
     
     private Map<String, Serializable> params;
-    private URL url;    
+    private URL url;
+    
+    Exception message = null;
 
     public WMTService(Map<String, Serializable> params) {
         this.params = params;
@@ -90,10 +103,6 @@ public class WMTService extends IService {
         if (adaptee == null) {
             throw new NullPointerException("No adaptor specified" ); //$NON-NLS-1$
         }        
-//        if (adaptee.isAssignableFrom(WMTSource.class)) {
-//            return adaptee.cast(getSource());
-//        }
-
         return super.resolve(adaptee, monitor);
     }
     
@@ -117,15 +126,20 @@ public class WMTService extends IService {
         if (members == null) {
             synchronized (this) {
                 if (members == null) {
-                    if (WMTSourceFactory.getClassFromUrl(
-                            getIdentifier()).equals(NASASource.class.getCanonicalName())) {
-                        members = new LinkedList<IGeoResource>();
-                        
-                        NASASourceManager sourceManager = NASASourceManager.getInstance();
-                        sourceManager.buildGeoResources(this, members);                        
-                    } else {                     
-                        return Collections.singletonList(
-                                (IGeoResource) new WMTGeoResource(this, WMTGeoResource.DEFAULT_ID));
+                    try {
+                        if (WMTSourceFactory.getClassFromUrl(
+                                getIdentifier()).equals(NASASource.class.getCanonicalName())) {
+                            members = new LinkedList<IGeoResource>();
+                            
+                            NASASourceManager sourceManager = NASASourceManager.getInstance();
+                            sourceManager.buildGeoResources(this, members);
+                        } else {                     
+                            return Collections.singletonList(
+                                    (IGeoResource) new WMTGeoResource(this, WMTGeoResource.DEFAULT_ID));
+                        }
+                    }
+                    catch (Exception exc){
+                        message = exc; // could not "connect"
                     }
                 }
             }
@@ -152,15 +166,16 @@ public class WMTService extends IService {
      * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
-        return //(adaptee != null
-               // && (adaptee.isAssignableFrom(WMTSource.class)) ||
-                        super.canResolve(adaptee);
+        return super.canResolve(adaptee);
     }
 
     /*
      * @see net.refractions.udig.catalog.IResolve#getStatus()
      */
     public Status getStatus() {
+        if( members == null ){
+            return super.getStatus();
+        }
         return Status.CONNECTED;
     }
 
@@ -168,7 +183,7 @@ public class WMTService extends IService {
      * @see net.refractions.udig.catalog.IResolve#getMessage()
      */
     public Throwable getMessage() {
-        return null;
+        return message;
     }
 
     /*
@@ -178,4 +193,11 @@ public class WMTService extends IService {
         return url;
     }
 
+    @Override
+    public void dispose(IProgressMonitor monitor) {
+        super.dispose(monitor);
+        if( members != null ){
+            members = null;
+        }
+    }
 }

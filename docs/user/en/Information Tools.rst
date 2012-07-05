@@ -3,8 +3,8 @@ Information Tools
 
 Information Tools are used to perform queries and ask questions about the displayed information.
 
--  |image0| `Information Tool <#InformationTools-InformationTool>`_ - I
--  |image1| `Distance Tool <#InformationTools-DistanceTool>`_ - I
+-  |image0| `Information Tool`_
+-  |image1| `Distance Tool`_
 
 The information tools are represented as a category; you can cycle through the available tools by
 using the keyboard short cut **I**.
@@ -12,8 +12,7 @@ using the keyboard short cut **I**.
 Information Tool
 ----------------
 
-Use the information tool to click on displayed information. The `Information
-view <Information%20view.html>`_ will be displayed with whatever details are known.
+Use the information tool to click on displayed information. The :doc:`Information view` will be displayed with whatever details are known.
 
 Distance Tool
 -------------

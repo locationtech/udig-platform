@@ -5,12 +5,11 @@ The following application concepts are used consistently throughout the uDig app
 
 Contents:
 
-* :doc:`Area of Interest`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`Project`
-
-* :doc:`Selection`
-
-* :doc:`uDig`
-
+   Area of Interest
+   Project
+   Selection
+   uDig
 

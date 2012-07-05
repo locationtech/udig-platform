@@ -3,7 +3,7 @@ Grouping layers by folder
 
 Tasks related to grouping the layers and moving them in and out of folders, or simply changing the
 order of the layers are accomplished through 'dragging' and 'dropping' the layers from one location
-to another inside the `Legend View <Legend%20View.html>`_.
+to another inside the :doc:`Legend View`.
 
 Putting a layer into a folder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -39,14 +39,11 @@ Changing layer position
 
 **Related concepts**
 
-
 :doc:`Legend`
 
 
 **Related reference**
 
-
 :doc:`Legend View`
 
- :doc:`Using the Legend View`
-
+:doc:`Using the Legend View`

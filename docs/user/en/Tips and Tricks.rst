@@ -3,10 +3,8 @@ Tips and Tricks
 
 The following tips and tricks give some helpful ideas and short cuts for working with uDig.
 
-* :doc:`Catalog`
-
-* :doc:`Help`
-
+* `Catalog`_
+* `Help`_
 
 Catalog
 -------

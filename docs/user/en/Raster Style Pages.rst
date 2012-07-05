@@ -1,18 +1,18 @@
 Raster Style Pages
 ##################
 
-When the `Style Editor dialog <Style%20Editor%20dialog.html>`_ is opened on a raster layer the
+When the :doc:`Style Editor dialog` is opened on a raster layer the
 following pages are available.
 
-* :doc:`Cache`
+* `Cache`_
 
-* :doc:`Raster Color Mask`
+* `Raster Color Mask`_
 
-* :doc:`Simple Raster`
+* `Simple Raster`_
 
-* :doc:`Single Band Rasters`
+* `Single Band Rasters`_
 
-* :doc:`XML`
+* `XML`_
 
 
 Cache
@@ -36,7 +36,6 @@ to indicate areas where no information was recorded.
 
 **Related tasks**
 
-
 :doc:`Set raster transparent color`
 
 
@@ -53,7 +52,8 @@ Allows simple control over the rendering of a raster image.
    boundaries to show through the raster.
 -  Scale: Control the scale at which the raster is shown
 -  RGB Channel Selection
-    Provides control over mapping raster channels to Red, Green and Blue channels for display. The
+
+   Provides control over mapping raster channels to Red, Green and Blue channels for display. The
    gamma of each band can be controlled allowing you to adjust how much of a contribution each band
    makes to the final display.
 
@@ -93,7 +93,6 @@ Validate
 Press this button to check that your XML is valid.
 
 **Related concepts**
-
 
 :doc:`Style Layer Descriptor`
 

@@ -11,7 +11,7 @@ available in the Layer menu apply to the selected Layer as shown in the Layer vi
 Add
 ---
 
-Opens the `Add Data wizard <Add%20Data%20wizard.html>`_ to add additional layers to the current map.
+Opens the :doc:`Add Data wizard` to add additional layers to the current map.
 
 Create
 ------
@@ -40,12 +40,12 @@ Layer Operations
 
 Operations that are applicable to the current layer are listed here.
 
-Additional operations are available from **File > All Operations**
+Additional operations are available from :menuselection:`File --> All Operations`
 
 Change Style
 ~~~~~~~~~~~~
 
-Opens the `Style Editor dialog <Style%20Editor%20dialog.html>`_ for the current layer.
+Opens the :doc:`Style Editor dialog` for the current layer.
 
 Layer Properties
 ----------------
@@ -54,7 +54,6 @@ Opens the Property Dialog for the selected layer.
 
 **Related reference**
 
-
-* :doc:`Layers view`
+:doc:`Layers view`
 
 

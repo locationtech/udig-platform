@@ -6,20 +6,19 @@ can be persisted to the file system.
 
 Contents:
 
-* :doc:`GeoTIFF`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`GML`
-
-* :doc:`Shapefile`
-
-* :doc:`World Plus Image`
+   GeoTIFF
+   GML
+   Shapefile
+   World Plus Image
 
 
 Handling of Files in uDig
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When a file is added into the uDig application it shows up in the `Catalog
-view <Catalog%20view.html>`_ as a `Service <Service.html>`_. You can think of the file as providing
+When a file is added into the uDig application it shows up in the :doc:`Catalog view` as a :doc:`Service`. You can think of the file as providing
 the service; you can open up the service entry to see the content being provided by the file.
 
 While this devision does not make much sense for a shapefile; it is more useful when working with
@@ -46,14 +45,12 @@ Here are two quick examples:
 
 **Related concepts**
 
-
 :doc:`Service`
 
 
 **Related reference**
 
-
 :doc:`Files page`
 
- :doc:`Catalog view`
+:doc:`Catalog view`
 

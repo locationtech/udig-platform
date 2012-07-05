@@ -7,16 +7,15 @@ menu**.
 
 **Related tasks**
 
+.. toctree::
+   :maxdepth: 1
 
-:doc:`Zooming to a layer`
-
- :doc:`Deleting a layer`
-
- :doc:`Change a Layers Style`
+   Zooming to a layer
+   Deleting a layer
 
 
 **Related reference**
 
+:doc:`Change a Layers Style`
 
 :doc:`Layers view`
-

@@ -45,6 +45,9 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
 import org.geotools.data.crs.ForceCoordinateSystemFeatureResults;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.data.simple.SimpleFeatureStore;
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.SchemaException;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -63,6 +66,7 @@ import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
+import org.opengis.filter.FilterFactory;
 import org.opengis.geometry.BoundingBox;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -123,15 +127,15 @@ public class BasicFeatureRenderer extends RendererImpl {
     private int expandSizePaintArea = 0;
 
     protected void setQueries() {
-        try {
-            // The context seems to have other ideas about the query we should draw
-            // (in order to filter out the features being edited at the moment)
-            //
-            Query featureQuery = getContext().getFeatureQuery();
-            ((FeatureLayer)layers[0]).setQuery(featureQuery);
-        } catch (Exception e) {
-            // do nothing.
-        }
+//        try {
+//            // The context seems to have other ideas about the query we should draw
+//            // (in order to filter out the features being edited at the moment)
+//            //
+//            Query featureQuery = getContext().getFeatureQuery();
+//            ((FeatureLayer)layers[0]).setQuery(featureQuery);
+//        } catch (Exception e) {
+//            // do nothing.
+//        }
     }
 
     /**
@@ -148,10 +152,10 @@ public class BasicFeatureRenderer extends RendererImpl {
         // check for style information on the blackboard
         ILayer layer = getContext().getLayer();
         StyleBlackboard styleBlackboard = (StyleBlackboard) layer.getStyleBlackboard();
-        FeatureSource<SimpleFeatureType, SimpleFeature> featureSource;
-        featureSource = layer.getResource(FeatureStore.class, new SubProgressMonitor(monitor, 0));
+        SimpleFeatureSource featureSource;
+        featureSource = layer.getResource(SimpleFeatureStore.class, new SubProgressMonitor(monitor, 0));
         if (featureSource == null) {
-            featureSource = layer.getResource(FeatureSource.class, new SubProgressMonitor(monitor,
+            featureSource = layer.getResource(SimpleFeatureSource.class, new SubProgressMonitor(monitor,
                     0));
         }
         Style style = getStyle(styleBlackboard, featureSource);
@@ -159,15 +163,25 @@ public class BasicFeatureRenderer extends RendererImpl {
         CoordinateReferenceSystem layerCRS = layer.getCRS();
         SimpleFeatureType schema = featureSource.getSchema();
         
-        Query query = null;
+        // Original Query provided by Layer.getFilter() as adjusted by selection and edit filter
+        Query query = getContext().getFeatureQuery();
         if( styleBlackboard.contains(ProjectBlackboardConstants.LAYER__STYLE_FILTER)){
+            // Additional Filter provided as Style used to reduce onscreen clutter
             FilterStyle filterStyle = (FilterStyle) styleBlackboard.get(ProjectBlackboardConstants.LAYER__STYLE_FILTER);
             query = new Query();
             query.setTypeName(schema.getTypeName());
             
-            Filter filter = filterStyle.toFilter(schema);
-            if( filter != Filter.INCLUDE ){
-                query.setFilter( filter );
+            Filter styleFilter = filterStyle.toFilter(schema);
+            if( styleFilter != Filter.INCLUDE ){
+                Filter queryFilter = query.getFilter();
+                if( queryFilter == Filter.INCLUDE ){
+                    query.setFilter( styleFilter );
+                }
+                else {
+                    FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+                    Filter combinedFilter = ff.and(styleFilter, queryFilter);
+                    query.setFilter( combinedFilter );
+                }
             }
         }
 

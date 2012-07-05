@@ -1,37 +1,30 @@
 Working with Layers
 ###################
 
-The concept of a `Layer <Layer.html>`_ is the central method of working with mapping information. A
+The concept of a :doc:`Layer` is the central method of working with mapping information. A
 layer consists of two parts: the data being displayed and the style controlling how the data is
 rendered.
 
-* :doc:`Adding a layer`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`Change a Layers Style`
-
-* :doc:`Configure a AOI layer`
-
-* :doc:`Create Layer from Query`
-
-* :doc:`Feature count`
-
-* :doc:`Using Layer Operations`
-
-
-   * :doc:`Validation`
-
-
-* :doc:`Using Resource Summary`
+   Adding a layer
+   Change a Layers Style
+   Configure a AOI layer
+   Create Layer from Query
+   Feature count
+   Using Layer Operations
+   Validation
+   Using Resource Summary
 
 
 Please note that you can also work directly with the data used by the layer.
 
 **Related tasks**
 
-
 :doc:`Using the Catalog`
 
- :doc:`Working with Maps`
+:doc:`Working with Maps`
 
- :doc:`Using Resource Summary`
+:doc:`Using Resource Summary`
 

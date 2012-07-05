@@ -4,7 +4,7 @@ Finding new plugins
 The update manager provides functionality to search for new features/plugins for udig. To search for
 new features:
 
-#. Start the `Update Manager <Working%20with%20the%20Update%20Manager.html>`_
+#. Start the :doc:`Working with the Update Manager`
 #. Select **Search for new features to install** option.
     |image0|
 #. Press Next

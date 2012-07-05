@@ -63,15 +63,15 @@ public class JGTtmsServiceExtension implements ServiceExtension {
             String path = propertiesFile.getAbsolutePath();
             if (path.endsWith(".mapurl")) {
                 url = propertiesFile.toURI().toURL();
+                params = new HashMap<String, Serializable>();
+                params.put(KEY, url);
+                return params;
             }
-            params = new HashMap<String, Serializable>();
-            params.put(KEY, url);
         } catch (MalformedURLException e) {
             e.printStackTrace();
             return null;
         }
-
-        return params;
+        return null;
     }
 
     /**

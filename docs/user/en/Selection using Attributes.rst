@@ -28,17 +28,15 @@ Examples
 | \\A[ln]            | will match many string that starts with **l** or **n**          |
 +--------------------+-----------------------------------------------------------------+
 
-**Note:** The search is NOT case sensitive.
- **Note:** In most cases **\\A** can be replaced with **^** (start of line) and \\Z can be replaced
-with **$** (end of line)
+.. note::
+   The search is NOT case sensitive.
+ 
+   In most cases **\\A** can be replaced with **^** (start of line) and **\\Z** can be replaced with **$** (end of line)
 
 **Related reference**
 
+:doc:`Table view`
 
-* :doc:`Table view`
+:doc:`Selection using CQL`
 
-* :doc:`Selection using CQL`
-
-* :doc:`Regular Expression`
-
-
+`Regular Expression <http://en.wikipedia.org/wiki/Regular_expression>`_

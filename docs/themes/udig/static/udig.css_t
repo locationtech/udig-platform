@@ -222,38 +222,60 @@ table.index a:link, table.index a:visited {
     text-decoration: none;
     color: {{ theme_linkcolor }};
 }
+
 table.index a:hover, table.index a:active {
     text-decoration: underline;
     color: {{ theme_hoverlinkcolor }};
 }
 
+table.docutils td, table.docutils th {
+    border: 1px solid #AAA;
+}
+
+caption {
+    display: table-caption;
+    font-weight: bold;
+}
 
 /* Haiku User Guide styles and layout */
 
 /* Rounded corner boxes */
 /* Common declarations */
 div.admonition {
-    -webkit-border-radius: 10px;
-    -khtml-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
+    -webkit-border-radius: 8px;
+    -khtml-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
     border-style: dotted;
     border-width: thin;
-    border-color: #dcdcdc;
-    padding: 10px 15px 10px 15px;
+    border-color: #B8C5CE;
+    padding: 10px 10px 10px 15px;
     margin-bottom: 15px;
     margin-top: 15px;
 }
+
 div.note {
-    padding: 10px 15px 10px 80px;
+    min-height: 40px;
+    background: #CCDBE5;
+/*
+    padding: 10px 10px 10px 80px;
     background: #e4ffde url(alert_info_32.png) 15px 15px no-repeat;
-    min-height: 42px;
+*/
 }
+
+div.hint {
+    min-height: 40px;
+    background: #FAF5E6;
+}
+
 div.warning {
-    padding: 10px 15px 10px 80px;
+    min-height: 40px;
+    background: #FDD;
+/*
     background: #fffbc6 url(alert_warning_32.png) 15px 15px no-repeat;
-    min-height: 42px;
+*/
 }
+
 div.seealso {
     background: #e4ffde;
 }
@@ -302,12 +324,15 @@ ol {
 }
 
 ul {
-    padding-left: 5px;
     margin-top: 3px;
 }
 
 li {
     line-height: 1.3;
+}
+
+div.content ul > li {
+    margin-bottom: 5px;
 }
 
 /*
@@ -427,4 +452,27 @@ div.bottomnav {
    border-top: {{ theme_headingcolor }};
    border-width: 1px;
    border-style: solid;
+}
+
+.guilabel {
+   font-weight: bold;
+   font-style: normal;
+/*
+   font-size: 1.05em;
+*/
+}
+
+.menuselection {
+	font-style: normal;
+	font-size: 1.05em;
+	font-family: Arial,sans-serif;
+	padding: 1px 2px;
+	margin: 0px 4px;
+	background-color: whiteSmoke;
+}
+
+.pre {
+	font-size: 1.4em;
+	padding: 1px 4px;
+	font-family: monospace;
 }

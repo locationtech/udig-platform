@@ -33,6 +33,8 @@ import org.geotools.data.DataSourceException;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
@@ -66,8 +68,8 @@ public class DB2GeoResource extends IGeoResource {
             return false;
 
         return adaptee.isAssignableFrom(IGeoResourceInfo.class)
-                || adaptee.isAssignableFrom(FeatureStore.class)
-                || adaptee.isAssignableFrom(FeatureSource.class)
+                || adaptee.isAssignableFrom(SimpleFeatureStore.class)
+                || adaptee.isAssignableFrom(SimpleFeatureSource.class)
                 || adaptee.isAssignableFrom(IService.class)
                 || super.canResolve(adaptee);
     }
@@ -81,18 +83,19 @@ public class DB2GeoResource extends IGeoResource {
         if (adaptee.isAssignableFrom(IGeoResourceInfo.class))
             return adaptee.cast(createInfo(monitor));
 
-        if (adaptee.isAssignableFrom(FeatureSource.class)) {
+        if (adaptee.isAssignableFrom(SimpleFeatureSource.class)) {
             DataStore ds = parent.getDataStore(monitor);
             if (ds != null) {
-                FeatureSource<SimpleFeatureType, SimpleFeature> fs = ds.getFeatureSource(name);
-                if (fs != null)
+                SimpleFeatureSource fs = ds.getFeatureSource(name);
+                if (fs != null){
                     return adaptee.cast(fs);
+                }
             }
         }
 
-        if (adaptee.isAssignableFrom(FeatureStore.class)) {
-            FeatureSource<SimpleFeatureType, SimpleFeature> fs = resolve(FeatureSource.class, monitor);
-            if (fs != null && fs instanceof FeatureStore) {
+        if (adaptee.isAssignableFrom(SimpleFeatureStore.class)) {
+            FeatureSource<SimpleFeatureType, SimpleFeature> fs = resolve(SimpleFeatureSource.class, monitor);
+            if (fs != null && fs instanceof SimpleFeatureStore) {
                 return adaptee.cast(fs);
             }
         }

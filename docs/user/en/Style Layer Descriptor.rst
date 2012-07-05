@@ -6,26 +6,24 @@ Consortium. Style Layer Descriptor documents defines how Features are rendered o
 
 You can use your own Style Layer Descriptor documents in several ways:
 
--  Select the **XML** page of the `Style Editor dialog <Style%20Editor%20dialog.html>`_ and directly
+-  Select the **XML** page of the :doc:`Style Editor dialog` and directly
    modify what is being used directly
 -  Any sld file associated with a shapefile will be picked up and used
--  You can import and export SLD files from the `Style Editor
-   dialog <Style%20Editor%20dialog.html>`_
+-  You can import and export SLD files from the :doc:`Style Editor dialog`
 -  you can drop an SLD file directly onto a Layer
 
 **Related reference**
 
-
 :doc:`Style Editor dialog`
 
- `Styled Layer Descriptor <http://www.opengeospatial.org/standards/sld>`_ (OGC Specification)
- `Symbology Encoding <http://www.opengeospatial.org/standards/symbol>`_ (OGC Specification)
- :doc:`SLD Examples (from MassGIS)`
+`Styled Layer Descriptor <http://www.opengeospatial.org/standards/sld>`_ (OGC Specification)
 
- :doc:`SLD Intro Tutorial (from GeoServer)`
+`Symbology Encoding <http://www.opengeospatial.org/standards/symbol>`_ (OGC Specification)
+ 
+`SLD Intro Tutorial (from GeoServer) <http://docs.geoserver.org/stable/en/user/styling/sld-introduction.html>`_
 
- `SLD Samples (from
-GeoServer) <http://geoserver.org/display/GEOSDOC/OGC+SLD+Explanations+and+Samples>`_
+`SLD Cookbook with Samples (from GeoServer) <http://docs.geoserver.org/stable/en/user/styling/sld-cookbook/index.html#sld-cookbook>`_
+
 
 Example
 =======
@@ -76,4 +74,3 @@ file.
             </sld:UserStyle>
         </sld:UserLayer>
     </sld:StyledLayerDescriptor>
-

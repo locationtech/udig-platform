@@ -10,8 +10,18 @@ bars. More than one Workbench window can exist on the desktop at any given time.
 
 **Related concepts**
 
+.. toctree::
+   :maxdepth: 1
 
-:doc:`View`
-
- :doc:`Editor`
+   Active Part
+   Editor
+   Fast views
+   Help system
+   Perspective
+   Toolbar
+   Toolbars
+   Use of Views
+   Using an Editor
+   View
+   Welcome
 

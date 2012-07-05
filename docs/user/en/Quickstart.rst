@@ -10,52 +10,54 @@ This quickstart makes use of sample data kindly made available by the `Natural
 Earth <http://www.naturalearthdata.com>`_ project:
 
 #. Right click on the following links and choose **Save Link As...**:
-   :doc:`data\_1\_3.zip`
 
+   `data_1_3.zip <http://udig.refractions.net/files/data/data_1_3.zip>`_ 
 
-   -  If you are using this in a classroom setting or OSGeo live dvd the files should be on your DVD
+   .. note::
+      If you are using this in a classroom setting or OSGeo live dvd the files should be on your DVD
 
 #. If you have your own GIS data please feel free to experiment. Making use of the above sample data
    will enable you to follow along with this tutorial step by step.
 
-This is actually the full dataset used by `Walkthrough 1 <Walkthrough%201.html>`_. The contents of
+This is actually the full dataset used by :doc:`Walkthrough 1`. The contents of
 this dataset are as follows (in case you want to download higher resolution data):
-`HYP\_50M\_SR\_W.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/raster/HYP_50M_SR_W.zip>`_,
-`10m-populated-places-simple.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-populated-places-simple.zip>`_,
-`10m-admin-0-countries.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-0-countries.zip>`_,
-`10m-admin-1-states-provinces-shp.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-1-states-provinces-shp.zip>`_,
-`10m-urban-area.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-urban-area.zip>`_,
-`10m-geography-regions-polys.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-polys.zip>`_,
-`10m-geography-regions-points.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-points.zip>`_,
-`10m-geography-regions-elevation-points.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-elevation-points.zip>`_,
-`10m-geography-marine-polys.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-marine-polys.zip>`_,
-`10m-land.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-land.zip>`_,
-`10m-ocean.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-ocean.zip>`_,
-`physical/10m-lakes.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-lakes.zip>`_,
-:doc:`10m-rivers-lake-centerlines.zip`
 
+* `HYP\_50M\_SR\_W.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/raster/HYP_50M_SR_W.zip>`_,
+* `10m-populated-places-simple.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-populated-places-simple.zip>`_,
+* `10m-admin-0-countries.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-0-countries.zip>`_,
+* `10m-admin-1-states-provinces-shp.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-1-states-provinces-shp.zip>`_,
+* `10m-urban-area.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-urban-area.zip>`_,
+* `10m-geography-regions-polys.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-polys.zip>`_,
+* `10m-geography-regions-points.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-points.zip>`_,
+* `10m-geography-regions-elevation-points.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-elevation-points.zip>`_,
+* `10m-geography-marine-polys.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-marine-polys.zip>`_,
+* `10m-land.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-land.zip>`_,
+* `10m-ocean.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-ocean.zip>`_,
+* `physical/10m-lakes.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-lakes.zip>`_,
+* `physical/10m-rivers-lake-centerlines.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-rivers-lake-centerlines.zip>`_
 
 uDig Application
 ~~~~~~~~~~~~~~~~
 
-#. Choose **uDig 1.1 > uDig** from the start menu
+#. Choose :menuselection:`uDig 1.1 --> uDig` from the start menu
 #. The application will take a few moments to start up
-    |image0|
+
+   |image0|
 
 The uDig application keeps a configuration folder in your home directory, the folder will be created
 the first time the application is launched. If you have any difficulties, or are running uDig on
-Linux or Mac please review the `Running uDig <Running%20uDig.html>`_ reference page.
+Linux or Mac please review the :doc:`Running uDig` reference page.
 
 Welcome View
 ~~~~~~~~~~~~
 
 #. When you start up uDig for the first time the **Welcome** view takes up the entire display. This
    screen has links to tutorials, documentation and the project website.
-#. Click the arrow labelled **Workbench** in the upper right corner, to reveal the contents of the
-   uDig workbench.
-    |image1|
+#. Click the arrow labelled **Workbench** in the upper right corner, to reveal the contents of the uDig workbench.
 
-You can return to the Welcome view at any time by selecting the **Help > Welcome** from the menu
+   |image1|
+
+You can return to the Welcome view at any time by selecting the :menuselection:`Help --> Welcome` from the menu
 bar.
 
 Workbench
@@ -68,24 +70,21 @@ information about the current Map).
    :align: center
    :alt: 
 
-Shown above is a typical uDig session with the `Map editor <Map%20editor.html>`_, `Projects
-view <Projects%20view.html>`_, `Layers view <Layers%20view.html>`_ and `Catalog
-view <Catalog%20view.html>`_ labelled . These views will be described further as we demonstrate
-their use.
+Shown above is a typical uDig session with the :doc:`Map editor`, :doc:`Projects view`, :doc:`Layers view` and :doc:`Catalog view` labelled . 
+These views will be described further as we demonstrate their use.
 
 Files
 ~~~~~
 
 To start out with we are going to load some of the sample data you downloaded earlier.
 
-#. Choose **Layer > Add** from the menu bar to open up the `Add Data
-   wizard <Add%20Data%20wizard.html>`_
-#. Select `Files <Files%20page.html>`_ from the list of data sources
+#. Choose :menuselection:`Layer --> Add` from the menu bar to open up the :doc:`Add Data wizard`
+#. Select :doc:`Files` from the list of data sources
 #. Press **Next** to open up a file dialog
 #. Select the following files from your data folder: **countries.shp**
 #. Press **Open**
 
-   -  A new `Map editor <Map%20editor.html>`_ will be opened based on the contents of your
+   -  A new :doc:`Map editor` will be opened based on the contents of your
       shapefile. The default name and projection of the Map has been taken from your shapefile.
    -  You can see the **Catalog view** has been updated with an entry for **countries.shp**. This
       view is used to track the use of resources by the uDig application.
@@ -100,14 +99,16 @@ To start out with we are going to load some of the sample data you downloaded ea
 #. You can see the order the layers are drawn in the layer view. Right now the **clouds.jpg** layer
    is drawn ontop of the countries layer.
 #. Select the **clouds.jpg** layer in the catalog view and drag it to the bottom of the list
-    |image2|
+
+   |image2|
 
 **Info:** One of the most common questions asked when uDig is considered for an organization is how
 much memory the application uses. Unlike most GIS applications uDig can get by with a fixed amount
 of memory. The above shapefile is not loaded into memory, we have a policy of keeping data on disk
 and drawing data like this shapefile onto the screen as needed.
 
-**Tip** You can also drag and drop shapefiles directly into the uDig application!
+.. tip::
+    You can also drag and drop shapefiles directly into the uDig application!
 
 Map
 ~~~
@@ -127,11 +128,12 @@ tool bar along the top of the screen.
 
    -  |image5| Show All, can be used to return to the full extents at any time
    -  |image6| Zoom In and |image7| Zoom Out can be used to change the scale by a fixed amount.
-   -  You can use **Navigation > Back** and **Navigation > Forward** in the menu bar to cycle though
+   -  You can use :menuselection:`Navigation --> Back` and :menuselection:`Navigation --> Forward` in the menu bar to cycle though
       previously visited locations.
 
-**Tip:** Most tools allow you to Pan by holding the center button and control the scale using the
-scroll wheel.
+
+.. tip:: 
+    Most tools allow you to Pan by holding the center button and control the scale using the scroll wheel.
 
 Web Map Server
 ~~~~~~~~~~~~~~
@@ -140,24 +142,30 @@ One of the reasons to use an application like uDig is to access all the great fr
 information available on the web. This section covers the use of **Web Map Servers** which make
 available layers of information that you can mix into your own maps.
 
-#. Select **File > New > New Map** from the menu bar
+#. Select :menuselection:`File --> New --> New Map` from the menu bar
 #. Change to the **Web view**, click on the tab next to the **Catalog view** to reveal the Web view.
 #. Click on the link **WMS:dm solutions** link
-    |image8|
-#. From the `Resource Selection page <Resource%20Selection%20page.html>`_ we are going to choose the
+
+   |image8|
+
+#. From the :doc:`Resource Selection page` we are going to choose the
    following layers:
 
    -  Elevation/Bathymetry\*
    -  Parks
    -  Cities
-       |image9|
+
+      |image9|
 
 #. Press **Finish** to add these layers to your map
-    |image10|
+
+   |image10|
+
 #. Use the |image11| Zoom Tool to move closer to one of the Parks
 #. Switch to the |image12| and click on one the parks to learn more about it
 
-**Tip:** You can switch between the zoom and info tools by pressing **Z** and **I** on the keyboard.
+.. tip:: 
+    You can switch between the zoom and info tools by pressing **Z** and **I** on the keyboard.
 
 Style
 ~~~~~
@@ -171,20 +179,23 @@ Style
    -  Line: Click on the **Color** and change the color to **BLACK**
    -  Fill: uncheck the box to turn off fill
    -  Label: check the box, and choose **CNTRY\_NAME** from the list of attributes
-       |image13|
+
+      |image13|
 
 #. Press **Apply** to see what this looks like on your Map, the Layer view will also be updated to
    reflect the current style
 #. When you are happy with the result you can press **Close** to dismiss the dialog
-#. Some files include style settings, Select **Layer > Add ...** from the menu bar
+#. Some files include style settings, Select :menuselection:`Layer --> Add ...` from the menu bar
 #. Select **Files** from the list of data sources and press **Next**
 #. Using the From the file chooser open up **timezone.shp** and press **Open**
 #. It is a bit hard to see what is going on with the **clouds.jpg** layer providing so much details.
-   Select **Map > Mylar** from the menu bar to focus on the selected layer
+   Select :menuselection:`Map --> Mylar` from the menu bar to focus on the selected layer
 #. Using the Layer view select **timezone**, **countries** and **clouds.jpg** in turn to see the
    effect
-    |image14|
-#. You can turn off this effect at any time using **Map > Mylar** from the menu bar
+
+   |image14|
+
+#. You can turn off this effect at any time using :menuselection:`Map --> Mylar` from the menu bar
 
 What is Next
 ~~~~~~~~~~~~
@@ -192,9 +203,9 @@ What is Next
 This is only the first step on the road to using uDig. There is a lot more great material (and
 ability) left for your to discover in our walkthroughs.
 
--  `Walkthrough 1 <Walkthrough%201.html>`_ - Try out the use of PostGIS, extract data from a Web
+-  :doc:`Walkthrough 1` - Try out the use of PostGIS, extract data from a Web
    Feature Server and explore the use of Themes with our powerful Color Brewer technology.
--  `Walkthrough 2 <Walkthrough%202.html>`_ - Learn how to create shapefiles and use the Edit tools
+-  :doc:`Walkthrough 2` - Learn how to create shapefiles and use the Edit tools
    to manipulate feature data, covers the installation of GeoServer and editing with a Web Feature
    Server.
 

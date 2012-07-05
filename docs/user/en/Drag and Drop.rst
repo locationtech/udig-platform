@@ -43,7 +43,7 @@ To insert a Service:
 
 #. Press the mouse button on a WMS Capabilities link (in a browser)
 #. Drag the url into the Layer view
-#. Release; a `Resource Selection page <Resource%20Selection%20page.html>`_ will be displayed
+#. Release; a :doc:`Resource Selection page` will be displayed
    allowing you to choose which layers to insert. The service will also be added to the catalog.
 
 Projects View
@@ -64,21 +64,20 @@ Creating a new Map from a shapefile:
       the shapefile; the map projection will be based on the **prj** file.
    -  Release it onto an existing Map to insert a layer
 
-**Note:** The resource(s) must be dragged to the exact location in the Projects view hierarchy; they
-cannot be simply dragged and dropped onto a blank area.
+  .. note::
+     The resource(s) must be dragged to the exact location in the Projects view hierarchy; they cannot 
+     be simply dragged and dropped onto a blank area.
 
 Map Editor
 ==========
 
 You can drag a File, URL or Catalog resource onto an open Map Editor; a layer will be added to the
-Map as if you had used the `Add Data wizard <Add%20Data%20wizard.html>`_
+Map as if you had used the :doc:`Add Data wizard`
 
 **Related reference**
 
-
 :doc:`Layers view`
 
- :doc:`Projects view`
+:doc:`Projects view`
 
- :doc:`Map editor`
-
+:doc:`Map editor`

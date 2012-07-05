@@ -1,12 +1,11 @@
 uDig Walkthrough 1
------------------------------------
+==================
 
-|logo_lisasoft_png|
-|logo_refractions_png|
-|logo_udig_gif|
+|refractions_png| |lisasoft_png| |udig_logo_gif|
 
+.. image:: ../images/background.png
+   :width: 100%
 
-|background_png|
 
 .. toctree::
     :maxdepth: 2
@@ -26,21 +25,13 @@ uDig Walkthrough 1
     Re-projection
     WhattodoNext
 
-.. |logo_refractions_png| image:: images/logo_refractions.png
-    :width: 2.799cm
-    :height: 2.718cm
 
-.. |logo_udig_gif| image:: images/logo_udig.gif
-    :width: 4.642cm
-    :height: 4.791cm
+.. |refractions_png| image:: ../images/refractions_logo.png
+   :height: 3cm
 
+.. |lisasoft_png| image:: ../images/lisasoft_logo.png
+   :height: 3cm
 
-.. |logo_lisasoft_png| image:: images/logo_lisasoft.png
-    :width: 2.69cm
-    :height: 2.101cm
-
-
-.. |background_png| image:: images/background.png
-    :width: 21.026cm
-    :height: 4.121cm
+.. |udig_logo_gif| image:: ../images/udig_logo.gif
+   :height: 3cm
 

@@ -12,20 +12,18 @@ distribute with the uDig application directly.
 
 **Related tasks**
 
-
 :doc:`Introduction to the Spatial Toolbox`
 
 
 **Related concepts**
 
-
 `DemManipulation <http://code.google.com/p/jgrasstools/wiki/DemManipulation>`_ (jgrasstools)
- `Geomorphology <http://code.google.com/p/jgrasstools/wiki/Geomorphology>`_ (jgrasstools)
- `Network <http://code.google.com/p/jgrasstools/wiki/Network>`_ (jgrasstools)
- `Hillslope <http://code.google.com/p/jgrasstools/wiki/Hillslope>`_ (jgrasstools)
- `Basin <http://code.google.com/p/jgrasstools/wiki/Basin>`_ (jgrasstools)
- `Statistics <http://code.google.com/p/jgrasstools/wiki/Statistics>`_ (jgrasstools)
- `Hydrogeomorphology <http://code.google.com/p/jgrasstools/wiki/Hydrogeomorphology>`_ (jgrasstools)
+`Geomorphology <http://code.google.com/p/jgrasstools/wiki/Geomorphology>`_ (jgrasstools)
+`Network <http://code.google.com/p/jgrasstools/wiki/Network>`_ (jgrasstools)
+`Hillslope <http://code.google.com/p/jgrasstools/wiki/Hillslope>`_ (jgrasstools)
+`Basin <http://code.google.com/p/jgrasstools/wiki/Basin>`_ (jgrasstools)
+`Statistics <http://code.google.com/p/jgrasstools/wiki/Statistics>`_ (jgrasstools)
+`Hydrogeomorphology <http://code.google.com/p/jgrasstools/wiki/Hydrogeomorphology>`_ (jgrasstools)
 
 Spatial Toolbox
 ===============

@@ -3,14 +3,13 @@ Tracing WMS Calls
 
 Occasionally you will have trouble connecting to a WMS service; here is how to enable tracing.
 
-:doc:`Traceing WMS Requests`
+* `Traceing WMS Requests`_
 
+* `Example Tracing Information`_
 
-* :doc:`Example Tracing Information`
+* `Trouble Shooting a WMS Server`_
 
-* :doc:`Trouble Shooting a WMS Server`
-
-* :doc:`Mac OSX`
+* `Mac OSX`_
 
 
 Traceing WMS Requests
@@ -43,16 +42,14 @@ Example Tracing Information
 When connecting to the JPL server and choosing the blue marble layer the following trace was
 produced:
 
-!ENTRY net.refractions.udig.catalog.internal.wms 4 0 2008-09-05 08:26:15.561
- !MESSAGE GetCapabilities:
-:doc:`http://wms.jpl.nasa.gov/wms.cgi?REQUEST=GetCapabilities&VERSION=1.1.1&SERVICE=WMS`
+::
 
+   !ENTRY net.refractions.udig.catalog.internal.wms 4 0 2008-09-05 08:26:15.561
+    !MESSAGE GetCapabilities: `http://wms.jpl.nasa.gov/wms.cgi?REQUEST=GetCapabilities&VERSION=1.1.1&SERVICE=WMS`_
 
-!ENTRY net.refractions.udig.catalog.internal.wms 4 0 2008-09-05 08:26:24.781
- !MESSAGE GetMap: `http://wms.jpl.nasa.gov/wms.cgi?
-SERVICE=WMS&LAYERS=BMNG&EXCEPTIONS=application/vnd.ogc.se\_xml&
-FORMAT=image/png&HEIGHT=357&TRANSPARENT=TRUE&REQUEST=GetMap&BBOX=-180.0,-90.0,180.0,90.0&WIDTH=714&STYLES=default&
-SRS=EPSG:4326&VERSION=1.1.1 <http://wms.jpl.nasa.gov/wms.cgi?SERVICE=WMS&LAYERS=BMNG&EXCEPTIONS=application/vnd.ogc.se_xml&FORMAT=image/png&HEIGHT=357&TRANSPARENT=TRUE&REQUEST=GetMap&BBOX=-180.0,-90.0,180.0,90.0&WIDTH=714&STYLES=default&SRS=EPSG:4326&VERSION=1.1.1>`_
+   !ENTRY net.refractions.udig.catalog.internal.wms 4 0 2008-09-05 08:26:24.781
+    !MESSAGE GetMap: `http://wms.jpl.nasa.gov/wms.cgi?SERVICE=WMS&LAYERS=BMNG&EXCEPTIONS=application/vnd.ogc.se\_xml&FORMAT=image/png&HEIGHT=357&TRANSPARENT=TRUE&REQUEST=GetMap&BBOX=-180.0,-90.0,180.0,90.0&WIDTH=714&STYLES=default&SRS=EPSG:4326&VERSION=1.1.1 <http://wms.jpl.nasa.gov/wms.cgi?SERVICE=WMS&LAYERS=BMNG&EXCEPTIONS=application/vnd.ogc.se_xml&FORMAT=image/png&HEIGHT=357&TRANSPARENT=TRUE&REQUEST=GetMap&BBOX=-180.0,-90.0,180.0,90.0&WIDTH=714&STYLES=default&SRS=EPSG:4326&VERSION=1.1.1>`_ 
+
 
 The URLs mentioned during tracing can be cut and pasted into a browser to verify an error message,
 or see the same image that uDig displayed.
@@ -80,9 +77,9 @@ The uDig will enter into "version negotiation" with the server using the above i
 Mac OSX
 -------
 
-1. right click on uDig.app and choose "Show Package Contents"
- 2. Navigate to MacOS folder
- 3. Next the the file udig\_internal.ini create the file ".options" as described above.
+#. right click on uDig.app and choose "Show Package Contents"
+#. Navigate to MacOS folder
+#. Next the the file udig\_internal.ini create the file ".options" as described above.
 
 You can either review the application logs located (from the about udig screen); or start the
 application from the command line with:
@@ -93,6 +90,4 @@ application from the command line with:
 
 **Related tasks**
 
-
-`View Error Log and Configuration
-Details <View%20Error%20Log%20and%20Configuration%20Details.html>`_
+:doc:`View Error Log and Configuration Details`

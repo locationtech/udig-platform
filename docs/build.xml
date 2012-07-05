@@ -43,14 +43,21 @@
     </target>
 
     <target name="user" depends="init">
-        <antcall target="sphinx-ignore-warnings">
+        <antcall target="sphinx">
             <param name="id" value="user/en" />
             <param name="build" value="html" />
         </antcall>
     </target>
 
+    <target name="user-pdf" depends="init">
+        <antcall target="pdf">
+            <param name="id" value="user/en" />
+            <param name="build" value="pdf" />
+        </antcall>
+    </target>
+    
     <target name="devel" depends="init">
-        <antcall target="sphinx">
+        <antcall target="sphinx-ignore-warnings">
             <param name="id" value="devel/en"/>
             <param name="build" value="html"/>
         </antcall>
@@ -66,7 +73,7 @@
     </target>
     
     <target name="sphinx" if="sphinx.available">
-                <echo message="Running sphinx-build -D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/> 
+        <echo message="Running sphinx-build -D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/> 
         <exec executable="sphinx-build" failonerror="true" dir="${basedir}/${id}">
             <arg line="-D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/>
         </exec>

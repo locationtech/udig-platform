@@ -34,14 +34,11 @@ the Layers View and on the map editor.
 
 **Related concepts**
 
-
 :doc:`Legend`
 
 
 **Related reference**
 
-
 :doc:`Legend View`
 
- :doc:`Using the Legend View`
-
+:doc:`Using the Legend View`

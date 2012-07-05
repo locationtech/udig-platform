@@ -36,5 +36,8 @@ Boundary
 --------
 
 Setting a layer as a boundary layer will enable it to be used to set the boundary in the boundary
-view and therefor restrict the zoom to extent and filter table and catalog results. Note: this
-option is only available if the layer is a background layer.
+view and therefor restrict the zoom to extent and filter table and catalog results. 
+
+.. note:: 
+   This option is only available if the layer is a background layer.
+

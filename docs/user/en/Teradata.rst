@@ -25,9 +25,8 @@ The version of the Teradata plugin that ships with uDig 1.2.2 has some issues th
 performance issues with large data sets and a potential application freeze when editing features.
 There is a patch to address these issues, which can be installed in the following way:
 
--  Follow the instructions to `install a new plugin <Finding%20new%20plugins.html>`_.
--  When asked for the site location (step 5) enter
-   :doc:`http://udig.refractions.net/files/update-teradata/`
+-  Follow the instructions to :doc:`install a new plugin <Finding new plugins>`.
+-  When asked for the site location (step 5) enter `<http://udig.refractions.net/files/update-teradata/>`_
 
 -  After completing the wizard, restart uDig.
 
@@ -45,12 +44,9 @@ To support editing, a table must have one of the following:
 -  a unique primary index
 -  an identity (sequential) column
 
-.. figure:: images/icons/emoticons/warning.gif
-   :align: center
-   :alt: 
-
-It is not recommended to solely use an identity column, as spatial index triggers are not supported
-when referencing an identity column. See the section on Spatial Indexes for more details.
+.. note::
+   It is not recommended to solely use an identity column, as spatial index triggers are not supported
+   when referencing an identity column. See the section on Spatial Indexes for more details.
 
 Query Banding
 ^^^^^^^^^^^^^
@@ -68,7 +64,7 @@ uDig sends the following information as part of a standard request:
 -  Type of statement (i.e. "SELECT", "INSERT", "DELETE")
 
 The only details that can be modified from within uDig is the Name of application and the Connection
-Mode .  See the `Teradata page <Teradata%20page.html>`_ for more details.
+Mode .  See the :doc:`Teradata page` for more details.
 
 Spatial indexes
 ^^^^^^^^^^^^^^^
@@ -82,13 +78,10 @@ uDig will read from a spatial index if its exists. The convention for a spatial 
 So for a layer called "STATES" with a geometry column called "GEOM", the index table should be
 called **STATES\_GEOM\_idx**.
 
-.. figure:: images/icons/emoticons/forbidden.gif
-   :align: center
-   :alt: 
-
-Make sure to match the case of all tables and columns. If the geometry column is called "GEOM"
-(upper case) and the index created is called STATES\_geom\_idx (lower case), the index will not be
-properly linked to the table.
+.. warning::
+   Make sure to match the case of all tables and columns. If the geometry column is called "GEOM"
+   (upper case) and the index created is called STATES\_geom\_idx (lower case), the index will not be
+   properly linked to the table.
 
 This index table should contain two columns:
 
@@ -96,6 +89,7 @@ This index table should contain two columns:
 -  The tessellation cell ID (cellid)
 
 The tessellation cell ID is the ID of the cell where that feature is contained.
+
 
 Geometry column
 ^^^^^^^^^^^^^^^
@@ -111,92 +105,39 @@ Tessellation is the name of Teradata's spatial index. In order to activate tesse
 layer, an entry (row) needs to be placed in the ``SYSSPATIAL.tessellation`` table. This table should
 have the following schema:
 
-Table name
-
-Type
-
-Description
-
-F\_TABLE\_SCHEMA
-
-varchar
-
-Name of the spatial database/schema containing the table
-
-F\_TABLE\_NAME
-
-varchar
-
-Name of the spatial table
-
-F\_GEOMETRY\_COLUMN
-
-varchar
-
-Column that contains the spatial data
-
-U\_XMIN
-
-float
-
-Minimum X value for the tessellation universe
-
-U\_YMIN
-
-float
-
-Minimum Y value for the tessellation universe
-
-U\_XMAX
-
-float
-
-Maximum X value for the tessellation universe
-
-U\_YMAX
-
-float
-
-Maximum Y value for the tessellation universe
-
-G\_NX
-
-integer
-
-Number of X grids
-
-G\_NY
-
-integer
-
-Number of Y grids
-
-LEVELS
-
-integer
-
-Number of levels in the grid
-
-SCALE
-
-float
-
-Scale value for the grid
-
-SHIFT
-
-float
-
-Shift value for the grid
++-----------------------+----------+-----------------------------------------------+
+| **Table name**        | **Type** |  **Description**                              |
++-----------------------+----------+-----------------------------------------------+
+| **F_TABLE_SCHEMA**    | varchar  | Name of the spatial database/schema           |
+|                       |          | containing the table                          |
++-----------------------+----------+-----------------------------------------------+
+| **F_TABLE_NAME**      | varchar  | Name of the spatial table                     |
++-----------------------+----------+-----------------------------------------------+
+| **F_GEOMETRY_COLUMN** | varchar  | Column that contains the spatial data         |
++-----------------------+----------+-----------------------------------------------+
+| **U_XMIN**            | float    | Minimum X value for the tessellation universe |
++-----------------------+----------+-----------------------------------------------+
+| **U_YMIN**            | float    | Minimum Y value for the tessellation universe |
++-----------------------+----------+-----------------------------------------------+
+| **U_XMAX**            | float    | Maximum X value for the tessellation universe |
++-----------------------+----------+-----------------------------------------------+
+| **U_YMAX**            | float    | Maximum Y value for the tessellation universe |
++-----------------------+----------+-----------------------------------------------+
+| **G_NX**              | integer  | Number of X grids                             |
++-----------------------+----------+-----------------------------------------------+
+| **G_NY**              | integer  | Number of Y grids                             |
++-----------------------+----------+-----------------------------------------------+
+| **LEVELS**            | integer  | Number of levels in the grid                  |
++-----------------------+----------+-----------------------------------------------+
+| **SCALE**             | float    | Scale value for the grid                      |
++-----------------------+----------+-----------------------------------------------+
+| **SHIFT**             | float    | Shift value for the grid                      |
++-----------------------+----------+-----------------------------------------------+
 
 For more information about Tessellation, please see the Teradata documentation.
 
-.. figure:: images/icons/emoticons/forbidden.gif
-   :align: center
-   :alt: 
-
-The tessellation table values are case sensitive and so must match the case of the tables and
-columns.
+.. warning::
+   The tessellation table values are case sensitive and so must match the case of the tables and columns.
 
 Installing the Teradata extension
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -207,11 +148,8 @@ downloaded prior to use.
 To get the Teradata drivers, please visit:
 http://downloads.teradata.com/download/connectivity/jdbc-driver
 
-.. figure:: images/icons/emoticons/warning.gif
-   :align: center
-   :alt: 
-
-You will need to log in to Teradata's site in order to download this artifact.
+.. note::
+   You will need to log in to Teradata's site in order to download this artifact.
 
 Extract the contents of the archive to any convenient directory. There should be two files in this
 archive:
@@ -219,7 +157,7 @@ archive:
 -  terajdbc4.jar
 -  tdgssconfig.jar
 
-Then navigate to **Layer > Add... > Teradata**. You will be shown a dialog (see below). Insert the
+Then navigate to :menuselection:`Layer --> Add... --> Teradata`. You will be shown a dialog (see below). Insert the
 locations of the two files extracted above into the dialog box and then click **Restart**.
 
 .. figure:: /images/teradata/td_drivers.png
@@ -234,6 +172,6 @@ restart uDig, and try again.
    :align: center
    :alt: 
 
-After uDig restarts, navigate back to **Layer > Add... > Teradata**. If everything was installed
+After uDig restarts, navigate back to :menuselection:`Layer --> Add... --> Teradata`. If everything was installed
 correctly, you will now be shown a dialog box for **Teradata Connection Settings.** Please continue
-on to the `Teradata connection page <Teradata%20page.html>`_ for details.
+on to the :doc:`Teradata connection page <Teradata page>` for details.

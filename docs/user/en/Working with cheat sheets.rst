@@ -1,41 +1,36 @@
 Working with cheat sheets
 #########################
 
-`Cheat sheets <Cheat%20sheets.html>`_ are available from the help menu and offer active assistance
+:doc:`Cheat sheets` are available from the help menu and offer active assistance
 stepping through common tasks.
 
-* :doc:`Cheat Sheet Selection Dialog`
-
-* :doc:`Starting`
-
-* :doc:`Restarting`
-
-* :doc:`Progressing to the next step`
-
-* :doc:`Getting task help information`
-
-* :doc:`Skipping a step`
-
-* :doc:`Closing`
+* `Cheat Sheet Selection Dialog`_
+* `Starting`_
+* `Restarting`_
+* `Progressing to the next step`_
+* `Getting task help information`_
+* `Skipping a step`_
+* `Closing`_
 
 
 **Related reference**
-
 
 :doc:`Cheat sheets`
 
 
 **Related tasks**
 
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`Working with composite cheat sheets`
+   Working with composite cheat sheets
 
 
 Cheat Sheet Selection Dialog
 ============================
 
-1. Select **Help > Cheat sheets** from the menubar
- 2. Select one of the available cheat sheets and click **OK**.
+1. Select :menuselection:`Help --> Cheat sheets` from the menubar
+2. Select one of the available cheat sheets and click :guilabel:`OK`
 
 You may also load a cheat sheet content file or from the internet.
 

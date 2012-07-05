@@ -19,6 +19,4 @@ line.
 
 **Related concepts**
 
-
 :doc:`Toolbars`
-

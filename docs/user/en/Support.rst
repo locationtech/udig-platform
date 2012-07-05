@@ -6,21 +6,17 @@ issue tracker used by the development team.
 
 **Related tasks**
 
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`Submit Error Log`
+   Submit Error Log
+   Subscribe to the user list
+   Tracing WMS Calls
+   Using the Issue Tracker
+   View Error Log and Configuration Details
 
-* :doc:`Subscribe to the user list`
-
-* :doc:`Tracing WMS Calls`
-
-* :doc:`Using the Issue Tracker`
-
--  `View Error Log and Configuration
-   Details <View%20Error%20Log%20and%20Configuration%20Details.html>`_
 
 **Related reference**
 
-
-* :doc:`Issue Tracker`
-
+`Issue Tracker <http://jira.codehaus.org/browse/UDIG>`_
 

@@ -6,12 +6,10 @@ geometric data; while the map is used to show the geometries.
 
 **Related concepts**
 
-
 :doc:`Constraint Query Language`
 
 
 **Related tasks**
-
 
 * :doc:`Selection using Attributes`
 
@@ -20,7 +18,4 @@ geometric data; while the map is used to show the geometries.
 
 **Related reference**
 
-
 * :doc:`Table view`
-
-

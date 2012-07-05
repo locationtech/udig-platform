@@ -8,9 +8,11 @@ coverage of measurements for datasets such as a digital elevation model.
 
 Contents:
 
-* :doc:`Georeference an Image`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`Set raster transparent color`
+   Georeference an Image
+   Set raster transparent color
 
 
 **Related tasks**

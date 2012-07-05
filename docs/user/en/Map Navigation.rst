@@ -10,9 +10,9 @@ idea of changing the time or elevation displayed.
 
 **Related tasks**
 
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`Pan`
-
-* :doc:`Zoom`
-
+   Pan
+   Zoom
 

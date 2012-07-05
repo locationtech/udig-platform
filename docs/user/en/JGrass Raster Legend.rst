@@ -4,20 +4,21 @@ JGrass Raster Legend
 The JGrass Raster Legend Decoration gives the possibility to make color ramps on single banded
 rasters.
 
- |image0|
+.. figure:: /images/jgrass_raster_legend/jgrass_raster_legend.png
+   :align: center
+   :width: 80%
   
 
 Style
 =====
 
- You can change the location of the decoration along with the Font and color:
+You can change the location of the decoration along with the Font and color:
 
-|image1|
+.. figure:: /images/jgrass_raster_legend/JGrass-Raster-Style.jpg
+   :align: center
+   :width: 80%
+
 
 **Related reference**
 
-
-Style Editor Dialog
-
-.. |image0| image:: /images/jgrass_raster_legend/jgrass_raster_legend.png
-.. |image1| image:: /images/jgrass_raster_legend/JGrass-Raster-Style.jpg
+:doc:`Style Editor dialog`

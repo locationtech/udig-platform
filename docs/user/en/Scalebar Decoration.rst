@@ -32,7 +32,4 @@ You can change the Location of the Scalebar Decoration:
 
 **Related reference**
 
-
-* :doc:`Style Editor dialog`
-
-
+:doc:`Style Editor dialog`

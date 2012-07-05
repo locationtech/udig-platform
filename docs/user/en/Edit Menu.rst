@@ -3,7 +3,8 @@ Edit Menu
 
 This menu helps you manipulate the selected resources or layer. The contents of this menu will
 change based on what is selected.
- |image0|
+
+.. image:: /images/edit_menu/EditMenu.png
 
 Undo
 ----
@@ -57,7 +58,7 @@ already in progress.
 All Operations
 --------------
 
-Opens the `Operations dialog <Operations%20dialog.html>`_ allowing you to choose an operation to
+Opens the :doc:`Operations dialog` allowing you to choose an operation to
 perform on the selected object.
 
 The Operations dialog is used to list all operations, while a cut down list of operations provided
@@ -73,4 +74,3 @@ Rollback
 
 Throw away the current work, reverting to the information as stored on the server or database.
 
-.. |image0| image:: /images/edit_menu/EditMenu.png

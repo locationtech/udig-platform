@@ -8,7 +8,6 @@ Contents:
 
 **Related tasks**
 
-
-* :doc:`Using Feature operations`
+:doc:`Using Feature operations`
 
 

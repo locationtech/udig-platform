@@ -30,7 +30,7 @@ application.
 Toolbar
 -------
 
-|image0| - Activate the selection tool
+ |image0| - Activate the selection tool
  |image1| - Zooms to display all the selected features.
  |image2| - Promote all the selected items to the top of the table.
 
@@ -45,31 +45,28 @@ The following choices are available:
 
 -  All - a regular expression search against all attributes
 -  AttributeName(s) - a regular expression search against the selected attribute
--  CQL - use the `Constraint Query Language <Constraint%20Query%20Language.html>`_ to define a query
+-  CQL - use the :doc:`Constraint Query Language` to define a query
 
 To the right of the selection field is a check box that can be used to find either all of the
 features, or the first feature, matching the query.
 
 **Related concepts**
 
-
 :doc:`Constraint Query Language`
 
 
 **Related tasks**
 
+:doc:`Using the Table View`
 
-* :doc:`Using the Table View`
+:doc:`Selection using Attributes`
 
-* :doc:`Selection using Attributes`
-
-* :doc:`Selection using CQL`
+:doc:`Selection using CQL`
 
 
 **Related reference**
 
-
-* :doc:`Regular Expression`
+`Regular Expression <http://en.wikipedia.org/wiki/Regular_expression>`_
 
 
 .. |image0| image:: /images/table_view/SelectionTool.png

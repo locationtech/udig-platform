@@ -15,7 +15,7 @@ Allows you to create new resources.
 New Project
 ~~~~~~~~~~~
 
-Opens the `New Project wizard <New%20Project%20wizard.html>`_ allowing you to create a new project
+Opens the :doc:`New Project wizard` allowing you to create a new project
 directory for your uDig work.
 
 You can have several projects open at one time.
@@ -30,7 +30,7 @@ If there are no projects open a new project will be created as well.
 New Layer
 ~~~~~~~~~
 
-Open the `Add Data wizard <Add%20Data%20wizard.html>`_ to add a new layer to the current Map.
+Open the :doc:`Add Data wizard` to add a new layer to the current Map.
 
 If there is no Map opened a new Map will be created as needed.
 
@@ -45,7 +45,7 @@ Close
 
 Close the current Map Editor or Page Editor.
 
-When a `Map editor <Map%20editor.html>`_ has unsaved changes you will be asked if you want to save
+When a :doc:`Map editor` has unsaved changes you will be asked if you want to save
 your work before the editor is closed.
 
 This menu is only available when an Editor is already opened.
@@ -101,19 +101,19 @@ Redraw the active Map Editor.
 Import
 ------
 
-Open the `Import Wizard <Import%20Wizard.html>`_ allowing you add additional existing resources into
+Open the :doc:`Import Wizard` allowing you add additional existing resources into
 the application.
 
 Export
 ------
 
-Open the `Export Wizard <Export%20Wizard.html>`_ allowing you to export the selected resource to an
+Open the :doc:`Export Wizard` allowing you to export the selected resource to an
 external file or service.
 
 Properties
 ----------
 
-Open the `Properties dialog <Properties%20dialog.html>`_ for the selected resource. The Properites
+Open the :doc:`Properties dialog` for the selected resource. The Properites
 dialog can be used to:
 
 -  inspect details such as file location or coordinate reference system
