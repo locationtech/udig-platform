@@ -20,22 +20,15 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IService;
-import net.refractions.udig.core.jts.ReferencedEnvelopeCache;
 
-import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.data.wfs.WFSDataStore;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.GeometryDescriptor;
 
 /**
  * Access a feature type in a wfs.
@@ -103,14 +96,14 @@ public class WFSGeoResourceImpl extends IGeoResource {
         if (adaptee.isAssignableFrom(IGeoResourceInfo.class)){
             return adaptee.cast(createInfo(monitor));
         }
-        if (adaptee.isAssignableFrom(FeatureSource.class)) {
+        if (adaptee.isAssignableFrom(SimpleFeatureSource.class)) {
             WFSDataStore wfs = parent.getDS(monitor);
-            FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = wfs.getFeatureSource(typename);
+            SimpleFeatureSource featureSource = wfs.getFeatureSource(typename);
             return adaptee.cast(featureSource);            
         }
         if (adaptee.isAssignableFrom(FeatureStore.class)) {
             WFSDataStore wfs = parent.getDS(monitor);
-            FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = wfs.getFeatureSource(typename);
+            SimpleFeatureSource featureSource = wfs.getFeatureSource(typename);
             if( featureSource instanceof FeatureStore){
                 return adaptee.cast(featureSource);
             }
@@ -127,10 +120,10 @@ public class WFSGeoResourceImpl extends IGeoResource {
         if (adaptee == null){
             return false;
         }
-        if (adaptee.isAssignableFrom(FeatureSource.class)){
+        if (adaptee.isAssignableFrom(SimpleFeatureSource.class)){
             return true;
         }
-        if (adaptee.isAssignableFrom(FeatureStore.class)) {
+        if (adaptee.isAssignableFrom(SimpleFeatureStore.class)) {
             if (info != null) {
                 // if info is known we can check if we are writable
                 WFSGeoResourceInfo wfsInfo = (WFSGeoResourceInfo) info;

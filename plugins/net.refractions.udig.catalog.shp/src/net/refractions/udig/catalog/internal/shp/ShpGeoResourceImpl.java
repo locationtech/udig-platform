@@ -31,7 +31,6 @@ import net.refractions.udig.catalog.URLUtils;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureSource;
-import org.geotools.data.FeatureStore;
 import org.geotools.data.shapefile.indexed.IndexedShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.data.simple.SimpleFeatureStore;
@@ -146,13 +145,13 @@ public class ShpGeoResourceImpl extends IGeoResource {
             return adaptee.cast(createInfo(monitor));
         }
         if (adaptee.isAssignableFrom(SimpleFeatureStore.class)) {
-            FeatureSource<SimpleFeatureType, SimpleFeature> fs = featureSource(monitor);
+            SimpleFeatureSource fs = featureSource(monitor);
             if (fs instanceof SimpleFeatureStore) {
                 return adaptee.cast(fs);
             }
         }
         if (adaptee.isAssignableFrom(SimpleFeatureStore.class)) {
-            FeatureSource<SimpleFeatureType, SimpleFeature> fs = featureSource(monitor);
+            SimpleFeatureSource fs = featureSource(monitor);
             if (fs instanceof SimpleFeatureStore) {
                 return adaptee.cast(fs);
             }
@@ -416,7 +415,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
         if (adaptee == null) {
             return false;
         }
-        return (adaptee.isAssignableFrom(IGeoResourceInfo.class) || adaptee.isAssignableFrom(FeatureStore.class)
+        return (adaptee.isAssignableFrom(IGeoResourceInfo.class) || adaptee.isAssignableFrom(SimpleFeatureStore.class)
                 || adaptee.isAssignableFrom(FeatureSource.class) 
                 || adaptee.isAssignableFrom(SimpleFeatureSource.class) 
                 || adaptee.isAssignableFrom(IService.class) || adaptee

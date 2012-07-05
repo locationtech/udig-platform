@@ -29,6 +29,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.DataAccess;
 import org.geotools.data.DataAccessFactory;
+import org.geotools.data.DataStore;
+import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.ServiceInfo;
 import org.opengis.feature.type.Name;
 
@@ -45,18 +47,18 @@ public class DataStoreService extends IService {
 	
     private ID id;
     private Map<String, Serializable> connectionParams;
-    private DataAccess< ? , ? > dataStore;
-    private DataAccessFactory factory;
+    private DataStore dataStore;
+    private DataStoreFactorySpi factory;
     private IOException message;
     private List<FeatureSourceGeoResource> resources;
 
-    public DataStoreService( ID id, DataAccessFactory factory, Map<String, Serializable> params ) {
+    public DataStoreService( ID id, DataStoreFactorySpi factory, Map<String, Serializable> params ) {
         this.id = id;
         connectionParams = params;
         this.factory = factory;
     }
 
-    public synchronized DataAccess< ? , ? > toDataAccess() throws IOException {
+    public synchronized DataStore toDataAccess() throws IOException {
         if (dataStore == null) {
             // connect!
             try {
