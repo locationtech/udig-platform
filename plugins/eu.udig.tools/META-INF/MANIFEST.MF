@@ -6,8 +6,10 @@ Bundle-Version: 1.3.2.qualifier
 Bundle-Activator: eu.udig.tools.Activator
 Bundle-Vendor: uDig Community
 Bundle-Localization: plugin
-Export-Package: eu.udig.tools.geometry.split,
- eu.udig.tools.merge
+Export-Package: eu.udig.tools.arc.internal;x-friends:="eu.udig.tools.tests",
+ eu.udig.tools.geometry.split,
+ eu.udig.tools.merge,
+ eu.udig.tools.parallel.internal;x-friends:="eu.udig.tools.tests"
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.ui;bundle-version="1.3.0",
