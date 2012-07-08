@@ -217,7 +217,7 @@ Images
 
 Add images to your documentation when possible.  Images, such as screenshots, are a very helpful way of making documentation understandable.  When making screenshots, try to crop out unnecessary content (browser window, desktop, etc).  Avoid scaling the images, as the Sphinx theme automatically resizes large images.  It is also helpful to include a caption underneath the image.
 
-.. figure:: ../getting_started/images/udig_logo.gif
+.. figure:: ../../../images/udig_logo.gif
    :align: center
    
    **uDig Project logo.**
