@@ -127,7 +127,16 @@ public class BulkConvert {
 
             String htmlName = htmlFile.getName();
             if( htmlName.equals("index.html")){
-                continue; // skip this one
+                File tocFile = new File( rstDirectory.getParentFile(), "toc.xml");
+                boolean deleted = tocFile.delete();
+                if (!deleted) {
+                    System.out.println("\tCould not remove '" + tocFile
+                            + "' do you have it open in an editor?");
+                    System.out.println("\tSkipping ...");
+                    continue;
+                }
+                bufferedStreamsCopy( htmlFile, tocFile );
+                continue; // just a straight copy
             }
             String rstName = htmlName.substring(0, htmlName.lastIndexOf('.')) + ".rst";
 

@@ -1,0 +1,13 @@
+5530
+####
+
+Where can I find uDig API javadocs?
+===================================
+
+The uDig API javadocs can be viewed from the `Initial Project
+Documentation <http://udig.refractions.net/confluence//display/UDIG/Initial+Project+Documentation>`_
+page:
+
+* :doc:`http://udig.refractions.net/docs/api-udig`
+
+
