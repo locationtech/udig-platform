@@ -15,6 +15,9 @@ Everything in eclipse is handled through the plug-in extension mechanism, and de
 
 * Press the :guilabel:`Finish` button.
 
+  .. hint::
+     You can check what xml is being generated at any point by looking at the plugin.xml tab.
+
 
 * Right click on the (application) element and select :menuselection:`New --> Run`
 

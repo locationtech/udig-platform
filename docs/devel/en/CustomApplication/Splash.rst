@@ -7,53 +7,29 @@ The splash screen is displayed by the launcher to give the user something to wat
 
 When making your own splash screen you will want to plan out the location of the progress bar and progress message as shown above.
 
-* Select the
-  Splash
-  tab
+* Select the :guilabel:`Splash` tab
+
+* Check the :guilabel:`Add a progress bar` check box and enter:
 
 
-* Check the
-  Add a progress bar
-  check box and enter:
+  * Enter **0** in the x-offset field
+
+  * Enter **196** into the y-offset field
+
+  * Enter **500** in the width field
+
+  * Enter **10** in the height field
 
 
-* Enter
-  0
-  in the x-offset field
+* Check the :guilabel:`Add a progress message` check box and enter:
+
+  * Enter **180** into the y-offset field
+
+  * Enter **16** into the height field
 
 
-* Enter
-  196
-  into the y-offset field
+* Change the Text color to **white**
 
-
-* Enter
-  500
-  in the width field
-
-
-* Enter
-  10
-  in the height field
-
-
-* Check the
-  Add a progress message
-  check box and enter:
-
-
-* Enter
-  180
-  into the y-offset field
-
-
-* Enter
-  16
-  into the height field
-
-
-* Change the Text color to
-  white
   |10000201000002C7000000C57E07D887_png|
 
 

@@ -63,6 +63,10 @@ Fiddling around with drawing programs is a bit beyond the scope of this workbook
 
 * Download the following file: :download:`rcp_branding.zip`
 
+  .. note::
+     If you are using this workbook in a lab setting you will find the file rcp_branding.zip on your dvd.
+
+
 * Select :menuselection:`File --> Import` to open up the Import wizard
 
 * Choose :menuselection:`General --> Archive File` and press :guilabel:`Next`

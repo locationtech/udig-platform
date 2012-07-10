@@ -3,84 +3,65 @@ Perspective
 
 Perspectives are used to gather together a screen layout (usually for a specific task).
 
-In the previous section we saw that an application can list a default perspective to use when it starts up – this is only used the first time the user runs the application. On subsequent runs the application will maintain the arrangement as the user left them.
+In the previous section we saw that an application can list a default perspective to use when it 
+starts up – this is only used the first time the user runs the application. On subsequent runs 
+the application will maintain the arrangement as the user left them.
 
 * Return to the Extension editor.
-  It is the editor titled:
-  net.refraction.udig.tutorials.customapp
-  , make sure the editor is still on the Extensions tab.
+
+  It is the editor titled: **net.refraction.udig.tutorials.customapp**, make sure the editor 
+  is still on the Extensions tab.
 
 
-* Press
-  Add...
-  button and select
-  org.eclipse.ui.perspectives
+* Press :guilabel:`Add...` button and select **org.eclipse.ui.perspectives**
+
   |10000000000001F400000226FA164E05_png|
 
+* Press :guilabel:`Finish`
 
-* Press
-  Finish
+* Select the name element.
 
+  **id:** net.refractions.udig.tutorials.customapp.perspective
 
-* Select the
-  name
-  element.
-  id:
-  net.refractions.udig.tutorials.customapp.perspective
-  name:
-  Custom Perspective
-  class:
-  net.refractions.udig.tutorials.customapp.CustomPerspectiveFactory
+  **name:** Custom Perspective
+
+  **class:** net.refractions.udig.tutorials.customapp.CustomPerspectiveFactory
+
   |10000201000002C5000000D17802F89A_png|
 
+* Click the :guilabel:`Browse` button after icon and select world_obj.gif
 
-* Click the
-  Browse
-  button after
-  icon
-  and select
-  world_obj.gif
   |100000000000015B0000011D6A55A270_png|
 
+* Save the file, click the class link to open the Java Class dialog.
 
-* Save the file, click the
-  class
-  link to open the Java Class dialog.
   |10000000000001EF0000024FD8F78535_png|
 
 
-* Press
-  Finish
-  to create the class.
-
+* Press :guilabel:`Finish` to create the class.
 
 * Add the following static constants:
 
 
-private static final String BOOKMARKS =
+  .. code-block:: java
 
-"org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarksView";
+     private static final String BOOKMARKS = "org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarksView";
 
-private static final String PROJECTS =
+     private static final String PROJECTS = "net.refractions.udig.project.ui.projectExplorer";
 
-"net.refractions.udig.project.ui.projectExplorer";
-
-private static final String LAYERS =
-
-"net.refractions.udig.project.ui.layerManager";
-
-* In the
-  createInitialLayout
-  method, add the following code:
+     private static final String LAYERS = "net.refractions.udig.project.ui.layerManager";
 
 
-layout.addFastView(PROJECTS);
+* In the createInitialLayout method, add the following code:
 
-layout.addView(LAYERS, IPageLayout.LEFT, 0.3f,
+  .. code-block:: java
 
-IPageLayout.ID_EDITOR_AREA);
+     layout.addFastView(PROJECTS);
 
-layout.addView(BOOKMARKS, IPageLayout.BOTTOM, 0.7f, LAYERS);
+     layout.addView(LAYERS, IPageLayout.LEFT, 0.3f, IPageLayout.ID_EDITOR_AREA);
+
+     layout.addView(BOOKMARKS, IPageLayout.BOTTOM, 0.7f, LAYERS);
+
 
 .. |10000000000001F400000226FA164E05_png| image:: images/10000000000001F400000226FA164E05.png
     :width: 9.26cm

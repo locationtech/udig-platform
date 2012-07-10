@@ -7,6 +7,11 @@ customize and build on top of the uDig core. uDig can be extended by adding stan
 plug-ins which work against either Eclipse or uDig extension points. Developers define their own
 applications which combine existing and possibly new plug-ins.
 
+.. toctree::
+   :maxdepth: 2
+
+   CustomApplication/CustomApplication 
+
 * Getting Started
 * Programmers Guide
 * Working with Eclipse RCP

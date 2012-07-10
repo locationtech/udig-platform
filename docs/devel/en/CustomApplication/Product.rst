@@ -5,61 +5,47 @@ Now that we have an application we can bundle it up as a product for others, and
 
 To start lets add a product file to our branding plugin:
 
-* Select
-  net.refractions.udig.tutorials.customapp
-  in the Project Explorer
+* Select **net.refractions.udig.tutorials.customapp** in the Project Explorer
 
+* Selection :menuselection:`File --> New --> Product Configuration`
 
-* Selection
-  File > New > Product Configuration
+* Select **net.refractions.udig.tutorials.customapp**
 
+* Enter **custom.product** in the File name field
 
-* Select
-  net.refractions.udig.tutorials.customapp
-
-
-* Enter
-  custom.product
-  in the File name field
   |10000000000001F4000001E262060AA2_png|
 
+* Press the :guilabel:`Finish` button.
 
-* Press the
-  Finish
-  button.
-
-
-* The
-  custom.product
-  file is created and opened for your review.
-
+* The **custom.product** file is created and opened for your review.
 
 * We are going to fill in the blanks defining our product.
-  Name:
-  Custom
-  Application:
-  net.refractions.udig.tutorials.customapp.id1
-  The product configuration is based on:
-  features
+
+  **Name:** Custom
+
+  **Application:** net.refractions.udig.tutorials.customapp.id1
+
+  **The product configuration is based on:** features
+
+  .. note::
+     Screen is slightly different in other Versions of Eclipse IDE.
+
   |100002010000027A0000014398B76B0C_png|
 
 
-* Save your work and hit the
-  New...
-  button next to
-  Product
-  .
-
+* Save your work and hit the :guilabel:`New...` button next to Product.
 
 * In the Product Definition wizard enter:
-  Product ID:
-  custom
+
+  **Product ID:** custom
+
+  .. hint::
+     Eclipse detected that **customapp** was already in use by the SDK! Use **custom** for the product ID.
+
   |10000000000001CC0000019F135B97B6_png|
 
 
-* Press the
-  Finish
-  button and save your work.
+* Press the :guilabel:`Finish` button and save your work.
 
 
 .. |10000000000001F4000001E262060AA2_png| image:: images/10000000000001F4000001E262060AA2.png

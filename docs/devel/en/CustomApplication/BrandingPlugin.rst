@@ -22,6 +22,10 @@ In this section we create a plug-in that contains all of the custom â€œbrandingâ
 
 * On the Plug-in Content page provide the following information:
 
+  .. note::
+     We use Java extensions and wont be sticking to an execution envrionment.
+
+
   Plug-in Name: ``Custom Application Branding Plug-in``
 
   Plug-in Provider: ``Student``
@@ -36,6 +40,9 @@ In this section we create a plug-in that contains all of the custom â€œbrandingâ
 * Press :guilabel:`Finish` to continue (we are not interested in using any of the included templates).
 
 * If the Open Associated Perspective dialog pops up you can select :guilabel:`Yes`
+
+  .. note::
+     Eclipse is switching perspectives to assist you in working on your new plug-in.
 
   |10000000000001B9000000E298F103F2_png|
 
