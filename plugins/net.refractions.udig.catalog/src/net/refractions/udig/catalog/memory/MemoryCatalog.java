@@ -1,8 +1,5 @@
 package net.refractions.udig.catalog.memory;
 
-import static net.refractions.udig.catalog.IResolve.Status.CONNECTED;
-import static net.refractions.udig.catalog.IResolve.Status.NOTCONNECTED;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -11,14 +8,6 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.swt.widgets.Display;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-
-import com.vividsolutions.jts.geom.Envelope;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalogInfo;
@@ -30,11 +19,17 @@ import net.refractions.udig.catalog.ISearch;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
 import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.internal.CatalogImpl;
-import net.refractions.udig.catalog.internal.CatalogInfoImpl;
 import net.refractions.udig.catalog.internal.Messages;
 import net.refractions.udig.catalog.util.AST;
 import net.refractions.udig.catalog.util.ASTFactory;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.swt.widgets.Display;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+
+import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * A very simple catalog to hold search results in memory.
@@ -70,7 +65,7 @@ public class MemoryCatalog extends ISearch {
     public <T> boolean canResolve( Class<T> adaptee ) {
         return false;
     }
-
+    @Override
     public Status getStatus() {
         return Status.CONNECTED;
     }

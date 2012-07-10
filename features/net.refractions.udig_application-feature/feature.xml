@@ -232,4 +232,11 @@ GNU Lesser General Public License for more details.
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="eu.udig.image.georeferencing"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>
