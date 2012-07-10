@@ -26,7 +26,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.expression.Literal;
-import org.w3c.dom.Document;
 
 /**
  * This JUnit TestCase is used to verify that GeoTools has been correctly
@@ -61,7 +60,7 @@ public class GeoToolsTest {
         URL url = GeoToolsTest.class.getResource("example.svg");
         String parser = XMLResourceDescriptor.getXMLParserClassName();
         SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
-        Document doc = f.createDocument(url.toString());
+        f.createDocument(url.toString());
     }
     /**
      * @throws java.lang.Exception
