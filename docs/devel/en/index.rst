@@ -11,6 +11,7 @@ applications which combine existing and possibly new plug-ins.
    :maxdepth: 2
 
    CustomApplication/CustomApplication 
+   SDKQuickstart/SDKQuickstart 
 
 * Getting Started
 * Programmers Guide
