@@ -27,6 +27,7 @@ The goal of uDig is to provide a complete Java solution for desktop GIS data acc
 h1. Steering Committee
 
 * Andrea Antonello
+* Frank Gasdorf
 * Jesse Eichar
 * Jody Garnett
 * Mauricio Pazos
