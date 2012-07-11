@@ -1,5 +1,5 @@
-2 Why a platform
-================
+Why a platform
+==============
 
 The Java GIS community is already host to several open-source toolkits of great capability. These
 toolkits provide a great number of services, and allow you the software developer to communicate
@@ -10,7 +10,7 @@ As a software developer you can focus on your tasks needed for your problem. The
 and display of spatial information can be someone else's problem.
 
 Relationship with Libraries and Toolkits
-========================================
+----------------------------------------
 
 You will find that uDig is set up as a platform allowing you to work "out of the box" with:
 

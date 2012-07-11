@@ -52,6 +52,9 @@ Some of the terminology used when working with the PDE:
 Please keep these ideas in mind – even an “Application” is considered an extension when working with the 
 Eclipse Platform.
 
+.. figure:: images/uDigApplicationAsPlugin.jpg
+   :align: center
+   :alt:
 
 Downloads
 =========
@@ -167,7 +170,7 @@ When your eclipse download has finished and we can begin to installation.
   file and select :menuselection:`Send To --> Desktop (create shortcut)`.
 
 
-  .. info::
+  .. note::
      You may want to modify the “eclipse.ini” file to specify additional command line 
      options such as more memory.
 
@@ -228,7 +231,7 @@ Eclipse Preferences
 
 We have a few global settings to configure before we can proceed.
 
-.. info::
+.. note::
    We are waiting for a Mac OSX JRE to be available before using Java 7.
 
 
@@ -513,4 +516,88 @@ Here are some additional things to try when running uDig.
 .. |10000000000003820000028AA8CFBF1E_jpg| image:: images/10000000000003820000028AA8CFBF1E.jpg
     :width: 15.199cm
     :height: 11cm
+
+Tips, Ticks and Suggestions
+===========================
+
+The following tips, tricks and suggestions have been collected from the udig-devel email list. If
+you have any questions feel free to drop by and introduce yourself.
+
+ClassNotFoundException at EclipseStarter
+----------------------------------------
+
+If your uDig application fails to load due to a ClassNotFoundException at 
+org.eclipse.core.runtime.adaptor.EclipseStarter then we have a problem with the plugin dependencies. 
+The EclipseStarter is doing its best to load the UDIGApplication; however the UDIGApplication is 
+not available as the Platform refused to load the net.refractions.udig.ui plugin as some of the 
+dependencies were not available.
+
+This usually happens each time we update the version of Eclipse we use. Each version of eclipse
+changes the plugins required; requiring us to review and examine the plugins we include in our SDK.
+
+As a temporary measure:
+
+#. Open up your Run Configuration
+#. Navigate to the Plugins tab
+#. Hit "Verify Plugins" (to list the plugins that failed to load; you should see that 
+   net.refractions.udig.ui is in this list)
+#. Hit add required plugins
+
+Please email the `udig-devel <http://lists.refractions.net/mailman/listinfo/udig-devel>`_ list; and 
+volunteer to test the SDK with the version of eclipse you are using.
+
+NoClassDefFoundError JAI
+------------------------
+
+The class JAI is provided as part of the custom **jre** you downloaded. In order for uDig to see
+this class it needs to be run using the "ext" classpath. This information is part of the
+udig.product file you run during the SDK Quickstart.
+
+For reference here is the command line option it sets:: 
+
+   -Dosgi.parentClassloader:ext
+
+Linux
+-----
+
+Please follow the same procedure; there is a "prepackaged" JRE available for you in our
+`http://udig.refractions.net/downloads/jre/ <http://udig.refractions.net/downloads/jre/>`_ folder.
+
+Please don't do anything tricky like trying to "app get" a copy of Eclipse and Java; version numbers
+are important and we are setting up this environment very carefully.
+
+If you would like to patch up your system Java you can do so by installing the versions of JAI and
+ImageIO mentioned above.
+
+Mac OS-X
+--------
+
+The Java included with your operating system is "good enough" for now - JAI is already installed on
+Tiger and Leopard. Some raster formats may not work out.
+
+How to build uDig from Source Code
+----------------------------------
+
+If you are interested in taking part on trunk development please consider `these instructions for
+checking out and building uDig <http://udig.refractions.net/confluence/display/ADMIN/02+Development+Environment>`_.
+
+JVM Terminated with Exit Code=-1
+--------------------------------
+
+If you have a really old machine with lots of versions of Java installed you may be in trouble! If
+you start eclipse and big dialog saying **JVM Terminated with Exit Code=-1** then add the following
+to your command line options::
+
+   -vm C:\\java\\eclipse\\jre\\bin\\javaw.exe
+
+This will force :command:`eclipse.exe` to use the jre you downloaded.
+
+
+References
+==========
+
+.. toctree::
+   :maxdepth: 1
+
+   SDK_Quickstart_for_uDig_1.1.0
 

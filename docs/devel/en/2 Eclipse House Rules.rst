@@ -1,68 +1,8 @@
-2 Eclipse House Rules
-=====================
+Eclipse House Rules
+###################
 
 Finally we have gather the **Eclipse House Rules** into one location. These are actual rules that
 must be followed by any Eclipse plug-in.
-
-:doc:`Extender Rules`
-
-
-* :doc:`Contribution Rule`
-
-* :doc:`Conformance Rule`
-
-* :doc:`Sharing Rule`
-
-* :doc:`Monkey See Monkey Do Rule`
-
-* :doc:`Relevance Rule`
-
-* :doc:`Integration Rule`
-
-* :doc:`Responsibility Rule`
-
-* :doc:`Program To API Contract Rule`
-
-* :doc:`Other Rule`
-
-* :doc:`Adapt to IResource Rule`
-
-* :doc:`Strata Rule`
-
-* :doc:`User Continuity Rule`
-
-
-:doc:`Enabler Rule`
-
-
-* :doc:`Invitation Rule`
-
-* :doc:`Lazy Loading Rule`
-
-* :doc:`Safe Platform Rule`
-
-* :doc:`Fair Play Rule`
-
-* :doc:`Explicit Extension`
-
-* :doc:`Diversity Rule`
-
-* :doc:`Good Fences`
-
-* :doc:`User Arbitration Rule`
-
-* :doc:`Explicit API Rule`
-
-* :doc:`Stability Rule`
-
-* :doc:`Defensive API Rule`
-
-
-:doc:`Publisher`
-
-
-* :doc:`License Rule`
-
 
 The Eclipse Hourse rules, are rather hard to track down (although they are referred to often). The
 best source is the "Contributing to Eclipse" book mentioned on the project reading list.

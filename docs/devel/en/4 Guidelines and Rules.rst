@@ -1,14 +1,12 @@
-4 Guidelines and Rules
-======================
+Guidelines and Rules
+====================
 
-* :doc:`1 UDIG Guidelines`
+.. toctree::
+   :maxdepth: 1
 
-* :doc:`2 Eclipse House Rules`
-
-* :doc:`3 User Interface Guidelines`
-
-* :doc:`4 Naming Conventions`
-
-* :doc:`5 Coding Conventions`
-
+   1 UDIG Guidelines
+   2 Eclipse House Rules
+   3 User Interface Guidelines
+   4 Naming Conventions
+   5 Coding Conventions
 

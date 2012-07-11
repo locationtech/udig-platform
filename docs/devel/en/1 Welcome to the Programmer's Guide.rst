@@ -1,5 +1,5 @@
-1 Welcome to the Programmer's Guide
-===================================
+Welcome to the Programmer's Guide
+=================================
 
 **Welcome to the uDig community!**
 

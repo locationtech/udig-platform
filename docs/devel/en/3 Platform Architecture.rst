@@ -1,5 +1,5 @@
-3 Platform Architecture
-=======================
+Platform Architecture
+=====================
 
 The UDIG GISPlatform is built around the concept of plug-ins to the base Eclipse Rich Client
 Platform. In addition uDig makes use of the several support libraries and a couple extensions to the
@@ -13,7 +13,7 @@ References:
    Library <http://docs.codehaus.org/display/GEOTDOC/02+Meet+the+GeoTools+Library>`_
 
 Overview
-========
+--------
 
 It is useful to consider the UDIG application as a series of Tiers each with different
 responsibilities and capabilities.

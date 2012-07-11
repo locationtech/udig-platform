@@ -1,4 +1,4 @@
-4 Naming Conventions
+Naming Conventions
 ====================
 
 Welcome to the next level, naming stuff. Naming is one of the hardest things to do when developing

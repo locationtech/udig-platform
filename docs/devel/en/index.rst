@@ -10,11 +10,11 @@ applications which combine existing and possibly new plug-ins.
 .. toctree::
    :maxdepth: 2
 
-   CustomApplication/CustomApplication 
-   SDKQuickstart/SDKQuickstart 
+   GettingStarted
+   ProgrammersGuide
 
-* Getting Started
-* Programmers Guide
+   CustomApplication/CustomApplication 
+
 * Working with Eclipse RCP
 * Catalog
 * Project

@@ -1,15 +1,8 @@
-5 Coding Conventions
+Coding Conventions
 ====================
 
 As a strict policy we do our best to **use the tools** to capture our coding conventions; as such we
 make use of FindBugz, Code Templates and Code Formatters for all the small stuff.
-
-This page covers what is left.
-
-* :doc:`Converting a URL to a File`
-
-* :doc:`Example Checklist for an Import Wizard`
-
 
 Converting a URL to a File
 --------------------------
@@ -22,16 +15,17 @@ that the file is located on. On Windows systems, this includes the drive or netw
 The rule is simple: If URL.getAuthority isn't null or empty, then the File should be constructed
 like so:
 
-::
+.. codeblock:: java
 
     URL url = ...
     File f = new File("//" + url.getAuthority() + url.getPath());
+
 
 It is very important that you always check the authority when converting to a File!
 
 There is a utility method in URLUtils that will do this for you:
 
-::
+.. codeblock:: java
 
     File f = URLUtils.urlToFile(url);
 

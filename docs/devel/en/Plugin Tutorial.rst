@@ -1,32 +1,26 @@
-2 Plugin Tutorial
-=================
+Plugin Tutorial
+===============
 
 This tutorial shows how to create a new plug-in that adds a distance tool to the uDig application.
 
-:doc:`|image0|`
-
+.. image:: images/2_plugin_tutorial/ToolPluginWorkbook.png
 
 Tool Plugin Tutorial
-====================
+--------------------
 
 This workbook is part of our public training materials:
 
-* :doc:`http://udig.refractions.net/files/tutorials/ToolPluginTutorial.pdf`
-
+* `<http://udig.refractions.net/files/tutorials/ToolPluginTutorial.pdf>`_
 
 Downloads:
 
-* :doc:`http://udig.refractions.net/tutorials/distance\_icons.zip`
-
+* :download:`distance_icons.zip`
 
 Source code:
 
--  Available in your uDig SDK (import the `source code <1%20Code%20Examples.html>`_ from the plugins
-   view)
--  plugin:
-   :doc:`net.refractions.udig.tutorials.distancetool`
+-  Available in your uDig SDK (import the :doc:`source code <1 Code Examples>` from the plugins view)
+-  plugin `net.refractions.udig.tutorials.distancetool (github) <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.distancetool>`_
 
-   (github)
 
 Introduction
 ------------
@@ -46,7 +40,7 @@ After completing this tutorial, you will have gained the skills to:
 We are going to create a tool that returns the distance between the point the mouse is clicked and
 the point the mouse is released.
 
-.. figure:: /images/2_plugin_tutorial/DistanceTool.jpg
+.. figure:: images/2_plugin_tutorial/DistanceTool.jpg
    :align: center
    :alt: 
 
@@ -65,7 +59,7 @@ Plugin consists of:
 The plugin you create is based on an **extension point** provided by the uDig project (the tools
 extension point).
 
-.. figure:: /images/2_plugin_tutorial/ToolExtensionPoint.jpg
+.. figure:: images/2_plugin_tutorial/ToolExtensionPoint.jpg
    :align: center
    :alt: 
 
@@ -90,7 +84,7 @@ The step by step workbook is only part of the store - here are some additional c
 try.
 
 Tool Categories
-~~~~~~~~~~~~~~~
+```````````````
 
 Tools are organized into "Categories" each with their own keyboard short-cut, the Distance Tool is
 in the category "Information".
@@ -98,7 +92,7 @@ in the category "Information".
 Create your own Category.
 
 Activator - Plugin Lifecycle Callback Object
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+````````````````````````````````````````````
 
 Plug-ins have a life cycle (controlled by the Platform class). You can register a callback object
 called an **Activator** to be advised when your plugin starts and stops.
@@ -109,14 +103,14 @@ like Icons).
 The ID for your Plugin is used so often that it is worth making a constant in your **Activator** for
 others to refer to.
 
-::
+.. code-block:: java
 
     public static final String PLUGIN_ID = "net.refractions.udig.tutorials.distancetool";
 
 This may already be done by the wizard.
 
 Eclipse RCP Logging with **.options** File
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``````````````````````````````````````````
 
 Your activator can also be used to send log messages; and check debug options (from the TRACING
 page)
@@ -132,7 +126,7 @@ To enable this, add a **.options** file to your plug-in next to plugin.xml. The 
 At runtime use your Activator to check if tracing is turned on, put the following in the start
 method:
 
-::
+.. code-block:: java
 
     if( isDebugging() &&
             "true".equalsIgnoreCase(Platform.getDebugOption(PLUGIN_ID + "/debug"))){
@@ -141,7 +135,7 @@ method:
     }
 
 Log Distance
-~~~~~~~~~~~~
+````````````
 
 With the above example of how to use **.option** file in mind, output your distance results to the
 console log.
@@ -149,9 +143,9 @@ console log.
 Hint: This information is currently being displayed in the status bar (eg. 3420 km)
 
 Tool Category Keyboard Shortcuts (Advanced)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```````````````````````````````````````````
 
-You can select the "Information" category by pressing "i"; if you continue to press "i" it will
+You can select the "Information" category by pressing :kbd:`i`; if you continue to press :kbd:`i` it will
 cycle through all available "Information" tools.
 
 Try hooking up your tool category to a keyboard binding.
@@ -159,24 +153,23 @@ Try hooking up your tool category to a keyboard binding.
 Hint: Study and existing example.
 
 Tips, Tricks and Suggestions
-============================
+----------------------------
 
 The following tips, tricks and suggestions have been collected from the udig-devel email list. If
 you have any questions please drop by and introduce yourself.
 
 Use the Source Luke!
-~~~~~~~~~~~~~~~~~~~~
+````````````````````
 
 One of the key advantages in open source development; is having access to existing working source
 code to use as a good example.
 
-This is especially helpful for the keyboard short cuts; you can study how the "i" key is assigned to
+This is especially helpful for the keyboard short cuts; you can study how the :kbd:`i` key is assigned to
 the information tool category; and reproduce those steps for your new category.
 
 Use the debugger
-~~~~~~~~~~~~~~~~
+````````````````
 
 Putting break points into a line of code you are interested in - is a great way to learn how it
 works.
 
-.. |image0| image:: /images/2_plugin_tutorial/ToolPluginWorkbook.png

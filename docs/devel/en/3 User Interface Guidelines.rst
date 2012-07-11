@@ -1,60 +1,18 @@
-3 User Interface Guidelines
-===========================
+User Interface Guidelines
+#########################
 
 The eclipse user interace guidelines include a
 `checklist <http://www.eclipse.org/articles/Article-UI-Guidelines/Contents.html#Checklist%20For%20Developers>`_,
 we have linked to some of this content and provided our own summary.
-
-:doc:`uDig User Interface Guidelines`
-
-
-* :doc:`Icons and Imagery`
-
-
-`Summary of Eclipse User Interface
-Guidelines <#3UserInterfaceGuidelines-SummaryofEclipseUserInterfaceGuidelines>`_
-
-* :doc:`General UI Guidelines`
-
-* :doc:`Visual Design Guidelines`
-
-* :doc:`Component Development`
-
-* :doc:`Commands Guidelines`
-
-* :doc:`Dialogs Guidelines`
-
-* :doc:`Wizards Guidelines`
-
-* :doc:`Editors Guidelines`
-
-* :doc:`Views Guidelines`
-
-* :doc:`Perspectives Guidelines`
-
-* :doc:`Windows Guidelines`
-
-* :doc:`Properties Guidelines`
-
-* :doc:`Widgets Guidelines`
-
-* :doc:`Standard Components Guidelines`
-
-* :doc:`Flat Look Design`
-
-* :doc:`Tao of Resource`
-
-* :doc:`Accessibility Guidelines`
-
 
 uDig User Interface Guidelines
 ==============================
 
 Real quick and easy - follow the eclipse user interface guidelines!
 
-* :doc:`http://wiki.eclipse.org/User\_Interface\_Guidelines`
+* `<http://wiki.eclipse.org/User\_Interface\_Guidelines>`_
 
-* :doc:`http://www.eclipse.org/articles/Article-UI-Guidelines/Index.html`
+* `<http://www.eclipse.org/articles/Article-UI-Guidelines/Index.html>`_
 
 
 Icons and Imagery
