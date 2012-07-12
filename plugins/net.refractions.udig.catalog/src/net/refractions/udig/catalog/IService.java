@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.internal.Messages;
 import net.refractions.udig.ui.ErrorManager;
 
@@ -219,7 +218,7 @@ public abstract class IService implements IResolve {
             throw new NullPointerException("No adaptor specified"); //$NON-NLS-1$
         }
         if (adaptee.isAssignableFrom(IServiceInfo.class)) {
-            return adaptee.cast(createInfo(monitor));
+            return adaptee.cast(getInfo(monitor));
         }
         if (adaptee.isAssignableFrom(IService.class)) {
             monitor.done();
