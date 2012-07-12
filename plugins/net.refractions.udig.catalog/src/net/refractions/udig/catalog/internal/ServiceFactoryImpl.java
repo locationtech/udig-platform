@@ -1,7 +1,7 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+ *    (C) 2004-2012, Refractions Research Inc.
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -22,19 +22,13 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceFactory;
 import net.refractions.udig.catalog.ServiceExtension;
 import net.refractions.udig.catalog.interceptor.ServiceInterceptor;
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
 
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -44,20 +38,18 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 /**
  * Default implementation of IServiceFactory used by the local catalog.
  * <p>
- * This is an internal class and defines no additional API of interest.
+ * This service factory is careful not to test the connections (ie resolve to IServiceInfo)
+ * during creation. It is making the assumption that the parameters were already checked
+ * (and are thus valid), the resulting IService handles are thus untested and not connected
+ * as behoves the application when quickly starting up.
  * 
  * @author David Zwiers, Refractions Research
  * @since 0.6
+ * @version 1.3
  */
 public class ServiceFactoryImpl extends IServiceFactory {
 
-    /** Lock used to protect map of available services; for the last call? */
-    private Lock lock = new ReentrantLock();
 
-    /**
-     * Map of ServiceExtension by "id", access control policed by above "lock".
-     */
-    Map<String, ServiceExtension> registered = null; // lazy creation
 
     /** @deprecated use createService */
     public List<IService> aquire( final URL id, final Map<String, Serializable> params ) {
@@ -91,11 +83,12 @@ public class ServiceFactoryImpl extends IServiceFactory {
      * <p>
      * An extension point flag should be used; for now we will just
      * check the identifier itself.
-     * @param serviceExtId
+     * @param serviceExtension
      * @return true if this service extension is generic
      */
-    private boolean isGeneric( String serviceExtId ){
-        return serviceExtId.toLowerCase().contains("geotools");
+    private boolean isGeneric( ServiceExtension serviceExtension ){
+        String name = serviceExtension.getClass().getName();
+        return name.toLowerCase().contains("geotools");
     }
     
     /*
@@ -114,39 +107,6 @@ public class ServiceFactoryImpl extends IServiceFactory {
     }
     */
     
-    Map<String, ServiceExtension> getRegisteredExtensions() {
-        try {
-            lock.lock();
-            if (registered == null) { // load available
-                // we are going to sort the map so that
-                // "generic" fallback datastores are selected last
-                //                
-                registered = new HashMap<String, ServiceExtension>();
-                ExtensionPointUtil
-                        .process(
-                                CatalogPlugin.getDefault(),
-                                "net.refractions.udig.catalog.ServiceExtension", new ExtensionPointProcessor(){ //$NON-NLS-1$
-                                    public void process( IExtension extension,
-                                            IConfigurationElement element ) throws Exception {
-                                        // extentionIdentifier used to report any problems;
-                                        // in the event of failure we want to be able to report
-                                        // who had the problem
-                                        //String extensionId = extension.getUniqueIdentifier();
-                                        String id = element.getAttribute("id");
-                                        ServiceExtension se = (ServiceExtension) element
-                                                .createExecutableExtension("class");
-                                        if( id == null || id.length()==0){
-                                            id = se.getClass().getSimpleName();
-                                        }
-                                        registered.put(id, se);
-                                    }
-                                });
-            }
-            return registered;
-        } finally {
-            lock.unlock();
-        }
-    }
 
     /**
      * List candidate IService handles generated by all ServiceExtentions that think they can handle
@@ -164,24 +124,24 @@ public class ServiceFactoryImpl extends IServiceFactory {
         final Map<String, Map<String, Serializable>> available = new HashMap<String, Map<String, Serializable>>();
         final Map<String, Map<String, Serializable>> generic = new HashMap<String, Map<String, Serializable>>();
         
-        for( Map.Entry<String, ServiceExtension> entry : getRegisteredExtensions().entrySet() ) {
-            if (entry == null)
-                continue;
-            String id = entry.getKey();
-            ServiceExtension serviceExtension = entry.getValue();
+        for( ServiceExtension serviceExtension : CatalogPlugin.getDefault().getServiceExtensions() ) {
+            String name = serviceExtension.getClass().getName();
+            if( isGeneric(serviceExtension)){
+                continue; // skip generic for this pass
+            }
             try {
                 Map<String, Serializable> defaultParams = serviceExtension.createParams(targetUrl);
                 if (defaultParams != null) {
-                    if( isGeneric(id)){
-                        generic.put(id, defaultParams);
+                    if( isGeneric(serviceExtension)){
+                        generic.put(name, defaultParams);
                     }
                     else {
-                        available.put(id, defaultParams);
+                        available.put(name, defaultParams);
                     }
                 }
             } catch (Throwable t) {
                 if (CatalogPlugin.getDefault().isDebugging()) {
-                    IStatus warning = new Status(IStatus.WARNING, CatalogPlugin.ID, id
+                    IStatus warning = new Status(IStatus.WARNING, CatalogPlugin.ID, name
                             + " could not create params " + targetUrl, t);
                     CatalogPlugin.getDefault().getLog().log(warning);
                 }
@@ -229,11 +189,11 @@ public class ServiceFactoryImpl extends IServiceFactory {
     public List<IService> createService( final Map<String, Serializable> connectionParameters ) {
         final List<IService> services = new LinkedList<IService>();
         
-        for( Map.Entry<String, ServiceExtension> entry : getRegisteredExtensions().entrySet() ) {
-            String id = entry.getKey();
-            if( isGeneric(id)) continue; // skip generic for this passs
-            
-            ServiceExtension serviceExtension = entry.getValue();
+        for( ServiceExtension serviceExtension : CatalogPlugin.getDefault().getServiceExtensions() ) {
+            String name = serviceExtension.getClass().getName();
+            if( isGeneric(serviceExtension)){
+                continue; // skip generic for this pass
+            }
             try {
                 // Attempt to construct a service, and add to the list if available.
                 
@@ -244,15 +204,15 @@ public class ServiceFactoryImpl extends IServiceFactory {
                     services.add(service);                    
                 }
             } catch (Throwable deadService) {
-                CatalogPlugin.log(id + " could not create service", deadService); //$NON-NLS-1$
+                CatalogPlugin.log(name + " could not create service", deadService); //$NON-NLS-1$
             }
         }
         if( services.isEmpty()){
-            for( Map.Entry<String, ServiceExtension> entry : getRegisteredExtensions().entrySet() ) {
-                String id = entry.getKey();
-                if( !isGeneric(id)) continue; // Do not use generic this pass
-                
-                ServiceExtension serviceExtension = entry.getValue();
+            for( ServiceExtension serviceExtension : CatalogPlugin.getDefault().getServiceExtensions() ) {
+                String name = serviceExtension.getClass().getName();
+                if( isGeneric(serviceExtension)){
+                    continue; // only generic for this pass
+                }
                 try {
                     // Attempt to construct a service, and add to the list if available.
                     IService service = serviceExtension.createService(null, connectionParameters);
@@ -262,40 +222,11 @@ public class ServiceFactoryImpl extends IServiceFactory {
                     }
                 } catch (Throwable deadService) {
                     deadService.printStackTrace();
-                    CatalogPlugin.trace(id + " could not create service", deadService); //$NON-NLS-1$
+                    CatalogPlugin.trace(name + " could not create service", deadService); //$NON-NLS-1$
                 }
             }    
         }
         return services;
-    }
-
-    /** Look up a specific implementation; used mostly for test cases */
-    public <E extends ServiceExtension> E serviceImplementation( Class<E> implementation ) {
-        for( Map.Entry<String, ServiceExtension> entry : getRegisteredExtensions().entrySet() ) {
-            String id = entry.getKey();
-            ServiceExtension serviceExtension = entry.getValue();
-
-            if (id == null || serviceExtension == null)
-                continue;
-            if (implementation.isInstance(serviceExtension)) {
-                return implementation.cast(serviceExtension);
-            }
-        }
-        return null;
-    }
-    /** Look up a specific implementation; used mostly for test cases */
-    public ServiceExtension serviceImplementation( String serviceExtensionId ) {
-        for( Map.Entry<String, ServiceExtension> entry : getRegisteredExtensions().entrySet() ) {
-            String id = entry.getKey();
-            ServiceExtension serviceExtension = entry.getValue();
-
-            if (id == null || serviceExtension == null)
-                continue;
-            if (serviceExtensionId.equalsIgnoreCase(id)) {
-                return serviceExtension;
-            }
-        }
-        return null;
     }
 
     public void dispose( List<IService> list, IProgressMonitor monitor ) {
