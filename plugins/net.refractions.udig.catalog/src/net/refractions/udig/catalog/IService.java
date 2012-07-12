@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * Represents a geo spatial service handle. Follows the same design as IResource.
@@ -339,6 +340,9 @@ public abstract class IService implements IResolve {
                 // support concurrent access
                 // however createInfo implementors should know about this
                 if (info == null) {
+                    if (Display.getCurrent() != null) {
+                        throw new IllegalStateException("Lookup of getInfo not available from the display thread"); //$NON-NLS-1$
+                    }
                     info = createInfo(monitor);
                     
                     if( info == null ){
