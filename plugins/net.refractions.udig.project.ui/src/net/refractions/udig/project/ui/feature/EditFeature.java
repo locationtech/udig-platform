@@ -49,7 +49,7 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class EditFeature extends DecoratingFeature implements IAdaptable, SimpleFeature {
     private IEditManager manager;
-    
+
     // not used yet; could be used to "batch up" changes to send in one command?
     private Set<String> dirty = new LinkedHashSet<String>(); // we no longer need this
 
@@ -61,21 +61,21 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
      * @param feature the wrapped feature
      * @param evaluationObject the layer that contains the feature.
      */
-    public EditFeature( IEditManager manager ) {
+    public EditFeature(IEditManager manager) {
         super(manager.getEditFeature());
         this.manager = manager;
     }
-    
-    public EditFeature( IEditManager manager, SimpleFeature feature ) {
-        super( feature );
+
+    public EditFeature(IEditManager manager, SimpleFeature feature) {
+        super(feature);
         this.manager = manager;
     }
-    
+
     /**
      * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
      */
     @SuppressWarnings("unchecked")
-    public Object getAdapter( Class adapter ) {
+    public Object getAdapter(Class adapter) {
         if (IEditManager.class.isAssignableFrom(adapter)) {
             if (manager != null) {
                 return manager;
@@ -90,16 +90,17 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
     }
 
     @Override
-    public boolean equals( Object obj ) {
+    public boolean equals(Object obj) {
         return delegate.equals(obj);
     }
+
     @Override
     public int hashCode() {
         return delegate.hashCode();
     }
 
     @Override
-    public void setAttribute( int index, Object value ) {
+    public void setAttribute(int index, Object value) {
         SimpleFeatureType schema = getFeatureType();
         AttributeDescriptor attribute = schema.getAttributeDescriptors().get(index);
         String name = attribute.getLocalName();
@@ -107,57 +108,63 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
         dirty.add(name);
         manager.getMap().sendCommandASync(sync);
     }
+
     @Override
-    public void setAttribute( Name name, Object value ) {
+    public void setAttribute(Name name, Object value) {
         SetAttributeCommand sync = new SetAttributeCommand(name.getLocalPart(), value);
         dirty.add(name.getLocalPart());
         manager.getMap().sendCommandASync(sync);
     }
+
     @Override
-    public void setAttribute( String path, Object value ) {
-        //System.out.println("made it to set attribute");
+    public void setAttribute(String path, Object value) {
+        // System.out.println("made it to set attribute");
         SetAttributeCommand sync = new SetAttributeCommand(path, value);
-        //System.out.println("made it to before dirty");
+        // System.out.println("made it to before dirty");
         dirty.add(path);
-        //System.out.println("made it to after dirty");
+        // System.out.println("made it to after dirty");
         manager.getMap().sendCommandASync(sync);
     }
+
     @Override
-    public void setAttributes( List<Object> values ) {
+    public void setAttributes(List<Object> values) {
         String[] xpath;
         Object[] value;
         ArrayList<String> xpathlist = new ArrayList<String>();
         SimpleFeatureType schema = getFeatureType();
-        for( PropertyDescriptor x : schema.getDescriptors() ) {
+        for (PropertyDescriptor x : schema.getDescriptors()) {
             xpathlist.add(x.getName().getLocalPart());
             dirty.add(x.getName().getLocalPart());
         }
         xpath = xpathlist.toArray(new String[xpathlist.size()]);
         value = values.toArray();
         SetAttributesCommand sync = new SetAttributesCommand(xpath, value);
-        manager.getMap().sendCommandASync(sync);       
+        manager.getMap().sendCommandASync(sync);
     }
+
     @Override
-    public void setAttributes( Object[] values ) {
+    public void setAttributes(Object[] values) {
         String[] xpath;
         ArrayList<String> xpathlist = new ArrayList<String>();
         SimpleFeatureType schema = getFeatureType();
-        for( PropertyDescriptor x : schema.getDescriptors() ) {
+        for (PropertyDescriptor x : schema.getDescriptors()) {
             xpathlist.add(x.getName().getLocalPart());
         }
         dirty.addAll(xpathlist);
-        xpath = xpathlist.toArray( new String[xpathlist.size()]);
+        xpath = xpathlist.toArray(new String[xpathlist.size()]);
         SetAttributesCommand sync = new SetAttributesCommand(xpath, values);
         manager.getMap().sendCommandASync(sync);
     }
+
     @Override
     // This is simply the same as in DecoratingFeature.class
-    public void setDefaultGeometry( Object geometry ) {
+    public void setDefaultGeometry(Object geometry) {
         GeometryDescriptor geometryDescriptor = getFeatureType().getGeometryDescriptor();
         setAttribute(geometryDescriptor.getName(), geometry);
     }
+
     @Override
-    public void setDefaultGeometryProperty( GeometryAttribute geometryAttribute ) {
+    public void setDefaultGeometryProperty(GeometryAttribute geometryAttribute) {
         if (geometryAttribute != null)
             setDefaultGeometry(geometryAttribute.getValue());
         else
@@ -165,22 +172,22 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
     }
 
     @Override
-    public void setValue( Collection<Property> values ) {
+    public void setValue(Collection<Property> values) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void setValue( Object value ) {
+    public void setValue(Object value) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void setDefaultGeometry( Geometry geometry ) throws IllegalAttributeException {
+    public void setDefaultGeometry(Geometry geometry) throws IllegalAttributeException {
         GeometryDescriptor geometryDescriptor = getFeatureType().getGeometryDescriptor();
         setAttribute(geometryDescriptor.getName(), geometry);
     }
 
-    public void setBatch( boolean batch ){
+    public void setBatch(boolean batch) {
         this.batch = batch;
     }
 }
