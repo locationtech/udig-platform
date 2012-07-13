@@ -1,9 +1,7 @@
 package net.refractions.udig.project.listener;
 
-import org.opengis.feature.Feature;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.Name;
 
 /**
  * A listener which is notified during {@link EditFeature} life cycle events.
@@ -118,8 +116,21 @@ public interface EditFeatureListener {
 
     /**
      * 
-     * Called before each attribute is desplayed, returning false will cause the value to not be
-     * desplayed.
+     * Called before the feature is displayed, returning false will cause the value for every
+     * attribute in this feature to return null.
+     * 
+     * <p>
+     * This is a great place change the value that will be depllayed in the UI.
+     * </p>
+     * 
+     * <pre>
+     * public Boolean beforeDesplay(SimpleFeature feature){
+     *     if (feature.getType()getTypeName() == "NoName") {
+     *         SimpleFeature.Attribute("name") = null;
+     *     }
+     *     return true;
+     * }
+     * </pre>
      * 
      * @param feature
      * @return
