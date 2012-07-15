@@ -5,10 +5,11 @@ The GIS Application is used for the core uDig ideas of map, layers and tools.
 
 The following tutorials are available:
 
-:doc:`map_decorator_tutorial`
-
- :doc:`feature_editor_tutorial`
-
+.. toctree::
+   :maxdepth: 1
+   
+   map_decorator_tutorial
+   feature_editor_tutorial
 
 Reference:
 

@@ -5,7 +5,9 @@ The following tutorials cover the integration of uDig with existing RCP applicat
 development teams already have a preexisting RCP application to which they would like to add uDig
 mapping.
 
-:doc:`preferred_zoom_level_application`
-
- :doc:`tool_view_application`
+.. toctree::
+   :maxdepth: 1
+   
+   preferred_zoom_level_application
+   tool_view_application
 

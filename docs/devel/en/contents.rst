@@ -31,8 +31,8 @@ Contents
 
       * :doc:`export_sld_plugin_tutorial`
 
-      -  `Extending an existing perspective
-         Example <Extending%20an%20existing%20perspective%20Example.html>`_
+      * :doc:`extending_an_existing_perspective_example`
+      
       * :doc:`keyboard_shortcut_example`
 
       * :doc:`training_materials`
@@ -154,9 +154,8 @@ Contents
 
 * :doc:`working_with_eclipse_rcp`
 
-
-   -  `Adding History to Dialogs and
-      Wizards <Adding%20History%20to%20Dialogs%20and%20Wizards.html>`_
+   * :doc:`adding_history_to_dialogs_and_wizards`
+   
    * :doc:`bundle_a_jar_up_as_a_plugin`
 
    * :doc:`common_plugin_files`
@@ -199,8 +198,8 @@ Contents
 
    * :doc:`plugin_internationalization`
 
-   -  `Plugin Internationalization with
-      ResourceBundles <Plugin%20Internationalization%20with%20ResourceBundles.html>`_
+   * :doc:`plugin_internationalization_with_resourcebundles`_
+   
    * :doc:`plugin_setup`
 
    * :doc:`plugin_structure`

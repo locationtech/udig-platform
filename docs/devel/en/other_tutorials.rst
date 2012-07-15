@@ -3,7 +3,9 @@ Other Tutorials
 
 The following tutorials explore other aspects of uDig development (advanced).
 
-:doc:`coverage_tool`
-
- :doc:`tracking_animation`
+.. toctree::
+   :maxdepth: 1
+   
+   coverage_tool
+   tracking_animation
 

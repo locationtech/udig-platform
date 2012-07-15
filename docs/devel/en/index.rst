@@ -9,31 +9,24 @@ customize and build on top of the uDig core. uDig can be extended by adding stan
 plug-ins which work against either Eclipse or uDig extension points. Developers define their own
 applications which combine existing and possibly new plug-ins.
 
-:doc:`getting_started`
+.. toctree::
+   :maxdepth: 1
 
- :doc:`programmer_guide`
+   getting_started
+   programmer_guide
+   working_with_eclipse_rcp
+   working_with_the_gis_platform
+   working_with_gis_application
+   faq
+   reference
 
- :doc:`working_with_eclipse_rcp`
-
- :doc:`working_with_the_gis_platform`
-
- :doc:`working_with_gis_application`
-
- :doc:`faq`
-
- :doc:`reference`
-
-
-.. figure:: http://udig.refractions.net/image/DEV/ngrelr.gif
-   :align: center
-   :alt: 
+*Reference*
 
 * `Programmer's Guide (Eclipse 4.2 Help) <http://help.eclipse.org/juno/nav/2>`_
 * `Programmer's Guide (Eclipse 3.7 Help) <http://help.eclipse.org/indigo/nav/2>`_
 * `http://wiki.eclipse.org/ <http://wiki.eclipse.org/>`_
--  `Rich Client Platform <http://wiki.eclipse.org/Rich_Client_Platform>`_ (wiki.eclipse.org)
-* `User Interface Guidelines <http://wiki.eclipse.org/User_Interface_Guidelines>`_
-   (wiki.eclipse.org)
+* `Rich Client Platform <http://wiki.eclipse.org/Rich_Client_Platform>`_ (wiki.eclipse.org)
+* `User Interface Guidelines <http://wiki.eclipse.org/User_Interface_Guidelines>`_ (wiki.eclipse.org)
 * `Eclipse Search <http://www.cypal.in/Eclipse_Search.html>`_
 
 If you are looking for help on eclipse concepts please do not start with google! You will have more

@@ -6,32 +6,31 @@ environment, the creation of a simple plugin, and packaging up your own GIS appl
 executable for others
 
 Tutorials:
- :doc:`sdk_quickstart`
 
- :doc:`tool_plugin_tutorial`
-
- :doc:`custom_application_tutorial`
-
- :doc:`workbench_selection_tutorial`
-
- :doc:`gis_platform_tutorials`
-
- :doc:`gis_application_tutorials`
-
- :doc:`disk_to_screen_tutorials`
-
- :doc:`other_tutorials`
-
- :doc:`rcp_tutorials`
-
+.. toctree::
+   :maxdepth: 1
+   
+   sdk_quickstart
+   tool_plugin_tutorial
+   custom_application_tutorial
+   workbench_selection_tutorial
+   
+.. toctree::
+   :maxdepth: 2
+   
+   gis_platform_tutorials
+   gis_application_tutorials
+   disk_to_screen_tutorials
+   other_tutorials
+   rcp_tutorials`
 
 Introduction:
- :doc:`examples`
 
- :doc:`featuresourceop_example`
-
- :doc:`welcome_new_eclipse_rcp_developers`
-
+.. toctree::
+   :maxdepth: 1
+   
+   examples
+   welcome_new_eclipse_rcp_developers
 
 Check the `reference section <Reference.html>`_ for help setting up on other platforms, additional
 `code examples <Examples.html>`_ are also available.

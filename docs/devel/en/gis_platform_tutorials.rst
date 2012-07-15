@@ -4,10 +4,12 @@ GIS Platform Tutorials
 The GIS platform is used for the catalog and data access.
 
 The following tutorials are available:
- :doc:`iadaptable_and_operations_tutorial`
 
- :doc:`shapefile_export_tutorial`
-
+.. toctree::
+   :maxdepth: 1
+   
+   iadaptable_and_operations_tutorial
+   shapefile_export_tutorial
 
 GIS Platform
 ~~~~~~~~~~~~
