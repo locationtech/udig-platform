@@ -138,8 +138,14 @@ public class BulkConvert {
                 bufferedStreamsCopy( htmlFile, tocFile );
                 continue; // just a straight copy
             }
-            String rstName = htmlName.substring(0, htmlName.lastIndexOf('.')) + ".rst";
-
+            String name = htmlName.substring(0, htmlName.lastIndexOf('.'));
+            name = fixPageReference(name);
+            
+            String rstName = name + ".rst";
+            if( htmlName.equals("Home.html") ){
+                rstName = "index.rst";
+            }
+            
             File rstFile = new File(rstDirectory, rstName);
             System.out.println(htmlFile + " to " + rstFile.getName());
             if (rstFile.exists()) {
@@ -175,7 +181,7 @@ public class BulkConvert {
             return name;
         }
         String page = name.substring(0, split);
-        page = page.replace(' ', '_');
+        page = fixPageReference(page);
         page = page.toLowerCase();
 
         return page;
@@ -188,10 +194,26 @@ public class BulkConvert {
             return name;
         }
         String page = name.substring(0, split);
-
-        return page;
+        
+        String title = toTitleCase( page.replace('_',' ') );
+        return title;
     }
 
+    String toTitleCase(String heading) {
+        StringBuilder title = new StringBuilder();
+        boolean next = true;
+
+        for (char c : heading.toCharArray()) {
+            if (Character.isSpaceChar(c)) {
+                next = true;
+            } else if (next) {
+                c = Character.toTitleCase(c);
+                next = false;
+            }
+            title.append(c);
+        }
+        return title.toString();
+    }
     /**
      * Process the generated rstFile and perform a few fixes.
      * 
@@ -232,6 +254,7 @@ public class BulkConvert {
 
         Pattern linkPattern = Pattern.compile("(\\s*)-\\s*`(.*) <(.*)>`_");
         String linkReplace = "$1* :doc:`$2`";
+        
         Pattern strightLinkPattern = Pattern.compile("(\\s*)`(.*) <(.*)>`_");
         String straightLinkReplace = "$1:doc:`$2`";
 
@@ -260,7 +283,7 @@ public class BulkConvert {
                     int level = LEVEL.indexOf(line.charAt(1));
                     if (pageLevel == -1) {
                         pageLevel = level; // you are the first heading
-                        if (previousLine.equals(title)) {
+                        if (previousLine.equalsIgnoreCase( title ) ) {
                             // title already emitted!
                             includesTitle = true;
                         }
@@ -286,8 +309,18 @@ public class BulkConvert {
                     String htmlRef = linkMatcher.group(3);
                     // BEFORE: - `some page <some%20page.html>`_
                     // AFTER: * :doc:`some page`
-                    line = linkMatcher.replaceAll(linkReplace);
-                    lineFeedNeeded = true;
+                    // "$1* :doc:`$2`"
+                    // line = linkMatcher.replaceAll(linkReplace);
+                    String fixed_page_ref = fixPageReference(pageRef);
+                    if( htmlRef.startsWith("http")){
+                        // external link `
+                        // $1* `$2 <$3>`_
+                        line = indent+"* `"+pageRef+" <"+htmlRef+">`_";
+                    }
+                    else {
+                        line = indent+"* :doc:`"+fixed_page_ref+"`";
+                        lineFeedNeeded = true;
+                    }
                 }
                 Matcher straightLinkMatcher = strightLinkPattern.matcher(line);
                 if (straightLinkMatcher.matches()) {
@@ -296,8 +329,18 @@ public class BulkConvert {
                     String htmlRef = straightLinkMatcher.group(3);
                     // BEFORE: `some page <some%20page.html>`_
                     // AFTER: :doc:`some page`
-                    line = straightLinkMatcher.replaceAll(straightLinkReplace);
-                    lineFeedNeeded = true;
+                    // line = straightLinkMatcher.replaceAll(straightLinkReplace);
+                    // lineFeedNeeded = true;
+                    String fixed_page_ref = fixPageReference(pageRef);
+                    if( htmlRef.startsWith("http")){
+                        // external link `
+                        // $1`$2 <$3>`_
+                        line = indent+"`"+pageRef+" <"+htmlRef+">`_";
+                    }
+                    else {
+                        line = indent+":doc:`"+fixed_page_ref+"`";
+                        lineFeedNeeded = true;
+                    }
                 }
                 // check for image references
                 //
@@ -379,6 +422,13 @@ public class BulkConvert {
             }
         }
         return true;
+    }
+    /** Frank has asked that pages be all lowercase and not contain any spaces */
+    private String fixPageReference(String pageRef) {
+        pageRef = pageRef.replace(' ','_');
+        pageRef = pageRef.toLowerCase();
+        
+        return pageRef;
     }
 
     private void duplicateImage(File attachementImage, File pageImage) {
