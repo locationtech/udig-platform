@@ -5,39 +5,6 @@ Cheat sheets is a emerging technology within Eclipse that is meant to guide a us
 of complex tasks to achieve some overall goal. Some tasks can be performed automatically, such as
 launching the required tools for the user. Other tasks need to be completed manually by the user.
 
-:doc:`add_a_cheat_sheet`
-
-
-:doc:`contributing_a_cheat_sheet`
-
-
-* :doc:`add_action_to_an_item`
-
-* :doc:`add_a_command_to_an_item`
-
-
-:doc:`contributing_a_category`
-
-
-:doc:`authoring_guidelines`
-
-
-* :doc:`when_to_create_cheat_sheets`
-
--  `When to create composite cheat
-   sheets <#WorkingwithCheatSheets-Whentocreatecompositecheatsheets>`_
-* :doc:`when_not_to_use_cheat_sheets`
-
-* :doc:`when_to_create_a_new_category`
-
-
-:doc:`cheatsheets_in_udig`
-
-
-Reference:
-
-* `http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.platform.doc.isv/guide/ua\_cheatsheet\_guidelines.htm <http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.platform.doc.isv/guide/ua_cheatsheet_guidelines.htm>`_
-
 Add a Cheat Sheet
 =================
 
@@ -216,4 +183,8 @@ The usual guidelines for handling of resources apply with respect to Internation
 
 -  net.refractions.udig.project.ui.editor/nl/en/style\_cheatsheet.xml
 -  net.refractions.udig.project.ui.editor/nl/de/style\_cheatsheet.xml (translation to German)
+
+Reference:
+
+* `<http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.platform.doc.isv/guide/ua_cheatsheet_guidelines.htm>`_
 
