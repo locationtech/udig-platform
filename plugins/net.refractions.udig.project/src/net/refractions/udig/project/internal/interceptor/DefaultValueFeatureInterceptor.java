@@ -18,7 +18,7 @@ import org.opengis.feature.type.PropertyDescriptor;
  */
 public class DefaultValueFeatureInterceptor implements FeatureInterceptor {
 
-    public void run( Feature feature ) {
+    public Boolean run( Feature feature ) {
         if( feature instanceof SimpleFeature ){
             SimpleFeatureType type = (SimpleFeatureType) feature.getType();
             SimpleFeature simpleFeature = (SimpleFeature) feature;
@@ -35,6 +35,7 @@ public class DefaultValueFeatureInterceptor implements FeatureInterceptor {
                 property.setValue( defaultValue );
             }
         }
+        return true;
     }
     /**
      * Retrieves a default value for the provided descriptor.
