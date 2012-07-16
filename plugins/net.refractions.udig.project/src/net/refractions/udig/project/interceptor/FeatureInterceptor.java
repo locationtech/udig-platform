@@ -3,16 +3,22 @@ package net.refractions.udig.project.interceptor;
 import org.opengis.feature.Feature;
 
 /**
- * Used to process a feature.
+ * Used to intercept and interrupt events during the feature lifecycle.
  * 
  * @author Jody
+ * @author Levi Putna
  * @since 1.2.0
  */
 public interface FeatureInterceptor {
     /**
      * Extension Point ID of feature interceptors
      */
-    String EXTENSION_ID = "net.refractions.udig.project.featureInterceptor"; //$NON-NLS-1$
+    final String EXTENSION_ID = "net.refractions.udig.project.featureInterceptor"; //$NON-NLS-1$
+    
+    /**
+     * the xml tag that will hold the configuration of this extension point.
+     */
+    final String XML_TAG = "featureCreated";
 
     public enum Lifecycle {
         /**
@@ -24,7 +30,7 @@ public interface FeatureInterceptor {
          * <p>
          * Example:
          * 
-         * Lifecycle CREATED_ID = Lifecycle.CREATE;
+         * Lifecycle LIFECYCLE_ID = Lifecycle.CREATE;
          * 
          * <pre>
          * public Boolean run(SimpleFeature feature) {
@@ -48,7 +54,7 @@ public interface FeatureInterceptor {
          * <p>
          * Example:
          * 
-         * Lifecycle CREATED_ID = Lifecycle.DELETE;
+         * Lifecycle LIFECYCLE_ID = Lifecycle.DELETE;
          * 
          * <pre>
          * public Boolean run(SimpleFeature feature) {
@@ -97,7 +103,7 @@ public interface FeatureInterceptor {
      * Action that this intercepter will be intercepting, if not specified defaults to
      * {@link Lifecycle#CREATE}
      */
-    Lifecycle CREATED_ID = Lifecycle.CREATE; //$NON-NLS-1$
+    Lifecycle LIFECYCLE_ID = Lifecycle.CREATE; //$NON-NLS-1$
 
     /**
      * Performs an action on a feature.
