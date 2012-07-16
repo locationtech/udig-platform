@@ -62,7 +62,7 @@ public interface EditFeatureListener {
      * <pre>
      * public Boolean beforeCreate(SimpleFeature feature) {
      * 
-     *     if (feature.getType()getTypeName() == "Samle" && (feature.getAttribute(&quot;name&quot;).length() &lt; 5 || feature.getAttribute(&quot;name&quot;).length() &gt; 20)) {
+     *     if (feature.getType()getTypeName() == "Sample" && (feature.getAttribute(&quot;name&quot;).length() &lt; 5 || feature.getAttribute(&quot;name&quot;).length() &gt; 20)) {
      *         editManager
      *                 .setErrorMessage(&quot;Attribute 'name' must be greater than 5 characters and less than 20 characters in length.&quot;);
      *         return false;
@@ -120,7 +120,7 @@ public interface EditFeatureListener {
      * attribute in this feature to return null.
      * 
      * <p>
-     * This is a great place change the value that will be depllayed in the UI.
+     * This is a great place change the value that will be displayed in the UI.
      * </p>
      * 
      * <pre>
@@ -128,7 +128,7 @@ public interface EditFeatureListener {
      *     if (feature.getType()getTypeName() == "NoName") {
      *         SimpleFeature.Attribute("name") = null;
      *     }
-     *     return true;
+     *     return true; 
      * }
      * </pre>
      * 

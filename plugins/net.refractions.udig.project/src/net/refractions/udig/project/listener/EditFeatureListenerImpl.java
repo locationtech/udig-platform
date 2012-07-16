@@ -8,12 +8,6 @@
  */
 package net.refractions.udig.project.listener;
 
-import java.util.Iterator;
-import java.util.List;
-
-import net.refractions.udig.project.interceptor.FeatureInterceptor;
-
-import org.opengis.feature.Feature;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.type.AttributeDescriptor;
 

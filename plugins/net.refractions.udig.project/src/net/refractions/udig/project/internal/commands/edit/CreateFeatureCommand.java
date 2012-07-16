@@ -223,6 +223,7 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
         editLayer.getResource(FeatureStore.class, null).removeFeatures(
                 filterFactory.id(FeatureUtils.stringToId(filterFactory, fid)));
     }
+    
     public static void runFeatureCreationInterceptors( Feature feature ) {
         List<IConfigurationElement> interceptors = ExtensionPointList
                 .getExtensionPointList(FeatureInterceptor.EXTENSION_ID);
