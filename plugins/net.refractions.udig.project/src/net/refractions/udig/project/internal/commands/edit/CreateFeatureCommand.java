@@ -229,7 +229,7 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
                 .getExtensionPointList(FeatureInterceptor.EXTENSION_ID);
         for( IConfigurationElement element : interceptors ) {
             String id = element.getAttribute("id");
-            if (FeatureInterceptor.CREATED_ID.equals(element.getName())) {
+            if (FeatureInterceptor.LIFECYCLE_ID.equals(element.getName())) {
                 try {
                     FeatureInterceptor interceptor = (FeatureInterceptor) element
                             .createExecutableExtension("class");
