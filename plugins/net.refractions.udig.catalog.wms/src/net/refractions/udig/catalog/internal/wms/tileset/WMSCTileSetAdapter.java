@@ -76,16 +76,12 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
         if (resolve.canResolve(WebMapServer.class)) {
             server = resolve.resolve(WebMapServer.class, monitor);
         }
-        if (resolve.canResolve(TiledWebMapServer.class)) {
+        else if (resolve.canResolve(TiledWebMapServer.class)) {
             server = resolve.resolve(TiledWebMapServer.class, monitor);
         }
-
-        /*
-         * if there is no server for the tiles to come from, we can't/wont continue
-         */
-        if (server == null) {
-            WmsPlugin
-                    .log("Tileset must have a service defined, serive is null", new ServiceNotFoundException()); //$NON-NLS-1$
+        else {
+            // if there is no server for the tiles to come from, we can't/wont continue
+            WmsPlugin.trace("WMS or WMST required", new ServiceNotFoundException()); //$NON-NLS-1$
             return null;
         }
 

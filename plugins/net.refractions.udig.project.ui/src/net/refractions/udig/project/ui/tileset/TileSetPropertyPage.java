@@ -19,6 +19,7 @@ import java.io.IOException;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.project.internal.Layer;
+import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import net.refractions.udig.project.ui.preferences.PreferenceConstants;
 
 import org.eclipse.swt.widgets.Composite;
@@ -44,8 +45,7 @@ public class TileSetPropertyPage extends PropertyPage implements IWorkbenchPrope
         try {
             info = resource.getInfo(null);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            ProjectUIPlugin.trace( TileSetPropertyPage.class, "Unable to obtain info:"+e, e );
         }
         if (info != null) {
             this.tileControlPage = new TileSetControl(resource);
