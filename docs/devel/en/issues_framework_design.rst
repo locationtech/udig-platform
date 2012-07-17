@@ -29,7 +29,7 @@ Existing implementations
 ========================
 
 IIssues implementations:
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 -  FeatureIssue - An issue that indicates that a feature needs to be inspected. Description should
    provide more details as to what the issue is with the feature. The fix method opens the map and
@@ -38,7 +38,7 @@ IIssues implementations:
    determine how to fix the issue. An accompanying IFixer
 
 IIssuesList implementations:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 -  IssuesList - An in-memory implementation of the IIssuesList interface.
 -  PostGISIssuesList - An IRemoteIssuesList that stores its issues as features in a PostGIS
@@ -52,69 +52,49 @@ IIssuesList implementations:
 -  at least 2 of the text columns should have an unlimited length
     Ideally the table should have the following columns (case is unimportant):
 
-   Column
+.. list-table::
+   :widths: 30 20 50
+   :header-rows: 1
 
-   Type
+   * - Column
+     - Type
+     - Comments
+   * - ID
+     - text
+     - should be able to contain at least 20 characters
+   * - resolution
+     - text
+     - can be limited to 8 characters
+   * - priority
+     - text
+     - can be limited to 8 characters
+   * - description
+     - text
+     - should be able to contain at least 100 characters
+   * - groupID
+     - text
+     - should be able to contain at least 20 characters
+   * - memento
+     - text
+     - should be unlimited or very large
+   * - viewmemento
+     - text
+     - should be unlimited or very large
+   * - extensionid
+     - text
+     - should be able to contain at least 20 characters
+   * - bounds
+     - polygon
+     - 
 
-   Comments
+.. note::
+   The PostgisDatastoreStrategy is a strategy for the StrategizedIssuesList so more implementations 
+   will be forthcoming in the future. If you desire an implementation that backs onto another datastore 
+   look at the classes: 
+   * net.refractions.udig.issues.StrategizedIssuesList
+   * net.refractions.udig.issues.internal.datastore.PostgisDatastoreStrategy
+   * net.refractions.udig.issues.internal.datastore.AbstractDatastoreStrategy
 
-   ID
-
-   text
-
-   should be able to contain at least 20 characters
-
-   resolution
-
-   text
-
-   can be limited to 8 characters
-
-   priority
-
-   text
-
-   can be limited to 8 characters
-
-   description
-
-   text
-
-   should be able to contain at least 100 characters
-
-   groupID
-
-   text
-
-   should be able to contain at least 20 characters
-
-   memento
-
-   text
-
-   should be unlimited or very large
-
-   viewmemento
-
-   text
-
-   should be unlimited or very large
-
-   extensionid
-
-   text
-
-   should be able to contain at least 20 characters
-
-   bounds
-
-   polygon
-
-   Note: The PostgisDatastoreStrategy is a strategy for the StrategizedIssuesList so more
-   implementations will be forthcoming in the future. If you desire an implementation that backs
-   onto another datastore look at the classes: net.refractions.udig.issues.StrategizedIssuesList
-    net.refractions.udig.issues.internal.datastore.PostgisDatastoreStrategy
-    net.refractions.udig.issues.internal.datastore.AbstractDatastoreStrategy
 
 Extension points
 ================
@@ -122,27 +102,24 @@ Extension points
 For developers who want to create custom issues or issue lists the following extension points will
 be of interest to you:
 
-Extension point ID
+.. list-table::
+   :widths: 40 60
+   :header-rows: 1
 
-Description
-
-net.refractions.udig.issues.issue
-
-Allows new issue types to be declared. The getExtensionID should return the id of your extension
-
-net.refractions.udig.issues.issuesList
-
-Declares a new issues list implementation
-
-net.refractions.udig.issues.issueFixer
-
-Declares a fixer for subclasses of AbstractFixableIssue
+   * - Extension point ID
+     - Description
+   * - net.refractions.udig.issues.issue
+     - Allows new issue types to be declared. The getExtensionID should return the id of your extension
+   * - net.refractions.udig.issues.issuesList
+     - Declares a new issues list implementation
+   * - net.refractions.udig.issues.issueFixer
+     - Declares a fixer for subclasses of AbstractFixableIssue
 
 Support Classes
 ===============
 
 StrategizedIssuesList
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 The StrategizedIssuesList is an implementation of the IRemoteIssuesList interface that delegates the
 reading and writing of features to an IListStrategy object. The StrategizedIssuesList handles all of
@@ -150,14 +127,14 @@ the "tricky" logic for caching of features organizing them into groups, etc... T
 a very simple interface designed to reduce the overhead of implementing IRemoteIssuesLists.
 
 AbstractDatastoreStrategy
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 The AbstractDatastoreStrategy is an implementation of the IListStrategy interface converts features
 from a FeatureStore (the instance is determined by the implementation of the abstract
 getFeatureStore() method) into issues for use by the StrategizedIssuesList
 
 IssueFixer
-~~~~~~~~~~
+----------
 
 IssuesFixer is a framework described below that is used by the FixableIssue class to allow the
 workflow or method of fixing an issue to be declared as extension of the
@@ -178,9 +155,10 @@ extension attributes
 -  **requiredKey**: (multiple instances) requires that the saveMemento contain this attribute for
    fixer to be a potential candidate.
 
-note: the use of targetClass and requiredKey is recommended but not required; using them reduces the
-number of fixer classes which need to be instantiated (in order for the IFixer.canFix method to be
-called) each time an issue is "fixed", resulting in lower overhead.
+.. note::
+   The use of targetClass and requiredKey is recommended but not required; using them reduces the
+   number of fixer classes which need to be instantiated (in order for the IFixer.canFix method to be
+   called) each time an issue is "fixed", resulting in lower overhead.
 
 Methods
 -------
@@ -217,3 +195,4 @@ FixableIssue vs AbstractFixableIssue
 FixableIssue is a simple implementation of AbstractFixableIssue which serves as a good example of
 how to override the init and save methods. It may be overridden, and subclasses should take care to
 override the getExtensionID method and return their own defining extension's ID.
+

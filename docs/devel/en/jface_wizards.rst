@@ -1,12 +1,12 @@
 JFace Wizards
-~~~~~~~~~~~~~
+=============
 
 Contributing to the ImportWizard
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------
 
 Add a ImportWizard extension in the plugin.xml of your plugin.
 
-::
+.. code-block:: xml
 
     <extension
              point="org.eclipse.ui.importWizards">
@@ -20,11 +20,11 @@ Add a ImportWizard extension in the plugin.xml of your plugin.
        </extension>
 
 Contributing to the dataWizard
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------
 
 Add a dataWizard extension in the plugin.xml of your plugin.
 
-::
+.. code-block:: xml
 
     <extension
            point="net.refractions.udig.catalog.ui.dataWizards">
@@ -38,16 +38,11 @@ Add a dataWizard extension in the plugin.xml of your plugin.
         </wizard>
      </extension>
 
-.. figure:: http://udig.refractions.net/image/DEV/ngrelr.gif
-   :align: center
-   :alt: 
+Related reference
+-----------------
 
--  `Creating JFace
-   Wizards <http://www.eclipse.org/articles/Article-JFace%20Wizards/wizardArticle.html>`_
--  `Eclipse Platform Plug-in Developer Guide: Standard Widget Toolkit
-   (SWT) <http://dev.eclipse.org/help20/content/help:/org.eclipse.platform.doc.isv/guide/swt.htm>`_
--  `Eclipse Platform Plug-in Developer Guide: JFace UI
-   Framework <http://dev.eclipse.org/help20/content/help:/org.eclipse.platform.doc.isv/guide/jface.htm>`_
--  `Article: Understanding Layouts in SWT (Revised for
-   2.0) <http://www.eclipse.org/articles/Understanding%20Layouts/Understanding%20Layouts.htm>`_
+*  `Creating JFace Wizards <http://www.eclipse.org/articles/Article-JFace%20Wizards/wizardArticle.html>`_
+*  `Eclipse Platform Plug-in Developer Guide: Standard Widget Toolkit (SWT) <http://dev.eclipse.org/help20/content/help:/org.eclipse.platform.doc.isv/guide/swt.htm>`_
+*  `Eclipse Platform Plug-in Developer Guide: JFace UI Framework <http://dev.eclipse.org/help20/content/help:/org.eclipse.platform.doc.isv/guide/jface.htm>`_
+*  `Article: Understanding Layouts in SWT (Revised for 2.0) <http://www.eclipse.org/articles/Understanding%20Layouts/Understanding%20Layouts.htm>`_
 
