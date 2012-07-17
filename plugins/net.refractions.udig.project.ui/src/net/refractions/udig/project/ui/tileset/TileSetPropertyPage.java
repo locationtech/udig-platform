@@ -28,10 +28,13 @@ import org.eclipse.ui.IWorkbenchPropertyPage;
 import org.eclipse.ui.dialogs.PropertyPage;
 
 /**
- * A property page for the TileSet definition list
+ * A property page for TileSet definition.
+ * <p>
+ * This page makes use of {@link PreferenceConstants#P_TILESET_ON_OFF} to enable
+ * the generation (or overide) of a TileSet for use with a tiled map renderer.
  * 
  * @author jhudson
- * @since 1.2.0
+ * @since 1.3.0
  */
 public class TileSetPropertyPage extends PropertyPage implements IWorkbenchPropertyPage {
 
