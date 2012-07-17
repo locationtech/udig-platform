@@ -14,7 +14,7 @@ This class is to be used as part of a product definition:
 
 Links to Related Content:
 
--  For the latest instructions please see the `Getting Started <Getting%20Started.html>`_ tutorial
+-  For the latest instructions please see the :doc:`Getting Started <getting_started>` tutorial
 
 As a Showcase
 ^^^^^^^^^^^^^

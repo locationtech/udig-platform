@@ -45,7 +45,7 @@ The Developers Guide is structured in the same manner as the Eclipse Documentati
 
    * :doc:`udig_guidelines`
 
-   -  `Eclipse House Rules <Eclipse%20House%20Rules.html>`_ (from Contributing to Eclipse
+   * :doc:`eclipse_house_rules` (from Contributing to Eclipse
       Principles, Patterns and Plug-ins)
    * :doc:`user_interface_guidelines`
 
@@ -106,7 +106,7 @@ Books:
 -  Contributing to Eclipse Principles, Patterns and Plug-ins
 -  Building Commercial Quaility Plug-ins
 
-For more information about these books please check out the `Reading List <Reading%20List.html>`_
+For more information about these books please check out the :doc:`Reading List <reading_list>`
 from the developers guide.
 
 How it fits together

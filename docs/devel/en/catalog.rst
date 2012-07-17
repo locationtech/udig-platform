@@ -585,7 +585,7 @@ Common mistakes:
 
 -  If you are used to making your own Eclipse plugins you may accidently depend on IResource, it
    will not be available at runtime since it is part of the Eclipse IDE.
--  `Eclipse House Rules <Eclipse%20House%20Rules.html>`_: You may only depend on public API packages
+-  :doc:`Eclipse House Rules <eclipse_house_rules>`: You may only depend on public API packages
    (example net.refractions.udig.catalog). This is less of a problem since we are able to properly
    restrict packages in Eclipse 3.3.
 

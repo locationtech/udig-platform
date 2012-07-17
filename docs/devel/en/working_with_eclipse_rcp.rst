@@ -17,8 +17,8 @@ Tips, tricks and utility classes for working with the Eclipse RCP platform.
 
  :doc:`plugin_activator`
 
- `Plugin Internationalization with
-ResourceBundles <Plugin%20Internationalization%20with%20ResourceBundles.html>`_
+ :doc:`plugin_internationalization_with_resourcebundles`
+
  :doc:`imageregistry_and_images`
 
  :doc:`plugin_help`

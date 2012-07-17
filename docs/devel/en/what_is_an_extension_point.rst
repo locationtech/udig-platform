@@ -17,10 +17,9 @@ However, it is important to remember this is not straight-up object oriented pro
 that chunk of XML (the extension) also needs to correspond to a respective interface. In XML-speak,
 this is what is known as an XML Schema.
 
-Here is a link to the extension points used by uDig right now: `uDig extension
-points <uDig%20extension%20points%20list.html>`_. In addition to these extension points, you can use
-any of the extension points defined by the Eclipse RCP application (allowing you to do everything
-from additional views... to online help).
+Here is a link to the extension points used by uDig right now: :doc:`udig_extension_points_list`. 
+In addition to these extension points, you can use any of the extension points defined by the Eclipse 
+RCP application (allowing you to do everything from additional views... to online help).
 
 --------------
 
