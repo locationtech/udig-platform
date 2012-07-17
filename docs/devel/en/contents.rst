@@ -74,7 +74,9 @@ Contents
       * :doc:`tool_view_application`
 
 
-   * :doc:`sdk_quickstart`
+   * :doc:`SDKQuickstart/SDKQuickstart`
+
+   * :doc:`CustomApplication/CustomApplication`
 
    * :doc:`tool_plugin_tutorial`
 
@@ -198,7 +200,7 @@ Contents
 
    * :doc:`plugin_internationalization`
 
-   * :doc:`plugin_internationalization_with_resourcebundles`_
+   * :doc:`plugin_internationalization_with_resourcebundles`
    
    * :doc:`plugin_setup`
 

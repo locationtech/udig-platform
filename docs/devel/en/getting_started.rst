@@ -10,7 +10,8 @@ Tutorials:
 .. toctree::
    :maxdepth: 1
    
-   sdk_quickstart
+   SDKQuickstart/SDKQuickstart
+   CustomApplication/CustomApplication
    tool_plugin_tutorial
    custom_application_tutorial
    workbench_selection_tutorial

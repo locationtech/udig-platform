@@ -1,5 +1,5 @@
 Catalog
-~~~~~~~
+=======
 
 The uDIg Catalog is used to mange and interact with spatial services and resources.
 
@@ -16,7 +16,7 @@ very important to us that you know when you are making use of spatial data that 
 to process, or has the possibility of an I/O error.
 
 CatalogPlugin
-^^^^^^^^^^^^^
+-------------
 
 The CatalogPlugin provides the following services:
 
@@ -33,37 +33,38 @@ content.
 
 You can retrieve the single instance of CatalogPlugin using getDefault():
 
-::
+.. code-block:: java
 
     CatalogPlugin activator = CatalogPlugin.getDefault();
 
+
 You can add a listener to watch for catalog events:
 
-::
+.. code-block:: java
 
     CatalogPlugin.getDefault().addListener( listener );
     CatalogPlugin.getDefault().removeListener( listener );
 
-For more information please check out the next section on `Catalog
-Notifications <Catalog%20Notifications.html>`_.
+
+For more information please check out the next section on :doc:`Catalog Notifications <catalog_notifications>`.
 
 The CatalogPlugin keeps a list of known catalogs, including the local catalog and remote web
 catalogs.
 
-::
+.. code-block:: java
 
     CatalogPlugin.getDefault().getCatalogs();
 
 Most of the time you will spend interacting with the LocalCatalog manage live connections to
 services:
 
-::
+.. code-block:: java
 
     IRepository local = CatalogPlugin.getDefault().getLocal();
 
 There is also a service factory used to create services to add to the local catalog:
 
-::
+.. code-block:: java
 
     IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
     List<IService> created = serviceFactory.createService( file.toURL() );
@@ -80,13 +81,13 @@ such it extends AbstractUIPlugin for the following.
 By convention all Plugins contain a static ID field used to identify the plug-in OSGi bundle, or
 Platform methods.
 
-::
+.. code-block:: java
 
     Bundle bundle = Platform.getBundle( CatalogPlugin.ID );
 
 The ID is also useful when reporting problems:
 
-::
+.. code-block:: java
 
     IStatus status = new Status(IStatus.ERROR, CatalogPlugin.ID, "error message");
     CatalogPlugin.getDefault().getLog().log( status );
@@ -113,7 +114,7 @@ world where external servers are sometimes down for maintenance.
 The CatalogPlugin keeps track of all the catalogs (local and remote) that can be used to find
 spatial content.
 
-::
+.. code-block:: java
 
     List<IResolve> found = new ArrayList<IResolve>();
     for( ISearch search : CatalogPlugin.getDefault().getCatalogs() ){
@@ -181,14 +182,14 @@ catalog as you start to use it.
 
 To find an existing service in the catalog:
 
-::
+.. code-block:: java
 
     IRepository local = CatalogPlugin.getDefault().getLocalCatalog();
     IService shapefile = local.getById( IService.class, url, progressmonitor );
 
 To find an existing georesource in the catalog:
 
-::
+.. code-block:: java
 
     ICatalog local = CatalogPlugin.getDefault().getLocalCatalog();
     IGeoResource shapefile = local.getById( IGeoResource.class, url, progressmonitor );
@@ -198,7 +199,7 @@ ICatalog.add( service ) to place each service into the catalog.
 
 To use ServiceFactory to connect to a service based on a simple URL.
 
-::
+.. code-block:: java
 
     File file = new File( "C:\data\cities.shp" );
     URL url = file.toURL();
@@ -219,7 +220,7 @@ To use ServiceFactory to connect to a service based on a simple URL.
 You can be a little more efficient using the **acquire** method (the acquire method checks using
 getById and only creates the service if needed):
 
-::
+.. code-block:: java
 
     File file = new File( "C:\data\cities.shp" );
     URL url = file.toURL();
@@ -229,7 +230,7 @@ getById and only creates the service if needed):
 
 You can also use connection parameters to be a bit more specific about servic:
 
-::
+.. code-block:: java
 
     Map<String,Serializable> params = new HashMap<String,Serializable>();
     params.put("ur", url );
@@ -247,7 +248,7 @@ You can also use connection parameters to be a bit more specific about servic:
 
 To to connect to a more interesting service such as PostGIS.
 
-::
+.. code-block:: java
 
     Map<String,Serializable> params = new HashMap<String,Serializable>();
     params.put("dbtype", "postgis");           // must be "postgis"
@@ -262,7 +263,7 @@ To to connect to a more interesting service such as PostGIS.
 
 Or a Web Feature Server:
 
-::
+.. code-block:: java
 
     URL url = new URL("http://www2.dmsolutions.ca/cgi-bin/mswfs_gmap?Version=1.0.0&Request=GetCapabilities&Service=wfs");
 
@@ -273,6 +274,9 @@ Or a Web Feature Server:
 
     IRepository local = CatalogPlugin.getDefault().getLocal();
     IService service = local.acquire( params, new NullProgressMonitor() );
+
+.. todo:: 
+   change to docs.geotools.org
 
 To determine the connection parameters for many common servers review the `GeoTools User
 Guide <http://docs.codehaus.org/display/GEOTDOC/Home>`_.
@@ -297,7 +301,7 @@ Here are some examples to get us started:
 
 The identifier of a service is available - so you can find the service again at another time.
 
-::
+.. code-block:: java
 
     // recommended!
     ID id = service.getID();
@@ -309,7 +313,7 @@ The id is like a quick version of URL (not subject to the usual delays during ha
 
 You can grab a copy of the service title:
 
-::
+.. code-block:: java
 
     String title = service.getTitle()
 
@@ -320,7 +324,7 @@ the
 The connection parameters are available; you can store these parameters if you would like to connect
 to the service again at a later time.
 
-::
+.. code-block:: java
 
     Map<String,Serializable> params = service.getConnectionParams()
 
@@ -330,7 +334,7 @@ between runs so it can connect to the service again.
 
 You can figure out which catalog the service belongs to:
 
-::
+.. code-block:: java
 
     ICatalog catalog = service.parent( new NullProgressMonitor() );
 
@@ -340,7 +344,7 @@ to cancel).
 To retrieve information about a service including its title, description and icon you can ask for
 the ServiceInfo object:
 
-::
+.. code-block:: java
 
     IServiceInfo info = service.getInfo( new NullProgressMonitor());
 
@@ -349,20 +353,19 @@ the ServiceInfo object:
     double metric = info.getMetric();
 
 Grabbing a IServiceInfo is the best way to check if you can connect to a service. You will find that
-the
- IService.getMetric() provides a good measurement of how well the service will work. It is used to
- indicate if the service has all the information it needs to function smoothly. If some information
+the **IService.getMetric()** provides a good measurement of how well the service will work. It is used to
+indicate if the service has all the information it needs to function smoothly. If some information
 is missing, such as a coordinate reference system or index, some prep may be required.
 
 You can check if a service is connected:
 
-::
+.. code-block:: java
 
     Status status = service.getStatus();
 
 A service contains children.
 
-::
+.. code-block:: java
 
     for( IResolve child : service.members(new NullProgressMonitor())){
         //work with child
@@ -374,7 +377,7 @@ processes depending on the service.
 If you are only interested in spatial data there is a specific method that will list only the
 GeoResources with useful data.
 
-::
+.. code-block:: java
 
     for( IGeoResource georesource : service.resources(new NullProgressMonitor()) ){
         // work with resource
@@ -385,7 +388,7 @@ Service Specific Examples
 
 To access a shapefile:
 
-::
+.. code-block:: java
 
     if( service.canResolve( ShapefileDataStore.class )){
          ShapefileDataStore shapefile = service.resolve( ShapefileDataStore.class, new NullProgressMonitor() );
@@ -393,7 +396,7 @@ To access a shapefile:
 
 To access a WebMapServer:
 
-::
+.. code-block:: java
 
     if( service.canResolve( WebMapServer.class )){
         WebMapServer wms = service.resolve( WebMapServer.class, new NullProgressMonitor() );
@@ -402,7 +405,7 @@ To access a WebMapServer:
 
 To access PostGIS data store:
 
-::
+.. code-block:: java
 
     if( service.canResolve( PostgisDataStore.class )){
          PostgisDataStore database = service.resolve( PostgisDataStore.class, new NullProgressMonitor() );
@@ -411,7 +414,7 @@ To access PostGIS data store:
 
 To work with PostGIS jdbc connection:
 
-::
+.. code-block:: java
 
     if( service.canResolve( Connection.class )){
          Connection connection = service.resolve( Connection.class, new NullProgressMonitor() );
@@ -426,7 +429,7 @@ To work with PostGIS jdbc connection:
 
 To access a WebMapServer:
 
-::
+.. code-block:: java
 
     if( service.canResolve( WebMapServer.class )){
         WebMapServer wms = service.resolve( WebMapServer.class, new NullProgressMonitor() );
@@ -485,8 +488,7 @@ IGeoResource instances can formed into a tree:
 Use of IGeoResourceInfo
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-::
-
+.. todo:: 
     ....pending...
 
 IResolve
@@ -531,7 +533,7 @@ Let's quickly work with an example (to make this real)
 
 Use of canResolve and resolve methods
 
-::
+.. code-block:: java
 
     public count shapes( File shapefile ){
         CatalogPlugin catalog = CatalogPlugin.getDefault();
@@ -546,22 +548,18 @@ Use of canResolve and resolve methods
         return 0;
     }
 
-.. figure:: images/icons/emoticons/information.gif
-   :align: center
-   :alt: 
+.. note:: **Comparison with IResource**
 
-**Comparison with IResource**
+   The IResolve interface follows the same design as the normal Eclipse IResource class.
 
-The IResolve interface follows the same design as the normal Eclipse IResource class.
+   IResolve offers the following advantages over normal Eclipse IResource:
 
-IResolve offers the following advantages over normal Eclipse IResource:
-
--  IResolve explicitly represents a handle for a remote resource
--  IResolve blocking behavior is explicit at the API level, anything that takes an IProgressMonitor
-   or throws an IOException is blocking
--  IResolve is available for RCP applications, normal IResource is part of the Eclipse IDE and
-   cannot be used in a RCP application
--  IResolve uses Java 5 enums, type narrowing and Templates for a simplified API
+   -  IResolve explicitly represents a handle for a remote resource
+   -  IResolve blocking behavior is explicit at the API level, anything that takes an IProgressMonitor
+      or throws an IOException is blocking
+   -  IResolve is available for RCP applications, normal IResource is part of the Eclipse IDE and
+      cannot be used in a RCP application
+   -  IResolve uses Java 5 enums, type narrowing and Templates for a simplified API
 
 Extending Catalog Plugin (Advanced)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -1,107 +1,92 @@
 Training Materials
-~~~~~~~~~~~~~~~~~~
+==================
 
-These examples are from the Refractions commercial `training
-course <http://www.refractions.net/services/training_course.php>`_
+These examples are from the Refractions commercial `training course <http://www.refractions.net/services/training_course.php>`_
 
 **Example Code**
 
 The uDig SDK can also be found live on our uDig subversion repository:
 
-* `http://svn.refractions.net/udig/udig/trunk/tutorials/ <http://svn.refractions.net/udig/udig/trunk/tutorials/>`_
-* `http://svn.refractions.net/udig/udig/branches/1.1.x/udig/tutorials/ <http://svn.refractions.net/udig/udig/branches/1.1.x/udig/tutorials/>`_
+.. todo:: 
+   svn isn't up anymore...
 
-This example code is included in your SDK, please visit the `Code Examples <Code%20Examples.html>`_
+* `<http://svn.refractions.net/udig/udig/trunk/tutorials/>`_
+* `<http://svn.refractions.net/udig/udig/branches/1.1.x/udig/tutorials/>`_
+
+This example code is included in your SDK, please visit the :doc:`Code Examples <code_examples>`
 page for instructions on importing these examples into your workspace for review.
 
 **Training Materials**
 
 The workbooks and slides for the training course are available here:
 
-* `http://svn.refractions.net/udig\_training/trunk <http://svn.refractions.net/udig_training/trunk>`_
+.. todo:: 
+   svn isn't up anymore...
+
+* `<http://svn.refractions.net/udig_training/trunk>`_
 
 This is a private svn repository that is open to those who have taken the training course. The
 course materials can be **made available for free** to those working at academic institutions - we
 ask for an email from your Professor.
 
-Of course we would much rather come and visit you - see the `support
-page <http://udig.refractions.net/confluence//display/UDIG/Links>`_ for more details.
+Of course we would much rather come and visit you - see the `support page <http://udig.refractions.net/confluence//display/UDIG/Links>`_ for more details.
 
 Public Tutorials
-^^^^^^^^^^^^^^^^
+----------------
 
 The following examples are covered as part of the public training materials we have made available
 in this developers guide.
 
  
+.. list-table::
+   :widths: 20 80
+   :header-rows: 1
 
-Technology
+   * - **Technology**
+     - Concept
+   * - RCP
+     - Platform class uses the plugin.xml files to wire up your appliation
+   * - RCP
+     - Workbench selection is used to communicate between plugins and a single selection can "Adapt to"
+       multiple Java Interfaces as needed
 
-Concept
-
-.. figure:: images/icons/emoticons/check.gif
-   :align: center
-   :alt: 
-
-RCP
-
-Platform class uses the plugin.xml files to wire up your appliation
-
-.. figure:: images/icons/emoticons/check.gif
-   :align: center
-   :alt: 
-
-RCP
-
-Workbench selection is used to communicate between plugins and a single selection can "Adapt to"
-multiple Java Interfaces as needed
 
 Distance Tool Tutorial
 ----------------------
 
 -  net.refractions.udig.tutorials.distancetool
 
-Example used as part of `Tool Plugin Tutorial <Tool%20Plugin%20Tutorial.html>`_ tutorial.
+Example used as part of :doc:`Tool Plugin Tutorial <tool_plugin_tutorial>` tutorial.
 
 Custom Application Tutorial
 ---------------------------
 
 -  net.refractions.udig.tutorials.distancetool
 
-Example used as part of `Custom Application Tutorial <Custom%20Application%20Tutorial.html>`_.
+Example used as part of :doc:`Custom Application Tutorial <custom_application_tutorial>`
 
 Workbench Selection
 -------------------
 
-Example used as part of `Workbench Selection Tutorial <Workbench%20Selection%20Tutorial.html>`_.
+Example used as part of :doc:`Workbench Selection Tutorial <workbench_selection_tutorial>`
 
 UDIG Workshop Introduction
-==========================
-
+--------------------------
  
+.. list-table::
+   :widths: 20 80
+   :header-rows: 1
 
-Technology
+   * - **Technology**
+     - Concept
+   * - GIS Platform
+     - How catalog IGeoResources "Resolve To" a data access Interface as needed
+   * - GIS Application
+     - How blackboards are used to communicate between plug-ins
 
-Concept
-
-.. figure:: images/icons/emoticons/check.gif
-   :align: center
-   :alt: 
-
-GIS Platform
-
-How catalog IGeoResources "Resolve To" a data access Interface as needed
-
-.. figure:: images/icons/emoticons/check.gif
-   :align: center
-   :alt: 
-
-GIS Application
-
-How blackboards are used to communicate between plug-ins
 
 IAdaptable
-----------
+``````````
 
 -  net.refractions.udig.tutorials.urladapter
 
@@ -110,7 +95,7 @@ add an Adapter to an existing uDig class. This is the technique you will often u
 own API against existing entries in the Catalog.
 
 Export Shapefile
-----------------
+````````````````
 
 -  net.refractions.udig.tutorials.shpexport
 
@@ -118,7 +103,7 @@ Make use of an IGeoResource; by requesting a FeatureSource API for data access. 
 how to create a new Shapfile using the GeoTools library.
 
 Map Graphic
------------
+```````````
 
 -  net.refractions.udig.tutorials.mapgraphic.coordinate
 -  net.refractions.udig.tutorials.tool.coordinate
@@ -136,7 +121,7 @@ user interface views) on a blackboard in order to host their functionality withi
 framework.
 
 Feature Editor
---------------
+``````````````
 
 This example shows how to make a FeatureEditor that is used to edit features from **countries.shp**
 (included in the Walkthrough 1 sample data).
@@ -148,12 +133,12 @@ This tutorials shows how to:
 -  issue an edit command (asking the EditManager to modify the selected feature)
 
 UDIG Workshop Advanced
-======================
+----------------------
 
 These tutorials cover "from disk to screen".
 
 CSV Service
------------
+```````````
 
 -  com.csvreader
 -  net.refractions.udig.tutorials.catalog.csv
@@ -162,7 +147,7 @@ This covers how to package a third-party jar as an eclipse plug-in, and how to m
 service representing a new file format.
 
 Testing
--------
+```````
 
 -  net.refractions.udig.tests.catalog.csv
 
@@ -170,9 +155,9 @@ A JUnit plug-in test that tests the above CSV Service. When you run a JUnit Plug
 copy of uDig is started up; the test is run and then the slaved copy of UDig is exited.
 
 CSV Renderer
-------------
+````````````
 
--net.refractions.udig.tutorials.render.csv
+- net.refractions.udig.tutorials.render.csv
 
 Defines a renderer capable of drawing a "CSVGeoResource" onto the screen. Renderers can be defined
 for each kind of data access API (ie a Java Interface). In this case we are using the CSVReader API
@@ -183,7 +168,7 @@ additional renderers available as community plugins (making use of Nasa World Wi
 OSSIM).
 
 Style
------
+`````
 
 -  net.refractions.udig.tutorials.style.color
 
@@ -199,7 +184,7 @@ This tutorial covers:
    Editor dialog; or Style view as required.
 
 Tracking
---------
+````````
 
 -  net.refractions.udig.tutorials.rcp
 -  net.refractions.udig.tutorials.rcp-feature
