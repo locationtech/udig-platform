@@ -14,23 +14,19 @@ Everything else is considered an internal implementation detail and should not b
 code.
 
 If you really need something please ask on the email list, chances are we would be happy to make it
-available,
- and are just waiting for someone to ask. One of the ways we have kept the udig application small is
-by not
- inventing (or advertising) API until a developers asks.
+available, and are just waiting for someone to ask. One of the ways we have kept the udig application 
+small is by not inventing (or advertising) API until a developers asks.
 
 The eclipse rules go into more details on subclassing and overriding. Please assume we are following
-eclipse
- conventions - and feel free to report a bug when we dont. |image0|
+eclipse conventions - and feel free to report a bug when we dont. 
 
 For more information:
 
-* `http://help.eclipse.org/juno/topic/org.eclipse.platform.doc.isv/reference/misc/api-usage-rules.html <http://help.eclipse.org/juno/topic/org.eclipse.platform.doc.isv/reference/misc/api-usage-rules.html>`_
+* `<http://help.eclipse.org/juno/topic/org.eclipse.platform.doc.isv/reference/misc/api-usage-rules.html>`_
 
 Q: net.refractions.udig.xyz is optional?
 
-Yes - if you don't have any plublic API (because you are a pure extention) don't declare any public
-api
+Yes - if you don't have any plublic API (because you are a pure extention) don't declare any public api
 
 Q: Implementation is not required?
 
@@ -48,4 +44,3 @@ Class and different implementations. While this is possible it is not sane.
 The RCP forces us to make sharing explicit - hense the reason for plug-ins like
 net.refractions.udig.libs.
 
-.. |image0| image:: images/icons/emoticons/smile.gif

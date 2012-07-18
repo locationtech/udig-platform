@@ -142,3 +142,9 @@ geospatial formats. The ImageIO-EXT project has made use of GDAL SWIG bindings i
 C++ support for some of the more exotic formats.
 
 For more information please visit the ImageIO-EXT website.
+
+.. toctree::
+   :maxdepth: 1
+   
+   key_components
+

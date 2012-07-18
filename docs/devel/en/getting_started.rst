@@ -23,7 +23,7 @@ Tutorials:
    gis_application_tutorials
    disk_to_screen_tutorials
    other_tutorials
-   rcp_tutorials`
+   rcp_tutorials
 
 Introduction:
 
@@ -33,5 +33,5 @@ Introduction:
    examples
    welcome_new_eclipse_rcp_developers
 
-Check the `reference section <Reference.html>`_ for help setting up on other platforms, additional
-`code examples <Examples.html>`_ are also available.
+Check the :doc:`reference section <Reference>` for help setting up on other platforms, additional
+:doc:`code examples <examples>` are also available.

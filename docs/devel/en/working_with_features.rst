@@ -20,7 +20,7 @@ update site then any Eclipse based application can install the Feature using the
 Creating a Feature
 ^^^^^^^^^^^^^^^^^^
 
-#. Create a Feature Project. **New->Project**.
+#. Create a Feature Project. :menuselection:`New --> Project`.
 #. Select **Feature Project** in the **Plug-in Development** category
 #. The naming convention is:
 
@@ -29,7 +29,8 @@ Creating a Feature
    #. **Feature Project** - the Feature ID with \_feature appended to the end.
    #. **Feature Name** - Unimportant but should usually be translatable (%feature.name in the
       feature.xml and the key/value pair in the plugin.properties)
-       |image0|
+
+      |image0|
 
 #. Press Finish
 #. A nice editor for the Feature.xml is opened. In the Branding Plug-in Field enter the Branding
@@ -38,7 +39,8 @@ Creating a Feature
 #. Switch to the **Plug-ins** tab of the editor (tabs are across the bottom)
 #. Press **Add ...**
 #. Select the Plug-ins that will be part of the Feature
-    |image1|
+
+   |image1|
 
 There is numerous other options for specifying what Features and Plug-ins the Feature depends on as
 well as what versions and how to install the Feature. This is all that is really required to make a

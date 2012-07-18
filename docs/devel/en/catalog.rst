@@ -318,8 +318,7 @@ You can grab a copy of the service title:
     String title = service.getTitle()
 
 This is useful when listing the service in a user interface (as it will make use of a cached copy of
-the
- service title and not have to connect).
+the service title and not have to connect).
 
 The connection parameters are available; you can store these parameters if you would like to connect
 to the service again at a later time.
@@ -567,27 +566,27 @@ Extending Catalog Plugin (Advanced)
 To extend catalog for additional formats you will need to make an implementation of IService,
 IGeoResource and a WizardPage for your new content.
 
--  ServiceExtention: allow the catalog to work with new kinds of Services
--  ICatalog: teach the CatalogPlugin about new kinds of remote catalogs
--  temporaryResource: create new temporary resources
--  resolvers: teach the existing IResolve Implementations (like ShpGeoResource) about your
-   application needs
--  friendly: build up assocations between services that are designed to work together
+- ServiceExtention: allow the catalog to work with new kinds of Services
+- ICatalog: teach the CatalogPlugin about new kinds of remote catalogs
+- temporaryResource: create new temporary resources
+- resolvers: teach the existing IResolve Implementations (like ShpGeoResource) about your
+  application needs
+- friendly: build up assocations between services that are designed to work together
 
 We are going to launch right into technical details here (this is the advanced section). If you
 require additional background information please consider the following references:
 
--  Contributing to Eclipse (nice explanation of IResource, and IAdaptable)
-* :doc:`eclipse_house_rules`
+- Contributing to Eclipse (nice explanation of IResource, and IAdaptable)
+- :doc:`eclipse_house_rules`
 
 
 Common mistakes:
 
--  If you are used to making your own Eclipse plugins you may accidently depend on IResource, it
-   will not be available at runtime since it is part of the Eclipse IDE.
--  :doc:`Eclipse House Rules <eclipse_house_rules>`: You may only depend on public API packages
-   (example net.refractions.udig.catalog). This is less of a problem since we are able to properly
-   restrict packages in Eclipse 3.3.
+- If you are used to making your own Eclipse plugins you may accidently depend on IResource, it
+  will not be available at runtime since it is part of the Eclipse IDE.
+- :doc:`Eclipse House Rules <eclipse_house_rules>`: You may only depend on public API packages
+  (example net.refractions.udig.catalog). This is less of a problem since we are able to properly
+  restrict packages in Eclipse 3.3.
 
 ResolveManager
 ^^^^^^^^^^^^^^

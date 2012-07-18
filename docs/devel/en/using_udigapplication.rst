@@ -1,5 +1,5 @@
 Using UDIGApplication
-~~~~~~~~~~~~~~~~~~~~~
+=====================
 
 The base class UDIGApplication serves three purposes:
 
@@ -17,7 +17,7 @@ Links to Related Content:
 -  For the latest instructions please see the :doc:`Getting Started <getting_started>` tutorial
 
 As a Showcase
-^^^^^^^^^^^^^
+-------------
 
 As a showcase the UDIGApplication needs to provide a fine balance between enough functionality to be
 useful; and not so much that the result is intimidating.
@@ -29,8 +29,9 @@ The actual uDig application does not do much:
    everything is not right
 -  Starts up a workbench using the UDIGWorkbenchAdvisor
 
+
 As a Base
-^^^^^^^^^
+---------
 
 As base class UDIGApplication must ensure that every contribution shows up in a logical part of the
 user interface. This is especially important with respect to **menubars** and **toolbars**; we must
@@ -46,22 +47,12 @@ dialog if JAI is not found.
 Setting up an UDIGApplication that requires a login is a common request. This example shows how to
 use the checkLogin() method to talk to a "Client" plug-in and call its login method.
 
-:doc:`using_udigapplication`
-
-
-* :doc:`as_a_showcase`
-
-* :doc:`as_a_base`
-
-* :doc:`as_a_utility_class`
-
-
 The "Client' plug-in technique is used when you have a Client plugin that holds on to a Spring
 remoting Session with a J2EE server application.
 
 Here is an example of overriding the UDIGApplication checkLogin() method.
 
-::
+.. code-block:: java
 
     public boolean checkLogin() {
             LoginDialog loginDialog = new LoginDialog(
@@ -92,7 +83,7 @@ Here is an example of overriding the UDIGApplication checkLogin() method.
 
 The above example made use of a really simple MessageDialog shown bellow:
 
-::
+.. code-block:: java
 
     public class LoginDialog extends MessageDialog {
         String user;
@@ -151,58 +142,58 @@ The init method as provided will kick the net.refractions.udig.libs Activator cl
 EPSG database. It actually does a quick sanity check first (to see if loading will take a long
 time).
 
-::
+.. code-block:: java
 
     /**
-         * We have a couple things that need to happen
-         * before the workbench is opened. The org.eclipse.ui.startup
-         * extension point is willing to run stuff for us *after*
-         * the workbench is opened - but that is not so useful
-         * when we need to configure the EPSG database for libs
-         * and load up the local catalog.
-         * <p>
-         * Long term we will want to create a startup list
-         * (much like we have shutdown hooks).
-         */
-        protected boolean init() {
-            ProgressMonitorDialog progress = new ProgressMonitorDialog( Display.getCurrent().getActiveShell());
-            final Bundle bundle = Platform.getBundle(Activator.ID);
+      * We have a couple things that need to happen
+      * before the workbench is opened. The org.eclipse.ui.startup
+      * extension point is willing to run stuff for us *after*
+      * the workbench is opened - but that is not so useful
+      * when we need to configure the EPSG database for libs
+      * and load up the local catalog.
+      * <p>
+      * Long term we will want to create a startup list
+      * (much like we have shutdown hooks).
+      */
+     protected boolean init() {
+         ProgressMonitorDialog progress = new ProgressMonitorDialog( Display.getCurrent().getActiveShell());
+         final Bundle bundle = Platform.getBundle(Activator.ID);
             
-            // We should kick the libs plugin to load the EPSG database now
-            if( ThreadedH2EpsgFactory.isUnpacked()){
-                // if there is not going to be a long delay
-                // don't annoy users with a dialog
-                Activator.initializeReferencingModule( null );            
-            }
-            else {
-                // We are going to take a couple of minutes to set this up
-                // so we better set up a progress dialog thing
-                //
-                try {
-                    progress.run(false,false, new IRunnableWithProgress(){            
-                        public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                                InterruptedException {
-                            Activator.initializeReferencingModule( monitor);
-                        }
-                    });
-                } catch (InvocationTargetException e) {
-                    Platform.getLog(bundle).log(
-                            new Status(IStatus.ERROR, Activator.ID, e.getCause().getLocalizedMessage(), e
-                                    .getCause()));
-                    return false;
-                } catch (InterruptedException e) {
-                    Platform.getLog(bundle).log(
-                            new Status(IStatus.ERROR, Activator.ID, e.getCause().getLocalizedMessage(), e
-                                    .getCause()));
-                    return false;
-                }
-            }
-            // We should kick the CatalogPlugin to load now...
-            return true;
-        }
+         // We should kick the libs plugin to load the EPSG database now
+         if( ThreadedH2EpsgFactory.isUnpacked()){
+             // if there is not going to be a long delay
+             // don't annoy users with a dialog
+             Activator.initializeReferencingModule( null );            
+         }
+         else {
+             // We are going to take a couple of minutes to set this up
+             // so we better set up a progress dialog thing
+             //
+             try {
+                 progress.run(false,false, new IRunnableWithProgress(){            
+                     public void run( IProgressMonitor monitor ) throws InvocationTargetException,
+                             InterruptedException {
+                         Activator.initializeReferencingModule( monitor);
+                     }
+                 });
+             } catch (InvocationTargetException e) {
+                 Platform.getLog(bundle).log(
+                         new Status(IStatus.ERROR, Activator.ID, e.getCause().getLocalizedMessage(), e
+                                 .getCause()));
+                 return false;
+             } catch (InterruptedException e) {
+                 Platform.getLog(bundle).log(
+                         new Status(IStatus.ERROR, Activator.ID, e.getCause().getLocalizedMessage(), e
+                                 .getCause()));
+                 return false;
+             }
+         }
+         // We should kick the CatalogPlugin to load now...
+         return true;
+     }
 
 As a Utility Class
-^^^^^^^^^^^^^^^^^^
+------------------
 
 Utility methods exist to perform checks commonly needed at startup.
 
@@ -210,7 +201,7 @@ Utility methods exist to perform checks commonly needed at startup.
 
 The **checkForJAI** method will return false if JAI is not installed into the current JRE:
 
-::
+.. code-block:: java
 
     boolean optional = UDIGApplication.checkForJAI();
 
@@ -222,7 +213,7 @@ is limited to vector work you can get by without this functionality.
 The **checkForGDI** method will return false if GDI+ is required (ie on WIN\_32 platform) and not
 available:
 
-::
+.. code-block:: java
 
     boolean required = UDIGApplication.checkForGDI();
 

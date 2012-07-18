@@ -3,11 +3,11 @@ Programmer Guide
 
 Background information and guidelines for working in the uDig environment.
 
-:doc:`welcome_to_the_programmer's_guide`
+.. toctree::
+   :maxdepth: 1
 
- :doc:`why_a_platform`
-
- :doc:`platform_architecture`
-
- :doc:`guidelines_and_rules`
+   welcome_to_the_programmer's_guide
+   why_a_platform
+   platform_architecture
+   guidelines_and_rules
 

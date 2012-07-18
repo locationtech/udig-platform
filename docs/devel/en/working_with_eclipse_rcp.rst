@@ -3,67 +3,43 @@ Working with Eclipse RCP
 
 Tips, tricks and utility classes for working with the Eclipse RCP platform.
 
-:doc:`creating_a_plugin`
+.. toctree:: 
+   :maxdepth: 1
 
- :doc:`common_plugin_files`
-
- :doc:`plugin_structure`
-
- :doc:`plugin_setup`
-
- :doc:`plugin_dependency`
-
- :doc:`plugin_internationalization`
-
- :doc:`plugin_activator`
-
- :doc:`plugin_internationalization_with_resourcebundles`
-
- :doc:`imageregistry_and_images`
-
- :doc:`plugin_help`
-
- :doc:`plugin_classloader_use`
-
- :doc:`plugin_debug_and_tracing_support`
-
- :doc:`working_with_features`
-
- :doc:`making_a_branding_plugin`
-
- :doc:`making_a_product_and_executable`
-
- :doc:`using_udigapplication`
-
- :doc:`menus_using_actions_and_actionsets`
-
- :doc:`menus_using_commands_and_handlers`
-
- :doc:`menus_using_operations_and_tools`
-
- :doc:`adding_history_to_dialogs_and_wizards`
-
- :doc:`swt_and_jface_widgets`
-
- :doc:`what_is_an_extension_point`
-
- :doc:`creating_and_using_extension_points`
-
- :doc:`testing_plugins`
-
- :doc:`bundle_a_jar_up_as_a_plugin`
-
- :doc:`how_to_turn_stuff_off`
-
- :doc:`how_do_i_turn_off_menus`
-
- :doc:`using_the_udigworkbenchadvisor`
-
- :doc:`using_udigmenubuilder`
-
- :doc:`using_workbenchconfigurations`
-
- :doc:`working_with_cheat_sheets`
+   creating_a_plugin
+   common_plugin_files
+   plugin_structure
+   plugin_setup
+   plugin_dependency
+   plugin_internationalization
+   plugin_activator
+   plugin_internationalization_with_resourcebundles
+   imageregistry_and_images
+   jface_actions
+   jface_field_decorations
+   jface_wizards
+   plugin_help
+   plugin_classloader_use
+   plugin_debug_and_tracing_support
+   working_with_features
+   making_a_branding_plugin
+   making_a_product_and_executable
+   using_udigapplication
+   menus_using_actions_and_actionsets
+   menus_using_commands_and_handlers
+   menus_using_operations_and_tools
+   adding_history_to_dialogs_and_wizards
+   swt_and_jface_widgets
+   what_is_an_extension_point
+   creating_and_using_extension_points
+   testing_plugins
+   bundle_a_jar_up_as_a_plugin
+   how_to_turn_stuff_off
+   how_do_i_turn_off_menus
+   using_the_udigworkbenchadvisor
+   using_udigmenubuilder
+   using_workbenchconfigurations
+   working_with_cheat_sheets
 
 
 Fashions change - and the Eclipse RCP API has evolved over time. As such some of these instructions

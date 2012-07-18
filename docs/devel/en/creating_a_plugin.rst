@@ -1,94 +1,89 @@
 Creating a Plugin
-~~~~~~~~~~~~~~~~~
+=================
 
-1) Start the New Project Wizard
-'''''''''''''''''''''''''''''''
+Start the New Project Wizard
+----------------------------
 
--  File->New->Project
-    |image0|
+-  :menuselection:`File --> New --> Project`
+
+   |image0|
+
 -  Select "Plug-in Project"
 -  Next
 
-2) Plug-in Project
-''''''''''''''''''
+Plug-in Project
+---------------
 
 .. figure:: /images/creating_a_plugin/NewProject1.jpg
    :align: center
    :alt: 
 
 -  Set the project name:
-    agrees with package structure, starts with net.refractions.udig.\*
+
+   agrees with package structure, starts with net.refractions.udig.\*
+
 -  Project contents:
-    use default
+
+   use default
+
 -  Project Settings:
-    Create a Java project
-    default src and bin folders are fine
+
+   Create a Java project
+
+   default src and bin folders are fine
+
 -  Alternate Format:
-    Apprently it is not worth using the the OSGi bundle manifest at this time (see panel below)
+
+   Apprently it is not worth using the the OSGi bundle manifest at this time (see panel below)
+
 -  Next
 
-.. figure:: images/icons/emoticons/information.gif
-   :align: center
-   :alt: 
+   **Plugin Name**
 
-**Plugin Name**
+   What is in a name? Well a clue on what the plugin is for:
 
-What is in a name? Well a clue on what the plugin is for:
+.. list-table::
+   :widths: 30 35 35
+   :header-rows: 1
 
-Project
+   * - Project 
+     - Example
+     - Naming Convention
+   * - Plug-In
+     - net.refractions.udig.render
+     - named in agreement with internal package structure
+   * - JUnit Test Plug-In
+     - net.refractions.udig.render-test
+     - Append "-test"
+   * - Plug-In Fragment
+     - net.refractions.udig.german
+     - Provide ".\ *language*" file at the root udig
+   * - Plug-In Fragment
+     - net.refractions.render-1
+     - Do anything except add a dot
+   * - Features
+     - net.refractions.udig.render-feature
+     - Append "-feature" to associated root Plug-In
 
-Example
 
-Naming Convention
+The following was taken from the `Repository Structure <http://udig.refractions.net/confluence//display/UDIG/Repository+Structure>`_ page.
 
-Plug-In
+.. list-table::
+   :widths: 100
+   :header-rows: 1
 
-net.refractions.udig.render
+   * - **OSGi (from Rich Client Tutorial - Part 1)**
+   * - Eclipse 3.0 introduced a new run-time system based on OSGi standards that uses 
+       bundles and a new manifest file (MANIFEST.MF) to implement plug-ins. The use of 
+       MANIFEST.MF, in normal circumstances, is completely optional.
+       You will notice that almost all of the 3.0 SDK plug-ins do NOT have one yet all 
+       are marked as 3.0 and many do not require the compatibility layer. The only reason 
+       you would want to have a MANIFEST.MF is if you need to use a particular OSGi 
+       capability that is not exposed through plugin.xml (for example, import-package).
+       Otherwise it's recommended at this time that you don't have one.
 
-named in agreement with internal package structure
-
-JUnit Test Plug-In
-
-net.refractions.udig.render-test
-
-Append "-test"
-
-Plug-In Fragment
-
-net.refractions.udig.german
-
-Provide ".\ *language*" file at the root udig
-
-Plug-In Fragment
-
-net.refractions.render-1
-
-Do anything except add a dot
-
-Features
-
-net.refractions.udig.render-feature
-
-Append "-feature" to associated root Plug-In
-
-The following was taken from the `Repository
-Structure <http://udig.refractions.net/confluence//display/UDIG/Repository+Structure>`_ page.
-
-**OSGi (from Rich Client Tutorial - Part 1)**
-
-Eclipse 3.0 introduced a new run-time system based on OSGi standards that uses bundles and a new
-manifest file (MANIFEST.MF) to implement plug-ins. The use of MANIFEST.MF, in normal circumstances,
-is completely optional.
-
-You will notice that almost all of the 3.0 SDK plug-ins do NOT have one yet all are marked as 3.0
-and many do not require the compatibility layer. The only reason you would want to have a
-MANIFEST.MF is if you need to use a particular OSGi capability that is not exposed through
-plugin.xml (for example, import-package).
-
-Otherwise it's recommended at this time that you don't have one.
-
-3) Plug-In Content
-''''''''''''''''''
+Plug-In Content
+---------------
 
 .. figure:: /images/creating_a_plugin/NewProject2.jpg
    :align: center
@@ -114,19 +109,18 @@ Otherwise it's recommended at this time that you don't have one.
 
 -  Next
 
-**Plug-in Class (from Rich Client Tutorial - Part 1)**
+.. list-table::
+   :widths: 100
+   :header-rows: 1
 
-The generated plug-in class that you may be familiar with in previous releases is no longer required
-in Eclipse 3.0. You can still have one to hold global data if you like.
+   * - **Plug-in Class (from Rich Client Tutorial - Part 1)**
+   * - The generated plug-in class that you may be familiar with in previous releases 
+       is no longer required in Eclipse 3.0. You can still have one to hold global data if you like.
+       In this case we would like to hold some global data, rather than use a singleton. 
+       This allows us to cleanup after the application (something that is hard with singletons).
 
---------------
-
-In this case we would like to hold some global data, rather than use a singleton. This allows us to
-cleanup after the
- application (something that is hard with singletons).
-
-4) Templates
-''''''''''''
+Templates
+---------
 
 (Only available when making a UI Plug-in Class)
 
@@ -140,13 +134,12 @@ cleanup after the
    -  Choose a ui wizard (such as "Custom plug-in wizard")
    -  Next (to start filling out the template)
 
-5) Template Selection
-^^^^^^^^^^^^^^^^^^^^^
+Template Selection
+------------------
 
 (Only available when using "Custom plug-in wizard")
 
-5) Template Selection
-'''''''''''''''''''''
+**Template Selection**
 
 .. figure:: /images/creating_a_plugin/NewProject4.jpg
    :align: center

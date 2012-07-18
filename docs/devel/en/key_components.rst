@@ -1,13 +1,18 @@
 Key Components
 ##############
 
-#. `Operations <Operations%20Design.html>`_
-#. `Drag and Drop <Drag%20and%20Drop%20Design.html>`_
-#. `Issues Framework <Issues%20Framework%20Design.html>`_
-#. Catalog
-#. Project
-#. Rendering
-#. Printing
-#. Tools
-#. Editing Tools
+.. toctree::
+   :maxdepth: 1
+   
+   Operations <operations_design>
+   Drag and Drop <drag_and_drop_design>
+   Issues Framework <issues_framework_design>
+   shutdown_tasks
+
+* Catalog
+* Project
+* Rendering
+* Printing
+* Tools
+* Editing Tools
 
