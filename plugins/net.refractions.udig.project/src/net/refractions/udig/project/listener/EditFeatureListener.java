@@ -1,5 +1,7 @@
 package net.refractions.udig.project.listener;
 
+import java.beans.PropertyChangeEvent;
+
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -31,7 +33,7 @@ public interface EditFeatureListener {
      * @param newValue The new value of the changed property, or <code>null</code> if not known or
      *        not relevant.
      */
-    public void attributeValueChange(EditFeature feature, Object oldValue, Object newValue);
+    public void attributeValueChange(PropertyChangeEvent event);
 
     /**
      * 
