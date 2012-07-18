@@ -22,6 +22,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import net.refractions.udig.core.internal.ExtensionPointList;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.interceptor.InterceptorSupport;
 import net.refractions.udig.project.interceptor.LayerInterceptor;
 import net.refractions.udig.project.interceptor.MapInterceptor;
 import net.refractions.udig.project.internal.Layer;
@@ -160,7 +161,7 @@ class LayersList3 extends SynchronizedEObjectResolvingEList<Layer> {
     private void removeAllInterceptors( Collection<?> c ) {
         for( Iterator<?> iter = c.iterator(); iter.hasNext(); ) {
             Layer element = (Layer) iter.next();
-            runLayerInterceptor(element, "layerRemoved"); //$NON-NLS-1$
+            InterceptorSupport.runLayerInterceptor(element, "layerRemoved"); //$NON-NLS-1$
             element.eAdapters().removeAll(deepAdapters);
         }
     }
@@ -171,58 +172,15 @@ class LayersList3 extends SynchronizedEObjectResolvingEList<Layer> {
             if (!layer.eAdapters().contains(deepAdapter))
                 layer.eAdapters().add(deepAdapter);
         }
-        runLayerInterceptor(layer, LayerInterceptor.ADDED_ID);
+        InterceptorSupport.runLayerInterceptor(layer, LayerInterceptor.ADDED_ID);
     }
 
     private void runRemoveInterceptor( Object remove ) {
         if (remove == null || !contains(remove))
             return;
         Layer layer = (Layer) remove;
-        runLayerInterceptor(layer, LayerInterceptor.REMOVED_ID);
-        (layer).eAdapters().removeAll(deepAdapters);
-    }
-
-    private void runLayerInterceptor( Layer layer, String configurationName ) {
-        runNonDeprecatedInterceptors(layer, configurationName);
-        runDeprecatedInterceptors(layer, configurationName);
-    }
-
-    private void runNonDeprecatedInterceptors( Layer layer, String configurationName ) {
-        List<IConfigurationElement> list = ExtensionPointList
-                .getExtensionPointList(LayerInterceptor.EXTENSION_ID);
-        for( IConfigurationElement element : list ) {
-            if (element.getName().equals(configurationName)) {
-                String attribute = element.getAttribute("name"); //$NON-NLS-1$
-                try {
-                    LayerInterceptor interceptor = (LayerInterceptor) element
-                            .createExecutableExtension("class"); //$NON-NLS-1$
-                    interceptor.run(layer);
-                } catch (CoreException e) {
-                    ProjectPlugin
-                            .log(
-                                    "Error creating class: " + element.getAttribute("class") + " part of layer interceptor: " + attribute, e); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-                } catch (Throwable t) {
-                    ProjectPlugin.log("error running interceptor: " + attribute, t); //$NON-NLS-1$
-                }
-            }
-        }
-    }
-
-    private void runDeprecatedInterceptors( Layer layer, String configurationName ) {
-        List<IConfigurationElement> interceptors = ExtensionPointList
-                .getExtensionPointList(MapInterceptor.MAP_INTERCEPTOR_EXTENSIONPOINT);
-        for( IConfigurationElement element : interceptors ) {
-            if (!configurationName.equals(element.getName())) {
-                continue;
-            }
-            try {
-                LayerInterceptor interceptor = (LayerInterceptor) element
-                        .createExecutableExtension("class"); //$NON-NLS-1$
-                interceptor.run(layer);
-            } catch (Throwable e) {
-                ProjectPlugin.log("", e); //$NON-NLS-1$
-            }
-        }
+        InterceptorSupport.runLayerInterceptor(layer, LayerInterceptor.REMOVED_ID);
+        layer.eAdapters().removeAll(deepAdapters);
     }
 
 }

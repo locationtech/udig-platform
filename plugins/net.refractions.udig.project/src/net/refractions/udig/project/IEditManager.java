@@ -11,24 +11,31 @@ package net.refractions.udig.project;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
- * Defines and implements controllers a map. The EditManager is the central piece and has the
+ * EditManager acts as the Controler for an open Map responsible for managing the current
+ * session.
+ * <p>
+ * EditManager is responsible for the following functionality:
+ *  (both Transaction and any EditFeatures), assiting edit tools (hosting the inter
+ * active ediDefines and implements controllers a map. The EditManager is the central piece and has the
  * following functionality:
  * <ul>
- * <li>Controlling transactions (commit and rollback) used to support data editing</li>
- * <li>Modifying the layer list safely</li>
- *     <ul>
- *     <li>Creating Layer Objects</li>
- *     </ul>
- *     </li>
- * <li>EditFeature support (apply and cancel) on a feature by feature basis used to support forms</li>
- * <li>Recycling FeatureSource instances to be shared between layers</li>
+ * <li>Managing the current session used for editing:
+ *   <ul>
+ *   <li>Current transactions (used for commit and rollback)</li>
+ *   <li>EditFeature support (apply and cancel) on a feature by feature basis used to support forms</li>
+ *   <li>Recycling FeatureSource instances to be shared between layers and operations</li>
+ *   <li>Pending: Any support for Security or FeatureLocking will be handled here</li>
+ *   </ul>
+ * </li>
+ * <li>Concurrent modification: Holds a queue of commands to support the safe modification of the Map when the
+ * data structure is not in use. As an example you can use a command to modify the layer list, when the map is not being used
+ * for rendering.</li>
  * </ul>
- * <p>
- * Transactions and locks are also part of map core.
  * </p>
  * 
  * @author jeichar
  * @since 0.1
+ * @version 3.2
  */
 public interface IEditManager {
 

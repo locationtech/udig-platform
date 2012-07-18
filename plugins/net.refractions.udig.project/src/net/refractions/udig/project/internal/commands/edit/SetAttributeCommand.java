@@ -34,11 +34,12 @@ import org.opengis.filter.Id;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * This command modifies an attribute of the current editFeature(the victim that is currently
+ * Modifies an attribute of the current editFeature (the victim that is currently
  * edittable).
  * 
  * @author jeichar
  * @since 0.3
+ * @version 3.2
  */
 public class SetAttributeCommand extends AbstractEditCommand implements UndoableMapCommand {
     protected String xpath;

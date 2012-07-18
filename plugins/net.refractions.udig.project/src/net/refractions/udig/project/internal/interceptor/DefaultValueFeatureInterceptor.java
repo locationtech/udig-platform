@@ -1,8 +1,8 @@
 package net.refractions.udig.project.internal.interceptor;
 
+import net.refractions.udig.project.EditFeature;
 import net.refractions.udig.project.interceptor.FeatureInterceptor;
 
-import org.opengis.feature.Feature;
 import org.opengis.feature.Property;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -18,24 +18,15 @@ import org.opengis.feature.type.PropertyDescriptor;
  */
 public class DefaultValueFeatureInterceptor implements FeatureInterceptor {
 
-    public Boolean run( Feature feature ) {
-        if( feature instanceof SimpleFeature ){
-            SimpleFeatureType type = (SimpleFeatureType) feature.getType();
-            SimpleFeature simpleFeature = (SimpleFeature) feature;
-            for( int i = 0; i < type.getAttributeCount(); i++ ) {
-                if( simpleFeature.getAttribute(i) == null ){
-                    Object value = toDefaultValue(type.getDescriptor(i));
-                    simpleFeature.setAttribute(i, value );
-                }
+    public void run( EditFeature feature ) {
+        SimpleFeatureType type = (SimpleFeatureType) feature.getType();
+        SimpleFeature simpleFeature = (SimpleFeature) feature;
+        for( int i = 0; i < type.getAttributeCount(); i++ ) {
+            if( simpleFeature.getAttribute(i) == null ){
+                Object value = toDefaultValue(type.getDescriptor(i));
+                simpleFeature.setAttribute(i, value );
             }
         }
-        else {
-            for( Property property : feature.getProperties() ){
-                Object defaultValue = toDefaultValue( property.getDescriptor() );
-                property.setValue( defaultValue );
-            }
-        }
-        return true;
     }
     /**
      * Retrieves a default value for the provided descriptor.

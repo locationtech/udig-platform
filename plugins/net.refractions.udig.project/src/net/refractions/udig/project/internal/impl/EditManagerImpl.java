@@ -60,7 +60,7 @@ import org.opengis.filter.identity.Identifier;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * The default implementation of the EditManager interface.
+ * Default implementation of the EditManager.
  * 
  * @author Jesse
  * @since 1.0.0

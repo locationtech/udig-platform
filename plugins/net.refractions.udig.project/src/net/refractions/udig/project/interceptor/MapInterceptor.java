@@ -25,10 +25,16 @@ import net.refractions.udig.project.internal.Map;
  */
 public interface MapInterceptor {
     static final String MAP_INTERCEPTOR_EXTENSIONPOINT = "net.refractions.udig.project.mapInterceptor"; //$NON-NLS-1$
-
+    /**
+     * Used to recognize the "mapClosing" element.
+     */
     public static final String CLOSING_ID = "mapClosing";
     
+    /**
+     * Used to recognize the "mapOpening" element.
+     */
     public static final String OPENING_ID = "mapOpening";
+    
     /**
      * Performs an action on or with the intercepted map.
      *

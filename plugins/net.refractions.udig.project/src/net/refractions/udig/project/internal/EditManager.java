@@ -9,21 +9,26 @@
 package net.refractions.udig.project.internal;
 
 import java.io.IOException;
+import java.util.List;
 
+import net.refractions.udig.core.internal.ExtensionPointList;
 import net.refractions.udig.project.IEditManager;
+import net.refractions.udig.project.interceptor.FeatureInterceptor;
 
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.ecore.EObject;
 import org.geotools.data.Transaction;
 import org.geotools.feature.IllegalAttributeException;
+import org.opengis.feature.Feature;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal
- * <p>
- * </p>
+ * Internal read/write interface for IEditManager offering greater control. This
+ * interface should only used from a Command for threadsafety.
  * 
  * @author Jesse
- * @since 1.0.0
+ * @since 1.0
+ * @since 3.2
  * @model
  */
 public interface EditManager extends EObject, IEditManager {

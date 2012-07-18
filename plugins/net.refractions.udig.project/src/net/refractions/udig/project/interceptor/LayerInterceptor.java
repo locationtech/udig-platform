@@ -17,7 +17,7 @@ package net.refractions.udig.project.interceptor;
 import net.refractions.udig.project.internal.Layer;
 
 /**
- * An interceptor that is ran on a layer.  See the net.refractions.udig.mapInterceptor extension point for more details.
+ * An "interceptor" that is ran on a layer.  See the net.refractions.udig.mapInterceptor extension point for more details.
  * 
  * @author Jesse
  * @since 1.1.0
@@ -26,19 +26,19 @@ public interface LayerInterceptor {
     /**
      * Extension Point ID of Layer interceptors
      */
-    String EXTENSION_ID = "net.refractions.udig.project.layerInterceptor"; //$NON-NLS-1$
+    public String EXTENSION_ID = "net.refractions.udig.project.layerInterceptor"; //$NON-NLS-1$
     /**
      * Attribute name of layer created interceptors
      */
-    String CREATED_ID = "layerCreated"; //$NON-NLS-1$
+    public String CREATED_ID = "layerCreated"; //$NON-NLS-1$
     /**
      * Attribute name of layer added interceptors
      */
-    String ADDED_ID = "layerAdded"; //$NON-NLS-1$
+    public String ADDED_ID = "layerAdded"; //$NON-NLS-1$
     /**
      * Attribute name of layer removed interceptors
      */
-    String REMOVED_ID = "layerRemoved"; //$NON-NLS-1$
+    public String REMOVED_ID = "layerRemoved"; //$NON-NLS-1$
 
     /**
      * Performs an action on the layer.

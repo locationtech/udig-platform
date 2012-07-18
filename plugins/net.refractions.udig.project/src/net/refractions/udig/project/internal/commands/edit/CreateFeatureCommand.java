@@ -9,24 +9,22 @@
 package net.refractions.udig.project.internal.commands.edit;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.core.internal.GeometryBuilder;
 import net.refractions.udig.project.AdaptableFeature;
+import net.refractions.udig.project.EditFeature;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.MapCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.interceptor.FeatureInterceptor;
+import net.refractions.udig.project.interceptor.InterceptorSupport;
 import net.refractions.udig.project.interceptor.MapInterceptor;
+import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.ProjectPlugin;
 
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
@@ -36,7 +34,6 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.referencing.CRS;
-import org.opengis.feature.Feature;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -117,11 +114,14 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
         newFeature.setDefaultGeometry(geom);
         fid = newFeature.getID();
 
-        SimpleFeature feature = new AdaptableFeature(newFeature, editLayer);
+        EditManager editManager = map.getEditManagerInternal();
+        //SimpleFeature feature = new AdaptableFeature(newFeature, editLayer);
         
-        runFeatureCreationInterceptors(feature);
-
-        map.getEditManagerInternal().addFeature(newFeature, (Layer) editLayer);
+        EditFeature editFeature = new EditFeature(editManager, newFeature );
+        
+        InterceptorSupport.runFeatureCreationInterceptors(editFeature);
+        
+        editManager.addFeature(newFeature, (Layer) editLayer);
     }
     /**
      * Retrieves a default value for the provided descriptor.
@@ -222,22 +222,5 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
                 .getDefaultHints());
         editLayer.getResource(FeatureStore.class, null).removeFeatures(
                 filterFactory.id(FeatureUtils.stringToId(filterFactory, fid)));
-    }
-    
-    public static void runFeatureCreationInterceptors( Feature feature ) {
-        List<IConfigurationElement> interceptors = ExtensionPointList
-                .getExtensionPointList(FeatureInterceptor.EXTENSION_ID);
-        for( IConfigurationElement element : interceptors ) {
-            String id = element.getAttribute("id");
-            if (FeatureInterceptor.LIFECYCLE_ID.equals(element.getName())) {
-                try {
-                    FeatureInterceptor interceptor = (FeatureInterceptor) element
-                            .createExecutableExtension("class");
-                    interceptor.run(feature);
-                } catch (Exception e) {
-                    ProjectPlugin.log("FeatureInterceptor " + id + ":" + e, e);
-                }
-            }
-        }
     }
 }

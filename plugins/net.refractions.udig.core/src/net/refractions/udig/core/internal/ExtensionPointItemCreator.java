@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.IExtension;
 /**
  * Process an Extention Point into items for a List.
  * <p>
- * This interface works with a different set of assumptions then Jesse's origional. It is influenced
+ * This interface works with a different set of assumptions then Jesse's original. It is influenced
  * by the guidelines in "Contributing to Eclipse", and is focused on Object (possibly proxy)
  * creation.
  * </p>
@@ -55,14 +55,14 @@ import org.eclipse.core.runtime.IExtension;
  * @author jgarnett
  * @since 0.6
  */
-public abstract class ExtensionPointItemCreator {
+public abstract class ExtensionPointItemCreator<T> {
     /**
      * Process this extention point into a List.
      * 
      * @param xpid Extention point to process
      * @return List of items created
      */
-    public List process( String xpid ) {
+    public List<T> process( String xpid ) {
         return ExtensionPointUtil.list(xpid, this);
     }
     /**
@@ -79,7 +79,7 @@ public abstract class ExtensionPointItemCreator {
      * @throws Exception If extention point could not be processed, a ExtentionPointUtil will create
      *         the appropriate log message
      */
-    public abstract Object createItem( IExtension extension, IConfigurationElement element )
+    public abstract T createItem( IExtension extension, IConfigurationElement element )
             throws Exception;
 
 }

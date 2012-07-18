@@ -24,11 +24,14 @@ import java.util.Map.Entry;
 
 import net.refractions.udig.core.IBlockingProvider;
 import net.refractions.udig.core.StaticBlockingProvider;
+import net.refractions.udig.project.EditFeature;
+import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.UndoableComposite;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.command.provider.FIDFeatureProvider;
-import net.refractions.udig.project.internal.commands.edit.CreateFeatureCommand;
+import net.refractions.udig.project.interceptor.InterceptorSupport;
+import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.commands.edit.DeleteFeatureCommand;
 import net.refractions.udig.project.internal.commands.edit.SetGeometryCommand;
 import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
@@ -253,10 +256,11 @@ public class AcceptChangesBehaviour implements Behaviour {
                                 "Could not create an empty " + schema.getTypeName() + ":" + e, e); //$NON-NLS-1$//$NON-NLS-2$
                     }
                     
-                    CreateFeatureCommand.runFeatureCreationInterceptors(feature);
+                    IEditManager editManager = handler.getEditLayer().getMap().getEditManager();
+                    EditFeature editFeature = new EditFeature( editManager, feature );
+                    InterceptorSupport.runFeatureCreationInterceptors(editFeature);
                     
-                    // FeaturePanelProcessor panels = ProjectUIPlugin.getDefault()
-                    // .getFeaturePanelProcessor();
+                    // FeaturePanelProcessor panels = ProjectUIPlugin.getDefault().getFeaturePanelProcessor();
                     // List<FeaturePanelEntry> popup = panels.search(schema);
                     // if (popup.isEmpty()) {
                     CreateAndSelectNewFeature newFeatureCommand = new CreateAndSelectNewFeature(

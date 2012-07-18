@@ -81,16 +81,11 @@ public class ExtensionPointUtil {
                 try {
                     processor.process(extension, element);
                 } catch (Throwable exception) {
-                    plugin
-                            .getLog()
-                            .log(
-                                    new Status(
-                                            IStatus.WARNING,
-                                            element.getNamespaceIdentifier(),
-                                            0,
-                                            MessageFormat
-                                                    .format(
-                                                            "Error processing extension {0}", new Object[]{exception}), exception)); //$NON-NLS-1$                    
+                    Status status = new Status(
+                            IStatus.WARNING,
+                            element.getNamespaceIdentifier(),
+                            "Error processing extension:"+exception, exception); //$NON-NLS-1$
+                    plugin.getLog().log(status);
                 }
             }
         }
@@ -115,14 +110,14 @@ public class ExtensionPointUtil {
      * @param itemCreator Used to process extention points into items for a list
      * @return List
      */
-    public static List list( String xpid, ExtensionPointItemCreator itemCreator ) {
+    public static <T> List<T> list( String xpid, ExtensionPointItemCreator<T> itemCreator ) {
         IExtensionRegistry registry = Platform.getExtensionRegistry();
         IExtensionPoint extensionPoint = registry.getExtensionPoint(xpid);
         if (extensionPoint == null) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
         IExtension[] extensions = extensionPoint.getExtensions();
-        List<Object> list = new ArrayList<Object>();
+        List<T> list = new ArrayList<T>();
         // For each extension ...
         for( int i = 0; i < extensions.length; i++ ) {
             IExtension extension = extensions[i];
@@ -132,23 +127,17 @@ public class ExtensionPointUtil {
             for( int j = 0; j < elements.length; j++ ) {
                 IConfigurationElement element = elements[j];
                 try {
-                    Object obj = itemCreator.createItem(extension, element);
-                    if (obj == null)
-                        continue; // warning?
-
-                    list.add(obj);
+                    T item = itemCreator.createItem(extension, element);
+                    if (item == null){
+                        continue; // warning or just skip
+                    }
+                    list.add(item);
                 } catch (Throwable exception) {
-                    CorePlugin
-                            .getDefault()
-                            .getLog()
-                            .log(
-                                    new Status(
-                                            IStatus.WARNING,
-                                            extension.getNamespaceIdentifier(),
-                                            0,
-                                            MessageFormat
-                                                    .format(
-                                                            "Error processing extension {0}", new Object[]{exception}), exception)); //$NON-NLS-1$
+                    Status status = new Status(
+                            IStatus.WARNING,
+                            element.getNamespaceIdentifier(),
+                            "Error processing extension:"+exception, exception); //$NON-NLS-1$
+                    CorePlugin.getDefault().getLog().log(status);
                 }
             }
         }
