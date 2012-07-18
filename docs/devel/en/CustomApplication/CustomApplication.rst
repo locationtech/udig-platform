@@ -1,4 +1,4 @@
-Custum Application
+Custom Application
 ==================
 
 |refractions_png| |lisasoft_png| |udig_logo_gif|
