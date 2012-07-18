@@ -23,6 +23,9 @@ package eu.udig.tools.merge.internal.view;
 import java.util.List;
 
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.IMapCompositionListener;
+import net.refractions.udig.project.MapCompositionEvent;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.ui.AnimationUpdater;
 import net.refractions.udig.project.ui.ApplicationGIS;
@@ -37,6 +40,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
@@ -53,8 +57,8 @@ import eu.udig.tools.merge.MergeContext;
  * This view shows the features to merge.
  * 
  * <p>
- * The view allows to select the attributes of the source features that will be merge in the 
- * target feature (the merge feature).
+ * The view allows to select the attributes of the source features that will be merge in the target
+ * feature (the merge feature).
  * </p>
  * 
  * @author Aritz Davila (www.axios.es)
@@ -62,247 +66,454 @@ import eu.udig.tools.merge.MergeContext;
  */
 public class MergeView extends ViewPart implements IUDIGView {
 
-	public static final String	ID				= "eu.udig.tools.merge.internal.view.MergeView";	//$NON-NLS-1$
+    public static final String ID = "eu.udig.tools.merge.internal.view.MergeView"; //$NON-NLS-1$
 
-	private MergeComposite		mergeComposite	= null;
+    private MergeComposite mergeComposite = null;
 
-	private CancelButtonAction	cancelButton	= null;
-	private MergeButtonAction	mergeButton		= null;
-	private MergeContext		mergeContext	= null;
-	private String				message;
+    private CancelButtonAction cancelButton = null;
 
-	/** The merge operation is possible if this variable is sets in true value */
-	private boolean 			canMerge;
+    private MergeButtonAction mergeButton = null;
 
-	@Override
-	public void createPartControl(Composite parent) {
+    private MergeContext mergeContext = null;
 
-		this.mergeComposite = new MergeComposite(parent, SWT.NONE);
+    private String message;
 
-		this.mergeComposite.setView(this);
+    /** The merge operation is possible if this variable is sets in true value */
+    private boolean canMerge;
 
-		createActions();
-		createToolbar();
-	}
+    // listeners
+    /** Map Listener used to catch the map changes */
+    private IMapCompositionListener mapListener = null;
 
-	private void createToolbar() {
+    protected Thread uiThread;
 
-		IToolBarManager toolbar = getViewSite().getActionBars().getToolBarManager();
-		toolbar.add(mergeButton);
-		toolbar.add(cancelButton);
+    private boolean wasInitialized = false;
 
-	}
+    private IToolContext context = null;
 
-	private void createActions() {
+    // ###
+    // ###
+    // ###
 
-		this.mergeButton = new MergeButtonAction();
-		this.cancelButton = new CancelButtonAction();
-	}
+    protected void initialize() {
 
-	private class CancelButtonAction extends Action {
+        this.wasInitialized = false;
 
-		public CancelButtonAction() {
+        this.uiThread = Thread.currentThread();
 
-			setToolTipText(Messages.MergeView_cancel_tool_tip);
-			String imgFile = "images/reset_co.gif"; //$NON-NLS-1$
-			setImageDescriptor(ImageDescriptor.createFromFile(MergeView.class, imgFile));
-		}
+        // createContents();
 
-		/**
-		 * closes the view
-		 */
-		@Override
-		public void run() {
-			close();
-		}
-	}
+        initListeners();
 
-	private  void close() {
-		try {
-			
-			ApplicationGIS.getView(false, MergeView.ID);
-			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			IViewPart viewPart = page.findView(MergeView.ID);
-			page.hideView(viewPart);
-		} finally {
-			IToolContext context=  getContext();
-			UndoableMapCommand clearSelectionCommand = context.getSelectionFactory().createNoSelectCommand();
+        this.wasInitialized = true;
 
-			context.sendASyncCommand(clearSelectionCommand);
-		}		
-		
-	}
-	
-	
+    }
 
-	private class MergeButtonAction extends Action {
+    /**
+     * create the default listeners for spatial operations.
+     * 
+     */
+    private void initListeners() {
 
-		public MergeButtonAction() {
+        this.mapListener = new IMapCompositionListener() {
 
-			setToolTipText(Messages.MergeView_finish_tool_tip);
-			String imgFile = "images/apply_co.gif"; //$NON-NLS-1$
-			setImageDescriptor(ImageDescriptor.createFromFile(MergeView.class, imgFile));
-		}
+            public void changed(MapCompositionEvent event) {
 
-		/**
-		 * Executes the merge command
-		 */
-		@Override
-		public void run() {
+                /*
+                 * if (!wasInitialized()) { return; }
+                 */
+                // if (getCommand().isStopped()) {
+                // return;
+                // }
 
-			// sets the command using the features present in the merge builder
-			IToolContext context = getContext();
-			final ILayer layer = context.getSelectedLayer();
+                updatedMapLayersActions(event);
+            }
+        };
+    }
 
-			MergeFeatureBuilder mergeBuilder = mergeComposite.getMergeBuilder();
-			final List<SimpleFeature> sourceFeatures = mergeBuilder.getSourceFeatures();
-			final SimpleFeatureCollection sourceFeaturesCollection = DataUtilities.collection(sourceFeatures);
+    /**
+     * Sets the map as current and add the listeners to listen the changes in the map and its
+     * layers. Additionally it initializes the current layer list.
+     * 
+     * @param map
+     */
 
-			final SimpleFeature mergedFeature = mergeBuilder.buildMergedFeature();
-			
-			mergeBuilder.removeFromSourceFeatures(sourceFeatures);
+    private void addListenersTo(final IMap map/* , final List<ILayer> layerList */) {
 
-			MergeFeaturesCommand cmd = MergeFeaturesCommand.getInstance(layer, sourceFeaturesCollection, mergedFeature);
+        assert map != null;
+        // assert layerList != null;
+        assert this.mapListener != null;
+        // assert this.layerListener != null;
 
-			context.getMap().sendCommandASync(cmd);
+        map.addMapCompositionListener(this.mapListener);
+        /*
+         * for (ILayer layer : layerList) {
+         * 
+         * layer.addListener(this.layerListener); }
+         */
+    }
 
-			StatusBar.setStatusBarMessage(context, Messages.MergeTool_successful);
-			
-			context.getViewportPane().repaint();
-			
-			close();
-		}
-	}
+    /**
+     * This method is called if the collection of layer is updated (added or removed). This is a
+     * template method that calls a specific method by each event type.
+     * 
+     * @see changedLayerListActions()
+     * @see addedLayerActions()
+     * @see removedLayerActions()
+     * @param event
+     */
+    private void updatedMapLayersActions(final MapCompositionEvent event) {
 
-	@Override
-	public void setFocus() {
+        MapCompositionEvent.EventType eventType = event.getType();
 
-		// TODO Auto-generated method stub
-	}
+        switch (eventType) {
 
-	/**
-	 * Set the mergeBuilder that contains all the data and populate the
-	 * composite with these data.
-	 * @deprecated
-	 * @param builder
-	 */
-	public void setBuilder(MergeFeatureBuilder builder) {
-		throw new UnsupportedOperationException();
-		//this.mergeComposite.setBuilder(builder);
-	}
+        case ADDED: {
+            Display.findDisplay(uiThread).asyncExec(new Runnable() {
+                public void run() {
 
+                    final ILayer layer = event.getLayer();
+                    // addedLayerActions(layer);
+                    // validateParameters();
+                    System.out.print("Layer ADDED");
+                }
+            });
+            break;
+        }
+        case REMOVED: {
 
-	/**
-	 * Enables the merge button for merge the features depending on the boolean value.
-	 * <ul>
-	 * <li>It should be select two or more feature</li>
-	 * </ul>
-	 */
-	protected void canMerge(boolean bValue) {
-		
-		this.canMerge = bValue;
-		this.mergeButton.setEnabled(this.canMerge);
-	}
+            Display.findDisplay(uiThread).asyncExec(new Runnable() {
+                public void run() {
 
-	/**
-	 * displays the error message
-	 */
-	private void handleError(IToolContext context, MapMouseEvent e) {
+                    final ILayer layer = event.getLayer();
+                    // removedLayerActions(layer);
+                    // validateParameters();
+                    System.out.print("Layer REMOVED");
+                }
+            });
+            break;
+        }
+        case MANY_ADDED:
+        case MANY_REMOVED:
+            Display.findDisplay(uiThread).asyncExec(new Runnable() {
 
-		AnimationUpdater.runTimer(context.getMapDisplay(), new MessageBubble(e.x, e.y, this.message, PreferenceUtil
-					.instance().getMessageDisplayDelay())); //$NON-NLS-1$
-	}
+                public void run() {
 
-	
-	/**
-	 * Add the features the merge feature list
-	 * @param sourceFeatures
-	 */
-	public void addSourceFeatures(List<SimpleFeature> sourceFeatures) {
+                    // changedLayerListActions();
+                    // validateParameters();
 
-		assert sourceFeatures != null;
-		
-		this.mergeComposite.addSourceFeatures(sourceFeatures);
-	}
+                    System.out.print("Layer MANY ADDED-REMOVED");
+                }
+            });
+            break;
+        default:
+            System.out.print("Layer DEFAULT");
+            break;
+        }
+    }
 
-	/**
-	 * Displays the content of this view 
-	 * 
-	 * @param selectedFeatures
-	 */
-	public void display() {
-			
-		this.mergeComposite.display();
-	}
+    @Override
+    public void createPartControl(Composite parent) {
 
-	
-	/**
-	 * Checks if the feature to be deleted from the list could be deleted. If
-	 * there is no selection or if it's only one feature on the list, will
-	 * return false.
-	 * 
-	 * @param featureToDelete
-	 * @return
-	 */
-//	private boolean canDelete(SimpleFeature featureToDelete) {
-//
-//		boolean isValid = true;
-//		this.message = "";
-//		
-//		if (featureToDelete == null) {
-//			// there is any feature to delete.
-//			this.message = Messages.MergeFeatureView_no_feature_to_delete;
-//			return false;
-//		}
-//		List<SimpleFeature> sourceFeatures = this.mergeComposite.getSourceFeatures();
-//		if (sourceFeatures.size() == 1) {
-//
-//			this.message = Messages.MergeFeatureView_cant_remove;
-//			isValid = false;
-//		}
-//		
-//		this.mergeComposite.setMessage(this.message, IMessageProvider.WARNING);
-//
-//		return isValid;
-//	}
+        this.mergeComposite = new MergeComposite(parent, SWT.NONE);
 
+        this.mergeComposite.setView(this);
 
-	@Override
-	public void dispose() {
+        createActions();
+        createToolbar();
+        initialize(); // <<<< ############### plug in Listener previous workflow HERE  #################
+    }
+    
+    /**
+     * @return the current Map; null if there is not any Map.
+     */
+    public IMap getCurrentMap() {
 
-		if(this.mergeContext != null){ 
-			this.mergeContext.disposeMergeView();
-		}
-		super.dispose();
-	}
+            if (this.context == null) {
+                    return null;
+            }
 
-	@Override
-	public void editFeatureChanged(SimpleFeature feature) {
-		// TODO Auto-generated method stub
-		
-	}
+            return this.context.getMap();
+    }
+    
+    /**
+     * Removes the listeners from map.
+     * 
+     * @param currentMap
+     */
+    private void removeListenerFrom(IMap map) {
 
-	@Override
-	public void setContext(IToolContext newContext) {
-		// TODO Auto-generated method stub
-		
-	}
+            assert map != null;
+            assert this.mapListener != null;
+            /*
+            assert this.layerListener != null;
 
-	@Override
-	public IToolContext getContext() {
-		if(this.mergeContext == null) return null;
-		
-		return this.mergeContext.getToolContext();
-	}
+            for (ILayer layer : getCurrentLayerList()) {
 
-	public void setMergeContext(MergeContext mergeContext) {
+                    layer.removeListener(this.layerListener);
+            }
+            */
 
-		this.mergeContext = mergeContext;
-	}
+            map.removeMapCompositionListener(this.mapListener);
+    }
 
-	public boolean isDisposed() {
-		// TODO Auto-generated method stub
-		return this.mergeComposite.isDisposed();
-	}
+    // <<<< ###############
+    // <<<< ###############
+    // <<<< ###############
+    // <<<< ###############
+    // <<<< ###############
+    // <<<< ###############
+    // <<<< ###############
+    // <<<< ###############
+    // <<<< ###############
+
+    private void createToolbar() {
+
+        IToolBarManager toolbar = getViewSite().getActionBars().getToolBarManager();
+        toolbar.add(mergeButton);
+        toolbar.add(cancelButton);
+
+    }
+
+    private void createActions() {
+
+        this.mergeButton = new MergeButtonAction();
+        this.cancelButton = new CancelButtonAction();
+    }
+
+    private class CancelButtonAction extends Action {
+
+        public CancelButtonAction() {
+
+            setToolTipText(Messages.MergeView_cancel_tool_tip);
+            String imgFile = "images/reset_co.gif"; //$NON-NLS-1$
+            setImageDescriptor(ImageDescriptor.createFromFile(MergeView.class, imgFile));
+        }
+
+        /**
+         * closes the view
+         */
+        @Override
+        public void run() {
+            close();
+        }
+    }
+
+    private void close() {
+        try {
+
+            ApplicationGIS.getView(false, MergeView.ID);
+            IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                    .getActivePage();
+            IViewPart viewPart = page.findView(MergeView.ID);
+            page.hideView(viewPart);
+        } finally {
+            IToolContext context = getContext();
+            UndoableMapCommand clearSelectionCommand = context.getSelectionFactory()
+                    .createNoSelectCommand();
+
+            context.sendASyncCommand(clearSelectionCommand);
+        }
+
+    }
+
+    private class MergeButtonAction extends Action {
+
+        public MergeButtonAction() {
+
+            setToolTipText(Messages.MergeView_finish_tool_tip);
+            String imgFile = "images/apply_co.gif"; //$NON-NLS-1$
+            setImageDescriptor(ImageDescriptor.createFromFile(MergeView.class, imgFile));
+        }
+
+        /**
+         * Executes the merge command
+         */
+        @Override
+        public void run() {
+
+            // sets the command using the features present in the merge builder
+            IToolContext context = getContext();
+            final ILayer layer = context.getSelectedLayer();
+
+            MergeFeatureBuilder mergeBuilder = mergeComposite.getMergeBuilder();
+            final List<SimpleFeature> sourceFeatures = mergeBuilder.getSourceFeatures();
+            final SimpleFeatureCollection sourceFeaturesCollection = DataUtilities
+                    .collection(sourceFeatures);
+
+            final SimpleFeature mergedFeature = mergeBuilder.buildMergedFeature();
+
+            mergeBuilder.removeFromSourceFeatures(sourceFeatures);
+
+            MergeFeaturesCommand cmd = MergeFeaturesCommand.getInstance(layer,
+                    sourceFeaturesCollection, mergedFeature);
+
+            context.getMap().sendCommandASync(cmd);
+
+            StatusBar.setStatusBarMessage(context, Messages.MergeTool_successful);
+
+            context.getViewportPane().repaint();
+
+            close();
+        }
+    }
+
+    @Override
+    public void setFocus() {
+
+        // TODO Auto-generated method stub
+    }
+
+    /**
+     * Set the mergeBuilder that contains all the data and populate the composite with these data.
+     * 
+     * @deprecated
+     * @param builder
+     */
+    public void setBuilder(MergeFeatureBuilder builder) {
+        throw new UnsupportedOperationException();
+        // this.mergeComposite.setBuilder(builder);
+    }
+
+    /**
+     * Enables the merge button for merge the features depending on the boolean value.
+     * <ul>
+     * <li>It should be select two or more feature</li>
+     * </ul>
+     */
+    protected void canMerge(boolean bValue) {
+
+        this.canMerge = bValue;
+        this.mergeButton.setEnabled(this.canMerge);
+    }
+
+    /**
+     * displays the error message
+     */
+    private void handleError(IToolContext context, MapMouseEvent e) {
+
+        AnimationUpdater.runTimer(context.getMapDisplay(), new MessageBubble(e.x, e.y,
+                this.message, PreferenceUtil.instance().getMessageDisplayDelay())); //$NON-NLS-1$
+    }
+
+    /**
+     * Add the features the merge feature list
+     * 
+     * @param sourceFeatures
+     */
+    public void addSourceFeatures(List<SimpleFeature> sourceFeatures) {
+
+        assert sourceFeatures != null;
+
+        this.mergeComposite.addSourceFeatures(sourceFeatures);
+    }
+
+    /**
+     * Displays the content of this view
+     * 
+     * @param selectedFeatures
+     */
+    public void display() {
+
+        this.mergeComposite.display();
+    }
+
+    /**
+     * Checks if the feature to be deleted from the list could be deleted. If there is no selection
+     * or if it's only one feature on the list, will return false.
+     * 
+     * @param featureToDelete
+     * @return
+     */
+    // private boolean canDelete(SimpleFeature featureToDelete) {
+    //
+    // boolean isValid = true;
+    // this.message = "";
+    //
+    // if (featureToDelete == null) {
+    // // there is any feature to delete.
+    // this.message = Messages.MergeFeatureView_no_feature_to_delete;
+    // return false;
+    // }
+    // List<SimpleFeature> sourceFeatures = this.mergeComposite.getSourceFeatures();
+    // if (sourceFeatures.size() == 1) {
+    //
+    // this.message = Messages.MergeFeatureView_cant_remove;
+    // isValid = false;
+    // }
+    //
+    // this.mergeComposite.setMessage(this.message, IMessageProvider.WARNING);
+    //
+    // return isValid;
+    // }
+
+    @Override
+    public void dispose() {
+
+        if (this.mergeContext != null) {
+            this.mergeContext.disposeMergeView();
+        }
+        super.dispose();
+    }
+
+    @Override
+    public void editFeatureChanged(SimpleFeature feature) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void setContext(IToolContext newContext) {
+
+        // ######### THIS IS NEW STUFF - Before editing the setContext method was EMPTY
+        IMap map;
+        if (newContext == null) {
+            // initialize or reinitialize the Presenter
+            map = getCurrentMap();
+            if (map != null) {
+                removeListenerFrom(map);
+            }
+        } else {
+            // sets maps and its layers as current
+            map = newContext.getMap();
+            if (map != null) {
+
+                // add this presenter as listener of the map
+                // List<ILayer> layerList = getLayerListOf(map);
+                addListenersTo(map/* , layerList */);
+            }
+        }
+        this.context = newContext;
+
+        // notifies the change in current map
+        /*
+         * REMOVED WHILE IMPLEMENTING STEP-BY-STEP
+        changedMapActions(map);
+        if (map != null) {
+            changedLayerListActions();
+            validateParameters();
+        }
+        */
+        // #############################################
+
+    }
+
+    @Override
+    public IToolContext getContext() {
+        if (this.mergeContext == null)
+            return null;
+
+        return this.mergeContext.getToolContext();
+    }
+
+    public void setMergeContext(MergeContext mergeContext) {
+
+        this.mergeContext = mergeContext;
+    }
+
+    public boolean isDisposed() {
+        // TODO Auto-generated method stub
+        return this.mergeComposite.isDisposed();
+    }
 
 }
