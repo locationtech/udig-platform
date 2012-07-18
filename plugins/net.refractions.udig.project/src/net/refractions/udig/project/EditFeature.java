@@ -25,11 +25,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.project.EditFeature.AttributeStatus;
 import net.refractions.udig.project.internal.commands.edit.SetAttributeCommand;
 import net.refractions.udig.project.internal.commands.edit.SetAttributesCommand;
-import net.refractions.udig.project.listener.EditFeatureListenerList;
 import net.refractions.udig.project.listener.EditFeatureListener;
+import net.refractions.udig.project.listener.EditFeatureListenerList;
+import net.refractions.udig.project.listener.EditFeatureStateChangeEvent;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
@@ -44,7 +44,6 @@ import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.feature.type.Name;
 import org.opengis.feature.type.PropertyDescriptor;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -70,14 +69,11 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
      * @author leviputna
      * 
      */
-    class AttributeStatus {
-        private Boolean dirty = false;
-
-        private Boolean visible = true;
-
-        private Boolean enabled = true;
-
-        private Boolean editable = true;
+    public class AttributeStatus {
+        private boolean dirty = false;
+        private boolean visible = true;
+        private boolean enabled = true;
+        private boolean editable = true;
 
         /**
          * Check if the attribute value has changes in the EditFeature but has not been updated in
@@ -95,8 +91,9 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
          * 
          * @param dirty the dirty status to set
          */
-        public void setDirty(Boolean dirty) {
+        public void setDirty(boolean dirty) {
             this.dirty = dirty;
+            doStatusChange(EditFeatureStateChangeEvent.Type.DIRTY, this);
         }
 
         /**
@@ -113,8 +110,9 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
          * 
          * @param the visibility to set.
          */
-        public void setVisible(Boolean visible) {
+        public void setVisible(boolean visible) {
             this.visible = visible;
+            doStatusChange(EditFeatureStateChangeEvent.Type.VISIBLE, this);
         }
 
         /**
@@ -148,8 +146,9 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
          * 
          * @param enabled
          */
-        public void setEnabled(Boolean enabled) {
+        public void setEnabled(boolean enabled) {
             this.enabled = enabled;
+            doStatusChange(EditFeatureStateChangeEvent.Type.ENABLED, this);
         }
 
         /**
@@ -167,8 +166,9 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
          * 
          * @param true to make this attribute editable, false to make it read only.
          */
-        public void setEditable(Boolean editable) {
+        public void setEditable(boolean editable) {
             this.editable = editable;
+            doStatusChange(EditFeatureStateChangeEvent.Type.EDITABLE, this);
         }
 
     }
@@ -221,9 +221,9 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
     public void setAttribute(int index, Object value) {
         SimpleFeatureType schema = getFeatureType();
         AttributeDescriptor attribute = schema.getAttributeDescriptors().get(index);
-
         Object oldValue = getAttribute(index);
         String name = attribute.getLocalName();
+        doBeforeValueChange(attribute.getLocalName(), oldValue, value);
         SetAttributeCommand sync = new SetAttributeCommand(name, value);
         dirty.add(name);
         manager.getMap().sendCommandASync(sync);
@@ -237,6 +237,7 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
 
         SetAttributeCommand sync = new SetAttributeCommand(name.getLocalPart(), value);
         dirty.add(name.getLocalPart());
+        doBeforeValueChange(name.getLocalPart(), oldValue, value);
         manager.getMap().sendCommandASync(sync);
         doValueChange(name.getLocalPart(), oldValue, value);
     }
@@ -249,6 +250,7 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
         // System.out.println("made it to before dirty");
         dirty.add(path);
         // System.out.println("made it to after dirty");
+        doBeforeValueChange(path, oldValue, value);
         manager.getMap().sendCommandASync(sync);
         doValueChange(path, oldValue, value);
     }
@@ -287,10 +289,8 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
     // This is simply the same as in DecoratingFeature.class
     public void setDefaultGeometry(Object geometry) {
         GeometryDescriptor geometryDescriptor = getFeatureType().getGeometryDescriptor();
-        setAttribute(geometryDescriptor.getName(), geometry);
 
-        Object oldValue = getAttribute(geometryDescriptor.getName());
-        doValueChange(geometryDescriptor.getLocalName(), oldValue, geometry);
+        setAttribute(geometryDescriptor.getName(), geometry);
     }
 
     @Override
@@ -371,9 +371,18 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
     public void removeEditFeatureListener(EditFeatureListener listener) {
         editFeatureListeners.remove(listener);
     }
+    
+    private void doBeforeValueChange(String attributeName, Object oldValue, Object newValue) {
+        editFeatureListeners.doValueChange(new PropertyChangeEvent(this, attributeName, oldValue,
+                newValue));
+    }
 
     private void doValueChange(String attributeName, Object oldValue, Object newValue) {
         editFeatureListeners.doValueChange(new PropertyChangeEvent(this, attributeName, oldValue,
                 newValue));
+    }
+    
+    private void doStatusChange(EditFeatureStateChangeEvent.Type state, AttributeStatus attributeStatus) {
+        editFeatureListeners.doStateChange(new EditFeatureStateChangeEvent(state, attributeStatus));
     }
 }

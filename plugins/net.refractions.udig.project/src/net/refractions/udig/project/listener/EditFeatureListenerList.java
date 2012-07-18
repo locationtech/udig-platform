@@ -10,11 +10,7 @@ package net.refractions.udig.project.listener;
 
 import java.beans.PropertyChangeEvent;
 
-import net.refractions.udig.project.EditFeature;
-import net.refractions.udig.project.listener.EditFeatureListener.StateType;
-
 import org.eclipse.core.runtime.ListenerList;
-import org.opengis.feature.type.AttributeDescriptor;
 
 /**
  * Holds onto all the {@link EditFeatureListener} for an EditFeature, provides additional utility
@@ -62,13 +58,16 @@ public class EditFeatureListenerList {
 
     /**
      * Utility method to notify all value change listeners.
+     * 
+     * @param stateChangeEvent
+     * @param attributeStatus
      */
-    public void doStateChange(StateType type, EditFeature feature) {
+    public void doStateChange(EditFeatureStateChangeEvent stateChangeEvent) {
         Object[] listenerArray = getListeners();
 
         for (int i = 0; i < listenerArray.length; i++) {
             EditFeatureListener listener = (EditFeatureListener) listenerArray[i];
-            listener.attributeStateChange(type, feature);
+            listener.attributeStateChange(stateChangeEvent);
 
         }
     }
