@@ -12,8 +12,21 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.type.AttributeDescriptor;
 
 
-public class EditFeatureListenerImpl implements EditFeatureListener {
+/**
+ * Abstract implementation to help with implementation of anonymous inner classes.
+ * <p>
+ * Example:<pre>
+ * editFeature.addListener( new EditFeatureListenerAdaptor(){
+ *     public void activate(EditFeature feature) {
+ *         return true;
+ *     }
+ * });</pre>
+ * @author leviputna
+ *
+ */
+public abstract class EditFeatureAdaptor implements EditFeatureListener {
 
+    
     @Override
     public Boolean beforeEdit(SimpleFeature feature, AttributeDescriptor attributeDescriptor) {
         return true;

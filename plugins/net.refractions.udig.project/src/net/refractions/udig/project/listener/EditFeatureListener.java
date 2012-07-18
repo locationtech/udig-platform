@@ -1,18 +1,41 @@
 package net.refractions.udig.project.listener;
 
+import org.eclipse.jface.util.IPropertyChangeListener;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.type.AttributeDescriptor;
-
+import net.refractions.udig.project.ui.feature.EditFeature;
 /**
- * A listener which is notified during {@link EditFeature} life cycle events.
- * 
+ * EditFeature event notification, provides feedback during attribute value editing with additional
+ * events covering isDirty, isVisible, isEnabled, isEditable model changes.
  * <p>
- * Implement to listen to EditFeature changes
+ * This is similar to {@link IPropertyChangeListener}.
  * 
  * @author Levi Putna
  * @since 1.3.0
  */
 public interface EditFeatureListener {
+
+    public enum StateType {
+        DIRTY,
+        VISIBLE,
+        ENABLED,
+        EDITABLE
+    };
+
+    /**
+     * Notification of attribute value change
+     * 
+     * @param oldValue The old value of the changed property, or <code>null</code> if not known or
+     *        not relevant.
+     * @param newValue The new value of the changed property, or <code>null</code> if not known or
+     *        not relevant.
+     */
+    public void attributeValueChange(EditFeature feature, Object oldValue, Object newValue);
+
+    /**
+     * 
+     */
+    public void attributeStateChange(StateType type, EditFeature feature);
 
     /**
      * Called before an attribute value changes, returning false will cause the edit event to be

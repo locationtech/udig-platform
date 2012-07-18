@@ -26,6 +26,8 @@ import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.commands.edit.SetAttributeCommand;
 import net.refractions.udig.project.internal.commands.edit.SetAttributesCommand;
+import net.refractions.udig.project.listener.EditFeatureListenerList;
+import net.refractions.udig.project.listener.EditFeatureListener;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
@@ -49,6 +51,8 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class EditFeature extends DecoratingFeature implements IAdaptable, SimpleFeature {
     private IEditManager manager;
+
+    private EditFeatureListenerList editFeatureAdapter = new EditFeatureListenerList();
 
     // not used yet; could be used to "batch up" changes to send in one command?
     private Set<String> dirty = new LinkedHashSet<String>(); // we no longer need this
@@ -189,5 +193,25 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
 
     public void setBatch(boolean batch) {
         this.batch = batch;
+    }
+
+    /**
+     * add a listener to this EditFeature. This method has no effect if the <a
+     * href="ListenerList.html#same">same</a> listener is already registered.
+     * 
+     * @param listener the non-<code>null</code> listener to add
+     */
+    public void addEditFeatureListener(EditFeatureListener listener) {
+        editFeatureAdapter.add(listener);
+    }
+
+    /**
+     * Removes a listener from this EditFeature. Has no effect if the <a
+     * href="ListenerList.html#same">same</a> listener was not already registered.
+     * 
+     * @param listener the non-<code>null</code> listener to remove
+     */
+    public void removeEditFeatureListener(EditFeatureListener listener) {
+        editFeatureAdapter.remove(listener);
     }
 }
