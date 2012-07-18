@@ -8,11 +8,14 @@
  */
 package net.refractions.udig.project.listener;
 
+import net.refractions.udig.project.EditFeature;
+import net.refractions.udig.project.listener.EditFeatureListener.StateType;
+
 import org.eclipse.core.runtime.ListenerList;
 
 /**
- * Holds onto all the {@link EditFeatureListener} for an EditFeature, provides additional
- * utility methods and is backed by a normal {@link ListenerList}.
+ * Holds onto all the {@link EditFeatureListener} for an EditFeature, provides additional utility
+ * methods and is backed by a normal {@link ListenerList}.
  * 
  * @author levi.putna
  * 
@@ -21,7 +24,6 @@ public class EditFeatureListenerList {
 
     private ListenerList listeners = new ListenerList();
 
-    
     /**
      * Adds a listener to this list. This method has no effect if the <a
      * href="ListenerList.html#same">same</a> listener is already registered.
@@ -40,6 +42,32 @@ public class EditFeatureListenerList {
      */
     public void remove(EditFeatureListener listener) {
         this.listeners.remove(listener);
+    }
+
+    /**
+     * Utility method to fire notify all value change listeners
+     */
+    public void doValueChange(EditFeature feature, Object oldValue, Object newValue) {
+        Object[] listenerArray = getListeners();
+
+        for (int i = 0; i < listenerArray.length; i++) {
+            EditFeatureListener listener = (EditFeatureListener) listenerArray[i];
+            listener.attributeValueChange(feature, oldValue, newValue);
+
+        }
+    }
+
+    /**
+     * Utility method to notify all value change listeners.
+     */
+    public void doStateChange(StateType type, EditFeature feature) {
+        Object[] listenerArray = getListeners();
+
+        for (int i = 0; i < listenerArray.length; i++) {
+            EditFeatureListener listener = (EditFeatureListener) listenerArray[i];
+            listener.attributeStateChange(type, feature);
+
+        }
     }
 
     /**

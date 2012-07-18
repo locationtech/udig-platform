@@ -3,10 +3,10 @@ package net.refractions.udig.tools.edit.commands;
 import java.util.Collections;
 
 import junit.framework.TestCase;
+import net.refractions.udig.project.EditFeature;
 import net.refractions.udig.project.command.CommandManager;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.ui.feature.EditFeature;
 import net.refractions.udig.tools.edit.EditState;
 import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.support.EditBlackboard;

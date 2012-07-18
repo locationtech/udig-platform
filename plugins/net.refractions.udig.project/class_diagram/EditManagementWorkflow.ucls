@@ -10,9 +10,9 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </interface>  
-  <class id="2" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.project.ui.feature.EditFeature" 
-    project="net.refractions.udig.project.ui" 
-    file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/feature/EditFeature.java" binary="false">    
+  <class id="2" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.project.EditFeature" 
+    project="net.refractions.udig.project" 
+    file="/net.refractions.udig.project/src/net/refractions/udig/project/EditFeature.java" binary="false">    
     <position height="-1" width="-1" x="183" y="755"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      

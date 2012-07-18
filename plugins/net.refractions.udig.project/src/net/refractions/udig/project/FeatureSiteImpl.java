@@ -1,10 +1,7 @@
-package net.refractions.udig.project.ui.feature;
+package net.refractions.udig.project;
 
 import org.opengis.feature.simple.SimpleFeature;
 
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.ui.IFeatureSite;
 import net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl;

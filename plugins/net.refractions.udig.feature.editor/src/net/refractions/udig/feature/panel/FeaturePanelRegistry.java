@@ -27,12 +27,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.refractions.udig.feature.editor.FeatureEditorPlugin;
+import net.refractions.udig.project.FeatureSiteImpl;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ui.IFeatureSite;
 import net.refractions.udig.project.ui.feature.FeaturePanelEntry;
 import net.refractions.udig.project.ui.feature.FeaturePanelProcessor;
-import net.refractions.udig.project.ui.feature.FeatureSiteImpl;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IAdaptable;

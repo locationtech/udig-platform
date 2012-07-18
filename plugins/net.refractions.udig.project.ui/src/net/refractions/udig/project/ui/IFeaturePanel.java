@@ -1,6 +1,6 @@
 package net.refractions.udig.project.ui;
 
-import net.refractions.udig.project.ui.feature.EditFeature;
+import net.refractions.udig.project.EditFeature;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IMemento;

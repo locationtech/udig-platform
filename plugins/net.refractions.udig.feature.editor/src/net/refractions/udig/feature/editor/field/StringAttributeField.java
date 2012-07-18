@@ -15,7 +15,7 @@
 package net.refractions.udig.feature.editor.field;
 
 import net.refractions.udig.internal.ui.SendLogDialog;
-import net.refractions.udig.project.ui.feature.EditFeature;
+import net.refractions.udig.project.EditFeature;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.resource.JFaceResources;

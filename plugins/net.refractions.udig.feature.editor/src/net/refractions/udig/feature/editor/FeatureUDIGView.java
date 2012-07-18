@@ -6,6 +6,7 @@ import net.refractions.udig.feature.panel.FeaturePanelPage;
 import net.refractions.udig.feature.panel.FeaturePanelPageContributor;
 import net.refractions.udig.internal.ui.UiPlugin;
 import net.refractions.udig.project.EditManagerEvent;
+import net.refractions.udig.project.FeatureSiteImpl;
 import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.IEditManagerListener;
 import net.refractions.udig.project.ILayer;
@@ -14,7 +15,6 @@ import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.IFeatureSite;
 import net.refractions.udig.project.ui.IUDIGView;
-import net.refractions.udig.project.ui.feature.FeatureSiteImpl;
 import net.refractions.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.core.runtime.IAdaptable;

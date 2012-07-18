@@ -3,7 +3,8 @@ package net.refractions.udig.project.listener;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.type.AttributeDescriptor;
-import net.refractions.udig.project.ui.feature.EditFeature;
+
+import net.refractions.udig.project.EditFeature;
 /**
  * EditFeature event notification, provides feedback during attribute value editing with additional
  * events covering isDirty, isVisible, isEnabled, isEditable model changes.

@@ -14,7 +14,7 @@
  *    Lesser General Public License for more details.
  *
  */
-package net.refractions.udig.project.ui.feature;
+package net.refractions.udig.project;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,8 +22,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.commands.edit.SetAttributeCommand;
 import net.refractions.udig.project.internal.commands.edit.SetAttributesCommand;
 import net.refractions.udig.project.listener.EditFeatureListenerList;
@@ -52,7 +50,7 @@ import com.vividsolutions.jts.geom.Geometry;
 public class EditFeature extends DecoratingFeature implements IAdaptable, SimpleFeature {
     private IEditManager manager;
 
-    private EditFeatureListenerList editFeatureAdapter = new EditFeatureListenerList();
+    private EditFeatureListenerList editFeatureListeners = new EditFeatureListenerList();
 
     // not used yet; could be used to "batch up" changes to send in one command?
     private Set<String> dirty = new LinkedHashSet<String>(); // we no longer need this
@@ -111,6 +109,7 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
         SetAttributeCommand sync = new SetAttributeCommand(name, value);
         dirty.add(name);
         manager.getMap().sendCommandASync(sync);
+//        editFeatureListeners.doValueChange(feature, oldValue, newValue);
     }
 
     @Override
@@ -202,7 +201,7 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
      * @param listener the non-<code>null</code> listener to add
      */
     public void addEditFeatureListener(EditFeatureListener listener) {
-        editFeatureAdapter.add(listener);
+        editFeatureListeners.add(listener);
     }
 
     /**
@@ -212,6 +211,6 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
      * @param listener the non-<code>null</code> listener to remove
      */
     public void removeEditFeatureListener(EditFeatureListener listener) {
-        editFeatureAdapter.remove(listener);
+        editFeatureListeners.remove(listener);
     }
 }

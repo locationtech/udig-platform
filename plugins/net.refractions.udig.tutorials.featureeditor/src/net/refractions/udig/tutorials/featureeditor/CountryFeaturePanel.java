@@ -5,13 +5,13 @@ import java.util.Properties;
 
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.project.EditFeature;
 import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.CompositeCommand;
 import net.refractions.udig.project.command.factory.EditCommandFactory;
 import net.refractions.udig.project.ui.IFeaturePanel;
 import net.refractions.udig.project.ui.IFeatureSite;
-import net.refractions.udig.project.ui.feature.EditFeature;
 import net.refractions.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.core.runtime.NullProgressMonitor;

@@ -14,9 +14,9 @@
  */
 package net.refractions.udig.feature.editor.field;
 
+import net.refractions.udig.project.EditFeature;
 import net.refractions.udig.project.ui.IFeaturePanel;
 import net.refractions.udig.project.ui.IFeatureSite;
-import net.refractions.udig.project.ui.feature.EditFeature;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.dialogs.DialogPage;

@@ -3,7 +3,7 @@ package net.refractions.udig.feature.editor.field;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.refractions.udig.project.ui.feature.EditFeature;
+import net.refractions.udig.project.EditFeature;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;

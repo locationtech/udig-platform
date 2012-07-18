@@ -16,7 +16,7 @@
  */
 package net.refractions.udig.project.ui;
 
-import net.refractions.udig.project.ui.feature.EditFeature;
+import net.refractions.udig.project.EditFeature;
 import net.refractions.udig.project.ui.tool.IToolContext;
 
 /**
