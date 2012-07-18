@@ -128,7 +128,7 @@ public interface FeatureInterceptor {
      * Feature editing:
      * <ul>
      * <li>activateFeature: Called prior to displaying the feature for review and editing. Often used to register
-     * listeners, or fill in an intial set of warnings.</li>
+     * listeners, or fill in an initial set of warnings.</li>
      * <li>deactivateFeature: Called </li>
      * </ul>
      * When throwing an exception it responsibility of the Interceptor to inform the EditFeature as to
