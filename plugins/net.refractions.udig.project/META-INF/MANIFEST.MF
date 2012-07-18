@@ -9,14 +9,10 @@ Bundle-Localization: plugin
 Eclipse-BuddyPolicy: ext
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
- net.refractions.udig.libs;visibility:=reexport,
- org.eclipse.jface,
  org.eclipse.ui,
- net.refractions.udig.core;visibility:=reexport,
  net.refractions.udig.catalog;visibility:=reexport,
  org.eclipse.emf.ecore.xmi,
- net.refractions.udig.ui,
- org.junit4;resolution:=optional
+ net.refractions.udig.ui
 Bundle-ActivationPolicy: lazy
 Export-Package: net.refractions.udig.project,
  net.refractions.udig.project.command,
@@ -44,4 +40,3 @@ Export-Package: net.refractions.udig.project,
  net.refractions.udig.project.preferences,
  net.refractions.udig.project.render,
  net.refractions.udig.project.render.displayAdapter
-Import-Package: net.refractions.udig.project.ui

@@ -1,7 +1,6 @@
 package net.refractions.udig.core.jts;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
