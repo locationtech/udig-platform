@@ -69,7 +69,7 @@ public class ShapeMover implements ServiceMover {
         File file = URLUtils.urlToFile(url);
         
         String completeShapeFilePath = file.getAbsolutePath();
-        completeShapeFilePath.replaceAll("\\\\", "/");
+        completeShapeFilePath = completeShapeFilePath.replaceAll("\\\\", "/");
         int dotPosition = completeShapeFilePath.lastIndexOf("."); //$NON-NLS-1$
         String completeShapefileBasePath = completeShapeFilePath.substring(0, dotPosition);
 
