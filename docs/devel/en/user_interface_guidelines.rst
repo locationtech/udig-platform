@@ -1,5 +1,5 @@
 User Interface Guidelines
-~~~~~~~~~~~~~~~~~~~~~~~~~
+=========================
 
 The eclipse user interace guidelines include a
 `checklist <http://www.eclipse.org/articles/Article-UI-Guidelines/Contents.html#Checklist%20For%20Developers>`_,
@@ -11,16 +11,16 @@ Real quick and easy - follow the eclipse user interface guidelines!
 * `http://www.eclipse.org/articles/Article-UI-Guidelines/Index.html <http://www.eclipse.org/articles/Article-UI-Guidelines/Index.html>`_
 
 Icons and Imagery
-~~~~~~~~~~~~~~~~~
+-----------------
 
 We use a consistent "visual language" to represent services, spatial concepts and abstract ideas.
 
 * :doc:`fonts_and_imagery`
 
--  `Icons <Icons.html>`_ - covers expected directory structure
+* :doc:`icons` - covers expected directory structure
 
 Eclipse User Interface Guidelines
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 Now that the eclipse user interface guidelines have moved to a wiki they are more up to date. In the
 past we have had to take some notes about our understanding of the user interface guidelines. These

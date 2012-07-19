@@ -1,10 +1,13 @@
 Workbench Selection Tutorial
-----------------------------
+============================
 
 This tutorial goes over creating a new view which will watch the workbench selection and use
 IAdatable to show how the uDig application functions at runtime.
 
-`|image0| <http://udig.refractions.net/files/tutorials/WorkbenchSelection.pdf>`_
+.. _WorkbenchSelection.pdf: http://udig.refractions.net/files/tutorials/WorkbenchSelection.pdf
+
+.. image:: /images/workbench_selection_tutorial/WorkbenchSelectionWorkbook.png
+   :target: WorkbenchSelection.pdf_
 
 References:
 
@@ -12,23 +15,20 @@ References:
 
 This workbook is part of our public training materials:
 
-* `http://udig.refractions.net/files/tutorials/WorkbenchSelection.pdf <http://udig.refractions.net/files/tutorials/WorkbenchSelection.pdf>`_
+* WorkbenchSelection.pdf_
 
 Resources:
 
-* `http://udig.refractions.net/files/tutorials/workbench\_icons.zip <http://udig.refractions.net/files/tutorials/workbench_icons.zip>`_
+* :download:`workbench_icons.zip`
 
 Source code:
 
--  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
-   view)
+-  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins view)
 -  plugin:
-   `net.refractions.udig.tutorials.workbench <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.workbench>`_
-   (github)
-    (github)
+   `net.refractions.udig.tutorials.workbench <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.workbench>`_ (github)
 
 Introduction
-~~~~~~~~~~~~
+------------
 
 In this tutorial you will:
 
@@ -56,12 +56,12 @@ select something and reporting back on what we find.
    :alt: 
 
 What to Try Next
-~~~~~~~~~~~~~~~~
+----------------
 
 Here are some additional challenges for you to try:
 
 MapEditor ModalTool Selection
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+`````````````````````````````
 
 You should have noticed that each View provides a unique selection. Did you also notice that the Map
 Editor will change what workbench selection it provides based on the current modal tool.
@@ -69,7 +69,7 @@ Editor will change what workbench selection it provides based on the current mod
 Explore the available tools and note what content each tool thinks it is working on.
 
 Perspective Extension for Show View Menu
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+````````````````````````````````````````
 
 Currently, if you want to see the workbench view you have to select Window>Show View>Other to open a
 the Show view dialog. You can then use the Show view dialog to navigate to Other >Select View.
@@ -77,16 +77,17 @@ the Show view dialog. You can then use the Show view dialog to navigate to Other
 Can you use a "perspectiveExtension" make your view show up under the main view menu?
 
 Advertise a Selection to the Workbench (Advanced)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+`````````````````````````````````````````````````
 
 Advanced: We have focused on listening to the workbench selection. Can you use getViewSite() to
 advertise an object to the workbench selection service? As a side effect, the Selection View you've
 just created will listen to itself
- Advanced: In this example we have checked "instance of" and "IAdaptable". Can you extend this
+
+Advanced: In this example we have checked "instance of" and "IAdaptable". Can you extend this
 example to check IResolve?
 
 Use of IResolve (Advanced)
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+``````````````````````````
 
 IResolve is uDig specific and represents external content. You should be very careful to read the
 javadocs and not call any methods from the event thread that may block while waiting for a WFS
@@ -98,7 +99,7 @@ external service. If you find yourself doing a try/catch block while in an event
 probably made a mistake!
 
 Use of IAdaptable
-^^^^^^^^^^^^^^^^^
+`````````````````
 
 Advanced: If you've done the IAdaptable workbook, you will note that your SelectionView tells you an
 IService is selected and gives you its URL. Similarly with an IGeoResource. However, it doesn't seem
@@ -107,10 +108,10 @@ to be able to adapt them to URLs...go ahead and fix that.
 Hint: you'll need to use the AdapterUtil class.
 
 Tips, Tricks and Suggestions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 Workbench Services
-^^^^^^^^^^^^^^^^^^
+``````````````````
 
 The use of Workbench "Services" is similar to a global scratch pad - this an example of the
 "blackboard" design pattern.
@@ -124,14 +125,14 @@ fact each of the plugins have never been formally introduced.
 **Concept**: Workbench selection is used to communicate between plugins.
 
 Extensible Interface
-^^^^^^^^^^^^^^^^^^^^
+````````````````````
 
 The next idea presented here is that of an "extensible interface". We are used to as Java developers
 the idea of a class implementing an interface.
 
 We can check what interfaces an object implements at runtime:
 
-::
+.. code-block:: java
 
     if( obj instanceof URL){
         URL url = (URL) obj;
@@ -144,7 +145,7 @@ be converted to at runtime.
 In eclipse this is handled by the **IAdaptable** interface which is great for information that is
 held in memory:
 
-::
+.. code-block:: java
 
     URL url = (URL) adaptable.getAdapter( URL.class );
     if( url != null ){
@@ -155,7 +156,7 @@ If you like you can extend **PlatformObject** as a quick way to implement IAdapt
 
 uDig uses this same general approach to handle external resources (that may throw an IOException):
 
-::
+.. code-block:: java
 
     if( geoResource.canResolve( URL.class ) ){
          try {
@@ -174,10 +175,9 @@ permission for the file.
 **Concept**: A single selection can "Adapt to" multiple Java Interfaces as needed.
 
 uDig 1.1 version of this workbook
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+`````````````````````````````````
 
 For uDig 1.1 developers the previous version of this document is available
 
 * `http://udig.refractions.net/files/tutorials/workbench.pdf <http://udig.refractions.net/files/tutorials/workbench.pdf>`_
 
-.. |image0| image:: /images/workbench_selection_tutorial/WorkbenchSelectionWorkbook.png

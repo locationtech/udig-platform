@@ -33,5 +33,5 @@ Introduction:
    examples
    welcome_new_eclipse_rcp_developers
 
-Check the :doc:`reference section <Reference>` for help setting up on other platforms, additional
+Check the :doc:`reference section <reference>` for help setting up on other platforms, additional
 :doc:`code examples <examples>` are also available.

@@ -1,5 +1,5 @@
 Adding History to Dialogs and Wizards
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=====================================
 
 It is often beneficial to add a 'history' to some of the widgets to increase the useability of a
 wizard or dialog. This article will explain how to use Eclipse's IDialogSettings interface to
@@ -8,13 +8,14 @@ achieve this easily and will show how it was implemented in uDig's WMS Wizard.
 The terms wizard and dialog are interchangeable in this document.
 
 Here is a screenshot of the WMS Wizard, displaying the rememberance of previously-entered URLs.
- |image0|
+
+.. image:: /images/adding_history_to_dialogs_and_wizards/wizardHistory.jpg
 
 Here is what the contents of the file look like when saved out to disk:
 
 **dialog\_settings.xml**
 
-::
+.. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <section name="Workbench">
@@ -27,13 +28,12 @@ Here is what the contents of the file look like when saved out to disk:
     </section>
 
 The overview:
- 1. In the dialog's constructor, access the previously saved settings, or create them if they don't
-exist.
- 2. When creating the widgets for the dialog, populate them with previously entered settings.
- 3. When the OK button is pushed (or the wizard is finished), save the entered values.
+#. In the dialog's constructor, access the previously saved settings, or create them if they don't exist.
+#. When creating the widgets for the dialog, populate them with previously entered settings.
+#. When the OK button is pushed (or the wizard is finished), save the entered values.
 
 IDialogSettings
-^^^^^^^^^^^^^^^
+---------------
 
 The JavaDoc for IDialogSettings can be viewed
 `here <http://www.eclipse.org/documentation/html/plugins/org.eclipse.platform.doc.isv/doc/reference/api/org/eclipse/jface/dialogs/IDialogSettings.html>`_.
@@ -56,17 +56,17 @@ Strings is the most interesting for dialogs, as they often use combo boxes for f
 The loading and saving is handled by the plugin class.
 
 An Example
-^^^^^^^^^^
+----------
 
 The WMS Wizard inside uDig has been converted to use IDialogSettings to store previously entered
 URLs.
 
 Initializing the settings
-^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------
 
 **WMSWizardPage.java**
 
-::
+.. code-block:: java
 
     private static final String WMS_WIZARD = "WMS_WIZARD"; //$NON-NLS-1$
       private IDialogSettings settings;
@@ -84,14 +84,14 @@ This code accesses the previously entered values stored at the section named 'WM
 don't exist (settings == null), the section must be added.
 
 Reading the settings
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 The code in WMSWizardPage that instantiates the widgets is also responsible for populating those
 widgets with previously entered values.
 
 **WMSWizardPage.java**
 
-::
+.. code-block:: java
 
     private static final String WMS_RECENT = "WMS_RECENT"; //$NON-NLS-1$
 
@@ -113,7 +113,7 @@ This code accesses all the values stored at the key 'WMS\_RECENT'. If no values 
 return null. Later on, the Combo widget 'url' has its items set to those values.
 
 Saving the settings
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 Saving the settings is a little more complicated than using them. The IDialogSettings interface only
 allows an entire key to be saved at once, so we must add our new history item to the array and save
@@ -129,7 +129,7 @@ widget as well. After that, just add the key and the values to the IDialogSettin
 
 **WMSWizardPage.java**
 
-::
+.. code-block:: java
 
     private static final int COMBO_HISTORY_LENGTH = 15;
 
@@ -189,11 +189,10 @@ widget as well. After that, just add the key and the values to the IDialogSettin
 Once saveWidgetValues() is configured, you simply need to call it when your dialog or wizard is
 done.
 
-::
+.. code-block:: java
 
     /*
      * Success! Store the URL in history.
      */
     saveWidgetValues();
 
-.. |image0| image:: /images/adding_history_to_dialogs_and_wizards/wizardHistory.jpg

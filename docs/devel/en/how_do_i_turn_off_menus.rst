@@ -46,16 +46,12 @@ The RCP Tutorial covered how to use action sets as one of the steps; and also ag
 questions (where you "turn on" the style menu contribution). You can use these facilities to "turn
 off" things as well.
 
-.. figure:: images/icons/emoticons/warning.gif
-   :align: center
-   :alt: 
+.. warning::
+   **Eclipse Help**
 
-**Eclipse Help**
-
-Extension Point Schema:
-`org.eclipse.ui.actionSets <http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/extension-points/org_eclipse_ui_actionSets.html>`_
- The above links are the most recent at the time of writing; use the eclipse help provided with your
-eclipse for accurate documentation.
+   Extension Point Schema: `org.eclipse.ui.actionSets <http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/extension-points/org_eclipse_ui_actionSets.html>`_
+   The above links are the most recent at the time of writing; use the eclipse help provided with your 
+   eclipse for accurate documentation.
 
 There are two ways to contribute menus:
 
@@ -83,16 +79,12 @@ The **Activities** extension point is designed to do exactly what you want - tur
 user interface that are not useful to your users. It is much more powerful than just turning off
 menus; it can also turn off views, toolbar contributions and so on.
 
-.. figure:: images/icons/emoticons/warning.gif
-   :align: center
-   :alt: 
+.. warning::
+   **Eclipse Help**
 
-**Eclipse Help**
-
-Extension Point Schema:
-`org.eclipse.ui.activties <http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/extension-points/org_eclipse_ui_activities.html>`_
- The above links are the most recent at the time of writing; use the eclipse help provided with your
-eclipse for accurate documentation.
+   Extension Point Schema: `org.eclipse.ui.activties <http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/extension-points/org_eclipse_ui_activities.html>`_
+   The above links are the most recent at the time of writing; use the eclipse help provided with 
+   your eclipse for accurate documentation.
 
 MapViewer
 ---------
