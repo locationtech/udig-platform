@@ -20,11 +20,14 @@
  */
 package eu.udig.tools.merge.internal.view;
 
+import java.util.Collections;
 import java.util.List;
 
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IMapCompositionListener;
+import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.MapCompositionEvent;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.ui.AnimationUpdater;
@@ -48,8 +51,11 @@ import org.eclipse.ui.part.ViewPart;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.filter.Filter;
 
+import eu.udig.tools.internal.mediator.PlatformGISMediator;
 import eu.udig.tools.internal.i18n.Messages;
+import eu.udig.tools.internal.mediator.AppGISAdapter;
 import eu.udig.tools.internal.ui.util.StatusBar;
 import eu.udig.tools.merge.MergeContext;
 
@@ -85,6 +91,9 @@ public class MergeView extends ViewPart implements IUDIGView {
     /** Map Listener used to catch the map changes */
     private IMapCompositionListener mapListener = null;
 
+    /** Layer Listener used to catch the layers changes */
+    private ILayerListener layerListener = null;
+
     protected Thread uiThread;
 
     private boolean wasInitialized = false;
@@ -119,14 +128,30 @@ public class MergeView extends ViewPart implements IUDIGView {
 
             public void changed(MapCompositionEvent event) {
 
-                /*
-                 * if (!wasInitialized()) { return; }
-                 */
+                if (!wasInitialized()) {
+                    return;
+                }
+
                 // if (getCommand().isStopped()) {
                 // return;
                 // }
 
                 updatedMapLayersActions(event);
+            }
+        };
+
+        this.layerListener = new ILayerListener() {
+
+            public void refresh(LayerEvent event) {
+
+                if (!wasInitialized()) {
+                    return;
+                }
+                // if (getCommand().isStopped()) {
+                // return;
+                // }
+
+                updateLayerActions(event);
             }
         };
     }
@@ -138,19 +163,20 @@ public class MergeView extends ViewPart implements IUDIGView {
      * @param map
      */
 
-    private void addListenersTo(final IMap map/* , final List<ILayer> layerList */) {
+    private void addListenersTo(final IMap map, final List<ILayer> layerList) {
 
         assert map != null;
-        // assert layerList != null;
+        assert layerList != null;
         assert this.mapListener != null;
-        // assert this.layerListener != null;
+        assert this.layerListener != null;
 
         map.addMapCompositionListener(this.mapListener);
-        /*
-         * for (ILayer layer : layerList) {
-         * 
-         * layer.addListener(this.layerListener); }
-         */
+
+        for (ILayer layer : layerList) {
+
+            layer.addListener(this.layerListener);
+        }
+
     }
 
     /**
@@ -173,7 +199,7 @@ public class MergeView extends ViewPart implements IUDIGView {
                 public void run() {
 
                     final ILayer layer = event.getLayer();
-                    // addedLayerActions(layer);
+                    addedLayerActions(layer);
                     // validateParameters();
                     System.out.print("Layer ADDED");
                 }
@@ -186,7 +212,7 @@ public class MergeView extends ViewPart implements IUDIGView {
                 public void run() {
 
                     final ILayer layer = event.getLayer();
-                    // removedLayerActions(layer);
+                    removedLayerActions(layer);
                     // validateParameters();
                     System.out.print("Layer REMOVED");
                 }
@@ -212,6 +238,178 @@ public class MergeView extends ViewPart implements IUDIGView {
         }
     }
 
+    /**
+     * This method is called when a layer is changed.
+     * 
+     * @param event
+     * 
+     * @see {@link #changedFilterSelectionActions(ILayer, Filter)}
+     * @see {@link #changedLayerActions(ILayer)}
+     */
+    private void updateLayerActions(final LayerEvent event) {
+
+        final ILayer modifiedLayer = event.getSource();
+
+        PlatformGISMediator.syncInDisplayThread(new Runnable() {
+
+            public void run() {
+
+                LayerEvent.EventType type = event.getType();
+                switch (type) {
+                case ALL:
+                    changedLayerActions(modifiedLayer);
+                    break;
+
+                case FILTER:
+                    Filter newFilter = modifiedLayer.getFilter();
+                    changedFilterSelectionActions(modifiedLayer, newFilter);
+                    break;
+
+                default:
+                    break;
+                }
+            }
+
+        });
+    }
+
+    /**
+     * This is a callback method, It should be used to implement the actions required when a new
+     * layer is added to map. The event occurs when a layer is created or added to the map.
+     * <p>
+     * This method provide a default implementation which add a {@link ILayerListener} Do not forget
+     * call this method to maintain the listener list.
+     * </p>
+     * 
+     * @param layer
+     */
+    protected void addedLayerActions(final ILayer layer) {
+
+        layer.addListener(this.layerListener);
+
+        // changedLayerListActions();
+
+    }
+
+    /**
+     * This is a callback method, It should be used to implement the actions required when a layer
+     * is deleted from map.
+     * <p>
+     * This method provide a default implementation which remove the listener. You can override this
+     * method to provide specific actions, Do not forget call this method to maintain the listener
+     * list.
+     * </p>
+     * 
+     * @param layer
+     */
+    protected void removedLayerActions(final ILayer layer) {
+
+        layer.removeListener(this.layerListener);
+        // TODO implement removeLayerListActions(layer).
+        // removeLayerListActions(layer);
+        // changedLayerListActions();
+
+    }
+
+    /**
+     * This is a callback method, It should be used to implement the actions required when the
+     * features selected in layer are changed. The event occurs when a layer is created or added to
+     * the map.
+     * 
+     * @param layer
+     * @param newFilter the filter or Filter.ALL if there is no any feature selected
+     */
+    protected void changedFilterSelectionActions(final ILayer layer, final Filter newFilter) {
+
+        // nothing as default implementation
+        System.out.print("######################SELECTION CHANGED######################");
+    }
+
+    /**
+     * This is a callback method, It should be used to implement the actions required when a layer
+     * is modified. The event occurs when a layer is created or added to the map.
+     * 
+     * @param modifiedLayer the modified layer
+     */
+    protected void changedLayerActions(final ILayer modifiedLayer) {
+
+        // nothing by default implementation
+    }
+
+    /**
+     * @return the current Map; null if there is not any Map.
+     */
+    public IMap getCurrentMap() {
+
+        if (this.context == null) {
+            return null;
+        }
+
+        return this.context.getMap();
+    }
+
+    /**
+     * Removes the listeners from map.
+     * 
+     * @param currentMap
+     */
+    private void removeListenerFrom(IMap map) {
+
+        assert map != null;
+        assert this.mapListener != null;
+
+        assert this.layerListener != null;
+
+        for (ILayer layer : getCurrentLayerList()) {
+
+            layer.removeListener(this.layerListener);
+        }
+
+        map.removeMapCompositionListener(this.mapListener);
+    }
+
+    /**
+     * gets the layer list from a map
+     * 
+     * @param map
+     * @return the Layer list of map
+     */
+    protected List<ILayer> getLayerListOf(IMap map) {
+
+        assert map != null;
+
+        return AppGISAdapter.getMapLayers(map);
+    }
+
+    /**
+     * @return the layer list of current map
+     */
+    protected List<ILayer> getCurrentLayerList() {
+
+        if (getCurrentMap() == null) {
+            return Collections.emptyList();
+        }
+        return AppGISAdapter.getMapLayers(this.getCurrentMap());
+    }
+
+    /**
+     * @return true if the presenter is ready to work, false in other case
+     */
+    public boolean wasInitialized() {
+
+        return (!this.isDisposed()) /* && (this.getCommand() != null) */&& (this.wasInitialized);
+    }
+
+    // <<<< ###############
+    // <<<< ###############
+    // <<<< ###############
+    // <<<< ###############
+    // <<<< ###############
+    // <<<< ###############
+    // <<<< ###############
+    // <<<< ###############
+    // <<<< ###############
+
     @Override
     public void createPartControl(Composite parent) {
 
@@ -221,51 +419,9 @@ public class MergeView extends ViewPart implements IUDIGView {
 
         createActions();
         createToolbar();
-        initialize(); // <<<< ############### plug in Listener previous workflow HERE  #################
+        initialize(); // <<<< ############### plug in Listener previous workflow HERE
+                      // #################
     }
-    
-    /**
-     * @return the current Map; null if there is not any Map.
-     */
-    public IMap getCurrentMap() {
-
-            if (this.context == null) {
-                    return null;
-            }
-
-            return this.context.getMap();
-    }
-    
-    /**
-     * Removes the listeners from map.
-     * 
-     * @param currentMap
-     */
-    private void removeListenerFrom(IMap map) {
-
-            assert map != null;
-            assert this.mapListener != null;
-            /*
-            assert this.layerListener != null;
-
-            for (ILayer layer : getCurrentLayerList()) {
-
-                    layer.removeListener(this.layerListener);
-            }
-            */
-
-            map.removeMapCompositionListener(this.mapListener);
-    }
-
-    // <<<< ###############
-    // <<<< ###############
-    // <<<< ###############
-    // <<<< ###############
-    // <<<< ###############
-    // <<<< ###############
-    // <<<< ###############
-    // <<<< ###############
-    // <<<< ###############
 
     private void createToolbar() {
 
@@ -479,21 +635,20 @@ public class MergeView extends ViewPart implements IUDIGView {
             if (map != null) {
 
                 // add this presenter as listener of the map
-                // List<ILayer> layerList = getLayerListOf(map);
-                addListenersTo(map/* , layerList */);
+                List<ILayer> layerList = getLayerListOf(map);
+                addListenersTo(map, layerList);
             }
         }
         this.context = newContext;
 
         // notifies the change in current map
-        /*
-         * REMOVED WHILE IMPLEMENTING STEP-BY-STEP
-        changedMapActions(map);
+
+        // REMOVED WHILE IMPLEMENTING STEP-BY-STEP changedMapActions(map);
         if (map != null) {
-            changedLayerListActions();
-            validateParameters();
+            // changedLayerListActions(); <<-- this method is void in AbstractParamsPresenter
+            //validateParameters();
         }
-        */
+
         // #############################################
 
     }
