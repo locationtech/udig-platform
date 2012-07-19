@@ -17,69 +17,91 @@
 package net.refractions.udig.catalog;
 
 import java.net.URI;
+import java.util.UUID;
 
 /**
- * Represents an available document.
- * <p>
- * IDocument items are currently made available to the DocumentView; but can be used elsewhere.
+ * Document interface.
  * 
  * @author paul.pfeiffer
+ * @author Naz Chan
  */
-public interface IDocument {
-    
-    /*
-    enum Activity {
-        OPEN,
-        ATTACH,
-        DELETE,
-        EDIT,
-        NEW
-    }*/
-    
+public interface IDocument extends IDocumentItem {
+
     /**
-     * The display name used to represent the document to the user
-     * @return display name
+     * Document types
      */
-    public String getName();
+    public enum TYPE {
+        FILE, WEB;
+    };
+    
     /**
-     * Description of the document; for example this may be generated from the
-     * modification date, creation date and so forth.
+     * Gets the ID of the document.
      * 
-     * @return
+     * @return ID
      */
-    public String getDescription();
+    public UUID getID();
     
     /**
      * Universal Resource Indicator.
      * 
-     * In many cases this will be a simple File URL or web site reference. We are using a URI
-     * here to allow for resolution using an internal OSGi bundle reference or database entry.
+     * In many cases this will be a simple File URL or web site reference. We are using a URI here
+     * to allow for resolution using an internal OSGi bundle reference or database entry.
      * 
      * @return
      */
     public URI getURI();
+
+    /**
+     * Gets the document label string.
+     * 
+     * @return label
+     */
+    public String getLabel();
     
     /**
-     * This is the string reference available to be stored as a "hotlink" if required.
-     * <p>
-     * The default implementation is baed on getURI().toExternalForm().
+     * Gets the attribute name of related to the document. This is only used by documents from
+     * feature hotlinks.
      * 
-     * @return String suitable for persistence
+     * @return attribute name
      */
-    public String getReferences();
+    public String getAttributeName();
     
+    /**
+     * Gets the document type
+     * 
+     * @return document type
+     */
+    public TYPE getType();
+    
+    /**
+     * Gets the document source of the document.
+     * 
+     * @return document source
+     */
+    public IAbstractDocumentSource getSource();
+    
+    /**
+     * Gets the folder containing the document.
+     * 
+     * @return folder
+     */
+    public IDocumentFolder getFolder();
+
     /**
      * Open this document; in a platform specific manner.
      * <p>
-     * As an example we will expect the operating system to open website URLs; or
-     * File references. We may detect the presence of uDig specific things such as 
-     * projects, SLDs or GetCapabilities references and take appropriate action.
+     * As an example we will expect the operating system to open website URLs; or File references.
+     * We may detect the presence of uDig specific things such as projects, SLDs or GetCapabilities
+     * references and take appropriate action.
      */
-    public void open();
-
-    /*
-    Set<Activity> getActivity();
+    public boolean open();
     
-    public void perform( Activity activit, Object params... );
-    */
+    /**
+     * Checks if the document has a related content (file or URL). Or if the value does not point to
+     * a valid file or URL.
+     * 
+     * @return true if it has a related content, otherwise false
+     */
+    public boolean isEmpty();
+    
 }

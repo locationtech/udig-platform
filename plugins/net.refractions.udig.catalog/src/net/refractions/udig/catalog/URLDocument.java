@@ -5,64 +5,91 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import org.geotools.data.DataUtilities;
-
+/**
+ * This is the url document implementation. This acts as a container to the url itself and provides
+ * getters for url related metadata.
+ * 
+ * @author Naz Chan
+ */
 public class URLDocument extends AbstractDocument {
 
     private URL url;
-    private ID id;
-
-    public URLDocument( URL sourceURL ) {
-        url = sourceURL;
-        id = new ID(sourceURL);
+    
+    public URLDocument() {
+        // Nothing
     }
 
-    public URLDocument( ID sourceID ) {
-        url = sourceID.toURL();
-        id = sourceID;
+    public URLDocument(URL url) {
+        this.url = url;
+    }
+    
+    public URL getUrl() {
+        return url;
+    }
+    
+    public void setUrl(URL url) {
+        this.url = url;
     }
     
     @Override
     public String getName() {
-        return url.getHost() + url.getPath(); //$NON-NLS-1$
+        if (url != null) {
+            final String detail = url.getHost() + url.getPath(); 
+            if (label != null) {
+                return String.format(LABEL_FORMAT, label, detail); 
+            }
+            return detail;    
+        } else {
+            if (label != null) {
+                return String.format(LABEL_FORMAT, label, UNASSIGNED); 
+            }
+            return UNASSIGNED_NO_LABEL;
+        }
     }
 
     @Override
     public String getDescription() {
-        // TODO Auto-generated method stub
-        return null;
+        if (url != null) {
+            return url.toString();    
+        }
+        return UNASSIGNED_NO_LABEL;
     }
 
     @Override
     public URI getURI() {
-        URI uri;
-        try {
-            uri = url.toURI();
-        } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
+        if (url != null) {
+            try {
+                return url.toURI();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }            
         }
-        return uri;
+        return null;
     }
 
     @Override
-    public void open() {
-        try {
-            java.awt.Desktop.getDesktop().browse(url.toURI());
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+    public boolean open() {
+        if (url != null) {
+            try {
+                java.awt.Desktop.getDesktop().browse(url.toURI());
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }            
         }
-
+        return false;
     }
 
     @Override
-    public String getReferences() {
-        return url.toExternalForm();
+    public TYPE getType() {
+        return TYPE.WEB;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return (url == null);
     }
 
 }
