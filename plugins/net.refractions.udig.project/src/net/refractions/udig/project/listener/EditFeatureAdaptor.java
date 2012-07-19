@@ -8,55 +8,39 @@
  */
 package net.refractions.udig.project.listener;
 
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.type.AttributeDescriptor;
-
+import java.beans.PropertyChangeEvent;
 
 /**
  * Abstract implementation to help with implementation of anonymous inner classes.
  * <p>
- * Example:<pre>
- * editFeature.addListener( new EditFeatureListenerAdaptor(){
+ * Example:
+ * 
+ * <pre>
+ * editFeature.addListener(new EditFeatureListenerAdaptor() {
  *     public void activate(EditFeature feature) {
  *         return true;
  *     }
- * });</pre>
+ * });
+ * </pre>
+ * 
  * @author leviputna
- *
+ * 
  */
 public abstract class EditFeatureAdaptor implements EditFeatureListener {
 
-    
     @Override
-    public Boolean beforeEdit(SimpleFeature feature, AttributeDescriptor attributeDescriptor) {
-        return true;
+    public void attributeValueBeforeChange(PropertyChangeEvent event) {
+        // default behavior is to do nothing.
     }
 
     @Override
-    public void afterEdit(SimpleFeature feature, AttributeDescriptor attributeDescriptor) {
+    public void attributeValueChange(PropertyChangeEvent event) {
+        // default behavior is to do nothing.
     }
 
     @Override
-    public Boolean beforeCreate(SimpleFeature feature) {
-        return true;
-    }
-
-    @Override
-    public void afterCreate(SimpleFeature feature) {
-    }
-
-    @Override
-    public Boolean beforeDelete(SimpleFeature feature) {
-        return null;
-    }
-
-    @Override
-    public void afterDelete(SimpleFeature feature) {
-    }
-
-    @Override
-    public Boolean beforeDesplay(SimpleFeature feature) {
-        return true;
+    public void attributeStateChange(EditFeatureStateChangeEvent stateChangeEvent) {
+        // default behavior is to do nothing.
     }
 
 }
