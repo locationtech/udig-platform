@@ -16,6 +16,7 @@ package net.refractions.udig.project.listener;
 
 import java.beans.PropertyChangeEvent;
 
+import net.refractions.udig.project.EditFeature;
 import net.refractions.udig.project.EditFeature.AttributeStatus;
 
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -35,6 +36,27 @@ public interface EditFeatureListener {
      * Called before an attribute value changes, returning false will cause the edit event to be
      * canceled. It is the responsibility of the implementing method to inform the EditManager as to
      * why the edit was canceled. {@link EditManager.addErrorMessage()}
+     * 
+     * <pre>
+     * public void attributeValueBeforeChange(PropertyChangeEvent event) {
+     *     // default behavior is to do nothing.
+     *     EditFeature editFeature = (EditFeature) event.getSource();
+     *     if (!&quot;Sample&quot;.equals(editFeature.getFeatureType().getName())) {
+     *         return; // wrong featureType
+     *     }
+     * 
+     *     String name = (String) editFeature.getAttribute(&quot;name&quot;);
+     *     if (name == null) {
+     *         editFeature.getState(&quot;name&quot;).addError(&quot;{0} is required&quot;);
+     *     }
+     * 
+     *     if (name.length() &lt; 5 || name.length() &gt; 20) {
+     *         editFeature.getState(&quot;name&quot;).addWarning(&quot;{0} limited to between 5 and 20 characters: {1}&quot;);
+     *     }
+     * 
+     *     editFeature.getState(event.getPropertyName()).addError(&quot;{0} is required&quot;);
+     * }
+     * </pre>
      * 
      * @param event
      */

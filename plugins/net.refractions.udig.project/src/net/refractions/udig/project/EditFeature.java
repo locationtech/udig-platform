@@ -31,9 +31,12 @@ import net.refractions.udig.project.listener.EditFeatureListener;
 import net.refractions.udig.project.listener.EditFeatureListenerList;
 import net.refractions.udig.project.listener.EditFeatureStateChangeEvent;
 
+import oms3.gen.booleanAccess;
+
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
 import org.geotools.feature.DecoratingFeature;
+import org.geotools.feature.NameImpl;
 import org.opengis.feature.GeometryAttribute;
 import org.opengis.feature.IllegalAttributeException;
 import org.opengis.feature.Property;
@@ -59,6 +62,9 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
     // not used yet; could be used to "batch up" changes to send in one command?
     private Set<String> dirty = new LinkedHashSet<String>(); // we no longer need this
 
+    /*
+     * holds onto statue change listeners for all attributes.
+     */
     private Map<Name, AttributeStatus> attribureStatusList = new HashMap<Name, AttributeStatus>();
 
     private boolean batch;
@@ -71,9 +77,17 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
      */
     public class AttributeStatus {
         private boolean dirty = false;
+
         private boolean visible = true;
+
         private boolean enabled = true;
+
         private boolean editable = true;
+
+        private List<String> errorMessages = new ArrayList<String>();
+
+        // not used yet
+        private List<String> warningMessages = new ArrayList<String>();
 
         /**
          * Check if the attribute value has changes in the EditFeature but has not been updated in
@@ -169,6 +183,96 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
         public void setEditable(boolean editable) {
             this.editable = editable;
             doStatusChange(EditFeatureStateChangeEvent.Type.EDITABLE, this);
+        }
+
+        /**
+         * Appends the specified error to the attribute.
+         * 
+         * @param message The error message to add.
+         * @return returns true if the error was added.
+         */
+        public boolean addError(String message) {
+            return errorMessages.add(message);
+        }
+
+        /**
+         * Appends the specified Warning to the attribute.
+         * 
+         * @param message The Warning message to add.
+         * @return returns true if the Warning was added.
+         */
+        public boolean addWarning(String message) {
+            return warningMessages.add(message);
+        }
+
+        /**
+         * Removed the specified error from the attribute.
+         * 
+         * @param message The error message to remove.
+         * @return true if the error message was removes.
+         */
+        public boolean removeError(String message) {
+            return errorMessages.remove(message);
+        }
+
+        /**
+         * Removed the specified Warning from the attribute.
+         * 
+         * @param message The Warning message to remove.
+         * @return true if the Warning message was removes.
+         */
+        public boolean removeWarning(String message) {
+            return warningMessages.remove(message);
+        }
+
+        /**
+         * Removes all of the errors from this attribute.
+         */
+        public void clearErrors() {
+            errorMessages.clear();
+        }
+
+        /**
+         * Removes all of the Warning from this attribute.
+         */
+        public void clearWarnings() {
+            warningMessages.clear();
+        }
+
+        /**
+         * return the list if errors on this attribute.
+         * 
+         * @return errors in this attribute
+         */
+        public List<String> getErrors() {
+            return errorMessages;
+        }
+
+        /**
+         * return the list if Warning on this attribute.
+         * 
+         * @return Warning in this attribute
+         */
+        public List<String> getWarnings() {
+            return warningMessages;
+        }
+
+        /**
+         * Returns <code>true</code> is there are any errors added to this attribute.
+         * 
+         * @return true for errors, false if no errors
+         */
+        public boolean hasErrors() {
+            return (errorMessages.size() > 0);
+        }
+
+        /**
+         * Returns <code>true</code> is there are any Warning added to this attribute.
+         * 
+         * @return true for Warning, false if no errors
+         */
+        public boolean hasWarning() {
+            return (errorMessages.size() > 0);
         }
 
     }
@@ -352,6 +456,10 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
         }
     }
 
+    public AttributeStatus getState(String attribute) {
+        return getState(new NameImpl(attribute));
+    }
+
     /**
      * add a listener to this EditFeature. This method has no effect if the <a
      * href="ListenerList.html#same">same</a> listener is already registered.
@@ -371,7 +479,7 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
     public void removeEditFeatureListener(EditFeatureListener listener) {
         editFeatureListeners.remove(listener);
     }
-    
+
     private void doBeforeValueChange(String attributeName, Object oldValue, Object newValue) {
         editFeatureListeners.doValueChange(new PropertyChangeEvent(this, attributeName, oldValue,
                 newValue));
@@ -381,8 +489,9 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
         editFeatureListeners.doValueChange(new PropertyChangeEvent(this, attributeName, oldValue,
                 newValue));
     }
-    
-    private void doStatusChange(EditFeatureStateChangeEvent.Type state, AttributeStatus attributeStatus) {
+
+    private void doStatusChange(EditFeatureStateChangeEvent.Type state,
+            AttributeStatus attributeStatus) {
         editFeatureListeners.doStateChange(new EditFeatureStateChangeEvent(state, attributeStatus));
     }
 }
