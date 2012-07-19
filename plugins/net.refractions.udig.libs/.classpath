@@ -32,7 +32,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-image-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-imageio-ext-gdal-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-imagemosaic-8-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-8-SNAPSHOT.jar" sourcepath="/Volumes/Fiore/jody/java/geotools/trunk/modules/library/jdbc/src/main/java"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-db2-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-h2-8-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-mysql-8-SNAPSHOT.jar"/>
