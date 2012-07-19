@@ -1,4 +1,4 @@
-package net.refractions.udig.tool.info.documents;
+package net.refractions.udig.document;
 
 import org.eclipse.osgi.util.NLS;
 

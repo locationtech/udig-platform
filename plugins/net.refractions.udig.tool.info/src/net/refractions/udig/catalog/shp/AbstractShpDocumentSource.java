@@ -12,13 +12,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.internal.shp;
+package net.refractions.udig.catalog.shp;
 
 import java.net.URL;
 
 import net.refractions.udig.catalog.DocumentFactory;
 import net.refractions.udig.catalog.IAbstractDocumentSource;
 import net.refractions.udig.catalog.IDocumentFolder;
+import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 
 /**
  * The abstract class for shape document sources. This sets up needs utility objects like the
@@ -32,9 +33,10 @@ public abstract class AbstractShpDocumentSource implements IAbstractDocumentSour
     protected ShpDocPropertyParser propParser;
     protected DocumentFactory docFactory;
     protected IDocumentFolder folder;
+    protected ShpGeoResourceImpl service;
     
-    public AbstractShpDocumentSource(URL url, String folderName) {
-        this.url = url;
+    public AbstractShpDocumentSource(ShpGeoResourceImpl geoResource, String folderName) {
+        this.service = service;
         this.docFactory = new DocumentFactory(this);
         this.folder = docFactory.createFolder(folderName);
         this.docFactory.setFolder(folder);

@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.internal.shp;
+package net.refractions.udig.catalog.shp;
 
 import java.io.File;
 import java.net.URL;
@@ -26,6 +26,7 @@ import net.refractions.udig.catalog.IDocument;
 import net.refractions.udig.catalog.IDocumentFolder;
 import net.refractions.udig.catalog.IDocumentSource;
 import net.refractions.udig.catalog.URLDocument;
+import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 
 /**
  * This is the shapefile document source implementation. This implements getters and setters to the
@@ -44,8 +45,8 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
      * @param url of the existing .shp file
      * @throws Exception
      */
-    public ShpDocumentSource(URL url) {
-        super(url, defaultLabel);
+    public ShpDocumentSource(ShpGeoResourceImpl resource) {
+        super(resource, defaultLabel);
     }
     
     @Override

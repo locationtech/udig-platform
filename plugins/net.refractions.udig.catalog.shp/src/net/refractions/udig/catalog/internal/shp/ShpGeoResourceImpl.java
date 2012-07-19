@@ -164,18 +164,6 @@ public class ShpGeoResourceImpl extends IGeoResource {
         if (adaptee.isAssignableFrom(IndexedShapefileDataStore.class)) {
             return adaptee.cast(parent.getDS(monitor));
         }
-        if (adaptee.isAssignableFrom(IDocumentSource.class)) {
-            IDocumentSource document = document(monitor);
-            if (document != null) {
-                return adaptee.cast(document);
-            }
-        }
-        if (adaptee.isAssignableFrom(IHotlinkSource.class)) {
-            IHotlinkSource hotlink = hotlink(monitor);
-            if (hotlink != null) {
-                return adaptee.cast(hotlink);
-            }
-        }
         if (adaptee.isAssignableFrom(Style.class)) {
             Style style = style(monitor);
             if (style != null) {
@@ -192,39 +180,6 @@ public class ShpGeoResourceImpl extends IGeoResource {
         return parent.getDS(monitor).getFeatureSource();
     }
 
-    /**
-     * Resolves to a document source
-     * 
-     * @param monitor
-     * @return document source
-     */
-    private IDocumentSource document( IProgressMonitor monitor ) {
-        
-        final URL url = parent.getIdentifier();
-        final File file = ShpDocPropertyParser.getPropertiesFile(url);
-        if (file != null && file.exists()) {
-            return new ShpDocumentSource(url);
-        }
-        return null;
-        
-    }
-    
-    /**
-     * Resolves to a hotlink source
-     * 
-     * @param monitor
-     * @return hotlink source
-     */
-    private IHotlinkSource hotlink(IProgressMonitor monitor) {
-        
-        final URL url = parent.getIdentifier();
-        final File file = ShpDocPropertyParser.getPropertiesFile(url);
-        if (file != null && file.exists()) {
-            return new ShpHotlinkSource(url);
-        }
-        return null;
-        
-    }
     
     public Style style( IProgressMonitor monitor ) {
         URL url = parent.getIdentifier();
@@ -468,8 +423,6 @@ public class ShpGeoResourceImpl extends IGeoResource {
                 || adaptee.isAssignableFrom(SimpleFeatureSource.class) 
                 || adaptee.isAssignableFrom(IService.class) 
                 || adaptee.isAssignableFrom(Style.class)
-                || adaptee.isAssignableFrom(IDocumentSource.class)
-                || adaptee.isAssignableFrom(IHotlinkSource.class)
                 ) 
                 || super.canResolve(adaptee);
     }

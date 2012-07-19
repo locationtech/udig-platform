@@ -17,6 +17,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.views,
  net.refractions.udig.style.wms,
  net.refractions.udig.render.wms.basic,
- org.eclipse.ui.forms;bundle-version="3.5.101"
+ org.eclipse.ui.forms,
+ net.refractions.udig.catalog.shp;resolution:=optional
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

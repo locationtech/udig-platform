@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.internal.shp;
+package net.refractions.udig.catalog.shp;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -192,7 +192,24 @@ public class ShpDocPropertyParser {
     }
 
     /**
-     * Gets the properties file with the given URL.
+     * Lookup the properties sidecar file for the indicate shapefile.
+     * 
+     * @param url
+     * @return properties file
+     */
+    public static File getPropertiesFile(ID id) {
+        File file = id.toFile(PROP_FILE_EXT.toLowerCase());
+        if (file.exists()) {
+            return file;
+        }
+        file = id.toFile(PROP_FILE_EXT.toUpperCase());
+        if (file.exists()) {
+            return file;
+        }
+        return null;
+    }
+    /**
+     * Lookup the properties sidecar file for the indicate shapefile.
      * 
      * @param url
      * @return properties file
