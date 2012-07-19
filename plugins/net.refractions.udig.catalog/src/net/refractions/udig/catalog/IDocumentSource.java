@@ -16,66 +16,121 @@
  */
 package net.refractions.udig.catalog;
 
+import java.io.File;
+import java.net.URL;
 import java.util.List;
 
-public abstract class IDocumentSource {
-    
-    /**
-     * This is used to return any documents associated with this feature type.
-     * <p>
-     * As an example this will return a SHAPEFILENAME.TXT file that is associated
-     * (ie a sidecar file) with the provided shapefile. We may also wish to
-     * list a README.txt file in the same directory (as it is the habbit of GIS
-     * professionals to record fun information about the entire dataset.
-     * </p>
-     * @return
-     */
-    public abstract List<IDocument> findDocuments();
-
+/**
+ * This is the document source interface. This is designed to be implemented by shapefile level or
+ * layer level document sources.
+ * 
+ * @author nchan
+ * 
+ */
+public interface IDocumentSource extends IAbstractDocumentSource {
 
     /**
-     * This is used to look up documents associated with an individual Feature.
-     * <p>
-     * As an example the feature type may indicate that the "reference" attribute is
-     * actually a String to be handled as a "hotlink". In that case we would
-     * return a LinkDocument representing the value of that attribute that would
-     * be willing to open the "hotlink" in a web browser when open() is called.
+     * Gets the list of documents related to the shapefile. The list of documents is wrapped in a
+     * document folder with the folder name.
      * 
-     * @param fid Indicate the feature we are finding documents for
-     * @return List of documents for the indicated feature
+     * @param folderName
+     * @return document folder
      */
-    public abstract List<IDocument> findDocuments(String fid);
+    public IDocumentFolder getDocumentsInFolder(String folderName);
     
     /**
-     * Add the document to the global document list
-     * @param doc
+     * Gets the list of documents related to the shapefile. The list of documents is wrapped in a
+     * document folder with the default folder name.
+     * 
+     * @return document folder
      */
-    public abstract void add( IDocument doc );
+    public IDocumentFolder getDocumentsInFolder();
     
     /**
-     * Add the document to the FID.
-     * @param doc
-     * @param fid
+     * Gets the list of documents associated with this feature type.
+     * <p>
+     * As an example this will return a SHAPEFILENAME.TXT file that is associated (ie a sidecar
+     * file) with the provided shapefile. We may also wish to list a README.txt file in the same
+     * directory (as it is the habbit of GIS professionals to record fun information about the
+     * entire dataset.
+     * </p>
+     * 
+     * @return documents
      */
-    public abstract void add( IDocument doc, String fid );
-    
-    /**
-     * Removes any occurrences of the document in the global document list
-     * @param doc
-     */
-    public abstract void remove( IDocument doc );
-    
-    /**
-     * Removes any occurrences of the document that are associated to the FID
-     * @param doc
-     * @param fid
-     */
-    public abstract void remove( IDocument doc, String fid );
+    public List<IDocument> getDocuments();
 
     /**
-     * Opens the document for viewing or editing
+     * Checks if the source allows adding new documents.
+     * 
+     * @return true if allows adding, otherwise false
+     */
+    public boolean canAdd();
+
+    /**
+     * Adds the link.
+     * 
+     * @param url
+     */
+    public IDocument addLink(URL url);
+
+    /**
+     * Adds the file.
+     * 
+     * @param file
+     */
+    public IDocument addFile(File file);
+
+    /**
+     * Adds the list of files.
+     * 
+     * @param files
+     */
+    public List<IDocument> addFiles(List<File> files);
+
+    /**
+     * Checks if the source allows removing.
+     * 
+     * @return true if allows removing, otherwise false
+     */
+    public boolean canRemove();
+
+    /**
+     * Removes the document.
+     * 
      * @param doc
      */
-    public abstract void open( IDocument doc );
+    public void remove(IDocument doc);
+
+    /**
+     * Removes the list of documents.
+     * 
+     * @param docs
+     */
+    public void remove(List<IDocument> docs);
+
+    /**
+     * Checks if the source allows updating.
+     * 
+     * @return true if allows updating, otherwise false
+     */
+    public boolean canUpdate();
+    
+    /**
+     * Updates the file of the document.
+     * 
+     * @param doc
+     * @param file
+     * @return true successful, otherwise false
+     */
+    public boolean updateFile(FileDocument doc, File file);
+    
+    /**
+     * Updates the url of the document.
+     * 
+     * @param doc
+     * @param url
+     * @return true successful, otherwise false
+     */
+    public boolean updateLink(URLDocument doc, URL url);
     
 }

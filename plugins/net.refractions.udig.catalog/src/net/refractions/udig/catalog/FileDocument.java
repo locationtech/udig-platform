@@ -19,79 +19,93 @@ package net.refractions.udig.catalog;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.geotools.data.DataUtilities;
-
 /**
- * Simple document built around a file.
+ * This is the file document implementation. This acts as a container to the file itself and
+ * provides getters for file related metadata.
  * 
  * @author paul.pfeiffer
- * @version 1.3.0
+ * @author Naz Chan
  */
 public class FileDocument extends AbstractDocument {
 
     private File file;
 
-    /**
-     * @param f
-     */
-    public FileDocument( File f ) {
-        file = f;
+    private static final String DATE_FORMAT = "dd-MM-yyyy hh:mm:ss"; //$NON-NLS-1$
+    
+    public FileDocument() {
+        // Nothing
     }
-
-    /*
-     * (non-Javadoc)
-     * @see net.refractions.udig.catalog.IDocument#getName()
-     */
+    
+    public FileDocument(File file) {
+        this.file = file;
+    }
+    
+    public File getFile() {
+        return file;
+    }
+    
+    public void setFile(File file) {
+        this.file = file;
+    }
+    
     @Override
     public String getName() {
-        return file.getName();
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see net.refractions.udig.catalog.IDocument#getDescription()
-     */
-    @Override
-    public String getDescription() {
-        long modified = file.lastModified();
-        Date d = new Date(modified);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-        String dateString = sdf.format(d);
-
-        return file.getName() + " modified on " + dateString;
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see net.refractions.udig.catalog.IDocument#getURI()
-     */
-    @Override
-    public URI getURI() {
-        return file.toURI();
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see net.refractions.udig.catalog.IDocument#open()
-     */
-    @Override
-    public void open() {
-        try {
-            java.awt.Desktop.getDesktop().open(file);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        if (file != null) {
+            final String detail = file.getName(); 
+            if (label != null) {
+                return String.format(LABEL_FORMAT, label, detail); 
+            }
+            return detail;    
+        } else {
+            if (label != null) {
+                return String.format(LABEL_FORMAT, label, UNASSIGNED); 
+            }
+            return UNASSIGNED_NO_LABEL;
         }
     }
 
     @Override
-    public String getReferences() {
-        return DataUtilities.fileToURL(file).toExternalForm();
+    public String getDescription() {
+        if (file != null) {
+            final Date modeDate = new Date(file.lastModified());
+            return file.getName() + " modified on " //$NON-NLS-1$
+                    + (new SimpleDateFormat(DATE_FORMAT)).format(modeDate);    
+        }
+        return UNASSIGNED_NO_LABEL;
+    }
+
+    @Override
+    public URI getURI() {
+        if (file != null) {
+            return file.toURI();    
+        }
+        return null;
+    }
+
+    @Override
+    public boolean open() {
+        if (file != null) {
+            try {
+                java.awt.Desktop.getDesktop().open(file);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }            
+        }
+        return false;
+    }
+
+    @Override
+    public TYPE getType() {
+        return TYPE.FILE;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return (file == null);
     }
 
 }

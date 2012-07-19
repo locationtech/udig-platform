@@ -1,95 +1,124 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
- *    This library is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU Lesser General Public
- *    License as published by the Free Software Foundation;
- *    version 2.1 of the License.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
  *
- *    This library is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *    Lesser General Public License for more details.
- *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  */
 package net.refractions.udig.catalog;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
- * A folder that contains documents. Used as a data structure for the document view. 
- * A folder may contain other folders. 
+ * This is the document folder implementation.
  * 
- * @author paul.pfeiffer
- * @version 1.3.1
- *
+ * @author Naz Chan 
  */
-public class DocumentFolder implements IFolder {
+public class DocumentFolder extends AbstractDocumentItem implements IDocumentFolder {
 
-    private ResourceFolder globalDocuments = null;
-    private FeatureFolder featureDocuments = null;
-    private final String name = "Top Level";
-//    private IDocumentSource source;
-    private String selectedFeature = null;
+    private UUID id;
+    private IAbstractDocumentSource source;
     
-    public DocumentFolder(IDocumentSource source) {
-//        this.source = source;
-        globalDocuments = new ResourceFolder(source);
-        featureDocuments = new FeatureFolder(source);
+    private List<IDocumentItem> items;
+    
+    public DocumentFolder(String name, IAbstractDocumentSource source) {
+        setName(name);
+        this.source = source;
+        this.items = new ArrayList<IDocumentItem>();
     }
     
-//    public DocumentFolder(IDocumentSource source, String name) {
-//        this(source);
-//        this.name = name;
-//    }
+    @Override
+    public UUID getID() {
+        return id;
+    }
+    
+    public void setID(UUID id) {
+        this.id = id;
+    }
     
     @Override
-    public IFolder getRow( int index ) {
-        switch (index) {
-        case 0:
-            return globalDocuments;
-        case 1:
-            if (selectedFeature == null || selectedFeature.isEmpty()) {
-                return null;
+    public IAbstractDocumentSource getSource() {
+        return source;
+    }
+
+    @Override
+    public List<IDocumentItem> getItems() {
+        return items;
+    }
+
+    @Override
+    public List<IDocument> getDocuments() {
+        final List<IDocument> docs = new ArrayList<IDocument>();
+        for (IDocumentItem item : items) {
+            if (item instanceof IDocument) {
+                docs.add((IDocument) item);
             }
-            else {
-                return featureDocuments;
-            }
-        default: 
-            return null;
         }
+        return docs;
     }
-        
-
+    
     @Override
-    public void setCount( int count ) {
-        // do nothing - the contents are set manually
+    public void setDocuments(List<IDocument> docs) {
+        items.clear();
+        addDocuments(docs);
     }
-
+    
     @Override
-    public int getCount() {
-        if (selectedFeature == null || selectedFeature.isEmpty()) {
-            return 1;
-        }
-        else {
-            return 2;
+    public boolean contains(IDocument doc) {
+        return items.contains(doc);
+    }
+    
+    @Override
+    public void addItem(IDocumentItem item) {
+        if (item != null) {
+            items.add(item);    
         }
     }
     
     @Override
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Stores the selected feature id and updates the feature document folder
-     * @param selectedFeature
-     */
-    public void setSelectedFeature( String selectedFeature ) {
-        this.selectedFeature = selectedFeature;
-        featureDocuments.setSelectedFeature(selectedFeature);
+    public void addItems(List<IDocumentItem> items) {
+        if (items != null && items.size() > 0) {
+            for (IDocumentItem item : items) {
+                items.add(item);
+            }    
+        }
     }
     
+    @Override
+    public void addDocuments(List<IDocument> docs) {
+        if (docs != null && docs.size() > 0) {
+            for (IDocument doc : docs) {
+                items.add(doc);
+            }    
+        }
+    }
+    
+    @Override
+    public void addFolders(List<IDocumentFolder> folders) {
+        if (folders != null && folders.size() > 0) {
+            for (IDocumentFolder folder : folders) {
+                items.add(folder);
+            }            
+        }
+    }
 
+    @Override
+    public void removeItem(IDocumentItem item) {
+        items.remove(item);
+    }
+
+    @Override
+    public void removeDocuments(List<IDocument> docs) {
+        items.removeAll(docs);
+    }
+    
 }

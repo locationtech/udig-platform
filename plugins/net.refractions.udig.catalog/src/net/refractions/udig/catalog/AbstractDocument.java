@@ -16,90 +16,91 @@
  */
 package net.refractions.udig.catalog;
 
-import java.net.URI;
+import java.util.UUID;
+
 
 /**
- * Abstract class that implements hashCode and equals 
- * so that instances of this object can be added and removed in lists. 
- * Also contains methods for IFolder to enable it to be added to a folder and 
- * defined as a leaf node in the tree.
+ * This is the abstract class for documents.
  * 
  * @author paul.pfeiffer
- * @version 1.3.1
+ * @author Naz Chan
  *
  */
-public abstract class AbstractDocument implements IDocument, IFolder {
+public abstract class AbstractDocument extends AbstractDocumentItem implements IDocument {
 
-    /* (non-Javadoc)
-     * @see net.refractions.udig.catalog.IDocument#getName()
-     */
+    private UUID id;
+    
+    private IAbstractDocumentSource source;
+    private IDocumentFolder folder;
+    
+    protected String label;
+    private String attributeName;
+    
+    protected static final String UNASSIGNED = "unassigned"; //$NON-NLS-1$
+    protected static final String UNASSIGNED_NO_LABEL = "(unassigned)"; //$NON-NLS-1$
+    protected static final String LABEL_FORMAT = "%s (%s)"; //$NON-NLS-1$
+    
     @Override
-    public abstract String getName();
+    public String getLabel() {
+        return label;
+    }
 
-    /* (non-Javadoc)
-     * @see net.refractions.udig.catalog.IDocument#getDescription()
-     */
-    @Override
-    public abstract String getDescription();
-
-    /* (non-Javadoc)
-     * @see net.refractions.udig.catalog.IDocument#getURI()
-     */
-    @Override
-    public abstract URI getURI();
-
-    /* (non-Javadoc)
-     * @see net.refractions.udig.catalog.IDocument#getReferences()
-     */
-    @Override
-    public abstract String getReferences();
-
-    /* (non-Javadoc)
-     * @see net.refractions.udig.catalog.IDocument#open()
-     */
-    @Override
-    public abstract void open();
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getReferences() == null) ? 0 : getReferences().hashCode());
-        return result;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     @Override
-    public boolean equals( Object obj ) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (obj instanceof AbstractDocument) {
-            AbstractDocument document = (AbstractDocument) obj;
-            if (getReferences().equals(document.getReferences())) {
-                return true;
-            }
-        }
-        return false;
+    public String getAttributeName() {
+        return attributeName;
     }
-
-    // defines this document as a leaf node in a tree view. See IFolder
-    @Override
-    public IFolder getRow(int index) {
-        return null;
-    }
-    // defines this document as a leaf node in a tree view. See IFolder
-    @Override
-    public void setCount(int count) {
-        
-    }
-    // defines this document as a leaf node in a tree view. See IFolder
-    @Override
-    public int getCount() {
-        return 0;
+    
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
     }
     
     @Override
-    public String toString() {
-        return getReferences();
+    public UUID getID() {
+        return id;
+    }
+    
+    public void setID(UUID id) {
+        this.id = id;
+    }
+    
+    @Override
+    public IAbstractDocumentSource getSource() {
+        return source;
+    }
+
+    public void setSource(IAbstractDocumentSource source) {
+        this.source = source;
+    }
+
+    @Override
+    public IDocumentFolder getFolder() {
+        return folder;
+    }
+
+    public void setFolder(IDocumentFolder folder) {
+        this.folder = folder;
+    }
+ 
+    @Override
+    public boolean equals(Object obj) {
+        if (isEmpty()) {
+            return false;
+        } else {
+            if (obj instanceof AbstractDocument) {
+                final AbstractDocument doc = (AbstractDocument) obj;
+                if (!doc.isEmpty()) {
+                    if (getURI().compareTo(doc.getURI()) == 0) {
+                        return true;
+                    }    
+                }
+                return false;
+            }    
+        }
+        return super.equals(obj);
     }
     
 }

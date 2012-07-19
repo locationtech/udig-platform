@@ -22,17 +22,16 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-import java.util.Properties;
 
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IDocumentSource;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
+import net.refractions.udig.catalog.IHotlinkSource;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.URLUtils;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.data.DataUtilities;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.shapefile.indexed.IndexedShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureSource;
@@ -171,6 +170,12 @@ public class ShpGeoResourceImpl extends IGeoResource {
                 return adaptee.cast(document);
             }
         }
+        if (adaptee.isAssignableFrom(IHotlinkSource.class)) {
+            IHotlinkSource hotlink = hotlink(monitor);
+            if (hotlink != null) {
+                return adaptee.cast(hotlink);
+            }
+        }
         if (adaptee.isAssignableFrom(Style.class)) {
             Style style = style(monitor);
             if (style != null) {
@@ -187,28 +192,40 @@ public class ShpGeoResourceImpl extends IGeoResource {
         return parent.getDS(monitor).getFeatureSource();
     }
 
-    /*
-     * resolves a document source
+    /**
+     * Resolves to a document source
+     * 
+     * @param monitor
+     * @return document source
      */
     private IDocumentSource document( IProgressMonitor monitor ) {
-        URL url = parent.getIdentifier();
-        File f = ShpDocumentSource.getPropertiesFile(url);
         
-        try {
-            if (f.createNewFile()) {
-                // if it can be created and hasn't yet then delete it
-                // because we don't want to leave properties files everywhere
-                f.delete();
-            }
+        final URL url = parent.getIdentifier();
+        final File file = ShpDocPropertyParser.getPropertiesFile(url);
+        if (file != null && file.exists()) {
             return new ShpDocumentSource(url);
-        } 
-        catch (IOException e) {
-            //otherwise there was some permission or io error so we can't resolve to DocumentSource
-            //e.printStackTrace();
-            return null;
         }
+        return null;
+        
     }
-
+    
+    /**
+     * Resolves to a hotlink source
+     * 
+     * @param monitor
+     * @return hotlink source
+     */
+    private IHotlinkSource hotlink(IProgressMonitor monitor) {
+        
+        final URL url = parent.getIdentifier();
+        final File file = ShpDocPropertyParser.getPropertiesFile(url);
+        if (file != null && file.exists()) {
+            return new ShpHotlinkSource(url);
+        }
+        return null;
+        
+    }
+    
     public Style style( IProgressMonitor monitor ) {
         URL url = parent.getIdentifier();
         File file = URLUtils.urlToFile(url);
@@ -452,6 +469,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
                 || adaptee.isAssignableFrom(IService.class) 
                 || adaptee.isAssignableFrom(Style.class)
                 || adaptee.isAssignableFrom(IDocumentSource.class)
+                || adaptee.isAssignableFrom(IHotlinkSource.class)
                 ) 
                 || super.canResolve(adaptee);
     }
