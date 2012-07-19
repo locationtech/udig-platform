@@ -129,7 +129,7 @@ public final class SplitFeatureBuilder {
 			throws SplitFeatureBuilderFailException {
 
 		if (featureList == null)
-			new NullPointerException("The source feature list is required"); //$NON-NLS-1$
+			throw new NullPointerException("The source feature list is required"); //$NON-NLS-1$
 		if (splitLine == null)
 			throw new NullPointerException("The split line is required"); //$NON-NLS-1$
 		if (desiredCRS == null)
