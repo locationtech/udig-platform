@@ -8,12 +8,16 @@
  */
 package net.refractions.udig.project.internal.commands.edit;
 
+import java.io.IOException;
+
 import net.refractions.udig.core.IBlockingProvider;
 import net.refractions.udig.core.internal.FeatureUtils;
+import net.refractions.udig.project.EditFeature;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.MapCommand;
 import net.refractions.udig.project.command.PostDeterminedEffectCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
+import net.refractions.udig.project.interceptor.InterceptorSupport;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Messages;
 
@@ -23,7 +27,9 @@ import org.geotools.data.FeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
+import org.opengis.filter.FilterFactory2;
 
 /**
  * Deletes a feature from the map.
@@ -63,13 +69,38 @@ public class DeleteFeatureCommand extends AbstractEditCommand implements Undoabl
         monitor.beginTask(Messages.DeleteFeatureCommand_deleteFeature, 4); 
         monitor.worked(1);
         feature = featureProvider.get(new SubProgressMonitor(monitor, 1));
-        if( feature==null )
-            return false;
+        if( feature==null ){
+            return false; // most of been canceled
+        }
         oldLayer = layerProvider.get(new SubProgressMonitor(monitor, 1));
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-		oldLayer.getResource(FeatureStore.class, null).removeFeatures(
-                filterFactory.id(FeatureUtils.stringToId(filterFactory, feature.getID())));
+        
+        EditFeature editFeature;
+        if( feature instanceof EditFeature ){
+            editFeature = (EditFeature) feature;
+        }
+        else {
+            editFeature = new EditFeature( map.getEditManager(), feature, oldLayer );
+        }
+        InterceptorSupport.runFeaturePreDeleteInterceprtors( editFeature );
+        if( editFeature.hasError()){
+            // unable to accept this editFeature (would be nice to pop open a dialog
+            // here to review the EditFeature warnings and errors
+            throw new IOException("Delete feature "+editFeature.getID()+" failed.");
+        }
+        
+        FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
+        FeatureStore featureStore = oldLayer.getResource(FeatureStore.class, null);
+        Filter filter = ff.id( feature.getIdentifier() );
+        featureStore.removeFeatures( filter );
+        
+        InterceptorSupport.runFeatureDeletedInterceprtors( editFeature );
+        if( editFeature.hasError()){
+            // unable to accept this editFeature (would be nice to pop open a dialog
+            // here to review the EditFeature warnings and errors
+        }
         map.getEditManagerInternal().setEditFeature(null, null);
+        
+        monitor.done();
         return true;
     }
     public MapCommand copy() {

@@ -54,7 +54,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * 
  * @since 1.2.0
  */
-public class EditFeature extends DecoratingFeature implements IAdaptable, SimpleFeature {
+public class EditFeature extends AdaptableFeature {
     private IEditManager manager;
 
     private EditFeatureListenerList editFeatureListeners = new EditFeatureListenerList();
@@ -284,7 +284,7 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
      * @param evaluationObject the layer that contains the feature.
      */
     public EditFeature(IEditManager manager) {
-        super(manager.getEditFeature());
+        super(manager.getEditFeature(),manager.getEditLayer() );
         this.manager = manager;
     }
 
@@ -292,11 +292,14 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
         super(feature);
         this.manager = manager;
     }
-
+    public EditFeature(IEditManager manager, SimpleFeature feature, ILayer layer) {
+        super(feature, layer);
+        this.manager = manager;
+    }
     /**
      * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     public Object getAdapter(Class adapter) {
         if (IEditManager.class.isAssignableFrom(adapter)) {
             if (manager != null) {
@@ -493,6 +496,9 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
     private void doStatusChange(EditFeatureStateChangeEvent.Type state,
             AttributeStatus attributeStatus) {
         editFeatureListeners.doStateChange(new EditFeatureStateChangeEvent(state, attributeStatus));
+    }
+    public boolean hasError(){
+        return false;
     }
     /**
      * Record a warning against this EditFeature, warnings are expected to be displayed

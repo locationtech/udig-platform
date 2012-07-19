@@ -13,16 +13,11 @@ import java.util.Random;
 
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.core.internal.GeometryBuilder;
-import net.refractions.udig.project.AdaptableFeature;
-import net.refractions.udig.project.EditFeature;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.MapCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.interceptor.InterceptorSupport;
-import net.refractions.udig.project.interceptor.MapInterceptor;
 import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -98,28 +93,15 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
         }
         final SimpleFeatureType type = store.getSchema();
 
-        // Object[] attrs = new Object[type.getAttributeCount()];
-        // for( int i = 0; i < attrs.length; i++ ) {
-        // attrs[i] = toDefaultValue(type.getDescriptor(i));
-        // }
-        //        
-        // final SimpleFeature newFeature = SimpleFeatureBuilder.build(type, attrs, "newFeature"
-        // + new Random().nextInt());
-
-        String proposedFid = "newFeature"+"newFeature" + new Random().nextInt();
+        String proposedFid = type.getTypeName()+".new" + new Random().nextInt();
         final SimpleFeature newFeature = SimpleFeatureBuilder.template(type, proposedFid );
 
-        Class geomType = type.getGeometryDescriptor().getType().getBinding();
+        Class<Geometry> geomType = (Class<Geometry>) type.getGeometryDescriptor().getType().getBinding();
         Geometry geom = GeometryBuilder.create().safeCreateGeometry(geomType, coordinates);
         newFeature.setDefaultGeometry(geom);
         fid = newFeature.getID();
 
         EditManager editManager = map.getEditManagerInternal();
-        //SimpleFeature feature = new AdaptableFeature(newFeature, editLayer);
-        
-        EditFeature editFeature = new EditFeature(editManager, newFeature );
-        
-        InterceptorSupport.runFeatureCreationInterceptors(editFeature);
         
         editManager.addFeature(newFeature, (Layer) editLayer);
     }

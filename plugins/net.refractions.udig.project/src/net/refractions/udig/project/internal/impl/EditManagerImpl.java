@@ -13,10 +13,12 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.AdaptableFeature;
+import net.refractions.udig.project.EditFeature;
 import net.refractions.udig.project.EditManagerEvent;
 import net.refractions.udig.project.IEditManagerListener;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.interceptor.InterceptorSupport;
 import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
@@ -627,31 +629,38 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     @SuppressWarnings("unchecked")
     public void addFeature( final SimpleFeature feature, Layer layer ) throws IOException {
 
-        SimpleFeature adaptableFeature = feature;
-        if (!(feature instanceof IAdaptable)) {
-            adaptableFeature = new AdaptableFeature(feature, layer);
+        EditFeature editFeature;
+        if (feature instanceof EditFeature) {
+            editFeature = (EditFeature) feature;
         }
-        // TODO FeatureInterceptor
+        else {
+            editFeature = new EditFeature( this, feature, layer );
+        }
+        InterceptorSupport.runFeaturePreCreateInterceptors( editFeature );
+        if( editFeature.hasError()){
+            // unable to accept this editFeature (would be nice to pop open a dialog
+            // here to review the EditFeature warnings and errors
+            throw new IOException("Add feature "+editFeature.getID()+" failed.");
+        }
+        
+        final EditFeature finalFeature = editFeature;
+        setEditFeature(feature, layer);
 
-        final SimpleFeature finalFeature = adaptableFeature;
-        // setEditFeature(feature, layer);
-
-        FeatureStore<SimpleFeatureType, SimpleFeature> store = layer.getResource(
-                FeatureStore.class, null);
+        FeatureStore<SimpleFeatureType, SimpleFeature> store = layer.getResource(FeatureStore.class, null);
         FeatureCollection<SimpleFeatureType, SimpleFeature> c = new org.geotools.feature.collection.AdaptorFeatureCollection(
-                "copyCollection", store.getSchema()){
+                "addFeatureCollection", store.getSchema()){
             @Override
             public int size() {
                 return 1;
             }
             @Override
-            protected Iterator openIterator() {
-                return new Iterator(){
+            protected Iterator<SimpleFeature> openIterator() {
+                return new Iterator<SimpleFeature>(){
                     boolean more = true;
                     public boolean hasNext() {
                         return more;
                     }
-                    public Object next() {
+                    public SimpleFeature next() {
                         more = false;
                         return finalFeature;
                     }
@@ -664,8 +673,13 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
             protected void closeIterator( Iterator close ) {
             }
         };
-
         store.addFeatures(c);
+        
+        InterceptorSupport.runFeatureCreatedInterceptors( finalFeature );
+        if( editFeature.hasError()){
+            // unable to accept this editFeature (would be nice to pop open a dialog
+            // here to review the EditFeature warnings and errors
+        }
     }
 
     /**
