@@ -18,7 +18,7 @@
       </annotation>
       <complexType>
          <choice minOccurs="0" maxOccurs="unbounded">
-            <element ref="featureCreated"/>
+            <element ref="featurePreCreate"/>
          </choice>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -47,12 +47,212 @@
       </complexType>
    </element>
 
+   <element name="featurePreCreate">
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  an id for the interceptor
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  A name for the interceptor, this is considered translatable as it may be presented to the user as an error message in the event an exception is thrown.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="schema" type="string">
+            <annotation>
+               <documentation>
+                  Used to perform a quick schema check to confirm the Feature is of interest to this FeatureInterceptor.
+
+Example: Road
+Matches against any FeatureType named &quot;Road&quot;.
+
+Example: [name=&quot;&quot;,population=0]
+Used to confirm the presense of select attributes.
+
+Example: file:/cities.shp
+ID reference matching an exact IGeoResource.
+
+For more information please see InterceptorSupport javadocs.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The FeatureInterceptor class.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.FeatureInterceptor"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
    <element name="featureCreated">
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  an id for the interceptor
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  A name for the interceptor, this is considered translatable as it may be presented to the user as an error message in the event an exception is thrown.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="schema" type="string">
+            <annotation>
+               <documentation>
+                  Used to perform a quick schema check to confirm the Feature is of interest to this FeatureInterceptor.
+
+Example: Road
+Matches against any FeatureType named &quot;Road&quot;.
+
+Example: [name=&quot;&quot;,population=0]
+Used to confirm the presense of select attributes.
+
+Example: file:/cities.shp
+ID reference matching an exact IGeoResource.
+
+For more information please see InterceptorSupport javadocs.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The FeatureInterceptor class.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.FeatureInterceptor"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="featurePreDelete">
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  an id for the interceptor
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  A name for the interceptor, this is considered translatable as it may be presented to the user as an error message in the event an exception is thrown.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="schema" type="string">
+            <annotation>
+               <documentation>
+                  Used to perform a quick schema check to confirm the Feature is of interest to this FeatureInterceptor.
+
+Example: Road
+Matches against any FeatureType named &quot;Road&quot;.
+
+Example: [name=&quot;&quot;,population=0]
+Used to confirm the presense of select attributes.
+
+Example: file:/cities.shp
+ID reference matching an exact IGeoResource.
+
+For more information please see InterceptorSupport javadocs.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The FeatureInterceptor class.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.FeatureInterceptor"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="featureDeleted">
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  an id for the interceptor
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  A name for the interceptor, this is considered translatable as it may be presented to the user as an error message in the event an exception is thrown.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="schema" type="string">
+            <annotation>
+               <documentation>
+                  Used to perform a quick schema check to confirm the Feature is of interest to this FeatureInterceptor.
+
+Example: Road
+Matches against any FeatureType named &quot;Road&quot;.
+
+Example: [name=&quot;&quot;,population=0]
+Used to confirm the presense of select attributes.
+
+Example: file:/cities.shp
+ID reference matching an exact IGeoResource.
+
+For more information please see InterceptorSupport javadocs.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The FeatureInterceptor class.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.FeatureInterceptor"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="featureApply">
       <annotation>
          <documentation>
-            An interceptor that will be ran when a feature is created.
+            Called before any outstanding changes in the EditFeature are written back the the feature model. Returning false will cause the event to be blocked from calling.
 
-This is only ran if the feature is created by CreateFeatureCommand at this time.
+When using a geometry edit tool this functionaliy is assigned the Return key and is listed as Apply in the Edit menu.
          </documentation>
       </annotation>
       <complexType>
@@ -66,11 +266,196 @@ This is only ran if the feature is created by CreateFeatureCommand at this time.
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  A name for the interceptor
+                  A name for the interceptor, this is considered translatable as it may be presented to the user as an error message in the event an exception is thrown.
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
                </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="schema" type="string">
+            <annotation>
+               <documentation>
+                  Used to perform a quick schema check to confirm the Feature is of interest to this FeatureInterceptor.
+
+Example: Road
+Matches against any FeatureType named &quot;Road&quot;.
+
+Example: [name=&quot;&quot;,population=0]
+Used to confirm the presense of select attributes.
+
+Example: file:/cities.shp
+ID reference matching an exact IGeoResource.
+
+For more information please see InterceptorSupport javadocs.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The FeatureInterceptor class.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.FeatureInterceptor"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="featureCancel">
+      <annotation>
+         <documentation>
+            Called before the the EditFeature reverts back to the feature model forgetting all outstanding changes.
+
+When using a geometry edit tool this functionaliy is assigned the Escaape key and is listed as Cancel in the Edit menu.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  an id for the interceptor
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  A name for the interceptor, this is considered translatable as it may be presented to the user as an error message in the event an exception is thrown.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="schema" type="string">
+            <annotation>
+               <documentation>
+                  Used to perform a quick schema check to confirm the Feature is of interest to this FeatureInterceptor.
+
+Example: Road
+Matches against any FeatureType named &quot;Road&quot;.
+
+Example: [name=&quot;&quot;,population=0]
+Used to confirm the presense of select attributes.
+
+Example: file:/cities.shp
+ID reference matching an exact IGeoResource.
+
+For more information please see InterceptorSupport javadocs.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The FeatureInterceptor class.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.FeatureInterceptor"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="featureActive">
+      <annotation>
+         <documentation>
+            Called prior to displaying a feature in a form or table or geometry edit tool.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  an id for the interceptor
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  A name for the interceptor, this is considered translatable as it may be presented to the user as an error message in the event an exception is thrown.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="schema" type="string">
+            <annotation>
+               <documentation>
+                  Used to perform a quick schema check to confirm the Feature is of interest to this FeatureInterceptor.
+
+Example: Road
+Matches against any FeatureType named &quot;Road&quot;.
+
+Example: [name=&quot;&quot;,population=0]
+Used to confirm the presense of select attributes.
+
+Example: file:/cities.shp
+ID reference matching an exact IGeoResource.
+
+For more information please see InterceptorSupport javadocs.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The FeatureInterceptor class.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.interceptor.FeatureInterceptor"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="featureInActive">
+      <annotation>
+         <documentation>
+            Called when a feature is disconnected form a form or table or geometry edit tool.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  an id for the interceptor
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  A name for the interceptor, this is considered translatable as it may be presented to the user as an error message in the event an exception is thrown.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="schema" type="string">
+            <annotation>
+               <documentation>
+                  Used to perform a quick schema check to confirm the Feature is of interest to this FeatureInterceptor.
+
+Example: Road
+Matches against any FeatureType named &quot;Road&quot;.
+
+Example: [name=&quot;&quot;,population=0]
+Used to confirm the presense of select attributes.
+
+Example: file:/cities.shp
+ID reference matching an exact IGeoResource.
+
+For more information please see InterceptorSupport javadocs.
+               </documentation>
             </annotation>
          </attribute>
          <attribute name="class" type="string" use="required">

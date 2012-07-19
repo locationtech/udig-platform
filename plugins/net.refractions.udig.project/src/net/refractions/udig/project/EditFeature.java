@@ -494,4 +494,16 @@ public class EditFeature extends DecoratingFeature implements IAdaptable, Simple
             AttributeStatus attributeStatus) {
         editFeatureListeners.doStateChange(new EditFeatureStateChangeEvent(state, attributeStatus));
     }
+    /**
+     * Record a warning against this EditFeature, warnings are expected to be displayed
+     * to the user at the next available opportunity.
+     */
+    public void addWarning(String string, Throwable e) {
+    }
+    /**
+     * Record a warning against this EditFeature, warnings are expected to halt the current activity
+     * (and provided to the user as the reason for failure).
+     */
+    public void addError(String string, Throwable e) {
+    }
 }
