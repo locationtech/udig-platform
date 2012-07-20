@@ -165,7 +165,6 @@ public class DocumentFactory {
         if (url != null) {
             urlDoc = new URLDocument((URL) url);
         }
-        urlDoc.setID(UUID.randomUUID());
         urlDoc.setLabel(label);
         urlDoc.setSource(source);
         urlDoc.setFolder(folder);
@@ -184,7 +183,6 @@ public class DocumentFactory {
         if (file != null) {
             fileDoc = new FileDocument((File) file);
         }
-        fileDoc.setID(UUID.randomUUID());
         fileDoc.setLabel(label);
         fileDoc.setSource(source);
         fileDoc.setFolder(folder);

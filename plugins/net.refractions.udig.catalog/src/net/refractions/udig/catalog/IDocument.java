@@ -17,7 +17,6 @@
 package net.refractions.udig.catalog;
 
 import java.net.URI;
-import java.util.UUID;
 
 /**
  * Document interface.
@@ -33,13 +32,6 @@ public interface IDocument extends IDocumentItem {
     public enum Type {
         FILE, WEB;
     };
-    
-    /**
-     * Gets the ID of the document.
-     * 
-     * @return ID
-     */
-    public UUID getID();
     
     /**
      * Universal Resource Indicator.

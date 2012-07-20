@@ -27,8 +27,6 @@ import java.util.UUID;
  *
  */
 public abstract class AbstractDocument extends AbstractDocumentItem implements IDocument {
-
-    private UUID id;
     
     private IAbstractDocumentSource source;
     private IDocumentFolder folder;
@@ -56,15 +54,6 @@ public abstract class AbstractDocument extends AbstractDocumentItem implements I
     
     public void setAttributeName(String attributeName) {
         this.attributeName = attributeName;
-    }
-    
-    @Override
-    public UUID getID() {
-        return id;
-    }
-    
-    public void setID(UUID id) {
-        this.id = id;
     }
     
     @Override
