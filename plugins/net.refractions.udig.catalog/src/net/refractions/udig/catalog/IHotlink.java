@@ -21,90 +21,125 @@ import java.util.List;
 import net.refractions.udig.catalog.IDocument.TYPE;
 
 import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.Name;
-import org.opengis.filter.identity.FeatureId;
 
 /**
  * Hotlink support for IGeoResource.
  * <p>
- * Hotlinks are used to record a document reference feature attributes. The feature attributes
- * that are used for this purpose are made available through this interface, along with helper
- * methods allowing you to update these links correctly.
+ * Hotlinks are used to record a document reference feature attributes. The feature attributes that
+ * are used for this purpose are made available through this interface, along with helper methods
+ * allowing you to update these links correctly.
  * <p>
  * 
- * @author nchan
+ * @author Jody Garnett
  */
 public interface IHotlink {
+
     /**
-     * Used to record additional AttributeDescriptor information marking
-     * attributes suitable to store hotlink information.
+     * Used to record additional AttributeDescriptor information marking attributes suitable to
+     * store hotlink information.
      */
     public class HotlinkDescriptor {
+        
+        private String attributeName;
         private TYPE type;
-        private Name name;
-        public HotlinkDescriptor( Name name, IDocument.TYPE type ){
-            this.name = name;
+        
+        public HotlinkDescriptor(String attributeName, IDocument.TYPE type) {
+            this.attributeName = attributeName;
             this.type = type;
         }
-        public HotlinkDescriptor( SimpleFeatureType schema, String name, IDocument.TYPE type ){
-            this.name = schema.getDescriptor(name).getName();
-            this.type = type;
+
+        public String getAttributeName() {
+            return attributeName;
         }
-        public Name getName() {
-            return name;
-        }
+
         public TYPE getType() {
             return type;
         }
+        
     }
+
     /**
      * List of available attributes available to store hotlink information.
+     * 
      * @return list of available hotlink information, may be empty if hotlinks not available.
      */
-    List<HotlinkDescriptor> getHotlinkAttributeList();
-    
+    public List<HotlinkDescriptor> getHotlinkDescriptors();
+
+    /**
+     * Gets the list of documents in the feature. The list of documents is wrapped in a
+     * document folder with the folder name.
+     * 
+     * @param folderName
+     * @param fid
+     * @return document folder
+     */
+    public IDocumentFolder getDocumentsInFolder(SimpleFeature feature, String folderName);
+
+    /**
+     * Gets the list of documents in the feature. The list of documents is wrapped in a
+     * document folder with the default folder name.
+     * 
+     * @param fid
+     * @return document folder
+     */
+    public IDocumentFolder getDocumentsInFolder(SimpleFeature feature);
+
+    /**
+     * Gets the list of documents in the feature.
+     * 
+     * @param fid
+     * @return list of documents
+     */
+    public List<IDocument> getDocuments(SimpleFeature feature);
+
     /**
      * Used to decode the indicated hotlink value as an IDocument for general use.
-     * @param feature Feature under study, either retrieved directly from featureSource or a live EditFeature
+     * 
+     * @param feature Feature under study, either retrieved directly from featureSource or a live
+     *        EditFeature
      * @param attributeName Attribute to decode document reference
      */
-    IDocument document( SimpleFeature feature, Name attributeName );
-    
+    public IDocument getDocument(SimpleFeature feature, String attributeName);
+
     /**
      * Used to encode the indicated file as an IDocument in the provided feature.
      * <p>
      * It is the callers responsibility to record this changed value, either by using featureStore
      * to write out the changed value, or by passing in a live EditFeature for modification.
      * 
-     * @param feature Feature under study, either retrieved directly from featureSource or a live EditFeature
+     * @param feature Feature under study, either retrieved directly from featureSource or a live
+     *        EditFeature
      * @param attributeName Attribute used to store the document reference
      * @param file File to encode as a reference
      * @return The created IDocument, or null if link unsuccessful
      */
-    IDocument file( SimpleFeature feature, Name attributeName ,File file );
+    public IDocument setFile(SimpleFeature feature, String attributeName, File file);
+
     /**
      * Used to encode the indicated file as an IDocument in the provided feature.
      * <p>
      * It is the callers responsibility to record this changed value, either by using featureStore
      * to write out the changed value, or by passing in a live EditFeature for modification.
      * 
-     * @param feature Feature under study, either retrieved directly from featureSource or a live EditFeature
+     * @param feature Feature under study, either retrieved directly from featureSource or a live
+     *        EditFeature
      * @param attributeName Attribute used to store the document reference
      * @param link URL to encode as a reference
      * @return The created IDocument, or null if link unsuccessful
      */
-    IDocument link( SimpleFeature feature, Name attributeName, URL link );
+    public IDocument setLink(SimpleFeature feature, String attributeName, URL link);
+
     /**
      * Used to clear a hotlink in the provided feature.
      * <p>
      * It is the callers responsibility to record this changed value, either by using featureStore
      * to write out the changed value, or by passing in a live EditFeature for modification.
      * 
-     * @param feature Feature under study, either retrieved directly from featureSource or a live EditFeature
+     * @param feature Feature under study, either retrieved directly from featureSource or a live
+     *        EditFeature
      * @param attributeName Attribute used to store the document reference
      * @return The removed IDocument, or null if not available
      */
-    IDocument clear( SimpleFeature feature, Name attributeName );
-    
+    public IDocument clear(SimpleFeature feature, String attributeName);
+
 }
