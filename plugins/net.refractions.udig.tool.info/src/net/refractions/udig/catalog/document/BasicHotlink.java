@@ -72,11 +72,6 @@ public class BasicHotlink implements IHotlink {
         }
 
         @Override
-        public IDocumentFolder getFolder() {
-            return null;
-        }
-
-        @Override
         public boolean open() {
             boolean success = Program.launch( file.toString() );
             return success;
@@ -133,11 +128,6 @@ public class BasicHotlink implements IHotlink {
         }
     
         @Override
-        public IDocumentFolder getFolder() {
-            return null;
-        }
-    
-        @Override
         public boolean open() {
             boolean success = Program.launch( url.toExternalForm() );
             return success;
@@ -172,16 +162,6 @@ public class BasicHotlink implements IHotlink {
             }
         }
         return Collections.unmodifiableList(list);
-    }
-
-    @Override
-    public IDocumentFolder getDocumentsInFolder(SimpleFeature feature, String folderName) {
-        return null;
-    }
-
-    @Override
-    public IDocumentFolder getDocumentsInFolder(SimpleFeature feature) {
-        return null;
     }
 
     @Override
