@@ -1,5 +1,5 @@
 Plugin Internationalization
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===========================
 
 The file plugin.properties is used to internationalize the plugin.xml file. Since some of these
 descriptions will be showing up in client code.
@@ -10,7 +10,8 @@ this view".
 How to acomplish this?
 
 Change the name to a %LocalRegistry (in this example)
- |image0|
+
+.. image:: /images/plugin_internationalization/InternationalizationPlugInProperties.jpg
 
 Cerate a plugin.properties file with an entry for LocalRegistry.
 
@@ -24,8 +25,7 @@ You can use this trick to manage many aspects of the plugin.xml file including s
 **Links**
 
 * `http://www.eclipse.org/articles/Article-Internationalization/how2I18n.html <http://www.eclipse.org/articles/Article-Internationalization/how2I18n.html>`_
--  `RCP Tutorial Part
-   2 <http://dev.eclipse.org/viewcvs/index.cgi/%7echeckout%7e/org.eclipse.ui.tutorials.rcp.part2/html/tutorial2.html>`_
+* `RCP Tutorial Part 2 <http://dev.eclipse.org/viewcvs/index.cgi/%7echeckout%7e/org.eclipse.ui.tutorials.rcp.part2/html/tutorial2.html>`_
 
 To internationalize your source code, see `Plugin Internationalization with
 ResourceBundles <Plugin%20Internationalization%20with%20ResourceBundles.html>`_.
@@ -41,4 +41,3 @@ line.
 
      Bundle-Localization: plugin
 
-.. |image0| image:: /images/plugin_internationalization/InternationalizationPlugInProperties.jpg

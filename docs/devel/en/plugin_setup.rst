@@ -82,8 +82,7 @@ Setting up plugin.properties
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The plugin.properties file is used to externalize strings from the plugin.xml manifest. This is good
-practice and will allow us to
- provide French support later.
+practice and will allow us to provide French support later.
 
 ::
 

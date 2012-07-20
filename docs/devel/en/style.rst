@@ -1,16 +1,18 @@
 Style
------
+=====
+
+.. _GeoTools User Guide: http://docs.geotools.org/latest/userguide/
 
 uDig can provide maps symbolized by implementing styles. A style describes how to paint points,
 lines, polygons and raster data sets by providing a set of painting rules.
 
 Related Reference:
 
-* `GeoTools User Guide: 12 Renderer <http://docs.codehaus.org/display/GEOTDOC/12+Render>`_
+* `GeoTools User Guide: Renderer <http://docs.geotools.org/latest/userguide/library/render/index.html>`_
 * `Styled Layer Descriptor Reference Document <http://www.opengis.org/docs/02-070.pdf>`_
 
 uDig Style Framework
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 The style api has three major extension points (defined by the **net.refractions.udig.project**
 plug-in):
@@ -32,7 +34,7 @@ to inspect the style blackboard. The renderer that is able to understand the mos
 blackboard is chosen to draw what is on the screen.
 
 StyleContent, Objects and the StyleBlackboard
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------------
 
 Here is how the StyleBlackboard is used for collaboration:
 
@@ -55,7 +57,7 @@ Each style configurator is supplied with a copy of the actual layer blackboard. 
 object is changed, it must be replaced onto the blackboard for persistence to occure.
 
 StyleContent
-~~~~~~~~~~~~
+------------
 
 The style content extension-point is used to teach the system about a new kind of style information
 you would like to store on the blackboard.
@@ -73,7 +75,7 @@ For an example of the production of a StyleContent please review the
 net.refractions.udig.tutorials.style.color tutorial.
 
 StyleConfigurator
-~~~~~~~~~~~~~~~~~
+-----------------
 
 The StyleConfigurator is a user interface; that should store no state of its own (since it could be
 close at any time). All state should be stored in the style objects on the style blackboard. When a
@@ -86,7 +88,7 @@ values of style objects on the blackboard. This should be performed every time r
 Whenever style objects are read from the blackboard, the example below is pretending to talk to a
 "point.style" key that is used to store a Point object.
 
-::
+.. code-block:: java
 
     void apply() {
           StyleBlackboard styleBlackboard = getStyleBlackboard();
@@ -109,21 +111,21 @@ Whenever style objects are read from the blackboard, the example below is preten
       }
 
 Built-in Styles
-~~~~~~~~~~~~~~~
+---------------
 
 The uDig application provides several built-in StyleContent implementations. These are described in
 this section; but in a few cases you will need to go off and read formal documentation provided by a
 standards body.
 
 ProjectBlackboardConstants.LAYER\_DATA\_QUERY
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------------
 
 This is an entry on the style blackboard that can be used to hold an OGC Filter or WFS Query. This
 is used to turn your layer into a simple "view" of the complete content provided by the GeoResource.
 
 To quickly create a filter you can use the CQL utility class:
 
-::
+.. code-block:: java
 
     Filter filter = CQL.toFilter("attName >= 5");
 
@@ -131,7 +133,7 @@ To quickly create a filter you can use the CQL utility class:
 
 Or a FilterFactory:
 
-::
+.. code-block:: java
 
     FilterFactory ff = CommonFactoryFinder.getFilterFactory( null );
     Filter filter = ff.propertyLessThan( ff.property( "AGE"), ff.literal( 12 ) );
@@ -140,11 +142,11 @@ Or a FilterFactory:
 
 References:
 
-* `GeoTools User Guide <http://docs.codehaus.org/display/GEOTDOC>`_
+* `GeoTools User Guide`_
 * `http://www.opengeospatial.org/standards/filter <http://www.opengeospatial.org/standards/filter>`_
 
 SLDContent
-~~~~~~~~~~
+----------
 
 The SLDContent entry is used to store a "Style Layer Descriptor" document on the style blackboard.
 The OGC Style Layer Descriptor specification defines a style that can be used to portray Features
@@ -161,17 +163,17 @@ The class **SLDContent** is used to store an **org.geotools.styling.Style** obje
 SLD file). If you would like to interact with this object you can request it from the style
 blackboard using the key SLDContent.ID.
 
-::
+.. code-block:: java
 
     Style sld = (Style) = layer.getStyleBlackboard().get(SLDContent.ID);
 
 References:
 
-* `GeoTools User Guide <http://docs.codehaus.org/display/GEOTDOC>`_
+* `GeoTools User Guide`_
 * `http://www.opengeospatial.org/standards/sld <http://www.opengeospatial.org/standards/sld>`_
 
 Default Style
-~~~~~~~~~~~~~
+-------------
 
 SLDContent will ask your GeoResource for a default style; you have several ways of supplying a
 default:
@@ -184,7 +186,7 @@ default:
 
 To ask SLDContent for a default style yourself:
 
-::
+.. code-block:: java
 
     SLDContent sldContent = new SLDContent(SLDContent.ID);
     Style sld = (Style) SLDContent.createDefaultStyle( resource, Color.BLACK, new NullProgressMonitor() );
@@ -192,12 +194,12 @@ To ask SLDContent for a default style yourself:
 The **CreateLayerCommand** normally takes care of this step for you when you are creating
 
 GeoTools Style Class
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 The GeoTools Style object represents the contents of an SLD file. You can create a Style using a
 StyleBuilder
 
-::
+.. code-block:: java
 
     StyleFactory styleFactory = StyleFactory.createStyleFactory();
     Style style = styleFactory.getDefaultStyle();
@@ -205,7 +207,7 @@ StyleBuilder
     FeatureTypeStyle fts = styleFactory.createFeatureTypeStyle();
     fts.setFeatureTypeName("feature-type-1");
     style.addFeatureTypeStyle(fts);
-    ...
+
 
 Overview of Style classes mentioned above:
 
@@ -220,7 +222,7 @@ Overview of Style classes mentioned above:
          range, the rule won't apply and thus its symbolizers won't be used;
       -  a Filter that is applied to the features, only the features matching the filter will be
          painted according to the Rule symbolizers;
-          as an alternative, the rule can have an "else filter". This special kind of filter catches
+         as an alternative, the rule can have an "else filter". This special kind of filter catches
          all of the features that still haven't been symbolized by previous rules with a regular
          filter.
 
@@ -235,7 +237,7 @@ Overview of Style classes mentioned above:
             -  Raster Symbolizer
 
 SLDs utility class
-~~~~~~~~~~~~~~~~~~
+------------------
 
 Since a Style is composed of a complex set of objects, a StyleBuilder object is provided for you to
 conveniently build simple styles without the need to build all of the style elements by hand. For
@@ -244,7 +246,7 @@ call: the builder will generate a default FeatureTypeStyle and the Rule for you.
 
 Using SLDs utility class to query an SLD:
 
-::
+.. code-block:: java
 
     Style sld = (Style) = layer.getStyleBlackboard().get(SLDContent.ID);
     FeatureTypeStyle style = SLDs.getFeatureTypeStyle( sld );

@@ -10,7 +10,7 @@ is XML-based, but Eclipse provides a very nice GUI editor.
 
 uDig's application lives in the net.refractions.udig plug-in:
 
-`http://svn.geotools.org/udig/trunk/plugins/net.refractions.udig/udig.product <http://svn.geotools.org/udig/trunk/plugins/net.refractions.udig/udig.product>`_
+`<https://github.com/uDig/udig-platform/blob/master/plugins/net.refractions.udig/udig.product>`_ 
 
 Creating the .product File
 --------------------------
@@ -20,7 +20,7 @@ your branding plug-in.
 
 In your Eclipse SDK:
 
-#. Select **File**->\ **New**->\ **Other...**
+#. Select :menuselection:`File  --> New --> Other...`
 #. In the **Plug-in Development** folder, select **Product Configuration** and press **Next**
 #. Select your **branding plug-in** for the parent folder. (eg:
    "**net.refractions.udig.community.jody.visual**\ ")
@@ -30,7 +30,8 @@ In your Eclipse SDK:
 #. Press **Finish**
 
 This screenshot shows a newly created visual.product file based on udig.product:
- `|image0| <http://udig.refractions.net/confluence//download/attachments/9358/newProduct.jpg>`_
+
+.. image:: images/making_a_product_and_executable/newProduct.jpg
 
 Configuring your Product
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -39,8 +40,8 @@ Configuring your Product
 
 Note that **product name** is set to "%product.name". You should either create a plugin.properties
 file and provide a value, or change it to an appropriate product name (eg: "Visual Application").
-For an example properties file, see
-`http://svn.geotools.org/udig/trunk/plugins/net.refractions.udig/plugin.properties <http://svn.geotools.org/udig/trunk/plugins/net.refractions.udig/plugin.properties>`_
+For an example properties file, see 
+`<https://github.com/uDig/udig-platform/blob/master/plugins/net.refractions.udig/plugin.properties>`_ 
 
 **Feature-Based Product**
 
@@ -52,7 +53,7 @@ plug-ins you want to include (ex: **net.refractions.udig.community.jody.visual\_
 
 The following screenshot shows the **Configuration** page of a product based on features:
 
-`|image1| <http://udig.refractions.net/confluence//download/attachments/9358/featureBasedProduct.jpg>`_
+.. image:: images/making_a_product_and_executable/featureBasedProduct.jpg
 
 **Branding**
 
@@ -68,7 +69,7 @@ Using the Product to Run your Application
 
 A product file can be used to run your application within Eclipse. On the **Overview** page, under
 **Testing**, there are a couple buttons. **Synchronize** creates (or updates) the Eclipse run-time
-configuration (What you see under Run->Run History), and **Launch the Product** or **Launch the
+configuration (What you see under :menuselection:`Run --> Run History`), and **Launch the Product** or **Launch the
 Product in Debug mode**.
 
 To use the product file to run your application:
@@ -89,11 +90,9 @@ Change **Root directory** to something suitable for your application (eg: "visua
 Press Finish and then wait for it to build.
 
 The following screenshot shows the Eclipse export wizard:
- `|image2| <http://udig.refractions.net/confluence//download/attachments/9358/export.jpg>`_
+
+.. image:: images/making_a_product_and_executable/export.jpg
 
 Note that if you wish to export for multiple platforms, you will need to install the Eclispe RCP
 Delta Pack.
 
-.. |image0| image:: download/thumbnails/9358/newProduct.jpg
-.. |image1| image:: download/thumbnails/9358/featureBasedProduct.jpg
-.. |image2| image:: download/thumbnails/9358/export.jpg

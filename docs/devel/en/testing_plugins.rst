@@ -2,13 +2,15 @@ Testing Plugins
 ###############
 
 Writing Test Plugins
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Writing a test plugin is no different from writing a regular plugin. After creating your test
 plugin, simply creating test cases the usual junit way by extended org.junit.TestCase.
 
-**Note**: The junit library is bundled as the **org.junit** plugin. Your test plugin must depend on
-it.
+.. note::
+
+   The junit library is bundled as the **org.junit** plugin. Your test plugin 
+   must depend on it.
 
 Optional: Unless it is necessary, we recommend placing junit tests for a particular plugin, in a
 separate plugin all together. The only downside to doing so is the loss of the ability to use
@@ -47,7 +49,8 @@ include:
 
 ::
 
-     the feature.xml file
+    the feature.xml file
+
     net.refractions.udig.catalog
     net.refractions.udig.catalog.wfs
 
@@ -71,9 +74,11 @@ Running Tests in the IDE
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 After creating a test case in your new test plugin, right click on the class while in the **Java**
-perspective, and the context menu should contain a menu item entitled *Run As* -> *JUnit Plug-in
-Test*. This will start an eclipse runtime environment and run your test class.
- |image0|
+perspective, and the context menu should contain a menu item entitled 
+:menuselection:`Run As --> JUnit Plug-in Test`. This will start an eclipse runtime environment and 
+run your test class.
+
+.. image:: /images/testing_plugins/runide.png
 
 Running Automated Tests
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -93,7 +98,7 @@ A test suite is a java class which extends **junit.framework.TestSuite**. Each t
 must be added to the test suite. The following is an example of a test suite which contains three
 test classes.
 
-::
+.. code-block:: java
 
     public class CatalogUITestSuite extends TestSuite {
 
@@ -110,16 +115,14 @@ test classes.
         
     }
 
-.. figure:: images/icons/emoticons/forbidden.gif
-   :align: center
-   :alt: 
+.. warning::
+   **The test suite must provide an implementation of a method with the following 
+   signature, which returns an instnace of the suite**
 
-**The test suite must provide an implementation of a method with the following signature, which
-returns an instnace of the suite**
-
-::
+   .. code-block:: java
 
         public static Test suite();
+
 
 Creating the test.xml Script.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -132,8 +135,10 @@ include:
 #. **plugin-name** - This is name of your **test** plugin. For simplicity, keep it the same as the
    id of your plugin.
 #. **testClass** - This is the fully qualified class name of your test suite.
-#. **testTarget** - This is the name of ant target which will be used to run your tests. |image1| It
-   must be unique among all other test plugins.
+#. **testTarget** - This is the name of ant target which will be used to run your tests. 
+
+.. warning::
+   It must be unique among all other test plugins.
 
 Adding the Plugin to the net.refractions.udig.test Feature
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -141,15 +146,24 @@ Adding the Plugin to the net.refractions.udig.test Feature
 The easiest way to add a plugin to a particular feature is using the eclipse feature editor.
 
 #. Navigate to the net.refractions.udig.test feature while in the Java Perspective
-    |image2|
+
+   .. image:: /images/testing_plugins/nav.png
+
 #. Open the feature.xml file with the eclipse editor and select the **Plug-ins** tab
-    |image3|
+
+   .. image:: /images/testing_plugins/edit.png
+
 #. Click the **Add** button and select the test plugin from the pop-up dialog.
-    |image4|
+
+   .. image:: /images/testing_plugins/select.png
+
 #. Click **OK** and save the feature.xml file
 
 Adding the Plugin to the Automated Test Set
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. todo:: 
+   Where are the test geotools scripts ? couldn't find at github (https://github.com/geotools/geotools)
 
 To add the plugin to the automated test set, you must check out
 `http://svn.geotools.org/udig/trunk/scripts <http://svn.geotools.org/udig/trunk/scripts/test/>`_.
@@ -188,7 +202,7 @@ above. In order to have to the root script call your test.xml script, you must m
 named **all** and add a call to your target. The **all** target is located near the bottom of the
 script and looks like the following:
 
-::
+.. code-block:: xml
 
       <target name="all">
         <antcall target="catalog" />
@@ -199,7 +213,7 @@ script and looks like the following:
 
 To add the catalog.tests.ui plugin, we add the following line:
 
-::
+.. code-block:: xml
 
         <antcall target="catalog.ui" />
 
@@ -209,7 +223,7 @@ This name MUST match the plugin-name property declared in the test.xml file crea
 
 The following is an example of a target:
 
-::
+.. code-block:: xml
 
      <target name="catalog.ui">
         <antcall target="runtests">
@@ -220,25 +234,14 @@ The following is an example of a target:
 
 The target can be added anywhere in the file.
 
-.. figure:: images/icons/emoticons/forbidden.gif
-   :align: center
-   :alt: 
+.. warning::
+   **The testPlugin attribute must match the name of the property added to teh test.properties file.**
 
-**The testPlugin attribute must match the name of the property added to teh test.properties file.**
-
-.. figure:: images/icons/emoticons/check.gif
-   :align: center
-   :alt: 
-
-**The report attribute is the name that the test report will be published as**
+.. hint::
+   **The report attribute is the name that the test report will be published as**
 
 Note that the plugin required to run automated tests is "eclipse-test-framework-3.1.zip", available
 here:
 
-`http://download.eclipse.org/eclipse/downloads/drops/R-3.1-200506271435/index.php <http://download.eclipse.org/eclipse/downloads/drops/R-3.1-200506271435/index.php>`_
+`<http://download.eclipse.org/eclipse/downloads/drops/R-3.1-200506271435/index.php>`_
 
-.. |image0| image:: /images/testing_plugins/runide.png
-.. |image1| image:: images/icons/emoticons/warning.gif
-.. |image2| image:: /images/testing_plugins/nav.png
-.. |image3| image:: /images/testing_plugins/edit.png
-.. |image4| image:: /images/testing_plugins/select.png

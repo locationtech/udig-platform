@@ -33,9 +33,9 @@ an Action.
       net.refractions.udig.defaultUDIGKeyConfiguration ). Schemes are part of the
       org.eclipse.ui.bindings extension.
 
--  Only 1 scheme is active at a time. So if you create a new scheme you have to create new bindings
+#. Only 1 scheme is active at a time. So if you create a new scheme you have to create new bindings
    for every command that you want to use in your application.
--  To activate a new scheme you must create a plugin\_customization.ini file in your application
+#. To activate a new scheme you must create a plugin\_customization.ini file in your application
    plugin or choose a new scheme in the Window > Preferences > Keys preference page.
 
    #. Define a key binding for your command (part of the org.eclipse.ui.bindings extension). In the
@@ -47,32 +47,31 @@ an Action.
 
    #. When you create your action set the definitionID to the command's id.
 
--  ::
+      .. code-block:: java
 
-       action.setActionDefinitionId("yourCommandsID");
+          action.setActionDefinitionId("yourCommandsID");
 
    #. Next you must register your command with the current site's keybinding service.
 
--  ::
-
-       part.getSite().getKeyBindingService().registerAction(action);
+      .. code-block:: java
+   
+          part.getSite().getKeyBindingService().registerAction(action);
 
    #. During the creation of a view the context that are active must be defined as well. By default
       org.eclipse.ui.contexts.window context is active so if you keybinding is part of that context
       then you can skip this step.
 
--  ::
+      .. code-block:: java
 
-       site.getKeyBindingService().setScopes(new String[] {"yourContextID"});
+          site.getKeyBindingService().setScopes(new String[] {"yourContextID"});
 
-**Tips**
- The ToolManager's contributeGlobalActions() sets all the "normal" uDig actions such as copy, paste,
-delete, undo, redo, etc... The ToolManager can be obtained with the method
-ApplicationGIS.getToolManager().
+.. tip::
+   The ToolManager's contributeGlobalActions() sets all the "normal" uDig actions such as copy, paste,
+   delete, undo, redo, etc... The ToolManager can be obtained with the method ApplicationGIS.getToolManager().
 
 **Example:**
 
-::
+.. code-block:: xml
 
     <!-- This is part of org.eclipse.ui plugin.xml -->
           <extension
@@ -119,7 +118,6 @@ ApplicationGIS.getToolManager().
 
 **Resources**
 
--  See the org.eclipse.ui plugin.xml for many existing commmands, categories, keybindings, contexts
-   and schemes.
-* `http://www.magma.ca/~pollockd/despumate/bindingsHowTo.html <http://www.magma.ca/~pollockd/despumate/bindingsHowTo.html>`_
+* See the org.eclipse.ui plugin.xml for many existing commmands, categories, keybindings, contexts and schemes.
+* `<http://www.magma.ca/~pollockd/despumate/bindingsHowTo.html>`_
 

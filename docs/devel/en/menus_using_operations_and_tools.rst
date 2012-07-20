@@ -22,8 +22,7 @@ Adding a Menu using Tool
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 The tool extension point provided as part of the GIS Application (net.refractions.udig.project.ui)
-allows you to indicate where tools
- will be added to the menu bar.
+allows you to indicate where tools will be added to the menu bar.
 
 This information should only be filled in as an override; Tool category will be used to position
 contributions in the correct location (on the menu bar or context menu as needed).

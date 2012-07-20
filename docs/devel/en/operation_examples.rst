@@ -88,32 +88,33 @@ Code Snippets
 The follow example declares an operation that is enabled when the selection is a *single* IMap
 object. This operation would be enabled in the MapEditor and the Project Explorer.
 
-::
+.. code-block:: xml
 
-    <operation               categoryId="net.refractions.udig.project.ui.informationOperations"
-    class="net.refractions.udig.project.ui.operations.example.FeaturesInView"
-                   enablesFor="1"
-                   id="net.refractions.udig.project.ui.featuresInView"
-                   name="%featuresView"
-                   targetClass="net.refractions.udig.project.IMap"/>
+    <operation categoryId="net.refractions.udig.project.ui.informationOperations"
+        class="net.refractions.udig.project.ui.operations.example.FeaturesInView"
+        enablesFor="1"
+        id="net.refractions.udig.project.ui.featuresInView"
+        name="%featuresView"
+        targetClass="net.refractions.udig.project.IMap"/>
 
 **FeaturesInView.java**
 
-::
+.. code-block:: java
 
     public void op( final Display display, Object target, IProgressMonitor monitor )
                 throws Exception {
-            IMap map = (IMap) target; 
+        IMap map = (IMap) target; 
 
-    // ... some work
+        // ... some work
     }
 
 **Example where target is exactly 2 ILayers**
- The following example would be enabled when exactly 2 ILayers are selected. No more and no less.
+
+The following example would be enabled when exactly 2 ILayers are selected. No more and no less.
 The standard views where this operation could be enabled in are the Layers View and Project
 Explorer.
 
-::
+.. code-block:: xml
 
     <operation
                 class="net.refractions.udig.tool.edit.DifferenceOp"
@@ -122,9 +123,10 @@ Explorer.
                 name="%difference.name"
                 targetClass="net.refractions.udig.project.ILayer"/>
 
+
 **DifferenceOp.java**
 
-::
+.. code-block:: java
 
     public void op( final Display display, Object target, IProgressMonitor monitor ) throws Exception {
             final ILayer[] layers=(ILayer[]) target;
@@ -132,13 +134,14 @@ Explorer.
     }
 
 **Example using enablement filter**
- The following example show the declaration of an operation that is enabled only when the selection
+
+The following example show the declaration of an operation that is enabled only when the selection
 consists of a single IService that can adapt (resolve in the case of IService) to a DataStore
 object. The difference between this example and simply having the target as a DataStore is that the
 object that is passed in is a IService and not a DataStore. Obviously the functionality of IService
 is required and not the functionality of a DataStore.
 
-::
+.. code-block:: xml
 
     <operation
          categoryId="net.refractions.udig.ui.edit"
@@ -158,7 +161,7 @@ DataStore.
 
 **NewFeatureTypeOp.java**
 
-::
+.. code-block:: java
 
     public void op( final Display display, final Object target, final IProgressMonitor monitor )
                 throws Exception {
@@ -173,7 +176,7 @@ Layer Summary Operation
 Plugin.xml extension declaration
 ''''''''''''''''''''''''''''''''
 
-::
+.. code-block:: xml
 
     <extension
        point="net.refractions.udig.ui.operation">
@@ -190,8 +193,10 @@ Plugin.xml extension declaration
 
 The **targetClass** indicates which type of objects the operation can operate on. The an instance of
 the targetClass will be passed to the operation as one of the parameters of the op(...) method.
- The **class** declares the operation class. It must implement the IOp interface.
- The **categoryId** declares which category the operation is part of. This determines where in the
+
+The **class** declares the operation class. It must implement the IOp interface.
+
+The **categoryId** declares which category the operation is part of. This determines where in the
 operations menu the operation is located.
 
 The **category** declaration declares a new category called Information. If there are any operations
@@ -202,7 +207,7 @@ Layer Summary Class
 
 **LayerSummary.java**
 
-::
+.. code-block:: java
 
     /**
      * Displays a summary of the layer in a dialog.

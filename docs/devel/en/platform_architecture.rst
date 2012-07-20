@@ -7,8 +7,7 @@ Java Runtime Environment.
 
 References:
 
--  `Eclipse
-   Architecture <http://help.eclipse.org/juno/topic/org.eclipse.platform.doc.isv/guide/arch.htm>`_
+* `Eclipse Architecture <http://help.eclipse.org/juno/topic/org.eclipse.platform.doc.isv/guide/arch.htm>`_
 * `GeoTools Architecture <http://docs.geotools.org/latest/userguide/welcome/architecture.html>`_
 
 It is useful to consider the UDIG application as a series of Tiers each with different

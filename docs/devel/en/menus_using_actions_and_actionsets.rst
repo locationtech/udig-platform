@@ -6,10 +6,8 @@ Actions. This functionality is now deprecated; new code should look into use com
 
 Related Information
 
--  `Basic workbench extention points using
-   actions <http://help.eclipse.org/help33/topic/org.eclipse.platform.doc.isv/guide/workbench_basicext.htm>`_
+* `Basic workbench extention points using actions <http://help.eclipse.org/help33/topic/org.eclipse.platform.doc.isv/guide/workbench_basicext.htm>`_
 * :doc:`menus_using_commands_and_handlers`
-
 * :doc:`menus_using_operations_and_tools`
 
 
@@ -102,7 +100,7 @@ Example for any popup (must use visibleWhen):
 Adding an IAction using an ActionBarAdvisor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-::
+.. code-block:: java
 
     IMenuManager fileMenu = menuBar.findMenuUsingPath(IWorkbenchActionConstants.M_FILE);
 
@@ -186,21 +184,21 @@ To add the a "Data" menu to the top-level menu bar:
 
 #. create org.eclipse.ui.ActionSets --> actionset --> menu
 #. put "additions" for the path
-    Additions is located between Analysis and Window in the menubar
+
+   Additions is located between Analysis and Window in the menubar
 
 To add the a "Data" menu to an existing menu:
 
 #. Find out the path to the group marker (see the end of this page for examples)
 #. create org.eclipse.ui.ActionSets --> actionset --> menu
-#. put the path to your group marker:
-    layer/additions
+#. put the path to your group marker: layer/additions
 
 Additions comes from the **UDIGWorkbenchAdvisor**, or similar class provided by your Custom
 application.
 
 Here is an example from UDIGWorkbenchAdvisor:
 
-::
+.. code-block:: java
 
     private void fillMenuBar( IWorkbenchWindow window, IActionBarConfigurer configurer ) {
             IMenuManager menuBar = configurer.getMenuManager();
@@ -220,7 +218,7 @@ Window menu.
 
 The same strategy can be used to find out where the group markers are in other menus:
 
-::
+.. code-block:: java
 
     private MenuManager createLayerMenu() {
             MenuManager menu = new MenuManager(Policy.bind("UDIGWorkbenchAdvisor.layerMenu"), "layer");

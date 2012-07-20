@@ -2,7 +2,7 @@ Plugin Structure
 ################
 
 A Plugin is defined by the following strucutre .. for a complete list of the usual suspects start
-with the `Common Plugin Files <Common%20Plugin%20Files.html>`_.
+with the :doc:`common_plugin_files>`.
 
 **src/**
 

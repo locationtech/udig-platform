@@ -48,7 +48,7 @@ the renderer must render to.
 The Big Picture
 ---------------
 
-|image0|
+.. image:: images/renderers/RenderingClassDiagram.jpg
 
 .. list-table::
    :widths: 20 80
@@ -109,27 +109,31 @@ Lets see how this works with a quick example.
 Example One: Named Style
 ````````````````````````
 
-|image1|
+.. figure:: images/renderers/wms1.png
+   :alt:
 
- *A layer makes use of a WMS GeoResource, a NamedStyle from the Blackboard, this results in a
-WMSRenderer being chosen to draw onto the screen.*
+   A layer makes use of a WMS GeoResource, a NamedStyle from the Blackboard, 
+   this results in a WMSRenderer being chosen to draw onto the screen.
 
 .. note::
    Just because a WMS is being used to draw does not prevent other tools from using the layer in
    a different manner.
 
-|image2|
+.. figure:: images/renderers/wms2.png
+   :alt:
 
- *An editor makes use of the same layer, this time a WFS is used to access the real Feature data*
+   An editor makes use of the same layer, this time a WFS is used to access the real Feature data
 
 Example Two: Named Style and SLD
 ````````````````````````````````
 
 Note that several renderers may draw from the same layer at once.
 
-|image3|
+.. figure:: images/renderers/wms3.png
+   :alt:
 
- *This time a custom SLD style is being used to draw the "selected" features*
+   This time a custom SLD style is being used to draw the "selected" features
+
 
 Available Rendering Technology
 ------------------------------
@@ -280,7 +284,3 @@ You can also use something similar directly on a single renderer
 
     ((RendererImpl)rdr).eAdapters().add( theAdatper );
 
-.. |image0| image:: images/renderers/RenderingClassDiagram.jpg
-.. |image1| image:: images/renderers/wms1.png
-.. |image2| image:: images/renderers/wms2.png
-.. |image3| image:: images/renderers/wms3.png

@@ -1,5 +1,5 @@
 Plugin Internationalization with ResourceBundles
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+================================================
 
 uDig recently made a change regarding how it externalizes its strings so that they may be
 internationalized. The new method brings several new advantages, including better type-checking. If
@@ -12,7 +12,7 @@ Externalize Strings Wizard
 Eclipse provides an Externalize Strings Wizard that can be used to automate this process very
 nicely.
 
--  Right click on a plug-in or source code file and select **Source-->Externalize Strings...**
+-  Right click on a plug-in or source code file and select :menuselection:`Source --> Externalize Strings...`
 
 Once inside the wizard, make sure you check **"Use Eclipse's string externalization mechanism"**. If
 this is already checked and greyed out, then the plug-in is already configured to use it.
@@ -39,12 +39,12 @@ The messages.properties file and accompanying Messages class should be placed in
 package of your plug-in:
 
 $PLUGIN/src/$PLUGIN-AS-PACKAGE/internal/messages.properties
- $PLUGIN/src/$PLUGIN-AS-PACKAGE/internal/Messages.java
+$PLUGIN/src/$PLUGIN-AS-PACKAGE/internal/Messages.java
 
 For example, if your plug-in is net.refractions.udig.catalog.ui, it would look like:
 
 net.refractions.udig.catalog.ui/src/net/refractions/udig/catalog/ui/internal/messages.properties
- net.refractions.udig.catalog.ui/src/net/refractions/udig/catalog/ui/internal/Messages.java
+net.refractions.udig.catalog.ui/src/net/refractions/udig/catalog/ui/internal/Messages.java
 
 Policy class
 ^^^^^^^^^^^^
@@ -64,12 +64,10 @@ Switching from Policy based support to Eclipse NLS based support is rather tedio
 -  Create Messages.java, with static String fields for each key
 -  Change all calls from Policy.bind("$key") to Messages.$key
 -  Calls that use parameters will need to be changed.
-    Ex: Policy.bind("$key", object1, object2) will become MessageFormat.format(Messages.$key,
-   object1, object2)
+   Ex: Policy.bind("$key", object1, object2) will become MessageFormat.format(Messages.$key, object1, object2)
 
 There are some bash and perl scripts in trunk/scripts/i18n that were used to convert uDig over to
 this new system. They did not completely make the conversion, but did save a tremendous amount of
 time. Please see the README file in that directory before you use them.
 
-To internationalize your plugin.properties files, see `Plugin
-Internationalization <Plugin%20Internationalization.html>`_
+To internationalize your plugin.properties files, see :doc:`Plugin Internationalization <plugin_internationalization>`

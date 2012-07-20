@@ -6,8 +6,7 @@ use of ActionSets.
 
 Related Information:
 
--  `New menu contribution
-   extention <http://richclientplatform.blogspot.com/2007/07/new-menu-contribution-extension.html>`_
+* `New menu contribution extention <http://richclientplatform.blogspot.com/2007/07/new-menu-contribution-extension.html>`_
 
 Commands
 ^^^^^^^^
@@ -29,17 +28,13 @@ Commands can get a bit more fancy:
 
 Related Information:
 
-* `org.eclipse.ui.commands <http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/extension-points/org_eclipse_ui_commands.html>`_
-   extension point
--  `platform command framework <http://wiki.eclipse.org/Platform_Command_Framework#Commands>`_ in
-   the eclipse wiki
--  `Basic workbench extension points using
-   commands <http://help.eclipse.org/help33/topic/org.eclipse.platform.doc.isv/guide/workbench_cmd_commands.htm>`_
-   in the PDE programmers guide.
+* `org.eclipse.ui.commands <http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/extension-points/org_eclipse_ui_commands.html>`_ extension point
+* `platform command framework <http://wiki.eclipse.org/Platform_Command_Framework#Commands>`_ in the eclipse wiki
+* `Basic workbench extension points using commands <http://help.eclipse.org/help33/topic/org.eclipse.platform.doc.isv/guide/workbench_cmd_commands.htm>`_ in the PDE programmers guide.
 
 Creating a new Command using the Extension Point:
 
-::
+.. code-block:: xml
 
     <extension
           point="org.eclipse.ui.commands">
@@ -58,7 +53,7 @@ Creating a new Command using the Extension Point:
 
 Creating a new Command using Java:
 
-::
+.. code-block:: java
 
     ICommandService cmdService =
       (ICommandService) getSite().getService(ICommandService.class);
@@ -79,7 +74,7 @@ Creating a new Command using Java:
 
 To get the workbench ICommandService:
 
-::
+.. code-block:: java
 
     public class StartupOperations implements IStartup {
         public void earlyStartup(){
