@@ -695,10 +695,10 @@ public class DocumentView extends ViewPart {
         boolean isFolder = true;
         String defaultValue = ""; //$NON-NLS-1$
         if (obj instanceof IDocument) {
-            final IDocument doc = (IDocument) obj;
+            final URLDocument urlDoc = (URLDocument) obj;
             isFolder = false;
-            if (!doc.isEmpty()) {
-                defaultValue = doc.getURI().toString();    
+            if (!urlDoc.isEmpty()) {
+                defaultValue = urlDoc.getUrl().toString();    
             }
         }
         

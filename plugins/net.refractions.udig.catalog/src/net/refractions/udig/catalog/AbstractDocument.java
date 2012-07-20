@@ -16,7 +16,7 @@
  */
 package net.refractions.udig.catalog;
 
-import java.util.UUID;
+import java.net.URI;
 
 
 /**
@@ -74,6 +74,8 @@ public abstract class AbstractDocument extends AbstractDocumentItem implements I
         this.folder = folder;
     }
  
+    protected abstract URI getUri();
+    
     @Override
     public boolean equals(Object obj) {
         if (isEmpty()) {
@@ -82,7 +84,7 @@ public abstract class AbstractDocument extends AbstractDocumentItem implements I
             if (obj instanceof AbstractDocument) {
                 final AbstractDocument doc = (AbstractDocument) obj;
                 if (!doc.isEmpty()) {
-                    if (getURI().compareTo(doc.getURI()) == 0) {
+                    if (getUri().compareTo(doc.getUri()) == 0) {
                         return true;
                     }    
                 }

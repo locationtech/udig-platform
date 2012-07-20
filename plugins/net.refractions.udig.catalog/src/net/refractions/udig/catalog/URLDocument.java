@@ -57,7 +57,7 @@ public class URLDocument extends AbstractDocument {
     }
 
     @Override
-    public URI getURI() {
+    public URI getUri() {
         if (url != null) {
             try {
                 return url.toURI();

@@ -79,7 +79,7 @@ public class FileDocument extends AbstractDocument {
     }
 
     @Override
-    public URI getURI() {
+    public URI getUri() {
         if (file != null) {
             return file.toURI();    
         }

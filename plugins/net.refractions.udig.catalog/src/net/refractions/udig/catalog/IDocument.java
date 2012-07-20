@@ -16,7 +16,6 @@
  */
 package net.refractions.udig.catalog;
 
-import java.net.URI;
 
 /**
  * Document interface.
@@ -33,16 +32,6 @@ public interface IDocument extends IDocumentItem {
         FILE, WEB;
     };
     
-    /**
-     * Universal Resource Indicator.
-     * 
-     * In many cases this will be a simple File URL or web site reference. We are using a URI here
-     * to allow for resolution using an internal OSGi bundle reference or database entry.
-     * 
-     * @return
-     */
-    public URI getURI();
-
     /**
      * Gets the document label string.
      * 
