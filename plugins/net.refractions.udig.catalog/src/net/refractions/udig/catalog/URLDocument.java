@@ -1,9 +1,10 @@
 package net.refractions.udig.catalog;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+
+import org.eclipse.swt.program.Program;
 
 /**
  * This is the url document implementation. This acts as a container to the url itself and provides
@@ -70,14 +71,7 @@ public class URLDocument extends AbstractDocument {
     @Override
     public boolean open() {
         if (url != null) {
-            try {
-                java.awt.Desktop.getDesktop().browse(url.toURI());
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }            
+            return Program.launch(url.toString());
         }
         return false;
     }

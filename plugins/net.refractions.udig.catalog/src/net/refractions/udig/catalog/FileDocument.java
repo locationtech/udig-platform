@@ -17,10 +17,11 @@
 package net.refractions.udig.catalog;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.eclipse.swt.program.Program;
 
 /**
  * This is the file document implementation. This acts as a container to the file itself and
@@ -88,12 +89,7 @@ public class FileDocument extends AbstractDocument {
     @Override
     public boolean open() {
         if (file != null) {
-            try {
-                java.awt.Desktop.getDesktop().open(file);
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }            
+            return Program.launch(file.getAbsolutePath(), null);        
         }
         return false;
     }
