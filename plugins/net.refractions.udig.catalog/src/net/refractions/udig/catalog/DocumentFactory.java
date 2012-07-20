@@ -80,7 +80,7 @@ public class DocumentFactory {
      * @param type
      * @return document
      */
-    public IDocument create(URL url, String info, IDocument.TYPE type) {
+    public IDocument create(URL url, String info, IDocument.Type type) {
         return createDoc(url, null, info, type);
     }
     
@@ -200,7 +200,7 @@ public class DocumentFactory {
      * @param type
      * @return abstract document
      */
-    public AbstractDocument createDoc(URL url, String label, String info, IDocument.TYPE type) {
+    public AbstractDocument createDoc(URL url, String label, String info, IDocument.Type type) {
         switch (type) {
         case FILE:
             try {

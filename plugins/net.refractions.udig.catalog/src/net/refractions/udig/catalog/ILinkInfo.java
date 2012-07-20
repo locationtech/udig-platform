@@ -22,6 +22,6 @@ public interface ILinkInfo {
 
     public String getInfo();
 
-    public IDocument.TYPE getType();
+    public IDocument.Type getType();
     
 }

@@ -22,7 +22,7 @@ import java.util.List;
 import net.refractions.udig.catalog.DocumentFolder;
 import net.refractions.udig.catalog.IDocument;
 import net.refractions.udig.catalog.LinkInfo;
-import net.refractions.udig.catalog.IDocument.TYPE;
+import net.refractions.udig.catalog.IDocument.Type;
 import net.refractions.udig.catalog.IDocumentFolder;
 import net.refractions.udig.catalog.IHotlink;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
@@ -79,7 +79,7 @@ public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotl
     @Override
     public IDocument getDocument(SimpleFeature feature, String attributeName) {
         final String spec = (String) feature.getAttribute(attributeName);
-        final TYPE type = propParser.getFeatureLinkInfo(attributeName).getType();
+        final Type type = propParser.getFeatureLinkInfo(attributeName).getType();
         return docFactory.create(url, spec, type);
     }
 

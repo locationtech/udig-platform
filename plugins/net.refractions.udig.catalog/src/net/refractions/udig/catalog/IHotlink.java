@@ -18,7 +18,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-import net.refractions.udig.catalog.IDocument.TYPE;
+import net.refractions.udig.catalog.IDocument.Type;
 
 import org.opengis.feature.simple.SimpleFeature;
 
@@ -32,7 +32,7 @@ import org.opengis.feature.simple.SimpleFeature;
  * 
  * @author Jody Garnett
  */
-public interface IHotlink {
+public interface IHotlink extends IAbstractDocumentSource {
 
     /**
      * Used to record additional AttributeDescriptor information marking attributes suitable to
@@ -41,9 +41,9 @@ public interface IHotlink {
     public class HotlinkDescriptor {
         
         private String attributeName;
-        private TYPE type;
+        private Type type;
         
-        public HotlinkDescriptor(String attributeName, IDocument.TYPE type) {
+        public HotlinkDescriptor(String attributeName, IDocument.Type type) {
             this.attributeName = attributeName;
             this.type = type;
         }
@@ -52,7 +52,7 @@ public interface IHotlink {
             return attributeName;
         }
 
-        public TYPE getType() {
+        public Type getType() {
             return type;
         }
         

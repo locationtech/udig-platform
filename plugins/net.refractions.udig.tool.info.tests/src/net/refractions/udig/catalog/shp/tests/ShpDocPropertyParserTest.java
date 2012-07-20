@@ -99,12 +99,12 @@ public class ShpDocPropertyParserTest extends TestCase {
         final LinkInfo info1 = parser.getFeatureLinkInfo("CNTRY_NAME");
         assertEquals("Label is not expected.", "Country", info1.getLabel());
         assertEquals("Info is not expected.", "CNTRY_NAME", info1.getInfo());
-        assertEquals("Type is not expected.", IDocument.TYPE.FILE, info1.getType());
+        assertEquals("Type is not expected.", IDocument.Type.FILE, info1.getType());
         
         final LinkInfo info2 = parser.getFeatureLinkInfo("LONG_NAME");
         assertEquals("Label is not expected.", "Name", info2.getLabel());
         assertEquals("Info is not expected.", "LONG_NAME", info2.getInfo());
-        assertEquals("Type is not expected.", IDocument.TYPE.WEB, info2.getType());
+        assertEquals("Type is not expected.", IDocument.Type.WEB, info2.getType());
         
     }
     

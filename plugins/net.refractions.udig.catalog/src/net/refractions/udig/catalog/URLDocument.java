@@ -83,8 +83,8 @@ public class URLDocument extends AbstractDocument {
     }
 
     @Override
-    public TYPE getType() {
-        return TYPE.WEB;
+    public Type getType() {
+        return Type.WEB;
     }
 
     @Override

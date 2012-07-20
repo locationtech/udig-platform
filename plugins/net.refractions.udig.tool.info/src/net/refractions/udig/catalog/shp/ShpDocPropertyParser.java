@@ -260,7 +260,7 @@ public class ShpDocPropertyParser {
                 final String info = propertyPairComponents[1];
                 final String rawType = propertyPairComponents[2];
                 if (typeExists(rawType)) {
-                    final IDocument.TYPE type = IDocument.TYPE.valueOf(rawType);
+                    final IDocument.Type type = IDocument.Type.valueOf(rawType);
                     linkInfos.add(new LinkInfo(label, info, type));
                 }
             }    
@@ -271,13 +271,13 @@ public class ShpDocPropertyParser {
     }
     
     /**
-     * Checks if the type string exists in the {@link IDocument.TYPE} enum.
+     * Checks if the type string exists in the {@link IDocument.Type} enum.
      * 
      * @param type
      * @return true if exists, otherwise false
      */
     private boolean typeExists(String type) {
-        for (IDocument.TYPE c : IDocument.TYPE.values()) {
+        for (IDocument.Type c : IDocument.Type.values()) {
             if (c.name().equals(type)) {
                 return true;
             }

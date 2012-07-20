@@ -99,8 +99,8 @@ public class FileDocument extends AbstractDocument {
     }
 
     @Override
-    public TYPE getType() {
-        return TYPE.FILE;
+    public Type getType() {
+        return Type.FILE;
     }
 
     @Override

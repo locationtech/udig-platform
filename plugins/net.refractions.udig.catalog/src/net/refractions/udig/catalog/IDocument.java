@@ -30,7 +30,7 @@ public interface IDocument extends IDocumentItem {
     /**
      * Document types
      */
-    public enum TYPE {
+    public enum Type {
         FILE, WEB;
     };
     
@@ -71,7 +71,7 @@ public interface IDocument extends IDocumentItem {
      * 
      * @return document type
      */
-    public TYPE getType();
+    public Type getType();
     
     /**
      * Gets the document source of the document.

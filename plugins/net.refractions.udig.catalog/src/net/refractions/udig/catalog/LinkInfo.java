@@ -32,9 +32,9 @@ public class LinkInfo implements ILinkInfo {
     /**
      * Document type
      */
-    private IDocument.TYPE type;
+    private IDocument.Type type;
     
-    public LinkInfo(String label, String info, IDocument.TYPE type) {
+    public LinkInfo(String label, String info, IDocument.Type type) {
         this.label = label;
         this.info = info;
         this.type = type;
@@ -56,11 +56,11 @@ public class LinkInfo implements ILinkInfo {
         this.info = info;
     }
 
-    public IDocument.TYPE getType() {
+    public IDocument.Type getType() {
         return type;
     }
 
-    public void setType(IDocument.TYPE type) {
+    public void setType(IDocument.Type type) {
         this.type = type;
     }
     
