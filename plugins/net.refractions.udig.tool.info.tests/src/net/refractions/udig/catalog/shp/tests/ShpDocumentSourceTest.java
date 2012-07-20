@@ -23,20 +23,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.geotools.data.shapefile.ShapefileDataStoreFactory;
-
+import junit.framework.TestCase;
 import net.refractions.udig.catalog.DocumentFactory;
 import net.refractions.udig.catalog.FileDocument;
 import net.refractions.udig.catalog.IDocument;
 import net.refractions.udig.catalog.IDocumentFolder;
 import net.refractions.udig.catalog.URLDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
-import net.refractions.udig.catalog.internal.shp.ShpPlugin;
 import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
 import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
 import net.refractions.udig.catalog.shp.ShpDocumentSource;
 
-import junit.framework.TestCase;
+import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 
 /**
  * Test class for {@link ShpDocumentSource}.
