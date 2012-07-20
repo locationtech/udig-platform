@@ -29,7 +29,6 @@ import java.net.URI;
 public abstract class AbstractDocument extends AbstractDocumentItem implements IDocument {
     
     private IAbstractDocumentSource source;
-    private IDocumentFolder folder;
     
     protected String label;
     private String attributeName;
@@ -63,15 +62,6 @@ public abstract class AbstractDocument extends AbstractDocumentItem implements I
 
     public void setSource(IAbstractDocumentSource source) {
         this.source = source;
-    }
-
-    @Override
-    public IDocumentFolder getFolder() {
-        return folder;
-    }
-
-    public void setFolder(IDocumentFolder folder) {
-        this.folder = folder;
     }
  
     protected abstract URI getUri();

@@ -62,13 +62,6 @@ public interface IDocument extends IDocumentItem {
     public IAbstractDocumentSource getSource();
     
     /**
-     * Gets the folder containing the document.
-     * 
-     * @return folder
-     */
-    public IDocumentFolder getFolder();
-
-    /**
      * Open this document; in a platform specific manner.
      * <p>
      * As an example we will expect the operating system to open website URLs; or File references.

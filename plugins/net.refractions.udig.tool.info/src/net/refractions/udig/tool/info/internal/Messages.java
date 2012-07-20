@@ -50,6 +50,8 @@ public class Messages extends NLS {
 
     public static String docView_errURLExist;
 
+    public static String docView_featureDocs;
+
     public static String docView_link;
 
     public static String docView_linkDialogHeader;
@@ -63,6 +65,8 @@ public class Messages extends NLS {
     public static String docView_open;
 
     public static String docView_openDialogTitle;
+
+    public static String docView_shapeDocs;
 
     static {
         // initialize resource bundle

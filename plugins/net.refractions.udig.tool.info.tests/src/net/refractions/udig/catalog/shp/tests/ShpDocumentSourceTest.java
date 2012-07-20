@@ -27,7 +27,6 @@ import junit.framework.TestCase;
 import net.refractions.udig.catalog.DocumentFactory;
 import net.refractions.udig.catalog.FileDocument;
 import net.refractions.udig.catalog.IDocument;
-import net.refractions.udig.catalog.IDocumentFolder;
 import net.refractions.udig.catalog.URLDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
@@ -92,12 +91,7 @@ public class ShpDocumentSourceTest extends TestCase {
     }
     
     public void testGetDocuments() {
-        
         assertEquals("Count is not expected.", 2, source.getDocuments().size());
-        
-        final IDocumentFolder folder = source.getDocumentsInFolder();
-        assertEquals("Count is not expected.", 2, folder.getDocuments().size());
-        
     }
     
     public void testAddRemoveFile() throws MalformedURLException {

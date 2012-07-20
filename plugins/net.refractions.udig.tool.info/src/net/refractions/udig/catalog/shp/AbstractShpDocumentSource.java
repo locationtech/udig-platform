@@ -18,7 +18,6 @@ import java.net.URL;
 
 import net.refractions.udig.catalog.DocumentFactory;
 import net.refractions.udig.catalog.IAbstractDocumentSource;
-import net.refractions.udig.catalog.IDocumentFolder;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 
 /**
@@ -32,15 +31,12 @@ public abstract class AbstractShpDocumentSource implements IAbstractDocumentSour
     protected URL url;
     protected ShpDocPropertyParser propParser;
     protected DocumentFactory docFactory;
-    protected IDocumentFolder folder;
     protected ShpGeoResourceImpl geoResource;
     
-    public AbstractShpDocumentSource(ShpGeoResourceImpl geoResource, String folderName) {
+    public AbstractShpDocumentSource(ShpGeoResourceImpl geoResource) {
         this.geoResource = geoResource;
         this.url = geoResource.service().getIdentifier();
         this.docFactory = new DocumentFactory(this);
-        this.folder = docFactory.createFolder(folderName);
-        this.docFactory.setFolder(folder);
         this.propParser = new ShpDocPropertyParser(url, docFactory);
     }
     

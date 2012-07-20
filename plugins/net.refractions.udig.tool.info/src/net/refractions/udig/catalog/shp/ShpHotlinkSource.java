@@ -19,12 +19,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.DocumentFolder;
 import net.refractions.udig.catalog.IDocument;
-import net.refractions.udig.catalog.LinkInfo;
 import net.refractions.udig.catalog.IDocument.Type;
-import net.refractions.udig.catalog.IDocumentFolder;
 import net.refractions.udig.catalog.IHotlink;
+import net.refractions.udig.catalog.LinkInfo;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 
 import org.opengis.feature.simple.SimpleFeature;
@@ -39,11 +37,8 @@ import org.opengis.feature.simple.SimpleFeature;
  */
 public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotlink {
 
-    private static final String defaultLabel = "Feature Documents"; //$NON-NLS-1$
-    private static final String namedLabelFormat = defaultLabel + " (%s)"; //$NON-NLS-1$
-    
     public ShpHotlinkSource(ShpGeoResourceImpl geoResource) {
-        super(geoResource, defaultLabel);
+        super(geoResource);
     }
 
     @Override
@@ -56,24 +51,8 @@ public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotl
     }
 
     @Override
-    public IDocumentFolder getDocumentsInFolder(SimpleFeature feature, String folderName) {
-        if (folder instanceof DocumentFolder) {
-            final DocumentFolder docfolder = (DocumentFolder) folder;
-            docfolder.setName(String.format(namedLabelFormat, folderName));    
-        }
-        return getDocumentsInFolder(feature);
-    }
-
-    @Override
-    public IDocumentFolder getDocumentsInFolder(SimpleFeature feature) {
-        folder.setDocuments(propParser.getFeatureLinks(feature));
-        return folder;
-    }
-
-    @Override
     public List<IDocument> getDocuments(SimpleFeature feature) {
-        folder.setDocuments(propParser.getFeatureLinks(feature));
-        return folder.getDocuments();
+        return propParser.getFeatureLinks(feature);
     }
 
     @Override

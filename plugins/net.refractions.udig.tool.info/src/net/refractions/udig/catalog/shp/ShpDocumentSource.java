@@ -20,10 +20,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.DocumentFolder;
 import net.refractions.udig.catalog.FileDocument;
 import net.refractions.udig.catalog.IDocument;
-import net.refractions.udig.catalog.IDocumentFolder;
 import net.refractions.udig.catalog.IDocumentSource;
 import net.refractions.udig.catalog.URLDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
@@ -36,9 +34,6 @@ import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
  */
 public class ShpDocumentSource extends AbstractShpDocumentSource implements IDocumentSource {
 
-    private static final String defaultLabel = "Shapefile Documents"; //$NON-NLS-1$
-    private static final String namedLabelFormat = defaultLabel + " (%s)"; //$NON-NLS-1$
-    
     /**
      * Creates a new ShpDocumentSource
      * 
@@ -46,28 +41,12 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
      * @throws Exception
      */
     public ShpDocumentSource(ShpGeoResourceImpl resource) {
-        super(resource, defaultLabel);
-    }
-    
-    @Override
-    public IDocumentFolder getDocumentsInFolder(String folderName) {
-        if (folder instanceof DocumentFolder) {
-            final DocumentFolder docfolder = (DocumentFolder) folder;
-            docfolder.setName(String.format(namedLabelFormat, folderName));    
-        }
-        return getDocumentsInFolder();
-    }
-    
-    @Override
-    public IDocumentFolder getDocumentsInFolder() {
-        folder.setDocuments(propParser.getShapeAttachments());
-        return folder;
+        super(resource);
     }
     
     @Override
     public List<IDocument> getDocuments() {
-        folder.setDocuments(propParser.getShapeAttachments());
-        return folder.getDocuments();
+        return propParser.getShapeAttachments();
     }
     
     @Override
@@ -77,10 +56,11 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
 
     @Override 
     public IDocument addLink(URL url) {
+        final List<IDocument> docs = getDocuments();
         final IDocument doc = docFactory.create(url);
-        if (!folder.contains(doc)) {
-            folder.addItem(doc);
-            propParser.setShapeAttachments(folder.getDocuments());
+        if (!docs.contains(doc)) {
+            docs.add(doc);
+            propParser.setShapeAttachments(docs);
             return doc;
         }
         return null;
@@ -88,10 +68,11 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
 
     @Override
     public IDocument addFile(File file) {
+        final List<IDocument> docs = getDocuments();
         final IDocument doc = docFactory.create(file);
-        if (!folder.contains(doc)) {
-            folder.addItem(doc);
-            propParser.setShapeAttachments(folder.getDocuments());
+        if (!docs.contains(doc)) {
+            docs.add(doc);
+            propParser.setShapeAttachments(docs);
             return doc;
         }
         return null;
@@ -99,15 +80,16 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
 
     @Override
     public List<IDocument> addFiles(List<File> files) {
+        final List<IDocument> existingDocs = getDocuments();
         final List<IDocument> docs = new ArrayList<IDocument>();
         for (File file : files) {
             final IDocument doc = docFactory.create(file);
-            if (!folder.contains(doc)) {
+            if (!existingDocs.contains(doc)) {
                 docs.add(doc);
-                folder.addItem(doc);
+                existingDocs.add(doc);
             }
         }
-        propParser.setShapeAttachments(folder.getDocuments());
+        propParser.setShapeAttachments(existingDocs);
         return docs;
     }
     
@@ -123,12 +105,13 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
 
     @Override
     public void remove(List<IDocument> docs) {
+        final List<IDocument> existingDocs = getDocuments();
         for (IDocument doc : docs) {
-            if (folder.contains(doc)) {
-                folder.removeItem(doc);
+            if (existingDocs.contains(doc)) {
+                existingDocs.remove(doc);
             }
         }
-        propParser.setShapeAttachments(folder.getDocuments());
+        propParser.setShapeAttachments(existingDocs);
     }
 
     @Override
@@ -138,22 +121,44 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
     
     @Override
     public boolean updateFile(FileDocument doc, File file) {
-        if (folder.contains(docFactory.create(file))) {
-            return false;
+        
+        FileDocument fileDoc = null;
+        final IDocument newDoc = docFactory.create(file);
+        final List<IDocument> docs = getDocuments();
+        for (IDocument existingDoc : docs) {
+            if (existingDoc.equals(newDoc)) {
+                return false;
+            }
+            if (existingDoc.equals(doc)) {
+                fileDoc = (FileDocument) existingDoc;
+            }
         }
-        doc.setFile(file);
-        propParser.setShapeAttachments(folder.getDocuments());
+        
+        fileDoc.setFile(file);
+        propParser.setShapeAttachments(docs);
         return true;
+        
     }
 
     @Override
     public boolean updateLink(URLDocument doc, URL url) {
-        if (folder.contains(docFactory.create(url))) {
-            return false;
+        
+        URLDocument fileDoc = null;
+        final IDocument newDoc = docFactory.create(url);
+        final List<IDocument> docs = getDocuments();
+        for (IDocument existingDoc : docs) {
+            if (existingDoc.equals(newDoc)) {
+                return false;
+            }
+            if (existingDoc.equals(doc)) {
+                fileDoc = (URLDocument) existingDoc;
+            }
         }
-        doc.setUrl(url);
-        propParser.setShapeAttachments(folder.getDocuments());
+        
+        fileDoc.setUrl(url);
+        propParser.setShapeAttachments(docs);
         return true;
+
     }
 
 }

@@ -66,25 +66,6 @@ public interface IHotlink extends IAbstractDocumentSource {
     public List<HotlinkDescriptor> getHotlinkDescriptors();
 
     /**
-     * Gets the list of documents in the feature. The list of documents is wrapped in a
-     * document folder with the folder name.
-     * 
-     * @param folderName
-     * @param fid
-     * @return document folder
-     */
-    public IDocumentFolder getDocumentsInFolder(SimpleFeature feature, String folderName);
-
-    /**
-     * Gets the list of documents in the feature. The list of documents is wrapped in a
-     * document folder with the default folder name.
-     * 
-     * @param fid
-     * @return document folder
-     */
-    public IDocumentFolder getDocumentsInFolder(SimpleFeature feature);
-
-    /**
      * Gets the list of documents in the feature.
      * 
      * @param fid

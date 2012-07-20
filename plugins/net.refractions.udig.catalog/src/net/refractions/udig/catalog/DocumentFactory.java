@@ -37,19 +37,9 @@ import org.opengis.feature.type.AttributeDescriptor;
 public class DocumentFactory {
 
     private IAbstractDocumentSource source;
-    private IDocumentFolder folder;
     
     public DocumentFactory(IAbstractDocumentSource source) {
         this.source = source;
-    }
-    
-    /**
-     * Sets the folder
-     * 
-     * @param folder
-     */
-    public void setFolder(IDocumentFolder folder) {
-        this.folder = folder;
     }
     
     /**
@@ -167,7 +157,6 @@ public class DocumentFactory {
         }
         urlDoc.setLabel(label);
         urlDoc.setSource(source);
-        urlDoc.setFolder(folder);
         return urlDoc;
     }
 
@@ -185,7 +174,6 @@ public class DocumentFactory {
         }
         fileDoc.setLabel(label);
         fileDoc.setSource(source);
-        fileDoc.setFolder(folder);
         return fileDoc;
     }
     
@@ -205,9 +193,7 @@ public class DocumentFactory {
                 if (info != null) {
                     final File parentFile = new File(new URI(url.toString()));
                     final File childFile = new File(parentFile.getParent(), info);
-                    if (childFile.exists()) {
-                        return createFileDoc(childFile, label);    
-                    }    
+                    return createFileDoc(childFile, label);    
                 }
             } catch (URISyntaxException e) {
                 // e.printStackTrace();

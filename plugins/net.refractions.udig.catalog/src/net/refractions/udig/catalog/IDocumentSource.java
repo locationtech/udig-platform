@@ -30,23 +30,6 @@ import java.util.List;
 public interface IDocumentSource extends IAbstractDocumentSource {
 
     /**
-     * Gets the list of documents related to the shapefile. The list of documents is wrapped in a
-     * document folder with the folder name.
-     * 
-     * @param folderName
-     * @return document folder
-     */
-    public IDocumentFolder getDocumentsInFolder(String folderName);
-    
-    /**
-     * Gets the list of documents related to the shapefile. The list of documents is wrapped in a
-     * document folder with the default folder name.
-     * 
-     * @return document folder
-     */
-    public IDocumentFolder getDocumentsInFolder();
-    
-    /**
      * Gets the list of documents associated with this feature type.
      * <p>
      * As an example this will return a SHAPEFILENAME.TXT file that is associated (ie a sidecar

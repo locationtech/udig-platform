@@ -29,15 +29,6 @@ import org.opengis.filter.identity.FeatureId;
 public interface IAttachmentSource extends IAbstractDocumentSource {
 
     /**
-     * Gets the list of documents related to the feature. The documents are wrapped in a document
-     * folder.
-     * 
-     * @param fid
-     * @return document folder
-     */
-    public IDocumentFolder documentsInFolder(FeatureId fid);
-
-    /**
      * Gets the list of documents related to the feature
      * 
      * @param fid

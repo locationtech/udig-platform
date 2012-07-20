@@ -25,7 +25,6 @@ import java.util.Map;
 import junit.framework.TestCase;
 import net.refractions.udig.catalog.FileDocument;
 import net.refractions.udig.catalog.IDocument;
-import net.refractions.udig.catalog.IDocumentFolder;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.URLDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
@@ -162,15 +161,7 @@ public class ShpHotlinkSourceTest extends TestCase {
     }
     
     public void testGetDocuments() {
-        
         assertEquals("Count is not expected.", 2, source.getDocuments(feature).size());
-        
-        IDocumentFolder folder = source.getDocumentsInFolder(feature);
-        assertEquals("Count is not expected.", 2, folder.getDocuments().size());
-        
-        folder = source.getDocumentsInFolder(feature, "FolderName");
-        assertEquals("Count is not expected.", 2, folder.getDocuments().size());
-        
     }
     
     public void testSetClearFile() throws InterruptedException {
