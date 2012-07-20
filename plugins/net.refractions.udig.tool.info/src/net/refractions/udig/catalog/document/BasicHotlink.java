@@ -43,7 +43,7 @@ public class BasicHotlink implements IHotlink {
 
         @Override
         public String getName() {
-            return null;
+            return file != null ? file.getName() : "(empty)";
         }
 
         @Override
@@ -81,7 +81,10 @@ public class BasicHotlink implements IHotlink {
         public boolean isEmpty() {
            return file == null;
         }
-
+        @Override
+        public String toString() {
+            return "Basic Hotlink "+attributeName+" file:"+file;
+        }
     }
 
     class WebLink implements IDocument {
@@ -99,7 +102,13 @@ public class BasicHotlink implements IHotlink {
     
         @Override
         public String getName() {
-            return null;
+            String external = url.toExternalForm();
+            int split = external.lastIndexOf("/");
+            if( split != -1 ){
+                String name = external.substring(split+1);
+                return name;
+            }
+            return external;
         }
     
         @Override
@@ -137,7 +146,10 @@ public class BasicHotlink implements IHotlink {
         public boolean isEmpty() {
            return url == null;
         }
-    
+        @Override
+        public String toString() {
+            return "Basic Hotlink "+attributeName+" link:"+url;
+        }
     }
 
     private IGeoResource resource;

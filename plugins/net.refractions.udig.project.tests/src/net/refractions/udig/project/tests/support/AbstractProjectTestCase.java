@@ -89,10 +89,6 @@ public class AbstractProjectTestCase extends TestCase {
         
     }
 
-    public void testStub() throws Exception {
-        assertTrue(true);
-    }
-    
     private void deleteFile( File file ) {
         if( !file.exists() )
             return;

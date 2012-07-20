@@ -55,7 +55,7 @@ public interface IHotlink extends IAbstractDocumentSource {
         public HotlinkDescriptor(String definition) {
             int split = definition.lastIndexOf(":");
             this.attributeName = split == -1 ? definition : definition.substring(0,split);
-            this.type = split == -1 ? Type.WEB : Type.valueOf(definition.substring(split));
+            this.type = split == -1 ? Type.WEB : Type.valueOf(definition.substring(split+1));
         }
         
         public String getAttributeName() {

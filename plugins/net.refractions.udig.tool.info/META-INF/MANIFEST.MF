@@ -6,7 +6,8 @@ Bundle-Version: 1.2.3.qualifier
 Bundle-Activator: net.refractions.udig.tool.info.InfoPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
-Export-Package: net.refractions.udig.catalog.shp,
+Export-Package: net.refractions.udig.catalog.document,
+ net.refractions.udig.catalog.shp,
  net.refractions.udig.document,
  net.refractions.udig.tool.info,
  net.refractions.udig.tool.info.internal,
