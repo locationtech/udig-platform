@@ -33,10 +33,11 @@ public abstract class AbstractShpDocumentSource implements IAbstractDocumentSour
     protected ShpDocPropertyParser propParser;
     protected DocumentFactory docFactory;
     protected IDocumentFolder folder;
-    protected ShpGeoResourceImpl service;
+    protected ShpGeoResourceImpl geoResource;
     
     public AbstractShpDocumentSource(ShpGeoResourceImpl geoResource, String folderName) {
-        this.service = service;
+        this.geoResource = geoResource;
+        this.url = geoResource.service().getIdentifier();
         this.docFactory = new DocumentFactory(this);
         this.folder = docFactory.createFolder(folderName);
         this.docFactory.setFolder(folder);

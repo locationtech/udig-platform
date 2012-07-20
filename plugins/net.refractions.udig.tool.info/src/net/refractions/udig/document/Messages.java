@@ -3,7 +3,7 @@ package net.refractions.udig.document;
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-    private static final String BUNDLE_NAME = "net.refractions.udig.tool.info.documents.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "net.refractions.udig.document.messages"; //$NON-NLS-1$
 
     public static String docView_attach;
 

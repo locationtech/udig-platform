@@ -21,7 +21,6 @@ import java.net.URL;
 import java.util.List;
 
 import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.DocumentFactory;
 import net.refractions.udig.catalog.DocumentFolder;
 import net.refractions.udig.catalog.IDocument;
 import net.refractions.udig.catalog.IDocument.TYPE;
@@ -60,25 +59,16 @@ import org.opengis.filter.identity.FeatureId;
  * 
  * @author Naz Chan
  */
-public class ShpHotlinkSource implements IHotlinkSource {
+public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotlinkSource {
 
     private static final String defaultLabel = "Feature Documents"; //$NON-NLS-1$
     private static final String namedLabelFormat = defaultLabel + " (%s)"; //$NON-NLS-1$
     
     private ShpServiceImpl service;
-
-    protected URL url;
-    protected ShpDocPropertyParser propParser;
-    protected DocumentFactory docFactory;
-    protected IDocumentFolder folder;
-    protected ShpGeoResourceImpl resource;
     
-    public ShpHotlinkSource(ShpGeoResourceImpl resource) {
-        this.resource = resource;
-        this.docFactory = new DocumentFactory(this);
-        this.folder = docFactory.createFolder(defaultLabel);
-        this.docFactory.setFolder(folder);
-        this.propParser = new ShpDocPropertyParser(url, docFactory);
+    public ShpHotlinkSource(ShpGeoResourceImpl geoResource) {
+        super(geoResource, defaultLabel);
+        this.service = geoResource.service();
     }
     
     @Override
@@ -132,16 +122,15 @@ public class ShpHotlinkSource implements IHotlinkSource {
     private void set(final FeatureId fid, final String attributeName, final Object obj) {
         final SimpleFeature feature = getFeature(fid);
         
-        if( resource.canResolve(SimpleFeatureStore.class) ){
+        if( geoResource.canResolve(SimpleFeatureStore.class) ){
             final IMap map = ApplicationGIS.getActiveMap();
             if( map != null ){
                 // use current map and issue a SetAttributeCommand
                 IBlockingProvider<ILayer> layerProvider = new IBlockingProvider<ILayer>() {
-                    
                     @Override
                     public ILayer get(IProgressMonitor monitor, Object... params) throws IOException {
                         for( ILayer layer : map.getMapLayers() ){
-                            if( layer.getGeoResource().getID() == resource.getID() ){
+                            if( layer.getGeoResource().getID() == geoResource.getID() ){
                                 return layer;
                             }
                         }
@@ -158,7 +147,7 @@ public class ShpHotlinkSource implements IHotlinkSource {
                     public void run(IProgressMonitor monitor) throws InvocationTargetException,
                             InterruptedException {
                         try {
-                            SimpleFeatureStore featureStore = resource.resolve(SimpleFeatureStore.class, new NullProgressMonitor());
+                            SimpleFeatureStore featureStore = geoResource.resolve(SimpleFeatureStore.class, new NullProgressMonitor());
                             FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
                             Filter filter = ff.id(fid);
                             featureStore.modifyFeatures( attributeName, obj, filter );
@@ -188,7 +177,7 @@ public class ShpHotlinkSource implements IHotlinkSource {
     
     private SimpleFeature getFeature(FeatureId fid) {
         try {
-            SimpleFeatureStore featureSource = resource.resolve(SimpleFeatureStore.class, new NullProgressMonitor());
+            SimpleFeatureStore featureSource = geoResource.resolve(SimpleFeatureStore.class, new NullProgressMonitor());
             
             final FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
             final Filter fidFilter = ff.id(fid);

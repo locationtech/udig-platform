@@ -92,6 +92,7 @@
          name="Shapefile Document Resolvers"
          point="net.refractions.udig.catalog.resolvers">
       <factory
+            class="net.refractions.udig.catalog.shp.ShpDocumentResolveFactory"
             resolveableType="net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl">
          <resolve
                type="net.refractions.udig.catalog.IHotlinkSource"></resolve>
