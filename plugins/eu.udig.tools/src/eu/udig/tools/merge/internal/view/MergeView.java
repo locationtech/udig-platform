@@ -20,6 +20,7 @@
  */
 package eu.udig.tools.merge.internal.view;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,6 +31,7 @@ import net.refractions.udig.project.IMapCompositionListener;
 import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.MapCompositionEvent;
 import net.refractions.udig.project.command.UndoableMapCommand;
+import net.refractions.udig.project.internal.commands.selection.BBoxSelectionCommand;
 import net.refractions.udig.project.ui.AnimationUpdater;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.IUDIGView;
@@ -53,11 +55,14 @@ import org.geotools.data.simple.SimpleFeatureCollection;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 
+//import au.com.objectix.jgridshift.Util;
+
 import eu.udig.tools.internal.mediator.PlatformGISMediator;
 import eu.udig.tools.internal.i18n.Messages;
 import eu.udig.tools.internal.mediator.AppGISAdapter;
 import eu.udig.tools.internal.ui.util.StatusBar;
 import eu.udig.tools.merge.MergeContext;
+import eu.udig.tools.merge.Util;
 
 /**
  * This view shows the features to merge.
@@ -99,6 +104,10 @@ public class MergeView extends ViewPart implements IUDIGView {
     private boolean wasInitialized = false;
 
     private IToolContext context = null;
+
+    private boolean operationMode = false;
+
+    private ILayer currEventTriggeringLayer = null;
 
     // ###
     // ###
@@ -249,6 +258,8 @@ public class MergeView extends ViewPart implements IUDIGView {
     private void updateLayerActions(final LayerEvent event) {
 
         final ILayer modifiedLayer = event.getSource();
+        
+        this.currEventTriggeringLayer  = modifiedLayer;
 
         PlatformGISMediator.syncInDisplayThread(new Runnable() {
 
@@ -322,7 +333,21 @@ public class MergeView extends ViewPart implements IUDIGView {
     protected void changedFilterSelectionActions(final ILayer layer, final Filter newFilter) {
 
         // nothing as default implementation
-        System.out.print("######################SELECTION CHANGED######################");
+        System.out.print("######################SELECTION CHANGED######################"); //$NON-NLS-1$
+        // builds a command to show the features selected to merge
+
+        List<SimpleFeature> selectedFeatures = null;
+        try {
+            selectedFeatures = Util.retrieveFeatures(newFilter, layer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (selectedFeatures != null) {
+            this.addSourceFeatures(selectedFeatures);
+
+            this.display();
+        }
+
     }
 
     /**
@@ -400,6 +425,22 @@ public class MergeView extends ViewPart implements IUDIGView {
         return (!this.isDisposed()) /* && (this.getCommand() != null) */&& (this.wasInitialized);
     }
 
+    /**
+     * @return true if the MergeView was NOT started by the MergeTool (and hence has no ToolContext!)
+     */
+    public boolean isOperationMode() {
+        return operationMode;
+    }
+
+    /**
+     * @return the layer that has triggered the current event. Null if no layer event is running.
+     */
+    public ILayer getCurrentEventTriggeringLayer() {
+        // TODO Auto-generated method stub
+        return this.currEventTriggeringLayer;
+    }
+
+    
     // <<<< ###############
     // <<<< ###############
     // <<<< ###############
@@ -416,10 +457,16 @@ public class MergeView extends ViewPart implements IUDIGView {
         this.mergeComposite = new MergeComposite(parent, SWT.NONE);
 
         this.mergeComposite.setView(this);
+        
+        // If, at this step, MergeView has no context it means that has been started
+        // by MergeOperation: this must be traced to prevent call on null objects.
+        if (this.getContext() == null) {
+            this.operationMode = true;
+        }
 
         createActions();
         createToolbar();
-        initialize(); // <<<< ############### plug in Listener previous workflow HERE
+        initialize(); // <<<< ############### plug-in Listener stuff in previous work-flow HERE
                       // #################
     }
 
@@ -646,7 +693,7 @@ public class MergeView extends ViewPart implements IUDIGView {
         // REMOVED WHILE IMPLEMENTING STEP-BY-STEP changedMapActions(map);
         if (map != null) {
             // changedLayerListActions(); <<-- this method is void in AbstractParamsPresenter
-            //validateParameters();
+            // validateParameters();
         }
 
         // #############################################

@@ -32,7 +32,7 @@ import eu.udig.tools.internal.ui.util.LayerUtil;
  * @author Mauricio Pazos
  *
  */
-final class Util {
+public final class Util {
 	
 	private Util(){}
 
