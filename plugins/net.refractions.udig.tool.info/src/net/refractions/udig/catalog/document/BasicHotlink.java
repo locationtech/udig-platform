@@ -2,26 +2,20 @@ package net.refractions.udig.catalog.document;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
-
-import org.eclipse.swt.program.Program;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.type.Name;
-import org.opengis.filter.identity.FeatureId;
 
 import net.refractions.udig.catalog.IAbstractDocumentSource;
 import net.refractions.udig.catalog.IDocument;
-import net.refractions.udig.catalog.IDocument.TYPE;
 import net.refractions.udig.catalog.IDocumentFolder;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IHotlink;
-import net.refractions.udig.catalog.IHotlink.HotlinkDescriptor;
 import net.refractions.udig.tool.info.InfoPlugin;
+
+import org.eclipse.swt.program.Program;
+import org.opengis.feature.simple.SimpleFeature;
 
 public class BasicHotlink implements IHotlink {
     /**
@@ -58,16 +52,6 @@ public class BasicHotlink implements IHotlink {
         }
 
         @Override
-        public UUID getID() {
-            return null;
-        }
-
-        @Override
-        public URI getURI() {
-            return null;
-        }
-
-        @Override
         public String getLabel() {
             return file.getName();
         }
@@ -78,8 +62,8 @@ public class BasicHotlink implements IHotlink {
         }
 
         @Override
-        public TYPE getType() {
-            return TYPE.FILE;
+        public Type getType() {
+            return Type.FILE;
         }
 
         @Override
@@ -111,7 +95,7 @@ public class BasicHotlink implements IHotlink {
         public WebLink(String attributeName, Object value) {
             String path = (String) value;
             try {
-                url = new URL( (String) value );
+                url = new URL( path );
             } catch (MalformedURLException e) {
                 url = null;
             }
@@ -127,17 +111,7 @@ public class BasicHotlink implements IHotlink {
         public String getDescription() {
             return attributeName+" file:"+url;
         }
-    
-        @Override
-        public UUID getID() {
-            return null;
-        }
-    
-        @Override
-        public URI getURI() {
-            return null;
-        }
-    
+
         @Override
         public String getLabel() {
             return url == null ? "(empty)" : url.getFile();
@@ -149,8 +123,8 @@ public class BasicHotlink implements IHotlink {
         }
     
         @Override
-        public TYPE getType() {
-            return TYPE.WEB;
+        public Type getType() {
+            return Type.WEB;
         }
     
         @Override
@@ -193,7 +167,7 @@ public class BasicHotlink implements IHotlink {
                     HotlinkDescriptor descriptor = new HotlinkDescriptor(defn);
                     list.add(descriptor);
                 } catch (Throwable t) {
-                    InfoPlugin.getDefault().log("Unable describe hotlink:" + defn, t);
+                    InfoPlugin.log("Unable describe hotlink:" + defn, t);
                 }
             }
         }
