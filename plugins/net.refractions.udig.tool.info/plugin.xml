@@ -99,6 +99,13 @@
          <resolve
                type="net.refractions.udig.catalog.IDocumentSource"></resolve>
       </factory>
+      <factory
+            class="net.refractions.udig.catalog.document.BasicHotlinkResolveFactory"
+            resolveableType="net.refractions.udig.catalog.IGeoResource">
+         <resolve
+               type="net.refractions.udig.catalog.IHotlink">
+         </resolve>
+      </factory>
    </extension>
 
 </plugin>
