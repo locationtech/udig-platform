@@ -20,14 +20,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.DocumentFolder;
 import net.refractions.udig.catalog.IDocument;
 import net.refractions.udig.catalog.IDocument.TYPE;
 import net.refractions.udig.catalog.IDocumentFolder;
 import net.refractions.udig.catalog.IHotlinkSource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceFactory;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
 import net.refractions.udig.core.IBlockingProvider;
@@ -119,71 +116,98 @@ public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotl
         set(fid, attributeName, null);
     }
     
+    /**
+     * Sets the attribute value of the feature.
+     * 
+     * @param fid
+     * @param attributeName
+     * @param obj
+     */
     private void set(final FeatureId fid, final String attributeName, final Object obj) {
-        final SimpleFeature feature = getFeature(fid);
-        
-        if( geoResource.canResolve(SimpleFeatureStore.class) ){
+        if (geoResource.canResolve(SimpleFeatureStore.class)) {
             final IMap map = ApplicationGIS.getActiveMap();
-            if( map != null ){
-                // use current map and issue a SetAttributeCommand
-                IBlockingProvider<ILayer> layerProvider = new IBlockingProvider<ILayer>() {
-                    @Override
-                    public ILayer get(IProgressMonitor monitor, Object... params) throws IOException {
-                        for( ILayer layer : map.getMapLayers() ){
-                            if( layer.getGeoResource().getID() == geoResource.getID() ){
-                                return layer;
-                            }
-                        }
-                        return null;
-                    }
-                };
-                IBlockingProvider<SimpleFeature> featureProvider = new FIDFeatureProvider(fid.getID(),layerProvider);
-                SetAttributeCommand command = new SetAttributeCommand( featureProvider, layerProvider,  attributeName, obj );
-                map.sendCommandASync(command);
+            if (map != null) {
+                setOnMap(map, fid, attributeName, obj);
+            } else {
+                setOnGeoResource(fid, attributeName, obj);
             }
-            else {
-                IRunnableWithProgress runner = new IRunnableWithProgress() {
-                    @Override
-                    public void run(IProgressMonitor monitor) throws InvocationTargetException,
-                            InterruptedException {
-                        try {
-                            SimpleFeatureStore featureStore = geoResource.resolve(SimpleFeatureStore.class, new NullProgressMonitor());
-                            FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
-                            Filter filter = ff.id(fid);
-                            featureStore.modifyFeatures( attributeName, obj, filter );
-                        }
-                        catch (IOException e){
-                            InfoPlugin.log("Shapefile hotlink"+fid+" not set:"+e, e);
-                        }
+        }
+    }
+    
+    /**
+     * Sets the attribute value of the feature given that the layer in on the map.
+     * 
+     * @param map
+     * @param fid
+     * @param attributeName
+     * @param obj
+     */
+    private void setOnMap(final IMap map, final FeatureId fid, final String attributeName,
+            final Object obj) {
+        
+        IBlockingProvider<ILayer> layerProvider = new IBlockingProvider<ILayer>() {
+            @Override
+            public ILayer get(IProgressMonitor monitor, Object... params) throws IOException {
+                for (ILayer layer : map.getMapLayers()) {
+                    if (layer.getGeoResource().getID() == geoResource.getID()) {
+                        return layer;
                     }
-                };
-                // we should indicate that modification is not supported?
-                // or update the shapefile in the background?
-                PlatformGIS.runInProgressDialog("Hotlink", true, runner, true );
+                }
+                return null;
+            }
+        };
+        IBlockingProvider<SimpleFeature> featureProvider = new FIDFeatureProvider(fid.getID(),
+                layerProvider);
+        
+        map.sendCommandASync(new SetAttributeCommand(featureProvider, layerProvider,
+                attributeName, obj));
+    }
+    
+    /**
+     * Sets the attribute value of the feature directly to the geoResource.
+     * 
+     * @param fid
+     * @param attributeName
+     * @param obj
+     */
+    private void setOnGeoResource(final FeatureId fid, final String attributeName, final Object obj) {
 
-                
+        IRunnableWithProgress runner = new IRunnableWithProgress() {
+            @Override
+            public void run(IProgressMonitor monitor) throws InvocationTargetException,
+                    InterruptedException {
+                try {
+                    SimpleFeatureStore featureStore = geoResource.resolve(SimpleFeatureStore.class,
+                            new NullProgressMonitor());
+                    FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
+                    Filter filter = ff.id(fid);
+                    featureStore.modifyFeatures(attributeName, obj, filter);
+                } catch (IOException e) {
+                    InfoPlugin.log("Shapefile hotlink" + fid + " not set:" + e, e);
+                }
             }
-        }
+        };
+        // we should indicate that modification is not supported?
+        // or update the shapefile in the background?
+        PlatformGIS.runInProgressDialog("Hotlink", true, runner, true);
+
     }
     
-    private ShpServiceImpl getService() {
-        if (service == null) {
-            final IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
-            final List<IService> services = factory.createService(url);
-            service = (ShpServiceImpl) services.get(0);    
-        }
-        return service;
-    }
-    
+    /**
+     * Gets the feature from the geoResource
+     * 
+     * @param fid
+     * @return feature
+     */
     private SimpleFeature getFeature(FeatureId fid) {
         try {
-            SimpleFeatureStore featureSource = geoResource.resolve(SimpleFeatureStore.class, new NullProgressMonitor());
             
-            final FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
-            final Filter fidFilter = ff.id(fid);
-            
+            final SimpleFeatureStore featureSource = geoResource.resolve(SimpleFeatureStore.class,
+                    new NullProgressMonitor());
+            final Filter fidFilter = CommonFactoryFinder.getFilterFactory2().id(fid);
             final SimpleFeatureCollection featureCollection = featureSource.getFeatures(fidFilter);
             final SimpleFeatureIterator featureIterator = featureCollection.features();
+            
             try {
                  if (featureIterator.hasNext()) {
                      return featureIterator.next();
@@ -193,8 +217,9 @@ public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotl
                     featureIterator.close();
                 }
             }
+            
         } catch (IOException e) {
-            InfoPlugin.log("Shapefile hotlink"+fid+" unavailable:"+e, e);
+            InfoPlugin.log("Shapefile hotlink" + fid + " unavailable:" + e, e);
         }
         return null;
     }
