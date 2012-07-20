@@ -414,7 +414,7 @@ public class ShpDocPropertyParser {
      * 
      * @return list of feature link info
      */
-    private List<LinkInfo> getFeatureLinkInfos() {
+    public List<LinkInfo> getFeatureLinkInfos() {
         return getLinkInfos(LINK_ATTRIBUTES);
     }
     

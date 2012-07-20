@@ -95,7 +95,7 @@
             class="net.refractions.udig.catalog.shp.ShpDocumentResolveFactory"
             resolveableType="net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl">
          <resolve
-               type="net.refractions.udig.catalog.IHotlinkSource"></resolve>
+               type="net.refractions.udig.catalog.IHotlink"></resolve>
          <resolve
                type="net.refractions.udig.catalog.IDocumentSource"></resolve>
       </factory>

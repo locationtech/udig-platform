@@ -24,10 +24,8 @@ import java.net.URL;
 import java.util.List;
 
 import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IDocumentSource;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IHotlinkSource;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.URLUtils;
 

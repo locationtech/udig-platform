@@ -26,24 +26,23 @@ import junit.framework.TestCase;
 import net.refractions.udig.catalog.FileDocument;
 import net.refractions.udig.catalog.IDocument;
 import net.refractions.udig.catalog.IDocumentFolder;
+import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.URLDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
 import net.refractions.udig.catalog.shp.ShpHotlinkSource;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IMapListener;
-import net.refractions.udig.project.MapEvent;
-import net.refractions.udig.project.internal.commands.selection.CommitCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.identity.FeatureIdImpl;
+import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 
 /**
@@ -56,6 +55,7 @@ public class ShpHotlinkSourceTest extends TestCase {
 
     private ShpGeoResourceImpl geoResource;
     private ShpHotlinkSource source;
+    private SimpleFeature feature;
     
     private File file;
     private URL url;
@@ -74,7 +74,6 @@ public class ShpHotlinkSourceTest extends TestCase {
     private static final String WEB2 = "http://www.yahoo.com";
     
     private static final String FEATURE = "countries.155";
-    private static final FeatureIdImpl FEATURE_ID = new FeatureIdImpl(FEATURE);
     private static final String CNTRY_NAME = "CNTRY_NAME";
     private static final String LONG_NAME = "LONG_NAME";
     
@@ -97,6 +96,9 @@ public class ShpHotlinkSourceTest extends TestCase {
         final ShpServiceImpl service = new ShpServiceImpl(url, params);
         geoResource = new ShpGeoResourceImpl(service, "");
         source = new ShpHotlinkSource(geoResource);
+        final Filter filter = CommonFactoryFinder.getFilterFactory2()
+                .id(new FeatureIdImpl(FEATURE));
+        feature = getFeature(geoResource, filter);
         
         IRunnableWithProgress runner = new IRunnableWithProgress() {
             @Override
@@ -118,17 +120,40 @@ public class ShpHotlinkSourceTest extends TestCase {
         
     }
     
+    private SimpleFeature getFeature(IGeoResource geoResource, Filter filter) {
+        try {
+            if (geoResource.canResolve(SimpleFeatureStore.class)) {
+                final SimpleFeatureStore featureSource = geoResource.resolve(SimpleFeatureStore.class,
+                        new NullProgressMonitor());
+                final SimpleFeatureCollection featureCollection = featureSource.getFeatures(filter);
+                final SimpleFeatureIterator featureIterator = featureCollection.features();
+                try {
+                     if (featureIterator.hasNext()) {
+                         return featureIterator.next();
+                     }
+                } finally {
+                    if (featureIterator != null) {
+                        featureIterator.close();
+                    }
+                }    
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
     public void testGetDocument() {
         
-        assertEquals("Count is not expected.", 2, source.getDocuments(FEATURE_ID).size());
+        assertEquals("Count is not expected.", 2, source.getDocuments(feature).size());
         
-        IDocument doc = source.getDocument(FEATURE_ID, CNTRY_NAME);
+        IDocument doc = source.getDocument(feature, CNTRY_NAME);
         assertNotNull("Doc is null.", doc);
         assertTrue("Doc is not an instance of FileDoc.", (doc instanceof FileDocument));
         FileDocument fileDoc = (FileDocument) doc;
         assertEquals("File is not expected.", file1.getAbsolutePath(), fileDoc.getFile().getAbsolutePath());
         
-        doc = source.getDocument(FEATURE_ID, LONG_NAME);
+        doc = source.getDocument(feature, LONG_NAME);
         assertNotNull("Doc is null.", doc);
         assertTrue("Doc is not an instance of UrlDoc.", (doc instanceof URLDocument));
         URLDocument urlDoc = (URLDocument) doc;
@@ -138,43 +163,40 @@ public class ShpHotlinkSourceTest extends TestCase {
     
     public void testGetDocuments() {
         
-        assertEquals("Count is not expected.", 2, source.getDocuments(FEATURE_ID).size());
+        assertEquals("Count is not expected.", 2, source.getDocuments(feature).size());
         
-        IDocumentFolder folder = source.getDocumentsInFolder(FEATURE_ID);
+        IDocumentFolder folder = source.getDocumentsInFolder(feature);
         assertEquals("Count is not expected.", 2, folder.getDocuments().size());
         
-        folder = source.getDocumentsInFolder("FolderName", FEATURE_ID);
+        folder = source.getDocumentsInFolder(feature, "FolderName");
         assertEquals("Count is not expected.", 2, folder.getDocuments().size());
         
     }
     
-    public void xtestSetRemoveFile() throws InterruptedException {
+    public void testSetClearFile() throws InterruptedException {
 
-        assertEquals("Count is not expected.", 2, source.getDocuments(FEATURE_ID).size());
+        assertEquals("Count is not expected.", 2, source.getDocuments(feature).size());
 
-        source.setFile(FEATURE_ID, CNTRY_NAME, file2);
-        commit();
+        source.setFile(feature, CNTRY_NAME, file2);
         
-        IDocument doc = source.getDocument(FEATURE_ID, CNTRY_NAME);
+        IDocument doc = source.getDocument(feature, CNTRY_NAME);
         assertNotNull("Doc is null.", doc);
         assertTrue("Doc is not an instance of FileDoc.", (doc instanceof FileDocument));
         FileDocument fileDoc = (FileDocument) doc;
         assertEquals("File is not expected.", file2.getAbsolutePath(), fileDoc.getFile()
                 .getAbsolutePath());
 
-        source.remove(FEATURE_ID, CNTRY_NAME);
-        commit();
+        source.clear(feature, CNTRY_NAME);
         
-        doc = source.getDocument(FEATURE_ID, CNTRY_NAME);
+        doc = source.getDocument(feature, CNTRY_NAME);
         assertNotNull("Doc is null.", doc);
         assertTrue("Doc is not an instance of FileDoc.", (doc instanceof FileDocument));
         fileDoc = (FileDocument) doc;
         assertNull("File is not expected.", fileDoc.getFile());
         
-        source.setFile(FEATURE_ID, CNTRY_NAME, file1);
-        commit();
+        source.setFile(feature, CNTRY_NAME, file1);
         
-        doc = source.getDocument(FEATURE_ID, CNTRY_NAME);
+        doc = source.getDocument(feature, CNTRY_NAME);
         assertNotNull("Doc is null.", doc);
         assertTrue("Doc is not an instance of FileDoc.", (doc instanceof FileDocument));
         fileDoc = (FileDocument) doc;
@@ -183,11 +205,34 @@ public class ShpHotlinkSourceTest extends TestCase {
         
     }
     
-    private void commit() {
-        final IMap map = ApplicationGIS.getActiveMap();
-        if (map != null) {
-            map.sendCommandASync(new CommitCommand());
-        }
+    public void testSetClearLink() throws InterruptedException {
+
+        assertEquals("Count is not expected.", 2, source.getDocuments(feature).size());
+
+        source.setLink(feature, LONG_NAME, url2);
+        
+        IDocument doc = source.getDocument(feature, LONG_NAME);
+        assertNotNull("Doc is null.", doc);
+        assertTrue("Doc is not an instance of FileDoc.", (doc instanceof URLDocument));
+        URLDocument urlDoc = (URLDocument) doc;
+        assertEquals("File is not expected.", url2.toString(), urlDoc.getUrl().toString());
+
+        source.clear(feature, LONG_NAME);
+        
+        doc = source.getDocument(feature, LONG_NAME);
+        assertNotNull("Doc is null.", doc);
+        assertTrue("Doc is not an instance of FileDoc.", (doc instanceof URLDocument));
+        urlDoc = (URLDocument) doc;
+        assertNull("File is not expected.", urlDoc.getUrl());
+        
+        source.setLink(feature, LONG_NAME, url1);
+        
+        doc = source.getDocument(feature, LONG_NAME);
+        assertNotNull("Doc is null.", doc);
+        assertTrue("Doc is not an instance of FileDoc.", (doc instanceof URLDocument));
+        urlDoc = (URLDocument) doc;
+        assertEquals("File is not expected.", url1.toString(), urlDoc.getUrl().toString());
+        
     }
     
 }

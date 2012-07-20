@@ -16,6 +16,7 @@ package net.refractions.udig.document;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -33,16 +34,24 @@ import net.refractions.udig.catalog.IDocumentFolder;
 import net.refractions.udig.catalog.IDocumentItem;
 import net.refractions.udig.catalog.IDocumentSource;
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IHotlinkSource;
+import net.refractions.udig.catalog.IHotlink;
 import net.refractions.udig.catalog.URLDocument;
 import net.refractions.udig.core.AdapterUtil;
+import net.refractions.udig.core.IBlockingProvider;
+import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.command.provider.FIDFeatureProvider;
+import net.refractions.udig.project.internal.commands.edit.SetAttributeCommand;
+import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.tool.info.internal.Messages;
+import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -69,13 +78,19 @@ import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.part.ViewPart;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.data.simple.SimpleFeatureStore;
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.FidFilterImpl;
-import org.geotools.filter.identity.FeatureIdImpl;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.filter.Filter;
+import org.opengis.filter.identity.FeatureId;
 
 /**
  * The Document View provides a user interface to view, edit and access attached documents. In this
  * current release, the view uses shapefile implementations of {@link IDocumentSource} and
- * {@link IHotlinkSource} as its document sources.
+ * {@link IHotlink} as its document sources.
  * 
  * @author paul.pfeiffer
  * @author Naz Chan
@@ -88,7 +103,8 @@ public class DocumentView extends ViewPart {
     private Button linkButton;
     private Button removeButton;
 
-    private FidFilterImpl filter;
+    private IGeoResource geoResource;
+    private SimpleFeature feature;
     private IStructuredSelection viewerSelection;
     private IStructuredSelection workbenchSelection;
     private DocumentItemModel itemModel;
@@ -414,19 +430,20 @@ public class DocumentView extends ViewPart {
         for (Iterator<?> iterator = workbenchSelection.iterator(); iterator.hasNext();) {
             
             final Object obj = iterator.next();
-            final IGeoResource geoResource = toGeoResource(obj, monitor);
+            this.geoResource = toGeoResource(obj, monitor);
             if (geoResource != null) {
                 
-                final IHotlinkSource hotlinkSource = toHotlinkSource(obj, geoResource, monitor);
-                if (hotlinkSource != null && filter != null) {
-                    final String fid = (String) filter.getIDs().iterator().next();
-                    items.add(hotlinkSource.getDocumentsInFolder(fid, new FeatureIdImpl(fid)));
+                final IHotlink hotlinkSource = toHotlinkSource(obj, geoResource, monitor);
+                if (hotlinkSource != null && feature != null) {
+                    final String featureId = feature.getIdentifier().getID();
+                    items.add(hotlinkSource.getDocumentsInFolder(feature, featureId));
                 }
                 
                 final IDocumentSource docSource = toSource(geoResource, IDocumentSource.class, monitor);
                 if (docSource != null) {
                     items.add(docSource.getDocumentsInFolder(geoResource.getTitle()));
-                }                
+                }
+                
             }
         }
         
@@ -485,11 +502,11 @@ public class DocumentView extends ViewPart {
      * @param monitor
      * @return hotlink document source
      */
-    private IHotlinkSource toHotlinkSource(Object obj, IGeoResource geoResource, IProgressMonitor monitor) {
+    private IHotlink toHotlinkSource(Object obj, IGeoResource geoResource, IProgressMonitor monitor) {
         final FidFilterImpl filter = toFilter(obj, monitor);
-        if (filter != null) {
-            this.filter = filter; 
-            return toSource(geoResource, IHotlinkSource.class, monitor);
+        if (filter != null) { 
+            this.feature = getFeature(geoResource, filter);
+            return toSource(geoResource, IHotlink.class, monitor);
         }
         return null;
     }
@@ -512,6 +529,36 @@ public class DocumentView extends ViewPart {
             } catch (IOException e) {
                 e.printStackTrace();
             }    
+        }
+        return null;
+    }
+    
+    /**
+     * Gets the feature from the geo resource given the filter.
+     * 
+     * @param geoResource
+     * @param filter
+     * @return feature
+     */
+    private SimpleFeature getFeature(IGeoResource geoResource, FidFilterImpl filter) {
+        try {
+            if (geoResource.canResolve(SimpleFeatureStore.class)) {
+                final SimpleFeatureStore featureSource = geoResource.resolve(SimpleFeatureStore.class,
+                        new NullProgressMonitor());
+                final SimpleFeatureCollection featureCollection = featureSource.getFeatures(filter);
+                final SimpleFeatureIterator featureIterator = featureCollection.features();
+                try {
+                     if (featureIterator.hasNext()) {
+                         return featureIterator.next();
+                     }
+                } finally {
+                    if (featureIterator != null) {
+                        featureIterator.close();
+                    }
+                }    
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -588,15 +635,15 @@ public class DocumentView extends ViewPart {
                         MessageDialog.openInformation(attachButton.getShell(),
                                 Messages.docView_attachFile, Messages.docView_errFileExistSingle);
                     }
-                } else if (source instanceof IHotlinkSource) {
+                } else if (source instanceof IHotlink) {
                     
-                    final String fid = (String) filter.getIDs().iterator().next();
-                    final IHotlinkSource hotlinkSource = (IHotlinkSource) source;
-                    hotlinkSource.setFile(new FeatureIdImpl(fid), doc.getAttributeName(), file);
+                    final String attributeName = doc.getAttributeName();
+                    final IHotlink hotlinkSource = (IHotlink) source;
+                    hotlinkSource.setFile(feature, attributeName, file);
+                    set(attributeName, feature.getAttribute(attributeName));
                     
                     final FileDocument fileDoc = (FileDocument) obj;
                     fileDoc.setFile(file);
-                    
                 }
                 
             }
@@ -681,11 +728,12 @@ public class DocumentView extends ViewPart {
                             MessageDialog.openInformation(attachButton.getShell(),
                                     Messages.docView_linkURL, Messages.docView_errURLExist);
                         }
-                    } else if (source instanceof IHotlinkSource) {
+                    } else if (source instanceof IHotlink) {
                         
-                        final String fid = (String) filter.getIDs().iterator().next();
-                        final IHotlinkSource hotlinkSource = (IHotlinkSource) source;
-                        hotlinkSource.setLink(new FeatureIdImpl(fid), doc.getAttributeName(), url);
+                        final String attributeName = doc.getAttributeName();
+                        final IHotlink hotlinkSource = (IHotlink) source;
+                        hotlinkSource.setLink(feature, attributeName, url);
+                        set(attributeName, feature.getAttribute(attributeName));
                         
                         final URLDocument urlDoc = (URLDocument) doc;
                         urlDoc.setUrl(url);
@@ -765,13 +813,14 @@ public class DocumentView extends ViewPart {
             
             if (source instanceof IDocumentSource) {
                 ((IDocumentSource) source).remove(docs);
-            } else if (source instanceof IHotlinkSource) {
+            } else if (source instanceof IHotlink) {
                 
-                final IHotlinkSource hotlinkSource = (IHotlinkSource) source;
-                final String fid = (String) filter.getIDs().iterator().next();
+                final IHotlink hotlinkSource = (IHotlink) source;
                 for (IDocument doc : docs) {
-                                        
-                    hotlinkSource.remove(new FeatureIdImpl(fid), doc.getAttributeName());
+                    
+                    final String attributeName = doc.getAttributeName();
+                    hotlinkSource.clear(feature, doc.getAttributeName());
+                    set(attributeName, feature.getAttribute(attributeName));
                     
                     if (doc instanceof FileDocument) {
                         final FileDocument fileDoc = (FileDocument) doc;
@@ -788,6 +837,82 @@ public class DocumentView extends ViewPart {
         }
         viewer.refresh();
         viewer.expandAll();
+    }
+    
+    /**
+     * Sets the attribute value of the feature.
+     * 
+     * @param fid
+     * @param attributeName
+     * @param obj
+     */
+    private void set(final String attributeName, final Object obj) {
+        final FeatureId fid = feature.getIdentifier();
+        final IMap map = ApplicationGIS.getActiveMap();
+        if (map != null) {
+            setOnMap(map, fid, attributeName, obj);
+        } else {
+            setOnGeoResource(fid, attributeName, obj);
+        }
+    }
+    
+    /**
+     * Sets the attribute value of the feature given that the layer in on the map.
+     * 
+     * @param map
+     * @param fid
+     * @param attributeName
+     * @param obj
+     */
+    private void setOnMap(final IMap map, final FeatureId fid, final String attributeName,
+            final Object obj) {
+
+        final IBlockingProvider<ILayer> layerProvider = new IBlockingProvider<ILayer>() {
+            @Override
+            public ILayer get(IProgressMonitor monitor, Object... params) throws IOException {
+                for (ILayer layer : map.getMapLayers()) {
+                    if (layer.getGeoResource().getID() == geoResource.getID()) {
+                        return layer;
+                    }
+                }
+                return null;
+            }
+        };
+        final IBlockingProvider<SimpleFeature> featureProvider = new FIDFeatureProvider(
+                fid.getID(), layerProvider);
+
+        map.sendCommandASync(new SetAttributeCommand(featureProvider, layerProvider, attributeName,
+                obj));
+    }
+    
+    /**
+     * Sets the attribute value of the feature directly to the geoResource.
+     * 
+     * @param fid
+     * @param attributeName
+     * @param obj
+     */
+    private void setOnGeoResource(final FeatureId fid, final String attributeName, final Object obj) {
+
+        final IRunnableWithProgress runner = new IRunnableWithProgress() {
+            @Override
+            public void run(IProgressMonitor monitor) throws InvocationTargetException,
+                    InterruptedException {
+                try {
+                    if (geoResource.canResolve(SimpleFeatureStore.class)) {
+                        final Filter filter = CommonFactoryFinder.getFilterFactory2().id(fid);
+                        final SimpleFeatureStore featureStore = geoResource.resolve(
+                                SimpleFeatureStore.class, new NullProgressMonitor());
+                        featureStore.modifyFeatures(attributeName, obj, filter);    
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        PlatformGIS.runInProgressDialog("", true, runner, true);
+
     }
     
     // Utility inner classes
