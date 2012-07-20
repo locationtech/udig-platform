@@ -36,6 +36,7 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IHotlinkSource;
 import net.refractions.udig.catalog.URLDocument;
 import net.refractions.udig.core.AdapterUtil;
+import net.refractions.udig.tool.info.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
