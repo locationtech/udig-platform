@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2004, Refractions Research Inc.
+ * (C) 2004-2012, Refractions Research Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -40,6 +40,7 @@ import org.eclipse.core.runtime.SubMonitor;
  * Default implementation of {@link IResolveManager}
  * @author Jesse
  * @since 1.1.0
+ * @version 1.3.2
  */
 public class ResolveManager implements IResolveManager {
 
@@ -313,21 +314,24 @@ public class ResolveManager implements IResolveManager {
         	return factory;
     	}
     }
-    protected IResolveAdapterFactory getResolveAdapterFactory( IConfigurationElement element ){
-    	synchronized (factories) {
-        	IResolveAdapterFactory factory = factories.get( element );
-        	if( factory != null ) return factory;
-        	
-        	try {
-	        	factory= (IResolveAdapterFactory)
-	        		element.createExecutableExtension("class"); //$NON-NLS-1$        	
-	        } catch (CoreException e) {
-	        	CatalogPlugin.log( e.toString(), e );
-	        	factory = new BrokenIResolveAdapaterFactory(e);
-	        }
-        	factories.put( element, factory );
-        	return factory;
-    	}
+
+    protected IResolveAdapterFactory getResolveAdapterFactory(IConfigurationElement element) {
+        synchronized (factories) {
+            IResolveAdapterFactory factory = factories.get(element);
+            if (factory != null)
+                return factory;
+
+            try {
+                factory = (IResolveAdapterFactory) element.createExecutableExtension("class"); //$NON-NLS-1$        	
+            } catch (CoreException e) {
+                String message = "Marking IResolveAdaptorFactory as unavaiable:"+e;
+                IStatus status = new Status( IStatus.WARNING, element.getContributor().getName(), message, e);
+                CatalogPlugin.getDefault().getLog().log(status);
+                factory = new BrokenIResolveAdapaterFactory(e);
+            }
+            factories.put(element, factory);
+            return factory;
+        }
     }
     
     /**
