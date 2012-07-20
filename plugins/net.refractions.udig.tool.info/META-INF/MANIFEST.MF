@@ -6,7 +6,9 @@ Bundle-Version: 1.2.3.qualifier
 Bundle-Activator: net.refractions.udig.tool.info.InfoPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
-Export-Package: net.refractions.udig.tool.info,
+Export-Package: net.refractions.udig.catalog.shp,
+ net.refractions.udig.document,
+ net.refractions.udig.tool.info,
  net.refractions.udig.tool.info.internal,
  net.refractions.udig.tool.info.internal.display
 Require-Bundle: org.eclipse.ui,
@@ -18,6 +20,6 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.style.wms,
  net.refractions.udig.render.wms.basic,
  org.eclipse.ui.forms,
- net.refractions.udig.catalog.shp;resolution:=optional
+ net.refractions.udig.catalog.shp;resolution:=optional;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
