@@ -47,7 +47,17 @@ public interface IHotlink extends IAbstractDocumentSource {
             this.attributeName = attributeName;
             this.type = type;
         }
-
+        /**
+         * HotlinkDescriptor represented as a string.
+         * 
+         * @param definition Definition of the form "name:type"
+         */
+        public HotlinkDescriptor(String definition) {
+            int split = definition.lastIndexOf(":");
+            this.attributeName = split == -1 ? definition : definition.substring(0,split);
+            this.type = split == -1 ? TYPE.WEB : TYPE.valueOf(definition.substring(split));
+        }
+        
         public String getAttributeName() {
             return attributeName;
         }
@@ -55,7 +65,10 @@ public interface IHotlink extends IAbstractDocumentSource {
         public Type getType() {
             return type;
         }
-        
+        @Override
+        public String toString() {
+            return attributeName + ":"+type;
+        }
     }
 
     /**
@@ -91,14 +104,6 @@ public interface IHotlink extends IAbstractDocumentSource {
      * @return list of documents
      */
     public List<IDocument> getDocuments(SimpleFeature feature);
-
-    /**
-     * List the hotlinks for the provided feature.
-     * 
-     * @param feature
-     * @return List of hotlink documents for the provided feature
-     */
-    List<IDocument> getHotlinks( SimpleFeature feature );
     
     /**
      * Used to decode the indicated hotlink value as an IDocument for general use.
