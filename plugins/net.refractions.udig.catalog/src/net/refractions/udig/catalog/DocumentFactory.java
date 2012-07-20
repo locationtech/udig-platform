@@ -204,10 +204,12 @@ public class DocumentFactory {
         switch (type) {
         case FILE:
             try {
-                final File parentFile = new File(new URI(url.toString()));
-                final File childFile = new File(parentFile.getParent(), info);
-                if (childFile.exists()) {
-                    return createFileDoc(childFile, label);    
+                if (info != null) {
+                    final File parentFile = new File(new URI(url.toString()));
+                    final File childFile = new File(parentFile.getParent(), info);
+                    if (childFile.exists()) {
+                        return createFileDoc(childFile, label);    
+                    }    
                 }
             } catch (URISyntaxException e) {
                 // e.printStackTrace();
@@ -215,7 +217,9 @@ public class DocumentFactory {
             return createFileDoc(null, label);
         case WEB:
             try {
-                return createUrlDoc(new URL(info), label);
+                if (info != null) {
+                    return createUrlDoc(new URL(info), label);    
+                }
             } catch (MalformedURLException e) {
                 // e.printStackTrace();
             }
