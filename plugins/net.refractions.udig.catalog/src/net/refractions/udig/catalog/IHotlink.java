@@ -93,6 +93,14 @@ public interface IHotlink extends IAbstractDocumentSource {
     public List<IDocument> getDocuments(SimpleFeature feature);
 
     /**
+     * List the hotlinks for the provided feature.
+     * 
+     * @param feature
+     * @return List of hotlink documents for the provided feature
+     */
+    List<IDocument> getHotlinks( SimpleFeature feature );
+    
+    /**
      * Used to decode the indicated hotlink value as an IDocument for general use.
      * 
      * @param feature Feature under study, either retrieved directly from featureSource or a live
