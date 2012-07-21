@@ -711,15 +711,10 @@ Instead they are extensions of the net.refractions.udig.project.ui.tool extensio
 there are a large number of editing tools that can be created an many of them have similar
 functionality there is a little framework associated with edit tools development.
 
-Class Diagram of Edit Tool frame work
-'''''''''''''''''''''''''''''''''''''
+* Class Diagram of Edit Tool frame work
 
-`|image0| <http://udig.refractions.net/confluence//download/attachments/8001/edit_tool_design.png>`_
+  .. image:: /images/edit_tools/edit_tool_design.png
 
-Interaction Diagram of a Mouse Released Event
-'''''''''''''''''''''''''''''''''''''''''''''
+* Interaction Diagram of a Mouse Released Event
 
-`|image1| <http://udig.refractions.net/confluence//download/attachments/8001/mouse_click_nonselected_feature_behaviour.png>`_
-
-.. |image0| image:: download/thumbnails/8001/edit_tool_design.png
-.. |image1| image:: download/thumbnails/8001/mouse_click_nonselected_feature_behaviour.png
+  .. image:: /images/edit_tools/mouse_click_nonselected_feature_behaviour.png

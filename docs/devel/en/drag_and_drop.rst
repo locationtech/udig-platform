@@ -26,19 +26,15 @@ extension point. This extension point advertises
 `Transfer <http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html>`_
 objects that are available for use. The Transfers defined by the normal udig platform are:
 
--  UDigByteAndLocalTransfer - Transfers objects within udig. This transfer is not useful outside of
-   udig.
-* `TextTransfer <http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/TextTransfer.html>`_
-   - Transfers text. (Part of eclipse DND)
-* `FileTransfer <http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/FileTransfer.html>`_
-   - Transfers files. (Part of eclipse DND)
-* `RTFTransfer <http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/RTFTransfer.html>`_
-   - Transfers rich text formatted text. (Part of eclipse DND)
+* UDigByteAndLocalTransfer - Transfers objects within udig. This transfer is not useful outside of udig.
+* `TextTransfer <http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/TextTransfer.html>`_ - Transfers text. (Part of eclipse DND)
+* `FileTransfer <http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/FileTransfer.html>`_ - Transfers files. (Part of eclipse DND)
+* `RTFTransfer <http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/RTFTransfer.html>`_ - Transfers rich text formatted text. (Part of eclipse DND)
 * `HTMLTransfer <http://help.eclipse.org/help31/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/HTMLTransfer.html>`_
-   - Transfers HTML formatted text. (Part of eclipse DND)
--  FeatureTextTransfer - Converts features to and from GML2 text. (uDig 1.1 only)
--  GeometryTextTransfer - Converts geometries from and to text, either GML or vivid solution well
-   known text format (uDig 1.1 only)
+  \- Transfers HTML formatted text. (Part of eclipse DND)
+* FeatureTextTransfer - Converts features to and from GML2 text. (uDig 1.1 only)
+* GeometryTextTransfer - Converts geometries from and to text, either GML or vivid solution well
+  known text format (uDig 1.1 only)
 
 Drag and Drop to and from uDig
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -62,7 +58,7 @@ url is dropped on a layer.
 
 plugin.xml Extension Definition
 
-::
+.. code-block:: xml
 
     <action class="net.refractions.udig.project.ui.internal.actions.SLDDropAction" name="SLD Drag and Drop">
             <destination class="net.refractions.udig.project.ILayer"/>
@@ -73,7 +69,7 @@ plugin.xml Extension Definition
 
 DropAction Code
 
-::
+.. code-block:: java
 
     import java.io.File;
     import java.io.IOException;

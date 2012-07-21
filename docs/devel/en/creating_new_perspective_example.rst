@@ -1,5 +1,5 @@
 Creating new Perspective Example
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+================================
 
 This example creates a new perspective that is based on combining
 
@@ -8,7 +8,7 @@ Declare new Perspective
 
 Add the following XML snippet to your plugin.xml:
 
-::
+.. code-block:: xml
 
     <extension
              point="org.eclipse.ui.perspectives">
@@ -30,7 +30,7 @@ Create a Perspective Factory class
 
 **PerspectiveFactory1**
 
-::
+.. code-block:: java
 
     package tutorial;
 
@@ -51,12 +51,12 @@ Create a Perspective Factory class
 Create the Perspective Extensions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-See the `Extending an existing perspective
-Example <Extending%20an%20existing%20perspective%20Example.html>`_ tutorial on how to create
+See the :doc:`extending_an_existing_perspective_example` tutorial on how to create
 Perspective extensions.
- Add the following xml snippet to the plugin.xml.
 
-::
+Add the following xml snippet to the plugin.xml.
+
+.. code-block:: xml
 
     <extension
              point="org.eclipse.ui.perspectiveExtensions">

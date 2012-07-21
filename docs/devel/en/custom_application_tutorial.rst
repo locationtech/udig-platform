@@ -1,37 +1,37 @@
 Custom Application Tutorial
 ---------------------------
 
+.. _CustomApplication.pdf: http://udig.refractions.net/files/tutorials/CustomApplication.pdf
+
 Here is the tutorial everyone has been waiting for; how to make your own custom application.
 
 Reference
 
 * `Rich Client Tutorial Part 1 <http://www.eclipse.org/articles/Article-RCP-1/tutorial1.html>`_
--  `Rich Client Tutorial Part 2 <http://www.eclipse.org/articles/Article-RCP-2/tutorial2.html>`_ -
-   Applications, Workbenches, and Workbench Windows
--  `Rich Client Tutorial Part 3 <http://www.eclipse.org/articles/Article-RCP-3/tutorial3.html>`_ -
-   Views, Menus and Toolbars
+* `Rich Client Tutorial Part 2 <http://www.eclipse.org/articles/Article-RCP-2/tutorial2.html>`_ \-
+  Applications, Workbenches, and Workbench Windows
+* `Rich Client Tutorial Part 3 <http://www.eclipse.org/articles/Article-RCP-3/tutorial3.html>`_ \- 
+  Views, Menus and Toolbars
 
-`|image0| <http://udig.refractions.net/files/tutorials/CustomApplication.pdf>`_
+
+.. image:: /images/custom_application_tutorial/CustomAppWorkbook.png
+   :target: CustomApplication.pdf_
 
 This workbook is part of our public training materials:
 
-* `http://udig.refractions.net/files/tutorials/CustomApplication.pdf <http://udig.refractions.net/files/tutorials/CustomApplication.pdf>`_
+* CustomApplication.pdf_ 
 
 Downloads:
 
-* `http://udig.refractions.net/tutorials/rcp\_branding.zip <http://udig.refractions.net/tutorials/rcp_branding.zip>`_
-   Images and Icons used in the Tutorial
+* :download:`CustomApplication/rcp_branding.zip` Images and Icons used in the Tutorial
 
 Source code:
 
--  Available in your uDig SDK (import the `source code <Code%20Examples.html>`_ from the plugins
+-  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
    view)
--  plugin:
-   `net.refractions.udig.tutorials.customapp <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.customapp>`_
-   (github)
+-  plugin: `net.refractions.udig.tutorials.customapp <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.customapp>`_ (github)
 -  feature:
-   `net.refractions.udig\_tutorials.custom-feature <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig_tutorials.custom-feature>`_
-   (github)
+   `net.refractions.udig\_tutorials.custom-feature <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig_tutorials.custom-feature>`_ (github)
 
 Introduction
 ~~~~~~~~~~~~
@@ -198,5 +198,4 @@ For uDig 1.1 developers the previous version of this document is available [
 
 * `http://udig.refractions.net/tutorials/rcp\_walkthrough.pdf <http://udig.refractions.net/tutorials/rcp_walkthrough.pdf>`_
 
-.. |image0| image:: /images/custom_application_tutorial/CustomAppWorkbook.png
 .. |image1| image:: /images/custom_application_tutorial/CustomApplicationSearch.png

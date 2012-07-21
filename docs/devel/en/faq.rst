@@ -1,5 +1,5 @@
 FAQ
-~~~
+===
 
 Frequently asked questions on uDig Development.
 
@@ -14,10 +14,9 @@ Q: Where to start with eclipse RCP development\*
 
 Few links for starting with eclipse RCP are provided below:
 
-* `http://www.eclipse.org/rcp/ <http://www.eclipse.org/rcp/>`_
-* `http://www.eclipse.org/community/rcp.html <http://www.eclipse.org/community/rcp.html>`_
--  Our own `Getting Started <Getting%20Started.html>`_ section has a\ `Welcome New Eclipse RCP
-   Developers <Welcome%20New%20Eclipse%20RCP%20Developers.html>`_ page
+* `<http://www.eclipse.org/rcp/>`_
+* `<http://www.eclipse.org/community/rcp.html>`_
+*  Our own :doc:`getting_started` section has a\ :doc:`welcome_new_eclipse_rcp_developers` page
 
 You should also check out the Eclipse RCP forums (**eclipse.platform.rcp** on news.eclipse.org).
 
@@ -25,35 +24,33 @@ Q: Where to Start with uDig development\*
                                          
 
     I am new in uDig framework and in GIS programming in particular.
-     However, i want to make uDig work with a health database, in mysql.
-     attached please find my plugin specification.
+    However, i want to make uDig work with a health database, in mysql.
+    attached please find my plugin specification.
 
-    basically i want to add a function which connect to a database,
-     search an entry on the database, seach the same entry on shape file,
-     then highlith the image on the map.
+    basically I want to add a function which connect to a database,
+    search an entry on the database, seach the same entry on shape file,
+    then highlith the image on the map.
 
     This is in real life application. Please help me how to go about.
 
 Sounds like fun!
 
 Well we are happy to help with facilities over here, with have a github community repository.
- Please sign up to the developers email list and work your way through the initial quickstart and
+Please sign up to the developers email list and work your way through the initial quickstart and
 plug-in tutorial.
 
 Steps:
 
-#. Sign up:
-   `http://lists.refractions.net/mailman/listinfo/udig-devel <http://lists.refractions.net/mailman/listinfo/udig-devel>`_
-#. Install: `SDK Quickstart <SDK%20Quickstart.html>`_ for simple plugins (or
-   `Home <http://udig.refractions.net/confluence//display/ADMIN/Home>`_ for core development)
-#. Follow: `Tool Plugin Tutorial <Tool%20Plugin%20Tutorial.html>`_
+#. Sign up: `<http://lists.refractions.net/mailman/listinfo/udig-devel>`_
+#. Install: :doc:`SDKQuickstart/SDKQuickstart` for simple plugins (or `Home <http://udig.refractions.net/confluence//display/ADMIN/Home>`_ for core development)
+#. Follow: :doc:`tool_plugin_tutorial`
 
 From there on out you can start to get our own uDig/Eclipse RCP docs and pick up some Eclipse books
 (for help in making a user interface and so on), and I assume you are familiar with the MySQL/JDBC
 part of things?
 
-#. Read: `Home <Home.html>`_
-#. Read: `Reading List <Reading%20List.html>`_
+#. Read: :doc:`Home <index>`
+#. Read: :doc:`reading_list`
 
 Our docs are on as an needed basis, so as you have questions we will due our best to make a page of
 docs to answer email, and help people later. So you you are already on the right track, ask
@@ -87,11 +84,10 @@ Q: Which branch to choose
                          
 
 Please join us in working on the uDig **master** branch for access to the latest developments, bug
-fixes
- and GeoTools libraries.
+fixes and GeoTools libraries.
 
-The **1.2.x** branch is considered stable with no additional releases planned. The project is open
- if your team needs to make a release of 1.2.x we would be happy to assist any volunteers.
+The **1.2.x** branch is considered stable with no additional releases planned. The project is 
+open if your team needs to make a release of 1.2.x we would be happy to assist any volunteers.
 
 Developer Questions
 ^^^^^^^^^^^^^^^^^^^
@@ -99,8 +95,8 @@ Developer Questions
 Q: Where can I find uDig API javadocs
                                      
 
--  The `Reference <Reference.html>`_ section has a `Javadocs <Javadocs.html>`_
-* `http://udig.refractions.net/docs/api-udig <http://udig.refractions.net/docs/api-udig>`_
+* The :doc:`reference` section has a :doc:`javadocs`
+* `<http://udig.refractions.net/docs/api-udig>`_
 
 Q: Where can I find uDig extension Point Documentation
                                                       
@@ -151,33 +147,27 @@ The views initially displayed are provided by a perspective:
 
 An example of extending a perspective is in the net.refractions.udig.feature.editor/plugin.xml file.
 
-If you define a new perspective and you want it to be loaded by default you have to
- create a fragment for net.refractions.udig.ui and in the fragment override the
- UDIGWorkbenchAdvisor class to return your perspective ID in the getInitialWindowPerspectiveId
- method.
+If you define a new perspective and you want it to be loaded by default you have to create a fragment 
+for net.refractions.udig.ui and in the fragment override the UDIGWorkbenchAdvisor class to return 
+your perspective ID in the getInitialWindowPerspectiveId method.
 
 Examples:
 
 * :doc:`creating_new_perspective_example`
-
--  `Extending an existing perspective
-   Example <Extending%20an%20existing%20perspective%20Example.html>`_
+* :doc:`extending_an_existing_perspective_example`
 
 Q: How do I configure keyboard shortcuts
                                         
 
 You need to create a schema, which assigns keyboard bindings to commands. This allows a key press to
-invoke the
- same command that would otherwise be issued in response to an Action (such as a menu item or
-toolbar
- button being pressed).
+invoke the same command that would otherwise be issued in response to an Action (such as a menu item or
+toolbar button being pressed).
 
 The actual functionally invoked by a Command can be determined dynamically using a command handler.
- This is how the same keyboard short cuts (such as Control-C or Delete) can be performed differently
- depending on the view the user is working in.
+This is how the same keyboard short cuts (such as Control-C or Delete) can be performed differently
+depending on the view the user is working in.
 
-Examples:
- :doc:`keyboard_shortcut_example`
+Examples: :doc:`keyboard_shortcut_example`
 
 
 Q: How do I get an SWT layout to display properly
@@ -190,7 +180,7 @@ The solution lies in the parent composite (rather than the control).
 If the composite is using a layout manager to control the size of the controls you can call the
 layout() method:
 
-::
+.. code-block:: java
 
     Composite parent = new Composite(grandParent, SWT.NONE);
     ...
@@ -211,14 +201,14 @@ A few tips on using Progress Monitors:
 
 Always start the progress monitor and do at least 1 bit of work. For example:
 
-::
+.. code-block:: java
 
     monitor.beginTask("Working", 4);
     monitor.work(1);
 
 Always finish started job.
 
-::
+.. code-block:: java
 
     try{
       monitor.beginTask("Working", 4);
@@ -230,7 +220,7 @@ Always finish started job.
 
 Make use of SubProgressMonitor if sending the monitor to another method:
 
-::
+.. code-block:: java
 
     try{
       monitor.beginTask("Working", 8);
@@ -252,8 +242,8 @@ Q: How to wait in the display thread
                                     
 
 All interactions with the user (or widgets) is funnelled through a single display thread. As such
- you should not take a trip out to disk or do any serious computation from the display thread or the
- application will appear to be frozen and unresponsive.
+you should not take a trip out to disk or do any serious computation from the display thread or the
+application will appear to be frozen and unresponsive.
 
 So how can you perform these tasks - and then update the user interface in response?
 
@@ -262,11 +252,10 @@ So how can you perform these tasks - and then update the user interface in respo
 
 -  Alternative: Use the display's read and dispatch method to run other jobs that are waiting for
    the display thread.
-    Only when there are no more jobs waiting(readAndDispatch returns false when no more jobs are
-   waiting)
-    then let the thread sleep.
+   Only when there are no more jobs waiting(readAndDispatch returns false when no more jobs are
+   waiting) then let the thread sleep.
 
-   ::
+   .. code-block:: java
 
        while( condition ) {
            //run a display event continue if there is more work todo.
@@ -319,7 +308,7 @@ The **ApplicationGIS** class provides access to all the projects currently regis
 
 To access the first Map in the first project:
 
-::
+.. code-block:: java
 
     ApplicationGIS.openMap(ApplicationGIS.getProjects().get(0).getElements(IMap.class).get(0));
 
@@ -328,7 +317,7 @@ Q: How can I programmatically commit changes
 
 There is a Commit Command that can be sent to the map to commit:
 
-::
+.. code-block:: java
 
     MapCommand commitCommand=EditCommandFactory.getInstance().createCommitCommand();
     map.sendCommandSync(commitCommand);
@@ -347,13 +336,13 @@ Q: How do I add a layer programmatically
 
 The **ApplicationGIS** class has a utility method for you:
 
-::
+.. code-block:: java
 
     ApplicationGIS.addLayersToMap(map, layers, startposition, project);
 
 You can also send the command directly yourself:
 
-::
+.. code-block:: java
 
     IMap map;
     map.sendCommandASync(new AddLayerCommand(layer) );
@@ -363,7 +352,7 @@ Q: How do I add default key bindings to my IWorkbenchPart
 
 Simply add this line to the createPartControl() method of your workbench part.
 
-::
+.. code-block:: java
 
     ApplicationGIS.getToolManager().registerActionsWithPart(this);
 
@@ -375,7 +364,7 @@ Q: How do I create a map programmatically
 
 There is a command to create a map, which you can send to the project:
 
-::
+.. code-block:: java
 
     CreateMapCommand command=new CreateMapCommand("MapName", listofGeoResources, project);
     project.sendSync(command);
@@ -459,19 +448,19 @@ scenarios that occur in uDig.
 
 FeatureSource access from a layer:
 
-::
+.. code-block:: java
 
     layer.getResource( FeatureSource.class, monitor );
 
 This is a blocking call you can do a non-blocking check to see if the layer has a FeatureSource by:
 
-::
+.. code-block:: java
 
     layer.hasResource( FeatureSource.class );
 
 FeatureSource access from an IGeoResource:
 
-::
+.. code-block:: java
 
     if( resource.canResolve( FeatureSource.class ) )
         return resource.resolve( FeatureSource.class );
@@ -485,13 +474,13 @@ Q: How to get geometries from layer
 
 To get geometries from a layer you need to ask for a FeatureSource object from the layer:
 
-::
+.. code-block:: java
 
     FeatureSource source=layer.getResource( FeatureSource.class, progressMonitor);
 
 Once you have a feature source you can get all the features from the source by:
 
-::
+.. code-block:: java
 
     FeatureCollection collection=source.getFeatures();
 
@@ -503,7 +492,7 @@ very easy to morph uDig to meet your needs.
 
 -  Adaptor: Generic EMF notifications are provided through use of an "Adaptor"
 
-   ::
+   .. code-block:: java
 
        layer.eAdapters().add( new AdapterImpl(){
           public void notifyChanged( Notificaiton msg ) {
@@ -528,7 +517,7 @@ very easy to morph uDig to meet your needs.
 -  Listener: the project sets add/remove listener methods as they are requested on the udig-devel
    email list:
 
-   ::
+   .. code-block:: java
 
        layer.addListener( new ILayerListener(){
           public refresh( LayerEvent event ){
@@ -557,7 +546,7 @@ So the above example is "an adapter", and we are only paying attention to the ch
 
 Example: Here is how you can watch the "Viewport Model" (ie. Zoom, Pan, CRS):
 
-::
+.. code-block:: java
 
     map.getViewportModel().addViewportModelListener(new IViewportModelListener()){
       public void changed(ViewportModel event){
@@ -575,7 +564,7 @@ Example: Layer(s) added/removed
    or when the layer list order has changed. For more information take a look at
    **MapCompositionEvent.EventType**:
 
-   ::
+   .. code-block:: java
 
        ApplicationGIS.getActiveMap().addMapCompositionListener(new IMapCompositionListener(){
            public void changed( MapCompositionEvent event ) {
@@ -592,7 +581,7 @@ Example: Map opens/created/closes If you have to do something when a map opens, 
 about to close, use the extension point *net.refractions.udig.project.mapInterceptor* in your
 **plugin.xml**:
 
-::
+.. code-block:: xml
 
     [..]
       <extension
@@ -606,7 +595,7 @@ about to close, use the extension point *net.refractions.udig.project.mapInterce
 
 And create a new class:
 
-::
+.. code-block:: java
 
     import net.refractions.udig.project.interceptor.MapInterceptor;
     import net.refractions.udig.project.internal.Map;
@@ -621,7 +610,7 @@ And create a new class:
 Example: MapEditor and other ViewParts get activated/opened/closed. If you just want to track
 changes of the MapEditor, take a look at **LayersView.MapEditorListener**.
 
-::
+.. code-block:: java
 
     getSite().getWorkbenchWindow().getPartService().addPartListener(new  IPartListener() {
 
@@ -655,7 +644,7 @@ You will need to know which Map is being worked on; either by:
 -  having a workbench listener and watching the editors change; and remembering the Map from the
    last MapEditor used.
 
-::
+.. code-block:: java
 
     IMap map;
 
@@ -672,13 +661,13 @@ You will need to know which Map is being worked on; either by:
    wants to provide visual feedback. A Context object is just a helper class - when you are working
    on a View you will need to do the work yourself.
 
-   ::
+   .. code-block:: java
 
        DrawShapeCommand command = new DrawShapeCommand(shape, paint, lineStyle, lineWidth);
 
    Here is the kind of work a tool context normally does for you:
 
-   ::
+   .. code-block:: java
 
        command.setMap( map );
        ViewportPane viewportPane = map.getRenderManager().getMapDisplay();
@@ -697,7 +686,7 @@ You will need to know which Map is being worked on; either by:
    A review of how draw commands work - they stay on the map until they are invalid. So at some
    point "later" you can take the command off the screen by:
 
-   ::
+   .. code-block:: java
 
        command.setValid(false);
 
@@ -726,7 +715,7 @@ example makes use of screen coordiantes; you will need to use the viewport world
 
 Here is an example of storing points on the layer blackboard in lat/lon:
 
-::
+.. code-block:: java
 
     IBlackboard blackboard = map.getBlackboard();
     List<Coordinate> points =  (List<Coordinate>) blackboard.get("route);
@@ -739,7 +728,7 @@ Here is an example of storing points on the layer blackboard in lat/lon:
 
 You can draw these onto the screen in your mapgraphic render method
 
-::
+.. code-block:: java
 
     public void draw( MapGraphicContext context ) {
 

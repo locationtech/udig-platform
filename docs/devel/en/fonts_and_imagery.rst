@@ -1,15 +1,13 @@
 Fonts and Imagery
-~~~~~~~~~~~~~~~~~
+=================
 
 Where possible these images are taken directly from our coderepository, and represent the **live**
 images used by the application right now.
 
 References:
 
-* `http://wiki.eclipse.org/User\_Interface\_Guidelines#Design <http://wiki.eclipse.org/User_Interface_Guidelines#Design>`_
-   (amazing background detail on how to do this stuff)
--  `http://projects.opengeo.org/geosilk/ <http://projects.opengeo.org/geosilk/>`_ (match core icon
-   concepts for geospatial concepts)
+* `<http://wiki.eclipse.org/User_Interface_Guidelines#Design>`_ (amazing background detail on how to do this stuff)
+* `<http://projects.opengeo.org/geosilk/>`_ (match core icon concepts for geospatial concepts)
 * `http://en.wikipedia.org/wiki/Gill\_Sans <http://en.wikipedia.org/wiki/Gill_Sans>`_
 
 Fonts
@@ -17,7 +15,7 @@ Fonts
 
 The uDig splash screen and tagline are rendered with GillSans Light:
 
-* `http://en.wikipedia.org/wiki/Gill\_Sans <http://en.wikipedia.org/wiki/Gill_Sans>`_
+* `<http://en.wikipedia.org/wiki/Gill_Sans>`_
 
 The color used is:
 
@@ -55,180 +53,63 @@ Core Icon Concepts
 
 UDIG constructs with well defined representations:
 
- 
++---------------+---------------------------+---------------+------------------------+
+| |fai_image01| |     udig logo             | |fai_image02| | project file           |
++---------------+---------------------------+---------------+------------------------+
+| |fai_image03| |     feature               | |fai_image04| | grid                   |
++---------------+---------------------------+---------------+------------------------+
+| |fai_image05| |     datastore             | |fai_image06| | grid coverge exchange  |
++---------------+---------------------------+---------------+------------------------+
+| |fai_image07| |     web feature server    | |fai_image08| | web map server         |
++---------------+---------------------------+---------------+------------------------+
+| |fai_image09| |     feature file          | |fai_image10| | grid file              |
++---------------+---------------------------+---------------+------------------------+
+| |fai_image11| |     map file              | |fai_image12| | pixel                  |
++---------------+---------------------------+---------------+------------------------+
+| |fai_image13| |     repository            | |fai_image14| | web registry service   |
++---------------+---------------------------+---------------+------------------------+
+| |fai_image15| |     server                | |fai_image16| | database               |
++---------------+---------------------------+---------------+------------------------+
+| |fai_image17| |     project               | |fai_image18| | project missing        |
++---------------+---------------------------+---------------+------------------------+
+| |fai_image19| |     map                   | |fai_image20| | empty map              |
++---------------+---------------------------+---------------+------------------------+
+| |fai_image21| |     map layer             | |fai_image22| | map layer empty        |
++---------------+---------------------------+---------------+------------------------+
+| |fai_image23| |     map folder            | |fai_image24| | map folder missing     |
++---------------+---------------------------+---------------+------------------------+
+| |fai_image25| |     paper                 | |fai_image26| | page template          |
++---------------+---------------------------+---------------+------------------------+
 
- 
+.. |fai_image01| image:: /images/fonts_and_imagery/udig_logo16.gif
+.. |fai_image02| image:: /images/fonts_and_imagery/project_file_obj.gif
+.. |fai_image03| image:: /images/fonts_and_imagery/feature_obj.gif
+.. |fai_image04| image:: /images/fonts_and_imagery/grid_obj.gif
+.. |fai_image05| image:: /images/fonts_and_imagery/datastore_obj.gif
+.. |fai_image06| image:: /images/fonts_and_imagery/gce_obj.gif
+.. |fai_image07| image:: /images/fonts_and_imagery/wfs_obj.gif
+.. |fai_image08| image:: /images/fonts_and_imagery/wms_obj.gif
+.. |fai_image09| image:: /images/fonts_and_imagery/feature_file_obj.gif
+.. |fai_image10| image:: /images/fonts_and_imagery/grid_file_obj.gif
+.. |fai_image11| image:: /images/fonts_and_imagery/map_file_obj.gif
+.. |fai_image12| image:: /images/fonts_and_imagery/pixel_obj.gif
+.. |fai_image13| image:: /images/fonts_and_imagery/repository_obj.gif
+.. |fai_image14| image:: /images/fonts_and_imagery/wrs_obj.gif
+.. |fai_image15| image:: /images/fonts_and_imagery/server_obj.gif
+.. |fai_image16| image:: /images/fonts_and_imagery/database_obj.gif
+.. |fai_image17| image:: /images/fonts_and_imagery/project_obj.gif
+.. |fai_image18| image:: /images/fonts_and_imagery/project_nonexist_obj.gif
+.. |fai_image19| image:: /images/fonts_and_imagery/map_obj.gif
+.. |fai_image20| image:: /images/fonts_and_imagery/map_empty_obj.gif
+.. |fai_image21| image:: /images/fonts_and_imagery/layer_obj.gif
+.. |fai_image22| image:: /images/fonts_and_imagery/layer_empty_obj.gif
+.. |fai_image23| image:: /images/fonts_and_imagery/mapfolder_obj.gif
+.. |fai_image24| image:: /images/fonts_and_imagery/mapfolder_nonexist_obj.gif
+.. |fai_image25| image:: /images/fonts_and_imagery/page_obj.gif
+.. |fai_image26| image:: /images/fonts_and_imagery/page_template_obj.gif
 
- 
-
- 
-
-.. figure:: /images/fonts_and_imagery/udig_logo16.gif
-   :align: center
-   :alt: 
-
-udig logo
-
-.. figure:: /images/fonts_and_imagery/project_file_obj.gif
-   :align: center
-   :alt: 
-
-project file
-
-.. figure:: /images/fonts_and_imagery/feature_obj.gif
-   :align: center
-   :alt: 
-
-feature
-
-.. figure:: /images/fonts_and_imagery/grid_obj.gif
-   :align: center
-   :alt: 
-
-grid
-
-.. figure:: /images/fonts_and_imagery/datastore_obj.gif
-   :align: center
-   :alt: 
-
-datastore
-
-.. figure:: /images/fonts_and_imagery/gce_obj.gif
-   :align: center
-   :alt: 
-
-grid coverge exchange
-
-.. figure:: /images/fonts_and_imagery/wfs_obj.gif
-   :align: center
-   :alt: 
-
-web feature server
-
-.. figure:: /images/fonts_and_imagery/wms_obj.gif
-   :align: center
-   :alt: 
-
-web map server
-
-.. figure:: /images/fonts_and_imagery/feature_file_obj.gif
-   :align: center
-   :alt: 
-
-feature file
-
-.. figure:: /images/fonts_and_imagery/grid_file_obj.gif
-   :align: center
-   :alt: 
-
-grid file
-
-.. figure:: /images/fonts_and_imagery/map_file_obj.gif
-   :align: center
-   :alt: 
-
-map file
-
-.. figure:: /images/fonts_and_imagery/pixel_obj.gif
-   :align: center
-   :alt: 
-
-pixel
-
-.. figure:: /images/fonts_and_imagery/repository_obj.gif
-   :align: center
-   :alt: 
-
-repository
-
-.. figure:: /images/fonts_and_imagery/wrs_obj.gif
-   :align: center
-   :alt: 
-
-web registry service
-
-.. figure:: /images/fonts_and_imagery/server_obj.gif
-   :align: center
-   :alt: 
-
-server
-
-.. figure:: /images/fonts_and_imagery/database_obj.gif
-   :align: center
-   :alt: 
-
-database
-
-.. figure:: /images/fonts_and_imagery/project_obj.gif
-   :align: center
-   :alt: 
-
-project
-
-.. figure:: /images/fonts_and_imagery/project_nonexist_obj.gif
-   :align: center
-   :alt: 
-
-project missing
-
-.. figure:: /images/fonts_and_imagery/map_obj.gif
-   :align: center
-   :alt: 
-
-map
-
-.. figure:: /images/fonts_and_imagery/map_empty_obj.gif
-   :align: center
-   :alt: 
-
-empty map
-
-.. figure:: /images/fonts_and_imagery/layer_obj.gif
-   :align: center
-   :alt: 
-
-map layer
-
-.. figure:: /images/fonts_and_imagery/layer_empty_obj.gif
-   :align: center
-   :alt: 
-
-map layer empty
-
-.. figure:: /images/fonts_and_imagery/mapfolder_obj.gif
-   :align: center
-   :alt: 
-
-map folder
-
-.. figure:: /images/fonts_and_imagery/mapfolder_nonexist_obj.gif
-   :align: center
-   :alt: 
-
-map folder missing
-
-.. figure:: /images/fonts_and_imagery/page_obj.gif
-   :align: center
-   :alt: 
-
-paper
-
-.. figure:: /images/fonts_and_imagery/page_template_obj.gif
-   :align: center
-   :alt: 
-
-page template
-
- 
-
- 
-
- 
-
- 
-
-This is designed to intergrate well with the `common Eclipse
-representations <http://wiki.eclipse.org/User_Interface_Guidelines#Consistency_.26_Reuse>`_, and
+This is designed to intergrate well with the 
+`common Eclipse representations <http://wiki.eclipse.org/User_Interface_Guidelines#Consistency_.26_Reuse>`_, and
 play with with the range of overlays etc.
 
 Overlays
@@ -291,8 +172,7 @@ Product Branding
 ^^^^^^^^^^^^^^^^
 
 Here is some of the source material used for "branding" the uDig application itself; for details on
-how branding works please review the `Custom Application
-Tutorial <Custom%20Application%20Tutorial.html>`_.
+how branding works please review the :doc:`Custom Application Tutorial <custom_application_tutorial>`.
 
 Application Logo
 ^^^^^^^^^^^^^^^^

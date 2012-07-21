@@ -1,88 +1,41 @@
 Plugin Structure
-################
+================
 
 A Plugin is defined by the following strucutre .. for a complete list of the usual suspects start
-with the :doc:`common_plugin_files>`.
+with the :doc:`common_plugin_files`.
 
-**src/**
-
-svn
-
-source files
-
-**bin/**
-
- 
-
-generated class files
-
-**doc/**
-
- 
-
-generated schema documentation
-
-**html/**
-
-svn
-
-online help
-
-**/icons/**
-
-svn
-
-icons aranged into categories
-
-plugin.xml
-
-svn
-
-plugin manifest file
-
-plugin.properties
-
-svn
-
-plugin manifest internationalization
-
-build.xml
-
-svn
-
-generated ant export script
-
-build.properties
-
-svn
-
-describes src, and export contents
-
- 
-
- 
-
- 
-
-.classpath
-
- 
-
-generated plug-in classpath information
-
-.project
-
- 
-
-plug-in project file
++-------------------+-----+-----------------------------------------+
+| **src/**          | git | source files                            |
++-------------------+-----+-----------------------------------------+
+| **bin/**          |     | generated class files                   |
++-------------------+-----+-----------------------------------------+
+| **doc/**          |     | generated schema documentation          |
++-------------------+-----+-----------------------------------------+
+| **html/**         | git | online help                             |
++-------------------+-----+-----------------------------------------+
+| **/icons/**       | git | icons aranged into categories           |
++-------------------+-----+-----------------------------------------+
+| plugin.xml        | git | plugin manifest file                    |
++-------------------+-----+-----------------------------------------+
+| plugin.properties | git | plugin manifest internationalization    |
++-------------------+-----+-----------------------------------------+
+| build.xml         | git | generated ant export script             |
++-------------------+-----+-----------------------------------------+
+| build.properties  | git | describes src, and export contents      |
++-------------------+-----+-----------------------------------------+
+|                   |     |                                         |
++-------------------+-----+-----------------------------------------+
+| .classpath        |     | generated plug-in classpath information |
++-------------------+-----+-----------------------------------------+
+| .project          |     | plug-in project file                    |
++-------------------+-----+-----------------------------------------+
 
 Your first build
 
-Plugins have strict naming conventions for their packages - please consult the `API rules of
-engagement <API%20rules%20of%20engagement.html>`_ for more information.
+Plugins have strict naming conventions for their packages - please consult the :doc:`api_rules_of_engagement` 
+for more information.
 
-.. figure:: http://udig.refractions.net/image/DEV/ngrelc.gif
-   :align: center
-   :alt: 
+Related concepts
+----------------
 
 `Repository Structure <http://udig.refractions.net/confluence//display/UDIG/Repository+Structure>`_

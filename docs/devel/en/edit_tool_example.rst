@@ -1,5 +1,5 @@
 Edit Tool Example
-~~~~~~~~~~~~~~~~~
+=================
 
 This tutorial demonstrates how to make a simple custom edit tool. The tool will select features and
 change the geometry of the feature into a star.
@@ -7,8 +7,8 @@ change the geometry of the feature into a star.
 Requirements for tutorial
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Installed eclipse and uDig SDK 1.1 - `SDK Quickstart <SDK%20Quickstart.html>`_
- Completion of the Plugin tutorial - `Tool Plugin Tutorial <Tool%20Plugin%20Tutorial.html>`_
+* Installed eclipse and uDig SDK 1.1 - :doc:`SDKQuickstart/SDKQuickstart`
+* Completion of the Plugin tutorial - :doc:`tool_plugin_tutorial`
 
 What is a Edit Tool?
 ^^^^^^^^^^^^^^^^^^^^
@@ -17,15 +17,13 @@ Edit tools are another sub-type of tools, however they do not (yet) have their o
 Instead they are extensions of the net.refractions.udig.project.ui.tool extension point. Because
 there are a large number of editing tools that can be created an many of them have similar
 functionality there is a little framework associated with edit tools development. The design and
-more detailed discussion of the edit tool framework can be found at `Edit
-Tools <Edit%20Tools.html>`_
+more detailed discussion of the edit tool framework can be found at :doc:`edit_tools`
 
 Tutorial
 ^^^^^^^^
 
 1. Create a new Plugin called: **net.refractions.udig.tutorials.tool.star**
- 2. Configure your new created plugin
-
+2. Configure your new created plugin
 #. Open the Plug-in Development perspective.
 #. In the Package Explorer navigate to the plug-in created in the previous section. Open the plug-in
    manifest by navigating to the META-INF/MANIFEST.MF file under the root of the feature editor
@@ -55,13 +53,12 @@ Define a New Extension
 
 Create a New Tool
 
-#. Right click on newly added extension, **net.refractions.udig.project.ui.tool**, and select **New
-   > modalTool**
+#. Right click on newly added extension, **net.refractions.udig.project.ui.tool**, and 
+   select :menuselection:`New --> modalTool`
 #. Replace the default data in the id field with **net.refractions.udig.tutorials.tool.star**.
 #. Enter a tool tip message into the tooltip field: **Changes Geometry to Star**
 #. Enter **net.refractions.udig.tutorials.tool.move.StarTool** into the class field.
-#. Enter **icons/etool16/** into the icon field.
-    (Or press the Browse button and locate the icon)
+#. Enter **icons/etool16/** into the icon field. (Or press the Browse button and locate the icon)
 #. Enter **Move** into the name field.
 #. Set onToolbar to **true**.
 #. Enter **net.refractions.udig.tool.edit.create** into the categoryId field. This ensures that the
