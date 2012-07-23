@@ -8,6 +8,7 @@ Views and editors
    Bookmarks View
    Catalog view
    Cheat Sheet view
+   Document view
    Help view
    Information view
    Layers view
