@@ -299,12 +299,13 @@ GIS Application Questions
 Q: How can I find what maps and projects are currently available
                                                                 
 
-The **ApplicationGIS** class provides access to all the projects currently registered with the uDig
- instance.
+The **ApplicationGIS** class provides access to all the projects currently registered with 
+the uDig instance.
 
 **ApplicationGIS.getProjects()** will return all the projects currently registered with the system.
- Given a project all the contained elements can be searched via the **getElements()** method. If a
- single type of elements is desired such as maps the **getElements( Class<T> )** method can be used.
+
+Given a project all the contained elements can be searched via the **getElements()** method. If a
+single type of elements is desired such as maps the **getElements( Class<T> )** method can be used.
 
 To access the first Map in the first project:
 
@@ -325,11 +326,11 @@ There is a Commit Command that can be sent to the map to commit:
 Q: How can I set up a custom splash screen
                                           
 
-Follow the `Custom Application Tutorial <Custom%20Application%20Tutorial.html>`_ for branding and
+Follow the :doc:`Custom Application Tutorial <custom_application_tutorial>` for branding and
 splash screen information.
 
-Alternative: Make a fragment which overrides the provided intro/root.xml or the introContent.xml in
- the net.refractions.udig.ui plugin.
+Alternative: Make a fragment which overrides the provided intro/root.xml or the introContent.xml 
+in the net.refractions.udig.ui plugin.
 
 Q: How do I add a layer programmatically
                                         

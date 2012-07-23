@@ -1,5 +1,5 @@
 Map Decorator Tutorial
-----------------------
+======================
 
 This tutorial allows you to quickly draw something on screen using a combination of a Tool (for
 drawing) and a Decorator (for drawing on the map).
@@ -12,7 +12,7 @@ References:
 
 * :doc:`working_with_gis_application`
 
--  `crs <http://docs.geotools.org/latest/userguide/library/referencing/crs.html>`_ (GeoTools User
+* `crs <http://docs.geotools.org/latest/userguide/library/referencing/crs.html>`_ (GeoTools User
    Guide)
 
 This workbook is part of our commercial training materials.
@@ -23,7 +23,7 @@ This workbook is part of our commercial training materials.
 
 Source code:
 
--  Available in your uDig SDK (import the `source code <Code%20Examples.html>`_ from the plugins
+-  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
    view)
 -  plugin:
 
@@ -32,7 +32,7 @@ Source code:
    * `net.refractions.udig.tutorials.mapgraphic <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.mapgraphic>`_
 
 Introduction
-~~~~~~~~~~~~
+------------
 
 This tutorial will introduce you to a few aspects of using uDig as a "GISApplication". This time out
 we will be working with high level concepts familiar to end users (such as Maps and Layers) .
@@ -52,7 +52,7 @@ This tutorial provides hands on experience with:
 -  Use of a blackboard for collaboration among plug-ins
 
 What to Do Next
-~~~~~~~~~~~~~~~
+---------------
 
 Here are some other things you can try:
 
@@ -109,7 +109,7 @@ A North Arrow would make an excellent Map Graphic how would you make one?
 (Hint If you want to use an Image you can ask your Activator to manage the ImageDescriptor for you)
 
 Tips, Tricks and Suggestions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 The following tips have been provided by the udig-devel list; please stop by and introduce yourself.
 
@@ -140,7 +140,7 @@ It also provides a couple of utility classes to make working with these ideas ea
 The GeoTools documentation mentioned below has many valuable example including the following one
 showing how to transform a Geometry between two coordinate reference systems:
 
-::
+.. code-block:: java
 
     import org.geotools.geometry.jts.JTS;
     import org.geotools.referencing.CRS;
@@ -157,7 +157,7 @@ References:
 * `http://docs.geotools.org/latest/userguide/library/api/jts.html <http://docs.geotools.org/latest/userguide/library/api/jts.html>`_
 
 Commercial Training Materials
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Please contact any of the organisations listed on the main `uDig support
 page <http://udig.refractions.net/users/>`_ for details on uDig training.

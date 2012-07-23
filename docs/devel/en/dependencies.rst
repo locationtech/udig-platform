@@ -1,15 +1,14 @@
 Dependencies
-~~~~~~~~~~~~
+============
 
-uDig makes use of several dependencies (as outlined in the `Platform
-Architecture <Platform%20Architecture.html>`_ page)
+uDig makes use of several dependencies (as outlined in the `Platform Architecture <platform_architecture>` page)
 
 The vast majority of the dependencies in uDig are isolated into a single OSGi plugin
 (net.refractions.udig.libs). The complete list of dependencies is generated on the fly using an ant
 script.
 
 GeoTools
-~~~~~~~~
+--------
 
 Spatial library providing referencing and spatial format support including rendering.
 
@@ -28,7 +27,7 @@ uDig 1.1 uses GeoTools 2.2:
 * `http://svn.osgeo.org/geotools/branches/2.2.x/ <http://svn.osgeo.org/geotools/branches/2.2.x/>`_
 
 JTS Topology Suite
-~~~~~~~~~~~~~~~~~~
+------------------
 
 Provides the implementation of Geometry.
 

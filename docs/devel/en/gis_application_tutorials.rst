@@ -1,5 +1,5 @@
 GIS Application Tutorials
--------------------------
+=========================
 
 The GIS Application is used for the core uDig ideas of map, layers and tools.
 
@@ -13,14 +13,15 @@ The following tutorials are available:
 
 Reference:
 
--  `Disk to Screen Tutorials <Disk%20to%20Screen%20Tutorials.html>`_ tutorials `CSV Renderer
-   Tutorial <CSV%20Renderer%20Tutorial.html>`_ and `Style Tutorial <Style%20Tutorial.html>`_
+* :doc:`disk_to_screen_tutorials`
+* :doc:`csv_renderer_tutorial`
+* :doc:`style_tutorial`
 
 GIS Application
-~~~~~~~~~~~~~~~
+---------------
 
 The GIS Application serves as the basic GIS for your own customisations. It is the second tier of
-the `Platform Architecture <Platform%20Architecture.html>`_:
+the :doc:`Platform Architecture <platform_architecture>`:
 
 -  Custom Application
 -  GIS Application
@@ -29,7 +30,7 @@ the `Platform Architecture <Platform%20Architecture.html>`_:
 The GIS Application is essentially the running uDig application including the GUI.
 
 Data Model
-~~~~~~~~~~
+----------
 
 GIS Application provides a Project-Map-Layer model which you can see in the user interface:
 
@@ -50,13 +51,13 @@ GIS Application provides a Project-Map-Layer model which you can see in the user
    :align: center
    :alt: 
 
-Notes:
+.. note::
 
--  uDig generally uses blackboard for inter component communication; the coordinate tool and
+   uDig generally uses blackboard for inter component communication; the coordinate tool and
    coordinate map graphic is an introduction to this idea
 
 Commands
-~~~~~~~~
+--------
 
 The second bit of fun here is the above data model is not available for you to change directly. In
 earlier copies of uDig we had the data model available for direct modification so you could call
@@ -70,18 +71,18 @@ This resulted in a lot of deadlocks due to these restrictions:
 
 What we have come up with is the use of **Commands**:
 
-::
+.. code-block:: java
 
     map.sendCommandASynch( command );
 
 There are a number of commands available in uDig and you can role your own:
 
-::
+.. code-block:: java
 
     NavCommand goHome = new SetViewportCenterCommand(new Coordinate(x,y), DefaultGeographicCRS.WGS84 );
     map.sendASyncCommand( goHome );
 
 For more information:
 
--  `Commands <Commands.html>`_ (Developers Guide)
+-  :doc:`commands` (Developers Guide)
 

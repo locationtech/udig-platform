@@ -1,5 +1,5 @@
 CSV Renderer Tutorial
----------------------
+=====================
 
 This is an advanced workbook showing how torender a comma separated value file.
 
@@ -15,14 +15,14 @@ This workbook is part of our commercial training materials.
 
 Source code:
 
--  Available in your uDig SDK (import the `source code <Code%20Examples.html>`_ from the plugins
+-  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
    view)
 -  plugin:
    `net.refractions.udig.tutorials.render.csv <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.render.csv>`_
    (github)
 
 Introduction
-~~~~~~~~~~~~
+------------
 
 This workbook brings together all your previous work in uDig with one goal - getting your data on
 the screen.
@@ -37,7 +37,7 @@ are also extension points for making StyleConfigurator (user interfaces that are
 style blackboard).
 
 What to Do Next
-~~~~~~~~~~~~~~~
+---------------
 
 For better understanding of these facilities please try the following:
 
@@ -84,12 +84,12 @@ Hint: You will need to change CSVGeoResource to resolve to a Font (it will be us
 value).
 
 Tips, Tricks and Suggestions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 The following tips have been provided by the udig-devel list; please stop by and introduce yourself.
 
 Commercial Training Materials
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Please contact any of the organisations listed on the main `uDig support
 page <http://udig.refractions.net/users/>`_ for details on uDig training.

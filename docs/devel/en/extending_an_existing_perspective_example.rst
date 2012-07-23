@@ -1,12 +1,11 @@
 Extending An Existing Perspective Example
-#########################################
+=========================================
 
 Extending an existing perspective
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
-This example continues the `View Extension Point
-Example <View%20Extension%20Point%20Example.html>`_, it assumes that a view and a plugin have both
-be created.
+This example continues the `View Extension Point Example <view_extension_point_example>`, it assumes 
+that a view and a plugin have both be created.
 
 Declare Extension in plugin.xml:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -14,7 +13,7 @@ Declare Extension in plugin.xml:
 Edit the plugin.xml file of your plugin. Add a extension to the org.eclipse.ui.perspectiveExtensions
 extension point. The following snippet of xml should be added to the plugin.xml file:
 
-::
+.. code-block:: xml
 
     <extension
              point="org.eclipse.ui.perspectiveExtensions">
@@ -24,7 +23,7 @@ extension point. The following snippet of xml should be added to the plugin.xml 
                    relationship="stack"
                    relative="org.eclipse.ui.views.ResourceNavigator"/>
           </perspectiveExtension>
-       </extension>
+    </extension>
 
 The extensions tab of the plugin.xml editor should now look similar to the following image:
 

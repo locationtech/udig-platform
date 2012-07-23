@@ -1,5 +1,5 @@
 GIS Platform Tutorials
-----------------------
+======================
 
 The GIS platform is used for the catalog and data access.
 
@@ -12,17 +12,17 @@ The following tutorials are available:
    shapefile_export_tutorial
 
 GIS Platform
-~~~~~~~~~~~~
+------------
 
 The GIS Platform serves as the foundation of the uDig application responsible for data access. It is
-the first tier of the `Platform Architecture <Platform%20Architecture.html>`_:
+the first tier of the `Platform Architecture <platform_architecture>`:
 
 -  Custom Application
 -  GIS Application
 -  GIS Platform
 
 Data Model
-~~~~~~~~~~
+----------
 
 The GIS platform works with the concept a catalog which provides access to resource "handles". Here
 is how that breaks down in practice:
@@ -47,7 +47,7 @@ In the above example we have:
 -  **GeoResource** - represents the actual spatial information
 
 Data Access Handles
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 The IService and IGeoResource objects work in a manner similar to a **File** handle. A Java File
 object contains information about how to access the file; and can be used to interact with the file;
@@ -55,7 +55,7 @@ but are not actually the bytes on disk available when you "open" a file and get 
 
 Here is how to use a getResource to access features:
 
-::
+.. code-block:: java
 
     if( geoResource.canResolve( FeatureStore.class ) ){
         FeatureSource featureSource = handle.resolve( FeatureSource.class, monitor );
@@ -72,11 +72,11 @@ Both **IService** and **IGeoResource** implement **IResolve** with the following
    use
 
 Eclipse RCP IAdaptable
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 The Eclipse concept of IAdaptable is similar to the normal example of a Java interface:
 
-::
+.. code-block:: java
 
     if( object instanceof WebMapServer ){
        WebMapServer wms = (WebMapServer) object;
@@ -85,7 +85,7 @@ The Eclipse concept of IAdaptable is similar to the normal example of a Java int
 
 Using IAdaptable this would become:
 
-::
+.. code-block:: java
 
     if( object instanceof IAdaptable){
        IAdaptable adaptee = (IAdaptable) object;
@@ -98,7 +98,7 @@ Using IAdaptable this would become:
 
 Or using IResolve which uses the same general approach:
 
-::
+.. code-block:: java
 
     if( service.canResolve( WebMapServer.class ) ){
         WebMapServer.class wms = handle.resolve( WebMapServer.class, new NullProgressMonitor() );

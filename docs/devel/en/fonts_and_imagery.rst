@@ -177,7 +177,7 @@ how branding works please review the :doc:`Custom Application Tutorial <custom_a
 Application Logo
 ^^^^^^^^^^^^^^^^
 
-icon128.gif
+ icon128.gif
  icon64.gif
  icon48.gif
  icon32.gif

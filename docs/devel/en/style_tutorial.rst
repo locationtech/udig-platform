@@ -15,7 +15,7 @@ This workbook is part of our commercial training materials.
 
 Source code:
 
--  Available in your uDig SDK (import the `source code <Code%20Examples.html>`_ from the plugins
+-  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
    view)
 -  plugin:
    `net.refractions.udig.tutorials.style.color <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.style.color>`_

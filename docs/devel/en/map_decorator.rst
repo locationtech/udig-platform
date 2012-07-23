@@ -1,5 +1,5 @@
 Map Decorator
--------------
+=============
 
 Map decorations are implemented as **MapGraphic** classes that draw onto the map without the need to
 access data. Examples are the scale bar or legend where what is drawn is completely dictated by
@@ -7,10 +7,10 @@ current Map and ViewportModel.
 
 References:
 
--  `Map Decorator Tutorial <Map%20Decorator%20Tutorial.html>`_ Tutorial
+-  :doc:`map_decorator_tutorial`
 
 Finding and Using a Map Decorator
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 All the implementations of MapGraphic are gathered into a single IService; with a IGeoResource
 representing each implementation.
@@ -21,7 +21,7 @@ implementation used.
 
 To use **GridMapGraphic** we can look up its definition:
 
-::
+.. code-block:: xml
 
     <mapGraphic
                 class="net.refractions.udig.mapgraphic.grid.GridMapGraphic"
@@ -31,13 +31,13 @@ To use **GridMapGraphic** we can look up its definition:
 
 So we can create the correct ID to look that up:
 
-::
+.. code-block:: java
 
     ID grid_id = new ID( MapGraphicService.SERVICE_ID, "grid" );
 
 Or if you don't want to add the dependency:
 
-::
+.. code-block:: java
 
     IRepository local = CatalogPlugin.getDefault().getLocal();
 
@@ -46,11 +46,11 @@ Or if you don't want to add the dependency:
     // You can then use this with the AddLayersCommand
 
 Implementing Map Graphic
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 The interface for MapGraphic is straight forward:
 
-::
+.. code-block:: java
 
     public interface MapGraphic {
         /** extension point id **/
@@ -68,10 +68,9 @@ As you can see you are responsible for implementing a single draw method; the Ma
 provides access to the screen, access to the Layer (holding any style settings you require) and the
 Map and MapViewport.
 
-Here is a simple example from the `Map Decorator Tutorial <Map%20Decorator%20Tutorial.html>`_
-tutorial using screen coordinates:
+Here is a simple example from the :doc:`map_decorator_tutorial` tutorial using screen coordinates:
 
-::
+.. code-block:: java
 
     public void draw( MapGraphicContext context ) {
         //initialize the graphics handle
@@ -101,7 +100,7 @@ tutorial using screen coordinates:
 If you are working in real world locations (such as WGS84) you will need to convert those locations
 to screen coordinates:
 
-::
+.. code-block:: java
 
     public void draw(MapGraphicContext context) {
             // initialize the graphics handle

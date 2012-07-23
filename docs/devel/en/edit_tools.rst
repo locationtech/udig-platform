@@ -39,8 +39,7 @@ Use of IProvider
 ^^^^^^^^^^^^^^^^
 
 The **IProvider** interface is really just used to capture the idea of a pointer or proxy to a
-value. It represents a promises that a value of the
- expected type will be available when asked.
+value. It represents a promises that a value of the expected type will be available when asked.
 
 The Edit Tool Framework makes use of:
 
@@ -103,7 +102,7 @@ The EditToolHandler:
    current changes be accepted or when the user presses "Enter" key.
 -  has a locking mechanism so that a group of **EventBehaviours** can lock out other potentially
    valid behaviours.
-    For example a move vertex behaviour (Valid during drag events) may wish to lock the handler so
+   For example a move vertex behaviour (Valid during drag events) may wish to lock the handler so
    that the SelectVertexBox behaviour (Also valid during drag events) is not disturbed.
 -  The current geometry and shape (shell or hole) being edited can be accessed throught the
    **EditToolHandler**

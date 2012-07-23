@@ -1,8 +1,8 @@
-This is a detailed tutorial showing how to make a Custom RCP Application working with preferred zoom
-levels (such as those provided by a tiled data source).
-
 Preferred Zoom Level Application
 ================================
+
+This is a detailed tutorial showing how to make a Custom RCP Application working with preferred zoom
+levels (such as those provided by a tiled data source).
 
 Source Code
 -----------
@@ -15,7 +15,7 @@ This workbook is part of our commercial training materials.
 
 Source code:
 
--  Available in your uDig SDK (import the `source code <Code%20Examples.html>`_ from the plugins
+-  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
    view)
 -  plugin:
 
@@ -23,5 +23,8 @@ Source code:
 
 Introduction
 ------------
+
+.. todo:: 
+   Introduction Preferred Zoom Level Application
 
 TBD

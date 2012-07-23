@@ -1,5 +1,5 @@
 Feature Editor Tutorial
------------------------
+=======================
 
 Description of tutorial focused on goal.
 
@@ -15,14 +15,14 @@ This workbook is part of our commercial training materials.
 
 Source code:
 
--  Available in your uDig SDK (import the `source code <Code%20Examples.html>`_ from the plugins
+-  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
    view)
 -  plugin:
    `net.refractions.udig.tutorials.featureeditor <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.featureeditor>`_
    (github)
 
 Introduction
-~~~~~~~~~~~~
+------------
 
 When creating your own application, a common challenge is making a specific user interface for
 editing your data. Out of the box uDig provides several generic feature editors (the Table view and
@@ -50,7 +50,7 @@ edit tools.
    :alt: 
 
 What to Do Next
-~~~~~~~~~~~~~~~
+---------------
 
 Okay, I am sure you can think of lots of things to try:
 
@@ -64,8 +64,7 @@ MIGLayout
 ^^^^^^^^^
 
 The MIG Layout manager is a very nice trade-off between readability and risk of run time errors. For
-more information on the layout manager visit:
-`http://www.miglayout.com/ <http://www.miglayout.com/>`_
+more information on the layout manager visit: `<http://www.miglayout.com/>`_
 
 In particular the website documentation to get you started and a couple of JavaWebStart demo
 applications.
@@ -78,7 +77,7 @@ opposite trade off - you have real Java data structures to fill in for your layo
 
 Here is a small example to get you started.
 
-::
+.. code-block:: java
 
     parent.setLayout(new GridLayout(2, false));
         // SWT Widgets
@@ -112,7 +111,7 @@ able to list the number of layers, and listen to events to notice when layers ar
 (Hint: Look at EMF Notifier for very low level events beyond what the listeners provide)
 
 Tips, Tricks and Suggestions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 The following tips have been provided by the udig-devel list; please stop by and introduce yourself.
 
@@ -124,7 +123,7 @@ Eclipse includes WindowBuilder which you can use to visually layout your form.
 * `http://www.eclipse.org/windowbuilder/ <http://www.eclipse.org/windowbuilder/>`_
 
 Commercial Training Materials
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Please contact any of the organisations listed on the main `uDig support
 page <http://udig.refractions.net/users/>`_ for details on uDig training.

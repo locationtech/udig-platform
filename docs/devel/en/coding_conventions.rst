@@ -1,5 +1,5 @@
 Coding Conventions
-~~~~~~~~~~~~~~~~~~
+==================
 
 As a strict policy we do our best to **use the tools** to capture our coding conventions; as such we
 make use of FindBugz, Code Templates and Code Formatters for all the small stuff.
@@ -7,7 +7,7 @@ make use of FindBugz, Code Templates and Code Formatters for all the small stuff
 This page covers what is left.
 
 Converting a URL to a File
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 When you need to convert a java.net.URL object to a java.io.File object, you must take care that you
 do not ignore the 'authority' property on the URL object. This contains information about the server
@@ -17,7 +17,7 @@ that the file is located on. On Windows systems, this includes the drive or netw
 The rule is simple: If URL.getAuthority isn't null or empty, then the File should be constructed
 like so:
 
-::
+.. code-block:: java
 
     URL url = ...
     File f = new File("//" + url.getAuthority() + url.getPath());
@@ -26,19 +26,23 @@ It is very important that you always check the authority when converting to a Fi
 
 There is a utility method in URLUtils that will do this for you:
 
-::
+.. code-block:: java
 
     File f = URLUtils.urlToFile(url);
 
 Use it!
 
 Example Checklist for an Import Wizard
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
-The preceding sections on `uDig Guidelines <uDig%20Guidelines.html>`_,\ `Eclipse House
-Rules <Eclipse%20House%20Rules.html>`_ and `User Interface
-Guidelines <User%20Interface%20Guidelines.html>`_ may be a little bit abstract. Here is the results
-of apply those guidelines into an actual Quality Assurance Checklist for the UDIGImportPage.
+The preceding sections on 
+
+* :doc:`uDig Guidelines <udig_guidelines>`, 
+* :doc:`Eclipse House Rules <eclipse_house_rules>` and 
+* :doc:`User Interface Guidelines <user_interface_guidelines>` 
+
+may be a little bit abstract. Here is the results of apply those guidelines into an 
+actual Quality Assurance Checklist for the UDIGImportPage.
 
 Load Data
 
@@ -66,18 +70,18 @@ Help and Internationalization
 -  Restart and run tests with Italian
 
 Wizard Implementation Tips
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 -  Workspace context is based on IDataWizard.getSelection().
--  History is maintained in Dialog settings and is remembered across runs (See `Adding History to
-   Dialogs and Wizards <Adding%20History%20to%20Dialogs%20and%20Wizards.html>`_)
+-  History is maintained in Dialog settings and is remembered across runs 
+   (See :doc:`adding_history_to_dialogs_and_wizards`)
 -  Steal an existing wizban image and modify
 -  jdbc urls are not "valid" urls, see the `jdbc
    trail <http://java.sun.com/docs/books/tutorial/jdbc/basics/connecting.html>`_ and are not usual
    done using DND
 
 Code Checks
-~~~~~~~~~~~
+-----------
 
 -  Turn on all warnings as in environment setup
 -  Classes have at minimum a javadoc comment

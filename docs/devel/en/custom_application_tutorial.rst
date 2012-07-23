@@ -1,21 +1,21 @@
 Custom Application Tutorial
----------------------------
-
-.. _CustomApplication.pdf: http://udig.refractions.net/files/tutorials/CustomApplication.pdf
+===========================
 
 Here is the tutorial everyone has been waiting for; how to make your own custom application.
 
-Reference
+Reference:
 
-* `Rich Client Tutorial Part 1 <http://www.eclipse.org/articles/Article-RCP-1/tutorial1.html>`_
-* `Rich Client Tutorial Part 2 <http://www.eclipse.org/articles/Article-RCP-2/tutorial2.html>`_ \-
+* `Rich Client Tutorial Part 1 <http://www.eclipse.org/articles/Article-RCP-1/tutorial1.html>`_ 
+* `Rich Client Tutorial Part 2 <http://www.eclipse.org/articles/Article-RCP-2/tutorial2.html>`_ - 
   Applications, Workbenches, and Workbench Windows
-* `Rich Client Tutorial Part 3 <http://www.eclipse.org/articles/Article-RCP-3/tutorial3.html>`_ \- 
+* `Rich Client Tutorial Part 3 <http://www.eclipse.org/articles/Article-RCP-3/tutorial3.html>`_ - 
   Views, Menus and Toolbars
 
+.. _CustomApplication.pdf: http://udig.refractions.net/files/tutorials/CustomApplication.pdf
 
 .. image:: /images/custom_application_tutorial/CustomAppWorkbook.png
    :target: CustomApplication.pdf_
+
 
 This workbook is part of our public training materials:
 
@@ -23,7 +23,7 @@ This workbook is part of our public training materials:
 
 Downloads:
 
-* :download:`CustomApplication/rcp_branding.zip` Images and Icons used in the Tutorial
+* :download:`rcp_branding.zip <CustomApplication/rcp_branding.zip>` Images and Icons used in the Tutorial
 
 Source code:
 
@@ -34,7 +34,7 @@ Source code:
    `net.refractions.udig\_tutorials.custom-feature <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig_tutorials.custom-feature>`_ (github)
 
 Introduction
-~~~~~~~~~~~~
+------------
 
 In this workbook we are going to create a custom application based on uDig GIS platform.
 
@@ -56,7 +56,7 @@ next section** to ensure you understand how applications, action sets, products 
 used to assemble your application for distribution.
 
 What to do Next
-~~~~~~~~~~~~~~~
+---------------
 
 Here are some additional challenges for you to try. Each of these ideas results in a more
 professional looking application.
@@ -89,7 +89,8 @@ Try a Plug-in Search with the following parameters.
 -  Limit To: References
 -  External Scope: Enabled Plug-ins
 -  Scope: Workspace
-    |image1|
+
+.. image:: /images/custom_application_tutorial/CustomApplicationSearch.png
 
 Control Menu contents with a Perspective Extension
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -130,7 +131,7 @@ Build from the Command Line (Advanced)
 Advanced: Perform a build from the command line, eclipse help has the details.
 
 Tips and Tricks
-~~~~~~~~~~~~~~~
+---------------
 
 The following tips and tricks and suggestions have been collected from the udig-devel email list;
 drop by and introduce yourself.
@@ -150,14 +151,14 @@ Here is the key message; you can make a feature that **does not include everythi
 
 Here is one way to identify the problem:
 
-1. Delete your Run Configuration
- 2. Launch the application from your product (this will create a brand new run configuration using
-only the plugins mentioned by your product and feature files)
- 3. Watch it fail
- 4. Open up the run configuration; and go to the plugin tab; and **verify** the plugins. This will
-go through all the plugins and check that they have what they need to run.
- 5. Navigate through the list of plugins that cannot start; and see what plugin they are missing.
- 6. Add those missing plugins to a feature so they are included in your run configuration
+#. Delete your Run Configuration
+#. Launch the application from your product (this will create a brand new run configuration using 
+   only the plugins mentioned by your product and feature files)
+#. Watch it fail
+#. Open up the run configuration; and go to the plugin tab; and **verify** the plugins. This will 
+   go through all the plugins and check that they have what they need to run.
+#. Navigate through the list of plugins that cannot start; and see what plugin they are missing.
+#. Add those missing plugins to a feature so they are included in your run configuration
 
 Aside: If you just hit "Add Required Plugins" you will be able to run right away; but that won't
 help you when you go to export your application for release.
@@ -198,4 +199,3 @@ For uDig 1.1 developers the previous version of this document is available [
 
 * `http://udig.refractions.net/tutorials/rcp\_walkthrough.pdf <http://udig.refractions.net/tutorials/rcp_walkthrough.pdf>`_
 
-.. |image1| image:: /images/custom_application_tutorial/CustomApplicationSearch.png

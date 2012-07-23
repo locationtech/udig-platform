@@ -1,22 +1,22 @@
 Debugging Tips
-~~~~~~~~~~~~~~
+==============
 
 The following page contains some debugging tips you can use to explore udig in action:
 
 What is Going on?
-^^^^^^^^^^^^^^^^^
+-----------------
 
 Console Log
-'''''''''''
+^^^^^^^^^^^
 
-It is mentioned in the initial `SDK Quickstart <SDK%20Quickstart.html>`_ but it is worth repeating.
+It is mentioned in the initial :doc:`SDK Quickstart <SDKQuickstart/SDKQuickstart>` but it is worth repeating.
 When you go to run uDig from inside eclipse switch to the argument tab and add a "-consolelog"
 argument.
 
 Use the Selection View
-''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^
 
-The `Workbench Selection Tutorial <Workbench%20Selection%20Tutorial.html>`_ contributes a view
+The :doc:`Workbench Selection Tutorial <workbench_selection_tutorial>` contributes a view
 allowing you to watch what uDig is doing with selection as it is running. You can quickly include
 this plugin when running uDig from Eclipse in order to have an extra tool to debug uDig at runtime.
 
@@ -24,7 +24,7 @@ There are many similar eclipse spy programs around on the internet; some watch e
 tell you who is being slow for example.
 
 Tracing Specific Plugins
-''''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 You can turn on tracing for specific plugins; so if you are having trouble with WMS turn on tracing
 and see what that plugin is doing. The same goes for WFS or Shapefile support. If you are having
@@ -37,10 +37,10 @@ workspace rather than using the fancy eclipse Run dialog):
 * `Tracing WMS Calls <http://udig.refractions.net/confluence//display/EN/Tracing+WMS+Calls>`_
 
 Memory
-^^^^^^
+------
 
 Heap Monitor
-''''''''''''
+^^^^^^^^^^^^
 
 You can turn on the heap monitor widget as a tracing option; this is great trick if you are worried
 about memory use(and the ability to poke the garbage collector).
@@ -62,19 +62,19 @@ A couple of things to watch out for:
    running out of memory is not a sudden - but a slow and painful one.
 
 JAI Cache Settings
-''''''''''''''''''
+^^^^^^^^^^^^^^^^^^
 
 Right now we have cache settings for the entire application; we need a preference page to allow you
 to fiddle with the settings for the entire app. Suffice to say that tuning these parameters can have
 a major impact on the success and speed of raster based operations and rendering.
 
 Using the Debugger
-^^^^^^^^^^^^^^^^^^
+------------------
 
 There are many tips to using the debugger; here is some quick advice.
 
 Use binary search with the debugger
-'''''''''''''''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you are having a problem (say dragging and dropping a shapefile) use the debugger like binary
 search; pick a step halfway between the start of the action (dropping a file) and the end (an

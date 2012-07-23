@@ -1,8 +1,8 @@
 Plugin Setup
-~~~~~~~~~~~~
+============
 
-Now that you have created a plug-in it is time to play the set up game.
- It may be helpfull to review the `Common Plugin Files <Common%20Plugin%20Files.html>`_.
+Now that you have created a plug-in it is time to play the set up game. It may be helpfull to review 
+the :doc:`Common Plugin Files <common_plugin_files>`
 
 We are going to be setting up the following:
 
@@ -19,8 +19,7 @@ Setting up plugin.xml
 The plugin.xml file is known as the manifest and provides all the hooks used to tie together the
 Eclipse framework.
 
-Some of these entries were filled out for you during `Creating a
-Plugin <Creating%20a%20Plugin.html>`_.
+Some of these entries were filled out for you during :doc:`Creating a Plugin <creating_a_plugin>`.
 
 -  id: id for the plugin, each plug-in gets its own package tree to prevent source code conflict
 -  name: externalized to plugin.properties, display name for Plug-in
@@ -32,15 +31,14 @@ Plugin <Creating%20a%20Plugin.html>`_.
 
    -  note import is based on **plugin**
 
--  extension: associates id with well known `What is an Extension
-   Point <What%20is%20an%20Extension%20Point.html>`_ with classes in this plug-in
+-  extension: associates id with well known :doc:`What is an Extension Point <what_is_an_extension_point>` with classes in this plug-in
 
    -  try and make **id** match the class
    -  top level **id** entries have the plugin "id" prepended (like "org.geotools.udig.ui""."
       "UDigApplication"
    -  nested **id** entries need to be explicit (like "org.geotools.udig.ui.UDigPerspective")
 
-::
+   .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <?eclipse version="3.0"?>
@@ -138,7 +136,7 @@ Set up proper classpath:
 
 #. Add the following to your plugin.xml:
 
-   ::
+   .. code-block:: xml
 
        <requires>
           <import plugin="org.eclipse.core.runtime.compatibility"/>

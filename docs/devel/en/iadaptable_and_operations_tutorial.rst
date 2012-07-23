@@ -16,7 +16,7 @@ Developers Guide:
 
 Source code:
 
--  Available in your uDig SDK (import the `source code <Code%20Examples.html>`_ from the plugins
+-  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
    view)
 -  plugin:
    `net.refractions.udig.tutorials.urladapter <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.urladapter>`_
@@ -28,8 +28,7 @@ Introduction
 **IAdaptable**
 
 IAdaptable is the easies example of the "extensible interface" pattern. This is a core concepts for
-Eclipse RCP development also covered in the `workbench selection
-tutorial <Workbench%20Selection%20Tutorial.html>`_.
+Eclipse RCP development also covered in the :doc:`workbench_selection_tutorial`.
 
 It is a straight forward combination of two patterns you may already be familiar with:
 

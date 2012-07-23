@@ -3,19 +3,22 @@ Tool Plugin Tutorial
 
 This tutorial shows how to create a new plug-in that adds a distance tool to the uDig application.
 
-`|image0| <http://udig.refractions.net/files/tutorials/ToolPluginTutorial.pdf>`_
+.. _ToolPluginTutorial.pdf: http://udig.refractions.net/files/tutorials/ToolPluginTutorial.pdf
+
+.. image:: /images/tool_plugin_tutorial/ToolPluginWorkbook.png
+   :target: ToolPluginTutorial.pdf_
 
 This workbook is part of our public training materials:
 
-* `http://udig.refractions.net/files/tutorials/ToolPluginTutorial.pdf <http://udig.refractions.net/files/tutorials/ToolPluginTutorial.pdf>`_
+* ToolPluginTutorial.pdf_
 
 Downloads:
 
-* `http://udig.refractions.net/tutorials/distance\_icons.zip <http://udig.refractions.net/tutorials/distance_icons.zip>`_
+* :download:`distance_icons.zip`
 
 Source code:
 
--  Available in your uDig SDK (import the `source code <Code%20Examples.html>`_ from the plugins
+-  Available in your uDig SDK (import the :doc:`source code <code_examples>` from the plugins
    view)
 -  plugin:
    `net.refractions.udig.tutorials.distancetool <https://github.com/uDig/udig-platform/tree/master/tutorials/net.refractions.udig.tutorials.distancetool>`_
@@ -139,7 +142,8 @@ Log Distance
 With the above example of how to use **.option** file in mind, output your distance results to the
 console log.
 
-Hint: This information is currently being displayed in the status bar (eg. 3420 km)
+.. hint::
+   This information is currently being displayed in the status bar (eg. 3420 km)
 
 Tool Category Keyboard Shortcuts (Advanced)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -149,7 +153,8 @@ cycle through all available "Information" tools.
 
 Try hooking up your tool category to a keyboard binding.
 
-Hint: Study and existing example.
+.. hint:: 
+   Study and existing example.
 
 Tips, Tricks and Suggestions
 ============================
@@ -172,4 +177,3 @@ Use the debugger
 Putting break points into a line of code you are interested in - is a great way to learn how it
 works.
 
-.. |image0| image:: /images/tool_plugin_tutorial/ToolPluginWorkbook.png
