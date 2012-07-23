@@ -43,6 +43,7 @@ import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.command.provider.FIDFeatureProvider;
 import net.refractions.udig.project.internal.commands.edit.SetAttributeCommand;
 import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.tool.info.InfoPlugin;
 import net.refractions.udig.tool.info.internal.Messages;
 import net.refractions.udig.ui.PlatformGIS;
 
@@ -938,7 +939,7 @@ public class DocumentView extends ViewPart {
      * The label provider for the document item tree viewer in the {@link DocumentView}.
      */
     private class DocumentViewLabelProvider extends LabelProvider {
-
+        
         public DocumentViewLabelProvider() {
             // Do nothing
         }
@@ -957,7 +958,7 @@ public class DocumentView extends ViewPart {
 
         @Override
         public Image getImage(Object obj) {
-            
+
             if (obj instanceof IDocumentFolder) {
                 return PlatformUI.getWorkbench().getSharedImages()
                         .getImage(ISharedImages.IMG_OBJ_FOLDER);
@@ -965,10 +966,9 @@ public class DocumentView extends ViewPart {
                 return PlatformUI.getWorkbench().getSharedImages()
                         .getImage(ISharedImages.IMG_OBJ_FILE);
             } else if (obj instanceof URLDocument) {
-                return PlatformUI.getWorkbench().getSharedImages()
-                        .getImage(ISharedImages.IMG_OBJ_ELEMENT);
+                return InfoPlugin.getDefault().getImageRegistry().get(InfoPlugin.IMG_OBJ_LINK);
             }
-            
+
             return PlatformUI.getWorkbench().getSharedImages()
                     .getImage(ISharedImages.IMG_OBJ_ELEMENT);
         }
