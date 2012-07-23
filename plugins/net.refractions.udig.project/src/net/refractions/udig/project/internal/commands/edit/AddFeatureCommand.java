@@ -19,9 +19,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.refractions.udig.core.internal.FeatureUtils;
+import net.refractions.udig.project.EditFeature;
+import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
+import net.refractions.udig.project.interceptor.InterceptorSupport;
 import net.refractions.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -95,6 +98,9 @@ public class AddFeatureCommand extends AbstractCommand implements UndoableMapCom
             fid = featureId.getID();
             break;
         }
+        IEditManager editManager = getMap().getEditManager();
+        EditFeature editFeature = editManager.toEditFeature( feature, layer );
+        InterceptorSupport.runFeaturePreCreateInterceptors(editFeature);
     }
 
     public SimpleFeature getNewFeature() throws IOException {

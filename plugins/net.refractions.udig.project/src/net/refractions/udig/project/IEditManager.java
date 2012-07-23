@@ -113,4 +113,14 @@ public interface IEditManager {
      * @return
      */
     public boolean containsListener( IEditManagerListener listener);
+    
+    /**
+     * Convert to an EditFeature managed by this edit manager. Any changes to the EditFeature
+     * will be applied before a commit is issued.
+     * 
+     * @param feature
+     * @param layer Optional layer, allowing the resulting EditFeature to adapt to the associated Layer
+     * @return EditFeature managed by this EditManager
+     */
+    public EditFeature toEditFeature(SimpleFeature feature, ILayer layer);
 }

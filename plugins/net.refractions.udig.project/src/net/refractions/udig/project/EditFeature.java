@@ -27,6 +27,7 @@ import java.util.Set;
 
 import net.refractions.udig.project.internal.commands.edit.SetAttributeCommand;
 import net.refractions.udig.project.internal.commands.edit.SetAttributesCommand;
+import net.refractions.udig.project.internal.impl.EditManagerImpl;
 import net.refractions.udig.project.listener.EditFeatureListener;
 import net.refractions.udig.project.listener.EditFeatureListenerList;
 import net.refractions.udig.project.listener.EditFeatureStateChangeEvent;
@@ -284,14 +285,13 @@ public class EditFeature extends AdaptableFeature {
      * @param evaluationObject the layer that contains the feature.
      */
     public EditFeature(IEditManager manager) {
-        super(manager.getEditFeature(),manager.getEditLayer() );
-        this.manager = manager;
+        this(manager, manager.getEditFeature(),manager.getEditLayer() );
     }
-
+    
     public EditFeature(IEditManager manager, SimpleFeature feature) {
-        super(feature);
-        this.manager = manager;
+        this(manager,feature,null);
     }
+    
     public EditFeature(IEditManager manager, SimpleFeature feature, ILayer layer) {
         super(feature, layer);
         this.manager = manager;

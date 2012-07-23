@@ -73,14 +73,7 @@ public class DeleteFeatureCommand extends AbstractEditCommand implements Undoabl
             return false; // most of been canceled
         }
         oldLayer = layerProvider.get(new SubProgressMonitor(monitor, 1));
-        
-        EditFeature editFeature;
-        if( feature instanceof EditFeature ){
-            editFeature = (EditFeature) feature;
-        }
-        else {
-            editFeature = new EditFeature( map.getEditManager(), feature, oldLayer );
-        }
+        EditFeature editFeature = map.getEditManagerInternal().toEditFeature(feature,oldLayer);
         InterceptorSupport.runFeaturePreDeleteInterceprtors( editFeature );
         if( editFeature.hasError()){
             // unable to accept this editFeature (would be nice to pop open a dialog

@@ -258,7 +258,7 @@ public class AcceptChangesBehaviour implements Behaviour {
                     
                     IEditManager editManager = handler.getEditLayer().getMap().getEditManager();
                     EditFeature editFeature = new EditFeature( editManager, feature );
-                    InterceptorSupport.runFeatureCreationInterceptors(editFeature);
+                    InterceptorSupport.runFeaturePreCreateInterceptors(editFeature);
                     
                     // FeaturePanelProcessor panels = ProjectUIPlugin.getDefault().getFeaturePanelProcessor();
                     // List<FeaturePanelEntry> popup = panels.search(schema);
