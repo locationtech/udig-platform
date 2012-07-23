@@ -66,6 +66,7 @@ public class BasicHotlinkTest {
             service = null;
         }
     }
+    
     @Test
     public void testBasicResolveAdaptorFactory() throws Exception {
         IResolveAdapterFactory adaptorFactory = new BasicHotlinkResolveFactory();

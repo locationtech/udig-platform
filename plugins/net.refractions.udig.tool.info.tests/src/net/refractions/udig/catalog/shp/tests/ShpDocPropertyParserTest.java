@@ -20,7 +20,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.DocumentFactory;
 import net.refractions.udig.catalog.FileDocument;
 import net.refractions.udig.catalog.IDocument;
@@ -34,22 +33,7 @@ import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
  * @author Naz Chan
  */
 @SuppressWarnings("nls")
-public class ShpDocPropertyParserTest extends TestCase {
-
-    private File file;
-    private URL url;
-    
-    private static final String DIRECTORY = "internal\\";
-    private static final String SHAPEFILE = "countries.shp";
-    private static final String FILE = "attachment1.txt";
-    private static final String WEB = "http://www.google.com";
-    
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        file = new File(DIRECTORY + SHAPEFILE);
-        url = file.toURI().toURL();
-    }
+public class ShpDocPropertyParserTest extends AbstractShpDocTest {
     
     public void testHasProperties() throws MalformedURLException {
         
@@ -66,45 +50,43 @@ public class ShpDocPropertyParserTest extends TestCase {
         
         final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
         
-        final FileDocument fileDoc = new FileDocument(new File(DIRECTORY + FILE));
-        assertEquals("Link is not expected.", FILE, parser.getLinkValue(fileDoc));
+        final FileDocument fileDoc = new FileDocument(new File(DIRECTORY + FILE1));
+        assertEquals("Link is not expected.", FILE1, parser.getLinkValue(fileDoc));
         
-        final URLDocument urlDoc = new URLDocument(new URL(WEB));
-        assertEquals("Link is not expected.", WEB, parser.getLinkValue(urlDoc));
+        final URLDocument urlDoc = new URLDocument(new URL(WEB1));
+        assertEquals("Link is not expected.", WEB1, parser.getLinkValue(urlDoc));
         
     }
     
     public void testGetFileLinkValue() {
         
         final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
-        final File file = new File(DIRECTORY + FILE);
-        assertEquals("Link is not expected.", FILE, parser.getFileLinkValue(file));
+        final File file = new File(DIRECTORY + FILE1);
+        assertEquals("Link is not expected.", FILE1, parser.getFileLinkValue(file));
         
     }
     
     public void testGetUrlLinkValue() throws MalformedURLException {
         
         final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
-        final URL url = new URL(WEB);
-        assertEquals("Link is not expected.", WEB, parser.getUrlLinkValue(url));
+        final URL url = new URL(WEB1);
+        assertEquals("Link is not expected.", WEB1, parser.getUrlLinkValue(url));
         
     }
     
     public void testGetFeatureLinkInfo() {
         
-        //Country|CNTRY_NAME|FILE||Name|LONG_NAME|WEB
-        
         final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
         
-        final LinkInfo info1 = parser.getFeatureLinkInfo("CNTRY_NAME");
-        assertEquals("Label is not expected.", "Country", info1.getLabel());
-        assertEquals("Info is not expected.", "CNTRY_NAME", info1.getInfo());
-        assertEquals("Type is not expected.", IDocument.Type.FILE, info1.getType());
+        final LinkInfo info1 = parser.getFeatureLinkInfo(FILE_ATTR);
+        assertEquals("Label is not expected.", FILE_ATTR_LBL, info1.getLabel());
+        assertEquals("Info is not expected.", FILE_ATTR, info1.getInfo());
+        assertEquals("Type is not expected.", FILE_ATTR_TYPE, info1.getType());
         
-        final LinkInfo info2 = parser.getFeatureLinkInfo("LONG_NAME");
-        assertEquals("Label is not expected.", "Name", info2.getLabel());
-        assertEquals("Info is not expected.", "LONG_NAME", info2.getInfo());
-        assertEquals("Type is not expected.", IDocument.Type.WEB, info2.getType());
+        final LinkInfo info2 = parser.getFeatureLinkInfo(LINK_ATTR);
+        assertEquals("Label is not expected.", LINK_ATTR_LBL, info2.getLabel());
+        assertEquals("Info is not expected.", LINK_ATTR, info2.getInfo());
+        assertEquals("Type is not expected.", LINK_ATTR_TYPE, info2.getType());
         
     }
     
@@ -113,8 +95,8 @@ public class ShpDocPropertyParserTest extends TestCase {
         final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
         
         final List<IDocument> oldDocs = new ArrayList<IDocument>();
-        oldDocs.add(new FileDocument(new File(DIRECTORY + FILE)));
-        oldDocs.add(new URLDocument(new URL(WEB)));
+        oldDocs.add(new FileDocument(new File(DIRECTORY + FILE1)));
+        oldDocs.add(new URLDocument(new URL(WEB1)));
         
         parser.setShapeAttachments(oldDocs);
         
@@ -129,14 +111,14 @@ public class ShpDocPropertyParserTest extends TestCase {
             if (doc instanceof FileDocument) {
                 fileCnt++;
                 final FileDocument fileDoc = (FileDocument) doc;
-                final File oldFile =  new File(DIRECTORY + FILE);
+                final File oldFile =  new File(DIRECTORY + FILE1);
                 final File newFile =  fileDoc.getFile();
                 assertEquals("File directory is not expected", oldFile.getAbsolutePath(),
                         newFile.getAbsolutePath());
             } else if (doc instanceof URLDocument) {
                 urlCnt++;
                 final URLDocument urlDoc = (URLDocument) doc;
-                final URL oldUrl = new URL(WEB);
+                final URL oldUrl = new URL(WEB1);
                 final URL newUrl = urlDoc.getUrl();
                 assertEquals("URL is not expected", oldUrl.toString(),
                         newUrl.toString());
@@ -153,8 +135,8 @@ public class ShpDocPropertyParserTest extends TestCase {
         final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
         
         final List<IDocument> oldDocs = new ArrayList<IDocument>();
-        oldDocs.add(new FileDocument(new File(DIRECTORY + FILE)));
-        oldDocs.add(new URLDocument(new URL(WEB)));
+        oldDocs.add(new FileDocument(new File(DIRECTORY + FILE1)));
+        oldDocs.add(new URLDocument(new URL(WEB1)));
         
         final String featureId = "dummy.1";
         
@@ -171,14 +153,14 @@ public class ShpDocPropertyParserTest extends TestCase {
             if (doc instanceof FileDocument) {
                 fileCnt++;
                 final FileDocument fileDoc = (FileDocument) doc;
-                final File oldFile =  new File(DIRECTORY + FILE);
+                final File oldFile =  new File(DIRECTORY + FILE1);
                 final File newFile =  fileDoc.getFile();
                 assertEquals("File directory is not expected", oldFile.getAbsolutePath(),
                         newFile.getAbsolutePath());
             } else if (doc instanceof URLDocument) {
                 urlCnt++;
                 final URLDocument urlDoc = (URLDocument) doc;
-                final URL oldUrl = new URL(WEB);
+                final URL oldUrl = new URL(WEB1);
                 final URL newUrl = urlDoc.getUrl();
                 assertEquals("URL is not expected", oldUrl.toString(),
                         newUrl.toString());

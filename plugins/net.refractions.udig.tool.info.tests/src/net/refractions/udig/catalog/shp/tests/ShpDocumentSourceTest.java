@@ -14,16 +14,13 @@
  */
 package net.refractions.udig.catalog.shp.tests;
 
-import java.io.File;
 import java.io.Serializable;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.DocumentFactory;
 import net.refractions.udig.catalog.FileDocument;
 import net.refractions.udig.catalog.IDocument;
@@ -41,37 +38,13 @@ import org.geotools.data.shapefile.ShapefileDataStoreFactory;
  * @author Naz Chan
  */
 @SuppressWarnings("nls")
-public class ShpDocumentSourceTest extends TestCase {
+public class ShpDocumentSourceTest extends AbstractShpDocTest {
 
     private ShpDocumentSource source;
     
-    private File file;
-    private URL url;
-    
-    private File file1;
-    private File file2;
-    
-    private URL url1;
-    private URL url2;
-    
-    private static final String DIRECTORY = "internal\\";
-    private static final String SHAPEFILE = "countries.shp";
-    private static final String FILE1 = "attachment1.txt";
-    private static final String FILE2 = "attachment2.txt";
-    private static final String WEB1 = "http://www.google.com";
-    private static final String WEB2 = "http://www.yahoo.com";
-    
     @Override
-    protected void setUp() throws Exception {
-        
-        file = new File(DIRECTORY + SHAPEFILE);
-        url = file.toURI().toURL();
-        
-        file1 = new File(DIRECTORY + FILE1);
-        file2 = new File(DIRECTORY + FILE2);
-        
-        url1 = new URL(WEB1);
-        url2 = new URL(WEB2);
+    protected void setUpInternal() {
+        super.setUpInternal();
         
         final List<IDocument> docs = new ArrayList<IDocument>();
         docs.add(new FileDocument(file1));
