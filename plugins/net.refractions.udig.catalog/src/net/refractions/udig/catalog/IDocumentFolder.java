@@ -15,7 +15,6 @@
 package net.refractions.udig.catalog;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Document folder interface.
@@ -23,13 +22,6 @@ import java.util.UUID;
  * @author Naz Chan 
  */
 public interface IDocumentFolder extends IDocumentItem {
-
-    /**
-     * Gets the ID of the document.
-     * 
-     * @return ID
-     */
-    public UUID getID();
     
     /**
      * Gets the document source.
@@ -37,27 +29,7 @@ public interface IDocumentFolder extends IDocumentItem {
      * @return document source
      */
     public IAbstractDocumentSource getSource();
-    
-    /**
-     * Gets the contents of the folder
-     * 
-     * @return contents of the folder
-     */
-    public List<IDocumentItem> getItems();
-    
-    /**
-     * Gets the document contents of the folder
-     * @return document contents
-     */
-    public List<IDocument> getDocuments();
-    
-    /**
-     * Sets the documents of the folder
-     * 
-     * @param docs
-     */
-    public void setDocuments(List<IDocument> docs);
-    
+
     /**
      * Checks if the document exists in the folder
      * 
@@ -65,47 +37,97 @@ public interface IDocumentFolder extends IDocumentItem {
      * @return true if exists, otherwise false
      */
     public boolean contains(IDocument doc);
-    
+
+    /**
+     * Checks if the folder exists in the folder
+     * 
+     * @param folder
+     * @return true if exists, otherwise false
+     */
+    public boolean contains(IDocumentFolder folder);
+
+    /**
+     * Gets the contents of the folder
+     * 
+     * @return contents of the folder
+     */
+    public List<Object> getItems();
+
+    /**
+     * Gets the document items of the folder
+     * 
+     * @return documents
+     */
+    public List<IDocument> getDocuments();
+
+    /**
+     * Gets the folder items of the folder
+     * 
+     * @return folders
+     */
+    public List<IDocumentFolder> getFolders();
+
+    /**
+     * Sets the documents of the folder
+     * 
+     * @param docs
+     */
+    public void setDocuments(List<IDocument> docs);
+
+    /**
+     * Sets the folders of the folder.
+     * 
+     * @param folders
+     */
+    public void setFolders(List<IDocumentFolder> folders);
+
     /**
      * Adds the document item to the folder.
      * 
      * @param item
      */
-    public void addItem(IDocumentItem item);
-    
+    public void addDocument(IDocument doc);
+
     /**
-     * Adds the document items to the folder.
+     * Adds folder.
      * 
-     * @param items
+     * @param folder
      */
-    public void addItems(List<IDocumentItem> items);
-    
+    public void addFolder(IDocumentFolder folder);
+
     /**
      * Adds the documents to the folder.
      * 
      * @param docs
      */
     public void addDocuments(List<IDocument> docs);
-    
+
     /**
      * Adds the document folders to the document.
      * 
      * @param folders
      */
     public void addFolders(List<IDocumentFolder> folders);
-    
+
     /**
      * Removes the document item from the folder.
      * 
      * @param item
      */
-    public void removeItem(IDocumentItem item);
+    public void removeDocument(IDocument doc);
     
+    /**
+     * Removes the documents from teh folder.
+     * 
+     * @param docs
+     */
+    public void removeDocuments(List<IDocument> docs);
+
     /**
      * Removed the documents from the folder.
      * 
      * @param docs
      */
-    public void removeDocuments(List<IDocument> docs);
+    public void removeFolder(IDocumentFolder folder);
     
 }

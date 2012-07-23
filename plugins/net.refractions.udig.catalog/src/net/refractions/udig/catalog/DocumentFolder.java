@@ -16,7 +16,6 @@ package net.refractions.udig.catalog;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * This is the document folder implementation.
@@ -25,100 +24,94 @@ import java.util.UUID;
  */
 public class DocumentFolder extends AbstractDocumentItem implements IDocumentFolder {
 
-    private UUID id;
     private IAbstractDocumentSource source;
     
-    private List<IDocumentItem> items;
+    private List<IDocumentFolder> folders;
+    private List<IDocument> docs;
     
     public DocumentFolder(String name, IAbstractDocumentSource source) {
-        setName(name);
+        this.name = name;
         this.source = source;
-        this.items = new ArrayList<IDocumentItem>();
+        this.folders = new ArrayList<IDocumentFolder>();
+        this.docs = new ArrayList<IDocument>();
     }
-    
-    @Override
-    public UUID getID() {
-        return id;
-    }
-    
-    public void setID(UUID id) {
-        this.id = id;
-    }
-    
+
     @Override
     public IAbstractDocumentSource getSource() {
         return source;
     }
 
     @Override
-    public List<IDocumentItem> getItems() {
+    public boolean contains(IDocument doc) {
+        return docs.contains(doc);
+    }
+
+    @Override
+    public boolean contains(IDocumentFolder folder) {
+        return folders.contains(folder);
+    }
+
+    @Override
+    public List<Object> getItems() {
+        final List<Object> items = new ArrayList<Object>();
+        items.addAll(folders);
+        items.addAll(docs);
         return items;
     }
 
     @Override
     public List<IDocument> getDocuments() {
-        final List<IDocument> docs = new ArrayList<IDocument>();
-        for (IDocumentItem item : items) {
-            if (item instanceof IDocument) {
-                docs.add((IDocument) item);
-            }
-        }
         return docs;
     }
-    
+
+    @Override
+    public List<IDocumentFolder> getFolders() {
+        return folders;
+    }
+
     @Override
     public void setDocuments(List<IDocument> docs) {
-        items.clear();
-        addDocuments(docs);
+        this.docs = docs;
     }
-    
+
     @Override
-    public boolean contains(IDocument doc) {
-        return items.contains(doc);
+    public void setFolders(List<IDocumentFolder> folders) {
+        this.folders = folders;
     }
-    
+
     @Override
-    public void addItem(IDocumentItem item) {
-        if (item != null) {
-            items.add(item);    
-        }
+    public void addDocument(IDocument doc) {
+        this.docs.add(doc);
     }
-    
+
     @Override
-    public void addItems(List<IDocumentItem> items) {
-        if (items != null && items.size() > 0) {
-            for (IDocumentItem item : items) {
-                items.add(item);
-            }    
-        }
+    public void addFolder(IDocumentFolder folder) {
+        this.folders.add(folder);
     }
-    
+
     @Override
     public void addDocuments(List<IDocument> docs) {
-        if (docs != null && docs.size() > 0) {
-            for (IDocument doc : docs) {
-                items.add(doc);
-            }    
-        }
+        this.docs.addAll(docs);
+    }
+
+    @Override
+    public void addFolders(List<IDocumentFolder> folders) {
+        this.folders.addAll(folders);
+    }
+
+    @Override
+    public void removeDocument(IDocument doc) {
+        this.docs.remove(doc);
     }
     
     @Override
-    public void addFolders(List<IDocumentFolder> folders) {
-        if (folders != null && folders.size() > 0) {
-            for (IDocumentFolder folder : folders) {
-                items.add(folder);
-            }            
-        }
-    }
-
-    @Override
-    public void removeItem(IDocumentItem item) {
-        items.remove(item);
-    }
-
-    @Override
     public void removeDocuments(List<IDocument> docs) {
-        items.removeAll(docs);
+        this.docs.removeAll(docs);
+    }
+
+    @Override
+    public void removeFolder(IDocumentFolder folder) {
+        this.folders.remove(folder);
     }
     
 }

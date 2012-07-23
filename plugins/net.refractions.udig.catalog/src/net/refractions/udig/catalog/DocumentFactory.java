@@ -23,7 +23,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -137,9 +136,8 @@ public class DocumentFactory {
      * @param name
      * @return document folder
      */
-    public IDocumentFolder createFolder(String name) {
+    public static IDocumentFolder createFolder(String name, IAbstractDocumentSource source) {
         final DocumentFolder folder = new DocumentFolder(name, source); 
-        folder.setID(UUID.randomUUID());
         return  folder;
     }
     

@@ -22,8 +22,8 @@ package net.refractions.udig.catalog;
  */
 public abstract class AbstractDocumentItem implements IDocumentItem {
     
-    private String name;
-    private String description;
+    protected String name;
+    protected String description;
     
     @Override
     public String getName() {

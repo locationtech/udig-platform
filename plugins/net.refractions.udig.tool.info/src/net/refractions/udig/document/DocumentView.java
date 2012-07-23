@@ -26,9 +26,12 @@ import java.util.List;
 import java.util.Map;
 
 import net.miginfocom.swt.MigLayout;
+import net.refractions.udig.catalog.DocumentFactory;
 import net.refractions.udig.catalog.FileDocument;
 import net.refractions.udig.catalog.IAbstractDocumentSource;
 import net.refractions.udig.catalog.IDocument;
+import net.refractions.udig.catalog.IDocumentFolder;
+import net.refractions.udig.catalog.IDocumentItem;
 import net.refractions.udig.catalog.IDocumentSource;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IHotlink;
@@ -250,10 +253,10 @@ public class DocumentView extends ViewPart {
         if (viewerSelection != null) {
             if (viewerSelection.size() == 1) {
                 final Object firstObj = viewerSelection.getFirstElement();
-                if (firstObj instanceof IDocFolder) {
+                if (firstObj instanceof IDocumentFolder) {
                     openButton.setEnabled(false);
                     removeButton.setEnabled(false);
-                    final IDocFolder folder = (IDocFolder) firstObj;
+                    final IDocumentFolder folder = (IDocumentFolder) firstObj;
                     final boolean isDocSource = (folder.getSource() instanceof IDocumentSource);
                     attachButton.setEnabled(isDocSource);
                     linkButton.setEnabled(isDocSource);
@@ -277,7 +280,7 @@ public class DocumentView extends ViewPart {
             } else if (viewerSelection.size() > 1) {
                 int count = 0;
                 for (Object obj : viewerSelection.toList()) {
-                    if (obj instanceof IDocFolder) {
+                    if (obj instanceof IDocumentFolder) {
                         count++;
                     }
                 }
@@ -420,9 +423,9 @@ public class DocumentView extends ViewPart {
      * 
      * @return document items
      */
-    private List<Object> getItems() {
+    private List<IDocumentItem> getItems() {
         
-        final List<Object> items = new ArrayList<Object>();
+        final List<IDocumentItem> items = new ArrayList<IDocumentItem>();
         final NullProgressMonitor monitor = new NullProgressMonitor();
         for (Iterator<?> iterator = workbenchSelection.iterator(); iterator.hasNext();) {
             
@@ -434,7 +437,7 @@ public class DocumentView extends ViewPart {
                 if (hotlinkSource != null && feature != null) {
                     final String featureId = feature.getIdentifier().getID();
                     final String labelShown = String.format(Messages.docView_featureDocs, featureId);
-                    final IDocFolder folder = new DocFolder(labelShown, hotlinkSource);
+                    final IDocumentFolder folder = DocumentFactory.createFolder(labelShown, hotlinkSource);
                     folder.addDocuments(hotlinkSource.getDocuments(feature));
                     items.add(folder);
                 }
@@ -443,7 +446,7 @@ public class DocumentView extends ViewPart {
                 if (docSource != null) {
                     final String labelShown = String.format(Messages.docView_shapeDocs,
                             geoResource.getTitle());
-                    final IDocFolder folder = new DocFolder(labelShown, docSource);
+                    final IDocumentFolder folder = DocumentFactory.createFolder(labelShown, docSource);
                     folder.addDocuments(docSource.getDocuments());
                     items.add(folder);
                 }
@@ -609,7 +612,7 @@ public class DocumentView extends ViewPart {
         
         final Object obj = viewerSelection.getFirstElement();
         boolean isFolder = false;
-        if (obj instanceof IDocFolder) {
+        if (obj instanceof IDocumentFolder) {
             isFolder = true;
         }
         
@@ -617,7 +620,7 @@ public class DocumentView extends ViewPart {
         if (fileList != null) {
             if (isFolder) { 
                 
-                final IDocFolder folder = (IDocFolder) obj;
+                final IDocumentFolder folder = (IDocumentFolder) obj;
                 final IDocumentSource docSource = (IDocumentSource) folder.getSource();
                 
                 final List<IDocument> docs = docSource.addFiles(fileList);
@@ -716,7 +719,7 @@ public class DocumentView extends ViewPart {
                 
                 if (isFolder) {
                     
-                    final IDocFolder folder = (IDocFolder) obj;
+                    final IDocumentFolder folder = (IDocumentFolder) obj;
                     final IDocumentSource docSource = (IDocumentSource) folder.getSource();
                     final IDocument doc = docSource.addLink(new URL(urlSpec));
                     
@@ -942,8 +945,8 @@ public class DocumentView extends ViewPart {
 
         @Override
         public String getText(Object element) {
-            if (element instanceof IDocFolder) {
-                final IDocFolder folder = (IDocFolder) element;
+            if (element instanceof IDocumentFolder) {
+                final IDocumentFolder folder = (IDocumentFolder) element;
                 return folder.getName();                
             } else if (element instanceof IDocument) {
                 final IDocument doc = (IDocument) element;
@@ -955,7 +958,7 @@ public class DocumentView extends ViewPart {
         @Override
         public Image getImage(Object obj) {
             
-            if (obj instanceof IDocFolder) {
+            if (obj instanceof IDocumentFolder) {
                 return PlatformUI.getWorkbench().getSharedImages()
                         .getImage(ISharedImages.IMG_OBJ_FOLDER);
             } else if (obj instanceof FileDocument) {
@@ -988,8 +991,8 @@ public class DocumentView extends ViewPart {
 
         @Override
         public Object[] getChildren( Object element ) {
-            if (element instanceof IDocFolder) {
-                final IDocFolder folder = (IDocFolder) element;
+            if (element instanceof IDocumentFolder) {
+                final IDocumentFolder folder = (IDocumentFolder) element;
                 return folder.getItems().toArray(new Object[0]);
             }
             return null;
@@ -1002,8 +1005,8 @@ public class DocumentView extends ViewPart {
 
         @Override
         public boolean hasChildren( Object element ) {
-            if (element instanceof IDocFolder) {
-                final IDocFolder folder = (IDocFolder) element;
+            if (element instanceof IDocumentFolder) {
+                final IDocumentFolder folder = (IDocumentFolder) element;
                 return folder.getItems().size() > 0;
             }
             return false;
@@ -1026,24 +1029,24 @@ public class DocumentView extends ViewPart {
      */
     private class DocumentItemModel {
         
-        private List<Object> items;
+        private List<IDocumentItem> items;
         
         public DocumentItemModel() {
-            items = new ArrayList<Object>();
+            items = new ArrayList<IDocumentItem>();
         }
         
-        public List<Object> getItems() {
+        public List<IDocumentItem> getItems() {
             return items;
         }
         
-        public void setItems(List<Object> items) {
+        public void setItems(List<IDocumentItem> items) {
             this.items = items;
         }
         
-        public IDocFolder getFolder(IDocument doc) {
+        public IDocumentFolder getFolder(IDocument doc) {
             for (Object item : items) {
-                if (item instanceof IDocFolder) {
-                    final IDocFolder folder = (IDocFolder) item;
+                if (item instanceof IDocumentFolder) {
+                    final IDocumentFolder folder = (IDocumentFolder) item;
                     if (folder.getSource().equals(doc.getSource())) {
                         return folder;
                     }
