@@ -56,7 +56,7 @@ public class BasicHotlinkTest {
         List<IGeoResource> members = (List<IGeoResource>) service.resources(new NullProgressMonitor() );
         resource = members.get(0);
         
-        resource.getPersistentProperties().put( BasicHotlink.HOTLINK, "FILE:FILE,LINK:WEB");
+        resource.getPersistentProperties().put( BasicHotlinkResolveFactory.HOTLINK, "FILE:FILE,LINK:WEB");
     }
     
     @After 

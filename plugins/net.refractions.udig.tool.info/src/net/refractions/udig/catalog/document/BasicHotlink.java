@@ -12,20 +12,11 @@ import net.refractions.udig.catalog.IDocument;
 import net.refractions.udig.catalog.IDocumentFolder;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IHotlink;
-import net.refractions.udig.tool.info.InfoPlugin;
 
 import org.eclipse.swt.program.Program;
 import org.opengis.feature.simple.SimpleFeature;
 
 public class BasicHotlink implements IHotlink {
-    /**
-     * {@link IGeoResource#getPersistentProperties()} key used to record hotlink descriptor list.
-     * <p>
-     * The value is stored as a definition consisting of:
-     * <code>attributeName:file,attributeName:link</code>
-     */
-    final static String HOTLINK = "hotlink";
-
     class FileLink implements IDocument {
         private File file;
         private String attributeName;
@@ -160,22 +151,9 @@ public class BasicHotlink implements IHotlink {
 
     @Override
     public List<HotlinkDescriptor> getHotlinkDescriptors() {
-        String definition = (String) resource.getPersistentProperties().get(HOTLINK);
-        List<HotlinkDescriptor> list = new ArrayList<IHotlink.HotlinkDescriptor>();
-        if (definition != null && !definition.isEmpty()) {
-            String split[] = definition.split(",");
-            for (String defn : split) {
-                try {
-                    HotlinkDescriptor descriptor = new HotlinkDescriptor(defn);
-                    list.add(descriptor);
-                } catch (Throwable t) {
-                    InfoPlugin.log("Unable describe hotlink:" + defn, t);
-                }
-            }
-        }
+        List<HotlinkDescriptor> list = BasicHotlinkResolveFactory.hotlinkDescriptors( resource );
         return Collections.unmodifiableList(list);
     }
-
     @Override
     public List<IDocument> getDocuments(SimpleFeature feature) {
         List<IDocument> list = new ArrayList<IDocument>();
