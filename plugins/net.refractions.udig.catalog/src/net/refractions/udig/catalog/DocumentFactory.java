@@ -188,7 +188,7 @@ public class DocumentFactory {
         switch (type) {
         case FILE:
             try {
-                if (info != null) {
+                if (info != null && info.length() > 0) {
                     final File parentFile = new File(new URI(url.toString()));
                     final File childFile = new File(parentFile.getParent(), info);
                     return createFileDoc(childFile, label);    
@@ -199,7 +199,7 @@ public class DocumentFactory {
             return createFileDoc(null, label);
         case WEB:
             try {
-                if (info != null) {
+                if (info != null && info.length() > 0) {
                     return createUrlDoc(new URL(info), label);    
                 }
             } catch (MalformedURLException e) {
