@@ -15,8 +15,8 @@ the files associated with the select feature or layer.
 
 Within each folder several kinds of information are displayed:
 
- |image0| - File hotlink
- |image1| - Web link hotlink
+ |image0| - File Hotlink
+ |image1| - Weblink Hotlink
 
 When storing documents associated with a selected feature, specific
 attributes are marked along with the type of content they can reference.
@@ -29,21 +29,15 @@ Open
 The :guilabel:`Open` button is used to open the selected document, using the appropriate system
 application.
 
-Edit
-----
-
-The :guilabel:`Edit` button is used to review and edit the selected hotlink in a pop up dialog. It can be
-used to fix a hotlink in the event a file has moved on disk.
-
-Add File
+Add or Edit File
 --------
 
-The :guilabel:`Add File` button is used to store a file hotlink.
+The :guilabel:`File` button is used to store a file hotlink. It is also used to update the selected hotlink and fix a hotlink in the event a file was moved on disk.
 
-Add Link
+Add or Edit Link
 --------
 
-The :guilabel:`Add Link` button is used to store a web link.
+The :guilabel:`Link` button is used to store a web link hotlink. It is also used to review and edit the selected hotlink in a pop up dialog and fix a hotlink in the event of a broken link.
 
 
 Remove
@@ -55,5 +49,5 @@ The :guilabel:`Remove` button is used remove the selected hot link.
 
 :doc:`Working with hotlinks`
 
-.. |image0| image:: /images/document_view/doc_obj.png
-.. |image1| image:: /images/document_view/web_obj.png
+.. |image0| image:: /images/document_view/file_doc_obj.jpg
+.. |image1| image:: /images/document_view/link_doc_obj.png
