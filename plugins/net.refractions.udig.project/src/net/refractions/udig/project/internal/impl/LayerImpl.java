@@ -1642,6 +1642,12 @@ public class LayerImpl extends EObjectImpl implements Layer {
      */
     @SuppressWarnings("unchecked")
     public Object getAdapter( final Class adapter ) {
+        // Used to allow workbench selection to adapt an
+        // ILayer to a IGeoResource - this allows catalog views
+        // to interact with ILayer smoothly
+        if( IGeoResource.class.isAssignableFrom( adapter)){
+            return getGeoResource();
+        }
         EList adapters = eAdapters();
         if (adapters instanceof SynchronizedEList) {
             ((SynchronizedEList) adapters).lock();

@@ -249,6 +249,25 @@ public class ID implements Serializable {
     public File toFile() {
         return file;
     }
+    /**
+     * Create a file with the provided extension.
+     * <p>
+     * Example" id.toFile("properties") will produce "foo.properties" for the shapefile "foo.shp"
+     * 
+     * @param extension
+     * @return
+     */
+    public File toFile( String extension ) {
+        if( extension == null ){
+            return file;
+        }
+        File parent = file.getParentFile();
+        String baseFile = toBaseFile();
+        
+        File target = new File( parent, baseFile+"."+extension); //$NON-NLS-1$
+        return target;
+    }
+
     public String toExtension(){
         String name;
         try {

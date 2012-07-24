@@ -134,15 +134,15 @@ public class TransformPanel extends Composite {
     private ModifyListener nameListener = new ModifyListener() {
         public void modifyText(ModifyEvent e) {
             Definition definition = selectedDefinition();
-            String text = name.getText();
-            if (definition.name == null || !definition.name.equals(text)) {
-                definition.name = text;
-
-                // refresh the display, including labels and display the row if needed
-                table.refresh(definition, true, true);
-                ;
-                fireChanged(new ChangeEvent(transform));
+            if( definition != null ){
+                String text = name.getText();
+                if (definition.name == null || !definition.name.equals(text)) {
+                    definition.name = text;
+                }
             }
+            // refresh the display, including labels and display the row if needed
+            table.refresh(definition, true, true);;
+            fireChanged(new ChangeEvent(transform));
         }
     };
 
