@@ -13,6 +13,7 @@ Web Map Server, and for adding a layer into a Map.
    Using the Workbench
    Working with AOI
    Working with Features
+   Working with Documents
    Working with Images
    Working with Layers
    Working with Maps

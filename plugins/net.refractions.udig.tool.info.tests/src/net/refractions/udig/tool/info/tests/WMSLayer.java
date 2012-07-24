@@ -231,7 +231,6 @@ public class WMSLayer implements ILayer {;
 		return false;
 	}
 
-
 	@Override
 	public IBlackboard getBlackboard() {
 		// TODO Auto-generated method stub
@@ -240,18 +239,17 @@ public class WMSLayer implements ILayer {;
 
 
 
-	@Override
-	public boolean getInteraction(Interaction interaction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-
+    @Override
+    public boolean getInteraction( Interaction interaction ) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    
     @Override
     public boolean isShown() {
         // TODO Auto-generated method stub
         return false;
     }
+
 	
 }
