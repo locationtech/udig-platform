@@ -38,7 +38,7 @@ public abstract class AbstractShpDocTest extends TestCase {
     protected URL url1;
     protected URL url2;
     
-    protected static final String DIRECTORY = "internal\\";
+    protected static final String DIRECTORY = "internal";
     protected static final String SHAPEFILE = "australia.shp";
     protected static final String FILE1 = "readme.txt";
     protected static final String FILE2 = "australia.png";
@@ -57,11 +57,11 @@ public abstract class AbstractShpDocTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         
-        file = new File(DIRECTORY + SHAPEFILE);
+        file = new File( new File(DIRECTORY), SHAPEFILE);
         url = file.toURI().toURL();
         
-        file1 = new File(DIRECTORY + FILE1);
-        file2 = new File(DIRECTORY + FILE2);
+        file1 = new File( new File(DIRECTORY ), FILE1);
+        file2 = new File( new File(DIRECTORY ), FILE2);
         
         url1 = new URL(WEB1);
         url2 = new URL(WEB2);

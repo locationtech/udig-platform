@@ -40,7 +40,7 @@ public class ShpDocPropertyParserTest extends AbstractShpDocTest {
         ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
         assertTrue("Property file does not exist.", parser.hasProperties());
         
-        final URL url = new File(DIRECTORY + "dummy.shp").toURI().toURL();
+        final URL url = new File(new File( DIRECTORY ), "dummy.shp").toURI().toURL();
         parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
         assertFalse("Property file exist.", parser.hasProperties());
         
@@ -50,7 +50,7 @@ public class ShpDocPropertyParserTest extends AbstractShpDocTest {
         
         final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
         
-        final FileDocument fileDoc = new FileDocument(new File(DIRECTORY + FILE1));
+        final FileDocument fileDoc = new FileDocument( new File(new File(DIRECTORY), FILE1));
         assertEquals("Link is not expected.", FILE1, parser.getLinkValue(fileDoc));
         
         final URLDocument urlDoc = new URLDocument(new URL(WEB1));
@@ -61,7 +61,7 @@ public class ShpDocPropertyParserTest extends AbstractShpDocTest {
     public void testGetFileLinkValue() {
         
         final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
-        final File file = new File(DIRECTORY + FILE1);
+        final File file = new File( new File(DIRECTORY ), FILE1);
         assertEquals("Link is not expected.", FILE1, parser.getFileLinkValue(file));
         
     }
@@ -95,7 +95,7 @@ public class ShpDocPropertyParserTest extends AbstractShpDocTest {
         final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
         
         final List<IDocument> oldDocs = new ArrayList<IDocument>();
-        oldDocs.add(new FileDocument(new File(DIRECTORY + FILE1)));
+        oldDocs.add(new FileDocument(new File( new File(DIRECTORY ), FILE1)));
         oldDocs.add(new URLDocument(new URL(WEB1)));
         
         parser.setShapeAttachments(oldDocs);
@@ -111,7 +111,7 @@ public class ShpDocPropertyParserTest extends AbstractShpDocTest {
             if (doc instanceof FileDocument) {
                 fileCnt++;
                 final FileDocument fileDoc = (FileDocument) doc;
-                final File oldFile =  new File(DIRECTORY + FILE1);
+                final File oldFile =  new File( new File(DIRECTORY), FILE1);
                 final File newFile =  fileDoc.getFile();
                 assertEquals("File directory is not expected", oldFile.getAbsolutePath(),
                         newFile.getAbsolutePath());
@@ -135,7 +135,7 @@ public class ShpDocPropertyParserTest extends AbstractShpDocTest {
         final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
         
         final List<IDocument> oldDocs = new ArrayList<IDocument>();
-        oldDocs.add(new FileDocument(new File(DIRECTORY + FILE1)));
+        oldDocs.add(new FileDocument(new File(new File(DIRECTORY ), FILE1)));
         oldDocs.add(new URLDocument(new URL(WEB1)));
         
         final String featureId = "dummy.1";
@@ -153,7 +153,7 @@ public class ShpDocPropertyParserTest extends AbstractShpDocTest {
             if (doc instanceof FileDocument) {
                 fileCnt++;
                 final FileDocument fileDoc = (FileDocument) doc;
-                final File oldFile =  new File(DIRECTORY + FILE1);
+                final File oldFile =  new File(new File(DIRECTORY ), FILE1);
                 final File newFile =  fileDoc.getFile();
                 assertEquals("File directory is not expected", oldFile.getAbsolutePath(),
                         newFile.getAbsolutePath());
