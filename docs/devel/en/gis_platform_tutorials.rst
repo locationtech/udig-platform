@@ -15,7 +15,7 @@ GIS Platform
 ------------
 
 The GIS Platform serves as the foundation of the uDig application responsible for data access. It is
-the first tier of the `Platform Architecture <platform_architecture>`:
+the first tier of the :doc:`Platform Architecture <platform_architecture>`:
 
 -  Custom Application
 -  GIS Application

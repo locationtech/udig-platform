@@ -2,7 +2,6 @@ Shapefile Export Tutorial
 =========================
 
 .. figure:: /images/shapefile_export_tutorial/ShapefileExportWorkbook.png
-   :align: center
    :alt: 
 
 Reference:

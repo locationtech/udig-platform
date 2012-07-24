@@ -1,5 +1,5 @@
 Tool Plugin Tutorial
---------------------
+====================
 
 This tutorial shows how to create a new plug-in that adds a distance tool to the uDig application.
 
@@ -25,7 +25,7 @@ Source code:
    (github)
 
 Introduction
-~~~~~~~~~~~~
+------------
 
 The uDig application is built on the "Eclipse Rich Client Platform" that offers an alternative to
 traditional application framework design. The RCP Platform is customized through extensions that
@@ -80,7 +80,7 @@ Key Points:
 -  Complete the **What to do Next** section for an in-depth understanding of this content
 
 What to do Next
-~~~~~~~~~~~~~~~
+---------------
 
 The step by step workbook is only part of the store - here are some additional challenges for you to
 try.
@@ -157,7 +157,7 @@ Try hooking up your tool category to a keyboard binding.
    Study and existing example.
 
 Tips, Tricks and Suggestions
-============================
+----------------------------
 
 The following tips, tricks and suggestions have been collected from the udig-devel email list. If
 you have any questions please drop by and introduce yourself.
@@ -168,7 +168,7 @@ Use the Source Luke!
 One of the key advantages in open source development; is having access to existing working source
 code to use as a good example.
 
-This is especially helpful for the keyboard short cuts; you can study how the "i" key is assigned to
+This is especially helpful for the keyboard short cuts; you can study how the :kbd:`i` key is assigned to
 the information tool category; and reproduce those steps for your new category.
 
 Use the debugger

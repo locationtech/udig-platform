@@ -1,10 +1,9 @@
-CSVService Tutorial
--------------------
+CSV Service Tutorial
+====================
 
 Step one of our disk to screen tour is access to data.
 
 .. figure:: /images/csvservice_tutorial/CSVServiceTutorial.png
-   :align: center
    :alt: 
 
 This workbook is part of our commercial training materials.
@@ -25,7 +24,7 @@ Source code:
       (github)
 
 Introduction
-~~~~~~~~~~~~
+------------
 
 This workbook covers the creation of a custom service for the catalog. Our service is going to parse
 a comma separated value file; using a third-party java library that we are going to bundle up into a
@@ -46,7 +45,7 @@ together with some very strict Classpath restrictions.
    :alt: 
 
 What to Do Next
-~~~~~~~~~~~~~~~
+---------------
 
 Here are some additional challenges for you to try:
 
@@ -80,7 +79,7 @@ What happens when you try and add this data to a Map?
 Hint: Try zooming to the extents of the layer.
 
 Tips, Tricks and Suggestions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 The following tips have been provided by the udig-devel list; please stop by and introduce yourself.
 

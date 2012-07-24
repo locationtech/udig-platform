@@ -4,7 +4,6 @@ Feature Editor Tutorial
 Description of tutorial focused on goal.
 
 .. figure:: /images/feature_editor_tutorial/FeatureEditTutorial.png
-   :align: center
    :alt: 
 
 This workbook is part of our commercial training materials.

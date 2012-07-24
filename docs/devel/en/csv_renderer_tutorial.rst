@@ -4,7 +4,6 @@ CSV Renderer Tutorial
 This is an advanced workbook showing how torender a comma separated value file.
 
 .. figure:: /images/csv_renderer_tutorial/RenderingWorkbook.png
-   :align: center
    :alt: 
 
 This workbook is part of our commercial training materials.

@@ -1,10 +1,9 @@
 IAdaptable and Operations Tutorial
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+==================================
 
 An introduction to two key concepts: do stuff (udig IOp) in more places (eclipse IAdaptable)!.
 
 .. figure:: /images/iadaptable_and_operations_tutorial/IAdaptableOperationWorkbook.png
-   :align: center
    :alt: 
 
 Developers Guide:
@@ -23,7 +22,7 @@ Source code:
    (github)
 
 Introduction
-^^^^^^^^^^^^
+------------
 
 **IAdaptable**
 
@@ -68,48 +67,48 @@ The general idea is that you can define the operation on a kind of object; and t
 will make it available to users in as many places as possible.
 
 What to Do Next
-^^^^^^^^^^^^^^^
+---------------
 
 For better understanding of these facilities please try the following:
 
 Context Menu
-''''''''''''
+^^^^^^^^^^^^
 
 You now know how to add to the context menu (right click menu) for almost anything!
 
 This is how we make sure a layer acts like a layer no matter where you see it.
 
 IService
-''''''''
+^^^^^^^^
 
 See if you can make your Dialog only work on IService.
 
 How about both an IService and an IGeoResource?
 
 Extensible Interface
-''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^
 
 IAdaptable is an example of the Extensible Interface pattern, can you recognize another use of this
 pattern?
 
 Adapters
-''''''''
+^^^^^^^^
 
 Adapters usually end up listening for events in the original object (so that everything can stay in
 sync). The Eclipse Modeling Framework (EMF), only provides adapters - and you must use them rather
 than add a listener for events.
 
 Workbench Selection (Advanced)
-''''''''''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you completed the workbench selection tutorial you can see what is happening using the
 SelectionView. See what it tells you when a Service or GeoResource is selected in the Catalog view.
 
 Tips, Tricks and Suggestions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------
 
 Difference between IService and IGeoResource
-''''''''''''''''''''''''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  IService - represents where information (for example a shapefile on disk)
 -  IGeoResource - represents the actual information (for example the contents of the shapefile)
@@ -127,7 +126,7 @@ The workbooks and slides for the training course are available here:
 This is a private svn repository that is open to those who have taken the training course.
 
 Academic Access
-'''''''''''''''
+^^^^^^^^^^^^^^^
 
 The course materials can be made available to those working at academic institutions - we ask for an
 email from your Professor.

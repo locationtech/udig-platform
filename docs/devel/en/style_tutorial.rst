@@ -1,10 +1,9 @@
 Style Tutorial
---------------
+==============
 
 Control the rendering process by adding a custom style for the style blackboard.
 
 .. figure:: /images/style_tutorial/StyleTutorial.png
-   :align: center
    :alt: 
 
 This workbook is part of our commercial training materials.
@@ -22,7 +21,7 @@ Source code:
    (github)
 
 Introduction
-~~~~~~~~~~~~
+------------
 
 In this workbook we are going to create our own style content; and use it to control the CSVRenderer
 created earlier.
@@ -37,7 +36,7 @@ We will be covering the following ideas:
 We will also revisit the RenderingMetrics contract covered in the last tutorial.
 
 What to Do Next
-~~~~~~~~~~~~~~~
+---------------
 
 For better understanding of these facilities please try the following:
 
@@ -73,12 +72,12 @@ blackboard. If you do not have an sld - open up a point layer and visit the adva
 style editor. You can export this xml as an "sld" document.
 
 Tips, Tricks and Suggestions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 The following tips have been provided by the udig-devel list; please stop by and introduce yourself.
 
 Commercial Training Materials
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Please contact any of the organisations listed on the main `uDig support
 page <http://udig.refractions.net/users/>`_ for details on uDig training.

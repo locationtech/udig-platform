@@ -5,15 +5,13 @@ This tutorial allows you to quickly draw something on screen using a combination
 drawing) and a Decorator (for drawing on the map).
 
 .. figure:: /images/map_decorator_tutorial/CoordinateMapGraphicWorkbook.png
-   :align: center
    :alt: 
 
 References:
 
 * :doc:`working_with_gis_application`
 
-* `crs <http://docs.geotools.org/latest/userguide/library/referencing/crs.html>`_ (GeoTools User
-   Guide)
+* `crs <http://docs.geotools.org/latest/userguide/library/referencing/crs.html>`_ (GeoTools User Guide)
 
 This workbook is part of our commercial training materials.
 

@@ -4,7 +4,6 @@ Testing Tutorial
 Bit of Eclipse RCP review showing how to set up tests for your plugin.
 
 .. figure:: /images/testing_tutorial/TestingWorkbook.png
-   :align: center
    :alt: 
 
 This workbook is part of our commercial training materials.

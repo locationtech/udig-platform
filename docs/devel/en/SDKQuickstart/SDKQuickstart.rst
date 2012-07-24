@@ -243,7 +243,7 @@ We have a few global settings to configure before we can proceed.
 
 * Check the :menuselection:`Java --> Installed JREs` page:
 
-  * Should have Location: :file:`C:\java\eclipse`
+  * Should have Location: :file:`C:\\java\\eclipse`
 
     If the setting is not correct you can use the :guilabel:`Add..` button and create a 
     JRE entry for :file:`C:\\java\\eclipse`
@@ -432,7 +432,7 @@ What to Do Next
 
 Here are some additional things to try when running uDig.
 
-* From Eclipse open up :menuselection:` Run --> Run Configurations` to examine or customize configuration 
+* From Eclipse open up :menuselection:`Run --> Run Configurations` to examine or customize configuration 
   of uDig you are running. Many of these fields were filled in for you by the udig.product.
 
 
@@ -588,7 +588,7 @@ If you have a really old machine with lots of versions of Java installed you may
 you start eclipse and big dialog saying **JVM Terminated with Exit Code=-1** then add the following
 to your command line options::
 
-   -vm C:\\java\\eclipse\\jre\\bin\\javaw.exe
+   -vm C:\java\eclipse\jre\\bin\javaw.exe
 
 This will force :command:`eclipse.exe` to use the jre you downloaded.
 
