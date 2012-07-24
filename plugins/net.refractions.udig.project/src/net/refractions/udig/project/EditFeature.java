@@ -484,7 +484,7 @@ public class EditFeature extends AdaptableFeature {
     }
 
     private void doBeforeValueChange(String attributeName, Object oldValue, Object newValue) {
-        editFeatureListeners.doValueChange(new PropertyChangeEvent(this, attributeName, oldValue,
+        editFeatureListeners.doBeforeValueChange(new PropertyChangeEvent(this, attributeName, oldValue,
                 newValue));
     }
 

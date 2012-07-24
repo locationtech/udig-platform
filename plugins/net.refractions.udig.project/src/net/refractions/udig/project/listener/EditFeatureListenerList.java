@@ -48,6 +48,19 @@ public class EditFeatureListenerList {
     public void remove(EditFeatureListener listener) {
         this.listeners.remove(listener);
     }
+    
+    /**
+     * Utility method to fire notify all value change listeners
+     */
+    public void doBeforeValueChange(PropertyChangeEvent event) {
+        Object[] listenerArray = getListeners();
+
+        for (int i = 0; i < listenerArray.length; i++) {
+            EditFeatureListener listener = (EditFeatureListener) listenerArray[i];
+            listener.attributeValueBeforeChange(event);
+
+        }
+    }
 
     /**
      * Utility method to fire notify all value change listeners
