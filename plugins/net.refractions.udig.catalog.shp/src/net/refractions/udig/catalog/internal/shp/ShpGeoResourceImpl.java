@@ -178,13 +178,14 @@ public class ShpGeoResourceImpl extends IGeoResource {
         return parent.getDS(monitor).getFeatureSource();
     }
 
+    
     public Style style( IProgressMonitor monitor ) {
         URL url = parent.getIdentifier();
         File file = URLUtils.urlToFile(url);
         String shp = file.getAbsolutePath();
-
+        
         StyleFactory styleFactory = CommonFactoryFinder.getStyleFactory(GeoTools.getDefaultHints());
-
+        
         // strip off the extension and check for sld
         String sld = shp.substring(0, shp.length() - 4) + ".sld"; //$NON-NLS-1$
         File f = new File(sld);
@@ -193,7 +194,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
             sld = shp.substring(0, shp.length() - 4) + ".SLD"; //$NON-NLS-1$
             f = new File(sld);
         }
-
+        
         if (f.exists()) {
             // parse it up
             SLDParser parser = new SLDParser(styleFactory);
@@ -203,7 +204,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
                 return null; // well that is unexpected since f.exists()
             }
             Style[] styles = parser.readXML();
-
+            
             FeatureSource<SimpleFeatureType, SimpleFeature> source;
             try {
                 source = featureSource(null);
@@ -217,14 +218,14 @@ public class ShpGeoResourceImpl extends IGeoResource {
                 if (style == null) {
                     style = styles[0];
                 }
-
+                
                 makeGraphicsAbsolute(file, style);
                 return style;
             }
         }
         return null; // well nothing worked out; make your own style
     }
-
+    
     /**
      * This transforms all external graphics references that are relative to absolute.
      * This is a workaround to be able to visualize png and svg in relative mode, which 
@@ -418,8 +419,10 @@ public class ShpGeoResourceImpl extends IGeoResource {
         return (adaptee.isAssignableFrom(IGeoResourceInfo.class) || adaptee.isAssignableFrom(SimpleFeatureStore.class)
                 || adaptee.isAssignableFrom(FeatureSource.class) 
                 || adaptee.isAssignableFrom(SimpleFeatureSource.class) 
-                || adaptee.isAssignableFrom(IService.class) || adaptee
-                .isAssignableFrom(Style.class)) || super.canResolve(adaptee);
+                || adaptee.isAssignableFrom(IService.class) 
+                || adaptee.isAssignableFrom(Style.class)
+                ) 
+                || super.canResolve(adaptee);
     }
     @Override
     public ShpGeoResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
