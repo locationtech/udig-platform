@@ -27,16 +27,11 @@ import java.util.Set;
 
 import net.refractions.udig.project.internal.commands.edit.SetAttributeCommand;
 import net.refractions.udig.project.internal.commands.edit.SetAttributesCommand;
-import net.refractions.udig.project.internal.impl.EditManagerImpl;
 import net.refractions.udig.project.listener.EditFeatureListener;
 import net.refractions.udig.project.listener.EditFeatureListenerList;
 import net.refractions.udig.project.listener.EditFeatureStateChangeEvent;
 
-import oms3.gen.booleanAccess;
-
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
-import org.geotools.feature.DecoratingFeature;
 import org.geotools.feature.NameImpl;
 import org.opengis.feature.GeometryAttribute;
 import org.opengis.feature.IllegalAttributeException;

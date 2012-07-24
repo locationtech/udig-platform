@@ -60,7 +60,8 @@ public class EditFeatureStateChangeEvent {
     private AttributeStatus attributeStatus;
 
     public EditFeatureStateChangeEvent(Type stateChange, AttributeStatus attributeStatus) {
-
+        this.state = stateChange;
+        this.attributeStatus = attributeStatus;
     }
 
     /**

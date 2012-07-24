@@ -14,14 +14,15 @@ public class CountryView extends ViewPart implements IUDIGView {
 
     // CountryPanel panel = new CountryPanel();
     // CountryPanelForm panel = new CountryPanelForm();
-    CountryPanelFormCellEditor panel = new CountryPanelFormCellEditor();
-    FormToolkit toolkit;
+    // CountryPanelFormCellEditor panel = new CountryPanelFormCellEditor();
+    private CountryPanelFormEditFeature panel;;
+    private FormToolkit toolkit;
     private IToolContext context;
 
     public void createPartControl( Composite parent ) {
-        // panel.createControl(parent);
+        this.panel = new CountryPanelFormEditFeature();
         this.toolkit = new FormToolkit(parent.getDisplay());
-        panel.createControl(parent, toolkit);
+        this.panel.createControl(parent, toolkit);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class CountryView extends ViewPart implements IUDIGView {
         return context;
     }
 
-    public void editFeatureChanged( SimpleFeature feature ) {
+    public void editFeatureChanged(SimpleFeature feature) {
         panel.setEditFeature(feature, context);
     }
 

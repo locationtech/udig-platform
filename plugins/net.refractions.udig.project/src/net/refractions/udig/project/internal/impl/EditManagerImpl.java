@@ -921,7 +921,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
         } else {
             FeatureId fid = feature.getIdentifier();
             EditFeature editFeature = toEditFeature(fid);
-            if (editFeature != null) {
+            if (editFeature == null) {
                 editFeature = new EditFeature(this, feature, layer);
                 editFeatureBag.add(editFeature);
             }

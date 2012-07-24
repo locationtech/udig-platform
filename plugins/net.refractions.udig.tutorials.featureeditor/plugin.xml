@@ -10,6 +10,12 @@
             id="net.refractions.udig.tutorials.featureeditor.views.country"
             name="Country">
       </view>
+      <view
+            class="net.refractions.udig.tutorials.featureeditor.CountryLogsView"
+            id="net.refractions.udig.tutorials.featureeditor.views.countryLogs"
+            name="Country Logs"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="net.refractions.udig.project.ui.featureEditor">
@@ -33,6 +39,11 @@
                   name="COLOR_MAP"
                   type="java.lang.String">
             </attribute></featureType>
+      </editor>
+      <editor
+            id="net.refractions.udig.tutorials.featureeditor.countryLogsEditor"
+            name="Country Logs"
+            viewId="net.refractions.udig.tutorials.featureeditor.views.countryLogs">
       </editor>
    </extension>
    <extension
