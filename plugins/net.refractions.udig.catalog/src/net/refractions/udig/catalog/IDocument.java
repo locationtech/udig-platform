@@ -29,7 +29,7 @@ public interface IDocument extends IDocumentItem {
      * Document types
      */
     public enum Type {
-        FILE, WEB;
+        FILE, WEB, ACTION;
     };
     
     /**
