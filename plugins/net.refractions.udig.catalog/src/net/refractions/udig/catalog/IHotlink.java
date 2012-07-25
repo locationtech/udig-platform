@@ -39,13 +39,36 @@ public interface IHotlink extends IAbstractDocumentSource {
      * store hotlink information.
      */
     public class HotlinkDescriptor {
-        
-        private String attributeName;
-        private Type type;
-        
+        private final String attributeName;
+        private final Type type;
+        private final String config;
+        /**
+         * Create an empty descriptor.
+         */
+        public HotlinkDescriptor(){
+            attributeName = null;
+            type = Type.FILE;
+            config = null;
+        }
+       /**
+        * Direct copy constructor.
+        * <p>
+        * Provided in case we add additional fields later.
+        */
+       public HotlinkDescriptor(HotlinkDescriptor descriptor){
+           attributeName = descriptor.getAttributeName();
+           type = descriptor.getType();
+           config = descriptor.getConfig();
+       }
         public HotlinkDescriptor(String attributeName, IDocument.Type type) {
             this.attributeName = attributeName;
             this.type = type;
+            this.config = null;
+        }
+        public HotlinkDescriptor(String attributeName, IDocument.Type type, String config) {
+            this.attributeName = attributeName;
+            this.type = type;
+            this.config = config;
         }
         /**
          * HotlinkDescriptor represented as a string.
@@ -53,21 +76,50 @@ public interface IHotlink extends IAbstractDocumentSource {
          * @param definition Definition of the form "name:type"
          */
         public HotlinkDescriptor(String definition) {
-            int split = definition.lastIndexOf(":");
-            this.attributeName = split == -1 ? definition : definition.substring(0,split);
-            this.type = split == -1 ? Type.WEB : Type.valueOf(definition.substring(split+1));
+            int firstSplit = definition.indexOf(":");
+            int lastSplit = definition.indexOf(":",firstSplit+1);
+            if( firstSplit == -1 ){
+                this.attributeName = definition;
+                this.type = Type.WEB;
+                this.config = null;
+            }
+            else if( lastSplit == -1) {
+                this.attributeName = definition.substring(0,firstSplit);
+                this.type = Type.valueOf(definition.substring(firstSplit+1));
+                this.config = null;
+            }
+            else {
+                this.attributeName = definition.substring(0,firstSplit);
+                this.type = Type.valueOf(definition.substring(firstSplit+1,lastSplit));
+                this.config = definition.substring(lastSplit+1);
+            }
         }
-        
+        public boolean isEmpty(){
+            return attributeName == null || attributeName.isEmpty();
+        }
         public String getAttributeName() {
             return attributeName;
         }
-
         public Type getType() {
             return type;
         }
+        public String getConfig() {
+            return config;
+        }
         @Override
         public String toString() {
-            return attributeName + ":"+type;
+            StringBuilder build = new StringBuilder();
+            if( attributeName != null ){
+                build.append( attributeName );
+            }
+            if( type != null ){
+                build.append(":");
+                build.append( type );
+            }
+            if( config != null ){
+                build.append( config );
+            }
+            return build.toString();
         }
     }
 
