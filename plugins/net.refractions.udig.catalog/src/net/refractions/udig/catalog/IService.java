@@ -160,7 +160,7 @@ public abstract class IService implements IResolve {
     /**
      * Used to save persisted properties for child resources; please see {@link ServiceParameterPersister} for details.
      * <p>
-     * This is strictly a staging area and these values are copied into the IGeoResource after it is created.
+     * IGeoResource makes use of {@link #getPersistentProperties(ID)} for direct access to these maps.
      */
     Map<ID,Map<String, Serializable>> resourceProperties =  Collections.synchronizedMap(new HashMap<ID,Map<String, Serializable>>() );
     

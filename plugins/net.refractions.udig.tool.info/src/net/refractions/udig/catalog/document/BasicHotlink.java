@@ -151,7 +151,7 @@ public class BasicHotlink implements IHotlink {
 
     @Override
     public List<HotlinkDescriptor> getHotlinkDescriptors() {
-        List<HotlinkDescriptor> list = BasicHotlinkResolveFactory.hotlinkDescriptors( resource );
+        List<HotlinkDescriptor> list = BasicHotlinkResolveFactory.getHotlinkDescriptors( resource );
         return Collections.unmodifiableList(list);
     }
     @Override

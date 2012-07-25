@@ -107,5 +107,28 @@
          </resolve>
       </factory>
    </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            category="net.refractions.udig.catalog.ui.property.resourcePage"
+            class="net.refractions.udig.catalog.document.DocumentPropertyPage"
+            icon="icons/obj16/file_doc_obj.png"
+            id="net.refractions.udig.catalog.document.property.documentPage"
+            name="%documentPage.name">
+         <enabledWhen>
+            <or>
+               <instanceof
+                     value="net.refractions.udig.catalog.IGeoResource">
+               </instanceof>
+               <adapt
+                     type="net.refractions.udig.catalog.IGeoResource">
+               </adapt>
+            </or>
+         </enabledWhen>
+         <keywordReference
+               id="net.refractions.udig.catalog.ui.keyword.resource">
+         </keywordReference>
+      </page>
+   </extension>
 
 </plugin>

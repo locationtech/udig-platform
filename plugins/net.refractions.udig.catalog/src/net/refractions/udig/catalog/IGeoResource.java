@@ -243,8 +243,7 @@ public abstract class IGeoResource implements IResolve {
     }
     
     /**
-     * Returns a copy of the map of this resource's persistent properties. Returns an empty map if
-     * this resource has no persistent properties.
+     * Map of this resource's persistent properties, may be empty.
      * 
      * @return The map containing the persistent properties where the key is the
      *         {@link QualifiedName} of the property and the value is the {@link String} value of

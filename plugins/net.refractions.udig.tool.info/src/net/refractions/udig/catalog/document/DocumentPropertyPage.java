@@ -16,10 +16,12 @@ package net.refractions.udig.catalog.document;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import net.miginfocom.swt.MigLayout;
+import net.refractions.udig.catalog.IDocument.Type;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IHotlink.HotlinkDescriptor;
 
@@ -34,12 +36,16 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbenchPropertyPage;
 import org.eclipse.ui.dialogs.PropertyPage;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Allows configuration of IGeoResource persisted properties defining hotlinks.
@@ -47,7 +53,9 @@ import org.eclipse.ui.dialogs.PropertyPage;
  * @author Jody Garnett (LISAsoft)
  * @since 1.3.2
  */
-public class HotlinkPropertyPage extends PropertyPage implements IWorkbenchPropertyPage {
+public class DocumentPropertyPage extends PropertyPage implements IWorkbenchPropertyPage {
+
+    private static final HotlinkDescriptor[] EMPTY = new HotlinkDescriptor[0];
 
     private Button enableButton;
 
@@ -61,36 +69,64 @@ public class HotlinkPropertyPage extends PropertyPage implements IWorkbenchPrope
 
     private List<HotlinkDescriptor> model = new ArrayList<HotlinkDescriptor>();
 
+    private Label tableLabel;
+
+//    @Override
+//    protected Point doComputeSize() {
+//        return super.doComputeSize();
+//    }
+//    
     @Override
     protected Control createContents(Composite parent) {
-        final IGeoResource resource = (IGeoResource) getElement();
-        Map<String, Serializable> properties = resource.getPersistentProperties();
+        final IGeoResource resource = (IGeoResource) getElement().getAdapter(IGeoResource.class);
+        
+        boolean isEnabled = BasicHotlinkResolveFactory.hasHotlinkDescriptors( resource );
+        boolean hasSchema = resource.canResolve(SimpleFeatureSource.class);
         model = new ArrayList<HotlinkDescriptor>();
-        model.addAll( BasicHotlinkResolveFactory.hotlinkDescriptors(resource));
-
+        if( isEnabled && hasSchema ){
+            model.addAll( BasicHotlinkResolveFactory.getHotlinkDescriptors(resource));
+        }
         
         Composite page = new Composite( parent, SWT.NONE );
-        page.setLayout(new MigLayout("insets 0", "[][grow,fill][]", "[][][fill][]"));
+        page.setLayout(new MigLayout("insets 0", "[][grow,fill][]", "[][][][][fill][]"));
         
         Label label;
 
         label = new Label(page, SWT.SINGLE);
-        label.setText("Hotlink");
-        label.setLayoutData("cell 0 0, aligny top, gapx 0 unrelated");
-
+        label.setText("Document");
+        label.setLayoutData("cell 0 0, gapx 0 unrelated");
+        label.setEnabled(hasSchema);
+        
         // Area of Interest filter button
         enableButton = new Button(page, SWT.CHECK);
         enableButton.setText("Enable Hotlink");
         enableButton.setLayoutData("cell 1 0 2 1, left, grow x");
-        enableButton.setEnabled(properties.containsKey(BasicHotlinkResolveFactory.HOTLINK));
-
-        label = new Label(page, SWT.SINGLE);
-        label.setText("Hotlinks Attributes");
-        label.setLayoutData("cell 0 1 2 1, width pref!, left");
-
+        enableButton.setSelection(isEnabled);
+        enableButton.setEnabled(hasSchema);
+        enableButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                boolean isEnabled = enableButton.getSelection();
+                enableTableAndButtons(isEnabled);
+                if( isEnabled ){
+                    table.setInput(model);
+                    table.refresh();
+                }
+                else {
+                    table.setInput(EMPTY);
+                    table.refresh();
+                }
+            }
+        });
+        
+        tableLabel = new Label(page, SWT.SINGLE);
+        tableLabel.setText("Document Attributes");
+        tableLabel.setLayoutData("cell 0 1 2 1, width pref!, left");
+        
+        
         addButton = new Button(page, SWT.CENTER);
         addButton.setText("Add");
-        addButton.setLayoutData("cell 2 1 1 1, grow");
+        addButton.setLayoutData("cell 2 3, growx");
         addButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -107,10 +143,11 @@ public class HotlinkPropertyPage extends PropertyPage implements IWorkbenchPrope
                 }
             }
         });
+        
 
         editButton = new Button(page, SWT.CENTER);
         editButton.setText("Edit");
-        editButton.setLayoutData("cell 3 1 1 1, grow");
+        editButton.setLayoutData("cell 2 4, growx");
         editButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -122,10 +159,11 @@ public class HotlinkPropertyPage extends PropertyPage implements IWorkbenchPrope
                 }
             }
         });
+        
 
         removeButton = new Button(page, SWT.CENTER);
         removeButton.setText("Remove");
-        removeButton.setLayoutData("cell 4 1 1 1, grow");
+        removeButton.setLayoutData("cell 2 6, aligny bottom, growx");
         removeButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -138,12 +176,13 @@ public class HotlinkPropertyPage extends PropertyPage implements IWorkbenchPrope
                 }
             }
         });
+        
 
         table = new TableViewer(page, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
         table.setContentProvider(ArrayContentProvider.getInstance());
         table.getControl().setLayoutData(
-                "cell 1 0 2 4, grow, height 200:50%:70%,width 300:pref:100%");
-
+                "cell 0 3 2 4, grow, height 200:50%:70%,width 300:pref:100%");
+        
         TableViewerColumn column = new TableViewerColumn(table, SWT.NONE);
         column.getColumn().setWidth(100);
         column.getColumn().setMoveable(false);
@@ -191,9 +230,57 @@ public class HotlinkPropertyPage extends PropertyPage implements IWorkbenchPrope
             }
         });
         table.setInput( model );
-        return null;
+        
+        
+        enableTableAndButtons( isEnabled );
+        return page;
     }
-
+    @Override
+    public boolean performOk() {
+        final IGeoResource resource = (IGeoResource) getElement().getAdapter(IGeoResource.class);
+        
+        if( enableButton.getSelection() ){
+            if( table.getInput() == EMPTY ){
+                BasicHotlinkResolveFactory.putHotlinkDescriptors( resource, new ArrayList<HotlinkDescriptor>() );
+            }
+            else {
+                BasicHotlinkResolveFactory.putHotlinkDescriptors( resource, model );
+            }
+        }
+        else {
+            BasicHotlinkResolveFactory.clearHotlinkDescriptors(resource);
+        }
+        return super.performOk();
+    }
+    @Override
+    protected void performDefaults() {
+        final IGeoResource resource = (IGeoResource) getElement().getAdapter(IGeoResource.class);
+        
+        boolean isEnabled = BasicHotlinkResolveFactory.hasHotlinkDescriptors( resource );
+        boolean hasSchema = resource.canResolve(SimpleFeatureSource.class);
+        if( isEnabled && hasSchema ){
+            model.clear();
+            model.addAll( BasicHotlinkResolveFactory.getHotlinkDescriptors(resource));
+            table.refresh();
+        }
+        else {
+            table.setInput(EMPTY);
+        }
+        super.performDefaults();
+    }
+    @Override
+    public boolean performCancel() {
+        return super.performCancel(); // no change
+    }
+    public void enableTableAndButtons( boolean isEnabled ){
+        tableLabel.setEnabled( isEnabled );
+        table.getControl().setEnabled( isEnabled );
+        boolean hasSelection = isEnabled && !table.getSelection().isEmpty();
+        
+        addButton.setEnabled( isEnabled );
+        editButton.setEnabled( hasSelection );
+        removeButton.setEnabled( hasSelection );
+    }
     protected void removeDescriptor(HotlinkDescriptor descriptor) {
         model.remove( descriptor );
         table.refresh();
@@ -211,11 +298,11 @@ public class HotlinkPropertyPage extends PropertyPage implements IWorkbenchPrope
         else {
             model.add(index, descriptor );
         }
+        table.refresh();
     }
 
     private HotlinkDescriptor promptDescriptor() {
-        // TODO Auto-generated method stub
-        return null;
+        return new HotlinkDescriptor("fred", Type.FILE );
     }
 
 }
