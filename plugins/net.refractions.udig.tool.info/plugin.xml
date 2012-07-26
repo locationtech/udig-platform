@@ -98,6 +98,9 @@
                type="net.refractions.udig.catalog.IHotlink"></resolve>
          <resolve
                type="net.refractions.udig.catalog.IDocumentSource"></resolve>
+         <resolve
+               type="net.refractions.udig.catalog.IAttachmentSource">
+         </resolve>
       </factory>
       <factory
             class="net.refractions.udig.catalog.document.BasicHotlinkResolveFactory"

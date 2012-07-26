@@ -29,6 +29,7 @@ import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.DocumentFactory;
 import net.refractions.udig.catalog.FileDocument;
 import net.refractions.udig.catalog.IAbstractDocumentSource;
+import net.refractions.udig.catalog.IAttachmentSource;
 import net.refractions.udig.catalog.IDocument;
 import net.refractions.udig.catalog.IDocumentFolder;
 import net.refractions.udig.catalog.IDocumentItem;
@@ -258,9 +259,9 @@ public class DocumentView extends ViewPart {
                     openButton.setEnabled(false);
                     removeButton.setEnabled(false);
                     final IDocumentFolder folder = (IDocumentFolder) firstObj;
-                    final boolean isDocSource = (folder.getSource() instanceof IDocumentSource);
-                    attachButton.setEnabled(isDocSource);
-                    linkButton.setEnabled(isDocSource);
+                    final boolean isAddAllowed = !(folder.getSource() instanceof IHotlink);
+                    attachButton.setEnabled(isAddAllowed);
+                    linkButton.setEnabled(isAddAllowed);
                 } else if (firstObj instanceof IDocument) {
                     final IDocument doc = (IDocument) firstObj;
                     switch (doc.getType()) {
@@ -434,13 +435,27 @@ public class DocumentView extends ViewPart {
             this.geoResource = toGeoResource(obj, monitor);
             if (geoResource != null) {
                 
-                final IHotlink hotlinkSource = toHotlinkSource(obj, geoResource, monitor);
-                if (hotlinkSource != null && feature != null) {
-                    final String featureId = feature.getIdentifier().getID();
-                    final String labelShown = String.format(Messages.docView_featureDocs, featureId);
-                    final IDocumentFolder folder = DocumentFactory.createFolder(labelShown, hotlinkSource);
-                    folder.addDocuments(hotlinkSource.getDocuments(feature));
-                    items.add(folder);
+                feature = getFeature(geoResource, toFilter(obj, monitor));
+                if (feature != null) {
+                
+                    final IHotlink hotlinkSource = toSource(geoResource, IHotlink.class, monitor);
+                    if (hotlinkSource != null) {
+                        final String featureId = feature.getIdentifier().getID();
+                        final String labelShown = String.format(Messages.docView_featureDocs, featureId);
+                        final IDocumentFolder folder = DocumentFactory.createFolder(labelShown, hotlinkSource);
+                        folder.addDocuments(hotlinkSource.getDocuments(feature));
+                        items.add(folder);    
+                    }
+                
+                    final IAttachmentSource attachmentSource = toSource(geoResource, IAttachmentSource.class, monitor);
+                    if (attachmentSource != null) {
+                        final String featureId = feature.getIdentifier().getID();
+                        final String labelShown = String.format(Messages.docView_featureAttachments, featureId);
+                        final IDocumentFolder folder = DocumentFactory.createFolder(labelShown, attachmentSource);
+                        folder.addDocuments(attachmentSource.getDocuments(feature.getIdentifier()));
+                        items.add(folder);
+                    }
+                    
                 }
                 
                 final IDocumentSource docSource = toSource(geoResource, IDocumentSource.class, monitor);
@@ -500,24 +515,6 @@ public class DocumentView extends ViewPart {
         }
         return null;
     }
-    
-    /**
-     * Resolves the object to a hotlink document source. This returns null if it is unable to
-     * resolve.
-     * 
-     * @param obj
-     * @param geoResource
-     * @param monitor
-     * @return hotlink document source
-     */
-    private IHotlink toHotlinkSource(Object obj, IGeoResource geoResource, IProgressMonitor monitor) {
-        final FidFilterImpl filter = toFilter(obj, monitor);
-        if (filter != null) { 
-            this.feature = getFeature(geoResource, filter);
-            return toSource(geoResource, IHotlink.class, monitor);
-        }
-        return null;
-    }
 
     /**
      * Resolves the object to a feature ID filter. This returns null if it is unable to resolve.
@@ -549,24 +546,26 @@ public class DocumentView extends ViewPart {
      * @return feature
      */
     private SimpleFeature getFeature(IGeoResource geoResource, FidFilterImpl filter) {
-        try {
-            if (geoResource.canResolve(SimpleFeatureStore.class)) {
-                final SimpleFeatureStore featureSource = geoResource.resolve(SimpleFeatureStore.class,
-                        new NullProgressMonitor());
-                final SimpleFeatureCollection featureCollection = featureSource.getFeatures(filter);
-                final SimpleFeatureIterator featureIterator = featureCollection.features();
-                try {
-                     if (featureIterator.hasNext()) {
-                         return featureIterator.next();
-                     }
-                } finally {
-                    if (featureIterator != null) {
-                        featureIterator.close();
-                    }
-                }    
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (filter != null) {
+            try {
+                if (geoResource.canResolve(SimpleFeatureStore.class)) {
+                    final SimpleFeatureStore featureSource = geoResource.resolve(SimpleFeatureStore.class,
+                            new NullProgressMonitor());
+                    final SimpleFeatureCollection featureCollection = featureSource.getFeatures(filter);
+                    final SimpleFeatureIterator featureIterator = featureCollection.features();
+                    try {
+                         if (featureIterator.hasNext()) {
+                             return featureIterator.next();
+                         }
+                    } finally {
+                        if (featureIterator != null) {
+                            featureIterator.close();
+                        }
+                    }    
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }            
         }
         return null;
     }
@@ -622,23 +621,31 @@ public class DocumentView extends ViewPart {
             if (isFolder) { 
                 
                 final IDocumentFolder folder = (IDocumentFolder) obj;
-                final IDocumentSource docSource = (IDocumentSource) folder.getSource();
                 
-                final List<IDocument> docs = docSource.addFiles(fileList);
-                folder.addDocuments(docs);
-                if (docs.size() != fileList.size()) {
-                    MessageDialog.openInformation(attachButton.getShell(),
-                            Messages.docView_attachFiles, Messages.docView_errFileExistMulti);
+                List<IDocument> docs = null;
+                if (folder.getSource() instanceof IDocumentSource) {
+                    final IDocumentSource docSource = (IDocumentSource) folder.getSource();
+                    docs = docSource.addFiles(fileList);    
+                } else if (folder.getSource() instanceof IAttachmentSource) {
+                    final IAttachmentSource docSource = (IAttachmentSource) folder.getSource();
+                    docs = docSource.addFiles(feature.getIdentifier(), fileList);       
+                }
+                
+                if (docs != null) {
+                    folder.addDocuments(docs);
+                    if (docs.size() != fileList.size()) {
+                        MessageDialog.openInformation(attachButton.getShell(),
+                                Messages.docView_attachFiles, Messages.docView_errFileExistMulti);
+                    }    
                 }
                 
             } else {
                 
-                final IDocument doc = (IDocument) obj;
-                final IAbstractDocumentSource source = doc.getSource();
+                final FileDocument fileDoc = (FileDocument) obj;
+                final IAbstractDocumentSource source = fileDoc.getSource();
                 final File file = fileList.get(0);
                 
                 if (source instanceof IDocumentSource) {
-                    final FileDocument fileDoc = (FileDocument) obj;
                     final boolean isUpdateSuccess = ((IDocumentSource) source).updateFile(fileDoc, file);
                     if (!isUpdateSuccess) {
                         MessageDialog.openInformation(attachButton.getShell(),
@@ -647,16 +654,22 @@ public class DocumentView extends ViewPart {
                         fileDoc.setFile(file);
                     }
                 } else if (source instanceof IHotlink) {
-                    
-                    final String attributeName = doc.getAttributeName();
+                    final String attributeName = fileDoc.getAttributeName();
                     final IHotlink hotlinkSource = (IHotlink) source;
                     hotlinkSource.setFile(feature, attributeName, file);
                     set(attributeName, feature.getAttribute(attributeName));
-                    
-                    final FileDocument fileDoc = (FileDocument) obj;
                     fileDoc.setFile(file);
+                } else if (source instanceof IAttachmentSource) {
+                    final IAttachmentSource attachmentSource = (IAttachmentSource) source;
+                    final File localFile = attachmentSource.updateFile(feature.getIdentifier(), fileDoc, file);
+                    if (localFile == null) {
+                        MessageDialog.openInformation(attachButton.getShell(),
+                                Messages.docView_attachFile, Messages.docView_errFileExistSingle);
+                    } else {
+                        fileDoc.setFile(localFile);
+                    }
                 }
-                
+
             }
             viewer.refresh();
             viewer.expandAll();
@@ -720,9 +733,16 @@ public class DocumentView extends ViewPart {
                 
                 if (isFolder) {
                     
+                    IDocument doc = null;
+                    
                     final IDocumentFolder folder = (IDocumentFolder) obj;
-                    final IDocumentSource docSource = (IDocumentSource) folder.getSource();
-                    final IDocument doc = docSource.addLink(new URL(urlSpec));
+                    if (folder.getSource() instanceof IDocumentSource) {
+                        final IDocumentSource docSource = (IDocumentSource) folder.getSource();
+                        doc = docSource.addLink(new URL(urlSpec));
+                    } else if (folder.getSource() instanceof IAttachmentSource) {
+                        final IAttachmentSource docSource = (IAttachmentSource) folder.getSource();
+                        doc = docSource.addLink(feature.getIdentifier(), new URL(urlSpec));
+                    }
                     
                     if (doc == null) {
                         MessageDialog.openInformation(attachButton.getShell(),
@@ -733,12 +753,11 @@ public class DocumentView extends ViewPart {
                     
                 } else {
 
-                    final IDocument doc = (IDocument) obj;
-                    final IAbstractDocumentSource source = doc.getSource();
+                    final URLDocument urlDoc = (URLDocument) obj;
                     final URL url = new URL(urlSpec);
                     
+                    final IAbstractDocumentSource source = urlDoc.getSource();
                     if (source instanceof IDocumentSource) {
-                        final URLDocument urlDoc = (URLDocument) doc;
                         if (!((IDocumentSource) source).updateLink(urlDoc, url)) {
                             MessageDialog.openInformation(attachButton.getShell(),
                                     Messages.docView_linkURL, Messages.docView_errURLExist);
@@ -747,14 +766,21 @@ public class DocumentView extends ViewPart {
                         }
                     } else if (source instanceof IHotlink) {
                         
-                        final String attributeName = doc.getAttributeName();
+                        final String attributeName = urlDoc.getAttributeName();
                         final IHotlink hotlinkSource = (IHotlink) source;
                         hotlinkSource.setLink(feature, attributeName, url);
                         set(attributeName, feature.getAttribute(attributeName));
-                        
-                        final URLDocument urlDoc = (URLDocument) doc;
                         urlDoc.setUrl(url);
                         
+                    } else if (source instanceof IAttachmentSource) {
+                        final IAttachmentSource attachmentSource = (IAttachmentSource) source;
+                        final boolean isUpdateSuccess = attachmentSource.updateLink(feature.getIdentifier(), urlDoc, url);
+                        if (!isUpdateSuccess) {
+                            MessageDialog.openInformation(attachButton.getShell(),
+                                    Messages.docView_linkURL, Messages.docView_errURLExist);
+                        } else {
+                            urlDoc.setUrl(url);
+                        }
                     }
                     
                 }
@@ -830,6 +856,10 @@ public class DocumentView extends ViewPart {
             
             if (source instanceof IDocumentSource) {
                 ((IDocumentSource) source).remove(docs);
+                itemModel.getFolder(docs.get(0)).removeDocuments(docs);
+            } else if (source instanceof IAttachmentSource) {
+                final IAttachmentSource attachmentSource = (IAttachmentSource) source;
+                attachmentSource.remove(feature.getIdentifier(), docs);
                 itemModel.getFolder(docs.get(0)).removeDocuments(docs);
             } else if (source instanceof IHotlink) {
                 

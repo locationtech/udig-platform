@@ -99,7 +99,13 @@ public class ShpDocPropertyParser {
      * The property name format for attribute attachments
      */
     public static final String ATTRIBUTE_ATTACHMENTS = "%s_links"; //$NON-NLS-1$
-
+    /**
+     * The name of the folder that would contain all the shapefile's attachments.
+     * <p>
+     * Format should be in "[shapefile_name].documents".
+     */
+    public static final String SHAPE_DOCS_FOLDER = "%s.attachments"; //$NON-NLS-1$
+    
     private static final String PROP_FILE_EXT = "properties"; //$NON-NLS-1$
     
     private URL url;
@@ -460,6 +466,26 @@ public class ShpDocPropertyParser {
     public void setFeatureAttachments(String fid, List<IDocument> docs) {
         final String property = String.format(ATTRIBUTE_ATTACHMENTS, fid);
         setLinkInfos(property, docs);
+    }
+    
+    /**
+     * Gets the directory where the attachments for the feature should be stored.
+     * 
+     * @param fid
+     * @return feature attachments directory
+     */
+    public File getFeatureAttachmentsDir(String fid) {
+        try {
+            final File shapeFile = new File(url.toURI());
+            String fileName = shapeFile.getName();
+            fileName = fileName.substring(0, fileName.lastIndexOf('.'));
+            final String folderName = String.format(SHAPE_DOCS_FOLDER, fileName);
+            final File attachDir = new File(shapeFile.getParent(), folderName);
+            return new File(attachDir, fid);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     
 }

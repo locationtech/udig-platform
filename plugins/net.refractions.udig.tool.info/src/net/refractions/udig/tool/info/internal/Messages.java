@@ -50,6 +50,8 @@ public class Messages extends NLS {
 
     public static String docView_errURLExist;
 
+    public static String docView_featureAttachments;
+
     public static String docView_featureDocs;
 
     public static String docView_link;

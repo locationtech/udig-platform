@@ -24,7 +24,7 @@ import org.opengis.filter.identity.FeatureId;
  * This is the attachment source interface. This is designed to be implemented by feature level
  * "attachment" document sources.
  * 
- * @author nchan
+ * @author Naz Chan
  */
 public interface IAttachmentSource extends IAbstractDocumentSource {
 
@@ -34,7 +34,7 @@ public interface IAttachmentSource extends IAbstractDocumentSource {
      * @param fid
      * @return list of documents
      */
-    public List<IDocument> documents(FeatureId fid);
+    public List<IDocument> getDocuments(FeatureId fid);
 
     /**
      * Adds the file.
@@ -44,6 +44,8 @@ public interface IAttachmentSource extends IAbstractDocumentSource {
      * @return document
      */
     public IDocument addFile(FeatureId fid, File file);
+    
+    public List<IDocument> addFiles(FeatureId fid, List<File> files);
 
     /**
      * Adds the link.
@@ -54,6 +56,16 @@ public interface IAttachmentSource extends IAbstractDocumentSource {
      */
     public IDocument addLink(FeatureId fid, URL url);
 
+    /**
+     * Updates the file of the document.
+     * 
+     * @param fid
+     * @param fileDoc
+     * @param file
+     * @return file set to document
+     */
+    public File updateFile(FeatureId fid, FileDocument fileDoc, File file);
+    
     /**
      * Updates the url of the document.
      * 
@@ -71,6 +83,15 @@ public interface IAttachmentSource extends IAbstractDocumentSource {
      * @param doc
      * @return true if successful, otherwise false
      */
-    public boolean removeDoc(FeatureId fid, IDocument doc);
+    public boolean remove(FeatureId fid, IDocument doc);
+    
+    /**
+     * Deletes the list of documents
+     * 
+     * @param fid
+     * @param docs
+     * @return true if successfull, otherwise false
+     */
+    public boolean remove(FeatureId fid, List<IDocument> docs);
 
 }
