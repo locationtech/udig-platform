@@ -21,18 +21,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-import org.opengis.filter.identity.FeatureId;
-
 import net.refractions.udig.catalog.FileDocument;
 import net.refractions.udig.catalog.IAttachmentSource;
 import net.refractions.udig.catalog.IDocument;
 import net.refractions.udig.catalog.URLDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 
+import org.apache.commons.io.FileUtils;
+import org.opengis.filter.identity.FeatureId;
+
 /**
  * This is the shapefile attachment source implementation. This implements getters and setters to
- * the documents attached or linked to the shapefile's features.
+ * the documents attached or linked to the shapefile's features. This document source copies
+ * attachments to directory of the shapefile and also cleans up when an attachment is removed. See
+ * {@link ShpDocPropertyParser} for details.
  * 
  * @author Naz Chan
  */

@@ -615,61 +615,13 @@ public class DocumentView extends ViewPart {
         if (obj instanceof IDocumentFolder) {
             isFolder = true;
         }
-        
+
         final List<File> fileList = openFileDialog(isFolder);
         if (fileList != null) {
-            if (isFolder) { 
-                
-                final IDocumentFolder folder = (IDocumentFolder) obj;
-                
-                List<IDocument> docs = null;
-                if (folder.getSource() instanceof IDocumentSource) {
-                    final IDocumentSource docSource = (IDocumentSource) folder.getSource();
-                    docs = docSource.addFiles(fileList);    
-                } else if (folder.getSource() instanceof IAttachmentSource) {
-                    final IAttachmentSource docSource = (IAttachmentSource) folder.getSource();
-                    docs = docSource.addFiles(feature.getIdentifier(), fileList);       
-                }
-                
-                if (docs != null) {
-                    folder.addDocuments(docs);
-                    if (docs.size() != fileList.size()) {
-                        MessageDialog.openInformation(attachButton.getShell(),
-                                Messages.docView_attachFiles, Messages.docView_errFileExistMulti);
-                    }    
-                }
-                
+            if (isFolder) {
+                attachOnFolder((IDocumentFolder) obj, fileList);
             } else {
-                
-                final FileDocument fileDoc = (FileDocument) obj;
-                final IAbstractDocumentSource source = fileDoc.getSource();
-                final File file = fileList.get(0);
-                
-                if (source instanceof IDocumentSource) {
-                    final boolean isUpdateSuccess = ((IDocumentSource) source).updateFile(fileDoc, file);
-                    if (!isUpdateSuccess) {
-                        MessageDialog.openInformation(attachButton.getShell(),
-                                Messages.docView_attachFile, Messages.docView_errFileExistSingle);
-                    } else {
-                        fileDoc.setFile(file);
-                    }
-                } else if (source instanceof IHotlink) {
-                    final String attributeName = fileDoc.getAttributeName();
-                    final IHotlink hotlinkSource = (IHotlink) source;
-                    hotlinkSource.setFile(feature, attributeName, file);
-                    set(attributeName, feature.getAttribute(attributeName));
-                    fileDoc.setFile(file);
-                } else if (source instanceof IAttachmentSource) {
-                    final IAttachmentSource attachmentSource = (IAttachmentSource) source;
-                    final File localFile = attachmentSource.updateFile(feature.getIdentifier(), fileDoc, file);
-                    if (localFile == null) {
-                        MessageDialog.openInformation(attachButton.getShell(),
-                                Messages.docView_attachFile, Messages.docView_errFileExistSingle);
-                    } else {
-                        fileDoc.setFile(localFile);
-                    }
-                }
-
+                attachOnDocument((FileDocument) obj, fileList.get(0));
             }
             viewer.refresh();
             viewer.expandAll();
@@ -677,6 +629,72 @@ public class DocumentView extends ViewPart {
         
     }
 
+    /**
+     * Attaches the files to the selected folder. This method checks what document source is related
+     * to the folder.
+     * 
+     * @param folder
+     * @param fileList
+     */
+    private void attachOnFolder(IDocumentFolder folder, List<File> fileList) {
+        
+        List<IDocument> docs = null;
+        if (folder.getSource() instanceof IDocumentSource) {
+            final IDocumentSource docSource = (IDocumentSource) folder.getSource();
+            docs = docSource.addFiles(fileList);    
+        } else if (folder.getSource() instanceof IAttachmentSource) {
+            final IAttachmentSource docSource = (IAttachmentSource) folder.getSource();
+            docs = docSource.addFiles(feature.getIdentifier(), fileList);       
+        }
+        
+        if (docs != null) {
+            folder.addDocuments(docs);
+            if (docs.size() != fileList.size()) {
+                MessageDialog.openInformation(attachButton.getShell(),
+                        Messages.docView_attachFiles, Messages.docView_errFileExistMulti);
+            }    
+        }
+        
+    }
+    
+    /**
+     * Attaches the file to the selected document. This method checks what document source is
+     * related to the document.
+     * 
+     * @param fileDoc
+     * @param file
+     */
+    private void attachOnDocument(FileDocument fileDoc, File file) {
+        
+        final IAbstractDocumentSource source = fileDoc.getSource();
+        
+        if (source instanceof IDocumentSource) {
+            final boolean isUpdateSuccess = ((IDocumentSource) source).updateFile(fileDoc, file);
+            if (!isUpdateSuccess) {
+                MessageDialog.openInformation(attachButton.getShell(),
+                        Messages.docView_attachFile, Messages.docView_errFileExistSingle);
+            } else {
+                fileDoc.setFile(file);
+            }
+        } else if (source instanceof IHotlink) {
+            final String attributeName = fileDoc.getAttributeName();
+            final IHotlink hotlinkSource = (IHotlink) source;
+            hotlinkSource.setFile(feature, attributeName, file);
+            set(attributeName, feature.getAttribute(attributeName));
+            fileDoc.setFile(file);
+        } else if (source instanceof IAttachmentSource) {
+            final IAttachmentSource attachmentSource = (IAttachmentSource) source;
+            final File localFile = attachmentSource.updateFile(feature.getIdentifier(), fileDoc, file);
+            if (localFile == null) {
+                MessageDialog.openInformation(attachButton.getShell(),
+                        Messages.docView_attachFile, Messages.docView_errFileExistSingle);
+            } else {
+                fileDoc.setFile(localFile);
+            }
+        }
+        
+    }
+    
     /**
      * Opens the file selection dialog.
      * 
@@ -728,73 +746,87 @@ public class DocumentView extends ViewPart {
         
         final String urlSpec = openLinkDialog(defaultValue);
         if (urlSpec != null) {
-
             try {
-                
+                final URL url = new URL(urlSpec);
                 if (isFolder) {
-                    
-                    IDocument doc = null;
-                    
-                    final IDocumentFolder folder = (IDocumentFolder) obj;
-                    if (folder.getSource() instanceof IDocumentSource) {
-                        final IDocumentSource docSource = (IDocumentSource) folder.getSource();
-                        doc = docSource.addLink(new URL(urlSpec));
-                    } else if (folder.getSource() instanceof IAttachmentSource) {
-                        final IAttachmentSource docSource = (IAttachmentSource) folder.getSource();
-                        doc = docSource.addLink(feature.getIdentifier(), new URL(urlSpec));
-                    }
-                    
-                    if (doc == null) {
-                        MessageDialog.openInformation(attachButton.getShell(),
-                                Messages.docView_linkURL, Messages.docView_errURLExist);
-                    } else {
-                        folder.addDocument(doc);
-                    }
-                    
+                    linkOnFolder((IDocumentFolder) obj, url);
                 } else {
-
-                    final URLDocument urlDoc = (URLDocument) obj;
-                    final URL url = new URL(urlSpec);
-                    
-                    final IAbstractDocumentSource source = urlDoc.getSource();
-                    if (source instanceof IDocumentSource) {
-                        if (!((IDocumentSource) source).updateLink(urlDoc, url)) {
-                            MessageDialog.openInformation(attachButton.getShell(),
-                                    Messages.docView_linkURL, Messages.docView_errURLExist);
-                        } else {
-                            urlDoc.setUrl(url);
-                        }
-                    } else if (source instanceof IHotlink) {
-                        
-                        final String attributeName = urlDoc.getAttributeName();
-                        final IHotlink hotlinkSource = (IHotlink) source;
-                        hotlinkSource.setLink(feature, attributeName, url);
-                        set(attributeName, feature.getAttribute(attributeName));
-                        urlDoc.setUrl(url);
-                        
-                    } else if (source instanceof IAttachmentSource) {
-                        final IAttachmentSource attachmentSource = (IAttachmentSource) source;
-                        final boolean isUpdateSuccess = attachmentSource.updateLink(feature.getIdentifier(), urlDoc, url);
-                        if (!isUpdateSuccess) {
-                            MessageDialog.openInformation(attachButton.getShell(),
-                                    Messages.docView_linkURL, Messages.docView_errURLExist);
-                        } else {
-                            urlDoc.setUrl(url);
-                        }
-                    }
-                    
+                    linkOnDocument((URLDocument) obj, url);
                 }
-
                 viewer.refresh();
                 viewer.expandAll();
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
         }
         
     }
+    
+    /**
+     * Links the URL to the selected folder. This method checks what document source is related to
+     * the folder.
+     * 
+     * @param folder
+     * @param url
+     */
+    private void linkOnFolder(IDocumentFolder folder, URL url) {
+        
+        IDocument doc = null;
+        if (folder.getSource() instanceof IDocumentSource) {
+            final IDocumentSource docSource = (IDocumentSource) folder.getSource();
+            doc = docSource.addLink(url);
+        } else if (folder.getSource() instanceof IAttachmentSource) {
+            final IAttachmentSource docSource = (IAttachmentSource) folder.getSource();
+            doc = docSource.addLink(feature.getIdentifier(), url);
+        }
+        
+        if (doc == null) {
+            MessageDialog.openInformation(attachButton.getShell(),
+                    Messages.docView_linkURL, Messages.docView_errURLExist);
+        } else {
+            folder.addDocument(doc);
+        }
+        
+    }
 
+    /**
+     * Links the URL to the selected document. This method checks what document source is
+     * related to the document.
+     * 
+     * @param urlDoc
+     * @param url
+     */
+    private void linkOnDocument(URLDocument urlDoc, URL url) {
+        
+        final IAbstractDocumentSource source = urlDoc.getSource();
+        if (source instanceof IDocumentSource) {
+            if (!((IDocumentSource) source).updateLink(urlDoc, url)) {
+                MessageDialog.openInformation(attachButton.getShell(),
+                        Messages.docView_linkURL, Messages.docView_errURLExist);
+            } else {
+                urlDoc.setUrl(url);
+            }
+        } else if (source instanceof IHotlink) {
+            
+            final String attributeName = urlDoc.getAttributeName();
+            final IHotlink hotlinkSource = (IHotlink) source;
+            hotlinkSource.setLink(feature, attributeName, url);
+            set(attributeName, feature.getAttribute(attributeName));
+            urlDoc.setUrl(url);
+            
+        } else if (source instanceof IAttachmentSource) {
+            final IAttachmentSource attachmentSource = (IAttachmentSource) source;
+            final boolean isUpdateSuccess = attachmentSource.updateLink(feature.getIdentifier(), urlDoc, url);
+            if (!isUpdateSuccess) {
+                MessageDialog.openInformation(attachButton.getShell(),
+                        Messages.docView_linkURL, Messages.docView_errURLExist);
+            } else {
+                urlDoc.setUrl(url);
+            }
+        }
+        
+    }
+    
     /**
      * Opens the link input dialog.
      * 
@@ -855,7 +887,8 @@ public class DocumentView extends ViewPart {
             final ArrayList<IDocument> docs = docMap.get(source);
             
             if (source instanceof IDocumentSource) {
-                ((IDocumentSource) source).remove(docs);
+                final IDocumentSource docSource = (IDocumentSource) source;
+                docSource.remove(docs);
                 itemModel.getFolder(docs.get(0)).removeDocuments(docs);
             } else if (source instanceof IAttachmentSource) {
                 final IAttachmentSource attachmentSource = (IAttachmentSource) source;

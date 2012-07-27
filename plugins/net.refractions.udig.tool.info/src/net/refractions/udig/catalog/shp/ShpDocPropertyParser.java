@@ -469,10 +469,15 @@ public class ShpDocPropertyParser {
     }
     
     /**
-     * Gets the directory where the attachments for the feature should be stored.
+     * Gets the directory of feature's attachments.
+     * <p>
+     * Attachments directory:
+     * <ul>
+     * <li>[shapefile_dir]/[shapefile_name].documents/featureId</li>
+     * </ul>
      * 
      * @param fid
-     * @return feature attachments directory
+     * @return directory of feature's attachments
      */
     public File getFeatureAttachmentsDir(String fid) {
         try {
