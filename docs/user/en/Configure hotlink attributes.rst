@@ -3,18 +3,18 @@ Configure hotlink attributes
 
 We can mark attributes to store file or web *hotlinks*.
 
-#. Use :guilabel:1Catalog view1 to select the resource
+#. Use :guilabel:`Catalog` view to select the resource
 #. Open the :guilabel:`GeoResource Properties` from the context menu or data menu.
-#. Choose the :guilabel:`Hotlink` page
+#. Choose the :guilabel:`Hotlink` property page
 #. Enable hot link support using the provided checkbox
 #. List the attributes you wish to use to store hotlink information
    
    * Use the :guilabel:`Add` button to add a hotlink. You can select the attribute, and the type
-     of hotlink from the provided dialog. 
+     of hotlink from the provided dialog.
    * Use the :guilabel:`Edit` to revise any existing hotlink definitions
    * Use the :guilabel:`Remove`
    
-#. You can now use the :guilabel:`Document view` to manage document hotlinks.
+#. You can now use the :guilabel:`Document` view to manage document hotlinks.
 
 An example with the sample data set is:
 
