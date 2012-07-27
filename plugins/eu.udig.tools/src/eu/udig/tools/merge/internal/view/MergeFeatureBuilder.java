@@ -515,6 +515,19 @@ class MergeFeatureBuilder {
 		
 		sourceFeatures.removeAll(featureList);
 	}
+	/**
+	 * Remove all features from collection
+	 * 
+	 * Added to support new Operation access to MergeView
+	 * 
+	 * Changes in selected layer filter cause removal of all features from MergeBuilder and
+	 * addition of new ones (despite some where already in: also these are removed and re-added)
+	 */
+	public synchronized void removeFromSourceFeaturesAll() {
+            
+            sourceFeatures.clear();
+        }
+	
 
 	/**
 	 * Checks if the feature's geometry fulfill the conditions to be added in the list of features to merge.

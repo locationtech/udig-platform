@@ -10,9 +10,6 @@ import eu.udig.tools.merge.internal.view.MergeView;
 
 public class MergeOperation implements IOp {
     
-    @SuppressWarnings("unused")
-    private MergeView mergeView;
-
     @Override
     public void op(final Display display, Object target, IProgressMonitor monitor) throws Exception {
 
@@ -20,7 +17,8 @@ public class MergeOperation implements IOp {
 
             public void run() {
                 try {
-                    mergeView = (MergeView) ApplicationGIS.getView(true, MergeView.ID);
+                    // getView has the effect of OPENING the view.
+                    MergeView mergeView = (MergeView) ApplicationGIS.getView(true, MergeView.ID);
                     
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -29,8 +27,6 @@ public class MergeOperation implements IOp {
         };
 
         display.asyncExec(t);
-        
-        //PlatformGIS.syncInDisplayThread(t);
 
     }
 }
