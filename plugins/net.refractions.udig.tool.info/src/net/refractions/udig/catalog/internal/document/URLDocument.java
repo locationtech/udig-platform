@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IHotlink;
 import net.refractions.udig.catalog.document.IDocument.Type;
 
 import org.eclipse.swt.program.Program;
@@ -15,8 +16,9 @@ import org.eclipse.swt.program.Program;
  * 
  * @author Naz Chan
  */
-public class URLDocument extends AbstractDocument {
+public class URLDocument extends AbstractDocument implements IHotlink {
 
+    private String attributeName;
     private URL url;
     
     public URLDocument() {
@@ -25,6 +27,16 @@ public class URLDocument extends AbstractDocument {
 
     public URLDocument(URL url) {
         this.url = url;
+    }
+    
+
+    @Override
+    public String getAttributeName() {
+        return attributeName;
+    }
+    
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
     }
     
     public URL getUrl() {

@@ -21,15 +21,16 @@ import java.util.List;
 import org.opengis.filter.identity.FeatureId;
 
 /**
- * This is the attachment source interface. This is designed to be implemented by feature level
- * "attachment" document sources.
+ * Attachment support for a IGeoResource providing the ability to record IAttachment documents
+ * against individual features.
  * 
- * @author Naz Chan
+ * @author Naz Chan (LISAsoft)
+ * @since 1.3.2
  */
 public interface IAttachmentSource extends IAbstractDocumentSource {
 
     /**
-     * Gets the list of documents related to the feature
+     * Gets the list of documents related to the feature.
      * 
      * @param fid
      * @return list of documents

@@ -95,7 +95,12 @@ public class DocumentFactory {
                 if (attributeExists(feature, attributeName)) {
                     final String spec = (String) feature.getAttribute(attributeName);
                     final AbstractDocument doc = createDoc(url, info.getLabel(), spec, info.getType());
-                    doc.setAttributeName(info.getInfo());
+                    if( doc instanceof FileDocument ){
+                        ((FileDocument)doc).setAttributeName(attributeName);
+                    }
+                    if( doc instanceof URLDocument ){
+                        ((URLDocument)doc).setAttributeName(attributeName);
+                    }
                     docs.add(doc);    
                 }
             }

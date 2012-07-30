@@ -34,22 +34,13 @@ public interface IDocument extends IDocumentItem {
     };
     
     /**
-     * Human readable label.
+     * Human readable label used to display this document in a list.
      * <p>
      * This is often the base file name, and should not be a full PATH or URL.
      * 
      * @return label
      */
     public String getLabel();
-    
-    /**
-     * Gets the attribute name of related to the document.
-     * 
-     * This is only used by documents from feature hotlinks.
-     * 
-     * @return attribute name
-     */
-    public String getAttributeName();
     
     /**
      * Gets the document type.
@@ -66,7 +57,7 @@ public interface IDocument extends IDocumentItem {
     public Type getType();
     
     /**
-     * Gets the document source of the document.
+     * The document source responsible for listing this document. 
      * 
      * @return document source
      */

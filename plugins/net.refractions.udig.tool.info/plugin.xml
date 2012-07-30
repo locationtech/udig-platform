@@ -95,18 +95,18 @@
             class="net.refractions.udig.catalog.shp.ShpDocumentResolveFactory"
             resolveableType="net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl">
          <resolve
-               type="net.refractions.udig.catalog.IHotlink"></resolve>
+               type="net.refractions.udig.catalog.document.IHotlinkSource"></resolve>
          <resolve
-               type="net.refractions.udig.catalog.IDocumentSource"></resolve>
+               type="net.refractions.udig.catalog.document.IDocumentSource"></resolve>
          <resolve
-               type="net.refractions.udig.catalog.IAttachmentSource">
+               type="net.refractions.udig.catalog.document.IAttachmentSource">
          </resolve>
       </factory>
       <factory
             class="net.refractions.udig.catalog.document.BasicHotlinkResolveFactory"
             resolveableType="net.refractions.udig.catalog.IGeoResource">
          <resolve
-               type="net.refractions.udig.catalog.IHotlink">
+               type="net.refractions.udig.catalog.document.IHotlinkSource">
          </resolve>
       </factory>
    </extension>

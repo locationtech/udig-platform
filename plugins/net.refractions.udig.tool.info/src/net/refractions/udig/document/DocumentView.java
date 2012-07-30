@@ -28,11 +28,13 @@ import java.util.Map;
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.document.IAbstractDocumentSource;
+import net.refractions.udig.catalog.document.IAttachment;
 import net.refractions.udig.catalog.document.IAttachmentSource;
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocumentFolder;
 import net.refractions.udig.catalog.document.IDocumentItem;
 import net.refractions.udig.catalog.document.IDocumentSource;
+import net.refractions.udig.catalog.document.IHotlink;
 import net.refractions.udig.catalog.document.IHotlinkSource;
 import net.refractions.udig.catalog.internal.document.DocumentFactory;
 import net.refractions.udig.catalog.internal.document.FileDocument;
@@ -736,22 +738,33 @@ public class DocumentView extends ViewPart {
         final Object obj = viewerSelection.getFirstElement();
         boolean isFolder = true;
         String defaultValue = ""; //$NON-NLS-1$
-        if (obj instanceof IDocument) {
+        if (obj instanceof URLDocument) {
             final URLDocument urlDoc = (URLDocument) obj;
             isFolder = false;
             if (!urlDoc.isEmpty()) {
                 defaultValue = urlDoc.getUrl().toString();    
             }
         }
-        
+        if (obj instanceof IHotlink) {
+            isFolder = false;
+            IHotlink hotlink = (IHotlink) obj;
+            if (feature != null) {
+                Object value = feature.getAttribute(hotlink.getAttributeName());
+                defaultValue = value != null ? value.toString() : null;
+            }
+        }
+
         final String urlSpec = openLinkDialog(defaultValue);
         if (urlSpec != null) {
             try {
                 final URL url = new URL(urlSpec);
                 if (isFolder) {
                     linkOnFolder((IDocumentFolder) obj, url);
-                } else {
+                } else if( obj instanceof URLDocument ){
                     linkOnDocument((URLDocument) obj, url);
+                }
+                else if (obj instanceof IHotlink ){
+                    linkOnDocument( (IHotlink) obj, url);
                 }
                 viewer.refresh();
                 viewer.expandAll();
@@ -796,7 +809,7 @@ public class DocumentView extends ViewPart {
      * @param urlDoc
      * @param url
      */
-    private void linkOnDocument(URLDocument urlDoc, URL url) {
+    private void linkOnDocument(IDocument urlDoc, URL url) {
         
         final IAbstractDocumentSource source = urlDoc.getSource();
         if (source instanceof IDocumentSource) {
@@ -897,16 +910,35 @@ public class DocumentView extends ViewPart {
             } else if (source instanceof IHotlinkSource) {
                 
                 final IHotlinkSource hotlinkSource = (IHotlinkSource) source;
-                for (IDocument doc : docs) {
+                for(int index = 0; index<docs.size(); index++){
+                    IDocument doc = docs.get(index);
                     
-                    final String attributeName = doc.getAttributeName();
-                    hotlinkSource.clear(feature, doc.getAttributeName());
-                    set(attributeName, feature.getAttribute(attributeName));
+                    if( doc instanceof IHotlink ){
+                        IHotlink hotlink = (IHotlink) doc;
+                        final String attributeName = hotlink.getAttributeName();                        
+                        IDocument replacement = hotlinkSource.clear(feature, attributeName );
+                        Object value = feature.getAttribute(attributeName);
+                        
+                        set(attributeName, value);
+                        if( replacement != null ){
+                            if( replacement == hotlink ){
+                                this.viewer.update( hotlink, null ); // update viewer label
+                            }
+                            else {
+                                docs.set(index,  replacement ); // update model structure
+                                viewer.refresh();
+                            }
+                        }
+                        else {
+                            // unable to clear
+                        }
+                    }
                     
                     if (doc instanceof FileDocument) {
                         final FileDocument fileDoc = (FileDocument) doc;
                         fileDoc.setFile(null);
-                    } else if (doc instanceof URLDocument) {
+                    }
+                    else if (doc instanceof URLDocument) {
                         final URLDocument fileDoc = (URLDocument) doc;
                         fileDoc.setUrl(null);
                     }

@@ -13,7 +13,7 @@ import org.eclipse.swt.program.Program;
 import org.opengis.feature.simple.SimpleFeature;
 
 public class BasicHotlink implements IHotlinkSource {
-    class FileLink implements IDocument {
+    class FileLink implements IHotlink {
         private File file;
         private String attributeName;
         public FileLink(String attributeName, Object value) {
@@ -74,7 +74,7 @@ public class BasicHotlink implements IHotlinkSource {
         }
     }
 
-    class WebLink implements IDocument {
+    class WebLink implements IHotlink {
         private URL url;
         private String attributeName;
         public WebLink(String attributeName, Object value) {

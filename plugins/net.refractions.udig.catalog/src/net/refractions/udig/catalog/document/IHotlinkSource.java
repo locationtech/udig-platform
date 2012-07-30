@@ -25,12 +25,13 @@ import org.opengis.feature.simple.SimpleFeature;
 /**
  * Hotlink support for IGeoResource.
  * <p>
- * Hotlinks are used to record a document reference feature attributes. The feature attributes that
- * are used for this purpose are made available through this interface, along with helper methods
+ * {@link Hotlink} documents are used to record a document references in the attribtues of the provided feature.
+ * <p>
+ * The list of feature attributes that are used for this purpose are made available through this interface, along with helper methods
  * allowing you to update these links correctly.
  * <p>
  * 
- * @author Jody Garnett
+ * @author Jody Garnett (LISAsoft)
  */
 public interface IHotlinkSource extends IAbstractDocumentSource {
 
@@ -132,6 +133,8 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
 
     /**
      * Gets the list of documents in the feature.
+     * <p>
+     * Note the returned list may be a mix of {@link IDocument} types including {@link IHotlink}.
      * 
      * @param fid
      * @return list of documents
