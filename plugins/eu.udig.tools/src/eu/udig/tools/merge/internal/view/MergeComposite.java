@@ -176,6 +176,7 @@ class MergeComposite extends Composite {
         
         
         //TODO : FIX this code
+        /*
         //if (this.mergeView.isOperationMode()){
         ILayer selectedLayer = ApplicationGIS.getActiveMap().getEditManager().getSelectedLayer();
         Filter preSelectedFeatures = selectedLayer.getFilter(); 
@@ -190,6 +191,7 @@ class MergeComposite extends Composite {
         this.addSourceFeatures(featureList);
             
         //}
+         */
     }
 
     /**

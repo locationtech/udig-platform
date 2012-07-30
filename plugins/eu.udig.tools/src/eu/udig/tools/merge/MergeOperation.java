@@ -17,9 +17,12 @@ public class MergeOperation implements IOp {
 
             public void run() {
                 try {
-                    // getView has the effect of OPENING the view.
+                    // Set the merge mode (to preserve 'classic' MergeTool workflow)
+                    MergeContext tmpMC = MergeContext.getInstance();
+                    tmpMC.setMergeMode(MergeContext.MERGEMODE_OPERATION);
+                 // getView has the effect of OPENING the view.
                     MergeView mergeView = (MergeView) ApplicationGIS.getView(true, MergeView.ID);
-                    
+                                        
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

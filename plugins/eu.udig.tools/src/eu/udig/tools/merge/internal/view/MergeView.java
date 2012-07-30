@@ -261,12 +261,12 @@ public class MergeView extends ViewPart implements IUDIGView {
 
         final ILayer modifiedLayer = event.getSource();
         // Skip further steps if event comes from layer not selected
-        //      NOTE: this is needed since Box Selection actions issues the same event
-        //      on ALL Map layers (why??) and not on just the selected one        
-        if (modifiedLayer != getCurrentMap().getEditManager().getSelectedLayer()){
+        // NOTE: this is needed since Box Selection actions issues the same event
+        // on ALL Map layers (why??) and not on just the selected one
+        if (modifiedLayer != getCurrentMap().getEditManager().getSelectedLayer()) {
             return;
         }
-        
+
         this.currEventTriggeringLayer = modifiedLayer;
 
         PlatformGISMediator.syncInDisplayThread(new Runnable() {
@@ -463,14 +463,21 @@ public class MergeView extends ViewPart implements IUDIGView {
 
         this.mergeComposite.setView(this);
 
-        // If, at this step, MergeView has no context it means that has been started
-        // by MergeOperation: this must be traced to prevent call on null objects.
-        if (this.getContext() == null) {
-            this.operationMode = true;
-        }
-
         createActions();
         createToolbar();
+
+        // Check MergeContext for merge mode
+        // Merge Mode is set
+        // = MergeContext.MERGEMODE_OPERATION in MergeOperation.op method
+        // = MergeContext.MERGEMODE_TOOL in MergeTool.setActive Method
+        if (this.mergeContext == null) {
+            MergeContext tmpMC = MergeContext.getInstance();
+            if (tmpMC.getMergeMode() == MergeContext.MERGEMODE_TOOL) {
+                this.operationMode = false;
+            } else {
+                this.operationMode = true;
+            }
+        }
 
         if (this.isOperationMode()) {
             initializeOperationModeSupport(); // <<<< ############### plug-in Listener stuff in
@@ -684,37 +691,41 @@ public class MergeView extends ViewPart implements IUDIGView {
     @Override
     public void setContext(IToolContext newContext) {
 
-        // ######### THIS IS NEW STUFF - Before editing the setContext method was EMPTY
-        IMap map;
-        if (newContext == null) {
-            // initialize or reinitialize the Presenter
-            map = getCurrentMap();
-            if (map != null) {
-                removeListenerFrom(map);
+        // ######### THIS IS NEW STUFF to upport Operation mode - Before editing it the setContext
+        // method was EMPTY
+        if (this.isOperationMode()) {
+
+            IMap map;
+            if (newContext == null) {
+                // initialize or reinitialize the Presenter
+                map = getCurrentMap();
+                if (map != null) {
+                    removeListenerFrom(map);
+                }
+            } else {
+                // sets maps and its layers as current
+                map = newContext.getMap();
+                if (map != null) {
+
+                    // add this presenter as listener of the map
+                    List<ILayer> layerList = getLayerListOf(map);
+                    addListenersTo(map, layerList);
+                }
             }
-        } else {
-            // sets maps and its layers as current
-            map = newContext.getMap();
+
+            this.context = newContext;
+
+            // notifies the change in current map
+
+            // REMOVED WHILE IMPLEMENTING STEP-BY-STEP changedMapActions(map);
             if (map != null) {
-
-                // add this presenter as listener of the map
-                List<ILayer> layerList = getLayerListOf(map);
-                addListenersTo(map, layerList);
+                // TODO FIX HERE
+                // changedLayerListActions(); <<-- this method is void in AbstractParamsPresenter
+                // validateParameters();
             }
+
+            // #############################################
         }
-        this.context = newContext;
-
-        // notifies the change in current map
-
-        // REMOVED WHILE IMPLEMENTING STEP-BY-STEP changedMapActions(map);
-        if (map != null) {
-            // TODO FIX HERE
-            // changedLayerListActions(); <<-- this method is void in AbstractParamsPresenter
-            // validateParameters();
-        }
-
-        // #############################################
-
     }
 
     @Override
