@@ -12,10 +12,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.internal.document;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.refractions.udig.catalog.document.IAbstractDocumentSource;
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IDocumentFolder;
+
 
 /**
  * This is the document folder implementation.

@@ -10,8 +10,7 @@ import java.util.Map;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IHotlink;
-import net.refractions.udig.catalog.IHotlink.HotlinkDescriptor;
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
 import net.refractions.udig.tool.info.InfoPlugin;
@@ -50,7 +49,7 @@ public class BasicHotlinkResolveFactory implements IResolveAdapterFactory {
             throws IOException {
         IGeoResource resource = (IGeoResource) resolve; // safe cast due to extension point config
         if (resource.getPersistentProperties().containsKey(BasicHotlinkResolveFactory.HOTLINK)) {
-            IHotlink hotlink = new BasicHotlink(resource);
+            IHotlinkSource hotlink = new BasicHotlink(resource);
             return hotlink;
         }
         return null; // not available
@@ -68,7 +67,7 @@ public class BasicHotlinkResolveFactory implements IResolveAdapterFactory {
     public static List<HotlinkDescriptor> getHotlinkDescriptors(IGeoResource resource) {
         Map<String, Serializable> persistentProperties = resource.getPersistentProperties();
         String definition = (String) persistentProperties.get(HOTLINK);
-        List<HotlinkDescriptor> list = new ArrayList<IHotlink.HotlinkDescriptor>();
+        List<HotlinkDescriptor> list = new ArrayList<IHotlinkSource.HotlinkDescriptor>();
         if (definition != null && !definition.isEmpty()) {
             String split[] = definition.split(",");
             for (String defn : split) {

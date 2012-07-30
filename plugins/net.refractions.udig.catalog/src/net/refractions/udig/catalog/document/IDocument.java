@@ -14,7 +14,8 @@
  *    Lesser General Public License for more details.
  *
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.document;
+
 
 
 /**
@@ -33,22 +34,32 @@ public interface IDocument extends IDocumentItem {
     };
     
     /**
-     * Gets the document label string.
+     * Human readable label.
+     * <p>
+     * This is often the base file name, and should not be a full PATH or URL.
      * 
      * @return label
      */
     public String getLabel();
     
     /**
-     * Gets the attribute name of related to the document. This is only used by documents from
-     * feature hotlinks.
+     * Gets the attribute name of related to the document.
+     * 
+     * This is only used by documents from feature hotlinks.
      * 
      * @return attribute name
      */
     public String getAttributeName();
     
     /**
-     * Gets the document type
+     * Gets the document type.
+     * <p>
+     * The following documents are defined:
+     * <ul>
+     * <li>{@link Type#FILE} value is supplied as a local File</li>
+     * <li>{@link Type#WEB} value is supplied as URL</li>
+     * <li>{@link Type#ACTION} value is marked for script use</li>
+     * </ul>
      * 
      * @return document type
      */

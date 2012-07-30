@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.document;
 
 import java.io.File;
 import java.net.URL;
@@ -57,24 +57,26 @@ public interface IAttachmentSource extends IAbstractDocumentSource {
     public IDocument addLink(FeatureId fid, URL url);
 
     /**
-     * Updates the file of the document.
+     * Updates the file of the document, doc is required to be of
+     * type {@link IDocument.Type#FILE}.
      * 
      * @param fid
      * @param fileDoc
      * @param file
      * @return file set to document
      */
-    public File updateFile(FeatureId fid, FileDocument fileDoc, File file);
+    public File updateFile(FeatureId fid, IDocument doc, File file);
     
     /**
-     * Updates the url of the document.
+     * Updates the url of the document which is required to be of
+     * type {@link IDocument.Type#WEB}.
      * 
      * @param fid
      * @param urlDoc
      * @param url
      * @return true if successful, otherwise false
      */
-    public boolean updateLink(FeatureId fid, URLDocument urlDoc, URL url);
+    public boolean updateLink(FeatureId fid, IDocument doc, URL url);
 
     /**
      * Deletes the document

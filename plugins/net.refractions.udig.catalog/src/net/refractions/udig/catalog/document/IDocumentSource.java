@@ -1,7 +1,7 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2011, Refractions Research Inc.
+ *    (C) 2012, Refractions Research Inc.
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -14,18 +14,24 @@
  *    Lesser General Public License for more details.
  *
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.document;
 
 import java.io.File;
 import java.net.URL;
 import java.util.List;
 
+
 /**
- * This is the document source interface. This is designed to be implemented by shapefile level or
- * layer level document sources.
+ * Access to documents associated with a resource.
+ * <p>
+ * The files made available are dependent on the implementation - some possible examples are:
+ * <ul>
+ * <li>Support files associated with an IGeoResource</li>
+ * <li>Additional sidecar files associated with a shapefile</li>
+ * </ul>
  * 
  * @author nchan
- * 
+ * @since 1.3.2
  */
 public interface IDocumentSource extends IAbstractDocumentSource {
 
@@ -99,21 +105,23 @@ public interface IDocumentSource extends IAbstractDocumentSource {
     public boolean canUpdate();
     
     /**
-     * Updates the file of the document.
+     * Updates the file of the document which is required to be
+     * of type {@link IDocument.Type#FILE}.
      * 
      * @param doc
      * @param file
      * @return true successful, otherwise false
      */
-    public boolean updateFile(FileDocument doc, File file);
+    public boolean updateFile(IDocument doc, File file);
     
     /**
-     * Updates the url of the document.
+     * Updates the url of the document which is required to be
+     * of type {@link IDocument.Type#FILE}.
      * 
      * @param doc
      * @param url
      * @return true successful, otherwise false
      */
-    public boolean updateLink(URLDocument doc, URL url);
+    public boolean updateLink(IDocument doc, URL url);
     
 }

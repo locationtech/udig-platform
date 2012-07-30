@@ -12,16 +12,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.document;
+
 
 /**
- * @author nchan
- *
+ * A marker interface for all document source interfaces.
+ * 
+ * @author nchan 
  */
-public interface ILinkInfo {
-
-    public String getInfo();
-
-    public IDocument.Type getType();
-    
+public interface IAbstractDocumentSource {
+    // Nothing
 }

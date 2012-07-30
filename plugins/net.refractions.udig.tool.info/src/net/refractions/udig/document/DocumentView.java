@@ -26,17 +26,17 @@ import java.util.List;
 import java.util.Map;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.catalog.DocumentFactory;
-import net.refractions.udig.catalog.FileDocument;
-import net.refractions.udig.catalog.IAbstractDocumentSource;
-import net.refractions.udig.catalog.IAttachmentSource;
-import net.refractions.udig.catalog.IDocument;
-import net.refractions.udig.catalog.IDocumentFolder;
-import net.refractions.udig.catalog.IDocumentItem;
-import net.refractions.udig.catalog.IDocumentSource;
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IHotlink;
-import net.refractions.udig.catalog.URLDocument;
+import net.refractions.udig.catalog.document.IAbstractDocumentSource;
+import net.refractions.udig.catalog.document.IAttachmentSource;
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IDocumentFolder;
+import net.refractions.udig.catalog.document.IDocumentItem;
+import net.refractions.udig.catalog.document.IDocumentSource;
+import net.refractions.udig.catalog.document.IHotlinkSource;
+import net.refractions.udig.catalog.internal.document.DocumentFactory;
+import net.refractions.udig.catalog.internal.document.FileDocument;
+import net.refractions.udig.catalog.internal.document.URLDocument;
 import net.refractions.udig.core.AdapterUtil;
 import net.refractions.udig.core.IBlockingProvider;
 import net.refractions.udig.project.ILayer;
@@ -92,7 +92,7 @@ import org.opengis.filter.identity.FeatureId;
 /**
  * The Document View provides a user interface to view, edit and access attached documents. In this
  * current release, the view uses shapefile implementations of {@link IDocumentSource} and
- * {@link IHotlink} as its document sources.
+ * {@link IHotlinkSource} as its document sources.
  * 
  * @author paul.pfeiffer
  * @author Naz Chan
@@ -259,7 +259,7 @@ public class DocumentView extends ViewPart {
                     openButton.setEnabled(false);
                     removeButton.setEnabled(false);
                     final IDocumentFolder folder = (IDocumentFolder) firstObj;
-                    final boolean isAddAllowed = !(folder.getSource() instanceof IHotlink);
+                    final boolean isAddAllowed = !(folder.getSource() instanceof IHotlinkSource);
                     attachButton.setEnabled(isAddAllowed);
                     linkButton.setEnabled(isAddAllowed);
                 } else if (firstObj instanceof IDocument) {
@@ -438,7 +438,7 @@ public class DocumentView extends ViewPart {
                 feature = getFeature(geoResource, toFilter(obj, monitor));
                 if (feature != null) {
                 
-                    final IHotlink hotlinkSource = toSource(geoResource, IHotlink.class, monitor);
+                    final IHotlinkSource hotlinkSource = toSource(geoResource, IHotlinkSource.class, monitor);
                     if (hotlinkSource != null) {
                         final String featureId = feature.getIdentifier().getID();
                         final String labelShown = String.format(Messages.docView_featureDocs, featureId);
@@ -676,9 +676,9 @@ public class DocumentView extends ViewPart {
             } else {
                 fileDoc.setFile(file);
             }
-        } else if (source instanceof IHotlink) {
+        } else if (source instanceof IHotlinkSource) {
             final String attributeName = fileDoc.getAttributeName();
-            final IHotlink hotlinkSource = (IHotlink) source;
+            final IHotlinkSource hotlinkSource = (IHotlinkSource) source;
             hotlinkSource.setFile(feature, attributeName, file);
             set(attributeName, feature.getAttribute(attributeName));
             fileDoc.setFile(file);
@@ -806,10 +806,10 @@ public class DocumentView extends ViewPart {
             } else {
                 urlDoc.setUrl(url);
             }
-        } else if (source instanceof IHotlink) {
+        } else if (source instanceof IHotlinkSource) {
             
             final String attributeName = urlDoc.getAttributeName();
-            final IHotlink hotlinkSource = (IHotlink) source;
+            final IHotlinkSource hotlinkSource = (IHotlinkSource) source;
             hotlinkSource.setLink(feature, attributeName, url);
             set(attributeName, feature.getAttribute(attributeName));
             urlDoc.setUrl(url);
@@ -894,9 +894,9 @@ public class DocumentView extends ViewPart {
                 final IAttachmentSource attachmentSource = (IAttachmentSource) source;
                 attachmentSource.remove(feature.getIdentifier(), docs);
                 itemModel.getFolder(docs.get(0)).removeDocuments(docs);
-            } else if (source instanceof IHotlink) {
+            } else if (source instanceof IHotlinkSource) {
                 
-                final IHotlink hotlinkSource = (IHotlink) source;
+                final IHotlinkSource hotlinkSource = (IHotlinkSource) source;
                 for (IDocument doc : docs) {
                     
                     final String attributeName = doc.getAttributeName();

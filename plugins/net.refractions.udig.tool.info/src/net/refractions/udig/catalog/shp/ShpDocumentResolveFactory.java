@@ -17,11 +17,11 @@ package net.refractions.udig.catalog.shp;
 import java.io.File;
 import java.io.IOException;
 
-import net.refractions.udig.catalog.IAttachmentSource;
-import net.refractions.udig.catalog.IDocumentSource;
-import net.refractions.udig.catalog.IHotlink;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
+import net.refractions.udig.catalog.document.IAttachmentSource;
+import net.refractions.udig.catalog.document.IDocumentSource;
+import net.refractions.udig.catalog.document.IHotlinkSource;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -41,7 +41,7 @@ public class ShpDocumentResolveFactory implements IResolveAdapterFactory {
             final File file = ShpDocPropertyParser.getPropertiesFile(shpGeoResource.getID());
             if (file != null) {
                 if (adapter.isAssignableFrom(IDocumentSource.class)
-                        || adapter.isAssignableFrom(IHotlink.class)
+                        || adapter.isAssignableFrom(IHotlinkSource.class)
                         || adapter.isAssignableFrom(IAttachmentSource.class)) {
                     return file.exists(); // put off exist check until last as it involves IO
                 }
@@ -62,10 +62,10 @@ public class ShpDocumentResolveFactory implements IResolveAdapterFactory {
                 }
             }
         }
-        if (adapter.isAssignableFrom(IHotlink.class)) {
+        if (adapter.isAssignableFrom(IHotlinkSource.class)) {
             if (resolve instanceof ShpGeoResourceImpl) {
                 ShpGeoResourceImpl shpGeoResource = (ShpGeoResourceImpl) resolve;
-                IHotlink hotlink = hotlink(shpGeoResource, monitor);
+                IHotlinkSource hotlink = hotlink(shpGeoResource, monitor);
                 if (hotlink != null) {
                     return adapter.cast(hotlink);
                 }
@@ -92,7 +92,7 @@ public class ShpDocumentResolveFactory implements IResolveAdapterFactory {
      * @param monitor
      * @return hotlink source used to access attribute links and file referenes
      */
-    private IHotlink hotlink(ShpGeoResourceImpl shpGeoResource, IProgressMonitor monitor) {
+    private IHotlinkSource hotlink(ShpGeoResourceImpl shpGeoResource, IProgressMonitor monitor) {
         final File file = ShpDocPropertyParser.getPropertiesFile(shpGeoResource.getID());
         if (file != null && file.exists()) {
             return new ShpHotlinkSource(shpGeoResource);

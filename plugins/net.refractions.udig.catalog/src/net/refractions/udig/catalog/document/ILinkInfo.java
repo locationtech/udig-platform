@@ -12,27 +12,16 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.document;
 
 /**
- * Document item interface.
- * 
- * @author Naz Chan
+ * @author nchan
+ *
  */
-public interface IDocumentItem {
+public interface ILinkInfo {
 
-    /**
-     * Gets the document item's name
-     * 
-     * @return name
-     */
-    public String getName();
+    public String getInfo();
 
-    /**
-     * Gets the document item's description
-     * 
-     * @return description
-     */
-    public String getDescription();
+    public IDocument.Type getType();
     
 }

@@ -21,10 +21,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.FileDocument;
-import net.refractions.udig.catalog.IAttachmentSource;
-import net.refractions.udig.catalog.IDocument;
-import net.refractions.udig.catalog.URLDocument;
+import net.refractions.udig.catalog.document.IAttachmentSource;
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.internal.document.FileDocument;
+import net.refractions.udig.catalog.internal.document.URLDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 
 import org.apache.commons.io.FileUtils;
@@ -108,7 +108,7 @@ public class ShpAttachmentSource extends AbstractShpDocumentSource implements IA
     }
     
     @Override
-    public File updateFile(FeatureId fid, FileDocument doc, File file) {
+    public File updateFile(FeatureId fid, IDocument doc, File file) {
         
         FileDocument fileDoc = null;
         final File localDir = propParser.getFeatureAttachmentsDir(fid.getID());
@@ -137,7 +137,7 @@ public class ShpAttachmentSource extends AbstractShpDocumentSource implements IA
     }
 
     @Override
-    public boolean updateLink(FeatureId fid, URLDocument doc, URL url) {
+    public boolean updateLink(FeatureId fid, IDocument doc, URL url) {
 
         URLDocument fileDoc = null;
         final IDocument newDoc = docFactory.create(url);

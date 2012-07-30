@@ -14,9 +14,13 @@
  *    Lesser General Public License for more details.
  *
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.internal.document;
 
 import java.net.URI;
+
+import net.refractions.udig.catalog.document.IAbstractDocumentSource;
+import net.refractions.udig.catalog.document.IDocument;
+
 
 
 /**

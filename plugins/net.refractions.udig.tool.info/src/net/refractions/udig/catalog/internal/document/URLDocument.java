@@ -1,8 +1,11 @@
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.internal.document;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IDocument.Type;
 
 import org.eclipse.swt.program.Program;
 

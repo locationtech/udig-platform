@@ -7,16 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.IAbstractDocumentSource;
-import net.refractions.udig.catalog.IDocument;
-import net.refractions.udig.catalog.IDocumentFolder;
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IHotlink;
 
 import org.eclipse.swt.program.Program;
 import org.opengis.feature.simple.SimpleFeature;
 
-public class BasicHotlink implements IHotlink {
+public class BasicHotlink implements IHotlinkSource {
     class FileLink implements IDocument {
         private File file;
         private String attributeName;

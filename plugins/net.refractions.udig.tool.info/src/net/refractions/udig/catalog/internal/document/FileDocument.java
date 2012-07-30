@@ -14,12 +14,15 @@
  *    Lesser General Public License for more details.
  *
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.internal.document;
 
 import java.io.File;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IDocument.Type;
 
 import org.eclipse.swt.program.Program;
 

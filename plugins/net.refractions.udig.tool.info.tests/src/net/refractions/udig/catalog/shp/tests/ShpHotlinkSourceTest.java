@@ -19,10 +19,10 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.FileDocument;
-import net.refractions.udig.catalog.IDocument;
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.URLDocument;
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.internal.document.FileDocument;
+import net.refractions.udig.catalog.internal.document.URLDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
 import net.refractions.udig.catalog.shp.ShpHotlinkSource;

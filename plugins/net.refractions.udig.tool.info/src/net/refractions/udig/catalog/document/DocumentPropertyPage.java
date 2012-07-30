@@ -22,10 +22,9 @@ import java.util.List;
 import java.util.Map;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.catalog.IDocument.Type;
-import net.refractions.udig.catalog.IDocument;
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IHotlink.HotlinkDescriptor;
+import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

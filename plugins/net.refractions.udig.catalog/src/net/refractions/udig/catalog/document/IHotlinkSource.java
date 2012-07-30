@@ -12,13 +12,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.document;
 
 import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-import net.refractions.udig.catalog.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.Type;
 
 import org.opengis.feature.simple.SimpleFeature;
 
@@ -32,7 +32,7 @@ import org.opengis.feature.simple.SimpleFeature;
  * 
  * @author Jody Garnett
  */
-public interface IHotlink extends IAbstractDocumentSource {
+public interface IHotlinkSource extends IAbstractDocumentSource {
 
     /**
      * Used to record additional AttributeDescriptor information marking attributes suitable to

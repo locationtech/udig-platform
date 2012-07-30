@@ -14,7 +14,7 @@
  *    Lesser General Public License for more details.
  *
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.internal.document;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -23,6 +23,12 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+
+import net.refractions.udig.catalog.document.IAbstractDocumentSource;
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IDocumentFolder;
+import net.refractions.udig.catalog.document.IDocument.Type;
 
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -124,7 +130,11 @@ public class DocumentFactory {
         final List<IDocument> docs = new ArrayList<IDocument>();
         if (infos != null && infos.size() > 0) {
             for (LinkInfo info : infos) {
-                docs.add(createDoc(url, info.getLabel(), info.getInfo(), info.getType()));
+                String attributeName = info.getInfo();
+                Type type = info.getType();
+                AbstractDocument document = createDoc(url, info.getLabel(), attributeName, type);
+                
+                docs.add(document);
             }
         }
         return docs;

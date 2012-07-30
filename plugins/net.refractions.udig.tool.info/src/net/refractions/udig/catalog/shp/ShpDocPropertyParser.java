@@ -26,12 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import net.refractions.udig.catalog.DocumentFactory;
-import net.refractions.udig.catalog.FileDocument;
 import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IDocument;
-import net.refractions.udig.catalog.LinkInfo;
-import net.refractions.udig.catalog.URLDocument;
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.internal.document.DocumentFactory;
+import net.refractions.udig.catalog.internal.document.FileDocument;
+import net.refractions.udig.catalog.internal.document.LinkInfo;
+import net.refractions.udig.catalog.internal.document.URLDocument;
 
 import org.opengis.feature.simple.SimpleFeature;
 
