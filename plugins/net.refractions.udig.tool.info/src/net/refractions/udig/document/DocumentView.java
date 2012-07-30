@@ -28,7 +28,6 @@ import java.util.Map;
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.document.IAbstractDocumentSource;
-import net.refractions.udig.catalog.document.IAttachment;
 import net.refractions.udig.catalog.document.IAttachmentSource;
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocumentFolder;
@@ -813,28 +812,43 @@ public class DocumentView extends ViewPart {
         
         final IAbstractDocumentSource source = urlDoc.getSource();
         if (source instanceof IDocumentSource) {
-            if (!((IDocumentSource) source).updateLink(urlDoc, url)) {
+            IDocumentSource documentSource = (IDocumentSource) source;
+            boolean updated = documentSource.updateLink(urlDoc, url);
+            if (updated) {
+                if( urlDoc instanceof URLDocument){
+                    ((URLDocument)urlDoc).setUrl(url);
+                }
+            }
+            else {
                 MessageDialog.openInformation(attachButton.getShell(),
                         Messages.docView_linkURL, Messages.docView_errURLExist);
-            } else {
-                urlDoc.setUrl(url);
             }
         } else if (source instanceof IHotlinkSource) {
-            
-            final String attributeName = urlDoc.getAttributeName();
             final IHotlinkSource hotlinkSource = (IHotlinkSource) source;
-            hotlinkSource.setLink(feature, attributeName, url);
-            set(attributeName, feature.getAttribute(attributeName));
-            urlDoc.setUrl(url);
             
+            if( urlDoc instanceof IHotlink ){
+                IHotlink hotlink = (IHotlink) urlDoc;
+                final String attributeName = hotlink.getAttributeName();
+                
+                hotlinkSource.setLink(feature, attributeName, url);
+                Object value = feature.getAttribute(attributeName);
+                set(attributeName, value);
+            }
+            if( urlDoc instanceof URLDocument ){
+                ((URLDocument)urlDoc).setUrl(url);
+            }
         } else if (source instanceof IAttachmentSource) {
             final IAttachmentSource attachmentSource = (IAttachmentSource) source;
             final boolean isUpdateSuccess = attachmentSource.updateLink(feature.getIdentifier(), urlDoc, url);
-            if (!isUpdateSuccess) {
+            
+            if (isUpdateSuccess) {
+                if( urlDoc instanceof URLDocument){
+                    ((URLDocument)urlDoc).setUrl(url);
+                }
+            }
+            else {
                 MessageDialog.openInformation(attachButton.getShell(),
                         Messages.docView_linkURL, Messages.docView_errURLExist);
-            } else {
-                urlDoc.setUrl(url);
             }
         }
         
