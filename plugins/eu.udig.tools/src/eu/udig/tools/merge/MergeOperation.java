@@ -20,6 +20,10 @@ public class MergeOperation implements IOp {
 
             public void run() {
                 try {
+                    // Set tool mode
+                    MergeContext mergeContextSingleton = MergeContext.getInstance();
+                    mergeContextSingleton.setMergeMode(MergeContext.MERGEMODE_OPERATION);
+                    // Open view
                     mergeView = (MergeView) ApplicationGIS.getView(true, MergeView.ID);
                     
                 } catch (Exception ex) {

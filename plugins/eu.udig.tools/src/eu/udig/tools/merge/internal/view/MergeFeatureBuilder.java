@@ -515,6 +515,13 @@ class MergeFeatureBuilder {
 		
 		sourceFeatures.removeAll(featureList);
 	}
+	/**
+	 * Used by MergeView to remove all features before adding new collection (while in Operation Mode)
+	 */
+        public synchronized void removeFromSourceFeaturesAll() {
+            
+            sourceFeatures.clear();
+        }
 
 	/**
 	 * Checks if the feature's geometry fulfill the conditions to be added in the list of features to merge.

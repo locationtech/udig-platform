@@ -928,6 +928,12 @@ class MergeComposite extends Composite {
      */
     public void addSourceFeatures(List<SimpleFeature> featureList) {
 
+        // If in operation mode, clean tree-view before adding new features
+        if (this.mergeView.isOperationMode()){
+            this.mergeBuilder = getMergeBuilder();
+            mergeBuilder.removeFromSourceFeaturesAll();
+        }
+        
         for (SimpleFeature feature : featureList) {
             displaySourceFeature(feature);
         }

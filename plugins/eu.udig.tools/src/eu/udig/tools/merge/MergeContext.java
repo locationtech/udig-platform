@@ -42,6 +42,9 @@ import eu.udig.tools.merge.internal.view.MergeView;
  * @author Mauricio Pazos (www.axios.es)
  */
 public class MergeContext {
+    
+        public static final int MERGEMODE_TOOL = 1;
+        public static final int MERGEMODE_OPERATION = 2;
 
 	//private static final MergeContext THIS = new MergeContext();
 	
@@ -50,6 +53,8 @@ public class MergeContext {
 	private List<Envelope>		boundList = new ArrayList<Envelope>();
 	private MergeView 			mergeView = null;
 	private IToolContext 		toolContext = null;
+	
+	private static int mergeMode;
 
 	/**
 	 * Singleton use the getInstance methods
@@ -186,6 +191,23 @@ public class MergeContext {
 		this.mergeView = view;
 		
 	}
-	
-	
+	/**
+	 * Set the mode in which the tool operates:
+	 * Used by MergeOperatio.op
+	 * Used by MergeTool.
+	 *
+	 * @param mode
+	 */
+	public void setMergeMode(int mode){
+	    this.mergeMode = mode;
+	}
+	/**
+	 * Return the mode in which the tool is operating
+	 * Tool mode = 1 (selection by Merge Tool)
+	 * Operation mode = 2 (with listeners on layers)
+	 * @return
+	 */
+	public int getMergeMode(){
+	    return this.mergeMode;
+	}
 }
