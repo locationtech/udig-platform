@@ -20,7 +20,6 @@
  */
 package eu.udig.tools.merge.internal.view;
 
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +27,6 @@ import java.util.Set;
 
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.jface.action.MenuManager;
@@ -68,7 +66,6 @@ import org.opengis.filter.identity.FeatureId;
 import eu.udig.tools.internal.i18n.Messages;
 import eu.udig.tools.internal.ui.util.InfoMessage;
 import eu.udig.tools.internal.ui.util.LayerUtil;
-import eu.udig.tools.merge.Util;
 
 /**
  * Merge Controls for composite
@@ -173,23 +170,6 @@ class MergeComposite extends Composite {
         createCompositeMergeFeature();
         createContextMenu();
         viewForm.setContent(sashForm);
-        
-        
-        //TODO : FIX this code
-        //if (this.mergeView.isOperationMode()){
-        ILayer selectedLayer = ApplicationGIS.getActiveMap().getEditManager().getSelectedLayer();
-        Filter preSelectedFeatures = selectedLayer.getFilter(); 
-        List<SimpleFeature> featureList = null;
-        try {
-            featureList = Util.retrieveFeatures(preSelectedFeatures, selectedLayer);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
-        this.addSourceFeatures(featureList);
-            
-        //}
     }
 
     /**
@@ -944,21 +924,9 @@ class MergeComposite extends Composite {
     /**
      * Adds the features to the existent source feature set.
      * 
-     * In case linked MergeView was opened from operation so that MergeView.isOperationMode()
-     * returns True then all features are removed from mergeBuilder before adding the new ones
-     * 
      * @param featureList
      */
     public void addSourceFeatures(List<SimpleFeature> featureList) {
-
-        // In case the tool is running in operation mode
-        // remove any feature eventually inside the mergeBuilder 
-        // before adding the new ones: this allows sync wit
-        // selected features in active (selected) layer
-        if (this.mergeView.isOperationMode()) {
-            this.mergeBuilder =  getMergeBuilder();
-            mergeBuilder.removeFromSourceFeaturesAll();
-        }
 
         for (SimpleFeature feature : featureList) {
             displaySourceFeature(feature);
@@ -1002,8 +970,7 @@ class MergeComposite extends Composite {
 
         // create a new merge builder
         if (this.mergeView.isOperationMode()) {
-            this.mergeBuilder = new MergeFeatureBuilder(
-                    this.mergeView.getCurrentEventTriggeringLayer());
+            this.mergeBuilder = new MergeFeatureBuilder(this.mergeView.getCurrentEventTriggeringLayer());
         } else {
             this.mergeBuilder = new MergeFeatureBuilder(this.mergeView.getContext()
                     .getSelectedLayer());
