@@ -805,18 +805,18 @@ public class DocumentView extends ViewPart {
      * Links the URL to the selected document. This method checks what document source is
      * related to the document.
      * 
-     * @param urlDoc
+     * @param doc
      * @param url
      */
-    private void linkOnDocument(IDocument urlDoc, URL url) {
+    private void linkOnDocument(IDocument doc, URL url) {
         
-        final IAbstractDocumentSource source = urlDoc.getSource();
+        final IAbstractDocumentSource source = doc.getSource();
         if (source instanceof IDocumentSource) {
             IDocumentSource documentSource = (IDocumentSource) source;
-            boolean updated = documentSource.updateLink(urlDoc, url);
+            boolean updated = documentSource.updateLink(doc, url);
             if (updated) {
-                if( urlDoc instanceof URLDocument){
-                    ((URLDocument)urlDoc).setUrl(url);
+                if( doc instanceof URLDocument){
+                    ((URLDocument)doc).setUrl(url);
                 }
             }
             else {
@@ -826,24 +826,24 @@ public class DocumentView extends ViewPart {
         } else if (source instanceof IHotlinkSource) {
             final IHotlinkSource hotlinkSource = (IHotlinkSource) source;
             
-            if( urlDoc instanceof IHotlink ){
-                IHotlink hotlink = (IHotlink) urlDoc;
+            if( doc instanceof IHotlink ){
+                IHotlink hotlink = (IHotlink) doc;
                 final String attributeName = hotlink.getAttributeName();
                 
                 hotlinkSource.setLink(feature, attributeName, url);
                 Object value = feature.getAttribute(attributeName);
                 set(attributeName, value);
             }
-            if( urlDoc instanceof URLDocument ){
-                ((URLDocument)urlDoc).setUrl(url);
+            if( doc instanceof URLDocument ){
+                ((URLDocument)doc).setUrl(url);
             }
         } else if (source instanceof IAttachmentSource) {
             final IAttachmentSource attachmentSource = (IAttachmentSource) source;
-            final boolean isUpdateSuccess = attachmentSource.updateLink(feature.getIdentifier(), urlDoc, url);
+            final boolean isUpdateSuccess = attachmentSource.updateLink(feature.getIdentifier(), doc, url);
             
             if (isUpdateSuccess) {
-                if( urlDoc instanceof URLDocument){
-                    ((URLDocument)urlDoc).setUrl(url);
+                if( doc instanceof URLDocument){
+                    ((URLDocument)doc).setUrl(url);
                 }
             }
             else {
