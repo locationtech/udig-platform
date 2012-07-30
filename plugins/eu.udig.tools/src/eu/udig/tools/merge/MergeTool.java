@@ -97,6 +97,10 @@ public class MergeTool extends SimpleTool  implements ModalTool{
 			this.mergeContext = MergeContext.getInstance();
 			this.mergeContext.setToolContext(getContext());
 
+			// Set tool mode (also set in MergeOperation.op to MERGEMODE_OPERATION) 
+	                // MergeContext mergeContextSingleton = MergeContext.getInstance();
+			this.mergeContext.setMergeMode(MergeContext.MERGEMODE_TOOL);
+			
 			// feedback to the user indeed that he can select some features to merege
 			StatusBar.setStatusBarMessage(this.mergeContext.getToolContext(), "");//$NON-NLS-1$
 			if (this.mergeContext.getToolContext().getMapLayers().size() > 0) {

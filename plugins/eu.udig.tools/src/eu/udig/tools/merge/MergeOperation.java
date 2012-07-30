@@ -20,7 +20,7 @@ public class MergeOperation implements IOp {
 
             public void run() {
                 try {
-                    // Set tool mode
+                    // Set tool mode (also set in MergeTool.setContext to MERGEMODE_TOOL) 
                     MergeContext mergeContextSingleton = MergeContext.getInstance();
                     mergeContextSingleton.setMergeMode(MergeContext.MERGEMODE_OPERATION);
                     // Open view

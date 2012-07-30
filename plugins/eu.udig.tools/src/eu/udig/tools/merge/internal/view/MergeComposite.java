@@ -27,6 +27,7 @@ import java.util.Set;
 
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.UndoableMapCommand;
+import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.jface.action.MenuManager;
@@ -66,6 +67,7 @@ import org.opengis.filter.identity.FeatureId;
 import eu.udig.tools.internal.i18n.Messages;
 import eu.udig.tools.internal.ui.util.InfoMessage;
 import eu.udig.tools.internal.ui.util.LayerUtil;
+import eu.udig.tools.merge.MergeContext;
 
 /**
  * Merge Controls for composite
@@ -929,7 +931,13 @@ class MergeComposite extends Composite {
     public void addSourceFeatures(List<SimpleFeature> featureList) {
 
         // If in operation mode, clean tree-view before adding new features
+        /*
         if (this.mergeView.isOperationMode()){
+            this.mergeBuilder = getMergeBuilder();
+            mergeBuilder.removeFromSourceFeaturesAll();
+        }
+        */
+        if (MergeContext.getInstance().getMergeMode() == MergeContext.MERGEMODE_OPERATION) {
             this.mergeBuilder = getMergeBuilder();
             mergeBuilder.removeFromSourceFeaturesAll();
         }

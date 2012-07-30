@@ -258,8 +258,8 @@ public class MergeView extends ViewPart implements IUDIGView {
     private void updateLayerActions(final LayerEvent event) {
 
         final ILayer modifiedLayer = event.getSource();
-        
-        this.currEventTriggeringLayer  = modifiedLayer;
+
+        this.currEventTriggeringLayer = modifiedLayer;
 
         PlatformGISMediator.syncInDisplayThread(new Runnable() {
 
@@ -426,7 +426,8 @@ public class MergeView extends ViewPart implements IUDIGView {
     }
 
     /**
-     * @return true if the MergeView was NOT started by the MergeTool (and hence has no ToolContext!)
+     * @return true if the MergeView was NOT started by the MergeTool (and hence has no
+     *         ToolContext!)
      */
     public boolean isOperationMode() {
         return operationMode;
@@ -440,7 +441,6 @@ public class MergeView extends ViewPart implements IUDIGView {
         return this.currEventTriggeringLayer;
     }
 
-    
     // <<<< ###############
     // <<<< ###############
     // <<<< ###############
@@ -457,7 +457,7 @@ public class MergeView extends ViewPart implements IUDIGView {
         this.mergeComposite = new MergeComposite(parent, SWT.NONE);
 
         this.mergeComposite.setView(this);
-        
+
         // If, at this step, MergeView has no context it means that has been started
         // by MergeOperation: this must be traced to prevent call on null objects.
         if (this.getContext() == null) {
@@ -534,10 +534,15 @@ public class MergeView extends ViewPart implements IUDIGView {
          */
         @Override
         public void run() {
-
-            // sets the command using the features present in the merge builder
-            IToolContext context = getContext();
-            final ILayer layer = context.getSelectedLayer();
+            
+            ILayer layer = null;
+            if (MergeContext.getInstance().getMergeMode() == MergeContext.MERGEMODE_TOOL) {
+                // sets the command using the features present in the merge builder
+                IToolContext context = getContext();
+                 layer = context.getSelectedLayer();
+            } else if (MergeContext.getInstance().getMergeMode() == MergeContext.MERGEMODE_OPERATION) {
+                layer =  ApplicationGIS.getActiveMap().getEditManager().getSelectedLayer();
+            }
 
             MergeFeatureBuilder mergeBuilder = mergeComposite.getMergeBuilder();
             final List<SimpleFeature> sourceFeatures = mergeBuilder.getSourceFeatures();
