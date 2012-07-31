@@ -105,15 +105,13 @@ public class MergeView extends ViewPart implements IUDIGView {
 
     private IToolContext context = null;
 
-    private boolean operationMode = false;
-
     private ILayer currEventTriggeringLayer = null;
 
     // ###
     // ###
     // ###
 
-    protected void initialize() {
+    protected void initializeOperationModeSupport() {
 
         this.wasInitialized = false;
 
@@ -259,29 +257,35 @@ public class MergeView extends ViewPart implements IUDIGView {
 
         final ILayer modifiedLayer = event.getSource();
 
-        this.currEventTriggeringLayer = modifiedLayer;
+        // Execute actions just on currently selected layer
+        // NOTE: This is needed as a single Box selection action seems to trigger
+        // a FILTER eventType an ALL map layer and not just on the selected one
+        if (modifiedLayer == ApplicationGIS.getActiveMap().getEditManager().getSelectedLayer()) {
 
-        PlatformGISMediator.syncInDisplayThread(new Runnable() {
+            this.currEventTriggeringLayer = modifiedLayer;
 
-            public void run() {
+            PlatformGISMediator.syncInDisplayThread(new Runnable() {
 
-                LayerEvent.EventType type = event.getType();
-                switch (type) {
-                case ALL:
-                    changedLayerActions(modifiedLayer);
-                    break;
+                public void run() {
 
-                case FILTER:
-                    Filter newFilter = modifiedLayer.getFilter();
-                    changedFilterSelectionActions(modifiedLayer, newFilter);
-                    break;
+                    LayerEvent.EventType type = event.getType();
+                    switch (type) {
+                    case ALL:
+                        changedLayerActions(modifiedLayer);
+                        break;
 
-                default:
-                    break;
+                    case FILTER:
+                        Filter newFilter = modifiedLayer.getFilter();
+                        changedFilterSelectionActions(modifiedLayer, newFilter);
+                        break;
+
+                    default:
+                        break;
+                    }
                 }
-            }
 
-        });
+            });
+        }
     }
 
     /**
@@ -430,14 +434,21 @@ public class MergeView extends ViewPart implements IUDIGView {
      *         ToolContext!)
      */
     public boolean isOperationMode() {
-        return operationMode;
+        boolean isOpMode;
+        MergeContext mergeContextSingleton = MergeContext.getInstance();
+        if (mergeContextSingleton.getMergeMode() == MergeContext.MERGEMODE_OPERATION) {
+            isOpMode = true;
+        } else {
+            isOpMode = true;
+        }
+        return isOpMode;
     }
 
     /**
      * @return the layer that has triggered the current event. Null if no layer event is running.
      */
     public ILayer getCurrentEventTriggeringLayer() {
-        // TODO Auto-generated method stub
+        //
         return this.currEventTriggeringLayer;
     }
 
@@ -445,7 +456,7 @@ public class MergeView extends ViewPart implements IUDIGView {
     // <<<< ###############
     // <<<< ###############
     // <<<< ###############
-    // <<<< ###############
+    // <<<< ####NEW#STUFF##
     // <<<< ###############
     // <<<< ###############
     // <<<< ###############
@@ -458,16 +469,13 @@ public class MergeView extends ViewPart implements IUDIGView {
 
         this.mergeComposite.setView(this);
 
-        // If, at this step, MergeView has no context it means that has been started
-        // by MergeOperation: this must be traced to prevent call on null objects.
-        if (this.getContext() == null) {
-            this.operationMode = true;
-        }
-
         createActions();
         createToolbar();
-        initialize(); // <<<< ############### plug-in Listener stuff in previous work-flow HERE
-                      // #################
+
+        if (this.isOperationMode()) {
+            initializeOperationModeSupport(); // <<<< ############### plug-in Listener stuff for
+                                              // supporting operation mode
+        }
     }
 
     private void createToolbar() {
@@ -534,14 +542,14 @@ public class MergeView extends ViewPart implements IUDIGView {
          */
         @Override
         public void run() {
-            
+
             ILayer layer = null;
             if (MergeContext.getInstance().getMergeMode() == MergeContext.MERGEMODE_TOOL) {
                 // sets the command using the features present in the merge builder
                 IToolContext context = getContext();
-                 layer = context.getSelectedLayer();
+                layer = context.getSelectedLayer();
             } else if (MergeContext.getInstance().getMergeMode() == MergeContext.MERGEMODE_OPERATION) {
-                layer =  ApplicationGIS.getActiveMap().getEditManager().getSelectedLayer();
+                layer = ApplicationGIS.getActiveMap().getEditManager().getSelectedLayer();
             }
 
             MergeFeatureBuilder mergeBuilder = mergeComposite.getMergeBuilder();
@@ -569,7 +577,7 @@ public class MergeView extends ViewPart implements IUDIGView {
     @Override
     public void setFocus() {
 
-        // TODO Auto-generated method stub
+        //
     }
 
     /**
@@ -666,7 +674,7 @@ public class MergeView extends ViewPart implements IUDIGView {
 
     @Override
     public void editFeatureChanged(SimpleFeature feature) {
-        // TODO Auto-generated method stub
+        //
 
     }
 
@@ -709,8 +717,8 @@ public class MergeView extends ViewPart implements IUDIGView {
     public IToolContext getContext() {
         if (this.mergeContext == null)
             return null;
-
-        return this.mergeContext.getToolContext();
+        IToolContext itc = this.mergeContext.getToolContext();
+        return itc;
     }
 
     public void setMergeContext(MergeContext mergeContext) {
@@ -719,7 +727,7 @@ public class MergeView extends ViewPart implements IUDIGView {
     }
 
     public boolean isDisposed() {
-        // TODO Auto-generated method stub
+
         return this.mergeComposite.isDisposed();
     }
 
