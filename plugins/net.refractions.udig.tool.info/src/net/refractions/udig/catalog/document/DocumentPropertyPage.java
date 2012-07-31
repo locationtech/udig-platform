@@ -15,23 +15,21 @@
 package net.refractions.udig.catalog.document;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -44,14 +42,9 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.window.IShellProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -88,6 +81,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
 
     private Label tableLabel;
 
+    private ShpDocPropertyParser propParser;
+    
     // @Override
     // protected Point doComputeSize() {
     // return super.doComputeSize();
@@ -97,6 +92,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
     protected Control createContents(Composite parent) {
         final IGeoResource resource = (IGeoResource) getElement().getAdapter(IGeoResource.class);
 
+        propParser = new ShpDocPropertyParser(resource.getIdentifier(), null);
+        
         boolean isEnabled = BasicHotlinkResolveFactory.hasHotlinkDescriptors(resource);
         boolean hasSchema = resource.canResolve(SimpleFeatureSource.class);
         model = new ArrayList<HotlinkDescriptor>();
@@ -254,11 +251,14 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             if (table.getInput() == EMPTY) {
                 BasicHotlinkResolveFactory.putHotlinkDescriptors(resource,
                         new ArrayList<HotlinkDescriptor>());
+                propParser.setFeatureLinks(Collections.<HotlinkDescriptor> emptyList());
             } else {
                 BasicHotlinkResolveFactory.putHotlinkDescriptors(resource, model);
+                propParser.setFeatureLinks(model);
             }
         } else {
             BasicHotlinkResolveFactory.clearHotlinkDescriptors(resource);
+            propParser.setFeatureLinks(Collections.<HotlinkDescriptor> emptyList());
         }
         return super.performOk();
     }
@@ -271,7 +271,10 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         boolean hasSchema = resource.canResolve(SimpleFeatureSource.class);
         if (isEnabled && hasSchema) {
             model.clear();
-            model.addAll(BasicHotlinkResolveFactory.getHotlinkDescriptors(resource));
+            final List<HotlinkDescriptor> hotlinks = BasicHotlinkResolveFactory
+                    .getHotlinkDescriptors(resource);
+            model.addAll(hotlinks);
+            propParser.setFeatureLinks(hotlinks);
             table.refresh();
         } else {
             table.setInput(EMPTY);

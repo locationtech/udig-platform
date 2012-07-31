@@ -28,6 +28,7 @@ import java.util.Properties;
 
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.internal.document.DocumentFactory;
 import net.refractions.udig.catalog.internal.document.FileDocument;
 import net.refractions.udig.catalog.internal.document.LinkInfo;
@@ -110,6 +111,7 @@ public class ShpDocPropertyParser {
     
     private URL url;
     private Properties properties;
+    private long propsFileLastUpdate;
     private DocumentFactory docFactory;
 
     public ShpDocPropertyParser(URL url, DocumentFactory docFactory) {
@@ -128,35 +130,62 @@ public class ShpDocPropertyParser {
     }
     
     /**
-     * Caches the property file into a properties util for easy access.
+     * Caches the property file into a properties utility for easy access.
      * 
      * @return properties util
      */
     private Properties getProperties() {
-        if (properties == null) {
-            final File propertiesFile = getPropertiesFile();
-            if (propertiesFile != null) {
-                FileInputStream inStream = null;
-                try {
-                    inStream = new FileInputStream(propertiesFile);
-                    properties = new Properties();
-                    properties.load(inStream);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (inStream != null) {
-                        try {
-                            inStream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+        final File propertiesFile = getPropertiesFile();
+        if (propertiesFile != null) {
+            if (properties == null) {
+                loadProperties(propertiesFile);
+            } else {
+                if (isPropertiesUpdated(propertiesFile)) {
+                    loadProperties(propertiesFile);
                 }
             }
         }
         return properties;
+    }
+    
+    /**
+     * Loads the file into the properties utility.
+     * 
+     * @param propertiesFile
+     */
+    private void loadProperties(File propertiesFile) {
+        FileInputStream inStream = null;
+        try {
+            inStream = new FileInputStream(propertiesFile);
+            properties = new Properties();
+            properties.load(inStream);
+            propsFileLastUpdate = propertiesFile.lastModified(); 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inStream != null) {
+                try {
+                    inStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    
+    /**
+     * Checks if the properties file has been updated.
+     * 
+     * @param currentPropertiesFile
+     * @return true if updated, otherwise false
+     */
+    private boolean isPropertiesUpdated(File currentPropertiesFile) {
+        if (propsFileLastUpdate != currentPropertiesFile.lastModified()) {
+            return true;
+        }
+        return false;
     }
     
     /**
@@ -198,6 +227,25 @@ public class ShpDocPropertyParser {
     }
 
     /**
+     * Create the properties file.
+     * 
+     * @return properties file
+     */
+    private File createPropertiesFile() {
+        File file = getPropertiesFile();
+        if (file == null) {
+            final ID fileId = new ID(url);
+            file = fileId.toFile(PROP_FILE_EXT);
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return file;
+    }
+    
+    /**
      * Lookup the properties sidecar file for the indicate shapefile.
      * 
      * @param url
@@ -214,6 +262,7 @@ public class ShpDocPropertyParser {
         }
         return null;
     }
+    
     /**
      * Lookup the properties sidecar file for the indicate shapefile.
      * 
@@ -304,17 +353,7 @@ public class ShpDocPropertyParser {
         final StringBuilder sb = new StringBuilder();
         for (IDocument doc : docs) {
             count++;
-            final String label = doc.getLabel();
-            if (label != null) {
-                sb.append(label);    
-            }
-            sb.append(LINK_VALUE_DELIMITER);
-            final String linkValue = getLinkValue(doc); 
-            if (linkValue != null) {
-                sb.append(linkValue);    
-            }
-            sb.append(LINK_VALUE_DELIMITER);
-            sb.append(doc.getType().name());
+            appendLinkInfo(sb, doc);
             if (count < docs.size()) {
                 sb.append(LINK_PAIR_DELIMITER);
             }
@@ -322,6 +361,24 @@ public class ShpDocPropertyParser {
         getProperties().setProperty(property, sb.toString());
         writeProperties();
         
+    }
+    
+    private void appendLinkInfo(StringBuilder sb, IDocument doc) {
+        appendLinkInfo(sb, doc.getLabel(), getLinkValue(doc), doc.getType().name());
+    }
+    
+    private void appendLinkInfo(StringBuilder sb, String label, String info, String type) {
+
+        if (label != null) {
+            sb.append(label);
+        }
+        sb.append(LINK_VALUE_DELIMITER);
+        if (info != null) {
+            sb.append(info);
+        }
+        sb.append(LINK_VALUE_DELIMITER);
+        sb.append(type);
+
     }
     
     /**
@@ -433,6 +490,32 @@ public class ShpDocPropertyParser {
     public List<IDocument> getFeatureLinks(SimpleFeature feature) {
         final List<LinkInfo> infos = getFeatureLinkInfos();
         return docFactory.createList(url, feature, infos);
+    }
+
+    /**
+     * Sets the list of feature links.
+     * 
+     * @param hotlinks
+     */
+    public void setFeatureLinks(List<HotlinkDescriptor> hotlinks) {
+        
+        if (!hasProperties()) {
+            createPropertiesFile();
+        }
+        
+        int count = 0;
+        final StringBuilder sb = new StringBuilder();
+        for (HotlinkDescriptor hotlink : hotlinks) {
+            count++;
+            appendLinkInfo(sb, "", hotlink.getAttributeName(), hotlink.getType().name()); //$NON-NLS-1$
+            if (count < hotlinks.size()) {
+                sb.append(LINK_PAIR_DELIMITER);
+            }
+        }
+        
+        getProperties().setProperty(LINK_ATTRIBUTES, sb.toString());
+        writeProperties();
+        
     }
     
     /**
