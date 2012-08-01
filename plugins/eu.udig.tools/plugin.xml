@@ -2,6 +2,10 @@
 <?eclipse version="3.4"?>
 <plugin>
 
+	<extension
+		point="org.eclipse.ui.startup">
+      <startup class="eu.udig.tools.merge.MergeStartup"/>
+   </extension>
    <extension
          point="org.eclipse.ui.actionSets">
    </extension>

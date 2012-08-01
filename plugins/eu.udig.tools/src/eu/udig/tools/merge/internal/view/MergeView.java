@@ -464,7 +464,28 @@ public class MergeView extends ViewPart implements IUDIGView {
 
     @Override
     public void createPartControl(Composite parent) {
+        
+        MergeContext mergeContextSingleton = MergeContext.getInstance();
+        int mergeMode = mergeContextSingleton.getMergeMode();
+        if (mergeMode == 0){
+            Thread t = new Thread() {
 
+                public void run() {
+                    try {
+                        // Close view
+                        //ApplicationGIS.getView(true, MergeView.ID).dispose();
+                        
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            };
+
+            Display.getCurrent().asyncExec(t);
+            return;
+        }
+
+            
         this.mergeComposite = new MergeComposite(parent, SWT.NONE);
 
         this.mergeComposite.setView(this);
