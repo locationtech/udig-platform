@@ -31,7 +31,6 @@ import net.refractions.udig.project.IMapCompositionListener;
 import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.MapCompositionEvent;
 import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.commands.selection.BBoxSelectionCommand;
 import net.refractions.udig.project.ui.AnimationUpdater;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.IUDIGView;
@@ -55,11 +54,9 @@ import org.geotools.data.simple.SimpleFeatureCollection;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 
-//import au.com.objectix.jgridshift.Util;
-
-import eu.udig.tools.internal.mediator.PlatformGISMediator;
 import eu.udig.tools.internal.i18n.Messages;
 import eu.udig.tools.internal.mediator.AppGISAdapter;
+import eu.udig.tools.internal.mediator.PlatformGISMediator;
 import eu.udig.tools.internal.ui.util.StatusBar;
 import eu.udig.tools.merge.MergeContext;
 import eu.udig.tools.merge.Util;
@@ -208,7 +205,7 @@ public class MergeView extends ViewPart implements IUDIGView {
                     final ILayer layer = event.getLayer();
                     addedLayerActions(layer);
                     // validateParameters();
-                    System.out.print("Layer ADDED");
+                    System.out.print("Layer ADDED"); //$NON-NLS-1$
                 }
             });
             break;
@@ -221,7 +218,7 @@ public class MergeView extends ViewPart implements IUDIGView {
                     final ILayer layer = event.getLayer();
                     removedLayerActions(layer);
                     // validateParameters();
-                    System.out.print("Layer REMOVED");
+                    System.out.print("Layer REMOVED"); //$NON-NLS-1$
                 }
             });
             break;
@@ -235,12 +232,12 @@ public class MergeView extends ViewPart implements IUDIGView {
                     // changedLayerListActions();
                     // validateParameters();
 
-                    System.out.print("Layer MANY ADDED-REMOVED");
+                    System.out.print("Layer MANY ADDED-REMOVED"); //$NON-NLS-1$
                 }
             });
             break;
         default:
-            System.out.print("Layer DEFAULT");
+            System.out.print("Layer DEFAULT"); //$NON-NLS-1$
             break;
         }
     }
@@ -439,7 +436,7 @@ public class MergeView extends ViewPart implements IUDIGView {
         if (mergeContextSingleton.getMergeMode() == MergeContext.MERGEMODE_OPERATION) {
             isOpMode = true;
         } else {
-            isOpMode = true;
+            isOpMode = false;
         }
         return isOpMode;
     }
@@ -450,6 +447,24 @@ public class MergeView extends ViewPart implements IUDIGView {
     public ILayer getCurrentEventTriggeringLayer() {
         //
         return this.currEventTriggeringLayer;
+    }
+
+    /**
+     * Add features available in MergeContext as result of user pre-selection before MergeOperation
+     * launch. Features are added once then are cleared from blackboard (MergeContext)
+     */
+    private void addPreSelectedFeatures() {
+        // Use the currEventTriggeringLayer to store the layer that pseudo-triggered (no actual
+        // listener, just) this
+        MergeContext mergeContextSingleton = MergeContext.getInstance();      
+        List<SimpleFeature> selectedFeatures = mergeContextSingleton.getPreselectedFeatures();
+        this.currEventTriggeringLayer = mergeContextSingleton.getPreSelectedLayer();
+        if (selectedFeatures != null) {
+            this.addSourceFeatures(selectedFeatures);
+            // Clear preselected features to prevent repeated additions
+            mergeContextSingleton.clearPreselectedFeatures();
+            this.display();
+        }
     }
 
     // <<<< ###############
@@ -464,28 +479,7 @@ public class MergeView extends ViewPart implements IUDIGView {
 
     @Override
     public void createPartControl(Composite parent) {
-        
-        MergeContext mergeContextSingleton = MergeContext.getInstance();
-        int mergeMode = mergeContextSingleton.getMergeMode();
-        if (mergeMode == 0){
-            Thread t = new Thread() {
 
-                public void run() {
-                    try {
-                        // Close view
-                        //ApplicationGIS.getView(true, MergeView.ID).dispose();
-                        
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            };
-
-            Display.getCurrent().asyncExec(t);
-            return;
-        }
-
-            
         this.mergeComposite = new MergeComposite(parent, SWT.NONE);
 
         this.mergeComposite.setView(this);
@@ -496,7 +490,10 @@ public class MergeView extends ViewPart implements IUDIGView {
         if (this.isOperationMode()) {
             initializeOperationModeSupport(); // <<<< ############### plug-in Listener stuff for
                                               // supporting operation mode
+            // Add pre-selected features eventually available in blackboard (MergeContext)
+            addPreSelectedFeatures();
         }
+
     }
 
     private void createToolbar() {
@@ -627,10 +624,11 @@ public class MergeView extends ViewPart implements IUDIGView {
     /**
      * displays the error message
      */
+    @SuppressWarnings("unused")
     private void handleError(IToolContext context, MapMouseEvent e) {
 
         AnimationUpdater.runTimer(context.getMapDisplay(), new MessageBubble(e.x, e.y,
-                this.message, PreferenceUtil.instance().getMessageDisplayDelay())); //$NON-NLS-1$
+                this.message, PreferenceUtil.instance().getMessageDisplayDelay()));
     }
 
     /**

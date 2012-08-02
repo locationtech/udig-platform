@@ -81,6 +81,7 @@
             id="eu.udig.tools.merge.mergeoperation"
             name="Merge selected"
             targetClass="org.geotools.data.FeatureSource">
+         <enablement></enablement>
       </operation>
    </extension>
    <extension
