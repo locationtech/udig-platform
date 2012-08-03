@@ -334,6 +334,7 @@ class MergeComposite extends Composite {
         treeFeatures.setHeaderVisible(true);
         treeFeatures.setLayoutData(gridData4);
         treeFeatures.setLinesVisible(true);
+
         treeFeatures.addListener(SWT.Selection, new Listener() {
 
             public void handleEvent(Event event) {
@@ -343,12 +344,19 @@ class MergeComposite extends Composite {
                 }
             }
         });
+
         treeFeatures.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-
+                MergeContext mergeContextSingleton = MergeContext.getInstance();
+                if (mergeContextSingleton.getMergeMode() == MergeContext.MERGEMODE_TOOL) {
+                    // The handleTreeEventClick function selects in map the clicked treeFeature:
+                    // such behaviour is not compatible with MERGEMODE_OPERATION due to filterChange
+                    // listeners in place when in that mode, so the function call is allowed just
+                    // when in TOOL mode
                 handleTreeEventClick(e);
+                }
             }
         });
 
@@ -601,11 +609,13 @@ class MergeComposite extends Composite {
         final boolean isFeatureItem = isFeatureItem(item);
         if (isFeatureItem) {
             Object obj = item.getData();
+            
             if (obj instanceof Integer) {
                 ILayer layer = mergeBuilder.getLayer();
                 Filter filter = getSelectedFeatureFilter((Integer) obj);
                 LayerUtil.presentSelection(layer, filter);
             }
+            
         }
     }
 
@@ -931,17 +941,11 @@ class MergeComposite extends Composite {
     public void addSourceFeatures(List<SimpleFeature> featureList) {
 
         // If in operation mode, clean tree-view before adding new features
-        /*
-        if (this.mergeView.isOperationMode()){
-            this.mergeBuilder = getMergeBuilder();
-            mergeBuilder.removeFromSourceFeaturesAll();
-        }
-        */
         if (MergeContext.getInstance().getMergeMode() == MergeContext.MERGEMODE_OPERATION) {
             this.mergeBuilder = getMergeBuilder();
             mergeBuilder.removeFromSourceFeaturesAll();
         }
-        
+
         for (SimpleFeature feature : featureList) {
             displaySourceFeature(feature);
         }
@@ -984,7 +988,8 @@ class MergeComposite extends Composite {
 
         // create a new merge builder
         if (this.mergeView.isOperationMode()) {
-            this.mergeBuilder = new MergeFeatureBuilder(this.mergeView.getCurrentEventTriggeringLayer());
+            this.mergeBuilder = new MergeFeatureBuilder(
+                    this.mergeView.getCurrentEventTriggeringLayer());
         } else {
             this.mergeBuilder = new MergeFeatureBuilder(this.mergeView.getContext()
                     .getSelectedLayer());
