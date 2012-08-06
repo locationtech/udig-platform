@@ -31,6 +31,7 @@ import org.opengis.filter.expression.Literal;
  * @since 1.3.0
  */
 public class RGBExpressionViewer extends IExpressionViewer {
+    
     private final int MIN = 0;
     private final int MAX = 255;
 
@@ -50,7 +51,7 @@ public class RGBExpressionViewer extends IExpressionViewer {
                     return Appropriate.APPROPRIATE.getScore();
                 }
             }
-            return Appropriate.INCOMPLETE.getScore();
+            return Appropriate.NOT_APPROPRIATE.getScore();
         }
 
         @Override
