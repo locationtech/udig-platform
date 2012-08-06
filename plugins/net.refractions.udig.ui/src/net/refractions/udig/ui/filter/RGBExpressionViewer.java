@@ -336,7 +336,11 @@ public class RGBExpressionViewer extends IExpressionViewer {
                                 return; // literal color displayed!
                             }
                         }
-                        String cql = ECQL.toCQL(expr);
+                        
+                        String cql = "";
+                        if (expr != null) {
+                            cql = ECQL.toCQL(expr);
+                        }
                         colorText.setText(cql);
                         colorText.setEnabled(false);
                         
