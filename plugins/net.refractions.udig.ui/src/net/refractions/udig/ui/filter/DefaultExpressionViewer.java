@@ -16,22 +16,20 @@
  */
 package net.refractions.udig.ui.filter;
 
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.miginfocom.swt.MigLayout;
+import net.refractions.udig.ui.internal.Messages;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.AttributeType;
 import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
@@ -77,69 +75,45 @@ public class DefaultExpressionViewer extends CQLExpressionViewer {
 
     protected Composite control;
 
+    private Label lblAttribute;
     /**
      * Combo box to allow the user to select an attribute to base a filter on
      */
     protected Combo attribute;
 
+    private Label lblOperation;
     /**
      * Combo box to allow the user to select an operation to apply to an attribute
      */
     protected Combo operation;
 
+    private Label lblValue;
     /**
      * Text box to allow the user to enter a value to base a filter on
      */
     protected Combo value;
 
-    protected Button insert;
-
-    private SelectionAdapter insertButtonListener = new SelectionAdapter() {
+    private static final String ADD = "+"; //$NON-NLS-1$
+    private static final String SUB = "-"; //$NON-NLS-1$
+    private static final String MUL = "*"; //$NON-NLS-1$
+    private static final String DIV = "/"; //$NON-NLS-1$
+    private static final String[] OPERATORS = {ADD, SUB, MUL, DIV};
+    
+    private SelectionAdapter comboListener = new SelectionAdapter() {
         @Override
         public void widgetSelected(SelectionEvent e) {
-            
-            final StringBuilder sb = new StringBuilder();
-            
-            if (attribute.getSelectionIndex() != -1) {
-                sb.append(attribute.getText());
-                attribute.deselectAll();
-            }
-
-            if (operation.getSelectionIndex() != -1) {
-                if (sb.length() > 0) {
-                    sb.append(" "); //$NON-NLS-1$
+            if (e.widget instanceof Combo) {
+                final Combo combo = (Combo) e.widget;
+                if (combo.getSelectionIndex() != -1) {
+                    text.insert(combo.getText());
+                    text.setFocus();
+                    combo.deselectAll();
+                    changed();
                 }
-                sb.append(operation.getText());
-                operation.deselectAll();
             }
-
-            if (value.getSelectionIndex() != -1) {
-                if (sb.length() > 0) {
-                    sb.append(" "); //$NON-NLS-1$
-                }
-                sb.append(value.getText());
-                value.deselectAll();
-            }
-            
-            if (sb.length() > 0) {
-                text.insert(sb.toString());
-                text.setFocus();
-                changed();
-            }
-            
         }
     };
     
-//    private SelectionAdapter insertTextListener = new SelectionAdapter() {
-//        public void widgetSelected(SelectionEvent e) {
-//            Combo combo = (Combo) e.widget;
-//            String insertText = combo.getText();
-//            if( insertText != null ){
-//                text.insert( insertText );
-//            }
-//        };
-//    };
-
     /**
      * Creates ExpressionViewer using the provided style.
      * <ul>
@@ -161,121 +135,69 @@ public class DefaultExpressionViewer extends CQLExpressionViewer {
                 }
             }
         }, style);
-        control = text.getParent(); // refers to to the composite created above
-        boolean multiLine = (SWT.MULTI & style) != 0;
         
-        // ATTRIBUTE
-        Label lblAttribute = null;
-        if( multiLine ){
+        control = text.getParent(); // refers to to the composite created above
+        boolean isMultiline = (SWT.MULTI & style) != 0;
+        
+        lblAttribute = null;
+        if( isMultiline ){
             lblAttribute = new Label(control, SWT.NONE);
-            lblAttribute.setText("Attribute:");
+            lblAttribute.setText(Messages.DefaultExpressionViewer_attribute);
         }
         attribute = new Combo(control, SWT.DROP_DOWN | SWT.READ_ONLY );
-        attribute.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                String attributeName = attribute.getText();
-
-                // populate values based on this attribute
-                if (attributeName != null && getInput() != null && getInput().getSchema() != null) {
-                    SimpleFeatureType schema = getInput().getSchema();
-                    AttributeDescriptor descriptor = schema.getDescriptor(attributeName);
-                    
-                    SortedSet<String> suggestedValues = generateSuggestedValues( descriptor );
-
-                    value.removeAll();
-                    if (suggestedValues.isEmpty()) {
-                        value.setEnabled(false);
-                    } else {
-                        value.setEnabled(true);
-                        for (String item : suggestedValues) {
-                            value.add(item);
-                        }
-                    }
-                } else {
-                    value.removeAll();
-                    value.setEnabled(false);
-                }
-            }
-        });
+        attribute.addSelectionListener(comboListener);
         
-        // OPPERATIONS
-        Label lblOperation = null;
-        if( multiLine){
+        lblOperation = null;
+        if( isMultiline){
             lblOperation = new Label(control, SWT.NONE);
-            lblOperation.setText("Operation:");
+            lblOperation.setText(Messages.DefaultExpressionViewer_operation);
         }
         operation = new Combo(control, SWT.DROP_DOWN | SWT.READ_ONLY );
-        operation.add("+");
-        operation.add("-");
-        operation.add("*");
-        operation.add("/");
+        operation.setItems(OPERATORS);
+        operation.addSelectionListener(comboListener);
         
-        // VALUE COMBO
-        Label lblValue = null;
-        if( multiLine){
+        lblValue = null;
+        if( isMultiline){
             lblValue = new Label(control, SWT.NONE);
-            lblValue.setText("Value:");
+            lblValue.setText(Messages.DefaultExpressionViewer_value);
         }        
         value = new Combo(control, SWT.DROP_DOWN | SWT.READ_ONLY );
-        value.setEnabled(false); // need to select an attribute before we can suggest values
+        value.addSelectionListener(comboListener);
+        value.setEnabled(false);
         
-        // INSERT BUTTON
-        insert = new Button(control, SWT.NONE);
-        insert.setText("Insert");
-        insert.addSelectionListener(insertButtonListener);
+        setLayout(isMultiline);
         
-        if( multiLine ){
-            MigLayout layout = new MigLayout("insets 0", "[][][][][][][grow]", "[grow][]");
-            control.setLayout( layout);
-            
-            text.setLayoutData("cell 0 0,span,grow,width 200:100%:100%,height 60:100%:100%");
-            setPreferredTextSize(40,5);
-            
-            lblAttribute.setLayoutData("cell 0 1,alignx trailing,gapx related");
-            attribute.setLayoutData("cell 1 1,wmin 60,alignx left,gapx rel");
-            
-            lblOperation.setLayoutData("cell 2 1,alignx trailing,gapx related");
-            operation.setLayoutData("cell 3 1,wmin 60,alignx left,gapx rel");            
-
-            lblValue.setLayoutData( "cell 4 1,alignx trailing,gapx related");
-            value.setLayoutData("cell 5 1,wmin 60,alignx left,gapx related");
-            
-            insert.setLayoutData("cell 6 1,alignx left,gapx unrel");
-        }
-        else {
-            control.setLayout( new MigLayout("insets 0, flowx", "", ""));
-
-            text.setLayoutData("grow,width 200:70%:100%, gap unrelated");
-            attribute.setLayoutData("width 90:20%:100%, gap related");
-            operation.setLayoutData("width 60:10%:100%, gap related");
-            value.setLayoutData("width 60:10%:100%, gap related");
-            insert.setLayoutData("gap related");
-        }
     }
+    
     /**
-     * Used to supply a list of suggested values; given the provided attribtue descriptor.
+     * This sets the layout of the UI elements in the viewer.
      * 
-     * @param descriptor
-     * @return list of suggested values (may be empty if no values are suggested)
+     * @param isMultiline
      */
-    protected SortedSet<String> generateSuggestedValues(AttributeDescriptor descriptor) {
-        SortedSet<String> options = new TreeSet<String>();
+    private void setLayout(boolean isMultiline) {
+        if (isMultiline) {
+            MigLayout layout = new MigLayout("insets 0", "[][][][][][][grow]", "[grow][]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            control.setLayout(layout);
 
-        Object defaultValue = descriptor.getDefaultValue();
-        if (defaultValue != null) {
-            options.add(String.valueOf(defaultValue));
+            text.setLayoutData("cell 0 0,span,grow,width 200:100%:100%,height 60:100%:100%"); //$NON-NLS-1$
+            setPreferredTextSize(40, 5);
+
+            lblAttribute.setLayoutData("cell 0 1,alignx trailing,gapx related"); //$NON-NLS-1$
+            attribute.setLayoutData("cell 1 1,wmin 60,alignx left,gapx rel"); //$NON-NLS-1$
+
+            lblOperation.setLayoutData("cell 2 1,alignx trailing,gapx related"); //$NON-NLS-1$
+            operation.setLayoutData("cell 3 1,wmin 60,alignx left,gapx rel"); //$NON-NLS-1$
+
+            lblValue.setLayoutData("cell 4 1,alignx trailing,gapx related"); //$NON-NLS-1$
+            value.setLayoutData("cell 5 1,wmin 60,alignx left,gapx related"); //$NON-NLS-1$
+        } else {
+            control.setLayout(new MigLayout("insets 0, flowx", "", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+            text.setLayoutData("grow,width 200:70%:100%, gap unrelated"); //$NON-NLS-1$
+            attribute.setLayoutData("width 90:20%:100%, gap related"); //$NON-NLS-1$
+            operation.setLayoutData("width 60:10%:100%, gap related"); //$NON-NLS-1$
+            value.setLayoutData("width 60:10%:100%, gap related"); //$NON-NLS-1$
         }
-        AttributeType type = descriptor.getType();
-        if (Number.class.isAssignableFrom(type.getBinding())) {
-            options.add("0");
-            options.add("1");
-            options.add("2");
-            options.add("3");
-            options.add("4");
-            options.add("5");
-        }
-        return options;
     }
 
     /**
@@ -289,13 +211,30 @@ public class DefaultExpressionViewer extends CQLExpressionViewer {
         return control;
     }
     
+    /**
+     * This refreshes the viewer's UI elements (combo options, etc.) this should be called in
+     * response to setting the input to re-populate the attribute and value drop downs.
+     */
     @Override
     public void refresh() {
-        super.refresh(); // update text field suggestions
-        
+        super.refresh();
         if (input != null) {
-            SortedSet<String> names = new TreeSet<String>(input.toPropertyList());
+            // Set attribute options
+            final SortedSet<String> names = new TreeSet<String>(input.toPropertyList());
             attribute.setItems(names.toArray(new String[names.size()]));
+            // Set value options
+            final List<Object> options = input.getOptions();
+            if (options != null && options.size() > 0) {
+                value.setItems(new String[0]);
+                for (Object option : options) {
+                    if (option != null) {
+                        value.add(option.toString());
+                    }
+                }
+                value.setEnabled(true);
+            } else {
+                value.setEnabled(false);
+            }
         }
     }
 

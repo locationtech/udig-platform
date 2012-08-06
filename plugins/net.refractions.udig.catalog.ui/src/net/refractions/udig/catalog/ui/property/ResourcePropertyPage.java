@@ -15,6 +15,8 @@
 package net.refractions.udig.catalog.ui.property;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.IGeoResource;
@@ -75,8 +77,9 @@ public class ResourcePropertyPage extends PropertyPage implements IWorkbenchProp
         final ExpressionInput exInput = new ExpressionInput(getSchema());
         exInput.setBinding(String.class);
         exViewer.setInput(exInput);
-        setExpression(getLabelProperty());
         exViewer.refresh();
+        
+        setExpression(getLabelProperty());
         
         return page;
         
@@ -137,7 +140,6 @@ public class ResourcePropertyPage extends PropertyPage implements IWorkbenchProp
     private String getExpression() {
         final Expression expression = exViewer.getExpression();
         if (expression != null) {
-            System.out.println(ECQL.toCQL(exViewer.getExpression()));
             return ECQL.toCQL(exViewer.getExpression());    
         }
         return null;
