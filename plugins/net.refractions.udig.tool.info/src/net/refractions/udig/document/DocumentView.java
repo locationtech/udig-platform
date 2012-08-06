@@ -38,7 +38,6 @@ import net.refractions.udig.catalog.document.IHotlinkSource;
 import net.refractions.udig.catalog.internal.document.DocumentFactory;
 import net.refractions.udig.catalog.internal.document.FileDocument;
 import net.refractions.udig.catalog.internal.document.URLDocument;
-import net.refractions.udig.catalog.ui.property.ResourcePropertyPage;
 import net.refractions.udig.core.AdapterUtil;
 import net.refractions.udig.core.IBlockingProvider;
 import net.refractions.udig.project.ILayer;
@@ -87,8 +86,11 @@ import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.FidFilterImpl;
+import org.geotools.filter.text.cql2.CQLException;
+import org.geotools.filter.text.ecql.ECQL;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
+import org.opengis.filter.expression.Expression;
 import org.opengis.filter.identity.FeatureId;
 
 /**
@@ -440,7 +442,7 @@ public class DocumentView extends ViewPart {
                 feature = getFeature(geoResource, toFilter(obj, monitor));
                 if (feature != null) {
                 
-                    final String featureLabel = ResourcePropertyPage.getFeatureLabel(geoResource, feature);
+                    final String featureLabel = getFeatureLabel(geoResource, feature);
                     
                     final IHotlinkSource hotlinkSource = toSource(geoResource, IHotlinkSource.class, monitor);
                     if (hotlinkSource != null) {
@@ -473,6 +475,33 @@ public class DocumentView extends ViewPart {
         }
         
         return items;
+        
+    }
+    
+    private static final String FEATURE_LABEL = "FEATURE_LABEL"; //$NON-NLS-1$
+    
+    /**
+     * Gets the feature label by running the feature label expression set for the feature.
+     * 
+     * @param resource
+     * @param feature
+     * @return feature label
+     */
+    private String getFeatureLabel(IGeoResource resource, SimpleFeature feature) {
+        
+        final String labelExpression = (String) resource.getPersistentProperties().get(
+                FEATURE_LABEL);
+        
+        if (labelExpression != null) {
+            try {
+                final Expression exp = ECQL.toExpression(labelExpression);
+                return (String) exp.evaluate(feature);
+            } catch (CQLException e) {
+                e.printStackTrace();
+            }    
+        }
+        
+        return feature.getID();
         
     }
     

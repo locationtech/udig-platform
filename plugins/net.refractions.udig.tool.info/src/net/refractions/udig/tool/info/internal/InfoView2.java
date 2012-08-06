@@ -19,7 +19,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.ui.property.ResourcePropertyPage;
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.AdaptableFeature;
 import net.refractions.udig.project.ILayer;
@@ -76,12 +75,15 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.filter.text.cql2.CQLException;
+import org.geotools.filter.text.ecql.ECQL;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
+import org.opengis.filter.expression.Expression;
 
 /**
  * Info recast as a search part.
@@ -105,10 +107,12 @@ public class InfoView2 extends SearchPart {
     
     private class InfoViewLabelProvider extends LabelProvider implements IColorProvider {
         
+        private static final String FEATURE_LABEL = "FEATURE_LABEL"; //$NON-NLS-1$
+        
         public String getText(Object element) {
             if (element instanceof AdaptableFeature) {
                 final AdaptableFeature feature = (AdaptableFeature) element;
-                return ResourcePropertyPage.getFeatureLabel(feature);
+                return getFeatureLabel(feature);
             }
             else if (element instanceof LayerPointInfo) {
                 LayerPointInfo info = (LayerPointInfo) element;                    
@@ -121,7 +125,45 @@ public class InfoView2 extends SearchPart {
             return super.getText(element);
         }
         
-
+        /**
+         * Gets the feature label by running the feature label expression set for the feature.
+         * 
+         * @param feature
+         * @return feature label
+         */
+        private String getFeatureLabel(AdaptableFeature feature) {
+            
+            final ILayer layer = (ILayer) feature.getAdapter(ILayer.class);
+            final IGeoResource resource = layer.getGeoResource();
+            
+            return getFeatureLabel(resource, feature);
+            
+        }
+        
+        /**
+         * Gets the feature label by running the feature label expression set for the feature.
+         * 
+         * @param resource
+         * @param feature
+         * @return feature label
+         */
+        private String getFeatureLabel(IGeoResource resource, SimpleFeature feature) {
+            
+            final String labelExpression = (String) resource.getPersistentProperties().get(
+                    FEATURE_LABEL);
+            
+            if (labelExpression != null) {
+                try {
+                    final Expression exp = ECQL.toExpression(labelExpression);
+                    return (String) exp.evaluate(feature);
+                } catch (CQLException e) {
+                    e.printStackTrace();
+                }    
+            }
+            
+            return feature.getID();
+            
+        }
         
         /**
          * @see net.refractions.udig.project.internal.provider.LayerItemProvider

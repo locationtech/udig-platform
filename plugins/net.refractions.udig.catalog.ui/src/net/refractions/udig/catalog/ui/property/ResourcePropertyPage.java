@@ -15,14 +15,10 @@
 package net.refractions.udig.catalog.ui.property;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.project.AdaptableFeature;
-import net.refractions.udig.project.ILayer;
 import net.refractions.udig.ui.filter.ExpressionInput;
 import net.refractions.udig.ui.filter.ExpressionViewer;
 import net.refractions.udig.ui.filter.IExpressionViewer;
@@ -37,7 +33,6 @@ import org.eclipse.ui.dialogs.PropertyPage;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.filter.text.cql2.CQLException;
 import org.geotools.filter.text.ecql.ECQL;
-import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.expression.Expression;
 
@@ -162,47 +157,5 @@ public class ResourcePropertyPage extends PropertyPage implements IWorkbenchProp
     private String getLabelProperty() {
         return (String) resource.getPersistentProperties().get(FEATURE_LABEL);
     } 
-    
-    /**
-     * Gets the feature label by running the feature label expression set in
-     * {@link ResourcePropertyPage} against the feature.
-     * 
-     * @param feature
-     * @return feature label
-     */
-    public static String getFeatureLabel(AdaptableFeature feature) {
-        
-        final ILayer layer = (ILayer) feature.getAdapter(ILayer.class);
-        final IGeoResource resource = layer.getGeoResource();
-        
-        return getFeatureLabel(resource, feature);
-        
-    }
-    
-    /**
-     * Gets the feature label by running the feature label expression set in
-     * {@link ResourcePropertyPage} against the feature.
-     * 
-     * @param resource
-     * @param feature
-     * @return feature label
-     */
-    public static String getFeatureLabel(IGeoResource resource, SimpleFeature feature) {
-        
-        final String labelExpression = (String) resource.getPersistentProperties().get(
-                ResourcePropertyPage.FEATURE_LABEL);
-        
-        if (labelExpression != null) {
-            try {
-                final Expression exp = ECQL.toExpression(labelExpression);
-                return (String) exp.evaluate(feature);
-            } catch (CQLException e) {
-                e.printStackTrace();
-            }    
-        }
-        
-        return feature.getID();
-        
-    }
     
 }
