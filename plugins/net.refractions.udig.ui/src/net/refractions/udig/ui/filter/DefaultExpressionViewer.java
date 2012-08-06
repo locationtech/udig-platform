@@ -47,6 +47,7 @@ import org.opengis.filter.expression.Expression;
  * @since 1.2.0
  */
 public class DefaultExpressionViewer extends CQLExpressionViewer {
+    
     /**
      * Factory used to hook this into filterViewer extension point.
      * 
@@ -96,37 +97,36 @@ public class DefaultExpressionViewer extends CQLExpressionViewer {
     private SelectionAdapter insertButtonListener = new SelectionAdapter() {
         @Override
         public void widgetSelected(SelectionEvent e) {
-            if (attribute.isFocusControl() && attribute.getSelectionIndex() != -1) {
-                String selectedAttribute = attribute.getText();
-                text.insert(selectedAttribute);
-
-                attribute.clearSelection();
-                changed();
-                text.setFocus();
-                return;
+            
+            final StringBuilder sb = new StringBuilder();
+            
+            if (attribute.getSelectionIndex() != -1) {
+                sb.append(attribute.getText());
+                attribute.deselectAll();
             }
 
-            if (operation.isFocusControl() && operation.getSelectionIndex() != -1) {
-                String selectedOperation = operation.getText();
-                text.insert(selectedOperation);
-
-                operation.clearSelection();
-
-                changed();
-                text.setFocus();
-                return;
+            if (operation.getSelectionIndex() != -1) {
+                if (sb.length() > 0) {
+                    sb.append(" "); //$NON-NLS-1$
+                }
+                sb.append(operation.getText());
+                operation.deselectAll();
             }
 
-            if (value.isFocusControl() && value.getSelectionIndex() != -1) {
-                String selectedValue = value.getText();
-                text.insert(selectedValue);
-
-                value.clearSelection();
-
-                changed();
-                text.setFocus();
-                return;
+            if (value.getSelectionIndex() != -1) {
+                if (sb.length() > 0) {
+                    sb.append(" "); //$NON-NLS-1$
+                }
+                sb.append(value.getText());
+                value.deselectAll();
             }
+            
+            if (sb.length() > 0) {
+                text.insert(sb.toString());
+                text.setFocus();
+                changed();
+            }
+            
         }
     };
     
@@ -168,9 +168,9 @@ public class DefaultExpressionViewer extends CQLExpressionViewer {
         Label lblAttribute = null;
         if( multiLine ){
             lblAttribute = new Label(control, SWT.NONE);
-            lblAttribute.setText("Attribute");
+            lblAttribute.setText("Attribute:");
         }
-        attribute = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
+        attribute = new Combo(control, SWT.DROP_DOWN | SWT.READ_ONLY );
         attribute.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -205,7 +205,7 @@ public class DefaultExpressionViewer extends CQLExpressionViewer {
             lblOperation = new Label(control, SWT.NONE);
             lblOperation.setText("Operation:");
         }
-        operation = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
+        operation = new Combo(control, SWT.DROP_DOWN | SWT.READ_ONLY );
         operation.add("+");
         operation.add("-");
         operation.add("*");
@@ -215,9 +215,9 @@ public class DefaultExpressionViewer extends CQLExpressionViewer {
         Label lblValue = null;
         if( multiLine){
             lblValue = new Label(control, SWT.NONE);
-            lblValue.setText("Value");
+            lblValue.setText("Value:");
         }        
-        value = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
+        value = new Combo(control, SWT.DROP_DOWN | SWT.READ_ONLY );
         value.setEnabled(false); // need to select an attribute before we can suggest values
         
         // INSERT BUTTON
