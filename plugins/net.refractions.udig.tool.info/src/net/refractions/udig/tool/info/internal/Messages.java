@@ -26,6 +26,40 @@ public class Messages extends NLS {
 
     public static String DistanceTool_error;
 
+    public static String Document_26;
+
+    public static String Document_Action;
+
+    public static String Document_Action_Column;
+
+    public static String Document_Add;
+
+    public static String Document_Attachment_Enable;
+
+    public static String Document_Attachment_Section;
+
+    public static String Document_Attribute_Column;
+
+    public static String Document_Attribute;
+
+    public static String Document_Attributes;
+
+    public static String Document_Edit;
+
+    public static String Document_Hotlink;
+
+    public static String Document_Hotlink_Column;
+
+    public static String Document_Hotlink_Enable;
+
+    public static String Document_Hotlink_Section;
+
+    public static String Document_Open;
+
+    public static String Document_Prompt;
+
+    public static String Document_Remove;
+
     public static String InfoView_instructions_text;
 
     public static String InfoView2_information_request;

@@ -25,6 +25,7 @@ import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
+import net.refractions.udig.tool.info.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -117,30 +118,30 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         }
 
         Composite page = new Composite(parent, SWT.NO_SCROLL);
-        page.setLayout(new MigLayout("insets 0", "[][grow,fill][]", "[][][][][fill][]"));
+        page.setLayout(new MigLayout("insets 0", "[][grow,fill][]", "[][][][][fill][]")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         Label label;
 
         label = new Label(page, SWT.SINGLE);
-        label.setText("Attachment");
-        label.setLayoutData("cell 0 0, gapx related, gapy unrelated");
+        label.setText(Messages.Document_Attachment_Section);
+        label.setLayoutData("cell 0 0, gapx related, gapy unrelated"); //$NON-NLS-1$
         label.setEnabled(hasSchema);
         
         Button enableAttachment = new Button(page, SWT.CHECK);
-        enableAttachment.setText("Enable support for feature attachments");
-        enableAttachment.setLayoutData("cell 1 0 2 1, left, grow x");
+        enableAttachment.setText(Messages.Document_Attachment_Enable);
+        enableAttachment.setLayoutData("cell 1 0 2 1, left, grow x"); //$NON-NLS-1$
         enableAttachment.setEnabled(false);
         
         enableAttachment.setSelection( hasAttachmentSource );
         label = new Label(page, SWT.SINGLE);
-        label.setText("Hotlink");
-        label.setLayoutData("cell 0 1, gapx related, gapy related");
+        label.setText(Messages.Document_Hotlink_Section);
+        label.setLayoutData("cell 0 1, gapx related, gapy related"); //$NON-NLS-1$
         label.setEnabled(hasSchema);
 
         // Area of Interest filter button
         hotlinkEnable = new Button(page, SWT.CHECK);
-        hotlinkEnable.setText("Enable hotlink support on marked attributes");
-        hotlinkEnable.setLayoutData("cell 1 1 2 1, left, grow x");
+        hotlinkEnable.setText(Messages.Document_Hotlink_Enable);
+        hotlinkEnable.setLayoutData("cell 1 1 2 1, left, grow x"); //$NON-NLS-1$
         hotlinkEnable.setSelection(isEnabled);
         hotlinkEnable.setEnabled(hasSchema);
         hotlinkEnable.addSelectionListener(new SelectionAdapter() {
@@ -159,12 +160,12 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         });
 
         hotlinkLabel = new Label(page, SWT.SINGLE);
-        hotlinkLabel.setText("Hotlink Attributes");
-        hotlinkLabel.setLayoutData("cell 0 2, width pref!, gapx para");
+        hotlinkLabel.setText(Messages.Document_Attributes);
+        hotlinkLabel.setLayoutData("cell 0 2, width pref!, gapx para"); //$NON-NLS-1$
 
         addHotlink = new Button(page, SWT.CENTER);
-        addHotlink.setText("Add...");
-        addHotlink.setLayoutData("cell 2 3, growx");
+        addHotlink.setText(Messages.Document_Add);
+        addHotlink.setLayoutData("cell 2 3, growx"); //$NON-NLS-1$
         addHotlink.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -182,8 +183,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         });
 
         editHotlink = new Button(page, SWT.CENTER);
-        editHotlink.setText("Edit...");
-        editHotlink.setLayoutData("cell 2 4, growx");
+        editHotlink.setText(Messages.Document_Edit);
+        editHotlink.setLayoutData("cell 2 4, growx"); //$NON-NLS-1$
         editHotlink.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -197,8 +198,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         });
 
         removeButton = new Button(page, SWT.CENTER);
-        removeButton.setText("Remove");
-        removeButton.setLayoutData("cell 2 6, aligny bottom, growx");
+        removeButton.setText(Messages.Document_Remove);
+        removeButton.setLayoutData("cell 2 6, aligny bottom, growx"); //$NON-NLS-1$
         removeButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -214,7 +215,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         Composite tableComposite = new Composite( page, SWT.NONE );
         TableColumnLayout columnLayout = new TableColumnLayout();
         tableComposite.setLayout( columnLayout );
-        tableComposite.setLayoutData("cell 0 3 2 4, grow, height 200:100%:100%,width 300:pref:100%, gapx para");
+        tableComposite.setLayoutData("cell 0 3 2 4, grow, height 200:100%:100%,width 300:pref:100%, gapx para"); //$NON-NLS-1$
         
         hotlinkViewer = new TableViewer(tableComposite, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
         hotlinkViewer.setContentProvider(ArrayContentProvider.getInstance());
@@ -224,7 +225,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         column.getColumn().setWidth(100);
         column.getColumn().setMoveable(false);
         column.getColumn().setResizable(true);
-        column.getColumn().setText("Attribute");
+        column.getColumn().setText(Messages.Document_Attribute_Column);
         column.setLabelProvider(new ColumnLabelProvider() {
             @Override
             public String getText(Object element) {
@@ -238,7 +239,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         column.getColumn().setWidth(60);
         column.getColumn().setMoveable(false);
         column.getColumn().setResizable(true);
-        column.getColumn().setText("Hotlink");
+        column.getColumn().setText(Messages.Document_Hotlink_Column);
         column.getColumn().setAlignment(SWT.CENTER);
         column.setLabelProvider(new ColumnLabelProvider() {
             @Override
@@ -253,13 +254,13 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         column.getColumn().setWidth(140);
         column.getColumn().setMoveable(false);
         column.getColumn().setResizable(true);
-        column.getColumn().setText("Action");
+        column.getColumn().setText(Messages.Document_Action_Column);
         column.setLabelProvider(new ColumnLabelProvider() {
             @Override
             public String getText(Object element) {
                 HotlinkDescriptor descriptor = (HotlinkDescriptor) element;
                 if( descriptor.getConfig() == null ){
-                    return "Open";
+                    return Messages.Document_Open;
                 }
                 return descriptor.getConfig();
             }
@@ -419,7 +420,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
 
         protected HotlinkDescriptorDialog(Shell parentShell) {
             super(parentShell);
-            message = "Define hotlink functionality for an attribute.";
+            message = Messages.Document_Prompt;
             this.descriptor = new HotlinkDescriptor(); // empty if creating a new one
         }
 
@@ -447,7 +448,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
          * @param okayRunnable
          */
         public void openInJob(final Runnable okayRunnable) {
-            Job job = new Job("Prompt Hotlink Dscriptor") {
+            Job job = new Job("Prompt Hotlink Descriptor") { //$NON-NLS-1$
                 @Override
                 protected IStatus run(IProgressMonitor monitor) {
                     IGeoResource resource = (IGeoResource) getElement().getAdapter(
@@ -501,28 +502,28 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         @Override
         protected void configureShell(Shell shell) {
             super.configureShell(shell);
-            shell.setText("Hotlink Definition");
+            shell.setText(Messages.Document_26);
             shell.setImage( getInfoImage() );
         }
         
         @Override
         protected Control createDialogArea(Composite parent) {
             Composite composite = new Composite(parent, SWT.NONE);
-            MigLayout layout = new MigLayout("insets panel", "[][grow]", "[][][]");
+            MigLayout layout = new MigLayout("insets panel", "[][grow]", "[][][]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             composite.setLayout(layout);
             composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
             createMessageArea(composite);
-            imageLabel.setLayoutData("cell 0 0, grow");
-            messageLabel.setLayoutData("cell 1 0 2 1, grow ");
+            imageLabel.setLayoutData("cell 0 0, grow"); //$NON-NLS-1$
+            messageLabel.setLayoutData("cell 1 0 2 1, grow "); //$NON-NLS-1$
             
             Label label = new Label(composite, SWT.SINGLE);
-            label.setText("Attribute");
-            label.setLayoutData("cell 0 1, gapx unrelated");
+            label.setText(Messages.Document_Attribute);
+            label.setLayoutData("cell 0 1, gapx unrelated"); //$NON-NLS-1$
 
             attributeViewer = new ComboViewer(composite);
             attributeViewer.setContentProvider(ArrayContentProvider.getInstance());
-            attributeViewer.getControl().setLayoutData("cell 1 1, growx");
+            attributeViewer.getControl().setLayoutData("cell 1 1, growx"); //$NON-NLS-1$
             List<String> attributeNames = getSchemaCandidates();
             attributeViewer.setInput(attributeNames);
             attributeViewer.addSelectionChangedListener( new ISelectionChangedListener() {
@@ -543,13 +544,13 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             }
             
             label = new Label(composite, SWT.SINGLE);
-            label.setText("Hotlink:");
-            label.setLayoutData("cell 0 2, gapx unrelated");
+            label.setText(Messages.Document_Hotlink);
+            label.setLayoutData("cell 0 2, gapx unrelated"); //$NON-NLS-1$
 
             typeViewer = new ComboViewer(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
             typeViewer.setContentProvider(ArrayContentProvider.getInstance());
             typeViewer.setInput(IDocument.Type.values());
-            typeViewer.getControl().setLayoutData("cell 1 2");
+            typeViewer.getControl().setLayoutData("cell 1 2"); //$NON-NLS-1$
             typeViewer.setSelection(new StructuredSelection(descriptor.getType()), true);
             typeViewer.addSelectionChangedListener( new ISelectionChangedListener() {
                 public void selectionChanged(SelectionChangedEvent event) {
@@ -561,13 +562,13 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                         case FILE:
                             {
                                 actionLabel.setEnabled( false );
-                                actionText.setText("Open");
+                                actionText.setText(Messages.Document_Open);
                                 actionText.setEnabled(false);
                             }
                             break;
                         case ACTION:
                             actionLabel.setEnabled( true );
-                            actionText.setText( descriptor.getConfig() == null ? "" : descriptor.getConfig());
+                            actionText.setText( descriptor.getConfig() == null ? "" : descriptor.getConfig()); //$NON-NLS-1$
                             actionText.setEnabled(false);
                         }
                     }
@@ -575,8 +576,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             });
             
             actionLabel = new Label(composite, SWT.SINGLE);
-            actionLabel.setText("Action:");
-            actionLabel.setLayoutData("cell 0 3, gapx unrelated");
+            actionLabel.setText(Messages.Document_Action);
+            actionLabel.setLayoutData("cell 0 3, gapx unrelated"); //$NON-NLS-1$
 
             actionText = new Text(composite,  SWT.SINGLE );
             String actionConfig = descriptor.getConfig();
@@ -584,11 +585,11 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 actionText.setText( actionConfig );
             }
             else {
-                actionText.setText( "Open" );
+                actionText.setText( Messages.Document_Open );
                 actionText.setEnabled(false);
             }
             actionText.setEnabled(false);
-            actionText.setLayoutData("cell 1 3, growx");
+            actionText.setLayoutData("cell 1 3, growx"); //$NON-NLS-1$
             applyDialogFont(composite);
             return composite;
         }
