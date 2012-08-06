@@ -72,6 +72,7 @@ public class Messages extends NLS {
     public static String ReshapeOperation_DialogText;
     public static String ReshapeOperation_noAction;
     public static String ReshapeOperation_task;
+    public static String ResourcePropertyPage_labelExpression;
     public static String ResourceSelectionPage_brokenReportError;
     public static String ResourceSelectionPage_brokenUnknown;
     public static String ResourceSelectionPage_connectedButNoResources;

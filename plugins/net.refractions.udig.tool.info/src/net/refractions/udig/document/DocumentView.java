@@ -38,6 +38,7 @@ import net.refractions.udig.catalog.document.IHotlinkSource;
 import net.refractions.udig.catalog.internal.document.DocumentFactory;
 import net.refractions.udig.catalog.internal.document.FileDocument;
 import net.refractions.udig.catalog.internal.document.URLDocument;
+import net.refractions.udig.catalog.ui.property.ResourcePropertyPage;
 import net.refractions.udig.core.AdapterUtil;
 import net.refractions.udig.core.IBlockingProvider;
 import net.refractions.udig.project.ILayer;
@@ -439,10 +440,11 @@ public class DocumentView extends ViewPart {
                 feature = getFeature(geoResource, toFilter(obj, monitor));
                 if (feature != null) {
                 
+                    final String featureLabel = ResourcePropertyPage.getFeatureLabel(geoResource, feature);
+                    
                     final IHotlinkSource hotlinkSource = toSource(geoResource, IHotlinkSource.class, monitor);
                     if (hotlinkSource != null) {
-                        final String featureId = feature.getIdentifier().getID();
-                        final String labelShown = String.format(Messages.docView_featureDocs, featureId);
+                        final String labelShown = String.format(Messages.docView_featureDocs, featureLabel);
                         final IDocumentFolder folder = DocumentFactory.createFolder(labelShown, hotlinkSource);
                         folder.addDocuments(hotlinkSource.getDocuments(feature));
                         items.add(folder);    
@@ -450,8 +452,7 @@ public class DocumentView extends ViewPart {
                 
                     final IAttachmentSource attachmentSource = toSource(geoResource, IAttachmentSource.class, monitor);
                     if (attachmentSource != null) {
-                        final String featureId = feature.getIdentifier().getID();
-                        final String labelShown = String.format(Messages.docView_featureAttachments, featureId);
+                        final String labelShown = String.format(Messages.docView_featureAttachments, featureLabel);
                         final IDocumentFolder folder = DocumentFactory.createFolder(labelShown, attachmentSource);
                         folder.addDocuments(attachmentSource.getDocuments(feature.getIdentifier()));
                         items.add(folder);

@@ -505,7 +505,7 @@
         </keywordReference>
      </page>
      <page
-           class="org.eclipse.ui.internal.dialogs.EmptyPropertyPage"
+           class="net.refractions.udig.catalog.ui.property.ResourcePropertyPage"
            icon="icons/obj16/feature_obj.gif"
            id="net.refractions.udig.catalog.ui.property.resourcePage"
            name="%resourcePage.name">
