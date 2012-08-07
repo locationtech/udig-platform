@@ -119,18 +119,20 @@
             id="net.refractions.udig.catalog.document.property.documentPage"
             name="%documentPage.name">
          <enabledWhen>
-            <or>
-               <instanceof
-                     value="net.refractions.udig.catalog.IGeoResource">
-               </instanceof>
-               <adapt
-                     type="net.refractions.udig.catalog.IGeoResource">
-               </adapt>
-            </or>
+            <and>
+               <or>
+                  <instanceof
+                        value="net.refractions.udig.catalog.IGeoResource">
+                  </instanceof>
+                  <adapt
+                        type="net.refractions.udig.catalog.IGeoResource">
+                  </adapt>
+               </or>
+               <test
+                     property="featureSource">
+               </test>
+            </and>
          </enabledWhen>
-         <keywordReference
-               id="net.refractions.udig.catalog.ui.keyword.resource">
-         </keywordReference>
       </page>
    </extension>
 

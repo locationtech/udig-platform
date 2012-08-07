@@ -27,6 +27,7 @@ import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
 import net.refractions.udig.tool.info.internal.Messages;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -93,7 +94,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
     
     @Override
     protected Control createContents(Composite parent) {
-        final IGeoResource resource = (IGeoResource) getElement().getAdapter(IGeoResource.class);
+        IAdaptable target = getElement();
+        final IGeoResource resource = (IGeoResource) target.getAdapter(IGeoResource.class);
 
         if( resource instanceof ShpGeoResourceImpl ){
             propParser = new ShpDocPropertyParser(resource.getIdentifier(), null);
