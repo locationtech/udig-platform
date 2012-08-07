@@ -31,7 +31,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IconAndMessageDialog;
 import org.eclipse.jface.layout.TableColumnLayout;
@@ -74,10 +73,6 @@ import org.opengis.feature.type.AttributeDescriptor;
 public class DocumentPropertyPage extends PropertyPage implements IWorkbenchPropertyPage {
 
     private static final HotlinkDescriptor[] EMPTY = new HotlinkDescriptor[0];
-
-    private Button attachmentEnable;
-    
-    private Button documentEnable;
     
     private Button hotlinkEnable;
 
@@ -97,11 +92,6 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
 
     private ShpDocPropertyParser propParser;
     
-    // @Override
-    // protected Point doComputeSize() {
-    // return super.doComputeSize();
-    // }
-    //
     @Override
     protected Control createContents(Composite parent) {
         final IGeoResource resource = (IGeoResource) getElement().getAdapter(IGeoResource.class);
@@ -333,9 +323,10 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
 
     public void enableTableAndButtons(boolean isEnabled) {
         hotlinkLabel.setEnabled(isEnabled);
+        tableLabel.setEnabled(isEnabled);
         hotlinkViewer.getControl().setEnabled(isEnabled);
+        
         boolean hasSelection = isEnabled && !hotlinkViewer.getSelection().isEmpty();
-
         addHotlink.setEnabled(isEnabled);
         editHotlink.setEnabled(hasSelection);
         removeButton.setEnabled(hasSelection);
