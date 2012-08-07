@@ -88,8 +88,6 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
 
     private List<HotlinkDescriptor> hotlinkList = new ArrayList<HotlinkDescriptor>();
 
-    private Label tableLabel;
-
     private ShpDocPropertyParser propParser;
     
     @Override
@@ -282,17 +280,14 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             if (hotlinkViewer.getInput() == EMPTY) {
                 ArrayList<HotlinkDescriptor> empty = new ArrayList<HotlinkDescriptor>();
                 BasicHotlinkResolveFactory.putHotlinkDescriptors(resource, empty);
-                if( propParser != null ){
-                    propParser.setFeatureLinks(Collections.<HotlinkDescriptor>emptyList());
-                }
+                savePropertiesFile(null);
             } else {
                 BasicHotlinkResolveFactory.putHotlinkDescriptors(resource, hotlinkList);
+                savePropertiesFile(hotlinkList);
             }
         } else {
             BasicHotlinkResolveFactory.clearHotlinkDescriptors(resource);
-            if( propParser != null ){
-                propParser.setFeatureLinks(Collections.<HotlinkDescriptor> emptyList());
-            }
+            savePropertiesFile(null);
         }
         return super.performOk();
     }
@@ -316,6 +311,22 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         super.performDefaults();
     }
 
+    /**
+     * Saves the attribute hotlinks into the properties file. This creates the properties file if it
+     * does not exist in the file system.
+     * 
+     * @param hotlinks
+     */
+    private void savePropertiesFile(List<HotlinkDescriptor> hotlinks) {
+        if( propParser != null ){
+            if (hotlinks != null) {
+                propParser.setFeatureLinks(hotlinks);    
+            } else {
+                propParser.setFeatureLinks(Collections.<HotlinkDescriptor>emptyList());
+            }
+        }
+    }
+    
     @Override
     public boolean performCancel() {
         return super.performCancel(); // no change
@@ -323,7 +334,6 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
 
     public void enableTableAndButtons(boolean isEnabled) {
         hotlinkLabel.setEnabled(isEnabled);
-        tableLabel.setEnabled(isEnabled);
         hotlinkViewer.getControl().setEnabled(isEnabled);
         
         boolean hasSelection = isEnabled && !hotlinkViewer.getSelection().isEmpty();
