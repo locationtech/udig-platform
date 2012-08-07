@@ -54,6 +54,10 @@ public class Messages extends NLS {
 
     public static String Document_Hotlink_Section;
 
+    public static String Document_Label;
+
+    public static String Document_Label_Column;
+
     public static String Document_Open;
 
     public static String Document_Prompt;

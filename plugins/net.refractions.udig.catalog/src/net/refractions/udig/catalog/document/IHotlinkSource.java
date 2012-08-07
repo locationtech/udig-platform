@@ -40,87 +40,112 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
      * store hotlink information.
      */
     public class HotlinkDescriptor {
+
+        private final String label;
         private final String attributeName;
         private final Type type;
         private final String config;
+
+        public static final String DELIMITER = ":"; //$NON-NLS-1$
+        
         /**
          * Create an empty descriptor.
          */
-        public HotlinkDescriptor(){
+        public HotlinkDescriptor() {
+            label = null;
             attributeName = null;
             type = Type.FILE;
             config = null;
         }
-       /**
-        * Direct copy constructor.
-        * <p>
-        * Provided in case we add additional fields later.
-        */
-       public HotlinkDescriptor(HotlinkDescriptor descriptor){
-           attributeName = descriptor.getAttributeName();
-           type = descriptor.getType();
-           config = descriptor.getConfig();
-       }
+
+        /**
+         * Direct copy constructor.
+         * <p>
+         * Provided in case we add additional fields later.
+         */
+        public HotlinkDescriptor(HotlinkDescriptor descriptor) {
+            label = descriptor.getLabel();
+            attributeName = descriptor.getAttributeName();
+            type = descriptor.getType();
+            config = descriptor.getConfig();
+        }
+
         public HotlinkDescriptor(String attributeName, IDocument.Type type) {
+            this.label = null;
             this.attributeName = attributeName;
             this.type = type;
             this.config = null;
         }
-        public HotlinkDescriptor(String attributeName, IDocument.Type type, String config) {
+
+        public HotlinkDescriptor(String label, String attributeName, IDocument.Type type, String config) {
+            this.label = label;
             this.attributeName = attributeName;
             this.type = type;
             this.config = config;
         }
+
         /**
          * HotlinkDescriptor represented as a string.
          * 
-         * @param definition Definition of the form "name:type"
+         * @param definition Definition of the form "name:type:config:label"
          */
         public HotlinkDescriptor(String definition) {
-            int firstSplit = definition.indexOf(":");
-            int lastSplit = definition.indexOf(":",firstSplit+1);
-            if( firstSplit == -1 ){
-                this.attributeName = definition;
-                this.type = Type.WEB;
-                this.config = null;
+            
+            final String[] defValues = definition.split(DELIMITER);
+            attributeName = defValues[0];
+            type = Type.valueOf(defValues[1]);
+            if (defValues.length > 2) {
+                config = defValues[2];
+            } else {
+                config = null;    
             }
-            else if( lastSplit == -1) {
-                this.attributeName = definition.substring(0,firstSplit);
-                this.type = Type.valueOf(definition.substring(firstSplit+1));
-                this.config = null;
+            if (defValues.length > 3) { 
+                label = defValues[3];    
+            } else {
+                label = null;
             }
-            else {
-                this.attributeName = definition.substring(0,firstSplit);
-                this.type = Type.valueOf(definition.substring(firstSplit+1,lastSplit));
-                this.config = definition.substring(lastSplit+1);
-            }
+            
         }
-        public boolean isEmpty(){
+
+        public boolean isEmpty() {
             return attributeName == null || attributeName.isEmpty();
         }
+
         public String getAttributeName() {
             return attributeName;
         }
+
         public Type getType() {
             return type;
         }
+
         public String getConfig() {
             return config;
         }
+        
+        public String getLabel() {
+            return label;
+        } 
+
         @Override
         public String toString() {
-            StringBuilder build = new StringBuilder();
-            if( attributeName != null ){
-                build.append( attributeName );
+            final StringBuilder sb = new StringBuilder();
+            if (attributeName != null) {
+                sb.append(attributeName);
             }
-            if( type != null ){
-                build.append(":");
-                build.append( type );
+            sb.append(DELIMITER);
+            if (type != null) {
+                sb.append(type);
             }
-            if( config != null ){
-                build.append( config );
+            sb.append(DELIMITER);
+            if (config != null) {
+                sb.append(config);
             }
-            return build.toString();
+            sb.append(DELIMITER);
+            if (label != null) {
+                sb.append(label);
+            }
+            return sb.toString();
         }
     }
 

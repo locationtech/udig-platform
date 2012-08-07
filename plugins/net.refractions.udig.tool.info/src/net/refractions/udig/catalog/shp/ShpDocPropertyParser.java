@@ -507,7 +507,7 @@ public class ShpDocPropertyParser {
         final StringBuilder sb = new StringBuilder();
         for (HotlinkDescriptor hotlink : hotlinks) {
             count++;
-            appendLinkInfo(sb, "", hotlink.getAttributeName(), hotlink.getType().name()); //$NON-NLS-1$
+            appendLinkInfo(sb, hotlink.getLabel(), hotlink.getAttributeName(), hotlink.getType().name());
             if (count < hotlinks.size()) {
                 sb.append(LINK_PAIR_DELIMITER);
             }

@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IconAndMessageDialog;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -205,11 +206,25 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         tableComposite.setLayout( columnLayout );
         tableComposite.setLayoutData("cell 0 3 2 4, grow, height 200:100%:100%,width 300:pref:100%, gapx para"); //$NON-NLS-1$
         
-        hotlinkViewer = new TableViewer(tableComposite, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+        hotlinkViewer = new TableViewer(tableComposite, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL
+                | SWT.H_SCROLL | SWT.FULL_SELECTION);
         hotlinkViewer.setContentProvider(ArrayContentProvider.getInstance());
         
-        
         TableViewerColumn column = new TableViewerColumn(hotlinkViewer, SWT.NONE);
+        column.getColumn().setWidth(100);
+        column.getColumn().setMoveable(false);
+        column.getColumn().setResizable(true);
+        column.getColumn().setText(Messages.Document_Label_Column);
+        column.setLabelProvider(new ColumnLabelProvider() {
+            @Override
+            public String getText(Object element) {
+                final HotlinkDescriptor descriptor = (HotlinkDescriptor) element;
+                return descriptor.getLabel();
+            }
+        });
+        columnLayout.setColumnData(column.getColumn(), new ColumnWeightData(30, 100, true));
+        
+        column = new TableViewerColumn(hotlinkViewer, SWT.NONE);
         column.getColumn().setWidth(100);
         column.getColumn().setMoveable(false);
         column.getColumn().setResizable(true);
@@ -224,7 +239,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         columnLayout.setColumnData( column.getColumn(), new ColumnWeightData( 30, 100, true ));
         
         column = new TableViewerColumn(hotlinkViewer, SWT.NONE);
-        column.getColumn().setWidth(60);
+        column.getColumn().setWidth(80);
         column.getColumn().setMoveable(false);
         column.getColumn().setResizable(true);
         column.getColumn().setText(Messages.Document_Hotlink_Column);
@@ -239,7 +254,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         columnLayout.setColumnData( column.getColumn(), new ColumnPixelData( 40, true, true) );
         
         column = new TableViewerColumn(hotlinkViewer, SWT.NONE);
-        column.getColumn().setWidth(140);
+        column.getColumn().setWidth(120);
         column.getColumn().setMoveable(false);
         column.getColumn().setResizable(true);
         column.getColumn().setText(Messages.Document_Action_Column);
@@ -418,6 +433,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         private Text actionText;
 
         private Label actionLabel;
+        
+        private Text labelText;
 
         protected HotlinkDescriptorDialog(Shell parentShell) {
             super(parentShell);
@@ -509,22 +526,30 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         
         @Override
         protected Control createDialogArea(Composite parent) {
+            
             Composite composite = new Composite(parent, SWT.NONE);
             MigLayout layout = new MigLayout("insets panel", "[][grow]", "[][][]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             composite.setLayout(layout);
             composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
             createMessageArea(composite);
-            imageLabel.setLayoutData("cell 0 0, grow"); //$NON-NLS-1$
-            messageLabel.setLayoutData("cell 1 0 2 1, grow "); //$NON-NLS-1$
+            imageLabel.setLayoutData("cell 0 0, alignx center"); //$NON-NLS-1$
+            messageLabel.setLayoutData("cell 1 0 2 1, aligny center"); //$NON-NLS-1$
+
+            Label labelLbl = new Label(composite, SWT.NONE);
+            labelLbl.setText(Messages.Document_Label);
+            labelLbl.setLayoutData("cell 0 1, gapx unrelated"); //$NON-NLS-1$
+
+            labelText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+            labelText.setLayoutData("cell 1 1, growx"); //$NON-NLS-1$
             
             Label label = new Label(composite, SWT.SINGLE);
             label.setText(Messages.Document_Attribute);
-            label.setLayoutData("cell 0 1, gapx unrelated"); //$NON-NLS-1$
-
+            label.setLayoutData("cell 0 2, gapx unrelated"); //$NON-NLS-1$
+                        
             attributeViewer = new ComboViewer(composite);
             attributeViewer.setContentProvider(ArrayContentProvider.getInstance());
-            attributeViewer.getControl().setLayoutData("cell 1 1, growx"); //$NON-NLS-1$
+            attributeViewer.getControl().setLayoutData("cell 1 2, growx"); //$NON-NLS-1$
             List<String> attributeNames = getSchemaCandidates();
             attributeViewer.setInput(attributeNames);
             attributeViewer.addSelectionChangedListener( new ISelectionChangedListener() {
@@ -537,64 +562,65 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 }
             });
             
-            if( !descriptor.isEmpty() ){
-                String attributeName = descriptor.getAttributeName();
-                if( attributeNames.contains( attributeName )){
-                    attributeViewer.setSelection( new StructuredSelection( attributeName) );
-                }
-            }
-            
             label = new Label(composite, SWT.SINGLE);
             label.setText(Messages.Document_Hotlink);
-            label.setLayoutData("cell 0 2, gapx unrelated"); //$NON-NLS-1$
+            label.setLayoutData("cell 0 3, gapx unrelated"); //$NON-NLS-1$
 
             typeViewer = new ComboViewer(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
             typeViewer.setContentProvider(ArrayContentProvider.getInstance());
             typeViewer.setInput(IDocument.Type.values());
-            typeViewer.getControl().setLayoutData("cell 1 2"); //$NON-NLS-1$
-            typeViewer.setSelection(new StructuredSelection(descriptor.getType()), true);
+            typeViewer.getControl().setLayoutData("cell 1 3"); //$NON-NLS-1$
             typeViewer.addSelectionChangedListener( new ISelectionChangedListener() {
                 public void selectionChanged(SelectionChangedEvent event) {
                     if( !event.getSelection().isEmpty() && event.getSelection() instanceof StructuredSelection ){
                         StructuredSelection selection = (StructuredSelection) event.getSelection();
                         IDocument.Type type = (Type) selection.getFirstElement();
-                        switch (type ){
-                        case WEB:
-                        case FILE:
-                            {
-                                actionLabel.setEnabled( false );
-                                actionText.setText(Messages.Document_Open);
-                                actionText.setEnabled(false);
-                            }
-                            break;
-                        case ACTION:
-                            actionLabel.setEnabled( true );
-                            actionText.setText( descriptor.getConfig() == null ? "" : descriptor.getConfig()); //$NON-NLS-1$
-                            actionText.setEnabled(false);
-                        }
+                        setActionText(type, descriptor.getConfig());
                     }
                 }
             });
             
             actionLabel = new Label(composite, SWT.SINGLE);
             actionLabel.setText(Messages.Document_Action);
-            actionLabel.setLayoutData("cell 0 3, gapx unrelated"); //$NON-NLS-1$
-
-            actionText = new Text(composite,  SWT.SINGLE );
-            String actionConfig = descriptor.getConfig();
-            if( actionConfig != null ){
-                actionText.setText( actionConfig );
+            actionLabel.setLayoutData("cell 0 4, gapx unrelated"); //$NON-NLS-1$
+            
+            actionText = new Text(composite,  SWT.SINGLE | SWT.BORDER );
+            actionText.setLayoutData("cell 1 4, growx"); //$NON-NLS-1$
+            
+            if( descriptor.isEmpty() ){
+                final Type defaultType = Type.FILE;
+                typeViewer.setSelection(new StructuredSelection(defaultType), true);
+                setActionText(defaultType, null);
+            } else {
+                final String labelStr = descriptor.getLabel();
+                if (labelStr != null) {
+                    labelText.setText(labelStr);
+                }
+                final String attributeName = descriptor.getAttributeName();
+                if (attributeNames.contains(attributeName)) {
+                    attributeViewer.setSelection(new StructuredSelection(attributeName));
+                }
+                typeViewer.setSelection(new StructuredSelection(descriptor.getType()), true);
+                setActionText(descriptor.getType(), descriptor.getConfig());
             }
-            else {
-                actionText.setText( Messages.Document_Open );
-                actionText.setEnabled(false);
-            }
-            actionText.setEnabled(false);
-            actionText.setLayoutData("cell 1 3, growx"); //$NON-NLS-1$
+            
             applyDialogFont(composite);
             return composite;
         }
 
+        private void setActionText(Type type, String config) {
+            switch (type) {
+            case ACTION:
+                actionText.setEnabled(true);
+                actionText.setText(config == null ? "" : config); //$NON-NLS-1$
+                break;
+            default:
+                actionText.setEnabled(false);
+                actionText.setText(config == null ? Messages.Document_Open : config);
+                break;
+            }
+        }
+        
         @Override
         protected void createButtonsForButtonBar(Composite parent) {
             super.createButtonsForButtonBar(parent); //  // create OK and Cancel buttons by default
@@ -602,8 +628,12 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             boolean hasAttribute = !attributeViewer.getSelection().isEmpty();
             getButton(IDialogConstants.OK_ID).setEnabled(hasAttribute);
         }
+        
         @Override
         protected void okPressed() {
+            
+            final String label = labelText.getText();
+            
             String attributeName = attributeViewer.getCombo().getText();
             if( attributeName == null || attributeName.isEmpty() ){
                 return; // nothing!
@@ -611,15 +641,17 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             StructuredSelection selection = (StructuredSelection) typeViewer.getSelection();
             Type type = (Type) selection.getFirstElement();
             
-            String actionConfig = type == Type.ACTION ? actionText.getText() : null;
+            final String actionConfig = actionText.getText();
             
-            descriptor = new HotlinkDescriptor(attributeName, type, actionConfig);
+            descriptor = new HotlinkDescriptor(label, attributeName, type, actionConfig);
             super.okPressed();
         }
+        
         @Override
         protected void cancelPressed() {
             descriptor = null;
             super.cancelPressed();
         }
+        
     }
 }
