@@ -129,7 +129,7 @@
                   </adapt>
                </or>
                <test
-                     property="featureSource">
+                     property="net.refractions.udig.catalog.featureSource">
                </test>
             </and>
          </enabledWhen>
