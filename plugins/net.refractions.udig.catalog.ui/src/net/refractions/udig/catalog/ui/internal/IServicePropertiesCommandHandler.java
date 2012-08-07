@@ -14,12 +14,24 @@
  */
 package net.refractions.udig.catalog.ui.internal;
 
+import java.io.IOException;
+
+import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.catalog.IResolve;
+import net.refractions.udig.catalog.IService;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.preference.PreferenceDialog;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.IShellProvider;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
@@ -47,7 +59,7 @@ public class IServicePropertiesCommandHandler extends AbstractHandler implements
         };
 
         IWorkbenchPart activePart = activeWorkbenchWindow.getActivePage().getActivePart();
-        ISelectionProvider selectionProvider = activePart.getSite().getSelectionProvider();
+        ISelectionProvider selectionProvider =  new ServiceSelectionProvider( activePart.getSite().getSelectionProvider() );
         
         PropertyDialogAction action = new PropertyDialogAction( shellProvider, selectionProvider);
         PreferenceDialog dialog = action.createDialog();
@@ -55,5 +67,94 @@ public class IServicePropertiesCommandHandler extends AbstractHandler implements
 
         return null;
     }
-
+    class ServiceSelectionProvider implements ISelectionProvider {
+        ISelectionProvider provider;
+        ServiceSelectionProvider( ISelectionProvider provider ){
+            this.provider = provider;
+        }
+        @Override
+        public void addSelectionChangedListener(ISelectionChangedListener listener) {
+            provider.addSelectionChangedListener( listener );
+        }
+        @Override
+        public ISelection getSelection() {
+            ISelection selection = provider.getSelection();
+            if( selection instanceof IStructuredSelection && !selection.isEmpty() ){
+                IStructuredSelection sel = (IStructuredSelection) selection;
+                Object element = sel.getFirstElement();
+                
+                if( element instanceof IService){
+                    return selection;
+                }                
+                else if (element instanceof IGeoResource ){
+                    IGeoResource resource = (IGeoResource) element;
+                    return toServiceSelection(resource);
+                }
+                else if (element instanceof IResolve ){
+                    IResolve resolve = (IResolve) element;
+                    if( resolve.canResolve( IService.class)){
+                        try {
+                            IService service = resolve.resolve( IService.class, new NullProgressMonitor() );
+                            return new StructuredSelection( service );
+                        } catch (IOException e) {
+                            return StructuredSelection.EMPTY;
+                        }
+                    }
+                }
+                // check IAdaptable incase ILayer or another selection wants to play
+                if( element instanceof IAdaptable ){
+                    IAdaptable adaptable = (IAdaptable) element;
+                    IService service = (IService) adaptable.getAdapter(IService.class);
+                    if( service != null ){
+                        return new StructuredSelection( service );
+                    }
+                    IGeoResource resource = (IGeoResource) adaptable.getAdapter(IGeoResource.class);
+                    if( resource != null ){
+                        return toServiceSelection(resource);
+                    }
+                    IResolve resolve = (IResolve) adaptable.getAdapter(IResolve.class);
+                    if( resolve != null ){
+                        if( resolve.canResolve( IService.class)){
+                            try {
+                                service = resolve.resolve( IService.class, new NullProgressMonitor() );
+                                return new StructuredSelection( service );
+                            } catch (IOException e) {
+                                return StructuredSelection.EMPTY;
+                            }
+                        }                        
+                    }                    
+                }
+            }
+            return selection;
+        }
+        private ISelection toServiceSelection(IGeoResource resource) {
+            try {
+                IService service = resource.service( new NullProgressMonitor() );
+                return new StructuredSelection( service );
+            } catch (IOException e) {
+                return StructuredSelection.EMPTY;
+            }
+        }
+        @Override
+        public void removeSelectionChangedListener(ISelectionChangedListener listener) {
+            provider.addSelectionChangedListener( listener );
+        }
+        @Override
+        public void setSelection(ISelection selection) {
+            provider.setSelection( selection );
+        }
+    }
+    static class NullAdaptor implements IAdaptable {
+        private Object element;
+        public NullAdaptor( Object element ){
+           this.element = element;
+        }
+        public Object getAdapter(Class adapter) {
+            if( adapter.isInstance( element ) ){
+                return adapter.cast( element );
+            }
+            return null;
+        }
+        
+    }
 }
