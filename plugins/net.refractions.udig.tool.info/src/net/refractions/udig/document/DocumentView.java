@@ -55,13 +55,17 @@ import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.Window;
@@ -72,6 +76,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISharedImages;
@@ -115,9 +121,14 @@ public class DocumentView extends ViewPart {
     private IStructuredSelection workbenchSelection;
     private DocumentItemModel itemModel;
     
-    private ISelectionChangedListener listSelectionListener;
-    private SelectionAdapter btnSelectionListener;
     private ISelectionListener workbenchSelectionListener;
+    
+    private static final int NAME_INDEX = 0;
+    private static final int NAME_WEIGHT = 25;
+    private static final int DESCRIPTION_INDEX = 1;
+    private static final int DESCRIPTION_WEIGHT = 40;
+    private static final int DETAIL_INDEX = 2;
+    private static final int DETAIL_WEIGHT = 35;
     
     public DocumentView() {
         this.itemModel = new DocumentItemModel();
@@ -135,29 +146,76 @@ public class DocumentView extends ViewPart {
         form.setSeparatorVisible(true);
         
         final Composite parent = scrolledForm.getBody();
-        
         final String treeLayoutConst = "fillx, wrap 2"; //$NON-NLS-1$
         final String treeColConst = "[85%][15%]"; //$NON-NLS-1$
         final String treeRowConst = "[top][top]"; //$NON-NLS-1$
         parent.setLayout(new MigLayout(treeLayoutConst, treeColConst, treeRowConst));
         
-        listSelectionListener = new ISelectionChangedListener() {
+        createTreeControlArea(toolkit, parent);
+        createButtonControlArea(toolkit, parent);
+        refreshBtns();
+        
+        // Add workbench selection lister
+        workbenchSelectionListener = new ISelectionListener() {
+            @Override
+            public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+                handleWorkbenchSelection(selection);
+            }
+        };
+        getSite().getWorkbenchWindow().getSelectionService()
+                .addPostSelectionListener(workbenchSelectionListener);
+        
+    }
+
+    /**
+     * Creates the tree-table control for displaying the documents.
+     * 
+     * @param parent
+     */
+    private void createTreeControlArea(FormToolkit toolkit, Composite parent) {
+        
+        final Tree viewerTree = new Tree(parent, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER
+                | SWT.H_SCROLL | SWT.V_SCROLL);
+        viewerTree.setLayoutData("grow, push"); //$NON-NLS-1$
+        viewerTree.setHeaderVisible(true);
+        viewerTree.setLinesVisible(true);
+        
+        final TableLayout viewerTreeLayout = new TableLayout();
+        
+        final TreeColumn nameColumn = new TreeColumn(viewerTree, SWT.LEFT, NAME_INDEX);
+        nameColumn.setText(Messages.docView_nameColumn);
+        viewerTreeLayout.addColumnData(new ColumnWeightData(NAME_WEIGHT));
+        
+        final TreeColumn descColumn = new TreeColumn(viewerTree, SWT.LEFT, DESCRIPTION_INDEX);
+        descColumn.setText(Messages.docView_descriptionColumn);
+        viewerTreeLayout.addColumnData(new ColumnWeightData(DESCRIPTION_WEIGHT));
+        
+        final TreeColumn detailColumn = new TreeColumn(viewerTree, SWT.LEFT, DETAIL_INDEX);
+        detailColumn.setText(Messages.docView_detailsColumn);
+        viewerTreeLayout.addColumnData(new ColumnWeightData(DETAIL_WEIGHT));
+
+        viewerTree.setLayout(viewerTreeLayout); 
+        
+        viewer = new TreeViewer(viewerTree);
+        viewer.setContentProvider(new DocumentViewContentProvider());
+        viewer.setLabelProvider(new DocumentViewTableLabelProvider());
+        viewer.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
             public void selectionChanged(SelectionChangedEvent event) {
                 handleListSelection(event.getSelection());
             }
-        };
+        });
         
-        // add table or tree viewer
-        viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.VIRTUAL
-                | SWT.FULL_SELECTION | SWT.BORDER);
-        viewer.setContentProvider(new DocumentViewContentProvider());
-        viewer.setLabelProvider(new DocumentViewLabelProvider());
-        viewer.setUseHashlookup(true);
-        viewer.getTree().setLayoutData("grow, push"); //$NON-NLS-1$
-        viewer.addSelectionChangedListener(listSelectionListener);
+    }
+    
+    /**
+     * Creates the button controls panel for actions related to documents.
+     * 
+     * @param parent
+     */
+    private void createButtonControlArea(FormToolkit toolkit, Composite parent) {
         
-        btnSelectionListener = new SelectionAdapter() {
+        final SelectionAdapter btnSelectionListener = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 super.widgetSelected(e);
@@ -203,20 +261,8 @@ public class DocumentView extends ViewPart {
         removeButton.setLayoutData(btnLayoutData);
         removeButton.addSelectionListener(btnSelectionListener);
         
-        refreshBtns();
-        
-        // Add workbench selection lister
-        workbenchSelectionListener = new ISelectionListener() {
-            @Override
-            public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-                handleWorkbenchSelection(selection);
-            }
-        };
-        getSite().getWorkbenchWindow().getSelectionService()
-                .addPostSelectionListener(workbenchSelectionListener);
-        
     }
-
+    
     @Override
     public void setFocus() {
         // Do something
@@ -1073,7 +1119,77 @@ public class DocumentView extends ViewPart {
     }
     
     // Utility inner classes
+    
+    /**
+     * The label provider for the document item tree viewer in the {@link DocumentView}.
+     */
+    private class DocumentViewTableLabelProvider implements ITableLabelProvider {
 
+        @Override
+        public Image getColumnImage(Object element, int columnIndex) {
+            switch (columnIndex) {
+            case NAME_INDEX:
+                if (element instanceof IDocumentFolder) {
+                    return PlatformUI.getWorkbench().getSharedImages()
+                            .getImage(ISharedImages.IMG_OBJ_FOLDER);
+                } else if (element instanceof FileDocument) {
+                    return PlatformUI.getWorkbench().getSharedImages()
+                            .getImage(ISharedImages.IMG_OBJ_FILE);
+                } else if (element instanceof URLDocument) {
+                    return InfoPlugin.getDefault().getImageRegistry().get(InfoPlugin.IMG_OBJ_LINK);
+                }
+                return PlatformUI.getWorkbench().getSharedImages()
+                        .getImage(ISharedImages.IMG_OBJ_ELEMENT);
+            }
+            return null;
+        }
+
+        @Override
+        public String getColumnText(Object element, int columnIndex) {
+            if (element instanceof IDocumentFolder) {
+                final IDocumentFolder folder = (IDocumentFolder) element;
+                switch (columnIndex) {
+                case NAME_INDEX:
+                    return folder.getName();
+                case DESCRIPTION_INDEX:
+                    return folder.getDescription();
+                }
+            } else if (element instanceof IDocument) {
+                final IDocument doc = (IDocument) element;
+                switch (columnIndex) {
+                case NAME_INDEX:
+                    return doc.getName();
+                case DESCRIPTION_INDEX:
+                    return doc.getDescription();
+                case DETAIL_INDEX:
+                    return doc.getType().toString();
+                }                
+            }
+            return null;
+        }
+
+        @Override
+        public void dispose() {
+            // Nothing
+        }
+
+        @Override
+        public boolean isLabelProperty(Object element, String property) {
+            return false;
+        }
+
+        @Override
+        public void addListener(ILabelProviderListener listener) {
+            // Nothing
+        }
+        
+        @Override
+        public void removeListener(ILabelProviderListener listener) {
+            // Nothing
+        }
+
+    }
+    
     /**
      * The label provider for the document item tree viewer in the {@link DocumentView}.
      */

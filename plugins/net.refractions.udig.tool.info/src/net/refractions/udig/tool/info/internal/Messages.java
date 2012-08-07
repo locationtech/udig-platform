@@ -78,6 +78,10 @@ public class Messages extends NLS {
 
     public static String docView_delete;
 
+    public static String docView_descriptionColumn;
+
+    public static String docView_detailsColumn;
+
     public static String docView_errEmpty;
 
     public static String docView_errFileExistMulti;
@@ -101,6 +105,8 @@ public class Messages extends NLS {
     public static String docView_linkURL;
 
     public static String docView_name;
+
+    public static String docView_nameColumn;
 
     public static String docView_open;
 
