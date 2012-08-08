@@ -64,6 +64,24 @@ public class Messages extends NLS {
 
     public static String Document_Remove;
 
+    public static String DocumentDialog_actionLabel;
+
+    public static String DocumentDialog_descriptionLabel;
+
+    public static String DocumentDialog_errValidFile;
+
+    public static String DocumentDialog_errValidURL;
+
+    public static String DocumentDialog_fileBtn;
+
+    public static String DocumentDialog_fileLabel;
+
+    public static String DocumentDialog_nameLabel;
+
+    public static String DocumentDialog_typeLabel;
+
+    public static String DocumentDialog_urlLabel;
+
     public static String InfoView_instructions_text;
 
     public static String InfoView2_information_request;
