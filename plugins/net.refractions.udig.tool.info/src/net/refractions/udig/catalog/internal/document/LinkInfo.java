@@ -15,12 +15,12 @@
 package net.refractions.udig.catalog.internal.document;
 
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.ILinkInfo;
 import net.refractions.udig.catalog.document.IDocument.Type;
-
+import net.refractions.udig.catalog.document.ILinkInfo;
 
 /**
- * Info container for document properties as retrieved from the property file.
+ * Document info container for document. This was initially designed to contain document properties
+ * retrieved from the property file but can also be reused and/or extended where possible.
  * 
  * @author Naz Chan
  */
@@ -30,19 +30,45 @@ public class LinkInfo implements ILinkInfo {
      * Document label
      */
     private String label;
+
     /**
-     * Document info - file location for attachments or attribute name for hotlinks
+     * Document description
      */
-    private String info;
+    private String description;
+
     /**
      * Document type
      */
     private IDocument.Type type;
-    
-    public LinkInfo(String label, String info, IDocument.Type type) {
+
+    /**
+     * Document info
+     * <p>
+     *  - file location for attachments or attribute name for hotlinks
+     */
+    private String info;
+
+    /**
+     * Document configuration
+     */
+    private String config;
+
+    public LinkInfo(String infoStr) {
+        fromString(infoStr);
+    }
+            
+    public LinkInfo(String label, String info, Type type) {
         this.label = label;
         this.info = info;
         this.type = type;
+    }
+
+    public LinkInfo(String label, String description, String info, Type type, String config) {
+        this.label = label;
+        this.description = description;
+        this.info = info;
+        this.type = type;
+        this.config = config;
     }
     
     public String getLabel() {
@@ -67,6 +93,32 @@ public class LinkInfo implements ILinkInfo {
 
     public void setType(IDocument.Type type) {
         this.type = type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getConfig() {
+        return config;
+    }
+
+    public void setConfig(String config) {
+        this.config = config;
+    }
+
+    private void fromString(String infoStr) {
+        // TODO implement
+    }
+    
+    @Override
+    public String toString() {
+        // TODO implement
+        return super.toString();
     }
     
 }

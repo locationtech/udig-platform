@@ -15,13 +15,20 @@
 package net.refractions.udig.catalog.document;
 
 /**
- * @author nchan
- *
+ * Document info interface.
+ * 
+ * @author Naz Chan
  */
 public interface ILinkInfo {
 
-    public String getInfo();
+    public String getLabel();
+    
+    public String getDescription();
 
     public IDocument.Type getType();
+    
+    public String getInfo();
+    
+    public String getConfig();
     
 }
