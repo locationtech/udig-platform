@@ -62,6 +62,7 @@ import eu.udig.tools.merge.internal.view.MergeView;
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
+ * @author Marco Foi (www.mcfoi.it)
  */
 public class MergeTool extends SimpleTool  implements ModalTool{
 

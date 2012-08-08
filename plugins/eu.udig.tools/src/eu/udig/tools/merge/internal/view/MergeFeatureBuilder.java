@@ -102,6 +102,7 @@ import eu.udig.tools.geometry.internal.util.GeometryUtil;
  * 
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
+ * @author Marco Foi (www.mcfoi.it)
  * @since 1.1.0
  */
 class MergeFeatureBuilder {

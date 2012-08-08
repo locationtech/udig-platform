@@ -71,6 +71,7 @@ import eu.udig.tools.merge.Util;
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
+ * @author Marco Foi (www.mcfoi.it)
  */
 public class MergeView extends ViewPart implements IUDIGView {
 
@@ -102,6 +103,8 @@ public class MergeView extends ViewPart implements IUDIGView {
 
     private IToolContext context = null;
 
+    // Field used to track temporary (during the execution of the code that follows) the layer that
+    // has issued an event against a listener
     private ILayer currEventTriggeringLayer = null;
 
     // ###
@@ -136,10 +139,6 @@ public class MergeView extends ViewPart implements IUDIGView {
                     return;
                 }
 
-                // if (getCommand().isStopped()) {
-                // return;
-                // }
-
                 updatedMapLayersActions(event);
             }
         };
@@ -151,9 +150,6 @@ public class MergeView extends ViewPart implements IUDIGView {
                 if (!wasInitialized()) {
                     return;
                 }
-                // if (getCommand().isStopped()) {
-                // return;
-                // }
 
                 updateLayerActions(event);
             }
@@ -333,10 +329,6 @@ public class MergeView extends ViewPart implements IUDIGView {
      */
     protected void changedFilterSelectionActions(final ILayer layer, final Filter newFilter) {
 
-        // nothing as default implementation
-        System.out.print("######################SELECTION CHANGED######################"); //$NON-NLS-1$
-        // builds a command to show the features selected to merge
-
         List<SimpleFeature> selectedFeatures = null;
         try {
             selectedFeatures = Util.retrieveFeatures(newFilter, layer);
@@ -423,7 +415,7 @@ public class MergeView extends ViewPart implements IUDIGView {
      */
     public boolean wasInitialized() {
 
-        return (!this.isDisposed()) /* && (this.getCommand() != null) */&& (this.wasInitialized);
+        return (!this.isDisposed()) && (this.wasInitialized);
     }
 
     /**
@@ -456,7 +448,7 @@ public class MergeView extends ViewPart implements IUDIGView {
     private void addPreSelectedFeatures() {
         // Use the currEventTriggeringLayer to store the layer that pseudo-triggered (no actual
         // listener, just) this
-        MergeContext mergeContextSingleton = MergeContext.getInstance();      
+        MergeContext mergeContextSingleton = MergeContext.getInstance();
         List<SimpleFeature> selectedFeatures = mergeContextSingleton.getPreselectedFeatures();
         this.currEventTriggeringLayer = mergeContextSingleton.getPreSelectedLayer();
         if (selectedFeatures != null) {
@@ -469,8 +461,8 @@ public class MergeView extends ViewPart implements IUDIGView {
 
     // <<<< ###############
     // <<<< ###############
-    // <<<< ###############
-    // <<<< ###############
+    // <<<< #####END#######
+    // <<<< #####OF########
     // <<<< ####NEW#STUFF##
     // <<<< ###############
     // <<<< ###############
@@ -562,6 +554,8 @@ public class MergeView extends ViewPart implements IUDIGView {
         public void run() {
 
             ILayer layer = null;
+            // Depending on tool mode (so depending on how MergeView was opened) a different access
+            // to current layer is adopted
             if (MergeContext.getInstance().getMergeMode() == MergeContext.MERGEMODE_TOOL) {
                 // sets the command using the features present in the merge builder
                 IToolContext context = getContext();

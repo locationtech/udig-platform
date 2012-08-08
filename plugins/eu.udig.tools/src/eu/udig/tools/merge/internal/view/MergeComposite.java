@@ -78,6 +78,7 @@ import eu.udig.tools.merge.MergeContext;
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
+ * @author Marco Foi (www.mcfoi.it)
  */
 class MergeComposite extends Composite {
 
