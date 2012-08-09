@@ -66,7 +66,21 @@ public class Messages extends NLS {
 
     public static String DocumentDialog_actionLabel;
 
+    public static String DocumentDialog_addAttachHeader;
+
+    public static String DocumentDialog_attachSubHeader;
+
+    public static String DocumentDialog_attachSubHeaderFeature;
+
+    public static String DocumentDialog_attachSubHeaderShapefile;
+
+    public static String DocumentDialog_attributeLabel;
+
     public static String DocumentDialog_descriptionLabel;
+
+    public static String DocumentDialog_documentLabel;
+
+    public static String DocumentDialog_editAttachHeader;
 
     public static String DocumentDialog_errValidFile;
 
@@ -76,11 +90,21 @@ public class Messages extends NLS {
 
     public static String DocumentDialog_fileLabel;
 
-    public static String DocumentDialog_nameLabel;
+    public static String DocumentDialog_goBtn;
+
+    public static String DocumentDialog_hotlinkHeader;
+
+    public static String DocumentDialog_labelLabel;
+
+    public static String DocumentDialog_newBtn;
+
+    public static String DocumentDialog_openBtn;
 
     public static String DocumentDialog_typeLabel;
 
     public static String DocumentDialog_urlLabel;
+
+    public static String DocumentDialog_valueLabel;
 
     public static String InfoView_instructions_text;
 

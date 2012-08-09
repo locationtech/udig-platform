@@ -29,6 +29,13 @@ public interface IDocument extends IDocumentItem {
     /**
      * Document types
      */
+    public enum DocType {
+        ATTACHMENT, HOTLINK;
+    };
+    
+    /**
+     * Document content types
+     */
     public enum Type {
         FILE, WEB, ACTION;
     };
