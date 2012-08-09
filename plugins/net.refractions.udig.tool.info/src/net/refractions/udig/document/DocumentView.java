@@ -110,9 +110,10 @@ import org.opengis.filter.identity.FeatureId;
 public class DocumentView extends ViewPart {
     
     private TreeViewer viewer;
-    private Button openButton;
     private Button attachButton;
     private Button linkButton;
+    private Button openButton;
+    private Button saveAsButton;
     private Button removeButton;
 
     private IGeoResource geoResource;
@@ -123,12 +124,14 @@ public class DocumentView extends ViewPart {
     
     private ISelectionListener workbenchSelectionListener;
     
-    private static final int NAME_INDEX = 0;
-    private static final int NAME_WEIGHT = 25;
-    private static final int DESCRIPTION_INDEX = 1;
-    private static final int DESCRIPTION_WEIGHT = 40;
-    private static final int DETAIL_INDEX = 2;
-    private static final int DETAIL_WEIGHT = 35;
+    private static final int DOCUMENT_INDEX = 0;
+    private static final int DOCUMENT_WEIGHT = 40;
+    
+    private static final int TYPE_INDEX = 1;
+    private static final int TYPE_WEIGHT = 10;
+    
+    private static final int DESCRIPTION_INDEX = 2;
+    private static final int DESCRIPTION_WEIGHT = 50;
     
     public DocumentView() {
         this.itemModel = new DocumentItemModel();
@@ -146,7 +149,7 @@ public class DocumentView extends ViewPart {
         form.setSeparatorVisible(true);
         
         final Composite parent = scrolledForm.getBody();
-        final String treeLayoutConst = "fillx, wrap 2"; //$NON-NLS-1$
+        final String treeLayoutConst = "fill, wrap 2"; //$NON-NLS-1$
         final String treeColConst = "[85%][15%]"; //$NON-NLS-1$
         final String treeRowConst = "[top][top]"; //$NON-NLS-1$
         parent.setLayout(new MigLayout(treeLayoutConst, treeColConst, treeRowConst));
@@ -182,18 +185,18 @@ public class DocumentView extends ViewPart {
         
         final TableLayout viewerTreeLayout = new TableLayout();
         
-        final TreeColumn nameColumn = new TreeColumn(viewerTree, SWT.LEFT, NAME_INDEX);
-        nameColumn.setText(Messages.docView_nameColumn);
-        viewerTreeLayout.addColumnData(new ColumnWeightData(NAME_WEIGHT));
+        final TreeColumn nameColumn = new TreeColumn(viewerTree, SWT.LEFT, DOCUMENT_INDEX);
+        nameColumn.setText(Messages.docView_documentColumn);
+        viewerTreeLayout.addColumnData(new ColumnWeightData(DOCUMENT_WEIGHT));
+
+        final TreeColumn detailColumn = new TreeColumn(viewerTree, SWT.CENTER, TYPE_INDEX);
+        detailColumn.setText(Messages.docView_typeColumn);
+        viewerTreeLayout.addColumnData(new ColumnWeightData(TYPE_WEIGHT));
         
         final TreeColumn descColumn = new TreeColumn(viewerTree, SWT.LEFT, DESCRIPTION_INDEX);
         descColumn.setText(Messages.docView_descriptionColumn);
         viewerTreeLayout.addColumnData(new ColumnWeightData(DESCRIPTION_WEIGHT));
         
-        final TreeColumn detailColumn = new TreeColumn(viewerTree, SWT.LEFT, DETAIL_INDEX);
-        detailColumn.setText(Messages.docView_detailsColumn);
-        viewerTreeLayout.addColumnData(new ColumnWeightData(DETAIL_WEIGHT));
-
         viewerTree.setLayout(viewerTreeLayout); 
         
         viewer = new TreeViewer(viewerTree);
@@ -223,41 +226,37 @@ public class DocumentView extends ViewPart {
             }
         };
         
-        final String btnLayoutData = "growx"; //$NON-NLS-1$
-        final String btnSubLayoutConst = "insets 0, fillx, wrap 1"; //$NON-NLS-1$
-        final String btnLayoutConst = "insets 0, fillx, wrap 1, gapy 20px!"; //$NON-NLS-1$
-        final String btnColConst = ""; //$NON-NLS-1$
-        final String btnRowConst = ""; //$NON-NLS-1$
-        
         final Composite btnSection = toolkit.createComposite(parent);
+        final String btnLayoutConst = "insets 0, fillx, wrap 1"; //$NON-NLS-1$
+        final String btnColConst = ""; //$NON-NLS-1$
+        final String btnRowConst = "[][][][]push[]"; //$NON-NLS-1$
         btnSection.setLayout(new MigLayout(btnLayoutConst, btnColConst, btnRowConst));
-        btnSection.setLayoutData(btnLayoutData);
+        btnSection.setLayoutData("grow"); //$NON-NLS-1$
         
-        final Composite btnTopSection = toolkit.createComposite(btnSection);
-        btnTopSection.setLayout(new MigLayout(btnSubLayoutConst, btnColConst, btnRowConst));
-        btnTopSection.setLayoutData(btnLayoutData);
+        final String btnLayoutData = "growx"; //$NON-NLS-1$
+        
+        // attach button
+        attachButton = toolkit.createButton(btnSection, Messages.docView_attach, SWT.PUSH);
+        attachButton.setLayoutData(btnLayoutData);
+        attachButton.addSelectionListener(btnSelectionListener);
+        
+        // link button
+        linkButton = toolkit.createButton(btnSection, Messages.docView_link, SWT.PUSH);
+        linkButton.setLayoutData(btnLayoutData);
+        linkButton.addSelectionListener(btnSelectionListener);
+
         // open button
-        openButton = toolkit.createButton(btnTopSection, Messages.docView_open, SWT.PUSH);
+        openButton = toolkit.createButton(btnSection, Messages.docView_open, SWT.PUSH);
         openButton.setLayoutData(btnLayoutData);
         openButton.addSelectionListener(btnSelectionListener);
         
-        final Composite btnMidSection = toolkit.createComposite(btnSection);
-        btnMidSection.setLayout(new MigLayout(btnSubLayoutConst, btnColConst, btnRowConst));
-        btnMidSection.setLayoutData(btnLayoutData);
-        // attach button
-        attachButton = toolkit.createButton(btnMidSection, Messages.docView_attach, SWT.PUSH);
-        attachButton.setLayoutData(btnLayoutData);
-        attachButton.addSelectionListener(btnSelectionListener);
-        // link button
-        linkButton = toolkit.createButton(btnMidSection, Messages.docView_link, SWT.PUSH);
-        linkButton.setLayoutData(btnLayoutData);
-        linkButton.addSelectionListener(btnSelectionListener);
+        // save as button
+        saveAsButton = toolkit.createButton(btnSection, Messages.docView_saveAs, SWT.PUSH);
+        saveAsButton.setLayoutData(btnLayoutData);
+        saveAsButton.addSelectionListener(btnSelectionListener);
         
-        final Composite btnBotSection = toolkit.createComposite(btnSection);
-        btnBotSection.setLayout(new MigLayout(btnSubLayoutConst, btnColConst, btnRowConst));
-        btnBotSection.setLayoutData(btnLayoutData);
         // remove button
-        removeButton = toolkit.createButton(btnBotSection, Messages.docView_delete, SWT.PUSH);
+        removeButton = toolkit.createButton(btnSection, Messages.docView_delete, SWT.PUSH);
         removeButton.setLayoutData(btnLayoutData);
         removeButton.addSelectionListener(btnSelectionListener);
         
@@ -1128,7 +1127,7 @@ public class DocumentView extends ViewPart {
         @Override
         public Image getColumnImage(Object element, int columnIndex) {
             switch (columnIndex) {
-            case NAME_INDEX:
+            case DOCUMENT_INDEX:
                 if (element instanceof IDocumentFolder) {
                     return PlatformUI.getWorkbench().getSharedImages()
                             .getImage(ISharedImages.IMG_OBJ_FOLDER);
@@ -1149,7 +1148,7 @@ public class DocumentView extends ViewPart {
             if (element instanceof IDocumentFolder) {
                 final IDocumentFolder folder = (IDocumentFolder) element;
                 switch (columnIndex) {
-                case NAME_INDEX:
+                case DOCUMENT_INDEX:
                     return folder.getName();
                 case DESCRIPTION_INDEX:
                     return folder.getDescription();
@@ -1157,11 +1156,11 @@ public class DocumentView extends ViewPart {
             } else if (element instanceof IDocument) {
                 final IDocument doc = (IDocument) element;
                 switch (columnIndex) {
-                case NAME_INDEX:
+                case DOCUMENT_INDEX:
                     return doc.getName();
                 case DESCRIPTION_INDEX:
                     return doc.getDescription();
-                case DETAIL_INDEX:
+                case TYPE_INDEX:
                     return doc.getType().toString();
                 }                
             }
