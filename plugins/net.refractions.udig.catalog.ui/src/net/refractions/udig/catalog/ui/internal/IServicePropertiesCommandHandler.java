@@ -25,7 +25,9 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IAdapterManager;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -38,6 +40,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PropertyDialogAction;
+import org.eclipse.ui.internal.dialogs.AdaptableForwarder;
 
 /**
  * A command hander to display an IGeoResource properties page.
@@ -144,16 +147,39 @@ public class IServicePropertiesCommandHandler extends AbstractHandler implements
             provider.setSelection( selection );
         }
     }
+    /**
+     * Placeholder to convert a selection to an IAdaptable.
+     * <p>
+     * The design of this class was informed by {@link AdaptableForwarder}.
+     * 
+     * @author jody
+     * @since 1.3.2
+     */
     static class NullAdaptor implements IAdaptable {
         private Object element;
         public NullAdaptor( Object element ){
-           this.element = element;
-        }
-        public Object getAdapter(Class adapter) {
-            if( adapter.isInstance( element ) ){
-                return adapter.cast( element );
+            if( element instanceof NullAdaptor ){
+                NullAdaptor nullAdaptor = (NullAdaptor) element;
+                element = nullAdaptor.element;
             }
-            return null;
+            else {
+                this.element = element;
+            }
+        }
+        public Object getAdapter(Class type) {
+            if( type.isInstance( element ) ){
+                return type.cast( element );
+            }
+            if (element instanceof IAdaptable){
+                IAdaptable adaptable = (IAdaptable) element;
+                Object adapter = adaptable.getAdapter( type );
+                if( adapter != null ){
+                    return type.cast( adapter);
+                }
+            }
+            // last ditch attempt!
+            IAdapterManager manager = Platform.getAdapterManager();
+            return manager.getAdapter( element, type );
         }
         
     }
