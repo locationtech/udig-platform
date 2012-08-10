@@ -25,6 +25,7 @@ import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
+import net.refractions.udig.document.DocUtils;
 import net.refractions.udig.tool.info.internal.Messages;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -34,15 +35,15 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IconAndMessageDialog;
-import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
-import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -77,8 +78,6 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
     private static final HotlinkDescriptor[] EMPTY = new HotlinkDescriptor[0];
     
     private Button hotlinkEnable;
-
-    private Label hotlinkLabel;
     
     private TableViewer hotlinkViewer;
 
@@ -111,28 +110,15 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         Composite page = new Composite(parent, SWT.NO_SCROLL);
         page.setLayout(new MigLayout("insets 0", "[][grow,fill][]", "[][][][][fill][]")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-        Label label;
-
-        label = new Label(page, SWT.SINGLE);
-        label.setText(Messages.Document_Attachment_Section);
-        label.setLayoutData("cell 0 0, gapx related, gapy unrelated"); //$NON-NLS-1$
-        label.setEnabled(hasSchema);
-        
         Button enableAttachment = new Button(page, SWT.CHECK);
         enableAttachment.setText(Messages.Document_Attachment_Enable);
-        enableAttachment.setLayoutData("cell 1 0 2 1, left, grow x"); //$NON-NLS-1$
+        enableAttachment.setLayoutData("span 3, left, grow x, wrap"); //$NON-NLS-1$
         enableAttachment.setEnabled(false);
-        
         enableAttachment.setSelection( hasAttachmentSource );
-        label = new Label(page, SWT.SINGLE);
-        label.setText(Messages.Document_Hotlink_Section);
-        label.setLayoutData("cell 0 1, gapx related, gapy related"); //$NON-NLS-1$
-        label.setEnabled(hasSchema);
-
-        // Area of Interest filter button
+        
         hotlinkEnable = new Button(page, SWT.CHECK);
         hotlinkEnable.setText(Messages.Document_Hotlink_Enable);
-        hotlinkEnable.setLayoutData("cell 1 1 2 1, left, grow x"); //$NON-NLS-1$
+        hotlinkEnable.setLayoutData("span 3, left, grow x, wrap"); //$NON-NLS-1$
         hotlinkEnable.setSelection(isEnabled);
         hotlinkEnable.setEnabled(hasSchema);
         hotlinkEnable.addSelectionListener(new SelectionAdapter() {
@@ -149,10 +135,6 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 }
             }
         });
-
-        hotlinkLabel = new Label(page, SWT.SINGLE);
-        hotlinkLabel.setText(Messages.Document_Attributes);
-        hotlinkLabel.setLayoutData("cell 0 2, width pref!, gapx para"); //$NON-NLS-1$
 
         addHotlink = new Button(page, SWT.CENTER);
         addHotlink.setText(Messages.Document_Add);
@@ -213,9 +195,6 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         hotlinkViewer.setContentProvider(ArrayContentProvider.getInstance());
         
         TableViewerColumn column = new TableViewerColumn(hotlinkViewer, SWT.NONE);
-        column.getColumn().setWidth(100);
-        column.getColumn().setMoveable(false);
-        column.getColumn().setResizable(true);
         column.getColumn().setText(Messages.Document_Label_Column);
         column.setLabelProvider(new ColumnLabelProvider() {
             @Override
@@ -224,12 +203,9 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 return descriptor.getLabel();
             }
         });
-        columnLayout.setColumnData(column.getColumn(), new ColumnWeightData(30, 100, true));
+        columnLayout.setColumnData(column.getColumn(), new ColumnWeightData(25, 0, true));
         
         column = new TableViewerColumn(hotlinkViewer, SWT.NONE);
-        column.getColumn().setWidth(100);
-        column.getColumn().setMoveable(false);
-        column.getColumn().setResizable(true);
         column.getColumn().setText(Messages.Document_Attribute_Column);
         column.setLabelProvider(new ColumnLabelProvider() {
             @Override
@@ -238,27 +214,21 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 return descriptor.getAttributeName();
             }
         });
-        columnLayout.setColumnData( column.getColumn(), new ColumnWeightData( 30, 100, true ));
+        columnLayout.setColumnData( column.getColumn(), new ColumnWeightData( 25, 0, true ));
         
         column = new TableViewerColumn(hotlinkViewer, SWT.NONE);
-        column.getColumn().setWidth(80);
-        column.getColumn().setMoveable(false);
-        column.getColumn().setResizable(true);
         column.getColumn().setText(Messages.Document_Hotlink_Column);
         column.getColumn().setAlignment(SWT.CENTER);
         column.setLabelProvider(new ColumnLabelProvider() {
             @Override
             public String getText(Object element) {
                 HotlinkDescriptor descriptor = (HotlinkDescriptor) element;
-                return descriptor.getType().toString();
+                return DocUtils.toCamelCase(descriptor.getType().toString());
             }
         });
-        columnLayout.setColumnData( column.getColumn(), new ColumnPixelData( 40, true, true) );
+        columnLayout.setColumnData( column.getColumn(), new ColumnWeightData( 15, 0, true ));
         
         column = new TableViewerColumn(hotlinkViewer, SWT.NONE);
-        column.getColumn().setWidth(120);
-        column.getColumn().setMoveable(false);
-        column.getColumn().setResizable(true);
         column.getColumn().setText(Messages.Document_Action_Column);
         column.setLabelProvider(new ColumnLabelProvider() {
             @Override
@@ -270,11 +240,10 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 return descriptor.getConfig();
             }
         });
+        columnLayout.setColumnData( column.getColumn(), new ColumnWeightData( 35, 0, true ));
         
-        columnLayout.setColumnData( column.getColumn(), new ColumnWeightData( 60, 100, true ));
         hotlinkViewer.getTable().setHeaderVisible(true);
         hotlinkViewer.getTable().setLinesVisible(true);
-        
         hotlinkViewer.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
             public void selectionChanged(SelectionChangedEvent event) {
@@ -350,9 +319,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
     }
 
     public void enableTableAndButtons(boolean isEnabled) {
-        hotlinkLabel.setEnabled(isEnabled);
         hotlinkViewer.getControl().setEnabled(isEnabled);
-        
         boolean hasSelection = isEnabled && !hotlinkViewer.getSelection().isEmpty();
         addHotlink.setEnabled(isEnabled);
         editHotlink.setEnabled(hasSelection);
@@ -522,15 +489,15 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         @Override
         protected void configureShell(Shell shell) {
             super.configureShell(shell);
-            shell.setText(Messages.Document_26);
-            shell.setImage( getInfoImage() );
+            shell.setText(Messages.DocumentPropertyPage_title);
+            shell.setImage( getQuestionImage() );
         }
         
         @Override
         protected Control createDialogArea(Composite parent) {
             
             Composite composite = new Composite(parent, SWT.NONE);
-            MigLayout layout = new MigLayout("insets panel", "[][grow]", "[][][]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            MigLayout layout = new MigLayout("insets panel", "[left]8[grow]", "[]10[][]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             composite.setLayout(layout);
             composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
@@ -570,6 +537,16 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
 
             typeViewer = new ComboViewer(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
             typeViewer.setContentProvider(ArrayContentProvider.getInstance());
+            typeViewer.setLabelProvider(new LabelProvider() {
+                @Override
+                public String getText(Object element) {
+                    if (element instanceof Type) {
+                        final Type type = (Type) element;
+                        return DocUtils.toCamelCase(type.name());
+                    }
+                    return super.getText(element);
+                }
+            });
             typeViewer.setInput(IDocument.Type.values());
             typeViewer.getControl().setLayoutData("cell 1 3"); //$NON-NLS-1$
             typeViewer.addSelectionChangedListener( new ISelectionChangedListener() {
@@ -578,6 +555,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                         StructuredSelection selection = (StructuredSelection) event.getSelection();
                         IDocument.Type type = (Type) selection.getFirstElement();
                         setActionText(type, descriptor.getConfig());
+                        actionText.setFocus();
                     }
                 }
             });
@@ -618,7 +596,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 break;
             default:
                 actionText.setEnabled(false);
-                actionText.setText(config == null ? Messages.Document_Open : config);
+                actionText.setText(Messages.Document_Open);
                 break;
             }
         }
@@ -634,19 +612,60 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         @Override
         protected void okPressed() {
             
-            final String label = labelText.getText();
-            
-            String attributeName = attributeViewer.getCombo().getText();
-            if( attributeName == null || attributeName.isEmpty() ){
-                return; // nothing!
+            if (isValidHotlink()) {
+                String attributeName = attributeViewer.getCombo().getText();
+                String label = labelText.getText();
+                if( label == null || label.isEmpty() ){
+                    label = DocUtils.toCamelCase(attributeName);
+                }
+                StructuredSelection selection = (StructuredSelection) typeViewer.getSelection();
+                Type type = (Type) selection.getFirstElement();
+                final String actionConfig = actionText.getText();
+                descriptor = new HotlinkDescriptor(label, attributeName, type, actionConfig);
+                super.okPressed();                
             }
-            StructuredSelection selection = (StructuredSelection) typeViewer.getSelection();
-            Type type = (Type) selection.getFirstElement();
             
-            final String actionConfig = actionText.getText();
+        }
+        
+        /**
+         * Checks if the current inputs are valid. This checks if the hotlink definition inputted
+         * already exists in the list.
+         * 
+         * @return true if valid, otherwise false
+         */
+        private boolean isValidHotlink() {
+
+            final StructuredSelection selection = (StructuredSelection) typeViewer.getSelection();
+            final Type type = (Type) selection.getFirstElement();
+
+            final String action = actionText.getText().trim();
+            if (action == null || action.length() == 0) {
+                actionText.setFocus();
+                MessageDialog.openError(getShell(), Messages.DocumentPropertyPage_title,
+                        Messages.DocumentPropertyPage_errActionIsBlank);
+                return false;
+            }
             
-            descriptor = new HotlinkDescriptor(label, attributeName, type, actionConfig);
-            super.okPressed();
+            final String attributeName = attributeViewer.getCombo().getText();
+            for (HotlinkDescriptor hotlink : hotlinkList) {
+                if (!descriptor.isEmpty() && hotlink.toString().equals(descriptor.toString())) {
+                    continue;
+                }
+                if (attributeName.equals(hotlink.getAttributeName())) {
+                    final Type currentType = hotlink.getType();
+                    if (Type.ACTION == currentType && Type.ACTION == type) {
+                        return true;
+                    } else {
+                        attributeViewer.getControl().setFocus();
+                        MessageDialog.openError(getShell(), Messages.DocumentPropertyPage_title,
+                                Messages.DocumentPropertyPage_errExists);
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+            
         }
         
         @Override

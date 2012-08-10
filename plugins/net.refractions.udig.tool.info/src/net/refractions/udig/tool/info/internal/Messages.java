@@ -26,7 +26,7 @@ public class Messages extends NLS {
 
     public static String DistanceTool_error;
 
-    public static String Document_26;
+    public static String DocumentPropertyPage_title;
 
     public static String Document_Action;
 
@@ -63,6 +63,10 @@ public class Messages extends NLS {
     public static String Document_Prompt;
 
     public static String Document_Remove;
+
+    public static String DocumentPropertyPage_errActionIsBlank;
+
+    public static String DocumentPropertyPage_errExists;
 
     public static String InfoView_instructions_text;
 
