@@ -32,6 +32,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.Workbench;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.osgi.framework.BundleContext;
@@ -110,8 +111,9 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
         CatalogPlugin.addListener(new IResolveChangeListener(){
 
             public void changed( IResolveChangeEvent event ) {
-                if( PlatformUI.getWorkbench().isClosing() )
+                if( !PlatformUI.isWorkbenchRunning() || PlatformUI.getWorkbench().isClosing() ){
                     return;
+                }
 //                IPreferenceStore p = getPreferenceStore();
                 if( event.getType()==Type.POST_CHANGE 
                         && event.getDelta()!=null ){

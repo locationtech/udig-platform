@@ -1,5 +1,7 @@
 package net.refractions.udig.catalog.wmsc;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.HashMap;
@@ -10,18 +12,34 @@ import java.util.Map.Entry;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
+import javax.management.ServiceNotFoundException;
+
+import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.catalog.IGeoResourceInfo;
+import net.refractions.udig.catalog.internal.wms.WmsPlugin;
 import net.refractions.udig.catalog.wms.internal.Messages;
 import net.refractions.udig.catalog.wmsc.server.Tile;
 import net.refractions.udig.catalog.wmsc.server.TileListener;
 import net.refractions.udig.catalog.wmsc.server.TileRangeOnDisk;
 import net.refractions.udig.catalog.wmsc.server.TileSet;
 import net.refractions.udig.catalog.wmsc.server.TileWorkerQueue;
+import net.refractions.udig.catalog.wmsc.server.WMSTileSet;
+import net.refractions.udig.project.internal.render.impl.ScaleUtils;
+import net.refractions.udig.project.ui.preferences.PreferenceConstants;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.geotools.data.ServiceInfo;
+import org.geotools.data.ows.AbstractOpenWebService;
+import org.geotools.data.ows.CRSEnvelope;
+import org.geotools.data.ows.Layer;
+import org.geotools.data.ows.StyleImpl;
 import org.geotools.geometry.jts.JTS;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.CRS;
 
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
@@ -315,6 +333,140 @@ public class WMSCTileUtils {
 
         };
 
+    }
+
+    /**
+     * Generate TileSet definition from resource properties.
+     * 
+     * @param resource
+     * @param server
+     * @param monitor
+     * @return
+     * @throws IOException
+     */
+    public static TileSet toTileSet(IGeoResource resource, AbstractOpenWebService<?, ?> server,
+            IProgressMonitor monitor) throws IOException {
+        if( monitor == null ) monitor = new NullProgressMonitor();
+        
+        monitor.beginTask("TileSet generation", 100 );
+        try {
+            if (server == null ) { //$NON-NLS-1$
+                WmsPlugin.log("WebMapService required", new ServiceNotFoundException()); //$NON-NLS-1$
+                return null;
+            }
+//            ServiceInfo info = server.getInfo();
+//            String source = info.getSource() != null ? info.getSource().toString() : null;
+            String source = server.getInfo().getSource().toString();
+            String version = server.getCapabilities().getVersion();
+            if (source == null || "".equals(source)) { //$NON-NLS-1$
+                WmsPlugin.log("GetCapabilities SERVICE is required", new ServiceNotFoundException()); //$NON-NLS-1$
+                return null;
+            }
+            if (version == null || "".equals(version)) { //$NON-NLS-1$
+                WmsPlugin.log("GetCapabilities VERSION is required", new ServiceNotFoundException()); //$NON-NLS-1$
+                return null;
+            }
+            IGeoResourceInfo info = resource.getInfo( new SubProgressMonitor(monitor, 50));
+    
+            String srs = CRS.toSRS(info.getCRS());
+            TileSet tileset = new WMSTileSet();
+    
+            double minX = info.getBounds().getMinimum(0);
+            double maxX = info.getBounds().getMaximum(0);
+            double minY = info.getBounds().getMinimum(1);
+            double maxY = info.getBounds().getMaximum(1);
+    
+            CRSEnvelope bbox = new CRSEnvelope(srs, minX, minY, maxX, maxY);
+            tileset.setBoundingBox(bbox);
+            tileset.setCoorindateReferenceSystem(srs);
+    
+            Map<String, Serializable> properties = resource.getPersistentProperties();
+            Integer width = Integer.parseInt((String) properties.get(PreferenceConstants.P_TILESET_WIDTH));
+            Integer height = Integer.parseInt((String) properties.get(PreferenceConstants.P_TILESET_HEIGHT));
+    
+            if (width == null) {
+                width = PreferenceConstants.DEFAULT_TILE_SIZE;
+            }
+    
+            if (height == null) {
+                height = PreferenceConstants.DEFAULT_TILE_SIZE;
+            }
+    
+            tileset.setWidth(width);
+            tileset.setHeight(height);
+    
+            String imageType = (String) properties.get(PreferenceConstants.P_TILESET_IMAGE_TYPE);
+    
+            if (imageType == null || "".equals(imageType)) { //$NON-NLS-1$
+                imageType = PreferenceConstants.DEFAULT_IMAGE_TYPE;
+            }
+    
+            tileset.setFormat(imageType);
+    
+            /*
+             * The layer ID
+             */
+            tileset.setLayers(info.getName());
+    
+            String scales = (String) properties.get(PreferenceConstants.P_TILESET_SCALES);
+    
+            String resolutions = workoutResolutions(scales, new ReferencedEnvelope(bbox), width);
+    
+            /*
+             * If we have no resolutions to try - we wont.
+             */
+            if ("".equals(resolutions)) { //$NON-NLS-1$
+                WmsPlugin.log("Resolutions are required for TileSet generation", new ServiceNotFoundException()); //$NON-NLS-1$
+                return null;
+            }
+            tileset.setResolutions(resolutions);
+    
+            /*
+             * The styles
+             */
+            String style = ""; //$NON-NLS-1$
+            if (resource.canResolve(Layer.class)) {
+                Layer layer = resource.resolve(Layer.class, new SubProgressMonitor(monitor, 50));
+                StringBuilder sb = new StringBuilder(""); //$NON-NLS-1$
+                for( StyleImpl layerStyle : layer.getStyles() ) {
+                    sb.append(layerStyle.getName()+","); //$NON-NLS-1$
+                }
+                style = sb.toString();
+            }
+            if (style.length()>0){
+                tileset.setStyles(style.substring(0, style.length()-1));
+            } else {
+                tileset.setStyles(style);
+            }
+    
+            /*
+             * The server is where tiles can be retrieved
+             */
+            tileset.setServer(server);
+            return tileset;
+        }
+        finally {
+             monitor.done();
+        }
     };
 
+    /**
+     * From a list of scales turn them into a list of resolutions
+     * 
+     * @param rawScales
+     * @param bounds
+     * @param tileWidth
+     * @return space separated String of resolutions based on the scale values of the WMSTileSet
+     */
+    public static String workoutResolutions( String rawScales, ReferencedEnvelope bounds, int tileWidth ) {
+        String[] scales = rawScales.split(" "); //$NON-NLS-1$
+        StringBuffer sb = new StringBuffer();
+        for( String scale : scales ) {
+            Double scaleDouble = Double.parseDouble(scale);
+            Double calculatedScale = ScaleUtils.calculateResolutionFromScale(bounds, scaleDouble,
+                    tileWidth);
+            sb.append(calculatedScale + " "); //$NON-NLS-1$
+        }
+        return sb.toString();
+    }
 }

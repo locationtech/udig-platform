@@ -19,17 +19,108 @@ package net.refractions.udig.tool.info.internal;
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.tool.info.internal.messages"; //$NON-NLS-1$
-	public static String DistanceTool_distance;
-	public static String DistanceTool_error;
-	public static String InfoView_instructions_text;
-	public static String InfoView2_information_request;
-	public static String LayerPointInfo_toString;
-	static {
-		// initialize resource bundle
-		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-	}
+    
+    private static final String BUNDLE_NAME = "net.refractions.udig.tool.info.internal.messages"; //$NON-NLS-1$
 
-	private Messages() {
-	}
+    public static String DistanceTool_distance;
+
+    public static String DistanceTool_error;
+
+    public static String DocumentPropertyPage_description;
+
+    public static String DocumentPropertyPage_title;
+
+    public static String DocumentPropertyPage_Action;
+
+    public static String Document_Action_Column;
+
+    public static String Document_Add;
+
+    public static String Document_Attachment_Enable;
+
+    public static String Document_Attachment_Section;
+
+    public static String Document_Attribute_Column;
+
+    public static String DocumentPropertyPage_Attribute;
+
+    public static String Document_Attributes;
+
+    public static String Document_Edit;
+
+    public static String DocumentPropertyPage_Hotlink;
+
+    public static String Document_Hotlink_Column;
+
+    public static String Document_Hotlink_Enable;
+
+    public static String Document_Hotlink_Section;
+
+    public static String DocumentPropertyPage_Label;
+
+    public static String Document_Label_Column;
+
+    public static String DocumentPropertyPage_Open;
+
+    public static String DocumentPropertyPage_header;
+
+    public static String Document_Remove;
+
+    public static String DocumentPropertyPage_errActionIsBlank;
+
+    public static String DocumentPropertyPage_errExists;
+
+    public static String InfoView_instructions_text;
+
+    public static String InfoView2_information_request;
+
+    public static String LayerPointInfo_toString;
+
+    public static String docView_attach;
+
+    public static String docView_attachFile;
+
+    public static String docView_attachFiles;
+
+    public static String docView_delete;
+
+    public static String docView_errEmpty;
+
+    public static String docView_errFileExistMulti;
+
+    public static String docView_errFileExistSingle;
+
+    public static String docView_errInvalidURL;
+
+    public static String docView_errURLExist;
+
+    public static String docView_featureAttachments;
+
+    public static String docView_featureDocs;
+
+    public static String docView_link;
+
+    public static String docView_linkDialogHeader;
+
+    public static String docView_linkDialogTitle;
+
+    public static String docView_linkURL;
+
+    public static String docView_name;
+
+    public static String docView_open;
+
+    public static String docView_openDialogTitle;
+
+    public static String docView_shapeDocs;
+
+    public static String InfoPropertyPage_labelExpression;
+    
+    static {
+        // initialize resource bundle
+        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+    }
+
+    private Messages() {
+    }
 }

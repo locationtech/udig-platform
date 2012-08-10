@@ -72,7 +72,7 @@ public class MessageBubble extends AbstractDrawCommand implements IAnimation {
     private void processMessage(String message) {
         this.message=message.split("[\n\r]"); //$NON-NLS-1$
         for( String part : this.message ) {
-            part.replaceAll("\t", "    ");  //$NON-NLS-1$//$NON-NLS-2$
+            part = part.replaceAll("\t", "    ");  //$NON-NLS-1$//$NON-NLS-2$
         }
     }
 

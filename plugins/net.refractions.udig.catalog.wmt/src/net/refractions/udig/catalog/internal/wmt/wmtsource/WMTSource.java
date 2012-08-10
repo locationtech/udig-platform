@@ -1,3 +1,17 @@
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2010, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.catalog.internal.wmt.wmtsource;
 
 import java.net.MalformedURLException;
@@ -397,10 +411,12 @@ public abstract class WMTSource {
      * @param scale The map scale.
      * @param scaleFactor The scale-factor (0-100): scale up or down?
      * @param recommendedZoomLevel Always use the calculated zoom-level, do not use the one the user selected
+     * @param tileLimitWarning 
      * @return The list of found tiles.
      */
     public Map<String, Tile> cutExtentIntoTiles(WMTRenderJob renderJob, 
-            int scaleFactor, boolean recommendedZoomLevel, WMTLayerProperties layerProperties) {        
+            int scaleFactor, boolean recommendedZoomLevel, WMTLayerProperties layerProperties,
+            int tileLimitWarning) {        
         // only continue, if we have tiles that cover the requested extent
         if (!renderJob.getMapExtentTileCrs().intersects((Envelope) getBounds())) {
             return Collections.emptyMap();
@@ -445,6 +461,9 @@ public abstract class WMTSource {
                     movingTile = rightNeighbour;
                 } else {
                     break;
+                }
+                if (tileList.size()>tileLimitWarning) {
+                    return Collections.emptyMap();
                 }
             } while(tileList.size() < maxNumberOfTiles);
 

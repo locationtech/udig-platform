@@ -106,25 +106,100 @@
             class="net.refractions.udig.catalog.internal.ui.actions.ResetServiceHandler"
             commandId="net.refractions.udig.catalog.ui.command.reset">
       </handler>
+    <handler
+          class="net.refractions.udig.catalog.ui.internal.IGeoResourcePropertiesCommandHandler"
+          commandId="net.refractions.udig.catalog.ui.resourceProperties">
+       <activeWhen>
+          <iterate
+                ifEmpty="false"
+                operator="or">
+             <and>
+                <count
+                      value="1">
+                </count>
+                <or>
+                   <instanceof
+                         value="net.refractions.udig.catalog.IGeoResource">
+                   </instanceof>
+                   <adapt
+                         type="net.refractions.udig.catalog.IGeoResource">
+                   </adapt>
+                </or>
+             </and>
+          </iterate>
+       </activeWhen>
+    </handler>
+    <handler
+          class="net.refractions.udig.catalog.ui.internal.IServicePropertiesCommandHandler"
+          commandId="net.refractions.udig.catalog.ui.serviceProperties">
+       <activeWhen>
+          <iterate
+                ifEmpty="false"
+                operator="or">
+             <and>
+                <count
+                      value="1">
+                </count>
+                <or>
+                   <instanceof
+                         value="net.refractions.udig.catalog.IService">
+                   </instanceof>
+                   <adapt
+                         type="net.refractions.udig.catalog.IService">
+                   </adapt>
+                </or>
+             </and>
+          </iterate>
+       </activeWhen>
+    </handler>
    </extension>
    <extension
+         id="serviceCommand"
          point="org.eclipse.ui.commands">
+      <commandParameterType
+            id="net.refractions.udig.catalog.service"
+            type="net.refractions.udig.catalog.IService">
+      </commandParameterType>
       <category
+            description="%service.commands.description"
             id="net.refractions.udig.catalog.ui.service"
-            name="%Service Commands">
+            name="%service.commands">
       </category>
       <command
             categoryId="net.refractions.udig.catalog.ui.service"
+            defaultHandler="net.refractions.udig.catalog.ui.internal.IServicePropertiesCommandHandler"
+            description="%serviceProperties.description"
+            id="net.refractions.udig.catalog.ui.command.serviceProperties"
+            name="%serviceProperties">
+      </command>
+      <command
+            category="net.refractions.udig.catalog.ui.service"
+            categoryId="net.refractions.udig.catalog.ui.service"
+            defaultHandler="net.refractions.udig.catalog.internal.ui.actions.ResetServiceHandler"
             description="%resetService.tooltip"
             id="net.refractions.udig.catalog.ui.command.reset"
             name="%resetService.label"
-            returnTypeId="IService">
+            returnTypeId="net.refractions.udig.catalog.service">
       </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <commandParameterType
+            id="net.refractions.udig.catalog.geoResource"
+            type="net.refractions.udig.catalog.IGeoResource">
+      </commandParameterType>
+      <category
+            description="%resource.commands.description"
+            id="net.refractions.udig.catalog.ui.resource"
+            name="%resource.commands">
+      </category>
       <command
-            categoryId="net.refractions.udig.catalog.ui.service"
-            description="%Service Properties.Tooltip"
-            id="net.refractions.udig.catalog.ui.command.serviceProperties"
-            name="%Service.Properties.Name">
+            categoryId="net.refractions.udig.catalog.ui.resource"
+            defaultHandler="net.refractions.udig.catalog.ui.internal.IGeoResourcePropertiesCommandHandler"
+            description="%resourceProperties.description"
+            id="net.refractions.udig.catalog.ui.command.resourceProperties"
+            name="%resourceProperties"
+            returnTypeId="net.refractions.udig.catalog.geoResource">
       </command>
    </extension>
       <extension
@@ -181,6 +256,11 @@
             <separator
                   name="mbEnd">
             </separator>
+            <command
+                  commandId="net.refractions.udig.catalog.ui.command.resourceProperties"
+                  label="%resourceProperties"
+                  tooltip="%resourceProperties.description">
+            </command>
             <command
                   commandId="net.refractions.udig.catalog.ui.command.serviceProperties"
                   label="%Service.Properties.Name"
@@ -414,6 +494,61 @@
               toolbarPath="additions">
         </action>
      </viewContribution>
+  </extension>
+  <extension
+        id="net.refractions.udig.catalog.propertyPages"
+        name="Catalog Property Pages"
+        point="org.eclipse.ui.propertyPages">
+     <page
+           class="net.refractions.udig.catalog.ui.property.ServicePropertyPage"
+           icon="icons/obj16/datastore_obj.gif"
+           id="net.refractions.udig.catalog.ui.property.servicePage"
+           name="%servicePage.name">
+        <enabledWhen>
+           <or>
+              <instanceof
+                    value="net.refractions.udig.catalog.IService">
+              </instanceof>
+              <adapt
+                    type="net.refractions.udig.catalog.IService">
+              </adapt>
+           </or>
+        </enabledWhen>
+        <keywordReference
+              id="net.refractions.udig.catalog.ui.keyword.service">
+        </keywordReference>
+     </page>
+     <page
+           class="net.refractions.udig.catalog.ui.property.ResourcePropertyPage"
+           icon="icons/obj16/feature_obj.gif"
+           id="net.refractions.udig.catalog.ui.property.resourcePage"
+           name="%resourcePage.name">
+        <enabledWhen>
+           <or>
+              <instanceof
+                    value="net.refractions.udig.catalog.IGeoResource">
+              </instanceof>
+              <adapt
+                    type="net.refractions.udig.catalog.IGeoResource">
+              </adapt>
+           </or>
+        </enabledWhen>
+        <keywordReference
+              id="net.refractions.udig.catalog.ui.keyword.resource"></keywordReference>
+     </page>
+  </extension>
+  <extension
+        id="net.refractions.udig.catalog.keywords"
+        name="Catalog Keywords"
+        point="org.eclipse.ui.keywords">
+     <keyword
+           id="net.refractions.udig.catalog.ui.keyword.service"
+           label="%service.keyword">
+     </keyword>
+     <keyword
+           id="net.refractions.udig.catalog.ui.keyword.resource"
+           label="%resource.keyword">
+     </keyword>
   </extension>
   
 </plugin>

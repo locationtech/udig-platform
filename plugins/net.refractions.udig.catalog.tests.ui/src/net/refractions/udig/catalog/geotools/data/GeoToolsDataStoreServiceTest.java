@@ -58,7 +58,7 @@ public class GeoToolsDataStoreServiceTest {
     @Test
     public void testDataStoreServiceExtension() throws Exception {
         // DataStoreServiceExtension extension = new DataStoreServiceExtension();
-        DataStoreServiceExtension serviceExtension = serviceFactory.serviceImplementation(DataStoreServiceExtension.class);
+        DataStoreServiceExtension serviceExtension = CatalogPlugin.getDefault().serviceImplementation(DataStoreServiceExtension.class);
         
         URL target = GeoToolsDataStoreServiceTest.class.getResource("test-data/sample_data.properties");
         if( "bundleresource".equals(target.getProtocol())){

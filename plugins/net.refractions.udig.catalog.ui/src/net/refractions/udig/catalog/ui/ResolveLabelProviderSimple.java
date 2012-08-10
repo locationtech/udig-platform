@@ -109,12 +109,12 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
                     ID id = service.getID();
 
                     String title = service.getTitle();
-                    if (title == null) {
-                        IServiceInfo info = service.getInfo(new NullProgressMonitor());
-                        if (info != null) {
-                            title = info.getTitle();
-                        }
-                    }
+//                    if (title == null) {
+//                        IServiceInfo info = service.getInfo(new NullProgressMonitor());
+//                        if (info != null) {
+//                            title = info.getTitle();
+//                        }
+//                    }
                     if (title == null) {
                         // we are going to fake something here
                         String name = id.toString();

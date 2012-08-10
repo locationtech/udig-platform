@@ -1,7 +1,7 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+ *    (C) 2010, Refractions Research Inc.
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -12,7 +12,6 @@
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *    Lesser General Public License for more details.
- *
  */
 package net.refractions.udig.catalog.internal.arcsde;
 
@@ -31,10 +30,10 @@ import org.geotools.arcsde.session.ISessionPool;
 import org.geotools.data.DataStore;
 
 /**
- * Connect to ArcSDE.
+ * Connect to ArcSDE and list Vector contents.
  * 
- * @author Gabriel Roldan (based on David Zwiers' ArcServiceImpl)
- * @since 0.6
+ * @author Gabriel Roldan
+ * @since 1.2
  */
 class ArcSDEVectorService extends ArcSDEService {
 

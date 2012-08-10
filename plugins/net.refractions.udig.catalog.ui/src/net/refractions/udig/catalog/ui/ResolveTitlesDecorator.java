@@ -401,7 +401,9 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
                         		IGeoResource resource = (IGeoResource) element;
                         		data.text = resource.getInfo(monitor).getTitle();
                         		IService service = resource.service(monitor);
-                        		service.getPersistentProperties().put(resource.getID() + "_title", data.text);
+                        		if( service != null ){
+                        		    service.getPersistentProperties().put(resource.getID() + "_title", data.text);
+                        		}
                         	} else if(element instanceof IService) {
                         		IService service = (IService) element;
                         		IServiceInfo info = service.getInfo(monitor);

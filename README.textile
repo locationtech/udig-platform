@@ -27,6 +27,7 @@ The goal of uDig is to provide a complete Java solution for desktop GIS data acc
 h1. Steering Committee
 
 * Andrea Antonello
+* Frank Gasdorf
 * Jesse Eichar
 * Jody Garnett
 * Mauricio Pazos
@@ -39,5 +40,4 @@ Join us in working on uDig
 * "Development Environment":http://udig.refractions.net/confluence/display/ADMIN/02+Development+Environment
 * "Project Procedures":http://udig.refractions.net/confluence/display/ADMIN/04+Project+Procedures
 
-While uDig does support github pull requests we do ask that developers join the udig project
-and help handle any pull requests.
+There are two ways to take part: indirectly using github pull requests; and directly by obtaining commit access.

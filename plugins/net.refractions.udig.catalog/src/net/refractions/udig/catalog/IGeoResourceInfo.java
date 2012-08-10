@@ -68,8 +68,9 @@ public class IGeoResourceInfo {
         this.description = description;
         this.name = name;
         int i = 0;
-        if( keywords!=null )
+        if( keywords!=null ){
             i=keywords.length;
+        }
         String[] k=new String[i];
         if( keywords!=null )
             System.arraycopy(keywords, 0, k, 0, k.length);
@@ -188,7 +189,6 @@ public class IGeoResourceInfo {
         
         Icon awtIcon = AWTSWTImageUtils.imageDescriptor2awtIcon(icon);
         return awtIcon;
-        
     }
 
     /**

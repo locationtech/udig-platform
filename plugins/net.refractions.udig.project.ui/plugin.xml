@@ -258,6 +258,9 @@
                <instanceof
                      value="net.refractions.udig.project.internal.Layer">
                </instanceof>
+               <adapt
+                     type="net.refractions.udig.project.internal.Layer">
+               </adapt>
             </or>
          </enabledWhen>
       </page>
@@ -1004,7 +1007,7 @@
         <handler
               class="net.refractions.udig.project.ui.internal.handlers.MapPropertiesCommandHandler"
               commandId="net.refractions.udig.project.ui.mapProperties">
-           <enabledWhen>
+           <activeWhen>
               <iterate
                     ifEmpty="false"
                     operator="or">
@@ -1015,7 +1018,7 @@
                        value="net.refractions.udig.project.IMap">
                  </instanceof>
               </iterate>
-           </enabledWhen>
+           </activeWhen>
         </handler>
         <handler
               class="net.refractions.udig.project.ui.internal.handlers.LayerPropertiesCommandHandler"

@@ -199,6 +199,9 @@ public class Messages extends NLS {
 //    public static String orientation_automatic_tooltip;
     
     public static String addAttributeAction_label;
+    public static String DefaultExpressionViewer_attribute;
+    public static String DefaultExpressionViewer_operation;
+    public static String DefaultExpressionViewer_value;
 
     public static String ExceptionDetailsEditorMessage;
     

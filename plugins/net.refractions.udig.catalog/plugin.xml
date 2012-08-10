@@ -34,12 +34,14 @@
              descriptorClass="org.opengis.feature.simple.SimpleFeatureType"
              factory="net.refractions.udig.catalog.memory.internal.TemporaryResourceFactory"/>
     </extension>
-   <extension
-         point="org.eclipse.ui.importWizards">
-      <category
-            id="eu.udig.featureimportcategory"
-            name="%import2featurelayer.categoryName">
-      </category>
-   </extension>
-
+    <extension
+       point="org.eclipse.core.expressions.propertyTesters">
+    <propertyTester
+          class="net.refractions.udig.catalog.internal.CanResolvePropertyTester"
+          id="net.refractions.udig.catalog.canResolve"
+          namespace="net.refractions.udig.catalog"
+          properties="featureSource,featureStore,dataSource,wms,wmsLayer,schema,style"
+          type="net.refractions.udig.catalog.IResolve">
+    </propertyTester>
+  </extension>
 </plugin>

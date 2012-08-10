@@ -46,6 +46,7 @@ import org.opengis.filter.Filter;
  * @since 1.2.0
  */
 public class DefaultFilterViewer extends CQLFilterViewer {
+
     /**
      * Factory used to hook this into filterViewer extension point.
      * 
@@ -57,81 +58,84 @@ public class DefaultFilterViewer extends CQLFilterViewer {
     public static class Factory extends FilterViewerFactory {
         @Override
         public int appropriate(FilterInput input, Filter filter) {
-            return COMPLETE+1;
+            return COMPLETE + 1;
         }
+
         @Override
         public IFilterViewer createViewer(Composite parent, int style) {
             return new DefaultFilterViewer(parent, style);
         }
     }
+
     /**
      * Composite used as our control; allowing client code change layout data.
      */
     protected Composite control;
+
+    private Label lblAttribute;
 
     /**
      * Combo box to allow the user to select an attribute to base a filter on
      */
     protected Combo attribute;
 
+    private Label lblOperation;
+
     /**
      * Combo box to allow the user to select an operation to apply to an attribute
      */
     protected Combo operation;
 
+    private Label lblValue;
+
     /**
      * Text box to allow the user to enter a value to base a filter on
      */
     protected Combo value;
-
+    
     protected Button insert;
-
+    
     private SelectionAdapter insertButtonListener = new SelectionAdapter() {
         @Override
         public void widgetSelected(SelectionEvent e) {
-            if (attribute.isFocusControl() && attribute.getSelectionIndex() != -1) {
-                String selectedAttribute = attribute.getText();
-                text.insert(selectedAttribute);
-
-                attribute.clearSelection();
-                changed();
-                text.setFocus();
-                return;
+            
+            final StringBuilder sb = new StringBuilder();
+            
+            if (attribute.getSelectionIndex() != -1) {
+                sb.append(attribute.getText());
+                attribute.deselectAll();
             }
 
-            if (operation.isFocusControl() && operation.getSelectionIndex() != -1) {
-                String selectedOperation = operation.getText();
-                text.insert(selectedOperation);
-
-                operation.clearSelection();
-
-                changed();
-                text.setFocus();
-                return;
+            if (operation.getSelectionIndex() != -1) {
+                if (sb.length() > 0) {
+                    sb.append(" "); //$NON-NLS-1$
+                }
+                sb.append(operation.getText());
+                operation.deselectAll();
             }
 
-            if (value.isFocusControl() && value.getSelectionIndex() != -1) {
-                String selectedValue = value.getText();
-                text.insert(selectedValue);
-
-                value.clearSelection();
-
-                changed();
-                text.setFocus();
-                return;
+            if (value.getSelectionIndex() != -1) {
+                if (sb.length() > 0) {
+                    sb.append(" "); //$NON-NLS-1$
+                }
+                sb.append(value.getText());
+                value.deselectAll();
             }
+            
+            if (sb.length() > 0) {
+                changed();
+                text.insert(sb.toString());
+                text.setFocus();
+            }
+            
         }
     };
-    
-//    private SelectionAdapter insertTextListener = new SelectionAdapter() {
-//        public void widgetSelected(SelectionEvent e) {
-//            Combo combo = (Combo) e.widget;
-//            String insertText = combo.getText();
-//            if( insertText != null ){
-//                text.insert( insertText );
-//            }
-//        };
-//    };
+
+    private static final String EQUALS = "="; //$NON-NLS-1$
+    private static final String GTHAN = ">"; //$NON-NLS-1$
+    private static final String LTHAN = "<"; //$NON-NLS-1$
+    private static final String LIKE = "LIKE"; //$NON-NLS-1$
+    private static final String[] OPERATORS = { EQUALS, GTHAN, LTHAN, LIKE };
 
     /**
      * Creates ExpressionViewer using the provided style.
@@ -145,26 +149,24 @@ public class DefaultFilterViewer extends CQLFilterViewer {
      * @param style used to layout the viewer
      */
     public DefaultFilterViewer(Composite parent, int style) {
-        super(new Composite(parent, SWT.NO_SCROLL){
+        super(new Composite(parent, SWT.NO_SCROLL) {
             public void setEnabled(boolean enabled) {
                 super.setEnabled(enabled);
-                for( Control child : getChildren() ){
+                for (Control child : getChildren()) {
                     child.setEnabled(enabled);
                 }
             }
         }, style);
-        
+
         control = text.getParent();
-        
-        boolean multiLine = (SWT.MULTI & style) != 0;
-        
-        // ATTRIBUTE
-        Label lblAttribute = null;
-        if( multiLine ){
+        boolean isMultiline = (SWT.MULTI & style) != 0;
+
+        lblAttribute = null;
+        if (isMultiline) {
             lblAttribute = new Label(control, SWT.NONE);
-            lblAttribute.setText("Attribute");
+            lblAttribute.setText("Attribute:");
         }
-        attribute = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
+        attribute = new Combo(control, SWT.DROP_DOWN | SWT.READ_ONLY);
         attribute.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -174,8 +176,8 @@ public class DefaultFilterViewer extends CQLFilterViewer {
                 if (attributeName != null && getInput() != null && getInput().getSchema() != null) {
                     SimpleFeatureType schema = getInput().getSchema();
                     AttributeDescriptor descriptor = schema.getDescriptor(attributeName);
-                    
-                    SortedSet<String> suggestedValues = generateSuggestedValues( descriptor );
+
+                    SortedSet<String> suggestedValues = generateSuggestedValues(descriptor);
 
                     value.removeAll();
                     if (suggestedValues.isEmpty()) {
@@ -192,53 +194,57 @@ public class DefaultFilterViewer extends CQLFilterViewer {
                 }
             }
         });
-        
-        // OPPERATIONS
-        Label lblOperation = null;
-        if( multiLine){
+
+        lblOperation = null;
+        if (isMultiline) {
             lblOperation = new Label(control, SWT.NONE);
             lblOperation.setText("Operation:");
         }
-        operation = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
-        operation.add("=");
-        operation.add("<");
-        operation.add(">");
-        operation.add("LIKE");
-        
-        // VALUE COMBO
-        Label lblValue = null;
-        if( multiLine){
+
+        operation = new Combo(control, SWT.DROP_DOWN | SWT.READ_ONLY);
+        operation.setItems(OPERATORS);
+
+        lblValue = null;
+        if (isMultiline) {
             lblValue = new Label(control, SWT.NONE);
-            lblValue.setText("Value");
-        }        
-        value = new Combo(control, SWT.SIMPLE | SWT.READ_ONLY );
+            lblValue.setText("Value:");
+        }
+        value = new Combo(control, SWT.DROP_DOWN | SWT.READ_ONLY);
         value.setEnabled(false); // need to select an attribute before we can suggest values
-        
-        // INSERT BUTTON
+
         insert = new Button(control, SWT.NONE);
         insert.setText("Insert");
         insert.addSelectionListener(insertButtonListener);
         
-        if( multiLine ){
+        setLayout(isMultiline);
+
+    }
+
+    /**
+     * This sets the layout of the UI elements in the viewer.
+     * 
+     * @param isMultiline
+     */
+    private void setLayout(boolean isMultiline) {
+        if (isMultiline) {
             MigLayout layout = new MigLayout("insets 0", "[][][][][][][grow]", "[grow][]");
-            control.setLayout( layout);
-            
+            control.setLayout(layout);
+
             text.setLayoutData("span,grow,width 200:100%:100%,height 60:100%:100%");
-            setPreferredTextSize(40,5);
-            
+            setPreferredTextSize(40, 5);
+
             lblAttribute.setLayoutData("cell 0 1,alignx trailing,gapx related");
             attribute.setLayoutData("cell 1 1,wmin 60,alignx left,gapx rel");
-            
-            lblOperation.setLayoutData("cell 2 1,alignx trailing,gapx related");
-            operation.setLayoutData("cell 3 1,wmin 60,alignx left,gapx rel");            
 
-            lblValue.setLayoutData( "cell 4 1,alignx trailing,gapx related");
+            lblOperation.setLayoutData("cell 2 1,alignx trailing,gapx related");
+            operation.setLayoutData("cell 3 1,wmin 60,alignx left,gapx rel");
+
+            lblValue.setLayoutData("cell 4 1,alignx trailing,gapx related");
             value.setLayoutData("cell 5 1,wmin 60,alignx left,gapx related");
             
             insert.setLayoutData("cell 6 1,alignx left,gapx unrel");
-        }
-        else {
-            control.setLayout( new MigLayout("insets 0, flowx", "", ""));
+        } else {
+            control.setLayout(new MigLayout("insets 0, flowx", "", ""));
 
             text.setLayoutData("grow,width 200:70%:100%, gap unrelated");
             attribute.setLayoutData("width 90:20%:100%, gap related");
@@ -247,6 +253,7 @@ public class DefaultFilterViewer extends CQLFilterViewer {
             insert.setLayoutData("gap related");
         }
     }
+
     /**
      * Used to supply a list of suggested values; given the provided attribtue descriptor.
      * 
@@ -282,13 +289,13 @@ public class DefaultFilterViewer extends CQLFilterViewer {
     public Control getControl() {
         return control;
     }
-    
+
     @Override
     public void refresh() {
-        super.refresh(); // update text field suggestions
-        
+        super.refresh();
         if (input != null) {
-            SortedSet<String> names = new TreeSet<String>(input.toPropertyList());
+            // Set attribute options
+            final SortedSet<String> names = new TreeSet<String>(input.toPropertyList());
             attribute.setItems(names.toArray(new String[names.size()]));
         }
     }

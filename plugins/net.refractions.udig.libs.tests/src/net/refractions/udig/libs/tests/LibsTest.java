@@ -3,8 +3,6 @@
  */
 package net.refractions.udig.libs.tests;
 
-import static org.junit.Assert.*;
-
 import net.refractions.udig.libs.internal.Activator;
 
 import org.eclipse.core.runtime.Platform;

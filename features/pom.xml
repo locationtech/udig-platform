@@ -38,6 +38,9 @@
         
         <profile>
             <id>sdk</id>
+            <activation>
+                <property><name>all</name></property>
+            </activation>
             <modules>
                 <module>net.refractions.udig_sdk-product</module>
                 <module>net.refractions.udig_sdk-feature</module>

@@ -83,6 +83,11 @@ public class PlatformGIS {
      * wait for a long running and potentially blocking operation (for example an IO operation). If
      * the IO is done in the UI thread then the user interface will lock up. This allows synchronous
      * execution of a long running thread in the UI thread without locking the UI.
+     * <p>
+     * When called from the display thread, a {@link #executor} is used to schedule the background
+     * runnable, and we will take over the {@link Display#readAndDispatch()} cycle while waiting
+     * for the background runable to complete. When completed normal display thread execution will
+     * resume.
      * 
      * @param runnable The runnable(operation) to run
      * @param monitor the progress monitor to update.
@@ -266,6 +271,13 @@ public class PlatformGIS {
         }
         syncInDisplayThread(display, runnable);
     }
+    /**
+     * Run in the display thread at the next reasonable opportunity, current thread will
+     * wait for the runnable to complete.
+     * 
+     * @param display
+     * @param runnable
+     */
     public static void syncInDisplayThread( Display display, final Runnable runnable ) {
         if (Display.getCurrent() != display) {
             final AtomicBoolean done = new AtomicBoolean(false);

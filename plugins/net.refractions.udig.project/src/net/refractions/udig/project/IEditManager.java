@@ -14,9 +14,14 @@ import org.opengis.feature.simple.SimpleFeature;
  * Defines and implements controllers a map. The EditManager is the central piece and has the
  * following functionality:
  * <ul>
- * <li>Controlling transactions</li>
- * <li>Modifying ContextModel</li>
- * <li>Creating Layer Objects</li>
+ * <li>Controlling transactions (commit and rollback) used to support data editing</li>
+ * <li>Modifying the layer list safely</li>
+ *     <ul>
+ *     <li>Creating Layer Objects</li>
+ *     </ul>
+ *     </li>
+ * <li>EditFeature support (apply and cancel) on a feature by feature basis used to support forms</li>
+ * <li>Recycling FeatureSource instances to be shared between layers</li>
  * </ul>
  * <p>
  * Transactions and locks are also part of map core.

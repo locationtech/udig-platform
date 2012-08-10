@@ -67,7 +67,6 @@ import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.StyleBuilder;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-import org.opengis.referencing.operation.MathTransform2D;
 import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -114,42 +113,6 @@ public class BasicWMTRenderer extends RendererImpl {
         render(graphics, getRenderBounds(), monitor);
     }
 
-//    private int count = 1;
-//    private IProgressMonitor previousMonitor = null;
-//    public void render(Graphics2D destination, Envelope bounds2,
-//            IProgressMonitor monitor) throws RenderException {
-//        WMTPlugin.trace("[BasicWMTRender.render] is called"); //$NON-NLS-1$
-//        try {
-//            int count = this.count++;
-//            
-//            setState(STARTING);
-//            // check if the same Monitor is shared for every render call (no, it is not)
-//            System.out.println("Rendercall: " + count + " " + (previousMonitor == monitor));
-//            previousMonitor = monitor;
-//            
-//            if (monitor.isCanceled()) {
-//                System.out.println("cancel 1 " + count);
-////                setState(IRenderer.CANCELLED);
-////                monitor.done();
-//                return;
-//            }
-//            
-//            System.out.println("Before sleep " + count);
-//            monitor.beginTask("Render WMT", 100); //$NON-NLS-1$
-//            Thread.sleep(10000);
-//            System.out.println("Behind sleep " + count);
-//            
-//            if (monitor.isCanceled()) {
-//                System.out.println("cancel 2 " + count);
-////                setState(IRenderer.CANCELLED);
-////                monitor.done();
-//                return;
-//            }
-//            //monitor.done();
-//        } catch (Exception e) {
-//            System.out.println("Wait interrupted");
-//        }
-//    }
     
     public void render(Graphics2D destination, Envelope bounds, IProgressMonitor monitor)
             throws RenderException {
@@ -194,9 +157,10 @@ public class BasicWMTRenderer extends RendererImpl {
                 throw new UnsupportedOperationException(Messages.Render_Error_Projection);
             }
             
+            int tileLimitWarning = WMTRenderJob.getTileLimitWarning();
             // Find tiles
             Map<String, Tile> tileList = wmtSource.cutExtentIntoTiles(renderJob,
-                    WMTRenderJob.getScaleFactor(), false, layerProperties);
+                    WMTRenderJob.getScaleFactor(), false, layerProperties, tileLimitWarning);
 
             // if we have nothing to display, return
             if (tileList.isEmpty()) {
@@ -416,14 +380,15 @@ public class BasicWMTRenderer extends RendererImpl {
             Map<String, Tile> tileList) {
         int tilesCount = tileList.size();
         
-        if (tilesCount > WMTRenderJob.getTileLimitWarning()) {
+        int tileLimitWarning = WMTRenderJob.getTileLimitWarning();
+        if (tilesCount > tileLimitWarning) {
             // too many tiles, let's use the recommended zoom-level (if it wasn't already used)
             Boolean selectionAutomatic = layerProperties.getSelectionAutomatic();
             
             if ((selectionAutomatic != null) && (selectionAutomatic == false)) {
                 tileList.clear();
                 tileList = wmtSource.cutExtentIntoTiles(renderJob, WMTRenderJob.getScaleFactor(), 
-                        true, layerProperties);                
+                        true, layerProperties, tileLimitWarning);                
                 tilesCount = tileList.size();
             }
             

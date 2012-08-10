@@ -23,11 +23,14 @@ import java.util.Map;
 
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IService;
+import net.refractions.udig.catalog.IResolve.Status;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.DataAccess;
 import org.geotools.data.DataAccessFactory;
+import org.geotools.data.DataStore;
+import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.ServiceInfo;
 import org.opengis.feature.type.Name;
 
@@ -44,18 +47,18 @@ public class DataStoreService extends IService {
 	
     private ID id;
     private Map<String, Serializable> connectionParams;
-    private DataAccess< ? , ? > dataStore;
-    private DataAccessFactory factory;
+    private DataStore dataStore;
+    private DataStoreFactorySpi factory;
     private IOException message;
     private List<FeatureSourceGeoResource> resources;
 
-    public DataStoreService( ID id, DataAccessFactory factory, Map<String, Serializable> params ) {
+    public DataStoreService( ID id, DataStoreFactorySpi factory, Map<String, Serializable> params ) {
         this.id = id;
         connectionParams = params;
         this.factory = factory;
     }
 
-    public synchronized DataAccess< ? , ? > toDataAccess() throws IOException {
+    public synchronized DataStore toDataAccess() throws IOException {
         if (dataStore == null) {
             // connect!
             try {
@@ -107,14 +110,10 @@ public class DataStoreService extends IService {
     }
 
     public Status getStatus() {
-        if (dataStore != null) {
-            return Status.CONNECTED;
+        if( dataStore == null ){
+            return super.getStatus();
         }
-        if (message != null) {
-            return Status.BROKEN;
-        } else {
-            return Status.NOTCONNECTED;
-        }
+        return Status.CONNECTED;
     }
 
     @Override
@@ -137,4 +136,15 @@ public class DataStoreService extends IService {
         return super.resolve(adaptee, monitor);
     }
 
+    @Override
+    public void dispose(IProgressMonitor monitor) {
+        super.dispose(monitor); // clean up members
+        if( dataStore != null ){
+            dataStore.dispose();
+            dataStore = null;
+        }
+        if( resources != null ){
+            resources = null;
+        }
+    }
 }
