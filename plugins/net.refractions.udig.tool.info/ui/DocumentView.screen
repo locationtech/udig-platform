@@ -13,19 +13,16 @@
   </widgets>
   <widgets xsi:type="model:Icon" id="23" x="567" y="45" measuredWidth="16" measuredHeight="16" icon="empty-arrow-down (small)"/>
   <widgets xsi:type="model:Icon" id="24" x="544" y="45" measuredWidth="16" measuredHeight="16" icon="find (small)"/>
-  <widgets xsi:type="model:Button" id="27" x="464" y="128" width="116" text="Edit..." measuredWidth="116" measuredHeight="23">
+  <widgets xsi:type="model:Button" id="27" x="464" y="96" width="116" text="Edit..." measuredWidth="116" measuredHeight="23">
     <font/>
   </widgets>
-  <widgets xsi:type="model:Button" id="29" x="464" y="201" width="116" text="Save As..." measuredWidth="116" measuredHeight="23" state="disabled">
-    <font/>
-  </widgets>
-  <widgets xsi:type="model:Button" id="159" x="464" y="96" width="116" text="New ..." measuredWidth="116" measuredHeight="23" state="disabled">
+  <widgets xsi:type="model:Button" id="29" x="464" y="160" width="116" text="Save As..." measuredWidth="116" measuredHeight="23" state="disabled">
     <font/>
   </widgets>
   <widgets xsi:type="model:Table" id="160" x="14" y="63" width="443" height="300" text="Document, Type, Description&#xA;{desc} {open} Tasmania&#xA;   {internet} Flag_of_Tasmania.svg (flag), web, Link to state flag&#xA;   {pdf}  tasmania.pdf (report), file, carbon trading report&#xA;   {lightning} Australia, action, google search\, wikipedia search&#xA;   {excel} Australian carbon charts, excel, Australia carbon emission charts&#xA;   {internet} Australian Carbon Traders, link, related internet site&#xA;{desc} {folder} Countries&#xA;   {snapshot} Earth from space, web, external web link&#xA;   {pdf} Global Carbon Emmision Policies " measuredWidth="443" measuredHeight="300" selection="2" alternative="#eeeeee">
     <font/>
   </widgets>
-  <widgets xsi:type="model:Button" id="163" x="464" y="160" width="116" text="Open" measuredWidth="116" measuredHeight="23">
+  <widgets xsi:type="model:Button" id="163" x="464" y="128" width="116" text="Open" measuredWidth="116" measuredHeight="23">
     <font/>
   </widgets>
   <widgets xsi:type="model:Popup" id="164" x="582" y="60" text="Zoom to Feature&#xA;----&#xA;Document Properties..." measuredWidth="153" measuredHeight="59">
