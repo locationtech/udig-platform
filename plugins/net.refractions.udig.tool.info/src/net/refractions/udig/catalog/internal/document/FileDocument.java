@@ -14,12 +14,16 @@
  *    Lesser General Public License for more details.
  *
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.internal.document;
 
 import java.io.File;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IHotlink;
 
 import org.eclipse.swt.program.Program;
 
@@ -30,8 +34,9 @@ import org.eclipse.swt.program.Program;
  * @author paul.pfeiffer
  * @author Naz Chan
  */
-public class FileDocument extends AbstractDocument {
+public class FileDocument extends AbstractDocument implements IHotlink {
 
+    private String attributeName;
     private File file;
 
     private static final String DATE_FORMAT = "dd-MM-yyyy hh:mm:ss"; //$NON-NLS-1$
@@ -39,6 +44,17 @@ public class FileDocument extends AbstractDocument {
     public FileDocument() {
         // Nothing
     }
+    
+
+    @Override
+    public String getAttributeName() {
+        return attributeName;
+    }
+    
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
+    }
+    
     
     public FileDocument(File file) {
         this.file = file;

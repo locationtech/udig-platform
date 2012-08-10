@@ -3,14 +3,14 @@ package net.refractions.udig.catalog.document;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IHotlink;
-import net.refractions.udig.catalog.IHotlink.HotlinkDescriptor;
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
 import net.refractions.udig.tool.info.InfoPlugin;
@@ -19,7 +19,7 @@ import net.refractions.udig.tool.info.InfoPlugin;
  * Folds in BasicHotlink implementation for any IGeoResource that lists its hotlink attributes as
  * part of its {@link IGeoResource#getPersistentProperties()}.
  * <p>
- * Contains utility methods to help both {@link BasicHotlink} and {@link HotlinkPropertyPage}
+ * Contains utility methods to help both {@link BasicHotlink} and {@link DocumentPropertyPage}
  * extract descriptors from a IGeoResource.
  * 
  * @author Jody Garnett (LISAsoft)
@@ -49,21 +49,25 @@ public class BasicHotlinkResolveFactory implements IResolveAdapterFactory {
             throws IOException {
         IGeoResource resource = (IGeoResource) resolve; // safe cast due to extension point config
         if (resource.getPersistentProperties().containsKey(BasicHotlinkResolveFactory.HOTLINK)) {
-            IHotlink hotlink = new BasicHotlink(resource);
+            IHotlinkSource hotlink = new BasicHotlink(resource);
             return hotlink;
         }
         return null; // not available
     }
-
+    
+    public static boolean hasHotlinkDescriptors(IGeoResource resource) {
+        Map<String, Serializable> persistentProperties = resource.getPersistentProperties();
+        return persistentProperties.containsKey(HOTLINK);
+    }
     /**
      * Retrieve the hotlink descriptors for the provided resource.
      * 
      * @return
      */
-    public static List<HotlinkDescriptor> hotlinkDescriptors(IGeoResource resource) {
+    public static List<HotlinkDescriptor> getHotlinkDescriptors(IGeoResource resource) {
         Map<String, Serializable> persistentProperties = resource.getPersistentProperties();
-        String definition = (String) persistentProperties.get(BasicHotlinkResolveFactory.HOTLINK);
-        List<HotlinkDescriptor> list = new ArrayList<IHotlink.HotlinkDescriptor>();
+        String definition = (String) persistentProperties.get(HOTLINK);
+        List<HotlinkDescriptor> list = new ArrayList<IHotlinkSource.HotlinkDescriptor>();
         if (definition != null && !definition.isEmpty()) {
             String split[] = definition.split(",");
             for (String defn : split) {
@@ -76,6 +80,34 @@ public class BasicHotlinkResolveFactory implements IResolveAdapterFactory {
             }
         }
         return list;
+    }
+    /**
+     * Retrieve the hotlink descriptors for the provided resource.
+     * 
+     * @return
+     */
+    public static void putHotlinkDescriptors(IGeoResource resource, List<HotlinkDescriptor> list) {
+        Map<String, Serializable> persistentProperties = resource.getPersistentProperties();
+        
+        if( list == null ){
+            persistentProperties.remove( HOTLINK);
+        }
+        else {
+            StringBuilder build = new StringBuilder();
+            for( Iterator<HotlinkDescriptor> i=list.iterator(); i.hasNext(); )  {
+                HotlinkDescriptor descriptor = i.next();
+                 build.append( descriptor );
+                 if( i.hasNext() ){
+                     build.append( "," );
+                 }
+            }
+            String definition = build.toString();
+            persistentProperties.put( HOTLINK, definition );
+        }
+    }
+    public static void clearHotlinkDescriptors(IGeoResource resource) {
+        Map<String, Serializable> persistentProperties = resource.getPersistentProperties();
+        persistentProperties.remove(HOTLINK);
     }
 
 }

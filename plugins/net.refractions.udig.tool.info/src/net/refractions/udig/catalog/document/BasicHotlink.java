@@ -7,17 +7,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.IAbstractDocumentSource;
-import net.refractions.udig.catalog.IDocument;
-import net.refractions.udig.catalog.IDocumentFolder;
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IHotlink;
 
 import org.eclipse.swt.program.Program;
 import org.opengis.feature.simple.SimpleFeature;
 
-public class BasicHotlink implements IHotlink {
-    class FileLink implements IDocument {
+public class BasicHotlink implements IHotlinkSource {
+    class FileLink implements IHotlink {
         private File file;
         private String attributeName;
         public FileLink(String attributeName, Object value) {
@@ -78,7 +74,7 @@ public class BasicHotlink implements IHotlink {
         }
     }
 
-    class WebLink implements IDocument {
+    class WebLink implements IHotlink {
         private URL url;
         private String attributeName;
         public WebLink(String attributeName, Object value) {
@@ -151,7 +147,7 @@ public class BasicHotlink implements IHotlink {
 
     @Override
     public List<HotlinkDescriptor> getHotlinkDescriptors() {
-        List<HotlinkDescriptor> list = BasicHotlinkResolveFactory.hotlinkDescriptors( resource );
+        List<HotlinkDescriptor> list = BasicHotlinkResolveFactory.getHotlinkDescriptors( resource );
         return Collections.unmodifiableList(list);
     }
     @Override

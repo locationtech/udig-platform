@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.AdaptableFeature;
@@ -28,8 +27,8 @@ import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.IMapCompositionListener;
 import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.project.MapCompositionEvent;
 import net.refractions.udig.project.LayerEvent.EventType;
+import net.refractions.udig.project.MapCompositionEvent;
 import net.refractions.udig.project.internal.impl.LayerImpl;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.properties.FeaturePropertySource;
@@ -66,25 +65,25 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IMemento;
-import org.eclipse.ui.IViewSite;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.geotools.data.FeatureEvent;
-import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureEvent.Type;
+import org.geotools.data.FeatureSource;
 import org.geotools.data.ows.Layer;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.filter.text.cql2.CQLException;
+import org.geotools.filter.text.ecql.ECQL;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
+import org.opengis.filter.expression.Expression;
 
 /**
  * Info recast as a search part.
@@ -107,9 +106,13 @@ public class InfoView2 extends SearchPart {
     protected ImageRegistry registry;
     
     private class InfoViewLabelProvider extends LabelProvider implements IColorProvider {
+        
+        private static final String FEATURE_LABEL = "FEATURE_LABEL"; //$NON-NLS-1$
+        
         public String getText(Object element) {
-            if (element instanceof SimpleFeature) {
-                return ((SimpleFeature) element).getID();
+            if (element instanceof AdaptableFeature) {
+                final AdaptableFeature feature = (AdaptableFeature) element;
+                return getFeatureLabel(feature);
             }
             else if (element instanceof LayerPointInfo) {
                 LayerPointInfo info = (LayerPointInfo) element;                    
@@ -122,6 +125,45 @@ public class InfoView2 extends SearchPart {
             return super.getText(element);
         }
         
+        /**
+         * Gets the feature label by running the feature label expression set for the feature.
+         * 
+         * @param feature
+         * @return feature label
+         */
+        private String getFeatureLabel(AdaptableFeature feature) {
+            
+            final ILayer layer = (ILayer) feature.getAdapter(ILayer.class);
+            final IGeoResource resource = layer.getGeoResource();
+            
+            return getFeatureLabel(resource, feature);
+            
+        }
+        
+        /**
+         * Gets the feature label by running the feature label expression set for the feature.
+         * 
+         * @param resource
+         * @param feature
+         * @return feature label
+         */
+        private String getFeatureLabel(IGeoResource resource, SimpleFeature feature) {
+            
+            final String labelExpression = (String) resource.getPersistentProperties().get(
+                    FEATURE_LABEL);
+            
+            if (labelExpression != null) {
+                try {
+                    final Expression exp = ECQL.toExpression(labelExpression);
+                    return (String) exp.evaluate(feature);
+                } catch (CQLException e) {
+                    e.printStackTrace();
+                }    
+            }
+            
+            return feature.getID();
+            
+        }
         
         /**
          * @see net.refractions.udig.project.internal.provider.LayerItemProvider

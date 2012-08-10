@@ -19,10 +19,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.IDocument;
-import net.refractions.udig.catalog.IDocument.Type;
-import net.refractions.udig.catalog.IHotlink;
-import net.refractions.udig.catalog.LinkInfo;
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IHotlinkSource;
+import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.internal.document.LinkInfo;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 
 import org.opengis.feature.simple.SimpleFeature;
@@ -35,7 +35,7 @@ import org.opengis.feature.simple.SimpleFeature;
  * 
  * @author Naz Chan
  */
-public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotlink {
+public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotlinkSource {
 
     public ShpHotlinkSource(ShpGeoResourceImpl geoResource) {
         super(geoResource);
@@ -43,9 +43,10 @@ public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotl
 
     @Override
     public List<HotlinkDescriptor> getHotlinkDescriptors() {
-        final List<HotlinkDescriptor> hotlinkDescriptors = new ArrayList<IHotlink.HotlinkDescriptor>();
+        final List<HotlinkDescriptor> hotlinkDescriptors = new ArrayList<IHotlinkSource.HotlinkDescriptor>();
         for (LinkInfo info : propParser.getFeatureLinkInfos()) {
-            hotlinkDescriptors.add(new HotlinkDescriptor(info.getInfo(), info.getType()));
+            HotlinkDescriptor descriptor = new HotlinkDescriptor(info.getInfo(), info.getType());
+            hotlinkDescriptors.add(descriptor);
         }
         return hotlinkDescriptors;
     }

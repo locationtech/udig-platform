@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.FileDocument;
-import net.refractions.udig.catalog.IDocument;
-import net.refractions.udig.catalog.IDocumentSource;
-import net.refractions.udig.catalog.URLDocument;
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IDocumentSource;
+import net.refractions.udig.catalog.internal.document.FileDocument;
+import net.refractions.udig.catalog.internal.document.URLDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 
 /**
@@ -120,7 +120,7 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
     }
     
     @Override
-    public boolean updateFile(FileDocument doc, File file) {
+    public boolean updateFile(IDocument doc, File file) {
         
         FileDocument fileDoc = null;
         final IDocument newDoc = docFactory.create(file);
@@ -141,7 +141,7 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
     }
 
     @Override
-    public boolean updateLink(URLDocument doc, URL url) {
+    public boolean updateLink(IDocument doc, URL url) {
         
         URLDocument fileDoc = null;
         final IDocument newDoc = docFactory.create(url);

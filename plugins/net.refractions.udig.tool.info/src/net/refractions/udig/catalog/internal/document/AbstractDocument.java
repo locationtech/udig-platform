@@ -14,9 +14,13 @@
  *    Lesser General Public License for more details.
  *
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.internal.document;
 
 import java.net.URI;
+
+import net.refractions.udig.catalog.document.IAbstractDocumentSource;
+import net.refractions.udig.catalog.document.IDocument;
+
 
 
 /**
@@ -31,7 +35,7 @@ public abstract class AbstractDocument extends AbstractDocumentItem implements I
     private IAbstractDocumentSource source;
     
     protected String label;
-    private String attributeName;
+    
     
     protected static final String UNASSIGNED = "unassigned"; //$NON-NLS-1$
     protected static final String UNASSIGNED_NO_LABEL = "(unassigned)"; //$NON-NLS-1$
@@ -46,15 +50,6 @@ public abstract class AbstractDocument extends AbstractDocumentItem implements I
         this.label = label;
     }
 
-    @Override
-    public String getAttributeName() {
-        return attributeName;
-    }
-    
-    public void setAttributeName(String attributeName) {
-        this.attributeName = attributeName;
-    }
-    
     @Override
     public IAbstractDocumentSource getSource() {
         return source;

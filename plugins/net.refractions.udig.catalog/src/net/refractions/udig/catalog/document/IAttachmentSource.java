@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.document;
 
 import java.io.File;
 import java.net.URL;
@@ -21,20 +21,21 @@ import java.util.List;
 import org.opengis.filter.identity.FeatureId;
 
 /**
- * This is the attachment source interface. This is designed to be implemented by feature level
- * "attachment" document sources.
+ * Attachment support for a IGeoResource providing the ability to record IAttachment documents
+ * against individual features.
  * 
- * @author nchan
+ * @author Naz Chan (LISAsoft)
+ * @since 1.3.2
  */
 public interface IAttachmentSource extends IAbstractDocumentSource {
 
     /**
-     * Gets the list of documents related to the feature
+     * Gets the list of documents related to the feature.
      * 
      * @param fid
      * @return list of documents
      */
-    public List<IDocument> documents(FeatureId fid);
+    public List<IDocument> getDocuments(FeatureId fid);
 
     /**
      * Adds the file.
@@ -44,6 +45,8 @@ public interface IAttachmentSource extends IAbstractDocumentSource {
      * @return document
      */
     public IDocument addFile(FeatureId fid, File file);
+    
+    public List<IDocument> addFiles(FeatureId fid, List<File> files);
 
     /**
      * Adds the link.
@@ -55,14 +58,26 @@ public interface IAttachmentSource extends IAbstractDocumentSource {
     public IDocument addLink(FeatureId fid, URL url);
 
     /**
-     * Updates the url of the document.
+     * Updates the file of the document, doc is required to be of
+     * type {@link IDocument.Type#FILE}.
+     * 
+     * @param fid
+     * @param fileDoc
+     * @param file
+     * @return file set to document
+     */
+    public File updateFile(FeatureId fid, IDocument doc, File file);
+    
+    /**
+     * Updates the url of the document which is required to be of
+     * type {@link IDocument.Type#WEB}.
      * 
      * @param fid
      * @param urlDoc
      * @param url
      * @return true if successful, otherwise false
      */
-    public boolean updateLink(FeatureId fid, URLDocument urlDoc, URL url);
+    public boolean updateLink(FeatureId fid, IDocument doc, URL url);
 
     /**
      * Deletes the document
@@ -71,6 +86,15 @@ public interface IAttachmentSource extends IAbstractDocumentSource {
      * @param doc
      * @return true if successful, otherwise false
      */
-    public boolean removeDoc(FeatureId fid, IDocument doc);
+    public boolean remove(FeatureId fid, IDocument doc);
+    
+    /**
+     * Deletes the list of documents
+     * 
+     * @param fid
+     * @param docs
+     * @return true if successfull, otherwise false
+     */
+    public boolean remove(FeatureId fid, List<IDocument> docs);
 
 }
