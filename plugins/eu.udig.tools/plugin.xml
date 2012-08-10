@@ -6,9 +6,6 @@
       <startup class="eu.udig.tools.merge.MergeStartup"/>
    </extension>
    <extension
-         point="org.eclipse.ui.actionSets">
-   </extension>
-   <extension
          point="net.refractions.udig.project.ui.tool">
       <modalTool
             categoryId="net.refractions.udig.tool.edit.feature"
@@ -109,9 +106,6 @@
       </modalTool>
    </extension>
 
-   <extension
-         point="org.eclipse.ui.actionSets">
-   </extension>
    <extension
          point="org.eclipse.help.toc">
    </extension>

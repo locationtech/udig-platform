@@ -8,6 +8,7 @@ Bundle-Vendor: uDig Community
 Bundle-Localization: plugin
 Export-Package: eu.udig.tools.arc.internal;x-friends:="eu.udig.tools.tests",
  eu.udig.tools.geometry.split,
+ eu.udig.tools.geometry.trim,
  eu.udig.tools.merge,
  eu.udig.tools.parallel.internal;x-friends:="eu.udig.tools.tests"
 Require-Bundle: org.eclipse.ui,
