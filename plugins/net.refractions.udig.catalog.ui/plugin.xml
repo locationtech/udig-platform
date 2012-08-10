@@ -246,6 +246,25 @@
                   commandId="net.refractions.udig.catalog.ui.command.resourceProperties"
                   label="%resourceProperties"
                   tooltip="%resourceProperties.description">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="selection">
+                     <iterate>
+                        <or>
+                           <instanceof
+                                 value="net.refractions.udig.catalog.IGeoResource">
+                           </instanceof>
+                           <adapt
+                                 type="net.refractions.udig.catalog.IGeoResource">
+                           </adapt>
+                        </or>
+                     </iterate>
+                     <count
+                           value="1">
+                     </count>
+                  </with>
+               </visibleWhen>
             </command>
             <command
                   commandId="net.refractions.udig.catalog.ui.command.serviceProperties"
