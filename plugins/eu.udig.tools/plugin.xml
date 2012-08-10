@@ -16,7 +16,7 @@
             icon="icons/etool16/split_feature_mode.gif"
             id="eu.udig.tools.split.SplitTool"
             largeIcon="icons/etool24/split_24.png"
-            name="Split"
+            name="%eu.udig.tools.split.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
             tooltip="%eu.udig.tools.split.tooltip">
@@ -27,7 +27,7 @@
             icon="icons/etool16/merge_feature_mode.gif"
             id="eu.udig.tools.merge.MergeTool"
             largeIcon="icons/etool24/merge_24.png"
-            name="Merge"
+            name="%eu.udig.tools.merge.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
             tooltip="%eu.udig.tools.merge.tooltip">
@@ -37,7 +37,7 @@
             class="eu.udig.tools.arc.ArcTool"
             icon="icons/etool16/arc_tool.gif"
             id="eu.udig.tools.arc.ArcTool"
-            name="Arc"
+            name="%eu.udig.tools.arc.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
             tooltip="%eu.udig.tools.arc.tooltip">
@@ -82,6 +82,29 @@
                   </property>
                </or>
             </and>
+         </enablement>
+      </modalTool>
+      <modalTool
+            categoryId="net.refractions.udig.tool.edit.feature"
+            class="eu.udig.tools.trim.TrimTool"
+            icon="icons/etool16/trim_feature_mode.gif"
+            id="eu.udig.tools.trim.TrimTool"
+            largeIcon="icons/etool24/trim_24.png"
+            name="%eu.udig.tools.trim.name"
+            onToolbar="true"
+            toolCursorId="arrowCursor"
+            tooltip="%eu.udig.tools.trim.tooltip">
+         <enablement>
+            <or>
+               <property
+                     expectedValue="com.vividsolutions.jts.geom.LineString"
+                     propertyId="net.refractions.udig.project.ui.GeometryType">
+               </property>
+               <property
+                     expectedValue="com.vividsolutions.jts.geom.MultiLineString"
+                     propertyId="net.refractions.udig.project.ui.GeometryType">
+               </property>
+            </or>
          </enablement>
       </modalTool>
    </extension>
