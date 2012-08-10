@@ -41,11 +41,16 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 
-import eu.udig.tools.arc.es.axios.geotools.util.GeoToolsUtils;
-import eu.udig.tools.arc.es.axios.lib.geometry.util.GeometryUtil;
-import eu.udig.tools.arc.es.axios.udig.ui.commons.mediator.AppGISMediator;
-import eu.udig.tools.arc.es.axios.udig.ui.commons.util.DialogUtil;
-import eu.udig.tools.arc.es.axios.udig.ui.commons.util.LayerUtil;
+//import eu.udig.tools.arc.es.axios.geotools.util.GeoToolsUtils;
+import eu.udig.tools.feature.util.GeoToolsUtils;
+//import eu.udig.tools.arc.es.axios.lib.geometry.util.GeometryUtil;
+import eu.udig.tools.geometry.internal.util.GeometryUtil;
+//import eu.udig.tools.arc.es.axios.udig.ui.commons.mediator.AppGISMediator;
+import eu.udig.tools.internal.mediator.AppGISAdapter;
+//import eu.udig.tools.arc.es.axios.udig.ui.commons.util.DialogUtil;
+import eu.udig.tools.internal.ui.util.DialogUtil;
+//import eu.udig.tools.arc.es.axios.udig.ui.commons.util.LayerUtil;
+import eu.udig.tools.internal.ui.util.LayerUtil;
 
 /**
  * Acceptance behaviour for the arc creation tool.
@@ -122,7 +127,7 @@ public class CreateArcBehaviour implements Behaviour {
 			throw new RuntimeException(te);
 		}
 
-		EditCommandFactory editCmdFac = AppGISMediator.getEditCommandFactory();
+		EditCommandFactory editCmdFac = AppGISAdapter.getEditCommandFactory();
 
 		ILayer layer = editLayer;
 		SimpleFeatureType schema = layer.getSchema();
