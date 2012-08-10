@@ -42,6 +42,7 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
     public class HotlinkDescriptor {
 
         private final String label;
+        private final String description;
         private final String attributeName;
         private final Type type;
         private final String config;
@@ -53,6 +54,7 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
          */
         public HotlinkDescriptor() {
             label = null;
+            description = null;
             attributeName = null;
             type = Type.FILE;
             config = null;
@@ -65,6 +67,7 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
          */
         public HotlinkDescriptor(HotlinkDescriptor descriptor) {
             label = descriptor.getLabel();
+            description = descriptor.getDescription();
             attributeName = descriptor.getAttributeName();
             type = descriptor.getType();
             config = descriptor.getConfig();
@@ -72,13 +75,16 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
 
         public HotlinkDescriptor(String attributeName, IDocument.Type type) {
             this.label = null;
+            this.description = null;
             this.attributeName = attributeName;
             this.type = type;
             this.config = null;
         }
 
-        public HotlinkDescriptor(String label, String attributeName, IDocument.Type type, String config) {
+        public HotlinkDescriptor(String label, String description, String attributeName,
+                IDocument.Type type, String config) {
             this.label = label;
+            this.description = description;
             this.attributeName = attributeName;
             this.type = type;
             this.config = config;
@@ -92,21 +98,36 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
         public HotlinkDescriptor(String definition) {
             
             final String[] defValues = definition.split(DELIMITER);
-            attributeName = defValues[0];
+            attributeName = getCleanValue(defValues[0]);
             type = Type.valueOf(defValues[1]);
             if (defValues.length > 2) {
-                config = defValues[2];
+                config = getCleanValue(defValues[2]);
             } else {
                 config = null;    
             }
             if (defValues.length > 3) { 
-                label = defValues[3];    
+                label = getCleanValue(defValues[3]);    
             } else {
                 label = null;
+            }
+            if (defValues.length > 4) { 
+                description = getCleanValue(defValues[4]);    
+            } else {
+                description = null;
             }
             
         }
 
+        private String getCleanValue(String text) {
+            if (text != null) {
+                final String cleanText = text.trim();
+                if (cleanText.length() > 0) {
+                    return cleanText;
+                }
+            }
+            return null;
+        }
+        
         public boolean isEmpty() {
             return attributeName == null || attributeName.isEmpty();
         }
@@ -125,6 +146,10 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
         
         public String getLabel() {
             return label;
+        }
+        
+        public String getDescription() {
+            return description;
         } 
 
         @Override
@@ -144,6 +169,10 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
             sb.append(DELIMITER);
             if (label != null) {
                 sb.append(label);
+            }
+            sb.append(DELIMITER);
+            if (description != null) {
+                sb.append(description);
             }
             return sb.toString();
         }

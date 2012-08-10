@@ -26,9 +26,11 @@ public class Messages extends NLS {
 
     public static String DistanceTool_error;
 
+    public static String DocumentPropertyPage_description;
+
     public static String DocumentPropertyPage_title;
 
-    public static String Document_Action;
+    public static String DocumentPropertyPage_Action;
 
     public static String Document_Action_Column;
 
@@ -40,13 +42,13 @@ public class Messages extends NLS {
 
     public static String Document_Attribute_Column;
 
-    public static String Document_Attribute;
+    public static String DocumentPropertyPage_Attribute;
 
     public static String Document_Attributes;
 
     public static String Document_Edit;
 
-    public static String Document_Hotlink;
+    public static String DocumentPropertyPage_Hotlink;
 
     public static String Document_Hotlink_Column;
 
@@ -54,13 +56,13 @@ public class Messages extends NLS {
 
     public static String Document_Hotlink_Section;
 
-    public static String Document_Label;
+    public static String DocumentPropertyPage_Label;
 
     public static String Document_Label_Column;
 
-    public static String Document_Open;
+    public static String DocumentPropertyPage_Open;
 
-    public static String Document_Prompt;
+    public static String DocumentPropertyPage_header;
 
     public static String Document_Remove;
 

@@ -235,7 +235,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             public String getText(Object element) {
                 HotlinkDescriptor descriptor = (HotlinkDescriptor) element;
                 if( descriptor.getConfig() == null ){
-                    return Messages.Document_Open;
+                    return Messages.DocumentPropertyPage_Open;
                 }
                 return descriptor.getConfig();
             }
@@ -404,10 +404,12 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         private Label actionLabel;
         
         private Text labelText;
+        
+        private Text descriptionText;
 
         protected HotlinkDescriptorDialog(Shell parentShell) {
             super(parentShell);
-            message = Messages.Document_Prompt;
+            message = Messages.DocumentPropertyPage_header;
             this.descriptor = new HotlinkDescriptor(); // empty if creating a new one
         }
 
@@ -497,28 +499,35 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         protected Control createDialogArea(Composite parent) {
             
             Composite composite = new Composite(parent, SWT.NONE);
-            MigLayout layout = new MigLayout("insets panel", "[left]8[grow]", "[]10[][]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            MigLayout layout = new MigLayout("insets panel, wrap 2", "[right]8[grow]", "[]10[][]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             composite.setLayout(layout);
             composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
             createMessageArea(composite);
             imageLabel.setLayoutData("cell 0 0, alignx center"); //$NON-NLS-1$
             messageLabel.setLayoutData("cell 1 0 2 1, aligny center"); //$NON-NLS-1$
-
+            
             Label labelLbl = new Label(composite, SWT.NONE);
-            labelLbl.setText(Messages.Document_Label);
-            labelLbl.setLayoutData("cell 0 1, gapx unrelated"); //$NON-NLS-1$
+            labelLbl.setText(Messages.DocumentPropertyPage_Label);
+            labelLbl.setLayoutData(""); //$NON-NLS-1$
 
             labelText = new Text(composite, SWT.SINGLE | SWT.BORDER);
-            labelText.setLayoutData("cell 1 1, growx"); //$NON-NLS-1$
+            labelText.setLayoutData("growx"); //$NON-NLS-1$
+            
+            Label descriptionLbl = new Label(composite, SWT.NONE);
+            descriptionLbl.setText(Messages.DocumentPropertyPage_description);
+            descriptionLbl.setLayoutData(""); //$NON-NLS-1$
+
+            descriptionText = new Text(composite, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+            descriptionText.setLayoutData("growx, h 60!"); //$NON-NLS-1$
             
             Label label = new Label(composite, SWT.SINGLE);
-            label.setText(Messages.Document_Attribute);
-            label.setLayoutData("cell 0 2, gapx unrelated"); //$NON-NLS-1$
+            label.setText(Messages.DocumentPropertyPage_Attribute);
+            label.setLayoutData(""); //$NON-NLS-1$
                         
             attributeViewer = new ComboViewer(composite);
             attributeViewer.setContentProvider(ArrayContentProvider.getInstance());
-            attributeViewer.getControl().setLayoutData("cell 1 2, growx"); //$NON-NLS-1$
+            attributeViewer.getControl().setLayoutData("growx"); //$NON-NLS-1$
             List<String> attributeNames = getSchemaCandidates();
             attributeViewer.setInput(attributeNames);
             attributeViewer.addSelectionChangedListener( new ISelectionChangedListener() {
@@ -532,8 +541,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             });
             
             label = new Label(composite, SWT.SINGLE);
-            label.setText(Messages.Document_Hotlink);
-            label.setLayoutData("cell 0 3, gapx unrelated"); //$NON-NLS-1$
+            label.setText(Messages.DocumentPropertyPage_Hotlink);
+            label.setLayoutData(""); //$NON-NLS-1$
 
             typeViewer = new ComboViewer(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
             typeViewer.setContentProvider(ArrayContentProvider.getInstance());
@@ -548,7 +557,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 }
             });
             typeViewer.setInput(IDocument.Type.values());
-            typeViewer.getControl().setLayoutData("cell 1 3"); //$NON-NLS-1$
+            typeViewer.getControl().setLayoutData(""); //$NON-NLS-1$
             typeViewer.addSelectionChangedListener( new ISelectionChangedListener() {
                 public void selectionChanged(SelectionChangedEvent event) {
                     if( !event.getSelection().isEmpty() && event.getSelection() instanceof StructuredSelection ){
@@ -561,12 +570,12 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             });
             
             actionLabel = new Label(composite, SWT.SINGLE);
-            actionLabel.setText(Messages.Document_Action);
-            actionLabel.setLayoutData("cell 0 4, gapx unrelated"); //$NON-NLS-1$
+            actionLabel.setText(Messages.DocumentPropertyPage_Action);
+            actionLabel.setLayoutData(""); //$NON-NLS-1$
             
             actionText = new Text(composite,  SWT.SINGLE | SWT.BORDER );
-            actionText.setLayoutData("cell 1 4, growx"); //$NON-NLS-1$
-            
+            actionText.setLayoutData("growx"); //$NON-NLS-1$
+
             if( descriptor.isEmpty() ){
                 final Type defaultType = Type.FILE;
                 typeViewer.setSelection(new StructuredSelection(defaultType), true);
@@ -575,6 +584,10 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 final String labelStr = descriptor.getLabel();
                 if (labelStr != null) {
                     labelText.setText(labelStr);
+                }
+                final String descriptionStr = descriptor.getDescription();
+                if (descriptionStr != null) {
+                    descriptionText.setText(descriptionStr);
                 }
                 final String attributeName = descriptor.getAttributeName();
                 if (attributeNames.contains(attributeName)) {
@@ -596,7 +609,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 break;
             default:
                 actionText.setEnabled(false);
-                actionText.setText(Messages.Document_Open);
+                actionText.setText(Messages.DocumentPropertyPage_Open);
                 break;
             }
         }
@@ -618,10 +631,11 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 if( label == null || label.isEmpty() ){
                     label = DocUtils.toCamelCase(attributeName);
                 }
+                String description = descriptionText.getText();
                 StructuredSelection selection = (StructuredSelection) typeViewer.getSelection();
                 Type type = (Type) selection.getFirstElement();
                 final String actionConfig = actionText.getText();
-                descriptor = new HotlinkDescriptor(label, attributeName, type, actionConfig);
+                descriptor = new HotlinkDescriptor(label, description, attributeName, type, actionConfig);
                 super.okPressed();                
             }
             
