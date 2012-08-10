@@ -30,6 +30,7 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.document.IAbstractDocumentSource;
 import net.refractions.udig.catalog.document.IAttachmentSource;
 import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocumentFolder;
 import net.refractions.udig.catalog.document.IDocumentItem;
 import net.refractions.udig.catalog.document.IDocumentSource;
@@ -110,8 +111,8 @@ import org.opengis.filter.identity.FeatureId;
 public class DocumentView extends ViewPart {
     
     private TreeViewer viewer;
-    private Button attachButton;
-    private Button linkButton;
+    private Button addButton;
+    private Button editButton;
     private Button openButton;
     private Button saveAsButton;
     private Button removeButton;
@@ -235,15 +236,15 @@ public class DocumentView extends ViewPart {
         
         final String btnLayoutData = "growx"; //$NON-NLS-1$
         
-        // attach button
-        attachButton = toolkit.createButton(btnSection, Messages.docView_attach, SWT.PUSH);
-        attachButton.setLayoutData(btnLayoutData);
-        attachButton.addSelectionListener(btnSelectionListener);
+        // add button
+        addButton = toolkit.createButton(btnSection, Messages.docView_add, SWT.PUSH);
+        addButton.setLayoutData(btnLayoutData);
+        addButton.addSelectionListener(btnSelectionListener);
         
-        // link button
-        linkButton = toolkit.createButton(btnSection, Messages.docView_link, SWT.PUSH);
-        linkButton.setLayoutData(btnLayoutData);
-        linkButton.addSelectionListener(btnSelectionListener);
+        // edit button
+        editButton = toolkit.createButton(btnSection, Messages.docView_edit, SWT.PUSH);
+        editButton.setLayoutData(btnLayoutData);
+        editButton.addSelectionListener(btnSelectionListener);
 
         // open button
         openButton = toolkit.createButton(btnSection, Messages.docView_open, SWT.PUSH);
@@ -297,35 +298,25 @@ public class DocumentView extends ViewPart {
     private void refreshBtns() {
 
         openButton.setEnabled(false);
+        saveAsButton.setEnabled(false);
         removeButton.setEnabled(false);
-        attachButton.setEnabled(false);
-        linkButton.setEnabled(false);
+        addButton.setEnabled(false);
+        editButton.setEnabled(false);
 
         if (viewerSelection != null) {
             if (viewerSelection.size() == 1) {
                 final Object firstObj = viewerSelection.getFirstElement();
                 if (firstObj instanceof IDocumentFolder) {
-                    openButton.setEnabled(false);
-                    removeButton.setEnabled(false);
-                    final IDocumentFolder folder = (IDocumentFolder) firstObj;
-                    final boolean isAddAllowed = !(folder.getSource() instanceof IHotlinkSource);
-                    attachButton.setEnabled(isAddAllowed);
-                    linkButton.setEnabled(isAddAllowed);
+                    addButton.setEnabled(true);
                 } else if (firstObj instanceof IDocument) {
+                    editButton.setEnabled(true);
+                    removeButton.setEnabled(true);
                     final IDocument doc = (IDocument) firstObj;
-                    switch (doc.getType()) {
-                    case FILE:
-                        attachButton.setEnabled(true);
-                        break;
-                    case WEB:
-                        linkButton.setEnabled(true);
-                        break;
-                    default:
-                        break;
+                    if (Type.FILE == doc.getType()) {
+                        saveAsButton.setEnabled(true);
                     }
                     if (!doc.isEmpty()) {
                         openButton.setEnabled(true);
-                        removeButton.setEnabled(true);
                     }
                 }
             } else if (viewerSelection.size() > 1) {
@@ -654,9 +645,9 @@ public class DocumentView extends ViewPart {
     private void handleBtnSelection(Widget btn) {
         if (openButton == btn) {
             open();
-        } else if (attachButton == btn) {
+        } else if (addButton == btn) {
             attach();
-        } else if (linkButton == btn) {
+        } else if (editButton == btn) {
             link();
         } else if (removeButton == btn) {
             remove();
@@ -726,7 +717,7 @@ public class DocumentView extends ViewPart {
         if (docs != null) {
             folder.addDocuments(docs);
             if (docs.size() != fileList.size()) {
-                MessageDialog.openInformation(attachButton.getShell(),
+                MessageDialog.openInformation(addButton.getShell(),
                         Messages.docView_attachFiles, Messages.docView_errFileExistMulti);
             }    
         }
@@ -747,7 +738,7 @@ public class DocumentView extends ViewPart {
         if (source instanceof IDocumentSource) {
             final boolean isUpdateSuccess = ((IDocumentSource) source).updateFile(fileDoc, file);
             if (!isUpdateSuccess) {
-                MessageDialog.openInformation(attachButton.getShell(),
+                MessageDialog.openInformation(addButton.getShell(),
                         Messages.docView_attachFile, Messages.docView_errFileExistSingle);
             } else {
                 fileDoc.setFile(file);
@@ -762,7 +753,7 @@ public class DocumentView extends ViewPart {
             final IAttachmentSource attachmentSource = (IAttachmentSource) source;
             final File localFile = attachmentSource.updateFile(feature.getIdentifier(), fileDoc, file);
             if (localFile == null) {
-                MessageDialog.openInformation(attachButton.getShell(),
+                MessageDialog.openInformation(addButton.getShell(),
                         Messages.docView_attachFile, Messages.docView_errFileExistSingle);
             } else {
                 fileDoc.setFile(localFile);
@@ -780,7 +771,7 @@ public class DocumentView extends ViewPart {
     private List<File> openFileDialog(boolean isMultiSelect) {
         
         final int style = isMultiSelect ? (SWT.SAVE | SWT.MULTI) : SWT.SAVE; 
-        final FileDialog fileDialog = new FileDialog(attachButton.getShell(), style);
+        final FileDialog fileDialog = new FileDialog(addButton.getShell(), style);
         fileDialog.setText(Messages.docView_openDialogTitle);
         
         final String hasSelection = fileDialog.open();
@@ -868,7 +859,7 @@ public class DocumentView extends ViewPart {
         }
         
         if (doc == null) {
-            MessageDialog.openInformation(attachButton.getShell(),
+            MessageDialog.openInformation(addButton.getShell(),
                     Messages.docView_linkURL, Messages.docView_errURLExist);
         } else {
             folder.addDocument(doc);
@@ -895,7 +886,7 @@ public class DocumentView extends ViewPart {
                 }
             }
             else {
-                MessageDialog.openInformation(attachButton.getShell(),
+                MessageDialog.openInformation(addButton.getShell(),
                         Messages.docView_linkURL, Messages.docView_errURLExist);
             }
         } else if (source instanceof IHotlinkSource) {
@@ -922,7 +913,7 @@ public class DocumentView extends ViewPart {
                 }
             }
             else {
-                MessageDialog.openInformation(attachButton.getShell(),
+                MessageDialog.openInformation(addButton.getShell(),
                         Messages.docView_linkURL, Messages.docView_errURLExist);
             }
         }
@@ -937,7 +928,7 @@ public class DocumentView extends ViewPart {
      */
     private String openLinkDialog(String defaultValue) {
 
-        final InputDialog inputDialog = new InputDialog(linkButton.getShell(), Messages.docView_linkDialogTitle,
+        final InputDialog inputDialog = new InputDialog(editButton.getShell(), Messages.docView_linkDialogTitle,
                 Messages.docView_linkDialogHeader, defaultValue, new IInputValidator() {
                     @Override
                     public String isValid(String newText) {

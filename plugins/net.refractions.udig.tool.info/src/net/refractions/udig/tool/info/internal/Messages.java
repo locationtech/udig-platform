@@ -112,7 +112,7 @@ public class Messages extends NLS {
 
     public static String LayerPointInfo_toString;
 
-    public static String docView_attach;
+    public static String docView_add;
 
     public static String docView_attachFile;
 
@@ -138,7 +138,7 @@ public class Messages extends NLS {
 
     public static String docView_featureDocs;
 
-    public static String docView_link;
+    public static String docView_edit;
 
     public static String docView_linkDialogHeader;
 
