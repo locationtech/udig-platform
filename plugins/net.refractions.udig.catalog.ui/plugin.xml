@@ -500,7 +500,7 @@
         name="Catalog Property Pages"
         point="org.eclipse.ui.propertyPages">
      <page
-           class="org.eclipse.ui.internal.dialogs.EmptyPropertyPage"
+           class="net.refractions.udig.catalog.ui.property.ServicePropertyPage"
            icon="icons/obj16/datastore_obj.gif"
            id="net.refractions.udig.catalog.ui.property.servicePage"
            name="%servicePage.name">

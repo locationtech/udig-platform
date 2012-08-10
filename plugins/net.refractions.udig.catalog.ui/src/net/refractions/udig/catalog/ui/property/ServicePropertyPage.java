@@ -14,17 +14,11 @@
  */
 package net.refractions.udig.catalog.ui.property;
 
-import java.io.IOException;
-
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.ui.filter.ExpressionInput;
-import net.refractions.udig.ui.filter.ExpressionViewer;
-import net.refractions.udig.ui.filter.IExpressionViewer;
+import net.refractions.udig.catalog.IService;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -32,11 +26,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPropertyPage;
 import org.eclipse.ui.dialogs.PropertyPage;
-import org.geotools.data.simple.SimpleFeatureSource;
-import org.geotools.filter.text.cql2.CQLException;
-import org.geotools.filter.text.ecql.ECQL;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.expression.Expression;
 
 /**
  * Property Page providing a summary of {@link IGeoResource} items.
@@ -46,19 +35,19 @@ import org.opengis.filter.expression.Expression;
  * 
  * @author Naz Chan (LISAsoft)
  */
-public class ResourcePropertyPage extends PropertyPage implements IWorkbenchPropertyPage {
+public class ServicePropertyPage extends PropertyPage implements IWorkbenchPropertyPage {
 
-    private IGeoResource resource;
+    private IService service;
     
     private static final String FEATURE_LABEL = "FEATURE_LABEL"; //$NON-NLS-1$
     
-    public ResourcePropertyPage() {
+    public ServicePropertyPage() {
         // Nothing
     }
 
     @Override
     protected Control createContents(Composite parent) {
-        resource = (IGeoResource) getElement().getAdapter(IGeoResource.class);
+        service = (IService) getElement().getAdapter(IService.class);
         
         final Composite page = new Composite(parent, SWT.NONE);
         final String layoutConst = "fillx, insets 0"; //$NON-NLS-1$
@@ -70,7 +59,7 @@ public class ResourcePropertyPage extends PropertyPage implements IWorkbenchProp
         label.setText("ID:");
         
         Text text = new Text( page, SWT.SINGLE | SWT.BORDER );
-        text.setText( resource.getID().toString() );
+        text.setText( service.getID().toString() );
         text.setEditable(false);
         text.setLayoutData("width 100:300:,wrap");
         
@@ -79,7 +68,7 @@ public class ResourcePropertyPage extends PropertyPage implements IWorkbenchProp
         
         text = new Text( page, SWT.SINGLE | SWT.BORDER );
         
-        String title = resource.getTitle();
+        String title = service.getTitle();
         text.setText( title != null ? title : "(automaticly generated)" );
         text.setEditable(false);
         

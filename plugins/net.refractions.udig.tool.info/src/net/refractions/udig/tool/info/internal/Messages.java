@@ -114,6 +114,8 @@ public class Messages extends NLS {
 
     public static String docView_shapeDocs;
 
+    public static String InfoPropertyPage_labelExpression;
+    
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

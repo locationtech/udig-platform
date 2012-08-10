@@ -134,6 +134,28 @@
             </and>
          </enabledWhen>
       </page>
+      <page
+            category="net.refractions.udig.catalog.ui.property.resourcePage"
+            class="net.refractions.udig.tool.info.internal.InfoPropertyPage"
+            icon="icons/view16/info_view.gif"
+            id="net.refractions.udig.info.property.infoPage"
+            name="%infoPage.name">
+         <enabledWhen>
+            <and>
+               <or>
+                  <instanceof
+                        value="net.refractions.udig.catalog.IGeoResource">
+                  </instanceof>
+                  <adapt
+                        type="net.refractions.udig.catalog.IGeoResource">
+                  </adapt>
+               </or>
+               <test
+                     property="net.refractions.udig.catalog.featureSource">
+               </test>
+            </and>
+         </enabledWhen>
+      </page>
    </extension>
 
 </plugin>
