@@ -169,6 +169,23 @@ public class DocumentDialog extends IconAndMessageDialog {
         return (String) values.get(V_INFO);
     }
     
+    public File getFileInfo() {
+        final File file = new File(getInfo());
+        if (file.exists()) {
+            return file;
+        }
+        return null;
+    }
+    
+    public URL getUrlInfo() {
+        try {
+            final URL url = new URL(getInfo());
+            return url;
+        } catch (MalformedURLException e) {
+            return null;
+        }
+    }
+    
     private String getAttribute() {
         return (String) values.get(V_ATTRIBUTE);
     }
@@ -242,12 +259,17 @@ public class DocumentDialog extends IconAndMessageDialog {
         
     }
     
+    private static final String LABEL_WIDTH = "20%";  //$NON-NLS-1$
+    private static final String CONTROL_WIDTH = "80%"; //$NON-NLS-1$
+    private static final String LAYOUT_FORMAT = "[%s, right]8[%s]"; //$NON-NLS-1$
+    private static final String WIDTH_LAYOUT_FORMAT = "w %s!"; //$NON-NLS-1$
+    
     @Override
     protected Control createDialogArea(Composite parent) {
         
         composite = new Composite(parent, SWT.NONE);
         final String layoutCons = "insets 0, fillx, wrap 2, hidemode 3"; //$NON-NLS-1$
-        final String columnCons = "[20%, right]8[80%]"; //$NON-NLS-1$
+        final String columnCons = String.format(LAYOUT_FORMAT, LABEL_WIDTH, CONTROL_WIDTH);
         final String rowCons = "[]15[][]"; //$NON-NLS-1$
         composite.setLayout(new MigLayout(layoutCons, columnCons, rowCons));
         composite.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -263,14 +285,14 @@ public class DocumentDialog extends IconAndMessageDialog {
         attributeLbl.setLayoutData(""); //$NON-NLS-1$
 
         attribute = new Text(composite, SWT.SINGLE | SWT.BORDER | SWT.READ_ONLY);
-        attribute.setLayoutData("growx"); //$NON-NLS-1$
+        attribute.setLayoutData(String.format(WIDTH_LAYOUT_FORMAT, CONTROL_WIDTH));
         
         final Label docLbl = new Label(composite, SWT.NONE);
         docLbl.setText(getLabel(Messages.DocumentDialog_documentLabel));
         docLbl.setLayoutData(""); //$NON-NLS-1$
 
         document = new Text(composite, SWT.SINGLE | SWT.BORDER | SWT.READ_ONLY);
-        document.setLayoutData("growx"); //$NON-NLS-1$
+        document.setLayoutData(String.format(WIDTH_LAYOUT_FORMAT, CONTROL_WIDTH));
 
         createTypeControls();
         
@@ -279,7 +301,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         labelLbl.setLayoutData(""); //$NON-NLS-1$
 
         label = new Text(composite, SWT.SINGLE | SWT.BORDER);
-        label.setLayoutData("growx"); //$NON-NLS-1$
+        label.setLayoutData(String.format(WIDTH_LAYOUT_FORMAT, CONTROL_WIDTH));
         label.addModifyListener(new BasicModifyListener());
         
         final Label descriptionLbl = new Label(composite, SWT.NONE);
@@ -287,7 +309,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         descriptionLbl.setLayoutData(""); //$NON-NLS-1$
                     
         description = new Text(composite, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
-        description.setLayoutData("growx, h 60!"); //$NON-NLS-1$
+        description.setLayoutData(String.format(WIDTH_LAYOUT_FORMAT, CONTROL_WIDTH) + ", h 60!"); //$NON-NLS-1$
 
         return composite;
 
@@ -336,7 +358,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         infoLbl.setLayoutData(""); //$NON-NLS-1$
 
         info = new Text(composite, SWT.SINGLE | SWT.BORDER);
-        info.setLayoutData("growx"); //$NON-NLS-1$
+        info.setLayoutData(String.format(WIDTH_LAYOUT_FORMAT, CONTROL_WIDTH));
         info.addModifyListener(new InfoModifyListener());
         
         infoDecoration = new ControlDecoration(info, SWT.TOP | SWT.LEFT);
