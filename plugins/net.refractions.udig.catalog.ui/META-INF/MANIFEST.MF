@@ -17,6 +17,7 @@ Export-Package: net.refractions.udig.catalog.internal.ui,
  net.refractions.udig.catalog.ui.internal;x-friends:="net.refractions.udig.catalog.tests.ui",
  net.refractions.udig.catalog.ui.operation,
  net.refractions.udig.catalog.ui.preferences,
+ net.refractions.udig.catalog.ui.property,
  net.refractions.udig.catalog.ui.search,
  net.refractions.udig.catalog.ui.wizard,
  net.refractions.udig.catalog.ui.workflow

@@ -17,7 +17,7 @@ package net.refractions.udig.catalog.shp.tests;
 import java.io.File;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.Type;
 
 import junit.framework.TestCase;
 

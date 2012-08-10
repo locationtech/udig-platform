@@ -16,8 +16,8 @@ package net.refractions.udig.catalog.shp;
 
 import java.net.URL;
 
-import net.refractions.udig.catalog.DocumentFactory;
-import net.refractions.udig.catalog.IAbstractDocumentSource;
+import net.refractions.udig.catalog.document.IAbstractDocumentSource;
+import net.refractions.udig.catalog.internal.document.DocumentFactory;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 
 /**

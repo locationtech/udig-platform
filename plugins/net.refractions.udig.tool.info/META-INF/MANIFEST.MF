@@ -7,6 +7,7 @@ Bundle-Activator: net.refractions.udig.tool.info.InfoPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Export-Package: net.refractions.udig.catalog.document,
+ net.refractions.udig.catalog.internal.document;x-friends:="net.refractions.udig.tool.info.tests",
  net.refractions.udig.catalog.shp,
  net.refractions.udig.document,
  net.refractions.udig.tool.info,

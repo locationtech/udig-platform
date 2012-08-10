@@ -7,14 +7,12 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IDocument;
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IHotlink;
-import net.refractions.udig.catalog.IDocument.Type;
-import net.refractions.udig.catalog.IHotlink.HotlinkDescriptor;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ServiceExtension;
+import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.internal.shp.ShpServiceExtension;
 import net.refractions.udig.tool.info.tests.Activator;
 
@@ -70,9 +68,9 @@ public class BasicHotlinkTest {
     @Test
     public void testBasicResolveAdaptorFactory() throws Exception {
         IResolveAdapterFactory adaptorFactory = new BasicHotlinkResolveFactory();
-        assertTrue( adaptorFactory.canAdapt( resource, IHotlink.class ) );
+        assertTrue( adaptorFactory.canAdapt( resource, IHotlinkSource.class ) );
         
-        IHotlink hotlink = (IHotlink) adaptorFactory.adapt(resource,  IHotlink.class, new NullProgressMonitor() );
+        IHotlinkSource hotlink = (IHotlinkSource) adaptorFactory.adapt(resource,  IHotlinkSource.class, new NullProgressMonitor() );
         assertNotNull( hotlink );
         
         List<HotlinkDescriptor> list = hotlink.getHotlinkDescriptors();

@@ -12,52 +12,126 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.document;
 
 import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-import net.refractions.udig.catalog.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.Type;
 
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * Hotlink support for IGeoResource.
  * <p>
- * Hotlinks are used to record a document reference feature attributes. The feature attributes that
- * are used for this purpose are made available through this interface, along with helper methods
+ * {@link Hotlink} documents are used to record a document references in the attribtues of the provided feature.
+ * <p>
+ * The list of feature attributes that are used for this purpose are made available through this interface, along with helper methods
  * allowing you to update these links correctly.
  * <p>
  * 
- * @author Jody Garnett
+ * @author Jody Garnett (LISAsoft)
  */
-public interface IHotlink extends IAbstractDocumentSource {
+public interface IHotlinkSource extends IAbstractDocumentSource {
 
     /**
      * Used to record additional AttributeDescriptor information marking attributes suitable to
      * store hotlink information.
      */
     public class HotlinkDescriptor {
+
+        private final String label;
+        private final String description;
+        private final String attributeName;
+        private final Type type;
+        private final String config;
+
+        public static final String DELIMITER = ":"; //$NON-NLS-1$
         
-        private String attributeName;
-        private Type type;
-        
+        /**
+         * Create an empty descriptor.
+         */
+        public HotlinkDescriptor() {
+            label = null;
+            description = null;
+            attributeName = null;
+            type = Type.FILE;
+            config = null;
+        }
+
+        /**
+         * Direct copy constructor.
+         * <p>
+         * Provided in case we add additional fields later.
+         */
+        public HotlinkDescriptor(HotlinkDescriptor descriptor) {
+            label = descriptor.getLabel();
+            description = descriptor.getDescription();
+            attributeName = descriptor.getAttributeName();
+            type = descriptor.getType();
+            config = descriptor.getConfig();
+        }
+
         public HotlinkDescriptor(String attributeName, IDocument.Type type) {
+            this.label = null;
+            this.description = null;
             this.attributeName = attributeName;
             this.type = type;
+            this.config = null;
         }
+
+        public HotlinkDescriptor(String label, String description, String attributeName,
+                IDocument.Type type, String config) {
+            this.label = label;
+            this.description = description;
+            this.attributeName = attributeName;
+            this.type = type;
+            this.config = config;
+        }
+
         /**
          * HotlinkDescriptor represented as a string.
          * 
-         * @param definition Definition of the form "name:type"
+         * @param definition Definition of the form "name:type:config:label"
          */
         public HotlinkDescriptor(String definition) {
-            int split = definition.lastIndexOf(":");
-            this.attributeName = split == -1 ? definition : definition.substring(0,split);
-            this.type = split == -1 ? Type.WEB : Type.valueOf(definition.substring(split+1));
+            
+            final String[] defValues = definition.split(DELIMITER);
+            attributeName = getCleanValue(defValues[0]);
+            type = Type.valueOf(defValues[1]);
+            if (defValues.length > 2) {
+                config = getCleanValue(defValues[2]);
+            } else {
+                config = null;    
+            }
+            if (defValues.length > 3) { 
+                label = getCleanValue(defValues[3]);    
+            } else {
+                label = null;
+            }
+            if (defValues.length > 4) { 
+                description = getCleanValue(defValues[4]);    
+            } else {
+                description = null;
+            }
+            
+        }
+
+        private String getCleanValue(String text) {
+            if (text != null) {
+                final String cleanText = text.trim();
+                if (cleanText.length() > 0) {
+                    return cleanText;
+                }
+            }
+            return null;
         }
         
+        public boolean isEmpty() {
+            return attributeName == null || attributeName.isEmpty();
+        }
+
         public String getAttributeName() {
             return attributeName;
         }
@@ -65,9 +139,42 @@ public interface IHotlink extends IAbstractDocumentSource {
         public Type getType() {
             return type;
         }
+
+        public String getConfig() {
+            return config;
+        }
+        
+        public String getLabel() {
+            return label;
+        }
+        
+        public String getDescription() {
+            return description;
+        } 
+
         @Override
         public String toString() {
-            return attributeName + ":"+type;
+            final StringBuilder sb = new StringBuilder();
+            if (attributeName != null) {
+                sb.append(attributeName);
+            }
+            sb.append(DELIMITER);
+            if (type != null) {
+                sb.append(type);
+            }
+            sb.append(DELIMITER);
+            if (config != null) {
+                sb.append(config);
+            }
+            sb.append(DELIMITER);
+            if (label != null) {
+                sb.append(label);
+            }
+            sb.append(DELIMITER);
+            if (description != null) {
+                sb.append(description);
+            }
+            return sb.toString();
         }
     }
 
@@ -80,6 +187,8 @@ public interface IHotlink extends IAbstractDocumentSource {
 
     /**
      * Gets the list of documents in the feature.
+     * <p>
+     * Note the returned list may be a mix of {@link IDocument} types including {@link IHotlink}.
      * 
      * @param fid
      * @return list of documents

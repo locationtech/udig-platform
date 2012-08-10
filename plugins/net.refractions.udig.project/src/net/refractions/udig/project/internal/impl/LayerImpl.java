@@ -1645,8 +1645,29 @@ public class LayerImpl extends EObjectImpl implements Layer {
         // Used to allow workbench selection to adapt an
         // ILayer to a IGeoResource - this allows catalog views
         // to interact with ILayer smoothly
-        if( IGeoResource.class.isAssignableFrom( adapter)){
+        if( adapter == IGeoResource.class ){
+            System.out.println("testing IGeoResource");
+        }
+        if( adapter.isAssignableFrom( IGeoResource.class )){
+            // note use of isAssignableFrom to allow adapting
+            // IGeoResource or super class IResolve
+            // this is important for menu and property page enablement
+            // (see CanResolvePropertyTester)
             return getGeoResource();
+        }
+        if( IGeoResource.class.isAssignableFrom( adapter )){
+            // Now we can check the other way, for menu items or actions
+            // that want to test for a specific implementation such as
+            // ShpGeoResource
+            IGeoResource resource = getGeoResource();
+            if( resource != null ){
+                if( adapter.isAssignableFrom( resource.getClass() ) ){
+                    return resource;
+                }
+            }
+        }
+        if( IMap.class.isAssignableFrom( adapter )){
+            return getMap();
         }
         EList adapters = eAdapters();
         if (adapters instanceof SynchronizedEList) {

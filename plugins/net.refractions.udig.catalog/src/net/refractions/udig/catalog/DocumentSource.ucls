@@ -4,25 +4,26 @@
     project="net.refractions.udig.catalog" 
     file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IGeoResource.java" binary="false">    
     <position height="-1" width="-1" x="168" y="199"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <interface id="2" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.IDocument" 
+  <interface id="2" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.document.IDocument" 
     project="net.refractions.udig.catalog" 
-    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IDocument.java" binary="false">    
+    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/document/IDocument.java" binary="false">    
     <position height="-1" width="-1" x="461" y="512"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </interface>  
-  <class id="3" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.FileDocument" 
-    project="net.refractions.udig.catalog" 
-    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/FileDocument.java" binary="false">    
+  <class id="3" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.internal.document.FileDocument" 
+    project="net.refractions.udig.tool.info" 
+    file="/net.refractions.udig.tool.info/src/net/refractions/udig/catalog/internal/document/FileDocument.java" 
+    binary="false">    
     <position height="-1" width="-1" x="408" y="980"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
@@ -31,25 +32,27 @@
     project="net.refractions.udig.catalog" 
     file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/IFolder.java" binary="false">    
     <position height="-1" width="-1" x="609" y="100"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </interface>  
-  <class id="5" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.URLDocument" 
-    project="net.refractions.udig.catalog" 
-    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/URLDocument.java" binary="false">    
+  <class id="5" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.internal.document.URLDocument" 
+    project="net.refractions.udig.tool.info" 
+    file="/net.refractions.udig.tool.info/src/net/refractions/udig/catalog/internal/document/URLDocument.java" 
+    binary="false">    
     <position height="-1" width="-1" x="612" y="993"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="6" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.DocumentFolder" 
-    project="net.refractions.udig.catalog" 
-    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/DocumentFolder.java" binary="false">    
+  <class id="6" corner="BOTTOM_RIGHT" language="java" 
+    name="net.refractions.udig.catalog.internal.document.DocumentFolder" project="net.refractions.udig.tool.info" 
+    file="/net.refractions.udig.tool.info/src/net/refractions/udig/catalog/internal/document/DocumentFolder.java" 
+    binary="false">    
     <position height="-1" width="-1" x="438" y="295"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
@@ -59,16 +62,17 @@
     project="net.refractions.udig.catalog.ui" 
     file="/net.refractions.udig.catalog.ui/src/net/refractions/udig/catalog/ui/DocumentView.java" binary="false">    
     <position height="-1" width="-1" x="159" y="1096"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="8" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.AbstractDocument" 
-    project="net.refractions.udig.catalog" 
-    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/AbstractDocument.java" binary="false">    
+  <class id="8" corner="BOTTOM_RIGHT" language="java" 
+    name="net.refractions.udig.catalog.internal.document.AbstractDocument" project="net.refractions.udig.tool.info" 
+    file="/net.refractions.udig.tool.info/src/net/refractions/udig/catalog/internal/document/AbstractDocument.java" 
+    binary="false">    
     <position height="-1" width="-1" x="526" y="723"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
@@ -77,7 +81,7 @@
     project="net.refractions.udig.catalog" 
     file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/ResourceFolder.java" binary="false">    
     <position height="-1" width="-1" x="779" y="297"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
@@ -86,7 +90,7 @@
     project="net.refractions.udig.catalog" 
     file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/FeatureFolder.java" binary="false">    
     <position height="-1" width="-1" x="703" y="497"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
@@ -95,7 +99,7 @@
     name="net.refractions.udig.catalog.ui.DocumentView.ViewLabelProvider" project="net.refractions.udig.catalog.ui" 
     file="/net.refractions.udig.catalog.ui/src/net/refractions/udig/catalog/ui/DocumentView.java" binary="false">    
     <position height="-1" width="-1" x="120" y="932"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
@@ -104,7 +108,7 @@
     project="net.refractions.udig.catalog.ui" 
     file="/net.refractions.udig.catalog.ui/src/net/refractions/udig/catalog/ui/DocumentView.java" binary="false">    
     <position height="-1" width="-1" x="142" y="641"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
@@ -169,7 +173,8 @@
     <end type="SOURCE" refId="10"/>    
     <end type="TARGET" refId="4"/>  
   </realization>  
-  <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
+  <classifier-display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+    visibility="true">    
     <attributes public="true" package="true" protected="true" private="true"/>    
     <operations public="true" package="true" protected="true" private="true"/>  
   </classifier-display>  

@@ -12,16 +12,23 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.document;
 
 /**
- * @author nchan
- *
+ * Utility methods for {@link DocumentView} and related classes.
+ * 
+ * @author Naz Chan 
  */
-public interface ILinkInfo {
+public final class DocUtils {
 
-    public String getInfo();
-
-    public IDocument.Type getType();
+    /**
+     * Converts the string to camel case.
+     * 
+     * @param text
+     * @return string in camel case
+     */
+    public static String toCamelCase(String text) {
+        return text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
+    }
     
 }

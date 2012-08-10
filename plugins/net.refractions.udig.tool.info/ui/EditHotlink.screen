@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Window" id="30" x="8" y="8" width="409" height="263" text="Edit Hotlink" measuredWidth="409" measuredHeight="263"/>
+  <widgets xsi:type="model:Text" id="32" x="50" y="31" width="176" text="Flag Hotlink" measuredWidth="176" measuredHeight="17">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:TextField" id="35" x="100" y="67" text="http://en.wikipedia.org/wiki/File:Flag_of_Tasmania.svg" measuredWidth="307" measuredHeight="21">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="48" x="304" y="238" text="OK" measuredWidth="36" measuredHeight="23">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="49" x="347" y="238" text="Cancel" measuredWidth="56" measuredHeight="23">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Icon" id="50" x="18" y="238" measuredWidth="24" measuredHeight="24" icon="help (medium)"/>
+  <widgets xsi:type="model:Label" id="51" x="50" y="67" width="51" text="Value:" measuredWidth="51" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Window" id="70" x="8" y="286" width="409" height="263" text="Edit Hotlink" measuredWidth="409" measuredHeight="263"/>
+  <widgets xsi:type="model:Text" id="72" x="50" y="309" width="176" text="Report Hotlink" measuredWidth="176" measuredHeight="17">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="73" x="18" y="477" width="79" text="Description:" measuredWidth="79" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:TextField" id="74" x="96" y="345" width="307" text="tasmania.pdf" measuredWidth="307" measuredHeight="21">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="75" x="246" y="368" width="75" height="21" text="Browse..." measuredWidth="75" measuredHeight="21">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="80" x="32" y="448" width="65" text="Document:" measuredWidth="65" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:TextField" id="81" x="96" y="448" width="307" text="tasmania.pdf (report)" measuredWidth="307" measuredHeight="21" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="82" x="304" y="516" text="OK" measuredWidth="36" measuredHeight="23">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="83" x="347" y="516" text="Cancel" measuredWidth="56" measuredHeight="23">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Icon" id="84" x="18" y="516" measuredWidth="24" measuredHeight="24" icon="help (medium)"/>
+  <widgets xsi:type="model:Label" id="85" x="46" y="345" width="51" text="Value:" measuredWidth="51" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="106" x="50" y="325" text="carbon trading report" measuredWidth="121" measuredHeight="21">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="107" x="50" y="47" text="Link to state flag" measuredWidth="95" measuredHeight="21">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:TextArea" id="112" x="96" y="477" width="307" height="39" text="carbon trading report" measuredWidth="307" measuredHeight="39" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="39" x="32" y="400" width="65" text="Attribute:" measuredWidth="65" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:TextField" id="42" x="96" y="399" width="307" text="REPORT" measuredWidth="307" measuredHeight="21" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Icon" id="116" x="14" y="32" measuredWidth="32" measuredHeight="32" icon="lightning (large)"/>
+  <widgets xsi:type="model:Icon" id="117" x="14" y="309" measuredWidth="32" measuredHeight="32" icon="lightning (large)"/>
+  <widgets xsi:type="model:Button" id="159" x="328" y="368" width="74" height="21" text="New..." measuredWidth="74" measuredHeight="21" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="160" x="96" y="368" width="75" height="21" text="Open" measuredWidth="75" measuredHeight="21">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="161" x="32" y="423" width="65" text="Type:" measuredWidth="65" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:RadioButton" id="163" x="96" y="423" text="File" measuredWidth="39" measuredHeight="21" selected="true" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:RadioButton" id="164" x="144" y="423" text="Web" measuredWidth="43" measuredHeight="21" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:RadioButton" id="166" x="192" y="423" text="Action" measuredWidth="55" measuredHeight="21" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Window" id="167" x="8" y="560" width="409" height="263" text="Edit Hotlink" measuredWidth="409" measuredHeight="263"/>
+  <widgets xsi:type="model:Text" id="168" x="50" y="583" width="176" text="Name Hotlink" measuredWidth="176" measuredHeight="17">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="169" x="18" y="751" width="79" text="Description:" measuredWidth="79" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:TextField" id="170" x="96" y="619" width="307" text="tasmania" measuredWidth="307" measuredHeight="21">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="172" x="32" y="722" width="65" text="Document:" measuredWidth="65" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:TextField" id="173" x="96" y="722" width="307" text="Google Search" measuredWidth="307" measuredHeight="21" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="174" x="304" y="790" text="OK" measuredWidth="36" measuredHeight="23">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="175" x="347" y="790" text="Cancel" measuredWidth="56" measuredHeight="23">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Icon" id="176" x="18" y="790" measuredWidth="24" measuredHeight="24" icon="help (medium)"/>
+  <widgets xsi:type="model:Label" id="177" x="46" y="619" width="51" text="Value:" measuredWidth="51" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="178" x="50" y="599" text="Attirbute NAME actions google search, wikipedia search" measuredWidth="303" measuredHeight="21">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:TextArea" id="179" x="96" y="751" width="307" height="39" text="google search for state name" measuredWidth="307" measuredHeight="39" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="180" x="32" y="674" width="65" text="Attribute:" measuredWidth="65" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:TextField" id="181" x="96" y="673" width="307" text="NAME" measuredWidth="307" measuredHeight="21" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Icon" id="182" x="14" y="583" measuredWidth="32" measuredHeight="32" icon="lightning (large)"/>
+  <widgets xsi:type="model:Label" id="185" x="32" y="697" width="65" text="Type:" measuredWidth="65" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:RadioButton" id="186" x="96" y="697" text="File" measuredWidth="39" measuredHeight="21" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:RadioButton" id="187" x="144" y="697" text="Web" measuredWidth="43" measuredHeight="21" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:RadioButton" id="188" x="192" y="697" text="Action" measuredWidth="55" measuredHeight="21" selected="true" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="189" x="46" y="648" width="51" text="Action:" measuredWidth="51" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="193" x="200" y="648" width="47" height="21" text="Go" measuredWidth="47" measuredHeight="21">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="194" x="100" y="91" width="75" height="21" text="Open" measuredWidth="75" measuredHeight="21">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="195" x="21" y="195" width="79" text="Description:" measuredWidth="79" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="196" x="35" y="166" width="65" text="Document:" measuredWidth="65" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:TextField" id="197" x="99" y="166" width="307" text="Flag_of_Tasmania.svg (Flag)" measuredWidth="307" measuredHeight="21" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:TextArea" id="198" x="99" y="195" width="307" height="39" text="Link to state flag" measuredWidth="307" measuredHeight="39" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="199" x="35" y="118" width="65" text="Attribute:" measuredWidth="65" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="200" x="35" y="141" width="65" text="Type:" measuredWidth="65" measuredHeight="21" textAlignment="Right">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:RadioButton" id="201" x="99" y="141" text="File" measuredWidth="39" measuredHeight="21" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:RadioButton" id="202" x="147" y="141" text="Web" measuredWidth="43" measuredHeight="21" selected="true" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:RadioButton" id="203" x="195" y="141" text="Action" measuredWidth="55" measuredHeight="21" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:TextField" id="204" x="99" y="118" width="307" text="FLAG" measuredWidth="307" measuredHeight="21" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Combo" id="205" x="96" y="648" text="Google Search" measuredWidth="101" measuredHeight="21">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="11px"/>
+</model:Screen>

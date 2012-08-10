@@ -26,12 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import net.refractions.udig.catalog.DocumentFactory;
-import net.refractions.udig.catalog.FileDocument;
 import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IDocument;
-import net.refractions.udig.catalog.LinkInfo;
-import net.refractions.udig.catalog.URLDocument;
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import net.refractions.udig.catalog.internal.document.DocumentFactory;
+import net.refractions.udig.catalog.internal.document.FileDocument;
+import net.refractions.udig.catalog.internal.document.LinkInfo;
+import net.refractions.udig.catalog.internal.document.URLDocument;
 
 import org.opengis.feature.simple.SimpleFeature;
 
@@ -99,11 +100,18 @@ public class ShpDocPropertyParser {
      * The property name format for attribute attachments
      */
     public static final String ATTRIBUTE_ATTACHMENTS = "%s_links"; //$NON-NLS-1$
-
+    /**
+     * The name of the folder that would contain all the shapefile's attachments.
+     * <p>
+     * Format should be in "[shapefile_name].documents".
+     */
+    public static final String SHAPE_DOCS_FOLDER = "%s.attachments"; //$NON-NLS-1$
+    
     private static final String PROP_FILE_EXT = "properties"; //$NON-NLS-1$
     
     private URL url;
     private Properties properties;
+    private long propsFileLastUpdate;
     private DocumentFactory docFactory;
 
     public ShpDocPropertyParser(URL url, DocumentFactory docFactory) {
@@ -122,35 +130,62 @@ public class ShpDocPropertyParser {
     }
     
     /**
-     * Caches the property file into a properties util for easy access.
+     * Caches the property file into a properties utility for easy access.
      * 
      * @return properties util
      */
     private Properties getProperties() {
-        if (properties == null) {
-            final File propertiesFile = getPropertiesFile();
-            if (propertiesFile != null) {
-                FileInputStream inStream = null;
-                try {
-                    inStream = new FileInputStream(propertiesFile);
-                    properties = new Properties();
-                    properties.load(inStream);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (inStream != null) {
-                        try {
-                            inStream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+        final File propertiesFile = getPropertiesFile();
+        if (propertiesFile != null) {
+            if (properties == null) {
+                loadProperties(propertiesFile);
+            } else {
+                if (isPropertiesUpdated(propertiesFile)) {
+                    loadProperties(propertiesFile);
                 }
             }
         }
         return properties;
+    }
+    
+    /**
+     * Loads the file into the properties utility.
+     * 
+     * @param propertiesFile
+     */
+    private void loadProperties(File propertiesFile) {
+        FileInputStream inStream = null;
+        try {
+            inStream = new FileInputStream(propertiesFile);
+            properties = new Properties();
+            properties.load(inStream);
+            propsFileLastUpdate = propertiesFile.lastModified(); 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inStream != null) {
+                try {
+                    inStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    
+    /**
+     * Checks if the properties file has been updated.
+     * 
+     * @param currentPropertiesFile
+     * @return true if updated, otherwise false
+     */
+    private boolean isPropertiesUpdated(File currentPropertiesFile) {
+        if (propsFileLastUpdate != currentPropertiesFile.lastModified()) {
+            return true;
+        }
+        return false;
     }
     
     /**
@@ -192,6 +227,25 @@ public class ShpDocPropertyParser {
     }
 
     /**
+     * Create the properties file.
+     * 
+     * @return properties file
+     */
+    private File createPropertiesFile() {
+        File file = getPropertiesFile();
+        if (file == null) {
+            final ID fileId = new ID(url);
+            file = fileId.toFile(PROP_FILE_EXT);
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return file;
+    }
+    
+    /**
      * Lookup the properties sidecar file for the indicate shapefile.
      * 
      * @param url
@@ -208,6 +262,7 @@ public class ShpDocPropertyParser {
         }
         return null;
     }
+    
     /**
      * Lookup the properties sidecar file for the indicate shapefile.
      * 
@@ -298,17 +353,7 @@ public class ShpDocPropertyParser {
         final StringBuilder sb = new StringBuilder();
         for (IDocument doc : docs) {
             count++;
-            final String label = doc.getLabel();
-            if (label != null) {
-                sb.append(label);    
-            }
-            sb.append(LINK_VALUE_DELIMITER);
-            final String linkValue = getLinkValue(doc); 
-            if (linkValue != null) {
-                sb.append(linkValue);    
-            }
-            sb.append(LINK_VALUE_DELIMITER);
-            sb.append(doc.getType().name());
+            appendLinkInfo(sb, doc);
             if (count < docs.size()) {
                 sb.append(LINK_PAIR_DELIMITER);
             }
@@ -316,6 +361,24 @@ public class ShpDocPropertyParser {
         getProperties().setProperty(property, sb.toString());
         writeProperties();
         
+    }
+    
+    private void appendLinkInfo(StringBuilder sb, IDocument doc) {
+        appendLinkInfo(sb, doc.getLabel(), getLinkValue(doc), doc.getType().name());
+    }
+    
+    private void appendLinkInfo(StringBuilder sb, String label, String info, String type) {
+
+        if (label != null) {
+            sb.append(label);
+        }
+        sb.append(LINK_VALUE_DELIMITER);
+        if (info != null) {
+            sb.append(info);
+        }
+        sb.append(LINK_VALUE_DELIMITER);
+        sb.append(type);
+
     }
     
     /**
@@ -428,6 +491,32 @@ public class ShpDocPropertyParser {
         final List<LinkInfo> infos = getFeatureLinkInfos();
         return docFactory.createList(url, feature, infos);
     }
+
+    /**
+     * Sets the list of feature links.
+     * 
+     * @param hotlinks
+     */
+    public void setFeatureLinks(List<HotlinkDescriptor> hotlinks) {
+        
+        if (!hasProperties()) {
+            createPropertiesFile();
+        }
+        
+        int count = 0;
+        final StringBuilder sb = new StringBuilder();
+        for (HotlinkDescriptor hotlink : hotlinks) {
+            count++;
+            appendLinkInfo(sb, hotlink.getLabel(), hotlink.getAttributeName(), hotlink.getType().name());
+            if (count < hotlinks.size()) {
+                sb.append(LINK_PAIR_DELIMITER);
+            }
+        }
+        
+        getProperties().setProperty(LINK_ATTRIBUTES, sb.toString());
+        writeProperties();
+        
+    }
     
     /**
      * Gets the list of feature attachment info.
@@ -460,6 +549,31 @@ public class ShpDocPropertyParser {
     public void setFeatureAttachments(String fid, List<IDocument> docs) {
         final String property = String.format(ATTRIBUTE_ATTACHMENTS, fid);
         setLinkInfos(property, docs);
+    }
+    
+    /**
+     * Gets the directory of feature's attachments.
+     * <p>
+     * Attachments directory:
+     * <ul>
+     * <li>[shapefile_dir]/[shapefile_name].documents/featureId</li>
+     * </ul>
+     * 
+     * @param fid
+     * @return directory of feature's attachments
+     */
+    public File getFeatureAttachmentsDir(String fid) {
+        try {
+            final File shapeFile = new File(url.toURI());
+            String fileName = shapeFile.getName();
+            fileName = fileName.substring(0, fileName.lastIndexOf('.'));
+            final String folderName = String.format(SHAPE_DOCS_FOLDER, fileName);
+            final File attachDir = new File(shapeFile.getParent(), folderName);
+            return new File(attachDir, fid);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     
 }

@@ -165,7 +165,6 @@ public class ServiceParameterPersister {
     
     private String encodeID( ID id ){
         String str;
-        
         try {
             if( id.isChild()){
                 return URLEncoder.encode(id.toString(), ENCODING);
@@ -181,7 +180,6 @@ public class ServiceParameterPersister {
         } catch (UnsupportedEncodingException e) {
             str = id.toString(); // should not happen
         }
-
         // postpend type qualifier
         if( id.getTypeQualifier()!=null){
             try {
@@ -209,8 +207,10 @@ public class ServiceParameterPersister {
                 qualifier = parts[1];
             }
             try {
-                URL url = new URL(null, parts[0], CorePlugin.RELAXED_HANDLER);
-                id= new ID(url, qualifier);
+                // This line just checks if the string is a valid URL. Do NOT use as parameter to ID
+                // as the case is often changed and will confuse the property key.
+                URL url = new URL(null, parts[0], CorePlugin.RELAXED_HANDLER); 
+                id = new ID(parts[0], qualifier);
             } catch (MalformedURLException e) {
                 String path = parts[0].replaceAll(COLON_ENCODING, ":");
                 id = new ID(new File(path), qualifier);

@@ -12,7 +12,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog;
+package net.refractions.udig.catalog.internal.document;
+
+import net.refractions.udig.catalog.document.IDocumentItem;
+
 
 /**
  * This is the abstract document item class. This should sub-classed by document and
