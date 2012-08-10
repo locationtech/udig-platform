@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-
 	<extension
 		point="org.eclipse.ui.startup">
       <startup class="eu.udig.tools.merge.MergeStartup"/>
@@ -38,7 +37,7 @@
             class="eu.udig.tools.arc.ArcTool"
             icon="icons/etool16/arc_tool.gif"
             id="eu.udig.tools.arc.ArcTool"
-            name="%eu.udig.tools.arc.name"
+            name="Arc"
             onToolbar="true"
             toolCursorId="arrowCursor"
             tooltip="%eu.udig.tools.arc.tooltip">
@@ -55,9 +54,54 @@
             </or>
          </enablement>
       </modalTool>
+      <modalTool
+            categoryId="net.refractions.udig.tool.edit.create"
+            class="eu.udig.tools.parallel.ParallelTool"
+            icon="icons/etool16/parallel_mode.gif"
+            id="eu.udig.tools.parallel.ParallelTool"
+            name="%eu.udig.tools.parallel.name"
+            onToolbar="true"
+            toolCursorId="arrowCursor"
+            tooltip="%eu.udig.tools.parallel.tooltip">
+         <cursor
+               hotspotX="10"
+               hotspotY="10"
+               image="icons/pointers/merge_cursor.gif"/>
+         <enablement>
+            <and>
+               <property
+                     propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>
+               <or>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.LineString"
+                        propertyId="net.refractions.udig.project.ui.GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.MultiLineString"
+                        propertyId="net.refractions.udig.project.ui.GeometryType">
+                  </property>
+               </or>
+            </and>
+         </enablement>
+      </modalTool>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.actionSets">
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
    </extension>
    <extension
          point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="net.refractions.udig.project.ui.project"
+            class="eu.udig.tools.parallel.view.ParallelParametersView"
+            icon="icons/etool16/parallel_mode.gif"
+            id="eu.udig.tools.parallel.view.ParallelParametersView"
+            name="%eu.udig.tools.parallel.name">
+      </view>
       <view
             allowMultiple="false"
             category="net.refractions.udig.project.ui.project"
@@ -67,9 +111,6 @@
             name="Merge Features"
             restorable="true">
       </view>
-   </extension>
-   <extension
-         point="org.eclipse.help.toc">
    </extension>
    <extension
          point="net.refractions.udig.ui.operation">
@@ -90,6 +131,9 @@
             targetID="net.refractions.udig.ui.mapPerspective">
          <viewShortcut
                id="eu.udig.tools.merge.internal.view.MergeView">
+         </viewShortcut>
+         <viewShortcut
+               id="eu.udig.tools.parallel.view.ParallelParametersView">
          </viewShortcut>
       </perspectiveExtension>
    </extension>
