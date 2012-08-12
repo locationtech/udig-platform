@@ -19,6 +19,7 @@ import java.io.IOException;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
+import net.refractions.udig.core.SelectionProviderForwarder;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -26,9 +27,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -59,7 +60,12 @@ public class IServicePropertiesCommandHandler extends AbstractHandler implements
         };
 
         IWorkbenchPart activePart = activeWorkbenchWindow.getActivePage().getActivePart();
-        ISelectionProvider selectionProvider =  new ServiceSelectionProvider( activePart.getSite().getSelectionProvider() );
+        ISelectionProvider provider = activePart.getSite().getSelectionProvider();
+        if( provider == null ){
+            MessageDialog.openInformation( activeWorkbenchWindow.getShell(), "Service Properties", "Please select a service");
+            return null;
+        }
+        ISelectionProvider selectionProvider = new ServiceSelectionProvider( provider );
         
         PropertyDialogAction action = new PropertyDialogAction( shellProvider, selectionProvider);
         PreferenceDialog dialog = action.createDialog();
@@ -67,14 +73,17 @@ public class IServicePropertiesCommandHandler extends AbstractHandler implements
 
         return null;
     }
-    class ServiceSelectionProvider implements ISelectionProvider {
-        ISelectionProvider provider;
+    /**
+     * SelectionProviderForwarder to forward the selection as an IService.
+     * <p>
+     * Additional measures are taken to convert an IGeoReosurce (if selected) to its parent IService.
+     * 
+     * @author Jody Garnett
+     * @since 1.3.2
+     */
+    static class ServiceSelectionProvider extends SelectionProviderForwarder {
         ServiceSelectionProvider( ISelectionProvider provider ){
-            this.provider = provider;
-        }
-        @Override
-        public void addSelectionChangedListener(ISelectionChangedListener listener) {
-            provider.addSelectionChangedListener( listener );
+            super( provider, IService.class );
         }
         @Override
         public ISelection getSelection() {
@@ -125,7 +134,7 @@ public class IServicePropertiesCommandHandler extends AbstractHandler implements
                     }                    
                 }
             }
-            return selection;
+            return StructuredSelection.EMPTY; // no dice!
         }
         private ISelection toServiceSelection(IGeoResource resource) {
             try {
@@ -135,26 +144,5 @@ public class IServicePropertiesCommandHandler extends AbstractHandler implements
                 return StructuredSelection.EMPTY;
             }
         }
-        @Override
-        public void removeSelectionChangedListener(ISelectionChangedListener listener) {
-            provider.addSelectionChangedListener( listener );
-        }
-        @Override
-        public void setSelection(ISelection selection) {
-            provider.setSelection( selection );
-        }
-    }
-    static class NullAdaptor implements IAdaptable {
-        private Object element;
-        public NullAdaptor( Object element ){
-           this.element = element;
-        }
-        public Object getAdapter(Class adapter) {
-            if( adapter.isInstance( element ) ){
-                return adapter.cast( element );
-            }
-            return null;
-        }
-        
     }
 }

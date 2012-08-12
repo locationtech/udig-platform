@@ -109,34 +109,48 @@
     <handler
           class="net.refractions.udig.catalog.ui.internal.IGeoResourcePropertiesCommandHandler"
           commandId="net.refractions.udig.catalog.ui.resourceProperties">
-       <enabledWhen>
+       <activeWhen>
           <iterate
                 ifEmpty="false"
                 operator="or">
-             <adapt
-                   type="net.refractions.udig.catalog.IGeoResource">
-             </adapt>
-             <instanceof
-                   value="net.refractions.udig.catalog.IGeoResource">
-             </instanceof>
+             <and>
+                <count
+                      value="1">
+                </count>
+                <or>
+                   <instanceof
+                         value="net.refractions.udig.catalog.IGeoResource">
+                   </instanceof>
+                   <adapt
+                         type="net.refractions.udig.catalog.IGeoResource">
+                   </adapt>
+                </or>
+             </and>
           </iterate>
-       </enabledWhen>
+       </activeWhen>
     </handler>
     <handler
           class="net.refractions.udig.catalog.ui.internal.IServicePropertiesCommandHandler"
           commandId="net.refractions.udig.catalog.ui.serviceProperties">
-       <enabledWhen>
+       <activeWhen>
           <iterate
                 ifEmpty="false"
                 operator="or">
-             <adapt
-                   type="net.refractions.udig.catalog.IService">
-             </adapt>
-             <instanceof
-                   value="net.refractions.udig.catalog.IService">
-             </instanceof>
+             <and>
+                <count
+                      value="1">
+                </count>
+                <or>
+                   <instanceof
+                         value="net.refractions.udig.catalog.IService">
+                   </instanceof>
+                   <adapt
+                         type="net.refractions.udig.catalog.IService">
+                   </adapt>
+                </or>
+             </and>
           </iterate>
-       </enabledWhen>
+       </activeWhen>
     </handler>
    </extension>
    <extension
@@ -251,31 +265,6 @@
                   commandId="net.refractions.udig.catalog.ui.command.serviceProperties"
                   label="%Service.Properties.Name"
                   tooltip="%Service.Properties.Tooltip">
-               <visibleWhen
-                     checkEnabled="false">
-                  <with
-                        variable="selection">
-                     <iterate>
-                        <or>
-                           <instanceof
-                                 value="net.refractions.udig.catalog.IService">
-                           </instanceof>
-                           <adapt
-                                 type="net.refractions.udig.catalog.IService">
-                           </adapt>
-                           <instanceof
-                                 value="net.refractions.udig.catalog.IGeoResource">
-                           </instanceof>
-                           <adapt
-                                 type="net.refractions.udig.catalog.IGeoResource">
-                           </adapt>
-                        </or>
-                     </iterate>
-                     <count
-                           value="1">
-                     </count>
-                  </with>
-               </visibleWhen>
             </command>
          </menuContribution>
       </extension>
@@ -511,7 +500,7 @@
         name="Catalog Property Pages"
         point="org.eclipse.ui.propertyPages">
      <page
-           class="org.eclipse.ui.internal.dialogs.EmptyPropertyPage"
+           class="net.refractions.udig.catalog.ui.property.ServicePropertyPage"
            icon="icons/obj16/datastore_obj.gif"
            id="net.refractions.udig.catalog.ui.property.servicePage"
            name="%servicePage.name">

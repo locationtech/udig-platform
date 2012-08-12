@@ -21,43 +21,45 @@ import net.refractions.udig.catalog.document.ILinkInfo;
 /**
  * Document info container for document. This was initially designed to contain document properties
  * retrieved from the property file but can also be reused and/or extended where possible.
+ * Attachment information container. This is designed to be able to parse ({@link #LinkInfo(String)}
+ * ) and format ({@link LinkInfo#toString()}) the info string from the resource property file.
  * 
  * @author Naz Chan
  */
 public class LinkInfo implements ILinkInfo {
 
     /**
-     * Document label
+     * Attachment label
      */
     private String label;
 
     /**
-     * Document description
+     * Attachment description
      */
     private String description;
 
     /**
-     * Document type
-     */
-    private IDocument.Type type;
-
-    /**
-     * Document info
-     * <p>
-     *  - file location for attachments or attribute name for hotlinks
+     * Attachment info - file or url metadata
      */
     private String info;
+
+    /**
+     * Attachment type
+     */
+    private IDocument.Type type;
 
     /**
      * Document configuration
      */
     private String config;
 
-    public LinkInfo(String infoStr) {
-        fromString(infoStr);
+    public static final String DELIMITER = "~"; //$NON-NLS-1$
+
+    public LinkInfo(String attachmentInfo) {
+        fromString(attachmentInfo);
     }
-            
-    public LinkInfo(String label, String info, Type type) {
+
+    public LinkInfo(String label, String info, IDocument.Type type) {
         this.label = label;
         this.info = info;
         this.type = type;
@@ -70,13 +72,21 @@ public class LinkInfo implements ILinkInfo {
         this.type = type;
         this.config = config;
     }
-    
+
     public String getLabel() {
         return label;
     }
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getInfo() {
@@ -95,14 +105,6 @@ public class LinkInfo implements ILinkInfo {
         this.type = type;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getConfig() {
         return config;
     }
@@ -111,14 +113,51 @@ public class LinkInfo implements ILinkInfo {
         this.config = config;
     }
 
-    private void fromString(String infoStr) {
-        // TODO implement
+    private void fromString(String attachmentInfo) {
+        final String[] defValues = attachmentInfo.split(DELIMITER);
+        info = getCleanValue(defValues[0]);
+        type = Type.valueOf(defValues[1]);
+        if (defValues.length > 2) {
+            label = getCleanValue(defValues[2]);
+        } else {
+            label = null;
+        }
+        if (defValues.length > 3) {
+            description = getCleanValue(defValues[3]);
+        } else {
+            description = null;
+        }
     }
-    
+
+    private String getCleanValue(String text) {
+        if (text != null) {
+            final String cleanText = text.trim();
+            if (cleanText.length() > 0) {
+                return cleanText;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
-        // TODO implement
-        return super.toString();
+        final StringBuilder sb = new StringBuilder();
+        if (info != null) {
+            sb.append(info);
+        }
+        sb.append(DELIMITER);
+        if (type != null) {
+            sb.append(type);
+        }
+        sb.append(DELIMITER);
+        if (label != null) {
+            sb.append(label);
+        }
+        sb.append(DELIMITER);
+        if (description != null) {
+            sb.append(description);
+        }
+        return sb.toString();
     }
-    
+
 }
