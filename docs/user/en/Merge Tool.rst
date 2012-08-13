@@ -7,8 +7,10 @@ The *Merge Tool* works by selecting a set of features to be merged into one. It 
 geometry and attributes of the merged Feature. The geometry could be either the **geometric union**
 of the geometries from the input features, or the single geometry from one of the input features.
 
-To use the Merge tool:
-~~~~~~~~~~~~~~~~~~~~~~
+-- note: Two different approaches to Merge Tool usage are currently available: the *classic* mode and the new *operation mode*. Their desciption in noted to follow.
+
+To use the Merge tool ('*classic mode*'):
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Select the **Merge Tool** from the feature tool category in the tool bar.
     You can use the keyboard short cut **F** to cycle through the available feature tools
@@ -27,14 +29,37 @@ To use the Merge tool:
 
 :doc:`|image1|`
 
+To use the Merge tool ('*operation mode*'):
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#. Using the Box Selection tool, draw a box covering one or more features.
+#. Right-click anywhere in the map and select :menuselection:`Operations --> Merge Selected`
+#. The **Feature Merge** view will appear containing two columns:
+
+   -  Sources: these are the features that are being combined; check off the attributes you wish to
+      appear in the result
+   -  Merge Feature: this is the resulting Geometry
+
+#. For doing a Merge you will need 2 or more features.
+#. Featureset can be changed by
+
+#. Shift+LeftClick to ADD new feature to set;
+#. Ctrl+LeftClick to REMOVE features from current set;
+#. ..or just draw a new box over some other features to replace the whole tool content.
+
+#. Press **Finish** to perform the operation
+#. You can inspect your work in the `Map editor <Map%20editor.html>`_
+#. To save your work please press **Edit > Commit** from the menu bar
+
+
 
 Behavior
 ~~~~~~~~
 
-The *Merge Tool* operates upon the current Layer. Once the *Merge Tool* is selected, you can drag a
-bounding box to select which Features to merge. A view will be opened so you can specify exactly
-which attribute values from the input Features the *merged Feature* attributes shall assume the
-values of.
+The *Merge Tool* operates upon the current Layer.
+In '**classic**' mode, once the *Merge Tool* is selected, you can drag a bounding box to select which Features to merge.
+In '**operation mode**' first selection is performed with Box Selection tool, then a Right-click (anywhere in the map) opens the contect menu where :menuselection:`Operations --> Merge Selected` can be selected.
+A view will be opened so you can specify exactly which attribute values from the input Features the *merged Feature* attributes shall assume the values of.
 
 It could be the case that the *geometric union* produces a geometry whose type is not compatible
 with the allowable geometry type declared at the *Layer*'s *FeatureType*. For example, merging two
@@ -57,8 +82,8 @@ or commit the changes to the backend data repository as you would normally do in
 When the *Merge Tool* is instructed to create the new geometry as the union of the geometries from
 the input *Features*, the union is performed in the current *Layer*'s *Coordinate Reference System*.
 
-Usage Example
-~~~~~~~~~~~~~
+Usage Example ('*classic mode*')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Select the *Merge Tool* from the drop down buttons list as shown in *Figure 1*.
 
@@ -130,6 +155,43 @@ bounding box with Ctrl key pushed over the desired feature.
 
  **Figure 6. Delete button**
 
+Usage Example ('*operation mode*')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use the Box Selection Tool* to select feature like in  *Figure 7*.
+
+:doc:`|image8|`
+
+ **Figure 7. Selecting feature with the Box Selection Tool.**
+
+Once the interested feature are selecte, right-click on them and select: :menuselection:`Operations --> Merge Selected`.
+
+:doc:`|image9|`
+
+ **Figure 8. Launch the Operation -> Merge Selected command.**
+
+The Merge View will be opened and selected features filled in.
+
+:doc:`|image10|`
+
+ **Figure 9. The new Merge View windows containing the selected features.**
+
+Selection can be changed with Box Selection tool and Merge View will adapt to changes.
+
+:doc:`|image11|`
+
+ **Figure 10. A new selection is being created.**
+
+:doc:`|image12|`
+
+ **Figure 11. Merge View reacts and displays the new featureset.**
+
+Merge Operation can be fine tuned and lauched as in  '*lcassic*' mode.
+
+:doc:`|image13|`
+
+ **Figure 12. Merge task completes as usual.**
+
 .. |image0| image:: /images/merge_tool/merge_feature_mode.gif
 .. |image1| image:: download/thumbnails/12276/Merge1.png
 .. |image2| image:: download/thumbnails/12276/merge_1_select_tool.png
@@ -138,3 +200,9 @@ bounding box with Ctrl key pushed over the desired feature.
 .. |image5| image:: download/thumbnails/12276/MergeDialog2.png
 .. |image6| image:: download/thumbnails/12276/merge_5_merged_result.png
 .. |image7| image:: download/thumbnails/12276/MergeDelete.png
+.. |image8| image:: download/thumbnails/12276/merge_tool_operation_01.png
+.. |image9| image:: download/thumbnails/12276/merge_tool_operation_02.png
+.. |image10| image:: download/thumbnails/12276/merge_tool_operation_03.png
+.. |image11| image:: download/thumbnails/12276/merge_tool_operation_04.png
+.. |image12| image:: download/thumbnails/12276/merge_tool_operation_05.png
+.. |image13| image:: download/thumbnails/12276/merge_tool_operation_06.png
