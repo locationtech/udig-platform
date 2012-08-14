@@ -7,7 +7,7 @@ The *Merge Tool* works by selecting a set of features to be merged into one. It 
 geometry and attributes of the merged Feature. The geometry could be either the **geometric union**
 of the geometries from the input features, or the single geometry from one of the input features.
 
--- note: Two different approaches to Merge Tool usage are currently available: the *classic* mode and the new *operation mode*. Their desciption in noted to follow.
+.. note:: Two different approaches to Merge Tool usage are currently available: the *classic mode* and the new *operation mode*. Their desciption in noted to follow.
 
 To use the Merge tool ('*classic mode*'):
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -184,7 +184,7 @@ Selection can be changed with Box Selection tool and Merge View will adapt to ch
 
 :doc:`|image12|`
 
- **Figure 11. Merge View reacts and displays the new featureset.**
+ **Figure 11. Merge View self-updates and displays the new featureset.**
 
 Merge Operation can be fine tuned and lauched as in  '*lcassic*' mode.
 
@@ -200,9 +200,9 @@ Merge Operation can be fine tuned and lauched as in  '*lcassic*' mode.
 .. |image5| image:: download/thumbnails/12276/MergeDialog2.png
 .. |image6| image:: download/thumbnails/12276/merge_5_merged_result.png
 .. |image7| image:: download/thumbnails/12276/MergeDelete.png
-.. |image8| image:: download/thumbnails/12276/merge_tool_operation_01.png
-.. |image9| image:: download/thumbnails/12276/merge_tool_operation_02.png
-.. |image10| image:: download/thumbnails/12276/merge_tool_operation_03.png
-.. |image11| image:: download/thumbnails/12276/merge_tool_operation_04.png
-.. |image12| image:: download/thumbnails/12276/merge_tool_operation_05.png
-.. |image13| image:: download/thumbnails/12276/merge_tool_operation_06.png
+.. |image8| image:: /images/merge_tool_operation/merge_tool_operation_01.png
+.. |image9| image:: /images/merge_tool_operation/merge_tool_operation_02.png
+.. |image10| image:: /images/merge_tool_operation/merge_tool_operation_03.png
+.. |image11| image:: /images/merge_tool_operation/merge_tool_operation_04.png
+.. |image12| image:: /images/merge_tool_operation/merge_tool_operation_05.png
+.. |image13| image:: /images/merge_tool_operation/merge_tool_operation_06.png
