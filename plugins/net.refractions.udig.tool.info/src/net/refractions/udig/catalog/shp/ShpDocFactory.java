@@ -78,7 +78,9 @@ public class ShpDocFactory {
         default:
             break;
         }
-        doc.setSource(source);
+        if (doc != null) {
+            doc.setSource(source);    
+        }
         return doc;
     }
     
@@ -116,7 +118,6 @@ public class ShpDocFactory {
      * @return document
      */
     public IDocument create(String info, List<HotlinkDescriptor> descriptors) {
-        
         AbstractDocument doc = null;
         switch (descriptors.get(0).getType()) {
         case FILE:
@@ -131,10 +132,10 @@ public class ShpDocFactory {
         default:
             break;
         }
-        doc.setSource(source);
-
+        if (doc != null) {
+            doc.setSource(source);    
+        }
         return doc;
-
     }
     
     /**

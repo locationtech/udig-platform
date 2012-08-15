@@ -54,8 +54,8 @@ public abstract class AbstractDocument implements IDocument {
             final IDocument doc = (IDocument) obj;
             final boolean isEqualDocType = getDocType() == doc.getDocType();  
             final boolean isEqualType = getType() == doc.getType();
-            final boolean isEqualLabel = getLabel() == doc.getLabel();
-            final boolean isEqualDescription = getDescription() == doc.getDescription();
+            final boolean isEqualLabel = getLabel().equals(doc.getLabel());
+            final boolean isEqualDescription = getDescription().equals(doc.getDescription());
             final boolean isEqualSource = getSource() == doc.getSource();
             final boolean isEqualValue = getValue() == doc.getValue();
             return isEqualDocType && isEqualType && isEqualLabel && isEqualDescription

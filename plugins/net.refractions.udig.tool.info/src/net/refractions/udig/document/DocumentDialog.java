@@ -1002,8 +1002,7 @@ public class DocumentDialog extends IconAndMessageDialog {
                 break;
             case WEB:
                 try {
-                    @SuppressWarnings("unused") // Used to validate URL
-                    final URL url = new URL(infoValue);
+                    new URL(infoValue);
                     infoOpenBtn.setEnabled(true);
                 } catch (MalformedURLException e) {
                     infoDecoration.setDescriptionText(Messages.DocumentDialog_errValidURL);
