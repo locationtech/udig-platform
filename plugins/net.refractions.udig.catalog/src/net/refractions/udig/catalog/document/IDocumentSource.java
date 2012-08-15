@@ -16,10 +16,9 @@
  */
 package net.refractions.udig.catalog.document;
 
-import java.io.File;
-import java.net.URL;
 import java.util.List;
 
+import net.refractions.udig.catalog.document.IDocument.Type;
 
 /**
  * Access to documents associated with a resource.
@@ -30,7 +29,7 @@ import java.util.List;
  * <li>Additional sidecar files associated with a shapefile</li>
  * </ul>
  * 
- * @author nchan
+ * @author Naz Chan
  * @since 1.3.2
  */
 public interface IDocumentSource extends IAbstractDocumentSource {
@@ -56,25 +55,20 @@ public interface IDocumentSource extends IAbstractDocumentSource {
     public boolean canAdd();
 
     /**
-     * Adds the link.
+     * Adds the document.
      * 
-     * @param url
+     * @param info
+     * @return added document
      */
-    public IDocument addLink(URL url);
+    public IDocument add(DocumentInfo info);
 
     /**
-     * Adds the file.
+     * Adds the list of documents.
      * 
-     * @param file
+     * @param infos
+     * @return list of new added documents
      */
-    public IDocument addFile(File file);
-
-    /**
-     * Adds the list of files.
-     * 
-     * @param files
-     */
-    public List<IDocument> addFiles(List<File> files);
+    public List<IDocument> add(List<DocumentInfo> infos);
 
     /**
      * Checks if the source allows removing.
@@ -86,16 +80,16 @@ public interface IDocumentSource extends IAbstractDocumentSource {
     /**
      * Removes the document.
      * 
-     * @param doc
+     * @param true if removed successfully, otherwise false
      */
-    public void remove(IDocument doc);
+    public boolean remove(IDocument doc);
 
     /**
      * Removes the list of documents.
      * 
-     * @param docs
+     * @param true if removed successfully, otherwise false
      */
-    public void remove(List<IDocument> docs);
+    public boolean remove(List<IDocument> docs);
 
     /**
      * Checks if the source allows updating.
@@ -103,25 +97,160 @@ public interface IDocumentSource extends IAbstractDocumentSource {
      * @return true if allows updating, otherwise false
      */
     public boolean canUpdate();
-    
+
     /**
-     * Updates the file of the document which is required to be
-     * of type {@link IDocument.Type#FILE}.
+     * Updates the document with the information.
      * 
      * @param doc
-     * @param file
-     * @return true successful, otherwise false
+     * @param info
+     * @return updated document
      */
-    public boolean updateFile(IDocument doc, File file);
-    
+    public IDocument update(IDocument doc, DocumentInfo info);
+
     /**
-     * Updates the url of the document which is required to be
-     * of type {@link IDocument.Type#FILE}.
-     * 
-     * @param doc
-     * @param url
-     * @return true successful, otherwise false
+     * Document info container for document. This was initially designed to contain document
+     * properties retrieved from the property file but can also be reused and/or extended where
+     * possible. Attachment information container. This is designed to be able to parse (
+     * {@link DocumentInfo#fromString(String)} ) and format ({@link DocumentInfo#toString()}) the
+     * info string to and/or from the resource property file.
      */
-    public boolean updateLink(IDocument doc, URL url);
+    public class DocumentInfo {
+
+        /**
+         * Document label
+         */
+        private String label;
+
+        /**
+         * Document description
+         */
+        private String description;
+
+        /**
+         * Document info - file or url metadata
+         */
+        private String info;
+        
+        /**
+         * Document type
+         */
+        private IDocument.Type type;
+
+        /**
+         * Flag for templates.
+         */
+        private boolean isTemplate;
+        
+        public static final String DELIMITER = "|~|"; //$NON-NLS-1$
+        public static final String DELIMITER_REGEX = "\\|~\\|"; //$NON-NLS-1$
+
+        public DocumentInfo(String attachmentInfo) {
+            fromString(attachmentInfo);
+        }
+
+        public DocumentInfo(String label, String description, String info, Type type,
+                boolean isTemplate) {
+            this.label = label;
+            this.description = description;
+            this.info = info;
+            this.type = type;
+            this.isTemplate = isTemplate;
+        }
+
+        public String getLabel() {
+            return label;
+        }
+
+        public void setLabel(String label) {
+            this.label = label;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getInfo() {
+            return info;
+        }
+
+        public void setInfo(String info) {
+            this.info = info;
+        }
+
+        public IDocument.Type getType() {
+            return type;
+        }
+
+        public void setType(IDocument.Type type) {
+            this.type = type;
+        }
+        
+        public boolean isTemplate() {
+            return isTemplate;
+        }
+
+        public void setTemplate(boolean isTemplate) {
+            this.isTemplate = isTemplate;
+        }
+
+        private void fromString(String attachmentInfo) {
+            final String[] defValues = attachmentInfo.split(DELIMITER_REGEX);
+            info = getCleanValue(defValues[0]); 
+            type = Type.valueOf(defValues[1]);
+            if (defValues.length > 2) {
+                label = getCleanValue(defValues[2]);
+            } else {
+                label = null;
+            }
+            if (defValues.length > 3) {
+                description = getCleanValue(defValues[3]);
+            } else {
+                description = null;
+            }
+            if (defValues.length > 4) {
+                isTemplate = Boolean.parseBoolean(defValues[4]);
+            } else {
+                isTemplate = false;
+            }
+        }
+
+        private String getCleanValue(String text) {
+            if (text != null) {
+                final String cleanText = text.trim();
+                if (cleanText.length() > 0) {
+                    return cleanText;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String toString() {
+            final StringBuilder sb = new StringBuilder();
+            if (info != null) {
+                sb.append(info);
+            }
+            sb.append(DELIMITER);
+            if (type != null) {
+                sb.append(type);
+            }
+            sb.append(DELIMITER);
+            if (label != null) {
+                sb.append(label);
+            }
+            sb.append(DELIMITER);
+            if (description != null) {
+                sb.append(description);
+            }
+            sb.append(DELIMITER);
+            sb.append(Boolean.toString(isTemplate));
+            return sb.toString();
+        }
+        
+    }
     
 }

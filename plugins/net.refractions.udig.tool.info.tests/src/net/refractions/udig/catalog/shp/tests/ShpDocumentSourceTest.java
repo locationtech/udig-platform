@@ -15,16 +15,13 @@
 package net.refractions.udig.catalog.shp.tests;
 
 import java.io.Serializable;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.internal.document.DocumentFactory;
-import net.refractions.udig.catalog.internal.document.FileDocument;
-import net.refractions.udig.catalog.internal.document.URLDocument;
+import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
 import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
@@ -46,12 +43,13 @@ public class ShpDocumentSourceTest extends AbstractShpDocTest {
     protected void setUpInternal() {
         super.setUpInternal();
         
-        final List<IDocument> docs = new ArrayList<IDocument>();
-        docs.add(new FileDocument(file1));
-        docs.add(new URLDocument(url1));
+        final ShpDocPropertyParser parser = new ShpDocPropertyParser(url);
         
-        final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
-        parser.setShapeAttachments(docs);
+        List<DocumentInfo> inInfos = new ArrayList<DocumentInfo>();
+        inInfos.add(fileDocInfo1);
+        inInfos.add(webDocInfo1);
+        parser.setShapeDocmentInfos(inInfos);
+        parser.writeProperties();
         
         final Map<String, Serializable> params = new HashMap<String, Serializable>();
         params.put(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key, false);
@@ -63,72 +61,50 @@ public class ShpDocumentSourceTest extends AbstractShpDocTest {
         
     }
     
-    public void testGetDocuments() {
+    public void testGet() {
         assertEquals("Count is not expected.", 2, source.getDocuments().size());
     }
     
-    public void testAddRemoveFile() throws MalformedURLException {
+    public void testAddRemove() {
         
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
+        List<IDocument> docs = source.getDocuments();
+        assertEquals("Count is not expected.", 2, docs.size());
         
-        source.addFile(file2);
-        assertEquals("Count is not expected.", 3, source.getDocuments().size());
+        source.add(fileDocInfo2);
+        assertEquals("Count is not expected.", 3, docs.size());
 
-        final List<IDocument> docs = new ArrayList<IDocument>();
-        docs.add(new FileDocument(file1));
-        docs.add(new FileDocument(file2));
-        source.remove(docs);
-        assertEquals("Count is not expected.", 1, source.getDocuments().size());
+        source.remove(getDoc(docs, fileDocInfo2));
+        assertEquals("Count is not expected.", 2, docs.size());
+
+        List<DocumentInfo> inInfos = new ArrayList<DocumentInfo>();
+        inInfos.add(fileDocInfo2);
+        inInfos.add(webDocInfo2);
+
+        source.add(inInfos);
+        assertEquals("Count is not expected.", 4, docs.size());
+
+        List<IDocument> inDocs = new ArrayList<IDocument>();
+        inDocs.add(getDoc(docs, fileDocInfo1));
+        inDocs.add(getDoc(docs, webDocInfo1));
         
-        source.addFile(file1);
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
-        
-        final IDocument doc = source.addFile(file1);
-        assertNull("Doc is not null", doc);
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
-        
-        source.remove(new FileDocument(file1));
-        assertEquals("Count is not expected.", 1, source.getDocuments().size());
+        source.remove(inDocs);
+        assertEquals("Count is not expected.", 2, docs.size());
         
     }
     
     public void testUpdateFile() {
         
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
+        List<IDocument> docs = source.getDocuments();
+        assertEquals("Count is not expected.", 2, docs.size());
         
-        final FileDocument fileDoc = new FileDocument(file1);
-        assertFalse("Update is successfull.", source.updateFile(fileDoc, file1));
-        assertTrue("Update is successfull.", source.updateFile(fileDoc, file2));
+        IDocument doc = getDoc(docs, fileDocInfo1);
+        assertNotNull("Doc does not exists.", doc);
         
-    }
-    
-    public void testAddRemoveLink() {
-        
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
-        
-        IDocument doc = source.addLink(url1);
-        assertNull("Doc is not null", doc);
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
-        
-        doc = source.addLink(url2);
-        assertNotNull("Doc is not null", doc);
-        assertEquals("Count is not expected.", 3, source.getDocuments().size());
-        
-        source.remove(new URLDocument(url2));
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
-        
-        source.remove(new URLDocument(url1));
-        assertEquals("Count is not expected.", 1, source.getDocuments().size());
-        
-    }
-    
-    public void testUpdateUrl() {
-        
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
-        
-        final URLDocument urlDoc = new URLDocument(url1);
-        assertFalse("Update is successfull.", source.updateLink(urlDoc, url1));
-        assertTrue("Update is successfull.", source.updateLink(urlDoc, url2));
+        source.update(doc, fileDocInfo2);
+        doc = getDoc(docs, fileDocInfo1);
+        assertNull("Doc exists.", doc);
+        doc = getDoc(docs, fileDocInfo2);
+        assertNotNull("Doc does not exists.", doc);
         
     }
     

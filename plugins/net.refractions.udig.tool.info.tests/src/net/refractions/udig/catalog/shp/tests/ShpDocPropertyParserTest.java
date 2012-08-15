@@ -18,13 +18,15 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.internal.document.DocumentFactory;
-import net.refractions.udig.catalog.internal.document.FileDocument;
-import net.refractions.udig.catalog.internal.document.LinkInfo;
-import net.refractions.udig.catalog.internal.document.URLDocument;
+import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
+import org.opengis.feature.simple.SimpleFeature;
+
+import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
 
 /**
@@ -37,138 +39,114 @@ public class ShpDocPropertyParserTest extends AbstractShpDocTest {
     
     public void testHasProperties() throws MalformedURLException {
         
-        ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
+        ShpDocPropertyParser parser = new ShpDocPropertyParser(url);
         assertTrue("Property file does not exist.", parser.hasProperties());
         
-        final URL url = new File(new File( DIRECTORY ), "dummy.shp").toURI().toURL();
-        parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
+        final URL url = new File(new File(DIRECTORY), "dummy.shp").toURI().toURL();
+        parser = new ShpDocPropertyParser(url);
         assertFalse("Property file exist.", parser.hasProperties());
         
     }
     
-    public void testGetLinkValue() throws MalformedURLException {
+    public void testSetGetShapeDocInfos() {
         
-        final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
-        
-        final FileDocument fileDoc = new FileDocument( new File(new File(DIRECTORY), FILE1));
-        assertEquals("Link is not expected.", FILE1, parser.getLinkValue(fileDoc));
-        
-        final URLDocument urlDoc = new URLDocument(new URL(WEB1));
-        assertEquals("Link is not expected.", WEB1, parser.getLinkValue(urlDoc));
-        
-    }
-    
-    public void testGetFileLinkValue() {
-        
-        final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
-        final File file = new File( new File(DIRECTORY ), FILE1);
-        assertEquals("Link is not expected.", FILE1, parser.getFileLinkValue(file));
-        
-    }
-    
-    public void testGetUrlLinkValue() throws MalformedURLException {
-        
-        final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
-        final URL url = new URL(WEB1);
-        assertEquals("Link is not expected.", WEB1, parser.getUrlLinkValue(url));
-        
-    }
-    
-    public void testGetFeatureLinkInfo() {
-        
-        final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
-        
-        final LinkInfo info1 = parser.getFeatureLinkInfo(FILE_ATTR);
-        assertEquals("Label is not expected.", FILE_ATTR_LBL, info1.getLabel());
-        assertEquals("Info is not expected.", FILE_ATTR, info1.getInfo());
-        assertEquals("Type is not expected.", FILE_ATTR_TYPE, info1.getType());
-        
-        final LinkInfo info2 = parser.getFeatureLinkInfo(LINK_ATTR);
-        assertEquals("Label is not expected.", LINK_ATTR_LBL, info2.getLabel());
-        assertEquals("Info is not expected.", LINK_ATTR, info2.getInfo());
-        assertEquals("Type is not expected.", LINK_ATTR_TYPE, info2.getType());
-        
-    }
-    
-    public void testSetGetShapeAttachments() throws MalformedURLException {
-        
-        final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
-        
-        final List<IDocument> oldDocs = new ArrayList<IDocument>();
-        oldDocs.add(new FileDocument(new File( new File(DIRECTORY ), FILE1)));
-        oldDocs.add(new URLDocument(new URL(WEB1)));
-        
-        parser.setShapeAttachments(oldDocs);
-        
-        final List<IDocument> newDocs = parser.getShapeAttachments();
-        assertNotNull("Doc list is null.", newDocs);
-        assertEquals("Doc count is not expected.", 2, newDocs.size());
+        final ShpDocPropertyParser parser = new ShpDocPropertyParser(url);
 
-        int fileCnt = 0;
-        int urlCnt = 0;
+        List<DocumentInfo> inInfos = new ArrayList<DocumentInfo>();
+        parser.setShapeDocmentInfos(inInfos);
+
+        List<DocumentInfo> outInfos = parser.getShapeDocumentInfos();
+        assertNull("Info list is not null.", outInfos);
+
+        inInfos.add(fileDocInfo1);
+        inInfos.add(webDocInfo1);
+        parser.setShapeDocmentInfos(inInfos);
+
+        outInfos = parser.getShapeDocumentInfos();
+        assertNotNull("Info list is null.", outInfos);
+        assertEquals("Info count is not expected.", 2, outInfos.size());
+
+        inInfos.remove(fileDocInfo1);
+        parser.setShapeDocmentInfos(inInfos);
+
+        outInfos = parser.getShapeDocumentInfos();
+        assertNotNull("Info list is null.", outInfos);
+        assertEquals("Info count is not expected.", 1, outInfos.size());
+
+        inInfos.add(fileDocInfo1);
+        inInfos.add(fileDocInfo2);
+        inInfos.add(webDocInfo2);
+        parser.setShapeDocmentInfos(inInfos);
+
+        outInfos = parser.getShapeDocumentInfos();
+        assertNotNull("Info list is null.", outInfos);
+        assertEquals("Info count is not expected.", 4, outInfos.size());
         
-        for (IDocument doc : newDocs) {
-            if (doc instanceof FileDocument) {
-                fileCnt++;
-                final FileDocument fileDoc = (FileDocument) doc;
-                final File oldFile =  new File( new File(DIRECTORY), FILE1);
-                final File newFile =  fileDoc.getFile();
-                assertEquals("File directory is not expected", oldFile.getAbsolutePath(),
-                        newFile.getAbsolutePath());
-            } else if (doc instanceof URLDocument) {
-                urlCnt++;
-                final URLDocument urlDoc = (URLDocument) doc;
-                final URL oldUrl = new URL(WEB1);
-                final URL newUrl = urlDoc.getUrl();
-                assertEquals("URL is not expected", oldUrl.toString(),
-                        newUrl.toString());
-            }
-        }
+        inInfos.clear();
+        parser.setShapeDocmentInfos(inInfos);
+
+        outInfos = parser.getShapeDocumentInfos();
+        assertNull("Info list is not null.", outInfos);
         
-        assertEquals("File doc count is not expected.", 1, fileCnt);
-        assertEquals("URL doc count is not expected.", 1, urlCnt);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testSetGetFeatureDocInfos() {
+        
+        SimpleFeatureTypeBuilder fb = new SimpleFeatureTypeBuilder();
+        fb.setName("feature");
+        SimpleFeature feature1 = SimpleFeatureBuilder.build(fb.buildFeatureType(),
+                Collections.EMPTY_LIST, "feature.1");
+        
+        final ShpDocPropertyParser parser = new ShpDocPropertyParser(url);
+        
+        List<DocumentInfo> inInfos = new ArrayList<DocumentInfo>();
+        parser.setFeatureDocumentInfos(feature1, inInfos);
+
+        List<DocumentInfo> outInfos = parser.getFeatureDocumentInfos(feature1);
+        assertNull("Info list is not null.", outInfos);
+
+        inInfos.add(fileDocInfo1);
+        inInfos.add(webDocInfo1);
+        parser.setFeatureDocumentInfos(feature1, inInfos);
+
+        outInfos = parser.getFeatureDocumentInfos(feature1);
+        assertNotNull("Info list is null.", outInfos);
+        assertEquals("Info count is not expected.", 2, outInfos.size());
+
+        inInfos.remove(fileDocInfo1);
+        parser.setFeatureDocumentInfos(feature1, inInfos);
+
+        outInfos = parser.getFeatureDocumentInfos(feature1);
+        assertNotNull("Info list is null.", outInfos);
+        assertEquals("Info count is not expected.", 1, outInfos.size());
         
     }
     
-    public void testSetGetFeatureAttachments() throws MalformedURLException {
+    public void testSetGetFeatureHotlinkDescriptors() {
         
-        final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
+        final ShpDocPropertyParser parser = new ShpDocPropertyParser(url);
         
-        final List<IDocument> oldDocs = new ArrayList<IDocument>();
-        oldDocs.add(new FileDocument(new File(new File(DIRECTORY ), FILE1)));
-        oldDocs.add(new URLDocument(new URL(WEB1)));
-        
-        final String featureId = "dummy.1";
-        
-        parser.setFeatureAttachments(featureId, oldDocs);
-        
-        final List<IDocument> newDocs = parser.getFeatureAttachments(featureId);
-        assertNotNull("Doc list is null.", newDocs);
-        assertEquals("Doc count is not expected.", 2, newDocs.size());
+        List<HotlinkDescriptor> inInfos = new ArrayList<HotlinkDescriptor>();
+        parser.setHotlinkDescriptors(inInfos);
 
-        int fileCnt = 0;
-        int urlCnt = 0;
+        List<HotlinkDescriptor> outInfos = parser.getHotlinkDescriptors();
+        assertNull("Info list is not null.", outInfos);
+
+        inInfos.add(descriptor1);
+        inInfos.add(descriptor2);
+        parser.setHotlinkDescriptors(inInfos);
+
+        outInfos = parser.getHotlinkDescriptors();
+        assertNotNull("Info list is null.", outInfos);
+        assertEquals("Info count is not expected.", 2, outInfos.size());
         
-        for (IDocument doc : newDocs) {
-            if (doc instanceof FileDocument) {
-                fileCnt++;
-                final FileDocument fileDoc = (FileDocument) doc;
-                final File oldFile =  new File(new File(DIRECTORY ), FILE1);
-                final File newFile =  fileDoc.getFile();
-                assertEquals("File directory is not expected", oldFile.getAbsolutePath(),
-                        newFile.getAbsolutePath());
-            } else if (doc instanceof URLDocument) {
-                urlCnt++;
-                final URLDocument urlDoc = (URLDocument) doc;
-                final URL oldUrl = new URL(WEB1);
-                final URL newUrl = urlDoc.getUrl();
-                assertEquals("URL is not expected", oldUrl.toString(),
-                        newUrl.toString());
-            }
-        }
-        
-        assertEquals("File doc count is not expected.", 1, fileCnt);
-        assertEquals("URL doc count is not expected.", 1, urlCnt);
+        inInfos.add(descriptor3);
+        parser.setHotlinkDescriptors(inInfos);
+
+        outInfos = parser.getHotlinkDescriptors();
+        assertNotNull("Info list is null.", outInfos);
+        assertEquals("Info count is not expected.", 3, outInfos.size());
         
     }
     

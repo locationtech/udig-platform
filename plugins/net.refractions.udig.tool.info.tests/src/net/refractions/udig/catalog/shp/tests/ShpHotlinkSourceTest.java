@@ -14,17 +14,25 @@
  */
 package net.refractions.udig.catalog.shp.tests;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.internal.document.FileDocument;
-import net.refractions.udig.catalog.internal.document.URLDocument;
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import net.refractions.udig.catalog.internal.document.HotlinkActionDocument;
+import net.refractions.udig.catalog.internal.document.HotlinkFileDocument;
+import net.refractions.udig.catalog.internal.document.HotlinkWebDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
+import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
 import net.refractions.udig.catalog.shp.ShpHotlinkSource;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -40,142 +48,150 @@ import org.opengis.filter.Filter;
 /**
  * Test class for {@link ShpHotlinkSource}.
  * 
- * @author Naz Chan 
+ * @author Naz Chan
  */
 @SuppressWarnings("nls")
 public class ShpHotlinkSourceTest extends AbstractShpDocTest {
 
-    private ShpGeoResourceImpl geoResource;
-    private ShpHotlinkSource source;
-    private SimpleFeature feature;
-    
-    private static final String FEATURE = "australia.1";
+    protected ShpGeoResourceImpl geoResource;
+    protected ShpHotlinkSource source;
+    protected SimpleFeature feature;
+    protected static final String FEATURE = "australia.1";
     
     @Override
     protected void setUpInternal() {
         super.setUpInternal();
-        
+
+        final ShpDocPropertyParser parser = new ShpDocPropertyParser(url);
+        final List<HotlinkDescriptor> inInfos = new ArrayList<HotlinkDescriptor>();
+        inInfos.add(descriptor1);
+        inInfos.add(descriptor2);
+        inInfos.add(descriptor3);
+        parser.setHotlinkDescriptors(inInfos);
+        parser.writeProperties();
+
         final Map<String, Serializable> params = new HashMap<String, Serializable>();
         params.put(ShapefileDataStoreFactory.URLP.key, url);
         params.put(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key, false);
-        
+
         final ShpServiceImpl service = new ShpServiceImpl(url, params);
         geoResource = new ShpGeoResourceImpl(service, "");
         source = new ShpHotlinkSource(geoResource);
         final Filter filter = CommonFactoryFinder.getFilterFactory2()
                 .id(new FeatureIdImpl(FEATURE));
         feature = getFeature(geoResource, filter);
-        
-        source.setFile(feature, FILE_ATTR, file1);
-        source.setLink(feature, LINK_ATTR, url1);
-        
+
     }
-    
+
     private SimpleFeature getFeature(IGeoResource geoResource, Filter filter) {
         try {
             if (geoResource.canResolve(SimpleFeatureStore.class)) {
-                final SimpleFeatureStore featureSource = geoResource.resolve(SimpleFeatureStore.class,
-                        new NullProgressMonitor());
+                final SimpleFeatureStore featureSource = geoResource.resolve(
+                        SimpleFeatureStore.class, new NullProgressMonitor());
                 final SimpleFeatureCollection featureCollection = featureSource.getFeatures(filter);
                 final SimpleFeatureIterator featureIterator = featureCollection.features();
                 try {
-                     if (featureIterator.hasNext()) {
-                         return featureIterator.next();
-                     }
+                    if (featureIterator.hasNext()) {
+                        return featureIterator.next();
+                    }
                 } finally {
                     if (featureIterator != null) {
                         featureIterator.close();
                     }
-                }    
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
-    
-    public void testGetDocument() {
-        
-        assertEquals("Count is not expected.", 2, source.getDocuments(feature).size());
-        
+
+    public void testGetDescriptors() {
+        final List<HotlinkDescriptor> descriptors = source.getHotlinkDescriptors();
+        assertEquals("Descriptor count is not expected.", 3, descriptors.size());
+    }
+
+    public void testGetDocuments() {
+
+        final List<IDocument> docs = source.getDocuments(feature);
+        assertEquals("Count is not expected.", 3, docs.size());
+
         IDocument doc = source.getDocument(feature, FILE_ATTR);
         assertNotNull("Doc is null.", doc);
-        assertTrue("Doc is not an instance of FileDoc.", (doc instanceof FileDocument));
-        FileDocument fileDoc = (FileDocument) doc;
-        assertEquals("File is not expected.", file1.getAbsolutePath(), fileDoc.getFile().getAbsolutePath());
-        
+        assertTrue("Doc is not an instance of HotlinkFileDoc.",
+                (doc instanceof HotlinkFileDocument));
+
         doc = source.getDocument(feature, LINK_ATTR);
         assertNotNull("Doc is null.", doc);
-        assertTrue("Doc is not an instance of UrlDoc.", (doc instanceof URLDocument));
-        URLDocument urlDoc = (URLDocument) doc;
-        assertEquals("File is not expected.", url1.toString(), urlDoc.getUrl().toString());
-        
-    }
-    
-    public void testGetDocuments() {
-        assertEquals("Count is not expected.", 2, source.getDocuments(feature).size());
-    }
-    
-    public void testSetClearFile() throws InterruptedException {
+        assertTrue("Doc is not an instance of HotlinkWebDoc.", (doc instanceof HotlinkWebDocument));
 
-        assertEquals("Count is not expected.", 2, source.getDocuments(feature).size());
-
-        source.setFile(feature, FILE_ATTR, file2);
-        
-        IDocument doc = source.getDocument(feature, FILE_ATTR);
+        doc = source.getDocument(feature, STATE_ATTR);
         assertNotNull("Doc is null.", doc);
-        assertTrue("Doc is not an instance of FileDoc.", (doc instanceof FileDocument));
-        FileDocument fileDoc = (FileDocument) doc;
-        assertEquals("File is not expected.", file2.getAbsolutePath(), fileDoc.getFile()
-                .getAbsolutePath());
+        assertTrue("Doc is not an instance of HotlinkWebDoc.",
+                (doc instanceof HotlinkActionDocument));
+
+    }
+
+    public void testSetAndClearFile() {
+
+        source.setFile(feature, FILE_ATTR, file1);
+
+        IDocument doc = source.getDocument(feature, FILE_ATTR);
+        File docFile = (File) doc.getValue();
+        assertNotNull("Doc is null.", doc);
+        assertEquals("File is not expected.", file1.getAbsolutePath(), docFile.getAbsolutePath());
 
         source.clear(feature, FILE_ATTR);
-        
+
         doc = source.getDocument(feature, FILE_ATTR);
+        docFile = (File) doc.getValue();
         assertNotNull("Doc is null.", doc);
-        assertTrue("Doc is not an instance of FileDoc.", (doc instanceof FileDocument));
-        fileDoc = (FileDocument) doc;
-        assertNull("File is not expected.", fileDoc.getFile());
-        
-        source.setFile(feature, FILE_ATTR, file1);
-        
-        doc = source.getDocument(feature, FILE_ATTR);
-        assertNotNull("Doc is null.", doc);
-        assertTrue("Doc is not an instance of FileDoc.", (doc instanceof FileDocument));
-        fileDoc = (FileDocument) doc;
-        assertEquals("File is not expected.", file1.getAbsolutePath(), fileDoc.getFile()
-                .getAbsolutePath());
-        
+        assertNull("File is not null.", docFile);
+
     }
-    
-    public void testSetClearLink() throws InterruptedException {
 
-        assertEquals("Count is not expected.", 2, source.getDocuments(feature).size());
+    public void testSetAndClearWeb() {
 
-        source.setLink(feature, LINK_ATTR, url2);
-        
+        URL url = null;
+        try {
+            url = new URL(WEB1);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        source.setLink(feature, LINK_ATTR, url);
+
         IDocument doc = source.getDocument(feature, LINK_ATTR);
+        URL docUrl = (URL) doc.getValue();
         assertNotNull("Doc is null.", doc);
-        assertTrue("Doc is not an instance of FileDoc.", (doc instanceof URLDocument));
-        URLDocument urlDoc = (URLDocument) doc;
-        assertEquals("File is not expected.", url2.toString(), urlDoc.getUrl().toString());
+        assertEquals("File is not expected.", url.toString(), docUrl.toString());
 
         source.clear(feature, LINK_ATTR);
-        
+
         doc = source.getDocument(feature, LINK_ATTR);
+        docUrl = (URL) doc.getValue();
         assertNotNull("Doc is null.", doc);
-        assertTrue("Doc is not an instance of FileDoc.", (doc instanceof URLDocument));
-        urlDoc = (URLDocument) doc;
-        assertNull("File is not expected.", urlDoc.getUrl());
-        
-        source.setLink(feature, LINK_ATTR, url1);
-        
-        doc = source.getDocument(feature, LINK_ATTR);
-        assertNotNull("Doc is null.", doc);
-        assertTrue("Doc is not an instance of FileDoc.", (doc instanceof URLDocument));
-        urlDoc = (URLDocument) doc;
-        assertEquals("File is not expected.", url1.toString(), urlDoc.getUrl().toString());
-        
+        assertNull("File is not null.", docUrl);
+
     }
-    
+
+    public void testSetAndClearAction() {
+
+        final String action = "ACTION";
+
+        source.setAction(feature, STATE_ATTR, action);
+
+        IDocument doc = source.getDocument(feature, STATE_ATTR);
+        String docAction = (String) doc.getValue();
+        assertNotNull("Doc is null.", doc);
+        assertEquals("File is not expected.", action, docAction);
+
+        source.clear(feature, STATE_ATTR);
+
+        doc = source.getDocument(feature, STATE_ATTR);
+        docAction = (String) doc.getValue();
+        assertNotNull("Doc is null.", doc);
+        assertNull("File is not null.", docAction);
+
+    }
+
 }

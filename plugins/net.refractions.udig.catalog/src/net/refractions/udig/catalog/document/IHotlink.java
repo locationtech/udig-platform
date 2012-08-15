@@ -1,5 +1,9 @@
 package net.refractions.udig.catalog.document;
 
+import java.util.List;
+
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+
 /**
  * IDocument stored as a "hotlink" in the indicated {@link #getAttributeName()}.
  * 
@@ -17,5 +21,12 @@ public interface IHotlink extends IDocument {
      * @return attribute name
      */
     public String getAttributeName();
+    
+    /**
+     * Gets the list of {@link HotlinkDescriptor} related to document.
+     * 
+     * @return list of descriptors
+     */
+    public List<HotlinkDescriptor> getDescriptors();
     
 }

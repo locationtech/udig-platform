@@ -15,21 +15,29 @@
 package net.refractions.udig.document;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.miginfocom.swt.MigLayout;
+import net.refractions.udig.catalog.document.DocumentPropertyPage;
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocument.DocType;
 import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.tool.info.internal.Messages;
 
+import org.apache.commons.io.FileUtils;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IconAndMessageDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
@@ -37,6 +45,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
@@ -60,6 +69,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.ListDialog;
 
 /**
  * Dialog window to add or edit documents from the {@link DocumentView}.
@@ -92,6 +102,9 @@ public class DocumentDialog extends IconAndMessageDialog {
     
     private Text document;
     private ComboViewer type;
+    
+    private Button templateCheckBtn;
+    
     private Label labelLbl;
     private Text label;
     private Text description;
@@ -105,6 +118,7 @@ public class DocumentDialog extends IconAndMessageDialog {
     public static final String V_LABEL = "LABEL";  //$NON-NLS-1$
     public static final String V_DESCRIPTION = "DESCRIPTION"; //$NON-NLS-1$
     public static final String V_ATTRIBUTE = "ATTRIBUTE";  //$NON-NLS-1$
+    public static final String V_TEMPLATE = "TEMPLATE";  //$NON-NLS-1$
     public static final String V_DOCUMENT = "DOCUMENT";  //$NON-NLS-1$
     public static final String V_ACTIONS = "ACTIONS";  //$NON-NLS-1$
     
@@ -113,6 +127,7 @@ public class DocumentDialog extends IconAndMessageDialog {
     public static final String P_MODE = "MODE"; //$NON-NLS-1$
     public static final String P_FEATURE_NAME = "FEATURE_NAME"; //$NON-NLS-1$
     public static final String P_SHAPEFILE_NAME = "SHAPEFILE_NAME"; //$NON-NLS-1$
+    public static final String P_TEMPLATES = "TEMPLATES"; //$NON-NLS-1$
     
     public enum Mode { 
         ADD, EDIT;
@@ -121,7 +136,6 @@ public class DocumentDialog extends IconAndMessageDialog {
     private boolean isAttachment = true;
     private boolean isAddMode = true;
     
-    public static final String DOCUMENT_FORMAT = "%s (%s)"; //$NON-NLS-1$
     public static final String LABEL_FORMAT = "%s%s:"; //$NON-NLS-1$
     public static final String MANDATORY = "*"; //$NON-NLS-1$
     
@@ -169,6 +183,18 @@ public class DocumentDialog extends IconAndMessageDialog {
         return (String) values.get(V_INFO);
     }
     
+    public boolean isTemplate() {
+        final Object isTemplateObj = values.get(V_TEMPLATE);
+        if (isTemplateObj != null) {
+            return (Boolean) isTemplateObj;    
+        }
+        return false;
+    }
+    
+    public DocumentInfo getDocInfo() {
+        return (new DocumentInfo(getLabel(), getDescription(), getInfo(), getType(), isTemplate()));
+    }
+    
     public File getFileInfo() {
         final File file = new File(getInfo());
         if (file.exists()) {
@@ -191,9 +217,8 @@ public class DocumentDialog extends IconAndMessageDialog {
     }
     
     @SuppressWarnings("unchecked")
-    private List<Object> getActions() {
-        // TODO - How are the actions passed?
-        return (List<Object>) values.get(V_ACTIONS);
+    private List<HotlinkDescriptor> getActions() {
+        return (List<HotlinkDescriptor>) values.get(V_ACTIONS);
     }
     
     private boolean isAttachment() {
@@ -227,6 +252,11 @@ public class DocumentDialog extends IconAndMessageDialog {
         return (String) params.get(P_SHAPEFILE_NAME);
     }
     
+    @SuppressWarnings("unchecked")
+    private List<IDocument> getTemplates() {
+        return (List<IDocument>) params.get(P_TEMPLATES);
+    }
+    
     private String getLabel(String label) {
         return getLabel(label, false);
     }
@@ -245,16 +275,16 @@ public class DocumentDialog extends IconAndMessageDialog {
         
         final int HEIGHT = 380;
         final int WIDTH = 400;
-        
+
         final Display display = PlatformUI.getWorkbench().getDisplay();
         final Point size = (new Shell(display)).computeSize(-1, -1);
         final Rectangle screen = display.getMonitors()[0].getBounds();
-        
-        final int xPos =  (screen.width-size.x)/2 - WIDTH/2;
-        final int yPos =  (screen.height-size.y)/2 - HEIGHT/2;
-                
+
+        final int xPos = (screen.width - size.x) / 2 - WIDTH / 2;
+        final int yPos = (screen.height - size.y) / 2 - HEIGHT / 2;
+
         shell.setBounds(xPos, yPos, WIDTH, HEIGHT);
-        
+
         super.configureShell(shell);
         
     }
@@ -295,6 +325,10 @@ public class DocumentDialog extends IconAndMessageDialog {
         document.setLayoutData(String.format(WIDTH_LAYOUT_FORMAT, CONTROL_WIDTH));
 
         createTypeControls();
+        
+        templateCheckBtn = new Button(composite, SWT.CHECK);
+        templateCheckBtn.setText(Messages.DocumentDialog_templateLabel);
+        templateCheckBtn.setLayoutData("skip 1"); //$NON-NLS-1$
         
         labelLbl = new Label(composite, SWT.NONE);
         labelLbl.setText(getLabel(Messages.DocumentDialog_labelLabel, isAttachment));
@@ -359,7 +393,7 @@ public class DocumentDialog extends IconAndMessageDialog {
 
         info = new Text(composite, SWT.SINGLE | SWT.BORDER);
         info.setLayoutData(String.format(WIDTH_LAYOUT_FORMAT, CONTROL_WIDTH));
-        info.addModifyListener(new InfoModifyListener());
+        info.addModifyListener(new ValidatingModifyListener());
         
         infoDecoration = new ControlDecoration(info, SWT.TOP | SWT.LEFT);
         final FieldDecoration errorFieldIndicator = FieldDecorationRegistry.getDefault()
@@ -408,10 +442,104 @@ public class DocumentDialog extends IconAndMessageDialog {
         infoNewBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                // TODO - Implement
+                final File newFile = createFromTemplate();
+                if (newFile != null) {
+                    info.setText(newFile.getAbsolutePath());    
+                }
             }
         }); 
         
+    }
+    
+    /**
+     * Creates a new file from a template.
+     * 
+     * @return new file
+     */
+    private File createFromTemplate() {
+        final File templateFile = selectTemplate();
+        if (templateFile != null) {
+            final String filePath = enterFilename();
+            if (filePath != null) {
+                return createFile(templateFile, filePath);
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Opens a list selection dialog to select templates from.
+     * 
+     * @return template file
+     */
+    private File selectTemplate() { 
+
+        final ListDialog selectDialog = new ListDialog(infoNewBtn.getShell());
+        selectDialog.setTitle(Messages.DocumentDialog_selectTemplateTitle);
+        selectDialog.setMessage(Messages.DocumentDialog_selectTemplateMsg);
+        selectDialog.setLabelProvider(new LabelProvider() {
+            @Override
+            public String getText(Object element) {
+                final IDocument doc = (IDocument) element;
+                return DocUtils.getDocStr(doc) + " - " + doc.getDescription(); //$NON-NLS-1$
+            }
+        });
+        selectDialog.setContentProvider(new ArrayContentProvider());
+        final Object[] templates = getTemplates().toArray();
+        selectDialog.setInput(templates);
+        selectDialog.setInitialElementSelections(Collections.singletonList(templates[0]));
+        if (Dialog.OK == selectDialog.open()) {
+            final Object[] results = selectDialog.getResult();
+            if (results != null && results.length > 0) {
+                final IDocument doc = (IDocument) results[0];
+                if (doc != null) {
+                    return (File) doc.getValue();
+                }
+            }
+        }
+        
+        
+        return null;
+        
+    }
+    
+    /**
+     * Opens an input dialog to enter a filename.
+     * 
+     * @return filename
+     */
+    private String enterFilename() {
+        final FileDialog dialog = new FileDialog(infoNewBtn.getShell(), SWT.SAVE);
+        dialog.setText(Messages.DocumentDialog_enterFilenameTitle);
+        dialog.setOverwrite(true);
+        final String filePath = dialog.open();
+        if (filePath != null) {
+            return filePath;
+        }
+        return null;
+    }
+
+    /**
+     * Creates a new file with the filename from the template.
+     * 
+     * @param templateFile
+     * @param filePath
+     * @return new file
+     */
+    private File createFile(File templateFile, String filePath) {
+        try {
+            final File file = new File(filePath);
+            FileUtils.copyFile(templateFile, file);
+            MessageDialog.openInformation(infoNewBtn.getShell(),
+                    Messages.DocumentDialog_createFileFromTemplateTitle,
+                    Messages.DocumentDialog_createFileFromTemplateSuccess);
+            return file;
+        } catch (IOException e) {
+            MessageDialog.openError(infoNewBtn.getShell(),
+                    Messages.DocumentDialog_createFileFromTemplateTitle,
+                    Messages.DocumentDialog_createFileFromTemplateError);
+        }
+        return null;
     }
     
     /**
@@ -425,16 +553,24 @@ public class DocumentDialog extends IconAndMessageDialog {
 
         infoGoAction = new ComboViewer(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
         infoGoAction.getControl().setLayoutData("split 2"); //$NON-NLS-1$
-        infoGoAction.setContentProvider(ArrayContentProvider.getInstance());
-        infoGoAction.addSelectionChangedListener( new ISelectionChangedListener() {
-            public void selectionChanged(SelectionChangedEvent event) {
-                // TODO - Implement
-                // label.setText("");
-                // description.setText("");
+        infoGoAction.setLabelProvider(new LabelProvider() {
+            @Override
+            public String getText(Object element) {
+                final HotlinkDescriptor descriptor = (HotlinkDescriptor) element;
+                return descriptor.getLabel();
             }
         });
-        // TODO - How is this done?
-        final List<Object> actions = getActions();
+        infoGoAction.setContentProvider(ArrayContentProvider.getInstance());
+        infoGoAction.addSelectionChangedListener(new ISelectionChangedListener() {
+            public void selectionChanged(SelectionChangedEvent event) {
+                final StructuredSelection selection = (StructuredSelection) event.getSelection();
+                final HotlinkDescriptor descriptor = (HotlinkDescriptor) selection
+                        .getFirstElement();
+                label.setText(descriptor.getLabel());
+                description.setText(descriptor.getDescription());
+            }
+        });
+        final List<HotlinkDescriptor> actions = getActions();
         if (actions != null) {
             infoGoAction.setInput(actions.toArray());    
         }
@@ -445,7 +581,11 @@ public class DocumentDialog extends IconAndMessageDialog {
         infoGoActionBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                // TODO - Implement
+                final StructuredSelection selection = (StructuredSelection) infoGoAction.getSelection();
+                final HotlinkDescriptor descriptor = (HotlinkDescriptor) selection.getFirstElement();
+                final String action = descriptor.getConfig().replace(
+                        DocumentPropertyPage.ACTION_PARAM, info.getText());
+                Program.launch(action);
             }
         }); 
         
@@ -463,13 +603,19 @@ public class DocumentDialog extends IconAndMessageDialog {
         type = new ComboViewer(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
         type.getControl().setLayoutData(""); //$NON-NLS-1$
         type.setContentProvider(ArrayContentProvider.getInstance());
+        type.setLabelProvider(new LabelProvider() {
+            @Override
+            public String getText(Object element) {
+                return DocUtils.toCamelCase(element.toString());
+            }
+        });
         type.addSelectionChangedListener( new ISelectionChangedListener() {
             public void selectionChanged(SelectionChangedEvent event) {
                 final Type newTypeValue = getTypeComboValue();
                 if (typeValue != newTypeValue) {
                     typeValue = newTypeValue;
                     if (newTypeValue != null) {
-                        info.setText(""); //$NON-NLS-1$
+                        validateInfo();
                         refreshBtns();
                         configInfoControls(newTypeValue);
                     }    
@@ -536,6 +682,7 @@ public class DocumentDialog extends IconAndMessageDialog {
             setValue(label, getLabel());
             setValue(description, getDescription());
             setValue(attribute, getAttribute());
+            templateCheckBtn.setSelection(isTemplate());
         }
         
     }
@@ -550,10 +697,10 @@ public class DocumentDialog extends IconAndMessageDialog {
      * Sets the window, header and sub-header texts.
      */
     private void configHeaderDisplay() {
-        
+
         String header = ""; //$NON-NLS-1$
         String subHeader = ""; //$NON-NLS-1$
-        
+
         if (isAttachment) {
             if (isAddMode) {
                 header = Messages.DocumentDialog_addAttachHeader;
@@ -561,31 +708,33 @@ public class DocumentDialog extends IconAndMessageDialog {
                 header = Messages.DocumentDialog_editAttachHeader;
             }
 
-            final String featureName = getFeatureName();
-            final String shapefileName = getShapefileName();
-            if (featureName != null) {
-                subHeader = String.format(Messages.DocumentDialog_attachSubHeaderFeature, featureName, shapefileName);    
-            } else {
-                if (shapefileName != null) {
-                    subHeader = String.format(Messages.DocumentDialog_attachSubHeaderShapefile, shapefileName);
-                } else {
-                    subHeader = Messages.DocumentDialog_attachSubHeader;
-                }
-            }
+            String featureName = getFeatureName();
+            String shapefileName = getShapefileName();
             
+            if (shapefileName != null) {
+                shapefileName = DocUtils.toCamelCase(shapefileName);
+                if (featureName != null) {
+                    featureName = DocUtils.toCamelCase(featureName);
+                    subHeader = String.format(Messages.DocumentDialog_attachSubHeaderFeature,
+                            featureName, shapefileName);
+                } else {
+                    subHeader = String.format(Messages.DocumentDialog_attachSubHeaderShapefile,
+                            shapefileName);
+                }
+            } else {
+                subHeader = Messages.DocumentDialog_attachSubHeader;
+            }
+
         } else {
-            header = String.format(Messages.DocumentDialog_hotlinkHeader, toCamelCase(attribute.getText()));
+            header = String.format(Messages.DocumentDialog_hotlinkHeader,
+                    DocUtils.toCamelCase(attribute.getText()));
             subHeader = description.getText();
         }
-        
+
         getShell().setText(header);
         headerText.setText(header);
         headerSubText.setText(subHeader);
-        
-    }
-    
-    private String toCamelCase(String text) {
-        return text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
+
     }
     
     /**
@@ -595,15 +744,12 @@ public class DocumentDialog extends IconAndMessageDialog {
         if (isAttachment) {
             configAttributeControls(false);
             configMetadataControls(true);
-            if (isAddMode) {
-                type.getControl().setEnabled(true);
-            } else {
-                type.getControl().setEnabled(false);
-            }
+            type.getControl().setEnabled(isAddMode);
         } else {
             configAttributeControls(true);
             configMetadataControls(false);
             type.getControl().setEnabled(false);
+            templateCheckBtn.setVisible(false);
         }
     }
     
@@ -617,6 +763,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         values.put(V_DESCRIPTION, description.getText());
         values.put(V_TYPE, getTypeComboValue());
         values.put(V_INFO, info.getText());
+        values.put(V_TEMPLATE, templateCheckBtn.getSelection());
         
         super.okPressed();
     }
@@ -638,18 +785,21 @@ public class DocumentDialog extends IconAndMessageDialog {
                     : getLabel(Messages.DocumentDialog_valueLabel));
             configInfoBtnControls(true, true);
             configInfoGoActionControls(false);
+            templateCheckBtn.setVisible(true);
             break;
         case WEB:
             infoLbl.setText(isAttachment ? getLabel(Messages.DocumentDialog_urlLabel, true)
                     : getLabel(Messages.DocumentDialog_valueLabel));
             configInfoBtnControls(true, false);
             configInfoGoActionControls(false);
+            templateCheckBtn.setVisible(false);
             break;
         case ACTION:
             infoLbl.setText(isAttachment ? getLabel(Messages.DocumentDialog_actionLabel, true)
                     : getLabel(Messages.DocumentDialog_valueLabel));
             configInfoBtnControls(false, false);
             configInfoGoActionControls(true);
+            templateCheckBtn.setVisible(false);
             break;
         default:
             break;
@@ -668,6 +818,9 @@ public class DocumentDialog extends IconAndMessageDialog {
         if (isVisible) {
             infoBrowseBtn.setVisible(isFile);
             infoNewBtn.setVisible(isFile);
+            final List<IDocument> templates = getTemplates();
+            final boolean hasTemplates = (templates != null && templates.size() > 0);
+            infoNewBtn.setEnabled(hasTemplates);
         }
     }
     
@@ -838,7 +991,7 @@ public class DocumentDialog extends IconAndMessageDialog {
             switch (getTypeComboValue()) {
             case FILE:
                 final File file = new File(infoValue);
-                if (file.exists()) {
+                if (file.exists() && file.isFile()) {
                     infoOpenBtn.setEnabled(true);
                 } else {
                     infoDecoration.setDescriptionText(Messages.DocumentDialog_errValidFile);
@@ -885,29 +1038,7 @@ public class DocumentDialog extends IconAndMessageDialog {
                         labelValue = attribute.getText();
                     }
                 }
-                
-                String infoDisplayValue = ""; //$NON-NLS-1$
-                
-                switch (getTypeComboValue()) {
-                case FILE:
-                    final File file = new File(infoValue);
-                    infoDisplayValue = file.getName();
-                    break;
-                case WEB:
-                    infoDisplayValue = infoValue.substring(infoValue.lastIndexOf('/'));
-                    break;
-                case ACTION:
-                    // TODO - How to do this?
-                    break;
-                default:
-                    break;
-                }   
-                
-                if (labelValue == null || labelValue.length() == 0) {
-                    document.setText(infoDisplayValue);
-                } else {
-                    document.setText(String.format(DOCUMENT_FORMAT, infoDisplayValue, labelValue));    
-                }
+                document.setText(DocUtils.getDocStr(getTypeComboValue(), infoValue, labelValue));
                 
             } else {
                 document.setText("");   //$NON-NLS-1$
@@ -916,6 +1047,9 @@ public class DocumentDialog extends IconAndMessageDialog {
         }
     }
     
+    /**
+     * Modify listener that sets the document text and refreshes buttons' state.
+     */
     private class BasicModifyListener implements ModifyListener {
         @Override
         public void modifyText(ModifyEvent e) {
@@ -924,7 +1058,10 @@ public class DocumentDialog extends IconAndMessageDialog {
         }
     }
     
-    private class InfoModifyListener extends BasicModifyListener {
+    /**
+     * Modify listener that adds validation to {@link BasicModifyListener}'s functionalities.
+     */
+    private class ValidatingModifyListener extends BasicModifyListener {
         @Override
         public void modifyText(ModifyEvent e) {
             validateInfo();

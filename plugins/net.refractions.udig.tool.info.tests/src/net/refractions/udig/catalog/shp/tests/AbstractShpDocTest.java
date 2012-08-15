@@ -16,8 +16,13 @@ package net.refractions.udig.catalog.shp.tests;
 
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 
+import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import net.refractions.udig.catalog.internal.document.AbstractBasicDocument;
 
 import junit.framework.TestCase;
 
@@ -35,8 +40,15 @@ public abstract class AbstractShpDocTest extends TestCase {
     protected File file1;
     protected File file2;
     
-    protected URL url1;
-    protected URL url2;
+    protected DocumentInfo fileDocInfo1;
+    protected DocumentInfo fileDocInfo2;
+    
+    protected DocumentInfo webDocInfo1;
+    protected DocumentInfo webDocInfo2;
+    
+    protected HotlinkDescriptor descriptor1;
+    protected HotlinkDescriptor descriptor2;
+    protected HotlinkDescriptor descriptor3;
     
     protected static final String DIRECTORY = "internal";
     protected static final String SHAPEFILE = "australia.shp";
@@ -44,35 +56,50 @@ public abstract class AbstractShpDocTest extends TestCase {
     protected static final String FILE2 = "australia.png";
     protected static final String WEB1 = "http://en.wikipedia.org/wiki/Australia";
     protected static final String WEB2 = "http://en.wikipedia.org/wiki/History_of_Australia";
-    
+        
     protected static final String FILE_ATTR = "FILE";
-    protected static final String FILE_ATTR_LBL = "File";
-    protected static final Type FILE_ATTR_TYPE = Type.FILE;
-    
-    protected static final String LINK_ATTR_LBL = "Link";
     protected static final String LINK_ATTR = "LINK";
-    protected static final Type LINK_ATTR_TYPE = Type.WEB;
+    protected static final String STATE_ATTR = "STATE";
     
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+
+        final File directory = new File(DIRECTORY);
         
-        file = new File( new File(DIRECTORY), SHAPEFILE);
+        file = new File(directory, SHAPEFILE);
         url = file.toURI().toURL();
+
+        file1 = new File(directory, FILE1);
+        fileDocInfo1 = new DocumentInfo("fileDoc1", "fileDocDesc1", file1.getAbsolutePath(), Type.FILE, false);
+        file2 = new File(directory, FILE2);
+        fileDocInfo2 = new DocumentInfo("fileDoc2", "fileDocDesc2", file2.getAbsolutePath(), Type.FILE, true);
         
-        file1 = new File( new File(DIRECTORY ), FILE1);
-        file2 = new File( new File(DIRECTORY ), FILE2);
+        webDocInfo1 = new DocumentInfo("webDoc1", "webDocDesc1", WEB1, Type.WEB, false);
+        webDocInfo2 = new DocumentInfo("webDoc2", "webDocDesc2", WEB2, Type.WEB, false);
         
-        url1 = new URL(WEB1);
-        url2 = new URL(WEB2);
+        descriptor1 = new HotlinkDescriptor("label", "description", FILE_ATTR, Type.FILE, "config");
+        descriptor2 = new HotlinkDescriptor("label", "description", LINK_ATTR, Type.WEB, "config");
+        descriptor3 = new HotlinkDescriptor("label", "description", STATE_ATTR, Type.ACTION, "config");
         
         setUpInternal();
-        
+
     }
-    
+
     protected void setUpInternal() {
-        // Override in child class 
+        // Override in child class
     }
     
+    protected IDocument getDoc(List<IDocument> docs, DocumentInfo info) {
+        for (IDocument doc : docs) {
+            if (doc instanceof AbstractBasicDocument) {
+                final AbstractBasicDocument basicDoc = (AbstractBasicDocument) doc;  
+                if (basicDoc.getInfo().getLabel().equals(info.getLabel())) {
+                    return doc;
+                }    
+            }
+        }
+        return null;
+    }
 }
 

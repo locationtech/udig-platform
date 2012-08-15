@@ -22,6 +22,8 @@ public class Messages extends NLS {
     
     private static final String BUNDLE_NAME = "net.refractions.udig.tool.info.internal.messages"; //$NON-NLS-1$
 
+    public static String AbstractAttachmentDocument_errSaveAsNotSupported;
+
     public static String DistanceTool_distance;
 
     public static String DistanceTool_error;
@@ -78,11 +80,23 @@ public class Messages extends NLS {
 
     public static String DocumentDialog_attributeLabel;
 
+    public static String DocumentDialog_createFileFromTemplateError;
+
+    public static String DocumentDialog_createFileFromTemplateSuccess;
+
+    public static String DocumentDialog_createFileFromTemplateTitle;
+
     public static String DocumentDialog_descriptionLabel;
 
     public static String DocumentDialog_documentLabel;
 
     public static String DocumentDialog_editAttachHeader;
+
+    public static String DocumentDialog_enterFilenameErr;
+
+    public static String DocumentDialog_enterFilenameMsg;
+
+    public static String DocumentDialog_enterFilenameTitle;
 
     public static String DocumentDialog_errValidFile;
 
@@ -102,6 +116,12 @@ public class Messages extends NLS {
 
     public static String DocumentDialog_openBtn;
 
+    public static String DocumentDialog_selectTemplateMsg;
+
+    public static String DocumentDialog_selectTemplateTitle;
+
+    public static String DocumentDialog_templateLabel;
+
     public static String DocumentDialog_typeLabel;
 
     public static String DocumentDialog_urlLabel;
@@ -111,6 +131,20 @@ public class Messages extends NLS {
     public static String DocumentPropertyPage_errActionIsBlank;
 
     public static String DocumentPropertyPage_errExists;
+
+    public static String DocumentView_openActionDialogMessage;
+
+    public static String DocumentView_openActionDialogTitle;
+
+    public static String DocumentView_saveAsDialogTitle;
+
+    public static String DocumentView_saveAsErrorDialogMsg;
+
+    public static String DocumentView_saveAsErrorDialogTitle;
+
+    public static String DocumentView_saveAsSuccessDialogMsg;
+
+    public static String DocumentView_saveAsSuccessDialogTitle;
 
     public static String InfoView_instructions_text;
 
@@ -140,10 +174,6 @@ public class Messages extends NLS {
 
     public static String docView_errURLExist;
 
-    public static String docView_featureAttachments;
-
-    public static String docView_featureDocs;
-
     public static String docView_edit;
 
     public static String docView_linkDialogHeader;
@@ -161,8 +191,6 @@ public class Messages extends NLS {
     public static String docView_openDialogTitle;
 
     public static String docView_saveAs;
-
-    public static String docView_shapeDocs;
 
     public static String InfoPropertyPage_labelExpression;
     

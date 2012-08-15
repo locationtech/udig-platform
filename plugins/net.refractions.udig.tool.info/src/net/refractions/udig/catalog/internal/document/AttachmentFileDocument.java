@@ -15,52 +15,38 @@
 package net.refractions.udig.catalog.internal.document;
 
 import java.io.File;
+import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
+
+import net.refractions.udig.catalog.document.IAttachment;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 
 /**
- * Document model for file documents.
+ * Document model for attachment file documents.
  * 
  * @author Naz Chan
  */
-public class FileDocument extends AbstractBasicDocument {
+public class AttachmentFileDocument extends FileDocument implements IAttachment {
 
-    protected File file;
-
-    public FileDocument(DocumentInfo info) {
+    public AttachmentFileDocument(DocumentInfo info) {
         super(info);
     }
-    
+ 
     @Override
-    public void setInfo(DocumentInfo info) {
-        super.setInfo(info);
-        if (info != null) {
-            file = AbstractDocument.createFile(info.getInfo());
+    public boolean saveAs(File newfile) {
+        try {
+            FileUtils.copyFile(file, newfile);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    }
-    
-    @Override
-    public Object getValue() {
-        return file;
+        return false;
     }
 
     @Override
-    public boolean open() {
-        return AbstractDocument.openFile(file);
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return (file == null);
-    }
-    
-    @Override
-    public boolean isTemplate() {
-        return getInfo().isTemplate();
-    }
-    
-    public void setTemplate(boolean isTemplate) {
-        getInfo().setTemplate(isTemplate);
+    public DocType getDocType() {
+        return DocType.ATTACHMENT;
     }
     
 }

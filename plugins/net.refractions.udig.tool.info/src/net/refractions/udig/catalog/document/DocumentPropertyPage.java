@@ -91,13 +91,14 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
 
     private ShpDocPropertyParser propParser;
     
+    public static final String ACTION_PARAM = "{0}"; //$NON-NLS-1$
+    
     @Override
     protected Control createContents(Composite parent) {
         IAdaptable target = getElement();
         final IGeoResource resource = (IGeoResource) target.getAdapter(IGeoResource.class);
-
-        if( resource instanceof ShpGeoResourceImpl ){
-            propParser = new ShpDocPropertyParser(resource.getIdentifier(), null);
+        if (resource.canResolve(ShpGeoResourceImpl.class)) {
+            propParser = new ShpDocPropertyParser(resource.getIdentifier());
         }
         boolean isEnabled = BasicHotlinkResolveFactory.hasHotlinkDescriptors(resource);
         boolean hasAttachmentSource = resource.canResolve(IAttachmentSource.class);
@@ -305,11 +306,15 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
      */
     private void savePropertiesFile(List<HotlinkDescriptor> hotlinks) {
         if( propParser != null ){
-            if (hotlinks != null) {
-                propParser.setFeatureLinks(hotlinks);    
-            } else {
-                propParser.setFeatureLinks(Collections.<HotlinkDescriptor>emptyList());
+            if (!propParser.hasProperties()) {
+                propParser.createPropertiesFile();
             }
+            if (hotlinks != null) {
+                propParser.setHotlinkDescriptors(hotlinks);    
+            } else {
+                propParser.setHotlinkDescriptors(Collections.<HotlinkDescriptor>emptyList());
+            }
+            propParser.writeProperties();
         }
     }
     
