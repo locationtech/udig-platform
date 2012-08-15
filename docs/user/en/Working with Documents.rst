@@ -1,14 +1,14 @@
 Working with Documents
 ######################
 
-You can work with documents associated with a feature or layer using the **Document view**.
+You can work with documents associated with a feature or layer using the **Documents** view.
 
 .. toctree::
    :maxdepth: 1
 
    Configure hotlink attributes
-   Adding a file hotlink
-   Adding a web hotlink
+   Adding a document
+   Setting a hotlink
    
 To select a feature, or layer, please see the related tasks section below.
 
