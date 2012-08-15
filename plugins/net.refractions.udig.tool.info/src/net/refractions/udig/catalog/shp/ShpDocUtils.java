@@ -36,7 +36,7 @@ public final class ShpDocUtils {
      * @return absolute path
      */
     public static String getAbsolutePath(URL url, String relativePath) {
-        if (relativePath != null) {
+        if (relativePath != null && relativePath.trim().length() > 0) {
             try {
                 final File parentFile = new File(new URI(url.toString()));
                 final File childFile = new File(parentFile.getParent(), relativePath);
@@ -58,7 +58,7 @@ public final class ShpDocUtils {
      * @return relative path
      */
     public static String getRelativePath(URL url, String absolutePath) {
-        if (absolutePath != null) {
+        if (absolutePath != null && absolutePath.trim().length() > 0) {
             try {
                 final File parentFile = new File(new URI(url.toString()));
                 final File parentDir = parentFile.getParentFile();

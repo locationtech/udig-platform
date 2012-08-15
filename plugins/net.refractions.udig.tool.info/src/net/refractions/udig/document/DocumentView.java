@@ -266,7 +266,7 @@ public class DocumentView extends ViewPart {
         saveAsButton.addSelectionListener(btnSelectionListener);
         
         // remove button
-        removeButton = toolkit.createButton(btnSection, Messages.docView_delete, SWT.PUSH);
+        removeButton = toolkit.createButton(btnSection, Messages.docView_remove, SWT.PUSH);
         removeButton.setLayoutData(btnLayoutData);
         removeButton.addSelectionListener(btnSelectionListener);
         
@@ -344,6 +344,11 @@ public class DocumentView extends ViewPart {
                     if (!doc.isEmpty()) {
                         openButton.setEnabled(true);
                         removeButton.setEnabled(true);
+                    }
+                    if (DocType.ATTACHMENT == doc.getDocType()) {
+                        removeButton.setText(Messages.docView_delete);
+                    } else {
+                        removeButton.setText(Messages.docView_remove);
                     }
                 }
             } else if (viewerSelection.size() > 1) {
@@ -926,9 +931,19 @@ public class DocumentView extends ViewPart {
                         final String attributeName = hotlinkDoc.getAttributeName();
                         featureDocSource.clear(feature, attributeName);
                         set(attributeName, null);
+                    } else if (DocType.ATTACHMENT == doc.getDocType()) {
+                        if (Type.FILE == doc.getType()) {
+                            final boolean doDelete = MessageDialog.openConfirm(
+                                    removeButton.getShell(),
+                                    Messages.docView_deleteAttachConfirmTitle,
+                                    Messages.docView_deleteAttachConfirmMsg);
+                            if (doDelete) {
+                                featureDocSource.remove(feature, doc);
+                            }
+                        }
                     } else {
                         featureDocSource.remove(feature, doc);
-                    }             
+                    }
                 }
             }
         }
@@ -1068,7 +1083,8 @@ public class DocumentView extends ViewPart {
                         return InfoPlugin.getDefault().getImageRegistry()
                                 .get(InfoPlugin.IMG_OBJ_LINK);
                     case ACTION:
-                        // TODO - Request image
+                        return InfoPlugin.getDefault().getImageRegistry()
+                                .get(InfoPlugin.IMG_OBJ_ACTION);
                     default:
                         break;
                     }

@@ -160,6 +160,10 @@ public class Messages extends NLS {
 
     public static String docView_delete;
 
+    public static String docView_deleteAttachConfirmMsg;
+
+    public static String docView_deleteAttachConfirmTitle;
+
     public static String docView_descriptionColumn;
 
     public static String docView_typeColumn;
@@ -189,6 +193,8 @@ public class Messages extends NLS {
     public static String docView_open;
 
     public static String docView_openDialogTitle;
+
+    public static String docView_remove;
 
     public static String docView_saveAs;
 
