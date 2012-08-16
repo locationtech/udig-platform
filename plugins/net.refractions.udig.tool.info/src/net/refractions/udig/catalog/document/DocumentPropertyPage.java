@@ -26,6 +26,7 @@ import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
 import net.refractions.udig.document.DocUtils;
+import net.refractions.udig.tool.info.InfoPlugin;
 import net.refractions.udig.tool.info.internal.Messages;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -41,6 +42,8 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -61,7 +64,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPropertyPage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PropertyPage;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -196,6 +201,35 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         hotlinkViewer.setContentProvider(ArrayContentProvider.getInstance());
         
         TableViewerColumn column = new TableViewerColumn(hotlinkViewer, SWT.NONE);
+        column.getColumn().setText(""); //$NON-NLS-1$
+        column.setLabelProvider(new ColumnLabelProvider() {
+            @Override
+            public String getText(Object element) {
+                return ""; //$NON-NLS-1$
+            }
+            @Override
+            public Image getImage(Object element) {
+                final HotlinkDescriptor descriptor = (HotlinkDescriptor) element;
+                switch (descriptor.getType()) {
+                case FILE:
+                    return PlatformUI.getWorkbench().getSharedImages()
+                            .getImage(ISharedImages.IMG_OBJ_FILE);
+                case WEB:
+                    return InfoPlugin.getDefault().getImageRegistry()
+                            .get(InfoPlugin.IMG_OBJ_LINK);
+                case ACTION:
+                    return InfoPlugin.getDefault().getImageRegistry()
+                            .get(InfoPlugin.IMG_OBJ_ACTION);
+                default:
+                    break;
+                }
+                return PlatformUI.getWorkbench().getSharedImages()
+                        .getImage(ISharedImages.IMG_OBJ_ELEMENT);
+            }
+        });
+        columnLayout.setColumnData(column.getColumn(), new ColumnWeightData(8, 0, true));
+        
+        column = new TableViewerColumn(hotlinkViewer, SWT.NONE);
         column.getColumn().setText(Messages.Document_Label_Column);
         column.setLabelProvider(new ColumnLabelProvider() {
             @Override
@@ -241,7 +275,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 return descriptor.getConfig();
             }
         });
-        columnLayout.setColumnData( column.getColumn(), new ColumnWeightData( 35, 0, true ));
+        columnLayout.setColumnData( column.getColumn(), new ColumnWeightData( 30, 0, true ));
         
         hotlinkViewer.getTable().setHeaderVisible(true);
         hotlinkViewer.getTable().setLinesVisible(true);
@@ -251,6 +285,14 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 ISelection sel = event.getSelection();
                 editHotlink.setEnabled(!sel.isEmpty());
                 removeButton.setEnabled(!sel.isEmpty());
+            }
+        });
+        hotlinkViewer.addDoubleClickListener(new IDoubleClickListener() {
+            @Override
+            public void doubleClick(DoubleClickEvent event) {
+                final StructuredSelection selection = (StructuredSelection) hotlinkViewer.getSelection();
+                final HotlinkDescriptor descriptor = (HotlinkDescriptor) selection.getFirstElement();
+                editDescriptor(descriptor);
             }
         });
         hotlinkViewer.setInput(hotlinkList);
@@ -509,7 +551,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
             createMessageArea(composite);
-            imageLabel.setLayoutData("cell 0 0, alignx center"); //$NON-NLS-1$
+            imageLabel.setLayoutData("cell 0 0, alignx right"); //$NON-NLS-1$
             messageLabel.setLayoutData("cell 1 0 2 1, aligny center"); //$NON-NLS-1$
             
             Label labelLbl = new Label(composite, SWT.NONE);
@@ -538,10 +580,13 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             attributeViewer.addSelectionChangedListener( new ISelectionChangedListener() {
                 @Override
                 public void selectionChanged(SelectionChangedEvent event) {
-                    boolean hasAttribute = !event.getSelection().isEmpty();
-                    if( getButton(IDialogConstants.OK_ID) != null ){
-                        getButton(IDialogConstants.OK_ID).setEnabled(hasAttribute);
+                    final StructuredSelection selection = (StructuredSelection) event.getSelection();
+                    final boolean hasAttribute = !selection.isEmpty();
+                    final Button okBtn = getButton(IDialogConstants.OK_ID);
+                    if (okBtn != null) {
+                        okBtn.setEnabled(hasAttribute);
                     }
+                    labelText.setText(getLabelFromAttribute());
                 }
             });
             
@@ -577,10 +622,10 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             actionLabel = new Label(composite, SWT.SINGLE);
             actionLabel.setText(Messages.DocumentPropertyPage_Action);
             actionLabel.setLayoutData(""); //$NON-NLS-1$
-            
-            actionText = new Text(composite,  SWT.SINGLE | SWT.BORDER );
-            actionText.setLayoutData("growx"); //$NON-NLS-1$
 
+            actionText = new Text(composite, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+            actionText.setLayoutData("growx, h 60!"); //$NON-NLS-1$
+            
             if( descriptor.isEmpty() ){
                 final Type defaultType = Type.FILE;
                 typeViewer.setSelection(new StructuredSelection(defaultType), true);
@@ -634,7 +679,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 String attributeName = attributeViewer.getCombo().getText();
                 String label = labelText.getText();
                 if( label == null || label.isEmpty() ){
-                    label = DocUtils.toCamelCase(attributeName);
+                    label = getLabelFromAttribute();
                 }
                 String description = descriptionText.getText();
                 StructuredSelection selection = (StructuredSelection) typeViewer.getSelection();
@@ -691,6 +736,22 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         protected void cancelPressed() {
             descriptor = null;
             super.cancelPressed();
+        }
+     
+        /**
+         * Gets the label string from the attribute name value
+         * 
+         * @return label
+         */
+        private String getLabelFromAttribute() {
+            final StructuredSelection selection = (StructuredSelection) attributeViewer.getSelection();
+            final boolean hasAttribute = !selection.isEmpty();
+            if (hasAttribute) {
+                String attribute = (String) selection.getFirstElement();
+                attribute = attribute.replace('_', ' ');
+                return DocUtils.toCamelCase(attribute);
+            }
+            return ""; //$NON-NLS-1$
         }
         
     }
