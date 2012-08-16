@@ -726,19 +726,19 @@ public class MergeView extends ViewPart implements IUDIGView {
 	@Override
 	public void setContext(IToolContext newContext) {
 
-		if (MergeContext.getInstance().getMergeMode() == MergeContext.MERGEMODE_OPERATION) {
-			// ######### THIS IS NEW STUFF - Before editing the setContext
-			// method was EMPTY
-			IMap map;
-			if (newContext == null) {
-				// initialize or reinitialize the Presenter
-				map = getCurrentMap();
-				if (map != null) {
-					removeListenerFrom(map);
-				}
-			} else {
-				// sets maps and its layers as current
-				map = newContext.getMap();
+		// ######### THIS IS NEW STUFF - Before editing the setContext
+		// method was EMPTY
+		IMap map;
+		if (newContext == null) {
+			// initialize or reinitialize the Presenter
+			map = getCurrentMap();
+			if (map != null) {
+				removeListenerFrom(map);
+			}
+		} else {
+			// sets maps and its layers as current
+			map = newContext.getMap();
+			if (MergeContext.getInstance().getMergeMode() == MergeContext.MERGEMODE_OPERATION) {
 				if (map != null) {
 
 					// add this presenter as listener of the map
@@ -746,17 +746,18 @@ public class MergeView extends ViewPart implements IUDIGView {
 					addListenersTo(map, layerList);
 				}
 			}
-			this.context = newContext;
-
-			// notifies the change in current map
-
-			// REMOVED WHILE IMPLEMENTING STEP-BY-STEP changedMapActions(map);
-			if (map != null) {
-				// changedLayerListActions(); <<-- this method is void in
-				// AbstractParamsPresenter
-				// validateParameters();
-			}
 		}
+		this.context = newContext;
+
+		// notifies the change in current map
+
+		// REMOVED WHILE IMPLEMENTING STEP-BY-STEP changedMapActions(map);
+		if (map != null) {
+			// changedLayerListActions(); <<-- this method is void in
+			// AbstractParamsPresenter
+			// validateParameters();
+		}
+
 		// #############################################
 
 	}
