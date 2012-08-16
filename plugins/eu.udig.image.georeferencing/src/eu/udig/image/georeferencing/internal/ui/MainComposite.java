@@ -345,19 +345,27 @@ public class MainComposite extends Composite implements Observer, GeoReferencing
 	 */
 	public void executeOperation() {
 
-		setEnabled(false);
 
-		// sets the wait cursor and disables this panel
 		ViewportPane pane = this.udigContext.getViewportPane();
 		Display display = getDisplay();
 
-		pane.setCursor(display.getSystemCursor(SWT.CURSOR_WAIT));
+		try {
+			setEnabled(false);
 
-		this.cmd.execute();
+			// sets the wait cursor and disables this panel
 
-		pane.setCursor(null);
+			pane.setCursor(display.getSystemCursor(SWT.CURSOR_WAIT));
 
-		setEnabled(true);
+			this.cmd.execute();
+
+		} catch (IOException e) {
+			displayMessage(new InfoMessage( e.getMessage(), InfoMessage.Type.FAIL ) );			
+		} finally {
+			pane.setCursor(null);
+
+			setEnabled(true);
+		}
+
 	}
 
 	public void update(Observable o, Object arg) {

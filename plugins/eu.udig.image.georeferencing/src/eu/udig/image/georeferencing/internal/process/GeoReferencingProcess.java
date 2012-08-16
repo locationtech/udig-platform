@@ -139,8 +139,9 @@ public class GeoReferencingProcess {
 	 * </pre>
 	 * 
 	 * </p>
+	 * @throws IOException 
 	 */
-	public void run() {
+	public void run() throws IOException {
 
 		WarpTransform2D warpTransform = new WarpTransform2D(srcCoords, dstCoords, 1);
 
@@ -159,20 +160,22 @@ public class GeoReferencingProcess {
 			Operations ops = new Operations(null);
 			Coverage resample = ops.resample(coverage, this.crsTarget);
 			warpedCoverage = (GridCoverage2D) resample;
+			saveImage(warpedCoverage);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
 
-		saveImage(warpedCoverage);
 	}
 
 	/**
 	 * Creates a tif file using the give coverage.
 	 * 
 	 * @param warpedCoverage
+	 * @throws IOException 
 	 */
-	private void saveImage(GridCoverage2D warpedCoverage) {
+	private void saveImage(GridCoverage2D warpedCoverage) throws IOException {
 
 		if (warpedCoverage != null) {
 
@@ -187,19 +190,16 @@ public class GeoReferencingProcess {
 	 *            The coverage.
 	 * @param filename
 	 *            The output file name.
+	 * @throws IOException 
 	 */
-	private void writeTif(GridCoverage2D warpedCoverage, String filename) {
+	private void writeTif(GridCoverage2D warpedCoverage, String filename) throws IOException {
 
 		GeoTiffWriter writer;
 		if (!filename.contains(".tif")) { //$NON-NLS-1$
 			filename += ".tif"; //$NON-NLS-1$
 		}
-		try {
-			writer = new GeoTiffWriter(new File(filename));
-			writer.write(warpedCoverage.view(ViewType.GEOPHYSICS), null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		writer = new GeoTiffWriter(new File(filename));
+		writer.write(warpedCoverage.view(ViewType.GEOPHYSICS), null);
 
 		// add the result as a layer to the map by
 		// loading that file as a layer

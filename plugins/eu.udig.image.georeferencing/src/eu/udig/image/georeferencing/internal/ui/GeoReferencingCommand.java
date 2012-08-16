@@ -19,6 +19,7 @@ package eu.udig.image.georeferencing.internal.ui;
 
 import java.awt.Point;
 import java.awt.geom.Point2D;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -241,8 +242,9 @@ public final class GeoReferencingCommand extends Observable {
 
 	/**
 	 * Launch the georeferencing process.
+	 * @throws IOException 
 	 */
-	public void execute() {
+	public void execute() throws IOException {
 
 		if (!this.readyToExecute) {
 			throw new IllegalStateException(Messages.GeoReferencingCommand_cmdNotReady);
@@ -262,6 +264,7 @@ public final class GeoReferencingCommand extends Observable {
 
 		GeoReferencingProcess process = new GeoReferencingProcess(this.crsTarget, srcCoords, dstCoords, this.imagePath,
 					this.outputFileName, this.originalMap);
+		
 		process.run();
 
 		// FIXME test it, i want to see the newly added layer rendered in uDig.

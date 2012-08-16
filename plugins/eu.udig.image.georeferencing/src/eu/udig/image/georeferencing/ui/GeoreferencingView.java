@@ -129,13 +129,11 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 
 	@Override
 	public void init(IViewSite site) throws PartInitException {
-		// TODO Auto-generated method stub
 		super.init(site);
 	}
 
 	@Override
 	public void init(IViewSite site, IMemento memento) throws PartInitException {
-		// TODO Auto-generated method stub
 		super.init(site, memento);
 	}
 
@@ -180,9 +178,7 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 
 			@Override
 			public void run() {
-				showEnabled(false);
-				cmd.execute();
-				showEnabled(true);
+				executeGeoReferencingCommand();
 			}
 		};
 		this.runAction.setText(Messages.GeoreferencingView_runActionText);
@@ -220,6 +216,18 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 		this.saveAction.setEnabled(false);
 	}
 
+	protected void executeGeoReferencingCommand(){
+		try{
+			showEnabled(false);
+			cmd.execute();
+		} catch (Exception e){
+			e.printStackTrace();
+		}finally{
+			showEnabled(true);
+		}
+
+	}
+	
 	/**
 	 * Create the runButtonAction
 	 * 
@@ -237,10 +245,7 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 
 		@Override
 		public void run() {
-
-			showEnabled(false);
-			cmd.execute();
-			showEnabled(true);
+			executeGeoReferencingCommand();
 		}
 	}
 
