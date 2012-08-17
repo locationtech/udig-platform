@@ -29,6 +29,7 @@ import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import net.refractions.udig.document.DocUtils;
 
 import org.opengis.feature.simple.SimpleFeature;
 
@@ -414,6 +415,23 @@ public class ShpDocPropertyParser {
     }
     
     /**
+     * Gets the directory of the shapefile's attachments.
+     * 
+     * @return directory of the shapefile's attachments
+     */
+    public File getShapefileAttachDir() {
+        try {
+            final File shapeFile = new File(url.toURI());
+            final String folderName = String.format(SHAPE_DOCS_FOLDER, DocUtils.getName(shapeFile));
+            final File attachDir = new File(shapeFile.getParent(), folderName); 
+            return attachDir;
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    /**
      * Gets the directory of feature's attachments.
      * <p>
      * Attachments directory:
@@ -424,18 +442,9 @@ public class ShpDocPropertyParser {
      * @param fid
      * @return directory of feature's attachments
      */
-    public File getFeatureDocumentsDir(String fid) {
-        try {
-            final File shapeFile = new File(url.toURI());
-            String fileName = shapeFile.getName();
-            fileName = fileName.substring(0, fileName.lastIndexOf('.'));
-            final String folderName = String.format(SHAPE_DOCS_FOLDER, fileName);
-            final File attachDir = new File(shapeFile.getParent(), folderName);
-            return new File(attachDir, fid);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public File getFeatureAttachDir(String fid) {
+        final File attachDir = new File(getShapefileAttachDir(), fid);; 
+        return attachDir;
     }
     
 }

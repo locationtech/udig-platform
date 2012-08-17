@@ -15,9 +15,12 @@
 package net.refractions.udig.catalog.shp;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+
+import org.apache.commons.io.FileUtils;
 
 /**
  * Utility methods for shape document processing related classes.
@@ -68,6 +71,70 @@ public final class ShpDocUtils {
                 // Should not happen as shapefile should be a valid file
                 e.printStackTrace();
             }
+        }
+        return null;
+    }
+    
+    /**
+     * Deletes a file from the file system.
+     * 
+     * @param fileObj
+     * @return true if successful, otherwise false
+     */
+    public static boolean deleteFile(Object fileObj) {
+        if (fileObj instanceof File) {
+            return deleteFile((File) fileObj);
+        }
+        return false;
+    }
+    
+    /**
+     * Deletes a file from the file system.
+     * 
+     * @param file
+     * @return true if successful, otherwise false
+     */
+    public static boolean deleteFile(File file) {
+        if (file != null) {
+            if (file.exists()) {
+                return file.delete();    
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Copies a read-only copy of the old file into new file directory.
+     * 
+     * @param oldFilePath
+     * @param newFileDir
+     * @return new file
+     */
+    public static File copyFile(String oldFilePath, File newFileDir) {
+        return copyFile(new File(oldFilePath), newFileDir);
+    }
+    
+    /**
+     * Copies a read-only copy of the old file into new file directory.
+     * 
+     * @param oldFile
+     * @param newFileDir
+     * @return new file
+     */
+    public static File copyFile(File oldFile, File newFileDir) {
+        try {
+            if (!newFileDir.exists()) {
+                newFileDir.mkdir();
+            }
+            final File newFile = new File(newFileDir, oldFile.getName());
+            if (!newFile.exists()) {
+                FileUtils.copyFileToDirectory(oldFile, newFileDir);
+                newFile.setReadOnly();
+            }
+            return newFile;
+        } catch (IOException e) {
+            // Should not happen
+            e.printStackTrace();
         }
         return null;
     }

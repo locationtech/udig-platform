@@ -16,6 +16,8 @@ package net.refractions.udig.document;
 
 import java.io.File;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocument.Type;
@@ -28,6 +30,9 @@ import net.refractions.udig.catalog.document.IDocument.Type;
 public final class DocUtils {
 
     private static final String DOCUMENT_FORMAT = "%s (%s)"; //$NON-NLS-1$
+    private static final String LABEL_DESC_FORMAT = "%s - %s"; //$NON-NLS-1$
+    private static final String SAVE_AS_FORMAT = "%s-Copy.%s"; //$NON-NLS-1$
+    private static final String FILENAME_FORMAT = "%s.%s"; //$NON-NLS-1$
 
     /**
      * Gets the document string label.
@@ -175,7 +180,7 @@ public final class DocUtils {
     public static String toCamelCase(String text) {
         int count = 0;
         final StringBuilder sb = new StringBuilder();
-        final String[] words = text.split(" "); //$NON-NLS-1$
+        final String[] words = text.replace('_', ' ').split(" "); //$NON-NLS-1$
         for (String word : words) {
             count++;
             if (word.length() == 1) {
@@ -190,4 +195,93 @@ public final class DocUtils {
         return sb.toString();
     }
 
+    /**
+     * Gets the formatted label and description display string.
+     * 
+     * @param label
+     * @param description
+     * @return formatted label and description display string
+     */
+    public static String getLabelAndDescDisplay(String label, String description) {
+        if (description != null && description.trim().length() > 0) {
+            return String.format(LABEL_DESC_FORMAT, label, description);
+        }
+        return label;
+    }
+    
+    /**
+     * Gets the default filename when saving as another file.
+     * 
+     * @param file
+     * @return default filename
+     */
+    public static String getDefaultFilename(File file) {
+        final Map<String, String> parts = getNameParts(file);
+        return String.format(SAVE_AS_FORMAT, parts.get(F_NAME), parts.get(F_EXT));
+    }
+    
+    /**
+     * Gets a clean filename. This adds an extension from the old file if an extension is not
+     * supplied in the new file path.
+     * 
+     * @param newfilePath
+     * @param oldFile
+     * @return clean filename
+     */
+    public static String cleanFilename(String newfilePath, File oldFile) {
+        final File newFile = new File(newfilePath);
+        final Map<String, String> oldParts = getNameParts(oldFile);
+        final Map<String, String> newParts = getNameParts(newFile);
+        if (newParts.get(F_EXT) == null) {
+            final File newFileDir = newFile.getParentFile();
+            final String cleanFilename = String.format(FILENAME_FORMAT, newParts.get(F_NAME),
+                    oldParts.get(F_EXT));
+            final File cleanNewFile = new File(newFileDir, cleanFilename);
+            return cleanNewFile.getAbsolutePath();
+        }
+        return newfilePath;
+    }
+    
+    private static final String F_NAME = "F_NAME"; //$NON-NLS-1$
+    private static final String F_EXT = "F_EXT"; //$NON-NLS-1$
+    
+    /**
+     * Gets the name and extension from a filename and stores them in a map.
+     * 
+     * @param file
+     * @return filename parts map
+     */
+    private static Map<String, String> getNameParts(File file) {
+        final String filename = file.getName();
+        return getNameParts(filename);
+    }
+    
+    /**
+     * Gets the name and extension from a filename and stores them in a map.
+     * 
+     * @param filename
+     * @return filename parts map
+     */
+    private static Map<String, String> getNameParts(String filename) {
+        final Map<String, String> parts = new HashMap<String, String>();
+        final int index = filename.lastIndexOf('.');
+        if (index == -1) {
+            parts.put(F_NAME, filename);
+        } else {
+            parts.put(F_NAME, filename.substring(0, index));
+            parts.put(F_EXT, filename.substring(index + 1));    
+        }
+        return parts;
+    }
+    
+    /**
+     * Gets the name part of the filename.
+     * 
+     * @param file
+     * @return name part of filename
+     */
+    public static String getName(File file) {
+        return getNameParts(file).get(F_NAME);
+    }
+    
 }

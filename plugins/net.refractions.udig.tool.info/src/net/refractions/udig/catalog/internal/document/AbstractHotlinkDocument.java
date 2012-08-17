@@ -75,9 +75,12 @@ public abstract class AbstractHotlinkDocument extends AbstractDocument implement
             final StringBuilder sb = new StringBuilder();
             for (HotlinkDescriptor descriptor : descriptors) {
                 count++;
-                sb.append(descriptor.getDescription());
-                if (count < descriptors.size()) {
-                    sb.append(", "); //$NON-NLS-1$    
+                final String description = descriptor.getDescription();
+                if (description != null) {
+                    sb.append(description);
+                    if (count < descriptors.size()) {
+                        sb.append(", "); //$NON-NLS-1$    
+                    }    
                 }
             }
             return sb.toString();

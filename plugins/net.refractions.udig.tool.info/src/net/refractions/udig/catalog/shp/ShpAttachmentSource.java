@@ -15,7 +15,6 @@
 package net.refractions.udig.catalog.shp;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +27,7 @@ import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.internal.document.AbstractBasicDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 
-import org.apache.commons.io.FileUtils;
 import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.filter.identity.FeatureId;
 
 /**
  * This is the shapefile attachment source implementation. This implements getters and setters to
@@ -65,35 +62,40 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     
     @Override
     public IDocument add(SimpleFeature feature, DocumentInfo info) {
-        if (Type.FILE == info.getType()) {
-            final File newFile = copyFile(feature.getIdentifier(), info.getInfo());
-            info.setInfo(newFile.getAbsolutePath());
-        }
-        final IDocument newDoc = docFactory.create(info, true);
-        getDocsInternal(feature).add(newDoc);
+        final IDocument doc = addInternal(feature, info);
         save(feature);
-        return newDoc;
+        return doc;
     }
 
     @Override
     public List<IDocument> add(SimpleFeature feature, List<DocumentInfo> infos) {
         final List<IDocument> newDocs = new ArrayList<IDocument>();
         for (DocumentInfo info : infos) {
-            newDocs.add(add(feature, info));
+            addInternal(feature, info);
         }
         save(feature);
         return newDocs;
     }
 
+    private IDocument addInternal(SimpleFeature feature, DocumentInfo info) {
+        if (Type.FILE == info.getType()) {
+            final File newFile = ShpDocUtils.copyFile(info.getInfo(), getAttachmentDir(feature));
+            info.setInfo(newFile.getAbsolutePath());
+        }
+        final IDocument newDoc = docFactory.create(info, true);
+        getDocsInternal(feature).add(newDoc);
+        return newDoc;
+    }
+    
     @Override
     public IDocument update(SimpleFeature feature, IDocument doc, DocumentInfo info) {
         if (Type.FILE == info.getType()) {
             final File oldFile = (File) doc.getValue();
             if (oldFile == null) {
-                updateAttachment(feature, oldFile, info);
+                updateInternal(feature, oldFile, info);
             } else {
                 if (!oldFile.getAbsolutePath().equals(info.getInfo())) {
-                    updateAttachment(feature, oldFile, info);
+                    updateInternal(feature, oldFile, info);
                 }    
             }
         }
@@ -102,9 +104,9 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
         return doc;
     }
 
-    private void updateAttachment(SimpleFeature feature, File oldFile, DocumentInfo info) {
-        deleteFile(oldFile);
-        final File newFile = copyFile(feature.getIdentifier(), info.getInfo());
+    private void updateInternal(SimpleFeature feature, File oldFile, DocumentInfo info) {
+        ShpDocUtils.deleteFile(oldFile);
+        final File newFile = ShpDocUtils.copyFile(info.getInfo(), getAttachmentDir(feature));
         info.setInfo(newFile.getAbsolutePath());
     }
     
@@ -126,52 +128,10 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
 
     private boolean removeInternal(SimpleFeature feature, IDocument oldDoc) {
         if (Type.FILE == oldDoc.getType()) {
-            deleteFile(oldDoc.getValue());
+            ShpDocUtils.deleteFile(oldDoc.getValue());
         }
         getDocsInternal(feature).remove(oldDoc);
         return true;
-    }
-    
-    /**
-     * Deletes the file attachment.
-     * 
-     * @param fileObj
-     * @return true if successful, otherwise false
-     */
-    private boolean deleteFile(Object fileObj) {
-        if (fileObj != null) {
-            final File oldFile = (File) fileObj;
-            if (oldFile.exists()) {
-                return oldFile.delete();    
-            }
-        }
-        return false;
-    }
-    
-    /**
-     * Copies the file to the feature's documents directory.
-     * 
-     * @param fid
-     * @param file
-     * @return new file
-     */
-    private File copyFile(FeatureId fid, String filePath) {
-        try {
-            final File attachDir = propParser.getFeatureDocumentsDir(fid.getID());
-            if (!attachDir.exists()) {
-                attachDir.mkdir();
-            }
-            final File oldFile = new File(filePath);
-            final File newFile = new File(attachDir, oldFile.getName());
-            if (!newFile.exists()) {
-                FileUtils.copyFileToDirectory(oldFile, attachDir);    
-            }
-            return newFile;
-        } catch (IOException e) {
-            // Should not happen
-            e.printStackTrace();
-        }
-        return null;
     }
     
     private void save(SimpleFeature feature) {
@@ -184,6 +144,16 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
         }
         propParser.setFeatureDocumentInfos(feature, infos);
         propParser.writeProperties();
+    }
+    
+    /**
+     * Gets the attachment directory of the feature.
+     * 
+     * @param feature
+     * @return attachment directory
+     */
+    private File getAttachmentDir(SimpleFeature feature) {
+        return propParser.getFeatureAttachDir(feature.getIdentifier().getID());
     }
     
 }

@@ -747,8 +747,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             final StructuredSelection selection = (StructuredSelection) attributeViewer.getSelection();
             final boolean hasAttribute = !selection.isEmpty();
             if (hasAttribute) {
-                String attribute = (String) selection.getFirstElement();
-                attribute = attribute.replace('_', ' ');
+                final String attribute = (String) selection.getFirstElement();
                 return DocUtils.toCamelCase(attribute);
             }
             return ""; //$NON-NLS-1$

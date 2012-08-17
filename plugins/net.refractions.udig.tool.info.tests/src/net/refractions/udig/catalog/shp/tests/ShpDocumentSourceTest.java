@@ -14,6 +14,7 @@
  */
 package net.refractions.udig.catalog.shp.tests;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,19 +38,16 @@ import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 @SuppressWarnings("nls")
 public class ShpDocumentSourceTest extends AbstractShpDocTest {
 
+    private ShpDocPropertyParser parser;
     private ShpDocumentSource source;
+    private File attachDir;
     
     @Override
     protected void setUpInternal() {
         super.setUpInternal();
         
-        final ShpDocPropertyParser parser = new ShpDocPropertyParser(url);
-        
-        List<DocumentInfo> inInfos = new ArrayList<DocumentInfo>();
-        inInfos.add(fileDocInfo1);
-        inInfos.add(webDocInfo1);
-        parser.setShapeDocmentInfos(inInfos);
-        parser.writeProperties();
+        parser = new ShpDocPropertyParser(url);
+        attachDir = parser.getShapefileAttachDir();
         
         final Map<String, Serializable> params = new HashMap<String, Serializable>();
         params.put(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key, false);
@@ -59,43 +57,49 @@ public class ShpDocumentSourceTest extends AbstractShpDocTest {
         final ShpGeoResourceImpl geoResource = new ShpGeoResourceImpl(service, "");
         source = new ShpDocumentSource(geoResource);
         
+        cleaupAttachDir();
+        
     }
     
     public void testGet() {
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
+        assertEquals("Count is not expected.", 0, source.getDocuments().size());
     }
     
     public void testAddRemove() {
         
         List<IDocument> docs = source.getDocuments();
-        assertEquals("Count is not expected.", 2, docs.size());
+        assertEquals("Count is not expected.", 0, docs.size());
         
-        source.add(fileDocInfo2);
-        assertEquals("Count is not expected.", 3, docs.size());
+        source.add(fileDocInfo1);
+        assertEquals("Count is not expected.", 1, docs.size());
 
-        source.remove(getDoc(docs, fileDocInfo2));
-        assertEquals("Count is not expected.", 2, docs.size());
+        source.remove(getDoc(docs, fileDocInfo1));
+        assertEquals("Count is not expected.", 0, docs.size());
 
         List<DocumentInfo> inInfos = new ArrayList<DocumentInfo>();
         inInfos.add(fileDocInfo2);
         inInfos.add(webDocInfo2);
 
         source.add(inInfos);
-        assertEquals("Count is not expected.", 4, docs.size());
+        assertEquals("Count is not expected.", 2, docs.size());
 
         List<IDocument> inDocs = new ArrayList<IDocument>();
-        inDocs.add(getDoc(docs, fileDocInfo1));
-        inDocs.add(getDoc(docs, webDocInfo1));
+        inDocs.add(getDoc(docs, fileDocInfo2));
+        inDocs.add(getDoc(docs, webDocInfo2));
         
         source.remove(inDocs);
-        assertEquals("Count is not expected.", 2, docs.size());
+        assertEquals("Count is not expected.", 0, docs.size());
+        
+        cleaupAttachDir();
         
     }
     
     public void testUpdateFile() {
         
         List<IDocument> docs = source.getDocuments();
-        assertEquals("Count is not expected.", 2, docs.size());
+        assertEquals("Count is not expected.", 0, docs.size());
+        
+        source.add(fileDocInfo1);
         
         IDocument doc = getDoc(docs, fileDocInfo1);
         assertNotNull("Doc does not exists.", doc);
@@ -106,6 +110,21 @@ public class ShpDocumentSourceTest extends AbstractShpDocTest {
         doc = getDoc(docs, fileDocInfo2);
         assertNotNull("Doc does not exists.", doc);
         
+        cleaupAttachDir();
+        
+    }
+    
+    private void cleaupAttachDir() {
+        
+        parser.setShapeDocmentInfos(new ArrayList<DocumentInfo>());
+        parser.writeProperties();
+        
+        if (attachDir.exists()) {
+            for (File file : attachDir.listFiles()) {
+                file.delete();
+            }
+            attachDir.delete();
+        }
     }
     
 }

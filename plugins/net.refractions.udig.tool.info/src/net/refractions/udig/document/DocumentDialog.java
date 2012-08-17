@@ -156,7 +156,7 @@ public class DocumentDialog extends IconAndMessageDialog {
      * @param isInfoOnly
      */
     public DocumentDialog(Shell parentShell, Map<String, Object> values, Map<String, Object> params) {
-        super(parentShell);
+        this(parentShell);
         this.values = values;
         this.params = params;
         this.isAttachment = isAttachment();
@@ -457,11 +457,11 @@ public class DocumentDialog extends IconAndMessageDialog {
      * @return new file
      */
     private File createFromTemplate() {
-        final File templateFile = selectTemplate();
+        final File templateFile = openSelectTemplateDialog();
         if (templateFile != null) {
-            final String filePath = enterFilename();
+            final String filePath = openSaveFileDialog(templateFile);
             if (filePath != null) {
-                return createFile(templateFile, filePath);
+                return createFileFromTemplate(templateFile, filePath);
             }
         }
         return null;
@@ -472,7 +472,7 @@ public class DocumentDialog extends IconAndMessageDialog {
      * 
      * @return template file
      */
-    private File selectTemplate() { 
+    private File openSelectTemplateDialog() { 
 
         final ListDialog selectDialog = new ListDialog(infoNewBtn.getShell());
         selectDialog.setTitle(Messages.DocumentDialog_selectTemplateTitle);
@@ -481,7 +481,8 @@ public class DocumentDialog extends IconAndMessageDialog {
             @Override
             public String getText(Object element) {
                 final IDocument doc = (IDocument) element;
-                return DocUtils.getDocStr(doc) + " - " + doc.getDescription(); //$NON-NLS-1$
+                return DocUtils.getLabelAndDescDisplay(DocUtils.getDocStr(doc),
+                        doc.getDescription());
             }
         });
         selectDialog.setContentProvider(new ArrayContentProvider());
@@ -508,10 +509,11 @@ public class DocumentDialog extends IconAndMessageDialog {
      * 
      * @return filename
      */
-    private String enterFilename() {
+    private String openSaveFileDialog(File templateFile) {
         final FileDialog dialog = new FileDialog(infoNewBtn.getShell(), SWT.SAVE);
         dialog.setText(Messages.DocumentDialog_enterFilenameTitle);
         dialog.setOverwrite(true);
+        dialog.setFileName(DocUtils.getDefaultFilename(templateFile));
         final String filePath = dialog.open();
         if (filePath != null) {
             return filePath;
@@ -526,9 +528,9 @@ public class DocumentDialog extends IconAndMessageDialog {
      * @param filePath
      * @return new file
      */
-    private File createFile(File templateFile, String filePath) {
+    private File createFileFromTemplate(File templateFile, String filePath) {
         try {
-            final File file = new File(filePath);
+            final File file = new File(DocUtils.cleanFilename(filePath, templateFile));
             FileUtils.copyFile(templateFile, file);
             MessageDialog.openInformation(infoNewBtn.getShell(),
                     Messages.DocumentDialog_createFileFromTemplateTitle,
@@ -564,10 +566,14 @@ public class DocumentDialog extends IconAndMessageDialog {
         infoGoAction.addSelectionChangedListener(new ISelectionChangedListener() {
             public void selectionChanged(SelectionChangedEvent event) {
                 final StructuredSelection selection = (StructuredSelection) event.getSelection();
-                final HotlinkDescriptor descriptor = (HotlinkDescriptor) selection
-                        .getFirstElement();
+                final HotlinkDescriptor descriptor = (HotlinkDescriptor) selection.getFirstElement();
                 label.setText(descriptor.getLabel());
-                description.setText(descriptor.getDescription());
+                final String descriptionStr = descriptor.getDescription();
+                if (descriptionStr == null) {
+                    description.setText("");     //$NON-NLS-1$
+                } else {
+                    description.setText(descriptionStr);
+                }
             }
         });
         final List<HotlinkDescriptor> actions = getActions();

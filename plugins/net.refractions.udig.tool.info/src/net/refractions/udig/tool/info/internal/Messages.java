@@ -194,7 +194,7 @@ public class Messages extends NLS {
 
     public static String docView_openDialogTitle;
 
-    public static String docView_remove;
+    public static String docView_clear;
 
     public static String docView_saveAs;
 

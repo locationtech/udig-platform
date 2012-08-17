@@ -20,10 +20,10 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.eclipse.swt.program.Program;
-
 import net.refractions.udig.catalog.document.IAbstractDocumentSource;
 import net.refractions.udig.catalog.document.IDocument;
+
+import org.eclipse.swt.program.Program;
 
 /**
  * Abstract model for documents.
@@ -52,16 +52,34 @@ public abstract class AbstractDocument implements IDocument {
     public boolean equals(Object obj) {
         if (obj instanceof IDocument) {
             final IDocument doc = (IDocument) obj;
-            final boolean isEqualDocType = getDocType() == doc.getDocType();  
+            final boolean isEqualDocType = getDocType() == doc.getDocType();
             final boolean isEqualType = getType() == doc.getType();
-            final boolean isEqualLabel = getLabel().equals(doc.getLabel());
-            final boolean isEqualDescription = getDescription().equals(doc.getDescription());
+            final boolean isEqualLabel = isEqual(getLabel(), doc.getLabel());
+            final boolean isEqualDescription = isEqual(getDescription(), doc.getDescription());
             final boolean isEqualSource = getSource() == doc.getSource();
             final boolean isEqualValue = getValue() == doc.getValue();
             return isEqualDocType && isEqualType && isEqualLabel && isEqualDescription
                     && isEqualSource && isEqualValue;
         }
         return super.equals(obj);
+    }
+    
+    /**
+     * Checks equality between two strings, this checks if the strings are null to avoid NPEs.
+     * 
+     * @param str1
+     * @param str2
+     * @return true if equal, otherwise false
+     */
+    private boolean isEqual(String str1, String str2) {
+        if (str1 == null && str2 == null) {
+            return true;
+        } else if (str1 == null && str2 != null) {
+            return false;
+        } else if (str1 != null && str2 == null) {
+            return false;
+        }
+        return str1.equals(str2);
     }
     
     /**

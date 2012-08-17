@@ -78,9 +78,9 @@ public abstract class AbstractShpDocTest extends TestCase {
         webDocInfo1 = new DocumentInfo("webDoc1", "webDocDesc1", WEB1, Type.WEB, false);
         webDocInfo2 = new DocumentInfo("webDoc2", "webDocDesc2", WEB2, Type.WEB, false);
         
-        descriptor1 = new HotlinkDescriptor("label", "description", FILE_ATTR, Type.FILE, "config");
-        descriptor2 = new HotlinkDescriptor("label", "description", LINK_ATTR, Type.WEB, "config");
-        descriptor3 = new HotlinkDescriptor("label", "description", STATE_ATTR, Type.ACTION, "config");
+        descriptor1 = new HotlinkDescriptor("fileLabel", "description", FILE_ATTR, Type.FILE, "config");
+        descriptor2 = new HotlinkDescriptor("webLabel", "description", LINK_ATTR, Type.WEB, "config");
+        descriptor3 = new HotlinkDescriptor("actionLabel", "description", STATE_ATTR, Type.ACTION, "config");
         
         setUpInternal();
 

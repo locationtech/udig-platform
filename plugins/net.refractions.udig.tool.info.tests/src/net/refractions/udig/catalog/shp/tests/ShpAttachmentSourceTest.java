@@ -46,7 +46,7 @@ public class ShpAttachmentSourceTest extends ShpHotlinkSourceTest {
         parser.setFeatureDocumentInfos(feature, new ArrayList<DocumentInfo>());
         parser.writeProperties();
         
-        attachDir = parser.getFeatureDocumentsDir(FEATURE);
+        attachDir = parser.getFeatureAttachDir(FEATURE);
         attachSource = new ShpAttachmentSource(geoResource);
         
         cleaupAttachDir();
