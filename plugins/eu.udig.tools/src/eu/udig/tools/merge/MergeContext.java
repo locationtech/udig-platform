@@ -124,7 +124,7 @@ public class MergeContext {
      * 
      * @return the left upper corner
      */
-    public Point getBBoxStartPoint() {
+    public synchronized Point getBBoxStartPoint() {
 
         return this.bboxStartPoint;
     }

@@ -116,8 +116,7 @@ public final class Util {
 		Query query = new Query(typename, filterOR);
 
 		// retrieves the feature in the bbox
-		// FIXME HACK FeatureCollection<SimpleFeatureType, SimpleFeature> features = source.getFeatures(query);
-		FeatureCollection<SimpleFeatureType, SimpleFeature> features = source.getFeatures();
+		FeatureCollection<SimpleFeatureType, SimpleFeature> features = source.getFeatures(query);
 
 		List<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
 		FeatureIterator<SimpleFeature> iter = null;

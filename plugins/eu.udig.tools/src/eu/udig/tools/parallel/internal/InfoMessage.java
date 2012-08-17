@@ -156,7 +156,7 @@ public final class InfoMessage {
 		if (this.type == null) {
 			if (other.type != null)
 				return false;
-		} else if (this.type != type)
+		} else if (this.type != other.type)
 			return false;
 		return true;
 	}

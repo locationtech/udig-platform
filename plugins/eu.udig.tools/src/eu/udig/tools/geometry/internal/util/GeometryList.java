@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.LineString;
 
 /**
  * 

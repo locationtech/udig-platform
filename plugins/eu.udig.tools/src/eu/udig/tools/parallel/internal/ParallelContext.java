@@ -109,7 +109,7 @@ public class ParallelContext extends PrecisionToolsContext {
 	 * 
 	 * @return
 	 */
-	public SimpleFeature getReferenceFeature() {
+	public synchronized SimpleFeature getReferenceFeature() {
 
 		return referenceFeature;
 	}

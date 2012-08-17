@@ -72,14 +72,18 @@ public class OffsetBuilder {
 	/**
 	 * The position of the offset curve.
 	 */
-	public static OffsetPosition			CURRENT_POSITION		= OffsetPosition.POSITION_UPPER;
+	public OffsetPosition					currentPosition		= OffsetPosition.POSITION_UPPER;
 
 	private static final double				MIN_CURVE_VERTEX_FACTOR	= 1.0E-6;
-	private final double					DEPRECIATE_VALUE;
+	private final double					deprecateValue;
 	private double							distance				= 0.0;
 
 	private OffsetVertexList				vertexList;
-	private LineIntersector					li;
+	
+	// compute intersections in full precision, to provide accuracy
+	// the points are rounded as they are inserted into the curve line
+	private LineIntersector					lineIntersector = new RobustLineIntersector();
+	
 	private Map<LineSegment, LineSegment>	offsetList				= new LinkedHashMap<LineSegment, LineSegment>();
 
 	private Coordinate						coord0, coord1, coord2;
@@ -92,7 +96,7 @@ public class OffsetBuilder {
 	private int								side					= 0;
 	private Boolean							lastOutsideTurn			= null;
 
-	private static PrecisionModel			precisionModel;
+	private static PrecisionModel			precisionModel = new PrecisionModel();
 	/**
 	 * Start position of the offset curve respect the reference line and its
 	 * direction.
@@ -130,15 +134,11 @@ public class OffsetBuilder {
 	 */
 	public OffsetBuilder(OffsetPosition offsetPosition, int startPosition, double errorMargin) {
 
-		CURRENT_POSITION = offsetPosition;
+		this.currentPosition = offsetPosition;
 		this.startPosition = startPosition;
-		OffsetBuilder.precisionModel = new PrecisionModel();
 
-		// compute intersections in full precision, to provide accuracy
-		// the points are rounded as they are inserted into the curve line
-		li = new RobustLineIntersector();
 		// filletAngleQuantum = Math.PI / 2.0 / 1;
-		DEPRECIATE_VALUE = errorMargin;
+		this.deprecateValue = errorMargin;
 	}
 
 	/**
@@ -183,7 +183,7 @@ public class OffsetBuilder {
 
 		List<Coordinate> sourceList = Arrays.asList(inputPts);
 
-		if (CURRENT_POSITION == OffsetPosition.POSITION_UNDER) {
+		if (currentPosition == OffsetPosition.POSITION_UNDER) {
 
 			sourceList = new ArrayList<Coordinate>();
 			for (int i = inputPts.length - 1; i >= 0; i--) {
@@ -396,11 +396,11 @@ public class OffsetBuilder {
 
 		// get where the segment one and the last segment will intersects.
 		intersectionCoord = new Coordinate();
-		li.computeIntersection(arrayList.get(0), arrayList.get(1), arrayList.get(arrayList.size() - 2), arrayList
+		lineIntersector.computeIntersection(arrayList.get(0), arrayList.get(1), arrayList.get(arrayList.size() - 2), arrayList
 					.get(arrayList.size() - 1));
-		if (li.hasIntersection()) {
+		if (lineIntersector.hasIntersection()) {
 
-			intersectionCoord = li.getIntersection(0);
+			intersectionCoord = lineIntersector.getIntersection(0);
 		} else {
 
 			// addCornerPoint(offset0, offset1, false);
@@ -432,7 +432,7 @@ public class OffsetBuilder {
 
 		int n = inputPts.length - 1;
 
-		if (CURRENT_POSITION == OffsetPosition.POSITION_UPPER) {
+		if (currentPosition == OffsetPosition.POSITION_UPPER) {
 
 			// compute points for left side of line
 			initSideSegments(inputPts[0], inputPts[1], startPosition);
@@ -602,7 +602,7 @@ public class OffsetBuilder {
 		/**
 		 * add intersection point of offset segments (if any)
 		 */
-		if (!linesParallel(offset0.p0, offset0.p1, offset1.p0, offset1.p1, DEPRECIATE_VALUE)) {
+		if (!linesParallel(offset0.p0, offset0.p1, offset1.p0, offset1.p1, deprecateValue)) {
 			newPt = new Coordinate();
 
 			newPt = GeometryUtil.intersection(offset0.p0, offset0.p1, offset1.p0, offset1.p1);
@@ -622,7 +622,7 @@ public class OffsetBuilder {
 			double distance1 = offset0.distance(closestPoint.getCoordinate());
 			double distance2 = offset1.distance(closestPoint.getCoordinate());
 
-			if (distance1 <= DEPRECIATE_VALUE || distance2 <= DEPRECIATE_VALUE) {
+			if (distance1 <= deprecateValue || distance2 <= deprecateValue) {
 				vertexList.addPt(newPt, false);
 			} else {
 				// TODO and when the distance is larger ?

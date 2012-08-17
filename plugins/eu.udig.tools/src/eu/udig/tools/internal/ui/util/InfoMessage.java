@@ -136,9 +136,10 @@ public final class InfoMessage {
 
 	@Override
 	public int hashCode() {
-		final int PRIME = 31;
+		final int prime = 31;
 		int result = 1;
-		result = PRIME * result + ((this.text == null) ? 0 : this.text.hashCode());
+		result = prime * result + ((text == null) ? 0 : text.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -150,16 +151,13 @@ public final class InfoMessage {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final InfoMessage other = (InfoMessage) obj;
-		if (this.text == null) {
+		InfoMessage other = (InfoMessage) obj;
+		if (text == null) {
 			if (other.text != null)
 				return false;
-		} else if (!this.text.equals(other.text))
+		} else if (!text.equals(other.text))
 			return false;
-		if (this.type == null) {
-			if (other.type != null)
-				return false;
-		} else if (this.type != type)
+		if (type != other.type)
 			return false;
 		return true;
 	}

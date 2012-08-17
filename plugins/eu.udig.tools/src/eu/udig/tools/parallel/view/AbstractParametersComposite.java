@@ -39,6 +39,7 @@ import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.ui.tool.IToolContext;
 import net.refractions.udig.tools.edit.EditToolHandler;
 
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
@@ -135,15 +136,20 @@ public abstract class AbstractParametersComposite extends Composite implements O
 		Display.getCurrent().asyncExec(new Runnable() {
 			public void run() {
 
-				Set<Unit<?>> commonLengthUnits = UnitList.getCommonLengthUnits();
+				Set<Unit<?>> commonLengthUnits;
+				try {
+					commonLengthUnits = UnitList.getInstance().getCommonLengthUnits();
+					SortedMap<String, Unit<?>> units = new TreeMap<String, Unit<?>>();
+					for (Unit<?> unit : commonLengthUnits) {
+						units.put(UnitList.getInstance().getUnitName(unit), unit);
+					}
 
-				SortedMap<String, Unit<?>> units = new TreeMap<String, Unit<?>>();
-				for (Unit<?> unit : commonLengthUnits) {
-					units.put(UnitList.getUnitName(unit), unit);
+					unitset = units.entrySet();
+					loadComplete = true;
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 
-				unitset = units.entrySet();
-				loadComplete = true;
 			}
 		});
 

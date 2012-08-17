@@ -96,7 +96,7 @@ public abstract class PrecisionToolsContext extends Observable {
 	 * 
 	 * @return
 	 */
-	public Unit<?> getUnits() {
+	public synchronized Unit<?> getUnits() {
 
 		return units;
 	}
@@ -116,7 +116,7 @@ public abstract class PrecisionToolsContext extends Observable {
 	 * 
 	 * @return
 	 */
-	public Double getLength() {
+	public synchronized Double getLength() {
 
 		return length;
 	}
@@ -145,7 +145,7 @@ public abstract class PrecisionToolsContext extends Observable {
 	/**
 	 * Get the initial coordinate.
 	 */
-	public Coordinate getInitialCoordinate() {
+	public synchronized Coordinate getInitialCoordinate() {
 
 		return this.initialCoordinate;
 	}
@@ -166,7 +166,7 @@ public abstract class PrecisionToolsContext extends Observable {
 	 * 
 	 * @return
 	 */
-	public double getDistanceCoorX() {
+	public synchronized double getDistanceCoorX() {
 
 		return distanceCoorX;
 	}
@@ -196,7 +196,7 @@ public abstract class PrecisionToolsContext extends Observable {
 	 * 
 	 * @return
 	 */
-	public double getDistanceCoorY() {
+	public synchronized double getDistanceCoorY() {
 
 		return distanceCoorY;
 	}
