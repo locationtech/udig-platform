@@ -14,11 +14,11 @@
  */
 package net.refractions.udig.catalog.document;
 
-import java.io.File;
-import java.net.URL;
 import java.util.List;
 
-import org.opengis.filter.identity.FeatureId;
+import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
+
+import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * Attachment support for a IGeoResource providing the ability to record IAttachment documents
@@ -27,74 +27,60 @@ import org.opengis.filter.identity.FeatureId;
  * @author Naz Chan (LISAsoft)
  * @since 1.3.2
  */
-public interface IAttachmentSource extends IAbstractDocumentSource {
+public interface IAttachmentSource extends IHotlinkSource {
 
     /**
-     * Gets the list of documents related to the feature.
+     * Gets the list of attachments related to the feature.
      * 
      * @param fid
      * @return list of documents
      */
-    public List<IDocument> getDocuments(FeatureId fid);
+    public List<IDocument> getDocuments(SimpleFeature feature);
 
     /**
-     * Adds the file.
+     * Adds the document.
      * 
      * @param fid
      * @param file
      * @return document
      */
-    public IDocument addFile(FeatureId fid, File file);
-    
-    public List<IDocument> addFiles(FeatureId fid, List<File> files);
+    public IDocument add(SimpleFeature feature, DocumentInfo info);
 
     /**
-     * Adds the link.
+     * Adds the list of documents.
      * 
      * @param fid
-     * @param url
-     * @return document
+     * @param infos
+     * @return list of documents
      */
-    public IDocument addLink(FeatureId fid, URL url);
+    public List<IDocument> add(SimpleFeature feature, List<DocumentInfo> infos);
 
     /**
-     * Updates the file of the document, doc is required to be of
-     * type {@link IDocument.Type#FILE}.
+     * Updates the document info.
      * 
      * @param fid
      * @param fileDoc
      * @param file
-     * @return file set to document
+     * @return updated document
      */
-    public File updateFile(FeatureId fid, IDocument doc, File file);
-    
-    /**
-     * Updates the url of the document which is required to be of
-     * type {@link IDocument.Type#WEB}.
-     * 
-     * @param fid
-     * @param urlDoc
-     * @param url
-     * @return true if successful, otherwise false
-     */
-    public boolean updateLink(FeatureId fid, IDocument doc, URL url);
+    public IDocument update(SimpleFeature feature, IDocument doc, DocumentInfo info);
 
     /**
-     * Deletes the document
+     * Removes the document.
      * 
      * @param fid
      * @param doc
      * @return true if successful, otherwise false
      */
-    public boolean remove(FeatureId fid, IDocument doc);
-    
+    public boolean remove(SimpleFeature feature, IDocument doc);
+
     /**
-     * Deletes the list of documents
+     * Removes the list of documents.
      * 
      * @param fid
      * @param docs
      * @return true if successfull, otherwise false
      */
-    public boolean remove(FeatureId fid, List<IDocument> docs);
+    public boolean remove(SimpleFeature feature, List<IDocument> docs);
 
 }

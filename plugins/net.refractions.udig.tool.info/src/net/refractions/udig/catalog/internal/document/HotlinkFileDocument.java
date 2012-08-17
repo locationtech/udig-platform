@@ -14,36 +14,43 @@
  */
 package net.refractions.udig.catalog.internal.document;
 
-import net.refractions.udig.catalog.document.IDocumentItem;
+import java.io.File;
+import java.util.List;
 
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 
 /**
- * This is the abstract document item class. This should sub-classed by document and
- * document-folder.
+ * Document model for hotlink file documents.
  * 
  * @author Naz Chan
  */
-public abstract class AbstractDocumentItem implements IDocumentItem {
-    
-    protected String name;
-    protected String description;
-    
+public class HotlinkFileDocument extends AbstractHotlinkDocument {
+
+    protected File file;
+
+    public HotlinkFileDocument(String info, List<HotlinkDescriptor> descriptors) {
+        super(info, descriptors);
+    }
+
     @Override
-    public String getName() {
-        return name;
+    public void setInfo(String info) {
+        super.setInfo(info);
+        file = AbstractDocument.createFile(info);
     }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
-    
+
     @Override
-    public String getDescription() {
-        return description;
+    public Object getValue() {
+        return file;
     }
-    
-    public void setDescription(String description) {
-        this.description = description;
+
+    @Override
+    public boolean open() {
+        return AbstractDocument.openFile(file);
     }
-    
+
+    @Override
+    public boolean isEmpty() {
+        return (file == null);
+    }
+
 }

@@ -14,17 +14,15 @@
  */
 package net.refractions.udig.catalog.shp.tests;
 
+import java.io.File;
 import java.io.Serializable;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.internal.document.DocumentFactory;
-import net.refractions.udig.catalog.internal.document.FileDocument;
-import net.refractions.udig.catalog.internal.document.URLDocument;
+import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
 import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
@@ -40,18 +38,16 @@ import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 @SuppressWarnings("nls")
 public class ShpDocumentSourceTest extends AbstractShpDocTest {
 
+    private ShpDocPropertyParser parser;
     private ShpDocumentSource source;
+    private File attachDir;
     
     @Override
     protected void setUpInternal() {
         super.setUpInternal();
         
-        final List<IDocument> docs = new ArrayList<IDocument>();
-        docs.add(new FileDocument(file1));
-        docs.add(new URLDocument(url1));
-        
-        final ShpDocPropertyParser parser = new ShpDocPropertyParser(url, new DocumentFactory(null));
-        parser.setShapeAttachments(docs);
+        parser = new ShpDocPropertyParser(url);
+        attachDir = parser.getShapefileAttachDir();
         
         final Map<String, Serializable> params = new HashMap<String, Serializable>();
         params.put(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key, false);
@@ -61,75 +57,74 @@ public class ShpDocumentSourceTest extends AbstractShpDocTest {
         final ShpGeoResourceImpl geoResource = new ShpGeoResourceImpl(service, "");
         source = new ShpDocumentSource(geoResource);
         
+        cleaupAttachDir();
+        
     }
     
-    public void testGetDocuments() {
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
+    public void testGet() {
+        assertEquals("Count is not expected.", 0, source.getDocuments().size());
     }
     
-    public void testAddRemoveFile() throws MalformedURLException {
+    public void testAddRemove() {
         
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
+        List<IDocument> docs = source.getDocuments();
+        assertEquals("Count is not expected.", 0, docs.size());
         
-        source.addFile(file2);
-        assertEquals("Count is not expected.", 3, source.getDocuments().size());
+        source.add(fileDocInfo1);
+        assertEquals("Count is not expected.", 1, docs.size());
 
-        final List<IDocument> docs = new ArrayList<IDocument>();
-        docs.add(new FileDocument(file1));
-        docs.add(new FileDocument(file2));
-        source.remove(docs);
-        assertEquals("Count is not expected.", 1, source.getDocuments().size());
+        source.remove(getDoc(docs, fileDocInfo1));
+        assertEquals("Count is not expected.", 0, docs.size());
+
+        List<DocumentInfo> inInfos = new ArrayList<DocumentInfo>();
+        inInfos.add(fileDocInfo2);
+        inInfos.add(webDocInfo2);
+
+        source.add(inInfos);
+        assertEquals("Count is not expected.", 2, docs.size());
+
+        List<IDocument> inDocs = new ArrayList<IDocument>();
+        inDocs.add(getDoc(docs, fileDocInfo2));
+        inDocs.add(getDoc(docs, webDocInfo2));
         
-        source.addFile(file1);
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
+        source.remove(inDocs);
+        assertEquals("Count is not expected.", 0, docs.size());
         
-        final IDocument doc = source.addFile(file1);
-        assertNull("Doc is not null", doc);
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
-        
-        source.remove(new FileDocument(file1));
-        assertEquals("Count is not expected.", 1, source.getDocuments().size());
+        cleaupAttachDir();
         
     }
     
     public void testUpdateFile() {
         
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
+        List<IDocument> docs = source.getDocuments();
+        assertEquals("Count is not expected.", 0, docs.size());
         
-        final FileDocument fileDoc = new FileDocument(file1);
-        assertFalse("Update is successfull.", source.updateFile(fileDoc, file1));
-        assertTrue("Update is successfull.", source.updateFile(fileDoc, file2));
+        source.add(fileDocInfo1);
         
-    }
-    
-    public void testAddRemoveLink() {
+        IDocument doc = getDoc(docs, fileDocInfo1);
+        assertNotNull("Doc does not exists.", doc);
         
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
+        source.update(doc, fileDocInfo2);
+        doc = getDoc(docs, fileDocInfo1);
+        assertNull("Doc exists.", doc);
+        doc = getDoc(docs, fileDocInfo2);
+        assertNotNull("Doc does not exists.", doc);
         
-        IDocument doc = source.addLink(url1);
-        assertNull("Doc is not null", doc);
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
-        
-        doc = source.addLink(url2);
-        assertNotNull("Doc is not null", doc);
-        assertEquals("Count is not expected.", 3, source.getDocuments().size());
-        
-        source.remove(new URLDocument(url2));
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
-        
-        source.remove(new URLDocument(url1));
-        assertEquals("Count is not expected.", 1, source.getDocuments().size());
+        cleaupAttachDir();
         
     }
     
-    public void testUpdateUrl() {
+    private void cleaupAttachDir() {
         
-        assertEquals("Count is not expected.", 2, source.getDocuments().size());
+        parser.setShapeDocmentInfos(new ArrayList<DocumentInfo>());
+        parser.writeProperties();
         
-        final URLDocument urlDoc = new URLDocument(url1);
-        assertFalse("Update is successfull.", source.updateLink(urlDoc, url1));
-        assertTrue("Update is successfull.", source.updateLink(urlDoc, url2));
-        
+        if (attachDir.exists()) {
+            for (File file : attachDir.listFiles()) {
+                file.delete();
+            }
+            attachDir.delete();
+        }
     }
     
 }

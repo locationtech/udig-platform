@@ -16,34 +16,65 @@
  */
 package net.refractions.udig.catalog.document;
 
-
-
 /**
  * Document interface.
  * 
  * @author paul.pfeiffer
  * @author Naz Chan
  */
-public interface IDocument extends IDocumentItem {
+public interface IDocument {
 
     /**
-     * Document types
+     * Document type
+     */
+    public enum DocType {
+        DOCUMENT, ATTACHMENT, HOTLINK;
+    }
+
+    /**
+     * Document content type
      */
     public enum Type {
         FILE, WEB, ACTION;
+        public static boolean exists(String type) {
+            for (Type c : values()) {
+                if (c.name().equals(type)) {
+                    return true;
+                }
+            }
+            return false;
+        }
     };
-    
+
     /**
-     * Human readable label used to display this document in a list.
-     * <p>
-     * This is often the base file name, and should not be a full PATH or URL.
+     * Gets the document value. The value returned will depend on the document's content type. See
+     * {@link #getType()} for details.
+     * 
+     * @return document info
+     */
+    public Object getValue();
+
+    /**
+     * Gets the document label. This is to be used for labelling documents in lists and views.
      * 
      * @return label
      */
     public String getLabel();
-    
+
+    /**
+     * Gets the document description. This is to be used for labelling documents in lists and views.
+     */
+    public String getDescription();
+
     /**
      * Gets the document type.
+     * 
+     * @return document type
+     */
+    public DocType getDocType();
+
+    /**
+     * Gets the document content type.
      * <p>
      * The following documents are defined:
      * <ul>
@@ -52,17 +83,10 @@ public interface IDocument extends IDocumentItem {
      * <li>{@link Type#ACTION} value is marked for script use</li>
      * </ul>
      * 
-     * @return document type
+     * @return document content type
      */
     public Type getType();
-    
-    /**
-     * The document source responsible for listing this document. 
-     * 
-     * @return document source
-     */
-    public IAbstractDocumentSource getSource();
-    
+
     /**
      * Open this document; in a platform specific manner.
      * <p>
@@ -71,7 +95,7 @@ public interface IDocument extends IDocumentItem {
      * references and take appropriate action.
      */
     public boolean open();
-    
+
     /**
      * Checks if the document has a related content (file or URL). Or if the value does not point to
      * a valid file or URL.
@@ -79,5 +103,19 @@ public interface IDocument extends IDocumentItem {
      * @return true if it has a related content, otherwise false
      */
     public boolean isEmpty();
+
+    /**
+     * Checks if the document is set as a template.
+     * 
+     * @return true if template, otherwise false
+     */
+    public boolean isTemplate();
     
+    /**
+     * Gets the document source responsible for listing this document.
+     * 
+     * @return document source
+     */
+    public IAbstractDocumentSource getSource();
+
 }
