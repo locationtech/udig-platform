@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +32,7 @@ import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.filter.FilterFactory2;
 import org.osgi.framework.Bundle;
 
+@SuppressWarnings("nls")
 public class BasicHotlinkTest {
 
     private IService service;
@@ -38,69 +40,79 @@ public class BasicHotlinkTest {
 
     @Before
     public void setUp() throws Exception {
-        assertNotNull( "Please run as Plugin Test",Activator.getDefault() );
-        
+        assertNotNull("Please run as Plugin Test", Activator.getDefault());
+
         Bundle bundle = Activator.getDefault().getBundle();
         File directory = FileLocator.getBundleFile(bundle);
-        assertTrue( "Test Directory", directory.isDirectory() );
-        
-        File shapefile = new File(new File( directory, "internal"), "australia.shp");
-        assertTrue("Sample File", shapefile.isFile() );
-        
+        assertTrue("Test Directory", directory.isDirectory());
+
+        File shapefile = new File(new File(directory, "internal"), "australia.shp");
+        assertTrue("Sample File", shapefile.isFile());
+
         ServiceExtension factory = new ShpServiceExtension();
-        Map<String, Serializable> params = factory.createParams( shapefile.toURI().toURL() );
-        service = factory.createService( null, params );
-        
-        List<IGeoResource> members = (List<IGeoResource>) service.resources(new NullProgressMonitor() );
+        Map<String, Serializable> params = factory.createParams(shapefile.toURI().toURL());
+        service = factory.createService(null, params);
+
+        List<IGeoResource> members = (List<IGeoResource>) service
+                .resources(new NullProgressMonitor());
         resource = members.get(0);
-        
-        resource.getPersistentProperties().put( BasicHotlinkResolveFactory.HOTLINK, "FILE:FILE,LINK:WEB");
+
+        final List<HotlinkDescriptor> descriptors = new ArrayList<HotlinkDescriptor>();
+        descriptors.add(new HotlinkDescriptor("File", "File Description", "FILE", Type.FILE, ""));
+        descriptors.add(new HotlinkDescriptor("Web", "Web Description", "LINK", Type.WEB, ""));
+
+        BasicHotlinkResolveFactory.putHotlinkDescriptors(resource, descriptors);
+
     }
-    
-    @After 
+
+    @After
     public void tearDown() throws Exception {
-        if( service != null ){
-            service.dispose( new NullProgressMonitor() );
+        if (service != null) {
+            service.dispose(new NullProgressMonitor());
             service = null;
         }
     }
-    
+
     @Test
     public void testBasicResolveAdaptorFactory() throws Exception {
         IResolveAdapterFactory adaptorFactory = new BasicHotlinkResolveFactory();
-        assertTrue( adaptorFactory.canAdapt( resource, IHotlinkSource.class ) );
-        
-        IHotlinkSource hotlink = (IHotlinkSource) adaptorFactory.adapt(resource,  IHotlinkSource.class, new NullProgressMonitor() );
-        assertNotNull( hotlink );
-        
+        assertTrue(adaptorFactory.canAdapt(resource, IHotlinkSource.class));
+
+        IHotlinkSource hotlink = (IHotlinkSource) adaptorFactory.adapt(resource,
+                IHotlinkSource.class, new NullProgressMonitor());
+        assertNotNull(hotlink);
+
         List<HotlinkDescriptor> list = hotlink.getHotlinkDescriptors();
-        assertEquals("descriptors found", 2, list.size() );
-        
-        SimpleFeatureStore featureStore = resource.resolve(SimpleFeatureStore.class, new NullProgressMonitor() );
+        assertEquals("descriptors found", 2, list.size());
+
+        SimpleFeatureStore featureStore = resource.resolve(SimpleFeatureStore.class,
+                new NullProgressMonitor());
         SimpleFeatureType schema = featureStore.getSchema();
-        for( HotlinkDescriptor hotlinkDescriptor : list ){
-            AttributeDescriptor attributeDescriptor = schema.getDescriptor( hotlinkDescriptor.getAttributeName() );
-            assertNotNull( "confirm attribute name matches", attributeDescriptor );
-            assertTrue( "Confirm String", String.class.isAssignableFrom( attributeDescriptor.getType().getBinding() ) );
-            
-            assertNotNull( hotlinkDescriptor.getType() != null );
+        for (HotlinkDescriptor hotlinkDescriptor : list) {
+            AttributeDescriptor attributeDescriptor = schema.getDescriptor(hotlinkDescriptor
+                    .getAttributeName());
+            assertNotNull("confirm attribute name matches", attributeDescriptor);
+            assertTrue("Confirm String",
+                    String.class.isAssignableFrom(attributeDescriptor.getType().getBinding()));
+
+            assertNotNull(hotlinkDescriptor.getType() != null);
         }
         FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
-        SimpleFeatureCollection features = featureStore.getFeatures( ff.equals(ff.property("STATE"), ff.literal("Tasmania")) );
+        SimpleFeatureCollection features = featureStore.getFeatures(ff.equals(ff.property("STATE"),
+                ff.literal("Tasmania")));
         SimpleFeatureIterator iterator = features.features();
-        assertTrue( "Tasmania found", iterator.hasNext() );
+        assertTrue("Tasmania found", iterator.hasNext());
         SimpleFeature tasmania = iterator.next();
-        
-        List<IDocument> documents = hotlink.getDocuments( tasmania );
-        assertEquals( "image document found", 2, documents.size() );
-        
+
+        List<IDocument> documents = hotlink.getDocuments(tasmania);
+        assertEquals("image document found", 2, documents.size());
+
         IDocument imageDocument = documents.get(0);
-        assertEquals( Type.FILE, imageDocument.getType() );
-        assertEquals( "tasmania.png", imageDocument.getName() );
-        
+        assertEquals(Type.FILE, imageDocument.getType());
+
         IDocument webLink = documents.get(1);
-        assertEquals( Type.WEB, webLink.getType() );
-        assertTrue( webLink.getName().contains("Tasmania") );
+        assertEquals(Type.WEB, webLink.getType());
+
     }
 
 }

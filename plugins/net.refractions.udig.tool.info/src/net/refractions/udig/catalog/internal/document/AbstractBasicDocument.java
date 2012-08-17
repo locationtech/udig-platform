@@ -14,53 +14,47 @@
  */
 package net.refractions.udig.catalog.internal.document;
 
-import java.io.File;
-
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 
 /**
- * Document model for file documents.
+ * Abstract model for basic (non-hotlink) documents.
  * 
  * @author Naz Chan
  */
-public class FileDocument extends AbstractBasicDocument {
+public abstract class AbstractBasicDocument extends AbstractDocument {
 
-    protected File file;
+    private DocumentInfo info;
 
-    public FileDocument(DocumentInfo info) {
-        super(info);
+    public AbstractBasicDocument(DocumentInfo info) {
+        setInfo(info);
     }
     
-    @Override
+    public DocumentInfo getInfo() {
+        return info;
+    }
+
     public void setInfo(DocumentInfo info) {
-        super.setInfo(info);
-        if (info != null) {
-            file = AbstractDocument.createFile(info.getInfo());
-        }
-    }
-    
-    @Override
-    public Object getValue() {
-        return file;
+        this.info = info;
     }
 
     @Override
-    public boolean open() {
-        return AbstractDocument.openFile(file);
+    public String getLabel() {
+        return info.getLabel();
     }
 
     @Override
-    public boolean isEmpty() {
-        return (file == null);
+    public String getDescription() {
+        return info.getDescription();
     }
-    
+
     @Override
-    public boolean isTemplate() {
-        return getInfo().isTemplate();
+    public DocType getDocType() {
+        return DocType.DOCUMENT;
     }
-    
-    public void setTemplate(boolean isTemplate) {
-        getInfo().setTemplate(isTemplate);
+
+    @Override
+    public Type getType() {
+        return info.getType();
     }
-    
+
 }

@@ -21,24 +21,31 @@ import net.refractions.udig.catalog.document.IAbstractDocumentSource;
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocumentFolder;
 
-
 /**
  * This is the document folder implementation.
  * 
- * @author Naz Chan 
+ * @author Naz Chan
  */
-public class DocumentFolder extends AbstractDocumentItem implements IDocumentFolder {
+public class DocumentFolder implements IDocumentFolder {
+
+    private String name;
 
     private IAbstractDocumentSource source;
-    
+
     private List<IDocumentFolder> folders;
+
     private List<IDocument> docs;
-    
+
     public DocumentFolder(String name, IAbstractDocumentSource source) {
         this.name = name;
         this.source = source;
         this.folders = new ArrayList<IDocumentFolder>();
         this.docs = new ArrayList<IDocument>();
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -108,7 +115,7 @@ public class DocumentFolder extends AbstractDocumentItem implements IDocumentFol
     public void removeDocument(IDocument doc) {
         this.docs.remove(doc);
     }
-    
+
     @Override
     public void removeDocuments(List<IDocument> docs) {
         this.docs.removeAll(docs);
@@ -118,5 +125,5 @@ public class DocumentFolder extends AbstractDocumentItem implements IDocumentFol
     public void removeFolder(IDocumentFolder folder) {
         this.folders.remove(folder);
     }
-    
+
 }

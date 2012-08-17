@@ -15,25 +15,25 @@
 package net.refractions.udig.catalog.shp;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocumentSource;
-import net.refractions.udig.catalog.internal.document.FileDocument;
-import net.refractions.udig.catalog.internal.document.URLDocument;
+import net.refractions.udig.catalog.internal.document.AbstractBasicDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 
 /**
  * This is the shapefile document source implementation. This implements getters and setters to the
- * documents attached or linked to the shapefile.
+ * documents attached to the shapefile.
  * 
  * @author Naz Chan
  */
 public class ShpDocumentSource extends AbstractShpDocumentSource implements IDocumentSource {
 
+    private List<IDocument> docs;
+    
     /**
      * Creates a new ShpDocumentSource
      * 
@@ -43,54 +43,54 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
     public ShpDocumentSource(ShpGeoResourceImpl resource) {
         super(resource);
     }
-    
+
     @Override
     public List<IDocument> getDocuments() {
-        return propParser.getShapeAttachments();
+        docs = new ArrayList<IDocument>();
+        final List<DocumentInfo> infos = propParser.getShapeDocumentInfos();
+        if (infos != null && infos.size() > 0) {
+            docs.addAll(docFactory.create(infos, true));
+        }
+        return docs;
     }
-    
+
+    private List<IDocument> getDocsInternal() {
+        if (docs == null) {
+            return getDocuments();
+        }
+        return docs;
+    }
+        
     @Override
     public boolean canAdd() {
         return true;
     }
 
-    @Override 
-    public IDocument addLink(URL url) {
-        final List<IDocument> docs = getDocuments();
-        final IDocument doc = docFactory.create(url);
-        if (!docs.contains(doc)) {
-            docs.add(doc);
-            propParser.setShapeAttachments(docs);
-            return doc;
-        }
-        return null;
+    @Override
+    public IDocument add(DocumentInfo info) {
+        final IDocument doc = addInternal(info);
+        save();
+        return doc;
     }
 
     @Override
-    public IDocument addFile(File file) {
-        final List<IDocument> docs = getDocuments();
-        final IDocument doc = docFactory.create(file);
-        if (!docs.contains(doc)) {
-            docs.add(doc);
-            propParser.setShapeAttachments(docs);
-            return doc;
+    public List<IDocument> add(List<DocumentInfo> infos) {
+        final List<IDocument> newDocs = new ArrayList<IDocument>();
+        for (DocumentInfo info : infos) {
+            addInternal(info);
         }
-        return null;
+        save();
+        return newDocs;
     }
 
-    @Override
-    public List<IDocument> addFiles(List<File> files) {
-        final List<IDocument> existingDocs = getDocuments();
-        final List<IDocument> docs = new ArrayList<IDocument>();
-        for (File file : files) {
-            final IDocument doc = docFactory.create(file);
-            if (!existingDocs.contains(doc)) {
-                docs.add(doc);
-                existingDocs.add(doc);
-            }
+    private IDocument addInternal(DocumentInfo info) {
+        if (Type.FILE == info.getType()) {
+            final File newFile = ShpDocUtils.copyFile(info.getInfo(), propParser.getShapefileAttachDir());
+            info.setInfo(newFile.getAbsolutePath());
         }
-        propParser.setShapeAttachments(existingDocs);
-        return docs;
+        final IDocument newDoc = docFactory.create(info, true);
+        getDocsInternal().add(newDoc);
+        return newDoc;
     }
     
     @Override
@@ -99,66 +99,65 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
     }
 
     @Override
-    public void remove(IDocument doc) {
-        remove(Collections.singletonList(doc));
+    public boolean remove(IDocument oldDoc) {
+        removeInternal(oldDoc);
+        save();
+        return true;
     }
 
     @Override
-    public void remove(List<IDocument> docs) {
-        final List<IDocument> existingDocs = getDocuments();
-        for (IDocument doc : docs) {
-            if (existingDocs.contains(doc)) {
-                existingDocs.remove(doc);
-            }
+    public boolean remove(List<IDocument> oldDocs) {
+        for (IDocument doc : oldDocs) {
+            removeInternal(doc);
         }
-        propParser.setShapeAttachments(existingDocs);
+        save();
+        return true;
     }
 
-    @Override
-    public boolean canUpdate() {
+    private boolean removeInternal(IDocument doc) {
+        if (Type.FILE == doc.getType()) {
+            ShpDocUtils.deleteFile(doc.getValue());
+        }
+        getDocsInternal().remove(doc);
         return true;
     }
     
     @Override
-    public boolean updateFile(IDocument doc, File file) {
-        
-        FileDocument fileDoc = null;
-        final IDocument newDoc = docFactory.create(file);
-        final List<IDocument> docs = getDocuments();
-        for (IDocument existingDoc : docs) {
-            if (existingDoc.equals(newDoc)) {
-                return false;
-            }
-            if (existingDoc.equals(doc)) {
-                fileDoc = (FileDocument) existingDoc;
-            }
-        }
-        
-        fileDoc.setFile(file);
-        propParser.setShapeAttachments(docs);
+    public boolean canUpdate() {
         return true;
-        
     }
 
     @Override
-    public boolean updateLink(IDocument doc, URL url) {
-        
-        URLDocument fileDoc = null;
-        final IDocument newDoc = docFactory.create(url);
-        final List<IDocument> docs = getDocuments();
-        for (IDocument existingDoc : docs) {
-            if (existingDoc.equals(newDoc)) {
-                return false;
-            }
-            if (existingDoc.equals(doc)) {
-                fileDoc = (URLDocument) existingDoc;
+    public IDocument update(IDocument doc, DocumentInfo info) {
+        if (Type.FILE == info.getType()) {
+            final File oldFile = (File) doc.getValue();
+            if (oldFile == null) {
+                updateInternal(oldFile, info);
+            } else {
+                if (!oldFile.getAbsolutePath().equals(info.getInfo())) {
+                    updateInternal(oldFile, info);
+                }    
             }
         }
-        
-        fileDoc.setUrl(url);
-        propParser.setShapeAttachments(docs);
-        return true;
-
+        ((AbstractBasicDocument) doc).setInfo(info);
+        save();
+        return doc;
     }
-
+ 
+    private void updateInternal(File oldFile, DocumentInfo info) {
+        ShpDocUtils.deleteFile(oldFile);
+        final File newFile = ShpDocUtils.copyFile(info.getInfo(), propParser.getShapefileAttachDir());
+        info.setInfo(newFile.getAbsolutePath());
+    }
+    
+    private void save() {
+        final List<DocumentInfo> infos = new ArrayList<IDocumentSource.DocumentInfo>();
+        for (IDocument doc : getDocsInternal()) {
+            final AbstractBasicDocument shpDoc = (AbstractBasicDocument) doc;
+            infos.add(shpDoc.getInfo());
+        }
+        propParser.setShapeDocmentInfos(infos);
+        propParser.writeProperties();
+    }
+    
 }

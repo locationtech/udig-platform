@@ -14,20 +14,20 @@
  */
 package net.refractions.udig.catalog.internal.document;
 
-import java.io.File;
+import java.net.URL;
 
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 
 /**
- * Document model for file documents.
+ * Document model for web documents.
  * 
  * @author Naz Chan
  */
-public class FileDocument extends AbstractBasicDocument {
+public class WebDocument extends AbstractBasicDocument {
 
-    protected File file;
-
-    public FileDocument(DocumentInfo info) {
+    protected URL url;
+    
+    public WebDocument(DocumentInfo info) {
         super(info);
     }
     
@@ -35,32 +35,28 @@ public class FileDocument extends AbstractBasicDocument {
     public void setInfo(DocumentInfo info) {
         super.setInfo(info);
         if (info != null) {
-            file = AbstractDocument.createFile(info.getInfo());
+            url = AbstractDocument.createUrl(info.getInfo());
         }
     }
     
     @Override
     public Object getValue() {
-        return file;
+        return url;
     }
 
     @Override
     public boolean open() {
-        return AbstractDocument.openFile(file);
+        return AbstractDocument.openUrl(url);
     }
 
     @Override
     public boolean isEmpty() {
-        return (file == null);
+        return (url == null);
     }
     
     @Override
     public boolean isTemplate() {
-        return getInfo().isTemplate();
-    }
-    
-    public void setTemplate(boolean isTemplate) {
-        getInfo().setTemplate(isTemplate);
+        return false; // Web documents cannot be templates
     }
     
 }

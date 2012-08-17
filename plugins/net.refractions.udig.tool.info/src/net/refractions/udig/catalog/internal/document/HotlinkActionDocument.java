@@ -12,27 +12,31 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.document;
+package net.refractions.udig.catalog.internal.document;
+
+import java.util.List;
+
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 
 /**
- * Document item interface.
+ * Document model for hotlink action documents.
  * 
  * @author Naz Chan
  */
-public interface IDocumentItem {
-
-    /**
-     * Gets the document item's name
-     * 
-     * @return name
-     */
-    public String getName();
-
-    /**
-     * Gets the document item's description
-     * 
-     * @return description
-     */
-    public String getDescription();
+public class HotlinkActionDocument extends AbstractHotlinkDocument {
     
+    public HotlinkActionDocument(String info, List<HotlinkDescriptor> descriptors) {
+        super(info, descriptors);
+    }
+
+    @Override
+    public Object getValue() {
+        return info;
+    }
+
+    @Override
+    public boolean open() {
+        return false;
+    }
+
 }

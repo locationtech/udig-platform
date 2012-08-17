@@ -14,53 +14,43 @@
  */
 package net.refractions.udig.catalog.internal.document;
 
-import java.io.File;
+import java.net.URL;
+import java.util.List;
 
-import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 
 /**
- * Document model for file documents.
+ * Document model for hotlink web documents.
  * 
  * @author Naz Chan
  */
-public class FileDocument extends AbstractBasicDocument {
+public class HotlinkWebDocument extends AbstractHotlinkDocument {
 
-    protected File file;
+    protected URL url;
 
-    public FileDocument(DocumentInfo info) {
-        super(info);
+    public HotlinkWebDocument(String info, List<HotlinkDescriptor> descriptors) {
+        super(info, descriptors);
     }
     
     @Override
-    public void setInfo(DocumentInfo info) {
+    public void setInfo(String info) {
         super.setInfo(info);
-        if (info != null) {
-            file = AbstractDocument.createFile(info.getInfo());
-        }
+        url = AbstractDocument.createUrl(info);
     }
     
     @Override
     public Object getValue() {
-        return file;
+        return url;
     }
 
     @Override
     public boolean open() {
-        return AbstractDocument.openFile(file);
+        return AbstractDocument.openUrl(url);
     }
 
     @Override
     public boolean isEmpty() {
-        return (file == null);
+        return (url == null);
     }
-    
-    @Override
-    public boolean isTemplate() {
-        return getInfo().isTemplate();
-    }
-    
-    public void setTemplate(boolean isTemplate) {
-        getInfo().setTemplate(isTemplate);
-    }
-    
+
 }
