@@ -49,7 +49,7 @@ The document is opened using the default system application.
 Save As
 -------
 
-The :guilabel:`Save As` button is used to save a new copy of the file of a file attachment document.
+The :guilabel:`Save As...` button is used to save a new copy of the file of a file attachment document.
 
 Clear
 ------
