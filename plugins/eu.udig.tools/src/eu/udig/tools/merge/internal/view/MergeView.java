@@ -159,8 +159,9 @@ public class MergeView extends ViewPart implements IUDIGView {
 
 	/**
 	 * Sets the map as current and add the listeners to listen the changes in
-	 * the map and its layers. Additionally it initializes the current layer
-	 * list.
+	 * the map and its layers. Additionally it initialises the current layer
+	 * list. NOTE: the method gets called ALSO in TOOL mode (not OPERATION mode)
+	 * but, in this case, null listeners are added
 	 * 
 	 * @param map
 	 */
@@ -169,8 +170,10 @@ public class MergeView extends ViewPart implements IUDIGView {
 
 		assert map != null;
 		assert layerList != null;
-		assert this.mapListener != null;
-		assert this.layerListener != null;
+		if (MergeContext.getInstance().getMergeMode() == MergeContext.MERGEMODE_OPERATION) {
+			assert this.mapListener != null;
+			assert this.layerListener != null;
+		}
 
 		map.addMapCompositionListener(this.mapListener);
 
