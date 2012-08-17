@@ -78,8 +78,10 @@ public abstract class AbstractDocument implements IDocument {
             return false;
         } else if (str1 != null && str2 == null) {
             return false;
+        } else if (str1 != null && str2 != null) {
+            return str1.equals(str2);
         }
-        return str1.equals(str2);
+        return false;
     }
     
     /**
