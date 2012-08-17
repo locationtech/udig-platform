@@ -163,8 +163,9 @@ public class GeoReferencingProcess {
 			saveImage(warpedCoverage);
 
 		} catch (Exception e) {
+			
 			e.printStackTrace();
-			return;
+			throw new IOException("Failed generating the file " + outputFileName);
 		}
 
 	}
@@ -212,6 +213,7 @@ public class GeoReferencingProcess {
 			tiffResource = getTiffResource(tempfile.toURI().toURL());
 		} catch (IOException e) {
 			e.printStackTrace();
+			throw e;
 		}
 
 		if (tiffResource != null) {

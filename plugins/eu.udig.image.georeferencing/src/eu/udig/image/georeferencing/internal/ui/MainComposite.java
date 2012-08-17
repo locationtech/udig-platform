@@ -325,7 +325,7 @@ public class MainComposite extends Composite implements Observer, GeoReferencing
 	/**
 	 * Shows the message in the standard information area
 	 */
-	private void displayMessage(final InfoMessage message) {
+	public void displayMessage(final InfoMessage message) {
 
 		assert message != null;
 

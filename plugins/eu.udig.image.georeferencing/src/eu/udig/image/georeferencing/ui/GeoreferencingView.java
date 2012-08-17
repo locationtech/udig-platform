@@ -221,7 +221,7 @@ public class GeoreferencingView extends ViewPart implements IUDIGView, Observer 
 			showEnabled(false);
 			cmd.execute();
 		} catch (Exception e){
-			e.printStackTrace();
+			this.mainComposite.displayMessage(new InfoMessage("Fail!. The georeferencing process didn't genereate the raster image", InfoMessage.Type.FAIL));
 		}finally{
 			showEnabled(true);
 		}
