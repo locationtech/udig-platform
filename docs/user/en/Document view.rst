@@ -7,8 +7,8 @@ The Document view shows files and links associated with the selected layer or fe
    :align: center
    :alt: 
 
-Documents and Attachments
--------------------------
+Documents
+---------
 
 The documents are presented in a tree, with folders used to represent
 the files associated with the select feature or layer.
@@ -17,23 +17,22 @@ Within each folder several kinds of information are displayed:
 
 |file_logo| - File Document
 
-|web_logo| - Weblink Document
+|web_logo| - Web Document
 
 |action_logo| - Action Document
 
 When storing documents associated with a selected feature, specific
 attributes are marked along with the type of content they can reference.
-Hot link attributes that are not currently used will show up as "Unassigned".
 
-Some layers support the storing of documents as attachments, where attachments are copied
+Hotlink attributes that are not currently used will show up as "Unassigned".
+
+Some layers and features support the storing of documents as attachments, where attachments are copied
 into the application and managed along with the layer.
 
-Add
----
+Attach
+------
 
-The :guilabel:`Add...` button is used to add a new document to the selected feature or layer.
-
-A document folder must be selected to enable this button.
+The :guilabel:`Attach...` button is used to attach a document to the selected feature or layer.
 
 Edit
 ----
@@ -50,23 +49,21 @@ The document is opened using the default system application.
 Save As
 -------
 
-The :guilabel:`Save As` button is used to save a new copy of the file reference of the selected document.
+The :guilabel:`Save As` button is used to save a new copy of the file of a file attachment document.
 
-This is only enabled for file attachments.
-
-Remove
+Clear
 ------
 
-The :guilabel:`Remove` button is used remove file or web reference from the selected hotlink attribute.
+The :guilabel:`Clear` button is used remove the document reference from the selected hotlink attribute.
 
-Note that the corresponding file will not removed from disk, the attribute hotlink attribute reference is simply cleared.
+For file hotlinks, the referenced file will not removed from disk, the reference is simply cleared.
 
 Delete
 ------
 
-The :guilabel:`Delete` button is used remove the selected attachment.
+The :guilabel:`Delete` button is used remove the selected attachment document.
 
-A confirmation message will be shown as the file will be removed from disk.
+For file attachments, a confirmation message will be shown as the file will be removed from disk.
 
 **Related tasks**
 

@@ -13,10 +13,10 @@ We can mark attributes to store file or web *hotlinks*.
    * Use the :guilabel:`Edit...` to update an existing hotlink definition
    * Use the :guilabel:`Remove` to remove an attribute as hotlink
    
-An example with the sample data set is:
+A sample dataset is provided:
 
-- Use **australia.shp** from the sample dataset
-- File and Web hotlinks are already defined
+- Try out **australia.shp**
+- File, Web and Action hotlinks are already defined
 
 **Related tasks**
 

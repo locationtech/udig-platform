@@ -7,7 +7,7 @@ You can work with documents associated with a feature or layer using the **Docum
    :maxdepth: 1
 
    Configure hotlink attributes
-   Adding a document
+   Attaching a document
    Setting a hotlink
    
 To select a feature, or layer, please see the related tasks section below.

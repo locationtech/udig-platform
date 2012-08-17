@@ -12,9 +12,9 @@ To set a hotlink attribute:
 
 **Note:** For `Action` hotlinks, the marker '{0}' should be used in the action string for replacement with the attribute's value.
 
-An example sample dataset is:
+A sample dataset is provided:
 
-- Try out **australia.shp** as a sample dataset
+- Try out **australia.shp**
 - File, Web and Action hotlinks are already defined
 
 **Related tasks**
