@@ -1,8 +1,11 @@
 package net.refractions.udig.project.ui.internal.tool.display;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.net.URL;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.ID;
@@ -15,19 +18,23 @@ import net.refractions.udig.project.tests.support.MapTests;
 import net.refractions.udig.ui.operations.IOpFilterListener;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
-public class GeometryPropertyTest extends TestCase {
+public class GeometryPropertyTest {
 
     private ILayer layer;
     private GeometryProperty prop;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         Map map = MapTests.createDefaultMap("GeomPropertyTest", 2, true, null); //$NON-NLS-1$
         layer=map.getMapLayers().get(0);
         prop=new GeometryProperty();
     }
 
+    @Test
     public void testIsTrue() {
         assertTrue(prop.isTrue(layer, "Polygon")); //$NON-NLS-1$
         assertTrue(prop.isTrue(layer, "LineString")); //$NON-NLS-1$
@@ -44,7 +51,9 @@ public class GeometryPropertyTest extends TestCase {
         assertFalse(prop.isTrue(layer, "miss spelling")); //$NON-NLS-1$
     }
 
-    public void xtestResolveChange() throws Exception {
+    @Ignore
+    @Test
+    public void testResolveChange() throws Exception {
         final int[] changed=new int[1];
         changed[0]=0;
         IOpFilterListener l = new IOpFilterListener(){

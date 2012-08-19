@@ -1,5 +1,7 @@
 package net.refractions.udig.tools.edit.behaviour;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import net.refractions.udig.AbstractProjectUITestCase;
 import net.refractions.udig.catalog.tests.CatalogTests;
 import net.refractions.udig.project.internal.Layer;
@@ -15,6 +17,8 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -25,8 +29,9 @@ public class WithinLegalLayerBoundsBehaviourTest extends AbstractProjectUITestCa
 
     private TestHandler handler;
     private Map map;
-    protected void setUp() throws Exception {
-        super.setUp();
+    
+    @Before
+    public void setUp() throws Exception {
         handler=new TestHandler();
         map=(Map) handler.getContext().getMap();
         GeometryFactory fac=new GeometryFactory();
@@ -48,14 +53,16 @@ public class WithinLegalLayerBoundsBehaviourTest extends AbstractProjectUITestCa
         map.getEditManagerInternal().setSelectedLayer(layer);
     }
 
+    @Test
     public void testLegal() throws Exception {
         handler.setCurrentState(EditState.ILLEGAL);
         WithinLegalLayerBoundsBehaviour behav=new WithinLegalLayerBoundsBehaviour();
         MapMouseEvent e=new MapMouseEvent(map.getRenderManager().getMapDisplay(), 0,0, 0,0,0);
         
-        
         assertNull( behav.isEnabled(handler, e, EventType.MOVED) );
     }
+    
+    @Test
     public void testIllegal() throws Exception {
         map.getViewportModelInternal().setBounds(-300, -250, -180, -140);
         

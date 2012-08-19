@@ -1,11 +1,13 @@
 package net.refractions.udig.tests.catalog.wmt;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 import net.refractions.udig.catalog.internal.wmt.tile.WMTTile.WMTTileFactory;
 
+import org.junit.Test;
 
-public class WMTTileTest extends TestCase {
+public class WMTTileTest {
     
+    @Test
     public void testNormalizeDegreeValue() {
         double delta = 0.00000000001;
         

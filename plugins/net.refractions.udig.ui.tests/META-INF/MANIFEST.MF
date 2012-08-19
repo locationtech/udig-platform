@@ -17,6 +17,7 @@ Export-Package: net.refractions.udig.ui,
  net.refractions.udig.ui.tests.support,
  org.jmock,
  org.jmock.api,
+ org.jmock.internal,
  org.jmock.lib.action
 Bundle-ClassPath: lib/jmock-2.3.0-RC2.jar,
  lib/jmock-junit3-2.3.0-RC2.jar,

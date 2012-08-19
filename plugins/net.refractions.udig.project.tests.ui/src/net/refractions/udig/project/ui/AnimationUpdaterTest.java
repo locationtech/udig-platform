@@ -1,5 +1,8 @@
 package net.refractions.udig.project.ui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,31 +18,38 @@ import net.refractions.udig.ui.WaitCondition;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 public class AnimationUpdaterTest extends AbstractProjectUITestCase {
 
     private Map map;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         map=openMap();
         AnimationUpdater.setTesting(true);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         AnimationUpdater.setTesting(false);
     }
 
     /*
      * Test method for 'net.refractions.udig.project.ui.AnimationUpdater.runTimer(IMapDisplay, List<IAnimation>)'
      */
-    public void xtestViewportPaneSWTRunTimer() throws Exception {
+    @Ignore
+    @Test
+    public void testViewportPaneSWTRunTimer() throws Exception {
         runAnimationTest();
     }
     
-    public void xtestMultipleAnimations() throws Exception {
+    @Ignore
+    @Test
+    public void testMultipleAnimations() throws Exception {
         final TestAnimation anim1=new TestAnimation();
         TestAnimation anim2=new TestAnimation();
         

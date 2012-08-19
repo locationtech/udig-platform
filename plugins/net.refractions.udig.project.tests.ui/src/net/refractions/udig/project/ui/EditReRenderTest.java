@@ -1,5 +1,7 @@
 package net.refractions.udig.project.ui;
 
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Dimension;
 
 import net.refractions.udig.AbstractProjectUITestCase;
@@ -18,6 +20,9 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.geotools.data.FeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
@@ -27,25 +32,18 @@ public class EditReRenderTest extends AbstractProjectUITestCase {
 	private Map map;
 	private SimpleFeature[] features;
 
-	protected void setUp() throws Exception {
-        // ignore... tests are broken
-        if (true) {
-            return;
-        }
-        
-        super.setUp();
+	@Before
+	public void setUp() throws Exception {
 		features = UDIGTestUtil.createDefaultTestFeatures("featuretype", 4); //$NON-NLS-1$
 		map = MapTests.createNonDynamicMapAndRenderer(MapTests.createGeoResource(features, true),new Dimension(512,512));
 		map.setRenderManagerInternal(null);
 		
 	}
 
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
-
-	@SuppressWarnings("unchecked") 
-	public void xtestEditReRender() throws Exception {
+	@SuppressWarnings("unchecked")
+	@Ignore
+	@Test
+	public void testEditReRender() throws Exception {
         ApplicationGIS.openMap(map, true);
         
         UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition(){

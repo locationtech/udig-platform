@@ -14,6 +14,11 @@
  */
 package net.refractions.udig.tools.edit.behaviour;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
@@ -21,12 +26,10 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.Behaviour;
 import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
@@ -36,21 +39,23 @@ import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import net.refractions.udig.tools.edit.support.ShapeType;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
 /**
  * Test FreeHandPolygon Behaviour
  * @author jones
  * @since 1.1.0
  */
-public class FreeHandPolygonDrawBehaviourTest extends TestCase {
+public class FreeHandPolygonDrawBehaviourTest {
 
     private TestHandler handler;
     private FreeHandPolygonDrawBehaviour behav;
     private TestAcceptBehaviour acceptor;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        
+    @Before
+    public void setUp() throws Exception {
         handler=new TestHandler();
         behav = new FreeHandPolygonDrawBehaviour();
         handler.getBehaviours().add(behav);
@@ -62,6 +67,7 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.FreeHandPolygonDrawBehaviour.isValid(EditToolHandler, MapMouseEvent, EventType)'
      */
+    @Test
     public void testIsValid() {
         MapMouseEvent event=new MapMouseEvent(null, 10,10,MapMouseEvent.NONE,MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         assertTrue(behav.isValid(handler, event, EventType.DRAGGED));
@@ -77,9 +83,12 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.FreeHandPolygonDrawBehaviour.getCommand(EditToolHandler, MapMouseEvent, EventType)'
      */
+    @Ignore
+    @Test
     public void testDrawLine() {
-        MapMouseEvent event=new MapMouseEvent(null, 10,10,MapMouseEvent.NONE,MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         handler.getMouseTracker().setDragStarted(Point.valueOf(0,10));
+        
+        MapMouseEvent event=new MapMouseEvent(null, 10,10,MapMouseEvent.NONE,MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.DRAGGED);
 
         assertTrue(handler.isLocked());
@@ -125,9 +134,9 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
         
     }
     
+    @Ignore
+    @Test
     public void testDrawPolygon(){
-        if( EditTestControl.DISABLE ) return;
-        
         handler.getMouseTracker().setDragStarted(Point.valueOf(0,10));
         
         MapMouseEvent event=new MapMouseEvent(null, 10,10,MapMouseEvent.NONE,MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
@@ -157,9 +166,9 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
         
     }
     
+    @Ignore
+    @Test
     public void testCutHole() throws Exception {
-        if( EditTestControl.DISABLE ) return;
-        
         EditBlackboard editBlackboard = handler.getEditBlackboard();
         EditGeom geom = editBlackboard.getGeoms().get(0);
         editBlackboard.addPoint(0,0,geom.getShell());
@@ -241,7 +250,6 @@ public class FreeHandPolygonDrawBehaviourTest extends TestCase {
     protected void closeFrame() throws Exception {
         if (frame != null)
             frame.dispose();
-        super.tearDown();
     }
         
     class TestAcceptBehaviour implements Behaviour{

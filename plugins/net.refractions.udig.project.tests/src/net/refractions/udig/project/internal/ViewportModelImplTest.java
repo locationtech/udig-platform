@@ -1,30 +1,31 @@
 package net.refractions.udig.project.internal;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.Dimension;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.internal.render.ViewportModel;
 import net.refractions.udig.project.tests.support.MapTests;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
 
-public class ViewportModelImplTest extends TestCase {
+public class ViewportModelImplTest {
 
 	private static final double ACCURACY = 0.000001;
-
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
 
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
 	 */
-	public void xtestGetScaleDenominatorWGS84BoundsSmallerThanWorld() throws Exception {
+	@Ignore
+	@Test
+	public void testGetScaleDenominatorWGS84BoundsSmallerThanWorld() throws Exception {
 		Map map = MapTests.createDefaultMap("test",4,true, new Dimension( 500,500 )); //$NON-NLS-1$
 		ViewportModel viewportModel = map.getViewportModelInternal();
 		viewportModel.setCRS(DefaultGeographicCRS.WGS84);
@@ -39,6 +40,7 @@ public class ViewportModelImplTest extends TestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
 	 */
+    @Test
 	public void testGetScaleDenominatorAlbersBoundsSmallerThanWorld() throws Exception {
 		Map map = MapTests.createDefaultMap("test",4,true, new Dimension( 500,500 )); //$NON-NLS-1$
 		ViewportModel viewportModel = map.getViewportModelInternal();
@@ -54,6 +56,7 @@ public class ViewportModelImplTest extends TestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
 	 */
+    @Test
 	public void testGetScaleDenominatorWGS84BoundsLongerThanWorldIn1Direction() throws Exception {
 		Map map = MapTests.createDefaultMap("test",4,true, new Dimension( 500,500 )); //$NON-NLS-1$
 		ViewportModel viewportModel = map.getViewportModelInternal();
@@ -65,9 +68,11 @@ public class ViewportModelImplTest extends TestCase {
 		double viewportResults = viewportModel.getScaleDenominator();
 		double d = Math.abs(trueScale-viewportResults);
 	}
+    
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
 	 */
+    @Test
 	public void testGetScaleDenominatorWGS84BoundsLargerThanWorld() throws Exception {
 		Map map = MapTests.createDefaultMap("test",4,true, new Dimension( 500,500 )); //$NON-NLS-1$
 		ViewportModel viewportModel = map.getViewportModelInternal();
@@ -84,6 +89,7 @@ public class ViewportModelImplTest extends TestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
 	 */
+    @Test
 	public void testGetScaleDenominatorWGS84BoundsLargerThanWorldOffScreenData() throws Exception {
 		Map map = MapTests.createDefaultMap("test",4,true, new Dimension( 500,500 )); //$NON-NLS-1$
 		ViewportModel viewportModel = map.getViewportModelInternal();
@@ -97,6 +103,7 @@ public class ViewportModelImplTest extends TestCase {
 //		assertTrue(d+" should be less than "+ACCURACY_SCALE, d< ACCURACY_SCALE );		 //$NON-NLS-1$
 	}
 
+    @Test
 	public void testMetersPerPixel() throws Exception {
 		
 	}

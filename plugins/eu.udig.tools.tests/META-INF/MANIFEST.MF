@@ -7,14 +7,13 @@ Bundle-Activator: eu.udig.tools.tests.Activator
 Bundle-Vendor: uDig Community
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- eu.udig.tools;bundle-version="1.0.0"
+ eu.udig.tools;bundle-version="1.0.0",
+ org.junit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: com.vividsolutions.jts.geom,
  com.vividsolutions.jts.io,
  com.vividsolutions.jts.operation.polygonize,
- junit.framework;version="3.8.2",
- org.junit,
  org.opengis.feature.simple
 Export-Package: es.udig.tools.geometry.split,
  eu.udig.tools.tests

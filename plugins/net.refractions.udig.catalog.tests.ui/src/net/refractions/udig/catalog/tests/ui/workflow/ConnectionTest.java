@@ -1,13 +1,14 @@
 package net.refractions.udig.catalog.tests.ui.workflow;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.internal.ui.ConnectionPageDecorator;
 import net.refractions.udig.catalog.ui.ConnectionFactoryManager;
 import net.refractions.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
@@ -24,11 +25,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.After;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore
 public class ConnectionTest {
 	Shell shell;
 
@@ -69,6 +68,7 @@ public class ConnectionTest {
 			shell.dispose();
 	}
 	
+	@Ignore // fails when running from maven
 	@Test
 	public void testButtonState() {
         init("net.refractions.udig.catalog.ui.WMS"); //$NON-NLS-1$

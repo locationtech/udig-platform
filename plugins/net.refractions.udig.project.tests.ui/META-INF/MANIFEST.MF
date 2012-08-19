@@ -58,13 +58,13 @@ Export-Package: net.refractions.udig;
  net.refractions.udig.project.ui.internal.render.displayAdapter.impl;x-internal:=true;uses:="net.refractions.udig.project.ui.render.displayAdapter,junit.framework",
  net.refractions.udig.project.ui.internal.tool.display;x-internal:=true,
  net.refractions.udig.project.ui.tool;uses:="net.refractions.udig"
-Require-Bundle: net.refractions.udig.project.edit,
+Require-Bundle: org.eclipse.gef;bundle-version="3.7.0",
  net.refractions.udig.catalog.shp,
- net.refractions.udig.project.tests;visibility:=reexport,
  net.refractions.udig.catalog.ui,
- net.refractions.udig.catalog.tests.ui;visibility:=reexport,
- net.refractions.udig.mapgraphic,
  net.refractions.udig.issues,
- org.eclipse.gef;bundle-version="3.7.0"
+ net.refractions.udig.mapgraphic,
+ net.refractions.udig.project.edit,
+ net.refractions.udig.project.tests;visibility:=reexport,
+ net.refractions.udig.catalog.tests.ui;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

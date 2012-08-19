@@ -14,20 +14,25 @@
  */
 package net.refractions.udig.catalog.internal.ui.actions;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.net.URL;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * @author jesse
  * @since 1.1.0
  */
-public class CatalogImportDropActionTest extends TestCase {
+public class CatalogImportDropActionTest {
 
     private CatalogImportDropAction action;
 
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         action = new CatalogImportDropAction();
     }
 
@@ -35,6 +40,7 @@ public class CatalogImportDropActionTest extends TestCase {
      * Test method for
      * {@link net.refractions.udig.catalog.internal.ui.actions.CatalogImportDropAction#canImport(java.lang.Object)}.
      */
+    @Test
     public void testCanImport() {
         // TODO implement this test
     }
@@ -43,7 +49,9 @@ public class CatalogImportDropActionTest extends TestCase {
      * Test method for
      * {@link net.refractions.udig.catalog.internal.ui.actions.CatalogImportDropAction#extractURL(java.lang.String)}.
      */
-    public void xtestExtractURLWindows() throws Exception {
+    @Ignore
+    @Test
+    public void testExtractURLWindows() throws Exception {
         String s = "c:\\ap_102\\yoohoo.shp";
 
         URL url = action.extractURL(s);
@@ -55,7 +63,9 @@ public class CatalogImportDropActionTest extends TestCase {
      * Test method for
      * {@link net.refractions.udig.catalog.internal.ui.actions.CatalogImportDropAction#extractURL(java.lang.String)}.
      */
-    public void xtestExtractURLWindowsNetwork() {
+    @Ignore
+    @Test
+    public void testExtractURLWindowsNetwork() {
         String s = "\\\\c\\ap_102\\yoohoo.shp";
 
         URL url = action.extractURL("file:"+s);
@@ -67,7 +77,9 @@ public class CatalogImportDropActionTest extends TestCase {
      * Test method for
      * {@link net.refractions.udig.catalog.internal.ui.actions.CatalogImportDropAction#extractURL(java.lang.String)}.
      */
-    public void xtestExtractURLGOTO() {
+    @Ignore
+    @Test
+    public void testExtractURLGOTO() {
         fail("Not yet implemented");
     }
 
@@ -75,7 +87,9 @@ public class CatalogImportDropActionTest extends TestCase {
      * Test method for
      * {@link net.refractions.udig.catalog.internal.ui.actions.CatalogImportDropAction#extractURL(java.lang.String)}.
      */
-    public void xtestExtractURLEmbedded() {
+    @Ignore
+    @Test
+    public void testExtractURLEmbedded() {
         fail("Not yet implemented");
     }
 
@@ -83,7 +97,9 @@ public class CatalogImportDropActionTest extends TestCase {
      * Test method for
      * {@link net.refractions.udig.catalog.internal.ui.actions.CatalogImportDropAction#extractURL(java.lang.String)}.
      */
-    public void xtestExtractURLHref() {
+    @Ignore
+    @Test
+    public void testExtractURLHref() {
         fail("Not yet implemented");
     }
 
@@ -91,7 +107,9 @@ public class CatalogImportDropActionTest extends TestCase {
      * Test method for
      * {@link net.refractions.udig.catalog.internal.ui.actions.CatalogImportDropAction#extractURL(java.lang.String)}.
      */
-    public void xtestExtractURLStandard() {
+    @Ignore
+    @Test
+    public void testExtractURLStandard() {
         fail("Not yet implemented");
     }
 
@@ -99,7 +117,9 @@ public class CatalogImportDropActionTest extends TestCase {
      * Test method for
      * {@link net.refractions.udig.catalog.internal.ui.actions.CatalogImportDropAction#extractURL(java.lang.String)}.
      */
-    public void xtestExtractURLPostgis() {
+    @Ignore
+    @Test
+    public void testExtractURLPostgis() {
         fail("Not yet implemented");
     }
 

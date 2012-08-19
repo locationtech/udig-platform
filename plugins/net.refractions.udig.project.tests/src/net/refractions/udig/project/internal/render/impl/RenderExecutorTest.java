@@ -1,5 +1,9 @@
 package net.refractions.udig.project.internal.render.impl;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -25,6 +29,10 @@ import org.eclipse.core.runtime.Platform;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -42,10 +50,8 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 
 	public static boolean INTERACTIVE=true;
 
-	@Override
-	protected void setUp() throws Exception {
-        super.setUp();
-
+	@Before
+	public void setUp() throws Exception {
 		GeometryFactory factory=new GeometryFactory();
 		
 		LinearRing ring1=factory.createLinearRing(new Coordinate[]{
@@ -82,14 +88,15 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
         }
 	}
 	
-	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		map.getRenderManagerInternal().dispose();
-        super.tearDown();
 	}
+	
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.setState(int)'
 	 */
+	@Test
 	public void testSetState() {
 		
 	}
@@ -97,7 +104,9 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.render(Graphics2D, IProgressMonitor)'
 	 */
-	public void xtestRenderGraphics2DIProgressMonitor() throws Exception {
+	@Ignore
+	@Test
+	public void testRenderGraphics2DIProgressMonitor() throws Exception {
 		BufferedImage image=new BufferedImage(w,h,BufferedImage.TYPE_4BYTE_ABGR);
 
 		
@@ -118,7 +127,9 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.render(Envelope, IProgressMonitor)'
 	 */
-	public void xtestRenderEnvelopeIProgressMonitor() throws Exception {
+	@Ignore
+    @Test
+	public void testRenderEnvelopeIProgressMonitor() throws Exception {
 		RenderExecutor ex=map.getRenderManagerInternal().getRenderExecutor();
 		BufferedImage image = ex.getContext().getImage(w,h);
 
@@ -159,7 +170,9 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
     /*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.render(Envelope, IProgressMonitor)'
 	 */
-	public void xtestRenderRectangle() throws Exception {
+	@Ignore
+    @Test
+	public void testRenderRectangle() throws Exception {
 		RenderExecutor ex=map.getRenderManagerInternal().getRenderExecutor();
 		BufferedImage image = ex.getContext().getImage(w,h);
 
@@ -214,6 +227,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.dispose()'
 	 */
+    @Test
 	public void testDispose() {
 
 	}
@@ -221,6 +235,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.resyncState(Renderer)'
 	 */
+    @Test
 	public void testResyncState() {
 
 	}
@@ -228,6 +243,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.setLayerState(IRenderContext, int)'
 	 */
+    @Test
 	public void testSetLayerState() {
 
 	}
@@ -235,6 +251,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.stopRendering()'
 	 */
+    @Test
 	public void testStopRendering() {
 
 	}
@@ -242,7 +259,9 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.render()'
 	 */
-	public void xtestRender() throws Exception {
+	@Ignore
+    @Test
+	public void testRender() throws Exception {
 		RenderExecutor ex=map.getRenderManagerInternal().getRenderExecutor();
 		BufferedImage image = ex.getContext().getImage(w,h);
 
@@ -267,6 +286,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.getContext()'
 	 */
+    @Test
 	public void testGetContext() {
 
 	}
@@ -274,6 +294,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.getRenderer()'
 	 */
+    @Test
 	public void testGetRenderer() {
 
 	}
@@ -281,6 +302,7 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.addLayerListener(RenderContext)'
 	 */
+    @Test
 	public void testAddLayerListener() {
 
 	}
@@ -288,7 +310,9 @@ public class RenderExecutorTest extends AbstractProjectTestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderExecutorImpl.render(Envelope)'
 	 */
-	public void xtestRenderEnvelope() throws Exception {
+    @Ignore
+    @Test
+	public void testRenderEnvelope() throws Exception {
 		RenderExecutor ex=map.getRenderManagerInternal().getRenderExecutor();
 		BufferedImage image = ex.getContext().getImage();
 

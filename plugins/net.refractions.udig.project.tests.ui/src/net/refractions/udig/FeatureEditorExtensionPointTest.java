@@ -1,5 +1,11 @@
 package net.refractions.udig;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import java.net.URI;
 
 import net.refractions.udig.project.ui.internal.FeatureEditorExtensionProcessor;
@@ -13,6 +19,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -22,7 +30,9 @@ public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
     
     
     @SuppressWarnings("deprecation")
-    public void xtestGetEditWithMenu() throws Exception{
+    @Ignore
+    @Test
+    public void testGetEditWithMenu() throws Exception{
         FeatureEditorExtensionProcessor processor=new FeatureEditorExtensionProcessor();
         IContributionItem item=processor.getEditWithFeatureMenu(new StructuredSelection());
         assertTrue(item instanceof GroupMarker);
@@ -80,7 +90,9 @@ public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
     }
     
     @SuppressWarnings("deprecation")
-    public void xtestOpenMemory()throws Exception{
+    @Ignore
+    @Test
+    public void testOpenMemory()throws Exception{
         FeatureEditorExtensionProcessor processor=new FeatureEditorExtensionProcessor();
         SimpleFeatureTypeBuilder builder=new SimpleFeatureTypeBuilder();
         

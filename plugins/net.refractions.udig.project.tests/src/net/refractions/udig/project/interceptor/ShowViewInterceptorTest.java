@@ -14,17 +14,19 @@
  */
 package net.refractions.udig.project.interceptor;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import java.io.IOException;
 import java.net.URI;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.tests.CatalogTests;
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.interceptor.ShowViewInterceptor;
 import net.refractions.udig.project.internal.interceptor.CacheInterceptor.ViewStyleContent;
+import net.refractions.udig.project.internal.interceptor.ShowViewInterceptor;
 import net.refractions.udig.project.tests.support.MapTests;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -36,6 +38,9 @@ import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -48,7 +53,7 @@ import org.opengis.filter.Id;
  * @author Jesse
  * @since 1.1.0
  */
-public class ShowViewInterceptorTest extends TestCase {
+public class ShowViewInterceptorTest {
 
     private Map map;
     private  FeatureSource<SimpleFeatureType, SimpleFeature> featureSource;
@@ -57,8 +62,8 @@ public class ShowViewInterceptorTest extends TestCase {
     private SimpleFeature f;
     private Layer layer2;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         map = MapTests.createDefaultMap("type1", 5, true, null); //$NON-NLS-1$
         layer = map.getMapLayers().get(0);
         layer2 = map.getLayerFactory().createLayer(
@@ -77,7 +82,9 @@ public class ShowViewInterceptorTest extends TestCase {
      * Test method for
      * {@link net.refractions.udig.project.interceptor.ShowViewInterceptor#run(net.refractions.udig.project.ILayer, org.geotools.data.FeatureSource)}.
      */
-    public void xtestFilterOnLayerStyleBlackboard() throws Exception {
+    @Ignore
+    @Test
+    public void testFilterOnLayerStyleBlackboard() throws Exception {
         layer.getStyleBlackboard().put(ShowViewInterceptor.KEY, filter);
 
         FeatureCollection<SimpleFeatureType, SimpleFeature>  features = assertFilter(layer, 1);
@@ -94,7 +101,9 @@ public class ShowViewInterceptorTest extends TestCase {
      * Test method for
      * {@link net.refractions.udig.project.interceptor.ShowViewInterceptor#run(net.refractions.udig.project.ILayer, org.geotools.data.FeatureSource)}.
      */
-    public void xtestFilterOnLayerBlackboard() throws Exception {
+    @Ignore
+    @Test
+    public void testFilterOnLayerBlackboard() throws Exception {
         layer.getBlackboard().put(ShowViewInterceptor.KEY, filter);
 
         FeatureCollection<SimpleFeatureType, SimpleFeature>  features = assertFilter(layer, 1);
@@ -121,7 +130,9 @@ public class ShowViewInterceptorTest extends TestCase {
      * Test method for
      * {@link net.refractions.udig.project.interceptor.ShowViewInterceptor#run(net.refractions.udig.project.ILayer, org.geotools.data.FeatureSource)}.
      */
-    public void xtestQueryOnLayerStyleBlackboard() throws Exception {
+    @Ignore
+    @Test
+    public void testQueryOnLayerStyleBlackboard() throws Exception {
         layer.getStyleBlackboard().put(ShowViewInterceptor.KEY,
                 new DefaultQuery(f.getFeatureType().getTypeName(), filter));
 
@@ -139,7 +150,9 @@ public class ShowViewInterceptorTest extends TestCase {
      * Test method for
      * {@link net.refractions.udig.project.interceptor.ShowViewInterceptor#run(net.refractions.udig.project.ILayer, org.geotools.data.FeatureSource)}.
      */
-    public void xtestQueryOnLayerBlackboard() throws Exception {
+    @Ignore
+    @Test
+    public void testQueryOnLayerBlackboard() throws Exception {
         layer.getBlackboard().put(ShowViewInterceptor.KEY,
                 new DefaultQuery(f.getFeatureType().getTypeName(), filter));
 
@@ -154,12 +167,14 @@ public class ShowViewInterceptorTest extends TestCase {
         assertFilter(layer2, 3);
     }
 
+    @Test
     public void testGetFeatureStore() throws Exception {
         layer.getStyleBlackboard().put(ShowViewInterceptor.KEY, filter);
         assertNull(layer.getResource(FeatureStore.class,
                 new NullProgressMonitor()));
     }
 
+    @Test
     public void testStyleContentTestNulls() throws Exception {
         ViewStyleContent content = new ViewStyleContent();
         XMLMemento memento = XMLMemento.createWriteRoot("root");
@@ -169,6 +184,7 @@ public class ShowViewInterceptorTest extends TestCase {
         assertEquals(start, loaded);
     }
 
+    @Test
     public void testStyleContentAllNoneFilters() throws Exception {
         ViewStyleContent content = new ViewStyleContent();
         XMLMemento memento = XMLMemento.createWriteRoot("root");
@@ -183,7 +199,9 @@ public class ShowViewInterceptorTest extends TestCase {
         assertEquals(start, loaded);
     }
 
-    public void xtestStyleContentFullQuery() throws Exception {
+    @Ignore
+    @Test
+    public void testStyleContentFullQuery() throws Exception {
         XMLMemento memento = XMLMemento.createWriteRoot("root");
         DefaultQuery start = new DefaultQuery("type", new URI(
                 "http://localhost"), filter, 27, new String[] { "att" },

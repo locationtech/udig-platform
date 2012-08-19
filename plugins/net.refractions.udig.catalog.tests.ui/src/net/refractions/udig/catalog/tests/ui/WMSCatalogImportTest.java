@@ -1,5 +1,7 @@
 package net.refractions.udig.catalog.tests.ui;
 
+import static org.junit.Assert.assertTrue;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 

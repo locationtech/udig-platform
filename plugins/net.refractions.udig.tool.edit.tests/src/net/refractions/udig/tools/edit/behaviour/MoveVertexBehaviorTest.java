@@ -1,16 +1,19 @@
 package net.refractions.udig.tools.edit.behaviour;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.awt.Dimension;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.CommandManager;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.tests.support.TestMapDisplay;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.EventBehaviour;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
@@ -23,13 +26,16 @@ import net.refractions.udig.tools.edit.support.TestHandler;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.geometry.jts.JTS;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 
-public class MoveVertexBehaviorTest extends TestCase {
+public class MoveVertexBehaviorTest {
     final static int BUTTON1=MapMouseEvent.BUTTON1;
     final static int BUTTON2=MapMouseEvent.BUTTON2;
     final static int NONE=MapMouseEvent.NONE;
@@ -40,8 +46,8 @@ public class MoveVertexBehaviorTest extends TestCase {
     private TestHandler handler;
     private EditBlackboard editBlackboard;
     
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         mode=new MoveVertexBehaviour();
         handler=new TestHandler();
 
@@ -49,7 +55,7 @@ public class MoveVertexBehaviorTest extends TestCase {
         handler.getTestEditBlackboard().util.setSnappingRadius(0);
 
         MapMouseEvent event=new MapMouseEvent( DISPLAY, 10,10,NONE,BUTTON1, BUTTON1 );
-        assertFalse(mode.isValid(handler, event, EventType.DRAGGED));        
+        assertFalse(mode.isValid(handler, event, EventType.DRAGGED));
         
         editBlackboard = handler.getEditBlackboard();
         EditGeom currentGeom = editBlackboard.getGeoms().get(0);
@@ -62,6 +68,7 @@ public class MoveVertexBehaviorTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.mode.MoveVertexMode.isValid(EditToolHandler, MapMouseEvent, EventType)'
      */
+    @Test
     public void testIsValid() {
         handler.getEditBlackboard().selectionAdd( Point.valueOf(10,10) );
         handler.getMouseTracker().setDragStarted(Point.valueOf(10,10));
@@ -106,6 +113,7 @@ public class MoveVertexBehaviorTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.mode.MoveVertexMode.run(EditToolHandler, MapMouseEvent, EventType)'
      */
+    @Test
     public void testRun() throws Exception {
 
         handler.getEditBlackboard().selectionAdd(Point.valueOf(10,10));
@@ -157,7 +165,7 @@ public class MoveVertexBehaviorTest extends TestCase {
         
     }
 
-    
+    @Test
     public void testUndo() throws Exception {
 
         editBlackboard.selectionAdd(Point.valueOf(10,10));
@@ -219,9 +227,9 @@ public class MoveVertexBehaviorTest extends TestCase {
         assertEquals(0, editBlackboard.getCoords(20,10).size());
     }
     
+    @Ignore
+    @Test
     public void testPostSnapping() throws Exception {
-        if( EditTestControl.DISABLE ) return;
-        
         EditGeom newGeom = editBlackboard.newGeom("id", null); //$NON-NLS-1$
         editBlackboard.addPoint(30,20, newGeom.getShell());
         editBlackboard.addPoint(30,40, newGeom.getShell());
@@ -266,6 +274,7 @@ public class MoveVertexBehaviorTest extends TestCase {
         
     }
     
+    @Test
     public void testSnappingDuringDragging() throws Exception {
         editBlackboard.selectionAdd(Point.valueOf(10,10));
         editBlackboard.selectionAdd(Point.valueOf(20,10));
@@ -290,6 +299,7 @@ public class MoveVertexBehaviorTest extends TestCase {
         return null;
     }
 
+    @Test
     public void testDragAcrossAnotherVertex() throws Exception {
         editBlackboard.selectionAdd(Point.valueOf(10,10));
 
@@ -319,9 +329,7 @@ public class MoveVertexBehaviorTest extends TestCase {
         
     }
     
-    /**
-     *
-     */
+    @Test
     public void testSnapToVertex() throws Exception{
 
         MapMouseEvent event;

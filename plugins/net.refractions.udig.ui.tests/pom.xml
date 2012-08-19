@@ -14,30 +14,23 @@
     <version>1.2.0-SNAPSHOT</version>
 
     <packaging>eclipse-test-plugin</packaging>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-surefire-plugin</artifactId>
+            </plugin>
 
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>target-platform-configuration</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    
+<!--
     <profiles>
-
-        <profile>
-            <id>Mac OS</id>
-            <activation>
-                <os>
-                    <family>mac</family>
-                </os>
-            </activation>
-            <properties>
-                <tycho.test.OSspecific>-XstartOnFirstThread</tycho.test.OSspecific>
-            </properties>
-        </profile>
-
-        <profile>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <tycho.test.OSspecific />
-            </properties>
-        </profile>
-
 
         <profile>
             <id>coverage</id>
@@ -81,7 +74,7 @@
                                                 <txt outfile="${project.build.directory}/emma/coverage.txt" />
                                                 <xml outfile="${project.build.directory}/emma/coverage.xml" />
                                                 <html outfile="${project.build.directory}/emma/coverage.html" />
-                                                <!-- Could also generate an HTML report, if you want... -->
+                                                <!- - Could also generate an HTML report, if you want... - ->
                                             </report>
                                         </emma>
                                         <loadfile property="emma.txt"
@@ -99,37 +92,6 @@
         
     </profiles>
 
-    <properties>
-        <tycho.test.jvmArgs>-Xmx128m -XX:MaxPermSize=256m -Dsdtcore.headless ${tycho.test.OSspecific}</tycho.test.jvmArgs>
-    </properties>
-
-    <build>
-        <plugins>
-
-            <plugin>
-                <groupId>org.eclipse.tycho</groupId>
-                <artifactId>tycho-surefire-plugin</artifactId>
-                <version>${tycho-version}</version>
-                <configuration>
-                    <useUIHarness>true</useUIHarness>
-                    <product>net.refractions.udig-product</product>
-                    <application>org.eclipse.ui.ide.workbench</application>
-                    <argLine>${tycho.test.jvmArgs}</argLine>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>${tycho-provider}</groupId>
-                <artifactId>target-platform-configuration</artifactId>
-                <version>${tycho-version}</version>
-                <configuration>
-                    <environments combine.self="override">
-                    </environments>
-                </configuration>
-            </plugin>
-
-        </plugins>
-    </build>
-
+-->
 
 </project>

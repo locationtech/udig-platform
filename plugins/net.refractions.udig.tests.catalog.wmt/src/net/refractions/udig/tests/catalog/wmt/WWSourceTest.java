@@ -1,5 +1,7 @@
 package net.refractions.udig.tests.catalog.wmt;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Map;
 
 import net.refractions.udig.catalog.internal.wmt.WMTRenderJob;
@@ -11,11 +13,11 @@ import net.refractions.udig.catalog.wmsc.server.Tile;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.jdom.Element;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class WWSourceTest extends TestCase {
+public class WWSourceTest {
     
+    @Test
     public void testCutExtentInTilesRobbenIsland() throws Exception {
         Element rootElement = QuadTileSetTest.getRootElement();
         
@@ -47,7 +49,7 @@ public class WWSourceTest extends TestCase {
         assertEquals(1, tiles2.size());
     }
     
-
+    @Test
     public void testTileFromCoordinateWholeWorld() throws Exception {
         Element rootElement = QuadTileSetTest.getRootElement();
         QuadTileSet quadTileSet = new QuadTileSet(rootElement.getChild("ChildLayerSet").getChild("QuadTileSet"), "");

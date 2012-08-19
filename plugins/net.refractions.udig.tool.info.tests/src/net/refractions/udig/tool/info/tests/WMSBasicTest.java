@@ -1,5 +1,8 @@
 package net.refractions.udig.tool.info.tests;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Dimension;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -8,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.wmsc.server.MockHttpResponse;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
@@ -28,11 +30,13 @@ import org.geotools.data.wms.response.GetFeatureInfoResponse;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.ows.ServiceException;
 import org.geotools.referencing.CRS;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
 
-public class WMSBasicTest extends TestCase {
+public class WMSBasicTest {
 
 	public URL stableWMS;
 
@@ -52,11 +56,8 @@ public class WMSBasicTest extends TestCase {
 
 	ReferencedEnvelope bufferedClickBbox;
 	
-	@Override
-	protected void setUp() throws Exception {
-		// TODO Auto-generated method stub
-		super.setUp();
-
+	@Before
+	public void setUp() throws Exception {
 		crs = CRS.decode("EPSG:4326");
 		
 		Envelope env = new Envelope(-10.0, 10.0, -10.0, 10.0);
@@ -73,23 +74,18 @@ public class WMSBasicTest extends TestCase {
 		wmslayer.setQueryable(true);
 		wmslayer.setSrs(Collections.singleton("EPSG:4326"));
 		
-		stableWMS = new URL("http://www2.dmsolutions.ca/cgi-bin/mswms_gmap?VERSION=1.1.0&REQUEST=GetCapabilities");
+		stableWMS = new URL("http://vmap0.tiles.osgeo.org/wms/vmap0?SERVICE=wms&VERSION=1.1.0&REQUEST=GetCapabilities");
 		wms = new FudgeServer();
 		
 		layers = new ArrayList<ILayer>();
-		layers.add(new WMSLayer(this.map, this.wmslayer, this.wms));
 		
 		map = new TestMap(renderManager, viewportModel, layers);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-		// TODO Auto-generated method stub
-		super.tearDown();
-	}
-
-	public void testWMSBasic() throws Exception {
 		
+		layers.add(new WMSLayer(this.map, this.wmslayer, this.wms));
+	}
+
+	@Test
+	public void testWMSBasic() throws Exception {
 		InfoTool infoTool = new InfoTool();
 		
 		IToolContext context = new TestToolContext(this.bufferedClickBbox, 

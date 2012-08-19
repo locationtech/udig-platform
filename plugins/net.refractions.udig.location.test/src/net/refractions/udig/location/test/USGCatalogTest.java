@@ -14,14 +14,20 @@
  */
 package net.refractions.udig.location.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.location.AddressSeeker;
 import net.refractions.udig.location.USGLocation;
 
 import org.apache.xmlrpc.XmlRpcException;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -35,19 +41,19 @@ import com.vividsolutions.jts.geom.Point;
  * @author Jody Garnett
  * @since 1.0.0
  */
-public class USGCatalogTest extends TestCase {
+public class USGCatalogTest {
     USGLocation usg;
     AddressSeeker seeker;
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        usg = new USGLocation();        
+    
+    @Before
+    public void setUp() throws Exception {
+        usg = new USGLocation();
         seeker = new AddressSeeker();
     }
-    public void testStub() {
-        assertTrue(true);
-    }
-    public void xtestWhere() {
+    
+    @Ignore
+    @Test
+    public void testWhere() {
         Point location = null;
         try {
             location = seeker.where("1500 Poydras St, New Orleans, LA");
@@ -59,10 +65,13 @@ public class USGCatalogTest extends TestCase {
             fail("XmlRpcException");
         }
         assertNotNull( location );
-        assertEquals( -90.078377, location.getX() );
-        assertEquals( 29.951663, location.getY() );
+        assertEquals( -90.078377, location.getX(), 0 );
+        assertEquals( 29.951663, location.getY(), 0 );
     }
-    public void xtestGeocode() {
+    
+    @Ignore
+    @Test
+    public void testGeocode() {
         List<SimpleFeature> features = null;
         try {
             features = seeker.geocode("1500 Poydras St, New Orleans, LA");
@@ -77,8 +86,8 @@ public class USGCatalogTest extends TestCase {
         assertEquals( 1, features.size() );
         SimpleFeature feature = features.get(0);
         Point location = ((Geometry)feature.getDefaultGeometry()).getCentroid();
-        assertEquals( -90.078377, location.getX() );
-        assertEquals( 29.951663, location.getY() );
+        assertEquals( -90.078377, location.getX(), 0 );
+        assertEquals( 29.951663, location.getY(), 0 );
     }
     
     private void printFeats(List<SimpleFeature> list) {

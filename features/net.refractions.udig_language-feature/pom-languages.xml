@@ -44,7 +44,7 @@
 
 	<properties>
 		<tycho-version>0.13.0</tycho-version>
-		<tycho-provider>org.eclipse.tycho</tycho-provider>
+		<org.eclipse.tycho>org.eclipse.tycho</org.eclipse.tycho>
 	</properties>
 
 	<repositories>
@@ -130,7 +130,7 @@
 
 
 			<plugin>
-				<groupId>${tycho-provider}</groupId>
+				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<extensions>true</extensions>

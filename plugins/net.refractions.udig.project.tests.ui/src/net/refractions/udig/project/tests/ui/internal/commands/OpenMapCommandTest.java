@@ -1,5 +1,8 @@
 package net.refractions.udig.project.tests.ui.internal.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,7 +19,6 @@ import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.commands.CreateMapCommand;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.commands.OpenProjectElementCommand;
-import net.refractions.udig.project.ui.internal.MapEditor;
 import net.refractions.udig.project.ui.internal.MapEditorInput;
 import net.refractions.udig.project.ui.internal.MapEditorPart;
 
@@ -24,6 +26,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 public class OpenMapCommandTest extends AbstractProjectUITestCase {
 	
@@ -31,9 +36,8 @@ public class OpenMapCommandTest extends AbstractProjectUITestCase {
 	IService service;
 	boolean done;
 	
-	@Override
-	protected void setUp() throws Exception {
-        super.setUp();
+	@Before
+	public void setUp() throws Exception {
 		//get a georesource
 		ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
 		IServiceFactory sFactory 
@@ -53,7 +57,9 @@ public class OpenMapCommandTest extends AbstractProjectUITestCase {
 		done = false;
 	}
 	
-	public void xtest() throws Exception {
+	@Ignore
+	@Test
+	public void test() throws Exception {
 		Runner.Runnable[] runners = new Runner.Runnable[]{
 			new Runner.Runnable() {
 				public int run(IProgressMonitor monitor) {

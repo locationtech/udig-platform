@@ -1,70 +1,80 @@
 package net.refractions.udig.project.ui.internal.render.displayAdapter.impl;
 
+import static org.junit.Assert.fail;
+
 import java.awt.event.MouseEvent;
 
-import junit.framework.TestCase;
-
 import org.jmock.Mockery;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
-public class EventAdapterTest extends TestCase {
+public class EventAdapterTest {
 
 	private EventHandlerJava handler;
 	private Mockery context;
 	private EventJob mockEventJob;
 
-	@Override
-	protected void setUp() throws Exception {
-	    // ignore... tests are broken
-	    if (true) {
-	        return;
-	    }
-	    
+	@Before
+	public void setUp() throws Exception {
 		context = new Mockery();
 		mockEventJob = context.mock(EventJob.class);
 		this.handler = new EventHandlerJava(mockEventJob);
 	}
 	
-    public void testStub() throws Exception {
-        assertTrue(true);
-    }
-    
-	public void xtestMouseClicked() {
+	@Ignore
+	@Test
+	public void testMouseClicked() {
 		MouseEvent e=new MouseEvent(null, 0, 0L, 0, 0,0,1,false);
 		
 //		context.checking(new Expectations(){{
 //			MapMouseEvent mapMouseEvent;
 //			mockEventJob.fire(EventJob.PRESSED, mapMouseEvent);
 //		}}
-//		);  
+//		);
 		
 //		adapter.mouseClicked(e);
 	}
 
-	public void xtestMouseEntered() {
+	@Ignore
+    @Test
+	public void testMouseEntered() {
 		fail("Not yet implemented");
 	}
 
-	public void xtestMouseExited() {
+	@Ignore
+    @Test
+	public void testMouseExited() {
 		fail("Not yet implemented");
 	}
 
-	public void xtestMousePressed() {
+	@Ignore
+    @Test
+	public void testMousePressed() {
 		fail("Not yet implemented");
 	}
 
-	public void xtestMouseReleased() {
+	@Ignore
+    @Test
+	public void testMouseReleased() {
 		fail("Not yet implemented");
 	}
 
-	public void xtestMouseDragged() {
+	@Ignore
+    @Test
+	public void testMouseDragged() {
 		fail("Not yet implemented");
 	}
 
-	public void xtestMouseMoved() {
+	@Ignore
+    @Test
+	public void testMouseMoved() {
 		fail("Not yet implemented");
 	}
 
-	public void xtestMouseWheelMoved() {
+	@Ignore
+    @Test
+	public void testMouseWheelMoved() {
 		fail("Not yet implemented");
 	}
 
