@@ -44,7 +44,6 @@
 
 	<properties>
 		<tycho-version>0.13.0</tycho-version>
-		<org.eclipse.tycho>org.eclipse.tycho</org.eclipse.tycho>
 	</properties>
 
 	<repositories>
