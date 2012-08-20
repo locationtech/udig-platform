@@ -35,8 +35,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.geotools.brewer.color.BrewerPalette;
 
-import sun.security.krb5.internal.PAEncTSEnc;
-
 /**
  * <p>
  * <b>Purpose:</b>

@@ -1,5 +1,11 @@
 package net.refractions.udig.project.tests.ui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
+
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,37 +42,35 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 public class MapImportTest extends AbstractProjectUITestCase {
 	
-	MapImport mapImport;	
+	MapImport mapImport;
 	
-	@Override
-	protected void setUp() throws Exception {
-        // ignore... tests are broken
-        if (true) {
-            return;
-        }
-        
-		super.setUp();
-		
+	@Before
+	public void setUp() throws Exception {
 		mapImport = new MapImport();
 		mapImport.getDialog().setBlockOnOpen(false);
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 			.getActivePage().showView(LayersView.ID);
 	}
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
 //        Project p=(Project) ApplicationGIS.getActiveProject();
         List<Project> projects = ProjectPlugin.getPlugin().getProjectRegistry().getProjects();
         for( Project p : projects ) {
-            p.getElementsInternal().clear();            
+            p.getElementsInternal().clear();
         }
-        super.tearDown();
     }
     
-    public void xtestNormal() throws Exception {
+    @Ignore
+    @Test
+    public void testNormal() throws Exception {
         Object context = getContext();
         
         ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
@@ -137,7 +141,9 @@ public class MapImportTest extends AbstractProjectUITestCase {
         }
     }
 
-    public void xtestMultiResource() throws Exception {
+    @Ignore
+    @Test
+    public void testMultiResource() throws Exception {
         Object context = DummyMultiResourceService.url;
         
         ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();

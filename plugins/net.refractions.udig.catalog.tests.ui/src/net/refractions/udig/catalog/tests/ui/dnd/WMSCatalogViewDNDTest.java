@@ -1,5 +1,8 @@
 package net.refractions.udig.catalog.tests.ui.dnd;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;

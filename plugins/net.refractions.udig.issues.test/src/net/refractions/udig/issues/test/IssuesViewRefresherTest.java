@@ -1,24 +1,20 @@
 package net.refractions.udig.issues.test;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertTrue;
 import net.refractions.udig.issues.IssueConfiguration;
 import net.refractions.udig.issues.IssueConstants;
 import net.refractions.udig.issues.internal.view.IssuesContentProvider;
 import net.refractions.udig.issues.internal.view.IssuesView;
 
 import org.eclipse.ui.PlatformUI;
+import org.junit.Ignore;
+import org.junit.Test;
 
-public class IssuesViewRefresherTest extends TestCase {
-
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    public void testStub() throws Exception {
-        assertTrue(true);
-    }
+public class IssuesViewRefresherTest {
     
-    public void xtestRefresh() throws Exception {
+    @Ignore
+    @Test
+    public void testRefresh() throws Exception {
         IssuesView view = (IssuesView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(IssueConstants.VIEW_ID);
         
         final boolean[] refresh=new boolean[1];

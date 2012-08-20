@@ -1,6 +1,9 @@
 package net.refractions.udig.tools.edit.behaviour;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.CommandManager;
@@ -9,7 +12,6 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
 import net.refractions.udig.tools.edit.support.Point;
@@ -20,14 +22,17 @@ import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.WaitCondition;
 
 import org.geotools.data.FeatureSource;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-public class StartEditingBehaviourTest extends TestCase {
+public class StartEditingBehaviourTest {
 
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.StartEditingBehaviour.isValid(EditToolHandler, MapMouseEvent, EventType)'
      */
+    @Test
     public void testIsValid() throws Exception {
         TestHandler handler=new TestHandler();
         
@@ -61,12 +66,12 @@ public class StartEditingBehaviourTest extends TestCase {
         event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         assertTrue(behavior.isValid(handler, event, EventType.RELEASED));
         // doesn't work with event pressed
-        assertFalse(behavior.isValid(handler, event, EventType.PRESSED));        
+        assertFalse(behavior.isValid(handler, event, EventType.PRESSED));
     }
 
+    @Ignore
+    @Test
     public void testRun() throws Exception {
-        if( EditTestControl.DISABLE ) return;
-        
         final TestHandler handler=new TestHandler();
         
         ILayer layer = handler.getContext().getMapLayers().get(0);

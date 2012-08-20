@@ -1,5 +1,8 @@
 package net.refractions.udig.project.ui.internal;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -20,13 +23,17 @@ import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.ui.WaitCondition;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
 public class SynchronizeRendererConfigurationTest extends AbstractProjectUITestCase {
 
     private Map map;
     private RenderManagerDynamic manager;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         map=MapTests.createDefaultMap("SynchronizeRendererConfigurationTest", 5, true, null); //$NON-NLS-1$
         map.setRenderManagerInternal(null);
         ApplicationGIS.openMap(map, true);
@@ -40,7 +47,9 @@ public class SynchronizeRendererConfigurationTest extends AbstractProjectUITestC
         manager=(RenderManagerDynamic) map.getRenderManagerInternal();
     }
     
-    public void xtestRemoveLayerThenAddAnother() throws Exception {
+    @Ignore
+    @Test
+    public void testRemoveLayerThenAddAnother() throws Exception {
         removeAndAddLayer(1);
         removeAndAddLayer(2);
         Layer layer = MapTests.createLayer(map, MapGraphicService.class,
@@ -105,7 +114,9 @@ public class SynchronizeRendererConfigurationTest extends AbstractProjectUITestC
         }
     }
     
-    public void xtestReorder() throws Exception {
+    @Ignore
+    @Test
+    public void testReorder() throws Exception {
         map.getLayersInternal().clear();
         
         final Layer layer = MapTests.createLayer(map, MapGraphicService.class,

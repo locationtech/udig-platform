@@ -1,16 +1,20 @@
 package net.refractions.udig.tools.edit.behaviour;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.TestCase;
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.tests.support.TestLayer;
-import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
 import net.refractions.udig.tools.edit.support.EditGeom;
@@ -26,6 +30,9 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
@@ -43,15 +50,15 @@ import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
-public class WriteChangesBehaviourTest extends TestCase {
+public class WriteChangesBehaviourTest {
 
     private TestHandler handler;
     private Layer layer;
     private SimpleFeature feature;
     private SimpleFeature feature2;
 
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         handler=new TestHandler(2);
         layer = (Layer) handler.getContext().getMap().getMapLayers().get(0);
         FeatureIterator<SimpleFeature> features = layer.getResource(FeatureSource.class, null).getFeatures().features();
@@ -63,6 +70,7 @@ public class WriteChangesBehaviourTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.SetEditFeatureBehaviour.isValid(EditToolHandler)'
      */
+    @Test
     public void testIsValid() throws Exception {
         AcceptChangesBehaviour behaviour=new AcceptChangesBehaviour(Polygon.class, false);
         
@@ -80,9 +88,9 @@ public class WriteChangesBehaviourTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.SetEditFeatureBehaviour.run(EditToolHandler)'
      */
+    @Ignore
+    @Test
     public void testPolygon() throws Exception {
-        if( EditTestControl.DISABLE ) return;
-        
         AcceptChangesBehaviour behaviour;
         FeatureIterator<SimpleFeature> features;
         SimpleFeature next;
@@ -142,12 +150,13 @@ public class WriteChangesBehaviourTest extends TestCase {
         ((Map)handler.getContext().getMap()).getEditManagerInternal().setEditFeature(SimpleFeatureBuilder.template(type, "newFeature"), layer);
         
     }
+    
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.SetEditFeatureBehaviour.run(EditToolHandler)'
      */
+    @Ignore
+    @Test
     public void testMultiPolygon() throws Exception {
-        if( EditTestControl.DISABLE ) return;
-        
         AcceptChangesBehaviour behaviour;
         FeatureIterator<SimpleFeature> features;
         SimpleFeature next;
@@ -209,9 +218,9 @@ public class WriteChangesBehaviourTest extends TestCase {
         
     }
 
+    @Ignore
+    @Test
     public void testLines() throws Exception {
-        if( EditTestControl.DISABLE ) return;
-        
         AcceptChangesBehaviour behaviour;
         FeatureIterator<SimpleFeature> features;
         SimpleFeature next;
@@ -264,9 +273,9 @@ public class WriteChangesBehaviourTest extends TestCase {
         assertEquals(MultiLineString.class, feature.getDefaultGeometry().getClass());
     }
     
+    @Ignore
+    @Test
     public void testMultiLine() throws Exception {
-        if( EditTestControl.DISABLE ) return;
-        
         AcceptChangesBehaviour behaviour;
         FeatureIterator<SimpleFeature> features;
         SimpleFeature next;
@@ -319,9 +328,9 @@ public class WriteChangesBehaviourTest extends TestCase {
         return bb.toCoord(net.refractions.udig.tools.edit.support.Point.valueOf(i,j));
     }
 
+    @Ignore
+    @Test
     public void testPoint() throws Exception {
-        if( EditTestControl.DISABLE ) return;
-        
         AcceptChangesBehaviour behaviour=new AcceptChangesBehaviour(Point.class, false);
 
         EditBlackboard bb = handler.getEditBlackboard();
@@ -373,7 +382,7 @@ public class WriteChangesBehaviourTest extends TestCase {
         assertEquals(MultiPoint.class, feature.getDefaultGeometry().getClass());
     }
    
-
+    @Test
     public void testNoEditFeature() throws Exception {
         ((EditManager) handler.getContext().getMap().getEditManager()).setEditFeature(null, null);
         AcceptChangesBehaviour behaviour=new AcceptChangesBehaviour(Point.class, false);
@@ -407,9 +416,9 @@ public class WriteChangesBehaviourTest extends TestCase {
      *
      * @throws Exception
      */
+    @Ignore
+    @Test
     public void testMultiPointOnBlackboard() throws Exception {
-        if( EditTestControl.DISABLE ) return;
-        
         EditBlackboard bb = handler.getEditBlackboard();
         EditGeom geom = bb.newGeom(feature.getID(), ShapeType.POINT);
         bb.addPoint(10,10,geom.getShell());
@@ -433,6 +442,7 @@ public class WriteChangesBehaviourTest extends TestCase {
      *
      * @throws Exception
      */
+    @Test
     public void testTwoChangedFeaturesOnBlackboard() throws Exception {
         EditBlackboard bb = handler.getEditBlackboard();
         EditGeom geom1 = bb.newGeom(feature.getID(), null);
@@ -484,6 +494,7 @@ public class WriteChangesBehaviourTest extends TestCase {
      *
      * @throws Exception
      */
+    @Test
     public void testCreateFeature() throws Exception {
         EditBlackboard bb = handler.getEditBlackboard();
         

@@ -11,8 +11,7 @@ Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  net.refractions.udig.catalog;visibility:=reexport,
  net.refractions.udig.catalog.geotools,
  net.refractions.udig.catalog.shp,
- net.refractions.udig.ui.tests,
- org.junit4
+ net.refractions.udig.ui.tests
 Bundle-Activator: net.refractions.udig.catalog.tests.TestActivator
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -1,5 +1,7 @@
 package net.refractions.udig.render.wms.basic.test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.Dimension;
 import java.net.URL;
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ import org.geotools.data.ows.Layer;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
@@ -32,8 +36,8 @@ public class BasicWMSRenderer2Test extends AbstractProjectUITestCase {
     private ReferencedEnvelope viewport;
     private Map map;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         IService service = WMSRenderMetricsTest.createService(new URL(
                 "http://BasicWMSRenderer2Test"), false); //$NON-NLS-1$
         members = service.resources(new NullProgressMonitor());
@@ -44,14 +48,17 @@ public class BasicWMSRenderer2Test extends AbstractProjectUITestCase {
         wmsLayers = Arrays.asList(members.get(0).resolve(Layer.class, new NullProgressMonitor()));
     }
 
+    @Test
     public void testGetLayersBoundingBox() {
         // TODO
     }
 
+    @Test
     public void testFindRequestCRS() {
         // TODO
     }
 
+    @Test
     public void testCalculateRequestBBox_reprojecting() throws Exception {
         Layer world = new Layer("world"); //$NON-NLS-1$
         world.setBoundingBoxes(WMSRenderMetricsTest.BBOXES3);
@@ -75,6 +82,7 @@ public class BasicWMSRenderer2Test extends AbstractProjectUITestCase {
         assertEquals("Reprojected MaxY wrong", 60.6, result.getMaxY(), 0.1);
     }
 
+    @Test
     public void testCalculateRequestBBox_LayerContained() throws Exception {
         // Test viewport is larger than layer
         ReferencedEnvelope bbox = BasicWMSRenderer2.calculateRequestBBox(wmsLayers, viewport,
@@ -87,6 +95,7 @@ public class BasicWMSRenderer2Test extends AbstractProjectUITestCase {
         assertEquals(20.0, bbox.getMaxY(), ACCURACY);
     }
 
+    @Test
     public void testCalculateRequestBBox_ViewportContained() throws Exception {
         Envelope bboxInEnv = new Envelope(10, 40, 5, 15);
         ReferencedEnvelope bboxIn = new ReferencedEnvelope(bboxInEnv, viewportCRS);
@@ -99,6 +108,7 @@ public class BasicWMSRenderer2Test extends AbstractProjectUITestCase {
         assertEquals(15.0, bbox.getMaxY(), ACCURACY);
     }
 
+    @Test
     public void testCalculateImageDimensions() throws Exception {
         // everything in WGS84
         Dimension displaySize = new Dimension(400, 300);
@@ -131,6 +141,7 @@ public class BasicWMSRenderer2Test extends AbstractProjectUITestCase {
         assertEquals("request height is different", 300, result.getHeight(), ACCURACY);
     }
 
+    @Test
     public void testCalculateImageDimensions_reprojecting() throws Exception {
         // everything in BC albers 3005
         viewportCRS = CRS.decode("EPSG:3005");

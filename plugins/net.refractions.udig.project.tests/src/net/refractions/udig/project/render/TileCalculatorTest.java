@@ -1,10 +1,17 @@
 package net.refractions.udig.project.render;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 
 import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import com.vividsolutions.jts.geom.Envelope;
 
@@ -12,10 +19,8 @@ public class TileCalculatorTest extends AbstractProjectTestCase {
 
 	private TileCalculator tileCalculator;
 
-	@Override
-	protected void setUp() throws Exception {
-        super.setUp();
-
+	@Before
+	public void setUp() throws Exception {
 		this.tileCalculator=new TileCalculator(AffineTransform.getTranslateInstance(-200,-200), new Dimension(50,50));
 		tileCalculator.setBounds(new Envelope( 100,600,100,600 ) );
 	}
@@ -24,6 +29,7 @@ public class TileCalculatorTest extends AbstractProjectTestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.render.TileCalculator.numXTiles()'
 	 */
+	@Test
 	public void testNumXTiles() {
 		assertEquals(10, tileCalculator.numXTiles());
 		tileCalculator.setBounds(new Envelope(100,580,100,110));
@@ -39,6 +45,7 @@ public class TileCalculatorTest extends AbstractProjectTestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.render.TileCalculator.numYTiles()'
 	 */
+	@Test
 	public void testNumYTiles() {
 		assertEquals(10, tileCalculator.numYTiles());
 		tileCalculator.setBounds(new Envelope(100,580,100,110));
@@ -54,6 +61,7 @@ public class TileCalculatorTest extends AbstractProjectTestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.render.TileCalculator.getWorldTile(int, int)'
 	 */
+	@Test
 	public void testGetWorldTile() {
 		Envelope tile = tileCalculator.getWorldTile(0,0);
 		assertEquals(new Envelope(100,150,100,150), tile);
@@ -74,6 +82,7 @@ public class TileCalculatorTest extends AbstractProjectTestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.render.TileCalculator.getScreenTile(int, int)'
 	 */
+	@Test
 	public void testGetScreenTile() {
 		Rectangle tile = tileCalculator.getScreenTile(0,0);
 		assertEquals(new Rectangle(-100,-100,50,50), tile);
@@ -94,6 +103,7 @@ public class TileCalculatorTest extends AbstractProjectTestCase {
 		assertEquals(new Rectangle(-100,-100,10,50), tile);	
 	}
 
+	@Test
 	public void testGetWorldRandom() throws Exception {
 		tileCalculator.setTileSize(new Dimension(250,250));
 		
@@ -122,6 +132,7 @@ public class TileCalculatorTest extends AbstractProjectTestCase {
 		assertFalse( tile4.equals(tile1));
 	}
 
+	@Test
 	public void testGetScreenRandom() throws Exception {
 		tileCalculator.setTileSize(new Dimension(250,250));
 		

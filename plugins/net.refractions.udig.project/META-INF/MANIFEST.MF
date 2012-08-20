@@ -43,3 +43,4 @@ Export-Package: net.refractions.udig.project,
  net.refractions.udig.project.preferences,
  net.refractions.udig.project.render,
  net.refractions.udig.project.render.displayAdapter
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

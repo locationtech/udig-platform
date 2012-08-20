@@ -1,5 +1,7 @@
 package net.refractions.udig.catalog.tests.ui;
 
+import static org.junit.Assert.assertTrue;
+
 import java.net.URL;
 
 import net.refractions.udig.catalog.IService;
@@ -17,8 +19,4 @@ public class WFSCatalogImportTest extends CatalogImportTest {
 		assertTrue(service instanceof WFSServiceImpl);
 	}
 	
-	//override to stop this test   
-	public void xtestNormal() throws Exception{
-	   
-	}
 }

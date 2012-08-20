@@ -1,9 +1,11 @@
 package net.refractions.udig.issues.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.core.enums.Priority;
 import net.refractions.udig.core.enums.Resolution;
 import net.refractions.udig.issues.FeatureIssue;
@@ -21,6 +23,8 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -30,8 +34,7 @@ import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-
-public class StrategizedIssuesListTest extends TestCase {
+public class StrategizedIssuesListTest {
 
     public SimpleFeatureType featureType;
     public IRemoteIssuesList list;
@@ -47,8 +50,8 @@ public class StrategizedIssuesListTest extends TestCase {
 		} 
     }
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         FeatureIssue.setTesting(true);
         DataStore[] ds=new DataStore[1];
         SimpleFeatureType[] ft=new SimpleFeatureType[1];
@@ -63,6 +66,7 @@ public class StrategizedIssuesListTest extends TestCase {
         list.refresh();
     }
 
+    @Test
     public void testInitialLoad() throws Exception {
         assertEquals(4, list.size());
         assertEquals("0", list.get(0).getId()); //$NON-NLS-1$
@@ -72,6 +76,7 @@ public class StrategizedIssuesListTest extends TestCase {
         assertEquals( 4, store.getFeatureSource(featureType.getName().getLocalPart()).getCount(Query.ALL));
     }
     
+    @Test
     public void testAddIIssue() throws Exception {
         FeatureIssue issue = IssuesListTestHelper.createFeatureIssue("new"); //$NON-NLS-1$
         list.add(issue);
@@ -85,6 +90,7 @@ public class StrategizedIssuesListTest extends TestCase {
         assertEquals( 5, store.getFeatureSource(featureType.getName().getLocalPart()).getCount(Query.ALL));
     }
 
+    @Test
     public void testRemoveInt() throws Exception {
         list.remove(1);
         assertEquals(3, list.size());
@@ -94,7 +100,8 @@ public class StrategizedIssuesListTest extends TestCase {
         assertEquals( 3, store.getFeatureSource(featureType.getName().getLocalPart()).getCount(Query.ALL));
     }
     
-    public void testBackendRemovedIssue()throws Exception{
+    @Test
+    public void testBackendRemovedIssue() throws Exception{
     	FeatureStore<SimpleFeatureType, SimpleFeature> fs = (FeatureStore<SimpleFeatureType, SimpleFeature>) store
 				.getFeatureSource(featureType.getName().getLocalPart());
         FilterFactory factory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
@@ -112,6 +119,7 @@ public class StrategizedIssuesListTest extends TestCase {
         assertEquals("3",list.get(2).getId()); //$NON-NLS-1$
     }
 
+    @Test
     public void testBackendAddedIssue()throws Exception{
         IssuesListTestHelper.createFeature("new",  //$NON-NLS-1$
                 Resolution.IN_PROGRESS, 
@@ -132,7 +140,7 @@ public class StrategizedIssuesListTest extends TestCase {
         assertEquals(IssuesListEventType.REFRESH, change[0].getType());
     }
     
-    
+    @Test
     public void testRemoveMany() throws Exception {
         List<IIssue> sublist = new ArrayList<IIssue>();
         sublist.addAll(list.subList(0, 2));
@@ -142,6 +150,7 @@ public class StrategizedIssuesListTest extends TestCase {
         assertEquals("3", list.get(1).getId()); //$NON-NLS-1$
     }
 
+    @Test
     public void testAddMany() throws Exception {
         List<IIssue> newIssues=new ArrayList<IIssue>();
         newIssues.add(IssuesListTestHelper.createFeatureIssue("new1")); //$NON-NLS-1$
@@ -151,6 +160,7 @@ public class StrategizedIssuesListTest extends TestCase {
         assertEquals(6, list.size());
     }
 
+    @Test
     public void testModifyIssue() throws Exception{
         String newDescription = "new modified description"; //$NON-NLS-1$
         
@@ -173,11 +183,13 @@ public class StrategizedIssuesListTest extends TestCase {
         assertEquals(newDescription, next.getAttribute(IssuesListTestHelper.DESCRIPTION_ATTR));
     }
     
+    @Test
     public void testAddIssueWithBounds() throws Exception {
         list.add(IssuesListTestHelper.createFeatureIssue("id")); //$NON-NLS-1$
         // no exception? good.
     }
 
+    @Test
     public void testNullID() throws Exception {
         list.clear();
         list.add(IssuesListTestHelper.createFeatureIssue(null));
@@ -188,6 +200,7 @@ public class StrategizedIssuesListTest extends TestCase {
         assertNotNull(id);
     }
 
+    @Test
     public void testRefreshWithModifiedFeatures() throws Exception {
         String description="New Description: blah blah blah"; //$NON-NLS-1$
         list.get(0).setDescription(description);

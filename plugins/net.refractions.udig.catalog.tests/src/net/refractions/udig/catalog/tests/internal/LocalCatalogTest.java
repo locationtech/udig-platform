@@ -21,6 +21,7 @@ import net.refractions.udig.catalog.tests.AbstractCatalogTest;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.junit.Before;
 
 import com.vividsolutions.jts.geom.Envelope;
 
@@ -29,6 +30,8 @@ import com.vividsolutions.jts.geom.Envelope;
  */
 public class LocalCatalogTest extends AbstractCatalogTest {
 
+    private ICatalog instance = null;
+    
     /*
      * (non-Javadoc)
      * 
@@ -37,15 +40,9 @@ public class LocalCatalogTest extends AbstractCatalogTest {
     protected ICatalog getResolve() {
         return instance;
     }
-    private ICatalog instance = null;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see junit.framework.TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         instance = new CatalogImpl();
         instance.add(new IService(){
 

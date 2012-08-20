@@ -1,22 +1,26 @@
 package net.refractions.udig.tools.edit.validator;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import net.refractions.udig.tool.edit.internal.Messages;
-import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
 import net.refractions.udig.tools.edit.support.EditGeom;
 import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import net.refractions.udig.tools.edit.support.ShapeType;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
-public class LegalShapeValidatorTest extends TestCase {
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
+public class LegalShapeValidatorTest {
 
     private TestHandler handler;
     private EditBlackboard bb;
     private LegalShapeValidator validator;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         handler = new TestHandler();
         bb=handler.getEditBlackboard();
         bb.clear();
@@ -24,9 +28,9 @@ public class LegalShapeValidatorTest extends TestCase {
         validator=new LegalShapeValidator(); 
     }
 
+    @Ignore
+    @Test
     public void testLine() throws Exception {
-        if( EditTestControl.DISABLE ) return;
-        
         EditGeom line = bb.newGeom("line", ShapeType.LINE); //$NON-NLS-1$
         PrimitiveShape shell = line.getShell();
         
@@ -40,6 +44,7 @@ public class LegalShapeValidatorTest extends TestCase {
         assertNull(validator.isValid(handler, null, null));
     }
     
+    @Test
     public void testPoint() throws Exception {
         EditGeom point = bb.newGeom("line", ShapeType.POINT); //$NON-NLS-1$
         PrimitiveShape shell = point.getShell();
@@ -49,6 +54,7 @@ public class LegalShapeValidatorTest extends TestCase {
         assertNull(validator.isValid(handler, null, null));
     }
     
+    @Test
     public void testPolygonLegal() throws Exception {
         EditGeom polygon = bb.newGeom("line", ShapeType.POLYGON); //$NON-NLS-1$
         PrimitiveShape shell = polygon.getShell();
@@ -75,6 +81,7 @@ public class LegalShapeValidatorTest extends TestCase {
         assertNull(validator.isValid(handler, null, null));
     }
     
+    @Test
     public void testShellSelfIntersection() throws Exception {
         EditGeom polygon = bb.newGeom("line", ShapeType.POLYGON); //$NON-NLS-1$
         PrimitiveShape shell = polygon.getShell();
@@ -88,6 +95,7 @@ public class LegalShapeValidatorTest extends TestCase {
         assertEquals(Messages.LegalShapeValidator_shellIntersection, validator.isValid(handler, null, null));
     }
 
+    @Test
     public void testHoleSelfIntersection() throws Exception {
         EditGeom polygon = bb.newGeom("line", ShapeType.POLYGON); //$NON-NLS-1$
         PrimitiveShape shell = polygon.getShell();
@@ -107,6 +115,7 @@ public class LegalShapeValidatorTest extends TestCase {
         assertEquals(Messages.LegalShapeValidator_holeIntersection, validator.isValid(handler, null, null));
     }
     
+    @Test
     public void testHoleOutOfShell() throws Exception {
         EditGeom polygon = bb.newGeom("line", ShapeType.POLYGON); //$NON-NLS-1$
         PrimitiveShape shell = polygon.getShell();
@@ -124,6 +133,7 @@ public class LegalShapeValidatorTest extends TestCase {
         assertEquals(Messages.LegalShapeValidator_holeOutside, validator.isValid(handler, null, null));
     }
     
+    @Test
     public void testHoleIntersections() throws Exception {
         EditGeom polygon = bb.newGeom("line", ShapeType.POLYGON); //$NON-NLS-1$
         PrimitiveShape shell = polygon.getShell();

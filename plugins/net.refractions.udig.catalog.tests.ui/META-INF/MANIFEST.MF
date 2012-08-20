@@ -4,13 +4,13 @@ Bundle-Name: Catalog UI Test Plug-in
 Bundle-SymbolicName: net.refractions.udig.catalog.tests.ui; singleton:=true
 Bundle-Version: 1.2.0.qualifier
 Bundle-Localization: plugin
-Require-Bundle: net.refractions.udig.catalog,
- org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.swt,
- net.refractions.udig.catalog.ui,
  org.eclipse.jface,
- net.refractions.udig.libs,
  org.eclipse.ui,
+ net.refractions.udig.catalog,
+ net.refractions.udig.catalog.ui,
+ net.refractions.udig.libs,
  net.refractions.udig.catalog.db2,
  net.refractions.udig.catalog.geotiff,
  net.refractions.udig.catalog.google2,
@@ -23,8 +23,7 @@ Require-Bundle: net.refractions.udig.catalog,
  net.refractions.udig.catalog.worldimage,
  net.refractions.udig.catalog.geotools,
  net.refractions.udig.catalog.tests;visibility:=reexport,
- net.refractions.udig.ui.tests;visibility:=reexport,
- org.junit4;bundle-version="4.3.1"
+ net.refractions.udig.ui.tests;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: net.refractions.udig.catalog.tests.ui.CatalogTestsUIPlugin
 Export-Package: net.refractions.udig.catalog.tests.ui,

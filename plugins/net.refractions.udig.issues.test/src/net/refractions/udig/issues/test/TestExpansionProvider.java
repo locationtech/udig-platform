@@ -4,9 +4,7 @@ import net.refractions.udig.issues.IIssuesExpansionProvider;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.TreeItem;
-import org.junit.Ignore;
 
-@Ignore
 public class TestExpansionProvider {
 
     public static class Provider1 implements IIssuesExpansionProvider{

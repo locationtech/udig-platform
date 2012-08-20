@@ -1,5 +1,7 @@
 package net.refractions.udig.project.internal.impl;
 
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Dimension;
 
 import net.refractions.udig.catalog.IGeoResource;
@@ -13,6 +15,8 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Transaction;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -25,11 +29,9 @@ import org.opengis.filter.Filter;
  */
 public class UDIGFeatureStoreTransactionTest extends AbstractProjectTestCase {
 
-    public void testStub() throws Exception {
-        assertTrue(true);
-    }
-    
-    public void xtestTransactionUse() throws Exception {
+    @Ignore
+    @Test
+    public void testTransactionUse() throws Exception {
         IGeoResource resource1 = MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures(
                 "type1", 4), false); //$NON-NLS-1$
         Map map = MapTests.createNonDynamicMapAndRenderer(resource1, new Dimension(512,512));

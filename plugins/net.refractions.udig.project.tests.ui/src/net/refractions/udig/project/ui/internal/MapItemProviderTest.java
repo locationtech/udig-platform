@@ -14,6 +14,9 @@
  */
 package net.refractions.udig.project.ui.internal;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Dimension;
 import java.util.Iterator;
 
@@ -31,6 +34,10 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Test cases for map and project item providers to ensure that when a map or layer is added then the item provider
@@ -46,8 +53,8 @@ public class MapItemProviderTest extends AbstractProjectUITestCase {
     private Map map;
     private boolean refresh=false;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         content=new UDIGAdapterFactoryContentProvider(ProjectUIPlugin.getDefault()
                 .getAdapterFactory());
         viewer=new Viewer(){
@@ -92,13 +99,14 @@ public class MapItemProviderTest extends AbstractProjectUITestCase {
         map.getLayersInternal().clear();
     }
     
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         content.dispose();
     }
 
-    public void xtestMapItemProviderAddLayer() throws Exception {
+    @Ignore
+    @Test
+    public void testMapItemProviderAddLayer() throws Exception {
         content.inputChanged(viewer, null, map);
         content.getChildren(map);
         UDIGTestUtil.inDisplayThreadWait(5000, new WaitCondition(){

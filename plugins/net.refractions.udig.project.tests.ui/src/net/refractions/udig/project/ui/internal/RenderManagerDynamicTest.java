@@ -1,5 +1,6 @@
 package net.refractions.udig.project.ui.internal;
 
+import static org.junit.Assert.assertEquals;
 import net.refractions.udig.AbstractProjectUITestCase;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.Map;
@@ -13,17 +14,16 @@ import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.ui.WaitCondition;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
 public class RenderManagerDynamicTest extends AbstractProjectUITestCase {
 
     private Map map;
 
-    protected void setUp() throws Exception {
-        // ignore tests are broken
-        if (true) {
-            return;
-        }
-        
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         map=MapTests.createDefaultMap("RMDTestType", 3, true, null, false); //$NON-NLS-1$
         Map m2 = MapTests.createDefaultMap("RMDTestType2", 3, true, null, false); //$NON-NLS-1$
         map.getLayersInternal().add(m2.getLayersInternal().get(0));
@@ -38,7 +38,9 @@ public class RenderManagerDynamicTest extends AbstractProjectUITestCase {
         }, true);
     }
 
-    public void xtestRefreshLayer() throws Exception {
+    @Ignore
+    @Test
+    public void testRefreshLayer() throws Exception {
         final RenderExecutor renderExecutor = map.getRenderManagerInternal().getRenderExecutor();
         renderExecutor.setState(IRenderer.NEVER);
         final CompositeRendererImpl impl=(CompositeRendererImpl) renderExecutor.getRenderer();

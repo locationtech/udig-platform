@@ -1,9 +1,10 @@
 package net.refractions.udig.project.internal.commands.edit;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.Dimension;
 import java.util.Iterator;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.tests.support.MapTests;
@@ -13,14 +14,16 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-public class AddFeatureCommandTest extends TestCase {
+public class AddFeatureCommandTest {
 
     /*
      * Test method for 'net.refractions.udig.project.internal.commands.edit.AddFeatureCommand.run(IProgressMonitor)'
      */
+    @Test
     public void testRun() throws Exception {
         Map map = MapTests.createDefaultMap("test", 2, true, new Dimension(10,10)); //$NON-NLS-1$
         Layer layer = map.getLayersInternal().get(0);

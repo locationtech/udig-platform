@@ -1,12 +1,15 @@
 package net.refractions.udig.project.ui.internal.render.displayAdapter.impl;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
-public class EventHandlerTest extends TestCase {
+public class EventHandlerTest {
 
     public class TestEventJob extends EventJob {
         int type;
@@ -24,8 +27,8 @@ public class EventHandlerTest extends TestCase {
     private EventHandler handler;
     private TestEventJob eventJob;
 
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         eventJob=new TestEventJob();
         handler=new EventHandler(null, eventJob);
     }
@@ -33,6 +36,7 @@ public class EventHandlerTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.controlResized(Event)'
      */
+    @Test
     public void testControlResized() {
         
         
@@ -42,6 +46,7 @@ public class EventHandlerTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseDoubleClick(Event)'
      */
+    @Test
     public void testMouseDoubleClick() {
         Event e=new Event();
         e.button=1;
@@ -56,7 +61,9 @@ public class EventHandlerTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseDown(Event)'
      */
-    public void xtestMouseDown() {
+    @Ignore
+    @Test
+    public void testMouseDown() {
         Event e=new Event();
         e.button=1;
         e.stateMask=SWT.ALT|SWT.BUTTON1;
@@ -82,6 +89,7 @@ public class EventHandlerTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseUp(Event)'
      */
+    @Test
     public void testMouseUp() {
         Event e=new Event();
         e.button=1;
@@ -115,6 +123,7 @@ public class EventHandlerTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseMove(Event)'
      */
+    @Test
     public void testMouseMove() {
 
     }
@@ -122,6 +131,7 @@ public class EventHandlerTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseEnter(Event)'
      */
+    @Test
     public void testMouseEnter() {
 
     }
@@ -129,6 +139,7 @@ public class EventHandlerTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseExit(Event)'
      */
+    @Test
     public void testMouseExit() {
 
     }
@@ -136,6 +147,7 @@ public class EventHandlerTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseHover(Event)'
      */
+    @Test
     public void testMouseHover() {
 
     }

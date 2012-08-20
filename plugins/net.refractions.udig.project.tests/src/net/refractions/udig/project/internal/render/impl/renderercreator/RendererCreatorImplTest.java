@@ -14,6 +14,11 @@
  */
 package net.refractions.udig.project.internal.render.impl.renderercreator;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,6 +50,8 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Tests the renderer creator implementation.
@@ -53,17 +60,15 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class RendererCreatorImplTest extends AbstractProjectTestCase {
 
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
     /**
      * Test method for {@link net.refractions.udig.project.internal.render.impl.RendererCreatorImpl#getAvailableRenderersInfo(net.refractions.udig.project.internal.Layer)}.
      */
+    @Test
     public void testGetAvailableRenderersInfo() {
         // TODO implement test
     }
 
+    @Test
     public void testGetLayers() throws Exception {
         Map map = MapTests.createDefaultMap("typename", 2, true, null); //$NON-NLS-1$
         map.getLayersInternal().add(map.getLayerFactory().createLayer(MapTests.createGeoResource("type2", 3, false))); //$NON-NLS-1$
@@ -94,7 +99,9 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
      * Test method for {@link net.refractions.udig.project.internal.render.impl.RendererCreatorImpl#getRenderer(net.refractions.udig.project.internal.render.RenderContext)}.
      * @throws Exception 
      */
-    public void xtestGetRenderer() throws Exception {
+    @Ignore
+    @Test
+    public void testGetRenderer() throws Exception {
         LayerImpl layer = MapTests.createLayer(null, new RendererCreatorTestObjForSingleRenderer(), null);
         
         RendererCreatorImpl creator = MapTests.createRendererCreator(layer.getMapInternal());
@@ -124,6 +131,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
     /**
      * Test method for {@link net.refractions.udig.project.internal.render.impl.RendererCreatorImpl#getRenderContext(net.refractions.udig.project.internal.Layer)}.
      */
+    @Test
     public void testGetRenderContext() {
         // TODO implement test
     }
@@ -132,6 +140,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
      * Test method for {@link net.refractions.udig.project.internal.render.impl.RendererCreatorImpl#changed(org.eclipse.emf.common.notify.Notification)}.
      * @throws Exception 
      */
+    @Test
     public void testChanged() throws Exception {
         
         LayerImpl layer = MapTests.createLayer(null, new TestFeatureStore(), null);
@@ -176,6 +185,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
      * Test method for {@link net.refractions.udig.project.internal.render.impl.RendererCreatorImpl#findSelectionLayer(net.refractions.udig.project.ILayer)}.
      * @throws Exception 
      */
+    @Test
     public void testFindSelectionLayer() throws Exception {
         LayerImpl layer = MapTests.createLayer(null, new TestFeatureStore(), null);
         Map map = layer.getMapInternal();
@@ -199,7 +209,9 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
     /**
      * Test method for {@link net.refractions.udig.project.internal.render.impl.RendererCreatorImpl#getConfiguration()}.
      */
-    public void xtestGetConfigurationSingleLayer() throws Throwable {
+    @Ignore
+    @Test
+    public void testGetConfigurationSingleLayer() throws Throwable {
         LayerImpl layer = MapTests.createLayer(null, new RendererCreatorTestObjForSingleRenderer(), null);
         
         RendererCreatorImpl creator = MapTests.createRendererCreator(layer.getMapInternal());
@@ -237,6 +249,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         assertEquals(1, creator.getConfiguration().size());
     }
     
+    @Test
     public void testGetConfigurationMultiLayerRenderer() throws Throwable {
         LayerImpl layer = MapTests.createLayer(null, new RendererCreatorTestObjForMulitRenderer(), null);
         Map map=layer.getMapInternal();
@@ -313,7 +326,9 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         
     }
     
-    public void xtestGetConfigurationMixedLayers() throws Exception {
+    @Ignore
+    @Test
+    public void testGetConfigurationMixedLayers() throws Exception {
         LayerImpl layer = MapTests.createLayer(null, new RendererCreatorTestObjForSingleRenderer(), null);
         
         RendererCreatorImpl creator = MapTests.createRendererCreator(layer.getMapInternal());
@@ -368,7 +383,9 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
      *
      * @throws Exception
      */
-    public void xtestBugWithMultiLayerRenderers() throws Exception {
+    @Ignore
+    @Test
+    public void testBugWithMultiLayerRenderers() throws Exception {
         LayerImpl layer = MapTests.createLayer(null, new RendererCreatorTestObjForMulitRenderer(), null);
         layer.setName("layer1"); //$NON-NLS-1$
         RendererCreatorImpl creator = MapTests.createRendererCreator(layer.getMapInternal());
@@ -393,7 +410,9 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         assertEquals(2, config.size());
     }
     
-    public void xtestBlackboardPreferred() throws Exception {
+    @Ignore
+    @Test
+    public void testBlackboardPreferred() throws Exception {
         LayerImpl layer = MapTests.createLayer(null, new RendererCreatorTestObjForSingleRenderer(), null);
         layer.setName("Layer1"); //$NON-NLS-1$
         Map map=layer.getMapInternal();
@@ -440,7 +459,9 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         firstLayerR2SecondR1(creator);
     }
 
-    public void xtestBlackBoardLastResort() throws Exception {
+    @Ignore
+    @Test
+    public void testBlackBoardLastResort() throws Exception {
         LayerImpl layer = MapTests.createLayer(null, new RendererCreatorTestObjForSingleRenderer(), null);
         layer.setName("Layer1"); //$NON-NLS-1$
         Map map=layer.getMapInternal();
@@ -486,6 +507,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         //Now layer1 is clear but map dictates that Renderer2 is the important one.
         firstLayerR2SecondR1(creator);
     }
+    
     private void sameRenderer( RendererCreatorImpl creator, Class<? extends IRenderer> rendererClass, int expectedContexts) {
         Collection<RenderContext> configuration;
         Renderer renderer;
@@ -517,11 +539,14 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         assertFalse(iter.hasNext());
     }
     
+    @Test
     public void testPreference() throws Exception {
         //TODO 
     }
     
-    public void xtestSwitchStyle() throws Exception {
+    @Ignore
+    @Test
+    public void testSwitchStyle() throws Exception {
         LayerImpl layer = MapTests.createLayer(null, new RendererCreatorTestObjForSingleRenderer(), null);
         layer.setName("Layer1"); //$NON-NLS-1$
         IService createService = DummyService.createService(new URL("http://dummy77"), Collections.emptyList(), //$NON-NLS-1$ 
@@ -555,6 +580,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         sameRenderer(creator, MultiLayerRenderer.class, 1);
     }
     
+    @Test
     public void testBadMetrics() throws Exception {
         LayerImpl layer = MapTests.createLayer(null, BadRenderMetricsFactory.ALWAYS_EXCEPTION, null);
         
@@ -606,7 +632,7 @@ public class RendererCreatorImplTest extends AbstractProjectTestCase {
         
     }
     
-    
+    @Test
     public void testResourceChanged() throws Exception {
         //TODO
     }

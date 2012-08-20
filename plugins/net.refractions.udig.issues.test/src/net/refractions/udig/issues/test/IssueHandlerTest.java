@@ -1,5 +1,9 @@
 package net.refractions.udig.issues.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Dimension;
 
 import net.refractions.udig.AbstractProjectUITestCase;
@@ -13,7 +17,6 @@ import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.tests.support.MapTests;
 import net.refractions.udig.project.tests.ui.ViewPart1;
 import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.MapEditor;
 import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
 import net.refractions.udig.project.ui.internal.MapPart;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
@@ -28,26 +31,18 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 
 public class IssueHandlerTest extends AbstractProjectUITestCase {
 
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    public void testStub() throws Exception {
-        assertTrue(true);
-    }
-    
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.view.issues.IssueHandler.restorePerspective()'
      */
-    public void xtestRestorePerspective() throws WorkbenchException {
+    @Ignore
+    @Test
+    public void testRestorePerspective() throws WorkbenchException {
         int windows=PlatformUI.getWorkbench().getWorkbenchWindowCount();
         IPerspectiveDescriptor p = PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId("net.refractions.udig.project.tests.ui.perspective.test"); //$NON-NLS-1$
         getActiveWindow().getActivePage().setPerspective(p);
@@ -75,7 +70,9 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.view.issues.IssueHandler.restoreWorkbenchPart()'
      */
-    public void xtestViewPart() {
+    @Ignore
+    @Test
+    public void testViewPart() {
         TestIssue issue = new TestIssue(){
             @Override
             public String getViewPartId() {
@@ -127,7 +124,9 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.view.issues.IssueHandler.restoreEditor()'
      */
-    public void xtestRestoreEditor() throws Exception {
+    @Ignore
+    @Test
+    public void testRestoreEditor() throws Exception {
         
         assertNull(getActiveWindow().getActivePage().getActiveEditor());
         
