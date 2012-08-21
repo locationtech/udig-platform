@@ -170,7 +170,23 @@ final class LineBoundaryIntersectionAssociation {
             return true;
         }
 
-        /**
+        @Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime
+					* result
+					+ ((intersectionPoint == null) ? 0 : intersectionPoint
+							.hashCode());
+			result = prime * result
+					+ ((ringSegment == null) ? 0 : ringSegment.hashCode());
+			result = prime * result + segmentPosition;
+			result = prime * result + visitedIntersection;
+			return result;
+		}
+
+
+		/**
          * @return the visited intersection point
          */
         public Point getIntersectionPoint() {

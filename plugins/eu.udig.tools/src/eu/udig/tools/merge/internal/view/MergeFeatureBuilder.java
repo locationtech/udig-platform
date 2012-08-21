@@ -102,6 +102,7 @@ import eu.udig.tools.geometry.internal.util.GeometryUtil;
  * 
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
+ * @author Marco Foi (www.mcfoi.it)
  * @since 1.1.0
  */
 class MergeFeatureBuilder {
@@ -515,6 +516,13 @@ class MergeFeatureBuilder {
 		
 		sourceFeatures.removeAll(featureList);
 	}
+	/**
+	 * Used by MergeView to remove all features before adding new collection (while in Operation Mode)
+	 */
+        public synchronized void removeFromSourceFeaturesAll() {
+            
+            sourceFeatures.clear();
+        }
 
 	/**
 	 * Checks if the feature's geometry fulfill the conditions to be added in the list of features to merge.
