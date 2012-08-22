@@ -16,11 +16,8 @@
          name="GeoTiff File Formats"
          point="net.refractions.udig.catalog.ui.fileFormat">
       <fileService
-            fileExtension="*.tif"
-            name="Tif"/>
-      <fileService
-            fileExtension="*.tiff"
-            name="Tiff"/>
+            fileExtension="*.tif;*.tiff"
+            name="GeoTIFF Files"/>
    </extension>
 
 </plugin>

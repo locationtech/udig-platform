@@ -13,11 +13,8 @@
    </extension>
    <extension
          point="net.refractions.udig.catalog.ui.fileFormat">
-      <fileService fileExtension="*.gif"/>
-      <fileService fileExtension="*.jpg"/>
-      <fileService fileExtension="*.jpeg"/>
-      <fileService fileExtension="*.png"/>
+      <fileService name="GIF Files" fileExtension="*.gif"/>
+      <fileService name="JPEG Files" fileExtension="*.jpg;*.jpeg"/>
+      <fileService name="PNG Files" fileExtension="*.png"/>
    </extension>
-
-
 </plugin>
