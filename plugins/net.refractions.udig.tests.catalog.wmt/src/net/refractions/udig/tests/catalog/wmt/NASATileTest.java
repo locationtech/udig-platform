@@ -1,6 +1,6 @@
 package net.refractions.udig.tests.catalog.wmt;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 import net.refractions.udig.catalog.internal.wmt.tile.NASATile;
 import net.refractions.udig.catalog.internal.wmt.tile.NASATile.NASATileName;
 import net.refractions.udig.catalog.internal.wmt.tile.NASATile.NASATileName.NASAZoomLevel;
@@ -15,7 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-public class NASATileTest extends TestCase {
+public class NASATileTest {
     
     private NASASource source;
     private NASASource sourceUSA;
@@ -44,6 +44,7 @@ public class NASATileTest extends TestCase {
         assertEquals(3, zoomLevel.calculateMaxTilePerColNumber(0));
     }
     
+    @Test
     public void testGetTileFromCoordinate() {
         
         NASAZoomLevel zoomLevel = source.getZoomLevel(0);
@@ -59,6 +60,7 @@ public class NASATileTest extends TestCase {
         assertEquals("Global Mosaic, pan sharpened visual_0_1_2", tile3.getId());
     }
     
+    @Test
     public void testGetTileFromCoordinateUSA() {
         
         NASAZoomLevel zoomLevel = sourceUSA.getZoomLevel(3);
@@ -74,6 +76,7 @@ public class NASATileTest extends TestCase {
         assertEquals("Continental US Elevation_3_1_1", tile3.getId());
     }
     
+    @Test
     public void testGetExtentFromTileName() {
         NASAZoomLevel zoomLevel = source.getZoomLevel(0);
         
@@ -89,6 +92,7 @@ public class NASATileTest extends TestCase {
                 NASATile.getExtentFromTileName(tileName1.getRightNeighbour()).toString());
     }
     
+    @Test
     public void testGetExtentFromTileNameUSA() {
         NASAZoomLevel zoomLevel = sourceUSA.getZoomLevel(3);
         

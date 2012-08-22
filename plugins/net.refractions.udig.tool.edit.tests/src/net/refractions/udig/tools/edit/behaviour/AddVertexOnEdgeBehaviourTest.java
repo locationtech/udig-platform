@@ -1,23 +1,28 @@
 package net.refractions.udig.tools.edit.behaviour;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.support.Point;
 import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
 import com.vividsolutions.jts.geom.Coordinate;
 
-public class AddVertexOnEdgeBehaviourTest extends TestCase {
+public class AddVertexOnEdgeBehaviourTest {
 
     private TestHandler handler;
     private PrimitiveShape shell;
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    
+    @Before
+    public void setUp() throws Exception {
         handler = new TestHandler();
         shell = handler.getEditBlackboard().getGeoms().get(0).getShell();
         handler.getEditBlackboard().addPoint(0, 10, shell);
@@ -34,6 +39,7 @@ public class AddVertexOnEdgeBehaviourTest extends TestCase {
      * 'net.refractions.udig.tools.edit.behaviour.AddVertexOnEdgeBehaviour.isValid(EditToolHandler,
      * MapMouseEvent, EventType)'
      */
+    @Test
     public void testIsValid() {
         InsertVertexOnEdgeBehaviour behaviour = new InsertVertexOnEdgeBehaviour();
 
@@ -143,16 +149,16 @@ public class AddVertexOnEdgeBehaviourTest extends TestCase {
      * 'net.refractions.udig.tools.edit.behaviour.AddVertexOnEdgeBehaviour.getCommand(EditToolHandler,
      * MapMouseEvent, EventType)'
      */
+    @Ignore
+    @Test
     public void testGetCommand() {
-        if( EditTestControl.DISABLE ) return;
-        
         MapMouseEvent event = new MapMouseEvent(null, 10, 8, MapMouseEvent.NONE,
                 MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         handler.getBehaviours().add(new InsertVertexOnEdgeBehaviour());
 
         handler.setCurrentState(EditState.MODIFYING);
-        handler.setCurrentShape(shell);     
-        handler.handleEvent(event, EventType.RELEASED);  
+        handler.setCurrentShape(shell);
+        handler.handleEvent(event, EventType.RELEASED);
         assertTrue("Shape should have a new point", shell.hasVertex(Point.valueOf(10, 10))); //$NON-NLS-1$
         assertEquals(
                 "Blackboard should also reflect the change", 1, handler.getEditBlackboard().getCoords(10, 10).size()); //$NON-NLS-1$

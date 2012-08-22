@@ -44,8 +44,9 @@ public class FreeHandToolTest extends AbstractToolTest {
         
         SimpleFeature feature = handler.getFeature(0);
         
-        ((EditManagerImpl)handler.getContext().getEditManager()).setEditFeature(
-                feature, (Layer) handler.getContext().getMapLayers().get(0));
+        EditManagerImpl editManager = (EditManagerImpl) handler.getContext().getEditManager();
+        Layer layer = (Layer) handler.getContext().getMapLayers().get(0);
+        editManager.setEditFeature(feature, layer);
         
         handler.getEditBlackboard().addGeometry((Geometry) feature.getDefaultGeometry(), feature.getID());
         
@@ -67,7 +68,8 @@ public class FreeHandToolTest extends AbstractToolTest {
         
         handler.handleEvent(event, EventType.DOUBLE_CLICK);
         
-        assertFalse(feature.getID().equals(handler.getContext().getEditManager().getEditFeature().getID()) );
+        assertNull(handler.getContext().getEditManager().getEditFeature());
+        //assertFalse(feature.getID().equals(handler.getContext().getEditManager().getEditFeature().getID()) );
         
     }
 

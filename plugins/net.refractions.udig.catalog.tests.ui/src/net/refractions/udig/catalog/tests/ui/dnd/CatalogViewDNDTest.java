@@ -1,11 +1,14 @@
 package net.refractions.udig.catalog.tests.ui.dnd;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.IService;
@@ -23,8 +26,11 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.PlatformUI;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
-public class CatalogViewDNDTest extends TestCase {
+public class CatalogViewDNDTest {
 
 	private ICatalog catalog;
 
@@ -34,9 +40,8 @@ public class CatalogViewDNDTest extends TestCase {
 
 	private UDIGDropHandler handler;
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() throws Exception {
 		try {
 		    catalog = CatalogPlugin.getDefault().getLocalCatalog();
 		}
@@ -58,12 +63,10 @@ public class CatalogViewDNDTest extends TestCase {
         handler.setTarget(view);
 		handler.setViewerLocation(ViewerDropLocation.NONE);
 	}
-
-	public void testStub() throws Throwable {
-	    assertTrue(true);
-	}
 	
-	public void xtestSingle() throws Throwable {
+	@Ignore
+    @Test
+	public void testSingle() throws Throwable {
 		Object data = getData();
 
         final Throwable[] failure=new Throwable[1];
@@ -103,7 +106,9 @@ public class CatalogViewDNDTest extends TestCase {
 		makeAssertion(getSingleDataAssertionDescription(), catalog);
 	}
 
-	public void xtestMulti() throws Throwable {
+	@Ignore
+    @Test
+	public void testMulti() throws Throwable {
 		Object data = getDataMulti();
 
         final Throwable[] failure=new Throwable[1];

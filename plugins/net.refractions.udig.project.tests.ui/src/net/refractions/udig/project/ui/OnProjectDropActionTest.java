@@ -14,6 +14,12 @@
  */
 package net.refractions.udig.project.ui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.awt.Dimension;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +35,8 @@ import net.refractions.udig.project.ui.internal.actions.OnProjectDropAction;
 import net.refractions.udig.ui.ViewerDropLocation;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * TODO Purpose of 
@@ -45,8 +53,8 @@ public class OnProjectDropActionTest extends AbstractProjectUITestCase{
     private Layer layer;
     private OnProjectDropAction action;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         resource=MapTests.createGeoResource("OnProjectDropType", 3, true); //$NON-NLS-1$
         map=MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(10,10), null, false);
         layer=map.getLayersInternal().get(0);
@@ -56,6 +64,7 @@ public class OnProjectDropActionTest extends AbstractProjectUITestCase{
     /**
      * Test method for {@link net.refractions.udig.project.ui.internal.actions.OnProjectDropAction#accept()}.
      */
+    @Test
     public void testAccept() throws IOException {
         assertFalse(action.accept());
         action.init(null, null, ViewerDropLocation.ON, map.getProject(), resource);
@@ -92,6 +101,7 @@ public class OnProjectDropActionTest extends AbstractProjectUITestCase{
     /**
      * Test method for {@link net.refractions.udig.project.ui.internal.actions.OnProjectDropAction#perform(org.eclipse.core.runtime.IProgressMonitor)}.
      */
+    @Test
     public void testPerformAddResource() {
 
         assertEquals(1, map.getProject().getElements().size());
@@ -105,9 +115,11 @@ public class OnProjectDropActionTest extends AbstractProjectUITestCase{
         assertEquals( 1, newMap.getMapLayers().size());
         assertNotSame( layer, newMap.getMapLayers().get(0));
     }
+    
     /**
      * Test method for {@link net.refractions.udig.project.ui.internal.actions.OnProjectDropAction#perform(org.eclipse.core.runtime.IProgressMonitor)}.
      */
+    @Test
     public void testPerformAddIllegalObject() {
 
         assertEquals(1, map.getProject().getElements().size());
@@ -120,9 +132,11 @@ public class OnProjectDropActionTest extends AbstractProjectUITestCase{
             // good
         }
     }
+    
     /**
      * Test method for {@link net.refractions.udig.project.ui.internal.actions.OnProjectDropAction#perform(org.eclipse.core.runtime.IProgressMonitor)}.
      */
+    @Test
     public void testPerformAddCollection() {
 
         assertEquals(1, map.getProject().getElements().size());

@@ -1,10 +1,13 @@
 package net.refractions.udig.project.internal.render.impl;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.SortedSet;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.render.RenderContext;
@@ -12,12 +15,11 @@ import net.refractions.udig.project.internal.render.RendererCreator;
 import net.refractions.udig.project.internal.render.SelectionLayer;
 import net.refractions.udig.project.tests.support.MapTests;
 
-public class CompositeRenderContextImplTest extends TestCase {
+import org.junit.Test;
 
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
+public class CompositeRenderContextImplTest {
 
+    @Test
     public void testAddRemoveClear() throws Exception {
         Map map = MapTests.createDefaultMap("typename", 2, true, null); //$NON-NLS-1$
         map.getLayersInternal().add(map.getLayerFactory().createLayer(MapTests.createGeoResource("type2", 3, false))); //$NON-NLS-1$
@@ -51,7 +53,7 @@ public class CompositeRenderContextImplTest extends TestCase {
         assertEquals( map.getLayersInternal().get(1),sl.getWrappedLayer() );
     }
 
-
+    @Test
     public void testAssertNoSelfReference() {
         CompositeRenderContextImpl comp=new CompositeRenderContextImpl();
         CompositeRenderContextImpl comp2=new CompositeRenderContextImpl();
@@ -65,6 +67,7 @@ public class CompositeRenderContextImplTest extends TestCase {
         
     }
 
+    @Test
     public void testCopy() {
         // TODO
     }

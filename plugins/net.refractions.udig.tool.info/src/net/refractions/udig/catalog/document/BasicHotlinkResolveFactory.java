@@ -7,13 +7,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.tool.info.InfoPlugin;
+
+import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * Folds in BasicHotlink implementation for any IGeoResource that lists its hotlink attributes as
@@ -33,7 +34,7 @@ public class BasicHotlinkResolveFactory implements IResolveAdapterFactory {
      * The value is stored as a definition consisting of:
      * <code>attributeName:file,attributeName:link</code>
      */
-    final static String HOTLINK = "hotlink";
+    final static String HOTLINK = "hotlink"; //$NON-NLS-1$
 
     @Override
     public boolean canAdapt(IResolve resolve, Class<? extends Object> adapter) {
@@ -49,7 +50,7 @@ public class BasicHotlinkResolveFactory implements IResolveAdapterFactory {
             throws IOException {
         IGeoResource resource = (IGeoResource) resolve; // safe cast due to extension point config
         if (resource.getPersistentProperties().containsKey(BasicHotlinkResolveFactory.HOTLINK)) {
-            IHotlinkSource hotlink = new BasicHotlink(resource);
+            IHotlinkSource hotlink = new BasicHotlink((ShpGeoResourceImpl) resource);
             return hotlink;
         }
         return null; // not available
@@ -98,7 +99,7 @@ public class BasicHotlinkResolveFactory implements IResolveAdapterFactory {
                 HotlinkDescriptor descriptor = i.next();
                  build.append( descriptor );
                  if( i.hasNext() ){
-                     build.append( "," );
+                     build.append( "," ); //$NON-NLS-1$
                  }
             }
             String definition = build.toString();

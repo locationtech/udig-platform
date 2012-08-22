@@ -1,11 +1,14 @@
 package net.refractions.udig.tests.catalog.wmt;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 import net.refractions.udig.catalog.internal.wmt.wmtsource.ww.LayerSet;
 
 import org.jdom.Element;
+import org.junit.Test;
 
-public class LayerSetTest extends TestCase {
+public class LayerSetTest {
+    
+    @Test
     public void testLayerSetConstruct() throws Exception {
         Element rootElement = QuadTileSetTest.getRootElement();
         

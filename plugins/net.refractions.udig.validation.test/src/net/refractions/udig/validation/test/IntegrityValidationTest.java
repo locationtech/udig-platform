@@ -1,8 +1,10 @@
 package net.refractions.udig.validation.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Dimension;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.internal.Map;
@@ -15,6 +17,8 @@ import org.eclipse.swt.widgets.Display;
 import org.geotools.data.DataUtilities;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Id;
@@ -23,12 +27,14 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 
-public class IntegrityValidationTest extends TestCase {
+public class IntegrityValidationTest {
 
     /**
      * Test method for 'net.refractions.udig.validation.ValidateOverlaps.op(Display,
      * Object, IProgressMonitor)'
      */
+    @Ignore
+    @Test
     public void testOverlapsOp() throws Exception {
         //create features suitable for the test
         GeometryFactory factory = new GeometryFactory();

@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore
 public class WMSCParserTest {
 
     @Test
@@ -47,6 +46,7 @@ public class WMSCParserTest {
     }
 
     @Ignore
+    @Test
     public void testGeoWebCacheOnline() throws Exception {
         URL url = new URL(
                 "http://tiledmarble.org/geowebcache/service/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=getcapabilities&TILED=true");
@@ -66,6 +66,7 @@ public class WMSCParserTest {
     }
 
     @Ignore
+    @Test
     public void testGeoWebCacheOnline2() throws Exception {
         URL url = new URL(
                 "http://tiledmarble.org/geowebcache/service/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=getcapabilities&TILED=true");
@@ -77,6 +78,7 @@ public class WMSCParserTest {
         ArrayList<WMSTileSet> tiles = capabilities.getCapability().getVSCapabilities().getTiles();
         assertFalse(tiles.isEmpty());
     }
+    @Ignore // fails when running from maven
     @Test
     public void testEsriMapCapabilities() throws Exception {
         //URL url = WMSCParserTest.class.getResource("esrimapCapabilities.xml");

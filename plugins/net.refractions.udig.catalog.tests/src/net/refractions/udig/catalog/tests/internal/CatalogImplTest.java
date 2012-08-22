@@ -14,12 +14,16 @@
  */
 package net.refractions.udig.catalog.tests.internal;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.net.URL;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.URLUtils;
 
 import org.eclipse.core.runtime.Platform;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Tests for the default catalog
@@ -27,9 +31,11 @@ import org.eclipse.core.runtime.Platform;
  * @author Jesse
  * @since 1.1.0
  */
-public class CatalogImplTest extends TestCase {
+public class CatalogImplTest {
 
-    public void xtestUrlEquals() throws Exception {
+    @Ignore
+    @Test
+    public void testUrlEquals() throws Exception {
         if (Platform.getOS() == Platform.OS_WIN32) {
             assertTrue(URLUtils.urlEquals(new URL("file://c:\\java/udig/"), //$NON-NLS-1$
                     new URL("file:/C:\\java\\udig"), false)); //$NON-NLS-1$
@@ -52,7 +58,8 @@ public class CatalogImplTest extends TestCase {
                 new URL("file:/java/udig#ResourceName"), true)); //$NON-NLS-1$
     }
     
-    public void testAquire(){
+    @Test
+    public void testAquire() {
         
     }
 }

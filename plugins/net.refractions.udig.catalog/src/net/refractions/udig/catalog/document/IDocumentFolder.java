@@ -22,7 +22,14 @@ import java.util.List;
  * 
  * @author Naz Chan 
  */
-public interface IDocumentFolder extends IDocumentItem {
+public interface IDocumentFolder {
+    
+    /**
+     * Gets the display name of the folder;
+     * 
+     * @return name
+     */
+    public String getName();
     
     /**
      * Gets the document source.

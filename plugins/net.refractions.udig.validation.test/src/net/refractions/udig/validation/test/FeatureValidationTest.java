@@ -1,8 +1,9 @@
 package net.refractions.udig.validation.test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.Dimension;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.AbstractCommand;
@@ -22,6 +23,8 @@ import org.eclipse.swt.widgets.Display;
 import org.geotools.data.DataUtilities;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Id;
@@ -31,12 +34,14 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 
-public class FeatureValidationTest extends TestCase {
+public class FeatureValidationTest {
 
     /*
      * Test method for 'net.refractions.udig.validation.ValidateGeometry.op(Display, Object,
      * IProgressMonitor)'
      */
+    @Ignore
+    @Test
     public void testGeometryOp() throws Exception {
         SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("someType", 5); //$NON-NLS-1$
         Geometry geometry = (Geometry) features[0].getDefaultGeometry();
@@ -69,6 +74,8 @@ public class FeatureValidationTest extends TestCase {
      * Test method for 'net.refractions.udig.validation.ValidateLineMustBeASinglePart.op(Display,
      * Object, IProgressMonitor)'
      */
+    @Ignore
+    @Test
     public void testLineMustBeASinglePartOp() throws Exception {
         //create features suitable for the test
         GeometryFactory factory=new GeometryFactory();
@@ -118,6 +125,8 @@ public class FeatureValidationTest extends TestCase {
      * Test method for 'net.refractions.udig.validation.ValidateLineNoSelfIntersect.op(Display,
      * Object, IProgressMonitor)'
      */
+    @Ignore
+    @Test
     public void testLineNoSelfIntersectOp() throws Exception {
         //create features suitable for the test
         GeometryFactory factory=new GeometryFactory();
@@ -166,6 +175,8 @@ public class FeatureValidationTest extends TestCase {
      * Test method for 'net.refractions.udig.validation.ValidateLineNoSelfOverlap.op(Display,
      * Object, IProgressMonitor)'
      */
+    @Ignore
+    @Test
     public void testLineNoSelfOverlapOp() throws Exception {
         //create features suitable for the test
         GeometryFactory factory=new GeometryFactory();
@@ -215,6 +226,7 @@ public class FeatureValidationTest extends TestCase {
      * Test method for 'net.refractions.udig.validation.ValidateNullZero.op(Display,
      * Object, IProgressMonitor)'
      */
+    @Test
     public void testNullZeroOp() throws Exception {
         //create features suitable for the test
         GeometryFactory factory=new GeometryFactory();

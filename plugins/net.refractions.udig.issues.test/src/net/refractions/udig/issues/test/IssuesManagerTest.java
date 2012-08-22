@@ -1,5 +1,11 @@
 package net.refractions.udig.issues.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -28,28 +34,30 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewPart;
 import org.geotools.data.DataStore;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 public class IssuesManagerTest extends AbstractProjectUITestCase {
 
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         FeatureIssue.setTesting(true);
     }
     
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         FeatureIssue.setTesting(false);
-    }
-
-    public void testStub() {
-        assertTrue(true);
     }
 
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesManager.removeIssues(String)'
      */
-    public void xtestRemoveIssues() {
+    @Ignore
+    @Test
+    public void testRemoveIssues() {
         IssuesManager m = new IssuesManager();
         IIssuesList issueslist = m.getIssuesList();
         for( int i = 0; i < 10; i++ ) {
@@ -75,7 +83,9 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
         assertEquals(4, issueslist.size());
     }
 
-    public void xtestSetIssuesList() throws Exception {
+    @Ignore
+    @Test
+    public void testSetIssuesList() throws Exception {
         IssuesManager m = new IssuesManager();
         IIssuesList issuesList = new IssuesList();
         m.setIssuesList(issuesList);
@@ -112,7 +122,9 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
         assertFalse(removedListener.get());
     }
 
-    public void xtestListeners() throws Exception {
+    @Ignore
+    @Test
+    public void testListeners() throws Exception {
 
         IssuesManager m = new IssuesManager();
         final IssuesListEvent[] listEvent = new IssuesListEvent[1];
@@ -155,7 +167,9 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
 
     }
 
-    public void xtestDirtyEvents() throws Exception {
+    @Ignore
+    @Test
+    public void testDirtyEvents() throws Exception {
             IssuesManager m = new IssuesManager();
             m.setIssuesList(IssuesListTestHelper.createInMemoryDatastoreIssuesList(null, null));
 
@@ -186,7 +200,9 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
                     .iterator().next());
     }
 
-    public void xtestSaveIssuesList() throws Exception {
+    @Ignore
+    @Test
+    public void testSaveIssuesList() throws Exception {
         IssuesManager m = new IssuesManager();
         IIssuesList issuesList = new IssuesList();
         m.setIssuesList(issuesList);
@@ -227,7 +243,9 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
         assertEquals(createIssue.getId(), listener.saved.iterator().next().getId());
     }
 
-    public void xtestLoadedIssueThrowsException() throws Exception {
+    @Ignore
+    @Test
+    public void testLoadedIssueThrowsException() throws Exception {
         final IIssuesList list = IIssuesManager.defaultInstance.getIssuesList();
         list.clear();
         list.add(new AbstractIssue(){

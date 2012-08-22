@@ -1,11 +1,12 @@
 package net.refractions.udig.catalog.tests.ui.workflow;
 
+import static org.junit.Assert.assertFalse;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.internal.ui.ConnectionPageDecorator;
 import net.refractions.udig.catalog.internal.ui.ResourceSelectionPage;
 import net.refractions.udig.catalog.ui.ConnectionFactoryManager;
@@ -22,8 +23,12 @@ import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
-public class ResourceSelectionTest extends TestCase {
+public class ResourceSelectionTest {
 	Shell shell;
 
 	WorkflowWizard wizard;
@@ -38,8 +43,8 @@ public class ResourceSelectionTest extends TestCase {
 
 	private Workflow workflow;
 	
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 	
 		ArrayList<String> l = new ArrayList<String>();
 		l.add("net.refractions.udig.catalog.ui.WMS"); //$NON-NLS-1$
@@ -68,17 +73,15 @@ public class ResourceSelectionTest extends TestCase {
 		dialog.setBlockOnOpen(true);
 	}
 	
-	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		if (!shell.isDisposed())
 			shell.dispose();
 	}
-	
-    public void testStub() throws Throwable {
-        assertTrue(true);
-    }
     
-	public void xtestNormal() throws Exception {
+	@Ignore
+	@Test
+	public void testNormal() throws Exception {
 		//create a context
 			URL url = new URL("http://www.refractions.net:8080/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
 			workflow.setContext(url);
@@ -105,7 +108,9 @@ public class ResourceSelectionTest extends TestCase {
 		driver.cancel();
 	}
 
-	public void xtestNormalSelectedGeoResource() throws Exception {
+	@Ignore
+    @Test
+	public void testNormalSelectedGeoResource() throws Exception {
 		//create a workbench selection
 		URL url = new URL("http://www.refractions.net:8080/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities#gd:swamps"); //$NON-NLS-1$
 		workflow.setContext(url);

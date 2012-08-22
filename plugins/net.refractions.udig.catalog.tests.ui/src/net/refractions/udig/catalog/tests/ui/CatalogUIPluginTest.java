@@ -1,19 +1,23 @@
 package net.refractions.udig.catalog.tests.ui;
 
+import static org.junit.Assert.fail;
+
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
-public class CatalogUIPluginTest extends TestCase {
+public class CatalogUIPluginTest {
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
         List< ? extends IResolve> members = localCatalog.members(new NullProgressMonitor());
         
@@ -24,16 +28,16 @@ public class CatalogUIPluginTest extends TestCase {
         
     }
     
-    public void testStub() throws Exception {
-        assertTrue(true);
+    @Ignore
+    @Test
+    public void testHasCachedTitle() {
+        fail("Not yet implemented"); // TODO
     }
-//
-//    public void testHasCachedTitle() {
-//        fail("Not yet implemented"); // TODO
-//    }
-//
-//    public void testStoreLabel() {
-//        fail("Not yet implemented"); // TODO
-//    }
+
+    @Ignore
+    @Test
+    public void testStoreLabel() {
+        fail("Not yet implemented"); // TODO
+    }
 
 }

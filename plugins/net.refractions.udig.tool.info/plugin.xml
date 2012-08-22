@@ -62,14 +62,14 @@
             id="net.refractions.udig.tool.info.infoView">
          <description/>
       </view>
-      <!--view
+      <view
             category="net.refractions.udig.project.ui.project"
             class="net.refractions.udig.document.DocumentView"
             icon="icons/view16/document_view.gif"
             id="net.refractions.udig.tool.info.documentView"
             name="%docView.name"
             restorable="true">
-      </view-->
+      </view>
    </extension>
    <extension
          name="Information Displays"

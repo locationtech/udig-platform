@@ -3,6 +3,7 @@ package net.refractions.udig.catalog.wmsc;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -354,9 +355,10 @@ public class WMSCTileUtils {
                 WmsPlugin.log("WebMapService required", new ServiceNotFoundException()); //$NON-NLS-1$
                 return null;
             }
-//            ServiceInfo info = server.getInfo();
-//            String source = info.getSource() != null ? info.getSource().toString() : null;
-            String source = server.getInfo().getSource().toString();
+            ServiceInfo serverInfo = server.getInfo();
+            URI serverURI = serverInfo.getSource();
+            String source = serverURI != null ? serverURI.toString() : null;
+            
             String version = server.getCapabilities().getVersion();
             if (source == null || "".equals(source)) { //$NON-NLS-1$
                 WmsPlugin.log("GetCapabilities SERVICE is required", new ServiceNotFoundException()); //$NON-NLS-1$
@@ -371,10 +373,15 @@ public class WMSCTileUtils {
             String srs = CRS.toSRS(info.getCRS());
             TileSet tileset = new WMSTileSet();
     
-            double minX = info.getBounds().getMinimum(0);
-            double maxX = info.getBounds().getMaximum(0);
-            double minY = info.getBounds().getMinimum(1);
-            double maxY = info.getBounds().getMaximum(1);
+            ReferencedEnvelope bounds = info.getBounds();
+            if (bounds == null ) { //$NON-NLS-1$
+                WmsPlugin.log("Bounds required for TileSet definition", new NullPointerException("Bounds required for tileset definitio")); //$NON-NLS-1$
+                return null;
+            }
+            double minX = bounds.getMinimum(0);
+            double maxX = bounds.getMaximum(0);
+            double minY = bounds.getMinimum(1);
+            double maxY = bounds.getMaximum(1);
     
             CRSEnvelope bbox = new CRSEnvelope(srs, minX, minY, maxX, maxY);
             tileset.setBoundingBox(bbox);

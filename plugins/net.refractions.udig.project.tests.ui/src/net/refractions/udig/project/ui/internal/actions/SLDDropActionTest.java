@@ -14,11 +14,13 @@
  */
 package net.refractions.udig.project.ui.internal.actions;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.internal.ui.UDIGDropHandler;
 import net.refractions.udig.project.ILayer;
@@ -34,6 +36,9 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.styling.Style;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * TODO Purpose of 
@@ -43,7 +48,7 @@ import org.geotools.styling.Style;
  * @author Jesse
  * @since 1.1.0
  */
-public class SLDDropActionTest extends TestCase {
+public class SLDDropActionTest {
 
     private Map map;
     private SLDDropAction action;
@@ -51,8 +56,8 @@ public class SLDDropActionTest extends TestCase {
     private File sldFile;
     private UDIGDropHandler handler;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         map=MapTests.createDefaultMap("DropActionTestFeatures", 2, true, null); //$NON-NLS-1$
         IGeoResource[] resources = new IGeoResource[]{
                 MapTests.createGeoResource("DropActionTestFeatures2", 3, true), //$NON-NLS-1$
@@ -73,6 +78,7 @@ public class SLDDropActionTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.project.ui.internal.actions.SLDDropAction#accept()}.
      */
+    @Test
     public void testAccept() {
         
         // All locations but NONE should be acceptable.
@@ -104,6 +110,7 @@ public class SLDDropActionTest extends TestCase {
         assertFalse(action.accept());
     }
 
+    @Test
     public void testDropURLOnLayer() throws Exception {
         final Layer destination = map.getLayersInternal().get(1);
 
@@ -121,6 +128,7 @@ public class SLDDropActionTest extends TestCase {
         assertTrue(isTestStyle(destination, expectedName));
     }
 
+    @Test
     public void testDropFileOnLayer() throws Exception {
         final Layer destination = map.getLayersInternal().get(2);
 
@@ -138,6 +146,7 @@ public class SLDDropActionTest extends TestCase {
         assertTrue(isTestStyle(destination, expectedName));
     }
 
+    @Test
     public void testDropOnMap() throws Exception {
         map.getEditManagerInternal().setSelectedLayer(map.getLayersInternal().get(3));
         action.init(null, null, ViewerDropLocation.ON, map, sldURL);
@@ -154,7 +163,9 @@ public class SLDDropActionTest extends TestCase {
         assertTrue(isTestStyle(map.getEditManager().getSelectedLayer(), expectedName));
     }
 
-    public void xtestDropOnMapIntegration() throws Exception {
+    @Ignore
+    @Test
+    public void testDropOnMapIntegration() throws Exception {
         map.getEditManagerInternal().setSelectedLayer(map.getLayersInternal().get(3));
         handler.setTarget(map);
         handler.performDrop(sldFile, null);
@@ -170,6 +181,7 @@ public class SLDDropActionTest extends TestCase {
         assertTrue(isTestStyle(map.getEditManager().getSelectedLayer(), expectedName));
     }
     
+    @Test
     public void testDropOnLayerIntegration() throws Exception {
         final Layer destination = map.getLayersInternal().get(2);
 

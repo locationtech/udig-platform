@@ -5,9 +5,7 @@ import net.refractions.udig.issues.IIssuesLabelProvider;
 
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
-import org.junit.Ignore;
 
-@Ignore
 public class TestLabelProvider {
 
     public static class Provider1 implements IIssuesLabelProvider {

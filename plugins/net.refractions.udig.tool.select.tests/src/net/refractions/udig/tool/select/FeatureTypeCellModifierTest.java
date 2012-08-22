@@ -1,5 +1,10 @@
 package net.refractions.udig.tool.select;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +23,8 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.geotools.data.DataUtilities;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -34,7 +41,8 @@ public class FeatureTypeCellModifierTest extends AbstractProjectUITestCase {
     private FeatureTypeCellModifier modifier;
     private List<SimpleFeature> features;
     
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         featureType=DataUtilities.createType("testType", "*"+GEOM+":Polygon,"+NAME+":String,"+ID+":Integer,"+DISTANCE+":Double");  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
         features=new ArrayList<SimpleFeature>(2);
         
@@ -49,6 +57,7 @@ public class FeatureTypeCellModifierTest extends AbstractProjectUITestCase {
         modifier=new FeatureTypeCellModifier(map.getMapLayers().get(0));
     }
 
+    @Test
     public void testCanModify() {
         assertTrue( modifier.canModify(features.get(0), GEOM));
         assertTrue( modifier.canModify(features.get(0), NAME));
@@ -59,6 +68,7 @@ public class FeatureTypeCellModifierTest extends AbstractProjectUITestCase {
         
     }
 
+    @Test
     public void testGetValue() {
         assertNull( modifier.getValue(features.get(0), NAME));
         assertNull( modifier.getValue(features.get(0), ID));
@@ -69,6 +79,7 @@ public class FeatureTypeCellModifierTest extends AbstractProjectUITestCase {
         assertEquals( 5.5, modifier.getValue(features.get(1), DISTANCE));
     }
 
+    @Test
     public void testModify() throws Exception {
         Shell shell=new Shell(Display.getCurrent());
         Tree tree=new Tree(shell, SWT.DEFAULT);

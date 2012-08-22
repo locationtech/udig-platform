@@ -1,8 +1,11 @@
 package net.refractions.udig.project.internal.provider;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+
 import java.awt.Color;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.tests.support.MapTests;
@@ -11,19 +14,21 @@ import net.refractions.udig.ui.graphics.Glyph;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.swt.graphics.Image;
+import org.junit.Before;
+import org.junit.Test;
 
-public class LayerItemProviderTest extends TestCase {
+public class LayerItemProviderTest {
 
     private Map   map;
     private Layer layer;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         map = MapTests.createDefaultMap("typename", 4, true, null); //$NON-NLS-1$
         layer = map.getLayersInternal().get(0);
     }
 
-    @SuppressWarnings("unchecked")
+    @Test
     public void testGetImageObject() {
 
         AdapterFactory adapterFactoryImpl = new ProjectItemProviderAdapterFactory();
@@ -66,6 +71,7 @@ public class LayerItemProviderTest extends TestCase {
         }
     }
 
+    @Test
     public void testGetTextObject() {
         // TODO
     }

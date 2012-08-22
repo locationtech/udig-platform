@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ID;
@@ -20,13 +23,13 @@ import net.refractions.udig.catalog.geotools.Activator;
 import net.refractions.udig.catalog.internal.ServiceFactoryImpl;
 
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.DataAccess;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.opengis.feature.type.Name;
 
@@ -83,7 +86,8 @@ public class GeoToolsDataStoreServiceTest {
         
         assertEquals( 4, featureSource.getCount( Query.ALL ) );
         
-        IServiceInfo info = service.getInfo(new NullProgressMonitor());
+        //IServiceInfo info = service.getInfo(new NullProgressMonitor());
+        IServiceInfo info = getInfo(service, new NullProgressMonitor());
         assertNotNull("Title available", info.getTitle());
         assertNotNull("Description available", info.getDescription());
         
@@ -91,10 +95,57 @@ public class GeoToolsDataStoreServiceTest {
         for(IGeoResource resource: m) {
             ID id = resource.getID();
             assertNotNull(id);
-            IGeoResourceInfo grinfo = resource.getInfo(new NullProgressMonitor());
+            //IGeoResourceInfo grinfo = resource.getInfo(new NullProgressMonitor());
+            IGeoResourceInfo grinfo = getInfo(resource, new NullProgressMonitor());
             assertNotNull(grinfo);
             assertEquals("GeoResource title matches filename", "sample data", grinfo.getTitle());
         }
         
+    }
+    
+    private IServiceInfo getInfo(final IService service, final IProgressMonitor monitor) {
+        final Callable<IServiceInfo> job = new Callable<IServiceInfo>() {
+
+            @Override
+            public IServiceInfo call() throws Exception {
+                return service.getInfo(monitor);
+            }
+            
+        };
+        FutureTask<IServiceInfo> task = new FutureTask<IServiceInfo>(job);
+        Thread t = new Thread(task);
+        t.start();
+        IServiceInfo info = null;
+        
+        try {
+            info = task.get();
+        } catch (InterruptedException e) {
+        } catch (ExecutionException e) {
+        }
+        
+        return info;
+    }
+    
+    private IGeoResourceInfo getInfo(final IGeoResource resource, final IProgressMonitor monitor) {
+        final Callable<IGeoResourceInfo> job = new Callable<IGeoResourceInfo>() {
+
+            @Override
+            public IGeoResourceInfo call() throws Exception {
+                return resource.getInfo(monitor);
+            }
+            
+        };
+        FutureTask<IGeoResourceInfo> task = new FutureTask<IGeoResourceInfo>(job);
+        Thread t = new Thread(task);
+        t.start();
+        IGeoResourceInfo info = null;
+        
+        try {
+            info = task.get();
+        } catch (InterruptedException e) {
+        } catch (ExecutionException e) {
+        }
+        
+        return info;
     }
 }

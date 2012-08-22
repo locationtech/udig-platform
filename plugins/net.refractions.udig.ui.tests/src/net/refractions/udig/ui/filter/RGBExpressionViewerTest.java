@@ -14,9 +14,10 @@
  */
 package net.refractions.udig.ui.filter;
 
-import java.awt.Color;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-import junit.framework.TestCase;
+import java.awt.Color;
 
 import net.refractions.udig.ui.filter.ViewerFactory.Appropriate;
 
@@ -24,6 +25,8 @@ import org.eclipse.swt.SWT;
 import org.geotools.filter.expression.LiteralBuilder;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Test class for {@link RGBExpressionViewer}.
@@ -31,8 +34,9 @@ import org.geotools.filter.text.cql2.CQLException;
  * @author Naz Chan 
  */
 @SuppressWarnings("nls")
-public class RGBExpressionViewerTest extends TestCase {
+public class RGBExpressionViewerTest {
 
+    @Test
     public void testFactory() {
         
         final RGBExpressionViewer.Factory factory = new RGBExpressionViewer.Factory();
@@ -57,6 +61,8 @@ public class RGBExpressionViewerTest extends TestCase {
     }
     
     @Deprecated
+    @Ignore
+    @Test
     public void xtestRefreshExpressionNPE() {
         
         // Need to find a way to instantiate the viewer without a parent composite

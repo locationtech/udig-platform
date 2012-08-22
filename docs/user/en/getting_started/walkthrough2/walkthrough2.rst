@@ -1,7 +1,7 @@
 uDig Walkthrough 2
 ==================
 
-|refractions_png| |lisasoft_png| |udig_logo_gif|
+|refractions_png| |lisasoft_png| |udig_logo_gif|
 
 .. image:: ../../../../images/background.png
    :width: 100%

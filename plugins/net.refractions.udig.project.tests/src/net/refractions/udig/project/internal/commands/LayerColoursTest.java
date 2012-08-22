@@ -1,5 +1,8 @@
 package net.refractions.udig.project.internal.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -15,12 +18,14 @@ import net.refractions.udig.ui.palette.ColourScheme;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Test;
 
 public class LayerColoursTest extends AbstractProjectTestCase {
 
     //TODO: ensure removed colours are reused (they currently are not)
     //TODO: use more unique identifier than layer ID for scheme mapping key
     
+    @Test
     public void testColourScheme() throws Exception {
          //add and remove some layers, and make sure the colours are proper
         Map map = MapTests.createDefaultMap("test", 2, true, new Dimension(10,10)); //$NON-NLS-1$

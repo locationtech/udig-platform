@@ -16,41 +16,25 @@
  */
 package net.refractions.udig.catalog.internal.document;
 
-import java.net.URI;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import net.refractions.udig.catalog.document.IAbstractDocumentSource;
 import net.refractions.udig.catalog.document.IDocument;
 
-
+import org.eclipse.swt.program.Program;
 
 /**
- * This is the abstract class for documents.
+ * Abstract model for documents.
  * 
  * @author paul.pfeiffer
- * @author Naz Chan
- *
+ * @author Naz Chan 
  */
-public abstract class AbstractDocument extends AbstractDocumentItem implements IDocument {
+public abstract class AbstractDocument implements IDocument {
     
-    private IAbstractDocumentSource source;
-    
-    protected String label;
-    
-    
-    protected static final String UNASSIGNED = "unassigned"; //$NON-NLS-1$
-    protected static final String UNASSIGNED_NO_LABEL = "(unassigned)"; //$NON-NLS-1$
-    protected static final String LABEL_FORMAT = "%s (%s)"; //$NON-NLS-1$
-    
-    @Override
-    public String getLabel() {
-        return label;
-    }
+    protected IAbstractDocumentSource source;
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    @Override
     public IAbstractDocumentSource getSource() {
         return source;
     }
@@ -58,25 +42,106 @@ public abstract class AbstractDocument extends AbstractDocumentItem implements I
     public void setSource(IAbstractDocumentSource source) {
         this.source = source;
     }
- 
-    protected abstract URI getUri();
     
     @Override
+    public boolean isEmpty() {
+        return (getValue() == null);
+    }
+
+    @Override
     public boolean equals(Object obj) {
-        if (isEmpty()) {
-            return false;
-        } else {
-            if (obj instanceof AbstractDocument) {
-                final AbstractDocument doc = (AbstractDocument) obj;
-                if (!doc.isEmpty()) {
-                    if (getUri().compareTo(doc.getUri()) == 0) {
-                        return true;
-                    }    
-                }
-                return false;
-            }    
+        if (obj instanceof IDocument) {
+            final IDocument doc = (IDocument) obj;
+            final boolean isEqualDocType = getDocType() == doc.getDocType();
+            final boolean isEqualType = getType() == doc.getType();
+            final boolean isEqualLabel = isEqual(getLabel(), doc.getLabel());
+            final boolean isEqualDescription = isEqual(getDescription(), doc.getDescription());
+            final boolean isEqualSource = getSource() == doc.getSource();
+            final boolean isEqualValue = getValue() == doc.getValue();
+            return isEqualDocType && isEqualType && isEqualLabel && isEqualDescription
+                    && isEqualSource && isEqualValue;
         }
         return super.equals(obj);
+    }
+    
+    /**
+     * Checks equality between two strings, this checks if the strings are null to avoid NPEs.
+     * 
+     * @param str1
+     * @param str2
+     * @return true if equal, otherwise false
+     */
+    private boolean isEqual(String str1, String str2) {
+        if (str1 == null && str2 == null) {
+            return true;
+        } else if (str1 == null && str2 != null) {
+            return false;
+        } else if (str1 != null && str2 == null) {
+            return false;
+        } else if (str1 != null && str2 != null) {
+            return str1.equals(str2);
+        }
+        return false;
+    }
+    
+    /**
+     * Creates a new file from the file specification.
+     * 
+     * @param fileSpec
+     * @return file
+     */
+    protected static File createFile(String fileSpec) {
+        if (fileSpec != null) {
+            final File newFile = new File(fileSpec);
+            if (newFile.exists()) {
+                return newFile;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Opens the file with the assigned default program.
+     * 
+     * @param file
+     * @return true if file is opened successfully, otherwise false
+     */
+    protected static boolean openFile(File file) {
+        if (file != null) {
+            return Program.launch(file.getAbsolutePath());        
+        }
+        return false;
+    }
+    
+    /**
+     * Creates a new url from the url specification.
+     * 
+     * @param urlSpec
+     * @return url
+     */
+    protected static URL createUrl(String urlSpec) {
+        if (urlSpec != null) {
+            try {
+                final URL newUrl = new URL(urlSpec);
+                return newUrl;
+            } catch (MalformedURLException e) {
+                // Info is not a valid URL string
+            }    
+        }
+        return null;
+    }
+    
+    /**
+     * Opens the url with the assigned default web browser.
+     * 
+     * @param url
+     * @return true if url is opened successfully, otherwise false
+     */
+    protected static boolean openUrl(URL url) {
+        if (url != null) {
+            return Program.launch(url.toString());        
+        }
+        return false;
     }
     
 }

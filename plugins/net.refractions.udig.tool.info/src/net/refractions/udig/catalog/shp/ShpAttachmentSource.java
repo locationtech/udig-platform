@@ -15,20 +15,19 @@
 package net.refractions.udig.catalog.shp;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.refractions.udig.catalog.document.IAttachmentSource;
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.internal.document.FileDocument;
-import net.refractions.udig.catalog.internal.document.URLDocument;
+import net.refractions.udig.catalog.document.IDocument.DocType;
+import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocumentSource;
+import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
+import net.refractions.udig.catalog.internal.document.AbstractBasicDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 
-import org.apache.commons.io.FileUtils;
-import org.opengis.filter.identity.FeatureId;
+import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * This is the shapefile attachment source implementation. This implements getters and setters to
@@ -38,144 +37,123 @@ import org.opengis.filter.identity.FeatureId;
  * 
  * @author Naz Chan
  */
-public class ShpAttachmentSource extends AbstractShpDocumentSource implements IAttachmentSource {
-
+public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachmentSource {
+    
     public ShpAttachmentSource(ShpGeoResourceImpl geoResource) {
         super(geoResource);
     }
 
     @Override
-    public List<IDocument> getDocuments(FeatureId fid) {
-        return propParser.getFeatureAttachments(fid.getID());
-    }
-
-    @Override
-    public IDocument addFile(FeatureId fid, File file) {
-        final File localFile = copyFile(fid, file);
-        if (localFile != null) {
-            return add(fid, localFile);    
+    public List<IDocument> getDocuments(SimpleFeature feature) {
+        super.getDocuments(feature);
+        final List<DocumentInfo> infos = propParser.getFeatureDocumentInfos(feature);
+        if (infos != null && infos.size() > 0) {
+            docs.addAll(docFactory.create(infos, true));
         }
-        return null;
+        return docs;
     }
-
-    @Override
-    public List<IDocument> addFiles(FeatureId fid, List<File> files) {
-        final List<IDocument> docs = new ArrayList<IDocument>();
-        for (File file : files) {
-            final IDocument doc = addFile(fid, file);
-            if (doc != null) {
-                docs.add(doc);
-            }
+    
+    private List<IDocument> getDocsInternal(SimpleFeature feature) {
+        if (docs == null) {
+            return getDocuments(feature);
         }
         return docs;
     }
     
     @Override
-    public IDocument addLink(FeatureId fid, URL url) {
-        return add(fid, url);
+    public IDocument add(SimpleFeature feature, DocumentInfo info) {
+        final IDocument doc = addInternal(feature, info);
+        save(feature);
+        return doc;
     }
 
-    private File copyFile(FeatureId fid, File file) {
-        try {
-            final File attachmentsDir = propParser.getFeatureAttachmentsDir(fid.getID());
-            if (!attachmentsDir.exists()) {
-                attachmentsDir.mkdir();
-            }
-            FileUtils.copyFileToDirectory(file, attachmentsDir);
-            return new File(attachmentsDir, file.getName());
-        } catch (IOException e) {
-            e.printStackTrace();
+    @Override
+    public List<IDocument> add(SimpleFeature feature, List<DocumentInfo> infos) {
+        final List<IDocument> newDocs = new ArrayList<IDocument>();
+        for (DocumentInfo info : infos) {
+            addInternal(feature, info);
         }
-        return null;
+        save(feature);
+        return newDocs;
     }
-    
-    private IDocument add(FeatureId fid, Object obj) {
-        IDocument doc = null;
-        if (obj instanceof File) {
-            doc = docFactory.create((File) obj);
-        } else if (obj instanceof URL) {
-            doc = docFactory.create((URL) obj);
+
+    private IDocument addInternal(SimpleFeature feature, DocumentInfo info) {
+        if (Type.FILE == info.getType()) {
+            final File newFile = ShpDocUtils.copyFile(info.getInfo(), getAttachmentDir(feature));
+            info.setInfo(newFile.getAbsolutePath());
         }
-        if (doc != null) {
-            final List<IDocument> docs = getDocuments(fid);
-            if (!docs.contains(doc)) {
-                docs.add(doc);
-                propParser.setFeatureAttachments(fid.getID(), docs);
-                return doc;
-            }
-        }
-        return null;
+        final IDocument newDoc = docFactory.create(info, true);
+        getDocsInternal(feature).add(newDoc);
+        return newDoc;
     }
     
     @Override
-    public File updateFile(FeatureId fid, IDocument doc, File file) {
-        
-        FileDocument fileDoc = null;
-        final File localDir = propParser.getFeatureAttachmentsDir(fid.getID());
-        File localFile = new File(localDir, file.getName());
-        final IDocument newDoc = docFactory.create(localFile);
-        final List<IDocument> docs = getDocuments(fid);
-        for (IDocument existingDoc : docs) {
-            if (existingDoc.equals(newDoc)) {
-                return null;
-            }
-            if (existingDoc.equals(doc)) {
-                fileDoc = (FileDocument) existingDoc;
+    public IDocument update(SimpleFeature feature, IDocument doc, DocumentInfo info) {
+        if (Type.FILE == info.getType()) {
+            final File oldFile = (File) doc.getValue();
+            if (oldFile == null) {
+                updateInternal(feature, oldFile, info);
+            } else {
+                if (!oldFile.getAbsolutePath().equals(info.getInfo())) {
+                    updateInternal(feature, oldFile, info);
+                }    
             }
         }
-        
-        localFile = copyFile(fid, file);
-        
-        if (localFile != null && localFile.exists()) {
-            fileDoc.getFile().delete();
-            fileDoc.setFile(localFile);
-            propParser.setFeatureAttachments(fid.getID(), docs);
-            return localFile;
-        }
-        
-        return null;
+        ((AbstractBasicDocument) doc).setInfo(info);
+        save(feature);
+        return doc;
     }
 
+    private void updateInternal(SimpleFeature feature, File oldFile, DocumentInfo info) {
+        ShpDocUtils.deleteFile(oldFile);
+        final File newFile = ShpDocUtils.copyFile(info.getInfo(), getAttachmentDir(feature));
+        info.setInfo(newFile.getAbsolutePath());
+    }
+    
     @Override
-    public boolean updateLink(FeatureId fid, IDocument doc, URL url) {
-
-        URLDocument fileDoc = null;
-        final IDocument newDoc = docFactory.create(url);
-        final List<IDocument> docs = getDocuments(fid);
-        for (IDocument existingDoc : docs) {
-            if (existingDoc.equals(newDoc)) {
-                return false;
-            }
-            if (existingDoc.equals(doc)) {
-                fileDoc = (URLDocument) existingDoc;
-            }
-        }
-        
-        fileDoc.setUrl(url);
-        propParser.setFeatureAttachments(fid.getID(), docs);
+    public boolean remove(SimpleFeature feature, IDocument oldDoc) {
+        removeInternal(feature, oldDoc);
+        save(feature);
         return true;
-        
     }
 
     @Override
-    public boolean remove(FeatureId fid, IDocument doc) {
-        return remove(fid, Collections.singletonList(doc));
+    public boolean remove(SimpleFeature feature, List<IDocument> oldDocs) {
+        for (IDocument oldDoc : oldDocs) {
+            removeInternal(feature, oldDoc);
+        }
+        save(feature);
+        return true;
     }
 
-    @Override
-    public boolean remove(FeatureId fid, List<IDocument> docs) {
-        final List<IDocument> existingDocs = getDocuments(fid);
-        for (IDocument doc : docs) {
-            if (existingDocs.contains(doc)) {
-                if (doc instanceof FileDocument) {
-                    final FileDocument fileDoc = (FileDocument) doc;
-                    fileDoc.getFile().delete();
-                }
-                existingDocs.remove(doc);
+    private boolean removeInternal(SimpleFeature feature, IDocument oldDoc) {
+        if (Type.FILE == oldDoc.getType()) {
+            ShpDocUtils.deleteFile(oldDoc.getValue());
+        }
+        getDocsInternal(feature).remove(oldDoc);
+        return true;
+    }
+    
+    private void save(SimpleFeature feature) {
+        final List<DocumentInfo> infos = new ArrayList<IDocumentSource.DocumentInfo>();
+        for (IDocument doc : getDocsInternal(feature)) {
+            if (DocType.HOTLINK != doc.getDocType()) {
+                final AbstractBasicDocument shpDoc = (AbstractBasicDocument) doc;
+                infos.add(shpDoc.getInfo());    
             }
         }
-        propParser.setFeatureAttachments(fid.getID(), existingDocs);
-        return true;
+        propParser.setFeatureDocumentInfos(feature, infos);
+        propParser.writeProperties();
+    }
+    
+    /**
+     * Gets the attachment directory of the feature.
+     * 
+     * @param feature
+     * @return attachment directory
+     */
+    private File getAttachmentDir(SimpleFeature feature) {
+        return propParser.getFeatureAttachDir(feature.getIdentifier().getID());
     }
     
 }

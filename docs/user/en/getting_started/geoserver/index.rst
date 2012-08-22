@@ -1,8 +1,8 @@
-GeoServer Install
+﻿GeoServer Install
 =================
 
 
-|refractions_png| |lisasoft_png| |geoserver_png|
+|refractions_png| |lisasoft_png| |geoserver_png|
 
 .. image:: ../../../../images/background.png
    :width: 100%

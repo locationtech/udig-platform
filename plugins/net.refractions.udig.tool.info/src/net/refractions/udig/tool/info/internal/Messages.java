@@ -22,6 +22,8 @@ public class Messages extends NLS {
     
     private static final String BUNDLE_NAME = "net.refractions.udig.tool.info.internal.messages"; //$NON-NLS-1$
 
+    public static String AbstractAttachmentDocument_errSaveAsNotSupported;
+
     public static String DistanceTool_distance;
 
     public static String DistanceTool_error;
@@ -66,9 +68,83 @@ public class Messages extends NLS {
 
     public static String Document_Remove;
 
+    public static String DocumentDialog_actionLabel;
+
+    public static String DocumentDialog_addAttachHeader;
+
+    public static String DocumentDialog_attachSubHeader;
+
+    public static String DocumentDialog_attachSubHeaderFeature;
+
+    public static String DocumentDialog_attachSubHeaderShapefile;
+
+    public static String DocumentDialog_attributeLabel;
+
+    public static String DocumentDialog_createFileFromTemplateError;
+
+    public static String DocumentDialog_createFileFromTemplateSuccess;
+
+    public static String DocumentDialog_createFileFromTemplateTitle;
+
+    public static String DocumentDialog_descriptionLabel;
+
+    public static String DocumentDialog_documentLabel;
+
+    public static String DocumentDialog_editAttachHeader;
+
+    public static String DocumentDialog_enterFilenameErr;
+
+    public static String DocumentDialog_enterFilenameMsg;
+
+    public static String DocumentDialog_enterFilenameTitle;
+
+    public static String DocumentDialog_errValidFile;
+
+    public static String DocumentDialog_errValidURL;
+
+    public static String DocumentDialog_fileBtn;
+
+    public static String DocumentDialog_fileLabel;
+
+    public static String DocumentDialog_goBtn;
+
+    public static String DocumentDialog_hotlinkHeader;
+
+    public static String DocumentDialog_labelLabel;
+
+    public static String DocumentDialog_newBtn;
+
+    public static String DocumentDialog_openBtn;
+
+    public static String DocumentDialog_selectTemplateMsg;
+
+    public static String DocumentDialog_selectTemplateTitle;
+
+    public static String DocumentDialog_templateLabel;
+
+    public static String DocumentDialog_typeLabel;
+
+    public static String DocumentDialog_urlLabel;
+
+    public static String DocumentDialog_valueLabel;
+
     public static String DocumentPropertyPage_errActionIsBlank;
 
     public static String DocumentPropertyPage_errExists;
+
+    public static String DocumentView_openActionDialogMessage;
+
+    public static String DocumentView_openActionDialogTitle;
+
+    public static String DocumentView_saveAsDialogTitle;
+
+    public static String DocumentView_saveAsErrorDialogMsg;
+
+    public static String DocumentView_saveAsErrorDialogTitle;
+
+    public static String DocumentView_saveAsSuccessDialogMsg;
+
+    public static String DocumentView_saveAsSuccessDialogTitle;
 
     public static String InfoView_instructions_text;
 
@@ -76,13 +152,21 @@ public class Messages extends NLS {
 
     public static String LayerPointInfo_toString;
 
-    public static String docView_attach;
+    public static String docView_add;
 
     public static String docView_attachFile;
 
     public static String docView_attachFiles;
 
     public static String docView_delete;
+
+    public static String docView_deleteAttachConfirmMsg;
+
+    public static String docView_deleteAttachConfirmTitle;
+
+    public static String docView_descriptionColumn;
+
+    public static String docView_typeColumn;
 
     public static String docView_errEmpty;
 
@@ -94,11 +178,7 @@ public class Messages extends NLS {
 
     public static String docView_errURLExist;
 
-    public static String docView_featureAttachments;
-
-    public static String docView_featureDocs;
-
-    public static String docView_link;
+    public static String docView_edit;
 
     public static String docView_linkDialogHeader;
 
@@ -108,11 +188,15 @@ public class Messages extends NLS {
 
     public static String docView_name;
 
+    public static String docView_documentColumn;
+
     public static String docView_open;
 
     public static String docView_openDialogTitle;
 
-    public static String docView_shapeDocs;
+    public static String docView_clear;
+
+    public static String docView_saveAs;
 
     public static String InfoPropertyPage_labelExpression;
     

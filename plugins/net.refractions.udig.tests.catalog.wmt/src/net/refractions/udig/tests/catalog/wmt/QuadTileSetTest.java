@@ -1,9 +1,10 @@
 package net.refractions.udig.tests.catalog.wmt;
 
+import static org.junit.Assert.assertEquals;
+
 import java.net.URL;
 import java.net.URLConnection;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.internal.wmt.tile.WWTile;
 import net.refractions.udig.catalog.internal.wmt.wmtsource.WWSource;
 import net.refractions.udig.catalog.internal.wmt.wmtsource.ww.QuadTileSet;
@@ -11,12 +12,11 @@ import net.refractions.udig.catalog.internal.wmt.wmtsource.ww.QuadTileSet;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
+import org.junit.Test;
 
 import com.vividsolutions.jts.geom.Envelope;
 
-
-
-public class QuadTileSetTest extends TestCase {
+public class QuadTileSetTest {
     
     private static Element rootElement = null;
     
@@ -35,6 +35,7 @@ public class QuadTileSetTest extends TestCase {
         return rootElement;         
     }
     
+    @Test
     public void testQuadTileConstruct() throws Exception {
         Element rootElement = getRootElement();
         
@@ -64,6 +65,7 @@ public class QuadTileSetTest extends TestCase {
                         new WWTile.WWTileName(0, 0, quadTileSet.getZoomLevel(0), null)));
     }
     
+    @Test
     public void testTiles() throws Exception {
         Element rootElement = getRootElement();        
         QuadTileSet quadTileSet = new QuadTileSet(rootElement.getChild("ChildLayerSet").getChild("QuadTileSet"), "");
