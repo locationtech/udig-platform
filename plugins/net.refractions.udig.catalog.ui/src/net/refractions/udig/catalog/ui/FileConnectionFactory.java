@@ -134,6 +134,9 @@ public class FileConnectionFactory extends UDIGConnectionFactory {
                                         name =ext.substring(2).toUpperCase()+" Files";
                                     }
                                 }
+                                if( !name.contains("(")){
+                                    name += " ("+ext.replace(";",",")+")";
+                                }
                                 FileType type = new FileType(name, ext );
                                 extensionSet.add( type );
                             }
@@ -144,10 +147,13 @@ public class FileConnectionFactory extends UDIGConnectionFactory {
                                 String name = null;
                                 if( name == null ){
                                     name = provider.getClass().getSimpleName();
-                                    if( name.endsWith("FormatProvider")){
+                                    if( name.equals("FileDataStoreFormatProvider")){
+                                        name = "GeoTools DataStore Files";
+                                    }
+                                    else if( name.endsWith("FormatProvider")){
                                         name = name.substring(0,name.length()-14); // trim FormatProvider
                                     }
-                                } 
+                                }
                                 StringBuilder ext = new StringBuilder();
                                 Set<String> providerExtensions = provider.getExtensions();
                                 if( !providerExtensions.isEmpty() ){
@@ -156,6 +162,9 @@ public class FileConnectionFactory extends UDIGConnectionFactory {
                                             ext.append(";");
                                         }
                                         ext.append(fileExtension);
+                                    }
+                                    if( !name.contains("(")){
+                                        name += " ("+ext.toString().replace(";",",")+")";
                                     }
                                     FileType type = new FileType( name, ext.toString() );
                                     extensionSet.add(type);
