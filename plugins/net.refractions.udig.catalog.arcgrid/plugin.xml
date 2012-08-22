@@ -12,7 +12,7 @@
          point="net.refractions.udig.catalog.ui.fileFormat">
       <fileService
             fileExtension="*.asc"
-            name="Arcgrid"/>
+            name="ArcGRID Files"/>
    </extension>
 
 </plugin>
