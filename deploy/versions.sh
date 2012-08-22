@@ -12,7 +12,7 @@ export VERSION=1.3-SNAPSHOT
 export BUILD=${BASE}/build
 
 # Tycho Build
-export PRODUCT_TARGET=${BASE}/../features/net.refractions.udig-product/target
+export PRODUCT_TARGET=${BASE}/../features/net.refractions.udig-product/target/products
 export PRODUCT_SDK_TARGET=${BASE}/../features/net.refractions.udig_sdk-product/target
 
 
@@ -31,6 +31,9 @@ export JRE_LIN64=jre1.6.0_25.lin64_gdal_ecw
 
 echo "Release Version:  ${VERSION}"
 
+# echo "Staged for release in the target directory: ${TARGET}"
+# ls ${TARGET}/*.zip
+
 echo "Staged for release by maven tycho build..."
 ls ${PRODUCT_TARGET}/*.zip
 
@@ -45,9 +48,6 @@ then
         cp ${PRODUCT_SDK_TARGET}/udig-${VERSION}-sdk-linux.gtk.x86.zip ${TARGET}/udig-${VERSION}-sdk.zip
     fi
 fi
-
-echo "Staged for release in the target directory: ${TARGET}"
-ls ${TARGET}/*.zip
 
 echo "Available JREs:"
 ls ${JRE}
