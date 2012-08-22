@@ -82,7 +82,7 @@
          </enablement>
       </modalTool>
       <modalTool
-            categoryId="net.refractions.udig.tool.edit.feature"
+            categoryId="net.refractions.udig.tool.edit.edit"
             class="eu.udig.tools.trim.TrimTool"
             icon="icons/etool16/trim_feature_mode.gif"
             id="eu.udig.tools.trim.TrimTool"

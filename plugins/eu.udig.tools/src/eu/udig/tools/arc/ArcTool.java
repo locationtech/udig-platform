@@ -76,6 +76,7 @@ import eu.udig.tools.arc.internal.presentation.StatusBar;
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
+ * @author Marco Foi (www.mcfoi.it) [porting to uDig core]
  * @since 1.1.0
  * @see ArcFeedbackManager
  * @see CreateArcBehaviour

@@ -79,6 +79,7 @@ import eu.udig.tools.parallel.view.ParallelParametersView;
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
+ * @author Marco Foi (www.mcfoi.it) [porting to uDig core]
  * 
  */
 public class ParallelTool extends AbstractEditTool {

@@ -57,7 +57,7 @@ import eu.udig.tools.internal.ui.util.StatusBar;
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
- * @author Marco Foi (www.mcfoi.it)
+ * @author Marco Foi (www.mcfoi.it) [porting to uDig core]
  * @since 1.1.0
  */
 public class TrimTool extends AbstractEditTool {

@@ -22,6 +22,7 @@ package eu.udig.tools.merge;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.opengis.feature.simple.SimpleFeature;
@@ -47,11 +48,15 @@ import eu.udig.tools.merge.internal.view.MergeView;
  */
 public class MergeContext {
 
-    public static final int MERGEMODE_TOOL = 1;
+    private static final MergeContext THIS = new MergeContext();
 
+    /**
+     * maintains the interaction selected by the user for merging features 	
+     */
+	public static final int MERGEMODE_TOOL = 1;
     public static final int MERGEMODE_OPERATION = 2;
+    private int mergeMode; 
 
-    // private static final MergeContext THIS = new MergeContext();
 
     private Point bboxStartPoint = null;
 
@@ -63,10 +68,8 @@ public class MergeContext {
 
     private IToolContext toolContext = null;
 
-    private static int mergeMode;
-
-    private static List<SimpleFeature> preSelectedFeatures = null;
-    private static ILayer preSelectedLayer = null;
+    private List<SimpleFeature> preSelectedFeatures = Collections.emptyList();
+    private ILayer preSelectedLayer = null;
 
     /**
      * Singleton use the getInstance methods
@@ -82,7 +85,7 @@ public class MergeContext {
      * 
      */
     public static MergeContext getInstance() {
-        return new MergeContext();
+        return THIS;
     }
 
     public IToolContext getToolContext() {
@@ -210,7 +213,7 @@ public class MergeContext {
      * @param mode
      */
     public void setMergeMode(int mode) {
-        this.mergeMode = mode;
+        mergeMode = mode;
     }
 
     /**
@@ -219,8 +222,8 @@ public class MergeContext {
      * 
      * @return
      */
-    public int getMergeMode() {
-        return this.mergeMode;
+    public  int getMergeMode() {
+        return mergeMode;
     }
 
     /**
@@ -243,11 +246,11 @@ public class MergeContext {
      *         addition to MergeView
      */
     public List<SimpleFeature> getPreselectedFeatures() {
-        return this.preSelectedFeatures;
+        return preSelectedFeatures;
     }
     
     public ILayer getPreSelectedLayer() {
-        return this.preSelectedLayer;
+        return preSelectedLayer;
     }
 
     /**
@@ -255,6 +258,6 @@ public class MergeContext {
      * activation and are cleared once added to MergeView
      */
     public void clearPreselectedFeatures() {
-        this.preSelectedFeatures.clear();
+        preSelectedFeatures.clear();
     }
 }

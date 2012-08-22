@@ -438,8 +438,8 @@ public class MergeView extends ViewPart implements IUDIGView {
 	 */
 	public boolean isOperationMode() {
 		boolean isOpMode;
-		MergeContext mergeContextSingleton = MergeContext.getInstance();
-		if (mergeContextSingleton.getMergeMode() == MergeContext.MERGEMODE_OPERATION) {
+		
+		if (MergeContext.getInstance().getMergeMode() == MergeContext.MERGEMODE_OPERATION) {
 			isOpMode = true;
 		} else {
 			isOpMode = false;
@@ -553,10 +553,12 @@ public class MergeView extends ViewPart implements IUDIGView {
 			page.hideView(viewPart);
 		} finally {
 			IToolContext context = getContext();
-			UndoableMapCommand clearSelectionCommand = context
-					.getSelectionFactory().createNoSelectCommand();
+			if(context != null){
+				UndoableMapCommand clearSelectionCommand = context
+						.getSelectionFactory().createNoSelectCommand();
 
-			context.sendASyncCommand(clearSelectionCommand);
+				context.sendASyncCommand(clearSelectionCommand);
+			}
 		}
 
 	}
