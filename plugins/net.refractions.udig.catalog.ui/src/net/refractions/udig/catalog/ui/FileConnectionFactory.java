@@ -5,7 +5,8 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,8 +23,10 @@ import org.eclipse.core.runtime.IExtension;
 
 public class FileConnectionFactory extends UDIGConnectionFactory {
 
+    private static final String FILE_FORMAT_EXTENSION = "net.refractions.udig.catalog.ui.fileFormat"; //$NON-NLS-1$
     private ArrayList<String> extensionList;
-
+    private ArrayList<FileType> typeList;
+    
     public boolean canProcess( Object context ) {
         return createConnectionURL(context) != null;
     }
@@ -75,27 +78,109 @@ public class FileConnectionFactory extends UDIGConnectionFactory {
             return null;
         }
     }
+    public static class FileType implements Comparable<FileType> {
+        final String name;
+        final String extensions;
+        FileType( String name, String extensions){
+            this.name = name;
+            this.extensions = extensions;
+        }
+        public String getName() {
+            return name;
+        }
+        public String getExtensions() {
+            return extensions;
+        }
+        public List<String> getExtensionList(){
+            if( extensions.contains(";") ){
+                return Arrays.asList( extensions.split(";"));
+            }
+            else {
+                return Collections.singletonList( extensions );
+            }
+        }
 
-    @SuppressWarnings("unchecked")
-    synchronized List<String> getExtensionList() {
-        if (extensionList == null) {
-            final Set<String> extensionSet = new TreeSet<String>();
+        @Override
+        public int compareTo(FileType o) {
+            if( o == null || o.name == null){
+                return -1;
+            }
+            return name.compareTo(o.name);
+        }
+    }
+    
+    /**
+     * List of all registered FileTypes.
+     * @return List of all registered FileTypes
+     */
+    synchronized List<FileType> getTypeList() {
+        if (typeList == null) {
+            final Set<FileType> extensionSet = new TreeSet<FileType>();
             ExtensionPointUtil.process(CatalogUIPlugin.getDefault(),
-                    "net.refractions.udig.catalog.ui.fileFormat", new ExtensionPointProcessor(){ //$NON-NLS-1$
+                    FILE_FORMAT_EXTENSION, new ExtensionPointProcessor(){ 
                         public void process( IExtension extension, IConfigurationElement element )
                                 throws Exception {
-                            if ("fileService".equals(element.getName())) {
+                            if ("fileService".equals(element.getName())) { //$NON-NLS-1$
+                                String name = element.getAttribute("name"); //$NON-NLS-1$
                                 String ext = element.getAttribute("fileExtension"); //$NON-NLS-1$
-                                extensionSet.add(ext);
+                                
+                                if( name == null && ext.startsWith("*.")){
+                                    if( ext.contains(";") ){
+                                     // *.jpg;*.jpeg --> JPG Files
+                                        name = ext.substring(2,ext.lastIndexOf(';')).toUpperCase()+" Files";
+                                    }
+                                    else {
+                                        // *.gif --> GIF Files
+                                        name =ext.substring(2).toUpperCase()+" Files";
+                                    }
+                                }
+                                FileType type = new FileType(name, ext );
+                                extensionSet.add( type );
                             }
                             if ("provider".equals(element.getName())) {
                                 FormatProvider provider = (FormatProvider) element
                                         .createExecutableExtension("class");
-                                Set<String> extensions = provider.getExtensions();
-                                extensionSet.addAll(extensions);
+                                
+                                String name = null;
+                                if( name == null ){
+                                    name = provider.getClass().getSimpleName();
+                                    if( name.endsWith("FormatProvider")){
+                                        name = name.substring(0,name.length()-14); // trim FormatProvider
+                                    }
+                                } 
+                                StringBuilder ext = new StringBuilder();
+                                Set<String> providerExtensions = provider.getExtensions();
+                                if( !providerExtensions.isEmpty() ){
+                                    for( String fileExtension : providerExtensions ){
+                                        if( ext.length() != 0 ){
+                                            ext.append(";");
+                                        }
+                                        ext.append(fileExtension);
+                                    }
+                                    FileType type = new FileType( name, ext.toString() );
+                                    extensionSet.add(type);
+                                }
                             }
                         }
                     });
+            typeList = new ArrayList<FileType>(extensionSet);
+        }
+        return Collections.unmodifiableList( typeList );
+    }
+    
+    /**
+     * List of all known extensions to be used as a quick test that a provided file can be expected to work.
+     * 
+     * @return List of all known extensions
+     */
+    @SuppressWarnings("unchecked")
+    synchronized List<String> getExtensionList() {
+        if (extensionList == null) {
+            final List<String> extensionSet = new ArrayList<String>();
+            for( FileType type : getTypeList() ){
+                List<String> extensions = type.getExtensionList();
+                extensionSet.addAll( extensions );
+            }
             extensionList = new ArrayList<String>(extensionSet);
         }
         return (List<String>) extensionList.clone();
