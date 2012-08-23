@@ -6,7 +6,7 @@ Bundle-Version: 1.3.0.qualifier
 Bundle-Activator: net.refractions.udig.catalog.ui.CatalogUIPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
-Export-Package: net.refractions.udig.catalog.internal.ui,
+Export-Package: net.refractions.udig.catalog.internal.ui;x-internal:=true,
  net.refractions.udig.catalog.internal.ui.actions;x-friends:="net.refractions.udig.catalog.tests.ui",
  net.refractions.udig.catalog.internal.ui.ops;x-friends:="net.refractions.udig.catalog.tests.ui",
  net.refractions.udig.catalog.memory,

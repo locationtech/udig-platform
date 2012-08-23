@@ -6,13 +6,9 @@ Bundle-Version: 1.2.3.qualifier
 Bundle-Activator: net.refractions.udig.tool.info.InfoPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
-Export-Package: net.refractions.udig.catalog.document,
- net.refractions.udig.catalog.internal.document;x-friends:="net.refractions.udig.tool.info.tests",
- net.refractions.udig.catalog.shp,
- net.refractions.udig.document,
- net.refractions.udig.tool.info,
- net.refractions.udig.tool.info.internal,
- net.refractions.udig.tool.info.internal.display
+Export-Package: net.refractions.udig.tool.info,
+ net.refractions.udig.tool.info.internal;x-internal:=true,
+ net.refractions.udig.tool.info.internal.display;x-internal:=true
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.project,
