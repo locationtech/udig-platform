@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-
-   <extension
-         point="org.eclipse.ui.actionSets">
+	<extension
+		point="org.eclipse.ui.startup">
+      <startup class="eu.udig.tools.merge.MergeStartup"/>
    </extension>
    <extension
          point="net.refractions.udig.project.ui.tool">
@@ -13,7 +13,7 @@
             icon="icons/etool16/split_feature_mode.gif"
             id="eu.udig.tools.split.SplitTool"
             largeIcon="icons/etool24/split_24.png"
-            name="Split"
+            name="%eu.udig.tools.split.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
             tooltip="%eu.udig.tools.split.tooltip">
@@ -24,25 +24,135 @@
             icon="icons/etool16/merge_feature_mode.gif"
             id="eu.udig.tools.merge.MergeTool"
             largeIcon="icons/etool24/merge_24.png"
-            name="Merge"
+            name="%eu.udig.tools.merge.name"
             onToolbar="true"
             toolCursorId="arrowCursor"
             tooltip="%eu.udig.tools.merge.tooltip">
       </modalTool>
+      <modalTool
+            categoryId="net.refractions.udig.tool.edit.create"
+            class="eu.udig.tools.arc.ArcTool"
+            icon="icons/etool16/arc_tool.gif"
+            id="eu.udig.tools.arc.ArcTool"
+            name="%eu.udig.tools.arc.name"
+            onToolbar="true"
+            toolCursorId="arrowCursor"
+            tooltip="%eu.udig.tools.arc.tooltip">
+         <enablement>
+            <or>
+               <property
+                     expectedValue="com.vividsolutions.jts.geom.LineString"
+                     propertyId="GeometryType">
+               </property>
+               <property
+                     expectedValue="com.vividsolutions.jts.geom.MultiLineString"
+                     propertyId="GeometryType">
+               </property>
+            </or>
+         </enablement>
+      </modalTool>
+      <modalTool
+            categoryId="net.refractions.udig.tool.edit.create"
+            class="eu.udig.tools.parallel.ParallelTool"
+            icon="icons/etool16/parallel_mode.gif"
+            id="eu.udig.tools.parallel.ParallelTool"
+            name="%eu.udig.tools.parallel.name"
+            onToolbar="true"
+            toolCursorId="arrowCursor"
+            tooltip="%eu.udig.tools.parallel.tooltip">
+         <cursor
+               hotspotX="10"
+               hotspotY="10"
+               image="icons/pointers/merge_cursor.gif"/>
+         <enablement>
+            <and>
+               <property
+                     propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>
+               <or>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.LineString"
+                        propertyId="net.refractions.udig.project.ui.GeometryType">
+                  </property>
+                  <property
+                        expectedValue="com.vividsolutions.jts.geom.MultiLineString"
+                        propertyId="net.refractions.udig.project.ui.GeometryType">
+                  </property>
+               </or>
+            </and>
+         </enablement>
+      </modalTool>
+      <modalTool
+            categoryId="net.refractions.udig.tool.edit.edit"
+            class="eu.udig.tools.trim.TrimTool"
+            icon="icons/etool16/trim_feature_mode.gif"
+            id="eu.udig.tools.trim.TrimTool"
+            largeIcon="icons/etool24/trim_24.png"
+            name="%eu.udig.tools.trim.name"
+            onToolbar="true"
+            toolCursorId="arrowCursor"
+            tooltip="%eu.udig.tools.trim.tooltip">
+         <enablement>
+            <or>
+               <property
+                     expectedValue="com.vividsolutions.jts.geom.LineString"
+                     propertyId="net.refractions.udig.project.ui.GeometryType">
+               </property>
+               <property
+                     expectedValue="com.vividsolutions.jts.geom.MultiLineString"
+                     propertyId="net.refractions.udig.project.ui.GeometryType">
+               </property>
+            </or>
+         </enablement>
+      </modalTool>
+   </extension>
+
+   <extension
+         point="org.eclipse.help.toc">
    </extension>
    <extension
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
             category="net.refractions.udig.project.ui.project"
+            class="eu.udig.tools.parallel.view.ParallelParametersView"
+            icon="icons/etool16/parallel_mode.gif"
+            id="eu.udig.tools.parallel.view.ParallelParametersView"
+            name="%eu.udig.tools.parallel.name">
+      </view>
+      <view
+            allowMultiple="false"
+            category="net.refractions.udig.project.ui.project"
             class="eu.udig.tools.merge.internal.view.MergeView"
             icon="icons/etool16/merge_feature_mode.gif"
             id="eu.udig.tools.merge.internal.view.MergeView"
-            name="Merge Features">
+            name="Merge Features"
+            restorable="true">
       </view>
    </extension>
    <extension
-         point="org.eclipse.help.toc">
+         point="net.refractions.udig.ui.operation">
+      <operation
+            class="eu.udig.tools.merge.MergeOperation"
+            description="Merge the selected features"
+            enablesFor="1"
+            icon="icons/etool16/merge_feature_mode.gif"
+            id="eu.udig.tools.merge.mergeoperation"
+            name="Merge selected"
+            targetClass="org.geotools.data.FeatureSource">
+         <enablement></enablement>
+      </operation>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="net.refractions.udig.ui.mapPerspective">
+         <viewShortcut
+               id="eu.udig.tools.merge.internal.view.MergeView">
+         </viewShortcut>
+         <viewShortcut
+               id="eu.udig.tools.parallel.view.ParallelParametersView">
+         </viewShortcut>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

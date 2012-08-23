@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import eu.udig.tools.internal.mediator.PlatformGISMediator;
-import eu.udig.tools.internal.util.i18n.Messages;
+import eu.udig.tools.internal.i18n.Messages;
 
 /**
  * Constructs common dialog

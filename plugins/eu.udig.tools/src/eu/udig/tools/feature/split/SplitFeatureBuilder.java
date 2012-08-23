@@ -121,19 +121,22 @@ public final class SplitFeatureBuilder {
 	 *            The split line.
 	 * @param desiredCRS
 	 *            the crs where the split operation is done it
-	 * @return a new instance of the builder.
+	 * @return a new instance of the builder. 	 
+	 * 
+	 * @throws IllegalArgumentException
+	 * @throws SplitFeatureBuilderFailException
 	 */
 	public static SplitFeatureBuilder newInstance(
 			final List<SimpleFeature> featureList, final LineString splitLine,
 			final CoordinateReferenceSystem desiredCRS)
-			throws SplitFeatureBuilderFailException {
+			throws IllegalArgumentException, SplitFeatureBuilderFailException {
 
 		if (featureList == null)
-			throw new NullPointerException("The source feature list is required"); //$NON-NLS-1$
+			throw new IllegalArgumentException("The source feature list is required"); //$NON-NLS-1$
 		if (splitLine == null)
-			throw new NullPointerException("The split line is required"); //$NON-NLS-1$
+			throw new IllegalArgumentException("The split line is required"); //$NON-NLS-1$
 		if (desiredCRS == null)
-			throw new NullPointerException(
+			throw new IllegalArgumentException(
 					"The desired crs is required, i.e: map crs"); //$NON-NLS-1$
 		if (!(splitLine.getUserData() instanceof CoordinateReferenceSystem))
 			throw new IllegalArgumentException(
