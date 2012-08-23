@@ -37,7 +37,7 @@ function assemble() {
             echo "Building ${BUILD}/udig-${VERSION}.${EXT}.zip ..."
 
             echo "Extracting ${TARGET}/udig-${VERSION}.${EXT}.zip"
-            unzip -q -C -d ${BUILD}/${PLATFORM}/udig ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip
+            unzip -q -d ${BUILD}/${PLATFORM}/udig ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip
 
             echo "Preparing ${BUILD}/${PLATFORM} with ${JRE}/${PLATFORM_JRE}"
 
@@ -63,6 +63,7 @@ function prepare_resources () {
     cat ../plugins/net.refractions.udig.libs/.options >> ${BUILD}/${PLATFORM}/udig/.options
     if [[ $PLATFORM == linux* ]] ; then
         cp udig.sh ${BUILD}/${PLATFORM}/udig
+        chmod 755 ${BUILD}/${PLATFORM}/udig/udig_internal
         cp udig-clean.sh ${BUILD}/${PLATFORM}/udig
         cp udig-debug.sh ${BUILD}/${PLATFORM}/udig
     fi

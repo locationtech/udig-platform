@@ -152,6 +152,8 @@ public class FileConnectionFactory extends UDIGConnectionFactory {
                                     }
                                     else if( name.endsWith("FormatProvider")){
                                         name = name.substring(0,name.length()-14); // trim FormatProvider
+                                        
+                                        name += "Files"; // GDALFormatProvider --> GDAL Files
                                     }
                                 }
                                 StringBuilder ext = new StringBuilder();
@@ -164,7 +166,14 @@ public class FileConnectionFactory extends UDIGConnectionFactory {
                                         ext.append(fileExtension);
                                     }
                                     if( !name.contains("(")){
-                                        name += " ("+ext.toString().replace(";",",")+")";
+                                        if( providerExtensions.size() > 4 ){
+                                            // Shorter name for providers supporting multiple formats 
+                                            String first = providerExtensions.iterator().next();
+                                            name += " ( "+first+" and "+(providerExtensions.size()-1)+" more)";
+                                        }
+                                        else {
+                                            name += " ("+ext.toString().replace(";",",")+")";
+                                        }
                                     }
                                     FileType type = new FileType( name, ext.toString() );
                                     extensionSet.add(type);
