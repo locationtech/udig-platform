@@ -235,14 +235,14 @@ Includes the ossim feaure (this may be dead code)
                         </environment>
                         <environment>
                             <os>macosx</os>
-                            <ws>carbon</ws>
+                            <ws>cocoa</ws>
                             <arch>x86</arch>
                         </environment>
-                        <!--environment>
+                        <environment>
                             <os>macosx</os>
-                            <ws>carbon</ws>
+                            <ws>cocoa</ws>
                             <arch>x86_64</arch>
-                        </environment-->
+                        </environment>
                     </environments>
                 </configuration>
             </plugin>
