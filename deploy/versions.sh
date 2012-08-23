@@ -15,7 +15,6 @@ export BUILD=${BASE}/build
 export PRODUCT_TARGET=${BASE}/../features/net.refractions.udig-product/target/products
 export PRODUCT_SDK_TARGET=${BASE}/../features/net.refractions.udig_sdk-product/target
 
-
 # net.refractions.udig.libs "qualifier" for SDK (used to update libs source reference
 # example: TAG=1.3.2
 # example: QUALIFIER=1.3.2.201201031509
@@ -29,16 +28,16 @@ export JRE_WIN64=jre1.6.0.win64
 export JRE_LIN32=jre1.6.0_25.lin32_gdal_ecw
 export JRE_LIN64=jre1.6.0_25.lin64_gdal_ecw
 
-echo "Release Version:  ${VERSION}"
+# echo "Release Version:  ${VERSION}"
 
 # echo "Staged for release in the target directory: ${TARGET}"
 # ls ${TARGET}/*.zip
 
-echo "Staged for release by maven tycho build..."
-ls ${PRODUCT_TARGET}/*.zip
+# echo "Staged for release by maven tycho build..."
+# ls ${PRODUCT_TARGET}/*.zip
 
-echo "Staged SDK for release by maven tycho build..."
-ls ${PRODUCT_SDK_TARGET}/*.zip
+# echo "Staged SDK for release by maven tycho build..."
+# ls ${PRODUCT_SDK_TARGET}/*.zip
 
 if [ ! -f ${TARGET}/udig-${VERSION}-sdk.zip ] 
 then
@@ -49,14 +48,14 @@ then
     fi
 fi
 
-echo "Available JREs:"
-ls ${JRE}
+# echo "Available JREs:"
+# ls ${JRE}
 
 # The QUALIFIER is based on the time of the build - we will grab the value from the SDK
 # (We use this value to ensure the net.refractions.udig.libs source code loads correctly)
 export QUALIFIER=1.3.2.qualifier
 
-echo "Assigning SDK ${QUALIFIER} qualifier - checking for SDK"
+# echo "Assigning SDK ${QUALIFIER} qualifier - checking for SDK"
 if [ -f ${TARGET}/udig-${VERSION}-sdk.zip ] 
 then
     echo "Extracting QUALIFIER from ${TARGET}/udig-${VERSION}-sdk.zip"
