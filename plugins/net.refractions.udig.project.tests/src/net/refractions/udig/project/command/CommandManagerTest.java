@@ -16,6 +16,9 @@
  */
 package net.refractions.udig.project.command;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.commands.DefaultErrorHandler;
@@ -23,9 +26,11 @@ import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;
+import org.junit.Test;
 
 public class CommandManagerTest extends AbstractProjectTestCase {
 	
+    @Test
     public void testExecuteASync() {
         CommandManager manager=new CommandManager("test", new DefaultErrorHandler(), new CommandListener(){ //$NON-NLS-1$
 
@@ -61,6 +66,7 @@ public class CommandManagerTest extends AbstractProjectTestCase {
         assertTrue( result.ran );
     }
 
+    @Test
     public void testExecuteSync() {
         CommandManager manager=new CommandManager("test", new DefaultErrorHandler(), new CommandListener(){ //$NON-NLS-1$
 
@@ -88,6 +94,7 @@ public class CommandManagerTest extends AbstractProjectTestCase {
         assertTrue( result.ran );
     }
 
+    @Test
     public void testExecuteSyncDeadLocks() {
         final CommandManager manager=new CommandManager("test", new DefaultErrorHandler(), new CommandListener(){ //$NON-NLS-1$
 
@@ -131,8 +138,8 @@ public class CommandManagerTest extends AbstractProjectTestCase {
         assertTrue( result.ran );
         assertTrue( resultInner.ran );
     }
-    
 
+    @Test
     public void testExecuteSyncInDisplayThread() {
         final CommandManager manager=new CommandManager("test", new DefaultErrorHandler(), new CommandListener(){ //$NON-NLS-1$
 
@@ -189,6 +196,7 @@ public class CommandManagerTest extends AbstractProjectTestCase {
         assertTrue( resultInner.ran );
     }
 
+    @Test
     public void testTimeoutOn() throws Exception {
     	//test timeout
     	CommandManager manager=new CommandManager("test", new DefaultErrorHandler(), new CommandListener(){ //$NON-NLS-1$
@@ -220,6 +228,7 @@ public class CommandManagerTest extends AbstractProjectTestCase {
     	
 	}
     
+    @Test
     public void testTimeoutOff() throws Exception {
 //    	test no timeout
     	CommandManager manager = new CommandManager("test", new DefaultErrorHandler(), new CommandListener(){ //$NON-NLS-1$
@@ -252,11 +261,13 @@ public class CommandManagerTest extends AbstractProjectTestCase {
     	 
 	}
     
+    @Test
     public void testTimeoutWithIO() throws Exception {
     	//TODO test IO blocking.  Command should still have been removed
     	// and second command should be executed.
 	}
     
+    @Test
     public void testPostDeterminedEffectCommandExecution() throws Exception {
         CommandManager manager=new CommandManager("test", new DefaultErrorHandler(), new CommandListener(){ //$NON-NLS-1$
 
@@ -354,9 +365,11 @@ public class CommandManagerTest extends AbstractProjectTestCase {
         assertFalse(manager.canUndo());
     }
     
+    @Test
     public void testRedo() {
     }
 
+    @Test
     public void testUndo() {
     }
 

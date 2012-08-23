@@ -1,10 +1,10 @@
-GeoServer Install
+﻿GeoServer Install
 =================
 
 
-|refractions_png| |lisasoft_png| |geoserver_png|
+|refractions_png| |lisasoft_png| |geoserver_png|
 
-.. image:: ../images/background.png
+.. image:: ../../../../images/background.png
    :width: 100%
 
 
@@ -275,12 +275,12 @@ If you finish early here are some challenges.
   * How can you use GeoServer in your organisation?
 
 
-.. |refractions_png| image:: ../images/refractions_logo.png
+.. |refractions_png| image:: ../../../../images/refractions_logo.png
    :height: 3cm
 
-.. |lisasoft_png| image:: ../images/lisasoft_logo.png
+.. |lisasoft_png| image:: ../../../../images/lisasoft_logo.png
    :height: 3cm
 
-.. |geoserver_png| image:: ../images/geoserver_logo.png
+.. |geoserver_png| image:: ../../../../images/geoserver_logo.png
    :height: 3cm
 

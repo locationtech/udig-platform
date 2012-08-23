@@ -1,6 +1,11 @@
 package net.refractions.udig.tools.edit.behaviour;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Dimension;
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +20,6 @@ import net.refractions.udig.project.tests.support.MapTests;
 import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
 import net.refractions.udig.project.ui.internal.tool.ToolContext;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.EditToolHandler;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
@@ -31,6 +35,9 @@ import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
@@ -59,9 +66,8 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
     java.awt.Point SCREEN=new java.awt.Point(500,500);
     private TestHandler handler;
     
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         map=MapTests.createDefaultMap("Test",3,true,new Dimension(500,500)); //$NON-NLS-1$
         FeatureStore<SimpleFeatureType, SimpleFeature> resource = map.getLayersInternal().get(0).getResource(FeatureStore.class, null);
         features=resource.getFeatures();
@@ -88,6 +94,7 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.mode.MoveVertexMode.isValid(EditToolHandler, MapMouseEvent, EventType)'
      */
+    @Test
     public void testIsValid() throws Exception {
         SelectFeatureBehaviour mode=new SelectFeatureBehaviour(new Class[]{Polygon.class, MultiPolygon.class}, BBOX.class);
 
@@ -125,9 +132,9 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.mode.MoveVertexMode.run(EditToolHandler, MapMouseEvent, EventType)'
      */
+    @Ignore
+    @Test
     public void testRun() throws Exception {
-        if( EditTestControl.DISABLE ) return;
-        
         SelectFeatureBehaviour mode=new SelectFeatureBehaviour(new Class[]{Point.class}, BBOX.class);
         
         Listener l=new Listener();
@@ -183,6 +190,7 @@ public class SelectGeometryBehaviourTest extends AbstractProjectUITestCase {
         
     }
     
+    @Test
     public void testSelectMultiGeom() throws Exception {
         SelectFeatureBehaviour mode=new SelectFeatureBehaviour(new Class[]{MultiLineString.class}, BBOX.class);
 

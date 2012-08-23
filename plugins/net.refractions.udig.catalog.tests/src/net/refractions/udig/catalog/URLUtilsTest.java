@@ -1,19 +1,21 @@
 package net.refractions.udig.catalog;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.net.URL;
 
-import org.geotools.data.DataUtilities;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class URLUtilsTest extends TestCase {
-
-    public void testStub() throws Exception {
-        assertTrue(true);
-    }
-       
-    public void xtestPrefix() throws Exception {
+public class URLUtilsTest {
+    
+    @Ignore
+    @Test
+    public void testPrefix() throws Exception {
         File file;
         String prefix;
         String os = System.getProperty("os.name");
@@ -41,7 +43,9 @@ public class URLUtilsTest extends TestCase {
         assertNull("none", prefix);
     }
 
-    public void xtestToRelativePath() throws Exception {
+    @Ignore
+    @Test
+    public void testToRelativePath() throws Exception {
         URL url;
         File reference = new File(System.getProperty("user.home"));
 
@@ -83,7 +87,9 @@ public class URLUtilsTest extends TestCase {
 
     }
 
-    public void xtestConstructURL() throws Exception {
+    @Ignore
+    @Test
+    public void testConstructURL() throws Exception {
         File home = new File( System.getProperty("user.home"));
         
         URL expected = new File( new File( home, "foo" ), "bar").toURI().toURL();

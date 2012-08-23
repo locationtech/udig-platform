@@ -24,6 +24,7 @@ import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.core.internal.CorePlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
@@ -63,7 +64,6 @@ public class ServiceParameterPersister {
     }
     
     public ServiceParameterPersister(final ICatalog localCatalog, final IServiceFactory serviceFactory, File reference) {
-        super();
         this.localCatalog = localCatalog;
         this.serviceFactory = serviceFactory;
         this.reference=reference;
@@ -165,7 +165,6 @@ public class ServiceParameterPersister {
     
     private String encodeID( ID id ){
         String str;
-        
         try {
             if( id.isChild()){
                 return URLEncoder.encode(id.toString(), ENCODING);
@@ -181,7 +180,6 @@ public class ServiceParameterPersister {
         } catch (UnsupportedEncodingException e) {
             str = id.toString(); // should not happen
         }
-
         // postpend type qualifier
         if( id.getTypeQualifier()!=null){
             try {
@@ -209,8 +207,10 @@ public class ServiceParameterPersister {
                 qualifier = parts[1];
             }
             try {
-                URL url = new URL(null, parts[0], CorePlugin.RELAXED_HANDLER);
-                id= new ID(url, qualifier);
+                // This line just checks if the string is a valid URL. Do NOT use as parameter to ID
+                // as the case is often changed and will confuse the property key.
+                URL url = new URL(null, parts[0], CorePlugin.RELAXED_HANDLER); 
+                id = new ID(parts[0], qualifier);
             } catch (MalformedURLException e) {
                 String path = parts[0].replaceAll(COLON_ENCODING, ":");
                 id = new ID(new File(path), qualifier);
@@ -233,53 +233,53 @@ public class ServiceParameterPersister {
      */
     protected void locateService(ID targetID, Map<String, Serializable> connectionParameters,  Map<String,Serializable> properties, Map<ID, Map<String, Serializable>> resourcePropertyMap) {
         IService found = localCatalog.getById( IService.class,targetID, null );
-//        if( found != null ){
-//            // already exists!
-//            return;
-//        }
         
         List<IService> newServices = serviceFactory.createService(connectionParameters);
-        if( !newServices.isEmpty() ){
-            for( Iterator<IService> iter = newServices.iterator(); iter.hasNext(); ){
-                IService service = iter.next();
-                // should we check the local catalog to see if it already
-                // has an entry for this service?
-                found = localCatalog.getById( IService.class,service.getID(), null );
-                if( found != null && found.getID().equals( targetID)){
-                    service = found; // service already available
-                }
-                else if( service.getID().equals(targetID) ){
-                    // we have  match!
-                    localCatalog.add(service);
-                    iter.remove(); // don't dispose this service as we are using it
-                }
-                // restore persisted properties 
-                if( properties != null && !properties.isEmpty()){
-                    try {
-                        service.getPersistentProperties().putAll( properties );
-                    } catch (Exception e) {
-                        // could not restore propreties
+        try {
+            if( !newServices.isEmpty() ){
+                for( Iterator<IService> iter = newServices.iterator(); iter.hasNext(); ){
+                    IService service = iter.next();
+                    // should we check the local catalog to see if it already
+                    // has an entry for this service?
+                    found = localCatalog.getById( IService.class,service.getID(), null );
+                    if( found != null && found.getID().equals( targetID)){
+                        service = found; // service already available
                     }
-                }
-                if( resourcePropertyMap != null && !resourcePropertyMap.isEmpty()){
-                    // restore resource properites
-                    for( Entry<ID, Map<String, Serializable>> entry : resourcePropertyMap.entrySet() ){
+                    else if( service.getID().equals(targetID) ){
+                        // we have  match!
+                        localCatalog.add(service);
+                        iter.remove(); // don't dispose this service as we are using it
+                    }                    
+                    // restore persisted properties 
+                    if( properties != null && !properties.isEmpty()){
                         try {
-                            ID childID = entry.getKey();
-                            Map<String, Serializable> entryProperties = entry.getValue();
-                            if( entryProperties != null && !entryProperties.isEmpty()){
-                                Map<String, Serializable> resourceProperties = service.getPersistentProperties( childID );
-                                resourceProperties.putAll( entryProperties );
-                            }
+                            service.getPersistentProperties().putAll( properties );
                         } catch (Exception e) {
                             // could not restore propreties
                         }
                     }
+                    if( resourcePropertyMap != null && !resourcePropertyMap.isEmpty()){
+                        // restore resource properites
+                        for( Entry<ID, Map<String, Serializable>> entry : resourcePropertyMap.entrySet() ){
+                            try {
+                                ID childID = entry.getKey();
+                                Map<String, Serializable> entryProperties = entry.getValue();
+                                if( entryProperties != null && !entryProperties.isEmpty()){
+                                    Map<String, Serializable> resourceProperties = service.getPersistentProperties( childID );
+                                    resourceProperties.putAll( entryProperties );
+                                }
+                            } catch (Exception e) {
+                                // could not restore propreties
+                            }
+                        }
+                    }
                 }
+            } else {
+                CatalogPlugin.log("Nothing was able to be loaded from saved preferences: "+connectionParameters, null); //$NON-NLS-1$
             }
+        }
+        finally {
             serviceFactory.dispose(newServices, null);
-        } else {
-            CatalogPlugin.log("Nothing was able to be loaded from saved preferences: "+connectionParameters, null); //$NON-NLS-1$
         }
     }
     /**
@@ -397,7 +397,8 @@ public class ServiceParameterPersister {
         clearPreferences(node);
         for( IResolve member : resolves ) {
             try {
-                if( !CatalogPlugin.getDefault().getPreferenceStore().getBoolean("SaveTemporaryDataTypes")  //$NON-NLS-1$
+                IPreferenceStore preferenceStore = CatalogPlugin.getDefault().getPreferenceStore();
+                if( !preferenceStore.getBoolean("SaveTemporaryDataTypes")  //$NON-NLS-1$
                         && member.canResolve(ITransientResolve.class ) )
                     continue;
                 IService service=null ;

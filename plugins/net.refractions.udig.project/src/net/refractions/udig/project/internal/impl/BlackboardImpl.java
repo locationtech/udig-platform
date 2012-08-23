@@ -6,7 +6,6 @@
  */
 package net.refractions.udig.project.internal.impl;
 
-import java.io.Serializable;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -30,25 +29,19 @@ import net.refractions.udig.project.internal.Blackboard;
 import net.refractions.udig.project.internal.BlackboardEntry;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ui.XMLMemento;
-import org.osgi.framework.Bundle;
-
-import com.sun.org.apache.bcel.internal.generic.BALOAD;
 
 /**
  * A blackboard that saves its state out as an EObject.

@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.net.URL;
 import java.util.Map;
 
-import net.refractions.udig.catalog.AbstractServiceExtention;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IService;
+import net.refractions.udig.catalog.AbstractServiceExtention;
 
 /**
  * Create a MovedService handle recording where a service was moved to 

@@ -1,5 +1,7 @@
 package net.refractions.udig.project.ui.tool;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.Dimension;
 import java.io.IOException;
 
@@ -22,6 +24,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -30,14 +35,15 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
     private Map map;
     private Layer firstLayer;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         map = MapTests.createDefaultMap("test", 10, true, new Dimension(500, 500)); //$NON-NLS-1$
         firstLayer=map.getLayersInternal().get(0);
     }
 
-    public void xtestCUTPASTEFeatures() throws Exception {
+    @Ignore
+    @Test
+    public void testCUTPASTEFeatures() throws Exception {
         ApplicationGIS.openMap(map);
         UDIGTestUtil.inDisplayThreadWait(2000, new WaitCondition(){
 
@@ -89,6 +95,7 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
         
     }
     
+    @Test
     public void testDeleteAction() throws Exception {
         SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("new", 15); //$NON-NLS-1$
         IGeoResource resource = MapTests.createGeoResource(features, true);

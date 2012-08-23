@@ -1,16 +1,19 @@
 package net.refractions.udig.tools.edit.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
 
-import junit.framework.TestCase;
-import net.refractions.udig.tools.edit.EditTestControl;
-
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.widgets.Display;
+import org.junit.Ignore;
+import org.junit.Test;
 
-public class PathToPathIteratorAdapterTest extends TestCase {
+public class PathToPathIteratorAdapterTest {
     GeneralPath gp=new GeneralPath();
     Path p=new Path(Display.getCurrent());
 
@@ -31,6 +34,8 @@ public class PathToPathIteratorAdapterTest extends TestCase {
     	}
     }
     
+    @Ignore
+    @Test
     public void testDraw() throws Exception {
         moveTo(10,10);  //1
         lineTo(20,10); //2
@@ -38,8 +43,6 @@ public class PathToPathIteratorAdapterTest extends TestCase {
         quadTo(40,40, 50, 10);//3
         close();//5
         
-        if( EditTestControl.DISABLE ) return;
-
         PathToPathIteratorAdapter pi=new PathToPathIteratorAdapter(p);
         PathIterator i = gp.getPathIterator(new AffineTransform());
         
@@ -47,7 +50,7 @@ public class PathToPathIteratorAdapterTest extends TestCase {
             assertFalse("More content then we expected", pi.isDone());
             
             float[] expected=new float[6];
-            float[] actual=new float[6];            
+            float[] actual=new float[6];
             int expectedSegment = i.currentSegment(expected);
             int actualSegement = pi.currentSegment(actual);
             

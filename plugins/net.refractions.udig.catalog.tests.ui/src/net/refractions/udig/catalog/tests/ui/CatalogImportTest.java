@@ -1,12 +1,13 @@
 package net.refractions.udig.catalog.tests.ui;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.IService;
@@ -20,19 +21,22 @@ import net.refractions.udig.ui.WaitCondition;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
-public class CatalogImportTest extends TestCase {
+public class CatalogImportTest {
 	
 	CatalogImport catalogImport;
 	
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		
+	@Before
+	public void setUp() throws Exception {
 		catalogImport = new CatalogImport();
 	}
 	
-	public void xtestNormal() throws Exception{
+	@Ignore
+    @Test
+	public void testNormal() throws Exception{
 			Object context = getContext();
 			
 			final ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
@@ -72,6 +76,7 @@ public class CatalogImportTest extends TestCase {
 			}
 	}
 
+    @Test
 	public void testConnectionError() throws MalformedURLException {
 			//create a bad context object, lets say a wfs that doesn't exist
 			URL context = new URL("http://foo.blah.hehehe/geoserver/wfs"); //$NON-NLS-1$

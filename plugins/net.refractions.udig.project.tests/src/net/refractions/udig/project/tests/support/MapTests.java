@@ -73,7 +73,7 @@ public class MapTests {
     }
 
     public static Map createNonDynamicMapAndRenderer(IGeoResource resource, Dimension displaySize, Style style, boolean createRenderManager) throws Exception {
-		Map map=ProjectFactory.eINSTANCE.createMap(ProjectPlugin.getPlugin().getProjectRegistry().getDefaultProject(),
+		final Map map=ProjectFactory.eINSTANCE.createMap(ProjectPlugin.getPlugin().getProjectRegistry().getDefaultProject(),
                 "testMap", new ArrayList<Layer>()); //$NON-NLS-1$
 
 		Layer tmp=map.getLayerFactory().createLayer(resource);
@@ -122,7 +122,16 @@ public class MapTests {
     		rm.getRendererCreator().getLayers().add(layer);
             
             map.getViewportModelInternal().setCRS(layer.getCRS());
-            map.getViewportModelInternal().zoomToExtent();
+            
+            final Runnable job = new Runnable() {
+                @Override
+                public void run() {
+                    map.getViewportModelInternal().zoomToExtent();
+                }
+            };
+            final Thread jobThread = new Thread(job);
+            jobThread.start();
+            jobThread.join();
             
     		MultiLayerRenderer renderer=(MultiLayerRenderer) RenderFactory.eINSTANCE.createCompositeRenderer();
     		RenderContext context=new CompositeRenderContextImpl();

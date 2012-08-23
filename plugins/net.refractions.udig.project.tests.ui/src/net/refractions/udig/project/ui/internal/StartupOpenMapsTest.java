@@ -1,5 +1,8 @@
 package net.refractions.udig.project.ui.internal;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+
 import java.net.URL;
 
 import net.refractions.udig.AbstractProjectUITestCase;
@@ -10,13 +13,17 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.swt.widgets.Display;
+import org.junit.Ignore;
+import org.junit.Test;
 
 public class StartupOpenMapsTest extends AbstractProjectUITestCase {
 
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.StartupOpenMaps.earlyStartup()'
      */
-    public void xtestEarlyStartup() throws Exception{
+    @Ignore
+    @Test
+    public void testEarlyStartup() throws Exception{
         assertNotSame("There should be no maps open", ApplicationGIS.NO_MAP, ApplicationGIS.getActiveMap()); //$NON-NLS-1$
         StartupOpenMaps startup=new StartupOpenMaps();
         URL url = CatalogTestsUIPlugin.getDefault().getBundle()

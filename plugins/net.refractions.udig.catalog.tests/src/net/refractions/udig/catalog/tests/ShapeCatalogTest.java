@@ -9,6 +9,7 @@
 package net.refractions.udig.catalog.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,8 +29,8 @@ import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.shapefile.indexed.IndexedShapefileDataStore;
 import org.geotools.data.shapefile.ng.ShapefileDataStore;
-
-import junit.framework.TestCase;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * TODO Purpose of 
@@ -41,8 +42,9 @@ import junit.framework.TestCase;
  * @author leviputna
  * @since 0.0.4
  */
-public class ShapeCatalogTest extends TestCase{
+public class ShapeCatalogTest {
     
+    @Test
     public void testCreateShapeNG() throws IOException {
         File file = new File("data/point.shp");
         Map<String, Serializable> map = new HashMap<String, Serializable>();
@@ -58,6 +60,7 @@ public class ShapeCatalogTest extends TestCase{
         assertEquals(dataStore.getClass().getPackage(), ShapefileDataStore.class.getPackage());
     }
     
+    @Test
     public void testCreateShape() throws IOException {
         File file = new File("data/point.shp");
         Map<String, Serializable> map = new HashMap<String, Serializable>();
@@ -76,6 +79,7 @@ public class ShapeCatalogTest extends TestCase{
         assertEquals(dataStore.getClass().getPackage(), IndexedShapefileDataStore.class.getPackage());
     }
     
+    @Test
     public void testCatalogPluginShape() throws IOException {
         File file = new File("data/point.shp");
         Map<String, Serializable> map = new HashMap<String, Serializable>();
@@ -97,6 +101,8 @@ public class ShapeCatalogTest extends TestCase{
         assertTrue( "ShpServiceImpl", found );
     }
     
+    @Ignore
+    @Test
     public void testCatalogPluginShapeNG() throws IOException {
         File file = new File("data/point.shp");
         Map<String, Serializable> map = new HashMap<String, Serializable>();

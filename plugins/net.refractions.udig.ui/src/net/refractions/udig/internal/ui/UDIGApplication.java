@@ -162,13 +162,12 @@ public class UDIGApplication implements IApplication {
      * when we need to configure the EPSG database for libs
      * and load up the local catalog.
      * <p>
-     * Long term we will want to create a startup list
-     * (much like we have shutdown hooks).
+     * Long term we will want to create a startup list (much like we have shutdown hooks).
+     * <p>
+     * Subclasses can override, but pleaes call super.
      */
     @SuppressWarnings("restriction")
     protected boolean init() {
-        ProgressMonitorDialog progress = new ProgressMonitorDialog( Display.getCurrent().getActiveShell());
-        final Bundle bundle = Platform.getBundle(Activator.ID);
         
         // We should kick the libs plugin to load the EPSG database now
         File epsgFile = Activator.epsgDatabaseFile();
@@ -178,11 +177,14 @@ public class UDIGApplication implements IApplication {
             Activator.initializeReferencingModule( null );
         }
         else {
+            final Bundle bundle = Platform.getBundle(Activator.ID);
+            
             // We are going to take a couple of minutes to set this up
             // so we better set up a progress dialog thing
             //
             try {
-                progress.run(false,false, new IRunnableWithProgress(){            
+                ProgressMonitorDialog progress = new ProgressMonitorDialog( Display.getCurrent().getActiveShell());
+                progress.run(true,false, new IRunnableWithProgress(){            
                     public void run( IProgressMonitor monitor ) throws InvocationTargetException,
                             InterruptedException {
                         Activator.initializeReferencingModule( monitor);

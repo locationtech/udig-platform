@@ -1,9 +1,11 @@
 package net.refractions.udig.catalog.tests.ui.workflow;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.Workflow;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
@@ -16,8 +18,12 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
-public class BasicWorkflowDialogTest extends TestCase {
+public class BasicWorkflowDialogTest {
 	
 	WorkflowWizard wizard;
 	WorkflowWizard bwizard;
@@ -32,8 +38,8 @@ public class BasicWorkflowDialogTest extends TestCase {
 	
 	Shell shell;
 	
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		s1 = new SimpleState() {};
 		s2 = new SimpleState() {};
 		s3 = new SimpleState() {};
@@ -87,13 +93,15 @@ public class BasicWorkflowDialogTest extends TestCase {
 		mdialog.setBlockOnOpen(true);
 	}
 	
-	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		if (!shell.isDisposed())
 			shell.dispose();
 	}
 	
-	public void xtestBlockingWizard() {
+	@Ignore
+	@Test
+	public void testBlockingWizard() {
 		Assertion a1 = new Assertion() {
 			public void run() {
 				Button next = DialogDriver.findButton(bdialog, IDialogConstants.NEXT_ID);
@@ -141,7 +149,9 @@ public class BasicWorkflowDialogTest extends TestCase {
 		assertFalse(a2.fail);
 	}
 	
-	public void xtestNonBlockingWizard() {
+	@Ignore
+    @Test
+	public void testNonBlockingWizard() {
 		Assertion a1 = new Assertion() {
 			public void run() {
 				Button next = DialogDriver.findButton(dialog, IDialogConstants.NEXT_ID);
@@ -189,6 +199,7 @@ public class BasicWorkflowDialogTest extends TestCase {
 		assertFalse(a2.fail);
 	}
 	
+    @Test
 	public void testRunHeadless() {
 		s3.run = false;
 		Assertion a1 = new Assertion() {
@@ -208,11 +219,13 @@ public class BasicWorkflowDialogTest extends TestCase {
 		assertFalse(a1.fail);
 	}
 	
+    @Test
 	public void testRunHeadlessToFinish() {
 		dialog.runHeadless(new DummyMonitor());
 		assertTrue(dialog.getWorkflowWizard().getWorkflow().isFinished());
 	}
 	
+    @Test
 	public void testWizardPerformedFinish() {
 		mdialog.runHeadless(new DummyMonitor());
 		assertTrue(mwizard.finished);

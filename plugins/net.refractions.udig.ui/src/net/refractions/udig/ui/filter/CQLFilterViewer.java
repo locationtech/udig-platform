@@ -7,9 +7,8 @@ import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
@@ -78,12 +77,6 @@ public class CQLFilterViewer extends IFilterViewer {
      */
     protected Text text;
 
-    private KeyListener keyListener = new KeyAdapter() {
-        public void keyReleased(KeyEvent e) {
-            changed();
-        }
-    };
-
     private FunctionContentProposalProvider proposalProvider;
 
     /**
@@ -146,7 +139,13 @@ public class CQLFilterViewer extends IFilterViewer {
         // Need to set adapter to replace existing text. Default is insert.
         adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_INSERT);
         adapter.setPopupSize( new Point( 400, 300 ));
-        text.addKeyListener(keyListener);
+        text.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent e) {
+                changed();
+            }
+        });
+        
     }
 
     /**

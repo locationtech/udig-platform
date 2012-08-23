@@ -1,5 +1,8 @@
 package net.refractions.udig.project.ui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Dimension;
 import java.io.IOException;
 
@@ -24,6 +27,9 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -48,14 +54,9 @@ public class DropFilterActionTest extends AbstractProjectUITestCase {
     private Map targetMap;
 	private SimpleFeature[] sourceFeatures;
 
-    @SuppressWarnings("deprecation") 
-	protected void setUp() throws Exception {
-        // ignore... tests are broken
-        if (true) {
-            return;
-        }
-        
-        super.setUp();
+    @SuppressWarnings("deprecation")
+    @Before
+    public void setUp() throws Exception {
         sourceType=DataUtilities.createType("source", "*geom:LineString,geom2:Point,nAme:String"); //$NON-NLS-1$ //$NON-NLS-2$
         sourceFeatures = new SimpleFeature[1];
         GeometryFactory fac=new GeometryFactory();
@@ -78,14 +79,12 @@ public class DropFilterActionTest extends AbstractProjectUITestCase {
 
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
     /*
      * Test method for 'net.refractions.udig.project.ui.DropFilterAction.perform(Object, Object, IProgressMonitor)'
      */
-    public void xtestPerform() throws Exception {
+    @Ignore
+    @Test
+    public void testPerform() throws Exception {
     	DropFilterAction action=new DropFilterAction();
         FilterFactory fac=CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
         Filter filter=fac.id(FeatureUtils.stringToId(fac, sourceFeatures[0].getID()));
@@ -127,8 +126,9 @@ public class DropFilterActionTest extends AbstractProjectUITestCase {
         assertEquals(targetType, addedFeature.getFeatureType());
     }
 
-    @SuppressWarnings("deprecation") 
-	public void xtestNoMatchingAttributes() throws Exception {
+    @SuppressWarnings("deprecation")
+    @Test
+	public void testNoMatchingAttributes() throws Exception {
         targetType=DataUtilities.createType("target2", "noMatch:String"); //$NON-NLS-1$ //$NON-NLS-2$
         SimpleFeature[] targetFeatures = new SimpleFeature[1];
         targetFeatures[0]=SimpleFeatureBuilder.build(targetType,new Object[]{null},"id");
@@ -157,7 +157,9 @@ public class DropFilterActionTest extends AbstractProjectUITestCase {
         assertEquals(filter, layer.getFilter());
 	}
     
-    public void xtestPointToGeomDragDrop() throws Exception {
+    @Ignore
+    @Test
+    public void testPointToGeomDragDrop() throws Exception {
         targetType=DataUtilities.createType("target3", "*targetGeom:Geometry"); //$NON-NLS-1$ //$NON-NLS-2$
         SimpleFeature[] targetFeatures = new SimpleFeature[1];
         targetFeatures[0]=SimpleFeatureBuilder.build(targetType, new Object[]{null}, "id");
@@ -195,7 +197,9 @@ public class DropFilterActionTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.DropFilterAction.perform(Object, Object, IProgressMonitor)'
      */
-    public void xtestPerformOnMap() throws Exception {
+    @Ignore
+    @Test
+    public void testPerformOnMap() throws Exception {
         DropFilterAction action=new DropFilterAction();
         FilterFactory fac=CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
         Filter filter=fac.id(FeatureUtils.stringToId(fac, sourceFeatures[0].getID()));

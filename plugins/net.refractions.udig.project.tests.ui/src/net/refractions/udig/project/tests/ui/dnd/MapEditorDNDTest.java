@@ -1,5 +1,10 @@
 package net.refractions.udig.project.tests.ui.dnd;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,7 +24,6 @@ import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.tests.support.MapTests;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.MapEditor;
 import net.refractions.udig.project.ui.internal.MapEditorPart;
 import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
 import net.refractions.udig.ui.IDropAction;
@@ -32,16 +36,17 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 import org.eclipse.core.runtime.FileLocator;
 import org.geotools.data.memory.MemoryDataStore;
 import org.geotools.data.shapefile.ShapefileDataStore;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 public class MapEditorDNDTest extends AbstractProjectUITestCase {
 	
 	UDIGDropHandler handler;
 	boolean done;
 	
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		
+	@Before
+	public void setUp() throws Exception {
         ConnectionFactoryManager.instance().getConnectionFactoryDescriptors();
 		
 		UDIGControlDropListener dropper = UDIGDragDropUtilities.getEditorDropListener();
@@ -50,12 +55,9 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
 		done = false;
 	}
     
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-	
-	public void xtestSingle() throws Exception {
+	@Ignore
+	@Test
+	public void testSingle() throws Exception {
 		Object data = getDataSingleResource();
 		
 		handler.performDrop(data, null);
@@ -111,7 +113,9 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
         }
 	}
     
-    public void xtestHTMLTableDrop() throws Exception {
+	@Ignore
+    @Test
+    public void testHTMLTableDrop() throws Exception {
     	URL url=FileLocator.toFileURL(CatalogTestsUIPlugin.getDefault().getBundle().getEntry("data/lakes.shp")); //$NON-NLS-1$
     	String data="<td class='confluenceTd'> <span class=\"nobr\"><a href=\""+url.toString()+"\" title=\"Visit page outside Confluence\" rel=\"nofollow\">DM Solutions WMS<sup><img class=\"rendericon\" src=\"/confluence/images/icons/linkext7.gif\" height=\"7\" width=\"7\" align=\"absmiddle\" alt=\"\" border=\"0\"/></sup></a></span> </td>";  //$NON-NLS-1$//$NON-NLS-2$
 
@@ -154,7 +158,9 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
         
     }
 
-    public void xtestMulti() throws Exception {
+	@Ignore
+    @Test
+    public void testMulti() throws Exception {
         URL[] urls  = new URL[]{
         	FileLocator.toFileURL(CatalogTestsUIPlugin.getDefault().getBundle().getEntry("data/streams.shp")), //$NON-NLS-1$
         	FileLocator.toFileURL(CatalogTestsUIPlugin.getDefault().getBundle().getEntry("data/lakes.shp")) //$NON-NLS-1$
@@ -249,7 +255,9 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
         assertEquals("Should only be one map open", 1,ApplicationGIS.getOpenMaps().size()); //$NON-NLS-1$
     }
 
-    public void xtestMultiGeoResources() throws Exception {
+	@Ignore
+    @Test
+    public void testMultiGeoResources() throws Exception {
         Object data = new Object[]{ 
                 MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures("test1", 2), true), //$NON-NLS-1$
                 MapTests.createGeoResource(UDIGTestUtil.createDefaultTestFeatures("test2", 2), true) //$NON-NLS-1$

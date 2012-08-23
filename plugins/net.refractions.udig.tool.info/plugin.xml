@@ -4,6 +4,7 @@
 
      <extension-point id="infoDisplay" name="infoDisplay" schema="schema/infoDisplay.exsd"/>
    <extension
+         id="info"
          point="net.refractions.udig.project.ui.tool">
          <modalTool
                categoryId="net.refractions.udig.tool.category.info"
@@ -50,6 +51,7 @@
                image="icons/pointer/measure_source.gif"/>
    </extension>
    <extension
+         name="Information Views"
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
@@ -60,8 +62,17 @@
             id="net.refractions.udig.tool.info.infoView">
          <description/>
       </view>
+      <view
+            category="net.refractions.udig.project.ui.project"
+            class="net.refractions.udig.document.DocumentView"
+            icon="icons/view16/document_view.gif"
+            id="net.refractions.udig.tool.info.documentView"
+            name="%docView.name"
+            restorable="true">
+      </view>
    </extension>
    <extension
+         name="Information Displays"
          point="net.refractions.udig.tool.info.infoDisplay">
       <display
             name="text.name"
@@ -75,6 +86,76 @@
             name="%features.name"
             mime="application/vnd.ogc.gml"
             class="net.refractions.udig.tool.info.internal.display.FeatureDisplay"/>
+   </extension>
+   <extension
+         id="shp"
+         name="Shapefile Document Resolvers"
+         point="net.refractions.udig.catalog.resolvers">
+      <factory
+            class="net.refractions.udig.catalog.shp.ShpDocumentResolveFactory"
+            resolveableType="net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl">
+         <resolve
+               type="net.refractions.udig.catalog.document.IHotlinkSource"></resolve>
+         <resolve
+               type="net.refractions.udig.catalog.document.IDocumentSource"></resolve>
+         <resolve
+               type="net.refractions.udig.catalog.document.IAttachmentSource">
+         </resolve>
+      </factory>
+      <factory
+            class="net.refractions.udig.catalog.document.BasicHotlinkResolveFactory"
+            resolveableType="net.refractions.udig.catalog.IGeoResource">
+         <resolve
+               type="net.refractions.udig.catalog.document.IHotlinkSource">
+         </resolve>
+      </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            category="net.refractions.udig.catalog.ui.property.resourcePage"
+            class="net.refractions.udig.catalog.document.DocumentPropertyPage"
+            icon="icons/obj16/file_doc_obj.png"
+            id="net.refractions.udig.catalog.document.property.documentPage"
+            name="%documentPage.name">
+         <enabledWhen>
+            <and>
+               <or>
+                  <instanceof
+                        value="net.refractions.udig.catalog.IGeoResource">
+                  </instanceof>
+                  <adapt
+                        type="net.refractions.udig.catalog.IGeoResource">
+                  </adapt>
+               </or>
+               <test
+                     property="net.refractions.udig.catalog.featureSource">
+               </test>
+            </and>
+         </enabledWhen>
+      </page>
+      <page
+            category="net.refractions.udig.catalog.ui.property.resourcePage"
+            class="net.refractions.udig.tool.info.internal.InfoPropertyPage"
+            icon="icons/view16/info_view.gif"
+            id="net.refractions.udig.info.property.infoPage"
+            name="%infoPage.name">
+         <enabledWhen>
+            <and>
+               <or>
+                  <instanceof
+                        value="net.refractions.udig.catalog.IGeoResource">
+                  </instanceof>
+                  <adapt
+                        type="net.refractions.udig.catalog.IGeoResource">
+                  </adapt>
+               </or>
+               <test
+                     property="net.refractions.udig.catalog.featureSource">
+               </test>
+            </and>
+         </enabledWhen>
+      </page>
    </extension>
 
 </plugin>

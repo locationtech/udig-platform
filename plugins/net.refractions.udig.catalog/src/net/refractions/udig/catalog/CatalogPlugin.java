@@ -4,16 +4,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import net.refractions.udig.catalog.internal.CatalogImpl;
 import net.refractions.udig.catalog.internal.Messages;
@@ -47,6 +50,7 @@ import org.osgi.service.prefs.BackingStoreException;
  * The main plugin class to be used in the desktop.
  */
 public class CatalogPlugin extends Plugin {
+
     private static final String EXTENSION_POINT_ICATALOG = "net.refractions.udig.catalog.ICatalog";
 
     public static final String ID = "net.refractions.udig.catalog"; //$NON-NLS-1$
@@ -82,6 +86,15 @@ public class CatalogPlugin extends Plugin {
      */
     private volatile IResolveManager resolveManager;
 
+
+    /** Lock used to protect map of available services; for the last call? */
+    private Lock registeredLock = new ReentrantLock();
+
+    /**
+     * Map of ServiceExtension by "id", access control policed by above "lock".
+     */
+    Map<String, ServiceExtension> registered = null; // lazy creation
+    
     /**
      * The constructor. See {@link #start(BundleContext)} for the initialization of the plugin.
      */
@@ -98,17 +111,21 @@ public class CatalogPlugin extends Plugin {
         local = new CatalogImpl();
         catalogs = Collections.emptyList();
         serviceFactory = new ServiceFactoryImpl();
-
         resolveManager = new ResolveManager();
-        preferenceStore = new ScopedPreferenceStore(new InstanceScope(), getBundle()
-                .getSymbolicName());
+        
+        // ensure a preference store is around so we can save to it in the shutdown hook
+        preferenceStore = new ScopedPreferenceStore(new InstanceScope(), getBundle().getSymbolicName());
+
         try {
+            if (Display.getCurrent() != null) {
+                CatalogPlugin.log("Restoring Local Catalog", null);
+            }
             plugin.restoreFromPreferences();
-            addSaveLocalCatalogShutdownHook();
         } catch (Throwable e) {
             CatalogPlugin.log("Unable to restore catalog:"+e, e);
             handlerLoadingError(e);
         }
+        addSaveLocalCatalogShutdownHook();
     }
 
     private void addSaveLocalCatalogShutdownHook() {
@@ -198,7 +215,9 @@ public class CatalogPlugin extends Plugin {
         try {
             if( getLocalCatalog() instanceof CatalogImpl){
                 CatalogImpl localCatalog = (CatalogImpl) getLocalCatalog();
-                localCatalog.loadFromFile(getLocalCatalogFile(), getServiceFactory());
+                File catalogFile = getLocalCatalogFile();
+                IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
+                localCatalog.loadFromFile(catalogFile, serviceFactory);
             }
         } catch (Throwable t) {
             CatalogPlugin.log("Trouble restoring local catalog:"+t, t);
@@ -357,7 +376,95 @@ public class CatalogPlugin extends Plugin {
     public IServiceFactory getServiceFactory() {
         return serviceFactory;
     }
+    /**
+     * List of registered {@link ServiceExtension}s.
+     * @return Registered {@link ServiceExtension}
+     */
+    public List<ServiceExtension> getServiceExtensions(){
+        List<ServiceExtension> list = new ArrayList<ServiceExtension>( getRegisteredExtensions().values() );
+        return Collections.unmodifiableList( list );
+    }
+    /**
+     * Register a service extension by hand.
+     * 
+     * @param id
+     * @param extension
+     */
+    public void register( String id, ServiceExtension extension ){
+        try {
+            registeredLock.lock();
+            getRegisteredExtensions();
+            if( registered.containsKey(id)){
+                ServiceExtension existing = registered.get(id);
+                String exsistingName = existing != null ? existing.getClass().getSimpleName() : null;
+                throw new IllegalStateException("ServiceExtension "+id+" already registered with "+exsistingName );
+            }
+            
+            registered.put( id, extension );
+        } finally {
+            registeredLock.unlock();
+        }
+    }
+    /**
+     * Internal method to lazily process the {@link #CATALOG_SERVICE_EXTENSION}
+     * @return Map of {@link ServiceExtension} by id
+     */
+    Map<String, ServiceExtension> getRegisteredExtensions() {
+        try {
+            registeredLock.lock();
+            if (registered == null) { // load available
+                // we are going to sort the map so that "generic" fallback datastores are selected last
+                //
+                registered = new HashMap<String, ServiceExtension>();
+                ExtensionPointUtil.process(CatalogPlugin.getDefault(),
+                        ServiceExtension.EXTENSION_ID, new ExtensionPointProcessor() { //$NON-NLS-1$
+                            public void process(IExtension extension, IConfigurationElement element) throws Exception {
+                                // extentionIdentifier used to report any problems;
+                                // in the event of failure we want to be able to report
+                                // who had the problem
+                                // String extensionId = extension.getUniqueIdentifier();
+                                String id = element.getAttribute("id");
+                                ServiceExtension se = (ServiceExtension) element.createExecutableExtension("class");
+                                if (id == null || id.length() == 0) {
+                                    id = se.getClass().getSimpleName();
+                                }
+                                registered.put(id, se);
+                            }
+                        });
+            }
+            return registered;
+        } finally {
+            registeredLock.unlock();
+        }
+    }
+    /** Look up a specific implementation; used mostly for test cases */
+    public <E extends ServiceExtension> E serviceImplementation( Class<E> implementation ) {
+        for( Map.Entry<String, ServiceExtension> entry : getRegisteredExtensions().entrySet() ) {
+            String id = entry.getKey();
+            ServiceExtension serviceExtension = entry.getValue();
 
+            if (id == null || serviceExtension == null)
+                continue;
+            if (implementation.isInstance(serviceExtension)) {
+                return implementation.cast(serviceExtension);
+            }
+        }
+        return null;
+    }
+    /** Look up a specific implementation; used mostly for test cases */
+    public ServiceExtension serviceImplementation( String serviceExtensionId ) {
+        for( Map.Entry<String, ServiceExtension> entry : getRegisteredExtensions().entrySet() ) {
+            String id = entry.getKey();
+            ServiceExtension serviceExtension = entry.getValue();
+
+            if (id == null || serviceExtension == null)
+                continue;
+            if (serviceExtensionId.equalsIgnoreCase(id)) {
+                return serviceExtension;
+            }
+        }
+        return null;
+    }
     /**
      * Attempts to turn data into a URL. If data is an array or Collection, it will return the first
      * successful URL it can find. This is a utility method. Feel free to move it to another class.

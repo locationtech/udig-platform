@@ -6,9 +6,11 @@ package net.refractions.udig.tool.info.tests;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Set;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.IBlackboard;
+import net.refractions.udig.project.IBlackboardListener;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.IMap;
@@ -155,7 +157,111 @@ public class WMSLayer implements ILayer {;
 
 	public IStyleBlackboard getStyleBlackboard() {
 		// TODO Auto-generated method stub
-		return null;
+		return new IStyleBlackboard() {
+
+            @Override
+            public boolean addListener(IBlackboardListener listener) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public boolean removeListener(IBlackboardListener listener) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public boolean contains(String key) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public Object get(String key) {
+                // TODO Auto-generated method stub
+                return null;
+            }
+
+            @Override
+            public void put(String key, Object value) {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public Float getFloat(String key) {
+                // TODO Auto-generated method stub
+                return null;
+            }
+
+            @Override
+            public Integer getInteger(String key) {
+                // TODO Auto-generated method stub
+                return null;
+            }
+
+            @Override
+            public String getString(String key) {
+                // TODO Auto-generated method stub
+                return null;
+            }
+
+            @Override
+            public void putFloat(String key, float value) {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public void putInteger(String key, int value) {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public void putString(String key, String value) {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public Object remove(String key) {
+                // TODO Auto-generated method stub
+                return null;
+            }
+
+            @Override
+            public void clear() {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public void flush() {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public void addAll(IBlackboard blackboard) {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public Set<String> keySet() {
+                // TODO Auto-generated method stub
+                return null;
+            }
+
+            @Override
+            public boolean isSelected(String styleId) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+		    
+		};
 	}
 
 	public int getZorder() {
@@ -231,7 +337,6 @@ public class WMSLayer implements ILayer {;
 		return false;
 	}
 
-
 	@Override
 	public IBlackboard getBlackboard() {
 		// TODO Auto-generated method stub
@@ -240,18 +345,17 @@ public class WMSLayer implements ILayer {;
 
 
 
-	@Override
-	public boolean getInteraction(Interaction interaction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-
+    @Override
+    public boolean getInteraction( Interaction interaction ) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    
     @Override
     public boolean isShown() {
         // TODO Auto-generated method stub
         return false;
     }
+
 	
 }

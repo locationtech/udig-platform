@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.internal.Messages;
 import net.refractions.udig.ui.ErrorManager;
 
@@ -32,6 +31,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * Represents a geo spatial service handle. Follows the same design as IResource.
@@ -160,7 +160,7 @@ public abstract class IService implements IResolve {
     /**
      * Used to save persisted properties for child resources; please see {@link ServiceParameterPersister} for details.
      * <p>
-     * This is strictly a staging area and these values are copied into the IGeoResource after it is created.
+     * IGeoResource makes use of {@link #getPersistentProperties(ID)} for direct access to these maps.
      */
     Map<ID,Map<String, Serializable>> resourceProperties =  Collections.synchronizedMap(new HashMap<ID,Map<String, Serializable>>() );
     
@@ -219,7 +219,7 @@ public abstract class IService implements IResolve {
             throw new NullPointerException("No adaptor specified"); //$NON-NLS-1$
         }
         if (adaptee.isAssignableFrom(IServiceInfo.class)) {
-            return adaptee.cast(createInfo(monitor));
+            return adaptee.cast(getInfo(monitor));
         }
         if (adaptee.isAssignableFrom(IService.class)) {
             monitor.done();
@@ -340,6 +340,9 @@ public abstract class IService implements IResolve {
                 // support concurrent access
                 // however createInfo implementors should know about this
                 if (info == null) {
+                    if (Display.getCurrent() != null) {
+                        throw new IllegalStateException("Lookup of getInfo not available from the display thread"); //$NON-NLS-1$
+                    }
                     info = createInfo(monitor);
                     
                     if( info == null ){

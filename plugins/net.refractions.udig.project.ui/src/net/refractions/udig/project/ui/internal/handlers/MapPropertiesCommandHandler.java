@@ -14,47 +14,20 @@
  */
 package net.refractions.udig.project.ui.internal.handlers;
 
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.IHandler;
-import org.eclipse.jface.preference.PreferenceDialog;
-import org.eclipse.jface.viewers.ISelectionProvider;
-import org.eclipse.jface.window.IShellProvider;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.dialogs.PropertyDialogAction;
+import net.refractions.udig.project.IMap;
+import net.refractions.udig.ui.properties.ProperitesCommandHandler;
 
 /**
- * A command hander for the MapProperties command.
+ * Command hander for the MapProperties command, opens a Property Dialog focused on the IMap associated with
+ * the current selection.
  * 
  * @author jesse
  * @since 1.1.0
+ * @version 1.3.2
  */
-public class MapPropertiesCommandHandler extends AbstractHandler implements IHandler {
-
-    public Object execute( final ExecutionEvent arg0 ) throws ExecutionException {
-
-        final IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
-                .getActiveWorkbenchWindow();
-        IShellProvider shellProvider = new IShellProvider(){
-
-            public Shell getShell() {
-                return new Shell(activeWorkbenchWindow.getShell());
-            }
-
-        };
-
-        IWorkbenchPart activePart = activeWorkbenchWindow.getActivePage().getActivePart();
-        ISelectionProvider selectionProvider = activePart.getSite().getSelectionProvider();
-        PropertyDialogAction action = new org.eclipse.ui.dialogs.PropertyDialogAction(
-                shellProvider, selectionProvider);
-        PreferenceDialog dialog = action.createDialog();
-        dialog.open();
-
-        return null;
+public class MapPropertiesCommandHandler extends ProperitesCommandHandler {
+    public MapPropertiesCommandHandler(){
+        super( IMap.class );
     }
 
 }

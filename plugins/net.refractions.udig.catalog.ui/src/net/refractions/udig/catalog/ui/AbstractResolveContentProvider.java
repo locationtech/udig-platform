@@ -262,7 +262,7 @@ public class AbstractResolveContentProvider implements IResolveChangeListener {
                 }
                 refresh(resolve);
             } catch (Throwable t) {
-                // System.out.println( resolve.getIdentifier()+": "+t );
+                CatalogUIPlugin.trace( resolve.getIdentifier()+": "+t, t );
             }
         }
     }

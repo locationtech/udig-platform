@@ -42,7 +42,6 @@ public class AddToCatalog implements IStartup {
         
         service=new MapGraphicService();
         localCatalog.add(service);
-        
     }
 
 }

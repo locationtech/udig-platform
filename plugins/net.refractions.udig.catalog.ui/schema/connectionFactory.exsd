@@ -21,8 +21,8 @@
       </annotation>
       <complexType>
          <sequence>
-            <element ref="factory"/>
-            <element ref="wizardPage" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="factory" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="wizardPage" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>

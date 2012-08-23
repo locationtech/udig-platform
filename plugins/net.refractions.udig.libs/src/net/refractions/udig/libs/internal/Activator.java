@@ -38,7 +38,6 @@ import org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory;
 import org.geotools.resources.image.ImageUtilities;
 import org.geotools.util.logging.LoggerFactory;
 import org.geotools.util.logging.Logging;
-import org.jfree.chart.urls.URLUtilities;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
@@ -53,8 +52,9 @@ import org.osgi.util.tracker.ServiceTracker;
  * <p>
  * Currently this activator supplied:
  * <ul>
- * <li>hints about axis order for GeoTools;
- * <li>instructs java not to use native PNG support; see UDIG-1391 for details
+ * <li>hints about axis order for GeoTools</li>
+ * <li>instructs java not to use native PNG support; see UDIG-1391 for details</li>
+ * <li>Configures GeoTools library to use normal java logging</li>
  * </ul>
  * <p>
  * The contents of this Activator will change over time according to the needs of the libraries and
@@ -62,6 +62,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * </p>
  * 
  * @author Jody Garnett
+ * @version 1.3.0
  * @since 1.1.0
  */
 public class Activator implements BundleActivator {

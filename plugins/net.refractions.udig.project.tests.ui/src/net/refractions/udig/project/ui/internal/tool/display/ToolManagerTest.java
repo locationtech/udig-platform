@@ -1,36 +1,36 @@
 package net.refractions.udig.project.ui.internal.tool.display;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.tests.support.MapTests;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
 import net.refractions.udig.project.ui.internal.MapEditorPart;
 
-public class ToolManagerTest extends TestCase {
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
+public class ToolManagerTest {
 
     private Map map;
     private MapEditorPart editor;
 
-    protected void setUp() throws Exception {
-        // ignore... tests are broken
-        if (true) {
-            return;
-        }
-        
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         map=MapTests.createDefaultMap("ToolmanagerTestType", 5, true, null); //$NON-NLS-1$
         ApplicationGIS.openMap(map, true);
         editor=ApplicationGISInternal.getActiveEditor();
     }
-
-    public void testStub() throws Exception {
-        assertTrue(true);
-    }
     
-    public void xtestSetCurrentEditor() {
+    @Ignore
+    @Test
+    public void testSetCurrentEditor() {
         ToolManager manager = (ToolManager) ApplicationGIS.getToolManager();
         List<ActionToolCategory> categories = manager.getActiveToolCategories();
         ToolProxy tool=null;

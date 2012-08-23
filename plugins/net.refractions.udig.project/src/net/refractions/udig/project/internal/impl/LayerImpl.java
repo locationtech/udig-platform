@@ -10,7 +10,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -18,7 +17,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 
@@ -28,11 +30,11 @@ import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IResolve;
+import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.IResolveChangeEvent;
 import net.refractions.udig.catalog.IResolveDelta;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.IResolveDelta.Kind;
+import net.refractions.udig.catalog.URLUtils;
 import net.refractions.udig.catalog.util.SearchIDDeltaVisitor;
 import net.refractions.udig.core.Pair;
 import net.refractions.udig.core.internal.CorePlugin;
@@ -72,7 +74,6 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -88,7 +89,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.model.WorkbenchAdapter;
-import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureListener;
@@ -111,7 +111,6 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import com.sun.jndi.toolkit.url.UrlUtil;
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
@@ -285,16 +284,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 if (featureEvent.getEventType() == FeatureEvent.FEATURES_ADDED
                         || featureEvent.getEventType() == FeatureEvent.FEATURES_CHANGED) {
                     if (bounds == null) {
-                        ReferencedEnvelope bounds2;
-                        try {
-                            bounds2 = getGeoResource().getInfo(new NullProgressMonitor())
-                                    .getBounds();
-                        } catch (IOException e) {
+                        ReferencedEnvelope bounds2 = getInfo(getGeoResource(), new NullProgressMonitor()).getBounds();
+                        if (bounds2 == null) {
                             bounds2 = new ReferencedEnvelope(getCRS());
                         }
-                        if (bounds2 == null || bounds2.isNull()
-                                || !bounds2.contains((Envelope) featureEvent.getBounds())) {
-                            if (bounds2 == null) bounds2 = new ReferencedEnvelope(getCRS());
+                        if (bounds2.isNull() || !bounds2.contains((Envelope) featureEvent.getBounds())) {
                             bounds = bounds2;
                         }
                     }
@@ -1642,6 +1636,33 @@ public class LayerImpl extends EObjectImpl implements Layer {
      */
     @SuppressWarnings("unchecked")
     public Object getAdapter( final Class adapter ) {
+        // Used to allow workbench selection to adapt an
+        // ILayer to a IGeoResource - this allows catalog views
+        // to interact with ILayer smoothly
+        if( adapter == IGeoResource.class ){
+            System.out.println("testing IGeoResource");
+        }
+        if( adapter.isAssignableFrom( IGeoResource.class )){
+            // note use of isAssignableFrom to allow adapting
+            // IGeoResource or super class IResolve
+            // this is important for menu and property page enablement
+            // (see CanResolvePropertyTester)
+            return getGeoResource();
+        }
+        if( IGeoResource.class.isAssignableFrom( adapter )){
+            // Now we can check the other way, for menu items or actions
+            // that want to test for a specific implementation such as
+            // ShpGeoResource
+            IGeoResource resource = getGeoResource();
+            if( resource != null ){
+                if( adapter.isAssignableFrom( resource.getClass() ) ){
+                    return resource;
+                }
+            }
+        }
+        if( IMap.class.isAssignableFrom( adapter )){
+            return getMap();
+        }
         EList adapters = eAdapters();
         if (adapters instanceof SynchronizedEList) {
             ((SynchronizedEList) adapters).lock();
@@ -2088,28 +2109,47 @@ public class LayerImpl extends EObjectImpl implements Layer {
     private ReferencedEnvelope obtainBoundsFromResources( IProgressMonitor monitor ) {
         ReferencedEnvelope result = null;
         for( IGeoResource resource : getGeoResources() ) {
-            try {
-                IGeoResourceInfo info = resource.getInfo(monitor);
-                Envelope tmp = null;
-                if (info != null) tmp = info.getBounds();
+            //IGeoResourceInfo info = resource.getInfo(monitor);
+            IGeoResourceInfo info = getInfo(resource, monitor);
+            Envelope tmp = null;
+            if (info != null) tmp = info.getBounds();
 
-                if (tmp instanceof ReferencedEnvelope
-                        && ((ReferencedEnvelope) tmp).getCoordinateReferenceSystem() != null) {
-                    result = (ReferencedEnvelope) tmp;
-                } else {
-                    result = new ReferencedEnvelope(tmp.getMinX(), tmp.getMaxX(), tmp.getMinY(),
-                            tmp.getMaxY(), getCRS());
-                }
+            if (tmp instanceof ReferencedEnvelope
+                    && ((ReferencedEnvelope) tmp).getCoordinateReferenceSystem() != null) {
+                result = (ReferencedEnvelope) tmp;
+            } else {
+                result = new ReferencedEnvelope(tmp.getMinX(), tmp.getMaxX(), tmp.getMinY(),
+                        tmp.getMaxY(), getCRS());
+            }
 
-                if (result != null) {
-                    break;
-                }
-
-            } catch (IOException e) {
-                // continue to next
+            if (result != null) {
+                break;
             }
         }
         return result;
+    }
+    
+    private IGeoResourceInfo getInfo(final IGeoResource resource, final IProgressMonitor monitor) {
+        final Callable<IGeoResourceInfo> job = new Callable<IGeoResourceInfo>() {
+
+            @Override
+            public IGeoResourceInfo call() throws Exception {
+                return resource.getInfo(monitor);
+            }
+            
+        };
+        FutureTask<IGeoResourceInfo> task = new FutureTask<IGeoResourceInfo>(job);
+        Thread t = new Thread(task);
+        t.start();
+        IGeoResourceInfo info = null;
+        
+        try {
+            info = task.get();
+        } catch (InterruptedException e) {
+        } catch (ExecutionException e) {
+        }
+        
+        return info;
     }
 
     /**

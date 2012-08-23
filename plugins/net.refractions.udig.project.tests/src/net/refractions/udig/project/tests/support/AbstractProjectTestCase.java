@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.IResolve;
@@ -16,6 +15,8 @@ import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.commands.NullCommand;
 
 import org.eclipse.emf.ecore.resource.Resource;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Attempts to clean up after running by clearing the project registry, maps, and projects.
@@ -23,24 +24,18 @@ import org.eclipse.emf.ecore.resource.Resource;
  * @author Jesse
  * @since 1.1.0
  */
-public class AbstractProjectTestCase extends TestCase {
+public abstract class AbstractProjectTestCase {
     
-    public AbstractProjectTestCase(){
-        super();
-    }
-    
-    public AbstractProjectTestCase(String name){
-        super(name);
-    }
-
     /**
      * Should be called first by overriding tests.
      */
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 		ProjectPlugin.getPlugin().setUndoableCommandWarning(false);
 	}
-    protected void tearDown() throws Exception {
+    
+    @After
+    public void tearDown() throws Exception {
         List<Project> projects = ProjectPlugin.getPlugin().getProjectRegistry().getProjects();
         List<Resource> resources=new ArrayList<Resource>();
         for( Project project : projects ) {
@@ -89,10 +84,6 @@ public class AbstractProjectTestCase extends TestCase {
         
     }
 
-    public void testStub() throws Exception {
-        assertTrue(true);
-    }
-    
     private void deleteFile( File file ) {
         if( !file.exists() )
             return;

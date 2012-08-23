@@ -23,6 +23,10 @@ import org.eclipse.core.runtime.IAdapterFactory;
 
 /**
  * AdapterFactory that adapts IResolves to IAdaptables
+ * <p>
+ * Please be aware that although this will allow getAdapter to negotiate
+ * the IResolve methods; the result uses IBlocableAdapter and actually
+ * performs IO resulting in the possibility of long delays and IOExceptions.
  * 
  * @author jeichar
  * @since 0.9

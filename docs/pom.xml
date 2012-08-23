@@ -22,10 +22,19 @@
    ant devel
    
    This class also contains scripts used to prep and convert.
+
+   Convert from Confluence Space (see http://udig.refractions.net/confluence/spaces/exportspace.action?key=DEV)
+
+   "XML Export" into textile format:
    
    mvn exec:java -Dexec.mainClass="docs.ConvertConfluence" -Dexec.args="?"
    mvn exec:java -Dexec.mainClass="docs.ConvertConfluence" -Dexec.args="~/Desktop/EN/ ~/Desktop/user"
-   
+
+   "html Export" (pandoc is required to convert between markup languages (http://johnmacfarlane.net/pandoc/installing.html))
+
+   mvn exec:java -Dexec.mainClass="html.BulkConvert" -Dexec.args="/path/to/exported/html/index.html /path/to/target/rst/folder"
+
+
    You will probably have to copy the images over yourself.
    -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                                 http://maven.apache.org/maven-v4_0_0.xsd">

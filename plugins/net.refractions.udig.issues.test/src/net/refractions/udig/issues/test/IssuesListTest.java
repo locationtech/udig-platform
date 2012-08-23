@@ -1,5 +1,10 @@
 package net.refractions.udig.issues.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -7,14 +12,18 @@ import java.util.List;
 import net.refractions.udig.AbstractProjectUITestCase;
 import net.refractions.udig.issues.IIssue;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 
 public class IssuesListTest extends AbstractProjectUITestCase {
 
     DummyIssueList list=new DummyIssueList();
     DummyListener listener=new DummyListener();
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    
+    @Before
+    public void setUp() throws Exception {
         for( int i=0; i<10; i++){
             list.add(new DummyIssue(i));
         }
@@ -27,19 +36,18 @@ public class IssuesListTest extends AbstractProjectUITestCase {
         list.addListener(listener);
     }
     
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         list.clear();
         list.clearlisteners();
         listener.changes=0;
         listener.timesCalled=0;
-        super.tearDown();
     }
- 
 
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.add(IIssue)'
      */
+    @Test
     public void testAddIIssue() {
         list.add( new DummyIssue(10) );
         assertEquals(1,listener.changes);
@@ -49,12 +57,14 @@ public class IssuesListTest extends AbstractProjectUITestCase {
         assertNotNull(list.get(0).getId());
     }
     
+    @Test
     public void testClear() throws Exception {
         list.clear();
         assertEquals(10,listener.changes);
         assertEquals(1,listener.timesCalled);
     }
 
+    @Test
     public void testRetainAll() throws Exception {
         List<IIssue> toRemove=new ArrayList<IIssue>(3);
         toRemove.add(this.list.get(3));
@@ -73,6 +83,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
         }     
     }
     
+    @Test
     public void testSet() throws Exception {
         IIssue issue=list.set(3, list.get(0));
         
@@ -88,6 +99,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.add(int, IIssue)'
      */
+    @Test
     public void testAddIntIIssue() {
 
         list.add( 2, new DummyIssue(10) );
@@ -113,6 +125,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.addAll(Collection<? extends IIssue>)'
      */
+    @Test
     public void testAddAllCollectionOfQextendsIIssue() {
         list.addAll(createCollection(20));
 
@@ -134,6 +147,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.addAll(int, Collection<? extends IIssue>)'
      */
+    @Test
     public void testAddAllIntCollectionOfQextendsIIssue() {
         list.addAll(3, createCollection(20));
 
@@ -145,7 +159,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
                 assertTrue(Integer.parseInt(issue.getProblemObject())<10);
             }else{
                 int j=Integer.parseInt(issue.getProblemObject());
-                assertTrue(j>10);                
+                assertTrue(j>10);
             }
             i++;
         }        
@@ -155,6 +169,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.addFirst(IIssue)'
      */
+    @Test
     public void testAddFirstIIssue() {
 
         list.addFirst( new DummyIssue(10) );
@@ -166,6 +181,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.addLast(IIssue)'
      */
+    @Test
     public void testAddLastIIssue() {
         list.addLast( new DummyIssue(10) );
         assertEquals(1,listener.changes);
@@ -176,6 +192,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.remove()'
      */
+    @Test
     public void testRemove() {
         list.remove();
 
@@ -188,6 +205,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.remove(int)'
      */
+    @Test
     public void testRemoveInt() {
         list.remove(2);
 
@@ -200,6 +218,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.remove(Object)'
      */
+    @Test
     public void testRemoveObject() {
         list.remove(list.get(2));
 
@@ -212,6 +231,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.removeAll(Collection<?>)'
      */
+    @Test
     public void testRemoveAllCollectionOfQ() {
         List<IIssue> toRemove=new ArrayList<IIssue>(3);
         toRemove.add(this.list.get(3));
@@ -233,6 +253,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.removeFirst()'
      */
+    @Test
     public void testRemoveFirst() {
         list.removeFirst();
 
@@ -246,6 +267,7 @@ public class IssuesListTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesList.removeLast()'
      */
+    @Test
     public void testRemoveLast() {
         list.removeLast();
 

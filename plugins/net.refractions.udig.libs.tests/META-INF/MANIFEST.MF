@@ -7,3 +7,4 @@ Bundle-Vendor: udig.refractions.net
 Require-Bundle: net.refractions.udig.libs,
  org.junit4;bundle-version="4.8.1"
 Export-Package: net.refractions.udig.libs.tests
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

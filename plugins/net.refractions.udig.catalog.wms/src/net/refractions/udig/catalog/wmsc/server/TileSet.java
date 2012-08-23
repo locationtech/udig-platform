@@ -38,54 +38,54 @@ public interface TileSet {
 	 * 
 	 * @param epsg
 	 */
-	public abstract void setCoorindateReferenceSystem(String epsg);
+	public void setCoorindateReferenceSystem(String epsg);
 
 	/**
 	 * @return the tileset coordinate system
 	 */
-	public abstract CoordinateReferenceSystem getCoordinateReferenceSystem();
+	public CoordinateReferenceSystem getCoordinateReferenceSystem();
 
 	/**
 	 * Sets the tile bounding box
 	 * 
 	 * @param bbox
 	 */
-	public abstract void setBoundingBox(CRSEnvelope bbox);
+	public void setBoundingBox(CRSEnvelope bbox);
 
 	/**
 	 * Sets the tile widths
 	 * 
 	 * @param width
 	 */
-	public abstract void setWidth(int width);
+	public void setWidth(int width);
 
 	/**
 	 * Sets the tile styles
 	 * 
 	 * @param styles
 	 */
-	public abstract void setStyles(String styles);
+	public void setStyles(String styles);
 
 	/**
 	 * Sets the tile heights
 	 * 
 	 * @param height
 	 */
-	public abstract void setHeight(int height);
+	public void setHeight(int height);
 
 	/**
 	 * Sets the format
 	 * 
 	 * @param format
 	 */
-	public abstract void setFormat(String format);
+	public void setFormat(String format);
 
 	/**
 	 *Sets the tile set layers
 	 * 
 	 * @param layers
 	 */
-	public abstract void setLayers(String layers);
+	public void setLayers(String layers);
 
 	/**
 	 * Sets the resolutions supported by the tile set.
@@ -93,18 +93,18 @@ public interface TileSet {
 	 * @param res A space-separate string representing all the zoom levels (for example
 	 *        "0.5 0.25 0.125")
 	 */
-	public abstract void setResolutions(String res);
+	public void setResolutions(String res);
 
 	/**
 	 * Sets the server for this tileset
 	 * @param server
 	 */
-	public abstract void setServer(AbstractOpenWebService<?,?> server);
+	public void setServer(AbstractOpenWebService<?,?> server);
 
 	/**
 	 * @return the number of zoom levels supported by the tile set
 	 */
-	public abstract int getNumLevels();
+	public int getNumLevels();
 
 	/**
 	 * Return a map of tiles in this tileset that are visible within the given bounds.
@@ -116,7 +116,7 @@ public interface TileSet {
 	 * @param scale
 	 * @return map of tiles
 	 */
-	public abstract Map<String, Tile> getTilesFromViewportScale(Envelope bounds,
+	public Map<String, Tile> getTilesFromViewportScale(Envelope bounds,
 			double viewportScale);
 	
 	/**
@@ -129,7 +129,7 @@ public interface TileSet {
 	 * @param zoom level resolution
 	 * @return map of tiles
 	 */
-	public abstract Map<String, Tile> getTilesFromZoom(Envelope bounds,
+	public Map<String, Tile> getTilesFromZoom(Envelope bounds,
 			double zoom);	
 	
     /**
@@ -148,54 +148,54 @@ public interface TileSet {
 	 * 
 	 * @return layers
 	 */
-	public abstract String getLayers();
+	public String getLayers();
 
 	/**
 	 * @return the styles associated with the tile set
 	 */
-	public abstract String getStyles();
+	public String getStyles();
 
 	/**
 	 * @return the tile set format
 	 */
-	public abstract String getFormat();
+	public String getFormat();
 
 	/**
 	 * @return the tile set epsg code
 	 */
-	public abstract String getEPSGCode();
+	public String getEPSGCode();
 
 	/**
 	 * @return the tile widths
 	 */
-	public abstract int getWidth();
+	public int getWidth();
 
 	/**
 	 * @return the tile heights
 	 */
-	public abstract int getHeight();
+	public int getHeight();
 
 	/**
 	 * @return the bounding box of the tile set
 	 */
-	public abstract ReferencedEnvelope getBounds();
+	public ReferencedEnvelope getBounds();
 
 	/**
 	 * A unique identifier for a tile set
 	 * 
 	 * @return
 	 */
-	public abstract int getId();
+	public int getId();
 
 	/**
 	 * the actual resolutions defined in the getCapabilities document
 	 *
 	 * @return
 	 */
-	public abstract double[] getResolutions();
+	public double[] getResolutions();
 	
 	/**
 	 * @return server
 	 */
-	public abstract AbstractOpenWebService<?,?> getServer();
+	public AbstractOpenWebService<?,?> getServer();
 }

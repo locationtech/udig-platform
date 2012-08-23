@@ -4,9 +4,25 @@ function assemble() {
     PLATFORM=$1
     EXT=$2
     PLATFORM_JRE=$3
-
+    
+    echo "Looking for ${TARGET}/udig-${VERSION}.${EXT}.zip"
+    
+    
+    # Copy to TARGET if needed
+    # if [ ! -f ${TARGET}/udig-${VERSION}.${EXT}.zip ] 
+    #then
+    #    echo "Looking for ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip"
+    #    if [ -f ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip ] 
+    #    then
+    #        echo "Staging ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip to target directory for release"
+    #        cp ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip ${TARGET}/udig-${VERSION}.${EXT}.zip
+    #    else 
+    #        echo "Unable to locate a build of udig-${VERSION}.${EXT}.zip to release"
+    #    fi
+    #fi
+    
     # Release win32 if available
-    if [ -f ${TARGET}/udig-${VERSION}.${EXT}.zip ] 
+    if [ -f ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip ] 
     then
         echo "Releasing ${PLATFORM}"
 
@@ -21,12 +37,11 @@ function assemble() {
             echo "Building ${BUILD}/udig-${VERSION}.${EXT}.zip ..."
 
             echo "Extracting ${TARGET}/udig-${VERSION}.${EXT}.zip"
-            unzip -q -d ${BUILD}/${PLATFORM} ${TARGET}/udig-${VERSION}.${EXT}.zip
+            unzip -q -d ${BUILD}/${PLATFORM}/udig ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip
 
             echo "Preparing ${BUILD}/${PLATFORM} with ${JRE}/${PLATFORM_JRE}"
 
             extract_jre
-            
             
             echo "Preparing ${BUILD}/${PLATFORM} with start up scripts and html files"
             prepare_resources
@@ -48,6 +63,7 @@ function prepare_resources () {
     cat ../plugins/net.refractions.udig.libs/.options >> ${BUILD}/${PLATFORM}/udig/.options
     if [[ $PLATFORM == linux* ]] ; then
         cp udig.sh ${BUILD}/${PLATFORM}/udig
+        chmod 755 ${BUILD}/${PLATFORM}/udig/udig_internal
         cp udig-clean.sh ${BUILD}/${PLATFORM}/udig
         cp udig-debug.sh ${BUILD}/${PLATFORM}/udig
     fi

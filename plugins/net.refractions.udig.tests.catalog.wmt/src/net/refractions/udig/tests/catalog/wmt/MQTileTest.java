@@ -1,19 +1,19 @@
 package net.refractions.udig.tests.catalog.wmt;
 
-import org.geotools.geometry.jts.ReferencedEnvelope;
-
-import net.refractions.udig.catalog.internal.wmt.WMTService;
+import static org.junit.Assert.assertEquals;
 import net.refractions.udig.catalog.internal.wmt.tile.MQTile;
-import net.refractions.udig.catalog.internal.wmt.tile.MQTile.MQTileName.MQZoomLevel;
 import net.refractions.udig.catalog.internal.wmt.tile.MQTile.MQTileName;
+import net.refractions.udig.catalog.internal.wmt.tile.MQTile.MQTileName.MQZoomLevel;
 import net.refractions.udig.catalog.internal.wmt.wmtsource.MQSource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.OSMSource;
 import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
 import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSourceFactory;
-import junit.framework.TestCase;
 
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.junit.Test;
 
-public class MQTileTest extends TestCase {
+public class MQTileTest {
+    
+    @Test
     public void testNeighbourCalculation() {
         MQTileName tileName = new MQTileName(0, 1, new MQZoomLevel(0), null);
         
@@ -21,6 +21,7 @@ public class MQTileTest extends TestCase {
         assertEquals(new MQTileName(1, 1, new MQZoomLevel(0), null), tileName.getRightNeighbour());  
     }
     
+    @Test
     public void testLon0Bug() {
         MQSource source = (MQSource) WMTSourceFactory.createSource(null, WMTSource.getRelatedServiceUrl(MQSource.class), null, true);
         MQTile tile = new MQTile(58, 92, new MQZoomLevel(4), source);

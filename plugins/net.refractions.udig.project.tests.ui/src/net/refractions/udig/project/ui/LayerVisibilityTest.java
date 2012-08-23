@@ -1,5 +1,10 @@
 package net.refractions.udig.project.ui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.net.URL;
@@ -27,20 +32,14 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.junit.Ignore;
+import org.junit.Test;
 
 public class LayerVisibilityTest extends AbstractProjectUITestCase {
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
     
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-    
-	public void xtestNormalRenderer() throws Exception {
+    @Ignore
+    @Test
+	public void testNormalRenderer() throws Exception {
 		Map map = ProjectFactory.eINSTANCE.createMap();
 		URL url1 = FileLocator.toFileURL(CatalogTestsUIPlugin.getDefault().getBundle().getEntry("data/streams.shp")); //$NON-NLS-1$
 		String fragment1=url1.getFile();
@@ -62,7 +61,9 @@ public class LayerVisibilityTest extends AbstractProjectUITestCase {
 		runVisibilityTest(map, layer, layer2, true);
 	}
 	
-	public void xtestMultiLayerRenderer() throws Exception {
+    @Ignore
+    @Test
+	public void testMultiLayerRenderer() throws Exception {
 		Map map = ProjectFactory.eINSTANCE.createMap();
 				
 		Layer layer = MapTests.createLayer(map, MapGraphicService.class,

@@ -21,7 +21,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Widget;
 
 /**
- * An IProgressMonitor that guarantees that the 
+ * An IProgressMonitor that guarantees that the proviced IProgressMonitor part is only updated from the display thread.
+ * 
  * @author jesse
  * @since 1.1.0
  */

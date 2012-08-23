@@ -170,8 +170,7 @@ public class CatalogImpl extends ICatalog {
         
         IResolveDelta deltaAdded = new ResolveDelta(service, IResolveDelta.Kind.ADDED);
         IResolveDelta deltaChanged = new ResolveDelta(this, Collections.singletonList(deltaAdded));
-        fire(new ResolveChangeEvent(CatalogImpl.this, IResolveChangeEvent.Type.POST_CHANGE,
-                deltaChanged));
+        fire(new ResolveChangeEvent(CatalogImpl.this, IResolveChangeEvent.Type.POST_CHANGE,deltaChanged));
         
         return service;
     }

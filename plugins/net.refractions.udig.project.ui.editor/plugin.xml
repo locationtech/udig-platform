@@ -166,9 +166,6 @@
              label="%Map.properties.name"
              style="push"
              tooltip="%Map.properties.tooltip">
-          <visibleWhen
-                checkEnabled="true">
-          </visibleWhen>
        </command>
     </menuContribution>
     <menuContribution
