@@ -25,6 +25,8 @@ import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.graphics.Image;
 
+import eu.udig.tools.internal.ui.util.InfoMessage.Type;
+
 /**
  * Human Message
  * <p>
@@ -91,6 +93,30 @@ public final class InfoMessage {
 		this.type = type;
 	}
 	
+
+        public InfoMessage(final String text, final int type) {
+
+                assert text != null;
+
+                this.text = text;
+
+                switch (type) {
+                case IMessageProvider.INFORMATION:
+                        this.type = Type.INFORMATION;
+                        break;
+                case IMessageProvider.ERROR:
+                        this.type = Type.ERROR;
+                        break;
+                case IMessageProvider.NONE:
+                        this.type = Type.NULL;
+                        break;
+                case IMessageProvider.WARNING:
+                        this.type = Type.WARNING;
+                        break;
+                }
+
+        }
+	
 	public void setText(final String text) {
 		assert text != null;
 
@@ -110,9 +136,10 @@ public final class InfoMessage {
 
 	@Override
 	public int hashCode() {
-		final int PRIME = 31;
+		final int prime = 31;
 		int result = 1;
-		result = PRIME * result + ((this.text == null) ? 0 : this.text.hashCode());
+		result = prime * result + ((text == null) ? 0 : text.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -124,16 +151,13 @@ public final class InfoMessage {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final InfoMessage other = (InfoMessage) obj;
-		if (this.text == null) {
+		InfoMessage other = (InfoMessage) obj;
+		if (text == null) {
 			if (other.text != null)
 				return false;
-		} else if (!this.text.equals(other.text))
+		} else if (!text.equals(other.text))
 			return false;
-		if (this.type == null) {
-			if (other.type != null)
-				return false;
-		} else if (this.type != type)
+		if (type != other.type)
 			return false;
 		return true;
 	}

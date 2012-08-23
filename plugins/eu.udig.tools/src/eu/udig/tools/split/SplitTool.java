@@ -57,6 +57,7 @@ import eu.udig.tools.internal.ui.util.StatusBar;
  * 
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
+ * @author Marco Foi (www.mcfoi.it) [porting to uDig core]
  * @since 1.1.0
  */
 public class SplitTool extends AbstractEditTool {
