@@ -8,6 +8,9 @@ Bundle-Vendor: uDig Community
 Bundle-Localization: plugin
 Export-Package: eu.udig.tools.arc,
  eu.udig.tools.arc.internal;x-friends:="eu.udig.tools.tests",
+ eu.udig.tools.geometry.merge;x-friends:="eu.udig.tools.tests",
+ eu.udig.tools.geometry.split;x-friends:="eu.udig.tools.tests",
+ eu.udig.tools.geometry.trim;x-friends:="eu.udig.tools.tests",
  eu.udig.tools.merge,
  eu.udig.tools.parallel,
  eu.udig.tools.parallel.internal;x-friends:="eu.udig.tools.tests",
