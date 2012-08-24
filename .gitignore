@@ -15,3 +15,5 @@ target
 javaCompiler...args
 build.xml
 workspace
+
+/plugins/org.tcat.citd.sim.udig.bookmarks.tests/bin/
