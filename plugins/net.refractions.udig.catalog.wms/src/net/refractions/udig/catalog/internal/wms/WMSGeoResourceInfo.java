@@ -27,19 +27,20 @@ import net.refractions.udig.catalog.ui.ISharedImages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.ows.CRSEnvelope;
+import org.geotools.data.ows.Layer;
 import org.geotools.data.ows.WMSCapabilities;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.data.wms.xml.WMSSchema;
+import org.geotools.geometry.GeneralEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.opengis.geometry.Envelope;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Envelope;
-
-class WMSGeoResourceInfo extends IGeoResourceInfo {
+public class WMSGeoResourceInfo extends IGeoResourceInfo {
     /** WMSResourceInfo resource field */
     private final WMSGeoResourceImpl resource;
     @SuppressWarnings("unchecked")
@@ -47,40 +48,11 @@ class WMSGeoResourceInfo extends IGeoResourceInfo {
         resource = geoResourceImpl;
         WebMapServer wms = resource.service(monitor).getWMS(monitor);
         WMSCapabilities caps = wms.getCapabilities();
-
-        org.opengis.geometry.Envelope env = null;
-        CoordinateReferenceSystem crs = null;
-
-        Map boundingBoxes = resource.layer.getBoundingBoxes();
-        if (boundingBoxes.isEmpty()) {
-            crs = DefaultGeographicCRS.WGS84;
-            env = resource.layer.getEnvelope(crs);
-        } else {
-
-            CRSEnvelope bbox;
-            String epsg4326 = "EPSG:4326"; //$NON-NLS-1$
-            String epsg4269 = "EPSG:4269"; //$NON-NLS-1$
-            if (boundingBoxes.containsKey(epsg4326)) {
-                bbox = (CRSEnvelope) boundingBoxes.get(epsg4326);
-            } else if (boundingBoxes.containsKey(epsg4269)) {
-                bbox = (CRSEnvelope) boundingBoxes.get(epsg4269);
-            } else {
-                bbox = (CRSEnvelope) boundingBoxes.values().iterator().next();
-            }
-            try {
-                crs = CRS.decode(bbox.getEPSGCode());
-                env = new ReferencedEnvelope(bbox.getMinX(), bbox.getMaxX(), bbox.getMinY(),
-                        bbox.getMaxY(), crs);
-            } catch (NoSuchAuthorityCodeException e) {
-                crs = DefaultGeographicCRS.WGS84;
-                env = resource.layer.getEnvelope(crs);
-            } catch (FactoryException e) {
-                crs = DefaultGeographicCRS.WGS84;
-                env = resource.layer.getEnvelope(crs);
-            }
+        
+        bounds = bbox( resource.layer );
+        if( bounds == null ){
+            bounds = new ReferencedEnvelope( CRS.getEnvelope( DefaultGeographicCRS.WGS84 ) );
         }
-        bounds = new ReferencedEnvelope(new Envelope(env.getMinimum(0), env.getMaximum(0), env
-                .getMinimum(1), env.getMaximum(1)), crs);
 
         String parentid = resource.service(monitor) != null && resource.service(monitor).getIdentifier() != null ? resource.getIdentifier()
                 .toString() : ""; //$NON-NLS-1$
@@ -114,6 +86,50 @@ class WMSGeoResourceInfo extends IGeoResourceInfo {
         super.icon = CatalogUIPlugin.getDefault().getImageDescriptor(
                 ISharedImages.GRID_OBJ);
     }
+    /**
+     * Isolate bbox generation into a single method.
+     * <p>
+     * This implementation uses layer.getBoundingBoxes(), we should also
+     * be able to use getLatLonBoundingBox() as a backup plan.
+     * 
+     * @param layer
+     * @return
+     */
+    public static ReferencedEnvelope bbox(Layer layer) {
+        Envelope env;
+        CoordinateReferenceSystem crs;
+        
+        Map<String, CRSEnvelope> boundingBoxes = layer.getBoundingBoxes();
+        if (boundingBoxes.isEmpty()) {
+            crs = DefaultGeographicCRS.WGS84;
+            env = layer.getEnvelope(crs);
+        } else {
+            CRSEnvelope bbox;
+            String epsg4326 = "EPSG:4326"; //$NON-NLS-1$
+            String epsg4269 = "EPSG:4269"; //$NON-NLS-1$
+            if (boundingBoxes.containsKey(epsg4326)) {
+                bbox = (CRSEnvelope) boundingBoxes.get(epsg4326);
+            } else if (boundingBoxes.containsKey(epsg4269)) {
+                bbox = (CRSEnvelope) boundingBoxes.get(epsg4269);
+            } else {
+                bbox = (CRSEnvelope) boundingBoxes.values().iterator().next();
+            }
+            try {
+                crs = CRS.decode(bbox.getEPSGCode());
+                env = new ReferencedEnvelope(bbox.getMinX(), bbox.getMaxX(), bbox.getMinY(),
+                        bbox.getMaxY(), crs);
+            } catch (NoSuchAuthorityCodeException e) {
+                crs = DefaultGeographicCRS.WGS84;
+                env = layer.getEnvelope(crs);
+            } catch (FactoryException e) {
+                crs = DefaultGeographicCRS.WGS84;
+                env = layer.getEnvelope(crs);
+            }
+        }
+        return new ReferencedEnvelope( env.getMinimum(0), env.getMaximum(0), env
+                .getMinimum(1), env.getMaximum(1), crs);
+    }
+    
     public String getName() {
         return name;
     }
@@ -123,4 +139,5 @@ class WMSGeoResourceInfo extends IGeoResourceInfo {
     public String getTitle() {
         return title;
     }
+    
 }
