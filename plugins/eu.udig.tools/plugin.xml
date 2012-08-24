@@ -65,20 +65,14 @@
                hotspotY="10"
                image="icons/pointers/merge_cursor.gif"/>
          <enablement>
-            <and>
-               <property
-                     propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>
-               <or>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.LineString"
-                        propertyId="net.refractions.udig.project.ui.GeometryType">
-                  </property>
-                  <property
-                        expectedValue="com.vividsolutions.jts.geom.MultiLineString"
-                        propertyId="net.refractions.udig.project.ui.GeometryType">
-                  </property>
-               </or>
-            </and>
+          	<and>
+                <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+                 <or>
+                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+                 </or>
+             </and>
          </enablement>
       </modalTool>
       <modalTool
@@ -92,23 +86,18 @@
             toolCursorId="arrowCursor"
             tooltip="%eu.udig.tools.trim.tooltip">
          <enablement>
-            <or>
-               <property
-                     expectedValue="com.vividsolutions.jts.geom.LineString"
-                     propertyId="net.refractions.udig.project.ui.GeometryType">
-               </property>
-               <property
-                     expectedValue="com.vividsolutions.jts.geom.MultiLineString"
-                     propertyId="net.refractions.udig.project.ui.GeometryType">
-               </property>
-            </or>
+          	<and>
+                <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+                 <or>
+                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+                    <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+                 </or>
+             </and>
          </enablement>
       </modalTool>
    </extension>
 
-   <extension
-         point="org.eclipse.help.toc">
-   </extension>
    <extension
          point="org.eclipse.ui.views">
       <view
@@ -139,7 +128,6 @@
             id="eu.udig.tools.merge.mergeoperation"
             name="Merge selected"
             targetClass="org.geotools.data.FeatureSource">
-         <enablement></enablement>
       </operation>
    </extension>
    <extension
