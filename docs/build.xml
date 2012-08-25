@@ -91,4 +91,16 @@
         </exec>
     </target>
 
+    <target name="user-zip" depends="user">
+    	<description>Zip up user guide into docs.zip</description>
+        <zip destfile="${build.directory}/user/en/doc.zip">
+        	<zipfileset dir="${build.directory}/user/en/html" prefix="EN"/>
+        </zip>
+    </target>
+	
+	<target name="deploy" depends="user-zip">
+		<description>Deploy docs.zip and toc.xml to net.refractions.udig.help</description>
+		<copy file="${basedir}/user/toc.xml" todir="${basedir}/../plugins/net.refractions.udig.help"/>
+		<copy file="${build.directory}/user/en/doc.zip" todir="${basedir}/../plugins/net.refractions.udig.help"/>
+	</target>
 </project>
