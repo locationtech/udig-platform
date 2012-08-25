@@ -1,0 +1,114 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Validation &mdash; uDig 1.3.2 User Guide</title>
+    
+    <link rel="stylesheet" href="_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/udig.ico"/>
+    <link rel="top" title="uDig 1.3.2 User Guide" href="index.html" />
+    <link rel="up" title="Working with Layers" href="Working with Layers.html" />
+    <link rel="next" title="Using Resource Summary" href="Using Resource Summary.html" />
+    <link rel="prev" title="Using Layer Operations" href="Using Layer Operations.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+
+    <div class="related">
+      <ul id="breadcrumbs">
+        <li><a href="index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="Tasks.html" >Tasks</a> &raquo;</li>
+          <li><a href="Working with Layers.html" accesskey="U">Working with Layers</a> &raquo;</li>
+        <li><a href="#">Validation</a></li>
+      </ul>
+    </div> 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="validation">
+<h1>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h1>
+<p>Validation allows you to check your data source and helps to identify features which do not conform
+to the test(s) you specify.</p>
+<ul class="simple">
+<li>Select a layer from the Layers View and go to <em class="menuselection">Operations ‣ Validation...</em></li>
+<li>Select a test (<strong>*Is Valid Geometry</strong> for example*) from the list and click <strong>New</strong> to create the
+new test.</li>
+<li>Customize your test and click <strong>Run</strong></li>
+</ul>
+<p>Each feature in the current layer will be validated to ensure it passes each test. Features which
+fail a test will be displayed in the Issues List, which appears if at least one feature fails a
+validation.</p>
+<p>Available tests:</p>
+<ul class="simple">
+<li><strong>Is Valid Geometry</strong>: the feature conforms to its own geometry specification</li>
+<li><strong>NameExists</strong></li>
+<li><strong>Line Not Self Intersection</strong>: LineStrings do not intersect self</li>
+<li><strong>Line Not Self Overlapping</strong>: LineStrings do not overlap self</li>
+<li><strong>Line Without Dangles</strong></li>
+<li><strong>UniqueFID</strong>: FID is unique</li>
+</ul>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <ul id="breadcrumbs">
+            <li class="right" style="margin-right: 10px">
+              <a href="genindex.html" title="General Index"
+                 accesskey="I">index</a></li>
+            <li class="right" >
+              <a href="Using Resource Summary.html" title="Using Resource Summary"
+                 accesskey="N">next</a> |</li>
+            <li class="right" >
+              <a href="Using Layer Operations.html" title="Using Layer Operations"
+                 accesskey="P">previous</a> |</li>
+        <li><a href="index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="Tasks.html" >Tasks</a> &raquo;</li>
+          <li><a href="Working with Layers.html" >Working with Layers</a> &raquo;</li>
+        <li><a href="#">Validation</a></li>
+      </ul>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
