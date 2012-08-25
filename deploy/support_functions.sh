@@ -76,7 +76,10 @@ function prepare_resources () {
         windows_installer
     fi
     if [[ $PLATFORM == mac* ]] ; then
+        chmod 755 ${BUILD}/${PLATFORM}/udig/udig_internal.app/Contents/MacOS/udig_internal
         mv ${BUILD}/${PLATFORM}/udig/udig_internal.app ${BUILD}/${PLATFORM}/udig/udig.app
+        rm ${BUILD}/${PLATFORM}/udig/udig_internal
+        ln -s udig ${BUILD}/${PLATFORM}/udig/udig.app/Contents/MacOS/udig_internal
         cp mac-udig-clean.sh ${BUILD}/${PLATFORM}/udig/udig-clean.sh
         cp mac-udig-debug.sh ${BUILD}/${PLATFORM}/udig/udig-debug.sh
         mv ${BUILD}/${PLATFORM}/udig/.options ${BUILD}/${PLATFORM}/udig/udig.app/Contents/MacOS/

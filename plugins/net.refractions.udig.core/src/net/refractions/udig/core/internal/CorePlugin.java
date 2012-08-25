@@ -16,8 +16,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.defaults.DefaultPicoContainer;
 
 /**
  * PlugIn for net.refractions.udig.core, used by utility classes to access workbench log.
@@ -104,54 +102,6 @@ public class CorePlugin extends Plugin {
      */
     public static CorePlugin getDefault() {
         return plugin;
-    }
-
-    private static volatile MutablePicoContainer blackboard = null;
-
-    /**
-     * This is intended to return the top level Pico Container to use for blackBoarding.
-     * <p>
-     * For most applications, a sub container is required. I recommend the following code be
-     * inserted into your main plugin class. <code>
-     * private static MutablePicoContainer myContainer = null;
-     * 
-     * /**
-     *  * Gets the container for my plugin.
-     *  * 
-     *  * Make it 'public' if you want to share ... protected otherwise.
-     *  * /
-     * public static MutablePicoContainer getMyContainer(){
-     *   if(myContainer == null){
-     *     // XXXPlugin is the name of the Plugin class
-     *     synchronized(XXXPlugin.class){
-     *       // check so see that you were not queued for double creation
-     *       if(myContainer == null){
-     *         // This line does it ... careful to only call it once!
-     *         myContainer = CorePlugin.getBlackBoard().makeChildContainer();
-     *       }
-     *     }
-     *   }
-     *   return myContainer;
-     * }
-     * </code>
-     * </p>
-     * <p>
-     * NOTE:<br>
-     * Please check to ensure the child you want is not already created (important for two plugins
-     * sharing one container).
-     * </p>
-     * 
-     * @return
-     */
-    public static MutablePicoContainer getBlackBoard() {
-        if (blackboard == null) {
-            synchronized (CorePlugin.class) {
-                if (blackboard == null) {
-                    blackboard = new DefaultPicoContainer();
-                }
-            }
-        }
-        return blackboard;
     }
 
     /**
