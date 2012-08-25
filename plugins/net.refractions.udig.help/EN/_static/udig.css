@@ -35,10 +35,6 @@ body {
     padding: 0;
     min-width: 200px;
 }
-div.bodywrapper {
-    margin: 0;
-    border-right: 1px solid #ccc;
-}
 h1,h2,h3,h4,h5,h6 {
     font-family:Arial, Helvetica, sans-serif;
     font-weight:100;
@@ -117,7 +113,7 @@ pre {
 /* back to sphinx overrides */
 
 div.related {
-    margin: 0;
+    margin: 0px;
     width: auto;
 }
 div.related ul {
@@ -144,7 +140,7 @@ div.sphinxsidebar h3 a {
     color: inherit;
 }
 div.document {
-    margin: 0;
+    margin: 0px;
     background-image: none;
 }
 div.documentwrapper {
@@ -153,6 +149,6 @@ div.documentwrapper {
 div.footer {
     background: #fff;
     color: #000000;
-    padding: 60px 0 35px;
+    padding: 10px 0 35px;
     text-align: center;
 }

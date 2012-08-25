@@ -13,8 +13,4 @@ master_doc = 'index'
 
 # -- Options for HTML output ---------------------------------------------------
 
-# The theme to use for HTML and HTML Help pages.  Major themes that come with
-# Sphinx are currently 'default' and 'sphinxdoc'.
-html_theme = 'simple'
-
 html_title='uDig %s User Guide' % release

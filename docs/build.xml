@@ -66,12 +66,28 @@
     <target name="full" depends="user,devel">
     </target>
 
-    <target name="sphinx-ignore-warnings" if="sphinx.available">
-        <exec executable="sphinx-build" failonerror="true" dir="${basedir}/${id}">
-            <arg line="-D release=${project.version} -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/>
-        </exec>
+    <target name="user-help" depends="init">
+    	<description>Generate for help</description>
+    	<antcall target="sphinx-simple">
+            <param name="id" value="user/en" />
+            <param name="build" value="html" />
+        </antcall>
     </target>
-    
+	
+	<target name="deploy-clean">
+		<delete includeemptydirs="true">
+            <fileset dir="${basedir}/../plugins/net.refractions.udig.help/EN" includes="**/*"/>
+        </delete>
+	</target>
+	
+	<target name="deploy" depends="user-help">
+		<description>Deploy docs.zip and toc.xml to net.refractions.udig.help</description>
+		<copy file="${basedir}/user/toc.xml" todir="${basedir}/../plugins/net.refractions.udig.help"/>
+        <copy todir="${basedir}/../plugins/net.refractions.udig.help/EN">
+            <fileset dir="${build.directory}/user/en/simple" excludes="**/_sources/**"/>
+        </copy>
+	</target>
+	
     <target name="sphinx" if="sphinx.available">
         <echo message="Running sphinx-build -D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/> 
         <exec executable="sphinx-build" failonerror="true" dir="${basedir}/${id}">
@@ -79,6 +95,19 @@
         </exec>
     </target>
 
+    <target name="sphinx-ignore-warnings" if="sphinx.available">
+        <exec executable="sphinx-build" failonerror="true" dir="${basedir}/${id}">
+            <arg line="-D release=${project.version} -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/>
+        </exec>
+    </target>
+
+    <target name="sphinx-simple" if="sphinx.available">
+        <echo message="Running sphinx-build -D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/> 
+        <exec executable="sphinx-build" failonerror="true" dir="${basedir}/${id}">
+            <arg line="-D release=${project.version} -D html_theme='simple' -D html_title='User Guide' -Dhtml_show_sourcelink=False -D html_copy_source=False -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/simple&quot;"/>
+        </exec>
+    </target>
+    
     <target name="latex" if="latex.available">
         <exec executable="sphinx-build" failonerror="true" dir="${basedir}/${id}">
             <arg line="-D release=${project.version} -b latex -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/>
@@ -91,16 +120,4 @@
         </exec>
     </target>
 
-    <target name="user-zip" depends="user">
-    	<description>Zip up user guide into docs.zip</description>
-        <zip destfile="${build.directory}/user/en/doc.zip">
-        	<zipfileset dir="${build.directory}/user/en/html" prefix="EN"/>
-        </zip>
-    </target>
-	
-	<target name="deploy" depends="user-zip">
-		<description>Deploy docs.zip and toc.xml to net.refractions.udig.help</description>
-		<copy file="${basedir}/user/toc.xml" todir="${basedir}/../plugins/net.refractions.udig.help"/>
-		<copy file="${build.directory}/user/en/doc.zip" todir="${basedir}/../plugins/net.refractions.udig.help"/>
-	</target>
 </project>
