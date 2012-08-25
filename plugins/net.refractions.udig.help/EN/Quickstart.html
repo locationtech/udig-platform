@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Quickstart &mdash; uDig 1.3.2 User Guide</title>
+    
+    <link rel="stylesheet" href="_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/udig.ico"/>
+    <link rel="top" title="uDig 1.3.2 User Guide" href="index.html" />
+    <link rel="up" title="Getting Started" href="Getting Started.html" />
+    <link rel="next" title="Walkthrough 1" href="Walkthrough 1.html" />
+    <link rel="prev" title="Getting Started" href="Getting Started.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+
+    <div class="related">
+      <ul id="breadcrumbs">
+        <li><a href="index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="Getting Started.html" accesskey="U">Getting Started</a> &raquo;</li>
+        <li><a href="#">Quickstart</a></li>
+      </ul>
+    </div> 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
+<p>This is a quick introduction to the uDig application included as part of online help.</p>
+<div class="section" id="natural-earth-sample-data">
+<h2>Natural Earth Sample Data<a class="headerlink" href="#natural-earth-sample-data" title="Permalink to this headline">¶</a></h2>
+<p>This quickstart makes use of sample data kindly made available by the <a class="reference external" href="http://www.naturalearthdata.com">Natural
+Earth</a> project:</p>
+<ol class="arabic">
+<li><p class="first">Right click on the following links and choose <strong>Save Link As...</strong>:</p>
+<p><a class="reference external" href="http://udig.refractions.net/files/data/data_1_3.zip">data_1_3.zip</a></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are using this in a classroom setting or OSGeo live dvd the files should be on your DVD</p>
+</div>
+</li>
+<li><p class="first">If you have your own GIS data please feel free to experiment. Making use of the above sample data
+will enable you to follow along with this tutorial step by step.</p>
+</li>
+</ol>
+<p>This is actually the full dataset used by <a class="reference internal" href="Walkthrough 1.html"><em>Walkthrough 1</em></a>. The contents of
+this dataset are as follows (in case you want to download higher resolution data):</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/raster/HYP_50M_SR_W.zip">HYP_50M_SR_W.zip</a>,</li>
+<li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-populated-places-simple.zip">10m-populated-places-simple.zip</a>,</li>
+<li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-0-countries.zip">10m-admin-0-countries.zip</a>,</li>
+<li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-1-states-provinces-shp.zip">10m-admin-1-states-provinces-shp.zip</a>,</li>
+<li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-urban-area.zip">10m-urban-area.zip</a>,</li>
+<li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-polys.zip">10m-geography-regions-polys.zip</a>,</li>
+<li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-points.zip">10m-geography-regions-points.zip</a>,</li>
+<li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-elevation-points.zip">10m-geography-regions-elevation-points.zip</a>,</li>
+<li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-marine-polys.zip">10m-geography-marine-polys.zip</a>,</li>
+<li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-land.zip">10m-land.zip</a>,</li>
+<li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-ocean.zip">10m-ocean.zip</a>,</li>
+<li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-lakes.zip">physical/10m-lakes.zip</a>,</li>
+<li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-rivers-lake-centerlines.zip">physical/10m-rivers-lake-centerlines.zip</a></li>
+</ul>
+</div>
+<div class="section" id="udig-application">
+<h2>uDig Application<a class="headerlink" href="#udig-application" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Choose <em class="menuselection">uDig 1.1 ‣ uDig</em> from the start menu</p>
+</li>
+<li><p class="first">The application will take a few moments to start up</p>
+<p><img alt="image0" src="_images/Quickstart1Splash.png" /></p>
+</li>
+</ol>
+<p>The uDig application keeps a configuration folder in your home directory, the folder will be created
+the first time the application is launched. If you have any difficulties, or are running uDig on
+Linux or Mac please review the <a class="reference internal" href="Running uDig.html"><em>Running uDig</em></a> reference page.</p>
+</div>
+<div class="section" id="welcome-view">
+<h2>Welcome View<a class="headerlink" href="#welcome-view" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">When you start up uDig for the first time the <strong>Welcome</strong> view takes up the entire display. This
+screen has links to tutorials, documentation and the project website.</p>
+</li>
+<li><p class="first">Click the arrow labelled <strong>Workbench</strong> in the upper right corner, to reveal the contents of the uDig workbench.</p>
+<p><img alt="image1" src="_images/welcome.png" /></p>
+</li>
+</ol>
+<p>You can return to the Welcome view at any time by selecting the <em class="menuselection">Help ‣ Welcome</em> from the menu
+bar.</p>
+</div>
+<div class="section" id="workbench">
+<h2>Workbench<a class="headerlink" href="#workbench" title="Permalink to this headline">¶</a></h2>
+<p>The Workbench window offers multiple Editors (each showing a Map) and supporting Views (offering
+information about the current Map).</p>
+<div class="figure align-center">
+<img alt="" src="_images/workbench.png" />
+</div>
+<p>Shown above is a typical uDig session with the <a class="reference internal" href="Map editor.html"><em>Map editor</em></a>, <a class="reference internal" href="Projects view.html"><em>Projects view</em></a>, <a class="reference internal" href="Layers view.html"><em>Layers view</em></a> and <a class="reference internal" href="Catalog view.html"><em>Catalog view</em></a> labelled .
+These views will be described further as we demonstrate their use.</p>
+</div>
+<div class="section" id="files">
+<h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
+<p>To start out with we are going to load some of the sample data you downloaded earlier.</p>
+<ol class="arabic">
+<li><p class="first">Choose <em class="menuselection">Layer ‣ Add</em> from the menu bar to open up the <a class="reference internal" href="Add Data wizard.html"><em>Add Data wizard</em></a></p>
+</li>
+<li><p class="first">Select <a class="reference internal" href="Files.html"><em>Files</em></a> from the list of data sources</p>
+</li>
+<li><p class="first">Press <strong>Next</strong> to open up a file dialog</p>
+</li>
+<li><p class="first">Select the following files from your data folder: <strong>countries.shp</strong></p>
+</li>
+<li><p class="first">Press <strong>Open</strong></p>
+<ul class="simple">
+<li>A new <a class="reference internal" href="Map editor.html"><em>Map editor</em></a> will be opened based on the contents of your
+shapefile. The default name and projection of the Map has been taken from your shapefile.</li>
+<li>You can see the <strong>Catalog view</strong> has been updated with an entry for <strong>countries.shp</strong>. This
+view is used to track the use of resources by the uDig application.</li>
+<li>The <strong>Layers view</strong> shows a single layer is displayed on this map. This view is used to change
+the order and appearance of information in your Map.</li>
+<li>The <strong>Projects</strong> view has been updated to show that your map is stored in
+<strong>projects&gt;countries</strong>. You can have multiple projects open at a time, each project can have
+several maps.</li>
+</ul>
+</li>
+<li><p class="first">Open up your data folder in windows</p>
+</li>
+<li><p class="first">Drag the file <strong>clouds.jpg</strong> onto the Map Editor, a new layer is added to to the map.</p>
+</li>
+<li><p class="first">You can see the order the layers are drawn in the layer view. Right now the <strong>clouds.jpg</strong> layer
+is drawn ontop of the countries layer.</p>
+</li>
+<li><p class="first">Select the <strong>clouds.jpg</strong> layer in the catalog view and drag it to the bottom of the list</p>
+<p><img alt="image2" src="_images/QuickstartCountriesMap.jpg" /></p>
+</li>
+</ol>
+<p><strong>Info:</strong> One of the most common questions asked when uDig is considered for an organization is how
+much memory the application uses. Unlike most GIS applications uDig can get by with a fixed amount
+of memory. The above shapefile is not loaded into memory, we have a policy of keeping data on disk
+and drawing data like this shapefile onto the screen as needed.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">You can also drag and drop shapefiles directly into the uDig application!</p>
+</div>
+</div>
+<div class="section" id="map">
+<h2>Map<a class="headerlink" href="#map" title="Permalink to this headline">¶</a></h2>
+<p>You can control where in the world the Map Editor is looking by using the navigation tools in the
+tool bar along the top of the screen.</p>
+<ol class="arabic simple">
+<li>The <img alt="image3" src="_images/zoom_mode1.gif" /> <strong>Zoom</strong> tool is available by default<ul>
+<li>Use the zoom tool by drawing a box using the left mouse button around the area of the wold you
+wish to see.</li>
+<li>To zoom out draw a box with the right mouse button. The current map extents will be located
+within the box you draw.</li>
+</ul>
+</li>
+<li>The <img alt="image4" src="_images/pan_mode1.gif" /> <strong>Pan</strong> tool can be used to scroll around your map with out changing scale.</li>
+<li>There are also several navigation buttons that can be used at any time:<ul>
+<li><img alt="image5" src="_images/zoom_extent_co1.gif" /> Show All, can be used to return to the full extents at any time</li>
+<li><img alt="image6" src="_images/zoom_in_co1.gif" /> Zoom In and <img alt="image7" src="_images/zoom_out_co1.gif" /> Zoom Out can be used to change the scale by a fixed amount.</li>
+<li>You can use <em class="menuselection">Navigation ‣ Back</em> and <em class="menuselection">Navigation ‣ Forward</em> in the menu bar to cycle though
+previously visited locations.</li>
+</ul>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Most tools allow you to Pan by holding the center button and control the scale using the scroll wheel.</p>
+</div>
+</div>
+<div class="section" id="web-map-server">
+<h2>Web Map Server<a class="headerlink" href="#web-map-server" title="Permalink to this headline">¶</a></h2>
+<p>One of the reasons to use an application like uDig is to access all the great free geospatial
+information available on the web. This section covers the use of <strong>Web Map Servers</strong> which make
+available layers of information that you can mix into your own maps.</p>
+<ol class="arabic">
+<li><p class="first">Select <em class="menuselection">File ‣ New ‣ New Map</em> from the menu bar</p>
+</li>
+<li><p class="first">Change to the <strong>Web view</strong>, click on the tab next to the <strong>Catalog view</strong> to reveal the Web view.</p>
+</li>
+<li><p class="first">Click on the link <strong>WMS:dm solutions</strong> link</p>
+<p><img alt="image8" src="_images/WebViewClick.png" /></p>
+</li>
+<li><p class="first">From the <a class="reference internal" href="Resource Selection page.html"><em>Resource Selection page</em></a> we are going to choose the
+following layers:</p>
+<ul>
+<li><p class="first">Elevation/Bathymetry*</p>
+</li>
+<li><p class="first">Parks</p>
+</li>
+<li><p class="first">Cities</p>
+<p><img alt="image9" src="_images/AddWMSLayers.png" /></p>
+</li>
+</ul>
+</li>
+<li><p class="first">Press <strong>Finish</strong> to add these layers to your map</p>
+<p><img alt="image10" src="_images/WMSMap.png" /></p>
+</li>
+<li><p class="first">Use the <img alt="image11" src="_images/zoom_mode1.gif" /> Zoom Tool to move closer to one of the Parks</p>
+</li>
+<li><p class="first">Switch to the <img alt="image12" src="_images/info_mode1.gif" /> and click on one the parks to learn more about it</p>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">You can switch between the zoom and info tools by pressing <strong>Z</strong> and <strong>I</strong> on the keyboard.</p>
+</div>
+</div>
+<div class="section" id="style">
+<h2>Style<a class="headerlink" href="#style" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Select the <strong>project &gt; countries</strong>, you can double click to open this Map, or Right Click and
+choose <strong>Open Map</strong></p>
+</li>
+<li><p class="first">Select the <strong>countries</strong> layer in the Layer view</p>
+</li>
+<li><p class="first">Open up the Style Editor by right clicking on <strong>countries</strong> layer and choosing <strong>Change Style</strong></p>
+</li>
+<li><p class="first">We are going to change a few things about how countries are displayed</p>
+<ul>
+<li><p class="first">Line: Click on the <strong>Color</strong> and change the color to <strong>BLACK</strong></p>
+</li>
+<li><p class="first">Fill: uncheck the box to turn off fill</p>
+</li>
+<li><p class="first">Label: check the box, and choose <strong>CNTRY_NAME</strong> from the list of attributes</p>
+<p><img alt="image13" src="_images/StyleEditor.png" /></p>
+</li>
+</ul>
+</li>
+<li><p class="first">Press <strong>Apply</strong> to see what this looks like on your Map, the Layer view will also be updated to
+reflect the current style</p>
+</li>
+<li><p class="first">When you are happy with the result you can press <strong>Close</strong> to dismiss the dialog</p>
+</li>
+<li><p class="first">Some files include style settings, Select <em class="menuselection">Layer ‣ Add ...</em> from the menu bar</p>
+</li>
+<li><p class="first">Select <strong>Files</strong> from the list of data sources and press <strong>Next</strong></p>
+</li>
+<li><p class="first">Using the From the file chooser open up <strong>timezone.shp</strong> and press <strong>Open</strong></p>
+</li>
+<li><p class="first">It is a bit hard to see what is going on with the <strong>clouds.jpg</strong> layer providing so much details.
+Select <em class="menuselection">Map ‣ Mylar</em> from the menu bar to focus on the selected layer</p>
+</li>
+<li><p class="first">Using the Layer view select <strong>timezone</strong>, <strong>countries</strong> and <strong>clouds.jpg</strong> in turn to see the
+effect</p>
+<p><img alt="image14" src="_images/MapMylar.jpg" /></p>
+</li>
+<li><p class="first">You can turn off this effect at any time using <em class="menuselection">Map ‣ Mylar</em> from the menu bar</p>
+</li>
+</ol>
+</div>
+<div class="section" id="what-is-next">
+<h2>What is Next<a class="headerlink" href="#what-is-next" title="Permalink to this headline">¶</a></h2>
+<p>This is only the first step on the road to using uDig. There is a lot more great material (and
+ability) left for your to discover in our walkthroughs.</p>
+<ul class="simple">
+<li><a class="reference internal" href="Walkthrough 1.html"><em>Walkthrough 1</em></a> - Try out the use of PostGIS, extract data from a Web
+Feature Server and explore the use of Themes with our powerful Color Brewer technology.</li>
+<li><a class="reference internal" href="Walkthrough 2.html"><em>Walkthrough 2</em></a> - Learn how to create shapefiles and use the Edit tools
+to manipulate feature data, covers the installation of GeoServer and editing with a Web Feature
+Server.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <ul id="breadcrumbs">
+            <li class="right" style="margin-right: 10px">
+              <a href="genindex.html" title="General Index"
+                 accesskey="I">index</a></li>
+            <li class="right" >
+              <a href="Walkthrough 1.html" title="Walkthrough 1"
+                 accesskey="N">next</a> |</li>
+            <li class="right" >
+              <a href="Getting Started.html" title="Getting Started"
+                 accesskey="P">previous</a> |</li>
+        <li><a href="index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="Getting Started.html" >Getting Started</a> &raquo;</li>
+        <li><a href="#">Quickstart</a></li>
+      </ul>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

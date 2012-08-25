@@ -1,0 +1,132 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Import Directly to The Catalog &mdash; uDig 1.3.2 User Guide</title>
+    
+    <link rel="stylesheet" href="../../_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.3.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/udig.ico"/>
+    <link rel="top" title="uDig 1.3.2 User Guide" href="../../index.html" />
+    <link rel="up" title="uDig Walkthrough 1" href="index.html" />
+    <link rel="next" title="Style Editor" href="ThemedData.html" />
+    <link rel="prev" title="Working with Files" href="WorkingwithFiles.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="../../search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="../../_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+
+    <div class="related">
+      <ul id="breadcrumbs">
+        <li><a href="../../index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="../../Getting Started.html" >Getting Started</a> &raquo;</li>
+          <li><a href="../../Walkthrough 1.html" >Walkthrough 1</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">uDig Walkthrough 1</a> &raquo;</li>
+        <li><a href="#">Import Directly to The Catalog</a></li>
+      </ul>
+    </div> 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="import-directly-to-the-catalog">
+<h1>Import Directly to The Catalog<a class="headerlink" href="#import-directly-to-the-catalog" title="Permalink to this headline">¶</a></h1>
+<p>Earlier we learned how to work with content from the Catalog view, in this section we will import content directly into the catalog.</p>
+<ul>
+<li><p class="first">On the <em class="guilabel">Catalog</em> view please press the <em class="guilabel">Import</em> button:</p>
+<img alt="../../_images/catalog_ocean.png" src="../../_images/catalog_ocean.png" style="width: 10.91cm; height: 3.35cm;" />
+</li>
+<li><p class="first">Select <em class="menuselection">Other ‣ Data</em> and press <em class="guilabel">Next</em>.</p>
+<img alt="../../_images/import_data.png" src="../../_images/import_data.png" style="width: 7.62cm; height: 5.89cm;" />
+</li>
+<li><p class="first">Choose <em class="guilabel">Web Map Server</em> from the list and press <em class="guilabel">Next</em>.</p>
+<img alt="../../_images/import_wms.png" src="../../_images/import_wms.png" style="width: 7.62cm; height: 7.47cm;" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can copy the <a class="reference external" href="http://demo.opengeo.org/geoserver/ows?service=wms&amp;version=1.1.1&amp;request=GetCapabilities">URL</a> from the <a class="reference internal" href="../../Walkthrough 1.html"><em>Walkthrough 1</em></a> page.</p>
+</div>
+</li>
+<li><p class="first">This time we are going to import an OpenGeo demo Web Map Server using the following Capabilities document:</p>
+<img alt="WMS Wizard" src="../../_images/wms_wizard.png" />
+</li>
+<li><p class="first">Press <em class="guilabel">Finish</em> to import the Web Map Server into the <em class="guilabel">Catalog</em> view.</p>
+</li>
+<li><p class="first">Now that we have imported the WMS into the catalog we can add it to our Map.</p>
+</li>
+<li><p class="first">Drag and Drop the <em class="guilabel">bluemarble</em> layer directly onto <em class="guilabel">Map</em> editor.</p>
+<blockquote>
+<div><p><img alt="catalog_dnd_map_png" src="../../_images/catalog_dnd_map.png" style="width: 14.87cm; height: 11.24cm;" /></p>
+</div></blockquote>
+</li>
+<li><p class="first">Earlier we used the the layer view to reorder using the up and down buttons,
+this time we will drag the layers into the right order.</p>
+</li>
+<li><p class="first">Select the <em class="guilabel">Blue Marble</em> layer in the layer view and drag it to the bottom of the list.</p>
+<blockquote>
+<div><p><img alt="layers_dnd_png" src="../../_images/layers_dnd.png" style="width: 3.731cm; height: 1.769cm;" /></p>
+</div></blockquote>
+</li>
+</ul>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <ul id="breadcrumbs">
+            <li class="right" style="margin-right: 10px">
+              <a href="../../genindex.html" title="General Index"
+                 accesskey="I">index</a></li>
+            <li class="right" >
+              <a href="ThemedData.html" title="Style Editor"
+                 accesskey="N">next</a> |</li>
+            <li class="right" >
+              <a href="WorkingwithFiles.html" title="Working with Files"
+                 accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="../../Getting Started.html" >Getting Started</a> &raquo;</li>
+          <li><a href="../../Walkthrough 1.html" >Walkthrough 1</a> &raquo;</li>
+          <li><a href="index.html" >uDig Walkthrough 1</a> &raquo;</li>
+        <li><a href="#">Import Directly to The Catalog</a></li>
+      </ul>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

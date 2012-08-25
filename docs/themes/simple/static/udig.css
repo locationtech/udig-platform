@@ -113,7 +113,7 @@ pre {
 /* back to sphinx overrides */
 
 div.related {
-    margin: 0 80px;
+    margin: 0px;
     width: auto;
 }
 div.related ul {
@@ -140,7 +140,7 @@ div.sphinxsidebar h3 a {
     color: inherit;
 }
 div.document {
-    margin: 0 80px;
+    margin: 0px;
     background-image: none;
 }
 div.documentwrapper {

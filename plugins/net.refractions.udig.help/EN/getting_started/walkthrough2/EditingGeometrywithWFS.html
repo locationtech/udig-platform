@@ -1,0 +1,134 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Editing Geometry with WFS &mdash; uDig 1.3.2 User Guide</title>
+    
+    <link rel="stylesheet" href="../../_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.3.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/udig.ico"/>
+    <link rel="top" title="uDig 1.3.2 User Guide" href="../../index.html" />
+    <link rel="up" title="uDig Walkthrough 2" href="index.html" />
+    <link rel="next" title="Working with Attributes" href="WorkingwithAttributes.html" />
+    <link rel="prev" title="WMS and WFS Integration" href="WMSandWFSIntegration.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="../../search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="../../_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+
+    <div class="related">
+      <ul id="breadcrumbs">
+        <li><a href="../../index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="../../Getting Started.html" >Getting Started</a> &raquo;</li>
+          <li><a href="../../Walkthrough 2.html" >Walkthrough 2</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">uDig Walkthrough 2</a> &raquo;</li>
+        <li><a href="#">Editing Geometry with WFS</a></li>
+      </ul>
+    </div> 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="editing-geometry-with-wfs">
+<h1>Editing Geometry with WFS<a class="headerlink" href="#editing-geometry-with-wfs" title="Permalink to this headline">¶</a></h1>
+<p>We will use the Edit Geometry tool to move the road around the lake.</p>
+<ul>
+<li><p class="first">Zoom into the road that is crossing the lake in the center of the country</p>
+<img alt="../../_images/10000000000002EE000001AB5759BA81.png" src="../../_images/10000000000002EE000001AB5759BA81.png" style="width: 10.88cm; height: 6.2cm;" />
+</li>
+<li><p class="first">Select <strong>tasmania_roads_Type</strong> in the Layers view.</p>
+<img alt="../../_images/TasmanianCitiesInlayersView.png" src="../../_images/TasmanianCitiesInlayersView.png" style="width: 3.679cm; height: 1.96cm;" />
+</li>
+<li><p class="first">Change to the Edit Geometry tool from the tool palette (click the Editing drawer to see the available editing tools).</p>
+</li>
+<li><p class="first">Use the Edit Geometry tool to select the road crossing the lake.</p>
+<img alt="../../_images/10000000000002EC000001AA32F1BEEA.png" src="../../_images/10000000000002EC000001AA32F1BEEA.png" style="width: 10.85cm; height: 6.181cm;" />
+</li>
+<li><p class="first">The road will change color and develop “vertex handles”.</p>
+</li>
+<li><p class="first">Move the vertex handles so the road does not enter the water.</p>
+<img alt="../../_images/10000000000002EF000001A97F242FDB.png" src="../../_images/10000000000002EF000001A97F242FDB.png" style="width: 10.901cm; height: 6.17cm;" />
+</li>
+<li><p class="first">Add new vertices by switching to the Add Vertex tool.</p>
+</li>
+<li><p class="first">You can click any where on the road to add a new vertex.</p>
+<img alt="../../_images/10000000000002EF000001AA50861B63.png" src="../../_images/10000000000002EF000001AA50861B63.png" style="width: 10.901cm; height: 6.181cm;" />
+</li>
+<li><p class="first">You can use Undo and Redo in the Edit menu as required.</p>
+<img alt="../../_images/10000000000000C1000001426E66DB64.png" src="../../_images/10000000000000C1000001426E66DB64.png" style="width: 3.57cm; height: 5.96cm;" />
+</li>
+<li><p class="first">Press the Commit Changes button in the tool bar to send your changes off to the Web Feature Server.</p>
+<img alt="../../_images/10000201000000D10000004025531F72.png" src="../../_images/10000201000000D10000004025531F72.png" style="width: 5.53cm; height: 1.693cm;" />
+</li>
+<li><p class="first">Your line has now been moved.</p>
+</li>
+<li><p class="first">You can now refresh your web page to confirm that your changes have been made.</p>
+<img alt="../../_images/1000000000000213000001F04B82ED88.png" src="../../_images/1000000000000213000001F04B82ED88.png" style="width: 9.74cm; height: 9.1cm;" />
+</li>
+<li><p class="first">You can edit many Features at once, from different layers, or from different sources of data.
+Pressing Commit Changes  will send off all the changes made in the current map.</p>
+</li>
+</ul>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <ul id="breadcrumbs">
+            <li class="right" style="margin-right: 10px">
+              <a href="../../genindex.html" title="General Index"
+                 accesskey="I">index</a></li>
+            <li class="right" >
+              <a href="WorkingwithAttributes.html" title="Working with Attributes"
+                 accesskey="N">next</a> |</li>
+            <li class="right" >
+              <a href="WMSandWFSIntegration.html" title="WMS and WFS Integration"
+                 accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="../../Getting Started.html" >Getting Started</a> &raquo;</li>
+          <li><a href="../../Walkthrough 2.html" >Walkthrough 2</a> &raquo;</li>
+          <li><a href="index.html" >uDig Walkthrough 2</a> &raquo;</li>
+        <li><a href="#">Editing Geometry with WFS</a></li>
+      </ul>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

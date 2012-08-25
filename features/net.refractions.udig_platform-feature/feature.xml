@@ -121,7 +121,8 @@ This library is distributed in the hope that it will be useful, but WITHOUT ANY 
          id="net.refractions.udig.help"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
          id="net.refractions.udig.libs.db2"

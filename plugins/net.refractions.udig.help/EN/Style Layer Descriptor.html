@@ -1,0 +1,157 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Style Layer Descriptor &mdash; uDig 1.3.2 User Guide</title>
+    
+    <link rel="stylesheet" href="_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/udig.ico"/>
+    <link rel="top" title="uDig 1.3.2 User Guide" href="index.html" />
+    <link rel="up" title="Style" href="Style.html" />
+    <link rel="next" title="Symbology" href="Symbology.html" />
+    <link rel="prev" title="Style" href="Style.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+
+    <div class="related">
+      <ul id="breadcrumbs">
+        <li><a href="index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="Concepts.html" >Concepts</a> &raquo;</li>
+          <li><a href="Style.html" accesskey="U">Style</a> &raquo;</li>
+        <li><a href="#">Style Layer Descriptor</a></li>
+      </ul>
+    </div> 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="style-layer-descriptor">
+<h1>Style Layer Descriptor<a class="headerlink" href="#style-layer-descriptor" title="Permalink to this headline">¶</a></h1>
+<p>The <strong>Style Layer Descriptor</strong> file format is an XML document defined by the Open Geospatial
+Consortium. Style Layer Descriptor documents defines how Features are rendered on to the screen.</p>
+<p>You can use your own Style Layer Descriptor documents in several ways:</p>
+<ul class="simple">
+<li>Select the <strong>XML</strong> page of the <a class="reference internal" href="Style Editor dialog.html"><em>Style Editor dialog</em></a> and directly
+modify what is being used directly</li>
+<li>Any sld file associated with a shapefile will be picked up and used</li>
+<li>You can import and export SLD files from the <a class="reference internal" href="Style Editor dialog.html"><em>Style Editor dialog</em></a></li>
+<li>you can drop an SLD file directly onto a Layer</li>
+</ul>
+<p><strong>Related reference</strong></p>
+<p><a class="reference internal" href="Style Editor dialog.html"><em>Style Editor dialog</em></a></p>
+<p><a class="reference external" href="http://www.opengeospatial.org/standards/sld">Styled Layer Descriptor</a> (OGC Specification)</p>
+<p><a class="reference external" href="http://www.opengeospatial.org/standards/symbol">Symbology Encoding</a> (OGC Specification)</p>
+<p><a class="reference external" href="http://docs.geoserver.org/stable/en/user/styling/sld-introduction.html">SLD Intro Tutorial (from GeoServer)</a></p>
+<p><a class="reference external" href="http://docs.geoserver.org/stable/en/user/styling/sld-cookbook/index.html#sld-cookbook">SLD Cookbook with Samples (from GeoServer)</a></p>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>You can use a function to choose a color, the following example can be used with the countries.shp
+file.</p>
+<div class="highlight-python"><pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;sld:StyledLayerDescriptor
+   xmlns="http://www.opengis.net/sld"
+   xmlns:sld="http://www.opengis.net/sld"
+   xmlns:ogc="http://www.opengis.net/ogc"
+   xmlns:gml="http://www.opengis.net/gml"
+   version="1.0.0"&gt;
+    &lt;sld:UserLayer&gt;
+        &lt;sld:LayerFeatureConstraints&gt;
+            &lt;sld:FeatureTypeConstraint/&gt;
+        &lt;/sld:LayerFeatureConstraints&gt;
+        &lt;sld:UserStyle&gt;
+            &lt;sld:Name&gt;Default Styler&lt;/sld:Name&gt;
+            &lt;sld:Title/&gt;
+            &lt;sld:IsDefault&gt;1&lt;/sld:IsDefault&gt;
+            &lt;sld:FeatureTypeStyle&gt;
+                &lt;sld:Name&gt;simple&lt;/sld:Name&gt;
+                &lt;sld:FeatureTypeName&gt;Feature&lt;/sld:FeatureTypeName&gt;
+                &lt;sld:SemanticTypeIdentifier&gt;generic:geometry&lt;/sld:SemanticTypeIdentifier&gt;
+                &lt;sld:SemanticTypeIdentifier&gt;simple&lt;/sld:SemanticTypeIdentifier&gt;
+                &lt;sld:Rule&gt;
+                    &lt;sld:PolygonSymbolizer&gt;
+                        &lt;sld:Fill&gt;
+                            &lt;sld:CssParameter name="fill"&gt;
+                                &lt;ogc:Function name="if_then_else"&gt;
+                                    &lt;ogc:Function name="equalTo"&gt;
+                                        &lt;ogc:PropertyName&gt;LANDLOCKED&lt;/ogc:PropertyName&gt;
+                                        &lt;ogc:Literal&gt;Y&lt;/ogc:Literal&gt;
+                                    &lt;/ogc:Function&gt;
+                                    &lt;ogc:Literal&gt;#FFFF00&lt;/ogc:Literal&gt;
+                                    &lt;ogc:Literal&gt;#0000FF&lt;/ogc:Literal&gt;
+                                &lt;/ogc:Function&gt;
+                            &lt;/sld:CssParameter&gt;
+                            &lt;sld:CssParameter name="fill-opacity"&gt;0.5&lt;/sld:CssParameter&gt;
+                        &lt;/sld:Fill&gt;
+                    &lt;/sld:PolygonSymbolizer&gt;
+                &lt;/sld:Rule&gt;
+            &lt;/sld:FeatureTypeStyle&gt;
+        &lt;/sld:UserStyle&gt;
+    &lt;/sld:UserLayer&gt;
+&lt;/sld:StyledLayerDescriptor&gt;</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <ul id="breadcrumbs">
+            <li class="right" style="margin-right: 10px">
+              <a href="genindex.html" title="General Index"
+                 accesskey="I">index</a></li>
+            <li class="right" >
+              <a href="Symbology.html" title="Symbology"
+                 accesskey="N">next</a> |</li>
+            <li class="right" >
+              <a href="Style.html" title="Style"
+                 accesskey="P">previous</a> |</li>
+        <li><a href="index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="Concepts.html" >Concepts</a> &raquo;</li>
+          <li><a href="Style.html" >Style</a> &raquo;</li>
+        <li><a href="#">Style Layer Descriptor</a></li>
+      </ul>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,247 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Style Editor &mdash; uDig 1.3.2 User Guide</title>
+    
+    <link rel="stylesheet" href="../../_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.3.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/udig.ico"/>
+    <link rel="top" title="uDig 1.3.2 User Guide" href="../../index.html" />
+    <link rel="up" title="uDig Walkthrough 1" href="index.html" />
+    <link rel="next" title="Information Request" href="InformationRequest.html" />
+    <link rel="prev" title="Import Directly to The Catalog" href="ImportDirectlytoTheCatalog.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="../../search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="../../_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+
+    <div class="related">
+      <ul id="breadcrumbs">
+        <li><a href="../../index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="../../Getting Started.html" >Getting Started</a> &raquo;</li>
+          <li><a href="../../Walkthrough 1.html" >Walkthrough 1</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">uDig Walkthrough 1</a> &raquo;</li>
+        <li><a href="#">Style Editor</a></li>
+      </ul>
+    </div> 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="style-editor">
+<h1>Style Editor<a class="headerlink" href="#style-editor" title="Permalink to this headline">¶</a></h1>
+<p>The <em class="guilabel">Style Editor</em> allows fine grain control of the layer rendering.
+In addition to shapes, layers contain attribute values which we can use to
+control the rendering process.</p>
+<p>In this section we will create a <em>Styled Layer Descriptor</em> (SLD) file with
+the uDig <em class="guilabel">Style Editor</em> in order to generate labels and theme
+by attribute values.</p>
+<ul>
+<li><p class="first">Create a new map using <em class="menuselection">File ‣ New ‣ New Map</em></p>
+</li>
+<li><p class="first">Select your new map in the <em class="guilabel">Projects</em> view, and right click to choose <em class="guilabel">Rename</em>.</p>
+<p><img alt="projects_map_rename_jpg" src="../../_images/projects_map_rename.jpg" style="width: 6.219cm; height: 5.42cm;" /></p>
+</li>
+<li><p class="first">Enter the name <tt class="docutils literal"><span class="pre">Natural</span> <span class="pre">Earth</span></tt> and press <em class="guilabel">OK</em>.</p>
+</li>
+<li><p class="first">In the <em class="guilabel">Layer</em> menu, select <em class="guilabel">Add</em></p>
+</li>
+<li><p class="first">Choose <em class="guilabel">Files</em> from the provided list and press <em class="guilabel">Next</em>.</p>
+<p><img alt="add_data_files_png" src="../../_images/add_data_files.png" style="width: 7.62cm; height: 7.47cm;" /></p>
+</li>
+<li><p class="first">Select the following files from your data directory:</p>
+<ul class="simple">
+<li><em class="guilabel">10m_admin_0_countries.shp</em></li>
+<li><em class="guilabel">NE1_50M_SR_W.tif</em></li>
+</ul>
+<p>On windows hold down the control key to selecting multiple files.</p>
+<p><img alt="file_dialog_multiselect_png" src="../../_images/file_dialog_multiselect.png" style="width: 13.46cm; height: 10.389cm;" /></p>
+</li>
+<li><p class="first">Press <em class="guilabel">Open</em> and both layers will be added to your map and
+rendered with a default style.</p>
+<ul class="simple">
+<li>The default style for the <em class="guilabel">10m admin 0 countries</em> layer is
+slightly transparent so can see the base raster layer.</li>
+<li>You may wish to zoom out using the toolbar <em class="guilabel">Zoom Extent</em> command</li>
+</ul>
+</li>
+<li><p class="first">Right click on the countries layer and select <em class="guilabel">Change Style</em>
+to open the <em class="guilabel">Style Editor</em>.</p>
+<p><img alt="layers_change_style_png" src="../../_images/layers_change_style.png" style="width: 5.241cm; height: 4.33cm;" /></p>
+</li>
+<li><p class="first">The <em class="guilabel">Style Editor</em> is arranged into a series of pages.</p>
+</li>
+<li><p class="first">Select the <em class="guilabel">Polygons</em> page from the list on the right.</p>
+<p>We will use this page to add labels to the countries layer.</p>
+</li>
+<li><p class="first">Click the <em class="guilabel">Labels</em> tab on the <em class="guilabel">Polygon</em> page.</p>
+<ul class="simple">
+<li>Enable labels by checking the <em class="guilabel">enable/disable labelling</em> checkbox</li>
+<li>In the list to the far right of <em class="guilabel">label</em> choose the <em class="guilabel">NAME</em> attribute</li>
+</ul>
+<p><img alt="style_polygon_label_png" src="../../_images/style_polygon_label.png" style="width: 14.7cm; height: 10.261cm;" /></p>
+</li>
+<li><p class="first">You can press the <em class="guilabel">Apply</em> button to see what your map will look like with labels</p>
+</li>
+</ul>
+<div class="section" id="theme">
+<h2>Theme<a class="headerlink" href="#theme" title="Permalink to this headline">¶</a></h2>
+<p>A common use for maps is as a visual display of attribute values. In cartographic
+terms this is known as creating a <em>Thematic</em> map, accomplished by defining
+a <em>theme</em> for a layer.</p>
+<p>The <em class="guilabel">Style Editor</em> is used to theme data by setting up a thematic style
+for a layer based on attribute values.</p>
+<ul>
+<li><p class="first">Please switch to the <em class="guilabel">Theme</em> page and select the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em class="guilabel">Attribute</em>: Select the <em class="guilabel">POP_EST</em> attribute.</li>
+<li><em class="guilabel">Normalize</em>: Select the <em class="guilabel">GDP_MD_EST</em> attribute.</li>
+</ul>
+<p><img alt="style_theme_normalize_png" src="../../_images/style_theme_normalize.png" style="width: 10.77cm; height: 6.729cm;" /></p>
+</div></blockquote>
+</li>
+<li><p class="first">Filter the available colour palettes to show a subset of those available:</p>
+<ul class="simple">
+<li><em class="guilabel">Show</em>: Change from guilabel:<cite>Show All</cite> to <em class="guilabel">Sequential</em></li>
+<li>Press the <em class="guilabel">Colour-blind</em>, <em class="guilabel">LCD</em> and <em class="guilabel">CRT</em> buttons</li>
+<li>Select the <em class="guilabel">light orange to dark red</em> color palette</li>
+</ul>
+<p><img alt="style_theme_filter_png" src="../../_images/style_theme_filter.png" style="width: 10.71cm; height: 8.691cm;" /></p>
+<p>These options show palettes which are a ramp of color suitable for viewing by color
+blind people on either an LCD or CRT monitor.</p>
+</li>
+<li><p class="first">Press the <em class="guilabel">OK</em> button</p>
+<p><img alt="themed_map_png" src="../../_images/themed_map.png" style="width: 10.991cm; height: 6.17cm;" /></p>
+</li>
+<li><p class="first">The countries layer is now displayed as theme of population data normalized by gross domestic
+product as a quick measure of population productivity.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="legend">
+<h2>Legend<a class="headerlink" href="#legend" title="Permalink to this headline">¶</a></h2>
+<p>You can use a legend to review the colours and symbology used to illustrate your themaitic map.</p>
+<ul>
+<li><p class="first">From the menubar select <em class="menuselection">Layer ‣ Legend</em>.</p>
+<p><img alt="menubar_legend_png" src="../../_images/menubar_legend.png" style="width: 5.2cm; height: 3.129cm;" /></p>
+</li>
+<li><p class="first">The <em class="guilabel">Legend</em> decorator offers a quick summary of your themed data.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="mylar">
+<h2>Mylar<a class="headerlink" href="#mylar" title="Permalink to this headline">¶</a></h2>
+<p>The map display can become very complicated depending on the level of detail being displayed.</p>
+<p>The Mylar functionality is used to focus on the selected layer.</p>
+<ul>
+<li><p class="first">Press the <em class="guilabel">Mylar</em> button in the <em class="guilabel">Layers</em> view toolbar.</p>
+</li>
+<li><p class="first">Select each layer and observe the effect.</p>
+<p><img alt="mylar_png" src="../../_images/mylar.png" style="width: 14.91cm; height: 11.12cm;" /></p>
+</li>
+<li><p class="first">The Mylar effect is used to focus on the selected layer by fading out everything else.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="layout-and-perspectives">
+<h1>Layout and Perspectives<a class="headerlink" href="#layout-and-perspectives" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li><p class="first"><em class="guilabel">Map</em> editors can be resized and expanded</p>
+<ul class="simple">
+<li>Double click on the <em class="guilabel">Natural Earth</em> editor tab to maximize the editor display.</li>
+<li>Use using the zoom tool to explore the world while the editor is maximized.</li>
+</ul>
+<p><img alt="editor_maximized_png" src="../../_images/editor_maximized.png" style="width: 14.861cm; height: 11.15cm;" /></p>
+<ul class="simple">
+<li>Your <em class="guilabel">Layer</em> view is still available as a fast view the left hand side of the screen.
+Press <em class="guilabel">Layer</em> view button to slide the <em class="guilabel">layer</em> view on and off the screen as needed.</li>
+<li>Double click on the <em class="guilabel">Natural Earth</em> editor tab again to restore the previous size.</li>
+</ul>
+</li>
+<li><p class="first">You can also open two map editors and arrange them side by side by dragging
+the <em class="guilabel">Map</em> editor tab into position.</p>
+</li>
+<li><p class="first">You have a lot of flexibility in arranging views around your <em class="guilabel">Map</em> editor.</p>
+<ul class="simple">
+<li>You can drag views into different locations along the edge of your map by dragging their
+<em class="guilabel">View</em> tab into the desired location.</li>
+<li>You can detach a view by dragging it completely out of the window</li>
+<li>You can right click on the view for more options including a slide out <em class="guilabel">Fast</em> view.</li>
+<li>More views are available using the menubar <em class="menuselection">Window ‣ Show Views</em></li>
+</ul>
+</li>
+<li><p class="first">The arrangement of the <em class="guilabel">Workbench</em> editors and views is called a <em class="guilabel">Perspective</em>.</p>
+<ul class="simple">
+<li>Switch between perspectives using the menubar <em class="menuselection">Window ‣ Open Perspective</em></li>
+<li>Use the menubar <em class="menuselection">Window ‣ Reset Perspective</em> to restore any views you accidentally closed
+during experimentation.</li>
+</ul>
+<p><img alt="menubar_window_reset_perspective_png" src="../../_images/menubar_window_reset_perspective.png" style="width: 14.891cm; height: 2.949cm;" /></p>
+</li>
+</ul>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <ul id="breadcrumbs">
+            <li class="right" style="margin-right: 10px">
+              <a href="../../genindex.html" title="General Index"
+                 accesskey="I">index</a></li>
+            <li class="right" >
+              <a href="InformationRequest.html" title="Information Request"
+                 accesskey="N">next</a> |</li>
+            <li class="right" >
+              <a href="ImportDirectlytoTheCatalog.html" title="Import Directly to The Catalog"
+                 accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="../../Getting Started.html" >Getting Started</a> &raquo;</li>
+          <li><a href="../../Walkthrough 1.html" >Walkthrough 1</a> &raquo;</li>
+          <li><a href="index.html" >uDig Walkthrough 1</a> &raquo;</li>
+        <li><a href="#">Style Editor</a></li>
+      </ul>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

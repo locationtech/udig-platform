@@ -1,0 +1,153 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PostGIS &mdash; uDig 1.3.2 User Guide</title>
+    
+    <link rel="stylesheet" href="_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/udig.ico"/>
+    <link rel="top" title="uDig 1.3.2 User Guide" href="index.html" />
+    <link rel="up" title="Service" href="Service.html" />
+    <link rel="next" title="Teradata" href="Teradata.html" />
+    <link rel="prev" title="Files" href="Files.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+
+    <div class="related">
+      <ul id="breadcrumbs">
+        <li><a href="index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="Concepts.html" >Concepts</a> &raquo;</li>
+          <li><a href="Service.html" accesskey="U">Service</a> &raquo;</li>
+        <li><a href="#">PostGIS</a></li>
+      </ul>
+    </div> 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="postgis">
+<h1>PostGIS<a class="headerlink" href="#postgis" title="Permalink to this headline">¶</a></h1>
+<p>PostGIS adds support for geographic objects to the <a class="reference external" href="http://www.postgresql.com/">PostgreSQL database</a>.
+In effect, PostGIS &#8220;spatially enables&#8221; the PostgreSQL server, allowing it to be used as
+spatial database for geographic information systems.</p>
+<p>PostGIS follows the OpenGIS <a class="reference external" href="http://www.opengis.org/docs/99-049.pdf">Simple Features Specification for SQL</a> (SFSQL).</p>
+<div class="section" id="geometry-objects">
+<h2>Geometry Objects<a class="headerlink" href="#geometry-objects" title="Permalink to this headline">¶</a></h2>
+<p>PostGIS supports the range of geometry objects:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="82%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Geometry Object</strong></td>
+<td><strong>WKT Example</strong></td>
+</tr>
+<tr class="row-even"><td>Point</td>
+<td>POINT(0 0)</td>
+</tr>
+<tr class="row-odd"><td>LineString</td>
+<td>LINESTRING(0 0,1 1,1 2)</td>
+</tr>
+<tr class="row-even"><td>Polygon</td>
+<td>POLYGON((0 0,4 0,4 4,0 4,0 0),(1 1, 2 1, 2 2, 1 2,1 1))</td>
+</tr>
+<tr class="row-odd"><td>MultiPoint</td>
+<td>MULTIPOINT(0 0,1 2)</td>
+</tr>
+<tr class="row-even"><td>MultiLineString</td>
+<td>MULTILINESTRING((0 0,1 1,1 2),(2 3,3 2,5 4))</td>
+</tr>
+<tr class="row-odd"><td>MultiPolygon</td>
+<td>MULTIPOLYGON(((0 0,4 0,4 4,0 4,0 0),(1 1,2 1,2 2,1 2,1 1)), ((-1 -1,-1 -2,-2 -2,-2 -1,-1 -1)))</td>
+</tr>
+<tr class="row-even"><td>GeometryCollection</td>
+<td>GEOMETRYCOLLECTION(POINT(2 3),LINESTRING((2 3,3 4)))</td>
+</tr>
+</tbody>
+</table>
+<p>These geometry objects are in accordance with the SFSQL specification mentioned above; the examples
+are given using the &#8220;Well Known Text&#8221; format - the same format used for selections in uDig (see
+<a class="reference internal" href="Constraint Query Language.html"><em>Constraint Query Language</em></a> )</p>
+</div>
+<div class="section" id="required-postgis-tables">
+<h2>Required PostGIS Tables<a class="headerlink" href="#required-postgis-tables" title="Permalink to this headline">¶</a></h2>
+<p>When you install the PostGIS extension into your database two tables will be created:</p>
+<ul class="simple">
+<li>geometry_columns - records what spatial data is stored in which table; along with some
+information about the kind of geometry object and what SRID is expected</li>
+<li>spatial_ref_sys - records definitions of spatial reference systems according to SRID</li>
+</ul>
+<p>For uDig to recognize your database you will need to have at least one entry in your
+geometry_columns table.</p>
+<p><strong>Related reference</strong></p>
+<p><a class="reference internal" href="PostGIS page.html"><em>PostGIS page</em></a>
+<a class="reference external" href="http://postgis.refractions.net/">http://postgis.refractions.net/</a>
+<a class="reference external" href="http://www.postgresql.com/">http://www.postgresql.com/</a>
+<a class="reference external" href="http://www.foss4g2007.org/workshops/W-04/">Introduction to PostGIS</a> (FOSS4G 2007 workshop)</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <ul id="breadcrumbs">
+            <li class="right" style="margin-right: 10px">
+              <a href="genindex.html" title="General Index"
+                 accesskey="I">index</a></li>
+            <li class="right" >
+              <a href="Teradata.html" title="Teradata"
+                 accesskey="N">next</a> |</li>
+            <li class="right" >
+              <a href="Files.html" title="Files"
+                 accesskey="P">previous</a> |</li>
+        <li><a href="index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="Concepts.html" >Concepts</a> &raquo;</li>
+          <li><a href="Service.html" >Service</a> &raquo;</li>
+        <li><a href="#">PostGIS</a></li>
+      </ul>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

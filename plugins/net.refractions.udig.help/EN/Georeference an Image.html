@@ -1,0 +1,163 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Georeference an Image &mdash; uDig 1.3.2 User Guide</title>
+    
+    <link rel="stylesheet" href="_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/udig.ico"/>
+    <link rel="top" title="uDig 1.3.2 User Guide" href="index.html" />
+    <link rel="up" title="Working with Images" href="Working with Images.html" />
+    <link rel="next" title="Set raster transparent color" href="Set raster transparent color.html" />
+    <link rel="prev" title="Working with Images" href="Working with Images.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+
+    <div class="related">
+      <ul id="breadcrumbs">
+        <li><a href="index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="Tasks.html" >Tasks</a> &raquo;</li>
+          <li><a href="Working with Images.html" accesskey="U">Working with Images</a> &raquo;</li>
+        <li><a href="#">Georeference an Image</a></li>
+      </ul>
+    </div> 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="georeference-an-image">
+<h1>Georeference an Image<a class="headerlink" href="#georeference-an-image" title="Permalink to this headline">¶</a></h1>
+<p>The process of &#8220;georeferencing&#8221; an image allows you to place a normal PNG or JPEG image onto a map.
+Many spatial image contain enough information allowing them to be placed in the correct location
+automatically.</p>
+<p>The following steps provide an example of how to georeference an image overtop of your base map from
+start to finish.</p>
+<ol class="arabic simple">
+<li>Load a base map layer with a proper projection.</li>
+<li>Zoom to the area of the map where you want to add the image.</li>
+<li>Load an image overtop of the map. Use the <strong>Load Image</strong> tool and browse to the image you wish to
+add to the map:<ul>
+<li>The image will be loaded ontop the bottom left of the map</li>
+<li>The image will be selected</li>
+<li>The image 1/3 of the size of the current map.</li>
+</ul>
+</li>
+<li>Move the image beside the final location so you can see where to put placemarkers on both the
+image and the basemap.<ul>
+<li>Use the <strong>Select Image</strong> tool (if you have more than one image).</li>
+<li>Use the <strong>Move Image</strong> tool and move the image to an area of the map that allows us to see
+both the image and the part of the base map you want to work with.</li>
+<li>Use the <strong>Resize Image</strong> tool until you are satisfied that you can easily see both the image
+and the base map.</li>
+</ul>
+</li>
+<li>Select the Place Markers tool (a popup window will appear with some instructions).<ul>
+<li>Place a minimum of 6 markers on both the image and the base map that line up with each other.</li>
+<li>Place more than 6 markers for more accurate results.</li>
+<li>Check or uncheck the box to remove any previous markers before starting to place new ones.
+This is used to resume placing markers if you needed to move the image half way through.</li>
+</ul>
+</li>
+<li>Click OK to start placing new markers in the order of:<ol class="arabic">
+<li>place marker 1 on the image</li>
+<li>place the equivalent marker 1 on the base map</li>
+<li>repeat until at least 6 markers are on both the image and base map:</li>
+</ol>
+</li>
+<li>Continue placing markers until you are satisfied that the important areas are covered.<ul>
+<li>You can also select the <strong>Move Markers</strong> tool to fine tune your marker placement anytime.</li>
+</ul>
+</li>
+<li>Select the <strong>Warp Image</strong> tool to begin warping the image based on your marker placement<ul>
+<li>The image will begin the warp process</li>
+<li>When finished a dialog will ask you to save the result as a TIF file</li>
+</ul>
+</li>
+<li>Save the file and it will be loaded onto the map (replacing the original image)</li>
+</ol>
+<p>You will now have a warped image saved as a TIF file that is loaded on your map.</p>
+<div class="section" id="tips">
+<h2>Tips<a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>If you are not satisfied with the result, you can try again starting from step 3.</li>
+<li>Remember that placing more markers (and placing them in important areas that you want to ensure
+line-up) will return better results.</li>
+<li>Note that when this image is warped to fit onto the base map, the empty space left in the warped
+image will be transparent.<ul>
+<li>However, if the initial image is not rectangular and has a background color that is not
+tranparent, that background color will still remain. If you want this background color to be
+transparent, edit the image in an image editor and save it with a transparent background
+before loading it into uDig.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Related concepts</strong></p>
+<p><a class="reference internal" href="Georeference.html"><em>Georeference</em></a></p>
+<p><strong>Related reference</strong></p>
+<p><a class="reference internal" href="Georeferencing Tools.html"><em>Georeferencing Tools</em></a></p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <ul id="breadcrumbs">
+            <li class="right" style="margin-right: 10px">
+              <a href="genindex.html" title="General Index"
+                 accesskey="I">index</a></li>
+            <li class="right" >
+              <a href="Set raster transparent color.html" title="Set raster transparent color"
+                 accesskey="N">next</a> |</li>
+            <li class="right" >
+              <a href="Working with Images.html" title="Working with Images"
+                 accesskey="P">previous</a> |</li>
+        <li><a href="index.html">uDig 1.3.2 User Guide</a> &raquo;</li>
+          <li><a href="Tasks.html" >Tasks</a> &raquo;</li>
+          <li><a href="Working with Images.html" >Working with Images</a> &raquo;</li>
+        <li><a href="#">Georeference an Image</a></li>
+      </ul>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
