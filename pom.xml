@@ -194,6 +194,7 @@ Includes the ossim feaure (this may be dead code)
             <layout>p2</layout>
             <url>http://download.eclipse.org/technology/babel/update-site/R0.10.0/indigo</url>
         </repository>
+
     </repositories>
     
     <build>
