@@ -101,7 +101,6 @@
           name="Quickstart">
     </cheatsheet>
  </extension>
-	
      <extension
          id="net.refractions.udig.project.ui.mapEditor"
          name="%context.name"
@@ -116,11 +115,5 @@
             file="toc.xml"
             primary="true">
       </toc>
-      <toc
-            extradir=""
-            file="livetoc.xml"
-            primary="true">
-      </toc>
    </extension>
-
 </plugin>
