@@ -73,6 +73,7 @@ function prepare_resources () {
         cp *.bat ${BUILD}/${PLATFORM}/udig
         mkdir -p ${BUILD}/${PLATFORM}/udig/icons
         cp installer/*.ico ${BUILD}/${PLATFORM}/udig/icons/
+        rm ${BUILD}/${PLATFORM}/udig/eclipsec.exe
         windows_installer
     fi
     if [[ $PLATFORM == mac* ]] ; then
