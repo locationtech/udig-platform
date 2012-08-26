@@ -296,17 +296,29 @@
             <artifactId>gt-jdbc-sqlserver</artifactId>
             <version>${geotools.version}</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.geotools.jdbc</groupId>
             <artifactId>gt-jdbc-spatialite</artifactId>
             <version>${geotools.version}</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.geotools.jdbc</groupId>
             <artifactId>gt-jdbc-h2</artifactId>
             <version>${geotools.version}</version>
         </dependency>
 
+        <!-- xml formats -->
+        <dependency>
+            <groupId>org.geotools.xsd</groupId>
+            <artifactId>gt-xsd-kml</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.xsd</groupId>
+            <artifactId>gt-xsd-sld</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        
         <!-- pending -->
         <!--<dependency>
             <groupId>org.geotools</groupId>
@@ -318,11 +330,6 @@
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-wps</artifactId>
-            <version>${geotools.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.geotools.xsd</groupId>
-            <artifactId>gt-xsd-kml</artifactId>
             <version>${geotools.version}</version>
         </dependency>
 
