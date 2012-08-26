@@ -18,6 +18,7 @@ package net.refractions.udig.style.sld;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.net.URL;
 import java.util.ArrayList;
@@ -35,15 +36,18 @@ import net.refractions.udig.ui.graphics.SLDs;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
 import org.geotools.data.FeatureSource;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.filter.IllegalFilterException;
 import org.geotools.filter.function.FilterFunction_geometryType;
+import org.geotools.sld.v1_1.SLDConfiguration;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Fill;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.Mark;
+import org.geotools.styling.NamedStyle;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
@@ -55,10 +59,10 @@ import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.StyleFactory;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.UserLayer;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
+import org.geotools.xml.Parser;
 import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -66,6 +70,7 @@ import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.PropertyIsEqualTo;
 import org.opengis.filter.expression.Expression;
+import org.opengis.style.SemanticType;
 
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
@@ -186,8 +191,8 @@ public final class SLDContent extends StyleContent {
     		
     	if (layer.hasResource(FeatureSource.class)) {
     		IGeoResource resource = layer.findGeoResource(FeatureSource.class);
-    		FeatureSource<SimpleFeatureType, SimpleFeature> featureSource 
-    			= resource.resolve(FeatureSource.class, m);
+    		SimpleFeatureSource featureSource 
+    			= resource.resolve(SimpleFeatureSource.class, m);
     		
     		if (featureSource != null) {
     			//match up the feature type style name and the feature type name
@@ -195,9 +200,9 @@ public final class SLDContent extends StyleContent {
     			FeatureTypeStyle fstyle = SLDs.featureTypeStyle(style,type);
     			if (fstyle == null) {
     				//force a name match
-    				FeatureTypeStyle[] fstyles = style.getFeatureTypeStyles();
-    				if (fstyles != null && fstyles.length > 0) {
-    					fstyle = fstyles[0];
+    				List<FeatureTypeStyle> fstyles = style.featureTypeStyles();
+    				if (fstyles != null && !fstyles.isEmpty()) {
+    					fstyle = fstyles.get(0);
     				}
     			}
     			
@@ -232,9 +237,9 @@ public final class SLDContent extends StyleContent {
         }
         
         if( resource.canResolve(FeatureSource.class) ){
-             FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = null;
+            SimpleFeatureSource featureSource = null;
             try {
-                featureSource = resource.resolve(FeatureSource.class, m);
+                featureSource = resource.resolve(SimpleFeatureSource.class, m);
             } 
             catch (IOException e) {
                 e.printStackTrace();
@@ -319,49 +324,49 @@ public final class SLDContent extends StyleContent {
         Rule rule=sldContentManager.getDefaultRule();
         PropertyIsEqualTo filter = createGeometryFunctionFilter(geomXPath, Point.class.getSimpleName());
         rule.setFilter(filter);
-        rule.setSymbolizers(new Symbolizer[]{createPointSymbolizer(colour)});
+        rule.symbolizers().add(createPointSymbolizer(colour));
 
         // create MultiPoint rule
         rule=sldContentManager.createRule();
         filter = createGeometryFunctionFilter(geomXPath, MultiPoint.class.getSimpleName());
         rule.setFilter(filter);
-        rule.setSymbolizers(new Symbolizer[]{createPointSymbolizer(colour)});
-        sldContentManager.getDefaultFeatureTypeStyle().addRule(rule);
+        rule.symbolizers().add( createPointSymbolizer(colour));
+        sldContentManager.getDefaultFeatureTypeStyle().rules().add(rule);
         
         // create LineString rule
         rule=sldContentManager.createRule();
         filter = createGeometryFunctionFilter(geomXPath, LineString.class.getSimpleName());
         rule.setFilter(filter);
-        rule.setSymbolizers(new Symbolizer[]{createLineSymbolizer(colour)});
-        sldContentManager.getDefaultFeatureTypeStyle().addRule(rule);
+        rule.symbolizers().add(createLineSymbolizer(colour));
+        sldContentManager.getDefaultFeatureTypeStyle().rules().add(rule);
         
         // create LinearRing rule
         rule=sldContentManager.createRule();
         filter = createGeometryFunctionFilter(geomXPath, LinearRing.class.getSimpleName());
         rule.setFilter(filter);
-        rule.setSymbolizers(new Symbolizer[]{createLineSymbolizer(colour)});
-        sldContentManager.getDefaultFeatureTypeStyle().addRule(rule);
+        rule.symbolizers().add(createLineSymbolizer(colour));
+        sldContentManager.getDefaultFeatureTypeStyle().rules().add(rule);
         
         // create MultiLineString rule
         rule=sldContentManager.createRule();
         filter = createGeometryFunctionFilter(geomXPath, MultiLineString.class.getSimpleName());
         rule.setFilter(filter);
-        rule.setSymbolizers(new Symbolizer[]{createLineSymbolizer(colour)});
-        sldContentManager.getDefaultFeatureTypeStyle().addRule(rule);
+        rule.symbolizers().add(createLineSymbolizer(colour));
+        sldContentManager.getDefaultFeatureTypeStyle().rules().add(rule);
  
         // create Polygon rule
         rule=sldContentManager.createRule();
         filter = createGeometryFunctionFilter(geomXPath, Polygon.class.getSimpleName());
         rule.setFilter(filter);
-        rule.setSymbolizers(new Symbolizer[]{createPolygonSymbolizer(colour)});
-        sldContentManager.getDefaultFeatureTypeStyle().addRule(rule);
+        rule.symbolizers().add(createPolygonSymbolizer(colour));
+        sldContentManager.getDefaultFeatureTypeStyle().rules().add(rule);
 
         // create MultiPolygon rule
         rule=sldContentManager.createRule();
         filter = createGeometryFunctionFilter(geomXPath, MultiPolygon.class.getSimpleName());
         rule.setFilter(filter);
-        rule.setSymbolizers(new Symbolizer[]{createPolygonSymbolizer(colour)});
-        sldContentManager.getDefaultFeatureTypeStyle().addRule(rule);
+        rule.symbolizers().add(createPolygonSymbolizer(colour));
+        sldContentManager.getDefaultFeatureTypeStyle().rules().add(rule);
 
     }
 
@@ -371,18 +376,12 @@ public final class SLDContent extends StyleContent {
         List<Expression> params = new ArrayList<Expression>();
         params.add(factory.property(geomXPath));
         geomTypeExpr.setParameters(params);
-
-        
         
         return factory.equals(geomTypeExpr, factory.literal(geometryClassSimpleName));
     }
-
+    
     public static Style parse(URL url) throws IOException {
-    	StyleFactory factory = CommonFactoryFinder.getStyleFactory(GeoTools.getDefaultHints());
-        SLDParser styleReader = new SLDParser(factory, url);
-        Style style = styleReader.readXML()[0];
-
-        return style;
+        return SLDs.parseStyle(url);
     }
     
     public static StyledLayerDescriptor createDefaultStyledLayerDescriptor() {
@@ -418,7 +417,7 @@ public final class SLDContent extends StyleContent {
         // sldContentManager.addSymbolizer(styleBuilder.createRasterSymbolizer());
 
         //tag as a simple FeatureTypeStyle
-        FeatureTypeStyle fts = style.getFeatureTypeStyles()[0];
+        FeatureTypeStyle fts = style.featureTypeStyles().get(0);
         fts.setName("simple"); //$NON-NLS-1$
         fts.setSemanticTypeIdentifiers(new String[] {"generic:geometry", "simple"}); //$NON-NLS-1$ //$NON-NLS-2$
         
@@ -437,8 +436,8 @@ public final class SLDContent extends StyleContent {
     protected static PointSymbolizer createPointSymbolizer(Color colour) {
         PointSymbolizer symb=styleBuilder.createPointSymbolizer();
         Fill fill = styleBuilder.createFill(colour, 1.0);        
-        Stroke outline=styleBuilder.createStroke(Color.BLACK,1,1);        
-        symb.getGraphic().setMarks(new Mark[]{styleBuilder.createMark(StyleBuilder.MARK_SQUARE, fill, outline)});
+        Stroke outline=styleBuilder.createStroke(Color.BLACK,1,1);
+        symb.getGraphic().graphicalSymbols().add( styleBuilder.createMark(StyleBuilder.MARK_SQUARE, fill, outline));
         symb.getGraphic().setSize( styleBuilder.literalExpression(6.0));
         return symb;
     }

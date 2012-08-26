@@ -28,6 +28,7 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.URLUtils;
+import net.refractions.udig.ui.graphics.SLDs;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureSource;
@@ -179,49 +180,38 @@ public class ShpGeoResourceImpl extends IGeoResource {
     }
 
     
-    public Style style( IProgressMonitor monitor ) {
-        URL url = parent.getIdentifier();
-        File file = URLUtils.urlToFile(url);
-        String shp = file.getAbsolutePath();
+    public Style style( IProgressMonitor monitor ) throws IOException {
+        SimpleFeatureSource source  = featureSource(null);
+
+        SimpleFeatureType featureType = source.getSchema();
         
-        StyleFactory styleFactory = CommonFactoryFinder.getStyleFactory(GeoTools.getDefaultHints());
-        
-        // strip off the extension and check for sld
-        String sld = shp.substring(0, shp.length() - 4) + ".sld"; //$NON-NLS-1$
-        File f = new File(sld);
-        if (!f.exists()) {
-            // try upper case
-            sld = shp.substring(0, shp.length() - 4) + ".SLD"; //$NON-NLS-1$
-            f = new File(sld);
+        ID fileID = parent.getID();
+        if( !fileID.isFile() ){
+            return null; // we are only checking for sidecar files 
+        }
+        File file = fileID.toFile("sld");
+        if( !file.exists()){
+            file =fileID.toFile("SLD");
+            if( !file.exists()){
+                return null; // sidecar file not avaialble
+            }
+        }
+        StyledLayerDescriptor sld = SLDs.parseSLD( file );
+        if( sld == null ){
+            return null; // well that is unexpected since f.exists()
         }
         
-        if (f.exists()) {
-            // parse it up
-            SLDParser parser = new SLDParser(styleFactory);
-            try {
-                parser.setInput(f);
-            } catch (FileNotFoundException e) {
-                return null; // well that is unexpected since f.exists()
+        Style[] styles = SLDs.styles( sld );
+        // Style[] styles = parser.readXML();
+        
+        // put the first one on
+        if (styles != null && styles.length > 0) {
+            Style style = SLDs.matchingStyle(styles, featureType);
+            if (style == null) {
+                style = styles[0];
             }
-            Style[] styles = parser.readXML();
-            
-            FeatureSource<SimpleFeatureType, SimpleFeature> source;
-            try {
-                source = featureSource(null);
-            } catch (IOException e) {
-                return null; // does not look like there is anything in the shapefile
-            }
-            SimpleFeatureType featureType = source.getSchema();
-            // put the first one on
-            if (styles != null && styles.length > 0) {
-                Style style = SLD.matchingStyle(styles, featureType);
-                if (style == null) {
-                    style = styles[0];
-                }
-                
-                makeGraphicsAbsolute(file, style);
-                return style;
-            }
+            makeGraphicsAbsolute(file, style);
+            return style;
         }
         return null; // well nothing worked out; make your own style
     }

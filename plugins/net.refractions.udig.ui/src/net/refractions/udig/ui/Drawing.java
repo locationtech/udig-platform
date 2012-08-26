@@ -212,7 +212,9 @@ public final class Drawing {
     
     Symbolizer[] getSymbolizers(Rule rule) {
         List<Symbolizer> symbs=new ArrayList<Symbolizer>();
-        symbs.addAll(Arrays.asList(rule.getSymbolizers()));
+        if( rule != null && rule.symbolizers() != null ){
+            symbs.addAll(rule.symbolizers());
+        }
         return symbs.toArray(new Symbolizer[symbs.size()]);        
     }
 
