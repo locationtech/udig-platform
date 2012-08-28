@@ -75,7 +75,7 @@ deleted at the same time.
 Note that the *Merge Tool* does not commit the result, but lets you undo the operation if desired,
 or commit the changes to the backend data repository as you would normally do in uDig.
 
-.. figure:: images/icons/emoticons/information.gif
+.. figure:: /images/merge_tool/information.gif
    :align: center
    :alt: 
 
@@ -91,7 +91,7 @@ Select the *Merge Tool* from the drop down buttons list as shown in *Figure 1*.
 
 |image2|
 
- **Figure 1. Selecting the Merge Tool.**
+**Figure 1. Selecting the Merge Tool.**
 
 Draw the *Bounding Box* to be used as the filter to select the *Feature* to be merged. At least two
 *Features* need to be selected for doing a Merge, but the view will be opened if one feature is
@@ -99,12 +99,12 @@ selected.
 
 |image3|
 
- **Figure 2. Selecting the Features to merge.**
+**Figure 2. Selecting the Features to merge.**
 
 Once you release the mouse button, the *features* matching the bounding box will be looked up and
 the *Merge View* will show up.
- *Figure 3* shows the *Merge View*, which consists of two panels.
- The panel at the left is the *Source Features* panel and presents the selected *features*, their
+*Figure 3* shows the *Merge View*, which consists of two panels.
+The panel at the left is the *Source Features* panel and presents the selected *features*, their
 attributes, and allows to select attribute values from source features to assign to the *Merge
 Feature*.
 
@@ -118,8 +118,8 @@ source Features, and if that is not possible due to a type conflict with the Lay
 it assumes the value of the geometry from the first Feature.
 |image4|
 
- **Figure 3. Merge View.**
- While the *Merge View* is opened, the user can set specific attributes in the *Merge Feature* to
+**Figure 3. Merge View.**
+While the *Merge View* is opened, the user can set specific attributes in the *Merge Feature* to
 assume the values from other *Source Features* than the one at the top, by activating the checkbox
 corresponding to the desired attribute on the desired *Source Feature*.
 
@@ -131,11 +131,11 @@ the checkbox corresponding to the desired *Source Feature*.
 
 |image5|
 
- **Figure 4. Merge View with user specified attributes.**
+**Figure 4. Merge View with user specified attributes.**
 
 Finally, when you're ready setting the geometric and non geometric attribute values for the *Merge
 Feature*, press the *Finish* button on the *Merge View*.
- The *Merge Tool* will create the new *Merge Feature* and delete the *Source Features* in a single,
+The *Merge Tool* will create the new *Merge Feature* and delete the *Source Features* in a single,
 undoable step.
 
 The *Map* in *Figure 5* shows how the two buildings on this example have been merged into one, and
@@ -143,19 +143,19 @@ the *Table View* with the newly created *Feature*.
 
 |image6|
 
- **Figure 5. Merge result**
+**Figure 5. Merge result**
 
 Adding and deleting features.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For adding more features to be merged, select those features drawing a bounding box and they will be
 added to the view.
- For deleting features, select the feature to be deleted and click on the delete button or draw a
+For deleting features, select the feature to be deleted and click on the delete button or draw a
 bounding box with Ctrl key pushed over the desired feature.
 
 |image7|
 
- **Figure 6. Delete button**
+**Figure 6. Delete button**
 
 Usage Example ('*operation mode*')
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -165,7 +165,7 @@ Use the *Box Selection Tool* to select features as in *Figure 7*.
 
 |image8|
 
- **Figure 7. Selecting features with the Box Selection Tool.**
+**Figure 7. Selecting features with the Box Selection Tool.**
 
 
 Once the desired features are selected, right-click on them and select: :menuselection:`Operations --> Merge Selected`.
@@ -173,7 +173,7 @@ Once the desired features are selected, right-click on them and select: :menusel
 
 |image9|
 
- **Figure 8. Launch the Operation -> Merge Selected command.**
+**Figure 8. Launch the Operation -> Merge Selected command.**
 
 
 The Merge View will be opened and selected features filled in.
@@ -181,7 +181,7 @@ The Merge View will be opened and selected features filled in.
 
 |image10|
 
- **Figure 9. The new Merge View windows containing the selected features.**
+**Figure 9. The new Merge View windows containing the selected features.**
 
 
 Selection can be changed with Box Selection tool and Merge View will adapt to changes.
@@ -189,12 +189,12 @@ Selection can be changed with Box Selection tool and Merge View will adapt to ch
 
 |image11|
 
- **Figure 10. A new selection is being created.**
+**Figure 10. A new selection is being created.**
 
 
 |image12|
 
- **Figure 11. Merge View self-updates and displays the new featureset.**
+**Figure 11. Merge View self-updates and displays the new featureset.**
 
 
 Merge Operation can be fine tuned and lauched as in  '*classic mode*'.
@@ -202,16 +202,16 @@ Merge Operation can be fine tuned and lauched as in  '*classic mode*'.
 
 |image13|
 
- **Figure 12. Merge task completes as usual.**
+**Figure 12. Merge task completes as usual.**
 
 .. |image0| image:: /images/merge_tool/merge_feature_mode.gif
-.. |image1| image:: download/thumbnails/12276/Merge1.png
-.. |image2| image:: download/thumbnails/12276/merge_1_select_tool.png
-.. |image3| image:: download/thumbnails/12276/merge_2_select_features.png
-.. |image4| image:: download/thumbnails/12276/MergeDialog1.png
-.. |image5| image:: download/thumbnails/12276/MergeDialog2.png
-.. |image6| image:: download/thumbnails/12276/merge_5_merged_result.png
-.. |image7| image:: download/thumbnails/12276/MergeDelete.png
+.. |image1| image:: /images/merge_tool/Merge1.png
+.. |image2| image:: /images/merge_tool//merge_1_select_tool.png
+.. |image3| image:: /images/merge_tool/merge_2_select_features.png
+.. |image4| image:: /images/merge_tool/MergeDialog1.png
+.. |image5| image:: /images/merge_tool/MergeDialog2.png
+.. |image6| image:: /images/merge_tool/merge_5_merged_result.png
+.. |image7| image:: /images/merge_tool/MergeDelete.png
 .. |image8| image:: /images/merge_tool_operation/merge_tool_operation_01.png
 .. |image9| image:: /images/merge_tool_operation/merge_tool_operation_02.png
 .. |image10| image:: /images/merge_tool_operation/merge_tool_operation_03.png
