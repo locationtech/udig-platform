@@ -48,13 +48,6 @@ public interface IDocumentSource extends IAbstractDocumentSource {
     public List<IDocument> getDocuments();
 
     /**
-     * Checks if the source allows adding new documents.
-     * 
-     * @return true if allows adding, otherwise false
-     */
-    public boolean canAdd();
-
-    /**
      * Adds the document.
      * 
      * @param info
@@ -71,13 +64,6 @@ public interface IDocumentSource extends IAbstractDocumentSource {
     public List<IDocument> add(List<DocumentInfo> infos);
 
     /**
-     * Checks if the source allows removing.
-     * 
-     * @return true if allows removing, otherwise false
-     */
-    public boolean canRemove();
-
-    /**
      * Removes the document.
      * 
      * @param true if removed successfully, otherwise false
@@ -90,13 +76,6 @@ public interface IDocumentSource extends IAbstractDocumentSource {
      * @param true if removed successfully, otherwise false
      */
     public boolean remove(List<IDocument> docs);
-
-    /**
-     * Checks if the source allows updating.
-     * 
-     * @return true if allows updating, otherwise false
-     */
-    public boolean canUpdate();
 
     /**
      * Updates the document with the information.

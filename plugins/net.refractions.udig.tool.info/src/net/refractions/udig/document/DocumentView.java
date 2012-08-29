@@ -326,21 +326,40 @@ public class DocumentView extends ViewPart {
      * Refreshes the buttons with respect to the current list selection.
      */
     private void refreshBtns() {
+        setBtns(false);
+        refreshBtnsOnType();
+    }
+    
+    /**
+     * Sets the button's enablement.
+     * 
+     * @param isEnabled
+     */
+    private void setBtns(boolean isEnabled) {
+        openButton.setEnabled(isEnabled);
+        saveAsButton.setEnabled(isEnabled);
+        attachButton.setEnabled(isEnabled);
+        linkButton.setEnabled(isEnabled);
+        editButton.setEnabled(isEnabled);
+        removeButton.setEnabled(isEnabled);
+    }
 
-        openButton.setEnabled(false);
-        saveAsButton.setEnabled(false);
-        removeButton.setEnabled(false);
-        attachButton.setEnabled(false);
-        linkButton.setEnabled(false);
-        editButton.setEnabled(false);
-
+    /**
+     * Refreshes the buttons with respect to the selection's type (if {@link IDocument} or
+     * {@link IDocumentFolder}), document type (refer to {@link DocType}) and document content type
+     * (refer to {@link Type}). And also with respect to the selection's document source. Refer to
+     * {@link IAbstractDocumentSource}.
+     */
+    private void refreshBtnsOnType() {
+        
         if (viewerSelection != null) {
             if (viewerSelection.size() == 1) {
                 final Object element = viewerSelection.getFirstElement();
-                attachButton.setEnabled(true);
-                linkButton.setEnabled(true);
+                final IAbstractDocumentSource source = getDocumentSource();
+                attachButton.setEnabled(source.canAttach());
+                linkButton.setEnabled(source.canLink());
                 if (element instanceof IDocument) {
-                    editButton.setEnabled(true);
+                    editButton.setEnabled(source.canUpdate());
                     final IDocument doc = (IDocument) element;
                     if (DocType.ATTACHMENT == doc.getDocType() 
                             && Type.FILE == doc.getType()) {
@@ -348,7 +367,7 @@ public class DocumentView extends ViewPart {
                     }
                     if (!doc.isEmpty()) {
                         openButton.setEnabled(true);
-                        removeButton.setEnabled(true);
+                        removeButton.setEnabled(source.canRemove());
                     }
                     if (DocType.HOTLINK == doc.getDocType()) {
                         removeButton.setText(Messages.docView_clear);
@@ -367,7 +386,7 @@ public class DocumentView extends ViewPart {
                 removeButton.setEnabled(!isAllFolders);    
             }
         }
-
+        
     }
     
     /**
@@ -818,23 +837,6 @@ public class DocumentView extends ViewPart {
             }            
         }
         
-    }
-    
-    /**
-     * Gets the document folder containing the current selection. Or the current selection if it is
-     * a folder.
-     * 
-     * @return document folder
-     */
-    private IDocumentFolder getDocumentFolder() {
-        final Object obj = viewerSelection.getFirstElement();
-        IDocumentFolder folder = null;
-        if (obj instanceof IDocumentFolder) {
-            folder = (IDocumentFolder) obj;
-        } else if (obj instanceof IDocument) {
-            folder = itemModel.getFolder((IDocument) obj);
-        }
-        return folder;
     }
     
     /**
@@ -1335,6 +1337,40 @@ public class DocumentView extends ViewPart {
             return templates;
         }
         
+    }
+ 
+    /**
+     * Gets the document folder containing the current selection. Or the current selection if it is
+     * a folder.
+     * 
+     * @return document folder
+     */
+    private IDocumentFolder getDocumentFolder() {
+        if (viewerSelection != null) {
+            final Object obj = viewerSelection.getFirstElement();
+            IDocumentFolder folder = null;
+            if (obj instanceof IDocumentFolder) {
+                folder = (IDocumentFolder) obj;
+            } else if (obj instanceof IDocument) {
+                folder = itemModel.getFolder((IDocument) obj);
+            }
+            return folder;    
+        }
+        return null;
+    }
+    
+    /**
+     * Gets the document source of the folder containing the current selection. This should also be
+     * the same document source of the current selection if it is not a folder.
+     * 
+     * @return document source
+     */
+    private IAbstractDocumentSource getDocumentSource() {
+        final IDocumentFolder folder = getDocumentFolder();
+        if (folder != null) {
+            return folder.getSource();    
+        }
+        return null;
     }
     
 }

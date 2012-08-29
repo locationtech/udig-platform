@@ -114,6 +114,21 @@ public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotl
     }
 
     @Override
+    public boolean canAttach() {
+        return false;
+    }
+    
+    @Override
+    public boolean canLink() {
+        return false;
+    }
+    
+    @Override
+    public boolean canUpdate() {
+        return true;
+    }
+    
+    @Override
     public IDocument setFile(SimpleFeature feature, String attributeName, File file) {
         final HotlinkFileDocument fileDoc = (HotlinkFileDocument) getDocument(feature, attributeName);
         fileDoc.setInfo(file.getAbsolutePath());
@@ -137,6 +152,11 @@ public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotl
         return actionDoc;
     }
 
+    @Override
+    public boolean canRemove() {
+        return true;
+    }
+    
     @Override
     public IDocument clear(SimpleFeature feature, String attributeName) {
         final AbstractHotlinkDocument hotlinkDoc = (AbstractHotlinkDocument) getDocument(feature, attributeName);

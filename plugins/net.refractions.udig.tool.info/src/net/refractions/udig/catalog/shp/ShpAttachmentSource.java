@@ -61,6 +61,16 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     }
     
     @Override
+    public boolean canAttach() {
+        return true;
+    }
+    
+    @Override
+    public boolean canLink() {
+        return true;
+    }
+    
+    @Override
     public IDocument add(SimpleFeature feature, DocumentInfo info) {
         final IDocument doc = addInternal(feature, info);
         save(feature);
@@ -88,6 +98,11 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     }
     
     @Override
+    public boolean canUpdate() {
+        return true;
+    }
+    
+    @Override
     public IDocument update(SimpleFeature feature, IDocument doc, DocumentInfo info) {
         if (Type.FILE == info.getType()) {
             final File oldFile = (File) doc.getValue();
@@ -108,6 +123,11 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
         ShpDocUtils.deleteFile(oldFile);
         final File newFile = ShpDocUtils.copyFile(info.getInfo(), getAttachmentDir(feature));
         info.setInfo(newFile.getAbsolutePath());
+    }
+    
+    @Override
+    public boolean canRemove() {
+        return true;
     }
     
     @Override

@@ -83,4 +83,28 @@ public class BasicHotlink implements IHotlinkSource {
         return null;
     }
 
+    @Override
+    public boolean canAttach() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean canLink() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean canUpdate() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean canRemove() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 }
