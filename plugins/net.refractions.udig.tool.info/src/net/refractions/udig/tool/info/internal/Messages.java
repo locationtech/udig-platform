@@ -142,6 +142,8 @@ public class Messages extends NLS {
 
     public static String DocumentPropertyPage_errExists;
 
+    public static String DocumentPropertyPage_errRequired;
+
     public static String DocumentView_openActionDialogMessage;
 
     public static String DocumentView_openActionDialogTitle;
