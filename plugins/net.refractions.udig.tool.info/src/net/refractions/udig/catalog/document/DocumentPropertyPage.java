@@ -57,7 +57,11 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -386,9 +390,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         // look up shell now from the display thread
         final Shell shell = DocumentPropertyPage.this.getShell();
         
-        final HotlinkDescriptorDialog prompt = new HotlinkDescriptorDialog(shell);
-        HotlinkDescriptor copy = new HotlinkDescriptor(descriptor);
-        prompt.setDescriptor(copy);
+        final HotlinkDescriptor copy = new HotlinkDescriptor(descriptor);
+        final HotlinkDescriptorDialog prompt = new HotlinkDescriptorDialog(shell, copy);
         prompt.openInJob(new Runnable() {
             @Override
             public void run() {
@@ -453,12 +456,34 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
 
         private StructuredSelection typeSelection;
         
+        /**
+         * Constructor for add mode.
+         * 
+         * @param parentShell
+         */
         protected HotlinkDescriptorDialog(Shell parentShell) {
             super(parentShell);
-            message = Messages.DocumentPropertyPage_header;
-            this.descriptor = new HotlinkDescriptor(); // empty if creating a new one
+            message = Messages.DocumentPropertyPage_addHotlinkHeader;
+            this.descriptor = new HotlinkDescriptor();
         }
 
+        /**
+         * Constructor for edit mode.
+         * 
+         * @param parentShell
+         * @param descriptor
+         */
+        protected HotlinkDescriptorDialog(Shell parentShell, HotlinkDescriptor descriptor) {
+            super(parentShell);
+            message = Messages.DocumentPropertyPage_editHotlinkHeader;
+            this.descriptor = descriptor;
+        }
+        
+        @Override
+        protected boolean isResizable() {
+            return true;
+        }
+        
         @Override
         protected Image getImage() {
             return getQuestionImage();
@@ -470,10 +495,6 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
 
         public HotlinkDescriptor getDescriptor() {
             return descriptor;
-        }
-
-        public void setDescriptor(HotlinkDescriptor descriptor) {
-            this.descriptor = descriptor;
         }
 
         /**
@@ -536,22 +557,44 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         }
         @Override
         protected void configureShell(Shell shell) {
-            super.configureShell(shell);
             shell.setText(Messages.DocumentPropertyPage_title);
-            shell.setImage( getQuestionImage() );
+            shell.setImage(getQuestionImage());
+            resizeDialog(shell);
+            super.configureShell(shell);
+        }
+
+        protected void resizeDialog(Shell shell) {
+
+            final int HEIGHT = 380;
+            final int WIDTH = 460;
+
+            final Display display = PlatformUI.getWorkbench().getDisplay();
+            final Point size = (new Shell(display)).computeSize(-1, -1);
+            final Rectangle screen = display.getMonitors()[0].getBounds();
+
+            final int xPos = (screen.width - size.x) / 2 - WIDTH / 2;
+            final int yPos = (screen.height - size.y) / 2 - HEIGHT / 2;
+
+            shell.setBounds(xPos, yPos, WIDTH, HEIGHT);
+
         }
         
         @Override
         protected Control createDialogArea(Composite parent) {
             
             Composite composite = new Composite(parent, SWT.NONE);
-            MigLayout layout = new MigLayout("insets panel, wrap 2", "[right]8[grow]", "[]10[][]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            MigLayout layout = new MigLayout("insets 0, wrap 2, fillx", "[20%, right]8[80%]", "[]15[][][]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             composite.setLayout(layout);
             composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
             createMessageArea(composite);
             imageLabel.setLayoutData("cell 0 0, alignx right"); //$NON-NLS-1$
             messageLabel.setLayoutData("cell 1 0 2 1, aligny center"); //$NON-NLS-1$
+            final FontData[] fontData = messageLabel.getFont().getFontData(); 
+            for (int i = 0; i < fontData.length; i++) {
+                fontData[i].setHeight(14);
+            };
+            messageLabel.setFont(new Font(null, fontData));
             
             Label labelLbl = new Label(composite, SWT.NONE);
             labelLbl.setText(Messages.DocumentPropertyPage_Label);
