@@ -456,6 +456,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
 
         private StructuredSelection typeSelection;
         
+        private boolean isAddMode = true;
+        
         /**
          * Constructor for add mode.
          * 
@@ -463,7 +465,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
          */
         protected HotlinkDescriptorDialog(Shell parentShell) {
             super(parentShell);
-            message = Messages.DocumentPropertyPage_addHotlinkHeader;
+            this.isAddMode = true;
             this.descriptor = new HotlinkDescriptor();
         }
 
@@ -475,7 +477,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
          */
         protected HotlinkDescriptorDialog(Shell parentShell, HotlinkDescriptor descriptor) {
             super(parentShell);
-            message = Messages.DocumentPropertyPage_editHotlinkHeader;
+            this.isAddMode = false;
             this.descriptor = descriptor;
         }
         
@@ -587,6 +589,13 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             composite.setLayout(layout);
             composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
+            String header = Messages.DocumentPropertyPage_editHotlinkHeader;
+            if (isAddMode) {
+                header = Messages.DocumentPropertyPage_addHotlinkHeader;
+            }
+            message = header;
+            getShell().setText(header);
+            
             createMessageArea(composite);
             imageLabel.setLayoutData("cell 0 0, alignx right"); //$NON-NLS-1$
             messageLabel.setLayoutData("cell 1 0 2 1, aligny center"); //$NON-NLS-1$
