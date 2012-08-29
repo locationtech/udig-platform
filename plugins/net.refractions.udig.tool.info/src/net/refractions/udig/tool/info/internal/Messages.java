@@ -82,6 +82,10 @@ public class Messages extends NLS {
 
     public static String DocumentDialog_attributeLabel;
 
+    public static String DocumentDialog_btnAttach;
+
+    public static String DocumentDialog_btnLink;
+
     public static String DocumentDialog_createFileFromTemplateError;
 
     public static String DocumentDialog_createFileFromTemplateSuccess;

@@ -327,6 +327,19 @@ public class DocumentDialog extends IconAndMessageDialog {
     private static final String WIDTH_LAYOUT_FORMAT = "w %s!"; //$NON-NLS-1$
     
     @Override
+    protected void createButtonsForButtonBar(Composite parent) {
+        super.createButtonsForButtonBar(parent);
+        if (isAddMode()) {
+            final Button okBtn = getButton(IDialogConstants.OK_ID); 
+            if (isAttachment()) {
+                okBtn.setText(Messages.DocumentDialog_btnAttach);
+            } else if (isLinked()) {
+                okBtn.setText(Messages.DocumentDialog_btnLink);
+            }    
+        }
+    }
+    
+    @Override
     protected Control createDialogArea(Composite parent) {
         
         composite = new Composite(parent, SWT.NONE);
