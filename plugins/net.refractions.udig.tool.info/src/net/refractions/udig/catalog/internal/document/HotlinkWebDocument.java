@@ -44,6 +44,14 @@ public class HotlinkWebDocument extends AbstractHotlinkDocument {
     }
 
     @Override
+    public String getContentName() {
+        if (!isEmpty()) {
+            return url.toString();
+        }
+        return null;
+    }
+    
+    @Override
     public boolean open() {
         return AbstractDocument.openUrl(url);
     }

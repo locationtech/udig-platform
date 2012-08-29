@@ -43,7 +43,15 @@ public class FileDocument extends AbstractBasicDocument {
     public Object getContent() {
         return file;
     }
-
+    
+    @Override
+    public String getContentName() {
+        if (!isEmpty()) {
+            return file.getName();
+        }
+        return null;
+    }
+    
     @Override
     public boolean open() {
         return AbstractDocument.openFile(file);

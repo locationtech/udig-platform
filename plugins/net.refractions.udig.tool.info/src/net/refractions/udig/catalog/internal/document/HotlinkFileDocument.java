@@ -42,6 +42,14 @@ public class HotlinkFileDocument extends AbstractHotlinkDocument {
     public Object getContent() {
         return file;
     }
+    
+    @Override
+    public String getContentName() {
+        if (!isEmpty()) {
+            return file.getName();
+        }
+        return null;
+    }
 
     @Override
     public boolean open() {

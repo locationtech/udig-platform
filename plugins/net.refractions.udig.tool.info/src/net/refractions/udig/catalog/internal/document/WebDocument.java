@@ -45,6 +45,14 @@ public class WebDocument extends AbstractBasicDocument {
     }
 
     @Override
+    public String getContentName() {
+        if (!isEmpty()) {
+            return url.toString();
+        }
+        return null;
+    }
+    
+    @Override
     public boolean open() {
         return AbstractDocument.openUrl(url);
     }
