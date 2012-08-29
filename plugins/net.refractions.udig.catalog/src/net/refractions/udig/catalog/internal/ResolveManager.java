@@ -183,25 +183,27 @@ public class ResolveManager implements IResolveManager {
     	IConfigurationElement[] resolveList  = element.getChildren("resolve"); //$NON-NLS-1$
         for( IConfigurationElement child : resolveList ) {
             String resolveType=child.getAttribute("type"); //$NON-NLS-1$
-            // We first try a class loader trick to grab the target class
-            // without forcing the load of the plugin where the element
-            // comes from (this works in may cases where the type is something
-            // common from net.refractions.udig.libs)
-            try{
-                ClassLoader classLoader = target.getClassLoader();
-                if( classLoader==null ){
-                    classLoader=ClassLoader.getSystemClassLoader();
+            if( !resolveType.startsWith("net.refractions") && !resolveType.startsWith("eu.udig") ){
+                // We first try a class loader trick to grab the target class
+                // without forcing the load of the plugin where the element
+                // comes from (this works in may cases where the type is something
+                // common from net.refractions.udig.libs)
+                try{
+                    ClassLoader classLoader = target.getClassLoader();
+                    if( classLoader==null ){
+                        classLoader=ClassLoader.getSystemClassLoader();
+                    }
+                    Class< ? > resolvedClass = classLoader.loadClass(resolveType);
+                    
+                    if( target.isAssignableFrom(resolvedClass) ){
+                        return true;
+                    }
+                    else {                	
+                    	continue; // we were able to load the class and it did not match
+                    }
+                } catch(ClassNotFoundException e2){
+                    // that is no good, let's try using the RCP classloader
                 }
-                Class< ? > resolvedClass = classLoader.loadClass(resolveType);
-                
-                if( target.isAssignableFrom(resolvedClass) ){
-                    return true;
-                }
-                else {                	
-                	continue; // we were able to load the class and it did not match
-                }
-            } catch(ClassNotFoundException e2){
-                // that is no good, let's try using the RCP classloader
             }
             // Okay that optimisation failed; lets use the platform facilities
             // like a good RCP programmer
