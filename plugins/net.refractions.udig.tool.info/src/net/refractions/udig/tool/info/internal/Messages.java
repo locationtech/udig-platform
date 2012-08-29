@@ -34,6 +34,8 @@ public class Messages extends NLS {
 
     public static String DocumentPropertyPage_Action;
 
+    public static String DocumentPropertyPage_addHotlinkHeader;
+
     public static String Document_Action_Column;
 
     public static String Document_Add;
@@ -141,6 +143,8 @@ public class Messages extends NLS {
     public static String DocumentDialog_urlLabel;
 
     public static String DocumentDialog_valueLabel;
+
+    public static String DocumentPropertyPage_editHotlinkHeader;
 
     public static String DocumentPropertyPage_errActionIsBlank;
 

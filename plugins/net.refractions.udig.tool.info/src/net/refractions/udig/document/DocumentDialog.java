@@ -203,6 +203,11 @@ public class DocumentDialog extends IconAndMessageDialog {
         this.params = params;
     }
     
+    @Override
+    protected boolean isResizable() {
+        return true;
+    }
+    
     public Map<String, Object> getValues() {
         return values;
     }
@@ -306,7 +311,7 @@ public class DocumentDialog extends IconAndMessageDialog {
     protected void configureShell(Shell shell) {
         
         final int HEIGHT = 380;
-        final int WIDTH = 400;
+        final int WIDTH = 460;
 
         final Display display = PlatformUI.getWorkbench().getDisplay();
         final Point size = (new Shell(display)).computeSize(-1, -1);
@@ -345,7 +350,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         composite = new Composite(parent, SWT.NONE);
         final String layoutCons = "insets 0, fillx, wrap 2, hidemode 3"; //$NON-NLS-1$
         final String columnCons = String.format(LAYOUT_FORMAT, LABEL_WIDTH, CONTROL_WIDTH);
-        final String rowCons = "[]15[][]"; //$NON-NLS-1$
+        final String rowCons = "[][]15[][][]"; //$NON-NLS-1$
         composite.setLayout(new MigLayout(layoutCons, columnCons, rowCons));
         composite.setLayoutData(new GridData(GridData.FILL_BOTH));
         
@@ -400,31 +405,24 @@ public class DocumentDialog extends IconAndMessageDialog {
      * Creates the header section display image, header text and sub-text.
      */
     private void createHeader() {
-
-        final Composite headerComposite = new Composite(composite, SWT.NONE);
-        headerComposite.setLayoutData("growx, span 2"); //$NON-NLS-1$
-        final String layoutCons = "insets 0, fillx, wrap 2"; //$NON-NLS-1$
-        final String columnCons = "[]10[]"; //$NON-NLS-1$
-        final String rowCons = ""; //$NON-NLS-1$
-        headerComposite.setLayout(new MigLayout(layoutCons, columnCons, rowCons));
         
         final Image image = getImage();
         if (image != null) {
-                headerImg = new Label(headerComposite, SWT.NULL);
+                headerImg = new Label(composite, SWT.NULL);
                 image.setBackground(headerImg.getBackground());
                 headerImg.setImage(image);
                 headerImg.setLayoutData("sy 2"); //$NON-NLS-1$
         }
 
-        headerText = new Label(headerComposite, SWT.NONE);
-        headerText.setLayoutData("push"); //$NON-NLS-1$
+        headerText = new Label(composite, SWT.NONE);
         final FontData[] fontData = headerText.getFont().getFontData(); 
         for (int i = 0; i < fontData.length; i++) {
             fontData[i].setHeight(14);
         };
         headerText.setFont(new Font(null, fontData));
+        headerText.setLayoutData(""); //$NON-NLS-1$
         
-        subHeaderText = new Label(headerComposite, SWT.WRAP);
+        subHeaderText = new Label(composite, SWT.WRAP);
         subHeaderText.setLayoutData(""); //$NON-NLS-1$
         
     }
@@ -770,11 +768,11 @@ public class DocumentDialog extends IconAndMessageDialog {
     private void setHeaderDisplayHotlink() {
         
         final String header = String.format(Messages.DocumentDialog_hotlinkHeader,
-                DocUtils.toCamelCase(attribute.getText()));
+                DocUtils.toCamelCase(getAttribute()));
         getShell().setText(header);
         headerText.setText(header);
-        subHeaderText.setText(description.getText());
-        
+        subHeaderText.setText(getDescription());
+
     }
     
     private void setHeaderDisplayLinkedOrAttachment() {
