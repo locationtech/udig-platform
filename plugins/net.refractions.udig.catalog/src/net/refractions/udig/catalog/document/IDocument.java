@@ -30,14 +30,32 @@ public interface IDocument {
     public enum DocType {
         /**
          * Linked documents store a reference to the document.
+         * <p>
+         * This may have either of the following content types:
+         * <ul>
+         * <li>{@link Type#FILE}</li>
+         * <li>{@link Type#WEB}</li>
+         * </ul>
          */
         LINKED,
         /**
          * Attachments store a copy of the document.
+         * <p>
+         * This may have either of the following content types:
+         * <ul>
+         * <li>{@link Type#FILE}</li>
+         * </ul>
          */
         ATTACHMENT,
         /**
          * Hotlinks store reference to the document as a feature's attribute value.
+         *          * <p>
+         * This may have either of the following content types:
+         * <ul>
+         * <li>{@link Type#FILE}</li>
+         * <li>{@link Type#WEB}</li>
+         * <li>{@link Type#ACTION}</li>
+         * </ul>
          */
         HOTLINK;
     }
@@ -46,7 +64,18 @@ public interface IDocument {
      * Document content type
      */
     public enum Type {
-        FILE, WEB, ACTION;
+        /**
+         * Documents that refer to files.
+         */
+        FILE, 
+        /**
+         * Documents that refer to web pages.
+         */
+        WEB, 
+        /**
+         * Documents that refer to custom actions.
+         */
+        ACTION;
         public static boolean exists(String type) {
             for (Type c : values()) {
                 if (c.name().equals(type)) {
@@ -64,7 +93,7 @@ public interface IDocument {
      * @return document info
      */
     public Object getValue();
-
+    
     /**
      * Gets the document label. This is to be used for labelling documents in lists and views.
      * 
