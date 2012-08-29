@@ -30,7 +30,7 @@ public class HotlinkActionDocument extends AbstractHotlinkDocument {
     }
 
     @Override
-    public Object getValue() {
+    public Object getContent() {
         return info;
     }
 

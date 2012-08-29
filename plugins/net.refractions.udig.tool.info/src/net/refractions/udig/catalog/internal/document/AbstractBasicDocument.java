@@ -48,12 +48,12 @@ public abstract class AbstractBasicDocument extends AbstractDocument {
     }
 
     @Override
-    public DocType getDocType() {
-        return DocType.LINKED;
+    public Type getType() {
+        return Type.LINKED;
     }
 
     @Override
-    public Type getType() {
+    public ContentType getContentType() {
         return info.getType();
     }
 

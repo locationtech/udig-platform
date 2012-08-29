@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IDocumentSource;
 import net.refractions.udig.catalog.internal.document.AbstractBasicDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
@@ -89,7 +89,7 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
     }
 
     private IDocument addInternal(DocumentInfo info) {
-        if (Type.FILE == info.getType()) {
+        if (ContentType.FILE == info.getType()) {
             final File newFile = ShpDocUtils.copyFile(info.getInfo(), propParser.getShapefileAttachDir());
             info.setInfo(newFile.getAbsolutePath());
         }
@@ -120,8 +120,8 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
     }
 
     private boolean removeInternal(IDocument doc) {
-        if (Type.FILE == doc.getType()) {
-            ShpDocUtils.deleteFile(doc.getValue());
+        if (ContentType.FILE == doc.getContentType()) {
+            ShpDocUtils.deleteFile(doc.getContent());
         }
         getDocsInternal().remove(doc);
         return true;
@@ -134,8 +134,8 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
 
     @Override
     public IDocument update(IDocument doc, DocumentInfo info) {
-        if (Type.FILE == info.getType()) {
-            final File oldFile = (File) doc.getValue();
+        if (ContentType.FILE == info.getType()) {
+            final File oldFile = (File) doc.getContent();
             if (oldFile == null) {
                 updateInternal(oldFile, info);
             } else {

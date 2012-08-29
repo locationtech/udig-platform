@@ -45,19 +45,19 @@ public abstract class AbstractDocument implements IDocument {
     
     @Override
     public boolean isEmpty() {
-        return (getValue() == null);
+        return (getContent() == null);
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof IDocument) {
             final IDocument doc = (IDocument) obj;
-            final boolean isEqualDocType = getDocType() == doc.getDocType();
-            final boolean isEqualType = getType() == doc.getType();
+            final boolean isEqualDocType = getType() == doc.getType();
+            final boolean isEqualType = getContentType() == doc.getContentType();
             final boolean isEqualLabel = isEqual(getLabel(), doc.getLabel());
             final boolean isEqualDescription = isEqual(getDescription(), doc.getDescription());
             final boolean isEqualSource = getSource() == doc.getSource();
-            final boolean isEqualValue = getValue() == doc.getValue();
+            final boolean isEqualValue = getContent() == doc.getContent();
             return isEqualDocType && isEqualType && isEqualLabel && isEqualDescription
                     && isEqualSource && isEqualValue;
         }

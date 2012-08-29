@@ -21,7 +21,7 @@ import java.util.List;
 
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
@@ -665,23 +665,23 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             typeViewer.setLabelProvider(new LabelProvider() {
                 @Override
                 public String getText(Object element) {
-                    if (element instanceof Type) {
-                        final Type type = (Type) element;
+                    if (element instanceof ContentType) {
+                        final ContentType type = (ContentType) element;
                         return DocUtils.toCamelCase(type.name());
                     }
                     return super.getText(element);
                 }
             });
-            typeViewer.setInput(IDocument.Type.values());
+            typeViewer.setInput(IDocument.ContentType.values());
             typeViewer.getControl().setLayoutData(""); //$NON-NLS-1$
             typeViewer.addSelectionChangedListener( new ISelectionChangedListener() {
                 public void selectionChanged(SelectionChangedEvent event) {
                     final ISelection selection = event.getSelection();
                     if (!selection.isEmpty() && selection instanceof StructuredSelection) {
                         final StructuredSelection strucSelection = (StructuredSelection) selection;
-                        final IDocument.Type type = (Type) strucSelection.getFirstElement();
+                        final IDocument.ContentType type = (ContentType) strucSelection.getFirstElement();
                         if (typeSelection != null && !typeSelection.isEmpty()) {
-                            final IDocument.Type currentType = (Type) typeSelection.getFirstElement();
+                            final IDocument.ContentType currentType = (ContentType) typeSelection.getFirstElement();
                             if (currentType == type) {
                                 return;
                             }
@@ -728,7 +728,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             final Control control = super.createContents(parent);
             
             if( descriptor.isEmpty() ){
-                final Type defaultType = Type.FILE;
+                final ContentType defaultType = ContentType.FILE;
                 typeViewer.setSelection(new StructuredSelection(defaultType), true);
                 setActionText(defaultType, null);
             } else {
@@ -763,7 +763,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 }
                 String description = descriptionText.getText();
                 StructuredSelection selection = (StructuredSelection) typeViewer.getSelection();
-                Type type = (Type) selection.getFirstElement();
+                ContentType type = (ContentType) selection.getFirstElement();
                 final String actionConfig = actionText.getText();
                 descriptor = new HotlinkDescriptor(label, description, attributeName, type, actionConfig);
                 super.okPressed();                
@@ -812,7 +812,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             }
             
             final StructuredSelection selection = (StructuredSelection) typeViewer.getSelection();
-            final Type type = (Type) selection.getFirstElement();
+            final ContentType type = (ContentType) selection.getFirstElement();
             
             final String attributeName = attributeViewer.getCombo().getText();
             for (HotlinkDescriptor hotlink : hotlinkList) {
@@ -820,8 +820,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                     continue;
                 }
                 if (attributeName.equals(hotlink.getAttributeName())) {
-                    final Type currentType = hotlink.getType();
-                    if (Type.ACTION == currentType && Type.ACTION == type) {
+                    final ContentType currentType = hotlink.getType();
+                    if (ContentType.ACTION == currentType && ContentType.ACTION == type) {
                         return true;
                     } else {
                         attributeViewer.getControl().setFocus();
@@ -842,7 +842,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             super.cancelPressed();
         }
      
-        private void setActionText(Type type, String config) {
+        private void setActionText(ContentType type, String config) {
             switch (type) {
             case ACTION:
                 actionText.setEditable(true);

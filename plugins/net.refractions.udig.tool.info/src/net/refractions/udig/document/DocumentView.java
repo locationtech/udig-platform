@@ -31,8 +31,8 @@ import net.refractions.udig.catalog.document.IAbstractDocumentSource;
 import net.refractions.udig.catalog.document.IAttachment;
 import net.refractions.udig.catalog.document.IAttachmentSource;
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.DocType;
 import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IDocumentFolder;
 import net.refractions.udig.catalog.document.IDocumentSource;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
@@ -374,8 +374,8 @@ public class DocumentView extends ViewPart {
 
     /**
      * Refreshes the buttons with respect to the selection's type (if {@link IDocument} or
-     * {@link IDocumentFolder}), document type (refer to {@link DocType}) and document content type
-     * (refer to {@link Type}). And also with respect to the selection's document source. Refer to
+     * {@link IDocumentFolder}), document type (refer to {@link Type}) and document content type
+     * (refer to {@link ContentType}). And also with respect to the selection's document source. Refer to
      * {@link IAbstractDocumentSource}.
      */
     private void refreshBtnsOnType() {
@@ -389,8 +389,8 @@ public class DocumentView extends ViewPart {
                 if (element instanceof IDocument) {
                     editButton.setEnabled(source.canUpdate());
                     final IDocument doc = (IDocument) element;
-                    if (DocType.ATTACHMENT == doc.getDocType() 
-                            && Type.FILE == doc.getType()) {
+                    if (Type.ATTACHMENT == doc.getType() 
+                            && ContentType.FILE == doc.getContentType()) {
                         saveAsButton.setEnabled(true);
                         saveAsAction.setEnabled(true);
                     }
@@ -398,7 +398,7 @@ public class DocumentView extends ViewPart {
                         openButton.setEnabled(true);
                         removeButton.setEnabled(source.canRemove());
                     }
-                    if (DocType.HOTLINK == doc.getDocType()) {
+                    if (Type.HOTLINK == doc.getType()) {
                         removeButton.setText(Messages.docView_clear);
                     } else {
                         removeButton.setText(Messages.docView_delete);
@@ -737,7 +737,7 @@ public class DocumentView extends ViewPart {
     private void open() {
         final IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
         final IDocument doc = (IDocument) selection.getFirstElement();
-        if (Type.ACTION == doc.getType()) {
+        if (ContentType.ACTION == doc.getContentType()) {
             openAction(doc);
         } else {
             doc.open();  
@@ -793,7 +793,7 @@ public class DocumentView extends ViewPart {
      */
     private void openAction(IHotlink hotlinkDoc, HotlinkDescriptor descriptor) {
         final String action = descriptor.getConfig().replace(DocumentPropertyPage.ACTION_PARAM,
-                hotlinkDoc.getValue().toString());
+                hotlinkDoc.getContent().toString());
         Program.launch(action);
     }
     
@@ -806,7 +806,7 @@ public class DocumentView extends ViewPart {
         final IDocumentFolder folder = getDocumentFolder();
         if (folder != null) {
             final Map<String, Object> params = new HashMap<String, Object>();
-            params.put(DocumentDialog.P_DOC_TYPE, DocType.ATTACHMENT);
+            params.put(DocumentDialog.P_DOC_TYPE, Type.ATTACHMENT);
             params.put(DocumentDialog.P_MODE, Mode.ADD);
             params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(folder));
 
@@ -852,7 +852,7 @@ public class DocumentView extends ViewPart {
         final IDocumentFolder folder = getDocumentFolder();
         if (folder != null) {
             final Map<String, Object> params = new HashMap<String, Object>();
-            params.put(DocumentDialog.P_DOC_TYPE, DocType.LINKED);
+            params.put(DocumentDialog.P_DOC_TYPE, Type.LINKED);
             params.put(DocumentDialog.P_MODE, Mode.ADD);
             params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(folder));
 
@@ -878,7 +878,7 @@ public class DocumentView extends ViewPart {
         final Object obj = viewerSelection.getFirstElement();
         if (obj instanceof IDocument) {
             final IDocument doc = (IDocument) obj;
-            if (DocType.HOTLINK == doc.getDocType()) {
+            if (Type.HOTLINK == doc.getType()) {
                 editHotlink(doc);
             } else {
                 editDocument(doc);
@@ -898,15 +898,15 @@ public class DocumentView extends ViewPart {
         
         final Map<String, Object> values = new HashMap<String, Object>();
         if (!doc.isEmpty()) {
-            values.put(DocumentDialog.V_INFO, doc.getValue().toString());    
+            values.put(DocumentDialog.V_INFO, doc.getContent().toString());    
         }
-        values.put(DocumentDialog.V_TYPE, doc.getType());
+        values.put(DocumentDialog.V_TYPE, doc.getContentType());
         values.put(DocumentDialog.V_LABEL, doc.getLabel());
         values.put(DocumentDialog.V_DESCRIPTION, doc.getDescription());
         values.put(DocumentDialog.V_TEMPLATE, doc.isTemplate());
         
         final Map<String, Object> params = new HashMap<String, Object>();
-        params.put(DocumentDialog.P_DOC_TYPE, doc.getDocType());
+        params.put(DocumentDialog.P_DOC_TYPE, doc.getType());
         params.put(DocumentDialog.P_MODE, Mode.EDIT);
         params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(doc));
         
@@ -937,27 +937,27 @@ public class DocumentView extends ViewPart {
         
         final Map<String, Object> values = new HashMap<String, Object>();
         if (!doc.isEmpty()) {
-            values.put(DocumentDialog.V_INFO, doc.getValue().toString());    
+            values.put(DocumentDialog.V_INFO, doc.getContent().toString());    
         }
-        values.put(DocumentDialog.V_TYPE, doc.getType());
+        values.put(DocumentDialog.V_TYPE, doc.getContentType());
         values.put(DocumentDialog.V_ATTRIBUTE, attributeName);
         values.put(DocumentDialog.V_LABEL, doc.getLabel());
         values.put(DocumentDialog.V_DESCRIPTION, doc.getDescription());
-        if (Type.ACTION == doc.getType()) {
+        if (ContentType.ACTION == doc.getContentType()) {
             values.put(DocumentDialog.V_ACTIONS, hotlinkDoc.getDescriptors());
         }
         
         final Map<String, Object> params = new HashMap<String, Object>();
-        params.put(DocumentDialog.P_DOC_TYPE, DocType.HOTLINK);
+        params.put(DocumentDialog.P_DOC_TYPE, Type.HOTLINK);
         params.put(DocumentDialog.P_MODE, Mode.EDIT);
-        if (Type.FILE == doc.getType()) {
+        if (ContentType.FILE == doc.getContentType()) {
             params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(doc));
         }
         
         final DocumentDialog docDialog = openDocDialog(values, params, true);
         if (docDialog != null) {
             final IAttachmentSource featureDocSource = (IAttachmentSource) doc.getSource();
-            switch (doc.getType()) {
+            switch (doc.getContentType()) {
             case FILE:
                 featureDocSource.setFile(feature, attributeName, docDialog.getFileInfo());
                 break;
@@ -1024,7 +1024,7 @@ public class DocumentView extends ViewPart {
             for (IDocument doc : docs) {
                 
                 boolean doDelete = true;
-                if (DocType.ATTACHMENT == doc.getDocType() && Type.FILE == doc.getType()) {
+                if (Type.ATTACHMENT == doc.getType() && ContentType.FILE == doc.getContentType()) {
                     doDelete = MessageDialog.openConfirm(removeButton.getShell(),
                             Messages.docView_deleteAttachConfirmTitle,
                             Messages.docView_deleteAttachConfirmMsg);
@@ -1036,7 +1036,7 @@ public class DocumentView extends ViewPart {
                         docSource.remove(doc);
                     } else if (source instanceof IAttachmentSource) {
                         final IAttachmentSource featureDocSource = (IAttachmentSource) source;
-                        if (DocType.HOTLINK == doc.getDocType()) {
+                        if (Type.HOTLINK == doc.getType()) {
                             final IHotlink hotlinkDoc = (IHotlink) doc;
                             final String attributeName = hotlinkDoc.getAttributeName();
                             featureDocSource.clear(feature, attributeName);
@@ -1139,7 +1139,7 @@ public class DocumentView extends ViewPart {
         final Object element = viewerSelection.getFirstElement();
         if (element instanceof IAttachment) {
             final IAttachment attachDoc = (IAttachment) element;
-            final File file = (File) attachDoc.getValue();
+            final File file = (File) attachDoc.getContent();
             
             final FileDialog dialog = new FileDialog(saveAsButton.getShell(), SWT.SAVE);
             dialog.setText(Messages.DocumentView_saveAsDialogTitle);
@@ -1180,7 +1180,7 @@ public class DocumentView extends ViewPart {
                             .getImage(ISharedImages.IMG_OBJ_FOLDER);
                 } else if (element instanceof IDocument) {
                     final IDocument doc = (IDocument) element;
-                    switch (doc.getType()) {
+                    switch (doc.getContentType()) {
                     case FILE:
                         return PlatformUI.getWorkbench().getSharedImages()
                                 .getImage(ISharedImages.IMG_OBJ_FILE);
@@ -1214,7 +1214,7 @@ public class DocumentView extends ViewPart {
                 case DOCUMENT_INDEX:
                     return DocUtils.getDocStr(doc);
                 case TYPE_INDEX:
-                    return DocUtils.toCamelCase(doc.getType().toString());
+                    return DocUtils.toCamelCase(doc.getContentType().toString());
                 case DESCRIPTION_INDEX:
                     final String description = doc.getDescription();
                     if (description != null) {

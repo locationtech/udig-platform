@@ -27,8 +27,8 @@ import java.util.Map;
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.document.DocumentPropertyPage;
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.DocType;
 import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.tool.info.internal.Messages;
@@ -118,7 +118,7 @@ public class DocumentDialog extends IconAndMessageDialog {
      */
     public static final String V_INFO = "INFO"; //$NON-NLS-1$
     /**
-     * Document content type value. Refer to {@link Type}.
+     * Document content type value. Refer to {@link ContentType}.
      */
     public static final String V_TYPE = "TYPE"; //$NON-NLS-1$
     /**
@@ -130,15 +130,15 @@ public class DocumentDialog extends IconAndMessageDialog {
      */
     public static final String V_DESCRIPTION = "DESCRIPTION"; //$NON-NLS-1$
     /**
-     * Document attribute value. This is required for {@link DocType#HOTLINK} types.
+     * Document attribute value. This is required for {@link Type#HOTLINK} types.
      */
     public static final String V_ATTRIBUTE = "ATTRIBUTE";  //$NON-NLS-1$
     /**
-     * Document "is template" value. This is required for {@link Type#FILE} types.
+     * Document "is template" value. This is required for {@link ContentType#FILE} types.
      */
     public static final String V_TEMPLATE = "TEMPLATE";  //$NON-NLS-1$
     /**
-     * Document actions value. This is required for {@link DocType#HOTLINK} with {@link Type#ACTION} types.
+     * Document actions value. This is required for {@link Type#HOTLINK} with {@link ContentType#ACTION} types.
      */
     public static final String V_ACTIONS = "ACTIONS";  //$NON-NLS-1$
     
@@ -151,7 +151,7 @@ public class DocumentDialog extends IconAndMessageDialog {
      */
     public static final String P_MODE = "MODE"; //$NON-NLS-1$
     /**
-     * Document type parameter. Refer to {@link DocType}.
+     * Document type parameter. Refer to {@link Type}.
      */
     public static final String P_DOC_TYPE = "DOC_TYPE"; //$NON-NLS-1$
     /**
@@ -169,7 +169,7 @@ public class DocumentDialog extends IconAndMessageDialog {
     public static final String P_TEMPLATES = "TEMPLATES"; //$NON-NLS-1$
     
     private boolean hasError = false;
-    private Type typeValue;
+    private ContentType typeValue;
     
     /**
      * Dialog modes.
@@ -185,7 +185,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         EDIT;
     }
     private Mode mode;
-    private DocType docType;
+    private Type docType;
     
     public static final String LABEL_FORMAT = "%s%s:"; //$NON-NLS-1$
     public static final String MANDATORY = "*"; //$NON-NLS-1$
@@ -216,8 +216,8 @@ public class DocumentDialog extends IconAndMessageDialog {
         return (String) values.get(V_INFO);
     }
     
-    public Type getType() {
-        return (Type) values.get(V_TYPE);
+    public ContentType getType() {
+        return (ContentType) values.get(V_TYPE);
     }
     
     public String getLabel() {
@@ -245,10 +245,10 @@ public class DocumentDialog extends IconAndMessageDialog {
         return (List<HotlinkDescriptor>) values.get(V_ACTIONS);
     }
         
-    private DocType getDocType() {
+    private Type getDocType() {
         if (docType == null) {
             if (params != null) {
-                final DocType paramDocType = (DocType) params.get(P_DOC_TYPE);
+                final Type paramDocType = (Type) params.get(P_DOC_TYPE);
                 if (paramDocType != null) {
                     docType = paramDocType;
                 }
@@ -258,15 +258,15 @@ public class DocumentDialog extends IconAndMessageDialog {
     }
     
     private boolean isLinked() {
-        return DocType.LINKED == getDocType();
+        return Type.LINKED == getDocType();
     }
     
     private boolean isAttachment() {
-        return DocType.ATTACHMENT == getDocType();
+        return Type.ATTACHMENT == getDocType();
     }
     
     private boolean isHotlink() {
-        return DocType.HOTLINK == getDocType();
+        return Type.HOTLINK == getDocType();
     }
     
     private Mode getMode() {
@@ -539,7 +539,7 @@ public class DocumentDialog extends IconAndMessageDialog {
             if (results != null && results.length > 0) {
                 final IDocument doc = (IDocument) results[0];
                 if (doc != null) {
-                    return (File) doc.getValue();
+                    return (File) doc.getContent();
                 }
             }
         }
@@ -662,7 +662,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         });
         type.addSelectionChangedListener( new ISelectionChangedListener() {
             public void selectionChanged(SelectionChangedEvent event) {
-                final Type newTypeValue = getTypeComboValue();
+                final ContentType newTypeValue = getTypeComboValue();
                 if (typeValue != newTypeValue) {
                     typeValue = newTypeValue;
                     if (newTypeValue != null) {
@@ -674,19 +674,19 @@ public class DocumentDialog extends IconAndMessageDialog {
             }
         });
         
-        final List<Type> types = new ArrayList<Type>();
+        final List<ContentType> types = new ArrayList<ContentType>();
         switch (getDocType()) {
         case LINKED:
-            types.add(Type.FILE);
-            types.add(Type.WEB);
+            types.add(ContentType.FILE);
+            types.add(ContentType.WEB);
             break;
         case ATTACHMENT:
-            types.add(Type.FILE);
+            types.add(ContentType.FILE);
             break;
         case HOTLINK:
-            types.add(Type.FILE);
-            types.add(Type.WEB);
-            types.add(Type.ACTION);
+            types.add(ContentType.FILE);
+            types.add(ContentType.WEB);
+            types.add(ContentType.ACTION);
             break;
         default:
             break;
@@ -732,7 +732,7 @@ public class DocumentDialog extends IconAndMessageDialog {
     private void setValues() {
         
         if (isAddMode()) {
-            type.setSelection(new StructuredSelection(Type.FILE));
+            type.setSelection(new StructuredSelection(ContentType.FILE));
         } else {
             type.setSelection(new StructuredSelection(getType()));
             setValue(info, getInfo());
@@ -866,7 +866,7 @@ public class DocumentDialog extends IconAndMessageDialog {
      * 
      * @param type
      */
-    private void configInfoControls(Type type) {
+    private void configInfoControls(ContentType type) {
         switch (type) {
         case FILE:
             infoLbl.setText(isHotlink() ? getLabel(Messages.DocumentDialog_valueLabel) : getLabel(
@@ -1062,8 +1062,8 @@ public class DocumentDialog extends IconAndMessageDialog {
      * 
      * @return select value
      */
-    private Type getTypeComboValue() {
-        return (Type) getComboValue(type);
+    private ContentType getTypeComboValue() {
+        return (ContentType) getComboValue(type);
     }
     
     /**

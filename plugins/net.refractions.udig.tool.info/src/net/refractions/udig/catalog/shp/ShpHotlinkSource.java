@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IHotlink;
 import net.refractions.udig.catalog.document.IHotlinkSource;
 import net.refractions.udig.catalog.internal.document.AbstractHotlinkDocument;
@@ -79,7 +79,7 @@ public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotl
     private String getInfo(SimpleFeature feature, List<HotlinkDescriptor> descriptors) {
         final HotlinkDescriptor descriptor = descriptors.get(0);
         final String info = (String) feature.getAttribute(descriptor.getAttributeName());
-        if (Type.FILE == descriptor.getType()) {
+        if (ContentType.FILE == descriptor.getType()) {
             return ShpDocUtils.getAbsolutePath(url, info);
         }
         return info; 

@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Properties;
 
 import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.document.DocUtils;
@@ -284,7 +284,7 @@ public class ShpDocPropertyParser {
             final String[] docInfoArray = spec.split(DELIMITER_REGEX);
             for (String docInfo : docInfoArray) {
                 final DocumentInfo info = new DocumentInfo(docInfo);
-                if (Type.FILE == info.getType()) {
+                if (ContentType.FILE == info.getType()) {
                     info.setInfo(ShpDocUtils.getAbsolutePath(url, info.getInfo()));    
                 }
                 docInfos.add(info);
@@ -305,7 +305,7 @@ public class ShpDocPropertyParser {
         final StringBuilder sb = new StringBuilder();
         for (DocumentInfo info : docInfos) {
             count++;
-            if (Type.FILE == info.getType()) {
+            if (ContentType.FILE == info.getType()) {
                 final DocumentInfo writeInfo = new DocumentInfo(info.toString());
                 writeInfo.setInfo(ShpDocUtils.getRelativePath(url, writeInfo.getInfo()));
                 sb.append(writeInfo.toString());

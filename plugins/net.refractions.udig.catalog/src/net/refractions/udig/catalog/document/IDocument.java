@@ -27,7 +27,7 @@ public interface IDocument {
     /**
      * Document type
      */
-    public enum DocType {
+    public enum Type {
         /**
          * Linked documents store a reference to the document.
          * <p>
@@ -63,7 +63,7 @@ public interface IDocument {
     /**
      * Document content type
      */
-    public enum Type {
+    public enum ContentType {
         /**
          * Documents that refer to files.
          */
@@ -76,8 +76,15 @@ public interface IDocument {
          * Documents that refer to custom actions.
          */
         ACTION;
+        
+        /**
+         * Checks if the type exists in this enum.
+         * 
+         * @param type
+         * @return true if exists, otherwise false
+         */
         public static boolean exists(String type) {
-            for (Type c : values()) {
+            for (ContentType c : values()) {
                 if (c.name().equals(type)) {
                     return true;
                 }
@@ -88,11 +95,11 @@ public interface IDocument {
 
     /**
      * Gets the document value. The value returned will depend on the document's content type. See
-     * {@link #getType()} for details.
+     * {@link #getContentType()} for details.
      * 
      * @return document info
      */
-    public Object getValue();
+    public Object getContent();
     
     /**
      * Gets the document label. This is to be used for labelling documents in lists and views.
@@ -111,21 +118,21 @@ public interface IDocument {
      * 
      * @return document type
      */
-    public DocType getDocType();
+    public Type getType();
 
     /**
      * Gets the document content type.
      * <p>
      * The following documents are defined:
      * <ul>
-     * <li>{@link Type#FILE} value is supplied as a local File</li>
-     * <li>{@link Type#WEB} value is supplied as URL</li>
-     * <li>{@link Type#ACTION} value is marked for script use</li>
+     * <li>{@link ContentType#FILE} value is supplied as a local File</li>
+     * <li>{@link ContentType#WEB} value is supplied as URL</li>
+     * <li>{@link ContentType#ACTION} value is marked for script use</li>
      * </ul>
      * 
      * @return document content type
      */
-    public Type getType();
+    public ContentType getContentType();
 
     /**
      * Open this document; in a platform specific manner.

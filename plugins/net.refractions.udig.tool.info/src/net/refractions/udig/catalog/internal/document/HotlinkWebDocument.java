@@ -39,7 +39,7 @@ public class HotlinkWebDocument extends AbstractHotlinkDocument {
     }
     
     @Override
-    public Object getValue() {
+    public Object getContent() {
         return url;
     }
 

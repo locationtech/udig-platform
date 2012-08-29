@@ -18,7 +18,7 @@ package net.refractions.udig.catalog.document;
 
 import java.util.List;
 
-import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 
 /**
  * Access to documents associated with a resource.
@@ -113,7 +113,7 @@ public interface IDocumentSource extends IAbstractDocumentSource {
         /**
          * Document type
          */
-        private IDocument.Type type;
+        private IDocument.ContentType type;
 
         /**
          * Flag for templates.
@@ -127,7 +127,7 @@ public interface IDocumentSource extends IAbstractDocumentSource {
             fromString(attachmentInfo);
         }
 
-        public DocumentInfo(String label, String description, String info, Type type,
+        public DocumentInfo(String label, String description, String info, ContentType type,
                 boolean isTemplate) {
             this.label = label;
             this.description = description;
@@ -160,11 +160,11 @@ public interface IDocumentSource extends IAbstractDocumentSource {
             this.info = info;
         }
 
-        public IDocument.Type getType() {
+        public IDocument.ContentType getType() {
             return type;
         }
 
-        public void setType(IDocument.Type type) {
+        public void setType(IDocument.ContentType type) {
             this.type = type;
         }
         
@@ -179,7 +179,7 @@ public interface IDocumentSource extends IAbstractDocumentSource {
         private void fromString(String attachmentInfo) {
             final String[] defValues = attachmentInfo.split(DELIMITER_REGEX);
             info = getCleanValue(defValues[0]); 
-            type = Type.valueOf(defValues[1]);
+            type = ContentType.valueOf(defValues[1]);
             if (defValues.length > 2) {
                 label = getCleanValue(defValues[2]);
             } else {

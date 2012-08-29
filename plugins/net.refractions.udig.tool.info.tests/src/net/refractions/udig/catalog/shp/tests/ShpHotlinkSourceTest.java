@@ -137,14 +137,14 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
         source.setFile(feature, FILE_ATTR, file1);
 
         IDocument doc = source.getDocument(feature, FILE_ATTR);
-        File docFile = (File) doc.getValue();
+        File docFile = (File) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertEquals("File is not expected.", file1.getAbsolutePath(), docFile.getAbsolutePath());
 
         source.clear(feature, FILE_ATTR);
 
         doc = source.getDocument(feature, FILE_ATTR);
-        docFile = (File) doc.getValue();
+        docFile = (File) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertNull("File is not null.", docFile);
 
@@ -161,14 +161,14 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
         source.setLink(feature, LINK_ATTR, url);
 
         IDocument doc = source.getDocument(feature, LINK_ATTR);
-        URL docUrl = (URL) doc.getValue();
+        URL docUrl = (URL) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertEquals("File is not expected.", url.toString(), docUrl.toString());
 
         source.clear(feature, LINK_ATTR);
 
         doc = source.getDocument(feature, LINK_ATTR);
-        docUrl = (URL) doc.getValue();
+        docUrl = (URL) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertNull("File is not null.", docUrl);
 
@@ -181,14 +181,14 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
         source.setAction(feature, STATE_ATTR, action);
 
         IDocument doc = source.getDocument(feature, STATE_ATTR);
-        String docAction = (String) doc.getValue();
+        String docAction = (String) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertEquals("File is not expected.", action, docAction);
 
         source.clear(feature, STATE_ATTR);
 
         doc = source.getDocument(feature, STATE_ATTR);
-        docAction = (String) doc.getValue();
+        docAction = (String) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertNull("File is not null.", docAction);
 

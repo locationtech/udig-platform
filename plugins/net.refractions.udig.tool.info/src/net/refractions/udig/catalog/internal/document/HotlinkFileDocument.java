@@ -39,7 +39,7 @@ public class HotlinkFileDocument extends AbstractHotlinkDocument {
     }
 
     @Override
-    public Object getValue() {
+    public Object getContent() {
         return file;
     }
 

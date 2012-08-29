@@ -45,8 +45,8 @@ public class AttachmentFileDocument extends FileDocument implements IAttachment 
     }
 
     @Override
-    public DocType getDocType() {
-        return DocType.ATTACHMENT;
+    public Type getType() {
+        return Type.ATTACHMENT;
     }
     
 }

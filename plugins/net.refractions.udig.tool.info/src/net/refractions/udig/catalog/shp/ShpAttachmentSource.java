@@ -20,8 +20,8 @@ import java.util.List;
 
 import net.refractions.udig.catalog.document.IAttachmentSource;
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.DocType;
 import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IDocumentSource;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.internal.document.AbstractBasicDocument;
@@ -88,7 +88,7 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     }
 
     private IDocument addInternal(SimpleFeature feature, DocumentInfo info) {
-        if (Type.FILE == info.getType()) {
+        if (ContentType.FILE == info.getType()) {
             final File newFile = ShpDocUtils.copyFile(info.getInfo(), getAttachmentDir(feature));
             info.setInfo(newFile.getAbsolutePath());
         }
@@ -104,8 +104,8 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     
     @Override
     public IDocument update(SimpleFeature feature, IDocument doc, DocumentInfo info) {
-        if (Type.FILE == info.getType()) {
-            final File oldFile = (File) doc.getValue();
+        if (ContentType.FILE == info.getType()) {
+            final File oldFile = (File) doc.getContent();
             if (oldFile == null) {
                 updateInternal(feature, oldFile, info);
             } else {
@@ -147,8 +147,8 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     }
 
     private boolean removeInternal(SimpleFeature feature, IDocument oldDoc) {
-        if (Type.FILE == oldDoc.getType()) {
-            ShpDocUtils.deleteFile(oldDoc.getValue());
+        if (ContentType.FILE == oldDoc.getContentType()) {
+            ShpDocUtils.deleteFile(oldDoc.getContent());
         }
         getDocsInternal(feature).remove(oldDoc);
         return true;
@@ -157,7 +157,7 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     private void save(SimpleFeature feature) {
         final List<DocumentInfo> infos = new ArrayList<IDocumentSource.DocumentInfo>();
         for (IDocument doc : getDocsInternal(feature)) {
-            if (DocType.HOTLINK != doc.getDocType()) {
+            if (Type.HOTLINK != doc.getType()) {
                 final AbstractBasicDocument shpDoc = (AbstractBasicDocument) doc;
                 infos.add(shpDoc.getInfo());    
             }

@@ -15,7 +15,7 @@
 package net.refractions.udig.catalog.document;
 
 import junit.framework.TestCase;
-import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 
 /**
@@ -29,7 +29,7 @@ public class DocumentInfoTest extends TestCase {
     private static final String LABEL = "label";
     private static final String DESCRIPTION = "description";
     private static final String INFO = "info";
-    private static final Type TYPE = Type.FILE;
+    private static final ContentType TYPE = ContentType.FILE;
     private static final boolean IS_TEMPLATE = true;
     
     private static final String DELIMITER = DocumentInfo.DELIMITER;
