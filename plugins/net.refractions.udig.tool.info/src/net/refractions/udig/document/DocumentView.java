@@ -267,6 +267,7 @@ public class DocumentView extends ViewPart {
         saveAsButton.setText(Messages.docView_saveAs);
         saveAsButton.setLayoutData(btnLayoutData);
         saveAsButton.addSelectionListener(btnSelectionListener);
+        saveAsButton.setVisible(false); // Re: Brett's comment
         
         // remove button
         removeButton = new Button(btnSection, SWT.PUSH);
