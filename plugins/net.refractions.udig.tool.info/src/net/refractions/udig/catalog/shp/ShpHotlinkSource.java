@@ -58,12 +58,14 @@ public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotl
     public List<IDocument> getDocuments(SimpleFeature feature) {
         docs = new ArrayList<IDocument>();
         final List<HotlinkDescriptor> featureDescriptors = propParser.getHotlinkDescriptors();
-        final Map<String, List<HotlinkDescriptor>> descriptorMap = getDescriptorMap(featureDescriptors);
-        for (String attributeName : descriptorMap.keySet()) {
-            final List<HotlinkDescriptor> attributeDescriptors = descriptorMap.get(attributeName); 
-            final String info = getInfo(feature, attributeDescriptors);
-            docs.add(docFactory.create(info, attributeDescriptors));
-        }           
+        if (featureDescriptors != null && featureDescriptors.size() > 0) {
+            final Map<String, List<HotlinkDescriptor>> descriptorMap = getDescriptorMap(featureDescriptors);
+            for (String attributeName : descriptorMap.keySet()) {
+                final List<HotlinkDescriptor> attributeDescriptors = descriptorMap.get(attributeName); 
+                final String info = getInfo(feature, attributeDescriptors);
+                docs.add(docFactory.create(info, attributeDescriptors));
+            }                       
+        }
         return docs;
     }
 
