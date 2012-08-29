@@ -67,7 +67,7 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     
     @Override
     public boolean canLink() {
-        return true;
+        return false;
     }
     
     @Override
