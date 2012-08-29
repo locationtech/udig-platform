@@ -112,7 +112,8 @@ import org.opengis.filter.identity.FeatureId;
 public class DocumentView extends ViewPart {
     
     private TreeViewer viewer;
-    private Button addButton;
+    private Button attachButton;
+    private Button linkButton;
     private Button editButton;
     private Button openButton;
     private Button saveAsButton;
@@ -231,17 +232,23 @@ public class DocumentView extends ViewPart {
         final Composite btnSection = new Composite(parent, SWT.NONE);
         final String btnLayoutConst = "fillx, wrap 1"; //$NON-NLS-1$
         final String btnColConst = ""; //$NON-NLS-1$
-        final String btnRowConst = "[][][][]push[]"; //$NON-NLS-1$
+        final String btnRowConst = "[][][][][]push[]"; //$NON-NLS-1$
         btnSection.setLayout(new MigLayout(btnLayoutConst, btnColConst, btnRowConst));
         btnSection.setLayoutData("grow"); //$NON-NLS-1$
         
         final String btnLayoutData = "growx"; //$NON-NLS-1$
         
-        // add button
-        addButton = new Button(btnSection, SWT.PUSH);
-        addButton.setText(Messages.docView_add);
-        addButton.setLayoutData(btnLayoutData);
-        addButton.addSelectionListener(btnSelectionListener);
+        // attach button
+        attachButton = new Button(btnSection, SWT.PUSH);
+        attachButton.setText(Messages.docView_attach);
+        attachButton.setLayoutData(btnLayoutData);
+        attachButton.addSelectionListener(btnSelectionListener);
+        
+        // link button
+        linkButton = new Button(btnSection, SWT.PUSH);
+        linkButton.setText(Messages.docView_link);
+        linkButton.setLayoutData(btnLayoutData);
+        linkButton.addSelectionListener(btnSelectionListener);
         
         // edit button
         editButton = new Button(btnSection, SWT.PUSH);
@@ -323,13 +330,15 @@ public class DocumentView extends ViewPart {
         openButton.setEnabled(false);
         saveAsButton.setEnabled(false);
         removeButton.setEnabled(false);
-        addButton.setEnabled(false);
+        attachButton.setEnabled(false);
+        linkButton.setEnabled(false);
         editButton.setEnabled(false);
 
         if (viewerSelection != null) {
             if (viewerSelection.size() == 1) {
                 final Object element = viewerSelection.getFirstElement();
-                addButton.setEnabled(true);
+                attachButton.setEnabled(true);
+                linkButton.setEnabled(true);
                 if (element instanceof IDocument) {
                     editButton.setEnabled(true);
                     final IDocument doc = (IDocument) element;
@@ -661,8 +670,10 @@ public class DocumentView extends ViewPart {
     private void handleBtnSelection(Widget btn) {
         if (openButton == btn) {
             open();
-        } else if (addButton == btn) {
-            add();
+        } else if (attachButton == btn) {
+            attach();
+        } else if (linkButton == btn) {
+            link();
         } else if (editButton == btn) {
             edit();
         } else if (removeButton == btn) {
@@ -742,16 +753,9 @@ public class DocumentView extends ViewPart {
      * Adds a new document. This opens the {@link DocumentDialog} to allow the user to input details
      * of the document to be added.
      */
-    private void add() {
+    private void attach() {
 
-        final Object obj = viewerSelection.getFirstElement();
-        IDocumentFolder folder = null;
-        if (obj instanceof IDocumentFolder) {
-            folder = (IDocumentFolder) obj;
-        } else if (obj instanceof IDocument) {
-            folder = itemModel.getFolder((IDocument) obj);
-        }
-        
+        final IDocumentFolder folder = getDocumentFolder();
         if (folder != null) {
             final Map<String, Object> params = new HashMap<String, Object>();
             params.put(DocumentDialog.P_DOC_TYPE, DocType.ATTACHMENT);
@@ -762,7 +766,7 @@ public class DocumentView extends ViewPart {
             final boolean isFeatureDoc = (source instanceof IAttachmentSource);
             final DocumentDialog docDialog = openDocDialog(new HashMap<String, Object>(), params, isFeatureDoc);
             if (docDialog != null) {
-                addDocument(folder, docDialog.getDocInfo());
+                attachDocument(folder, docDialog.getDocInfo());
                 viewer.refresh();
                 viewer.expandAll();
             }            
@@ -773,7 +777,7 @@ public class DocumentView extends ViewPart {
     /**
      * Adds a new document to the document folder with the given document info.
      */
-    private void addDocument(IDocumentFolder folder, DocumentInfo info) {
+    private void attachDocument(IDocumentFolder folder, DocumentInfo info) {
                 
         IDocument doc = null;
         if (folder.getSource() instanceof IDocumentSource) {
@@ -785,10 +789,52 @@ public class DocumentView extends ViewPart {
         }
         
         if (doc == null) {
-            MessageDialog.openInformation(addButton.getShell(),
+            MessageDialog.openInformation(attachButton.getShell(),
                     Messages.docView_attachFile, Messages.docView_errFileExistSingle);
         }
         
+    }
+    
+    /**
+     * Links a new document. This opens the {@link DocumentDialog} to allow the user to input details
+     * of the document to be linked.
+     */
+    private void link() {
+
+        final IDocumentFolder folder = getDocumentFolder();
+        if (folder != null) {
+            final Map<String, Object> params = new HashMap<String, Object>();
+            params.put(DocumentDialog.P_DOC_TYPE, DocType.LINKED);
+            params.put(DocumentDialog.P_MODE, Mode.ADD);
+            params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(folder));
+
+            final IAbstractDocumentSource source = folder.getSource();
+            final boolean isFeatureDoc = (source instanceof IAttachmentSource);
+            final DocumentDialog docDialog = openDocDialog(new HashMap<String, Object>(), params, isFeatureDoc);
+            if (docDialog != null) {
+                //TODO - Do link here
+                viewer.refresh();
+                viewer.expandAll();
+            }            
+        }
+        
+    }
+    
+    /**
+     * Gets the document folder containing the current selection. Or the current selection if it is
+     * a folder.
+     * 
+     * @return document folder
+     */
+    private IDocumentFolder getDocumentFolder() {
+        final Object obj = viewerSelection.getFirstElement();
+        IDocumentFolder folder = null;
+        if (obj instanceof IDocumentFolder) {
+            folder = (IDocumentFolder) obj;
+        } else if (obj instanceof IDocument) {
+            folder = itemModel.getFolder((IDocument) obj);
+        }
+        return folder;
     }
     
     /**
@@ -828,7 +874,7 @@ public class DocumentView extends ViewPart {
         values.put(DocumentDialog.V_TEMPLATE, doc.isTemplate());
         
         final Map<String, Object> params = new HashMap<String, Object>();
-        params.put(DocumentDialog.P_DOC_TYPE, DocType.ATTACHMENT);
+        params.put(DocumentDialog.P_DOC_TYPE, doc.getDocType());
         params.put(DocumentDialog.P_MODE, Mode.EDIT);
         params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(doc));
         
@@ -909,7 +955,7 @@ public class DocumentView extends ViewPart {
         if (isFeatureDoc && feature != null) {
             params.put(DocumentDialog.P_FEATURE_NAME, getFeatureLabel(geoResource, feature));
         }
-        params.put(DocumentDialog.P_SHAPEFILE_NAME, geoResource.getTitle());
+        params.put(DocumentDialog.P_RESOURCE_NAME, geoResource.getTitle());
         final DocumentDialog docDialog = new DocumentDialog(editButton.getShell(), values, params);
         final int result = docDialog.open();
         if (Dialog.OK == result) {
