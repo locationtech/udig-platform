@@ -49,7 +49,7 @@ public abstract class AbstractBasicDocument extends AbstractDocument {
 
     @Override
     public DocType getDocType() {
-        return DocType.DOCUMENT;
+        return DocType.LINKED;
     }
 
     @Override

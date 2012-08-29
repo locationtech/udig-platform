@@ -72,6 +72,8 @@ public class Messages extends NLS {
 
     public static String DocumentDialog_addAttachHeader;
 
+    public static String DocumentDialog_addLinkHeader;
+
     public static String DocumentDialog_attachSubHeader;
 
     public static String DocumentDialog_attachSubHeaderFeature;
@@ -92,6 +94,8 @@ public class Messages extends NLS {
 
     public static String DocumentDialog_editAttachHeader;
 
+    public static String DocumentDialog_editLinkHeader;
+
     public static String DocumentDialog_enterFilenameErr;
 
     public static String DocumentDialog_enterFilenameMsg;
@@ -111,6 +115,12 @@ public class Messages extends NLS {
     public static String DocumentDialog_hotlinkHeader;
 
     public static String DocumentDialog_labelLabel;
+
+    public static String DocumentDialog_linkSubHeader;
+
+    public static String DocumentDialog_linkSubHeaderFeature;
+
+    public static String DocumentDialog_linkSubHeaderShapefile;
 
     public static String DocumentDialog_newBtn;
 
@@ -152,7 +162,7 @@ public class Messages extends NLS {
 
     public static String LayerPointInfo_toString;
 
-    public static String docView_add;
+    public static String docView_attach;
 
     public static String docView_attachFile;
 
@@ -183,6 +193,8 @@ public class Messages extends NLS {
     public static String docView_linkDialogHeader;
 
     public static String docView_linkDialogTitle;
+
+    public static String docView_link;
 
     public static String docView_linkURL;
 

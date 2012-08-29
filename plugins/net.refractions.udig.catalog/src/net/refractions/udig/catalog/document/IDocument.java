@@ -28,7 +28,18 @@ public interface IDocument {
      * Document type
      */
     public enum DocType {
-        DOCUMENT, ATTACHMENT, HOTLINK;
+        /**
+         * Linked documents store a reference to the document.
+         */
+        LINKED,
+        /**
+         * Attachments store a copy of the document.
+         */
+        ATTACHMENT,
+        /**
+         * Hotlinks store reference to the document as a feature's attribute value.
+         */
+        HOTLINK;
     }
 
     /**

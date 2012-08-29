@@ -82,7 +82,7 @@ public class DocumentDialog extends IconAndMessageDialog {
     
     private Label headerImg;
     private Label headerText;
-    private Label headerSubText;
+    private Label subHeaderText;
     
     private Label infoLbl;
     private Text info;
@@ -108,45 +108,87 @@ public class DocumentDialog extends IconAndMessageDialog {
     private Label labelLbl;
     private Text label;
     private Text description;
+
+    /**
+     * Dialog form values.
+     */
+    private Map<String, Object> values;
+    /**
+     * Document information (either absolute filepath or url string or action) value.
+     */
+    public static final String V_INFO = "INFO"; //$NON-NLS-1$
+    /**
+     * Document content type value. Refer to {@link Type}.
+     */
+    public static final String V_TYPE = "TYPE"; //$NON-NLS-1$
+    /**
+     * Document label value.
+     */
+    public static final String V_LABEL = "LABEL";  //$NON-NLS-1$
+    /**
+     * Document description value.
+     */
+    public static final String V_DESCRIPTION = "DESCRIPTION"; //$NON-NLS-1$
+    /**
+     * Document attribute value. This is required for {@link DocType#HOTLINK} types.
+     */
+    public static final String V_ATTRIBUTE = "ATTRIBUTE";  //$NON-NLS-1$
+    /**
+     * Document "is template" value. This is required for {@link Type#FILE} types.
+     */
+    public static final String V_TEMPLATE = "TEMPLATE";  //$NON-NLS-1$
+    /**
+     * Document actions value. This is required for {@link DocType#HOTLINK} with {@link Type#ACTION} types.
+     */
+    public static final String V_ACTIONS = "ACTIONS";  //$NON-NLS-1$
+    
+    /**
+     * Dialog configuration parameters.
+     */
+    private Map<String, Object> params;
+    /**
+     * Dialog mode parameter. Refer to {@link Mode}.
+     */
+    public static final String P_MODE = "MODE"; //$NON-NLS-1$
+    /**
+     * Document type parameter. Refer to {@link DocType}.
+     */
+    public static final String P_DOC_TYPE = "DOC_TYPE"; //$NON-NLS-1$
+    /**
+     * Feature name parameter. A string value used for header display. This may be null for layer level documents.
+     */
+    public static final String P_FEATURE_NAME = "FEATURE_NAME"; //$NON-NLS-1$
+    /**
+     * Resource name parameter. A string value used for header display. This should not be null. 
+     */
+    public static final String P_RESOURCE_NAME = "RESOURCE_NAME"; //$NON-NLS-1$
+    /**
+     * Templates parameter. A list of {@link IDocument} used to populate template options. This may
+     * be null if there are no templates.
+     */
+    public static final String P_TEMPLATES = "TEMPLATES"; //$NON-NLS-1$
     
     private boolean hasError = false;
     private Type typeValue;
     
-    private Map<String, Object> values;
-    public static final String V_INFO = "INFO"; //$NON-NLS-1$
-    public static final String V_TYPE = "TYPE"; //$NON-NLS-1$
-    public static final String V_LABEL = "LABEL";  //$NON-NLS-1$
-    public static final String V_DESCRIPTION = "DESCRIPTION"; //$NON-NLS-1$
-    public static final String V_ATTRIBUTE = "ATTRIBUTE";  //$NON-NLS-1$
-    public static final String V_TEMPLATE = "TEMPLATE";  //$NON-NLS-1$
-    public static final String V_DOCUMENT = "DOCUMENT";  //$NON-NLS-1$
-    public static final String V_ACTIONS = "ACTIONS";  //$NON-NLS-1$
-    
-    private Map<String, Object> params;
-    public static final String P_DOC_TYPE = "DOC_TYPE"; //$NON-NLS-1$
-    public static final String P_MODE = "MODE"; //$NON-NLS-1$
-    public static final String P_FEATURE_NAME = "FEATURE_NAME"; //$NON-NLS-1$
-    public static final String P_SHAPEFILE_NAME = "SHAPEFILE_NAME"; //$NON-NLS-1$
-    public static final String P_TEMPLATES = "TEMPLATES"; //$NON-NLS-1$
-    
-    public enum Mode { 
-        ADD, EDIT;
+    /**
+     * Dialog modes.
+     */
+    public enum Mode {
+        /**
+         * Add mode. For adding a new document.
+         */
+        ADD, 
+        /**
+         * Edit mode. For editing an existing document.
+         */
+        EDIT;
     }
-    
-    private boolean isAttachment = true;
-    private boolean isAddMode = true;
+    private Mode mode;
+    private DocType docType;
     
     public static final String LABEL_FORMAT = "%s%s:"; //$NON-NLS-1$
     public static final String MANDATORY = "*"; //$NON-NLS-1$
-    
-    /**
-     * Constructor for add mode with blank fields.
-     * 
-     * @param parentShell
-     */
-    public DocumentDialog(Shell parentShell) {
-        super(parentShell);
-    }
 
     /**
      * Constructor for edit mode with initial values and option to only allow info editing.
@@ -156,15 +198,21 @@ public class DocumentDialog extends IconAndMessageDialog {
      * @param isInfoOnly
      */
     public DocumentDialog(Shell parentShell, Map<String, Object> values, Map<String, Object> params) {
-        this(parentShell);
+        super(parentShell);
         this.values = values;
         this.params = params;
-        this.isAttachment = isAttachment();
-        this.isAddMode = isAddMode();
     }
     
     public Map<String, Object> getValues() {
         return values;
+    }
+
+    public String getInfo() {
+        return (String) values.get(V_INFO);
+    }
+    
+    public Type getType() {
+        return (Type) values.get(V_TYPE);
     }
     
     public String getLabel() {
@@ -174,13 +222,9 @@ public class DocumentDialog extends IconAndMessageDialog {
     public String getDescription() {
         return (String) values.get(V_DESCRIPTION);
     }
-    
-    public Type getType() {
-        return (Type) values.get(V_TYPE);
-    }
-    
-    public String getInfo() {
-        return (String) values.get(V_INFO);
+
+    private String getAttribute() {
+        return (String) values.get(V_ATTRIBUTE);
     }
     
     public boolean isTemplate() {
@@ -191,78 +235,66 @@ public class DocumentDialog extends IconAndMessageDialog {
         return false;
     }
     
-    public DocumentInfo getDocInfo() {
-        return (new DocumentInfo(getLabel(), getDescription(), getInfo(), getType(), isTemplate()));
-    }
-    
-    public File getFileInfo() {
-        final File file = new File(getInfo());
-        if (file.exists()) {
-            return file;
-        }
-        return null;
-    }
-    
-    public URL getUrlInfo() {
-        try {
-            final URL url = new URL(getInfo());
-            return url;
-        } catch (MalformedURLException e) {
-            return null;
-        }
-    }
-    
-    private String getAttribute() {
-        return (String) values.get(V_ATTRIBUTE);
-    }
-    
     @SuppressWarnings("unchecked")
     private List<HotlinkDescriptor> getActions() {
         return (List<HotlinkDescriptor>) values.get(V_ACTIONS);
     }
+        
+    private DocType getDocType() {
+        if (docType == null) {
+            if (params != null) {
+                final DocType paramDocType = (DocType) params.get(P_DOC_TYPE);
+                if (paramDocType != null) {
+                    docType = paramDocType;
+                }
+            }    
+        }
+        return docType;
+    }
+    
+    private boolean isLinked() {
+        return DocType.LINKED == getDocType();
+    }
     
     private boolean isAttachment() {
-        if (params != null) {
-            final DocType docType = (DocType) params.get(P_DOC_TYPE);
-            if (DocType.HOTLINK == docType) {
-                return false;
-            }
+        return DocType.ATTACHMENT == getDocType();
+    }
+    
+    private boolean isHotlink() {
+        return DocType.HOTLINK == getDocType();
+    }
+    
+    private Mode getMode() {
+        if (mode == null) {
+            if (params != null) {
+                final Mode paramMode = (Mode) params.get(P_MODE);
+                if (paramMode != null) {
+                    mode = paramMode;
+                }
+            }    
         }
-        return true;
+        return mode;
     }
     
     private boolean isAddMode() {
-        if (params != null) {
-            if (isAttachment()) {
-                final Mode mode = (Mode) params.get(P_MODE);
-                if (Mode.ADD == mode) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        return true;
+        return Mode.ADD == getMode();
+    }
+    
+    private boolean isEditMode() {
+        return Mode.EDIT == getMode();
     }
     
     private String getFeatureName() {
         return (String) params.get(P_FEATURE_NAME);
     }
     
-    private String getShapefileName() {
-        return (String) params.get(P_SHAPEFILE_NAME);
+    private String getResourceName() {
+        return (String) params.get(P_RESOURCE_NAME);
     }
     
     @SuppressWarnings("unchecked")
     private List<IDocument> getTemplates() {
         return (List<IDocument>) params.get(P_TEMPLATES);
-    }
-    
-    private String getLabel(String label) {
-        return getLabel(label, false);
-    }
-    
-    private String getLabel(String label, boolean isMandatory) {
-        return String.format(LABEL_FORMAT, label, (isMandatory ? MANDATORY : "")); //$NON-NLS-1$
     }
     
     @Override
@@ -331,7 +363,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         templateCheckBtn.setLayoutData("skip 1"); //$NON-NLS-1$
         
         labelLbl = new Label(composite, SWT.NONE);
-        labelLbl.setText(getLabel(Messages.DocumentDialog_labelLabel, isAttachment));
+        labelLbl.setText(getLabel(Messages.DocumentDialog_labelLabel, !isHotlink()));
         labelLbl.setLayoutData(""); //$NON-NLS-1$
 
         label = new Text(composite, SWT.SINGLE | SWT.BORDER);
@@ -377,8 +409,8 @@ public class DocumentDialog extends IconAndMessageDialog {
         };
         headerText.setFont(new Font(null, fontData));
         
-        headerSubText = new Label(headerComposite, SWT.NONE);
-        headerSubText.setLayoutData(""); //$NON-NLS-1$
+        subHeaderText = new Label(headerComposite, SWT.NONE);
+        subHeaderText.setLayoutData(""); //$NON-NLS-1$
         
     }
     
@@ -629,18 +661,24 @@ public class DocumentDialog extends IconAndMessageDialog {
             }
         });
         
-        if (isAttachment) {
-            final Type[] types = Type.values();
-            final List<Type> typeList = new ArrayList<Type>();;
-            for (int i = 0; i < types.length; i++) {
-                if (Type.ACTION != types[i]) {
-                    typeList.add(types[i]);    
-                }
-            }
-            type.setInput(typeList.toArray());
-        } else {
-            type.setInput(IDocument.Type.values());    
-        }
+        final List<Type> types = new ArrayList<Type>();
+        switch (getDocType()) {
+        case LINKED:
+            types.add(Type.FILE);
+            types.add(Type.WEB);
+            break;
+        case ATTACHMENT:
+            types.add(Type.FILE);
+            break;
+        case HOTLINK:
+            types.add(Type.FILE);
+            types.add(Type.WEB);
+            types.add(Type.ACTION);
+            break;
+        default:
+            break;
+        }        
+        type.setInput(types.toArray());
         
     }
     
@@ -680,7 +718,7 @@ public class DocumentDialog extends IconAndMessageDialog {
      */
     private void setValues() {
         
-        if (isAddMode) {
+        if (isAddMode()) {
             type.setSelection(new StructuredSelection(Type.FILE));
         } else {
             type.setSelection(new StructuredSelection(getType()));
@@ -703,59 +741,86 @@ public class DocumentDialog extends IconAndMessageDialog {
      * Sets the window, header and sub-header texts.
      */
     private void configHeaderDisplay() {
+        if (isHotlink()) {
+            setHeaderDisplayHotlink();
+        } else {
+            setHeaderDisplayLinkedOrAttachment();
+        }
+    }
+    
+    private void setHeaderDisplayHotlink() {
+        
+        final String header = String.format(Messages.DocumentDialog_hotlinkHeader,
+                DocUtils.toCamelCase(attribute.getText()));
+        getShell().setText(header);
+        headerText.setText(header);
+        subHeaderText.setText(description.getText());
+        
+    }
+    
+    private void setHeaderDisplayLinkedOrAttachment() {
 
         String header = ""; //$NON-NLS-1$
         String subHeader = ""; //$NON-NLS-1$
 
-        if (isAttachment) {
-            if (isAddMode) {
-                header = Messages.DocumentDialog_addAttachHeader;
-            } else {
-                header = Messages.DocumentDialog_editAttachHeader;
-            }
+        String featureName = getFeatureName();
+        String shapefileName = getResourceName();
 
-            String featureName = getFeatureName();
-            String shapefileName = getShapefileName();
-            
-            if (shapefileName != null) {
-                shapefileName = DocUtils.toCamelCase(shapefileName);
-                if (featureName != null) {
-                    featureName = DocUtils.toCamelCase(featureName);
-                    subHeader = String.format(Messages.DocumentDialog_attachSubHeaderFeature,
-                            featureName, shapefileName);
-                } else {
-                    subHeader = String.format(Messages.DocumentDialog_attachSubHeaderShapefile,
-                            shapefileName);
-                }
-            } else {
-                subHeader = Messages.DocumentDialog_attachSubHeader;
+        if (isAddMode()) {
+            header = Messages.DocumentDialog_addAttachHeader;
+            if (isLinked()) {
+                header = Messages.DocumentDialog_addLinkHeader;
             }
-
         } else {
-            header = String.format(Messages.DocumentDialog_hotlinkHeader,
-                    DocUtils.toCamelCase(attribute.getText()));
-            subHeader = description.getText();
+            header = Messages.DocumentDialog_editAttachHeader;
+            if (isLinked()) {
+                header = Messages.DocumentDialog_editLinkHeader;
+            }
+        }
+
+        if (shapefileName != null) {
+            shapefileName = DocUtils.toCamelCase(shapefileName);
+            if (featureName != null) {
+                featureName = DocUtils.toCamelCase(featureName);
+                String subHeaderFormat = Messages.DocumentDialog_attachSubHeaderFeature;
+                if (isLinked()) {
+                    subHeaderFormat = Messages.DocumentDialog_linkSubHeaderFeature;
+                }
+                subHeader = String.format(subHeaderFormat, featureName, shapefileName);
+            } else {
+                String subHeaderFormat = Messages.DocumentDialog_attachSubHeaderShapefile;
+                if (isLinked()) {
+                    subHeaderFormat = Messages.DocumentDialog_linkSubHeaderShapefile;
+                }
+                subHeader = String.format(subHeaderFormat, shapefileName);
+            }
+        } else {
+            subHeader = Messages.DocumentDialog_attachSubHeader;
+            if (isLinked()) {
+                subHeader = Messages.DocumentDialog_linkSubHeader;
+            }
         }
 
         getShell().setText(header);
         headerText.setText(header);
-        headerSubText.setText(subHeader);
-
+        subHeaderText.setText(subHeader);
+        
     }
     
     /**
      * Sets controls' enablement and visibility settings with respect to the dialog's type and mode.
      */
-    private void configControlEnablements() {        
-        if (isAttachment) {
-            configAttributeControls(false);
-            configMetadataControls(true);
-            type.getControl().setEnabled(isAddMode);
-        } else {
+    private void configControlEnablements() {
+        if (isHotlink()) {
             configAttributeControls(true);
             configMetadataControls(false);
             type.getControl().setEnabled(false);
             templateCheckBtn.setVisible(false);
+        } else {
+            configAttributeControls(false);
+            configMetadataControls(true);
+            type.getControl().setEnabled(isLinked() && isAddMode());
+            templateCheckBtn.setVisible(isAttachment());
         }
     }
     
@@ -787,22 +852,22 @@ public class DocumentDialog extends IconAndMessageDialog {
     private void configInfoControls(Type type) {
         switch (type) {
         case FILE:
-            infoLbl.setText(isAttachment ? getLabel(Messages.DocumentDialog_fileLabel, true)
-                    : getLabel(Messages.DocumentDialog_valueLabel));
+            infoLbl.setText(isHotlink() ? getLabel(Messages.DocumentDialog_valueLabel) : getLabel(
+                    Messages.DocumentDialog_fileLabel, true));
             configInfoBtnControls(true, true);
             configInfoGoActionControls(false);
-            templateCheckBtn.setVisible(true);
+            templateCheckBtn.setVisible(isAttachment());
             break;
         case WEB:
-            infoLbl.setText(isAttachment ? getLabel(Messages.DocumentDialog_urlLabel, true)
-                    : getLabel(Messages.DocumentDialog_valueLabel));
+            infoLbl.setText(isHotlink() ? getLabel(Messages.DocumentDialog_valueLabel) : getLabel(
+                    Messages.DocumentDialog_urlLabel, true));
             configInfoBtnControls(true, false);
             configInfoGoActionControls(false);
             templateCheckBtn.setVisible(false);
             break;
         case ACTION:
-            infoLbl.setText(isAttachment ? getLabel(Messages.DocumentDialog_actionLabel, true)
-                    : getLabel(Messages.DocumentDialog_valueLabel));
+            infoLbl.setText(isHotlink() ? getLabel(Messages.DocumentDialog_valueLabel) : getLabel(
+                    Messages.DocumentDialog_actionLabel, true));
             configInfoBtnControls(false, false);
             configInfoGoActionControls(true);
             templateCheckBtn.setVisible(false);
@@ -924,8 +989,10 @@ public class DocumentDialog extends IconAndMessageDialog {
      * @return true if one or more is not filled up, otherwise false
      */
     private boolean isEmpty() {
-        if (isAttachment && isEmpty(label)) {
-            return true;
+        if (isLinked() || isAttachment()) {
+            if (isEmpty(label)) {
+                return true;    
+            }
         }
         if (isEmpty(type)) {
             return true;
@@ -1039,7 +1106,7 @@ public class DocumentDialog extends IconAndMessageDialog {
 
                 String labelValue = label.getText().trim();
                 if (labelValue == null || labelValue.length() == 0) {
-                    if (!isAttachment) {
+                    if (isHotlink()) {
                         labelValue = attribute.getText();
                     }
                 }
@@ -1071,6 +1138,67 @@ public class DocumentDialog extends IconAndMessageDialog {
         public void modifyText(ModifyEvent e) {
             validateInfo();
             super.modifyText(e);
+        }
+    }
+
+    /**
+     * Gets a standard formatted label for the dialog's form.
+     * 
+     * @param label
+     * @return formatted label
+     */
+    private String getLabel(String label) {
+        return getLabel(label, false);
+    }
+    
+    /**
+     * Gets a standard formatted label for the dialog's form.
+     * 
+     * @param label
+     * @param isMandatory
+     * @return formatted label
+     */
+    private String getLabel(String label, boolean isMandatory) {
+        return String.format(LABEL_FORMAT, label, (isMandatory ? MANDATORY : "")); //$NON-NLS-1$
+    }
+    
+    /**
+     * Creates a {@link DocumentInfo} from the dialog form values. This is a utility to get values
+     * after the dialog's Ok button has been clicked.
+     * 
+     * @return document info
+     */
+    public DocumentInfo getDocInfo() {
+        return (new DocumentInfo(getLabel(), getDescription(), getInfo(), getType(), isTemplate()));
+    }
+
+    /**
+     * Gets a file from the information value of the dialog. This returns null if the value is not a
+     * valid file or is non existing. This is a utility to get values after the dialog's Ok button
+     * has been clicked.
+     * 
+     * @return file
+     */
+    public File getFileInfo() {
+        final File file = new File(getInfo());
+        if (file.exists()) {
+            return file;
+        }
+        return null;
+    }
+
+    /**
+     * Gets a url from the information value of the dialog. This returns null if the value is not a
+     * valid url. This is a utility to get values after the dialog's Ok button has been clicked.
+     * 
+     * @return url
+     */
+    public URL getUrlInfo() {
+        try {
+            final URL url = new URL(getInfo());
+            return url;
+        } catch (MalformedURLException e) {
+            return null;
         }
     }
     
