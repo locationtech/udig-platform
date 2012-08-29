@@ -729,6 +729,10 @@ public class DocumentDialog extends IconAndMessageDialog {
             setValue(description, getDescription());
             setValue(attribute, getAttribute());
             templateCheckBtn.setSelection(isTemplate());
+            final List<HotlinkDescriptor> actions = getActions();
+            if (actions != null && actions.size() > 0) {
+                infoGoAction.setSelection(new StructuredSelection(actions.get(0)));
+            }
         }
         
     }
