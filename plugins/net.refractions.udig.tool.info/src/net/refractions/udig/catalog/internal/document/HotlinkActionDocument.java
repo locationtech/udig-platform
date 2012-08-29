@@ -33,6 +33,14 @@ public class HotlinkActionDocument extends AbstractHotlinkDocument {
     public Object getContent() {
         return info;
     }
+    
+    @Override
+    public String getContentName() {
+        if (!isEmpty()) {
+            return info;
+        }
+        return null;
+    }
 
     @Override
     public boolean open() {

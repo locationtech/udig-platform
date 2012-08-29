@@ -94,12 +94,20 @@ public interface IDocument {
     };
 
     /**
-     * Gets the document value. The value returned will depend on the document's content type. See
+     * Gets the document content. The value returned will depend on the document's content type. See
      * {@link #getContentType()} for details.
      * 
-     * @return document info
+     * @return document content
      */
     public Object getContent();
+    
+    /**
+     * Gets the document content's display name. For example the filename of a file or the domain of
+     * a web URL.
+     * 
+     * @return document content's display name
+     */
+    public String getContentName();
     
     /**
      * Gets the document label. This is to be used for labelling documents in lists and views.

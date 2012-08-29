@@ -23,7 +23,7 @@ import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
 
 /**
- * Utility methods for {@link DocumentView} and related UI classes.
+ * Utility methods for {@link DocumentView}, {@link DocumentDialog} and other related UI classes.
  * 
  * @author Naz Chan
  */
@@ -41,8 +41,9 @@ public final class DocUtils {
      * @return document label
      */
     public static String getDocStr(IDocument doc) {
-        final String docInfoStr = getDocInfoStr(doc.getContentType(), doc.getContent());
-        return getDocStr(docInfoStr, doc.getLabel());
+        // [Naz] Updated to use content name instead
+        // final String docInfoStr = getDocInfoStr(doc.getContentType(), doc.getContent());
+        return getDocStr(doc.getContentName(), doc.getLabel());
     }
 
     /**

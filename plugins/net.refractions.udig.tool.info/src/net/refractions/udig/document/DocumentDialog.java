@@ -772,6 +772,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         getShell().setText(header);
         headerText.setText(header);
         subHeaderText.setText(getDescription());
+        subHeaderText.setToolTipText(getDescription());
 
     }
     
@@ -821,6 +822,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         getShell().setText(header);
         headerText.setText(header);
         subHeaderText.setText(subHeader);
+        subHeaderText.setToolTipText(subHeader);
         
     }
     
