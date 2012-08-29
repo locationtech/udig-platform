@@ -40,7 +40,7 @@ public class WebDocument extends AbstractBasicDocument {
     }
     
     @Override
-    public Object getValue() {
+    public Object getContent() {
         return url;
     }
 

@@ -14,7 +14,7 @@
  */
 package net.refractions.udig.catalog.document;
 
-import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import junit.framework.TestCase;
 
@@ -29,7 +29,7 @@ public class HotlinkDescriptorTest extends TestCase {
     private static final String LABEL = "label";
     private static final String DESCRIPTION = "description";
     private static final String NAME = "attr";
-    private static final Type TYPE = Type.WEB;
+    private static final ContentType TYPE = ContentType.WEB;
     private static final String CONFIG = "config";
     
     private static final String DELIMITER = HotlinkDescriptor.DELIMITER;

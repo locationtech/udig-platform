@@ -89,12 +89,12 @@ public abstract class AbstractHotlinkDocument extends AbstractDocument implement
     }
 
     @Override
-    public DocType getDocType() {
-        return DocType.HOTLINK;
+    public Type getType() {
+        return Type.HOTLINK;
     }
 
     @Override
-    public Type getType() {
+    public ContentType getContentType() {
         if (descriptors != null && descriptors.size() > 0) {
             return descriptors.get(0).getType();
         }

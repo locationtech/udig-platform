@@ -18,7 +18,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 
 import org.opengis.feature.simple.SimpleFeature;
 
@@ -124,7 +124,7 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
         private final String label;
         private final String description;
         private final String attributeName;
-        private final Type type;
+        private final ContentType type;
         private final String config;
 
         public static final String DELIMITER = "|~|"; //$NON-NLS-1$
@@ -137,7 +137,7 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
             label = null;
             description = null;
             attributeName = null;
-            type = Type.FILE;
+            type = ContentType.FILE;
             config = null;
         }
 
@@ -154,7 +154,7 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
             config = descriptor.getConfig();
         }
 
-        public HotlinkDescriptor(String attributeName, IDocument.Type type) {
+        public HotlinkDescriptor(String attributeName, IDocument.ContentType type) {
             this.label = null;
             this.description = null;
             this.attributeName = attributeName;
@@ -163,7 +163,7 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
         }
 
         public HotlinkDescriptor(String label, String description, String attributeName,
-                IDocument.Type type, String config) {
+                IDocument.ContentType type, String config) {
             this.label = label;
             this.description = description;
             this.attributeName = attributeName;
@@ -180,7 +180,7 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
             
             final String[] defValues = definition.split(DELIMITER_REGEX);
             attributeName = getCleanValue(defValues[0]);
-            type = Type.valueOf(defValues[1]);
+            type = ContentType.valueOf(defValues[1]);
             if (defValues.length > 2) {
                 config = getCleanValue(defValues[2]);
             } else {
@@ -217,7 +217,7 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
             return attributeName;
         }
 
-        public Type getType() {
+        public ContentType getType() {
             return type;
         }
 

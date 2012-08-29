@@ -40,7 +40,7 @@ public class FileDocument extends AbstractBasicDocument {
     }
     
     @Override
-    public Object getValue() {
+    public Object getContent() {
         return file;
     }
 

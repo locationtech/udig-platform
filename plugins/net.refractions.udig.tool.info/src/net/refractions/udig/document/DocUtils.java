@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 
 /**
  * Utility methods for {@link DocumentView} and related UI classes.
@@ -41,7 +41,7 @@ public final class DocUtils {
      * @return document label
      */
     public static String getDocStr(IDocument doc) {
-        final String docInfoStr = getDocInfoStr(doc.getType(), doc.getValue());
+        final String docInfoStr = getDocInfoStr(doc.getContentType(), doc.getContent());
         return getDocStr(docInfoStr, doc.getLabel());
     }
 
@@ -53,7 +53,7 @@ public final class DocUtils {
      * @param label
      * @return document label
      */
-    public static String getDocStr(Type type, String info, String label) {
+    public static String getDocStr(ContentType type, String info, String label) {
         final String docInfoStr = getDocInfoStr(type, info);
         return getDocStr(docInfoStr, label);
     }
@@ -80,7 +80,7 @@ public final class DocUtils {
      * @param infoStr
      * @return document info string
      */
-    private static String getDocInfoStr(Type type, String infoStr) {
+    private static String getDocInfoStr(ContentType type, String infoStr) {
         String infoDisplayValue = "Unassigned"; //$NON-NLS-1$
         if (infoStr != null) {
             switch (type) {
@@ -107,7 +107,7 @@ public final class DocUtils {
      * @param infoValue
      * @return document info string
      */
-    private static String getDocInfoStr(Type type, Object infoValue) {
+    private static String getDocInfoStr(ContentType type, Object infoValue) {
         String infoDisplayValue = "Unassigned"; //$NON-NLS-1$
         if (infoValue != null) {
             switch (type) {
