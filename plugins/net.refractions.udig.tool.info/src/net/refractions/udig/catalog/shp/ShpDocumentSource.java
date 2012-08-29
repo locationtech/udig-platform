@@ -68,7 +68,7 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
 
     @Override
     public boolean canLink() {
-        return true;
+        return false;
     }
     
     @Override

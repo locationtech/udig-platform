@@ -831,7 +831,8 @@ public class DocumentView extends ViewPart {
             final boolean isFeatureDoc = (source instanceof IAttachmentSource);
             final DocumentDialog docDialog = openDocDialog(new HashMap<String, Object>(), params, isFeatureDoc);
             if (docDialog != null) {
-                //TODO - Do link here
+                // TODO - Update document sources to support linking 
+                attachDocument(folder, docDialog.getDocInfo());
                 viewer.refresh();
                 viewer.expandAll();
             }            
