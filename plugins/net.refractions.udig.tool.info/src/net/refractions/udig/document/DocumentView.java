@@ -53,6 +53,8 @@ import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -83,6 +85,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPart;
@@ -117,6 +120,7 @@ public class DocumentView extends ViewPart {
     private Button editButton;
     private Button openButton;
     private Button saveAsButton;
+    private Action saveAsAction;
     private Button removeButton;
 
     private IGeoResource geoResource;
@@ -144,6 +148,7 @@ public class DocumentView extends ViewPart {
     public void createPartControl(final Composite viewParent) {
         
         setPartName(Messages.docView_name);
+        createViewMenu();
         
         final Composite parent = new Composite(viewParent, SWT.NONE);
         final String treeLayoutConst = "insets 0, fill, wrap 2"; //$NON-NLS-1$
@@ -167,6 +172,25 @@ public class DocumentView extends ViewPart {
         
     }
 
+    /**
+     * Creates the menu items for the view's menu.
+     */
+    private void createViewMenu() {
+
+        saveAsAction = new Action(Messages.docView_saveAs) {
+            @Override
+            public void run() {
+                saveAs();
+            }
+        };
+        saveAsAction.setId(Messages.docView_saveAs);
+
+        final IActionBars actionBars = getViewSite().getActionBars();
+        final IMenuManager menuManager = actionBars.getMenuManager();
+        menuManager.add(saveAsAction);
+
+    }
+    
     /**
      * Creates the tree-table control for displaying the documents.
      * 
@@ -337,12 +361,15 @@ public class DocumentView extends ViewPart {
      * @param isEnabled
      */
     private void setBtns(boolean isEnabled) {
+        
         openButton.setEnabled(isEnabled);
-        saveAsButton.setEnabled(isEnabled);
         attachButton.setEnabled(isEnabled);
         linkButton.setEnabled(isEnabled);
         editButton.setEnabled(isEnabled);
         removeButton.setEnabled(isEnabled);
+        
+        saveAsButton.setEnabled(isEnabled);
+        saveAsAction.setEnabled(isEnabled);
     }
 
     /**
@@ -365,6 +392,7 @@ public class DocumentView extends ViewPart {
                     if (DocType.ATTACHMENT == doc.getDocType() 
                             && Type.FILE == doc.getType()) {
                         saveAsButton.setEnabled(true);
+                        saveAsAction.setEnabled(true);
                     }
                     if (!doc.isEmpty()) {
                         openButton.setEnabled(true);
