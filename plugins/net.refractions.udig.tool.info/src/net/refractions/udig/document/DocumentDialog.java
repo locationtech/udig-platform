@@ -338,6 +338,8 @@ public class DocumentDialog extends IconAndMessageDialog {
         
         createHeader();
         
+        createTypeControls();
+        
         createInfoControls();
         createInfoBtnControls();
         createInfoGoActionControls();
@@ -349,19 +351,19 @@ public class DocumentDialog extends IconAndMessageDialog {
         attribute = new Text(composite, SWT.SINGLE | SWT.BORDER | SWT.READ_ONLY);
         attribute.setLayoutData(String.format(WIDTH_LAYOUT_FORMAT, CONTROL_WIDTH));
         
-        final Label docLbl = new Label(composite, SWT.NONE);
-        docLbl.setText(getLabel(Messages.DocumentDialog_documentLabel));
-        docLbl.setLayoutData(""); //$NON-NLS-1$
-
+        final Label documentLbl = new Label(composite, SWT.NONE);
+        documentLbl.setText(getLabel(Messages.DocumentDialog_documentLabel));
+        documentLbl.setLayoutData(""); //$NON-NLS-1$
+        documentLbl.setVisible(false); //Re: Brett's review comment
+        
         document = new Text(composite, SWT.SINGLE | SWT.BORDER | SWT.READ_ONLY);
         document.setLayoutData(String.format(WIDTH_LAYOUT_FORMAT, CONTROL_WIDTH));
-
-        createTypeControls();
+        document.setVisible(false); //Re: Brett's review comment
         
         templateCheckBtn = new Button(composite, SWT.CHECK);
         templateCheckBtn.setText(Messages.DocumentDialog_templateLabel);
         templateCheckBtn.setLayoutData("skip 1"); //$NON-NLS-1$
-        
+
         labelLbl = new Label(composite, SWT.NONE);
         labelLbl.setText(getLabel(Messages.DocumentDialog_labelLabel, !isHotlink()));
         labelLbl.setLayoutData(""); //$NON-NLS-1$
@@ -374,7 +376,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         descriptionLbl.setText(getLabel(Messages.DocumentDialog_descriptionLabel));
         descriptionLbl.setLayoutData(""); //$NON-NLS-1$
                     
-        description = new Text(composite, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+        description = new Text(composite, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
         description.setLayoutData(String.format(WIDTH_LAYOUT_FORMAT, CONTROL_WIDTH) + ", h 60!"); //$NON-NLS-1$
 
         return composite;
@@ -409,7 +411,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         };
         headerText.setFont(new Font(null, fontData));
         
-        subHeaderText = new Label(headerComposite, SWT.NONE);
+        subHeaderText = new Label(headerComposite, SWT.WRAP);
         subHeaderText.setLayoutData(""); //$NON-NLS-1$
         
     }
@@ -609,8 +611,8 @@ public class DocumentDialog extends IconAndMessageDialog {
             }
         });
         final List<HotlinkDescriptor> actions = getActions();
-        if (actions != null) {
-            infoGoAction.setInput(actions.toArray());    
+        if (actions != null && actions.size() > 0) {
+            infoGoAction.setInput(actions.toArray());
         }
         
         infoGoActionBtn = new Button(composite, SWT.PUSH);
@@ -922,8 +924,8 @@ public class DocumentDialog extends IconAndMessageDialog {
      * @param isEnabled
      */
     private void configMetadataControls(boolean isEnabled) {
-        label.setEnabled(isEnabled);
-        description.setEnabled(isEnabled);
+        label.setEditable(isEnabled);
+        description.setEditable(isEnabled);
     }
     
     /**
