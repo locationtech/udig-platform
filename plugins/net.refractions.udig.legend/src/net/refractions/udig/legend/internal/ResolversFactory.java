@@ -32,13 +32,14 @@ import org.eclipse.core.runtime.IProgressMonitor;
  */
 public class ResolversFactory implements IResolveAdapterFactory {
 
-    public Object adapt( IResolve resolve, Class< ? extends Object> adapter,
+    public <T> T adapt( IResolve resolve, Class<T> adapter,
             IProgressMonitor monitor ) throws IOException {
         MapGraphicResource resource = (MapGraphicResource) resolve;
         if( canResolveToRectangle(adapter, resource)){
             // this is the null style.  It says to place it in the 
             // bottom left at the optimal size
-            return new Rectangle(-LocationStyleContent.XPAD_RIGHT,-LocationStyleContent.YPAD_BOTTOM,0,0);
+            Rectangle rectangle = new Rectangle(-LocationStyleContent.XPAD_RIGHT,-LocationStyleContent.YPAD_BOTTOM,0,0);
+            return adapter.cast(rectangle);
         }
         return null;
     }

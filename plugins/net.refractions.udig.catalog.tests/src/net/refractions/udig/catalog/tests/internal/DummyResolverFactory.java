@@ -36,13 +36,13 @@ public class DummyResolverFactory implements IResolveAdapterFactory {
     /**
      * Actually adapt to the requested interface.
      */
-    public Object adapt( IResolve resolve, Class adapter, IProgressMonitor monitor )
+    public <T> T adapt( IResolve resolve, Class<T> adapter, IProgressMonitor monitor )
             throws IOException {
     	if( resolve instanceof DummyGeoResource ){
-    		return new ResolvedTo( resolve );
+    		return adapter.cast( new ResolvedTo( resolve ) );
     	}
     	else if( resolve instanceof DummyService){
-    		return new ResolvedTo( resolve );
+    		return adapter.cast( new ResolvedTo( resolve ) );
     	}
     	return null;
     }
@@ -54,7 +54,7 @@ public class DummyResolverFactory implements IResolveAdapterFactory {
      * @param 
      * @return true if this factory can adapt the provided resolve handle
      */
-    public boolean canAdapt( IResolve resolve, Class adapter ) {
+    public boolean canAdapt( IResolve resolve, Class<?> adapter ) {
     	if( resolve instanceof DummyGeoResource ){
     		return adapter.isAssignableFrom(ResolvedTo.class);
     	}

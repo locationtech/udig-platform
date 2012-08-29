@@ -283,7 +283,7 @@ public class ResolveManager implements IResolveManager {
     	public BrokenIResolveAdapaterFactory( CoreException coreException ){
     		problem = coreException;
     	}
-		public Object adapt(IResolve resolve, Class<? extends Object> adapter,
+		public <T> T adapt(IResolve resolve, Class<T> adapter,
 				IProgressMonitor monitor) throws IOException {
 			if( monitor == null ) monitor = new NullProgressMonitor();
 
