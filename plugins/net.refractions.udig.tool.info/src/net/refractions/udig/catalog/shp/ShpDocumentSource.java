@@ -62,10 +62,15 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
     }
         
     @Override
-    public boolean canAdd() {
+    public boolean canAttach() {
         return true;
     }
 
+    @Override
+    public boolean canLink() {
+        return true;
+    }
+    
     @Override
     public IDocument add(DocumentInfo info) {
         final IDocument doc = addInternal(info);

@@ -36,7 +36,7 @@ public interface IAttachmentSource extends IHotlinkSource {
      * @return list of documents
      */
     public List<IDocument> getDocuments(SimpleFeature feature);
-
+    
     /**
      * Adds the document.
      * 
@@ -54,7 +54,7 @@ public interface IAttachmentSource extends IHotlinkSource {
      * @return list of documents
      */
     public List<IDocument> add(SimpleFeature feature, List<DocumentInfo> infos);
-
+    
     /**
      * Updates the document info.
      * 
@@ -64,7 +64,7 @@ public interface IAttachmentSource extends IHotlinkSource {
      * @return updated document
      */
     public IDocument update(SimpleFeature feature, IDocument doc, DocumentInfo info);
-
+    
     /**
      * Removes the document.
      * 
