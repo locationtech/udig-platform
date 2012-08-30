@@ -1,4 +1,4 @@
-package net.refractions.udig.catalog.document;
+package net.refractions.udig.document.source;
 
 import java.io.File;
 import java.net.URL;
@@ -7,8 +7,11 @@ import java.util.Collections;
 import java.util.List;
 
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.internal.document.HotlinkFileDocument;
-import net.refractions.udig.catalog.internal.document.HotlinkWebDocument;
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IHotlinkSource;
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import net.refractions.udig.document.model.FileHotlinkDocument;
+import net.refractions.udig.document.model.WebHotlinkDocument;
 
 import org.opengis.feature.simple.SimpleFeature;
 
@@ -52,9 +55,9 @@ public class BasicHotlink implements IHotlinkSource {
         }
         switch (descriptor.getType()) {
         case FILE:
-            return new HotlinkFileDocument(value, Collections.singletonList(descriptor));
+            return new FileHotlinkDocument(value, Collections.singletonList(descriptor));
         case WEB:
-            return new HotlinkWebDocument(value, Collections.singletonList(descriptor));
+            return new WebHotlinkDocument(value, Collections.singletonList(descriptor));
         }
         return null;
     }
@@ -81,6 +84,18 @@ public class BasicHotlink implements IHotlinkSource {
     public IDocument setAction(SimpleFeature feature, String attributeName, String action) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public boolean canSetHotlink() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean canClearHotlink() {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }

@@ -14,23 +14,25 @@
  *    Lesser General Public License for more details.
  *
  */
-package net.refractions.udig.catalog.shp;
+package net.refractions.udig.document.source;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import net.refractions.udig.catalog.document.IAbstractDocumentSource;
 import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
+import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.catalog.internal.document.AbstractDocument;
-import net.refractions.udig.catalog.internal.document.AttachmentFileDocument;
-import net.refractions.udig.catalog.internal.document.DocumentFolder;
-import net.refractions.udig.catalog.internal.document.FileDocument;
-import net.refractions.udig.catalog.internal.document.HotlinkActionDocument;
-import net.refractions.udig.catalog.internal.document.HotlinkFileDocument;
-import net.refractions.udig.catalog.internal.document.HotlinkWebDocument;
-import net.refractions.udig.catalog.internal.document.WebDocument;
+import net.refractions.udig.document.model.AbstractDocument;
+import net.refractions.udig.document.model.ActionHotlinkDocument;
+import net.refractions.udig.document.model.DocumentFolder;
+import net.refractions.udig.document.model.FileAttachmentDocument;
+import net.refractions.udig.document.model.FileHotlinkDocument;
+import net.refractions.udig.document.model.FileLinkedDocument;
+import net.refractions.udig.document.model.WebHotlinkDocument;
+import net.refractions.udig.document.model.WebLinkedDocument;
 
 /**
  * Factory class to create shapefile documents and document folders.
@@ -52,31 +54,17 @@ public class ShpDocFactory {
      * @return document
      */
     public IDocument create(DocumentInfo info) {
-        return create(info, false);
-    }
-
-    /**
-     * Creates a document from the document info with the option to make the document an attachment.
-     * 
-     * @param info
-     * @param isAttachment
-     * @return document
-     */
-    public IDocument create(DocumentInfo info, boolean isAttachment) {
         AbstractDocument doc = null;
-        switch (info.getType()) {
-        case FILE:
-            if (isAttachment) {
-                doc = new AttachmentFileDocument(info);
-            } else {
-                doc = new FileDocument(info);
+        if (Type.ATTACHMENT == info.getType()) {
+            if (ContentType.FILE == info.getContentType()) {
+                doc = new FileAttachmentDocument(info);
             }
-            break;
-        case WEB:
-            doc = new WebDocument(info);
-            break;
-        default:
-            break;
+        } else if (Type.LINKED == info.getType()) {
+            if (ContentType.FILE == info.getContentType()) {
+                doc = new FileLinkedDocument(info);
+            } else if (ContentType.WEB == info.getContentType()) {
+                doc = new WebLinkedDocument(info);
+            }
         }
         if (doc != null) {
             doc.setSource(source);    
@@ -85,33 +73,22 @@ public class ShpDocFactory {
     }
     
     /**
-     * Creates a list documents from the list of document infos.
+     * Creates a list of document from the document infos.
      * 
      * @param infos
      * @return list of documents
      */
     public List<IDocument> create(List<DocumentInfo> infos) {
-        return create(infos, false);
-    }
-    
-    /**
-     * Creates a list of document from the document infos with the option to make the document an
-     * attachment.
-     * 
-     * @param infos
-     * @param isAttachment
-     * @return list of documents
-     */
-    public List<IDocument> create(List<DocumentInfo> infos, boolean isAttachment) {
         final List<IDocument> docs = new ArrayList<IDocument>();
         for (DocumentInfo info : infos) {
-            docs.add(create(info, isAttachment));
+            docs.add(create(info));
         }
         return docs;
     }
     
     /**
-     * Creates a document from the info and the list of hotlink descriptors.
+     * Creates a document from the info (is the attribute value) and the list of hotlink descriptors
+     * related to an attribute.
      * 
      * @param info
      * @param descriptors
@@ -121,13 +98,13 @@ public class ShpDocFactory {
         AbstractDocument doc = null;
         switch (descriptors.get(0).getType()) {
         case FILE:
-            doc = new HotlinkFileDocument(info, descriptors);
+            doc = new FileHotlinkDocument(info, descriptors);
             break;
         case WEB:
-            doc = new HotlinkWebDocument(info, descriptors);
+            doc = new WebHotlinkDocument(info, descriptors);
             break;
         case ACTION:
-            doc = new HotlinkActionDocument(info, descriptors);
+            doc = new ActionHotlinkDocument(info, descriptors);
             break;
         default:
             break;

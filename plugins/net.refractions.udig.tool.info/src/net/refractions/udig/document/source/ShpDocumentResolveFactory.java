@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.shp;
+package net.refractions.udig.document.source;
 
 import java.io.File;
 import java.io.IOException;

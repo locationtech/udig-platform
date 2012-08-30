@@ -27,17 +27,64 @@ public interface IDocument {
     /**
      * Document type
      */
-    public enum DocType {
-        DOCUMENT, ATTACHMENT, HOTLINK;
+    public enum Type {
+        /**
+         * Linked documents store a reference to the document.
+         * <p>
+         * This may have either of the following content types:
+         * <ul>
+         * <li>{@link Type#FILE}</li>
+         * <li>{@link Type#WEB}</li>
+         * </ul>
+         */
+        LINKED,
+        /**
+         * Attachments store a copy of the document.
+         * <p>
+         * This may have either of the following content types:
+         * <ul>
+         * <li>{@link Type#FILE}</li>
+         * </ul>
+         */
+        ATTACHMENT,
+        /**
+         * Hotlinks store reference to the document as a feature's attribute value.
+         *          * <p>
+         * This may have either of the following content types:
+         * <ul>
+         * <li>{@link Type#FILE}</li>
+         * <li>{@link Type#WEB}</li>
+         * <li>{@link Type#ACTION}</li>
+         * </ul>
+         */
+        HOTLINK;
     }
 
     /**
      * Document content type
      */
-    public enum Type {
-        FILE, WEB, ACTION;
+    public enum ContentType {
+        /**
+         * Documents that refer to files.
+         */
+        FILE, 
+        /**
+         * Documents that refer to web pages.
+         */
+        WEB, 
+        /**
+         * Documents that refer to custom actions.
+         */
+        ACTION;
+        
+        /**
+         * Checks if the type exists in this enum.
+         * 
+         * @param type
+         * @return true if exists, otherwise false
+         */
         public static boolean exists(String type) {
-            for (Type c : values()) {
+            for (ContentType c : values()) {
                 if (c.name().equals(type)) {
                     return true;
                 }
@@ -47,13 +94,21 @@ public interface IDocument {
     };
 
     /**
-     * Gets the document value. The value returned will depend on the document's content type. See
-     * {@link #getType()} for details.
+     * Gets the document content. The value returned will depend on the document's content type. See
+     * {@link #getContentType()} for details.
      * 
-     * @return document info
+     * @return document content
      */
-    public Object getValue();
-
+    public Object getContent();
+    
+    /**
+     * Gets the document content's display name. For example the filename of a file or the domain of
+     * a web URL.
+     * 
+     * @return document content's display name
+     */
+    public String getContentName();
+    
     /**
      * Gets the document label. This is to be used for labelling documents in lists and views.
      * 
@@ -71,21 +126,21 @@ public interface IDocument {
      * 
      * @return document type
      */
-    public DocType getDocType();
+    public Type getType();
 
     /**
      * Gets the document content type.
      * <p>
      * The following documents are defined:
      * <ul>
-     * <li>{@link Type#FILE} value is supplied as a local File</li>
-     * <li>{@link Type#WEB} value is supplied as URL</li>
-     * <li>{@link Type#ACTION} value is marked for script use</li>
+     * <li>{@link ContentType#FILE} value is supplied as a local File</li>
+     * <li>{@link ContentType#WEB} value is supplied as URL</li>
+     * <li>{@link ContentType#ACTION} value is marked for script use</li>
      * </ul>
      * 
      * @return document content type
      */
-    public Type getType();
+    public ContentType getContentType();
 
     /**
      * Open this document; in a platform specific manner.

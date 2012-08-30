@@ -14,11 +14,10 @@
  */
 package net.refractions.udig.catalog.document;
 
-
 /**
- * A marker interface for all document source interfaces.
+ * Marker (flag) interface for document sources.
  * 
- * @author nchan 
+ * @author Naz Chan
  */
 public interface IAbstractDocumentSource {
     // Nothing

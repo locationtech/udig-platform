@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.internal.document;
+package net.refractions.udig.document.model;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,9 +27,9 @@ import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
  * 
  * @author Naz Chan
  */
-public class AttachmentFileDocument extends FileDocument implements IAttachment {
+public class FileAttachmentDocument extends FileLinkedDocument implements IAttachment {
 
-    public AttachmentFileDocument(DocumentInfo info) {
+    public FileAttachmentDocument(DocumentInfo info) {
         super(info);
     }
  
@@ -45,8 +45,8 @@ public class AttachmentFileDocument extends FileDocument implements IAttachment 
     }
 
     @Override
-    public DocType getDocType() {
-        return DocType.ATTACHMENT;
+    public Type getType() {
+        return Type.ATTACHMENT;
     }
     
 }

@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.document;
+package net.refractions.udig.document.ui;
 
 import java.io.File;
 import java.net.URL;
@@ -20,15 +20,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 
 /**
- * Utility methods for {@link DocumentView} and related UI classes.
+ * Utility methods for {@link DocumentView}, {@link DocumentDialog} and other related UI classes.
  * 
  * @author Naz Chan
  */
 public final class DocUtils {
 
+    private static final String UNASSIGNED = "Unassigned"; //$NON-NLS-1$
     private static final String DOCUMENT_FORMAT = "%s (%s)"; //$NON-NLS-1$
     private static final String LABEL_DESC_FORMAT = "%s - %s"; //$NON-NLS-1$
     private static final String SAVE_AS_FORMAT = "%s-Copy.%s"; //$NON-NLS-1$
@@ -41,7 +42,10 @@ public final class DocUtils {
      * @return document label
      */
     public static String getDocStr(IDocument doc) {
-        final String docInfoStr = getDocInfoStr(doc.getType(), doc.getValue());
+        String docInfoStr = doc.getContentName();
+        if (docInfoStr == null || docInfoStr.isEmpty()) {
+            docInfoStr = UNASSIGNED;
+        }
         return getDocStr(docInfoStr, doc.getLabel());
     }
 
@@ -53,7 +57,7 @@ public final class DocUtils {
      * @param label
      * @return document label
      */
-    public static String getDocStr(Type type, String info, String label) {
+    public static String getDocStr(ContentType type, String info, String label) {
         final String docInfoStr = getDocInfoStr(type, info);
         return getDocStr(docInfoStr, label);
     }
@@ -80,8 +84,8 @@ public final class DocUtils {
      * @param infoStr
      * @return document info string
      */
-    private static String getDocInfoStr(Type type, String infoStr) {
-        String infoDisplayValue = "Unassigned"; //$NON-NLS-1$
+    private static String getDocInfoStr(ContentType type, String infoStr) {
+        String infoDisplayValue = UNASSIGNED;
         if (infoStr != null) {
             switch (type) {
             case FILE:
@@ -107,8 +111,8 @@ public final class DocUtils {
      * @param infoValue
      * @return document info string
      */
-    private static String getDocInfoStr(Type type, Object infoValue) {
-        String infoDisplayValue = "Unassigned"; //$NON-NLS-1$
+    private static String getDocInfoStr(ContentType type, Object infoValue) {
+        String infoDisplayValue = UNASSIGNED;
         if (infoValue != null) {
             switch (type) {
             case FILE:

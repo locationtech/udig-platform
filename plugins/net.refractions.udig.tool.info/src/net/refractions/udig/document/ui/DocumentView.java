@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.document;
+package net.refractions.udig.document.ui;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,22 +26,21 @@ import java.util.Map;
 
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.document.DocumentPropertyPage;
 import net.refractions.udig.catalog.document.IAbstractDocumentSource;
 import net.refractions.udig.catalog.document.IAttachment;
 import net.refractions.udig.catalog.document.IAttachmentSource;
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.DocType;
 import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IDocumentFolder;
 import net.refractions.udig.catalog.document.IDocumentSource;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.document.IHotlink;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.catalog.shp.ShpDocFactory;
 import net.refractions.udig.core.AdapterUtil;
 import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.document.DocumentDialog.Mode;
+import net.refractions.udig.document.source.ShpDocFactory;
+import net.refractions.udig.document.ui.DocumentDialog.Mode;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.command.provider.FIDFeatureProvider;
@@ -53,6 +52,8 @@ import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -83,6 +84,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPart;
@@ -112,10 +114,12 @@ import org.opengis.filter.identity.FeatureId;
 public class DocumentView extends ViewPart {
     
     private TreeViewer viewer;
-    private Button addButton;
+    private Button attachButton;
+    private Button linkButton;
     private Button editButton;
     private Button openButton;
     private Button saveAsButton;
+    private Action saveAsAction;
     private Button removeButton;
 
     private IGeoResource geoResource;
@@ -143,6 +147,7 @@ public class DocumentView extends ViewPart {
     public void createPartControl(final Composite viewParent) {
         
         setPartName(Messages.docView_name);
+        createViewMenu();
         
         final Composite parent = new Composite(viewParent, SWT.NONE);
         final String treeLayoutConst = "insets 0, fill, wrap 2"; //$NON-NLS-1$
@@ -166,6 +171,25 @@ public class DocumentView extends ViewPart {
         
     }
 
+    /**
+     * Creates the menu items for the view's menu.
+     */
+    private void createViewMenu() {
+
+        saveAsAction = new Action(Messages.docView_saveAs) {
+            @Override
+            public void run() {
+                saveAs();
+            }
+        };
+        saveAsAction.setId(Messages.docView_saveAs);
+
+        final IActionBars actionBars = getViewSite().getActionBars();
+        final IMenuManager menuManager = actionBars.getMenuManager();
+        menuManager.add(saveAsAction);
+
+    }
+    
     /**
      * Creates the tree-table control for displaying the documents.
      * 
@@ -231,17 +255,23 @@ public class DocumentView extends ViewPart {
         final Composite btnSection = new Composite(parent, SWT.NONE);
         final String btnLayoutConst = "fillx, wrap 1"; //$NON-NLS-1$
         final String btnColConst = ""; //$NON-NLS-1$
-        final String btnRowConst = "[][][][]push[]"; //$NON-NLS-1$
+        final String btnRowConst = "[][][][][]push[]"; //$NON-NLS-1$
         btnSection.setLayout(new MigLayout(btnLayoutConst, btnColConst, btnRowConst));
         btnSection.setLayoutData("grow"); //$NON-NLS-1$
         
         final String btnLayoutData = "growx"; //$NON-NLS-1$
         
-        // add button
-        addButton = new Button(btnSection, SWT.PUSH);
-        addButton.setText(Messages.docView_add);
-        addButton.setLayoutData(btnLayoutData);
-        addButton.addSelectionListener(btnSelectionListener);
+        // attach button
+        attachButton = new Button(btnSection, SWT.PUSH);
+        attachButton.setText(Messages.docView_attach);
+        attachButton.setLayoutData(btnLayoutData);
+        attachButton.addSelectionListener(btnSelectionListener);
+        
+        // link button
+        linkButton = new Button(btnSection, SWT.PUSH);
+        linkButton.setText(Messages.docView_link);
+        linkButton.setLayoutData(btnLayoutData);
+        linkButton.addSelectionListener(btnSelectionListener);
         
         // edit button
         editButton = new Button(btnSection, SWT.PUSH);
@@ -260,6 +290,7 @@ public class DocumentView extends ViewPart {
         saveAsButton.setText(Messages.docView_saveAs);
         saveAsButton.setLayoutData(btnLayoutData);
         saveAsButton.addSelectionListener(btnSelectionListener);
+        saveAsButton.setVisible(false); // Re: Brett's comment
         
         // remove button
         removeButton = new Button(btnSection, SWT.PUSH);
@@ -319,32 +350,58 @@ public class DocumentView extends ViewPart {
      * Refreshes the buttons with respect to the current list selection.
      */
     private void refreshBtns() {
+        setBtns(false);
+        refreshBtnsOnType();
+    }
+    
+    /**
+     * Sets the button's enablement.
+     * 
+     * @param isEnabled
+     */
+    private void setBtns(boolean isEnabled) {
+        
+        openButton.setEnabled(isEnabled);
+        attachButton.setEnabled(isEnabled);
+        linkButton.setEnabled(isEnabled);
+        editButton.setEnabled(isEnabled);
+        removeButton.setEnabled(isEnabled);
+        
+        saveAsButton.setEnabled(isEnabled);
+        saveAsAction.setEnabled(isEnabled);
+    }
 
-        openButton.setEnabled(false);
-        saveAsButton.setEnabled(false);
-        removeButton.setEnabled(false);
-        addButton.setEnabled(false);
-        editButton.setEnabled(false);
-
+    /**
+     * Refreshes the buttons with respect to the selection's type (if {@link IDocument} or
+     * {@link IDocumentFolder}), document type (refer to {@link Type}) and document content type
+     * (refer to {@link ContentType}). And also with respect to the selection's document source. Refer to
+     * {@link IAbstractDocumentSource}.
+     */
+    private void refreshBtnsOnType() {
+        
         if (viewerSelection != null) {
             if (viewerSelection.size() == 1) {
                 final Object element = viewerSelection.getFirstElement();
-                addButton.setEnabled(true);
+                final IAbstractDocumentSource source = getDocumentSource();
+                attachButton.setEnabled(DocSourceUtils.canAttach(source));
+                linkButton.setEnabled(DocSourceUtils.canLink(source));
                 if (element instanceof IDocument) {
-                    editButton.setEnabled(true);
                     final IDocument doc = (IDocument) element;
-                    if (DocType.ATTACHMENT == doc.getDocType() 
-                            && Type.FILE == doc.getType()) {
+                    final Type docType = doc.getType();
+                    final boolean isHotlink = (Type.HOTLINK == docType);
+                    editButton.setEnabled(DocSourceUtils.canUpdate(source, isHotlink));
+                    if (Type.ATTACHMENT == docType 
+                            && ContentType.FILE == doc.getContentType()) {
                         saveAsButton.setEnabled(true);
+                        saveAsAction.setEnabled(true);
                     }
                     if (!doc.isEmpty()) {
                         openButton.setEnabled(true);
-                        removeButton.setEnabled(true);
                     }
-                    if (DocType.HOTLINK == doc.getDocType()) {
-                        removeButton.setText(Messages.docView_clear);
-                    } else {
-                        removeButton.setText(Messages.docView_delete);
+                    removeButton.setText(isHotlink ? Messages.docView_clear : Messages.docView_delete);
+                    removeButton.setEnabled(isHotlink ? !doc.isEmpty() : true);
+                    if (removeButton.isEnabled()) {
+                        removeButton.setEnabled(DocSourceUtils.canRemove(source, isHotlink));    
                     }
                 }
             } else if (viewerSelection.size() > 1) {
@@ -358,7 +415,7 @@ public class DocumentView extends ViewPart {
                 removeButton.setEnabled(!isAllFolders);    
             }
         }
-
+        
     }
     
     /**
@@ -661,8 +718,10 @@ public class DocumentView extends ViewPart {
     private void handleBtnSelection(Widget btn) {
         if (openButton == btn) {
             open();
-        } else if (addButton == btn) {
-            add();
+        } else if (attachButton == btn) {
+            attach();
+        } else if (linkButton == btn) {
+            link();
         } else if (editButton == btn) {
             edit();
         } else if (removeButton == btn) {
@@ -678,7 +737,7 @@ public class DocumentView extends ViewPart {
     private void open() {
         final IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
         final IDocument doc = (IDocument) selection.getFirstElement();
-        if (Type.ACTION == doc.getType()) {
+        if (ContentType.ACTION == doc.getContentType()) {
             openAction(doc);
         } else {
             doc.open();  
@@ -734,7 +793,7 @@ public class DocumentView extends ViewPart {
      */
     private void openAction(IHotlink hotlinkDoc, HotlinkDescriptor descriptor) {
         final String action = descriptor.getConfig().replace(DocumentPropertyPage.ACTION_PARAM,
-                hotlinkDoc.getValue().toString());
+                hotlinkDoc.getContent().toString());
         Program.launch(action);
     }
     
@@ -742,19 +801,12 @@ public class DocumentView extends ViewPart {
      * Adds a new document. This opens the {@link DocumentDialog} to allow the user to input details
      * of the document to be added.
      */
-    private void add() {
+    private void attach() {
 
-        final Object obj = viewerSelection.getFirstElement();
-        IDocumentFolder folder = null;
-        if (obj instanceof IDocumentFolder) {
-            folder = (IDocumentFolder) obj;
-        } else if (obj instanceof IDocument) {
-            folder = itemModel.getFolder((IDocument) obj);
-        }
-        
+        final IDocumentFolder folder = getDocumentFolder();
         if (folder != null) {
             final Map<String, Object> params = new HashMap<String, Object>();
-            params.put(DocumentDialog.P_DOC_TYPE, DocType.ATTACHMENT);
+            params.put(DocumentDialog.P_TYPE, Type.ATTACHMENT);
             params.put(DocumentDialog.P_MODE, Mode.ADD);
             params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(folder));
 
@@ -771,6 +823,42 @@ public class DocumentView extends ViewPart {
     }
 
     /**
+     * Links a new document. This opens the {@link DocumentDialog} to allow the user to input details
+     * of the document to be linked.
+     */
+    private void link() {
+
+        final IDocumentFolder folder = getDocumentFolder();
+        if (folder != null) {
+            final IAbstractDocumentSource source = folder.getSource();
+            
+            final Map<String, Object> params = new HashMap<String, Object>();
+            params.put(DocumentDialog.P_TYPE, Type.LINKED);
+            params.put(DocumentDialog.P_MODE, Mode.ADD);
+            params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(folder));
+            final List<ContentType> contentTypes = new ArrayList<ContentType>();
+            if (DocSourceUtils.canLinkFile(source)) {
+                contentTypes.add(ContentType.FILE);
+            }
+            if (DocSourceUtils.canLinkWeb(source)) {
+                contentTypes.add(ContentType.WEB);
+            }
+            if (contentTypes != null && contentTypes.size() > 0) {
+                params.put(DocumentDialog.P_CONTENT_TYPES, contentTypes);    
+            }
+            
+            final boolean isFeatureDoc = (source instanceof IAttachmentSource);
+            final DocumentDialog docDialog = openDocDialog(new HashMap<String, Object>(), params, isFeatureDoc);
+            if (docDialog != null) { 
+                addDocument(folder, docDialog.getDocInfo());
+                viewer.refresh();
+                viewer.expandAll();
+            }            
+        }
+        
+    }
+    
+    /**
      * Adds a new document to the document folder with the given document info.
      */
     private void addDocument(IDocumentFolder folder, DocumentInfo info) {
@@ -785,7 +873,7 @@ public class DocumentView extends ViewPart {
         }
         
         if (doc == null) {
-            MessageDialog.openInformation(addButton.getShell(),
+            MessageDialog.openInformation(attachButton.getShell(),
                     Messages.docView_attachFile, Messages.docView_errFileExistSingle);
         }
         
@@ -800,7 +888,7 @@ public class DocumentView extends ViewPart {
         final Object obj = viewerSelection.getFirstElement();
         if (obj instanceof IDocument) {
             final IDocument doc = (IDocument) obj;
-            if (DocType.HOTLINK == doc.getDocType()) {
+            if (Type.HOTLINK == doc.getType()) {
                 editHotlink(doc);
             } else {
                 editDocument(doc);
@@ -820,15 +908,15 @@ public class DocumentView extends ViewPart {
         
         final Map<String, Object> values = new HashMap<String, Object>();
         if (!doc.isEmpty()) {
-            values.put(DocumentDialog.V_INFO, doc.getValue().toString());    
+            values.put(DocumentDialog.V_INFO, doc.getContent().toString());    
         }
-        values.put(DocumentDialog.V_TYPE, doc.getType());
+        values.put(DocumentDialog.V_CONTENT_TYPE, doc.getContentType());
         values.put(DocumentDialog.V_LABEL, doc.getLabel());
         values.put(DocumentDialog.V_DESCRIPTION, doc.getDescription());
         values.put(DocumentDialog.V_TEMPLATE, doc.isTemplate());
         
         final Map<String, Object> params = new HashMap<String, Object>();
-        params.put(DocumentDialog.P_DOC_TYPE, DocType.ATTACHMENT);
+        params.put(DocumentDialog.P_TYPE, doc.getType());
         params.put(DocumentDialog.P_MODE, Mode.EDIT);
         params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(doc));
         
@@ -859,27 +947,27 @@ public class DocumentView extends ViewPart {
         
         final Map<String, Object> values = new HashMap<String, Object>();
         if (!doc.isEmpty()) {
-            values.put(DocumentDialog.V_INFO, doc.getValue().toString());    
+            values.put(DocumentDialog.V_INFO, doc.getContent().toString());    
         }
-        values.put(DocumentDialog.V_TYPE, doc.getType());
+        values.put(DocumentDialog.V_CONTENT_TYPE, doc.getContentType());
         values.put(DocumentDialog.V_ATTRIBUTE, attributeName);
         values.put(DocumentDialog.V_LABEL, doc.getLabel());
         values.put(DocumentDialog.V_DESCRIPTION, doc.getDescription());
-        if (Type.ACTION == doc.getType()) {
+        if (ContentType.ACTION == doc.getContentType()) {
             values.put(DocumentDialog.V_ACTIONS, hotlinkDoc.getDescriptors());
         }
         
         final Map<String, Object> params = new HashMap<String, Object>();
-        params.put(DocumentDialog.P_DOC_TYPE, DocType.HOTLINK);
+        params.put(DocumentDialog.P_TYPE, Type.HOTLINK);
         params.put(DocumentDialog.P_MODE, Mode.EDIT);
-        if (Type.FILE == doc.getType()) {
+        if (ContentType.FILE == doc.getContentType()) {
             params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(doc));
         }
         
         final DocumentDialog docDialog = openDocDialog(values, params, true);
         if (docDialog != null) {
             final IAttachmentSource featureDocSource = (IAttachmentSource) doc.getSource();
-            switch (doc.getType()) {
+            switch (doc.getContentType()) {
             case FILE:
                 featureDocSource.setFile(feature, attributeName, docDialog.getFileInfo());
                 break;
@@ -909,7 +997,7 @@ public class DocumentView extends ViewPart {
         if (isFeatureDoc && feature != null) {
             params.put(DocumentDialog.P_FEATURE_NAME, getFeatureLabel(geoResource, feature));
         }
-        params.put(DocumentDialog.P_SHAPEFILE_NAME, geoResource.getTitle());
+        params.put(DocumentDialog.P_RESOURCE_NAME, geoResource.getTitle());
         final DocumentDialog docDialog = new DocumentDialog(editButton.getShell(), values, params);
         final int result = docDialog.open();
         if (Dialog.OK == result) {
@@ -946,7 +1034,8 @@ public class DocumentView extends ViewPart {
             for (IDocument doc : docs) {
                 
                 boolean doDelete = true;
-                if (DocType.ATTACHMENT == doc.getDocType() && Type.FILE == doc.getType()) {
+                if (Type.ATTACHMENT == doc.getType() && ContentType.FILE == doc.getContentType()
+                        && !doc.isEmpty()) {
                     doDelete = MessageDialog.openConfirm(removeButton.getShell(),
                             Messages.docView_deleteAttachConfirmTitle,
                             Messages.docView_deleteAttachConfirmMsg);
@@ -958,7 +1047,7 @@ public class DocumentView extends ViewPart {
                         docSource.remove(doc);
                     } else if (source instanceof IAttachmentSource) {
                         final IAttachmentSource featureDocSource = (IAttachmentSource) source;
-                        if (DocType.HOTLINK == doc.getDocType()) {
+                        if (Type.HOTLINK == doc.getType()) {
                             final IHotlink hotlinkDoc = (IHotlink) doc;
                             final String attributeName = hotlinkDoc.getAttributeName();
                             featureDocSource.clear(feature, attributeName);
@@ -1061,7 +1150,7 @@ public class DocumentView extends ViewPart {
         final Object element = viewerSelection.getFirstElement();
         if (element instanceof IAttachment) {
             final IAttachment attachDoc = (IAttachment) element;
-            final File file = (File) attachDoc.getValue();
+            final File file = (File) attachDoc.getContent();
             
             final FileDialog dialog = new FileDialog(saveAsButton.getShell(), SWT.SAVE);
             dialog.setText(Messages.DocumentView_saveAsDialogTitle);
@@ -1102,7 +1191,7 @@ public class DocumentView extends ViewPart {
                             .getImage(ISharedImages.IMG_OBJ_FOLDER);
                 } else if (element instanceof IDocument) {
                     final IDocument doc = (IDocument) element;
-                    switch (doc.getType()) {
+                    switch (doc.getContentType()) {
                     case FILE:
                         return PlatformUI.getWorkbench().getSharedImages()
                                 .getImage(ISharedImages.IMG_OBJ_FILE);
@@ -1136,7 +1225,7 @@ public class DocumentView extends ViewPart {
                 case DOCUMENT_INDEX:
                     return DocUtils.getDocStr(doc);
                 case TYPE_INDEX:
-                    return DocUtils.toCamelCase(doc.getType().toString());
+                    return DocUtils.toCamelCase(doc.getContentType().toString());
                 case DESCRIPTION_INDEX:
                     final String description = doc.getDescription();
                     if (description != null) {
@@ -1289,6 +1378,40 @@ public class DocumentView extends ViewPart {
             return templates;
         }
         
+    }
+ 
+    /**
+     * Gets the document folder containing the current selection. Or the current selection if it is
+     * a folder.
+     * 
+     * @return document folder
+     */
+    private IDocumentFolder getDocumentFolder() {
+        if (viewerSelection != null) {
+            final Object obj = viewerSelection.getFirstElement();
+            IDocumentFolder folder = null;
+            if (obj instanceof IDocumentFolder) {
+                folder = (IDocumentFolder) obj;
+            } else if (obj instanceof IDocument) {
+                folder = itemModel.getFolder((IDocument) obj);
+            }
+            return folder;    
+        }
+        return null;
+    }
+    
+    /**
+     * Gets the document source of the folder containing the current selection. This should also be
+     * the same document source of the current selection if it is not a folder.
+     * 
+     * @return document source
+     */
+    private IAbstractDocumentSource getDocumentSource() {
+        final IDocumentFolder folder = getDocumentFolder();
+        if (folder != null) {
+            return folder.getSource();    
+        }
+        return null;
     }
     
 }

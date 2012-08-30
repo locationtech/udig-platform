@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.document;
+package net.refractions.udig.document.ui;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,11 +21,14 @@ import java.util.List;
 
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IAttachmentSource;
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IHotlinkSource;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
-import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
-import net.refractions.udig.document.DocUtils;
+import net.refractions.udig.document.source.BasicHotlinkResolveFactory;
+import net.refractions.udig.document.source.ShpDocPropertyParser;
 import net.refractions.udig.tool.info.InfoPlugin;
 import net.refractions.udig.tool.info.internal.Messages;
 
@@ -53,9 +56,15 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -227,7 +236,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                         .getImage(ISharedImages.IMG_OBJ_ELEMENT);
             }
         });
-        columnLayout.setColumnData(column.getColumn(), new ColumnWeightData(8, 0, true));
+        columnLayout.setColumnData(column.getColumn(), new ColumnWeightData(8, 0, false));
         
         column = new TableViewerColumn(hotlinkViewer, SWT.NONE);
         column.getColumn().setText(Messages.Document_Label_Column);
@@ -384,9 +393,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         // look up shell now from the display thread
         final Shell shell = DocumentPropertyPage.this.getShell();
         
-        final HotlinkDescriptorDialog prompt = new HotlinkDescriptorDialog(shell);
-        HotlinkDescriptor copy = new HotlinkDescriptor(descriptor);
-        prompt.setDescriptor(copy);
+        final HotlinkDescriptor copy = new HotlinkDescriptor(descriptor);
+        final HotlinkDescriptorDialog prompt = new HotlinkDescriptorDialog(shell, copy);
         prompt.openInJob(new Runnable() {
             @Override
             public void run() {
@@ -443,23 +451,44 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         private SimpleFeatureType schema;
 
         private ComboViewer attributeViewer;
-
         private ComboViewer typeViewer;
-
         private Text actionText;
-
         private Label actionLabel;
-        
         private Text labelText;
-        
         private Text descriptionText;
 
+        private StructuredSelection typeSelection;
+        
+        private boolean isAddMode = true;
+        
+        /**
+         * Constructor for add mode.
+         * 
+         * @param parentShell
+         */
         protected HotlinkDescriptorDialog(Shell parentShell) {
             super(parentShell);
-            message = Messages.DocumentPropertyPage_header;
-            this.descriptor = new HotlinkDescriptor(); // empty if creating a new one
+            this.isAddMode = true;
+            this.descriptor = new HotlinkDescriptor();
         }
 
+        /**
+         * Constructor for edit mode.
+         * 
+         * @param parentShell
+         * @param descriptor
+         */
+        protected HotlinkDescriptorDialog(Shell parentShell, HotlinkDescriptor descriptor) {
+            super(parentShell);
+            this.isAddMode = false;
+            this.descriptor = descriptor;
+        }
+        
+        @Override
+        protected boolean isResizable() {
+            return true;
+        }
+        
         @Override
         protected Image getImage() {
             return getQuestionImage();
@@ -471,10 +500,6 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
 
         public HotlinkDescriptor getDescriptor() {
             return descriptor;
-        }
-
-        public void setDescriptor(HotlinkDescriptor descriptor) {
-            this.descriptor = descriptor;
         }
 
         /**
@@ -537,22 +562,51 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         }
         @Override
         protected void configureShell(Shell shell) {
-            super.configureShell(shell);
             shell.setText(Messages.DocumentPropertyPage_title);
-            shell.setImage( getQuestionImage() );
+            shell.setImage(getQuestionImage());
+            resizeDialog(shell);
+            super.configureShell(shell);
+        }
+
+        protected void resizeDialog(Shell shell) {
+
+            final int HEIGHT = 380;
+            final int WIDTH = 460;
+
+            final Display display = PlatformUI.getWorkbench().getDisplay();
+            final Point size = (new Shell(display)).computeSize(-1, -1);
+            final Rectangle screen = display.getMonitors()[0].getBounds();
+
+            final int xPos = (screen.width - size.x) / 2 - WIDTH / 2;
+            final int yPos = (screen.height - size.y) / 2 - HEIGHT / 2;
+
+            shell.setBounds(xPos, yPos, WIDTH, HEIGHT);
+
         }
         
         @Override
         protected Control createDialogArea(Composite parent) {
             
             Composite composite = new Composite(parent, SWT.NONE);
-            MigLayout layout = new MigLayout("insets panel, wrap 2", "[right]8[grow]", "[]10[][]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            MigLayout layout = new MigLayout("insets 0, wrap 2, fillx", "[20%, right]8[80%]", "[]15[][][]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             composite.setLayout(layout);
             composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
+            String header = Messages.DocumentPropertyPage_editHotlinkHeader;
+            if (isAddMode) {
+                header = Messages.DocumentPropertyPage_addHotlinkHeader;
+            }
+            message = header;
+            getShell().setText(header);
+            
             createMessageArea(composite);
             imageLabel.setLayoutData("cell 0 0, alignx right"); //$NON-NLS-1$
             messageLabel.setLayoutData("cell 1 0 2 1, aligny center"); //$NON-NLS-1$
+            final FontData[] fontData = messageLabel.getFont().getFontData(); 
+            for (int i = 0; i < fontData.length; i++) {
+                fontData[i].setHeight(14);
+            };
+            messageLabel.setFont(new Font(null, fontData));
             
             Label labelLbl = new Label(composite, SWT.NONE);
             labelLbl.setText(Messages.DocumentPropertyPage_Label);
@@ -560,13 +614,25 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
 
             labelText = new Text(composite, SWT.SINGLE | SWT.BORDER);
             labelText.setLayoutData("growx"); //$NON-NLS-1$
+            labelText.addModifyListener(new ModifyListener() {
+                @Override
+                public void modifyText(ModifyEvent e) {
+                    refreshButtons();
+                }
+            });
             
             Label descriptionLbl = new Label(composite, SWT.NONE);
             descriptionLbl.setText(Messages.DocumentPropertyPage_description);
             descriptionLbl.setLayoutData(""); //$NON-NLS-1$
 
-            descriptionText = new Text(composite, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+            descriptionText = new Text(composite, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
             descriptionText.setLayoutData("growx, h 60!"); //$NON-NLS-1$
+            descriptionText.addModifyListener(new ModifyListener() {
+                @Override
+                public void modifyText(ModifyEvent e) {
+                    refreshButtons();
+                }
+            });
             
             Label label = new Label(composite, SWT.SINGLE);
             label.setText(Messages.DocumentPropertyPage_Attribute);
@@ -574,8 +640,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                         
             attributeViewer = new ComboViewer(composite);
             attributeViewer.setContentProvider(ArrayContentProvider.getInstance());
-            attributeViewer.getControl().setLayoutData("growx"); //$NON-NLS-1$
-            List<String> attributeNames = getSchemaCandidates();
+            attributeViewer.getControl().setLayoutData(""); //$NON-NLS-1$
+            final List<String> attributeNames = getSchemaCandidates();
             attributeViewer.setInput(attributeNames);
             attributeViewer.addSelectionChangedListener( new ISelectionChangedListener() {
                 @Override
@@ -586,7 +652,10 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                     if (okBtn != null) {
                         okBtn.setEnabled(hasAttribute);
                     }
-                    labelText.setText(getLabelFromAttribute());
+                    if (labelText.getText().isEmpty()) {
+                        labelText.setText(getLabelFromAttribute());    
+                    }
+                    refreshButtons();
                 }
             });
             
@@ -599,22 +668,31 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             typeViewer.setLabelProvider(new LabelProvider() {
                 @Override
                 public String getText(Object element) {
-                    if (element instanceof Type) {
-                        final Type type = (Type) element;
+                    if (element instanceof ContentType) {
+                        final ContentType type = (ContentType) element;
                         return DocUtils.toCamelCase(type.name());
                     }
                     return super.getText(element);
                 }
             });
-            typeViewer.setInput(IDocument.Type.values());
+            typeViewer.setInput(IDocument.ContentType.values());
             typeViewer.getControl().setLayoutData(""); //$NON-NLS-1$
             typeViewer.addSelectionChangedListener( new ISelectionChangedListener() {
                 public void selectionChanged(SelectionChangedEvent event) {
-                    if( !event.getSelection().isEmpty() && event.getSelection() instanceof StructuredSelection ){
-                        StructuredSelection selection = (StructuredSelection) event.getSelection();
-                        IDocument.Type type = (Type) selection.getFirstElement();
+                    final ISelection selection = event.getSelection();
+                    if (!selection.isEmpty() && selection instanceof StructuredSelection) {
+                        final StructuredSelection strucSelection = (StructuredSelection) selection;
+                        final IDocument.ContentType type = (ContentType) strucSelection.getFirstElement();
+                        if (typeSelection != null && !typeSelection.isEmpty()) {
+                            final IDocument.ContentType currentType = (ContentType) typeSelection.getFirstElement();
+                            if (currentType == type) {
+                                return;
+                            }
+                        }
                         setActionText(type, descriptor.getConfig());
-                        actionText.setFocus();
+                        actionText.setFocus();  
+                        typeSelection = strucSelection;
+                        refreshButtons();
                     }
                 }
             });
@@ -623,11 +701,37 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             actionLabel.setText(Messages.DocumentPropertyPage_Action);
             actionLabel.setLayoutData(""); //$NON-NLS-1$
 
-            actionText = new Text(composite, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+            actionText = new Text(composite, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
             actionText.setLayoutData("growx, h 60!"); //$NON-NLS-1$
+            actionText.addModifyListener(new ModifyListener() {
+                @Override
+                public void modifyText(ModifyEvent e) {
+                    refreshButtons();
+                }
+            });
+                        
+            applyDialogFont(composite);
+            return composite;
+        }
+        
+
+        
+        @Override
+        protected void createButtonsForButtonBar(Composite parent) {
+            super.createButtonsForButtonBar(parent);
+            refreshButtons();
+        }
+        
+        private void refreshButtons() {
+            getButton(IDialogConstants.OK_ID).setEnabled(isValidForm());
+        }
+        
+        @Override
+        protected Control createContents(Composite parent) {
+            final Control control = super.createContents(parent);
             
             if( descriptor.isEmpty() ){
-                final Type defaultType = Type.FILE;
+                final ContentType defaultType = ContentType.FILE;
                 typeViewer.setSelection(new StructuredSelection(defaultType), true);
                 setActionText(defaultType, null);
             } else {
@@ -639,6 +743,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 if (descriptionStr != null) {
                     descriptionText.setText(descriptionStr);
                 }
+                final List<String> attributeNames = getSchemaCandidates();
                 final String attributeName = descriptor.getAttributeName();
                 if (attributeNames.contains(attributeName)) {
                     attributeViewer.setSelection(new StructuredSelection(attributeName));
@@ -646,30 +751,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 typeViewer.setSelection(new StructuredSelection(descriptor.getType()), true);
                 setActionText(descriptor.getType(), descriptor.getConfig());
             }
-            
-            applyDialogFont(composite);
-            return composite;
-        }
-
-        private void setActionText(Type type, String config) {
-            switch (type) {
-            case ACTION:
-                actionText.setEnabled(true);
-                actionText.setText(config == null ? "" : config); //$NON-NLS-1$
-                break;
-            default:
-                actionText.setEnabled(false);
-                actionText.setText(Messages.DocumentPropertyPage_Open);
-                break;
-            }
-        }
-        
-        @Override
-        protected void createButtonsForButtonBar(Composite parent) {
-            super.createButtonsForButtonBar(parent); //  // create OK and Cancel buttons by default
-            
-            boolean hasAttribute = !attributeViewer.getSelection().isEmpty();
-            getButton(IDialogConstants.OK_ID).setEnabled(hasAttribute);
+          
+            return control;
         }
         
         @Override
@@ -683,7 +766,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 }
                 String description = descriptionText.getText();
                 StructuredSelection selection = (StructuredSelection) typeViewer.getSelection();
-                Type type = (Type) selection.getFirstElement();
+                ContentType type = (ContentType) selection.getFirstElement();
                 final String actionConfig = actionText.getText();
                 descriptor = new HotlinkDescriptor(label, description, attributeName, type, actionConfig);
                 super.okPressed();                
@@ -692,23 +775,47 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         }
         
         /**
-         * Checks if the current inputs are valid. This checks if the hotlink definition inputted
-         * already exists in the list.
+         * Checks if the required fields have been filled up. This controls when the Ok button is
+         * enabled.
+         * 
+         * @return true if required fields are filled up, otherwise false
+         */
+        private boolean isValidForm() {
+            final String label = labelText.getText().trim();
+            if (label == null || label.length() == 0) {
+                return false;
+            }
+            final ISelection attribute = attributeViewer.getSelection();
+            if (attribute.isEmpty()) {
+                return false;
+            }
+            final ISelection type = typeViewer.getSelection();
+            if (type.isEmpty()) {
+                return false;
+            }
+            final String action = actionText.getText().trim();
+            if (action == null || action.length() == 0) {
+                return false;
+            }
+            return true;
+        }
+        
+        /**
+         * Checks if the current inputs are valid. This checks if the hotlink definition already
+         * exists in the list. This is the checking used on click of the Ok button.
          * 
          * @return true if valid, otherwise false
          */
         private boolean isValidHotlink() {
 
-            final StructuredSelection selection = (StructuredSelection) typeViewer.getSelection();
-            final Type type = (Type) selection.getFirstElement();
-
-            final String action = actionText.getText().trim();
-            if (action == null || action.length() == 0) {
-                actionText.setFocus();
+            if (!isValidForm()) {
                 MessageDialog.openError(getShell(), Messages.DocumentPropertyPage_title,
-                        Messages.DocumentPropertyPage_errActionIsBlank);
+                        Messages.DocumentPropertyPage_errRequired);
                 return false;
             }
+            
+            final StructuredSelection selection = (StructuredSelection) typeViewer.getSelection();
+            final ContentType type = (ContentType) selection.getFirstElement();
             
             final String attributeName = attributeViewer.getCombo().getText();
             for (HotlinkDescriptor hotlink : hotlinkList) {
@@ -716,8 +823,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                     continue;
                 }
                 if (attributeName.equals(hotlink.getAttributeName())) {
-                    final Type currentType = hotlink.getType();
-                    if (Type.ACTION == currentType && Type.ACTION == type) {
+                    final ContentType currentType = hotlink.getType();
+                    if (ContentType.ACTION == currentType && ContentType.ACTION == type) {
                         return true;
                     } else {
                         attributeViewer.getControl().setFocus();
@@ -738,6 +845,19 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
             super.cancelPressed();
         }
      
+        private void setActionText(ContentType type, String config) {
+            switch (type) {
+            case ACTION:
+                actionText.setEditable(true);
+                actionText.setText(config == null ? "" : config); //$NON-NLS-1$
+                break;
+            default:
+                actionText.setEditable(false);
+                actionText.setText(Messages.DocumentPropertyPage_Open);
+                break;
+            }
+        }
+        
         /**
          * Gets the label string from the attribute name value
          * 

@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.internal.document;
+package net.refractions.udig.document.model;
 
 import java.io.File;
 
@@ -23,11 +23,11 @@ import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
  * 
  * @author Naz Chan
  */
-public class FileDocument extends AbstractBasicDocument {
+public class FileLinkedDocument extends AbstractLinkedDocument {
 
     protected File file;
 
-    public FileDocument(DocumentInfo info) {
+    public FileLinkedDocument(DocumentInfo info) {
         super(info);
     }
     
@@ -40,10 +40,18 @@ public class FileDocument extends AbstractBasicDocument {
     }
     
     @Override
-    public Object getValue() {
+    public Object getContent() {
         return file;
     }
-
+    
+    @Override
+    public String getContentName() {
+        if (!isEmpty()) {
+            return file.getName();
+        }
+        return null;
+    }
+    
     @Override
     public boolean open() {
         return AbstractDocument.openFile(file);
