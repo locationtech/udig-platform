@@ -12,17 +12,17 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.shp;
+package net.refractions.udig.document.source;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.ContentType;
+import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocumentSource;
-import net.refractions.udig.catalog.internal.document.AbstractBasicDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
+import net.refractions.udig.document.model.AbstractLinkedDocument;
 
 /**
  * This is the shapefile document source implementation. This implements getters and setters to the
@@ -49,7 +49,7 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
         docs = new ArrayList<IDocument>();
         final List<DocumentInfo> infos = propParser.getShapeDocumentInfos();
         if (infos != null && infos.size() > 0) {
-            docs.addAll(docFactory.create(infos, true));
+            docs.addAll(docFactory.create(infos));
         }
         return docs;
     }
@@ -94,11 +94,13 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
     }
 
     private IDocument addInternal(DocumentInfo info) {
-        if (ContentType.FILE == info.getType()) {
+        if (Type.ATTACHMENT == info.getType()) {
             final File newFile = ShpDocUtils.copyFile(info.getInfo(), propParser.getShapefileAttachDir());
             info.setInfo(newFile.getAbsolutePath());
+        } else if (Type.LINKED == info.getType()) {
+            // Do special handling here for linked documents, if needed
         }
-        final IDocument newDoc = docFactory.create(info, true);
+        final IDocument newDoc = docFactory.create(info);
         getDocsInternal().add(newDoc);
         return newDoc;
     }
@@ -125,8 +127,10 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
     }
 
     private boolean removeInternal(IDocument doc) {
-        if (ContentType.FILE == doc.getContentType()) {
+        if (Type.ATTACHMENT == doc.getType()) {
             ShpDocUtils.deleteFile(doc.getContent());
+        } else if (Type.LINKED == doc.getType()) {
+            // Do special handling here for linked documents, if needed
         }
         getDocsInternal().remove(doc);
         return true;
@@ -139,7 +143,7 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
 
     @Override
     public IDocument update(IDocument doc, DocumentInfo info) {
-        if (ContentType.FILE == info.getType()) {
+        if (Type.ATTACHMENT == info.getType()) {
             final File oldFile = (File) doc.getContent();
             if (oldFile == null) {
                 updateInternal(oldFile, info);
@@ -148,8 +152,10 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
                     updateInternal(oldFile, info);
                 }    
             }
+        } else if (Type.LINKED == info.getType()) {
+            // Do special handling here for linked documents, if needed
         }
-        ((AbstractBasicDocument) doc).setInfo(info);
+        ((AbstractLinkedDocument) doc).setInfo(info);
         save();
         return doc;
     }
@@ -163,7 +169,7 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
     private void save() {
         final List<DocumentInfo> infos = new ArrayList<IDocumentSource.DocumentInfo>();
         for (IDocument doc : getDocsInternal()) {
-            final AbstractBasicDocument shpDoc = (AbstractBasicDocument) doc;
+            final AbstractLinkedDocument shpDoc = (AbstractLinkedDocument) doc;
             infos.add(shpDoc.getInfo());
         }
         propParser.setShapeDocmentInfos(infos);

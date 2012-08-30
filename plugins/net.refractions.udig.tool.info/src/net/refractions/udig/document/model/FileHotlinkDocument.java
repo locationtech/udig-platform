@@ -12,33 +12,32 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.internal.document;
+package net.refractions.udig.document.model;
 
 import java.io.File;
+import java.util.List;
 
-import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 
 /**
- * Document model for file documents.
+ * Document model for hotlink file documents.
  * 
  * @author Naz Chan
  */
-public class FileDocument extends AbstractBasicDocument {
+public class FileHotlinkDocument extends AbstractHotlinkDocument {
 
     protected File file;
 
-    public FileDocument(DocumentInfo info) {
-        super(info);
+    public FileHotlinkDocument(String info, List<HotlinkDescriptor> descriptors) {
+        super(info, descriptors);
     }
-    
+
     @Override
-    public void setInfo(DocumentInfo info) {
+    public void setInfo(String info) {
         super.setInfo(info);
-        if (info != null) {
-            file = AbstractDocument.createFile(info.getInfo());
-        }
+        file = AbstractDocument.createFile(info);
     }
-    
+
     @Override
     public Object getContent() {
         return file;
@@ -51,7 +50,7 @@ public class FileDocument extends AbstractBasicDocument {
         }
         return null;
     }
-    
+
     @Override
     public boolean open() {
         return AbstractDocument.openFile(file);
@@ -61,14 +60,5 @@ public class FileDocument extends AbstractBasicDocument {
     public boolean isEmpty() {
         return (file == null);
     }
-    
-    @Override
-    public boolean isTemplate() {
-        return getInfo().isTemplate();
-    }
-    
-    public void setTemplate(boolean isTemplate) {
-        getInfo().setTemplate(isTemplate);
-    }
-    
+
 }

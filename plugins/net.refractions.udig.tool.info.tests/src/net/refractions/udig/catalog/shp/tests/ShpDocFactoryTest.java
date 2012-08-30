@@ -21,15 +21,16 @@ import java.util.List;
 import junit.framework.TestCase;
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
+import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.catalog.internal.document.AttachmentFileDocument;
-import net.refractions.udig.catalog.internal.document.FileDocument;
-import net.refractions.udig.catalog.internal.document.HotlinkActionDocument;
-import net.refractions.udig.catalog.internal.document.HotlinkFileDocument;
-import net.refractions.udig.catalog.internal.document.HotlinkWebDocument;
-import net.refractions.udig.catalog.internal.document.WebDocument;
-import net.refractions.udig.catalog.shp.ShpDocFactory;
+import net.refractions.udig.document.model.ActionHotlinkDocument;
+import net.refractions.udig.document.model.FileAttachmentDocument;
+import net.refractions.udig.document.model.FileHotlinkDocument;
+import net.refractions.udig.document.model.FileLinkedDocument;
+import net.refractions.udig.document.model.WebHotlinkDocument;
+import net.refractions.udig.document.model.WebLinkedDocument;
+import net.refractions.udig.document.source.ShpDocFactory;
 
 /**
  * Test case for {@link ShpDocFactory}.
@@ -45,45 +46,24 @@ public class ShpDocFactoryTest extends TestCase {
     private static final String ATTRIBUTE_NAME = "name";
     private static final String CONFIG = "config";
     
-    public void testCreate() {
+    public void testCreateDocument() {
         
         final ShpDocFactory factory = new ShpDocFactory(null);
         
-        DocumentInfo info = new DocumentInfo(LABEL, DESCRIPTION, INFO, ContentType.FILE, false);
+        DocumentInfo info = new DocumentInfo(LABEL, DESCRIPTION, INFO, ContentType.FILE, false, Type.LINKED);
         IDocument doc = factory.create(info);
         assertNotNull("Doc is null.", doc);
-        assertTrue("Doc's type is not expected.", doc instanceof FileDocument);
+        assertTrue("Doc's type is not expected.", doc instanceof FileLinkedDocument);
         
-        info = new DocumentInfo(LABEL, DESCRIPTION, INFO, ContentType.WEB, false);
+        info = new DocumentInfo(LABEL, DESCRIPTION, INFO, ContentType.FILE, false, Type.ATTACHMENT);
         doc = factory.create(info);
         assertNotNull("Doc is null.", doc);
-        assertTrue("Doc's type is not expected.", doc instanceof WebDocument);
+        assertTrue("Doc's type is not expected.", doc instanceof FileAttachmentDocument);
         
-    }
-    
-    public void testCreateWithAttachOption() {
-        
-        final ShpDocFactory factory = new ShpDocFactory(null);
-        
-        DocumentInfo info = new DocumentInfo(LABEL, DESCRIPTION, INFO, ContentType.FILE, false);
-        IDocument doc = factory.create(info, false);
+        info = new DocumentInfo(LABEL, DESCRIPTION, INFO, ContentType.WEB, false, Type.LINKED);
+        doc = factory.create(info);
         assertNotNull("Doc is null.", doc);
-        assertTrue("Doc's type is not expected.", doc instanceof FileDocument);
-        
-        info = new DocumentInfo(LABEL, DESCRIPTION, INFO, ContentType.FILE, false);
-        doc = factory.create(info, true);
-        assertNotNull("Doc is null.", doc);
-        assertTrue("Doc's type is not expected.", doc instanceof AttachmentFileDocument);
-        
-        info = new DocumentInfo(LABEL, DESCRIPTION, INFO, ContentType.WEB, false);
-        doc = factory.create(info, false);
-        assertNotNull("Doc is null.", doc);
-        assertTrue("Doc's type is not expected.", doc instanceof WebDocument);
-        
-        info = new DocumentInfo(LABEL, DESCRIPTION, INFO, ContentType.WEB, false);
-        doc = factory.create(info, true);
-        assertNotNull("Doc is null.", doc);
-        assertTrue("Doc's type is not expected.", doc instanceof WebDocument);
+        assertTrue("Doc's type is not expected.", doc instanceof WebLinkedDocument);
         
     }
     
@@ -94,17 +74,17 @@ public class ShpDocFactoryTest extends TestCase {
         HotlinkDescriptor descriptor = new HotlinkDescriptor(LABEL, DESCRIPTION, ATTRIBUTE_NAME, ContentType.FILE, CONFIG);
         IDocument doc = factory.create(INFO, Collections.singletonList(descriptor));
         assertNotNull("Doc is null.", doc);
-        assertTrue("Doc's type is not expected.", doc instanceof HotlinkFileDocument);
+        assertTrue("Doc's type is not expected.", doc instanceof FileHotlinkDocument);
         
         descriptor = new HotlinkDescriptor(LABEL, DESCRIPTION, ATTRIBUTE_NAME, ContentType.WEB, CONFIG);
         doc = factory.create(INFO, Collections.singletonList(descriptor));
         assertNotNull("Doc is null.", doc);
-        assertTrue("Doc's type is not expected.", doc instanceof HotlinkWebDocument);
+        assertTrue("Doc's type is not expected.", doc instanceof WebHotlinkDocument);
         
         descriptor = new HotlinkDescriptor(LABEL, DESCRIPTION, ATTRIBUTE_NAME, ContentType.ACTION, CONFIG);
         doc = factory.create(INFO, Collections.singletonList(descriptor));
         assertNotNull("Doc is null.", doc);
-        assertTrue("Doc's type is not expected.", doc instanceof HotlinkActionDocument);
+        assertTrue("Doc's type is not expected.", doc instanceof ActionHotlinkDocument);
         
         descriptor = new HotlinkDescriptor(LABEL, DESCRIPTION, ATTRIBUTE_NAME, ContentType.ACTION, CONFIG);
         HotlinkDescriptor descriptor2 = new HotlinkDescriptor(LABEL, DESCRIPTION, ATTRIBUTE_NAME, ContentType.ACTION, CONFIG);
@@ -115,7 +95,7 @@ public class ShpDocFactoryTest extends TestCase {
         descriptors.add(descriptor3);
         doc = factory.create(INFO, descriptors);
         assertNotNull("Doc is null.", doc);
-        assertTrue("Doc's type is not expected.", doc instanceof HotlinkActionDocument);
+        assertTrue("Doc's type is not expected.", doc instanceof ActionHotlinkDocument);
 
     }
     

@@ -12,59 +12,39 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.internal.document;
+package net.refractions.udig.document.model;
 
-import java.net.URL;
+import java.util.List;
 
-import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
+import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 
 /**
- * Document model for web documents.
+ * Document model for hotlink action documents.
  * 
  * @author Naz Chan
  */
-public class WebDocument extends AbstractBasicDocument {
+public class ActionHotlinkDocument extends AbstractHotlinkDocument {
+    
+    public ActionHotlinkDocument(String info, List<HotlinkDescriptor> descriptors) {
+        super(info, descriptors);
+    }
 
-    protected URL url;
-    
-    public WebDocument(DocumentInfo info) {
-        super(info);
-    }
-    
-    @Override
-    public void setInfo(DocumentInfo info) {
-        super.setInfo(info);
-        if (info != null) {
-            url = AbstractDocument.createUrl(info.getInfo());
-        }
-    }
-    
     @Override
     public Object getContent() {
-        return url;
+        return info;
     }
-
+    
     @Override
     public String getContentName() {
         if (!isEmpty()) {
-            return url.toString();
+            return info;
         }
         return null;
     }
-    
-    @Override
-    public boolean open() {
-        return AbstractDocument.openUrl(url);
-    }
 
     @Override
-    public boolean isEmpty() {
-        return (url == null);
+    public boolean open() {
+        return false;
     }
-    
-    @Override
-    public boolean isTemplate() {
-        return false; // Web documents cannot be templates
-    }
-    
+
 }

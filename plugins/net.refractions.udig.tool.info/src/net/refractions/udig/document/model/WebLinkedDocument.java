@@ -12,53 +12,59 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.internal.document;
+package net.refractions.udig.document.model;
 
-import java.io.File;
-import java.util.List;
+import java.net.URL;
 
-import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 
 /**
- * Document model for hotlink file documents.
+ * Document model for web documents.
  * 
  * @author Naz Chan
  */
-public class HotlinkFileDocument extends AbstractHotlinkDocument {
+public class WebLinkedDocument extends AbstractLinkedDocument {
 
-    protected File file;
-
-    public HotlinkFileDocument(String info, List<HotlinkDescriptor> descriptors) {
-        super(info, descriptors);
-    }
-
-    @Override
-    public void setInfo(String info) {
-        super.setInfo(info);
-        file = AbstractDocument.createFile(info);
-    }
-
-    @Override
-    public Object getContent() {
-        return file;
+    protected URL url;
+    
+    public WebLinkedDocument(DocumentInfo info) {
+        super(info);
     }
     
     @Override
-    public String getContentName() {
-        if (!isEmpty()) {
-            return file.getName();
+    public void setInfo(DocumentInfo info) {
+        super.setInfo(info);
+        if (info != null) {
+            url = AbstractDocument.createUrl(info.getInfo());
         }
-        return null;
+    }
+    
+    @Override
+    public Object getContent() {
+        return url;
     }
 
     @Override
+    public String getContentName() {
+        if (!isEmpty()) {
+            return url.toString();
+        }
+        return null;
+    }
+    
+    @Override
     public boolean open() {
-        return AbstractDocument.openFile(file);
+        return AbstractDocument.openUrl(url);
     }
 
     @Override
     public boolean isEmpty() {
-        return (file == null);
+        return (url == null);
     }
-
+    
+    @Override
+    public boolean isTemplate() {
+        return false; // Web documents cannot be templates
+    }
+    
 }

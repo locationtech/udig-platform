@@ -1,4 +1,4 @@
-package net.refractions.udig.catalog.document;
+package net.refractions.udig.catalog.shp.tests;
 
 import static org.junit.Assert.*;
 
@@ -12,9 +12,12 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ServiceExtension;
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IHotlinkSource;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.internal.shp.ShpServiceExtension;
+import net.refractions.udig.document.source.BasicHotlinkResolveFactory;
 import net.refractions.udig.tool.info.tests.Activator;
 
 import org.eclipse.core.runtime.FileLocator;

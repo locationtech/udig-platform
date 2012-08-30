@@ -19,6 +19,7 @@ package net.refractions.udig.catalog.document;
 import java.util.List;
 
 import net.refractions.udig.catalog.document.IDocument.ContentType;
+import net.refractions.udig.catalog.document.IDocument.Type;
 
 /**
  * Access to documents associated with a resource.
@@ -127,6 +128,10 @@ public interface IDocumentSource extends IAbstractDocumentSource {
      * possible. Attachment information container. This is designed to be able to parse (
      * {@link DocumentInfo#fromString(String)} ) and format ({@link DocumentInfo#toString()}) the
      * info string to and/or from the resource property file.
+     * <p>
+     * <b>String format:</b>
+     * <p>
+     * "[info] DELIMITER [type] DELIMITER [contentType] DELIMITER [label] DELIMITER [description] DELIMITER [isTemplate]"
      */
     public class DocumentInfo {
 
@@ -148,7 +153,12 @@ public interface IDocumentSource extends IAbstractDocumentSource {
         /**
          * Document type
          */
-        private IDocument.ContentType type;
+        private Type type;
+        
+        /**
+         * Document content type
+         */
+        private ContentType contentType;
 
         /**
          * Flag for templates.
@@ -162,12 +172,13 @@ public interface IDocumentSource extends IAbstractDocumentSource {
             fromString(attachmentInfo);
         }
 
-        public DocumentInfo(String label, String description, String info, ContentType type,
-                boolean isTemplate) {
+        public DocumentInfo(String label, String description, String info, ContentType contentType,
+                boolean isTemplate, Type type) {
             this.label = label;
             this.description = description;
             this.info = info;
             this.type = type;
+            this.contentType = contentType;
             this.isTemplate = isTemplate;
         }
 
@@ -195,12 +206,20 @@ public interface IDocumentSource extends IAbstractDocumentSource {
             this.info = info;
         }
 
-        public IDocument.ContentType getType() {
+        public Type getType() {
             return type;
         }
-
-        public void setType(IDocument.ContentType type) {
+        
+        public void setType(Type type) {
             this.type = type;
+        }
+        
+        public IDocument.ContentType getContentType() {
+            return contentType;
+        }
+
+        public void setContentType(IDocument.ContentType contentType) {
+            this.contentType = contentType;
         }
         
         public boolean isTemplate() {
@@ -214,32 +233,23 @@ public interface IDocumentSource extends IAbstractDocumentSource {
         private void fromString(String attachmentInfo) {
             final String[] defValues = attachmentInfo.split(DELIMITER_REGEX);
             info = getCleanValue(defValues[0]); 
-            type = ContentType.valueOf(defValues[1]);
+            type = Type.valueOf(defValues[1]);
+            contentType = ContentType.valueOf(defValues[2]);
             if (defValues.length > 2) {
-                label = getCleanValue(defValues[2]);
+                label = getCleanValue(defValues[3]);
             } else {
                 label = null;
             }
             if (defValues.length > 3) {
-                description = getCleanValue(defValues[3]);
+                description = getCleanValue(defValues[4]);
             } else {
                 description = null;
             }
             if (defValues.length > 4) {
-                isTemplate = Boolean.parseBoolean(defValues[4]);
+                isTemplate = Boolean.parseBoolean(defValues[5]);
             } else {
                 isTemplate = false;
             }
-        }
-
-        private String getCleanValue(String text) {
-            if (text != null) {
-                final String cleanText = text.trim();
-                if (cleanText.length() > 0) {
-                    return cleanText;
-                }
-            }
-            return null;
         }
 
         @Override
@@ -253,6 +263,10 @@ public interface IDocumentSource extends IAbstractDocumentSource {
                 sb.append(type);
             }
             sb.append(DELIMITER);
+            if (contentType != null) {
+                sb.append(contentType);
+            }
+            sb.append(DELIMITER);
             if (label != null) {
                 sb.append(label);
             }
@@ -263,6 +277,16 @@ public interface IDocumentSource extends IAbstractDocumentSource {
             sb.append(DELIMITER);
             sb.append(Boolean.toString(isTemplate));
             return sb.toString();
+        }
+        
+        private String getCleanValue(String text) {
+            if (text != null) {
+                final String cleanText = text.trim();
+                if (cleanText.length() > 0) {
+                    return cleanText;
+                }
+            }
+            return null;
         }
         
     }

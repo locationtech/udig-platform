@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.internal.document;
+package net.refractions.udig.document.model;
 
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 
@@ -21,11 +21,11 @@ import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
  * 
  * @author Naz Chan
  */
-public abstract class AbstractBasicDocument extends AbstractDocument {
+public abstract class AbstractLinkedDocument extends AbstractDocument {
 
     private DocumentInfo info;
 
-    public AbstractBasicDocument(DocumentInfo info) {
+    public AbstractLinkedDocument(DocumentInfo info) {
         setInfo(info);
     }
     
@@ -48,13 +48,13 @@ public abstract class AbstractBasicDocument extends AbstractDocument {
     }
 
     @Override
-    public Type getType() {
-        return Type.LINKED;
+    public ContentType getContentType() {
+        return info.getContentType();
     }
 
     @Override
-    public ContentType getContentType() {
+    public Type getType() {
         return info.getType();
     }
-
+    
 }
