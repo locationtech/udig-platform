@@ -1,6 +1,6 @@
 h1. uDig Overview
 
-The User-friendly Desktop Internet GIS (uDig) is an open source (LGPL) desktop application framework, built with the Eclipse Rich Client (RCP) technology.
+The User-friendly Desktop Internet GIS (uDig) is an open source ("LGPL":http://www.opensource.org/licenses/lgpl-2.1.php) desktop application framework, built with the Eclipse Rich Client (RCP) technology.
 
 * uDig can be used as a stand-alone application
 * uDig can be extended with RCP "plug-ins"
