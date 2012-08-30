@@ -20,8 +20,8 @@ import java.util.List;
 
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
-import net.refractions.udig.catalog.shp.ShpAttachmentSource;
-import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
+import net.refractions.udig.document.source.ShpAttachmentSource;
+import net.refractions.udig.document.source.ShpDocPropertyParser;
 
 import org.geotools.filter.identity.FeatureIdImpl;
 

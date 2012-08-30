@@ -36,7 +36,28 @@ public interface IAttachmentSource extends IHotlinkSource {
      * @return list of documents
      */
     public List<IDocument> getDocuments(SimpleFeature feature);
-
+    
+    /**
+     * Checks if the source allows attaching new documents.
+     * 
+     * @return true if allows attaching, otherwise false
+     */
+    public boolean canAttach();
+    
+    /**
+     * Checks if the source allows linking file documents.
+     * 
+     * @return true if allows linking, otherwise false
+     */
+    public boolean canLinkFile();
+    
+    /**
+     * Checks if the source allows linking web documents.
+     * 
+     * @return true if allows linking, otherwise false
+     */
+    public boolean canLinkWeb();
+    
     /**
      * Adds the document.
      * 
@@ -54,7 +75,14 @@ public interface IAttachmentSource extends IHotlinkSource {
      * @return list of documents
      */
     public List<IDocument> add(SimpleFeature feature, List<DocumentInfo> infos);
-
+    
+    /**
+     * Checks if the source allows updating documents.
+     * 
+     * @return true if allows updating, otherwise false
+     */
+    public boolean canUpdate();
+    
     /**
      * Updates the document info.
      * 
@@ -64,7 +92,14 @@ public interface IAttachmentSource extends IHotlinkSource {
      * @return updated document
      */
     public IDocument update(SimpleFeature feature, IDocument doc, DocumentInfo info);
-
+    
+    /**
+     * Checks if the source allows removing documents.
+     * 
+     * @return true if allows removing or clearing, otherwise false
+     */
+    public boolean canRemove();
+    
     /**
      * Removes the document.
      * 

@@ -1,4 +1,4 @@
-package net.refractions.udig.catalog.document;
+package net.refractions.udig.catalog.shp.tests;
 
 import static org.junit.Assert.*;
 
@@ -12,9 +12,12 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ServiceExtension;
-import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IHotlinkSource;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.internal.shp.ShpServiceExtension;
+import net.refractions.udig.document.source.BasicHotlinkResolveFactory;
 import net.refractions.udig.tool.info.tests.Activator;
 
 import org.eclipse.core.runtime.FileLocator;
@@ -58,8 +61,8 @@ public class BasicHotlinkTest {
         resource = members.get(0);
 
         final List<HotlinkDescriptor> descriptors = new ArrayList<HotlinkDescriptor>();
-        descriptors.add(new HotlinkDescriptor("File", "File Description", "FILE", Type.FILE, ""));
-        descriptors.add(new HotlinkDescriptor("Web", "Web Description", "LINK", Type.WEB, ""));
+        descriptors.add(new HotlinkDescriptor("File", "File Description", "FILE", ContentType.FILE, ""));
+        descriptors.add(new HotlinkDescriptor("Web", "Web Description", "LINK", ContentType.WEB, ""));
 
         BasicHotlinkResolveFactory.putHotlinkDescriptors(resource, descriptors);
 
@@ -108,10 +111,10 @@ public class BasicHotlinkTest {
         assertEquals("image document found", 2, documents.size());
 
         IDocument imageDocument = documents.get(0);
-        assertEquals(Type.FILE, imageDocument.getType());
+        assertEquals(ContentType.FILE, imageDocument.getContentType());
 
         IDocument webLink = documents.get(1);
-        assertEquals(Type.WEB, webLink.getType());
+        assertEquals(ContentType.WEB, webLink.getContentType());
 
     }
 

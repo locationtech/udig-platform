@@ -18,14 +18,14 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-import net.refractions.udig.catalog.document.IDocument.Type;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * Hotlink support for IGeoResource.
  * <p>
- * {@link Hotlink} documents are used to record a document references in the attribtues of the provided feature.
+ * {@link Hotlink} documents are used to record a document references in the attributes of the provided feature.
  * <p>
  * The list of feature attributes that are used for this purpose are made available through this interface, along with helper methods
  * allowing you to update these links correctly.
@@ -61,6 +61,13 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
      */
     public IDocument getDocument(SimpleFeature feature, String attributeName);
 
+    /**
+     * Checks if the source allows setting the hotlinks
+     * 
+     * @return true if allows setting hotlinks, otherwise false
+     */
+    public boolean canSetHotlink();
+    
     /**
      * Used to encode the indicated file as an IDocument in the provided feature.
      * <p>
@@ -103,6 +110,13 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
     public IDocument setAction(SimpleFeature feature, String attributeName, String action);
 
     /**
+     * Checks if the source allows clearing the hotlink.
+     * 
+     * @return true if allows clearing, otherwise false
+     */
+    public boolean canClearHotlink();
+    
+    /**
      * Used to clear a hotlink in the provided feature.
      * <p>
      * It is the callers responsibility to record this changed value, either by using featureStore
@@ -124,7 +138,7 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
         private final String label;
         private final String description;
         private final String attributeName;
-        private final Type type;
+        private final ContentType type;
         private final String config;
 
         public static final String DELIMITER = "|~|"; //$NON-NLS-1$
@@ -137,7 +151,7 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
             label = null;
             description = null;
             attributeName = null;
-            type = Type.FILE;
+            type = ContentType.FILE;
             config = null;
         }
 
@@ -154,7 +168,7 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
             config = descriptor.getConfig();
         }
 
-        public HotlinkDescriptor(String attributeName, IDocument.Type type) {
+        public HotlinkDescriptor(String attributeName, IDocument.ContentType type) {
             this.label = null;
             this.description = null;
             this.attributeName = attributeName;
@@ -163,7 +177,7 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
         }
 
         public HotlinkDescriptor(String label, String description, String attributeName,
-                IDocument.Type type, String config) {
+                IDocument.ContentType type, String config) {
             this.label = label;
             this.description = description;
             this.attributeName = attributeName;
@@ -180,7 +194,7 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
             
             final String[] defValues = definition.split(DELIMITER_REGEX);
             attributeName = getCleanValue(defValues[0]);
-            type = Type.valueOf(defValues[1]);
+            type = ContentType.valueOf(defValues[1]);
             if (defValues.length > 2) {
                 config = getCleanValue(defValues[2]);
             } else {
@@ -217,7 +231,7 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
             return attributeName;
         }
 
-        public Type getType() {
+        public ContentType getType() {
             return type;
         }
 

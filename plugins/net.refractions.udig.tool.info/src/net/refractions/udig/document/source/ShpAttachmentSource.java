@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.shp;
+package net.refractions.udig.document.source;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,12 +20,11 @@ import java.util.List;
 
 import net.refractions.udig.catalog.document.IAttachmentSource;
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.DocType;
 import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocumentSource;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
-import net.refractions.udig.catalog.internal.document.AbstractBasicDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
+import net.refractions.udig.document.model.AbstractLinkedDocument;
 
 import org.opengis.feature.simple.SimpleFeature;
 
@@ -48,7 +47,7 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
         super.getDocuments(feature);
         final List<DocumentInfo> infos = propParser.getFeatureDocumentInfos(feature);
         if (infos != null && infos.size() > 0) {
-            docs.addAll(docFactory.create(infos, true));
+            docs.addAll(docFactory.create(infos));
         }
         return docs;
     }
@@ -58,6 +57,21 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
             return getDocuments(feature);
         }
         return docs;
+    }
+    
+    @Override
+    public boolean canAttach() {
+        return true;
+    }
+    
+    @Override
+    public boolean canLinkFile() {
+        return false;
+    }
+    
+    @Override
+    public boolean canLinkWeb() {
+        return true;
     }
     
     @Override
@@ -78,19 +92,26 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     }
 
     private IDocument addInternal(SimpleFeature feature, DocumentInfo info) {
-        if (Type.FILE == info.getType()) {
+        if (Type.ATTACHMENT == info.getType()) {
             final File newFile = ShpDocUtils.copyFile(info.getInfo(), getAttachmentDir(feature));
             info.setInfo(newFile.getAbsolutePath());
+        } else if (Type.LINKED == info.getType()) {
+            // Do special handling here for linked documents, if needed
         }
-        final IDocument newDoc = docFactory.create(info, true);
+        final IDocument newDoc = docFactory.create(info);
         getDocsInternal(feature).add(newDoc);
         return newDoc;
     }
     
     @Override
+    public boolean canUpdate() {
+        return true;
+    }
+    
+    @Override
     public IDocument update(SimpleFeature feature, IDocument doc, DocumentInfo info) {
-        if (Type.FILE == info.getType()) {
-            final File oldFile = (File) doc.getValue();
+        if (Type.ATTACHMENT == info.getType()) {
+            final File oldFile = (File) doc.getContent();
             if (oldFile == null) {
                 updateInternal(feature, oldFile, info);
             } else {
@@ -98,8 +119,10 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
                     updateInternal(feature, oldFile, info);
                 }    
             }
+        } else if (Type.LINKED == info.getType()) {
+            // Do special handling here for linked documents, if needed
         }
-        ((AbstractBasicDocument) doc).setInfo(info);
+        ((AbstractLinkedDocument) doc).setInfo(info);
         save(feature);
         return doc;
     }
@@ -108,6 +131,11 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
         ShpDocUtils.deleteFile(oldFile);
         final File newFile = ShpDocUtils.copyFile(info.getInfo(), getAttachmentDir(feature));
         info.setInfo(newFile.getAbsolutePath());
+    }
+    
+    @Override
+    public boolean canRemove() {
+        return true;
     }
     
     @Override
@@ -127,8 +155,10 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     }
 
     private boolean removeInternal(SimpleFeature feature, IDocument oldDoc) {
-        if (Type.FILE == oldDoc.getType()) {
-            ShpDocUtils.deleteFile(oldDoc.getValue());
+        if (Type.ATTACHMENT == oldDoc.getType()) {
+            ShpDocUtils.deleteFile(oldDoc.getContent());
+        } else if (Type.LINKED == oldDoc.getType()) {
+            // Do special handling here for linked documents, if needed
         }
         getDocsInternal(feature).remove(oldDoc);
         return true;
@@ -137,8 +167,8 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     private void save(SimpleFeature feature) {
         final List<DocumentInfo> infos = new ArrayList<IDocumentSource.DocumentInfo>();
         for (IDocument doc : getDocsInternal(feature)) {
-            if (DocType.HOTLINK != doc.getDocType()) {
-                final AbstractBasicDocument shpDoc = (AbstractBasicDocument) doc;
+            if (Type.HOTLINK != doc.getType()) {
+                final AbstractLinkedDocument shpDoc = (AbstractLinkedDocument) doc;
                 infos.add(shpDoc.getInfo());    
             }
         }
