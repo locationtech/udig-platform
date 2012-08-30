@@ -14,7 +14,7 @@
  *    Lesser General Public License for more details.
  *
  */
-package net.refractions.udig.catalog.internal.document;
+package net.refractions.udig.document.model;
 
 import java.io.File;
 import java.net.MalformedURLException;

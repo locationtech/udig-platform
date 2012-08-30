@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.shp;
+package net.refractions.udig.document.source;
 
 import java.io.File;
 import java.net.URL;
@@ -25,11 +25,11 @@ import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IHotlink;
 import net.refractions.udig.catalog.document.IHotlinkSource;
-import net.refractions.udig.catalog.internal.document.AbstractHotlinkDocument;
-import net.refractions.udig.catalog.internal.document.HotlinkActionDocument;
-import net.refractions.udig.catalog.internal.document.HotlinkFileDocument;
-import net.refractions.udig.catalog.internal.document.HotlinkWebDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
+import net.refractions.udig.document.model.AbstractHotlinkDocument;
+import net.refractions.udig.document.model.ActionHotlinkDocument;
+import net.refractions.udig.document.model.FileHotlinkDocument;
+import net.refractions.udig.document.model.WebHotlinkDocument;
 
 import org.opengis.feature.simple.SimpleFeature;
 
@@ -120,7 +120,7 @@ public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotl
     
     @Override
     public IDocument setFile(SimpleFeature feature, String attributeName, File file) {
-        final HotlinkFileDocument fileDoc = (HotlinkFileDocument) getDocument(feature, attributeName);
+        final FileHotlinkDocument fileDoc = (FileHotlinkDocument) getDocument(feature, attributeName);
         fileDoc.setInfo(file.getAbsolutePath());
         feature.setAttribute(attributeName, ShpDocUtils.getRelativePath(url, file.getAbsolutePath()));
         return fileDoc;
@@ -128,7 +128,7 @@ public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotl
 
     @Override
     public IDocument setLink(SimpleFeature feature, String attributeName, URL link) {
-        final HotlinkWebDocument webDoc = (HotlinkWebDocument) getDocument(feature, attributeName);
+        final WebHotlinkDocument webDoc = (WebHotlinkDocument) getDocument(feature, attributeName);
         webDoc.setInfo(link.toString());
         feature.setAttribute(attributeName, link.toString());
         return webDoc;
@@ -136,7 +136,7 @@ public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotl
 
     @Override
     public IDocument setAction(SimpleFeature feature, String attributeName, String action) {
-        final HotlinkActionDocument actionDoc = (HotlinkActionDocument) getDocument(feature, attributeName);
+        final ActionHotlinkDocument actionDoc = (ActionHotlinkDocument) getDocument(feature, attributeName);
         actionDoc.setInfo(action);
         feature.setAttribute(attributeName, action);
         return actionDoc;

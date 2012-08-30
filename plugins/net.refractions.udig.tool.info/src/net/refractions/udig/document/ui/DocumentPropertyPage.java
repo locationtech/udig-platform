@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.document;
+package net.refractions.udig.document.ui;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,11 +21,14 @@ import java.util.List;
 
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.catalog.document.IAttachmentSource;
+import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IHotlinkSource;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
-import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
-import net.refractions.udig.document.DocUtils;
+import net.refractions.udig.document.source.BasicHotlinkResolveFactory;
+import net.refractions.udig.document.source.ShpDocPropertyParser;
 import net.refractions.udig.tool.info.InfoPlugin;
 import net.refractions.udig.tool.info.internal.Messages;
 

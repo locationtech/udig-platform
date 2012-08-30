@@ -27,13 +27,13 @@ import java.util.Map;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.catalog.internal.document.HotlinkActionDocument;
-import net.refractions.udig.catalog.internal.document.HotlinkFileDocument;
-import net.refractions.udig.catalog.internal.document.HotlinkWebDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
-import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
-import net.refractions.udig.catalog.shp.ShpHotlinkSource;
+import net.refractions.udig.document.model.ActionHotlinkDocument;
+import net.refractions.udig.document.model.FileHotlinkDocument;
+import net.refractions.udig.document.model.WebHotlinkDocument;
+import net.refractions.udig.document.source.ShpDocPropertyParser;
+import net.refractions.udig.document.source.ShpHotlinkSource;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
@@ -119,16 +119,16 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
         IDocument doc = source.getDocument(feature, FILE_ATTR);
         assertNotNull("Doc is null.", doc);
         assertTrue("Doc is not an instance of HotlinkFileDoc.",
-                (doc instanceof HotlinkFileDocument));
+                (doc instanceof FileHotlinkDocument));
 
         doc = source.getDocument(feature, LINK_ATTR);
         assertNotNull("Doc is null.", doc);
-        assertTrue("Doc is not an instance of HotlinkWebDoc.", (doc instanceof HotlinkWebDocument));
+        assertTrue("Doc is not an instance of HotlinkWebDoc.", (doc instanceof WebHotlinkDocument));
 
         doc = source.getDocument(feature, STATE_ATTR);
         assertNotNull("Doc is null.", doc);
         assertTrue("Doc is not an instance of HotlinkWebDoc.",
-                (doc instanceof HotlinkActionDocument));
+                (doc instanceof ActionHotlinkDocument));
 
     }
 

@@ -12,53 +12,63 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.catalog.internal.document;
+package net.refractions.udig.document.model;
 
-import java.net.URL;
-import java.util.List;
+import java.io.File;
 
-import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 
 /**
- * Document model for hotlink web documents.
+ * Document model for file documents.
  * 
  * @author Naz Chan
  */
-public class HotlinkWebDocument extends AbstractHotlinkDocument {
+public class FileLinkedDocument extends AbstractLinkedDocument {
 
-    protected URL url;
+    protected File file;
 
-    public HotlinkWebDocument(String info, List<HotlinkDescriptor> descriptors) {
-        super(info, descriptors);
+    public FileLinkedDocument(DocumentInfo info) {
+        super(info);
     }
     
     @Override
-    public void setInfo(String info) {
+    public void setInfo(DocumentInfo info) {
         super.setInfo(info);
-        url = AbstractDocument.createUrl(info);
+        if (info != null) {
+            file = AbstractDocument.createFile(info.getInfo());
+        }
     }
     
     @Override
     public Object getContent() {
-        return url;
+        return file;
     }
-
+    
     @Override
     public String getContentName() {
         if (!isEmpty()) {
-            return url.toString();
+            return file.getName();
         }
         return null;
     }
     
     @Override
     public boolean open() {
-        return AbstractDocument.openUrl(url);
+        return AbstractDocument.openFile(file);
     }
 
     @Override
     public boolean isEmpty() {
-        return (url == null);
+        return (file == null);
     }
-
+    
+    @Override
+    public boolean isTemplate() {
+        return getInfo().isTemplate();
+    }
+    
+    public void setTemplate(boolean isTemplate) {
+        getInfo().setTemplate(isTemplate);
+    }
+    
 }

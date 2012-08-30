@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.document;
+package net.refractions.udig.document.ui;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.catalog.document.DocumentPropertyPage;
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IDocument.Type;
@@ -147,16 +146,16 @@ public class DocumentDialog extends IconAndMessageDialog {
      */
     private Map<String, Object> params;
     /**
-     * Dialog mode parameter. Refer to {@link Mode}.
+     * Dialog mode parameter. Refer to {@link Mode}. This is required.
      */
     public static final String P_MODE = "P_MODE"; //$NON-NLS-1$
     /**
-     * Document type parameter. Refer to {@link Type}.
+     * Document type parameter. Refer to {@link Type}. This is required.
      */
     public static final String P_TYPE = "P_TYPE"; //$NON-NLS-1$
     /**
-     * Document content type allowed options parameter. Refer to {@link ContentType}. If this is not
-     * specified the default content type options (depending on the document type) is displayed.
+     * Document content type allowed options parameter. Refer to {@link ContentType}. This may be
+     * null and the default content type options (depending on the document type) will be used.
      */
     public static final String P_CONTENT_TYPES = "P_CONTENT_TYPES"; //$NON-NLS-1$
     /**
@@ -164,7 +163,7 @@ public class DocumentDialog extends IconAndMessageDialog {
      */
     public static final String P_FEATURE_NAME = "P_FEATURE_NAME"; //$NON-NLS-1$
     /**
-     * Resource name parameter. A string value used for header display. This should not be null. 
+     * Resource name parameter. A string value used for header display. This is required. 
      */
     public static final String P_RESOURCE_NAME = "P_RESOURCE_NAME"; //$NON-NLS-1$
     /**
@@ -1206,7 +1205,8 @@ public class DocumentDialog extends IconAndMessageDialog {
      * @return document info
      */
     public DocumentInfo getDocInfo() {
-        return (new DocumentInfo(getLabel(), getDescription(), getInfo(), getType(), isTemplate()));
+        return (new DocumentInfo(getLabel(), getDescription(), getInfo(), getType(), isTemplate(),
+                getParamType()));
     }
 
     /**

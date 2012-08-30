@@ -1,4 +1,4 @@
-package net.refractions.udig.catalog.document;
+package net.refractions.udig.document.source;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -10,8 +10,10 @@ import java.util.Map;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
+import net.refractions.udig.catalog.document.IHotlinkSource;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
+import net.refractions.udig.document.ui.DocumentPropertyPage;
 import net.refractions.udig.tool.info.InfoPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;

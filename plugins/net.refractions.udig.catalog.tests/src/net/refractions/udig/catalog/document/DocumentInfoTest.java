@@ -16,6 +16,7 @@ package net.refractions.udig.catalog.document;
 
 import junit.framework.TestCase;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
+import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 
 /**
@@ -29,37 +30,45 @@ public class DocumentInfoTest extends TestCase {
     private static final String LABEL = "label";
     private static final String DESCRIPTION = "description";
     private static final String INFO = "info";
-    private static final ContentType TYPE = ContentType.FILE;
+    private static final Type TYPE = Type.ATTACHMENT;
+    private static final ContentType CONTENT_TYPE = ContentType.FILE;
     private static final boolean IS_TEMPLATE = true;
     
     private static final String DELIMITER = DocumentInfo.DELIMITER;
-    private static final String FORMAT = "%s" + DELIMITER + "%s" + DELIMITER + "%s" + DELIMITER + "%s" + DELIMITER + "%s";
+    private static final String FORMAT = "%s" + DELIMITER + "%s" + DELIMITER + "%s" + DELIMITER
+            + "%s" + DELIMITER + "%s" + DELIMITER + "%s";
     
     /**
      * Tests if the string definition is parsed correctly.
      */
     public void testFromString() {
 
-        String infoString = String.format(FORMAT, INFO, TYPE.toString(), LABEL, DESCRIPTION, Boolean.toString(IS_TEMPLATE));
+        String infoString = String.format(FORMAT, INFO, TYPE.toString(), CONTENT_TYPE.toString(),
+                LABEL, DESCRIPTION, Boolean.toString(IS_TEMPLATE));
         DocumentInfo info = new DocumentInfo(infoString);
         assertEquals("Info is not expected.", INFO, info.getInfo());
         assertEquals("Type is not expected.", TYPE, info.getType());
+        assertEquals("Content type is not expected.", CONTENT_TYPE, info.getContentType());
         assertEquals("Label is not expected.", LABEL, info.getLabel());
         assertEquals("Description is not expected.", DESCRIPTION, info.getDescription());
         assertEquals("Is template flag is not expected.", IS_TEMPLATE, info.isTemplate());
-        
-        infoString = String.format(FORMAT, INFO, TYPE.toString(), "", DESCRIPTION, Boolean.toString(IS_TEMPLATE));
+
+        infoString = String.format(FORMAT, INFO, TYPE.toString(), CONTENT_TYPE.toString(), "",
+                DESCRIPTION, Boolean.toString(IS_TEMPLATE));
         info = new DocumentInfo(infoString);
         assertEquals("Info is not expected.", INFO, info.getInfo());
         assertEquals("Type is not expected.", TYPE, info.getType());
+        assertEquals("Content type is not expected.", CONTENT_TYPE, info.getContentType());
         assertEquals("Label is not expected.", null, info.getLabel());
         assertEquals("Description is not expected.", DESCRIPTION, info.getDescription());
         assertEquals("Is template flag is not expected.", IS_TEMPLATE, info.isTemplate());
-        
-        infoString = String.format(FORMAT, INFO, TYPE.toString(), "", "", Boolean.toString(IS_TEMPLATE));
+
+        infoString = String.format(FORMAT, INFO, TYPE.toString(), CONTENT_TYPE.toString(), "", "",
+                Boolean.toString(IS_TEMPLATE));
         info = new DocumentInfo(infoString);
         assertEquals("Info is not expected.", INFO, info.getInfo());
         assertEquals("Type is not expected.", TYPE, info.getType());
+        assertEquals("Content type is not expected.", CONTENT_TYPE, info.getContentType());
         assertEquals("Label is not expected.", null, info.getLabel());
         assertEquals("Description is not expected.", null, info.getDescription());
         assertEquals("Is template flag is not expected.", IS_TEMPLATE, info.isTemplate());
@@ -71,22 +80,26 @@ public class DocumentInfoTest extends TestCase {
      */
     public void testToString() {
         
-        String infoString = String.format(FORMAT, INFO, TYPE.toString(), LABEL, DESCRIPTION, Boolean.toString(IS_TEMPLATE));
-        DocumentInfo hotlinkDesc = new DocumentInfo(LABEL, DESCRIPTION, INFO, TYPE, IS_TEMPLATE);
+        String infoString = String.format(FORMAT, INFO, TYPE.toString(), CONTENT_TYPE.toString(),
+                LABEL, DESCRIPTION, Boolean.toString(IS_TEMPLATE));
+        DocumentInfo hotlinkDesc = new DocumentInfo(LABEL, DESCRIPTION, INFO, CONTENT_TYPE,
+                IS_TEMPLATE, TYPE);
         assertEquals("Description string is not expected.", infoString, hotlinkDesc.toString());
-        
-        infoString = String.format(FORMAT, INFO, TYPE.toString(), "", DESCRIPTION, Boolean.toString(IS_TEMPLATE));
-        hotlinkDesc = new DocumentInfo(null, DESCRIPTION, INFO, TYPE, IS_TEMPLATE);
+
+        infoString = String.format(FORMAT, INFO, TYPE.toString(), CONTENT_TYPE.toString(), "",
+                DESCRIPTION, Boolean.toString(IS_TEMPLATE));
+        hotlinkDesc = new DocumentInfo(null, DESCRIPTION, INFO, CONTENT_TYPE, IS_TEMPLATE, TYPE);
         assertEquals("Description string is not expected.", infoString, hotlinkDesc.toString());
-        
-        hotlinkDesc = new DocumentInfo("", DESCRIPTION, INFO, TYPE, IS_TEMPLATE);
+
+        hotlinkDesc = new DocumentInfo("", DESCRIPTION, INFO, CONTENT_TYPE, IS_TEMPLATE, TYPE);
         assertEquals("Description string is not expected.", infoString, hotlinkDesc.toString());
-        
-        infoString = String.format(FORMAT, INFO, TYPE.toString(), "", "", Boolean.toString(IS_TEMPLATE));
-        hotlinkDesc = new DocumentInfo(null, null, INFO, TYPE, IS_TEMPLATE);
+
+        infoString = String.format(FORMAT, INFO, TYPE.toString(), CONTENT_TYPE.toString(), "", "",
+                Boolean.toString(IS_TEMPLATE));
+        hotlinkDesc = new DocumentInfo(null, null, INFO, CONTENT_TYPE, IS_TEMPLATE, TYPE);
         assertEquals("Description string is not expected.", infoString, hotlinkDesc.toString());
-        
-        hotlinkDesc = new DocumentInfo("", "", INFO, TYPE, IS_TEMPLATE);
+
+        hotlinkDesc = new DocumentInfo("", "", INFO, CONTENT_TYPE, IS_TEMPLATE, TYPE);
         assertEquals("Description string is not expected.", infoString, hotlinkDesc.toString());
         
     }

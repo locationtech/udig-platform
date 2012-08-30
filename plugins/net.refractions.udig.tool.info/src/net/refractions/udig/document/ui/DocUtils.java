@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.document;
+package net.refractions.udig.document.ui;
 
 import java.io.File;
 import java.net.URL;
@@ -29,6 +29,7 @@ import net.refractions.udig.catalog.document.IDocument.ContentType;
  */
 public final class DocUtils {
 
+    private static final String UNASSIGNED = "Unassigned"; //$NON-NLS-1$
     private static final String DOCUMENT_FORMAT = "%s (%s)"; //$NON-NLS-1$
     private static final String LABEL_DESC_FORMAT = "%s - %s"; //$NON-NLS-1$
     private static final String SAVE_AS_FORMAT = "%s-Copy.%s"; //$NON-NLS-1$
@@ -41,9 +42,11 @@ public final class DocUtils {
      * @return document label
      */
     public static String getDocStr(IDocument doc) {
-        // [Naz] Updated to use content name instead
-        // final String docInfoStr = getDocInfoStr(doc.getContentType(), doc.getContent());
-        return getDocStr(doc.getContentName(), doc.getLabel());
+        String docInfoStr = doc.getContentName();
+        if (docInfoStr == null || docInfoStr.isEmpty()) {
+            docInfoStr = UNASSIGNED;
+        }
+        return getDocStr(docInfoStr, doc.getLabel());
     }
 
     /**
@@ -82,7 +85,7 @@ public final class DocUtils {
      * @return document info string
      */
     private static String getDocInfoStr(ContentType type, String infoStr) {
-        String infoDisplayValue = "Unassigned"; //$NON-NLS-1$
+        String infoDisplayValue = UNASSIGNED;
         if (infoStr != null) {
             switch (type) {
             case FILE:
@@ -109,7 +112,7 @@ public final class DocUtils {
      * @return document info string
      */
     private static String getDocInfoStr(ContentType type, Object infoValue) {
-        String infoDisplayValue = "Unassigned"; //$NON-NLS-1$
+        String infoDisplayValue = UNASSIGNED;
         if (infoValue != null) {
             switch (type) {
             case FILE:

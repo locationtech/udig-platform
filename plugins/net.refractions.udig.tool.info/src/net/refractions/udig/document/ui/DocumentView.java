@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-package net.refractions.udig.document;
+package net.refractions.udig.document.ui;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +26,6 @@ import java.util.Map;
 
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.document.DocumentPropertyPage;
 import net.refractions.udig.catalog.document.IAbstractDocumentSource;
 import net.refractions.udig.catalog.document.IAttachment;
 import net.refractions.udig.catalog.document.IAttachmentSource;
@@ -38,10 +37,10 @@ import net.refractions.udig.catalog.document.IDocumentSource;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.document.IHotlink;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.catalog.shp.ShpDocFactory;
 import net.refractions.udig.core.AdapterUtil;
 import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.document.DocumentDialog.Mode;
+import net.refractions.udig.document.source.ShpDocFactory;
+import net.refractions.udig.document.ui.DocumentDialog.Mode;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.command.provider.FIDFeatureProvider;
@@ -398,12 +397,11 @@ public class DocumentView extends ViewPart {
                     }
                     if (!doc.isEmpty()) {
                         openButton.setEnabled(true);
-                        removeButton.setEnabled(DocSourceUtils.canRemove(source, isHotlink));
                     }
-                    if (Type.HOTLINK == docType) {
-                        removeButton.setText(Messages.docView_clear);
-                    } else {
-                        removeButton.setText(Messages.docView_delete);
+                    removeButton.setText(isHotlink ? Messages.docView_clear : Messages.docView_delete);
+                    removeButton.setEnabled(isHotlink ? !doc.isEmpty() : true);
+                    if (removeButton.isEnabled()) {
+                        removeButton.setEnabled(DocSourceUtils.canRemove(source, isHotlink));    
                     }
                 }
             } else if (viewerSelection.size() > 1) {
@@ -1036,7 +1034,8 @@ public class DocumentView extends ViewPart {
             for (IDocument doc : docs) {
                 
                 boolean doDelete = true;
-                if (Type.ATTACHMENT == doc.getType() && ContentType.FILE == doc.getContentType()) {
+                if (Type.ATTACHMENT == doc.getType() && ContentType.FILE == doc.getContentType()
+                        && !doc.isEmpty()) {
                     doDelete = MessageDialog.openConfirm(removeButton.getShell(),
                             Messages.docView_deleteAttachConfirmTitle,
                             Messages.docView_deleteAttachConfirmMsg);
