@@ -22,7 +22,7 @@
 
     <build>
         <!-- uDig.1.3.2.${BUILD_NUMBER}-->
-        <finalName>udig-1.3.SNAPSHOT-sdk</finalName>
+        <finalName>udig-1.3-SNAPSHOT-sdk</finalName>
         <plugins>
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
