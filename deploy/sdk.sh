@@ -1,15 +1,17 @@
 #!/bin/bash
-echo "Release"
 
 # ignore mac resources when using tar,zip,etc...
 #
 export COPYFILE_DISABLE=true
 source ./versions.sh
+echo "Release SDK ${VERSION}"
+
+# ls ${BASE}/../features/net.refractions.udig_sdk-product/target/udig-1.3.SNAPSHOT-sdk-linux.gtk.x86.zip
 
 # Release sdk if available
-if [ -f ${TARGET}/udig-${VERSION}-sdk.zip ] 
+if [ -f ${PRODUCT_SDK_TARGET}/udig-${VERSION}-sdk-linux.gtk.x86.zip ] 
 then
-    echo "Releasing SDK"
+    echo "Releasing SDK from ${PRODUCT_SDK_TARGET}/udig-${VERSION}-sdk-linux.gtk.x86.zip "
     
     if [ ! -d ${BUILD}/sdk ] 
     then
@@ -20,18 +22,13 @@ then
         rm -rf -d ${BUILD}/sdk
         mkdir -p ${BUILD}/sdk
     fi
-    
-    if [ ! -f ${BUILD}/udig-${VERSION}.html ]
-    then
-        cp ${BASE}/udig-1.3.x.html ${BUILD}/udig-${VERSION}.html
-    fi
-            
+   
     if [ ! -f ${BUILD}/udig-${VERSION}-sdk.zip ]
     then
         echo "Building  ${BUILD}/udig-${VERSION}-sdk.zip ..."
         
         echo "Extracting ${TARGET}/udig-${VERSION}-sdk.zip"
-        unzip -q -d ${BUILD}/sdk ${TARGET}/udig-${VERSION}-sdk.zip
+        unzip -q -d ${BUILD}/sdk ${PRODUCT_SDK_TARGET}/udig-${VERSION}-sdk-linux.gtk.x86.zip 
         
         if [ -d ${BUILD}/sdk/eclipse ]
         then
@@ -51,8 +48,8 @@ then
         rm ${BUILD}/sdk/udig_sdk/plugins/*swt*linux*
         
         # TODO: figure out how to make libs and libs source have the same qualifier
-        mv ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/net.refractions.udig.libs_${TAG}.qualifier \
-           ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/net.refractions.udig.libs_${QUALIFIER}
+        # mv ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/net.refractions.udig.libs_${TAG}.qualifier \
+        #    ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/net.refractions.udig.libs_${QUALIFIER}
         
         cp ${BASE}/udig-1.3.x.html ${BUILD}/sdk/udig_sdk/udig-${VERSION}.html
         

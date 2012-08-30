@@ -63,6 +63,12 @@ function prepare_resources () {
     cat ../plugins/net.refractions.udig.libs/.options >> ${BUILD}/${PLATFORM}/udig/.options
     mkdir ${BUILD}/${PLATFORM}/udig/dropins
     
+    if [ ! -f ${BUILD}/udig-${VERSION}.html ]
+    then
+        cp ${BASE}/udig-1.3.x.html ${BUILD}/udig-${VERSION}.html
+    fi
+         
+         
     if [[ $PLATFORM == linux* ]] ; then
         cp udig.sh ${BUILD}/${PLATFORM}/udig
         chmod 755 ${BUILD}/${PLATFORM}/udig/udig_internal
