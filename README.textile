@@ -19,10 +19,10 @@ h1. Website
 h1. Project Outline
 
 The goal of uDig is to provide a complete Java solution for desktop GIS data access, editing, and viewing. uDig aims to be:
-* <b>U</b> ser friendly, providing a familiar graphical environment for GIS users;
-* <b>D</b> esktop located, running as a thick client, natively on Windows, Mac OS/X and Linux;
-* <b>I</b> nternet oriented, consuming standard (WMS, WFS, WCS) and de facto (GeoRSS, KML, tiles) geospatial web services; and,
-* <b>G</b> IS ready, providing the framework on which complex analytical capabilities can be built, and gradually subsuming those capabilities into the main application.
+* <b>U</b>ser friendly, providing a familiar graphical environment for GIS users;
+* <b>D</b>esktop located, running as a thick client, natively on Windows, Mac OS/X and Linux;
+* <b>I</b>nternet oriented, consuming standard (WMS, WFS, WCS) and de facto (GeoRSS, KML, tiles) geospatial web services; and,
+* <b>G</b>IS ready, providing the framework on which complex analytical capabilities can be built, and gradually subsuming those capabilities into the main application.
 
 h1. Steering Committee
 
