@@ -14,42 +14,11 @@
  */
 package net.refractions.udig.catalog.document;
 
-
 /**
- * Base document source interface. This has methods for checking permission with regards to document
- * access and modification.
+ * Marker (flag) interface for document sources.
  * 
  * @author Naz Chan
  */
 public interface IAbstractDocumentSource {
-
-    /**
-     * Checks if the source allows attaching new documents.
-     * 
-     * @return true if allows attaching, otherwise false
-     */
-    public boolean canAttach();
-    
-    /**
-     * Checks if the source allows linking new documents.
-     * 
-     * @return true if allows linking, otherwise false
-     */
-    public boolean canLink();
-    
-    /**
-     * Checks if the source allows updating documents.
-     * 
-     * @return true if allows updating, otherwise false
-     */
-    public boolean canUpdate();
-    
-    /**
-     * Checks if the source allows removing documents for {@link IDocumentSource} and
-     * {@link IAttachmentSource} or clearing for {@link IHotlinkSource}.
-     * 
-     * @return true if allows removing or clearing, otherwise false
-     */
-    public boolean canRemove();
-    
+    // Nothing
 }

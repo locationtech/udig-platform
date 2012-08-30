@@ -48,6 +48,27 @@ public interface IDocumentSource extends IAbstractDocumentSource {
     public List<IDocument> getDocuments();
 
     /**
+     * Checks if the source allows attaching new documents.
+     * 
+     * @return true if allows attaching, otherwise false
+     */
+    public boolean canAttach();
+    
+    /**
+     * Checks if the source allows linking file documents.
+     * 
+     * @return true if allows linking, otherwise false
+     */
+    public boolean canLinkFile();
+    
+    /**
+     * Checks if the source allows linking web documents.
+     * 
+     * @return true if allows linking, otherwise false
+     */
+    public boolean canLinkWeb();
+    
+    /**
      * Adds the document.
      * 
      * @param info
@@ -64,6 +85,29 @@ public interface IDocumentSource extends IAbstractDocumentSource {
     public List<IDocument> add(List<DocumentInfo> infos);
 
     /**
+     * Checks if the source allows updating documents.
+     * 
+     * @return true if allows updating, otherwise false
+     */
+    public boolean canUpdate();
+    
+    /**
+     * Updates the document with the information.
+     * 
+     * @param doc
+     * @param info
+     * @return updated document
+     */
+    public IDocument update(IDocument doc, DocumentInfo info);
+    
+    /**
+     * Checks if the source allows removing documents.
+     * 
+     * @return true if allows removing or clearing, otherwise false
+     */
+    public boolean canRemove();
+    
+    /**
      * Removes the document.
      * 
      * @param true if removed successfully, otherwise false
@@ -76,15 +120,6 @@ public interface IDocumentSource extends IAbstractDocumentSource {
      * @param true if removed successfully, otherwise false
      */
     public boolean remove(List<IDocument> docs);
-
-    /**
-     * Updates the document with the information.
-     * 
-     * @param doc
-     * @param info
-     * @return updated document
-     */
-    public IDocument update(IDocument doc, DocumentInfo info);
 
     /**
      * Document info container for document. This was initially designed to contain document

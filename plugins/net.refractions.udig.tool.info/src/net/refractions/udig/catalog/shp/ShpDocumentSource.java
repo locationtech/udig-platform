@@ -67,8 +67,13 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
     }
 
     @Override
-    public boolean canLink() {
-        return false;
+    public boolean canLinkFile() {
+        return false; // Not implemented in this document source
+    }
+    
+    @Override
+    public boolean canLinkWeb() {
+        return true;
     }
     
     @Override

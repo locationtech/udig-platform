@@ -25,7 +25,7 @@ import org.opengis.feature.simple.SimpleFeature;
 /**
  * Hotlink support for IGeoResource.
  * <p>
- * {@link Hotlink} documents are used to record a document references in the attribtues of the provided feature.
+ * {@link Hotlink} documents are used to record a document references in the attributes of the provided feature.
  * <p>
  * The list of feature attributes that are used for this purpose are made available through this interface, along with helper methods
  * allowing you to update these links correctly.
@@ -61,6 +61,13 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
      */
     public IDocument getDocument(SimpleFeature feature, String attributeName);
 
+    /**
+     * Checks if the source allows setting the hotlinks
+     * 
+     * @return true if allows setting hotlinks, otherwise false
+     */
+    public boolean canSetHotlink();
+    
     /**
      * Used to encode the indicated file as an IDocument in the provided feature.
      * <p>
@@ -102,6 +109,13 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
      */
     public IDocument setAction(SimpleFeature feature, String attributeName, String action);
 
+    /**
+     * Checks if the source allows clearing the hotlink.
+     * 
+     * @return true if allows clearing, otherwise false
+     */
+    public boolean canClearHotlink();
+    
     /**
      * Used to clear a hotlink in the provided feature.
      * <p>
