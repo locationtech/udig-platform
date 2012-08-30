@@ -206,15 +206,16 @@ Includes the ossim feaure (this may be dead code)
                 <extensions>true</extensions>
             </plugin>
             
+            <!-- additional environments provided by udig product pom.xml file -->
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>target-platform-configuration</artifactId>
                 <version>${tycho-version}</version>
                 <configuration>
                     <resolver>p2</resolver>
-                    <!-- pomDependencies>consider</pomDependencies -->
+                    <!--pomDependencies>consider</pomDependencies-->
                     <environments>
-                        <environment>
+                        <!--environment>
                             <os>win32</os>
                             <ws>win32</ws>
                             <arch>x86</arch>
@@ -223,13 +224,13 @@ Includes the ossim feaure (this may be dead code)
                             <os>win32</os>
                             <ws>win32</ws>
                             <arch>x86_64</arch>
-                        </environment>
+                        </environment-->
                         <environment>
                             <os>linux</os>
                             <ws>gtk</ws>
                             <arch>x86</arch>
                         </environment>
-                        <environment>
+                        <!--environment>
                             <os>linux</os>
                             <ws>gtk</ws>
                             <arch>x86_64</arch>
@@ -243,7 +244,7 @@ Includes the ossim feaure (this may be dead code)
                             <os>macosx</os>
                             <ws>cocoa</ws>
                             <arch>x86_64</arch>
-                        </environment>
+                        </environment-->
                     </environments>
                 </configuration>
             </plugin>
