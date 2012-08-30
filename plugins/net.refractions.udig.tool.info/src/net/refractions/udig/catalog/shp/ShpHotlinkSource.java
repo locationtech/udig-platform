@@ -112,19 +112,9 @@ public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotl
         }
         return null;
     }
-
-    @Override
-    public boolean canAttach() {
-        return false;
-    }
     
     @Override
-    public boolean canLink() {
-        return false;
-    }
-    
-    @Override
-    public boolean canUpdate() {
+    public boolean canSetHotlink() {
         return true;
     }
     
@@ -153,7 +143,7 @@ public class ShpHotlinkSource extends AbstractShpDocumentSource implements IHotl
     }
 
     @Override
-    public boolean canRemove() {
+    public boolean canClearHotlink() {
         return true;
     }
     

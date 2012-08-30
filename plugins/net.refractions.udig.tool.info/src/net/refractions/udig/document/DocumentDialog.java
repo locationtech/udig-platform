@@ -27,8 +27,8 @@ import java.util.Map;
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.document.DocumentPropertyPage;
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
+import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.tool.info.internal.Messages;
@@ -116,31 +116,31 @@ public class DocumentDialog extends IconAndMessageDialog {
     /**
      * Document information (either absolute filepath or url string or action) value.
      */
-    public static final String V_INFO = "INFO"; //$NON-NLS-1$
+    public static final String V_INFO = "V_INFO"; //$NON-NLS-1$
     /**
      * Document content type value. Refer to {@link ContentType}.
      */
-    public static final String V_TYPE = "TYPE"; //$NON-NLS-1$
+    public static final String V_CONTENT_TYPE = "V_CONTENT_TYPE"; //$NON-NLS-1$
     /**
      * Document label value.
      */
-    public static final String V_LABEL = "LABEL";  //$NON-NLS-1$
+    public static final String V_LABEL = "V_LABEL";  //$NON-NLS-1$
     /**
      * Document description value.
      */
-    public static final String V_DESCRIPTION = "DESCRIPTION"; //$NON-NLS-1$
+    public static final String V_DESCRIPTION = "V_DESCRIPTION"; //$NON-NLS-1$
     /**
      * Document attribute value. This is required for {@link Type#HOTLINK} types.
      */
-    public static final String V_ATTRIBUTE = "ATTRIBUTE";  //$NON-NLS-1$
+    public static final String V_ATTRIBUTE = "V_ATTRIBUTE";  //$NON-NLS-1$
     /**
      * Document "is template" value. This is required for {@link ContentType#FILE} types.
      */
-    public static final String V_TEMPLATE = "TEMPLATE";  //$NON-NLS-1$
+    public static final String V_TEMPLATE = "V_TEMPLATE";  //$NON-NLS-1$
     /**
      * Document actions value. This is required for {@link Type#HOTLINK} with {@link ContentType#ACTION} types.
      */
-    public static final String V_ACTIONS = "ACTIONS";  //$NON-NLS-1$
+    public static final String V_ACTIONS = "V_ACTIONS";  //$NON-NLS-1$
     
     /**
      * Dialog configuration parameters.
@@ -149,24 +149,29 @@ public class DocumentDialog extends IconAndMessageDialog {
     /**
      * Dialog mode parameter. Refer to {@link Mode}.
      */
-    public static final String P_MODE = "MODE"; //$NON-NLS-1$
+    public static final String P_MODE = "P_MODE"; //$NON-NLS-1$
     /**
      * Document type parameter. Refer to {@link Type}.
      */
-    public static final String P_DOC_TYPE = "DOC_TYPE"; //$NON-NLS-1$
+    public static final String P_TYPE = "P_TYPE"; //$NON-NLS-1$
+    /**
+     * Document content type allowed options parameter. Refer to {@link ContentType}. If this is not
+     * specified the default content type options (depending on the document type) is displayed.
+     */
+    public static final String P_CONTENT_TYPES = "P_CONTENT_TYPES"; //$NON-NLS-1$
     /**
      * Feature name parameter. A string value used for header display. This may be null for layer level documents.
      */
-    public static final String P_FEATURE_NAME = "FEATURE_NAME"; //$NON-NLS-1$
+    public static final String P_FEATURE_NAME = "P_FEATURE_NAME"; //$NON-NLS-1$
     /**
      * Resource name parameter. A string value used for header display. This should not be null. 
      */
-    public static final String P_RESOURCE_NAME = "RESOURCE_NAME"; //$NON-NLS-1$
+    public static final String P_RESOURCE_NAME = "P_RESOURCE_NAME"; //$NON-NLS-1$
     /**
      * Templates parameter. A list of {@link IDocument} used to populate template options. This may
      * be null if there are no templates.
      */
-    public static final String P_TEMPLATES = "TEMPLATES"; //$NON-NLS-1$
+    public static final String P_TEMPLATES = "P_TEMPLATES"; //$NON-NLS-1$
     
     private boolean hasError = false;
     private ContentType typeValue;
@@ -217,7 +222,7 @@ public class DocumentDialog extends IconAndMessageDialog {
     }
     
     public ContentType getType() {
-        return (ContentType) values.get(V_TYPE);
+        return (ContentType) values.get(V_CONTENT_TYPE);
     }
     
     public String getLabel() {
@@ -245,60 +250,61 @@ public class DocumentDialog extends IconAndMessageDialog {
         return (List<HotlinkDescriptor>) values.get(V_ACTIONS);
     }
         
-    private Type getDocType() {
+    private Type getParamType() {
         if (docType == null) {
-            if (params != null) {
-                final Type paramDocType = (Type) params.get(P_DOC_TYPE);
-                if (paramDocType != null) {
-                    docType = paramDocType;
-                }
-            }    
+            final Type paramDocType = (Type) params.get(P_TYPE);
+            if (paramDocType != null) {
+                docType = paramDocType;
+            }
         }
         return docType;
     }
     
+    @SuppressWarnings("unchecked")
+    private List<ContentType> getParamContentTypes() {
+        return (List<ContentType>) params.get(P_CONTENT_TYPES);
+    }
+    
     private boolean isLinked() {
-        return Type.LINKED == getDocType();
+        return Type.LINKED == getParamType();
     }
     
     private boolean isAttachment() {
-        return Type.ATTACHMENT == getDocType();
+        return Type.ATTACHMENT == getParamType();
     }
     
     private boolean isHotlink() {
-        return Type.HOTLINK == getDocType();
+        return Type.HOTLINK == getParamType();
     }
     
-    private Mode getMode() {
+    private Mode getParamMode() {
         if (mode == null) {
-            if (params != null) {
-                final Mode paramMode = (Mode) params.get(P_MODE);
-                if (paramMode != null) {
-                    mode = paramMode;
-                }
-            }    
+            final Mode paramMode = (Mode) params.get(P_MODE);
+            if (paramMode != null) {
+                mode = paramMode;
+            }
         }
         return mode;
     }
     
     private boolean isAddMode() {
-        return Mode.ADD == getMode();
+        return Mode.ADD == getParamMode();
     }
     
     private boolean isEditMode() {
-        return Mode.EDIT == getMode();
+        return Mode.EDIT == getParamMode();
     }
     
-    private String getFeatureName() {
+    private String getParamFeatureName() {
         return (String) params.get(P_FEATURE_NAME);
     }
     
-    private String getResourceName() {
+    private String getParamResourceName() {
         return (String) params.get(P_RESOURCE_NAME);
     }
     
     @SuppressWarnings("unchecked")
-    private List<IDocument> getTemplates() {
+    private List<IDocument> getParamTemplates() {
         return (List<IDocument>) params.get(P_TEMPLATES);
     }
     
@@ -531,7 +537,7 @@ public class DocumentDialog extends IconAndMessageDialog {
             }
         });
         selectDialog.setContentProvider(new ArrayContentProvider());
-        final Object[] templates = getTemplates().toArray();
+        final Object[] templates = getParamTemplates().toArray();
         selectDialog.setInput(templates);
         selectDialog.setInitialElementSelections(Collections.singletonList(templates[0]));
         if (Dialog.OK == selectDialog.open()) {
@@ -674,23 +680,26 @@ public class DocumentDialog extends IconAndMessageDialog {
             }
         });
         
-        final List<ContentType> types = new ArrayList<ContentType>();
-        switch (getDocType()) {
-        case LINKED:
-            types.add(ContentType.FILE);
-            types.add(ContentType.WEB);
-            break;
-        case ATTACHMENT:
-            types.add(ContentType.FILE);
-            break;
-        case HOTLINK:
-            types.add(ContentType.FILE);
-            types.add(ContentType.WEB);
-            types.add(ContentType.ACTION);
-            break;
-        default:
-            break;
-        }        
+        List<ContentType> types = getParamContentTypes();
+        if (types == null) {
+            types = new ArrayList<ContentType>();
+            switch (getParamType()) {
+            case LINKED:
+                types.add(ContentType.FILE);
+                types.add(ContentType.WEB);
+                break;
+            case ATTACHMENT:
+                types.add(ContentType.FILE);
+                break;
+            case HOTLINK:
+                types.add(ContentType.FILE);
+                types.add(ContentType.WEB);
+                types.add(ContentType.ACTION);
+                break;
+            default:
+                break;
+            }
+        }
         type.setInput(types.toArray());
         
     }
@@ -716,11 +725,11 @@ public class DocumentDialog extends IconAndMessageDialog {
      * here. Eg. setting values, enablements, initial validations, etc.
      */
     private void afterCreateContents() {
-        // Set values here
+        // Set field values here
         setValues();
-        // Set title
+        // Set header and sub-header
         configHeaderDisplay();
-        // Set controls
+        // Set control enablements/visibility
         configControlEnablements();
         // Refresh buttons
         refreshBtns();
@@ -732,7 +741,11 @@ public class DocumentDialog extends IconAndMessageDialog {
     private void setValues() {
         
         if (isAddMode()) {
-            type.setSelection(new StructuredSelection(ContentType.FILE));
+            final Object[] types = (Object[]) type.getInput();
+            if (types != null && types.length > 0) {
+                type.setSelection(new StructuredSelection(types[0]));    
+            }
+            
         } else {
             type.setSelection(new StructuredSelection(getType()));
             setValue(info, getInfo());
@@ -781,8 +794,8 @@ public class DocumentDialog extends IconAndMessageDialog {
         String header = ""; //$NON-NLS-1$
         String subHeader = ""; //$NON-NLS-1$
 
-        String featureName = getFeatureName();
-        String shapefileName = getResourceName();
+        String featureName = getParamFeatureName();
+        String shapefileName = getParamResourceName();
 
         if (isAddMode()) {
             header = Messages.DocumentDialog_addAttachHeader;
@@ -833,13 +846,18 @@ public class DocumentDialog extends IconAndMessageDialog {
         if (isHotlink()) {
             configAttributeControls(true);
             configMetadataControls(false);
-            type.getControl().setEnabled(false);
             templateCheckBtn.setVisible(false);
+            type.getControl().setEnabled(false);
         } else {
             configAttributeControls(false);
             configMetadataControls(true);
-            type.getControl().setEnabled(isLinked() && isAddMode());
             templateCheckBtn.setVisible(isAttachment());
+            boolean isTypeEnabled = false;
+            if (isLinked() && isAddMode()) {
+                final Object[] types = (Object[]) type.getInput();
+                isTypeEnabled = (types != null && types.length > 1); 
+            }
+            type.getControl().setEnabled(isTypeEnabled);
         }
     }
     
@@ -851,7 +869,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         }
         values.put(V_LABEL, label.getText());
         values.put(V_DESCRIPTION, description.getText());
-        values.put(V_TYPE, getTypeComboValue());
+        values.put(V_CONTENT_TYPE, getTypeComboValue());
         values.put(V_INFO, info.getText());
         values.put(V_TEMPLATE, templateCheckBtn.getSelection());
         
@@ -908,7 +926,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         if (isVisible) {
             infoBrowseBtn.setVisible(isFile);
             infoNewBtn.setVisible(isFile);
-            final List<IDocument> templates = getTemplates();
+            final List<IDocument> templates = getParamTemplates();
             final boolean hasTemplates = (templates != null && templates.size() > 0);
             infoNewBtn.setEnabled(hasTemplates);
         }

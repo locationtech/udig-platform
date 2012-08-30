@@ -384,21 +384,23 @@ public class DocumentView extends ViewPart {
             if (viewerSelection.size() == 1) {
                 final Object element = viewerSelection.getFirstElement();
                 final IAbstractDocumentSource source = getDocumentSource();
-                attachButton.setEnabled(source.canAttach());
-                linkButton.setEnabled(source.canLink());
+                attachButton.setEnabled(DocSourceUtils.canAttach(source));
+                linkButton.setEnabled(DocSourceUtils.canLink(source));
                 if (element instanceof IDocument) {
-                    editButton.setEnabled(source.canUpdate());
                     final IDocument doc = (IDocument) element;
-                    if (Type.ATTACHMENT == doc.getType() 
+                    final Type docType = doc.getType();
+                    final boolean isHotlink = (Type.HOTLINK == docType);
+                    editButton.setEnabled(DocSourceUtils.canUpdate(source, isHotlink));
+                    if (Type.ATTACHMENT == docType 
                             && ContentType.FILE == doc.getContentType()) {
                         saveAsButton.setEnabled(true);
                         saveAsAction.setEnabled(true);
                     }
                     if (!doc.isEmpty()) {
                         openButton.setEnabled(true);
-                        removeButton.setEnabled(source.canRemove());
+                        removeButton.setEnabled(DocSourceUtils.canRemove(source, isHotlink));
                     }
-                    if (Type.HOTLINK == doc.getType()) {
+                    if (Type.HOTLINK == docType) {
                         removeButton.setText(Messages.docView_clear);
                     } else {
                         removeButton.setText(Messages.docView_delete);
@@ -806,7 +808,7 @@ public class DocumentView extends ViewPart {
         final IDocumentFolder folder = getDocumentFolder();
         if (folder != null) {
             final Map<String, Object> params = new HashMap<String, Object>();
-            params.put(DocumentDialog.P_DOC_TYPE, Type.ATTACHMENT);
+            params.put(DocumentDialog.P_TYPE, Type.ATTACHMENT);
             params.put(DocumentDialog.P_MODE, Mode.ADD);
             params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(folder));
 
@@ -814,7 +816,7 @@ public class DocumentView extends ViewPart {
             final boolean isFeatureDoc = (source instanceof IAttachmentSource);
             final DocumentDialog docDialog = openDocDialog(new HashMap<String, Object>(), params, isFeatureDoc);
             if (docDialog != null) {
-                attachDocument(folder, docDialog.getDocInfo());
+                addDocument(folder, docDialog.getDocInfo());
                 viewer.refresh();
                 viewer.expandAll();
             }            
@@ -823,9 +825,45 @@ public class DocumentView extends ViewPart {
     }
 
     /**
+     * Links a new document. This opens the {@link DocumentDialog} to allow the user to input details
+     * of the document to be linked.
+     */
+    private void link() {
+
+        final IDocumentFolder folder = getDocumentFolder();
+        if (folder != null) {
+            final IAbstractDocumentSource source = folder.getSource();
+            
+            final Map<String, Object> params = new HashMap<String, Object>();
+            params.put(DocumentDialog.P_TYPE, Type.LINKED);
+            params.put(DocumentDialog.P_MODE, Mode.ADD);
+            params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(folder));
+            final List<ContentType> contentTypes = new ArrayList<ContentType>();
+            if (DocSourceUtils.canLinkFile(source)) {
+                contentTypes.add(ContentType.FILE);
+            }
+            if (DocSourceUtils.canLinkWeb(source)) {
+                contentTypes.add(ContentType.WEB);
+            }
+            if (contentTypes != null && contentTypes.size() > 0) {
+                params.put(DocumentDialog.P_CONTENT_TYPES, contentTypes);    
+            }
+            
+            final boolean isFeatureDoc = (source instanceof IAttachmentSource);
+            final DocumentDialog docDialog = openDocDialog(new HashMap<String, Object>(), params, isFeatureDoc);
+            if (docDialog != null) { 
+                addDocument(folder, docDialog.getDocInfo());
+                viewer.refresh();
+                viewer.expandAll();
+            }            
+        }
+        
+    }
+    
+    /**
      * Adds a new document to the document folder with the given document info.
      */
-    private void attachDocument(IDocumentFolder folder, DocumentInfo info) {
+    private void addDocument(IDocumentFolder folder, DocumentInfo info) {
                 
         IDocument doc = null;
         if (folder.getSource() instanceof IDocumentSource) {
@@ -839,32 +877,6 @@ public class DocumentView extends ViewPart {
         if (doc == null) {
             MessageDialog.openInformation(attachButton.getShell(),
                     Messages.docView_attachFile, Messages.docView_errFileExistSingle);
-        }
-        
-    }
-    
-    /**
-     * Links a new document. This opens the {@link DocumentDialog} to allow the user to input details
-     * of the document to be linked.
-     */
-    private void link() {
-
-        final IDocumentFolder folder = getDocumentFolder();
-        if (folder != null) {
-            final Map<String, Object> params = new HashMap<String, Object>();
-            params.put(DocumentDialog.P_DOC_TYPE, Type.LINKED);
-            params.put(DocumentDialog.P_MODE, Mode.ADD);
-            params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(folder));
-
-            final IAbstractDocumentSource source = folder.getSource();
-            final boolean isFeatureDoc = (source instanceof IAttachmentSource);
-            final DocumentDialog docDialog = openDocDialog(new HashMap<String, Object>(), params, isFeatureDoc);
-            if (docDialog != null) {
-                // TODO - Update document sources to support linking 
-                attachDocument(folder, docDialog.getDocInfo());
-                viewer.refresh();
-                viewer.expandAll();
-            }            
         }
         
     }
@@ -900,13 +912,13 @@ public class DocumentView extends ViewPart {
         if (!doc.isEmpty()) {
             values.put(DocumentDialog.V_INFO, doc.getContent().toString());    
         }
-        values.put(DocumentDialog.V_TYPE, doc.getContentType());
+        values.put(DocumentDialog.V_CONTENT_TYPE, doc.getContentType());
         values.put(DocumentDialog.V_LABEL, doc.getLabel());
         values.put(DocumentDialog.V_DESCRIPTION, doc.getDescription());
         values.put(DocumentDialog.V_TEMPLATE, doc.isTemplate());
         
         final Map<String, Object> params = new HashMap<String, Object>();
-        params.put(DocumentDialog.P_DOC_TYPE, doc.getType());
+        params.put(DocumentDialog.P_TYPE, doc.getType());
         params.put(DocumentDialog.P_MODE, Mode.EDIT);
         params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(doc));
         
@@ -939,7 +951,7 @@ public class DocumentView extends ViewPart {
         if (!doc.isEmpty()) {
             values.put(DocumentDialog.V_INFO, doc.getContent().toString());    
         }
-        values.put(DocumentDialog.V_TYPE, doc.getContentType());
+        values.put(DocumentDialog.V_CONTENT_TYPE, doc.getContentType());
         values.put(DocumentDialog.V_ATTRIBUTE, attributeName);
         values.put(DocumentDialog.V_LABEL, doc.getLabel());
         values.put(DocumentDialog.V_DESCRIPTION, doc.getDescription());
@@ -948,7 +960,7 @@ public class DocumentView extends ViewPart {
         }
         
         final Map<String, Object> params = new HashMap<String, Object>();
-        params.put(DocumentDialog.P_DOC_TYPE, Type.HOTLINK);
+        params.put(DocumentDialog.P_TYPE, Type.HOTLINK);
         params.put(DocumentDialog.P_MODE, Mode.EDIT);
         if (ContentType.FILE == doc.getContentType()) {
             params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(doc));

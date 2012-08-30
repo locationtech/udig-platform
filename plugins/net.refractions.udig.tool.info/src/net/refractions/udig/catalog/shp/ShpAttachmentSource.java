@@ -66,8 +66,13 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     }
     
     @Override
-    public boolean canLink() {
+    public boolean canLinkFile() {
         return false;
+    }
+    
+    @Override
+    public boolean canLinkWeb() {
+        return true;
     }
     
     @Override
