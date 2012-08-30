@@ -65,14 +65,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-        <plugins>
-            <plugin>
-                <groupId>org.eclipse.tycho</groupId>
-                <artifactId>tycho-maven-plugin</artifactId>
-                <version>${tycho-version}</version>
-                <extensions>true</extensions>
-            </plugin>
             
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
