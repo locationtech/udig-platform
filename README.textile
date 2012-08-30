@@ -9,7 +9,7 @@ The User-friendly Desktop Internet GIS (uDig) is an open source (LGPL) desktop a
 uDig is an open project, with developers from multiple companies participating in the decision making process and project direction. All decisions are made transparently, on the public mailing list, or in open "IRC":http://en.wikipedia.org/wiki/IRC discussions.
 
 * <a href="irc://us.freenode.net/udig">#udig</a> on "freenode":http://freenode.net/irc_servers.shtml
-* <a href="irc://us.freenode.net/geotools>#geotools</a> on "freenode":http://freenode.net/irc_servers.shtml
+* <a href="irc://us.freenode.net/geotools">#geotools</a> on "freenode":http://freenode.net/irc_servers.shtml
 
 h1. Website
 
