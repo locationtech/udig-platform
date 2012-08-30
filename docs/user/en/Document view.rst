@@ -1,7 +1,7 @@
 Document view
 #############
 
-The Document view shows files and links associated with the selected layer or feature.
+The Document view shows attachments, links and hotlinks associated with the selected layer or feature.
 
 .. figure:: /images/document_view/DocumentView.png
    :align: center
@@ -34,6 +34,11 @@ Attach
 
 The :guilabel:`Attach...` button is used to attach a document to the selected feature or layer.
 
+Link
+----
+
+The :guilabel:`Link...` button is used to link a document to the selected feature or layer.
+
 Edit
 ----
 
@@ -49,7 +54,7 @@ The document is opened using the default system application.
 Save As
 -------
 
-The :guilabel:`Save As...` button is used to save a new copy of the file of a file attachment document.
+The :guilabel:`Save As...` button is used to save a new copy of an attachment document.
 
 Clear
 ------
@@ -61,9 +66,10 @@ For file hotlinks, the referenced file will not removed from disk, the reference
 Delete
 ------
 
-The :guilabel:`Delete` button is used remove the selected attachment document.
+The :guilabel:`Delete` button is used remove the selected attached or linked document.
 
-For file attachments, a confirmation message will be shown as the file will be removed from disk.
+For attached files, a confirmation message will be shown as the file will be removed from disk.
+For linked files, the referenced file will not removed from disk, the reference is simply cleared.
 
 **Related tasks**
 
