@@ -373,7 +373,6 @@
         
                             
         <topic label="Accessing context sensitive help" href="EN/Accessing context sensitive help.html">
-        
                 </topic>
         </topic>
                     
@@ -565,8 +564,18 @@
                 </topic>
         </topic>
         </topic>
-                    
-        <topic label="Working with Images" href="EN/Working with Images.html">
+    <topic label="Working with Documents" href="EN/Working with Documents.html">
+        <topic label="Configure hotlink attributes" href="EN/Configure hotlink attributes.html">
+            </topic>
+        <topic label="Attaching a document" href="EN/Attaching a document.html">
+            </topic>
+        <topic label="Linking a document" href="EN/Linking a document.html">
+                </topic>
+        <topic label="Setting a hotlink" href="EN/Setting a hotlink.html">
+                </topic>
+    </topic>
+                
+    <topic label="Working with Images" href="EN/Working with Images.html">
         
                             
         <topic label="Georeference an Image" href="EN/Georeference an Image.html">
@@ -719,11 +728,7 @@
                             
         <topic label="Data Menu" href="EN/Data Menu.html">
         
-                            
-        <topic label="WRIS" href="EN/WRIS.html">
-        
                 </topic>
-        </topic>
                     
         <topic label="Edit Menu" href="EN/Edit Menu.html">
         
@@ -770,30 +775,10 @@
         
                             
         <topic label="Catalog Preferences" href="EN/Catalog Preferences.html">
-        
-                            
-        <topic label="ArcSDE Preference Page" href="EN/ArcSDE Preference Page.html">
-        
-                </topic>
                     
-        <topic label="DB2 Preferences" href="EN/DB2 Preferences.html">
-        
-                </topic>
         </topic>
                     
         <topic label="Help Preferences" href="EN/Help Preferences.html">
-        
-                </topic>
-                    
-        <topic label="Layer Preferences" href="EN/Layer Preferences.html">
-        
-                </topic>
-                    
-        <topic label="Map Preferences" href="EN/Map Preferences.html">
-        
-                </topic>
-                    
-        <topic label="Printing Preferences" href="EN/Printing Preferences.html">
         
                 </topic>
                     
@@ -821,9 +806,6 @@
         </topic>
         </topic>
                     
-        <topic label="WMS Preferences" href="EN/WMS Preferences.html">
-        
-                </topic>
         </topic>
                     
         <topic label="Property Pages" href="EN/Property Pages.html">
@@ -864,7 +846,8 @@
         <topic label="Cheat Sheet view" href="EN/Cheat Sheet view.html">
         
                 </topic>
-                    
+        <topic label="Document view" href="EN/Document view.html">
+                </topic>
         <topic label="Help view" href="EN/Help view.html">
         
                 </topic>
@@ -1236,6 +1219,10 @@
                     
         <topic label="Using the WPS plugin" href="EN/Using the WPS plugin.html">
         
+                </topic>
+        </topic>
+        <topic label="docguide" href="EN/docguide/docguide.html">
+                <topic label="sphinxSyntax" href="EN/docguide/sphinxSyntax.html">
                 </topic>
         </topic>
     </toc>
