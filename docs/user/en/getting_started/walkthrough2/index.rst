@@ -14,7 +14,7 @@ uDig Walkthrough 2
     EditingGeometrywithWFS
     WorkingwithAttributes
     ExportingtoShapefile
-    TakeaBreak!
+    TakeaBreak
     CreatingFeatureType
     CopyingContent
     HoleCutter

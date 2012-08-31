@@ -26,7 +26,7 @@ uDig Walkthrough 2
 
 .. include:: ExportingtoShapefile.rst
 
-.. include:: TakeaBreak!.rst
+.. include:: TakeaBreak.rst
 
 .. include:: CreatingFeatureType.rst
 
