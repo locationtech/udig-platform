@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import net.refractions.udig.core.internal.ExtensionPointProcessor;
 import net.refractions.udig.core.internal.ExtensionPointUtil;
@@ -61,6 +63,11 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      */
     Map<String, BlackboardEntry> blackboard = new HashMap<String, BlackboardEntry>();
 
+    /**
+     * Lock used for protecting the blackboard
+     */
+    final Lock blackboardLock = new ReentrantLock();
+    
     /** persisters */
     ArrayList<IPersister< ? >> persisters;
 
@@ -202,7 +209,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         if (key == null)
             return null;
 
-        synchronized (blackboard) {
+        blackboardLock.lock();
+        try {
             // look up the entry
             BlackboardEntry entry = blackboard.get(key);
             if (entry != null) {
@@ -258,16 +266,20 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
             }
 
             return null;
+        } finally {
+            blackboardLock.unlock();
         }
     }
 
     private void initialize() {
         initialized = true;
-        synchronized (blackboard) {
+        blackboardLock.lock();
+        try {
             for (BlackboardEntry entry : this.getEntries()) {
                 blackboard.put(entry.getKey(), entry);
             }
-
+        } finally {
+            blackboardLock.unlock();
         }
     }
 
@@ -275,7 +287,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         if (key == null) return null;
 
         // look up the entry
-        synchronized (blackboard) {
+        blackboardLock.lock();
+        try{
             BlackboardEntry entry = blackboard.remove(key);
             if (entry == null) {
                 return null;
@@ -293,6 +306,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                 }
             }
             return oldValue;
+        } finally {
+            blackboardLock.unlock();
         }
     }
     /*
@@ -307,7 +322,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
             this.remove(key);
             return;
         }
-        synchronized (blackboard) {
+        blackboardLock.lock();
+        try {
             Object oldValue = null;
             BlackboardEntry entry = blackboard.get(key);
     
@@ -353,6 +369,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                     ProjectPlugin.log("", e); //$NON-NLS-1$
                 }
             }
+        } finally {
+            blackboardLock.unlock();
         }
     }
 
@@ -425,11 +443,14 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * @see net.refractions.udig.project.IBlackboard#clear()
      */
     public void clear() {
-        synchronized (blackboard) {
+        blackboardLock.lock();
+        try {
             blackboard.clear();
             for( IBlackboardListener l : listeners ) {
                 l.blackBoardCleared(this);
             }
+        } finally {
+            blackboardLock.unlock();
         }
     }
 
@@ -446,10 +467,13 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * Flushes all the cached objects. Useful for testing.
      */
     public void flush() {
-        synchronized (blackboard) {
+        blackboardLock.lock();
+        try {
             for( BlackboardEntry entry : blackboard.values() ) {
                 entry.setObject(null);
             }
+        } finally {
+            blackboardLock.unlock();
         }
     }
 
@@ -618,15 +642,19 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     }
 
     public Set<String> keySet() {
-        synchronized (blackboard) {
+        blackboardLock.lock();
+        try {
             return this.blackboard.keySet();
+        } finally {
+            blackboardLock.unlock();
         }
     }
 
     @SuppressWarnings("nls")
     @Override
     public String toString() {
-        synchronized (blackboard) {
+        blackboardLock.lock();
+        try {
             StringBuffer buf = new StringBuffer();
             buf.append("StyleBlackBoardImpl: ");
             buf.append(blackboard.size());
@@ -638,6 +666,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                 buf.append(entry.getValue());
             }
             return buf.toString();
+        } finally {
+            blackboardLock.unlock();
         }
     }
 } // BlackboardImpl
