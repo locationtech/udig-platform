@@ -70,10 +70,10 @@ function prepare_resources () {
          
          
     if [[ $PLATFORM == linux* ]] ; then
-        cp udig.sh ${BUILD}/${PLATFORM}/udig
-        chmod 755 ${BUILD}/${PLATFORM}/udig/udig_internal
-        cp udig-clean.sh ${BUILD}/${PLATFORM}/udig
-        cp udig-debug.sh ${BUILD}/${PLATFORM}/udig
+        cp udig.sh "${BUILD}/${PLATFORM}/udig"
+        chmod 755 "${BUILD}/${PLATFORM}/udig/udig_internal"
+        cp udig-clean.sh "${BUILD}/${PLATFORM}/udig"
+        cp udig-debug.sh "${BUILD}/${PLATFORM}/udig"
     fi
     if [[ $PLATFORM == win* ]] ; then
         cp *.bat ${BUILD}/${PLATFORM}/udig
@@ -84,16 +84,16 @@ function prepare_resources () {
     fi
     if [[ $PLATFORM == mac* ]] ; then
         HERE=`pwd`
-    
-        chmod 755 ${BUILD}/${PLATFORM}/udig/udig_internal.app/Contents/MacOS/udig_internal
-        mv ${BUILD}/${PLATFORM}/udig/udig_internal.app ${BUILD}/${PLATFORM}/udig/udig.app
-        rm ${BUILD}/${PLATFORM}/udig/udig_internal
-        cd  ${BUILD}/${PLATFORM}/udig/
-        ln -s udig.app/Contents/MacOS/udig_internal udig
-        cd ${HERE}
-        cp mac-udig-clean.sh ${BUILD}/${PLATFORM}/udig/udig-clean.sh
-        cp mac-udig-debug.sh ${BUILD}/${PLATFORM}/udig/udig-debug.sh
-        mv ${BUILD}/${PLATFORM}/udig/.options ${BUILD}/${PLATFORM}/udig/udig.app/Contents/MacOS/
+    	PLATFORMCONTENT="${HERE}/${BUILD}/${PLATFORM}"
+
+        chmod 755 "${PLATFORMCONTENT}/udig/udig_internal.app/Contents/MacOS/udig_internal"
+        mv "${PLATFORMCONTENT}/udig/udig_internal.app" "${PLATFORMCONTENT}/udig/udig.app"
+        rm "${PLATFORMCONTENT}/udig/udig_internal"
+        ln -s "${PLATFORMCONTENT}/udig/udig.app/Contents/MacOS/udig_internal" "${PLATFORMCONTENT}/udig/udig"
+        cp "${HERE}/mac-udig-clean.sh" "${PLATFORMCONTENT}/udig/udig-clean.sh"
+        cp "${HERE}/mac-udig-debug.sh" "${PLATFORMCONTENT}/udig/udig-debug.sh"
+        mv "${PLATFORMCONTENT}/udig/.options" "${PLATFORMCONTENT}/udig/udig.app/Contents/MacOS/"
+		make_dmg
     fi
 }
 
@@ -137,6 +137,20 @@ function windows_installer () {
         fi
     fi
 }
+
+
+function make_dmg () {
+	DMGTOOLS=`which hdiutil`
+	echo -n "Mac packaging utilities available... "
+    if [ $? == 0 ] ; then
+		echo "YES!"
+		echo -n "Building MacOS DMG for product"
+		hdiutil create -fs HFS+ -volname "udig-${VERSION}" -srcfolder "${PLATFORMCONTENT}" "${PLATFORMCONTENT}/../udig-${VERSION}.${EXT}.dmg"
+	else
+		echo "NO"
+	fi
+}
+
 
 function extract_jre () {
 
