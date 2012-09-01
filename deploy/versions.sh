@@ -8,7 +8,7 @@ export BASE=`dirname $0`
 export INSTALLER="${BASE}/installer"
 #export TARGET=${BASE}/target
 #export TARGET=${BASE}/../features/net.refractions.udig-product/target/products/
-export VERSION=1.3-SNAPSHOT
+export VERSION=1.3.2
 export BUILD="${BASE}/build"
 
 # Tycho Build
@@ -20,7 +20,7 @@ export PRODUCT_SDK_TARGET="${BASE}/../features/net.refractions.udig_sdk-product/
 # net.refractions.udig.libs "qualifier" for SDK (used to update libs source reference
 # example: TAG=1.3.2
 # example: QUALIFIER=1.3.2.201201031509
-export TAG=1.3.1
+# export TAG=1.3.1
 
 # Build Resources
 export JRE="${BASE}/jre"
