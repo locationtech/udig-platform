@@ -28,4 +28,4 @@ Bundle-Name: Lowagie Itext
 Bundle-Vendor: itext.lowagie.com
 Bundle-ClassPath: lib/iText-2.1.7.jar,
  lib/itextasian-1.5.2.jar
-
+Eclipse-BundleShape: dir
