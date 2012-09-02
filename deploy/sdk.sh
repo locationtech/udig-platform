@@ -8,10 +8,12 @@ echo "Release SDK ${VERSION}"
 
 # ls ${BASE}/../features/net.refractions.udig_sdk-product/target/udig-1.3.SNAPSHOT-sdk-linux.gtk.x86.zip
 
+SDK_FILE="udig-${VERSION}-sdk.zip"
+
 # Release sdk if available
-if [ -f ${PRODUCT_SDK_TARGET}/udig-${VERSION}-sdk-linux.gtk.x86.zip ] 
+if [ -f ${SDK_TARGET}/${SDK_FILE} ] 
 then
-    echo "Releasing SDK from ${PRODUCT_SDK_TARGET}/udig-${VERSION}-sdk-linux.gtk.x86.zip "
+    echo "Releasing SDK from ${SDK_TARGET}/${SDK_FILE} "
     
     if [ ! -d ${BUILD}/sdk ] 
     then
@@ -27,35 +29,29 @@ then
     then
         echo "Building  ${BUILD}/udig-${VERSION}-sdk.zip ..."
         
-        echo "Extracting ${TARGET}/udig-${VERSION}-sdk.zip"
-        unzip -q -d ${BUILD}/sdk ${PRODUCT_SDK_TARGET}/udig-${VERSION}-sdk-linux.gtk.x86.zip 
+        echo "Extracting ${SDK_TARGET}/${SDK_FILE}"
+        BUILD_SDK="${BUILD}/sdk/udig_sdk"
+        unzip -q -d ${BUILD_SDK} ${SDK_TARGET}/${SDK_FILE}
         
-        if [ -d ${BUILD}/sdk/eclipse ]
-        then
-            mv ${BUILD}/sdk/eclipse ${BUILD}/sdk/udig_sdk
-        fi
+        rm ${BUILD_SDK}/plugins/*swt*macosx*
+        rm ${BUILD_SDK}/plugins/*swt*win32*
+        rm ${BUILD_SDK}/plugins/*swt*linux*
         
-        echo "Prepairing ${BUILD}/sdk"
-        rm -rf ${BUILD}/sdk/udig_sdk/*.app
-        rm ${BUILD}/sdk/udig_sdk/*.exe
-        rm ${BUILD}/sdk/udig_sdk/*.ini
-        rm ${BUILD}/sdk/udig_sdk/*.sh
+        # features have to be unpacked, maybe tycho can do this?
+        for FILE in ${BUILD_SDK}/features/*.jar
+        do
+            BASENAME=$(basename "${FILE}" .jar)
+            
+            if [ ! -d "${BASENAME}" ]; then
+                unzip -d "${BUILD_SDK}/features/${BASENAME}" "${FILE}" && rm "${FILE}"
+            fi
+        done
         
-        rm -rf ${BUILD}/sdk/udig_sdk/configuration
-        
-        rm ${BUILD}/sdk/udig_sdk/plugins/*swt*macosx*
-        rm ${BUILD}/sdk/udig_sdk/plugins/*swt*win32*
-        rm ${BUILD}/sdk/udig_sdk/plugins/*swt*linux*
-        
-        # TODO: figure out how to make libs and libs source have the same qualifier
-        # mv ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/net.refractions.udig.libs_${TAG}.qualifier \
-        #    ${BUILD}/sdk/udig_sdk/plugins/net.refractions.udig.libs.source_${QUALIFIER}/src/net.refractions.udig.libs_${QUALIFIER}
-        
-        cp ${BASE}/udig-1.3.x.html ${BUILD}/sdk/udig_sdk/udig-${VERSION}.html
+        cp ${BASE}/udig-1.3.x.html ${BUILD_SDK}/udig-${VERSION}.html
         
         echo "Assemble ${BUILD}/udig-${VERSION}-sdk.zip "
         cd ${BUILD}/sdk
-        zip -9 -r -q ../udig-${VERSION}-sdk.zip udig_sdk 
+        zip -9 -r -q ../udig-${VERSION}-sdk.zip udig_sdk
      else 
        echo "Already Exists ${BUILD}/udig-${VERSION}-sdk.zip"
      fi

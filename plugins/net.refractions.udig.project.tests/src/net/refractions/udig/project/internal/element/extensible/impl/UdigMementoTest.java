@@ -13,6 +13,7 @@ import net.refractions.udig.project.memento.UdigMemento;
 import org.eclipse.ui.IMemento;
 import org.junit.Test;
 
+@SuppressWarnings("nls")
 public class UdigMementoTest {
 
     private static final String STRING_VAL = "Hello\nWorld";

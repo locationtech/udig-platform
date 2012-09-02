@@ -10,3 +10,4 @@ Eclipse-RegisterBuddy: net.refractions.udig.libs
 Require-Bundle: net.refractions.udig.libs,
  org.eclipse.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Eclipse-BundleShape: dir
