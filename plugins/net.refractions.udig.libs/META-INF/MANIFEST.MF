@@ -5,6 +5,7 @@ Bundle-SymbolicName: net.refractions.udig.libs;singleton:=true
 Bundle-Version: 1.3.2.qualifier
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
+Eclipse-BundleShape: dir
 Eclipse-BuddyPolicy: registered,
  ext
 Bundle-ActivationPolicy: lazy

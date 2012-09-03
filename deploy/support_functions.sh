@@ -133,15 +133,15 @@ function windows_installer () {
                 echo "makensisw.exe cannot be found"
             fi
         else 
-            echo "wine is not installed so creating windows installer"
+            echo "wine is not installed so not creating windows installer"
         fi
     fi
 }
 
 
 function make_dmg () {
+    echo -n "Mac packaging utilities available... "
 	DMGTOOLS=`which hdiutil`
-	echo -n "Mac packaging utilities available... "
     if [ $? == 0 ] ; then
 		echo "YES!"
 		echo -n "Building MacOS DMG for product"
