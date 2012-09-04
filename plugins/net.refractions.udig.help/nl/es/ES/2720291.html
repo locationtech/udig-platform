@@ -1,0 +1,169 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Spanish Users Guide : Breve Introducción</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Spanish Users Guide : Breve Introducción -->
+       <h1>Breve Introducción</h1>
+       <p>Esta es una rápida introducción a la aplicación uDig que se incluye además como parte de la ayuda en linea.&nbsp;</p>
+
+<h2><a name="BreveIntroducci%C3%B3n-DatosdeEjemplo"></a>Datos de Ejemplo</h2>
+
+<p>Antes de comenzar, por favor, tómese un momento para descargar algunos datos de ejemplo que hemos puesto a su disposición en la web:</p>
+<ol>
+	<li>Pulse el botón derecho sobre el siguiente enlace y elija <b>Guardar enlace como...</b>:
+<br clear="all" />  <a href="http://udig.refractions.net/docs/data-v1_1.zip">data_v1_1.zip</a></li>
+	<li>Cuando se le pregunte por la ubicación del archivo, seleccione una ubicación adecuada como su escritorio.</li>
+	<li>Descomprimir (unzip) el contenido de éste fichero en un una carpeta de <b>datos</b> en su escritorio.</li>
+</ol>
+
+
+<p>Si usted lo prefiere puede experimentar con sus propios datos SIG. Utilizando los datos de ejemplo anteriores podrá seguir con éste manual paso a paso.</p>
+
+<h2><a name="BreveIntroducci%C3%B3n-Laaplicaci%C3%B3nuDig"></a>La aplicación uDig</h2>
+
+<ol>
+	<li>Elija <b>uDig 1.1 &gt; uDig</b> En el menú Inicio.</li>
+	<li>La aplicación se tomará unos minutos para iniciarse.<br/>
+<img src="download/attachments/2720291/Quickstart1Splash.png" align="absmiddle" border="0"/></li>
+</ol>
+
+
+<p>La aplicación uDig mantiene una carpeta de configuración en su directorio de trabajo. La carpeta de configuración será creada la primera vez que la aplicación se ejecute. Si tiene dificultades, o esta ejecutando uDig en Linux o Mac por favor revise la página de referencia&nbsp; <a href="http://udig.refractions.net/confluence//display/EN/Running+uDig" title="Running uDig">Ejecutando uDig</a></p>
+
+<h2><a name="BreveIntroducci%C3%B3n-VistaBienvenido"></a>Vista Bienvenido</h2>
+
+<ol>
+	<li>Cuando inicie uDig por primera vez, la vista&nbsp; <b>Bienvenido</b> se presentará a pantalla completa. Esta pantalla tiene enlaces a tutoriales, documentación y al sitio Web del proyecto.</li>
+	<li>Haga click en la flecha etiquetada como <b>Workbench</b>, en la esquina superior derecha, que presentará el contenido del banco de trabajo de uDig.</li>
+</ol>
+
+
+<p><img src="download/attachments/2720291/welcome-es-450.png" align="absmiddle" border="0"/></p>
+
+<p>Puede volver a la vista de Bienvenida en cualquier momento seleccionando <b>Ayuda &gt; Bienvenido</b> en la barra de menú.</p>
+
+<h2><a name="BreveIntroducci%C3%B3n-Workbench"></a>Workbench</h2>
+
+<p>La ventana <b>Workbench</b> ofrece múltiples Editores (cada uno con un mapa) y&nbsp; vistas de apoyo (que ofrecen información sobre el mapa actual).</p>
+
+<p><img src="download/attachments/2720291/workbench-01-es-450.png" align="absmiddle" border="0"/></p>
+
+<p>Arriba se muestra una típica sesión de uDig con el <a href="http://udig.refractions.net/confluence//display/EN/Map+editor" title="Map editor">Editor de Mapa </a>, la <a href="http://udig.refractions.net/confluence//display/EN/Projects+view" title="Projects view">vista de Proyectos </a>, <a href="http://udig.refractions.net/confluence//display/EN/Layers+view" title="Layers view">la vista de Capas </a> y <a href="http://udig.refractions.net/confluence//display/EN/Catalog+view" title="Catalog view">la vista del Catálogo </a>. Estas vistas serán descritas en detalle más adelante cuando mostremos su utilización.</p>
+
+<h2><a name="BreveIntroducci%C3%B3n-Archivos"></a>Archivos</h2>
+
+<p>Para comenzar vamos a cargar algunos de los datos de ejemplo, que usted ha descargado previamente.</p>
+<ol>
+	<li>Elija <b>Capa&gt; Añadir</b> en la barra de menú para abrir la ventana del asistente para Agregar Datos.</li>
+	<li>Seleccione <a href="http://udig.refractions.net/confluence//display/EN/Files+page" title="Files page">Archivos</a> desde la lista de fuentes de datos.</li>
+	<li>Presione <b>Siguiente</b> para abrir el diálogo de archivo.</li>
+	<li>Seleccione el siguiente archivo de su carpeta de datos: <b>countries.shp</b></li>
+	<li>Pulse la tecla <b>Abrir</b>
+	<ul>
+		<li>Un nuevo <a href="http://udig.refractions.net/confluence//display/EN/Map+editor" title="Map editor">Editor de Mapa</a> se abrirá basado en el contenido de su shapefile. El nombre por omisión y la proyección del Mapa serán tomados del shapefile.</li>
+		<li>Podrá ver que la <b>vista Catálogo</b> se ha actualizado presentando una entrada para <b>countries.shp</b>. Esta vista se utiliza para rastrear el uso de los recursos utilizados por uDig.</li>
+		<li>La vista <b>Capas</b> presentará la una única capa desplegada en este mapa. Esta vista se utiliza para cambiar el orden y apariencia de la información en su mapa.</li>
+		<li>La vista <b>Proyecto</b> se actualizará para mostrar que su mapa se almacena en <b>proyectos &gt; countries</b>. Es posible tener varios proyectos abiertos a la vez, cada uno de los cuales puede tener varios mapas.</li>
+	</ul>
+	</li>
+	<li>Abra su carpeta de datos en Windows</li>
+	<li>Arrastre el archivo <b>clouds.jpg</b> en el editor de Mapa, una nueva capa se agregará al mapa.</li>
+	<li>Puede ver el orden de las capas que son dibujadas en la vista de capas. Ahora la capa clouds.jpg se dibuja en el tope de la capa countires.</li>
+	<li>Seleccione la capa <b>clouds.jpg</b>, en la vista Catálogo, y arrástrela a la parte inferior de la lista<br/>
+<img src="download/attachments/2720291/files-es-450.png" align="absmiddle" border="0"/></li>
+</ol>
+
+
+<p><b>Información:</b> una de las preguntas más frecuentes, cuando uDig es siendo considerado como herramienta para una organización, es cuánta memoria utiliza la aplicación. A diferencia de muchas aplicaciones GIS, uDig puede ejecutarse con una cantidad fija de memoria. El shapefile anterior no es cargado en memoria, tenemos una política de mantenimiento de datos en disco y dibujar los datos de éste shapefile en la pantalla cuando sea necesario.</p>
+
+<p><b>Sugerencia</b> ¡También puede arrastrar y soltar shapefiles directamente en la aplicación uDig &#33;</p>
+
+<h2><a name="BreveIntroducci%C3%B3n-Mapa"></a>Mapa</h2>
+
+<p>Es posible controlar el sitio del mundo que está presentando el Editor de Mapa, utilizando las herramientas de navegación disponibles en la barra de herramientas ubicada en la parte superior de la pantalla.</p>
+<ol>
+	<li><img src="download/attachments/2720291/Zoom_mode.gif" align="absmiddle" border="0"/> La herramienta de <b>Zoom</b> está disponible por defecto.
+	<ul>
+		<li>Use la herramienta de zoom para dibujar una zona rectangular con el botón izquierdo del ratón, encerrando el área del mundo que desea ver.</li>
+		<li>Para alejar el dibujo trace una zona rectangular con el botón derecho.</li>
+	</ul>
+	</li>
+	<li>El <img src="download/attachments/2720291/Pan_mode.gif" align="absmiddle" border="0"/> <b>Pan</b> se puede utilizar para desplazarse por el mapa sin cambiar la escala.</li>
+	<li>Existen varios botones de navegación que pueden utilizarse a la vez:
+	<ul>
+		<li><img src="download/attachments/2720291/Zoom_extent_co.gif" align="absmiddle" border="0"/> Mostrar Todo, puede utilizarse para volver a ver el área entera en cualquier momento.</li>
+		<li><img src="download/attachments/2720291/Zoom_in_co.gif" align="absmiddle" border="0"/> Acercar y <img src="download/attachments/2720291/zoom_out_co.gif" align="absmiddle" border="0"/> alejar (<b>Zoom In</b> y <b>Zoom Out</b>) pueden utilizarse para cambiar la escala por una cantidad fijada.</li>
+	</ul>
+	</li>
+	<li>Puede usar <b>Navegación &gt; Atrás</b> y <b>Navegación &gt; Adelante</b> en la barra de menú para ciclar a través de los lugares visitadas previamente.</li>
+</ol>
+
+
+<p><b>Consejo:</b> muchas herramientas permiten realizar un Pan manteniendo el botón central pulsado y controlar la escala usando la rueda de desplazamiento.</p>
+
+<h2><a name="BreveIntroducci%C3%B3n-ServidordeMapasWeb"></a>Servidor de Mapas Web</h2>
+
+<p>Una de las razones para utilizar una aplicación como uDig es la posibilidad que brinda de acceder a toda la información geoespacial de libre disponibilidad en la web. Esta sección cubre el uso de <b>Web Map Servers</b> que proveen capas de información que usted puede incluir en sus mapas.</p>
+<ol>
+	<li>Seleccione <b>Archivo &gt; Nuevo &gt; Nuevo mapa</b> de la barra de menú</li>
+	<li>Cambie a la vista <b>Web</b> realizando un click en la pestaña para que el <b>Catalog</b> presente la vista <b>Web</b>.</li>
+	<li>Realice un click en el enlace WMS:dm solutions<br/>
+<img src="download/attachments/2720291/wms-00-450.png" align="absmiddle" border="0"/></li>
+	<li>En la página de <a href="http://udig.refractions.net/confluence//display/EN/Resource+Selection+page" title="Resource Selection page">Seleccion de Recurso </a> vamos a seleccionar las siguientes capas:
+	<ul>
+		<li>Elevation / Bathymetry *</li>
+		<li>Parks</li>
+		<li>Cities<br/>
+<img src="download/attachments/2720291/wms-01-450.png" align="absmiddle" border="0"/></li>
+	</ul>
+	</li>
+	<li>Pulse <b>Finalizar</b> para añadir estas capas a su mapa<br/>
+<img src="download/attachments/2720291/wms-02-450.png" align="absmiddle" border="0"/></li>
+	<li>Utilice <img src="download/attachments/2720291/Zoom_mode.gif" align="absmiddle" border="0"/> la herramienta de Zoom para acercarse a uno de los parques</li>
+	<li>Cambie a la <img src="download/attachments/2720291/Info_mode.gif" align="absmiddle" border="0"/> y haga click en uno de los parques para obtener más información</li>
+</ol>
+
+
+<p><b>Sugerencia:</b> Puede cambiar entre las herramientas de zoom e información pulsando <b>Z</b> e <b>I</b> en el teclado.</p>
+
+<h2><a name="BreveIntroducci%C3%B3n-Estilo"></a>Estilo</h2>
+
+<ol>
+	<li>Seleccionar projecto &gt; countries, puede hacer un doble click para abrir este Mapa, o un click con el botón derecho y elegir <b>Open Map</b>.</li>
+	<li>Seleccione la capa countries en la vista de Capas.</li>
+	<li>Abrir el Editor de Estilos haciendo un click derecho en la capa countries y selecionando Cambiar Estilo.</li>
+	<li>Realizaremos algunos cambios en la presentación de países
+	<ul>
+		<li>Línea: Haga click en el Color y cambie el color a NEGRO</li>
+		<li>Rellenar: eliminamos la cruz de la casilla de verificación para desactivar el relleno</li>
+		<li>Label: chequee la casilla, y elija <b>CNTRY_NAME</b> en la lista de atributos<br/>
+<img src="download/attachments/2720291/style-00-450.png" align="absmiddle" border="0"/></li>
+	</ul>
+	</li>
+	<li>Presione <b>Aplicar</b> para ver cómo se presenta su Mapa, la vista de Capas se actualizará para reflejar el estilo actual.</li>
+	<li>Cuando esté conforme con el resultado puede presionar <b>Aceptar</b> para salir.</li>
+	<li>Algunos archivos incluyen estilos, Seleccione Capa &gt; Add ... en la barra de menú</li>
+	<li>Seleccione <b>Archivo</b> de la lista de fuentes de datos y pulse <b>Siguiente</b></li>
+	<li>Utilizando el diálogo elija el archivo <b>timezone.shp</b> y presione <b>Abrir</b></li>
+	<li>Puede resultar difícil ver qué sucede con la capa clouds.jpg para más detalles. Seleccione <b>Mapa &gt; Mylar</b>, en la barra de menú, para enfocar la capa seleccionada.</li>
+	<li>Usando la vista Capas seleccione timezone, countries y clouds.jpg por turnos para ver el efecto<br/>
+<img src="download/attachments/2720291/style-01-450.png" align="absmiddle" border="0"/></li>
+	<li>Puede desactivar este efecto en cualquier momento usando <b>Mapa &gt; Mylar</b> desde la barra de menú.</li>
+</ol>
+
+
+<h2><a name="BreveIntroducci%C3%B3n-%C2%BFQu%C3%A9eslosiguiente%3F"></a>¿Qué es lo siguiente?</h2>
+
+<p>Este es sólo el primer paso en el camino del aprendizaje de uDig. Hay mucho material (y más capacidad) que usted podrá descubrir en nuestras guías paso a paso (walkthroughs).</p>
+<ul>
+	<li><a href="http://udig.refractions.net/confluence//display/EN/Walkthrough+1" title="Walkthrough 1">Walkthrough 1</a> &#45; Podrá probar la utilización de PostGIS, para extraer datos de un Web Feature Server y explorar el uso de Temas con nuestra poderosa tecnología de color Brewer.</li>
+	<li><a href="http://udig.refractions.net/confluence//display/EN/Walkthrough+2" title="Walkthrough 2">Walkthrough 2</a> &#45; En éste se presentan las distintas posibilidades para crear y utilizar herramientas de edición y manipulación de las distintas características de los datos en shapefiles, además de la instalación de GeoServer y la edición mediante un Web Feature Server.</li>
+</ul>
+
+
+<small>(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.</small>
+    </body>
+</html>

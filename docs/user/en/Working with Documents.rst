@@ -8,6 +8,7 @@ You can work with documents associated with a feature or layer using the **Docum
 
    Configure hotlink attributes
    Attaching a document
+   Linking a document
    Setting a hotlink
    
 To select a feature, or layer, please see the related tasks section below.

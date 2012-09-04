@@ -11,4 +11,6 @@ source_suffix = '.rst'
 # The master toctree document.
 master_doc = 'index'
 
+# -- Options for HTML output ---------------------------------------------------
+
 html_title='uDig %s User Guide' % release

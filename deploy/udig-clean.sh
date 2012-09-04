@@ -13,4 +13,4 @@ while [ -h "$PRG" ]; do
 done
 
 PRG=`dirname "$PRG"`
-$PRG/udig.app/Contents/MacOS/udig_internal -clean
+$PRG/udig_internal -clean

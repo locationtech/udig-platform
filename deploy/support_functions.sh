@@ -4,9 +4,11 @@ function assemble() {
     PLATFORM=$1
     EXT=$2
     PLATFORM_JRE=$3
-
+    
+    echo "Looking for ${TARGET}/udig-${VERSION}.${EXT}.zip"
+    
     # Release win32 if available
-    if [ -f ${TARGET}/udig-${VERSION}.${EXT}.zip ] 
+    if [ -f ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip ] 
     then
         echo "Releasing ${PLATFORM}"
 
@@ -21,12 +23,11 @@ function assemble() {
             echo "Building ${BUILD}/udig-${VERSION}.${EXT}.zip ..."
 
             echo "Extracting ${TARGET}/udig-${VERSION}.${EXT}.zip"
-            unzip -q -d ${BUILD}/${PLATFORM} ${TARGET}/udig-${VERSION}.${EXT}.zip
+            unzip -q -d ${BUILD}/${PLATFORM}/udig ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip
 
             echo "Preparing ${BUILD}/${PLATFORM} with ${JRE}/${PLATFORM_JRE}"
 
             extract_jre
-            
             
             echo "Preparing ${BUILD}/${PLATFORM} with start up scripts and html files"
             prepare_resources
@@ -34,9 +35,16 @@ function assemble() {
             echo "Assemble ${BUILD}/udig-${VERSION}.${EXT}.zip"
             cd ${BUILD}/${PLATFORM}
             zip -9 -r -q ../udig-${VERSION}.${EXT}.zip udig
-         else 
+        else 
            echo "Already Exists ${BUILD}/udig-${VERSION}.${EXT}.zip"
-         fi
+        fi
+    else 
+        echo "Unable to locate ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip"
+        echo
+        echo "Available for release in net.refractions.udig_sdk-feature:"
+        ls ${PRODUCT_TARGET}/*.zip | xargs -n1 basename
+        echo
+        echo "To generate use: mvn install -Pproduct"
     fi
     
 }
@@ -46,22 +54,39 @@ function prepare_resources () {
     for opt in `find ../plugins/ -name .options` ; do cat $opt >> ${BUILD}/${PLATFORM}/udig/debug-options ; done
     cp ${BASE}/udig-1.3.x.html ${BUILD}/${PLATFORM}/udig/udig-${VERSION}.html
     cat ../plugins/net.refractions.udig.libs/.options >> ${BUILD}/${PLATFORM}/udig/.options
+    mkdir ${BUILD}/${PLATFORM}/udig/dropins
+    
+    if [ ! -f ${BUILD}/udig-${VERSION}.html ]
+    then
+        cp ${BASE}/udig-1.3.x.html ${BUILD}/udig-${VERSION}.html
+    fi
+         
+         
     if [[ $PLATFORM == linux* ]] ; then
-        cp udig.sh ${BUILD}/${PLATFORM}/udig
-        cp udig-clean.sh ${BUILD}/${PLATFORM}/udig
-        cp udig-debug.sh ${BUILD}/${PLATFORM}/udig
+        cp udig.sh "${BUILD}/${PLATFORM}/udig"
+        chmod 755 "${BUILD}/${PLATFORM}/udig/udig_internal"
+        cp udig-clean.sh "${BUILD}/${PLATFORM}/udig"
+        cp udig-debug.sh "${BUILD}/${PLATFORM}/udig"
     fi
     if [[ $PLATFORM == win* ]] ; then
         cp *.bat ${BUILD}/${PLATFORM}/udig
         mkdir -p ${BUILD}/${PLATFORM}/udig/icons
         cp installer/*.ico ${BUILD}/${PLATFORM}/udig/icons/
+        rm ${BUILD}/${PLATFORM}/udig/eclipsec.exe
         windows_installer
     fi
     if [[ $PLATFORM == mac* ]] ; then
-        mv ${BUILD}/${PLATFORM}/udig/udig_internal.app ${BUILD}/${PLATFORM}/udig/udig.app
-        cp mac-udig-clean.sh ${BUILD}/${PLATFORM}/udig/udig-clean.sh
-        cp mac-udig-debug.sh ${BUILD}/${PLATFORM}/udig/udig-debug.sh
-        mv ${BUILD}/${PLATFORM}/udig/.options ${BUILD}/${PLATFORM}/udig/udig.app/Contents/MacOS/
+        HERE=`pwd`
+    	PLATFORMCONTENT="${HERE}/${BUILD}/${PLATFORM}"
+
+        chmod 755 "${PLATFORMCONTENT}/udig/udig_internal.app/Contents/MacOS/udig_internal"
+        mv "${PLATFORMCONTENT}/udig/udig_internal.app" "${PLATFORMCONTENT}/udig/udig.app"
+        rm "${PLATFORMCONTENT}/udig/udig_internal"
+        ln -s "${PLATFORMCONTENT}/udig/udig.app/Contents/MacOS/udig_internal" "${PLATFORMCONTENT}/udig/udig"
+        cp "${HERE}/mac-udig-clean.sh" "${PLATFORMCONTENT}/udig/udig-clean.sh"
+        cp "${HERE}/mac-udig-debug.sh" "${PLATFORMCONTENT}/udig/udig-debug.sh"
+        mv "${PLATFORMCONTENT}/udig/.options" "${PLATFORMCONTENT}/udig/udig.app/Contents/MacOS/"
+		make_dmg
     fi
 }
 
@@ -101,10 +126,24 @@ function windows_installer () {
                 echo "makensisw.exe cannot be found"
             fi
         else 
-            echo "wine is not installed so creating windows installer"
+            echo "wine is not installed so not creating windows installer"
         fi
     fi
 }
+
+
+function make_dmg () {
+    echo -n "Mac packaging utilities available... "
+	DMGTOOLS=`which hdiutil`
+    if [ $? == 0 ] ; then
+		echo "YES!"
+		echo -n "Building MacOS DMG for product"
+		hdiutil create -fs HFS+ -volname "udig-${VERSION}" -srcfolder "${PLATFORMCONTENT}" "${PLATFORMCONTENT}/../udig-${VERSION}.${EXT}.dmg"
+	else
+		echo "NO"
+	fi
+}
+
 
 function extract_jre () {
 

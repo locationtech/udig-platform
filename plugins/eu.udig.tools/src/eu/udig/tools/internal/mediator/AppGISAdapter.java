@@ -30,6 +30,7 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
+import net.refractions.udig.project.command.factory.EditCommandFactory;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.BusyIndicator;
 import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
@@ -196,9 +197,9 @@ public final class AppGISAdapter {
 	 * 
 	 * @return EditCommandFactory
 	 */
-//	public static EditCommandFactory getEditCommandFactory() {
-//		return EditCommandFactory.getInstance();
-//	}
+	public static EditCommandFactory getEditCommandFactory() {
+		return EditCommandFactory.getInstance();
+	}
 
 	/**
 	 * Runs the given <code>runnable</code> *synchronously* in the display

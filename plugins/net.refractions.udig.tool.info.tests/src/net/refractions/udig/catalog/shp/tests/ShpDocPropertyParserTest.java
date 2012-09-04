@@ -27,7 +27,7 @@ import org.opengis.feature.simple.SimpleFeature;
 
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
+import net.refractions.udig.document.source.ShpDocPropertyParser;
 
 /**
  * Test class for {@link ShpDocPropertyParser}.

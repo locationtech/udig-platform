@@ -27,13 +27,13 @@ import java.util.Map;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.catalog.internal.document.HotlinkActionDocument;
-import net.refractions.udig.catalog.internal.document.HotlinkFileDocument;
-import net.refractions.udig.catalog.internal.document.HotlinkWebDocument;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
-import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
-import net.refractions.udig.catalog.shp.ShpHotlinkSource;
+import net.refractions.udig.document.model.ActionHotlinkDocument;
+import net.refractions.udig.document.model.FileHotlinkDocument;
+import net.refractions.udig.document.model.WebHotlinkDocument;
+import net.refractions.udig.document.source.ShpDocPropertyParser;
+import net.refractions.udig.document.source.ShpHotlinkSource;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
@@ -119,16 +119,16 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
         IDocument doc = source.getDocument(feature, FILE_ATTR);
         assertNotNull("Doc is null.", doc);
         assertTrue("Doc is not an instance of HotlinkFileDoc.",
-                (doc instanceof HotlinkFileDocument));
+                (doc instanceof FileHotlinkDocument));
 
         doc = source.getDocument(feature, LINK_ATTR);
         assertNotNull("Doc is null.", doc);
-        assertTrue("Doc is not an instance of HotlinkWebDoc.", (doc instanceof HotlinkWebDocument));
+        assertTrue("Doc is not an instance of HotlinkWebDoc.", (doc instanceof WebHotlinkDocument));
 
         doc = source.getDocument(feature, STATE_ATTR);
         assertNotNull("Doc is null.", doc);
         assertTrue("Doc is not an instance of HotlinkWebDoc.",
-                (doc instanceof HotlinkActionDocument));
+                (doc instanceof ActionHotlinkDocument));
 
     }
 
@@ -137,14 +137,14 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
         source.setFile(feature, FILE_ATTR, file1);
 
         IDocument doc = source.getDocument(feature, FILE_ATTR);
-        File docFile = (File) doc.getValue();
+        File docFile = (File) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertEquals("File is not expected.", file1.getAbsolutePath(), docFile.getAbsolutePath());
 
         source.clear(feature, FILE_ATTR);
 
         doc = source.getDocument(feature, FILE_ATTR);
-        docFile = (File) doc.getValue();
+        docFile = (File) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertNull("File is not null.", docFile);
 
@@ -161,14 +161,14 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
         source.setLink(feature, LINK_ATTR, url);
 
         IDocument doc = source.getDocument(feature, LINK_ATTR);
-        URL docUrl = (URL) doc.getValue();
+        URL docUrl = (URL) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertEquals("File is not expected.", url.toString(), docUrl.toString());
 
         source.clear(feature, LINK_ATTR);
 
         doc = source.getDocument(feature, LINK_ATTR);
-        docUrl = (URL) doc.getValue();
+        docUrl = (URL) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertNull("File is not null.", docUrl);
 
@@ -181,14 +181,14 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
         source.setAction(feature, STATE_ATTR, action);
 
         IDocument doc = source.getDocument(feature, STATE_ATTR);
-        String docAction = (String) doc.getValue();
+        String docAction = (String) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertEquals("File is not expected.", action, docAction);
 
         source.clear(feature, STATE_ATTR);
 
         doc = source.getDocument(feature, STATE_ATTR);
-        docAction = (String) doc.getValue();
+        docAction = (String) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertNull("File is not null.", docAction);
 

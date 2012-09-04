@@ -1,0 +1,324 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>GeoServer Install &mdash; User Guide</title>
+    
+    <link rel="stylesheet" href="../../_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.3.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/udig.ico"/>
+    <link rel="top" title="User Guide" href="../../index.html" />
+    <link rel="up" title="Walkthrough 2" href="../../Walkthrough 2.html" />
+    <link rel="next" title="uDig Walkthrough 2" href="../walkthrough2/index.html" />
+    <link rel="prev" title="Walkthrough 2" href="../../Walkthrough 2.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="../../search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="../../_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+ 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="geoserver-install">
+<h1>GeoServer Install<a class="headerlink" href="#geoserver-install" title="Permalink to this headline">¶</a></h1>
+<p><img alt="refractions_png" src="../../_images/refractions_logo.png" style="height: 3cm;" /> <img alt="lisasoft_png" src="../../_images/lisasoft_logo.png" style="height: 3cm;" /> <img alt="geoserver_png" src="../../_images/geoserver_logo.png" style="height: 3cm;" /></p>
+<img alt="../../_images/background.png" src="../../_images/background.png" style="width: 100%;" />
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer is Java Enterprise Edition application used to publish spatial information. It supports a number of Industry Standard protocols and also offers a REST API for configuration.</p>
+<p>In this workbook we are going to install GeoServer and go over a couple of configuration options.</p>
+<p>After completing this workbook, you will have:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Installed a Java Runtime Environment onto your computer</li>
+<li>Installed GeoServer using the Windows installer</li>
+<li>Started up and Customize GeoServer</li>
+<li>Started the Open Layers Tasmania Preview</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="java-runtime-environment">
+<h2>Java Runtime Environment<a class="headerlink" href="#java-runtime-environment" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer is a Java application – if you do not already have Java on your system please go ahead and install it now. Any version of Java 5 or newer will do fine.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Download the latest Java SE Runtime Environment from oracle:</li>
+</ul>
+<p>At the time of writing jre_7u1-windows-i586.exe had just been released.</p>
+<ul class="simple">
+<li>Double-click the installer (jre_7u1-windows-i586.exe is used in this example) and accept the license agreement.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/jre_welcome.png" src="../../_images/jre_welcome.png" style="width: 7.5cm;" />
+</div>
+<ul class="simple">
+<li>Press the Install but to get going.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/jre_installing.png" src="../../_images/jre_installing.png" style="width: 7.5cm;" />
+</div>
+<ul class="simple">
+<li>Congratulations Java is now installed.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/java_install_success.png" src="../../_images/java_install_success.png" style="width: 7.5cm;" />
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id1">
+<h2>GeoServer Install<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer can be installed as a windows service or as an application. We will be testing our
+GeoServer as a normal application.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Downloaded the latest GeoServer release:</li>
+</ul>
+<p>As this workbook went to press we got a hold of geoserver-2.1.2.exe</p>
+<ul class="simple">
+<li>Double-click the geoserver installer to start.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/installer_welcome.png" src="../../_images/installer_welcome.png" style="width: 7.5cm;" />
+</div>
+<ul class="simple">
+<li>GeoServer is released under the GPL license, press <em class="guilabel">I Agree</em> to continue.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">GeoServer uses the same LGPL GeoTools and ImageIO-Ext projects as uDig.</p>
+</div>
+<div class="figure">
+<img alt="../../_images/installer_license.png" src="../../_images/installer_license.png" style="width: 7.5cm;" />
+</div>
+<ul class="simple">
+<li>GeoServer will install into the <em>Programmers Files</em> directory, press <em class="guilabel">Next</em> to continue.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/installer_location.png" src="../../_images/installer_location.png" style="width: 7.5cm;" />
+</div>
+<ul class="simple">
+<li>Press <em>Next</em> to create the default start menu folder</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/installer_menu.png" src="../../_images/installer_menu.png" style="width: 7.5cm;" />
+</div>
+<ul class="simple">
+<li>GeoServer select your current Java Runtime Environment. Press <em class="guilabel">Next</em> to continue.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/installer_jre.png" src="../../_images/installer_jre.png" style="width: 7.5cm;" />
+</div>
+<ul class="simple">
+<li>GeoServer will store your configuration in a “data directory”, the default location will work fine. Press <em>Next</em> to continue.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/installer_data_dir.png" src="../../_images/installer_data_dir.png" style="width: 7.5cm;" />
+</div>
+<ul class="simple">
+<li>GeoServer provides a web based configuration system allowing you to administer the application remotely. Please accept the default credentials (admin and geoserver) for the purpose of this tutorial.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/installer_admin.png" src="../../_images/installer_admin.png" style="width: 7.5cm;" />
+</div>
+<ul class="simple">
+<li>You can also choose the port for the service, 8080 will be fine for this tutorial.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The GeoServer installer uses the Jetty application container.  GeoServer is also available as a war
+if you would like to use Tomcat.</p>
+</div>
+<div class="figure">
+<img alt="../../_images/installer_port.png" src="../../_images/installer_port.png" style="width: 7.5cm;" />
+</div>
+<ul class="simple">
+<li>We now get to choose “Run Manually” (as we are just interested in evaluating GeoServer at this time).</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/installer_type.png" src="../../_images/installer_type.png" style="width: 7.5cm;" />
+</div>
+<ul class="simple">
+<li>You can review your settings and then press <em class="guilabel">Finish</em> to install GeoServer.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/installer_ready.png" src="../../_images/installer_ready.png" style="width: 7.5cm;" />
+</div>
+<ul class="simple">
+<li>Please wait while GeoServer installs.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/installer_installing.png" src="../../_images/installer_installing.png" style="width: 7.5cm;" />
+</div>
+<ul class="simple">
+<li>Thank you for installing GeoServer!</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/installer_finish.png" src="../../_images/installer_finish.png" style="width: 7.5cm;" />
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="openlayers-tasmania-preview">
+<h2>OpenLayers Tasmania Preview<a class="headerlink" href="#openlayers-tasmania-preview" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer provides a layer preview implemented with the
+OpenLayers
+AJAX library.</p>
+<blockquote>
+<div><ul class="simple">
+<li>From the Welcome screen select <em>Layer Preview</em> from the list on the left.</li>
+<li>From the Layers Preview page type <em>Tasmania</em> into the search box and press enter.</li>
+<li>In the <em>tasmania</em> row click on the <em>OpenLayers</em> link.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/web_preview.png" src="../../_images/web_preview.png" style="width: 14.46cm; height: 6.549cm;" />
+</div>
+<ul class="simple">
+<li>Click on the highlighted OpenLayers link at the bottom to open a new tab. As this Open Layers
+application is started up you can watch the GeoServer console respond to queries.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/console_getmap.png" src="../../_images/console_getmap.png" style="width: 11.46cm; height: 6.6cm;" />
+</div>
+<ul class="simple">
+<li>This will bring up a web application put together with “Open Layers”.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is the same map used as a reference point for the <a class="reference internal" href="../walkthrough2/index.html"><em>uDig Walkthrough 2</em></a> tutorial.</p>
+</div>
+<div class="figure">
+<img alt="../../_images/tasmania.png" src="../../_images/tasmania.png" style="width: 10.16cm; height: 9.541cm;" />
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="starting-up-geoserver">
+<h2>Starting up GeoServer<a class="headerlink" href="#starting-up-geoserver" title="Permalink to this headline">¶</a></h2>
+<p>In this section you will learn how to start GeoServer, and explore its editing abilities.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Click <em class="menuselection">Start ‣ Programs ‣ GeoServer 2.0.1 ‣ Start GeoServer</em></li>
+</ul>
+<div class="figure">
+<img alt="../../_images/start_geoserver.png" src="../../_images/start_geoserver.png" style="width: 4.41cm; height: 2.69cm;" />
+</div>
+<ul class="simple">
+<li>When starting for the first time you will need to grant the Firewall permission for GeoServer to open a port.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/firewall.png" src="../../_images/firewall.png" style="width: 9.92cm; height: 7.1cm;" />
+</div>
+<ul class="simple">
+<li>GeoServer will open up a console running the Jetty Application Server; please wait until
+Jetty indicates it is listening on port 8080 as shown below.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you already jave a web server running on 8080 you can modify the jetty xml file by hand.</p>
+</div>
+<div class="figure">
+<img alt="../../_images/console_start.png" src="../../_images/console_start.png" style="width: 12.42cm; height: 6.271cm;" />
+</div>
+<ul class="simple">
+<li>You can use the start menu to open the “GeoServer Web Admin Page”.</li>
+</ul>
+<p>The web browser will open:</p>
+<div class="figure">
+<img alt="../../_images/welcome1.png" src="../../_images/welcome1.png" style="width: 14.439cm; height: 6.56cm;" />
+</div>
+<ul class="simple">
+<li>We need to login before we can use the configuration screen. Fill in <cite>admin</cite> and <cite>geoserver</cite> along the top of the screen and press <em class="guilabel">Login</em>.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/web_login.png" src="../../_images/web_login.png" style="width: 14.439cm; height: 1.36cm;" />
+</div>
+<ul class="simple">
+<li>The welcome screen now has a great many more options than in previous versions.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/geoserver_welcome_admin.png" src="../../_images/geoserver_welcome_admin.png" style="width: 13.27cm; height: 9.49cm;" />
+</div>
+<ul class="simple">
+<li>You may notice that this GeoServer belongs to “The ancient geographes INC”. Let us go in and fix that up.</li>
+<li>Click on <em>Contact Information</em> and fill in the details for your organisation.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/web_contact.png" src="../../_images/web_contact.png" style="width: 12.51cm; height: 9.49cm;" />
+</div>
+<ul class="simple">
+<li>Press the <em>Submit</em> button, you will be returned to the Welcome screen and you can see the contact organization has been changed.</li>
+<li>In a similar fashion change the title of the WMS to “Local Web Map Server”.</li>
+</ul>
+<div class="figure">
+<img alt="../../_images/web_config_wms.png" src="../../_images/web_config_wms.png" style="width: 14.469cm; height: 6.549cm;" />
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="what-to-do-next">
+<h2>What to do Next<a class="headerlink" href="#what-to-do-next" title="Permalink to this headline">¶</a></h2>
+<p>If you finish early here are some challenges.</p>
+<blockquote>
+<div><ul class="simple">
+<li>The “Sample Requests” demo lets you try out requests one at a time by selecting them from a List
+and hitting Submit.<ul>
+<li>Try out a GetFeature request by hand.</li>
+<li>Try out WMS GetCapabilities and confirm the title is as you defined it.</li>
+</ul>
+</li>
+<li>Turn down the amount of logging to let GeoServer run faster</li>
+<li>Advanced: Have a look at the <em>open layers</em> link for the Tasmania layer preview. Can you explain
+what trick Geoserver is doing.</li>
+</ul>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Look at the URL and source code of the Tasmania layer preview.</p>
+</div>
+<ul class="simple">
+<li>How can you use GeoServer in your organisation?</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

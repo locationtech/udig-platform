@@ -6,7 +6,7 @@
     <parent>
         <artifactId>udig-tycho</artifactId>
         <groupId>net.refractions</groupId>
-        <version>1.3.0-SNAPSHOT</version>
+        <version>1.3.2-SNAPSHOT</version>
     </parent>
 
     <groupId>net.refractions</groupId>
@@ -81,9 +81,8 @@
                 
                 <!-- build example feature after plugins -->
                 <module>net.refractions.udig.tutorials.rcp-feature</module>
-
-                <!-- SDK -->
-                <!--module>net.refractions.udig.libs.source</module-->
+                
+                <module>net.refractions.udig.libs.source</module>
              </modules>
         </profile>
     </profiles>

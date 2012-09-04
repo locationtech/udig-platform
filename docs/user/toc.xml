@@ -1,89 +1,32 @@
-
-
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
-<toc label="Users Guide">
+<toc label="Users Guide" topic="EN/index.html">
             
-        <topic label="Community" href="EN/Community.html">
+            
+        <topic label="uDig Overview" href="EN/uDig Overview.html">
+        
+                </topic>
+            
+        <topic label="Getting Started" href="EN/Getting Started.html">
+                    
+        <topic label="Quickstart" href="EN/Quickstart.html">
+        
+                </topic>
+                    
+        <topic label="Walkthrough 1" href="EN/Walkthrough 1.html">
+        
+                </topic>
+                    
+        <topic label="Walkthrough 2" href="EN/Walkthrough 2.html">
+        
+                </topic>
         
                             
-        <topic label="Axios uDig Extensions" href="EN/Axios uDig Extensions.html">
-        
-                            
-        <topic label="Editing Tools" href="EN/Editing Tools.html">
-        
-                            
-        <topic label="Arc Tool" href="EN/Arc Tool.html">
+        <topic label="Introduction to the Spatial Toolbox" href="EN/Introduction to the Spatial Toolbox.html">
         
                 </topic>
                     
-        <topic label="Parallel Tool" href="EN/Parallel Tool.html">
-        
-                </topic>
-                    
-        <topic label="Split Tool (Axios Tools)" href="EN/Split Tool (Axios Tools).html">
-        
-                </topic>
-                    
-        <topic label="Trim Line Tool" href="EN/Trim Line Tool.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Image Georeferencing view" href="EN/Image Georeferencing view.html">
-        
-                </topic>
-                    
-        <topic label="Spatial Operations" href="EN/Spatial Operations.html">
-        
-                            
-        <topic label="Buffer Operation" href="EN/Buffer Operation.html">
-        
-                </topic>
-                    
-        <topic label="Clip Operation" href="EN/Clip Operation.html">
-        
-                </topic>
-                    
-        <topic label="Dissolve Operation" href="EN/Dissolve Operation.html">
-        
-                </topic>
-                    
-        <topic label="Fill Operation" href="EN/Fill Operation.html">
-        
-                </topic>
-                    
-        <topic label="Hole Cut Operation" href="EN/Hole Cut Operation.html">
-        
-                </topic>
-                    
-        <topic label="Intersect Operation" href="EN/Intersect Operation.html">
-        
-                </topic>
-                    
-        <topic label="Polygon to Line Operation" href="EN/Polygon to Line Operation.html">
-        
-                </topic>
-                    
-        <topic label="Spatial Join Operation" href="EN/Spatial Join Operation.html">
-        
-                </topic>
-                    
-        <topic label="Split Operation" href="EN/Split Operation.html">
-        
-                </topic>
-        </topic>
-        </topic>
-                    
-        <topic label="Jody" href="EN/Jody.html">
-        
-                            
-        <topic label="North Arrow" href="EN/North Arrow.html">
-        
-                </topic>
-        </topic>
-                    
-        <topic label="Using the WPS plugin" href="EN/Using the WPS plugin.html">
+        <topic label="Merge Tool" href="EN/Merge Tool.html">
         
                 </topic>
         </topic>
@@ -430,7 +373,6 @@
         
                             
         <topic label="Accessing context sensitive help" href="EN/Accessing context sensitive help.html">
-        
                 </topic>
         </topic>
                     
@@ -622,8 +564,18 @@
                 </topic>
         </topic>
         </topic>
-                    
-        <topic label="Working with Images" href="EN/Working with Images.html">
+    <topic label="Working with Documents" href="EN/Working with Documents.html">
+        <topic label="Configure hotlink attributes" href="EN/Configure hotlink attributes.html">
+            </topic>
+        <topic label="Attaching a document" href="EN/Attaching a document.html">
+            </topic>
+        <topic label="Linking a document" href="EN/Linking a document.html">
+                </topic>
+        <topic label="Setting a hotlink" href="EN/Setting a hotlink.html">
+                </topic>
+    </topic>
+                
+    <topic label="Working with Images" href="EN/Working with Images.html">
         
                             
         <topic label="Georeference an Image" href="EN/Georeference an Image.html">
@@ -776,11 +728,7 @@
                             
         <topic label="Data Menu" href="EN/Data Menu.html">
         
-                            
-        <topic label="WRIS" href="EN/WRIS.html">
-        
                 </topic>
-        </topic>
                     
         <topic label="Edit Menu" href="EN/Edit Menu.html">
         
@@ -827,30 +775,10 @@
         
                             
         <topic label="Catalog Preferences" href="EN/Catalog Preferences.html">
-        
-                            
-        <topic label="ArcSDE Preference Page" href="EN/ArcSDE Preference Page.html">
-        
-                </topic>
                     
-        <topic label="DB2 Preferences" href="EN/DB2 Preferences.html">
-        
-                </topic>
         </topic>
                     
         <topic label="Help Preferences" href="EN/Help Preferences.html">
-        
-                </topic>
-                    
-        <topic label="Layer Preferences" href="EN/Layer Preferences.html">
-        
-                </topic>
-                    
-        <topic label="Map Preferences" href="EN/Map Preferences.html">
-        
-                </topic>
-                    
-        <topic label="Printing Preferences" href="EN/Printing Preferences.html">
         
                 </topic>
                     
@@ -878,9 +806,6 @@
         </topic>
         </topic>
                     
-        <topic label="WMS Preferences" href="EN/WMS Preferences.html">
-        
-                </topic>
         </topic>
                     
         <topic label="Property Pages" href="EN/Property Pages.html">
@@ -921,7 +846,8 @@
         <topic label="Cheat Sheet view" href="EN/Cheat Sheet view.html">
         
                 </topic>
-                    
+        <topic label="Document view" href="EN/Document view.html">
+                </topic>
         <topic label="Help view" href="EN/Help view.html">
         
                 </topic>
@@ -1200,38 +1126,6 @@
         
                 </topic>
             
-        <topic label="Home" href="EN/Home.html">
-        
-        <!-- HOME -->                     
-        <topic label="Contents" href="EN/Contents.html">
-        
-                </topic>
-        </topic>
-            
-        <topic label="Getting Started" href="EN/Getting Started.html">
-        
-                            
-        <topic label="Introduction to the Spatial Toolbox" href="EN/Introduction to the Spatial Toolbox.html">
-        
-                </topic>
-                    
-        <topic label="Merge Tool" href="EN/Merge Tool.html">
-        
-                </topic>
-                    
-        <topic label="Quickstart" href="EN/Quickstart.html">
-        
-                </topic>
-                    
-        <topic label="Walkthrough 1" href="EN/Walkthrough 1.html">
-        
-                </topic>
-                    
-        <topic label="Walkthrough 2" href="EN/Walkthrough 2.html">
-        
-                </topic>
-        </topic>
-            
         <topic label="What is new" href="EN/What is new.html">
         
                             
@@ -1244,9 +1138,93 @@
                 </topic>
         </topic>
             
-        <topic label="uDig Overview" href="EN/uDig Overview.html">
+        <topic label="Community" href="EN/Community.html">
+        
+                            
+        <topic label="Axios uDig Extensions" href="EN/Axios uDig Extensions.html">
+        
+                            
+        <topic label="Editing Tools" href="EN/Editing Tools.html">
+        
+                            
+        <topic label="Arc Tool" href="EN/Arc Tool.html">
         
                 </topic>
+                    
+        <topic label="Parallel Tool" href="EN/Parallel Tool.html">
+        
+                </topic>
+                    
+        <topic label="Split Tool (Axios Tools)" href="EN/Split Tool (Axios Tools).html">
+        
+                </topic>
+                    
+        <topic label="Trim Line Tool" href="EN/Trim Line Tool.html">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Image Georeferencing view" href="EN/Image Georeferencing view.html">
+        
+                </topic>
+                    
+        <topic label="Spatial Operations" href="EN/Spatial Operations.html">
+        
+                            
+        <topic label="Buffer Operation" href="EN/Buffer Operation.html">
+        
+                </topic>
+                    
+        <topic label="Clip Operation" href="EN/Clip Operation.html">
+        
+                </topic>
+                    
+        <topic label="Dissolve Operation" href="EN/Dissolve Operation.html">
+        
+                </topic>
+                    
+        <topic label="Fill Operation" href="EN/Fill Operation.html">
+        
+                </topic>
+                    
+        <topic label="Hole Cut Operation" href="EN/Hole Cut Operation.html">
+        
+                </topic>
+                    
+        <topic label="Intersect Operation" href="EN/Intersect Operation.html">
+        
+                </topic>
+                    
+        <topic label="Polygon to Line Operation" href="EN/Polygon to Line Operation.html">
+        
+                </topic>
+                    
+        <topic label="Spatial Join Operation" href="EN/Spatial Join Operation.html">
+        
+                </topic>
+                    
+        <topic label="Split Operation" href="EN/Split Operation.html">
+        
+                </topic>
+        </topic>
+        </topic>
+                    
+        <topic label="Jody" href="EN/Jody.html">
+        
+                            
+        <topic label="North Arrow" href="EN/North Arrow.html">
+        
+                </topic>
+        </topic>
+                    
+        <topic label="Using the WPS plugin" href="EN/Using the WPS plugin.html">
+        
+                </topic>
+        </topic>
+        <topic label="docguide" href="EN/docguide/docguide.html">
+                <topic label="sphinxSyntax" href="EN/docguide/sphinxSyntax.html">
+                </topic>
+        </topic>
     </toc>
 <!-- Document generated by Confluence on Jun 07, 2012 01:38 -->
 <!-- spacedesc: Users Guide v.5 (3411) -->

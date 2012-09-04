@@ -1,0 +1,141 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Expression viewer &mdash; User Guide</title>
+    
+    <link rel="stylesheet" href="_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/udig.ico"/>
+    <link rel="top" title="User Guide" href="index.html" />
+    <link rel="up" title="Filters and Expressions" href="Filters and Expressions.html" />
+    <link rel="next" title="Filter viewer" href="Filter viewer.html" />
+    <link rel="prev" title="Filters and Expressions" href="Filters and Expressions.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+ 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="expression-viewer">
+<h1>Expression viewer<a class="headerlink" href="#expression-viewer" title="Permalink to this headline">¶</a></h1>
+<p>Expression viewers are used in <a class="reference internal" href="Style Editor dialog.html"><em>Style Editor dialog</em></a> and <a class="reference internal" href="Transform dialog.html"><em>Transform dialog</em></a> when a formula is used to calculate a value on a feature by
+feature basis.</p>
+<p>This is a powerful technique that can be used for on the fly styling, or directly for data
+processing.</p>
+<div class="figure align-center">
+<img alt="" src="_images/CQLExpressionViewer.png" />
+</div>
+<p>You can switch between appropriate options using the drop down arrow on the right hand side.
+Depending on what the expression is for, and what kind of information you are working with,
+different options will be listed some of which are described below:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#constraint-query-language">Constraint Query Language</a></li>
+<li><a class="reference internal" href="#builder">Builder</a></li>
+<li><a class="reference internal" href="#rgb-color">RGB Color</a></li>
+<li><a class="reference internal" href="#numbers">Numbers</a></li>
+</ul>
+<p>When defining an expression you can make use of the full range of <a class="reference internal" href="Constraint Query Language.html"><em>Constraint Query Language</em></a> functions.</p>
+<ul>
+<li><p class="first">To concatenate several values into a single text output:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Concatenate</span><span class="p">(</span> <span class="n">NAME</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">,</span> <span class="n">CITY_CODE</span><span class="p">,</span> <span class="s">&#39; Zone &#39;</span><span class="p">,</span> <span class="n">ZONE</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">To smoothly interpolate between a min and a max value (used here to write out LEVEL as a
+percentage):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Concatenate</span><span class="p">(</span> <span class="n">Interpolate</span><span class="p">(</span> <span class="n">LEVEL</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3046</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&quot;linear&quot;</span><span class="p">),</span> <span class="s">&quot;%&quot;</span> <span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>Related concepts</strong></p>
+<p><a class="reference internal" href="Constraint Query Language.html"><em>Constraint Query Language</em></a></p>
+<p><strong>Related reference</strong></p>
+<p><a class="reference internal" href="Style Editor dialog.html"><em>Style Editor dialog</em></a></p>
+<p><a class="reference internal" href="Transform dialog.html"><em>Transform dialog</em></a></p>
+<div class="section" id="constraint-query-language">
+<h2>Constraint Query Language<a class="headerlink" href="#constraint-query-language" title="Permalink to this headline">¶</a></h2>
+<p>This is a plain viewer offering simple constraint query language input.</p>
+<p>It does offer dynamic help with auto completion for:</p>
+<ul>
+<li><p class="first">Attributes are listed from the feature type you are working with</p>
+<img alt="_images/CQLExpressionViewerAttribute.png" src="_images/CQLExpressionViewerAttribute.png" />
+</li>
+<li><p class="first">Function are listed, with pop up function reference</p>
+<img alt="_images/CQLExpressionViewerFunction.png" src="_images/CQLExpressionViewerFunction.png" />
+</li>
+</ul>
+</div>
+<div class="section" id="builder">
+<h2>Builder<a class="headerlink" href="#builder" title="Permalink to this headline">¶</a></h2>
+<p>A friendly general purpose viewer offering constraint query language input. Provides a list of
+attributes, operations and values that can be inserted into your expression.</p>
+<div class="figure align-center">
+<img alt="" src="_images/BuilderExpressionViewer.png" />
+</div>
+</div>
+<div class="section" id="rgb-color">
+<h2>RGB Color<a class="headerlink" href="#rgb-color" title="Permalink to this headline">¶</a></h2>
+<p>The following expression viewers can only be used when defining colours. They are often used when
+defining fill or stroke colour.</p>
+<div class="figure align-center">
+<img alt="" src="_images/RGBExpressionViewer.png" />
+</div>
+</div>
+<div class="section" id="numbers">
+<h2>Numbers<a class="headerlink" href="#numbers" title="Permalink to this headline">¶</a></h2>
+<p>The following expression viewers can only be used when defining numbers. An example would be
+defining fill opacity or line width.</p>
+<div class="figure align-center">
+<img alt="" src="_images/NumberExpressionViewer.png" />
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

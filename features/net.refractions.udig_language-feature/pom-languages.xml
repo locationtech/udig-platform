@@ -37,7 +37,7 @@
 
 	<groupId>net.refractions.udig</groupId>
 	<artifactId>net.refractions.udig_language-feature</artifactId>
-	<version>1.3.0.qualifier</version>
+	<version>1.3.2.qualifier</version>
 	<name>uDig - Language Pack Fetching maven script</name>
 
 	<packaging>eclipse-feature</packaging>
@@ -64,7 +64,7 @@
 		<repository>
 			<id>indigo-babel-web</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/technology/babel/update-site/R0.9.1/indigo</url>
+			<url>http://download.eclipse.org/technology/babel/update-site/R0.10.0/indigo</url>
 			<releases>
 				<enabled>true</enabled>
 				<updatePolicy>never</updatePolicy>

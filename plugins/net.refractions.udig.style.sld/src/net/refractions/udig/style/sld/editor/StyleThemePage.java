@@ -106,6 +106,7 @@ import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.expression.Divide;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Literal;
 import org.opengis.util.ProgressListener;
 
 import com.vividsolutions.jts.geom.LineString;
@@ -1323,17 +1324,18 @@ public class StyleThemePage extends StyleEditorPage {
                     if (createClassifier){
                     ProgressListener cancelProgress = ((StyleEditorDialog) getContainer()).getProgressListener();
                     function.setProgressListener((org.geotools.util.ProgressListener) cancelProgress);
-                    numClasses = new Integer(getCombo(COMBO_CLASSES).getText()).intValue();
+                    numClasses = Integer.parseInt( getCombo(COMBO_CLASSES).getText() );
+                    
+                    Literal literal;
                     if (getCombo(COMBO_ELSE).getSelectionIndex() == 0) {
-//                    	function.setNumberOfClasses(numClasses);
-                        function.setClasses(numClasses);
+                        literal = ff.literal( numClasses );
                     } else {
-//                    	function.setNumberOfClasses(numClasses-1);
-                    	function.setClasses(numClasses-1);
+                    	literal = ff.literal( numClasses-1);
                     }
-                    //function.setCollection(collection);
-                    function.getParameters().set(0,expr); //set the expression last, since it causes the calculation
-//                    function.setExpression(expr);
+                    List<Expression> params = new ArrayList<Expression>(2);
+                    params.add( expr );
+                    params.add( literal );
+                    function.setParameters(params);
                     classifier = (Classifier) function.evaluate( collection, Classifier.class );
                     }
                 }

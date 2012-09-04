@@ -10,7 +10,7 @@
       <actionSet
             description="%Resource.Query.ActionSet.Description"
             id="net.refractions.udig.catalog.ui.resourceQuerySet"
-            label="%Resource.Query.ActionsSet"
+            label="%Resource.Query.ActionSet"
             visible="false">
       </actionSet>
       <actionSet
@@ -382,7 +382,7 @@
             icon="icons/obj16/repository_obj.gif"
             id="net.refractions.udig.catalog.ui.dataImportWizard"
             name="%dataImportWizard.name">
-         <description>Import a spatial data source into the catalog.</description>
+         <description>%dataImportWizard.description</description>
       </wizard>
    </extension>
 

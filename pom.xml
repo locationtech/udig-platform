@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.refractions</groupId>
     <artifactId>udig-tycho</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.3.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <description>
         This is the base uDig pom that controls the version numbers
@@ -35,6 +35,7 @@
 
         <java-version>1.6</java-version>
         <tycho-version>0.15.0</tycho-version>
+        <tycho-extras-version>0.15.0</tycho-extras-version>
     </properties>
     
     <!--
@@ -194,6 +195,7 @@ Includes the ossim feaure (this may be dead code)
             <layout>p2</layout>
             <url>http://download.eclipse.org/technology/babel/update-site/R0.10.0/indigo</url>
         </repository>
+
     </repositories>
     
     <build>
@@ -211,7 +213,7 @@ Includes the ossim feaure (this may be dead code)
                 <version>${tycho-version}</version>
                 <configuration>
                     <resolver>p2</resolver>
-                    <!-- pomDependencies>consider</pomDependencies -->
+                    <!--pomDependencies>consider</pomDependencies-->
                     <environments>
                         <environment>
                             <os>win32</os>
@@ -235,14 +237,14 @@ Includes the ossim feaure (this may be dead code)
                         </environment>
                         <environment>
                             <os>macosx</os>
-                            <ws>carbon</ws>
+                            <ws>cocoa</ws>
                             <arch>x86</arch>
                         </environment>
-                        <!--environment>
+                        <environment>
                             <os>macosx</os>
-                            <ws>carbon</ws>
+                            <ws>cocoa</ws>
                             <arch>x86_64</arch>
-                        </environment-->
+                        </environment>
                     </environments>
                 </configuration>
             </plugin>
@@ -298,16 +300,6 @@ Includes the ossim feaure (this may be dead code)
                         <useUIHarness>true</useUIHarness>
                         <product>net.refractions.udig-product</product>
                         <argLine>-Xmx1024m -XX:MaxPermSize=256m -Dsdtcore.headless ${tycho.test.OSspecific}</argLine>
-                    </configuration>
-                </plugin>
-                
-                <plugin>
-                    <groupId>org.eclipse.tycho</groupId>
-                    <artifactId>target-platform-configuration</artifactId>
-                    <version>${tycho-version}</version>
-                    <configuration>
-                        <environments combine.self="override">
-                        </environments>
                     </configuration>
                 </plugin>
             </plugins>

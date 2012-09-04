@@ -49,7 +49,7 @@ import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 
-import eu.udig.tools.feature.utils.i18n.Messages;
+import eu.udig.tools.internal.i18n.Messages;
 import eu.udig.tools.geometry.internal.util.GeometryUtil;
 
 /**

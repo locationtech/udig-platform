@@ -37,7 +37,7 @@
             name="%fileService.name"/>
       <fileService
             fileExtension="*.mapurl"
-            name="JGrasstools TMS">
+            name="JGrasstools TMS Files (*.mapurl)">
       </fileService>
    </extension>
    <extension

@@ -10,5 +10,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.libs,
  net.refractions.udig.project.ui
-Eclipse-AutoStart: true
-Bundle-ClassPath: library.jar
+Bundle-ActivationPolicy: lazy

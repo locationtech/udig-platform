@@ -255,6 +255,7 @@ public class EditCommandFactory extends net.refractions.udig.project.command.Edi
      * @return a new {@linkplain DeleteFeatureCommand}object that deletes the feature.
      * @see DeleteFeatureCommand
      */
+    @Override
     public UndoableMapCommand createDeleteFeature( SimpleFeature feature, ILayer layer ) {
         return new DeleteFeatureCommand(new StaticBlockingProvider<SimpleFeature>(feature), new StaticBlockingProvider<ILayer>(layer));
     }

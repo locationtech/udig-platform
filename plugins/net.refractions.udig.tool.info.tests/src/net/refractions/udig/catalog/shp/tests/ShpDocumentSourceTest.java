@@ -25,8 +25,8 @@ import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
-import net.refractions.udig.catalog.shp.ShpDocPropertyParser;
-import net.refractions.udig.catalog.shp.ShpDocumentSource;
+import net.refractions.udig.document.source.ShpDocPropertyParser;
+import net.refractions.udig.document.source.ShpDocumentSource;
 
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 

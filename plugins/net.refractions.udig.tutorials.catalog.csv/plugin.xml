@@ -15,7 +15,7 @@
          point="net.refractions.udig.catalog.ui.fileFormat">
       <fileService
             fileExtension="*.csv"
-            name="comma seperated value"/>
+            name="Comma Seperated Value Files"/>
    </extension>
    <extension
          point="net.refractions.udig.ui.operation">

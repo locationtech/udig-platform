@@ -19,10 +19,11 @@ import java.net.URL;
 import java.util.List;
 
 import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.catalog.internal.document.AbstractBasicDocument;
+import net.refractions.udig.document.model.AbstractLinkedDocument;
 
 import junit.framework.TestCase;
 
@@ -71,16 +72,16 @@ public abstract class AbstractShpDocTest extends TestCase {
         url = file.toURI().toURL();
 
         file1 = new File(directory, FILE1);
-        fileDocInfo1 = new DocumentInfo("fileDoc1", "fileDocDesc1", file1.getAbsolutePath(), Type.FILE, false);
+        fileDocInfo1 = new DocumentInfo("fileDoc1", "fileDocDesc1", file1.getAbsolutePath(), ContentType.FILE, false, Type.ATTACHMENT);
         file2 = new File(directory, FILE2);
-        fileDocInfo2 = new DocumentInfo("fileDoc2", "fileDocDesc2", file2.getAbsolutePath(), Type.FILE, true);
+        fileDocInfo2 = new DocumentInfo("fileDoc2", "fileDocDesc2", file2.getAbsolutePath(), ContentType.FILE, true, Type.ATTACHMENT);
         
-        webDocInfo1 = new DocumentInfo("webDoc1", "webDocDesc1", WEB1, Type.WEB, false);
-        webDocInfo2 = new DocumentInfo("webDoc2", "webDocDesc2", WEB2, Type.WEB, false);
+        webDocInfo1 = new DocumentInfo("webDoc1", "webDocDesc1", WEB1, ContentType.WEB, false, Type.LINKED);
+        webDocInfo2 = new DocumentInfo("webDoc2", "webDocDesc2", WEB2, ContentType.WEB, false, Type.LINKED);
         
-        descriptor1 = new HotlinkDescriptor("fileLabel", "description", FILE_ATTR, Type.FILE, "config");
-        descriptor2 = new HotlinkDescriptor("webLabel", "description", LINK_ATTR, Type.WEB, "config");
-        descriptor3 = new HotlinkDescriptor("actionLabel", "description", STATE_ATTR, Type.ACTION, "config");
+        descriptor1 = new HotlinkDescriptor("fileLabel", "description", FILE_ATTR, ContentType.FILE, "config");
+        descriptor2 = new HotlinkDescriptor("webLabel", "description", LINK_ATTR, ContentType.WEB, "config");
+        descriptor3 = new HotlinkDescriptor("actionLabel", "description", STATE_ATTR, ContentType.ACTION, "config");
         
         setUpInternal();
 
@@ -92,8 +93,8 @@ public abstract class AbstractShpDocTest extends TestCase {
     
     protected IDocument getDoc(List<IDocument> docs, DocumentInfo info) {
         for (IDocument doc : docs) {
-            if (doc instanceof AbstractBasicDocument) {
-                final AbstractBasicDocument basicDoc = (AbstractBasicDocument) doc;  
+            if (doc instanceof AbstractLinkedDocument) {
+                final AbstractLinkedDocument basicDoc = (AbstractLinkedDocument) doc;  
                 if (basicDoc.getInfo().getLabel().equals(info.getLabel())) {
                     return doc;
                 }    

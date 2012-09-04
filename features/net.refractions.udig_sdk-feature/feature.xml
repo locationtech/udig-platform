@@ -6,7 +6,7 @@
       provider-name="Udig.Refractions.net">
 
    <description url="http://www.example.com/description">
-Feature gathering up source code, tutorials and example code (in addition
+      Feature gathering up source code, tutorials and example code (in addition
 to required udig plugins) to form a complete SDK for use as a target platform.
 
 The complete SDK includes more functionality than the example uDig application.
@@ -55,10 +55,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
          version="0.0.0"/>
 
    <includes
-         id="net.refractions.udig.libs.source-feature"
-         version="0.0.0"/>
-
-   <includes
          id="net.refractions.udig_tutorials-feature"
          version="0.0.0"/>
 
@@ -69,38 +65,5 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
    <includes
          id="net.refractions.udig_language-feature"
          version="0.0.0"/>
-
-   <plugin
-         id="org.junit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.junit4"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.pde.junit.runtime"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.jdt.junit.runtime"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.hamcrest.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
 </feature>

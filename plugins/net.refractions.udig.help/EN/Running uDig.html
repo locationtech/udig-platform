@@ -1,0 +1,368 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Running uDig &mdash; User Guide</title>
+    
+    <link rel="stylesheet" href="_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/udig.ico"/>
+    <link rel="top" title="User Guide" href="index.html" />
+    <link rel="up" title="Installation and Configuration" href="Installation and Configuration.html" />
+    <link rel="next" title="Support" href="Support.html" />
+    <link rel="prev" title="Installation and Configuration" href="Installation and Configuration.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+ 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="running-udig">
+<h1>Running uDig<a class="headerlink" href="#running-udig" title="Permalink to this headline">¶</a></h1>
+<p>This page covers some of the options you have when starting up uDig. We also cover a few platform
+specific issues.</p>
+<p><a class="reference internal" href="#the-udig-application">The UDIG Application</a></p>
+<ul class="simple">
+<li><a class="reference internal" href="#workspace">Workspace</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#language">Language</a></li>
+<li><a class="reference internal" href="#java">Java</a></li>
+<li><a class="reference internal" href="#got-memory">Got Memory</a></li>
+<li><a class="reference internal" href="#proxy-settings">Proxy Settings</a></li>
+</ul>
+<p><a class="reference internal" href="#windows">Windows</a></p>
+<ul class="simple">
+<li><a class="reference internal" href="#udig-does-not-work-on-windows-2000">uDig does not work on Windows 2000</a></li>
+</ul>
+<p><a class="reference internal" href="#max-os-x">Max OS X</a></p>
+<p><a class="reference internal" href="#linux">Linux</a></p>
+<ul class="simple">
+<li><a class="reference internal" href="#fedora-10-xulrunner-library-conflict">Fedora 10 XULRunner Library Conflict</a></li>
+<li><a class="reference internal" href="#advanced-graphics-to-disable-or-not">Advanced graphics: to disable or not?</a></li>
+<li><a class="reference internal" href="#the-ugly-cursors-udig-785-cursors-on-non-windows-platforms-are-mangled">The ugly cursors (UDIG-785 Cursors on non&#8211;windows platforms are mangled)</a></li>
+<li><a class="reference internal" href="#info-and-help-require-a-pure-mozilla-browser-udig-698-linux-mozilla-five-home-required-for-information-tool">Info and Help require a &#8220;Pure&#8221; Mozilla Browser ( UDIG-698: Linux MOZILLA_FIVE_HOME required for Information tool )</a></li>
+<li><a class="reference internal" href="#about-the-internal-browser">About the Internal Browser</a></li>
+<li><a class="reference internal" href="#the-zoom-window-is-opaque-when-advanced-graphics-are-disabled">The zoom window is opaque when advanced graphics are disabled</a></li>
+<li><a class="reference internal" href="#can-i-use-my-own-java">Can I use my Own Java?</a></li>
+<li><a class="reference internal" href="#jre-folder-vs-java-home">JRE folder vs JAVA_HOME</a></li>
+</ul>
+<p>The command line options can be set up either:</p>
+<ul class="simple">
+<li>on the short cut used to start uDig</li>
+<li>by modifying the udig.ini file (useful for macosx users)</li>
+</ul>
+<div class="section" id="the-udig-application">
+<h2>The UDIG Application<a class="headerlink" href="#the-udig-application" title="Permalink to this headline">¶</a></h2>
+<p>After you install, or unzip, the uDig application in a directory you can start the application by
+running:</p>
+<ul class="simple">
+<li>udig.exe on Windows systems</li>
+<li>udig on Linux systems</li>
+</ul>
+<p>By default the windows install creates the following short cut:</p>
+<div class="highlight-python"><pre>C:\Program Files\uDig\1.1\eclipse\udig.exe"
+  -data "%HOMEDRIVE%%HOMEPATH%\uDig\"
+  -configuration "%APPDATA%\udig\uDig1.1\"
+  -vm "C:\Program Files\uDig\1.1\eclipse\jre\bin\javaw.exe"</pre>
+</div>
+<div class="section" id="workspace">
+<h3>Workspace<a class="headerlink" href="#workspace" title="Permalink to this headline">¶</a></h3>
+<p>By default uDig will store your work in your home directory:</p>
+<ul class="simple">
+<li>C:\Documents and Settings\User\My Documents\udig on Windows XP</li>
+<li>C:\Users\User\udig on Windows Vista</li>
+<li>~user/udig-workspace on Linux</li>
+</ul>
+<p>You can change the location of your workspace using a command line option:</p>
+<div class="highlight-python"><pre>udig -data &lt;workspace location&gt;</pre>
+</div>
+</div>
+<div class="section" id="configuration">
+<h3>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
+<p>The application configuration is stored; by default in the configuration folder</p>
+<ul class="simple">
+<li>C:\Program Files\uDig\1.1\configuration</li>
+</ul>
+<p>If you want to run from a network share; or a from a CD you can ask the configuration to be stored
+elsewhere:</p>
+<div class="highlight-python"><pre>udig -configuration &lt;configuration location&gt;</pre>
+</div>
+<p>Storing the configuration directory in the users home directory is a good option when working off a
+CD</p>
+<div class="highlight-python"><pre>udig -configuration %USERPROFILE%\.udig</pre>
+</div>
+</div>
+<div class="section" id="language">
+<h3>Language<a class="headerlink" href="#language" title="Permalink to this headline">¶</a></h3>
+<p>The application will run in your current language by default (assuming we have a translation for
+that langauge).</p>
+<p>To change the language to English use the following:</p>
+<div class="highlight-python"><pre>udig -nl en</pre>
+</div>
+<p>To change the language to German:</p>
+<div class="highlight-python"><pre>udig -nl de</pre>
+</div>
+<p>To change the language to Korean:</p>
+<div class="highlight-python"><pre>udig -nl ko</pre>
+</div>
+<p>To change the language to Basque:</p>
+<div class="highlight-python"><pre>udig -nl eu</pre>
+</div>
+<p>To change the language to Italian:</p>
+<div class="highlight-python"><pre>udig -nl it</pre>
+</div>
+<p>To change the language to Spanish:</p>
+<div class="highlight-python"><pre>udig -nl es</pre>
+</div>
+<p>The community is working on additional translations - if you are interested in volunteering please
+the instructions are available
+<a class="reference external" href="http://udig.refractions.net/confluence//display/ADMIN/Adding+Translations">here</a>.</p>
+</div>
+<div class="section" id="java">
+<h3>Java<a class="headerlink" href="#java" title="Permalink to this headline">¶</a></h3>
+<p>The application will use the version of Java specified on the command line:</p>
+<div class="highlight-python"><pre>udig -vm &lt;jre location&gt;</pre>
+</div>
+<p>If you say nothing it will pick up the <strong>jre</strong> folder next to the udig application executable.
+Failing that it will try and find java on the path or by checking JAVA_HOME.</p>
+</div>
+<div class="section" id="got-memory">
+<h3>Got Memory<a class="headerlink" href="#got-memory" title="Permalink to this headline">¶</a></h3>
+<p>We have made every effort to make uDig work in a low memory environment, the default application is
+very careful to stream information from the disk or Internet to the screen.</p>
+<p>But we are still working with geospatial information - and that can get very large. Some editing
+operations will benefit from the addition of more memory.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">udig</span> <span class="o">-</span><span class="n">vmargs</span> <span class="o">-</span><span class="n">Xmx756m</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="41%" />
+<col width="59%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Minimum Tested</td>
+<td>udig -vmargs -Xmx64m</td>
+</tr>
+<tr class="row-even"><td>Default</td>
+<td>udig -vmargs -Xmx512m</td>
+</tr>
+<tr class="row-odd"><td>Maximum Tested</td>
+<td>udig -vmargs -Xmx1536m</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="proxy-settings">
+<h3>Proxy Settings<a class="headerlink" href="#proxy-settings" title="Permalink to this headline">¶</a></h3>
+<p>We make use of normal Java proxy settings; here is an example</p>
+<p>udig.exe -vmargs -DproxySet=true -DproxyPort=8080 -DproxyHost=192.168.20.1</p>
+<p>The same thing could be accomplished by modifying your udig.ini file as shown:</p>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-v<var>margs</var></span></kbd></td>
+<td>-Xmx386M
+-Dosgi.parentClassloader=ext
+-DproxySet=true
+-DproxyHost=192.168.20.1
+-DproxyPort=8080</td></tr>
+</tbody>
+</table>
+<p>&nbsp;If requires you can also add a Proxy User and Password.</p>
+<dl class="docutils">
+<dt>-DproxyUser=&lt;userid&gt;</dt>
+<dd>-DproxyPassword=&lt;password&gt;</dd>
+</dl>
+<p>You can also be specific and provide different ports for http, socks and ftp proxy servers:</p>
+<dl class="docutils">
+<dt>-Dhttp.proxyPort=8080</dt>
+<dd>-Dhttp.proxyHost=192.168.20.1
+-DsocksProxyHost=192.168.20.1
+-DsocksProxyPort=8080
+-DftpProxySet=true
+-DftpProxyHost=192.168.20.1
+-DftpProxyPort=8080</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="windows">
+<h2>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="udig-does-not-work-on-windows-2000">
+<h3>uDig does not work on Windows 2000<a class="headerlink" href="#udig-does-not-work-on-windows-2000" title="Permalink to this headline">¶</a></h3>
+<p>A: You will need to download the <strong>GDI+</strong> dll and place it in either:</p>
+<ul class="simple">
+<li>the correct windows folder as per the installation instructions</li>
+<li>the udig folder <strong>jre/bin</strong> (this is useful if you you are packaging up a uDig based application
+for hundreds of windows 2000 machines)</li>
+</ul>
+<p>A web search shows this page where you can download a GDI plus installer:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.microsoft.com/downloads/details.aspx?familyid=6A63AB9C-DF12-4D41-933C-BE590FEAA05A&amp;displaylang=en">Platform SDK Redistributable:
+GDI+</a></li>
+</ul>
+<p>This use of <strong>GDI+</strong> is the same problem that forces Vista into a &#8220;Downgraded Graphical Experience&#8221;
+- we expect it to be solved after Eclipse 3.3 is released.</p>
+</div>
+</div>
+<div class="section" id="max-os-x">
+<h2>Max OS X<a class="headerlink" href="#max-os-x" title="Permalink to this headline">¶</a></h2>
+<p>To start uDig on a Mac double click on the uDig application.</p>
+<p>To change any of the above mentioned command line operations you will need to edit the udig.ini file
+inside of the application bundle.</p>
+<ol class="arabic simple">
+<li>Control-click on the the uDig Application to bring up a pop up menu</li>
+<li>Choose &#8220;Show Package Contents&#8221;</li>
+<li>Locate the udig.ini file in <strong>Contents/MacOS</strong></li>
+<li>Use your text editor to modify udig.ini</li>
+</ol>
+<p>You can also run udig from the command line using the symbolic link provided.</p>
+</div>
+<div class="section" id="linux">
+<h2>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<p>Here we try to shed some light on some known issues about uDig in Linux.</p>
+<div class="section" id="fedora-10-xulrunner-library-conflict">
+<h3>Fedora 10 XULRunner Library Conflict<a class="headerlink" href="#fedora-10-xulrunner-library-conflict" title="Permalink to this headline">¶</a></h3>
+<p>The XULRunner library is used for Mozilla browser integration - and we can run into conflicts if you
+have the Fedora 10 Firefox package is installed or or a conflict between 32bin and 64 bit versions
+of the library.</p>
+<p>This conflict effects Eclipse 3.3 based applications such as uDig 1.1.1 and results in the JRE
+crashing - see <a class="reference external" href="http://jira.codehaus.org/browse/UDIG-1429">UDIG-1429</a> for details.</p>
+<p>The workaround is to explicitly document which library to use on the command line:</p>
+<div class="highlight-python"><pre>udig -configuration ~/.udig -vmargs -Dorg.eclipse.swt.browser.XULRunnerPath=/usr/bin/xulrunner</pre>
+</div>
+<p>As with any of these command line settings you can also add them to the udig.ini file.</p>
+</div>
+<div class="section" id="advanced-graphics-to-disable-or-not">
+<h3>Advanced graphics: to disable or not?<a class="headerlink" href="#advanced-graphics-to-disable-or-not" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://jira.codehaus.org/browse/UDIG-1110">UDIG-1110</a>: this is a conflict between SWT and Cairo
+1.2.x, which usually causes the map to not be visible. Until these two camps sort out their
+problems, uDig will be caught in the crossfire (and we have to disable &#8220;advanced graphics&#8221;). This
+problem should be resolved when a) we upgrade eclipse version uDig is based on and b) you upgrade
+your linux distribution.</p>
+<p>Due to a known problem in one of the supporting libraries, when first started uDig shows a pop-up
+window recommending that Linux users disable advanced graphics (check the version of your cairo
+package to be certain).</p>
+<p>Q: Under what conditions is this necessary, and for what user interface features are there problems?</p>
+<dl class="docutils">
+<dt>Cairo 1.2.x = Map in not visible</dt>
+<dd>Cairo 1.4.x = black edges?</dd>
+</dl>
+<p>Q: Is there a work-around?</p>
+<p>A: Disable advanced graphics to make the map visible, but draw slowly.</p>
+<p>Q: Perhaps downloading some extra package and installing it manually?</p>
+<ul class="simple">
+<li>upgrade cairo?</li>
+<li>upgrade eclipse?</li>
+</ul>
+</div>
+<div class="section" id="the-ugly-cursors-udig-785-cursors-on-non-windows-platforms-are-mangled">
+<h3>The ugly cursors (<a class="reference external" href="http://jira.codehaus.org/browse/UDIG-785">UDIG-785 Cursors on non&#8211;windows platforms are mangled</a>)<a class="headerlink" href="#the-ugly-cursors-udig-785-cursors-on-non-windows-platforms-are-mangled" title="Permalink to this headline">¶</a></h3>
+<p>Linux <a class="reference external" href="http://jira.codehaus.org/browse/UDIG-785">doesn&#8217;t support udig&#8217;s cursors</a>.</p>
+<p>Q: Would it be possible to have also a set of b/w cursors which are simpler, but at least they do
+not look ugly in linux?</p>
+<p>A: Yes we are limited by time and artwork, specifically we need two black and white bmp files (one
+for the image and one for the mask). The current cursors are using the GIF format which is
+apparently a problem.</p>
+<p>If you have time please attach the artwork to the UDIG-785 (or email them to the developers list).</p>
+</div>
+<div class="section" id="info-and-help-require-a-pure-mozilla-browser-udig-698-linux-mozilla-five-home-required-for-information-tool">
+<h3>Info and Help require a &#8220;Pure&#8221; Mozilla Browser ( <a class="reference external" href="http://jira.codehaus.org/browse/UDIG-698">UDIG-698</a>: Linux MOZILLA_FIVE_HOME required for Information tool )<a class="headerlink" href="#info-and-help-require-a-pure-mozilla-browser-udig-698-linux-mozilla-five-home-required-for-information-tool" title="Permalink to this headline">¶</a></h3>
+<p>uDig uses a web browser to display its help documents and also to show the attribute information
+about a feature selected from the map using the Info tool.</p>
+</div>
+<div class="section" id="about-the-internal-browser">
+<h3>About the Internal Browser<a class="headerlink" href="#about-the-internal-browser" title="Permalink to this headline">¶</a></h3>
+<p>For several functions uDig will make use of an internal (or embedded browser).</p>
+<ul class="simple">
+<li>Info View - browser used to display details obtained from a Web Map Server</li>
+<li>Web Catalog - browser used to display a search service</li>
+<li>Help - browser used to display this guide</li>
+</ul>
+<p>On the Linux platform eclipse tries to launch the Mozilla browser. But recent Linux distributions
+ship with a &#8220;custom&#8221; copy of Firefox so uDig does not recognize it.</p>
+<p>Because uDig runs inside eclipse, the Standard Widget Toolkit FAQ at <a class="reference external" href="http://www.eclipse.org/swt/faq.php#browserlinux">http://www.eclipse.org/swt/faq.php#browserlinux</a></p>
+<p>may indicate which web browser to install in case this information is not displayed correctly.</p>
+<p>Q: How to fix this?</p>
+<p>A: Download and Install Mozilla</p>
+<p>(i don&#8217;t think this is necessary - see <a class="reference external" href="http://jira.codehaus.org/browse/UDIG-698">UDIG-698</a>)</p>
+<p>Ubuntu 8.04 systems that have the Firefox 3 rc1 update installed will need to also install the
+xulrunner or xulrunner-gnome-support package to use the information tool. The latter package can be
+installed using the command:</p>
+<div class="highlight-python"><pre>sudo apt-get install xulrunner-gnome-support</pre>
+</div>
+</div>
+<div class="section" id="the-zoom-window-is-opaque-when-advanced-graphics-are-disabled">
+<h3>The zoom window is opaque when advanced graphics are disabled<a class="headerlink" href="#the-zoom-window-is-opaque-when-advanced-graphics-are-disabled" title="Permalink to this headline">¶</a></h3>
+<p>If the advanced graphics are disabled, the zoom box is opaque yellow, not translucent as it is under
+Windows.</p>
+<p>A: Understood, should we use a dither pattern? as a temporary measure?</p>
+</div>
+<div class="section" id="can-i-use-my-own-java">
+<h3>Can I use my Own Java?<a class="headerlink" href="#can-i-use-my-own-java" title="Permalink to this headline">¶</a></h3>
+<p>A: Yes you can (but please make sure it has <strong>Java Advanced Imaging</strong> and <strong>Java Imaging IO</strong>
+installed.</p>
+<p>You can specify a different version on the command line:</p>
+<div class="highlight-python"><pre>udig -vm vmPath</pre>
+</div>
+<p>You should also be able to mess around with the udig.ini file in a manner similar to the command
+line options.</p>
+<p>This is a useful technique if you ever get a failure &#8220;JVM terminated. Exit code=1&#8221;; we have only
+noticed this when a really old JVM is available.</p>
+</div>
+<div class="section" id="jre-folder-vs-java-home">
+<h3>JRE folder vs JAVA_HOME<a class="headerlink" href="#jre-folder-vs-java-home" title="Permalink to this headline">¶</a></h3>
+<p>uDig will pick up the <strong>jre</strong> folder included in the download, if you rename this (say to <strong>jre2</strong>)
+it will be forced look at your <strong>JAVA_HOME</strong> environmental variable.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
