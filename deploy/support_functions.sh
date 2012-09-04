@@ -7,20 +7,6 @@ function assemble() {
     
     echo "Looking for ${TARGET}/udig-${VERSION}.${EXT}.zip"
     
-    
-    # Copy to TARGET if needed
-    # if [ ! -f ${TARGET}/udig-${VERSION}.${EXT}.zip ] 
-    #then
-    #    echo "Looking for ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip"
-    #    if [ -f ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip ] 
-    #    then
-    #        echo "Staging ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip to target directory for release"
-    #        cp ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip ${TARGET}/udig-${VERSION}.${EXT}.zip
-    #    else 
-    #        echo "Unable to locate a build of udig-${VERSION}.${EXT}.zip to release"
-    #    fi
-    #fi
-    
     # Release win32 if available
     if [ -f ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip ] 
     then
@@ -49,9 +35,16 @@ function assemble() {
             echo "Assemble ${BUILD}/udig-${VERSION}.${EXT}.zip"
             cd ${BUILD}/${PLATFORM}
             zip -9 -r -q ../udig-${VERSION}.${EXT}.zip udig
-         else 
+        else 
            echo "Already Exists ${BUILD}/udig-${VERSION}.${EXT}.zip"
-         fi
+        fi
+    else 
+        echo "Unable to locate ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip"
+        echo
+        echo "Available for release in net.refractions.udig_sdk-feature:"
+        ls ${PRODUCT_TARGET}/*.zip | xargs -n1 basename
+        echo
+        echo "To generate use: mvn install -Pproduct"
     fi
     
 }

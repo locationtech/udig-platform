@@ -8,7 +8,8 @@ echo "Release SDK ${VERSION}"
 
 # ls ${BASE}/../features/net.refractions.udig_sdk-product/target/udig-1.3.SNAPSHOT-sdk-linux.gtk.x86.zip
 
-SDK_FILE="udig-${VERSION}-sdk.zip"
+#SDK_FILE="udig-${VERSION}-sdk.zip"
+SDK_FILE="udig-1.3.2-SNAPSHOT-sdk.zip"
 
 # Release sdk if available
 if [ -f ${SDK_TARGET}/${SDK_FILE} ] 
@@ -52,7 +53,14 @@ then
         echo "Assemble ${BUILD}/udig-${VERSION}-sdk.zip "
         cd ${BUILD}/sdk
         zip -9 -r -q ../udig-${VERSION}-sdk.zip udig_sdk
-     else 
+    else 
        echo "Already Exists ${BUILD}/udig-${VERSION}-sdk.zip"
-     fi
+    fi
+else 
+    echo "Unable to locate ${SDK_TARGET}/${SDK_FILE}"
+    echo
+    echo "Available for release in net.refractions.udig:"
+    ls ${SDK_TARGET}/*.zip | xargs -n1 basename
+    echo
+    echo "To generate use: mvn install -Dall -Psdk"
 fi
