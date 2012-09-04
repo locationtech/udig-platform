@@ -81,10 +81,19 @@
                 
                 <!-- build example feature after plugins -->
                 <module>net.refractions.udig.tutorials.rcp-feature</module>
-
+             </modules>
+        </profile>
+        
+        <profile>
+            <id>product</id>
+            <activation>
+                <property><name>all</name></property>
+            </activation>
+             <modules>            
                 <module>net.refractions.udig.libs.source</module>
              </modules>
         </profile>
+                    
     </profiles>
 
     <modules>
