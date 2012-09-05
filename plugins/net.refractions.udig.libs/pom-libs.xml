@@ -849,6 +849,18 @@
                             <goal>run</goal>
                         </goals>
                     </execution>
+                    <execution>
+                    <id>bootstrap</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <tasks>
+                                <ant antfile="bootstrap.xml" dir="${basedir}" target="library"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
          </plugins>
