@@ -14,7 +14,7 @@ technology.
 The help documentation is included in the uDig stand-alone application; and also included in RCP
 applications that make use of uDig technology.
 
-.. image:: images/udig_overview/workbench.jpg
+.. image:: images/udig_overview/workbench.png
    :width: 80%
    :align: center
 

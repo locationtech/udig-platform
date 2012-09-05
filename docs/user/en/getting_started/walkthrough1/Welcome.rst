@@ -30,4 +30,4 @@ Now that everything is installed we can start up the application for the first t
       
 * To close the :guilabel:`Welcome` view click the :guilabel:`x` next to the word welcome.
 
-* You can return to the welcome screen at any time using the :menuselection:`Help --> Welcome` menu item.
+* You can return to the welcome view at any time using the :menuselection:`Help --> Welcome` menu item.

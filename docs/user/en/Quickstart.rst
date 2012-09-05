@@ -13,28 +13,32 @@ Earth <http://www.naturalearthdata.com>`_ project:
 
    `data_1_3.zip <http://udig.refractions.net/files/data/data_1_3.zip>`_ 
 
-   .. note::
-      If you are using this in a classroom setting or OSGeo live dvd the files should be on your DVD
+   .. tip::
+      If you are using this in a classroom setting or *OSGeo Live* the files should be on your DVD
 
 #. If you have your own GIS data please feel free to experiment. Making use of the above sample data
    will enable you to follow along with this tutorial step by step.
 
-The *data_1_3.zip* download is the full dataset used by :doc:`Walkthrough 1`. The www.naturalearthdata.com
-web site makes these files available individually (and at different scales for more detailed work):
+The *data_1_3.zip* download is the full dataset used by :doc:`Walkthrough 1`.
 
-* `HYP\_50M\_SR\_W.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/raster/HYP_50M_SR_W.zip>`_,
-* `10m-populated-places-simple.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-populated-places-simple.zip>`_,
-* `10m-admin-0-countries.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-0-countries.zip>`_,
-* `10m-admin-1-states-provinces-shp.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-1-states-provinces-shp.zip>`_,
-* `10m-urban-area.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-urban-area.zip>`_,
-* `10m-geography-regions-polys.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-polys.zip>`_,
-* `10m-geography-regions-points.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-points.zip>`_,
-* `10m-geography-regions-elevation-points.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-elevation-points.zip>`_,
-* `10m-geography-marine-polys.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-marine-polys.zip>`_,
-* `10m-land.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-land.zip>`_,
-* `10m-ocean.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-ocean.zip>`_,
-* `physical/10m-lakes.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-lakes.zip>`_,
-* `physical/10m-rivers-lake-centerlines.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-rivers-lake-centerlines.zip>`_
+.. note:: Natural Earth Data
+
+  We would like to thank `www.naturalearthdata.com <http://www.naturalearthdata.com>`_ for this sample data. Please
+  visit their web site to download individual files (and at different scales for more detailed work):
+  
+  * `HYP\_50M\_SR\_W.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/raster/HYP_50M_SR_W.zip>`_,
+  * `10m-populated-places-simple.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-populated-places-simple.zip>`_,
+  * `10m-admin-0-countries.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-0-countries.zip>`_,
+  * `10m-admin-1-states-provinces-shp.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-1-states-provinces-shp.zip>`_,
+  * `10m-urban-area.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-urban-area.zip>`_,
+  * `10m-geography-regions-polys.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-polys.zip>`_,
+  * `10m-geography-regions-points.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-points.zip>`_,
+  * `10m-geography-regions-elevation-points.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-elevation-points.zip>`_,
+  * `10m-geography-marine-polys.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-marine-polys.zip>`_,
+  * `10m-land.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-land.zip>`_,
+  * `10m-ocean.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-ocean.zip>`_,
+  * `physical/10m-lakes.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-lakes.zip>`_,
+  * `physical/10m-rivers-lake-centerlines.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-rivers-lake-centerlines.zip>`_
 
 uDig Application
 ~~~~~~~~~~~~~~~~
@@ -51,14 +55,17 @@ Linux or Mac please review the :doc:`Running uDig` reference page.
 Welcome View
 ~~~~~~~~~~~~
 
-#. When you start up uDig for the first time the **Welcome** view takes up the entire display. This
-   screen has links to tutorials, documentation and the project website.
-#. Click the arrow labelled **Workbench** in the upper right corner, to reveal the contents of the uDig workbench.
-
-   |image1|
-
-You can return to the Welcome view at any time by selecting the :menuselection:`Help --> Welcome` from the menu
-bar.
+#. When you start up uDig for the first time the **Welcome** view is displayed on the right hand side
+   of the screen. This view has links to tutorials, documentation and the project web site.
+   
+.. figure:: /getting_started/walkthrough1/images/welcome.png
+   :width: 80%
+   :align: center
+   :alt: welcome screen
+   
+#. To close the :guilabel:`Welcome` view click the :guilabel:`x` next to the word welcome.
+   
+   You can return to the :guilabel:`Welcome` view at any time using the menu bar :menuselection:`Help --> Welcome`.
 
 Workbench
 ~~~~~~~~~
@@ -66,12 +73,14 @@ Workbench
 The Workbench window offers multiple Editors (each showing a Map) and supporting Views (offering
 information about the current Map).
 
-.. figure:: /getting_started/walkthrough1/images/workbench.png
+.. figure:: /getting_started/walkthrough1/images/workbench.jpg
+   :width: 80%
    :align: center
-   :alt: 
+   :alt: workbench tour
 
-Shown above is a typical uDig session with the :doc:`Map editor`, :doc:`Projects view`, :doc:`Layers view` and :doc:`Catalog view` labelled . 
-These views will be described further as we demonstrate their use.
+The above screen shows the uDig application in action with an open :doc:`Map editor` surrounded by the
+:doc:`Projects view`, :doc:`Layers view` and :doc:`Catalog view`. These views will be described further
+as we demonstrate their use.
 
 Files
 ~~~~~
@@ -81,59 +90,75 @@ To start out with we are going to load some of the sample data you downloaded ea
 #. Choose :menuselection:`Layer --> Add` from the menu bar to open up the :doc:`Add Data wizard`
 #. Select :doc:`Files` from the list of data sources
 #. Press **Next** to open up a file dialog
-#. Select the following files from your data folder: **countries.shp**
+#. Select the following file from your data folder: **10m_admin_0_countries.shp**
 #. Press **Open**
 
    -  A new :doc:`Map editor` will be opened based on the contents of your
       shapefile. The default name and projection of the Map has been taken from your shapefile.
-   -  You can see the **Catalog view** has been updated with an entry for **countries.shp**. This
+   -  You can see the **Catalog view** has been updated with an entry for **10m_admin_0_countries.shp**. This
       view is used to track the use of resources by the uDig application.
    -  The **Layers view** shows a single layer is displayed on this map. This view is used to change
       the order and appearance of information in your Map.
-   -  The **Projects** view has been updated to show that your map is stored in
-      **projects>countries**. You can have multiple projects open at a time, each project can have
+   -  The **Projects** view has been updated to show that your map is stored in a
+      **project**. You can have multiple projects open at a time, each project can have
       several maps.
 
-#. Open up your data folder in windows
-#. Drag the file **clouds.jpg** onto the Map Editor, a new layer is added to to the map.
-#. You can see the order the layers are drawn in the layer view. Right now the **clouds.jpg** layer
-   is drawn ontop of the countries layer.
-#. Select the **clouds.jpg** layer in the catalog view and drag it to the bottom of the list
+#. Open up your **data** folder in the file system
+#. Drag the file **NE1_50M_SR_W.tif** onto the Map Editor, a new layer is added to to the map.
+#. You can see the order the layers are drawn in the layer view. Right now the **NE1_50M_SR_W** layer
+   is drawn on top of the **10m_admin_0_countries** layer.
+#. Select the **NE1_50M_SR_W.tif** layer in the catalog view and drag it to the bottom of the list
 
-   |image2|
-
-**Info:** One of the most common questions asked when uDig is considered for an organization is how
-much memory the application uses. Unlike most GIS applications uDig can get by with a fixed amount
-of memory. The above shapefile is not loaded into memory, we have a policy of keeping data on disk
-and drawing data like this shapefile onto the screen as needed.
+.. figure:: /images/quickstart/QuickstartCountriesMap.jpg
+   :width: 80%
+   :align: center
+   :alt: Countries Map
+   
+#. You can also use the up and down buttons in the :guilabel:`Layers` view to reorder.
 
 .. tip::
-    You can also drag and drop shapefiles directly into the uDig application!
+   You can also drag and drop shapefiles directly into the uDig application!
+
+.. note::
+   A common questions asked when using uDig for the first time is how big a
+   shapefile can uDig load?
+   
+   The application uses a fixed amount of memory for each layer, and does not load
+   shapefiles into memory. We have a policy of keeping data on disk and drawing
+   information, such as this shapefile, onto the screen as needed.
 
 Map
 ~~~
 
-You can control where in the world the Map Editor is looking by using the navigation tools in the
-tool bar along the top of the screen.
+The :guilabel:`Map Editor` includes :guilabel:`Palette` of tools for map interaction. Use the navigation
+tools along the top of the :guilabel:`Palette` to control where the :guilabel:`Map Editor` is looking.
 
-#. The |image3| **Zoom** tool is available by default
+#. The |image3| :guilabel:`Zoom` tool is available by default
 
-   -  Use the zoom tool by drawing a box using the left mouse button around the area of the wold you
+   -  Use the zoom tool by drawing a box using the left mouse button around the area of the world you
       wish to see.
    -  To zoom out draw a box with the right mouse button. The current map extents will be located
       within the box you draw.
 
-#. The |image4| **Pan** tool can be used to scroll around your map with out changing scale.
-#. There are also several navigation buttons that can be used at any time:
+   .. tip:: 
+      Most tools allow you to Pan by holding the center button and control the scale using the scroll wheel.
 
-   -  |image5| Show All, can be used to return to the full extents at any time
-   -  |image6| Zoom In and |image7| Zoom Out can be used to change the scale by a fixed amount.
+#. The |image4| :guilabel:`Pan` tool can be used to scroll around your map with out changing scale.
+   
+   - You can change the behavior of the :guilabel:`Pan` tool using the tool option
+     area located along the bottom edge of the map.
+
+#. The :guilabel:`toolbar` is updated to reflect the current map and contains several
+   actions to control rendering:
+
+   - |image5| Show All, can be used to return to the full map area at any time
+   - |image6| Zoom In and |image7| Zoom Out can be used to change the scale by a fixed amount
+   - Actions to :guilabel:`Redraw Map` and :guilabel:`Stop Drawing` are available
+
+#. The application :guilabel:`menubar` is also updated to work with the current map.
+
    -  You can use :menuselection:`Navigation --> Back` and :menuselection:`Navigation --> Forward` in the menu bar to cycle though
       previously visited locations.
-
-
-.. tip:: 
-    Most tools allow you to Pan by holding the center button and control the scale using the scroll wheel.
 
 Web Map Server
 ~~~~~~~~~~~~~~
@@ -143,8 +168,8 @@ information available on the web. This section covers the use of **Web Map Serve
 available layers of information that you can mix into your own maps.
 
 #. Select :menuselection:`File --> New --> New Map` from the menu bar
-#. Change to the **Web view**, click on the tab next to the **Catalog view** to reveal the Web view.
-#. Click on the link **WMS:dm solutions** link
+#. Change to the :guilabel:`Web` view, click on the tab next to the :guilabel:`Catalog` view to reveal the :guilabel:`Web` view.
+#. Click on the link :guilabel:`WMS:dm solutions` link
 
    |image8|
 
@@ -155,46 +180,57 @@ available layers of information that you can mix into your own maps.
    -  Parks
    -  Cities
 
-      |image9|
+   |image9|
 
 #. Press **Finish** to add these layers to your map
 
-   |image10|
-
-#. Use the |image11| Zoom Tool to move closer to one of the Parks
-#. Switch to the |image12| and click on one the parks to learn more about it
+.. figure:: /images/quickstart/WMSMap.png
+   :width: 80%
+   :align: center
+   :alt: WMS Map
+   
+#. Use the |image11| :guilabel:`Zoom` tool to move closer to one of the Parks
+#. Switch to the |image12| :guilabel:`Info` tool and click on one the parks.
+   
+   The :doc:`Information view` is opened for more details on the area clicked.
 
 .. tip:: 
-    You can switch between the zoom and info tools by pressing **Z** and **I** on the keyboard.
+    You can switch between the zoom and info tools by pressing :kbd:`Z` and :kbd:`I` on the keyboard.
 
 Style
 ~~~~~
 
-#. Select the **project > countries**, you can double click to open this Map, or Right Click and
-   choose **Open Map**
-#. Select the **countries** layer in the Layer view
-#. Open up the Style Editor by right clicking on **countries** layer and choosing **Change Style**
-#. We are going to change a few things about how countries are displayed
+#. From the :guilabel:`Projects` view select :guilabel:`project --> 10m admin 0 countries`.
+   You can double click to open this Map, or right click for the context menu `menuselect:`Open Map`.
+#. With the map open use the :guilabel:`Layers` view to select the :guilabel:`10m admin 0 countries` layer.
+#. Open up the :doc:`Style Editor dialog` by right clicking on :guilabel:`10m admin 0 countries`
+   layer and :menuselection:`Change Style`.
+#. We are going to change a few things about how countries are displayed.
+   
+   The :guilabel:`Polygons` page provides a series of tabs for us to fill in:
+   
+   - :guilabel:`Border` Click on the :guilabel:`Color` and change the color to **BLACK**
+   - :guilabel:`Fill` uncheck the box disable fill
+   - :guilabel:`Label` check the box to enable labels. For the :guilabel:`label` value select
+     :guilabel:`NAME` from this list of attributes.
 
-   -  Line: Click on the **Color** and change the color to **BLACK**
-   -  Fill: uncheck the box to turn off fill
-   -  Label: check the box, and choose **CNTRY\_NAME** from the list of attributes
-
-      |image13|
-
-#. Press **Apply** to see what this looks like on your Map, the Layer view will also be updated to
+.. figure:: /images/quickstart/StyleEditor.png
+   :width: 80%
+   :align: center
+   :alt: Style Editor
+   
+#. Press :guilabel:`Apply` to see what this looks like on your Map, the Layer view will also be updated to
    reflect the current style
-#. When you are happy with the result you can press **Close** to dismiss the dialog
-#. Some files include style settings, Select :menuselection:`Layer --> Add ...` from the menu bar
-#. Select **Files** from the list of data sources and press **Next**
-#. Using the From the file chooser open up **timezone.shp** and press **Open**
-#. It is a bit hard to see what is going on with the **clouds.jpg** layer providing so much details.
+#. When you are happy with the result you can press :guilabel:`Close` to dismiss the dialog
+#. It is a bit hard to see what is going with the raster layer providing so much details.
    Select :menuselection:`Map --> Mylar` from the menu bar to focus on the selected layer
-#. Using the Layer view select **timezone**, **countries** and **clouds.jpg** in turn to see the
-   effect
+#. Using the :guilabel:`Layer` view select the different layers in turn to see the effect.
 
-   |image14|
-
+.. figure:: /images/quickstart/MapMylar.jpg
+   :width: 80%
+   :align: center
+   :alt: Mylar Map
+   
 #. You can turn off this effect at any time using :menuselection:`Map --> Mylar` from the menu bar
 
 What is Next
@@ -210,8 +246,6 @@ ability) left for your to discover in our walkthroughs.
    Server.
 
 .. |image0| image:: /getting_started/walkthrough1/images/splash.png
-.. |image1| image:: /getting_started/walkthrough1/images/welcome.png
-.. |image2| image:: /images/quickstart/QuickstartCountriesMap.jpg
 .. |image3| image:: /images/quickstart/zoom_mode.gif
 .. |image4| image:: /images/quickstart/pan_mode.gif
 .. |image5| image:: /images/quickstart/zoom_extent_co.gif
@@ -219,8 +253,6 @@ ability) left for your to discover in our walkthroughs.
 .. |image7| image:: /images/quickstart/zoom_out_co.gif
 .. |image8| image:: /images/quickstart/WebViewClick.png
 .. |image9| image:: /images/quickstart/AddWMSLayers.png
-.. |image10| image:: /images/quickstart/WMSMap.png
 .. |image11| image:: /images/quickstart/zoom_mode.gif
 .. |image12| image:: /images/quickstart/info_mode.gif
-.. |image13| image:: /images/quickstart/StyleEditor.png
-.. |image14| image:: /images/quickstart/MapMylar.jpg
+
