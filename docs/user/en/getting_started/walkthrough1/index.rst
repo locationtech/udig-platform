@@ -25,7 +25,6 @@ uDig Walkthrough 1
     Re-projection
     WhattodoNext
 
-
 .. |refractions_png| image:: ../../../../images/refractions_logo.png
    :height: 3cm
 

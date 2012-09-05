@@ -42,6 +42,9 @@
         <topic label="Re-projection" href="EN/getting_started/walkthrough1/Re-projection.html">
                 </topic>
             <topic label="What to do Next" href="EN/getting_started/walkthrough1/WhattodoNext.html">
+                <!--topic label="InstallPlugin" href="EN/getting_started/walkthrough1/InstallPlugin.html">
+                    </topic-->
+            
                 </topic>        
            </topic>
         </topic>

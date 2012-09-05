@@ -1,0 +1,132 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Adding a Layer from PostGIS &mdash; User Guide</title>
+    
+    <link rel="stylesheet" href="../../_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.3.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/udig.ico"/>
+    <link rel="top" title="User Guide" href="../../index.html" />
+    <link rel="up" title="What to do Next" href="WhattodoNext.html" />
+    <link rel="next" title="Walkthrough 2" href="../../Walkthrough 2.html" />
+    <link rel="prev" title="Install Plugin" href="InstallPlugin.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="../../search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="../../_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+ 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="adding-a-layer-from-postgis">
+<h1>Adding a Layer from PostGIS<a class="headerlink" href="#adding-a-layer-from-postgis" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This section requires your own local PostGIS. While we have a public PostGIS available
+for demonstrations most corporate environments are unable to access this database due
+to firewall restrictions.</p>
+<p>If you are trapped behind a firewall please feel free to skip this section.</p>
+<p class="last">The online help does have some advice about <a class="reference internal" href="../../Running uDig.html"><em>Running uDig</em></a> covering firewall access.</p>
+</div>
+<p>This section shows how you can add a Layer from a PostGIS table. PostGIS is an extension to the popular
+open source PostgreSQL database. uDig handles other databases like Oracle and DB2 in a similar manner:</p>
+<ul>
+<li><p class="first">Select <em class="menuselection">File ‣ New ‣ New Map</em> from the menu.</p>
+<p><img alt="menubar_new_map_png" src="../../_images/menubar_new_map.png" style="width: 6.669cm; height: 2.93cm;" /></p>
+</li>
+<li><p class="first">In the <em class="guilabel">Projects</em> view, right-click on your map and select <em class="guilabel">Add</em>.</p>
+<p><img alt="projects_map_add_png" src="../../_images/projects_map_add.png" style="width: 4.979cm; height: 4.641cm;" /></p>
+</li>
+<li><p class="first">Select <em class="guilabel">PostGIS</em> as the data source and click <em class="guilabel">Next</em>.</p>
+<p><img alt="postgis_wizard_png" src="../../_images/postgis_wizard.png" style="width: 8.89cm; height: 7.26cm;" /></p>
+</li>
+<li><p class="first">Enter the following connection information:</p>
+<ul class="simple">
+<li>Host: <tt class="docutils literal"><span class="pre">www.refractions.net</span></tt></li>
+<li>Port: <tt class="docutils literal"><span class="pre">5432</span></tt></li>
+<li>Username: <tt class="docutils literal"><span class="pre">demo</span></tt></li>
+<li>Password: <tt class="docutils literal"><span class="pre">demo</span></tt></li>
+<li>Store Password: check</li>
+</ul>
+<p>Once the connection information is entered press <em class="guilabel">Next</em>.</p>
+<p><img alt="postgis_connect_png" src="../../_images/postgis_connect.png" style="width: 9.631cm; height: 7.87cm;" /></p>
+</li>
+<li><p class="first">This page lists the databases available to the current user.</p>
+<p>The www.refractions.net database does not publish a public list so rather than choose from a
+nice easy list we are going to have to enter in <tt class="docutils literal"><span class="pre">demo-bc</span></tt> by hand.</p>
+<ul class="simple">
+<li>Database: <tt class="docutils literal"><span class="pre">demo-bc</span></tt></li>
+</ul>
+<p><img alt="postgis_list_png" src="../../_images/postgis_list.png" style="width: 9.631cm; height: 8.729cm;" /></p>
+</li>
+<li><p class="first">We can now press the <em class="guilabel">List</em> button to list the available tables. Please choose</p>
+<ul class="simple">
+<li><em class="guilabel">bc_hospitals</em></li>
+<li><em class="guilabel">bc_municipality</em></li>
+</ul>
+<p>Press <em class="guilabel">Next</em> when ready.</p>
+</li>
+<li><p class="first">The resource collection page confirms that <em class="guilabel">bc_hospitals</em> and <em class="guilabel">bc_municipality</em>
+are published as spatial layers.</p>
+<p>We can press <em class="guilabel">Finish</em> to add these layers to our Map.</p>
+<p><img alt="postgis_resource_selection_png" src="../../_images/postgis_resource_selection.png" style="width: 9.631cm; height: 7.08cm;" /></p>
+</li>
+<li><p class="first">It may take a short while to fully render since you are zoomed out so far.</p>
+</li>
+<li><p class="first">Head on over the the <em class="guilabel">Layer</em> view and right click on <em class="guilabel">bc_hospitals</em> layer
+and choose <em class="guilabel">Zoom to Layer</em></p>
+<p><img alt="postgis_zoom_to_layer_png" src="../../_images/postgis_zoom_to_layer.png" style="width: 14.52cm; height: 10.91cm;" /></p>
+<blockquote>
+<div><p>The map will now zoom in to show the extent of the <em class="guilabel">bc_hospitals</em> layer.</p>
+</div></blockquote>
+</li>
+<li><p class="first">You can return to your previous position in the world by selecting Back in the Navigation menu.</p>
+</li>
+</ul>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
