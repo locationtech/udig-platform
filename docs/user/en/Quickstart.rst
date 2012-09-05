@@ -58,11 +58,10 @@ Welcome View
 #. When you start up uDig for the first time the **Welcome** view is displayed on the right hand side
    of the screen. This view has links to tutorials, documentation and the project web site.
    
-.. figure:: /getting_started/walkthrough1/images/welcome.png
-   :width: 80%
-   :align: center
-   :alt: welcome screen
-   
+   .. figure:: /getting_started/walkthrough1/images/welcome.png
+      :width: 80%
+      :alt: welcome screen
+
 #. To close the :guilabel:`Welcome` view click the :guilabel:`x` next to the word welcome.
    
    You can return to the :guilabel:`Welcome` view at any time using the menu bar :menuselection:`Help --> Welcome`.
@@ -75,7 +74,6 @@ information about the current Map).
 
 .. figure:: /getting_started/walkthrough1/images/workbench.jpg
    :width: 80%
-   :align: center
    :alt: workbench tour
 
 The above screen shows the uDig application in action with an open :doc:`Map editor` surrounded by the
@@ -109,11 +107,10 @@ To start out with we are going to load some of the sample data you downloaded ea
    is drawn on top of the **10m_admin_0_countries** layer.
 #. Select the **NE1_50M_SR_W.tif** layer in the catalog view and drag it to the bottom of the list
 
-.. figure:: /images/quickstart/QuickstartCountriesMap.jpg
-   :width: 80%
-   :align: center
-   :alt: Countries Map
-   
+   .. figure:: /images/quickstart/QuickstartCountriesMap.jpg
+      :width: 80%
+      :alt: Countries Map
+
 #. You can also use the up and down buttons in the :guilabel:`Layers` view to reorder.
 
 .. tip::
@@ -168,30 +165,32 @@ information available on the web. This section covers the use of **Web Map Serve
 available layers of information that you can mix into your own maps.
 
 #. Select :menuselection:`File --> New --> New Map` from the menu bar
-#. Change to the :guilabel:`Web` view, click on the tab next to the :guilabel:`Catalog` view to reveal the :guilabel:`Web` view.
+#. Change to the :guilabel:`Web` view, click on the tab next to the :guilabel:`Catalog` view 
+   to reveal the :guilabel:`Web` view.
 #. Click on the link :guilabel:`WMS:dm solutions` link
 
-   |image8|
+   .. figure:: /images/quickstart/WebViewClick.png
+      :alt: Copy WMS URL
 
 #. From the :doc:`Resource Selection page` we are going to choose the
    following layers:
 
-   -  Elevation/Bathymetry\*
+   -  Elevation/Bathymetry
    -  Parks
    -  Cities
 
-   |image9|
+   .. figure:: /images/quickstart/AddWMSLayers.png
+      :alt: Add WMS Map
 
 #. Press **Finish** to add these layers to your map
 
-.. figure:: /images/quickstart/WMSMap.png
-   :width: 80%
-   :align: center
-   :alt: WMS Map
-   
+   .. figure:: /images/quickstart/WMSMap.png
+      :width: 80%
+      :alt: WMS Map
+
 #. Use the |image11| :guilabel:`Zoom` tool to move closer to one of the Parks
 #. Switch to the |image12| :guilabel:`Info` tool and click on one the parks.
-   
+
    The :doc:`Information view` is opened for more details on the area clicked.
 
 .. tip:: 
@@ -201,10 +200,10 @@ Style
 ~~~~~
 
 #. From the :guilabel:`Projects` view select :guilabel:`project --> 10m admin 0 countries`.
-   You can double click to open this Map, or right click for the context menu `menuselect:`Open Map`.
+   You can double click to open this Map, or right click for the context menu :guilabel:`Open Map`.
 #. With the map open use the :guilabel:`Layers` view to select the :guilabel:`10m admin 0 countries` layer.
 #. Open up the :doc:`Style Editor dialog` by right clicking on :guilabel:`10m admin 0 countries`
-   layer and :menuselection:`Change Style`.
+   layer and :guilabel:`Change Style`.
 #. We are going to change a few things about how countries are displayed.
    
    The :guilabel:`Polygons` page provides a series of tabs for us to fill in:
@@ -214,11 +213,10 @@ Style
    - :guilabel:`Label` check the box to enable labels. For the :guilabel:`label` value select
      :guilabel:`NAME` from this list of attributes.
 
-.. figure:: /images/quickstart/StyleEditor.png
-   :width: 80%
-   :align: center
-   :alt: Style Editor
-   
+   .. figure:: /images/quickstart/StyleEditor.png
+      :width: 80%
+      :alt: Style Editor
+
 #. Press :guilabel:`Apply` to see what this looks like on your Map, the Layer view will also be updated to
    reflect the current style
 #. When you are happy with the result you can press :guilabel:`Close` to dismiss the dialog
@@ -226,11 +224,10 @@ Style
    Select :menuselection:`Map --> Mylar` from the menu bar to focus on the selected layer
 #. Using the :guilabel:`Layer` view select the different layers in turn to see the effect.
 
-.. figure:: /images/quickstart/MapMylar.jpg
-   :width: 80%
-   :align: center
-   :alt: Mylar Map
-   
+   .. figure:: /images/quickstart/MapMylar.jpg
+      :width: 80%
+      :alt: Mylar Map
+
 #. You can turn off this effect at any time using :menuselection:`Map --> Mylar` from the menu bar
 
 What is Next
@@ -251,8 +248,6 @@ ability) left for your to discover in our walkthroughs.
 .. |image5| image:: /images/quickstart/zoom_extent_co.gif
 .. |image6| image:: /images/quickstart/zoom_in_co.gif
 .. |image7| image:: /images/quickstart/zoom_out_co.gif
-.. |image8| image:: /images/quickstart/WebViewClick.png
-.. |image9| image:: /images/quickstart/AddWMSLayers.png
 .. |image11| image:: /images/quickstart/zoom_mode.gif
 .. |image12| image:: /images/quickstart/info_mode.gif
 
