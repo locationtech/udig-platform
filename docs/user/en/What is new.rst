@@ -1,16 +1,7 @@
 What is new
 ###########
 
-The following features are new for the uDig 1.3 series:
-
-* `Area of Interest`_
-
-* `Tool Interaction`_
-
-* `Tool Palette and Options`_
-
-* `Cheatsheets`_
-
+The following features are new for the uDig 1.3 series.
 
 **Related reference**
 
@@ -20,6 +11,42 @@ The following features are new for the uDig 1.3 series:
    What is new 1.1.0
    What is new 1.2.0
 
+SLD 1.1
+=======
+
+Style import has been upgraded to support Style Layer Descriptor 1.1 (and Symbology Encoding 1.1).
+
+This functionality is available by:
+
+- Dragging an SLD file directly onto your layer
+- Using the :guilabel:`Import` directly form the :doc:`Style Editor dialog`
+
+New Edit Tools
+==============
+
+The Axios tools formally installed as a separate download are now included in the default set of :doc:`Edit Tools`.
+
+Constraint Query Language
+=========================
+
+The use of :doc:`Constraint Query Language` has been greatly improved with fields providing
+dynamic assistance and function lookup while you type.
+
+To access this functionality:
+
+- Constrain the data made avaialble to a layer using the :guilabel:`Query` page (accessed via layer properties).
+- To quickly limit just the map display use the :guilabel:`Filter` page of the :doc:`Style Editor dialog`. 
+- Process your data using CQL Expressions using the :doc:`Transform dialog`
+
+Transform Dialog
+================
+
+The :doc:`Transform dialog` offers a great user interface to process and transform your data.
+
+Here are some task pages to get you started:
+
+* :doc:`Adding a column to a shapefile`
+* :doc:`Processing the Geometry in a Shapefile`
 
 Area of Interest
 ================
@@ -31,18 +58,19 @@ We now support the concept of :doc:`Area of Interest`:
    current projection
 -  You can use Area of Interest to:
 
-   -  Limit the contents of the :doc:`Table view`
-   -  Limit the area you are searching for new data in the :doc:`Search view`
-   -  Show All
+   -  Quickly filter a layer using the :guilabel:`Filter` page of the :doc:`Style Editor dialog`. 
+   -  Quickly filter the contents of the :doc:`Table view`
+   -  Define the area searched in the :doc:`Search view`
+   -  Set the extent used by :guilabel:`Show All`
 
 For more information check out the Tasks section on :doc:`Working with AOI`
 
 Tool Interaction
 ================
 
-You can now control how a layer interacts with tools.
+You can now control how a layer interacts with tools using the :doc:`Interaction Properties page`.
 
-One great use of this facility is to quickly mark background layers so they do not get in the way of
+This facility is to quickly mark background layers so they do not get in the way of
 what you are working on.
 
 Tool Palette and Options

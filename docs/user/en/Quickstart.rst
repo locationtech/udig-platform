@@ -80,6 +80,15 @@ The above screen shows the uDig application in action with an open :doc:`Map edi
 :doc:`Projects view`, :doc:`Layers view` and :doc:`Catalog view`. These views will be described further
 as we demonstrate their use.
 
+The application provides:
+
+* :guilabel:`menubar` is located along the top of the screen
+* :guilabel:`toolbar` for quick access to common actions
+* :guilabel:`context menu` accessed by right click on the current selection 
+* Editors can provide :guilabel:`Palette` of tools
+* Views provide both a :guilabel:`View toolbar` for common actions ending with a downward arrow to access a more extensive :guilabel:`View menu`
+* When selecting content in an :guilabel:`Editor` or :guilabelL`View` 
+
 Files
 ~~~~~
 
@@ -200,10 +209,10 @@ Style
 ~~~~~
 
 #. From the :guilabel:`Projects` view select :guilabel:`project --> 10m admin 0 countries`.
-   You can double click to open this Map, or right click for the context menu :guilabel:`Open Map`.
+   You can double click to open this Map, or right click for :menuselection:`Context menu --> Open Map`.
 #. With the map open use the :guilabel:`Layers` view to select the :guilabel:`10m admin 0 countries` layer.
 #. Open up the :doc:`Style Editor dialog` by right clicking on :guilabel:`10m admin 0 countries`
-   layer and :guilabel:`Change Style`.
+   layer and using :menuselection:`Context menu --> Change Style`.
 #. We are going to change a few things about how countries are displayed.
    
    The :guilabel:`Polygons` page provides a series of tabs for us to fill in:
