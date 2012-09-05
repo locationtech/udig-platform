@@ -1,4 +1,5 @@
 .DS_Store
+Thumbs.db
 plugins/net.refractions.udig.libs.source/util/bin/
 plugins/net.refractions.udig.*/bin
 tutorials/net.refractions.udig.tutorials.*/bin

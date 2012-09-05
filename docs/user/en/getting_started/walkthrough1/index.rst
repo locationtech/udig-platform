@@ -1,4 +1,4 @@
-﻿uDig Walkthrough 1
+uDig Walkthrough 1
 ==================
 
 |refractions_png| |lisasoft_png| |udig_logo_gif|

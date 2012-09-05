@@ -1,11 +1,11 @@
 Online Documentation and Tutorials
 ----------------------------------
 
-In this section you will open up the online tutorial, and access reference information.
+In this section you will open up the online help and access reference information.
 
 .. hint::
-   You can access the tutorials directly by pressing :guilabel:`Getting Started` on the welcome screen.
-   
+   You can access the online help directly by pressing :guilabel:`Getting Started` on the welcome screen.
+
 * Open up the :guilabel:`Help` menu and select :guilabel:`Help Contents`
  
    |menubar_help_contents_png|
@@ -22,13 +22,8 @@ In this section you will open up the online tutorial, and access reference infor
    * |help_contents_png| Show in Table of Contents find your place in the table of contents.
 
 * The :guilabel:`Contents` view organizes :guilabel:`Pages` into :guilabel:`Books`.
-   
-   The following books are included with the uDig application:
-   
-   * User Guide
-   * Live User Guide - direct access to uDig web site
-   
-   More book may be included when you install additional features.
+  
+  More book are included as you install additional features.
   
 Help Categories
 ^^^^^^^^^^^^^^^

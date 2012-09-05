@@ -19,8 +19,8 @@ Earth <http://www.naturalearthdata.com>`_ project:
 #. If you have your own GIS data please feel free to experiment. Making use of the above sample data
    will enable you to follow along with this tutorial step by step.
 
-This is actually the full dataset used by :doc:`Walkthrough 1`. The contents of
-this dataset are as follows (in case you want to download higher resolution data):
+The *data_1_3.zip* download is the full dataset used by :doc:`Walkthrough 1`. The www.naturalearthdata.com
+web site makes these files available individually (and at different scales for more detailed work):
 
 * `HYP\_50M\_SR\_W.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/raster/HYP_50M_SR_W.zip>`_,
 * `10m-populated-places-simple.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-populated-places-simple.zip>`_,
@@ -39,7 +39,7 @@ this dataset are as follows (in case you want to download higher resolution data
 uDig Application
 ~~~~~~~~~~~~~~~~
 
-#. Choose :menuselection:`uDig 1.1 --> uDig` from the start menu
+#. Choose :menuselection:`uDig 1.3 --> uDig` from the start menu
 #. The application will take a few moments to start up
 
    |image0|
@@ -66,7 +66,7 @@ Workbench
 The Workbench window offers multiple Editors (each showing a Map) and supporting Views (offering
 information about the current Map).
 
-.. figure:: /images/quickstart/workbench.png
+.. figure:: /getting_started/walkthrough1/images/workbench.png
    :align: center
    :alt: 
 
@@ -209,8 +209,8 @@ ability) left for your to discover in our walkthroughs.
    to manipulate feature data, covers the installation of GeoServer and editing with a Web Feature
    Server.
 
-.. |image0| image:: /images/quickstart/Quickstart1Splash.png
-.. |image1| image:: /images/quickstart/welcome.png
+.. |image0| image:: /getting_started/walkthrough1/images/splash.png
+.. |image1| image:: /getting_started/walkthrough1/images/welcome.png
 .. |image2| image:: /images/quickstart/QuickstartCountriesMap.jpg
 .. |image3| image:: /images/quickstart/zoom_mode.gif
 .. |image4| image:: /images/quickstart/pan_mode.gif

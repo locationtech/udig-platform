@@ -107,9 +107,9 @@ public class TocTest {
                     pages.remove(key); // checked!
                 }
                 else {
-                    if( key.contains("walkthrough")){
-                        return; // skip for now
-                    }
+//                    if( key.contains("walkthrough")){
+//                        return; // skip for now
+//                    }
                     System.out.println("toc.xml does not reference '"+key+".html'");
                     
                     System.out.print("        <topic label=\"");

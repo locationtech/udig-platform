@@ -1,4 +1,4 @@
-﻿GeoServer Install
+GeoServer Install
 =================
 
 

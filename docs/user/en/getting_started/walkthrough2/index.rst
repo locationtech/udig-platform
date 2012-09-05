@@ -25,14 +25,6 @@ uDig Walkthrough 2
     Save
     WhattoDoNext
 
-.. toctree::
-    :hidden:
-   
-    walkthrough2
-
-
-Single Page for all chapters \: :doc:`walkthrough2`
-
 .. |refractions_png| image:: ../../../../images/refractions_logo.png
    :height: 3cm
 
