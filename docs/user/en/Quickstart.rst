@@ -80,14 +80,12 @@ The above screen shows the uDig application in action with an open :doc:`Map edi
 :doc:`Projects view`, :doc:`Layers view` and :doc:`Catalog view`. These views will be described further
 as we demonstrate their use.
 
-The application provides:
+Interaction is provided by:
 
-* :guilabel:`menubar` is located along the top of the screen
-* :guilabel:`toolbar` for quick access to common actions
-* :guilabel:`context menu` accessed by right click on the current selection 
-* Editors can provide :guilabel:`Palette` of tools
-* Views provide both a :guilabel:`View toolbar` for common actions ending with a downward arrow to access a more extensive :guilabel:`View menu`
-* When selecting content in an :guilabel:`Editor` or :guilabelL`View` 
+* The application :guilabel:`menubar` is located along the top of the screen with a :guilabel:`toolbar` for quick access to common actions
+* The Map editor interaction is controled by selecting different tools in the :guilabel:`Palette` provided
+* Views provide a :guilabel:`View toolbar` for common actions followed by a downward arrow to access a more extensive :guilabel:`View menu`
+* Selected content provides a right click :guilabel:`context menu` 
 
 Files
 ~~~~~
