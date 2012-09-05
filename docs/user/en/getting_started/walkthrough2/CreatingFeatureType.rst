@@ -22,7 +22,7 @@ We are going to create a new feature type to experiment with some of the more in
     :height: 4.45cm
 
 
-* Replace **New Feature Type** with **Lake**.
+* Replace **New_Feature_Type** with **Lake**.
 
   .. image:: images/10000000000001F4000000FF67B28346.png
     :width: 7.26cm

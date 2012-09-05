@@ -5,7 +5,7 @@ In this section you will learn how to edit an Attribute, along the way we will e
 
 To start out with lets figure out the name of that city:
 
-* Select :menuselection:`Navigation --> Show All` from the menu bar.
+* Select :menuselection:`Navigation --> Zoom to All` from the menu bar.
 
 * Select the Tasmanian cities in the Layers View.
 
@@ -57,7 +57,7 @@ To start out with lets figure out the name of that city:
       :height: 7.721cm
 
  * After making changes, hit the  :guilabel:`Apply` button to update the map, you can experiment with the settings and press
-   :guilabel:`Close` when you are finished.
+   :guilabel:`OK` when you are finished.
 
 * Ensure that **Tasmania cities** is still selected in the layers view, and select the Table view.
 

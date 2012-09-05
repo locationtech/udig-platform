@@ -3,7 +3,7 @@ Copying Content
 
 Now that we have created a new feature type, we can use cut and paste to grab geometry content from our WFS. This is different from the export we did earlier in that we are using our layer type.
 
-* Change to Tasmania  map and select :menuselection:`Navigation --> Zoom AOI`  in the menu bar.
+* Change to Tasmania  map and select :menuselection:`Navigation --> Zoom to All`  in the menu bar.
 
 * In the Layers view make sure that **tasmania_water_bodies_Type** is selected as shown below.
 
