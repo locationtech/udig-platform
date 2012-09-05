@@ -14,12 +14,76 @@
                 </topic>
                     
         <topic label="Walkthrough 1" href="EN/Walkthrough 1.html">
-        
+           <topic label="uDig Walkthrough 1" href="EN/getting_started/walkthrough1/index.html">
+                    <topic label="Introduction" href="EN/getting_started/walkthrough1/Introduction.html">
                 </topic>
+            <topic label="Installing and Running" href="EN/getting_started/walkthrough1/InstallingandRunningTheuDigApplication.html">
+                </topic>
+            <topic label="Welcome" href="EN/getting_started/walkthrough1/Welcome.html">
+                </topic>
+            <topic label="Online Documentation and Tutorials" href="EN/getting_started/walkthrough1/OnlineDocumentationandTutorials.html">
+                </topic>
+            <topic label="The Workbench" href="EN/getting_started/walkthrough1/TheWorkbench.html">
+                </topic>
+            <topic label="Connecting to a WebMapServer" href="EN/getting_started/walkthrough1/ConnectingtoaWebMapServer.html">
+                </topic>
+	        <topic label="Adding Layers from the Catalog View" href="EN/getting_started/walkthrough1/AddingLayersfromtheCatalogView.html">
+	                </topic>
+            <topic label="Working with Files" href="EN/getting_started/walkthrough1/WorkingwithFiles.html">
+                </topic>
+            <topic label="Import Directly to The Catalog" href="EN/getting_started/walkthrough1/ImportDirectlytoTheCatalog.html">
+                </topic>
+            <topic label="ThemedData" href="EN/getting_started/walkthrough1/ThemedData.html">
+                </topic>
+            <topic label="Information Request" href="EN/getting_started/walkthrough1/InformationRequest.html">
+                </topic>
+            <topic label="Web" href="EN/getting_started/walkthrough1/WebView.html">
+                </topic>
+        <topic label="Re-projection" href="EN/getting_started/walkthrough1/Re-projection.html">
+                </topic>
+            <topic label="What to do Next" href="EN/getting_started/walkthrough1/WhattodoNext.html">
+                </topic>        
+           </topic>
+        </topic>
                     
         <topic label="Walkthrough 2" href="EN/Walkthrough 2.html">
-        
-                </topic>
+            
+            <topic label="GeoServer Install" href="EN/getting_started/geoserver/index.html">
+            </topic>
+            
+            <topic label="uDig Walkthrough 2" href="EN/getting_started/walkthrough2/index.html">
+                <topic label="Introduction" href="EN/getting_started/walkthrough2/Introduction.html">
+                    </topic>
+		        <topic label="WMS and WFS Integration" href="EN/getting_started/walkthrough2/WMSandWFSIntegration.html">
+		                </topic>
+		        <topic label="Editing Geometry with WFS" href="EN/getting_started/walkthrough2/EditingGeometrywithWFS.html">
+		                </topic>
+		        <topic label="Working with Attributes" href="EN/getting_started/walkthrough2/WorkingwithAttributes.html">
+		                </topic>
+		        <topic label="Exporting to Shapefile" href="EN/getting_started/walkthrough2/ExportingtoShapefile.html">
+		                </topic>
+                <topic label="Take a Break" href="EN/getting_started/walkthrough2/TakeaBreak.html">
+                    </topic>
+		        <topic label="Creating FeatureType" href="EN/getting_started/walkthrough2/CreatingFeatureType.html">
+		                </topic>
+		        <topic label="Copying Content" href="EN/getting_started/walkthrough2/CopyingContent.html">
+		                </topic>
+		        <topic label="Hole Cutter" href="EN/getting_started/walkthrough2/HoleCutter.html">
+		                </topic>
+		        <topic label="Create Geometry" href="EN/getting_started/walkthrough2/CreateGeometry.html">
+		                </topic>
+		        <topic label="Changing Snapping Behavior" href="EN/getting_started/walkthrough2/ChangingSnappingBehavior.html">
+		                </topic>
+		        <topic label="Delete Feature Tool" href="EN/getting_started/walkthrough2/DeleteFeatureTool.html">
+		                </topic>
+		        <topic label="Fill Tool" href="EN/getting_started/walkthrough2/FillTool.html">
+		                </topic>
+                <topic label="Save" href="EN/getting_started/walkthrough2/Save.html">
+                    </topic>
+		        <topic label="What to Do Next" href="EN/getting_started/walkthrough2/WhattoDoNext.html">
+		                </topic>
+            </topic>            
+        </topic>
         
                             
         <topic label="Introduction to the Spatial Toolbox" href="EN/Introduction to the Spatial Toolbox.html">

@@ -61,18 +61,22 @@ Earth</a> project:</p>
 <ol class="arabic">
 <li><p class="first">Right click on the following links and choose <strong>Save Link As...</strong>:</p>
 <p><a class="reference external" href="http://udig.refractions.net/files/data/data_1_3.zip">data_1_3.zip</a></p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you are using this in a classroom setting or OSGeo live dvd the files should be on your DVD</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">If you are using this in a classroom setting or <em>OSGeo Live</em> the files should be on your DVD</p>
 </div>
 </li>
 <li><p class="first">If you have your own GIS data please feel free to experiment. Making use of the above sample data
 will enable you to follow along with this tutorial step by step.</p>
 </li>
 </ol>
-<p>This is actually the full dataset used by <a class="reference internal" href="Walkthrough 1.html"><em>Walkthrough 1</em></a>. The contents of
-this dataset are as follows (in case you want to download higher resolution data):</p>
-<ul class="simple">
+<p>The <em>data_1_3.zip</em> download is the full dataset used by <a class="reference internal" href="Walkthrough 1.html"><em>Walkthrough 1</em></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Natural Earth Data</p>
+<p>We would like to thank <a class="reference external" href="http://www.naturalearthdata.com">www.naturalearthdata.com</a> for this sample data. Please
+visit their web site to download individual files (and at different scales for more detailed work):</p>
+<ul class="last simple">
 <li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/raster/HYP_50M_SR_W.zip">HYP_50M_SR_W.zip</a>,</li>
 <li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-populated-places-simple.zip">10m-populated-places-simple.zip</a>,</li>
 <li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-0-countries.zip">10m-admin-0-countries.zip</a>,</li>
@@ -88,13 +92,14 @@ this dataset are as follows (in case you want to download higher resolution data
 <li><a class="reference external" href="http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-rivers-lake-centerlines.zip">physical/10m-rivers-lake-centerlines.zip</a></li>
 </ul>
 </div>
+</div>
 <div class="section" id="udig-application">
 <h2>uDig Application<a class="headerlink" href="#udig-application" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
-<li><p class="first">Choose <em class="menuselection">uDig 1.1 ‣ uDig</em> from the start menu</p>
+<li><p class="first">Choose <em class="menuselection">uDig 1.3 ‣ uDig</em> from the start menu</p>
 </li>
 <li><p class="first">The application will take a few moments to start up</p>
-<p><img alt="image0" src="_images/Quickstart1Splash.png" /></p>
+<p><img alt="image0" src="_images/splash.png" /></p>
 </li>
 </ol>
 <p>The uDig application keeps a configuration folder in your home directory, the folder will be created
@@ -103,97 +108,113 @@ Linux or Mac please review the <a class="reference internal" href="Running uDig.
 </div>
 <div class="section" id="welcome-view">
 <h2>Welcome View<a class="headerlink" href="#welcome-view" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>When you start up uDig for the first time the <strong>Welcome</strong> view is displayed on the right hand side
+of the screen. This view has links to tutorials, documentation and the project web site.</li>
+</ol>
+<div class="figure align-center">
+<img alt="welcome screen" src="_images/welcome.png" style="width: 80%;" />
+</div>
 <ol class="arabic">
-<li><p class="first">When you start up uDig for the first time the <strong>Welcome</strong> view takes up the entire display. This
-screen has links to tutorials, documentation and the project website.</p>
-</li>
-<li><p class="first">Click the arrow labelled <strong>Workbench</strong> in the upper right corner, to reveal the contents of the uDig workbench.</p>
-<p><img alt="image1" src="_images/welcome.png" /></p>
+<li><p class="first">To close the <em class="guilabel">Welcome</em> view click the <em class="guilabel">x</em> next to the word welcome.</p>
+<p>You can return to the <em class="guilabel">Welcome</em> view at any time using the menu bar <em class="menuselection">Help ‣ Welcome</em>.</p>
 </li>
 </ol>
-<p>You can return to the Welcome view at any time by selecting the <em class="menuselection">Help ‣ Welcome</em> from the menu
-bar.</p>
 </div>
 <div class="section" id="workbench">
 <h2>Workbench<a class="headerlink" href="#workbench" title="Permalink to this headline">¶</a></h2>
 <p>The Workbench window offers multiple Editors (each showing a Map) and supporting Views (offering
 information about the current Map).</p>
 <div class="figure align-center">
-<img alt="" src="_images/workbench.png" />
+<img alt="workbench tour" src="_images/workbench.jpg" style="width: 80%;" />
 </div>
-<p>Shown above is a typical uDig session with the <a class="reference internal" href="Map editor.html"><em>Map editor</em></a>, <a class="reference internal" href="Projects view.html"><em>Projects view</em></a>, <a class="reference internal" href="Layers view.html"><em>Layers view</em></a> and <a class="reference internal" href="Catalog view.html"><em>Catalog view</em></a> labelled .
-These views will be described further as we demonstrate their use.</p>
+<p>The above screen shows the uDig application in action with an open <a class="reference internal" href="Map editor.html"><em>Map editor</em></a> surrounded by the
+<a class="reference internal" href="Projects view.html"><em>Projects view</em></a>, <a class="reference internal" href="Layers view.html"><em>Layers view</em></a> and <a class="reference internal" href="Catalog view.html"><em>Catalog view</em></a>. These views will be described further
+as we demonstrate their use.</p>
 </div>
 <div class="section" id="files">
 <h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
 <p>To start out with we are going to load some of the sample data you downloaded earlier.</p>
-<ol class="arabic">
-<li><p class="first">Choose <em class="menuselection">Layer ‣ Add</em> from the menu bar to open up the <a class="reference internal" href="Add Data wizard.html"><em>Add Data wizard</em></a></p>
-</li>
-<li><p class="first">Select <a class="reference internal" href="Files.html"><em>Files</em></a> from the list of data sources</p>
-</li>
-<li><p class="first">Press <strong>Next</strong> to open up a file dialog</p>
-</li>
-<li><p class="first">Select the following files from your data folder: <strong>countries.shp</strong></p>
-</li>
-<li><p class="first">Press <strong>Open</strong></p>
-<ul class="simple">
+<ol class="arabic simple">
+<li>Choose <em class="menuselection">Layer ‣ Add</em> from the menu bar to open up the <a class="reference internal" href="Add Data wizard.html"><em>Add Data wizard</em></a></li>
+<li>Select <a class="reference internal" href="Files.html"><em>Files</em></a> from the list of data sources</li>
+<li>Press <strong>Next</strong> to open up a file dialog</li>
+<li>Select the following file from your data folder: <strong>10m_admin_0_countries.shp</strong></li>
+<li>Press <strong>Open</strong><ul>
 <li>A new <a class="reference internal" href="Map editor.html"><em>Map editor</em></a> will be opened based on the contents of your
 shapefile. The default name and projection of the Map has been taken from your shapefile.</li>
-<li>You can see the <strong>Catalog view</strong> has been updated with an entry for <strong>countries.shp</strong>. This
+<li>You can see the <strong>Catalog view</strong> has been updated with an entry for <strong>10m_admin_0_countries.shp</strong>. This
 view is used to track the use of resources by the uDig application.</li>
 <li>The <strong>Layers view</strong> shows a single layer is displayed on this map. This view is used to change
 the order and appearance of information in your Map.</li>
-<li>The <strong>Projects</strong> view has been updated to show that your map is stored in
-<strong>projects&gt;countries</strong>. You can have multiple projects open at a time, each project can have
+<li>The <strong>Projects</strong> view has been updated to show that your map is stored in a
+<strong>project</strong>. You can have multiple projects open at a time, each project can have
 several maps.</li>
 </ul>
 </li>
-<li><p class="first">Open up your data folder in windows</p>
-</li>
-<li><p class="first">Drag the file <strong>clouds.jpg</strong> onto the Map Editor, a new layer is added to to the map.</p>
-</li>
-<li><p class="first">You can see the order the layers are drawn in the layer view. Right now the <strong>clouds.jpg</strong> layer
-is drawn ontop of the countries layer.</p>
-</li>
-<li><p class="first">Select the <strong>clouds.jpg</strong> layer in the catalog view and drag it to the bottom of the list</p>
-<p><img alt="image2" src="_images/QuickstartCountriesMap.jpg" /></p>
-</li>
+<li>Open up your <strong>data</strong> folder in the file system</li>
+<li>Drag the file <strong>NE1_50M_SR_W.tif</strong> onto the Map Editor, a new layer is added to to the map.</li>
+<li>You can see the order the layers are drawn in the layer view. Right now the <strong>NE1_50M_SR_W</strong> layer
+is drawn on top of the <strong>10m_admin_0_countries</strong> layer.</li>
+<li>Select the <strong>NE1_50M_SR_W.tif</strong> layer in the catalog view and drag it to the bottom of the list</li>
 </ol>
-<p><strong>Info:</strong> One of the most common questions asked when uDig is considered for an organization is how
-much memory the application uses. Unlike most GIS applications uDig can get by with a fixed amount
-of memory. The above shapefile is not loaded into memory, we have a policy of keeping data on disk
-and drawing data like this shapefile onto the screen as needed.</p>
+<div class="figure align-center">
+<img alt="Countries Map" src="_images/QuickstartCountriesMap.jpg" style="width: 80%;" />
+</div>
+<ol class="arabic simple">
+<li>You can also use the up and down buttons in the <em class="guilabel">Layers</em> view to reorder.</li>
+</ol>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">You can also drag and drop shapefiles directly into the uDig application!</p>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>A common questions asked when using uDig for the first time is how big a
+shapefile can uDig load?</p>
+<p class="last">The application uses a fixed amount of memory for each layer, and does not load
+shapefiles into memory. We have a policy of keeping data on disk and drawing
+information, such as this shapefile, onto the screen as needed.</p>
+</div>
 </div>
 <div class="section" id="map">
 <h2>Map<a class="headerlink" href="#map" title="Permalink to this headline">¶</a></h2>
-<p>You can control where in the world the Map Editor is looking by using the navigation tools in the
-tool bar along the top of the screen.</p>
-<ol class="arabic simple">
-<li>The <img alt="image3" src="_images/zoom_mode1.gif" /> <strong>Zoom</strong> tool is available by default<ul>
-<li>Use the zoom tool by drawing a box using the left mouse button around the area of the wold you
+<p>The <em class="guilabel">Map Editor</em> includes <em class="guilabel">Palette</em> of tools for map interaction. Use the navigation
+tools along the top of the <em class="guilabel">Palette</em> to control where the <em class="guilabel">Map Editor</em> is looking.</p>
+<ol class="arabic">
+<li><p class="first">The <img alt="image3" src="_images/zoom_mode1.gif" /> <em class="guilabel">Zoom</em> tool is available by default</p>
+<ul class="simple">
+<li>Use the zoom tool by drawing a box using the left mouse button around the area of the world you
 wish to see.</li>
 <li>To zoom out draw a box with the right mouse button. The current map extents will be located
 within the box you draw.</li>
 </ul>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Most tools allow you to Pan by holding the center button and control the scale using the scroll wheel.</p>
+</div>
 </li>
-<li>The <img alt="image4" src="_images/pan_mode1.gif" /> <strong>Pan</strong> tool can be used to scroll around your map with out changing scale.</li>
-<li>There are also several navigation buttons that can be used at any time:<ul>
-<li><img alt="image5" src="_images/zoom_extent_co1.gif" /> Show All, can be used to return to the full extents at any time</li>
-<li><img alt="image6" src="_images/zoom_in_co1.gif" /> Zoom In and <img alt="image7" src="_images/zoom_out_co1.gif" /> Zoom Out can be used to change the scale by a fixed amount.</li>
+<li><p class="first">The <img alt="image4" src="_images/pan_mode1.gif" /> <em class="guilabel">Pan</em> tool can be used to scroll around your map with out changing scale.</p>
+<ul class="simple">
+<li>You can change the behavior of the <em class="guilabel">Pan</em> tool using the tool option
+area located along the bottom edge of the map.</li>
+</ul>
+</li>
+<li><p class="first">The <em class="guilabel">toolbar</em> is updated to reflect the current map and contains several
+actions to control rendering:</p>
+<ul class="simple">
+<li><img alt="image5" src="_images/zoom_extent_co1.gif" /> Show All, can be used to return to the full map area at any time</li>
+<li><img alt="image6" src="_images/zoom_in_co1.gif" /> Zoom In and <img alt="image7" src="_images/zoom_out_co1.gif" /> Zoom Out can be used to change the scale by a fixed amount</li>
+<li>Actions to <em class="guilabel">Redraw Map</em> and <em class="guilabel">Stop Drawing</em> are available</li>
+</ul>
+</li>
+<li><p class="first">The application <em class="guilabel">menubar</em> is also updated to work with the current map.</p>
+<ul class="simple">
 <li>You can use <em class="menuselection">Navigation ‣ Back</em> and <em class="menuselection">Navigation ‣ Forward</em> in the menu bar to cycle though
 previously visited locations.</li>
 </ul>
 </li>
 </ol>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Most tools allow you to Pan by holding the center button and control the scale using the scroll wheel.</p>
-</div>
 </div>
 <div class="section" id="web-map-server">
 <h2>Web Map Server<a class="headerlink" href="#web-map-server" title="Permalink to this headline">¶</a></h2>
@@ -203,77 +224,75 @@ available layers of information that you can mix into your own maps.</p>
 <ol class="arabic">
 <li><p class="first">Select <em class="menuselection">File ‣ New ‣ New Map</em> from the menu bar</p>
 </li>
-<li><p class="first">Change to the <strong>Web view</strong>, click on the tab next to the <strong>Catalog view</strong> to reveal the Web view.</p>
+<li><p class="first">Change to the <em class="guilabel">Web</em> view, click on the tab next to the <em class="guilabel">Catalog</em> view to reveal the <em class="guilabel">Web</em> view.</p>
 </li>
-<li><p class="first">Click on the link <strong>WMS:dm solutions</strong> link</p>
+<li><p class="first">Click on the link <em class="guilabel">WMS:dm solutions</em> link</p>
 <p><img alt="image8" src="_images/WebViewClick.png" /></p>
 </li>
 <li><p class="first">From the <a class="reference internal" href="Resource Selection page.html"><em>Resource Selection page</em></a> we are going to choose the
 following layers:</p>
-<ul>
-<li><p class="first">Elevation/Bathymetry*</p>
-</li>
-<li><p class="first">Parks</p>
-</li>
-<li><p class="first">Cities</p>
+<ul class="simple">
+<li>Elevation/Bathymetry*</li>
+<li>Parks</li>
+<li>Cities</li>
+</ul>
 <p><img alt="image9" src="_images/AddWMSLayers.png" /></p>
 </li>
-</ul>
-</li>
 <li><p class="first">Press <strong>Finish</strong> to add these layers to your map</p>
-<p><img alt="image10" src="_images/WMSMap.png" /></p>
 </li>
-<li><p class="first">Use the <img alt="image11" src="_images/zoom_mode1.gif" /> Zoom Tool to move closer to one of the Parks</p>
+</ol>
+<div class="figure align-center">
+<img alt="WMS Map" src="_images/WMSMap.png" style="width: 80%;" />
+</div>
+<ol class="arabic">
+<li><p class="first">Use the <img alt="image11" src="_images/zoom_mode1.gif" /> <em class="guilabel">Zoom</em> tool to move closer to one of the Parks</p>
 </li>
-<li><p class="first">Switch to the <img alt="image12" src="_images/info_mode1.gif" /> and click on one the parks to learn more about it</p>
+<li><p class="first">Switch to the <img alt="image12" src="_images/info_mode1.gif" /> <em class="guilabel">Info</em> tool and click on one the parks.</p>
+<p>The <a class="reference internal" href="Information view.html"><em>Information view</em></a> is opened for more details on the area clicked.</p>
 </li>
 </ol>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">You can switch between the zoom and info tools by pressing <strong>Z</strong> and <strong>I</strong> on the keyboard.</p>
+<p class="last">You can switch between the zoom and info tools by pressing <tt class="kbd docutils literal"><span class="pre">Z</span></tt> and <tt class="kbd docutils literal"><span class="pre">I</span></tt> on the keyboard.</p>
 </div>
 </div>
 <div class="section" id="style">
 <h2>Style<a class="headerlink" href="#style" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
-<li><p class="first">Select the <strong>project &gt; countries</strong>, you can double click to open this Map, or Right Click and
-choose <strong>Open Map</strong></p>
+<li><p class="first">From the <em class="guilabel">Projects</em> view select <em class="guilabel">project &#8211;&gt; 10m admin 0 countries</em>.
+You can double click to open this Map, or right click for the context menu <cite>menuselect:`Open Map</cite>.</p>
 </li>
-<li><p class="first">Select the <strong>countries</strong> layer in the Layer view</p>
+<li><p class="first">With the map open use the <em class="guilabel">Layers</em> view to select the <em class="guilabel">10m admin 0 countries</em> layer.</p>
 </li>
-<li><p class="first">Open up the Style Editor by right clicking on <strong>countries</strong> layer and choosing <strong>Change Style</strong></p>
+<li><p class="first">Open up the <a class="reference internal" href="Style Editor dialog.html"><em>Style Editor dialog</em></a> by right clicking on <em class="guilabel">10m admin 0 countries</em>
+layer and <em class="menuselection">Change Style</em>.</p>
 </li>
-<li><p class="first">We are going to change a few things about how countries are displayed</p>
-<ul>
-<li><p class="first">Line: Click on the <strong>Color</strong> and change the color to <strong>BLACK</strong></p>
-</li>
-<li><p class="first">Fill: uncheck the box to turn off fill</p>
-</li>
-<li><p class="first">Label: check the box, and choose <strong>CNTRY_NAME</strong> from the list of attributes</p>
-<p><img alt="image13" src="_images/StyleEditor.png" /></p>
-</li>
+<li><p class="first">We are going to change a few things about how countries are displayed.</p>
+<p>The <em class="guilabel">Polygons</em> page provides a series of tabs for us to fill in:</p>
+<ul class="simple">
+<li><em class="guilabel">Border</em> Click on the <em class="guilabel">Color</em> and change the color to <strong>BLACK</strong></li>
+<li><em class="guilabel">Fill</em> uncheck the box disable fill</li>
+<li><em class="guilabel">Label</em> check the box to enable labels. For the <em class="guilabel">label</em> value select
+<em class="guilabel">NAME</em> from this list of attributes.</li>
 </ul>
 </li>
-<li><p class="first">Press <strong>Apply</strong> to see what this looks like on your Map, the Layer view will also be updated to
-reflect the current style</p>
-</li>
-<li><p class="first">When you are happy with the result you can press <strong>Close</strong> to dismiss the dialog</p>
-</li>
-<li><p class="first">Some files include style settings, Select <em class="menuselection">Layer ‣ Add ...</em> from the menu bar</p>
-</li>
-<li><p class="first">Select <strong>Files</strong> from the list of data sources and press <strong>Next</strong></p>
-</li>
-<li><p class="first">Using the From the file chooser open up <strong>timezone.shp</strong> and press <strong>Open</strong></p>
-</li>
-<li><p class="first">It is a bit hard to see what is going on with the <strong>clouds.jpg</strong> layer providing so much details.
-Select <em class="menuselection">Map ‣ Mylar</em> from the menu bar to focus on the selected layer</p>
-</li>
-<li><p class="first">Using the Layer view select <strong>timezone</strong>, <strong>countries</strong> and <strong>clouds.jpg</strong> in turn to see the
-effect</p>
-<p><img alt="image14" src="_images/MapMylar.jpg" /></p>
-</li>
-<li><p class="first">You can turn off this effect at any time using <em class="menuselection">Map ‣ Mylar</em> from the menu bar</p>
-</li>
+</ol>
+<div class="figure align-center">
+<img alt="Style Editor" src="_images/StyleEditor.png" style="width: 80%;" />
+</div>
+<ol class="arabic simple">
+<li>Press <em class="guilabel">Apply</em> to see what this looks like on your Map, the Layer view will also be updated to
+reflect the current style</li>
+<li>When you are happy with the result you can press <em class="guilabel">Close</em> to dismiss the dialog</li>
+<li>It is a bit hard to see what is going with the raster layer providing so much details.
+Select <em class="menuselection">Map ‣ Mylar</em> from the menu bar to focus on the selected layer</li>
+<li>Using the <em class="guilabel">Layer</em> view select the different layers in turn to see the effect.</li>
+</ol>
+<div class="figure align-center">
+<img alt="Mylar Map" src="_images/MapMylar.jpg" style="width: 80%;" />
+</div>
+<ol class="arabic simple">
+<li>You can turn off this effect at any time using <em class="menuselection">Map ‣ Mylar</em> from the menu bar</li>
 </ol>
 </div>
 <div class="section" id="what-is-next">
