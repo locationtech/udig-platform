@@ -86,7 +86,10 @@ function prepare_resources () {
         cp "${HERE}/mac-udig-clean.sh" "${PLATFORMCONTENT}/udig/udig-clean.sh"
         cp "${HERE}/mac-udig-debug.sh" "${PLATFORMCONTENT}/udig/udig-debug.sh"
         mv "${PLATFORMCONTENT}/udig/.options" "${PLATFORMCONTENT}/udig/udig.app/Contents/MacOS/"
-		make_dmg
+        
+        if [[ PLATFORM == mac64 ]] ; then # only 64 is working right now
+            make_dmg
+        fi
     fi
 }
 
