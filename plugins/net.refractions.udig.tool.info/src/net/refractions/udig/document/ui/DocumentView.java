@@ -30,8 +30,8 @@ import net.refractions.udig.catalog.document.IAbstractDocumentSource;
 import net.refractions.udig.catalog.document.IAttachment;
 import net.refractions.udig.catalog.document.IAttachmentSource;
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
+import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocumentFolder;
 import net.refractions.udig.catalog.document.IDocumentSource;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
@@ -51,7 +51,10 @@ import net.refractions.udig.tool.info.internal.Messages;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.dialogs.Dialog;
@@ -80,6 +83,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
@@ -432,15 +436,15 @@ public class DocumentView extends ViewPart {
                 final IStructuredSelection newSelection = (IStructuredSelection) selection;
                 if (workbenchSelection == null) {
                     // Go Update!
-                    updateList(UPD_OPTIONS.UPDATE, newSelection);
+                    updateList(UpdateType.UPDATE, newSelection);
                 } else {
                     final boolean isSameCount = (workbenchSelection.size() == newSelection.size());
                     if (isSameCount) {
                         // Check and update!
-                        updateList(UPD_OPTIONS.CHECK_UPDATE, newSelection);
+                        updateList(UpdateType.CHECK_UPDATE, newSelection);
                     } else {
                         // Go Update!
-                        updateList(UPD_OPTIONS.UPDATE, newSelection);
+                        updateList(UpdateType.UPDATE, newSelection);
                     }
                 }
                 return;
@@ -448,48 +452,69 @@ public class DocumentView extends ViewPart {
         }
         
         // Clear list!        
-        updateList(UPD_OPTIONS.CLEAR, null);
+        updateList(UpdateType.CLEAR, null);
         
     }
     
-    private enum UPD_OPTIONS {
+    private enum UpdateType {
         CLEAR, UPDATE, CHECK_UPDATE
     }
     
     /**
-     * Updates the list with respect to the current selection.
+     * Creates a job to get the related documents of the selection. This transitions the processing
+     * to another thread.
      * 
      * @param option
-     * @param newSelection
+     * @param selection
      */
-    private void updateList(UPD_OPTIONS option, IStructuredSelection newSelection) {
+    private void updateList(final UpdateType option, final IStructuredSelection selection) {
 
-        switch (option) {
-        case CLEAR:
-            workbenchSelection = null;
-            itemModel = null;
-            viewer.setInput(itemModel);
-            break;
-        case UPDATE:
-            workbenchSelection = newSelection;
-            itemModel = new DocumentItemModel();
-            itemModel.setItems(getItems());
-            viewer.setInput(itemModel);
-            break;
-        case CHECK_UPDATE:
-            if (!isSameSelection(newSelection)) {
-                itemModel = new DocumentItemModel();
-                workbenchSelection = newSelection;
-                itemModel.setItems(getItems());
-                viewer.setInput(itemModel);
+        final Job getDocsJob = new Job("Retrieving documents"){
+            @Override
+            protected IStatus run(IProgressMonitor monitor) {
+
+                switch (option) {
+                case CLEAR:
+                    workbenchSelection = null;
+                    itemModel = null;
+                    break;
+                case UPDATE:
+                    workbenchSelection = selection;
+                    itemModel = new DocumentItemModel();
+                    itemModel.setItems(getItems(monitor));
+
+                    break;
+                case CHECK_UPDATE:
+                    if (!isSameSelection(selection)) {
+                        workbenchSelection = selection;
+                        itemModel = new DocumentItemModel();
+                        itemModel.setItems(getItems(monitor));
+                    }
+                    break;
+                default:
+                    break;
+                }
+
+                updateListCallback();
+                return Status.OK_STATUS;
+
             }
-            break;
-        default:
-            break;
-        }
-        
-        viewer.expandAll();
-        
+        };
+        getDocsJob.schedule();
+
+    }
+    
+    /**
+     * Updates the document list with the related documents of the selection. This transitions the
+     * processing back to the UI thread.
+     */
+    private void updateListCallback() {
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                viewer.setInput(itemModel);
+                viewer.expandAll();
+            }
+        });
     }
     
     /**
@@ -549,10 +574,9 @@ public class DocumentView extends ViewPart {
      * 
      * @return document items
      */
-    private List<Object> getItems() {
+    private List<Object> getItems(IProgressMonitor monitor) {
         
         final List<Object> items = new ArrayList<Object>();
-        final NullProgressMonitor monitor = new NullProgressMonitor();
         for (Iterator<?> iterator = workbenchSelection.iterator(); iterator.hasNext();) {
             
             final Object obj = iterator.next();
@@ -565,7 +589,7 @@ public class DocumentView extends ViewPart {
                     if (attachmentSource != null) {
                         final String featureLabel = getFeatureLabel(geoResource, feature);
                         final IDocumentFolder folder = ShpDocFactory.createFolder(featureLabel, attachmentSource);
-                        folder.setDocuments(attachmentSource.getDocuments(feature));
+                        folder.setDocuments(attachmentSource.getDocuments(feature)); //TODO - set monitor
                         items.add(folder);
                     }
                 }
@@ -573,7 +597,7 @@ public class DocumentView extends ViewPart {
                 final IDocumentSource docSource = toSource(geoResource, IDocumentSource.class, monitor);
                 if (docSource != null) {
                     final IDocumentFolder folder = ShpDocFactory.createFolder(geoResource.getTitle(), docSource);
-                    folder.setDocuments(docSource.getDocuments());
+                    folder.setDocuments(docSource.getDocuments()); //TODO - set monitor
                     items.add(folder);
                 }
                 
@@ -626,7 +650,7 @@ public class DocumentView extends ViewPart {
             final AdapterUtil adapterUtil = AdapterUtil.instance;
             if (adapterUtil.canAdaptTo(obj, IGeoResource.class)) {
                 try {
-                    return adapterUtil.adaptTo(IGeoResource.class, obj, new NullProgressMonitor());
+                    return adapterUtil.adaptTo(IGeoResource.class, obj, monitor);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
