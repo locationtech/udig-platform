@@ -104,6 +104,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.filter.FilterFactory2;
+import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Divide;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Literal;
@@ -1306,38 +1307,42 @@ public class StyleThemePage extends StyleEditorPage {
                 //create the classification function, if necessary
                 if (classifierModified) {
                     //TODO: add other classifiers
+                	FunctionName fn = null;
                     boolean createClassifier = true;
-                    if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_uniques)) 
-                    	function = new UniqueIntervalFunction();
-                    else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_equalInterval)) 
-                    	function = new EqualIntervalFunction();
-                    else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_quantile)) 
-                    	function = new QuantileFunction();
-                    else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_standardDeviation)) 
-                    	function = new StandardDeviationFunction();
+                    if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_uniques))
+                    	fn = UniqueIntervalFunction.NAME;
+                    else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_equalInterval))
+                    	fn = EqualIntervalFunction.NAME;
+                    else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_quantile))
+                    	fn = QuantileFunction.NAME;
+                    else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_standardDeviation))
+                    	fn = StandardDeviationFunction.NAME;
                     else if (getCombo(COMBO_BREAKTYPE).getText().equalsIgnoreCase(Messages.StyleEditor_theme_custom)){ 
                         classifier = customBreak;
                         createClassifier = false;
                     }else{ 
                         return;
                     }
-                    if (createClassifier){
-                    ProgressListener cancelProgress = ((StyleEditorDialog) getContainer()).getProgressListener();
-                    function.setProgressListener((org.geotools.util.ProgressListener) cancelProgress);
-                    numClasses = Integer.parseInt( getCombo(COMBO_CLASSES).getText() );
                     
-                    Literal literal;
-                    if (getCombo(COMBO_ELSE).getSelectionIndex() == 0) {
-                        literal = ff.literal( numClasses );
-                    } else {
-                    	literal = ff.literal( numClasses-1);
-                    }
-                    List<Expression> params = new ArrayList<Expression>(2);
-                    params.add( expr );
-                    params.add( literal );
-                    function.setParameters(params);
-                    classifier = (Classifier) function.evaluate( collection, Classifier.class );
-                    }
+					if (createClassifier) {
+						function = (ClassificationFunction) ff.function(fn.getFunctionName(), new Expression[fn.getArgumentCount()]);
+						
+						ProgressListener cancelProgress = ((StyleEditorDialog) getContainer()).getProgressListener();
+						function.setProgressListener((org.geotools.util.ProgressListener) cancelProgress);
+						numClasses = new Integer(getCombo(COMBO_CLASSES).getText()).intValue();
+
+						if (getCombo(COMBO_ELSE).getSelectionIndex() == 0) {
+							// function.setNumberOfClasses(numClasses);
+							function.setClasses(numClasses);
+						} else {
+							// function.setNumberOfClasses(numClasses-1);
+							function.setClasses(numClasses - 1);
+						}
+						// function.setCollection(collection);
+						function.getParameters().set(0, expr); // set the expression last, since it causes the calculation
+						// function.setExpression(expr);
+						classifier = (Classifier) function.evaluate(collection,Classifier.class);
+					}
                 }
 
                 //generate the style
