@@ -9,10 +9,10 @@ import java.util.List;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IHotlinkSource;
-import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.document.model.FileHotlinkDocument;
 import net.refractions.udig.document.model.WebHotlinkDocument;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.opengis.feature.simple.SimpleFeature;
 
 public class BasicHotlink implements IHotlinkSource {
@@ -24,23 +24,23 @@ public class BasicHotlink implements IHotlinkSource {
     }
 
     @Override
-    public List<HotlinkDescriptor> getHotlinkDescriptors() {
+    public List<HotlinkDescriptor> getHotlinkDescriptors(SimpleFeature feature, IProgressMonitor monitor) {
         List<HotlinkDescriptor> list = BasicHotlinkResolveFactory.getHotlinkDescriptors( resource );
         return Collections.unmodifiableList(list);
     }
     @Override
-    public List<IDocument> getDocuments(SimpleFeature feature) {
+    public List<IDocument> getDocuments(SimpleFeature feature, IProgressMonitor monitor) {
         List<IDocument> list = new ArrayList<IDocument>();
-        for (HotlinkDescriptor descriptor : getHotlinkDescriptors()) {
-            IDocument document = getDocument(feature, descriptor.getAttributeName());
+        for (HotlinkDescriptor descriptor : getHotlinkDescriptors(feature, monitor)) {
+            IDocument document = getDocument(feature, descriptor.getAttributeName(), monitor);
             list.add(document);
         }
         return Collections.unmodifiableList(list);
     }
 
     @Override
-    public IDocument getDocument(SimpleFeature feature, String attributeName) {
-        for (HotlinkDescriptor descriptor : getHotlinkDescriptors()) {
+    public IDocument getDocument(SimpleFeature feature, String attributeName, IProgressMonitor monitor) {
+        for (HotlinkDescriptor descriptor : getHotlinkDescriptors(feature, monitor)) {
             if (descriptor.getAttributeName().equals(attributeName)) {
                 return createDocument(feature, descriptor);
             }
@@ -63,38 +63,35 @@ public class BasicHotlink implements IHotlinkSource {
     }
 
     @Override
-    public IDocument setFile(SimpleFeature feature, String attributeName, File file) {
-        
-        return null;
-    }
-
-    @Override
-    public IDocument setLink(SimpleFeature feature, String attributeName, URL link) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public IDocument clear(SimpleFeature feature, String attributeName) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public IDocument setAction(SimpleFeature feature, String attributeName, String action) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public boolean canSetHotlink() {
-        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean setFile(SimpleFeature feature, String attributeName, File file,
+            IProgressMonitor monitor) {
+        return false;
+    }
+
+    @Override
+    public boolean setLink(SimpleFeature feature, String attributeName, URL link,
+            IProgressMonitor monitor) {
+        return false;
+    }
+
+    @Override
+    public boolean setAction(SimpleFeature feature, String attributeName, String action,
+            IProgressMonitor monitor) {
         return false;
     }
 
     @Override
     public boolean canClearHotlink() {
-        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean clear(SimpleFeature feature, String attributeName, IProgressMonitor monitor) {
         return false;
     }
 

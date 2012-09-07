@@ -63,7 +63,7 @@ public class ShpAttachmentSourceTest extends ShpHotlinkSourceTest {
     @Test
     public void testGetDocuments() {
         
-        List<IDocument> docs = attachSource.getDocuments(feature);
+        List<IDocument> docs = attachSource.getDocuments(feature, monitor);
         assertEquals("Count is not expected.", 3, docs.size());
         
     }
@@ -71,7 +71,7 @@ public class ShpAttachmentSourceTest extends ShpHotlinkSourceTest {
     @Test
     public void testAddRemove() {
         
-        List<IDocument> docs = attachSource.getDocuments(feature);
+        List<IDocument> docs = attachSource.getDocuments(feature, monitor);
         
         attachSource.add(feature, fileDocInfo1, monitor);
         assertEquals("Count is not expected.", 4, docs.size());
@@ -102,7 +102,7 @@ public class ShpAttachmentSourceTest extends ShpHotlinkSourceTest {
     @Test
     public void testUpdate() {
         
-        List<IDocument> docs = attachSource.getDocuments(feature);
+        List<IDocument> docs = attachSource.getDocuments(feature, monitor);
         assertEquals("Count is not expected.", 3, docs.size());
         
         IDocument doc = attachSource.add(feature, fileDocInfo1, monitor);
