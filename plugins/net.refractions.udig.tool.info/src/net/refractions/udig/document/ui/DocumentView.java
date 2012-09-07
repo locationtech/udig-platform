@@ -469,7 +469,7 @@ public class DocumentView extends ViewPart {
      */
     private void updateList(final UpdateType option, final IStructuredSelection selection) {
 
-        final Job getDocsJob = new Job("Retrieving documents"){
+        final Job getDocsJob = new Job("Retrieving documents..."){
             @Override
             protected IStatus run(IProgressMonitor monitor) {
 
@@ -839,8 +839,6 @@ public class DocumentView extends ViewPart {
             final DocumentDialog docDialog = openDocDialog(new HashMap<String, Object>(), params, isFeatureDoc);
             if (docDialog != null) {
                 addDocument(folder, docDialog.getDocInfo());
-                viewer.refresh();
-                viewer.expandAll();
             }            
         }
         
@@ -875,8 +873,6 @@ public class DocumentView extends ViewPart {
             final DocumentDialog docDialog = openDocDialog(new HashMap<String, Object>(), params, isFeatureDoc);
             if (docDialog != null) { 
                 addDocument(folder, docDialog.getDocInfo());
-                viewer.refresh();
-                viewer.expandAll();
             }            
         }
         
@@ -885,22 +881,46 @@ public class DocumentView extends ViewPart {
     /**
      * Adds a new document to the document folder with the given document info.
      */
-    private void addDocument(IDocumentFolder folder, DocumentInfo info) {
+    private void addDocument(final IDocumentFolder folder, final DocumentInfo info) {
                 
-        IDocument doc = null;
-        if (folder.getSource() instanceof IDocumentSource) {
-            final IDocumentSource resourceDocSource = (IDocumentSource) folder.getSource();
-            doc = resourceDocSource.add(info);
-        } else if (folder.getSource() instanceof IAttachmentSource) {
-            final IAttachmentSource featureDocSource = (IAttachmentSource) folder.getSource();
-            doc = featureDocSource.add(feature, info);
-        }
-        
-        if (doc == null) {
-            MessageDialog.openInformation(attachButton.getShell(),
-                    Messages.docView_attachFile, Messages.docView_errFileExistSingle);
-        }
-        
+        final Job addDocJob = new Job("Adding document..."){
+            @Override
+            protected IStatus run(IProgressMonitor monitor) {
+
+                IDocument doc = null;
+                if (folder.getSource() instanceof IDocumentSource) {
+                    final IDocumentSource resourceDocSource = (IDocumentSource) folder.getSource();
+                    doc = resourceDocSource.add(info); // TODO - add monitor
+                } else if (folder.getSource() instanceof IAttachmentSource) {
+                    final IAttachmentSource featureDocSource = (IAttachmentSource) folder.getSource();
+                    doc = featureDocSource.add(feature, info); // TODO - add monitor
+                }                
+                
+                addDocumentCallback(doc);
+                return Status.OK_STATUS;
+
+            }
+        };
+        addDocJob.schedule();
+
+    }
+    
+    /**
+     * Refreshes the documents list after adding a document. This transitions the processing back to
+     * the UI thread.
+     */
+    private void addDocumentCallback(final IDocument doc) {
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                // TODO - fix feedback
+                if (doc == null) {
+                    MessageDialog.openInformation(attachButton.getShell(),
+                            Messages.docView_attachFile, Messages.docView_errFileExistSingle);
+                }
+                viewer.refresh();
+                viewer.expandAll();
+            }
+        });
     }
     
     /**
@@ -917,8 +937,6 @@ public class DocumentView extends ViewPart {
             } else {
                 editDocument(doc);
             }
-            viewer.refresh();
-            viewer.expandAll();
         }
         
     }
@@ -928,7 +946,7 @@ public class DocumentView extends ViewPart {
      * 
      * @param doc
      */
-    private void editDocument(IDocument doc) {
+    private void editDocument(final IDocument doc) {
         
         final Map<String, Object> values = new HashMap<String, Object>();
         if (!doc.isEmpty()) {
@@ -948,15 +966,37 @@ public class DocumentView extends ViewPart {
         final boolean isFeatureDoc = (source instanceof IAttachmentSource);
         final DocumentDialog docDialog = openDocDialog(values, params, isFeatureDoc);
         if (docDialog != null) {
-            if (source instanceof IDocumentSource) {
-                final IDocumentSource resourceDocSource = (IDocumentSource) source;
-                resourceDocSource.update(doc, docDialog.getDocInfo());
-            } else if (source instanceof IAttachmentSource) {
-                final IAttachmentSource featureDocSource = (IAttachmentSource) source;
-                featureDocSource.update(feature, doc, docDialog.getDocInfo());
-            }
+            final Job editDocJob = new Job("Updating document..."){
+                @Override
+                protected IStatus run(IProgressMonitor monitor) {
+                    if (source instanceof IDocumentSource) {
+                        final IDocumentSource resourceDocSource = (IDocumentSource) source;
+                        resourceDocSource.update(doc, docDialog.getDocInfo()); //TODO - add monitor
+                    } else if (source instanceof IAttachmentSource) {
+                        final IAttachmentSource featureDocSource = (IAttachmentSource) source;
+                        featureDocSource.update(feature, doc, docDialog.getDocInfo()); //TODO - add monitor
+                    }              
+                    editDocumentCallback(doc);
+                    return Status.OK_STATUS;
+                }
+            };
+            editDocJob.schedule();
         }
         
+    }
+    
+    /**
+     * Refreshes the documents list after updating a document. This transitions the processing back
+     * to the UI thread.
+     */
+    private void editDocumentCallback(final IDocument doc) {
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                // TODO - provide feedback
+                viewer.refresh();
+                viewer.expandAll();
+            }
+        });
     }
     
     /**
@@ -964,7 +1004,7 @@ public class DocumentView extends ViewPart {
      * 
      * @param doc
      */
-    private void editHotlink(IDocument doc) {
+    private void editHotlink(final IDocument doc) {
         
         final IHotlink hotlinkDoc = (IHotlink) doc;
         final String attributeName = hotlinkDoc.getAttributeName();
@@ -990,23 +1030,47 @@ public class DocumentView extends ViewPart {
         
         final DocumentDialog docDialog = openDocDialog(values, params, true);
         if (docDialog != null) {
-            final IAttachmentSource featureDocSource = (IAttachmentSource) doc.getSource();
-            switch (doc.getContentType()) {
-            case FILE:
-                featureDocSource.setFile(feature, attributeName, docDialog.getFileInfo());
-                break;
-            case WEB:
-                featureDocSource.setLink(feature, attributeName, docDialog.getUrlInfo());
-                break;
-            case ACTION:
-                featureDocSource.setAction(feature, attributeName, docDialog.getInfo());
-                break;
-            default:
-                break;
-            }
-            set(attributeName, feature.getAttribute(attributeName));
+            final Job editHotlinkJob = new Job("Updating hotlink..."){
+                @Override
+                protected IStatus run(IProgressMonitor monitor) {
+                     
+                    final IAttachmentSource featureDocSource = (IAttachmentSource) doc.getSource();
+                    switch (doc.getContentType()) {
+                    case FILE:
+                        featureDocSource.setFile(feature, attributeName, docDialog.getFileInfo()); // TODO - add monitor
+                        break;
+                    case WEB:
+                        featureDocSource.setLink(feature, attributeName, docDialog.getUrlInfo()); // TODO - add monitor
+                        break;
+                    case ACTION:
+                        featureDocSource.setAction(feature, attributeName, docDialog.getInfo()); // TODO - add monitor
+                        break;
+                    default:
+                        break;
+                    }
+                    set(attributeName, feature.getAttribute(attributeName)); // TODO - add monitor
+                    
+                    editHotlinkCallback(null); // TODO - set result
+                    return Status.OK_STATUS;
+                }
+            };
+            editHotlinkJob.schedule();
         }
         
+    }
+    
+    /**
+     * Refreshes the documents list after updating a hotlink. This transitions the processing back
+     * to the UI thread.
+     */
+    private void editHotlinkCallback(final IDocument doc) {
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                // TODO - provide feedback
+                viewer.refresh();
+                viewer.expandAll();
+            }
+        });
     }
     
     /**
@@ -1053,9 +1117,9 @@ public class DocumentView extends ViewPart {
             }
         }
 
-        for (IAbstractDocumentSource source : docMap.keySet()) {
+        for (final IAbstractDocumentSource source : docMap.keySet()) {
             final ArrayList<IDocument> docs = docMap.get(source);
-            for (IDocument doc : docs) {
+            for (final IDocument doc : docs) {
                 
                 boolean doDelete = true;
                 if (Type.ATTACHMENT == doc.getType() && ContentType.FILE == doc.getContentType()
@@ -1067,27 +1131,76 @@ public class DocumentView extends ViewPart {
                 
                 if (doDelete) {
                     if (source instanceof IDocumentSource) {
-                        final IDocumentSource docSource = (IDocumentSource) source;
-                        docSource.remove(doc);
+                        final Job removeLayerDocJob = new Job("Removing document..."){
+                            @Override
+                            protected IStatus run(IProgressMonitor monitor) {
+                                final IDocumentSource docSource = (IDocumentSource) source;
+                                final boolean isRemoved = docSource.remove(doc); // TODO add monitor
+                                removeDocumentCallback(isRemoved); // TODO - set result
+                                return Status.OK_STATUS;
+                            }
+                        };
+                        removeLayerDocJob.schedule();
                     } else if (source instanceof IAttachmentSource) {
                         final IAttachmentSource featureDocSource = (IAttachmentSource) source;
                         if (Type.HOTLINK == doc.getType()) {
-                            final IHotlink hotlinkDoc = (IHotlink) doc;
-                            final String attributeName = hotlinkDoc.getAttributeName();
-                            featureDocSource.clear(feature, attributeName);
-                            set(attributeName, null);
+                            final Job clearHotlinkJob = new Job("Clearing hotlink..."){
+                                @Override
+                                protected IStatus run(IProgressMonitor monitor) {
+                                    final IHotlink hotlinkDoc = (IHotlink) doc;
+                                    final String attributeName = hotlinkDoc.getAttributeName();
+                                    featureDocSource.clear(feature, attributeName); // TODO - add monitor
+                                    set(attributeName, null);  // TODO - add monitor
+                                    clearHotlinkCallback(null); // TODO - set result
+                                    return Status.OK_STATUS;
+                                }
+                            };
+                            clearHotlinkJob.schedule();
                         } else {
-                            featureDocSource.remove(feature, doc);
+                            final Job removeFeatureDocJob = new Job("Removing document..."){
+                                @Override
+                                protected IStatus run(IProgressMonitor monitor) {
+                                    final boolean isRemoved = featureDocSource.remove(feature, doc); // TODO add monitor
+                                    removeDocumentCallback(isRemoved); // TODO - set result
+                                    return Status.OK_STATUS;
+                                }
+                            };
+                            removeFeatureDocJob.schedule();
                         }
                     }                    
                 }
                 
             }
         }
-
-        viewer.refresh();
-        viewer.expandAll();
         
+    }
+    
+    /**
+     * Refreshes the documents list after clearing a hotlink. This transitions the processing back
+     * to the UI thread.
+     */
+    private void clearHotlinkCallback(IDocument doc) {
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                //TODO - provide feedback
+                viewer.refresh();
+                viewer.expandAll();
+            }
+        });
+    }
+    
+    /**
+     * Refreshes the documents list after removing a document. This transitions the processing back
+     * to the UI thread.
+     */
+    private void removeDocumentCallback(boolean isRemoved) {
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                //TODO - provide feedback
+                viewer.refresh();
+                viewer.expandAll();
+            }
+        });
     }
     
     /**
