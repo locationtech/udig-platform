@@ -64,25 +64,25 @@ public class ShpAttachmentSourceTest extends ShpHotlinkSourceTest {
         
         List<IDocument> docs = attachSource.getDocuments(feature);
         
-        attachSource.add(feature, fileDocInfo1);
+        attachSource.add(feature, fileDocInfo1, monitor);
         assertEquals("Count is not expected.", 4, docs.size());
         assertTrue("File was not added.", fileExistsInLocalDir(file1));
         
-        attachSource.remove(feature, getDoc(docs, fileDocInfo1));
+        attachSource.remove(feature, getDoc(docs, fileDocInfo1), monitor);
         assertEquals("Count is not expected.", 3, docs.size());
         assertFalse("File was not removed.", fileExistsInLocalDir(file1));
         
         List<DocumentInfo> inInfos = new ArrayList<DocumentInfo>();
         inInfos.add(fileDocInfo2);
         inInfos.add(webDocInfo2);
-        attachSource.add(feature, inInfos);
+        attachSource.add(feature, inInfos, monitor);
         assertEquals("Count is not expected.", 5, docs.size());
         assertTrue("File was not added.", fileExistsInLocalDir(file2));
         
         List<IDocument> inDocs = new ArrayList<IDocument>();
         inDocs.add(getDoc(docs, fileDocInfo2));
         inDocs.add(getDoc(docs, webDocInfo2));
-        attachSource.remove(feature, inDocs);
+        attachSource.remove(feature, inDocs, monitor);
         assertEquals("Count is not expected.", 3, docs.size());
         assertFalse("File was not removed.", fileExistsInLocalDir(file2));
         
@@ -95,11 +95,11 @@ public class ShpAttachmentSourceTest extends ShpHotlinkSourceTest {
         List<IDocument> docs = attachSource.getDocuments(feature);
         assertEquals("Count is not expected.", 3, docs.size());
         
-        IDocument doc = attachSource.add(feature, fileDocInfo1);
+        IDocument doc = attachSource.add(feature, fileDocInfo1, monitor);
         assertNotNull("Doc does not exists.", doc);
         assertTrue("File was not added.", fileExistsInLocalDir(file1));
         
-        attachSource.update(feature, doc, fileDocInfo2);
+        attachSource.update(feature, doc, fileDocInfo2, monitor);
         
         doc = getDoc(docs, fileDocInfo1);
         assertNull("Doc exists.", doc);

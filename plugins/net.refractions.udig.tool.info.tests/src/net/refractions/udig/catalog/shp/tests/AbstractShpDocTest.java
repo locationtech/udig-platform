@@ -18,6 +18,9 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IDocument.Type;
@@ -62,10 +65,14 @@ public abstract class AbstractShpDocTest extends TestCase {
     protected static final String LINK_ATTR = "LINK";
     protected static final String STATE_ATTR = "STATE";
     
+    protected IProgressMonitor monitor;
+    
     @Override
     protected void setUp() throws Exception {
         super.setUp();
 
+        monitor = new NullProgressMonitor();
+        
         final File directory = new File(DIRECTORY);
         
         file = new File(directory, SHAPEFILE);
