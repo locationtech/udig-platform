@@ -801,6 +801,7 @@
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
                             <excludeScope>provided</excludeScope>
+							<stripVersion>true</stripVersion>
                         </configuration>
                     </execution>
                     <execution>
@@ -817,6 +818,7 @@
                             <overWriteSnapshots>false</overWriteSnapshots>
                              <excludeScope>provided</excludeScope>
                              <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+							<stripVersion>true</stripVersion>
                          </configuration>
                      </execution>
                 </executions>
