@@ -32,6 +32,8 @@ import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
 import net.refractions.udig.document.source.ShpDocPropertyParser;
 import net.refractions.udig.document.source.ShpDocumentSource;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 import org.junit.Test;
 
@@ -47,9 +49,13 @@ public class ShpDocumentSourceTest extends AbstractShpDocTest {
     private ShpDocumentSource source;
     private File attachDir;
     
+    private IProgressMonitor monitor;
+    
     @Override
     protected void setUpInternal() {
         super.setUpInternal();
+        
+        monitor = new NullProgressMonitor();
         
         parser = new ShpDocPropertyParser(url);
         attachDir = parser.getShapefileAttachDir();
@@ -68,33 +74,33 @@ public class ShpDocumentSourceTest extends AbstractShpDocTest {
     
     @Test
     public void testGet() {
-        assertEquals("Count is not expected.", 0, source.getDocuments().size());
+        assertEquals("Count is not expected.", 0, source.getDocuments(monitor).size());
     }
     
     @Test
     public void testAddRemove() {
         
-        List<IDocument> docs = source.getDocuments();
+        List<IDocument> docs = source.getDocuments(monitor);
         assertEquals("Count is not expected.", 0, docs.size());
         
-        source.add(fileDocInfo1);
+        source.add(fileDocInfo1, monitor);
         assertEquals("Count is not expected.", 1, docs.size());
 
-        source.remove(getDoc(docs, fileDocInfo1));
+        source.remove(getDoc(docs, fileDocInfo1), monitor);
         assertEquals("Count is not expected.", 0, docs.size());
 
         List<DocumentInfo> inInfos = new ArrayList<DocumentInfo>();
         inInfos.add(fileDocInfo2);
         inInfos.add(webDocInfo2);
 
-        source.add(inInfos);
+        source.add(inInfos, monitor);
         assertEquals("Count is not expected.", 2, docs.size());
 
         List<IDocument> inDocs = new ArrayList<IDocument>();
         inDocs.add(getDoc(docs, fileDocInfo2));
         inDocs.add(getDoc(docs, webDocInfo2));
         
-        source.remove(inDocs);
+        source.remove(inDocs, monitor);
         assertEquals("Count is not expected.", 0, docs.size());
         
         cleaupAttachDir();
@@ -104,15 +110,15 @@ public class ShpDocumentSourceTest extends AbstractShpDocTest {
     @Test
     public void testUpdateFile() {
         
-        List<IDocument> docs = source.getDocuments();
+        List<IDocument> docs = source.getDocuments(monitor);
         assertEquals("Count is not expected.", 0, docs.size());
         
-        source.add(fileDocInfo1);
+        source.add(fileDocInfo1, monitor);
         
         IDocument doc = getDoc(docs, fileDocInfo1);
         assertNotNull("Doc does not exists.", doc);
         
-        source.update(doc, fileDocInfo2);
+        source.update(doc, fileDocInfo2, monitor);
         doc = getDoc(docs, fileDocInfo1);
         assertNull("Doc exists.", doc);
         doc = getDoc(docs, fileDocInfo2);
