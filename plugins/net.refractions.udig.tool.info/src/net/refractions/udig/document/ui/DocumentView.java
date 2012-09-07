@@ -16,7 +16,6 @@ package net.refractions.udig.document.ui;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,17 +37,13 @@ import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.document.IHotlink;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.core.AdapterUtil;
-import net.refractions.udig.core.IBlockingProvider;
 import net.refractions.udig.document.source.ShpDocFactory;
 import net.refractions.udig.document.ui.DocumentDialog.Mode;
-import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.provider.FIDFeatureProvider;
 import net.refractions.udig.project.internal.commands.edit.SetAttributeCommand;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.tool.info.InfoPlugin;
 import net.refractions.udig.tool.info.internal.Messages;
-import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -59,7 +54,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -912,13 +906,13 @@ public class DocumentView extends ViewPart {
     private void addDocumentCallback(final IDocument doc) {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                // TODO - fix feedback
                 if (doc == null) {
-                    MessageDialog.openInformation(attachButton.getShell(),
-                            Messages.docView_attachFile, Messages.docView_errFileExistSingle);
+                    MessageDialog.openError(attachButton.getShell(),
+                            "Add Document", "Document was not added successfully.");
+                } else {
+                    viewer.refresh();
+                    viewer.expandAll();    
                 }
-                viewer.refresh();
-                viewer.expandAll();
             }
         });
     }
@@ -969,15 +963,16 @@ public class DocumentView extends ViewPart {
             final Job editDocJob = new Job("Updating document..."){
                 @Override
                 protected IStatus run(IProgressMonitor monitor) {
+                    boolean isUpdated = false;
                     final DocumentInfo info = docDialog.getDocInfo();
                     if (source instanceof IDocumentSource) {
                         final IDocumentSource resourceDocSource = (IDocumentSource) source;
-                        resourceDocSource.update(doc, info, monitor);
+                        isUpdated = resourceDocSource.update(doc, info, monitor);
                     } else if (source instanceof IAttachmentSource) {
                         final IAttachmentSource featureDocSource = (IAttachmentSource) source;
-                        featureDocSource.update(feature, doc, info, monitor);
+                        isUpdated = featureDocSource.update(feature, doc, info, monitor);
                     }              
-                    editDocumentCallback(doc);
+                    editDocumentCallback(isUpdated);
                     return Status.OK_STATUS;
                 }
             };
@@ -990,12 +985,16 @@ public class DocumentView extends ViewPart {
      * Refreshes the documents list after updating a document. This transitions the processing back
      * to the UI thread.
      */
-    private void editDocumentCallback(final IDocument doc) {
+    private void editDocumentCallback(final boolean isUpdated) {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                // TODO - provide feedback
-                viewer.refresh();
-                viewer.expandAll();
+                if (!isUpdated) {
+                    MessageDialog.openError(attachButton.getShell(),
+                            "Edit Document", "Document was not updated successfully.");
+                } else {
+                    viewer.refresh();
+                    viewer.expandAll();    
+                }
             }
         });
     }
@@ -1034,24 +1033,26 @@ public class DocumentView extends ViewPart {
             final Job editHotlinkJob = new Job("Updating hotlink..."){
                 @Override
                 protected IStatus run(IProgressMonitor monitor) {
-                     
+                    boolean isUpdated = false;
                     final IAttachmentSource featureDocSource = (IAttachmentSource) doc.getSource();
                     switch (doc.getContentType()) {
                     case FILE:
-                        featureDocSource.setFile(feature, attributeName, docDialog.getFileInfo()); // TODO - add monitor
+                        isUpdated = featureDocSource.setFile(feature, attributeName, docDialog.getFileInfo(), monitor);
                         break;
                     case WEB:
-                        featureDocSource.setLink(feature, attributeName, docDialog.getUrlInfo()); // TODO - add monitor
+                        isUpdated = featureDocSource.setLink(feature, attributeName, docDialog.getUrlInfo(), monitor);
                         break;
                     case ACTION:
-                        featureDocSource.setAction(feature, attributeName, docDialog.getInfo()); // TODO - add monitor
+                        isUpdated = featureDocSource.setAction(feature, attributeName, docDialog.getInfo(), monitor);
                         break;
                     default:
                         break;
                     }
-                    set(attributeName, feature.getAttribute(attributeName)); // TODO - add monitor
-                    
-                    editHotlinkCallback(null); // TODO - set result
+                    if (isUpdated) {
+                        isUpdated = set(attributeName, feature.getAttribute(attributeName), monitor);
+                    }
+                    itemModel.getClass();
+                    editHotlinkCallback(isUpdated);
                     return Status.OK_STATUS;
                 }
             };
@@ -1064,12 +1065,16 @@ public class DocumentView extends ViewPart {
      * Refreshes the documents list after updating a hotlink. This transitions the processing back
      * to the UI thread.
      */
-    private void editHotlinkCallback(final IDocument doc) {
+    private void editHotlinkCallback(final boolean isUpdated) {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                // TODO - provide feedback
-                viewer.refresh();
-                viewer.expandAll();
+                if (!isUpdated) {
+                    MessageDialog.openError(attachButton.getShell(),
+                            "Set Hotlink", "Hotlink was not set successfully.");
+                } else {
+                    viewer.refresh();
+                    viewer.expandAll();    
+                }
             }
         });
     }
@@ -1137,7 +1142,7 @@ public class DocumentView extends ViewPart {
                             protected IStatus run(IProgressMonitor monitor) {
                                 final IDocumentSource docSource = (IDocumentSource) source;
                                 final boolean isRemoved = docSource.remove(doc, monitor);
-                                removeDocumentCallback(isRemoved); // TODO - set result
+                                removeDocumentCallback(isRemoved);
                                 return Status.OK_STATUS;
                             }
                         };
@@ -1150,9 +1155,11 @@ public class DocumentView extends ViewPart {
                                 protected IStatus run(IProgressMonitor monitor) {
                                     final IHotlink hotlinkDoc = (IHotlink) doc;
                                     final String attributeName = hotlinkDoc.getAttributeName();
-                                    featureDocSource.clear(feature, attributeName); // TODO - add monitor
-                                    set(attributeName, null);  // TODO - add monitor
-                                    clearHotlinkCallback(null); // TODO - set result
+                                    boolean isCleared = featureDocSource.clear(feature, attributeName, monitor);
+                                    if (isCleared) {
+                                        isCleared = set(attributeName, null, monitor);
+                                    }
+                                    clearHotlinkCallback(isCleared); // TODO - set result
                                     return Status.OK_STATUS;
                                 }
                             };
@@ -1162,7 +1169,7 @@ public class DocumentView extends ViewPart {
                                 @Override
                                 protected IStatus run(IProgressMonitor monitor) {
                                     final boolean isRemoved = featureDocSource.remove(feature, doc, monitor);
-                                    removeDocumentCallback(isRemoved); // TODO - set result
+                                    removeDocumentCallback(isRemoved);
                                     return Status.OK_STATUS;
                                 }
                             };
@@ -1180,12 +1187,16 @@ public class DocumentView extends ViewPart {
      * Refreshes the documents list after clearing a hotlink. This transitions the processing back
      * to the UI thread.
      */
-    private void clearHotlinkCallback(IDocument doc) {
+    private void clearHotlinkCallback(final boolean isCleared) {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                //TODO - provide feedback
-                viewer.refresh();
-                viewer.expandAll();
+                if (!isCleared) {
+                    MessageDialog.openError(attachButton.getShell(),
+                            "Clear Hotlink", "Hotlink was not cleared successfully.");
+                } else {
+                    viewer.refresh();
+                    viewer.expandAll();    
+                }
             }
         });
     }
@@ -1194,12 +1205,16 @@ public class DocumentView extends ViewPart {
      * Refreshes the documents list after removing a document. This transitions the processing back
      * to the UI thread.
      */
-    private void removeDocumentCallback(boolean isRemoved) {
+    private void removeDocumentCallback(final boolean isRemoved) {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                //TODO - provide feedback
-                viewer.refresh();
-                viewer.expandAll();
+                if (!isRemoved) {
+                    MessageDialog.openError(attachButton.getShell(),
+                            "Remove Document", "Document was not removed successfully.");
+                } else {
+                    viewer.refresh();
+                    viewer.expandAll();    
+                }
             }
         });
     }
@@ -1211,13 +1226,13 @@ public class DocumentView extends ViewPart {
      * @param attributeName
      * @param obj
      */
-    private void set(final String attributeName, final Object obj) {
+    private boolean set(final String attributeName, final Object obj, IProgressMonitor monitor) {
         final FeatureId fid = feature.getIdentifier();
         final IMap map = ApplicationGIS.getActiveMap();
         if (map != null) {
-            setOnMap(map, fid, attributeName, obj);
+            return setOnMap(map, fid, attributeName, obj);
         } else {
-            setOnGeoResource(fid, attributeName, obj);
+            return setOnGeoResource(fid, attributeName, obj, monitor);
         }
     }
     
@@ -1229,25 +1244,11 @@ public class DocumentView extends ViewPart {
      * @param attributeName
      * @param obj
      */
-    private void setOnMap(final IMap map, final FeatureId fid, final String attributeName,
+    private boolean setOnMap(final IMap map, final FeatureId fid, final String attributeName,
             final Object obj) {
-
-        final IBlockingProvider<ILayer> layerProvider = new IBlockingProvider<ILayer>() {
-            @Override
-            public ILayer get(IProgressMonitor monitor, Object... params) throws IOException {
-                for (ILayer layer : map.getMapLayers()) {
-                    if (layer.getGeoResource().getID() == geoResource.getID()) {
-                        return layer;
-                    }
-                }
-                return null;
-            }
-        };
-        final IBlockingProvider<SimpleFeature> featureProvider = new FIDFeatureProvider(
-                fid.getID(), layerProvider);
-
-        map.sendCommandASync(new SetAttributeCommand(featureProvider, layerProvider, attributeName,
-                obj));
+        final SetAttributeCommand cmd = new SetAttributeCommand(attributeName, obj);
+        map.sendCommandASync(cmd);
+        return true;
     }
     
     /**
@@ -1257,26 +1258,22 @@ public class DocumentView extends ViewPart {
      * @param attributeName
      * @param obj
      */
-    private void setOnGeoResource(final FeatureId fid, final String attributeName, final Object obj) {
+    private boolean setOnGeoResource(final FeatureId fid, final String attributeName,
+            final Object obj, IProgressMonitor monitor) {
 
-        final IRunnableWithProgress runner = new IRunnableWithProgress() {
-            @Override
-            public void run(IProgressMonitor monitor) throws InvocationTargetException,
-                    InterruptedException {
-                try {
-                    if (geoResource.canResolve(SimpleFeatureStore.class)) {
-                        final Filter filter = CommonFactoryFinder.getFilterFactory2().id(fid);
-                        final SimpleFeatureStore featureStore = geoResource.resolve(
-                                SimpleFeatureStore.class, new NullProgressMonitor());
-                        featureStore.modifyFeatures(attributeName, obj, filter);    
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        try {
+            if (geoResource.canResolve(SimpleFeatureStore.class)) {
+                final Filter filter = CommonFactoryFinder.getFilterFactory2().id(fid);
+                final SimpleFeatureStore featureStore = geoResource.resolve(
+                        SimpleFeatureStore.class, monitor);
+                featureStore.modifyFeatures(attributeName, obj, filter);
+                return true;
             }
-        };
-
-        PlatformGIS.runInProgressDialog("", true, runner, true); //$NON-NLS-1$
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        return false;
 
     }
     

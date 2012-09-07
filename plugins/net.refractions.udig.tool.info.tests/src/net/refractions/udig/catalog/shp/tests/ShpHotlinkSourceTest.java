@@ -107,25 +107,25 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
     }
 
     public void testGetDescriptors() {
-        final List<HotlinkDescriptor> descriptors = source.getHotlinkDescriptors();
+        final List<HotlinkDescriptor> descriptors = source.getHotlinkDescriptors(feature, monitor);
         assertEquals("Descriptor count is not expected.", 3, descriptors.size());
     }
 
     public void testGetDocuments() {
 
-        final List<IDocument> docs = source.getDocuments(feature);
+        final List<IDocument> docs = source.getDocuments(feature, monitor);
         assertEquals("Count is not expected.", 3, docs.size());
 
-        IDocument doc = source.getDocument(feature, FILE_ATTR);
+        IDocument doc = source.getDocument(feature, FILE_ATTR, monitor);
         assertNotNull("Doc is null.", doc);
         assertTrue("Doc is not an instance of HotlinkFileDoc.",
                 (doc instanceof FileHotlinkDocument));
 
-        doc = source.getDocument(feature, LINK_ATTR);
+        doc = source.getDocument(feature, LINK_ATTR, monitor);
         assertNotNull("Doc is null.", doc);
         assertTrue("Doc is not an instance of HotlinkWebDoc.", (doc instanceof WebHotlinkDocument));
 
-        doc = source.getDocument(feature, STATE_ATTR);
+        doc = source.getDocument(feature, STATE_ATTR, monitor);
         assertNotNull("Doc is null.", doc);
         assertTrue("Doc is not an instance of HotlinkWebDoc.",
                 (doc instanceof ActionHotlinkDocument));
@@ -134,16 +134,16 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
 
     public void testSetAndClearFile() {
 
-        source.setFile(feature, FILE_ATTR, file1);
+        source.setFile(feature, FILE_ATTR, file1, monitor);
 
-        IDocument doc = source.getDocument(feature, FILE_ATTR);
+        IDocument doc = source.getDocument(feature, FILE_ATTR, monitor);
         File docFile = (File) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertEquals("File is not expected.", file1.getAbsolutePath(), docFile.getAbsolutePath());
 
-        source.clear(feature, FILE_ATTR);
+        source.clear(feature, FILE_ATTR, monitor);
 
-        doc = source.getDocument(feature, FILE_ATTR);
+        doc = source.getDocument(feature, FILE_ATTR, monitor);
         docFile = (File) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertNull("File is not null.", docFile);
@@ -158,16 +158,16 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        source.setLink(feature, LINK_ATTR, url);
+        source.setLink(feature, LINK_ATTR, url, monitor);
 
-        IDocument doc = source.getDocument(feature, LINK_ATTR);
+        IDocument doc = source.getDocument(feature, LINK_ATTR, monitor);
         URL docUrl = (URL) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertEquals("File is not expected.", url.toString(), docUrl.toString());
 
-        source.clear(feature, LINK_ATTR);
+        source.clear(feature, LINK_ATTR, monitor);
 
-        doc = source.getDocument(feature, LINK_ATTR);
+        doc = source.getDocument(feature, LINK_ATTR, monitor);
         docUrl = (URL) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertNull("File is not null.", docUrl);
@@ -178,16 +178,16 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
 
         final String action = "ACTION";
 
-        source.setAction(feature, STATE_ATTR, action);
+        source.setAction(feature, STATE_ATTR, action, monitor);
 
-        IDocument doc = source.getDocument(feature, STATE_ATTR);
+        IDocument doc = source.getDocument(feature, STATE_ATTR, monitor);
         String docAction = (String) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertEquals("File is not expected.", action, docAction);
 
-        source.clear(feature, STATE_ATTR);
+        source.clear(feature, STATE_ATTR, monitor);
 
-        doc = source.getDocument(feature, STATE_ATTR);
+        doc = source.getDocument(feature, STATE_ATTR, monitor);
         docAction = (String) doc.getContent();
         assertNotNull("Doc is null.", doc);
         assertNull("File is not null.", docAction);

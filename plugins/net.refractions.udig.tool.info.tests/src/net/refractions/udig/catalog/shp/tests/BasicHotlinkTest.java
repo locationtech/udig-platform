@@ -85,7 +85,7 @@ public class BasicHotlinkTest {
                 IHotlinkSource.class, new NullProgressMonitor());
         assertNotNull(hotlink);
 
-        List<HotlinkDescriptor> list = hotlink.getHotlinkDescriptors();
+        List<HotlinkDescriptor> list = hotlink.getHotlinkDescriptors(null, new NullProgressMonitor());
         assertEquals("descriptors found", 2, list.size());
 
         SimpleFeatureStore featureStore = resource.resolve(SimpleFeatureStore.class,
@@ -107,7 +107,7 @@ public class BasicHotlinkTest {
         assertTrue("Tasmania found", iterator.hasNext());
         SimpleFeature tasmania = iterator.next();
 
-        List<IDocument> documents = hotlink.getDocuments(tasmania);
+        List<IDocument> documents = hotlink.getDocuments(tasmania, new NullProgressMonitor());
         assertEquals("image document found", 2, documents.size());
 
         IDocument imageDocument = documents.get(0);

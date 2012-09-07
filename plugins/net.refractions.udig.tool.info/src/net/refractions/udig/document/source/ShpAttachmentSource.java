@@ -45,7 +45,7 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
 
     @Override
     public List<IDocument> getDocuments(SimpleFeature feature, IProgressMonitor monitor) {
-        super.getDocuments(feature);
+        super.getDocuments(feature, monitor);
         final List<DocumentInfo> infos = propParser.getFeatureDocumentInfos(feature);
         if (infos != null && infos.size() > 0) {
             docs.addAll(docFactory.create(infos));
@@ -53,9 +53,9 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
         return docs;
     }
     
-    private List<IDocument> getDocsInternal(SimpleFeature feature) {
+    private List<IDocument> getDocsInternal(SimpleFeature feature, IProgressMonitor monitor) {
         if (docs == null) {
-            return getDocuments(feature);
+            return getDocuments(feature, monitor);
         }
         return docs;
     }
@@ -77,8 +77,8 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     
     @Override
     public IDocument add(SimpleFeature feature, DocumentInfo info, IProgressMonitor monitor) {
-        final IDocument doc = addInternal(feature, info);
-        save(feature);
+        final IDocument doc = addInternal(feature, info, monitor);
+        save(feature, monitor);
         return doc;
     }
 
@@ -86,13 +86,13 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     public List<IDocument> add(SimpleFeature feature, List<DocumentInfo> infos, IProgressMonitor monitor) {
         final List<IDocument> newDocs = new ArrayList<IDocument>();
         for (DocumentInfo info : infos) {
-            addInternal(feature, info);
+            addInternal(feature, info, monitor);
         }
-        save(feature);
+        save(feature, monitor);
         return newDocs;
     }
 
-    private IDocument addInternal(SimpleFeature feature, DocumentInfo info) {
+    private IDocument addInternal(SimpleFeature feature, DocumentInfo info, IProgressMonitor monitor) {
         if (Type.ATTACHMENT == info.getType()) {
             final File newFile = ShpDocUtils.copyFile(info.getInfo(), getAttachmentDir(feature));
             info.setInfo(newFile.getAbsolutePath());
@@ -100,7 +100,7 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
             // Do special handling here for linked documents, if needed
         }
         final IDocument newDoc = docFactory.create(info);
-        getDocsInternal(feature).add(newDoc);
+        getDocsInternal(feature, monitor).add(newDoc);
         return newDoc;
     }
     
@@ -124,7 +124,7 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
             // Do special handling here for linked documents, if needed
         }
         ((AbstractLinkedDocument) doc).setInfo(info);
-        save(feature);
+        save(feature, monitor);
         return true;
     }
 
@@ -141,33 +141,33 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     
     @Override
     public boolean remove(SimpleFeature feature, IDocument oldDoc, IProgressMonitor monitor) {
-        removeInternal(feature, oldDoc);
-        save(feature);
+        removeInternal(feature, oldDoc, monitor);
+        save(feature, monitor);
         return true;
     }
 
     @Override
     public boolean remove(SimpleFeature feature, List<IDocument> oldDocs, IProgressMonitor monitor) {
         for (IDocument oldDoc : oldDocs) {
-            removeInternal(feature, oldDoc);
+            removeInternal(feature, oldDoc, monitor);
         }
-        save(feature);
+        save(feature, monitor);
         return true;
     }
 
-    private boolean removeInternal(SimpleFeature feature, IDocument oldDoc) {
+    private boolean removeInternal(SimpleFeature feature, IDocument oldDoc, IProgressMonitor monitor) {
         if (Type.ATTACHMENT == oldDoc.getType()) {
             ShpDocUtils.deleteFile(oldDoc.getContent());
         } else if (Type.LINKED == oldDoc.getType()) {
             // Do special handling here for linked documents, if needed
         }
-        getDocsInternal(feature).remove(oldDoc);
+        getDocsInternal(feature, monitor).remove(oldDoc);
         return true;
     }
     
-    private void save(SimpleFeature feature) {
+    private void save(SimpleFeature feature, IProgressMonitor monitor) {
         final List<DocumentInfo> infos = new ArrayList<IDocumentSource.DocumentInfo>();
-        for (IDocument doc : getDocsInternal(feature)) {
+        for (IDocument doc : getDocsInternal(feature, monitor)) {
             if (Type.HOTLINK != doc.getType()) {
                 final AbstractLinkedDocument shpDoc = (AbstractLinkedDocument) doc;
                 infos.add(shpDoc.getInfo());    
