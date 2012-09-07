@@ -463,7 +463,7 @@ public class DocumentView extends ViewPart {
      */
     private void updateList(final UpdateType option, final IStructuredSelection selection) {
 
-        final Job getDocsJob = new Job("Retrieving documents..."){
+        final Job getDocsJob = new Job(Messages.DocumentView_retrieveDocsProgressMsg){
             @Override
             protected IStatus run(IProgressMonitor monitor) {
 
@@ -877,7 +877,7 @@ public class DocumentView extends ViewPart {
      */
     private void addDocument(final IDocumentFolder folder, final DocumentInfo info) {
                 
-        final Job addDocJob = new Job("Adding document..."){
+        final Job addDocJob = new Job(Messages.DocumentView_addDocProgressMsg){
             @Override
             protected IStatus run(IProgressMonitor monitor) {
 
@@ -908,7 +908,7 @@ public class DocumentView extends ViewPart {
             public void run() {
                 if (doc == null) {
                     MessageDialog.openError(attachButton.getShell(),
-                            "Add Document", "Document was not added successfully.");
+                            Messages.DocumentView_addDocPopupTitle, Messages.DocumentView_addDocError);
                 } else {
                     viewer.refresh();
                     viewer.expandAll();    
@@ -960,7 +960,7 @@ public class DocumentView extends ViewPart {
         final boolean isFeatureDoc = (source instanceof IAttachmentSource);
         final DocumentDialog docDialog = openDocDialog(values, params, isFeatureDoc);
         if (docDialog != null) {
-            final Job editDocJob = new Job("Updating document..."){
+            final Job editDocJob = new Job(Messages.DocumentView_updateDocProgressMsg){
                 @Override
                 protected IStatus run(IProgressMonitor monitor) {
                     boolean isUpdated = false;
@@ -990,7 +990,7 @@ public class DocumentView extends ViewPart {
             public void run() {
                 if (!isUpdated) {
                     MessageDialog.openError(attachButton.getShell(),
-                            "Edit Document", "Document was not updated successfully.");
+                            Messages.DocumentView_updateDocPopupTitle, Messages.DocumentView_updateDocError);
                 } else {
                     viewer.refresh();
                     viewer.expandAll();    
@@ -1030,7 +1030,7 @@ public class DocumentView extends ViewPart {
         
         final DocumentDialog docDialog = openDocDialog(values, params, true);
         if (docDialog != null) {
-            final Job editHotlinkJob = new Job("Updating hotlink..."){
+            final Job editHotlinkJob = new Job(Messages.DocumentView_updateHotlinkProgressMsg){
                 @Override
                 protected IStatus run(IProgressMonitor monitor) {
                     boolean isUpdated = false;
@@ -1070,7 +1070,7 @@ public class DocumentView extends ViewPart {
             public void run() {
                 if (!isUpdated) {
                     MessageDialog.openError(attachButton.getShell(),
-                            "Set Hotlink", "Hotlink was not set successfully.");
+                            Messages.DocumentView_setHotlinkPopupTitle, Messages.DocumentView_setHotlinkError);
                 } else {
                     viewer.refresh();
                     viewer.expandAll();    
@@ -1137,7 +1137,7 @@ public class DocumentView extends ViewPart {
                 
                 if (doDelete) {
                     if (source instanceof IDocumentSource) {
-                        final Job removeLayerDocJob = new Job("Removing document..."){
+                        final Job removeLayerDocJob = new Job(Messages.DocumentView_removeDocProgressMsg){
                             @Override
                             protected IStatus run(IProgressMonitor monitor) {
                                 final IDocumentSource docSource = (IDocumentSource) source;
@@ -1150,7 +1150,7 @@ public class DocumentView extends ViewPart {
                     } else if (source instanceof IAttachmentSource) {
                         final IAttachmentSource featureDocSource = (IAttachmentSource) source;
                         if (Type.HOTLINK == doc.getType()) {
-                            final Job clearHotlinkJob = new Job("Clearing hotlink..."){
+                            final Job clearHotlinkJob = new Job(Messages.DocumentView_clearHotlinkProgressMsg){
                                 @Override
                                 protected IStatus run(IProgressMonitor monitor) {
                                     final IHotlink hotlinkDoc = (IHotlink) doc;
@@ -1159,13 +1159,13 @@ public class DocumentView extends ViewPart {
                                     if (isCleared) {
                                         isCleared = set(attributeName, null, monitor);
                                     }
-                                    clearHotlinkCallback(isCleared); // TODO - set result
+                                    clearHotlinkCallback(isCleared);
                                     return Status.OK_STATUS;
                                 }
                             };
                             clearHotlinkJob.schedule();
                         } else {
-                            final Job removeFeatureDocJob = new Job("Removing document..."){
+                            final Job removeFeatureDocJob = new Job(Messages.DocumentView_removeDocProgressMsg){
                                 @Override
                                 protected IStatus run(IProgressMonitor monitor) {
                                     final boolean isRemoved = featureDocSource.remove(feature, doc, monitor);
@@ -1192,7 +1192,7 @@ public class DocumentView extends ViewPart {
             public void run() {
                 if (!isCleared) {
                     MessageDialog.openError(attachButton.getShell(),
-                            "Clear Hotlink", "Hotlink was not cleared successfully.");
+                            Messages.DocumentView_clearHotlinkPopupTitle, Messages.DocumentView_clearHotlinkError);
                 } else {
                     viewer.refresh();
                     viewer.expandAll();    
@@ -1210,7 +1210,7 @@ public class DocumentView extends ViewPart {
             public void run() {
                 if (!isRemoved) {
                     MessageDialog.openError(attachButton.getShell(),
-                            "Remove Document", "Document was not removed successfully.");
+                            Messages.DocumentView_removeDocPopupTitle, Messages.DocumentView_removeDocError);
                 } else {
                     viewer.refresh();
                     viewer.expandAll();    
