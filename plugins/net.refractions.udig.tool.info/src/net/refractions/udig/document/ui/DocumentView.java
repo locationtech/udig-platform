@@ -597,7 +597,7 @@ public class DocumentView extends ViewPart {
                 final IDocumentSource docSource = toSource(geoResource, IDocumentSource.class, monitor);
                 if (docSource != null) {
                     final IDocumentFolder folder = ShpDocFactory.createFolder(geoResource.getTitle(), docSource);
-                    folder.setDocuments(docSource.getDocuments()); //TODO - set monitor
+                    folder.setDocuments(docSource.getDocuments(monitor));
                     items.add(folder);
                 }
                 
@@ -890,7 +890,7 @@ public class DocumentView extends ViewPart {
                 IDocument doc = null;
                 if (folder.getSource() instanceof IDocumentSource) {
                     final IDocumentSource resourceDocSource = (IDocumentSource) folder.getSource();
-                    doc = resourceDocSource.add(info); // TODO - add monitor
+                    doc = resourceDocSource.add(info, monitor);
                 } else if (folder.getSource() instanceof IAttachmentSource) {
                     final IAttachmentSource featureDocSource = (IAttachmentSource) folder.getSource();
                     doc = featureDocSource.add(feature, info); // TODO - add monitor
@@ -971,7 +971,7 @@ public class DocumentView extends ViewPart {
                 protected IStatus run(IProgressMonitor monitor) {
                     if (source instanceof IDocumentSource) {
                         final IDocumentSource resourceDocSource = (IDocumentSource) source;
-                        resourceDocSource.update(doc, docDialog.getDocInfo()); //TODO - add monitor
+                        resourceDocSource.update(doc, docDialog.getDocInfo(), monitor);
                     } else if (source instanceof IAttachmentSource) {
                         final IAttachmentSource featureDocSource = (IAttachmentSource) source;
                         featureDocSource.update(feature, doc, docDialog.getDocInfo()); //TODO - add monitor
@@ -1135,7 +1135,7 @@ public class DocumentView extends ViewPart {
                             @Override
                             protected IStatus run(IProgressMonitor monitor) {
                                 final IDocumentSource docSource = (IDocumentSource) source;
-                                final boolean isRemoved = docSource.remove(doc); // TODO add monitor
+                                final boolean isRemoved = docSource.remove(doc, monitor);
                                 removeDocumentCallback(isRemoved); // TODO - set result
                                 return Status.OK_STATUS;
                             }
