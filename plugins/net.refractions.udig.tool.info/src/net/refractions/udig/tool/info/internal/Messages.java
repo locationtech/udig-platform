@@ -152,9 +152,29 @@ public class Messages extends NLS {
 
     public static String DocumentPropertyPage_errRequired;
 
+    public static String DocumentView_addDocError;
+
+    public static String DocumentView_addDocPopupTitle;
+
+    public static String DocumentView_addDocProgressMsg;
+
+    public static String DocumentView_clearHotlinkError;
+
+    public static String DocumentView_clearHotlinkPopupTitle;
+
+    public static String DocumentView_clearHotlinkProgressMsg;
+
     public static String DocumentView_openActionDialogMessage;
 
     public static String DocumentView_openActionDialogTitle;
+
+    public static String DocumentView_removeDocError;
+
+    public static String DocumentView_removeDocPopupTitle;
+
+    public static String DocumentView_removeDocProgressMsg;
+
+    public static String DocumentView_retrieveDocsProgressMsg;
 
     public static String DocumentView_saveAsDialogTitle;
 
@@ -166,6 +186,18 @@ public class Messages extends NLS {
 
     public static String DocumentView_saveAsSuccessDialogTitle;
 
+    public static String DocumentView_setHotlinkError;
+
+    public static String DocumentView_setHotlinkPopupTitle;
+
+    public static String DocumentView_updateDocError;
+
+    public static String DocumentView_updateDocPopupTitle;
+
+    public static String DocumentView_updateDocProgressMsg;
+
+    public static String DocumentView_updateHotlinkProgressMsg;
+
     public static String InfoView_instructions_text;
 
     public static String InfoView2_information_request;
@@ -173,10 +205,6 @@ public class Messages extends NLS {
     public static String LayerPointInfo_toString;
 
     public static String docView_attach;
-
-    public static String docView_attachFile;
-
-    public static String docView_attachFiles;
 
     public static String docView_delete;
 
@@ -188,21 +216,7 @@ public class Messages extends NLS {
 
     public static String docView_typeColumn;
 
-    public static String docView_errEmpty;
-
-    public static String docView_errFileExistMulti;
-
-    public static String docView_errFileExistSingle;
-
-    public static String docView_errInvalidURL;
-
-    public static String docView_errURLExist;
-
     public static String docView_edit;
-
-    public static String docView_linkDialogHeader;
-
-    public static String docView_linkDialogTitle;
 
     public static String docView_link;
 
