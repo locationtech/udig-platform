@@ -589,7 +589,7 @@ public class DocumentView extends ViewPart {
                     if (attachmentSource != null) {
                         final String featureLabel = getFeatureLabel(geoResource, feature);
                         final IDocumentFolder folder = ShpDocFactory.createFolder(featureLabel, attachmentSource);
-                        folder.setDocuments(attachmentSource.getDocuments(feature)); //TODO - set monitor
+                        folder.setDocuments(attachmentSource.getDocuments(feature, monitor));
                         items.add(folder);
                     }
                 }
@@ -893,7 +893,7 @@ public class DocumentView extends ViewPart {
                     doc = resourceDocSource.add(info, monitor);
                 } else if (folder.getSource() instanceof IAttachmentSource) {
                     final IAttachmentSource featureDocSource = (IAttachmentSource) folder.getSource();
-                    doc = featureDocSource.add(feature, info); // TODO - add monitor
+                    doc = featureDocSource.add(feature, info, monitor);
                 }                
                 
                 addDocumentCallback(doc);
@@ -969,12 +969,13 @@ public class DocumentView extends ViewPart {
             final Job editDocJob = new Job("Updating document..."){
                 @Override
                 protected IStatus run(IProgressMonitor monitor) {
+                    final DocumentInfo info = docDialog.getDocInfo();
                     if (source instanceof IDocumentSource) {
                         final IDocumentSource resourceDocSource = (IDocumentSource) source;
-                        resourceDocSource.update(doc, docDialog.getDocInfo(), monitor);
+                        resourceDocSource.update(doc, info, monitor);
                     } else if (source instanceof IAttachmentSource) {
                         final IAttachmentSource featureDocSource = (IAttachmentSource) source;
-                        featureDocSource.update(feature, doc, docDialog.getDocInfo()); //TODO - add monitor
+                        featureDocSource.update(feature, doc, info, monitor);
                     }              
                     editDocumentCallback(doc);
                     return Status.OK_STATUS;
@@ -1160,7 +1161,7 @@ public class DocumentView extends ViewPart {
                             final Job removeFeatureDocJob = new Job("Removing document..."){
                                 @Override
                                 protected IStatus run(IProgressMonitor monitor) {
-                                    final boolean isRemoved = featureDocSource.remove(feature, doc); // TODO add monitor
+                                    final boolean isRemoved = featureDocSource.remove(feature, doc, monitor);
                                     removeDocumentCallback(isRemoved); // TODO - set result
                                     return Status.OK_STATUS;
                                 }

@@ -26,6 +26,7 @@ import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import net.refractions.udig.document.model.AbstractLinkedDocument;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
@@ -43,7 +44,7 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     }
 
     @Override
-    public List<IDocument> getDocuments(SimpleFeature feature) {
+    public List<IDocument> getDocuments(SimpleFeature feature, IProgressMonitor monitor) {
         super.getDocuments(feature);
         final List<DocumentInfo> infos = propParser.getFeatureDocumentInfos(feature);
         if (infos != null && infos.size() > 0) {
@@ -75,14 +76,14 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     }
     
     @Override
-    public IDocument add(SimpleFeature feature, DocumentInfo info) {
+    public IDocument add(SimpleFeature feature, DocumentInfo info, IProgressMonitor monitor) {
         final IDocument doc = addInternal(feature, info);
         save(feature);
         return doc;
     }
 
     @Override
-    public List<IDocument> add(SimpleFeature feature, List<DocumentInfo> infos) {
+    public List<IDocument> add(SimpleFeature feature, List<DocumentInfo> infos, IProgressMonitor monitor) {
         final List<IDocument> newDocs = new ArrayList<IDocument>();
         for (DocumentInfo info : infos) {
             addInternal(feature, info);
@@ -109,7 +110,7 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     }
     
     @Override
-    public IDocument update(SimpleFeature feature, IDocument doc, DocumentInfo info) {
+    public boolean update(SimpleFeature feature, IDocument doc, DocumentInfo info, IProgressMonitor monitor) {
         if (Type.ATTACHMENT == info.getType()) {
             final File oldFile = (File) doc.getContent();
             if (oldFile == null) {
@@ -124,7 +125,7 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
         }
         ((AbstractLinkedDocument) doc).setInfo(info);
         save(feature);
-        return doc;
+        return true;
     }
 
     private void updateInternal(SimpleFeature feature, File oldFile, DocumentInfo info) {
@@ -139,14 +140,14 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
     }
     
     @Override
-    public boolean remove(SimpleFeature feature, IDocument oldDoc) {
+    public boolean remove(SimpleFeature feature, IDocument oldDoc, IProgressMonitor monitor) {
         removeInternal(feature, oldDoc);
         save(feature);
         return true;
     }
 
     @Override
-    public boolean remove(SimpleFeature feature, List<IDocument> oldDocs) {
+    public boolean remove(SimpleFeature feature, List<IDocument> oldDocs, IProgressMonitor monitor) {
         for (IDocument oldDoc : oldDocs) {
             removeInternal(feature, oldDoc);
         }
