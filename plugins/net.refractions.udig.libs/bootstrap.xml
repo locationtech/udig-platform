@@ -55,7 +55,11 @@
         <move todir="${basedir}${file.separator}lib" includeemptydirs="false">
             <fileset dir="${basedir}${file.separator}lib">
                 <include name="**/gt-*.jar"/>
+                <include name="**/net.opengis.*-*.jar"/>
+                <include name="**/org.w3.xlink-*.jar"/>
                 <exclude name="**/gt-*-SNAPSHOT.jar"/>
+                <exclude name="**/net.opengis.*-*-SNAPSHOT.jar"/>
+                <exclude name="**/org.w3.xlink-*-SNAPSHOT.jar"/>
             </fileset>
             <regexpmapper handledirsep="yes"
                from="^(.*?)(\$$[^/\\\.]*)?-([\\\d]+)-([\\\d]+)\.([\\\d]+)\-([\\\d]+)\.jar$$"
