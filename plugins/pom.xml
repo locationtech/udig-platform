@@ -81,9 +81,6 @@
                 
                 <!-- build example feature after plugins -->
                 <module>net.refractions.udig.tutorials.rcp-feature</module>
-                
-                <!-- do not have a good solution for including source jars -->
-                <!-- <module>net.refractions.udig.libs.source</module>-->
              </modules>
         </profile>
     </profiles>
