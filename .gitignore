@@ -18,3 +18,4 @@ build.xml
 workspace
 
 /plugins/org.tcat.citd.sim.udig.bookmarks.tests/bin/
+/plugins/net.refractions.udig.libs/lib-src/
