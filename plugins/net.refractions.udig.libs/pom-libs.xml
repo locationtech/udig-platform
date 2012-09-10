@@ -36,6 +36,9 @@
         <geotools.version>9-SNAPSHOT</geotools.version>
         <imageio-ext.version>1.1.5</imageio-ext.version>
         <jfreechart.version>1.0.13</jfreechart.version>
+        
+        <lib.dir>${basedir}/lib</lib.dir>
+        <lib.source.dir>${basedir}/lib-src</lib.source.dir>
     </properties>
 
     <repositories>
@@ -767,14 +770,14 @@
                 <configuration>
                     <filesets>
                         <fileset>
-                            <directory>${basedir}/lib</directory>
+                            <directory>${lib.dir}</directory>
                             <includes>
                                 <include>*.*</include>
                             </includes>
                             <followSymlinks>false</followSymlinks>
                         </fileset>
                         <fileset>
-                            <directory>${basedir}/../net.refractions.udig.libs.source/src/net.refractions.udig.libs_${project.version}.qualifier/lib</directory>
+                            <directory>${lib.source.dir}</directory>
                             <includes>
                                 <include>*.*</include>
                             </includes>
@@ -796,7 +799,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/lib</outputDirectory>
+                            <outputDirectory>${lib.dir}</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
@@ -804,56 +807,52 @@
                         </configuration>
                     </execution>
                     <execution>
-                         <id>copy-dependencies-sources</id>
-                         <phase>validate</phase>
-                         <goals>
-                             <goal>copy-dependencies</goal>
-                         </goals>
-                         <configuration>
-                             <classifier>sources</classifier>
-                            <overWriteIfNewer>true</overWriteIfNewer>
-                             <outputDirectory>${basedir}/../net.refractions.udig.libs.source/src/net.refractions.udig.libs_${project.version}.qualifier</outputDirectory>
+                        <id>copy-dependencies-sources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>sources</classifier>
+                            <outputDirectory>${lib.source.dir}</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
-                             <excludeScope>provided</excludeScope>
-                             <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
-                         </configuration>
-                     </execution>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <excludeScope>provided</excludeScope>
+                            <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <dependencies>
-                    <dependency>
-                        <groupId>ant</groupId>
-                        <artifactId>ant</artifactId>
-                        <version>1.6.5</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>ant-contrib</groupId>
-                        <artifactId>ant-contrib</artifactId>
-                        <version>1.0b3</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>ant</groupId>
-                        <artifactId>ant-apache-regexp</artifactId> 
-                        <version>1.6.5</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>jakarta-regexp</groupId> 
-                        <artifactId>jakarta-regexp</artifactId> 
-                        <version>1.4</version> 
-                    </dependency>
-                </dependencies>
+                <version>1.7</version>
                 <executions>
                     <execution>
-                        <id>snapshot</id>
+                        <id>remove-lib-timestamp</id>
                         <phase>compile</phase>
                         <configuration>
-                            <tasks>
-                                <ant antfile="bootstrap.xml" dir="${basedir}" target="snapshot"/>
-                            </tasks>
+                            <target>
+                                <macrodef name="remove-lib-timestamp">
+                                    <attribute name="lib-dir"/>
+                                    <sequential>
+                                        <move todir="@{lib-dir}" includeemptydirs="false">
+                                            <fileset dir="@{lib-dir}">
+                                                <include name="**/*.jar"/>
+                                            </fileset>
+                                            <!-- YYYYMMDD.HHIISS-increment -->
+                                            <regexpmapper handledirsep="yes"
+                                                from="(.*?)-([\\\d]{8}(\.[\\\d]{6})?-[\\\d]+)((-sources)?\.jar)$$"
+                                                to="\1-SNAPSHOT\4"/>
+                                        </move>
+                                    </sequential>
+                                </macrodef>
+                                
+                                <remove-lib-timestamp lib-dir="${lib.dir}"/>
+                                <remove-lib-timestamp lib-dir="${lib.source.dir}"/>
+                            </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>
@@ -863,21 +862,9 @@
                         <id>checktools</id>
                         <phase>package</phase>
                         <configuration>
-                            <tasks>
-                                <ant antfile="tools_jar.xml" dir="${basedir}" target="tools"/>
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>bootstrap</id>
-                        <phase>package</phase>
-                        <configuration>
-                            <tasks>
-                                <ant antfile="bootstrap.xml" dir="${basedir}" target="library"/>
-                            </tasks>
+                            <target>
+                                <ant antfile="${basedir}/tools_jar.xml" dir="${basedir}" target="tools"/>
+                            </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>
