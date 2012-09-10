@@ -15,7 +15,9 @@
 package net.refractions.udig.document.ui;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.document.IDocument;
@@ -108,6 +111,8 @@ public class DocumentDialog extends IconAndMessageDialog {
     private Text label;
     private Text description;
 
+    private Properties templateProps;
+    
     /**
      * Dialog form values.
      */
@@ -492,13 +497,43 @@ public class DocumentDialog extends IconAndMessageDialog {
         infoNewBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                final File newFile = createFromTemplate();
-                if (newFile != null) {
-                    info.setText(newFile.getAbsolutePath());    
-                }
+                createFromTemplate();
             }
         }); 
         
+    }
+    
+    private static final String TEMPLATE_PROPS = "templates.properties"; //$NON-NLS-1$
+    
+    /**
+     * Loads the template extension properties file.
+     * 
+     * @return template extension properties
+     */
+    private Properties getTemplateProps() {
+        
+        if (templateProps == null) {
+            InputStream inStream = null;
+            try {
+                inStream = getClass().getResourceAsStream(TEMPLATE_PROPS);
+                templateProps = new Properties();
+                templateProps.load(inStream);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (inStream != null) {
+                    try {
+                        inStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }            
+        }
+                
+        return templateProps;
     }
     
     /**
@@ -563,7 +598,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         final FileDialog dialog = new FileDialog(infoNewBtn.getShell(), SWT.SAVE);
         dialog.setText(Messages.DocumentDialog_enterFilenameTitle);
         dialog.setOverwrite(true);
-        dialog.setFileName(DocUtils.getDefaultFilename(templateFile));
+        dialog.setFileName(DocUtils.getFromTemplateFilename(templateFile, getTemplateProps()));
         final String filePath = dialog.open();
         if (filePath != null) {
             return filePath;
@@ -579,19 +614,26 @@ public class DocumentDialog extends IconAndMessageDialog {
      * @return new file
      */
     private File createFileFromTemplate(File templateFile, String filePath) {
+        
+        File file = null;
         try {
-            final File file = new File(DocUtils.cleanFilename(filePath, templateFile));
+            file = new File(DocUtils.cleanFromTemplateFilename(filePath, templateFile,
+                    getTemplateProps()));
             FileUtils.copyFile(templateFile, file);
-            MessageDialog.openInformation(infoNewBtn.getShell(),
+            info.setText(file.getAbsolutePath());
+            final boolean doOpen = MessageDialog.openQuestion(infoNewBtn.getShell(),
                     Messages.DocumentDialog_createFileFromTemplateTitle,
                     Messages.DocumentDialog_createFileFromTemplateSuccess);
-            return file;
+            if (doOpen) {
+                Program.launch(file.getAbsolutePath());
+            }
         } catch (IOException e) {
             MessageDialog.openError(infoNewBtn.getShell(),
                     Messages.DocumentDialog_createFileFromTemplateTitle,
                     Messages.DocumentDialog_createFileFromTemplateError);
         }
-        return null;
+        
+        return file;
     }
     
     /**
@@ -983,7 +1025,7 @@ public class DocumentDialog extends IconAndMessageDialog {
      */
     private List<File> openFileDialog(boolean isMultiSelect) {
         
-        final int style = isMultiSelect ? (SWT.SAVE | SWT.MULTI) : SWT.SAVE; 
+        final int style = isMultiSelect ? (SWT.OPEN | SWT.MULTI) : SWT.OPEN; 
         final FileDialog fileDialog = new FileDialog(infoBrowseBtn.getShell(), style);
         fileDialog.setText(Messages.docView_openDialogTitle);
         
