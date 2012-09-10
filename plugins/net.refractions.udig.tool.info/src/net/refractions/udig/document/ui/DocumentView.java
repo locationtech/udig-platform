@@ -1290,7 +1290,7 @@ public class DocumentView extends ViewPart {
             final FileDialog dialog = new FileDialog(saveAsButton.getShell(), SWT.SAVE);
             dialog.setText(Messages.DocumentView_saveAsDialogTitle);
             dialog.setOverwrite(true);
-            dialog.setFileName(DocUtils.getDefaultFilename(file));
+            dialog.setFileName(DocUtils.getSaveAsFilename(file));
             final String filePath = dialog.open();
             if (filePath != null) {
                 final File newFile = new File(DocUtils.cleanFilename(filePath, file));

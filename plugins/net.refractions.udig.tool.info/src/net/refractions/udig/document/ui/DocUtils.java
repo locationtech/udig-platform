@@ -18,6 +18,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
@@ -32,9 +33,11 @@ public final class DocUtils {
     private static final String UNASSIGNED = "Unassigned"; //$NON-NLS-1$
     private static final String DOCUMENT_FORMAT = "%s (%s)"; //$NON-NLS-1$
     private static final String LABEL_DESC_FORMAT = "%s - %s"; //$NON-NLS-1$
+    
+    private static final String NEW_FILE_FORMAT = "New File.%s"; //$NON-NLS-1$
     private static final String SAVE_AS_FORMAT = "%s-Copy.%s"; //$NON-NLS-1$
     private static final String FILENAME_FORMAT = "%s.%s"; //$NON-NLS-1$
-
+    
     /**
      * Gets the document string label.
      * 
@@ -219,11 +222,11 @@ public final class DocUtils {
      * @param file
      * @return default filename
      */
-    public static String getDefaultFilename(File file) {
+    public static String getSaveAsFilename(File file) {
         final Map<String, String> parts = getNameParts(file);
         return String.format(SAVE_AS_FORMAT, parts.get(F_NAME), parts.get(F_EXT));
     }
-    
+
     /**
      * Gets a clean filename. This adds an extension from the old file if an extension is not
      * supplied in the new file path.
@@ -244,6 +247,49 @@ public final class DocUtils {
             return cleanNewFile.getAbsolutePath();
         }
         return newfilePath;
+    }
+    
+    /**
+     * Gets the default filename when creating a new file from a template.
+     * 
+     * @param templateFile
+     * @param templateProps
+     * @return filename
+     */
+    public static String getFromTemplateFilename(File templateFile, Properties templateProps) {
+        final Map<String, String> parts = getNameParts(templateFile);
+        return String.format(NEW_FILE_FORMAT, getFromTemplateExt(parts, templateProps));
+    }
+
+    /**
+     * Gets a clean filename for a file created from template.
+     * @param newfilePath
+     * @param templateFile
+     * @param templateProps
+     * @return clean filename
+     */ 
+    public static String cleanFromTemplateFilename(String newfilePath, File templateFile,
+            Properties templateProps) {
+        final Map<String, String> parts = getNameParts(templateFile);
+        final File tempTemplateFile = new File(String.format(FILENAME_FORMAT, parts.get(F_NAME),
+                getFromTemplateExt(parts, templateProps)));
+        return cleanFilename(newfilePath, tempTemplateFile);
+    }
+
+    /**
+     * Gets the correct file extension for a new file created from a template. This return the
+     * template's extension if there is no entry in the properties file for the template's
+     * extension.
+     * 
+     * @param parts
+     * @param templateProps
+     * @return file extension
+     */
+    private static String getFromTemplateExt(Map<String, String> parts, Properties templateProps) {
+        // To normalise with what is used by the properties file
+        final String templateExt = parts.get(F_EXT).toLowerCase();
+        final String fileExt = templateProps.getProperty(templateExt, templateExt);
+        return fileExt;
     }
     
     private static final String F_NAME = "F_NAME"; //$NON-NLS-1$
