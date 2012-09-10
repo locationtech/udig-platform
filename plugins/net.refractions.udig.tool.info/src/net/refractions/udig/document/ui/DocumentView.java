@@ -54,6 +54,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -1317,6 +1318,12 @@ public class DocumentView extends ViewPart {
      */
     private class DocumentViewTableLabelProvider implements ITableLabelProvider {
 
+        private FileImageDescriptor fileImageDescriptor;
+        
+        public DocumentViewTableLabelProvider() {
+            fileImageDescriptor = new FileImageDescriptor();
+        }
+        
         @Override
         public Image getColumnImage(Object element, int columnIndex) {
             switch (columnIndex) {
@@ -1328,8 +1335,8 @@ public class DocumentView extends ViewPart {
                     final IDocument doc = (IDocument) element;
                     switch (doc.getContentType()) {
                     case FILE:
-                        return PlatformUI.getWorkbench().getSharedImages()
-                                .getImage(ISharedImages.IMG_OBJ_FILE);
+                        final boolean isAttachment = (Type.ATTACHMENT == doc.getType());
+                        return fileImageDescriptor.createFileImage(isAttachment);
                     case WEB:
                         return InfoPlugin.getDefault().getImageRegistry()
                                 .get(InfoPlugin.IMG_OBJ_LINK);
@@ -1360,6 +1367,9 @@ public class DocumentView extends ViewPart {
                 case DOCUMENT_INDEX:
                     return DocUtils.getDocStr(doc);
                 case TYPE_INDEX:
+                    if (doc.isTemplate()) {
+                        return Messages.DocumentView_templateLbl;
+                    }
                     return DocUtils.toCamelCase(doc.getContentType().toString());
                 case DESCRIPTION_INDEX:
                     final String description = doc.getDescription();
