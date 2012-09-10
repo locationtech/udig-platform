@@ -334,4 +334,14 @@ public final class DocUtils {
         return getNameParts(file).get(F_NAME);
     }
     
+    /**
+     * Gets the extension part of the filename.
+     * 
+     * @param file
+     * @return extension part of the filename
+     */
+    public static String getExtension(File file) {
+        return getNameParts(file).get(F_EXT);
+    }
+    
 }

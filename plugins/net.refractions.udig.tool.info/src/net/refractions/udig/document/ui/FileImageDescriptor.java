@@ -14,13 +14,17 @@
  */
 package net.refractions.udig.document.ui;
 
+import java.io.File;
+
 import net.refractions.udig.tool.info.InfoPlugin;
 
 import org.eclipse.jface.resource.CompositeImageDescriptor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.program.Program;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
@@ -31,18 +35,19 @@ import org.eclipse.ui.PlatformUI;
  */
 public class FileImageDescriptor extends CompositeImageDescriptor {
 
-    private ImageDescriptor baseImg = null;
+    private ImageDescriptor defaultBaseImg = null;
+    private ImageData activeBaseImgData = null;
     
     private Point size;
     private boolean isAttachment = false;
     
-    private static final int OVERLAY_X_POS = 0;
-    private static final int OVERLAY_Y_POS = 0;
+    private static final int OVERLAY_X_POS = 9;
+    private static final int OVERLAY_Y_POS = 8;
     
     public FileImageDescriptor() {
-        baseImg = PlatformUI.getWorkbench().getSharedImages()
+        defaultBaseImg = PlatformUI.getWorkbench().getSharedImages()
                 .getImageDescriptor(ISharedImages.IMG_OBJ_FILE);
-        final Rectangle baseImgBounds = baseImg.createImage().getBounds();
+        final Rectangle baseImgBounds = defaultBaseImg.createImage().getBounds();
         size = new Point(baseImgBounds.width, baseImgBounds.height);
     }
     
@@ -53,16 +58,32 @@ public class FileImageDescriptor extends CompositeImageDescriptor {
      * @param isAttachment
      * @return
      */
-    public Image createFileImage(boolean isAttachment) {
+    public Image createFileImage(File file, boolean isAttachment) {
         this.isAttachment = isAttachment;
+        
+        if (file != null) {
+            final Program program = Program.findProgram(DocUtils.getExtension(file));
+            if (program != null) {
+                activeBaseImgData = program.getImageData();    
+            } else {
+                activeBaseImgData = null;
+            }    
+        } else {
+            activeBaseImgData = null;
+        }
+        
         return createImage();
     }
     
     @Override
     protected void drawCompositeImage(int width, int height) {
 
-        drawImage(baseImg.getImageData(), 0, 0);
-
+        if (activeBaseImgData != null) {
+            drawImage(activeBaseImgData, 0, 0);
+        } else {
+            drawImage(defaultBaseImg.getImageData(), 0, 0);    
+        }
+        
         if (isAttachment) {
             final ImageDescriptor overlayImageDescriptor = InfoPlugin.getDefault()
                     .getImageRegistry().getDescriptor(InfoPlugin.IMG_OVR_ATTACHMENT);
