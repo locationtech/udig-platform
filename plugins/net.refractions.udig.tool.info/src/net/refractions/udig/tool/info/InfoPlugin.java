@@ -35,6 +35,8 @@ public class InfoPlugin extends AbstractUIPlugin {
     public static final String IMG_OBJ_FILE = "icons/obj16/file_doc_obj.png"; //$NON-NLS-1$
     public static final String IMG_OBJ_LINK = "icons/obj16/link_doc_obj.png"; //$NON-NLS-1$
     public static final String IMG_OBJ_ACTION = "icons/obj16/action_doc_obj.png"; //$NON-NLS-1$
+    
+    public static final String IMG_OVR_ATTACHMENT = "icons/ovr16/attachment.gif"; //$NON-NLS-1$
 
     /**
      * The constructor.
@@ -128,6 +130,11 @@ public class InfoPlugin extends AbstractUIPlugin {
         final ImageDescriptor actionImg = ImageDescriptor.createFromURL(
                 FileLocator.find(bundle, actionImgPath, null));
         reg.put(IMG_OBJ_ACTION, actionImg);
+        
+        final Path attachImgPath = new Path(IMG_OVR_ATTACHMENT);
+        final ImageDescriptor attachImg = ImageDescriptor.createFromURL(
+                FileLocator.find(bundle, attachImgPath, null));
+        reg.put(IMG_OVR_ATTACHMENT, attachImg);
         
     }
     

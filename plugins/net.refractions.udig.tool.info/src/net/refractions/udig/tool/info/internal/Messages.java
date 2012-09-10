@@ -190,6 +190,8 @@ public class Messages extends NLS {
 
     public static String DocumentView_setHotlinkPopupTitle;
 
+    public static String DocumentView_templateLbl;
+
     public static String DocumentView_updateDocError;
 
     public static String DocumentView_updateDocPopupTitle;
