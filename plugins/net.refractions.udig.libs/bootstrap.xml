@@ -1,22 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project basedir="." default="library">
-	<target name="check-library">
-	    <available file="${basedir}${file.separator}library.jar" property="library.present"/>
-	</target>
-	
-	<target 
-		name="library" 
-		description="Create an empty library.jar as a placeholder allowing Tycho to bootstrap past the build.properties reference"
-		depends="check-library" unless="library.present">
-		
-		<!-- compiler needed for omsbox, needs to be in the plugins folder, but *NOT* on the classpath  -->
-		
-		<jar destfile="${basedir}${file.separator}library.jar">
-			<manifest>
-				<attribute name="Built-By" value="${user.name}"/>
-				<attribute name="Implementation-Title" value="placeholder"/>
-			 </manifest>
-		</jar>
-	</target>
+
+    <target name="check-library">
+        <available file="${basedir}${file.separator}library.jar" property="library.present"/>
+    </target>
+    
+    <target 
+        name="library" 
+        description="Create an empty library.jar as a placeholder allowing Tycho to bootstrap past the build.properties reference"
+        depends="check-library" unless="library.present">
+        
+        <echo>Creating placeholder library.jar for maven CLASSPATH</echo>
+        
+        <!-- compiler needed for omsbox, needs to be in the plugins folder, but *NOT* on the classpath  -->
+        
+        <jar destfile="${basedir}${file.separator}library.jar">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Implementation-Title" value="placeholder"/>
+             </manifest>
+        </jar>
+    </target>
+    
+    <target name="check-snapshot">
+        <available file="${basedir}${file.separator}lib${file.separator}gt-api-SNAPSHOT.jar" property="snapshot.present"/>
+    </target>
+    
+    <target 
+        name="snapshot" 
+        description="Replace snapshot version information with SNAPSHOT so MANIFEST.MF has a consistent name."
+        depends="check-snapshot" unless="snapshot.present">
+        
+        <!-- compiler needed for omsbox, needs to be in the plugins folder, but *NOT* on the classpath  -->
+        <echo>Check for geotools numbered snapshots...</echo>
+        <!--
+        <path id="geotools.jars">
+            <fileset dir="${basedir}${file.separator}lib">
+                <include name="**/gt-*.jar"/>
+                <exclude name="**/gt-*-SNAPSHOT.jar"/>
+            </fileset>
+        </path>
+        <pathconvert pathsep="${line.separator}        "             
+            property="geotools.jars.compile"             
+            refid="geotools.jars">
+            <regexpmapper handledirsep="yes"
+               from="^(.*?)(\$$[^/\\\.]*)?-([\\\d]+)-([\\\d]+)\.([\\\d]+)\-([\\\d]+)\.jar$$"
+               to="\1-SNAPSHOT.jar"/>
+        </pathconvert>
+        <echo>Correct ${geotools.jars.compile}</echo>
+        -->
+        <echo>SNAPSHOT rename</echo>
+        
+        <move todir="${basedir}${file.separator}lib" includeemptydirs="false">
+            <fileset dir="${basedir}${file.separator}lib">
+                <include name="**/gt-*.jar"/>
+                <exclude name="**/gt-*-SNAPSHOT.jar"/>
+            </fileset>
+            <regexpmapper handledirsep="yes"
+               from="^(.*?)(\$$[^/\\\.]*)?-([\\\d]+)-([\\\d]+)\.([\\\d]+)\-([\\\d]+)\.jar$$"
+               to="\1-SNAPSHOT.jar"/>
+        </move>
+
+    </target>
 </project>
