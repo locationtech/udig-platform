@@ -365,6 +365,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         composite.setLayoutData(new GridData(GridData.FILL_BOTH));
         
         createHeader();
+        configHeaderDisplay();
         
         createTypeControls();
         
@@ -412,7 +413,7 @@ public class DocumentDialog extends IconAndMessageDialog {
     }
     
     /**
-     * Creates the header section display image, header text and sub-text.
+     * Creates the header section to display header image, text and sub-text.
      */
     private void createHeader() {
         
@@ -421,7 +422,7 @@ public class DocumentDialog extends IconAndMessageDialog {
                 headerImg = new Label(composite, SWT.NULL);
                 image.setBackground(headerImg.getBackground());
                 headerImg.setImage(image);
-                headerImg.setLayoutData("sy 2"); //$NON-NLS-1$
+                headerImg.setLayoutData("sy 2, top"); //$NON-NLS-1$
         }
 
         headerText = new Label(composite, SWT.NONE);
@@ -433,7 +434,7 @@ public class DocumentDialog extends IconAndMessageDialog {
         headerText.setLayoutData(""); //$NON-NLS-1$
         
         subHeaderText = new Label(composite, SWT.WRAP);
-        subHeaderText.setLayoutData(""); //$NON-NLS-1$
+        subHeaderText.setLayoutData("wmax 80%"); //$NON-NLS-1$
         
     }
     
@@ -768,8 +769,6 @@ public class DocumentDialog extends IconAndMessageDialog {
     private void afterCreateContents() {
         // Set field values here
         setValues();
-        // Set header and sub-header
-        configHeaderDisplay();
         // Set control enablements/visibility
         configControlEnablements();
         // Refresh buttons
