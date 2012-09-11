@@ -33,12 +33,14 @@ public final class DocSourceUtils {
      * @return true if allows, otherwise false
      */
     public static boolean canAttach(IAbstractDocumentSource source) {
-        if (source instanceof IDocumentSource) {
-            final IDocumentSource layerDocSource = (IDocumentSource) source;
-            return layerDocSource.canAttach();
-        } else if (source instanceof IAttachmentSource) {
-            final IAttachmentSource featureDocSource = (IAttachmentSource) source;
-            return featureDocSource.canAttach();
+        if (source.isEnabled()) {
+            if (source instanceof IDocumentSource) {
+                final IDocumentSource layerDocSource = (IDocumentSource) source;
+                return layerDocSource.canAttach();
+            } else if (source instanceof IAttachmentSource) {
+                final IAttachmentSource featureDocSource = (IAttachmentSource) source;
+                return featureDocSource.canAttach();
+            }    
         }
         return false;
     }
@@ -60,12 +62,14 @@ public final class DocSourceUtils {
      * @return true if allows, otherwise false
      */
     public static boolean canLinkFile(IAbstractDocumentSource source) {
-        if (source instanceof IDocumentSource) {
-            final IDocumentSource layerDocSource = (IDocumentSource) source;
-            return layerDocSource.canLinkFile();
-        } else if (source instanceof IAttachmentSource) {
-            final IAttachmentSource featureDocSource = (IAttachmentSource) source;
-            return featureDocSource.canLinkFile();
+        if (source.isEnabled()) {
+            if (source instanceof IDocumentSource) {
+                final IDocumentSource layerDocSource = (IDocumentSource) source;
+                return layerDocSource.canLinkFile();
+            } else if (source instanceof IAttachmentSource) {
+                final IAttachmentSource featureDocSource = (IAttachmentSource) source;
+                return featureDocSource.canLinkFile();
+            }    
         }
         return false;
     }
@@ -77,12 +81,14 @@ public final class DocSourceUtils {
      * @return true if allows, otherwise false
      */
     public static boolean canLinkWeb(IAbstractDocumentSource source) {
-        if (source instanceof IDocumentSource) {
-            final IDocumentSource layerDocSource = (IDocumentSource) source;
-            return layerDocSource.canLinkWeb();
-        } else if (source instanceof IAttachmentSource) {
-            final IAttachmentSource featureDocSource = (IAttachmentSource) source;
-            return featureDocSource.canLinkWeb();
+        if (source.isEnabled()) {
+            if (source instanceof IDocumentSource) {
+                final IDocumentSource layerDocSource = (IDocumentSource) source;
+                return layerDocSource.canLinkWeb();
+            } else if (source instanceof IAttachmentSource) {
+                final IAttachmentSource featureDocSource = (IAttachmentSource) source;
+                return featureDocSource.canLinkWeb();
+            }    
         }
         return false;
     }
@@ -94,17 +100,17 @@ public final class DocSourceUtils {
      * @param isHotlink
      * @return true if allows, otherwise false
      */
-    public static boolean canUpdate(IAbstractDocumentSource source, boolean isHotlink) {
-        if (isHotlink) {
-            final IHotlinkSource hotlinkSource = (IHotlinkSource) source;
-            return hotlinkSource.canSetHotlink();
-        } else {
+    public static boolean canUpdate(IAbstractDocumentSource source) {
+        if (source.isEnabled()) {
             if (source instanceof IDocumentSource) {
                 final IDocumentSource layerDocSource = (IDocumentSource) source;
                 return layerDocSource.canUpdate();
             } else if (source instanceof IAttachmentSource) {
                 final IAttachmentSource featureDocSource = (IAttachmentSource) source;
                 return featureDocSource.canUpdate();
+            } else if (source instanceof IHotlinkSource) {
+                final IHotlinkSource hotlinkSource = (IHotlinkSource) source;
+                return hotlinkSource.canSetHotlink();
             }    
         }
         return false;
@@ -117,17 +123,17 @@ public final class DocSourceUtils {
      * @param isHotlink
      * @return true if allows, otherwise false
      */
-    public static boolean canRemove(IAbstractDocumentSource source, boolean isHotlink) {
-        if (isHotlink) {
-            final IHotlinkSource hotlinkSource = (IHotlinkSource) source;
-            return hotlinkSource.canClearHotlink();
-        } else {
+    public static boolean canRemove(IAbstractDocumentSource source) {
+        if (source.isEnabled()) {
             if (source instanceof IDocumentSource) {
                 final IDocumentSource layerDocSource = (IDocumentSource) source;
                 return layerDocSource.canRemove();
             } else if (source instanceof IAttachmentSource) {
                 final IAttachmentSource featureDocSource = (IAttachmentSource) source;
                 return featureDocSource.canRemove();
+            } else if (source instanceof IHotlinkSource) {
+                final IHotlinkSource hotlinkSource = (IHotlinkSource) source;
+                return hotlinkSource.canClearHotlink();
             }    
         }
         return false;

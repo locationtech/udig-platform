@@ -62,6 +62,25 @@ public class ShpDocPropertyParser {
     private static final String DELIMITER_REGEX = "\\|:\\|"; //$NON-NLS-1$
 
     /**
+     * The property name to flag if document are enabled at the shapefile level.
+     * <p>
+     * Expected values: true or false
+     */
+    public static final String SHAPE_DOCUMENTS_FLAG = "shp_documents_enabled"; //$NON-NLS-1$
+    /**
+     * The property name to flag if document are enabled at the feature level.
+     * <p>
+     * Expected values: true or false
+     */
+    public static final String FEATURE_DOCUMENTS_FLAG = "feature_documents_enabled"; //$NON-NLS-1$
+    /**
+     * The property name to flag if hotlinks are enabled at the feature level.
+     * <p>
+     * Expected values: true or false
+     */
+    public static final String FEATURE_HOTLINKS_FLAG = "feature_hotlinks_enabled"; //$NON-NLS-1$
+    
+    /**
      * The property name for the shapefile level documents
      */
     public static final String SHAPE_ATTACHMENTS = "shp_documents"; //$NON-NLS-1$
@@ -445,6 +464,42 @@ public class ShpDocPropertyParser {
     public File getFeatureAttachDir(String fid) {
         final File attachDir = new File(getShapefileAttachDir(), fid);; 
         return attachDir;
+    }
+    
+    public void setShapefileFlag(boolean isEnabled) {
+        setFlag(SHAPE_DOCUMENTS_FLAG, isEnabled);
+    }
+    
+    public boolean getShapefileFlag() {
+        return getFlag(SHAPE_DOCUMENTS_FLAG);
+    }
+    
+    public void setFeatureDocsFlag(boolean isEnabled) {
+        setFlag(FEATURE_DOCUMENTS_FLAG, isEnabled);
+    }
+    
+    public boolean getFeatureDocsFlag() {
+        return getFlag(FEATURE_DOCUMENTS_FLAG);
+    }
+    
+    public void setFeatureHotlinksFlag(boolean isEnabled) {
+        setFlag(FEATURE_HOTLINKS_FLAG, isEnabled);
+    }
+    
+    public boolean getFeatureHotlinksFlag() {
+        return getFlag(FEATURE_HOTLINKS_FLAG);
+    }
+    
+    private void setFlag(String property, boolean isEnabled) {
+        setProperty(property, Boolean.toString(isEnabled));
+    }
+    
+    private boolean getFlag(String property) {
+        final String flagValue = getProperty(property);
+        if (flagValue != null) {
+            return Boolean.parseBoolean(flagValue);
+        }
+        return false;
     }
     
 }

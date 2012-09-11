@@ -15,15 +15,30 @@
 package net.refractions.udig.catalog.shp.tests;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
+import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
+import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
 import net.refractions.udig.document.source.ShpAttachmentSource;
 import net.refractions.udig.document.source.ShpDocPropertyParser;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.geotools.data.shapefile.ShapefileDataStoreFactory;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.data.simple.SimpleFeatureStore;
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.identity.FeatureIdImpl;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.filter.Filter;
 
 /**
  * Test class for {@link ShpAttachmentSource}.
@@ -31,17 +46,30 @@ import org.geotools.filter.identity.FeatureIdImpl;
  * @author Naz Chan 
  */
 @SuppressWarnings("nls")
-public class ShpAttachmentSourceTest extends ShpHotlinkSourceTest {
+public class ShpAttachmentSourceTest extends AbstractShpDocTest {
 
     private ShpAttachmentSource attachSource;
+    protected ShpGeoResourceImpl geoResource;
+    protected SimpleFeature feature;
     private File attachDir;
     
+    protected static final String FEATURE = "australia.1";
     protected static final FeatureIdImpl FEATURE_ID = new FeatureIdImpl(FEATURE);
     
     @Override
     protected void setUpInternal() {
         super.setUpInternal();
 
+        final Map<String, Serializable> params = new HashMap<String, Serializable>();
+        params.put(ShapefileDataStoreFactory.URLP.key, url);
+        params.put(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key, false);
+
+        final ShpServiceImpl service = new ShpServiceImpl(url, params);
+        geoResource = new ShpGeoResourceImpl(service, "");
+        final Filter filter = CommonFactoryFinder.getFilterFactory2()
+                .id(new FeatureIdImpl(FEATURE));
+        feature = getFeature(geoResource, filter);
+        
         final ShpDocPropertyParser parser = new ShpDocPropertyParser(url);
         parser.setFeatureDocumentInfos(feature, new ArrayList<DocumentInfo>());
         parser.writeProperties();
@@ -53,10 +81,33 @@ public class ShpAttachmentSourceTest extends ShpHotlinkSourceTest {
         
     }
     
+    private SimpleFeature getFeature(IGeoResource geoResource, Filter filter) {
+        try {
+            if (geoResource.canResolve(SimpleFeatureStore.class)) {
+                final SimpleFeatureStore featureSource = geoResource.resolve(
+                        SimpleFeatureStore.class, new NullProgressMonitor());
+                final SimpleFeatureCollection featureCollection = featureSource.getFeatures(filter);
+                final SimpleFeatureIterator featureIterator = featureCollection.features();
+                try {
+                    if (featureIterator.hasNext()) {
+                        return featureIterator.next();
+                    }
+                } finally {
+                    if (featureIterator != null) {
+                        featureIterator.close();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
     public void testGetDocuments() {
         
         List<IDocument> docs = attachSource.getDocuments(feature, monitor);
-        assertEquals("Count is not expected.", 3, docs.size());
+        assertEquals("Count is not expected.", 0, docs.size());
         
     }
     
@@ -65,25 +116,25 @@ public class ShpAttachmentSourceTest extends ShpHotlinkSourceTest {
         List<IDocument> docs = attachSource.getDocuments(feature, monitor);
         
         attachSource.add(feature, fileDocInfo1, monitor);
-        assertEquals("Count is not expected.", 4, docs.size());
+        assertEquals("Count is not expected.", 1, docs.size());
         assertTrue("File was not added.", fileExistsInLocalDir(file1));
         
         attachSource.remove(feature, getDoc(docs, fileDocInfo1), monitor);
-        assertEquals("Count is not expected.", 3, docs.size());
+        assertEquals("Count is not expected.", 0, docs.size());
         assertFalse("File was not removed.", fileExistsInLocalDir(file1));
         
         List<DocumentInfo> inInfos = new ArrayList<DocumentInfo>();
         inInfos.add(fileDocInfo2);
         inInfos.add(webDocInfo2);
         attachSource.add(feature, inInfos, monitor);
-        assertEquals("Count is not expected.", 5, docs.size());
+        assertEquals("Count is not expected.", 2, docs.size());
         assertTrue("File was not added.", fileExistsInLocalDir(file2));
         
         List<IDocument> inDocs = new ArrayList<IDocument>();
         inDocs.add(getDoc(docs, fileDocInfo2));
         inDocs.add(getDoc(docs, webDocInfo2));
         attachSource.remove(feature, inDocs, monitor);
-        assertEquals("Count is not expected.", 3, docs.size());
+        assertEquals("Count is not expected.", 0, docs.size());
         assertFalse("File was not removed.", fileExistsInLocalDir(file2));
         
         cleaupAttachDir();
@@ -93,7 +144,7 @@ public class ShpAttachmentSourceTest extends ShpHotlinkSourceTest {
     public void testUpdate() {
         
         List<IDocument> docs = attachSource.getDocuments(feature, monitor);
-        assertEquals("Count is not expected.", 3, docs.size());
+        assertEquals("Count is not expected.", 0, docs.size());
         
         IDocument doc = attachSource.add(feature, fileDocInfo1, monitor);
         assertNotNull("Doc does not exists.", doc);

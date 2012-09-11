@@ -32,7 +32,7 @@ import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
 import net.refractions.udig.document.model.ActionHotlinkDocument;
 import net.refractions.udig.document.model.FileHotlinkDocument;
 import net.refractions.udig.document.model.WebHotlinkDocument;
-import net.refractions.udig.document.source.ShpDocPropertyParser;
+import net.refractions.udig.document.source.BasicHotlinkDescriptorParser;
 import net.refractions.udig.document.source.ShpHotlinkSource;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -62,14 +62,6 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
     protected void setUpInternal() {
         super.setUpInternal();
 
-        final ShpDocPropertyParser parser = new ShpDocPropertyParser(url);
-        final List<HotlinkDescriptor> inInfos = new ArrayList<HotlinkDescriptor>();
-        inInfos.add(descriptor1);
-        inInfos.add(descriptor2);
-        inInfos.add(descriptor3);
-        parser.setHotlinkDescriptors(inInfos);
-        parser.writeProperties();
-
         final Map<String, Serializable> params = new HashMap<String, Serializable>();
         params.put(ShapefileDataStoreFactory.URLP.key, url);
         params.put(ShapefileDataStoreFactory.CREATE_SPATIAL_INDEX.key, false);
@@ -81,6 +73,13 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
                 .id(new FeatureIdImpl(FEATURE));
         feature = getFeature(geoResource, filter);
 
+        final BasicHotlinkDescriptorParser parser = new BasicHotlinkDescriptorParser(geoResource);
+        final List<HotlinkDescriptor> inInfos = new ArrayList<HotlinkDescriptor>();
+        inInfos.add(descriptor1);
+        inInfos.add(descriptor2);
+        inInfos.add(descriptor3);
+        parser.setDescriptors(inInfos);
+        
     }
 
     private SimpleFeature getFeature(IGeoResource geoResource, Filter filter) {

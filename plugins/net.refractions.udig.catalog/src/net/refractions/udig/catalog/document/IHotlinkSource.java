@@ -36,6 +36,21 @@ import org.opengis.feature.simple.SimpleFeature;
  */
 public interface IHotlinkSource extends IAbstractDocumentSource {
 
+
+    /**
+     * Checks if the source allows setting the hotlinks.
+     * 
+     * @return true if allowed, otherwise false
+     */
+    public boolean canSetHotlink();
+
+    /**
+     * Checks if the source allows clearing the hotlink.
+     * 
+     * @return true if allowed, otherwise false
+     */
+    public boolean canClearHotlink();
+    
     /**
      * Gets the hotlink descriptors.
      * </p>
@@ -70,13 +85,6 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
      * @return document
      */
     public IDocument getDocument(SimpleFeature feature, String attributeName, IProgressMonitor monitor);
-
-    /**
-     * Checks if the source allows setting the hotlinks.
-     * 
-     * @return true if allowed, otherwise false
-     */
-    public boolean canSetHotlink();
     
     /**
      * Used to encode the file and set it as the content of the hotlink attribute.
@@ -122,13 +130,6 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
      */
     public boolean setAction(SimpleFeature feature, String attributeName, String action, IProgressMonitor monitor);
 
-    /**
-     * Checks if the source allows clearing the hotlink.
-     * 
-     * @return true if allowed, otherwise false
-     */
-    public boolean canClearHotlink();
-    
     /**
      * Used to clear a hotlink in the provided feature.
      * <p>

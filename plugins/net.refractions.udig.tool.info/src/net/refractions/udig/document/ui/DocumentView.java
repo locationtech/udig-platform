@@ -29,6 +29,7 @@ import net.refractions.udig.catalog.document.IAbstractDocumentSource;
 import net.refractions.udig.catalog.document.IAttachment;
 import net.refractions.udig.catalog.document.IAttachmentSource;
 import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.catalog.document.IHotlinkSource;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocumentFolder;
@@ -127,6 +128,10 @@ public class DocumentView extends ViewPart {
     private DocumentItemModel itemModel;
     
     private ISelectionListener workbenchSelectionListener;
+    
+    private boolean isResourceEnabled = false;
+    private boolean isFeatureEnabled = false;
+    private boolean isHotlinkEnabled = false;
     
     private static final int DOCUMENT_INDEX = 0;
     private static final int DOCUMENT_WEIGHT = 40;
@@ -379,29 +384,39 @@ public class DocumentView extends ViewPart {
         
         if (viewerSelection != null) {
             if (viewerSelection.size() == 1) {
+                
                 final Object element = viewerSelection.getFirstElement();
-                final IAbstractDocumentSource source = getDocumentSource();
-                attachButton.setEnabled(DocSourceUtils.canAttach(source));
-                linkButton.setEnabled(DocSourceUtils.canLink(source));
+                final IAbstractDocumentSource folderSource = getDocumentSource();
+                
+                attachButton.setEnabled(DocSourceUtils.canAttach(folderSource));
+                linkButton.setEnabled(DocSourceUtils.canLink(folderSource));
+                
                 if (element instanceof IDocument) {
+                    
                     final IDocument doc = (IDocument) element;
                     final Type docType = doc.getType();
-                    final boolean isHotlink = (Type.HOTLINK == docType);
-                    editButton.setEnabled(DocSourceUtils.canUpdate(source, isHotlink));
+                    
+                    editButton.setEnabled(DocSourceUtils.canUpdate(doc.getSource()));
+                    
                     if (Type.ATTACHMENT == docType 
                             && ContentType.FILE == doc.getContentType()) {
                         saveAsButton.setEnabled(true);
                         saveAsAction.setEnabled(true);
                     }
+                    
                     if (!doc.isEmpty()) {
                         openButton.setEnabled(true);
                     }
+                    
+                    final boolean isHotlink = (Type.HOTLINK == docType);
                     removeButton.setText(isHotlink ? Messages.docView_clear : Messages.docView_delete);
                     removeButton.setEnabled(isHotlink ? !doc.isEmpty() : true);
                     if (removeButton.isEnabled()) {
-                        removeButton.setEnabled(DocSourceUtils.canRemove(source, isHotlink));    
+                        removeButton.setEnabled(DocSourceUtils.canRemove(doc.getSource()));    
                     }
+                    
                 }
+                
             } else if (viewerSelection.size() > 1) {
                 int count = 0;
                 for (Object obj : viewerSelection.toList()) {
@@ -579,18 +594,33 @@ public class DocumentView extends ViewPart {
                 
                 feature = getFeature(geoResource, toFilter(obj, monitor));
                 if (feature != null) {
+                    
+                    final IHotlinkSource hotlinkSource = toSource(geoResource, IHotlinkSource.class, monitor);
+                    isHotlinkEnabled = hotlinkSource != null && hotlinkSource.isEnabled();
                     final IAttachmentSource attachmentSource = toSource(geoResource, IAttachmentSource.class, monitor);
-                    if (attachmentSource != null) {
+                    isFeatureEnabled = attachmentSource != null && attachmentSource.isEnabled();
+                    
+                    if (isFeatureEnabled || isHotlinkEnabled) {
                         final String featureLabel = getFeatureLabel(geoResource, feature);
                         final IDocumentFolder folder = ShpDocFactory.createFolder(featureLabel, attachmentSource);
-                        folder.setDocuments(attachmentSource.getDocuments(feature, monitor));
+                        if (isFeatureEnabled) {
+                            // Set so that source's document list is same with folder's
+                            folder.setDocuments(attachmentSource.getDocuments(feature, monitor));    
+                        }
+                        if (isHotlinkEnabled) {
+                            folder.insertDocuments(hotlinkSource.getDocuments(feature, monitor), 0);
+                        }
                         items.add(folder);
                     }
+                    
                 }
                 
                 final IDocumentSource docSource = toSource(geoResource, IDocumentSource.class, monitor);
-                if (docSource != null) {
+                isResourceEnabled = docSource != null && docSource.isEnabled();
+                
+                if (isResourceEnabled) {
                     final IDocumentFolder folder = ShpDocFactory.createFolder(geoResource.getTitle(), docSource);
+                    // Set so that source's document list is same with folder's
                     folder.setDocuments(docSource.getDocuments(monitor));
                     items.add(folder);
                 }
@@ -1034,7 +1064,7 @@ public class DocumentView extends ViewPart {
                 @Override
                 protected IStatus run(IProgressMonitor monitor) {
                     boolean isUpdated = false;
-                    final IAttachmentSource featureDocSource = (IAttachmentSource) doc.getSource();
+                    final IHotlinkSource featureDocSource = (IHotlinkSource) doc.getSource();
                     switch (doc.getContentType()) {
                     case FILE:
                         isUpdated = featureDocSource.setFile(feature, attributeName, docDialog.getFileInfo(), monitor);
@@ -1149,32 +1179,32 @@ public class DocumentView extends ViewPart {
                         removeLayerDocJob.schedule();
                     } else if (source instanceof IAttachmentSource) {
                         final IAttachmentSource featureDocSource = (IAttachmentSource) source;
-                        if (Type.HOTLINK == doc.getType()) {
-                            final Job clearHotlinkJob = new Job(Messages.DocumentView_clearHotlinkProgressMsg){
-                                @Override
-                                protected IStatus run(IProgressMonitor monitor) {
-                                    final IHotlink hotlinkDoc = (IHotlink) doc;
-                                    final String attributeName = hotlinkDoc.getAttributeName();
-                                    boolean isCleared = featureDocSource.clear(feature, attributeName, monitor);
-                                    if (isCleared) {
-                                        isCleared = set(attributeName, null, monitor);
-                                    }
-                                    clearHotlinkCallback(isCleared);
-                                    return Status.OK_STATUS;
+                        final Job removeFeatureDocJob = new Job(Messages.DocumentView_removeDocProgressMsg){
+                            @Override
+                            protected IStatus run(IProgressMonitor monitor) {
+                                final boolean isRemoved = featureDocSource.remove(feature, doc, monitor);
+                                removeDocumentCallback(isRemoved);
+                                return Status.OK_STATUS;
+                            }
+                        };
+                        removeFeatureDocJob.schedule();
+                    } else if (source instanceof IHotlinkSource) {
+                        final IHotlinkSource featureHotlinkSource = (IHotlinkSource) source;
+                        final Job clearHotlinkJob = new Job(Messages.DocumentView_clearHotlinkProgressMsg) {
+                            @Override
+                            protected IStatus run(IProgressMonitor monitor) {
+                                final IHotlink hotlinkDoc = (IHotlink) doc;
+                                final String attributeName = hotlinkDoc.getAttributeName();
+                                boolean isCleared = featureHotlinkSource.clear(feature,
+                                        attributeName, monitor);
+                                if (isCleared) {
+                                    isCleared = set(attributeName, null, monitor);
                                 }
-                            };
-                            clearHotlinkJob.schedule();
-                        } else {
-                            final Job removeFeatureDocJob = new Job(Messages.DocumentView_removeDocProgressMsg){
-                                @Override
-                                protected IStatus run(IProgressMonitor monitor) {
-                                    final boolean isRemoved = featureDocSource.remove(feature, doc, monitor);
-                                    removeDocumentCallback(isRemoved);
-                                    return Status.OK_STATUS;
-                                }
-                            };
-                            removeFeatureDocJob.schedule();
-                        }
+                                clearHotlinkCallback(isCleared);
+                                return Status.OK_STATUS;
+                            }
+                        };
+                        clearHotlinkJob.schedule();
                     }                    
                 }
                 
@@ -1476,9 +1506,14 @@ public class DocumentView extends ViewPart {
             for (Object item : items) {
                 if (item instanceof IDocumentFolder) {
                     final IDocumentFolder folder = (IDocumentFolder) item;
-                    if (folder.getSource().equals(doc.getSource())) {
-                        return folder;
+                    for (IDocument folderDoc : folder.getDocuments()) {
+                        if (folderDoc.equals(doc)) {
+                            return folder;
+                        }
                     }
+                    // if (folder.getSource().equals(doc.getSource())) {
+                    // return folder;
+                    // }
                 }
             }
             return null;

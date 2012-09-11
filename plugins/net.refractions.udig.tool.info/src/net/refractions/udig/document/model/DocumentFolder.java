@@ -112,6 +112,11 @@ public class DocumentFolder implements IDocumentFolder {
     }
 
     @Override
+    public void insertDocuments(List<IDocument> docs, int index) {
+        this.docs.addAll(index, docs);
+    }
+    
+    @Override
     public void removeDocument(IDocument doc) {
         this.docs.remove(doc);
     }

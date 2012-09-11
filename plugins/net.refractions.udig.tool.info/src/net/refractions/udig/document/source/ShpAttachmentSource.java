@@ -30,22 +30,58 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
- * This is the shapefile attachment source implementation. This implements getters and setters to
+ * Shapefile feature-level attachment source implementation. This implements getters and setters to
  * the documents attached or linked to the shapefile's features. This document source copies
  * attachments to directory of the shapefile and also cleans up when an attachment is removed. See
  * {@link ShpDocPropertyParser} for details.
  * 
  * @author Naz Chan
  */
-public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachmentSource {
+public class ShpAttachmentSource extends AbstractShpDocumentSource implements IAttachmentSource {
     
     public ShpAttachmentSource(ShpGeoResourceImpl geoResource) {
         super(geoResource);
     }
 
     @Override
+    public boolean isEnabled() {
+        return propParser.getFeatureDocsFlag();
+    }
+    
+    @Override
+    public boolean isEnabledEditable() {
+        return true;
+    }
+
+    @Override
+    public boolean canAttach() {
+        return true;
+    }
+    
+    @Override
+    public boolean canLinkFile() {
+        // Not implemented in this document source
+        return false;
+    }
+    
+    @Override
+    public boolean canLinkWeb() {
+        return true;
+    }
+    
+    @Override
+    public boolean canUpdate() {
+        return true;
+    }
+    
+    @Override
+    public boolean canRemove() {
+        return true;
+    }
+    
+    @Override
     public List<IDocument> getDocuments(SimpleFeature feature, IProgressMonitor monitor) {
-        super.getDocuments(feature, monitor);
+        docs = new ArrayList<IDocument>();
         final List<DocumentInfo> infos = propParser.getFeatureDocumentInfos(feature);
         if (infos != null && infos.size() > 0) {
             docs.addAll(docFactory.create(infos));
@@ -58,21 +94,6 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
             return getDocuments(feature, monitor);
         }
         return docs;
-    }
-    
-    @Override
-    public boolean canAttach() {
-        return true;
-    }
-    
-    @Override
-    public boolean canLinkFile() {
-        return false;
-    }
-    
-    @Override
-    public boolean canLinkWeb() {
-        return true;
     }
     
     @Override
@@ -103,12 +124,7 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
         getDocsInternal(feature, monitor).add(newDoc);
         return newDoc;
     }
-    
-    @Override
-    public boolean canUpdate() {
-        return true;
-    }
-    
+        
     @Override
     public boolean update(SimpleFeature feature, IDocument doc, DocumentInfo info, IProgressMonitor monitor) {
         if (Type.ATTACHMENT == info.getType()) {
@@ -133,11 +149,7 @@ public class ShpAttachmentSource extends ShpHotlinkSource implements IAttachment
         final File newFile = ShpDocUtils.copyFile(info.getInfo(), getAttachmentDir(feature));
         info.setInfo(newFile.getAbsolutePath());
     }
-    
-    @Override
-    public boolean canRemove() {
-        return true;
-    }
+
     
     @Override
     public boolean remove(SimpleFeature feature, IDocument oldDoc, IProgressMonitor monitor) {

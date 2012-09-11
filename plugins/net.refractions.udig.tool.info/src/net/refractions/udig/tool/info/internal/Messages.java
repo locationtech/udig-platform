@@ -40,7 +40,7 @@ public class Messages extends NLS {
 
     public static String Document_Add;
 
-    public static String Document_Attachment_Enable;
+    public static String DocumentPropertyPage_featureEnable;
 
     public static String Document_Attachment_Section;
 
@@ -56,7 +56,7 @@ public class Messages extends NLS {
 
     public static String Document_Hotlink_Column;
 
-    public static String Document_Hotlink_Enable;
+    public static String DocumentPropertyPage_hotlinkEnable;
 
     public static String Document_Hotlink_Section;
 
@@ -151,6 +151,12 @@ public class Messages extends NLS {
     public static String DocumentPropertyPage_errExists;
 
     public static String DocumentPropertyPage_errRequired;
+
+    public static String DocumentPropertyPage_featureGrpTitle;
+
+    public static String DocumentPropertyPage_resourceEnable;
+
+    public static String DocumentPropertyPage_resourceGrpTitle;
 
     public static String DocumentView_addDocError;
 
