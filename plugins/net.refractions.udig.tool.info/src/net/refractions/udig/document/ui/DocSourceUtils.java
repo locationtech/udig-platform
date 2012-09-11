@@ -33,7 +33,7 @@ public final class DocSourceUtils {
      * @return true if allows, otherwise false
      */
     public static boolean canAttach(IAbstractDocumentSource source) {
-        if (source.isEnabled()) {
+        if (isValidSource(source)) {
             if (source instanceof IDocumentSource) {
                 final IDocumentSource layerDocSource = (IDocumentSource) source;
                 return layerDocSource.canAttach();
@@ -62,7 +62,7 @@ public final class DocSourceUtils {
      * @return true if allows, otherwise false
      */
     public static boolean canLinkFile(IAbstractDocumentSource source) {
-        if (source.isEnabled()) {
+        if (isValidSource(source)) {
             if (source instanceof IDocumentSource) {
                 final IDocumentSource layerDocSource = (IDocumentSource) source;
                 return layerDocSource.canLinkFile();
@@ -81,7 +81,7 @@ public final class DocSourceUtils {
      * @return true if allows, otherwise false
      */
     public static boolean canLinkWeb(IAbstractDocumentSource source) {
-        if (source.isEnabled()) {
+        if (isValidSource(source)) {
             if (source instanceof IDocumentSource) {
                 final IDocumentSource layerDocSource = (IDocumentSource) source;
                 return layerDocSource.canLinkWeb();
@@ -101,7 +101,7 @@ public final class DocSourceUtils {
      * @return true if allows, otherwise false
      */
     public static boolean canUpdate(IAbstractDocumentSource source) {
-        if (source.isEnabled()) {
+        if (isValidSource(source)) {
             if (source instanceof IDocumentSource) {
                 final IDocumentSource layerDocSource = (IDocumentSource) source;
                 return layerDocSource.canUpdate();
@@ -124,7 +124,7 @@ public final class DocSourceUtils {
      * @return true if allows, otherwise false
      */
     public static boolean canRemove(IAbstractDocumentSource source) {
-        if (source.isEnabled()) {
+        if (isValidSource(source)) {
             if (source instanceof IDocumentSource) {
                 final IDocumentSource layerDocSource = (IDocumentSource) source;
                 return layerDocSource.canRemove();
@@ -138,5 +138,16 @@ public final class DocSourceUtils {
         }
         return false;
     }
+    
+    /**
+     * Checks if the source is not null and is enabled.
+     * 
+     * @param source
+     * @return true if valid, otherwise false
+     */
+    private static boolean isValidSource(IAbstractDocumentSource source) {
+        return (source != null && source.isEnabled());
+    }
+    
     
 }
