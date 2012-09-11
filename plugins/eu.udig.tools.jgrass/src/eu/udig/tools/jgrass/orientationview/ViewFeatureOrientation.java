@@ -72,6 +72,9 @@ public class ViewFeatureOrientation implements IOp {
         CoordinateReferenceSystem mapCrs = bounds.getCoordinateReferenceSystem();
         
         ReferencedEnvelope featureBounds = featureSource.getBounds();
+        if (featureBounds == null || featureBounds.isNull()){
+            return;
+        }
         CoordinateReferenceSystem featureCrs = featureBounds.getCoordinateReferenceSystem();
         ReferencedEnvelope tBounds = bounds.transform(featureCrs, true); 
         
