@@ -37,7 +37,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.geotools.data.FeatureStore;
-import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.feature.FeatureCollection;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -88,7 +88,7 @@ public class KmlImportWizard extends Wizard implements INewWizard {
 
             public void run( IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
                 try {
-                    SimpleFeatureCollection collection = KmlUtils.kmlFile2FeatureCollection(kmlFile);
+                    FeatureCollection<SimpleFeatureType, SimpleFeature> collection = KmlUtils.kmlFile2FeatureCollection(kmlFile);
 
                     IGeoResource resource = CatalogPlugin.getDefault().getLocalCatalog()
                             .createTemporaryResource(collection.getSchema());

@@ -26,7 +26,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.FeatureIterator;
@@ -69,13 +68,13 @@ public class KmlUtils {
                         toFilterExtension(KmlUtils.KMZ_FILE_EXTENSION)};
 
     /**
-     * Transform a kml file in a {@link SimpleFeatureCollection}.
+     * Transform a kml file in a {@link FeatureCollection}.
      * 
      * @param kml the file to convert.
-     * @return trhe generated feature collection.
+     * @return the generated feature collection.
      * @throws Exception
      */
-    public static SimpleFeatureCollection kmlFile2FeatureCollection( File kml ) throws Exception {
+    public static FeatureCollection<SimpleFeatureType, SimpleFeature> kmlFile2FeatureCollection( File kml ) throws Exception {
         InputStream inputStream = null;
         if (kml.getName().toLowerCase().endsWith(KMZ_FILE_EXTENSION)) {
             ZipInputStream zis = new ZipInputStream(new FileInputStream(kml));
@@ -93,20 +92,27 @@ public class KmlUtils {
         
         StreamingParser parser = new StreamingParser(new KMLConfiguration(), inputStream, KML.Placemark);
 
-        SimpleFeatureCollection newCollection = FeatureCollections.newCollection();
+        FeatureCollection<SimpleFeatureType, SimpleFeature> newCollection = FeatureCollections.newCollection();
         int index = 0;
         SimpleFeature f;
         DefaultGeographicCRS crs = DefaultGeographicCRS.WGS84;
+        SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
+        b.setName(kml.getName());
+        b.setCRS(crs);
+        b.add("name", String.class);
+        b.add("the_geom", Geometry.class); //$NON-NLS-1$
+        SimpleFeatureType type = b.buildFeatureType();
+        SimpleFeatureBuilder builder = new SimpleFeatureBuilder(type);
+
         while( (f = (SimpleFeature) parser.parse()) != null ) {
             Geometry geometry = (Geometry) f.getDefaultGeometry();
-
-            SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
-            b.setName(kml.getName());
-            b.setCRS(crs);
-            b.add("the_geom", Geometry.class); //$NON-NLS-1$
-            SimpleFeatureType type = b.buildFeatureType();
-            SimpleFeatureBuilder builder = new SimpleFeatureBuilder(type);
-            builder.addAll(new Object[]{geometry});
+            Object nameAttribute = null;
+            try {
+                nameAttribute = f.getAttribute("name");
+            } catch (Exception e){
+                // ignore name attribute
+            }
+            builder.addAll(new Object[]{nameAttribute, geometry });
             SimpleFeature feature = builder.buildFeature(type.getTypeName() + "." + index++); //$NON-NLS-1$
             newCollection.add(feature);
         }
@@ -121,7 +127,7 @@ public class KmlUtils {
      * @param featureCollection the collection to transform.
      * @throws Exception
      */
-    public static void writeKml( File kmlFile, SimpleFeatureCollection featureCollection ) throws Exception {
+    public static void writeKml( File kmlFile, FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection ) throws Exception {
         CoordinateReferenceSystem epsg4326 = DefaultGeographicCRS.WGS84;
         CoordinateReferenceSystem crs = featureCollection.getSchema().getCoordinateReferenceSystem();
         MathTransform mtrans = CRS.findMathTransform(crs, epsg4326, true);
