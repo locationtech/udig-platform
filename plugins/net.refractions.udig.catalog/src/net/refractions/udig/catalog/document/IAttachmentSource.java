@@ -27,7 +27,7 @@ import org.opengis.feature.simple.SimpleFeature;
  * @author Naz Chan (LISAsoft)
  * @since 1.3.2
  */
-public interface IAttachmentSource extends IHotlinkSource {
+public interface IAttachmentSource extends IAbstractAttachmentSource {
 
     /**
      * Gets the list of documents.
@@ -40,27 +40,6 @@ public interface IAttachmentSource extends IHotlinkSource {
      * @return documents
      */
     public List<IDocument> getDocuments(SimpleFeature feature, IProgressMonitor monitor);
-    
-    /**
-     * Checks if the source allows attaching new documents.
-     * 
-     * @return true if allowed, otherwise false
-     */
-    public boolean canAttach();
-    
-    /**
-     * Checks if the source allows linking file documents.
-     * 
-     * @return true if allowed, otherwise false
-     */
-    public boolean canLinkFile();
-    
-    /**
-     * Checks if the source allows linking web documents.
-     * 
-     * @return true if allowed, otherwise false
-     */
-    public boolean canLinkWeb();
     
     /**
      * Adds a document.
@@ -89,13 +68,6 @@ public interface IAttachmentSource extends IHotlinkSource {
     public List<IDocument> add(SimpleFeature feature, List<DocumentInfo> infos, IProgressMonitor monitor);
     
     /**
-     * Checks if the source allows updating documents.
-     * 
-     * @return true if allowed, otherwise false
-     */
-    public boolean canUpdate();
-    
-    /**
      * Updates the document.
      * </p>
      * This method may require server-side processing and should not be ran in the UI thread.
@@ -108,13 +80,6 @@ public interface IAttachmentSource extends IHotlinkSource {
      * @return true if successful, otherwise false
      */
     public boolean update(SimpleFeature feature, IDocument doc, DocumentInfo info, IProgressMonitor monitor);
-    
-    /**
-     * Checks if the source allows removing documents.
-     * 
-     * @return true if allowed, otherwise false
-     */
-    public boolean canRemove();
     
     /**
      * Removes the document.

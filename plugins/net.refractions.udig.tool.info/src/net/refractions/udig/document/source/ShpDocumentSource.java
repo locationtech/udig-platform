@@ -27,15 +27,13 @@ import net.refractions.udig.document.model.AbstractLinkedDocument;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * This is the shapefile document source implementation. This implements getters and setters to the
- * documents attached to the shapefile.
+ * Shapefile resource-level document source implementation. This implements getters and setters to
+ * the documents attached to the resource.
  * 
  * @author Naz Chan
  */
 public class ShpDocumentSource extends AbstractShpDocumentSource implements IDocumentSource {
 
-    private List<IDocument> docs;
-    
     /**
      * Creates a new ShpDocumentSource
      * 
@@ -46,6 +44,42 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
         super(resource);
     }
 
+    @Override
+    public boolean isEnabled() {
+        return propParser.getShapefileFlag();
+    }
+    
+    @Override
+    public boolean isEnabledEditable() {
+        return true;
+    }
+    
+    @Override
+    public boolean canAttach() {
+        return true;
+    }
+
+    @Override
+    public boolean canLinkFile() {
+        // Not implemented in this document source
+        return false;
+    }
+    
+    @Override
+    public boolean canLinkWeb() {
+        return true;
+    }
+    
+    @Override
+    public boolean canUpdate() {
+        return true;
+    }
+    
+    @Override
+    public boolean canRemove() {
+        return true;
+    }
+    
     @Override
     public List<IDocument> getDocuments(IProgressMonitor monitor) {
         docs = new ArrayList<IDocument>();
@@ -63,21 +97,6 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
         return docs;
     }
         
-    @Override
-    public boolean canAttach() {
-        return true;
-    }
-
-    @Override
-    public boolean canLinkFile() {
-        return false; // Not implemented in this document source
-    }
-    
-    @Override
-    public boolean canLinkWeb() {
-        return true;
-    }
-    
     @Override
     public IDocument add(DocumentInfo info, IProgressMonitor monitor) {
         final IDocument doc = addInternal(info, monitor);
@@ -106,11 +125,6 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
         getDocsInternal(monitor).add(newDoc);
         return newDoc;
     }
-    
-    @Override
-    public boolean canRemove() {
-        return true;
-    }
 
     @Override
     public boolean remove(IDocument oldDoc, IProgressMonitor monitor) {
@@ -138,11 +152,6 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
         return true;
     }
     
-    @Override
-    public boolean canUpdate() {
-        return true;
-    }
-
     @Override
     public boolean update(IDocument doc, DocumentInfo info, IProgressMonitor monitor) {
         if (Type.ATTACHMENT == info.getType()) {

@@ -35,7 +35,7 @@ import net.refractions.udig.catalog.document.IDocument.Type;
  * @author Naz Chan
  * @since 1.3.2
  */
-public interface IDocumentSource extends IAbstractDocumentSource {
+public interface IDocumentSource extends IAbstractAttachmentSource {
 
     /**
      * Gets the list of documents.
@@ -52,27 +52,6 @@ public interface IDocumentSource extends IAbstractDocumentSource {
      * @return documents
      */
     public List<IDocument> getDocuments(IProgressMonitor monitor);
-
-    /**
-     * Checks if the source allows attaching new documents.
-     * 
-     * @return true if allowed, otherwise false
-     */
-    public boolean canAttach();
-    
-    /**
-     * Checks if the source allows linking file documents.
-     * 
-     * @return true if allowed, otherwise false
-     */
-    public boolean canLinkFile();
-    
-    /**
-     * Checks if the source allows linking web documents.
-     * 
-     * @return true if allowed, otherwise false
-     */
-    public boolean canLinkWeb();
     
     /**
      * Adds a document.
@@ -97,13 +76,6 @@ public interface IDocumentSource extends IAbstractDocumentSource {
      * @return list added documents
      */
     public List<IDocument> add(List<DocumentInfo> infos, IProgressMonitor monitor);
-
-    /**
-     * Checks if the source allows updating documents.
-     * 
-     * @return true if allowed, otherwise false
-     */
-    public boolean canUpdate();
     
     /**
      * Updates the document with the information.
@@ -117,13 +89,6 @@ public interface IDocumentSource extends IAbstractDocumentSource {
      * @return true if successful, otherwise false
      */
     public boolean update(IDocument doc, DocumentInfo info, IProgressMonitor monitor);
-    
-    /**
-     * Checks if the source allows removing documents.
-     * 
-     * @return true if allowed, otherwise false
-     */
-    public boolean canRemove();
     
     /**
      * Removes the document.

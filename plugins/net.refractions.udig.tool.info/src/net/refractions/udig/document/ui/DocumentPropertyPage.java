@@ -16,25 +16,25 @@ package net.refractions.udig.document.ui;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.document.IAttachmentSource;
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IHotlinkSource;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
+import net.refractions.udig.catalog.document.IDocumentSource;
+import net.refractions.udig.catalog.document.IHotlinkSource;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
-import net.refractions.udig.document.source.BasicHotlinkResolveFactory;
+import net.refractions.udig.document.source.BasicHotlinkDescriptorParser;
 import net.refractions.udig.document.source.ShpDocPropertyParser;
 import net.refractions.udig.tool.info.InfoPlugin;
 import net.refractions.udig.tool.info.internal.Messages;
 
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -70,6 +70,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -91,119 +92,76 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
 
     private static final HotlinkDescriptor[] EMPTY = new HotlinkDescriptor[0];
     
-    private Button hotlinkEnable;
+    private Button resourceDocumentsFlag;
+    private Button featureDocumentsFlag;
+    private Button featureHotlinksFlag;
     
     private TableViewer hotlinkViewer;
-
     private Button addHotlink;
-
     private Button editHotlink;
-
     private Button removeButton;
 
-    private List<HotlinkDescriptor> hotlinkList = new ArrayList<HotlinkDescriptor>();
-
+    private List<HotlinkDescriptor> hotlinkList;
+    private BasicHotlinkDescriptorParser hotlinkParser;
     private ShpDocPropertyParser propParser;
     
     public static final String ACTION_PARAM = "{0}"; //$NON-NLS-1$
     
     @Override
     protected Control createContents(Composite parent) {
-        IAdaptable target = getElement();
-        final IGeoResource resource = (IGeoResource) target.getAdapter(IGeoResource.class);
-        if (resource.canResolve(ShpGeoResourceImpl.class)) {
-            propParser = new ShpDocPropertyParser(resource.getIdentifier());
-        }
-        boolean isEnabled = BasicHotlinkResolveFactory.hasHotlinkDescriptors(resource);
-        boolean hasAttachmentSource = resource.canResolve(IAttachmentSource.class);
-        boolean hasSchema = resource.canResolve(SimpleFeatureSource.class);
-        hotlinkList = new ArrayList<HotlinkDescriptor>();
-        if (isEnabled && hasSchema) {
-            hotlinkList.addAll(BasicHotlinkResolveFactory.getHotlinkDescriptors(resource));
-        }
 
-        Composite page = new Composite(parent, SWT.NO_SCROLL);
-        page.setLayout(new MigLayout("insets 0", "[][grow,fill][]", "[][][][][fill][]")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-
-        Button enableAttachment = new Button(page, SWT.CHECK);
-        enableAttachment.setText(Messages.Document_Attachment_Enable);
-        enableAttachment.setLayoutData("span 3, left, grow x, wrap"); //$NON-NLS-1$
-        enableAttachment.setEnabled(false);
-        enableAttachment.setSelection( hasAttachmentSource );
+        final Composite page = new Composite(parent, SWT.NO_SCROLL);
+        page.setLayout(new MigLayout("insets 0, wrap 1, fill")); //$NON-NLS-1$
+        page.setLayoutData(new GridData(GridData.FILL_BOTH));
         
-        hotlinkEnable = new Button(page, SWT.CHECK);
-        hotlinkEnable.setText(Messages.Document_Hotlink_Enable);
-        hotlinkEnable.setLayoutData("span 3, left, grow x, wrap"); //$NON-NLS-1$
-        hotlinkEnable.setSelection(isEnabled);
-        hotlinkEnable.setEnabled(hasSchema);
-        hotlinkEnable.addSelectionListener(new SelectionAdapter() {
+        final Group resourceGrp = new Group(page, SWT.SHADOW_IN);
+        resourceGrp.setText(Messages.DocumentPropertyPage_resourceGrpTitle);
+        resourceGrp.setLayoutData("growx"); //$NON-NLS-1$
+        resourceGrp.setLayout(new MigLayout());
+        
+        resourceDocumentsFlag = new Button(resourceGrp, SWT.CHECK);
+        resourceDocumentsFlag.setText(Messages.DocumentPropertyPage_resourceEnable);
+        resourceDocumentsFlag.setLayoutData("growx"); //$NON-NLS-1$
+        
+        final Group featureGrp = new Group(page, SWT.SHADOW_IN);
+        featureGrp.setText(Messages.DocumentPropertyPage_featureGrpTitle);
+        featureGrp.setLayoutData("grow, push"); //$NON-NLS-1$
+        final String layoutConst = "wrap 2, fill, insets 5"; //$NON-NLS-1$
+        final String columnConst = "[90%]5[10%]"; //$NON-NLS-1$
+        final String rowConst = ""; //$NON-NLS-1$
+        featureGrp.setLayout(new MigLayout(layoutConst, columnConst, rowConst));
+        
+        featureDocumentsFlag = new Button(featureGrp, SWT.CHECK);
+        featureDocumentsFlag.setText(Messages.DocumentPropertyPage_featureEnable);
+        featureDocumentsFlag.setLayoutData("span 2, growx"); //$NON-NLS-1$
+        
+        featureHotlinksFlag = new Button(featureGrp, SWT.CHECK);
+        featureHotlinksFlag.setText(Messages.DocumentPropertyPage_hotlinkEnable);
+        featureHotlinksFlag.setLayoutData("span 2, growx"); //$NON-NLS-1$
+        featureHotlinksFlag.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                boolean isEnabled = hotlinkEnable.getSelection();
-                enableTableAndButtons(isEnabled);
-                if (isEnabled) {
-                    hotlinkViewer.setInput(hotlinkList);
-                    hotlinkViewer.refresh();
-                } else {
-                    hotlinkViewer.setInput(EMPTY);
-                    hotlinkViewer.refresh();
-                }
+                final boolean isEnabled = featureHotlinksFlag.getSelection();
+                setTableAndButtonsEnablements(isEnabled);
+                hotlinkViewer.setInput(isEnabled ? hotlinkList : EMPTY);
+                hotlinkViewer.refresh();
             }
         });
 
-        addHotlink = new Button(page, SWT.CENTER);
-        addHotlink.setText(Messages.Document_Add);
-        addHotlink.setLayoutData("cell 2 3, growx"); //$NON-NLS-1$
-        addHotlink.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                ISelection sel = hotlinkViewer.getSelection();
-                if (!sel.isEmpty() && sel instanceof StructuredSelection) {
-                    StructuredSelection selection = (StructuredSelection) sel;
-                    HotlinkDescriptor descriptor = (HotlinkDescriptor) selection.getFirstElement();
+        createHotlinksTable(featureGrp);
+        createHotlinksButtons(featureGrp);
 
-                    int index = hotlinkList.indexOf(descriptor);
-                    addDescriptor(index);
-                } else {
-                    addDescriptor(-1);
-                }
-            }
-        });
-
-        editHotlink = new Button(page, SWT.CENTER);
-        editHotlink.setText(Messages.Document_Edit);
-        editHotlink.setLayoutData("cell 2 4, growx"); //$NON-NLS-1$
-        editHotlink.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                ISelection sel = hotlinkViewer.getSelection();
-                if (!sel.isEmpty() && sel instanceof StructuredSelection) {
-                    StructuredSelection selection = (StructuredSelection) sel;
-                    HotlinkDescriptor descriptor = (HotlinkDescriptor) selection.getFirstElement();
-                    editDescriptor(descriptor);
-                }
-            }
-        });
-
-        removeButton = new Button(page, SWT.CENTER);
-        removeButton.setText(Messages.Document_Remove);
-        removeButton.setLayoutData("cell 2 6, aligny bottom, growx"); //$NON-NLS-1$
-        removeButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                ISelection sel = hotlinkViewer.getSelection();
-                if (!sel.isEmpty() && sel instanceof StructuredSelection) {
-                    StructuredSelection selection = (StructuredSelection) sel;
-                    HotlinkDescriptor descriptor = (HotlinkDescriptor) selection.getFirstElement();
-
-                    removeDescriptor(descriptor);
-                }
-            }
-        });
-        Composite tableComposite = new Composite( page, SWT.NONE );
-        TableColumnLayout columnLayout = new TableColumnLayout();
-        tableComposite.setLayout( columnLayout );
-        tableComposite.setLayoutData("cell 0 3 2 4, grow, height 200:100%:100%,width 300:pref:100%, gapx para"); //$NON-NLS-1$
+        setPageInputAndEnablements();
+        
+        return page;
+    }
+    
+    private void createHotlinksTable(Composite parent) {
+        
+        final Composite tableComposite = new Composite(parent, SWT.NONE);
+        final TableColumnLayout columnLayout = new TableColumnLayout();
+        tableComposite.setLayout(columnLayout);
+        tableComposite.setLayoutData("grow, push"); //$NON-NLS-1$
         
         hotlinkViewer = new TableViewer(tableComposite, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL
                 | SWT.H_SCROLL | SWT.FULL_SELECTION);
@@ -304,82 +262,230 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 editDescriptor(descriptor);
             }
         });
-        hotlinkViewer.setInput(hotlinkList);
-
-        enableTableAndButtons(isEnabled);
-        return page;
+        
     }
+    
+    private void createHotlinksButtons(Composite parent) {
+        
+        final Composite buttonComposite = new Composite(parent, SWT.NONE);
+        final String btnLayoutConst = "fillx, insets 0, wrap 1"; //$NON-NLS-1$
+        final String btnColConst = "[fill]"; //$NON-NLS-1$
+        final String btnRowConst = "[][]push[]"; //$NON-NLS-1$
+        buttonComposite.setLayout(new MigLayout(btnLayoutConst, btnColConst, btnRowConst));
+        buttonComposite.setLayoutData("grow"); //$NON-NLS-1$
+        
+        addHotlink = new Button(buttonComposite, SWT.CENTER);
+        addHotlink.setText(Messages.Document_Add);
+        addHotlink.setLayoutData("grow"); //$NON-NLS-1$
+        addHotlink.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                ISelection sel = hotlinkViewer.getSelection();
+                if (!sel.isEmpty() && sel instanceof StructuredSelection) {
+                    StructuredSelection selection = (StructuredSelection) sel;
+                    HotlinkDescriptor descriptor = (HotlinkDescriptor) selection.getFirstElement();
 
-    @Override
-    public boolean performOk() {
+                    int index = hotlinkList.indexOf(descriptor);
+                    addDescriptor(index);
+                } else {
+                    addDescriptor(-1);
+                }
+            }
+        });
+
+        editHotlink = new Button(buttonComposite, SWT.CENTER);
+        editHotlink.setText(Messages.Document_Edit);
+        editHotlink.setLayoutData(""); //$NON-NLS-1$
+        editHotlink.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                ISelection sel = hotlinkViewer.getSelection();
+                if (!sel.isEmpty() && sel instanceof StructuredSelection) {
+                    StructuredSelection selection = (StructuredSelection) sel;
+                    HotlinkDescriptor descriptor = (HotlinkDescriptor) selection.getFirstElement();
+                    editDescriptor(descriptor);
+                }
+            }
+        });
+
+        removeButton = new Button(buttonComposite, SWT.CENTER);
+        removeButton.setText(Messages.Document_Remove);
+        removeButton.setLayoutData(""); //$NON-NLS-1$
+        removeButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                ISelection sel = hotlinkViewer.getSelection();
+                if (!sel.isEmpty() && sel instanceof StructuredSelection) {
+                    StructuredSelection selection = (StructuredSelection) sel;
+                    HotlinkDescriptor descriptor = (HotlinkDescriptor) selection.getFirstElement();
+
+                    removeDescriptor(descriptor);
+                }
+            }
+        });
+        
+    }
+    
+    private void setPageInputAndEnablements() {
+        final IProgressMonitor monitor = new NullProgressMonitor();
         final IGeoResource resource = (IGeoResource) getElement().getAdapter(IGeoResource.class);
-
-        if (hotlinkEnable.getSelection()) {
-            if (hotlinkViewer.getInput() == EMPTY) {
-                ArrayList<HotlinkDescriptor> empty = new ArrayList<HotlinkDescriptor>();
-                BasicHotlinkResolveFactory.putHotlinkDescriptors(resource, empty);
-                savePropertiesFile(null);
-            } else {
-                BasicHotlinkResolveFactory.putHotlinkDescriptors(resource, hotlinkList);
-                savePropertiesFile(hotlinkList);
-            }
-        } else {
-            BasicHotlinkResolveFactory.clearHotlinkDescriptors(resource);
-            savePropertiesFile(null);
-        }
-        return super.performOk();
+        setShpPropertyParser(resource);
+        setResourcePropsEnablements(resource, monitor);
+        setFeaturePropsEnablements(resource, monitor);
+        setHotlinkDescriptorParser(resource);
+        setHotlinkPropsEnablements(resource, monitor);
     }
-
-    @Override
-    protected void performDefaults() {
-        final IGeoResource resource = (IGeoResource) getElement().getAdapter(IGeoResource.class);
-
-        boolean isEnabled = BasicHotlinkResolveFactory.hasHotlinkDescriptors(resource);
-        boolean hasSchema = resource.canResolve(SimpleFeatureSource.class);
-        if (isEnabled && hasSchema) {
-            hotlinkList.clear();
-            hotlinkList.addAll(BasicHotlinkResolveFactory.getHotlinkDescriptors(resource));
-            hotlinkViewer.refresh();
-        } else {
-            hotlinkList.clear();
-            hotlinkViewer.setInput(EMPTY);
-            hotlinkViewer.refresh();
-        }
-        hotlinkEnable.setSelection(isEnabled);
-        super.performDefaults();
-    }
-
-    /**
-     * Saves the attribute hotlinks into the properties file. This creates the properties file if it
-     * does not exist in the file system.
-     * 
-     * @param hotlinks
-     */
-    private void savePropertiesFile(List<HotlinkDescriptor> hotlinks) {
-        if( propParser != null ){
-            if (!propParser.hasProperties()) {
-                propParser.createPropertiesFile();
-            }
-            if (hotlinks != null) {
-                propParser.setHotlinkDescriptors(hotlinks);    
-            } else {
-                propParser.setHotlinkDescriptors(Collections.<HotlinkDescriptor>emptyList());
-            }
-            propParser.writeProperties();
+    
+    private void setShpPropertyParser(IGeoResource resource) {
+        if (resource.canResolve(ShpGeoResourceImpl.class)) {
+            propParser = new ShpDocPropertyParser(resource.getIdentifier());
         }
     }
     
-    @Override
-    public boolean performCancel() {
-        return super.performCancel(); // no change
+    private void setResourcePropsEnablements(IGeoResource resource, IProgressMonitor monitor) {
+        resourceDocumentsFlag.setSelection(false);
+        resourceDocumentsFlag.setEnabled(false);
+        if (resource.canResolve(IDocumentSource.class)) {
+            try {
+                final IDocumentSource source = resource.resolve(IDocumentSource.class, monitor);
+                resourceDocumentsFlag.setSelection(source.isEnabled());
+                resourceDocumentsFlag.setEnabled(source.isEnabledEditable());
+            } catch (IOException e) {
+                // Already disabled
+            }
+        }
     }
-
-    public void enableTableAndButtons(boolean isEnabled) {
+    
+    private void setFeaturePropsEnablements(IGeoResource resource, IProgressMonitor monitor) {
+        featureDocumentsFlag.setSelection(false);
+        featureDocumentsFlag.setEnabled(false);
+        if (resource.canResolve(IAttachmentSource.class)) {
+            try {
+                final IAttachmentSource source = resource.resolve(IAttachmentSource.class, monitor);
+                featureDocumentsFlag.setSelection(source.isEnabled());
+                featureDocumentsFlag.setEnabled(source.isEnabledEditable());
+            } catch (IOException e) {
+                // Already disabled
+            }
+        }
+    }
+        
+    private void setHotlinkDescriptorParser(IGeoResource resource) {
+        if (resource.canResolve(IHotlinkSource.class)) {
+            hotlinkParser = new BasicHotlinkDescriptorParser(resource);
+        }
+    }
+    
+    private void setHotlinkPropsEnablements(IGeoResource resource, IProgressMonitor monitor) {
+        featureHotlinksFlag.setSelection(false);
+        featureHotlinksFlag.setEnabled(false);
+        setTableAndButtonsEnablements(false);
+        if (resource.canResolve(IHotlinkSource.class)) {
+            try {
+                final IHotlinkSource source = resource.resolve(IHotlinkSource.class, monitor);
+                final boolean isEnabled = source.isEnabled();
+                final boolean isEditable = source.isEnabledEditable();
+                featureHotlinksFlag.setSelection(isEnabled);
+                featureHotlinksFlag.setEnabled(isEditable);
+                setTableAndButtonsEnablements(isEnabled && isEditable);
+                if (isEditable) {
+                    hotlinkList = new ArrayList<HotlinkDescriptor>();
+                    hotlinkList.addAll(hotlinkParser.getDescriptors());
+                    hotlinkViewer.setInput(hotlinkList);
+                }
+            } catch (IOException e) {
+                // Already disabled
+            }
+        }
+    }
+    
+    private void setTableAndButtonsEnablements(boolean isEnabled) {
         hotlinkViewer.getControl().setEnabled(isEnabled);
         boolean hasSelection = isEnabled && !hotlinkViewer.getSelection().isEmpty();
         addHotlink.setEnabled(isEnabled);
         editHotlink.setEnabled(hasSelection);
         removeButton.setEnabled(hasSelection);
+    }
+    
+    @Override
+    public boolean performOk() {
+        savePersistentProperties();
+        savePropertiesFile();
+        return super.performOk();
+    }
+
+    @Override
+    protected void performDefaults() {
+        if (resourceDocumentsFlag.isEnabled()) {
+            resourceDocumentsFlag.setSelection(propParser.getShapefileFlag());
+        }
+        if (featureDocumentsFlag.isEnabled()) {
+            featureDocumentsFlag.setSelection(propParser.getFeatureDocsFlag());
+        }
+        if (featureHotlinksFlag.isEnabled()) {
+            featureHotlinksFlag.setSelection(hotlinkParser.isEnabled());
+            hotlinkList.clear();
+            hotlinkList.addAll(hotlinkParser.getDescriptors());
+            hotlinkViewer.refresh();
+        }
+        super.performDefaults();
+    }
+
+    private void savePersistentProperties() {
+        
+        final boolean isEditAllowed = featureHotlinksFlag.isEnabled();
+        
+        if (isEditAllowed && hotlinkParser != null) {
+            // Get enablement flag value
+            final boolean isHotlinksEnabled = featureHotlinksFlag.getSelection();
+            // Set enablement
+            hotlinkParser.setEnabled(isHotlinksEnabled);
+            // Set hotlink desriptors
+            if (isHotlinksEnabled) {
+                if (hotlinkViewer.getInput() == EMPTY) {
+                    hotlinkParser.setDescriptors(new ArrayList<HotlinkDescriptor>());
+                } else {
+                    hotlinkParser.setDescriptors(hotlinkList);
+                }
+            } else {
+                hotlinkParser.clearDescriptors();
+            }            
+        }
+        
+    }
+    
+    /**
+     * Saves the attribute hotlinks into the properties file. This creates the properties file if it
+     * does not exist in the file system.
+     * 
+     * @param descriptors
+     */
+    private void savePropertiesFile() {
+        
+        final boolean isResourceEditAllowed = resourceDocumentsFlag.isEnabled();
+        final boolean isFeatureEditAllowed = featureDocumentsFlag.isEnabled();
+        
+        if ((isResourceEditAllowed || isFeatureEditAllowed) && propParser != null) {
+            // Create properties file
+            if (!propParser.hasProperties()) {
+                propParser.createPropertiesFile();
+            }
+            // Set flags
+            if (isResourceEditAllowed) {
+                propParser.setShapefileFlag(resourceDocumentsFlag.getSelection());    
+            }
+            if (isFeatureEditAllowed) {
+                propParser.setFeatureDocsFlag(featureDocumentsFlag.getSelection());    
+            }
+            // Write properties
+            propParser.writeProperties();
+        }
+        
+    }
+    
+    @Override
+    public boolean performCancel() {
+        return super.performCancel(); // no change
     }
 
     protected void removeDescriptor(HotlinkDescriptor descriptor) {

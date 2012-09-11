@@ -14,24 +14,28 @@
  */
 package net.refractions.udig.document.source;
 
-import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
+import java.net.URL;
+import java.util.List;
+
+import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.catalog.document.IAbstractDocumentSource;
+import net.refractions.udig.catalog.document.IDocument;
 
 /**
- * The base class for shape document sources. This sets up needs utility objects like the document
- * factory and the property file parser.
+ * The base class for document sources.
  * 
- * @author Naz Chan 
+ * @author Naz Chan
  */
-public abstract class AbstractShpDocumentSource extends AbstractDocumentSource {
+public abstract class AbstractDocumentSource implements IAbstractDocumentSource {
 
-    protected ShpDocPropertyParser propParser;
-    protected ShpDocFactory docFactory;
+    protected URL url;
+    protected IGeoResource resource;
     
-    public AbstractShpDocumentSource(ShpGeoResourceImpl resource) {
-        super(resource);
-        this.url = resource.service().getIdentifier();
-        this.docFactory = new ShpDocFactory(this);
-        this.propParser = new ShpDocPropertyParser(url);
+    protected List<IDocument> docs;
+    
+    public AbstractDocumentSource(IGeoResource resource) {
+        this.url = resource.getIdentifier();
+        this.resource = resource;
     }
     
 }
