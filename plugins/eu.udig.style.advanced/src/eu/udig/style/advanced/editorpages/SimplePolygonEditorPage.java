@@ -174,17 +174,6 @@ public class SimplePolygonEditorPage extends StyleEditorPage {
 
         StyleBlackboard styleBlackboard = layer.getStyleBlackboard();
         styleBlackboard.put(SLDContent.ID, newStyle);
-        /*try {
-            System.out.println("***********************"); //$NON-NLS-1$
-            System.out.println("***********************"); //$NON-NLS-1$
-            System.out.println("***********************"); //$NON-NLS-1$
-            System.out.println(Utilities.styleToString(newStyle));
-            System.out.println("***********************"); //$NON-NLS-1$
-            System.out.println("***********************"); //$NON-NLS-1$
-            System.out.println("***********************"); //$NON-NLS-1$
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
     }
 
     public boolean performOk() {
