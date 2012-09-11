@@ -45,10 +45,6 @@ import org.osgi.framework.BundleContext;
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
-/**
- * @author fgdrf
- *
- */
 public class ProjectUIPlugin extends AbstractUdigUIPlugin {
 
     /**
@@ -88,9 +84,9 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
         INSTANCE = this;
     }
 
-    FeatureEditorExtensionProcessor featureEditProcessor = new FeatureEditorExtensionProcessor();
+    FeatureEditorExtensionProcessor featureEditProcessor = null;
     
-    FeaturePanelProcessor featurePanelProcessor = new FeaturePanelProcessor();
+    FeaturePanelProcessor featurePanelProcessor = null;
     
     /**
      * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
@@ -208,7 +204,9 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
      */
 
     public void stop( BundleContext context ) throws Exception {
-        featureEditProcessor.stopPartListener();
+        if (featureEditProcessor != null){
+            featureEditProcessor.stopPartListener();
+        }
         if (LayerGeneratedGlyphDecorator.getInstance() != null)
             LayerGeneratedGlyphDecorator.getInstance().dispose();
         super.stop(context);
@@ -220,7 +218,8 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
      * @return
      */
     public FeatureEditorExtensionProcessor getFeatureEditProcessor() {
-        if (!featureEditProcessor.isRunning()){
+        if (featureEditProcessor == null) {
+            featureEditProcessor = new FeatureEditorExtensionProcessor();
             featureEditProcessor.startPartListener();
         }
         return featureEditProcessor;
@@ -232,6 +231,9 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
      * @return
      */
     public FeaturePanelProcessor getFeaturePanelProcessor() {
+        if (featurePanelProcessor == null){
+            featurePanelProcessor = new FeaturePanelProcessor();
+        }
         return featurePanelProcessor;
     }
 
