@@ -333,4 +333,8 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
         return q;
     }
 
+    public void gotFocus() {
+        // do nothing here
+    }
+
 }
