@@ -141,6 +141,9 @@ public class GridCoverageReaderRenderer extends RendererImpl {
             
         	 
              AbstractGridCoverage2DReader reader = (AbstractGridCoverage2DReader) geoResource.resolve( AbstractGridCoverage2DReader.class, monitor);
+             if( reader == null ){
+                 return; // unable to connect!
+             }
              CoordinateReferenceSystem destinationCRS = currentContext.getCRS();
              ReferencedEnvelope bounds = (ReferencedEnvelope) currentContext.getImageBounds();
              bounds=bounds.transform(destinationCRS, true);
@@ -150,8 +153,7 @@ public class GridCoverageReaderRenderer extends RendererImpl {
                  group=reader.getFormat().getReadParameters();
              }
              else{
-                 // temporary fix for image-io
-                 // JG: (what is the nature of this fix?)
+                 // temporary fix for image-io (JG: what is the nature of this fix?)
                  try{
                      ParameterValue<?> jaiImageReaderParam = group.parameter(AbstractGridFormat.USE_JAI_IMAGEREAD.getName().toString());
                      if(jaiImageReaderParam!=null){

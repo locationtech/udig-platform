@@ -27,8 +27,8 @@ import java.util.Set;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
-import net.refractions.udig.catalog.IResolveAdapterFactory2;
 import net.refractions.udig.catalog.IResolveManager;
+import net.refractions.udig.catalog.ResolveAdapterFactory;
 import net.refractions.udig.core.internal.ExtensionPointList;
 
 import org.eclipse.core.runtime.CoreException;
@@ -50,7 +50,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
  * </ul>
  * 
  * @author Jody Garnett
- * @since 1.3.2
+ * @since 1.3.3
  */
 public class ResolveManager2 implements IResolveManager {
 
@@ -75,43 +75,89 @@ public class ResolveManager2 implements IResolveManager {
         List<IConfigurationElement> extensionList = ExtensionPointList
                 .getExtensionPointList(RESOLVE_FACTORY_EXTENSION_POINT);
         for (IConfigurationElement element : extensionList) {
-            ResolveAdapterFactoryProxy proxy = new ResolveAdapterFactoryProxy(element);
-            String resolveName = proxy.getResolveName();
-            registerResolves(proxy, resolveName);
+            try {
+                ResolveAdapterFactoryProxy proxy = new ResolveAdapterFactoryProxy(element);
+                register(proxy);
+            }
+            catch (Throwable t){
+                CatalogPlugin.log(element.getNamespaceIdentifier()+" failed:"+t, t);
+            }
+        }
+    }
+
+    @Override
+    public boolean canResolve(IResolve resolve, Class<?> targetClass) {
+        Map<String, IResolveAdapterFactory> available = getFactories(resolve.getClass());
+        String targetTypeName = targetClass.getName();
+        IResolveAdapterFactory factory = available.get(targetTypeName);
+        if (factory != null){
+            // we found a factory directly responsible for this connection
+            try {
+                return factory.canAdapt(resolve, targetClass);
+            } catch (Throwable t) {
+                String msg = "IResolveAdapterFactory " + factory.getClass().getName()
+                        + " canAdapt check failed:" + t;
+                CatalogPlugin.trace(msg, t);
+                return false; // factory was unable to function
+            }
+        }
+        else {
+            // factories that were not registered against a specific targetClass
+            //
+            List<IResolveAdapterFactory> genericFactories = factories.get(null);
+            if( genericFactories != null ){
+                for( IResolveAdapterFactory fallback : genericFactories ){
+                    try {
+                        if( fallback.canAdapt( resolve, targetClass ) ){
+                            return true; // found one!
+                        }
+                    }
+                    catch( Throwable t ){
+                        String factoryName = fallback.getClass().getName();
+                        CatalogPlugin.trace( "IResolveFactory "+factoryName+" unable to test for "+targetTypeName+":"+t, t);
+                    }
+                }
+            }
+            return false; 
         }
     }
 
     @Override
     public <T> T resolve(IResolve resolve, Class<T> targetClass, IProgressMonitor monitor)
             throws IOException {
+        String targetTypeName = targetClass.getName();
+        
         Map<String, IResolveAdapterFactory> available = getFactories(resolve.getClass());
-        IResolveAdapterFactory factory = available.get(targetClass.getName());
-        if (factory == null)
-            return null; // nobody knows how to do this one
-
-        T connected = factory.adapt(resolve, targetClass, monitor);
-
-        return connected;
+        IResolveAdapterFactory factory = available.get(targetTypeName);
+        if (factory != null) {
+            // we found a factory directly responsible for this connection
+            T connected = factory.adapt(resolve, targetClass, monitor);
+            return connected;
+        }
+        else {
+            List<IResolveAdapterFactory> genericFactories = factories.get(null);
+            for( IResolveAdapterFactory fallback : genericFactories ){
+                try {
+                    if( fallback.canAdapt( resolve, targetClass ) ){
+                        T connected = fallback.adapt( resolve, targetClass, monitor );
+                        if( connected != null ){
+                            return connected;
+                        }
+                    }
+                }
+                catch( Throwable t ){
+                    String factoryName = fallback.getClass().getName();
+                    CatalogPlugin.trace( "IResolveFactory "+factoryName+" unable to convert to "+targetTypeName+":"+t, t);
+                }
+            }
+            return null; // unable to convert
+        }
     }
 
     @Override
-    public boolean canResolve(IResolve resolve, Class<?> targetClass) {
-        Map<String, IResolveAdapterFactory> available = getFactories(resolve.getClass());
-        IResolveAdapterFactory factory = available.get(targetClass.getName());
-        if (factory == null)
-            return false; // nobody knows how to do this one
-        try {
-            return factory.canAdapt(resolve, targetClass);
-        } catch (Throwable t) {
-            String msg = "IResolveAdapterFactory " + factory.getClass().getName()
-                    + " canAdapt check failed:" + t;
-            CatalogPlugin.trace(msg, t);
-            return false; // factory was unable to function
-        }
-
-    }
-
-    public void registerResolves(IResolveAdapterFactory factory, String className) {
+    public void register(ResolveAdapterFactory factory) {
+        String className = factory.getResolveName();
+        
         List<IResolveAdapterFactory> register = factories.get(className);
         if (register == null) {
             register = new ArrayList<IResolveAdapterFactory>(2);
@@ -122,17 +168,71 @@ public class ResolveManager2 implements IResolveManager {
 
     @Override
     public void registerResolves(IResolveAdapterFactory factory) {
-        //
+        if( factory instanceof ResolveAdapterFactory ){
+            register((ResolveAdapterFactory) factory );
+        }
+        else {
+            registerGeneric( factory );
+        }
+    }
+
+    private void registerGeneric(IResolveAdapterFactory factory) {
+        List<IResolveAdapterFactory> register = factories.get(null);
+        if (register == null) {
+            register = new ArrayList<IResolveAdapterFactory>(2);
+            factories.put(null, register);
+        }
+        GenericResolveAdapterFactory item = new GenericResolveAdapterFactory(factory);
+        register.add(item);
     }
 
     @Override
     public void unregisterResolves(IResolveAdapterFactory factory) {
-        //
+        if( factory instanceof ResolveAdapterFactory ){
+            unregister((ResolveAdapterFactory) factory );
+        }
+        else {
+            unregisterGeneric( factory );
+        }
     }
 
     @Override
+    public void unregister(ResolveAdapterFactory factory) {
+        String className = factory.getResolveName();
+        List<IResolveAdapterFactory> register = factories.get(className);
+        if (register != null) {
+            register.remove( factory );
+        }
+    }
+    
+    @Override
     public void unregisterResolves(IResolveAdapterFactory factory, Class<?> resolveType) {
-        //
+        GenericResolveAdapterFactory item = lookupGenericFactory( factory );
+        item.getExcludes().add( resolveType );
+    }
+
+    private void unregisterGeneric(IResolveAdapterFactory factory) {
+        List<IResolveAdapterFactory> register = factories.get(null);
+        if (register != null) {
+            GenericResolveAdapterFactory item = lookupGenericFactory(factory);
+            register.remove( item );
+        }
+    }
+
+    private GenericResolveAdapterFactory lookupGenericFactory(IResolveAdapterFactory factory) {
+        List<IResolveAdapterFactory> genericFactories = factories.get(null);
+        if( genericFactories == null ){
+            return null; // no generic factories have been registered
+        }
+        for( IResolveAdapterFactory generic : genericFactories ){
+            if( generic instanceof GenericResolveAdapterFactory ){
+                GenericResolveAdapterFactory manual = (GenericResolveAdapterFactory) generic;
+                if( manual == factory || manual.getFactory() == factory ){
+                    return manual;
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -225,8 +325,8 @@ public class ResolveManager2 implements IResolveManager {
                         table.put(adapterName, factory);
                     }
                 }
-            } else if (factory instanceof IResolveAdapterFactory2) {
-                IResolveAdapterFactory2 factory2 = (IResolveAdapterFactory2) factory;
+            } else if (factory instanceof ResolveAdapterFactory) {
+                ResolveAdapterFactory factory2 = (ResolveAdapterFactory) factory;
                 for (Class<?> adapterClass : factory2.getAdapterList()) {
                     String adapterName = adapterClass.getName();
                     if (table.get(adapterName) == null) {
@@ -314,8 +414,8 @@ public class ResolveManager2 implements IResolveManager {
         } catch (ClassNotFoundException notFound) {
             // check if the factory knows what to do - perhaps load via spring
             // or service provider interface
-            if (factory instanceof IResolveAdapterFactory2) {
-                for (Class<?> adpaterClass : ((IResolveAdapterFactory2) factory).getAdapterList()) {
+            if (factory instanceof ResolveAdapterFactory) {
+                for (Class<?> adpaterClass : ((ResolveAdapterFactory) factory).getAdapterList()) {
                     String adapterName = adpaterClass.getCanonicalName();
                     if (className.equals(adapterName)) {
                         return adpaterClass;
@@ -325,38 +425,85 @@ public class ResolveManager2 implements IResolveManager {
         }
         return null; // not available
     }
-
+    /**
+     * Holds a manually registered "generic" IResolveAdapterFactory instance.
+     * <p>
+     * Provides additional support an exclude list, used to offer limited control of manually registered factories.
+     * This functionality is superseded by {@link ResolveAdapterFactory#getAdapterNames()}.
+     * 
+     * @author Jody Garnett (LISAsoft)
+     * @since 1.3.3
+     */
+    static class GenericResolveAdapterFactory implements IResolveAdapterFactory {
+        IResolveAdapterFactory factory;
+        Set<Class<?>> excludes = new HashSet<Class<?>>();
+        
+        GenericResolveAdapterFactory( IResolveAdapterFactory factory ){
+            if( factory == null ){
+                throw new NullPointerException("Factory required");
+            }
+            this.factory = factory;
+        }
+        public boolean canAdapt(IResolve resolve, Class<? extends Object> adapterType) {
+            if (excludes.contains(adapterType)){
+                return false; // type has been manually excluded 
+            }
+            return factory.canAdapt(resolve, adapterType);
+        }
+        public <T> T adapt(IResolve resolve, Class<T> adapterType, IProgressMonitor monitor)
+                throws IOException {
+            return factory.adapt(resolve, adapterType, monitor);
+        }
+        /**
+         * Used to store excludes provided by {@link IResolveManager#unregisterResolves(IResolveAdapterFactory, Class).
+         * <p>
+         * This set overrides the functionality of #canAdapt(IResolve, Class) above.
+         * @return Set of types mannually excluded
+         */
+        public Set<Class<?>> getExcludes() {
+            return excludes;
+        }
+        public IResolveAdapterFactory getFactory() {
+            return factory;
+        }
+        @Override
+        public String toString() {
+            return "ManualResolveAdapterFactory "+factory.getClass().getName() +" excludes:"+excludes;
+        }
+    }
     /**
      * Proxy supporting the lazy loading of an IResolveAdapterFactory while providing access to its
      * list of supported types.
      * 
      * @author Jody Garnett (LISAsoft)
-     * @since 1.3.2
+     * @since 1.3.3
      */
-    static class ResolveAdapterFactoryProxy implements IResolveAdapterFactory2 {
+    static class ResolveAdapterFactoryProxy extends ResolveAdapterFactory {
         IConfigurationElement config;
 
         IResolveAdapterFactory factory;
 
         /** Provide class lookup by full name */
-        Map<String, Class<?>> adapterTypes;
+        Map<String, Class<?>> adapterTypes = new HashMap<String, Class<?>>();
 
         private String resolveName;
 
-        private Class<?> resolveClass;
+        private Class<?> resolveType;
 
-        public ResolveAdapterFactoryProxy(IResolveAdapterFactory2 factory) {
+        public ResolveAdapterFactoryProxy(ResolveAdapterFactory factory) {
             this.config = null;
             this.factory = factory;
             for (Class<?> adapterClass : factory.getAdapterList()) {
                 String adapterTypeName = adapterClass.getName();
                 adapterTypes.put(adapterTypeName, adapterClass);
             }
+            this.resolveName = factory.getResolveName();
+            this.resolveType = factory.getResolveType();
         }
 
         public ResolveAdapterFactoryProxy(IConfigurationElement config) {
             this.config = config;
-            resolveName = config.getAttribute("type");
+            resolveName = config.getAttribute("resolveableType");
 
             for (IConfigurationElement element : config.getChildren("resolve")) {
                 String adapterTypeName = element.getAttribute("type");
@@ -369,18 +516,18 @@ public class ResolveManager2 implements IResolveManager {
         }
 
         public synchronized Class<?> getResolveType() {
-            if (resolveClass == null) {
-                resolveClass = loadClass(factory, resolveName);
+            if (resolveType == null) {
+                resolveType = loadClass(factory, resolveName);
             }
-            return resolveClass;
+            return resolveType;
         }
 
         private synchronized void loadFactory() {
             if (factory == null) {
                 try {
-                    factory = (IResolveAdapterFactory) config.createExecutableExtension("type");
+                    factory = (IResolveAdapterFactory) config.createExecutableExtension("class");
                 } catch (CoreException problem) {
-                    String factoryName = config.getAttribute("type");
+                    String factoryName = config.getAttribute("class");
                     factory = new ExceptionResolveAdapaterFactory(factoryName, problem);
                 }
             }
@@ -395,15 +542,10 @@ public class ResolveManager2 implements IResolveManager {
                 return false; // factory has never heard of this adapterType
             }
             // okay factory thinks it can do it ...
-            if (factory != null) {
-                return factory.canAdapt(resolve, adapterType);
-            } else {
-                // An earlier implementation would load the factory at this point to check
-                // As an optimisation we are just going to return true at this poin
-                // and let the adapt method (with its progress monitor) take on
-                // the pain of loading the factory?
-                return true;
+            if (factory == null) {
+                loadFactory();
             }
+            return factory.canAdapt(resolve, adapterType);           
         }
 
         @Override
@@ -445,7 +587,7 @@ public class ResolveManager2 implements IResolveManager {
          * 
          * @author Jody
          */
-        static class ExceptionResolveAdapaterFactory implements IResolveAdapterFactory2 {
+        static class ExceptionResolveAdapaterFactory extends ResolveAdapterFactory {
             CoreException problem;
 
             private String factoryName;
@@ -474,6 +616,21 @@ public class ResolveManager2 implements IResolveManager {
             @Override
             public List<Class<?>> getAdapterList() {
                 return Collections.emptyList();
+            }
+
+            @Override
+            public List<String> getAdapterNames() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public Class<?> getResolveType() {
+                return Void.class;
+            }
+
+            @Override
+            public String getResolveName() {
+                return "java.lang.Void";
             }
         }
     }

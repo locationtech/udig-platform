@@ -20,14 +20,13 @@ import java.util.List;
 
 /**
  * Extension that allows {@link IResolveAdapterFactory} implementations
- * to provide a list of target adapter types in the same fashion as
- * the extension point.
+ * to provide a type information in the same fashion as the extension point.
  * <p>
  * 
  * @author Jody Garnett (LISAsoft)
  * @since version 1.3.2
  */
-public interface IResolveAdapterFactory2 extends IResolveAdapterFactory {
+public abstract class ResolveAdapterFactory implements IResolveAdapterFactory {
     
     /**
      * List of adapter types types this factory can connect to.
@@ -35,7 +34,13 @@ public interface IResolveAdapterFactory2 extends IResolveAdapterFactory {
      * This method is used by ResolveManager2 to short list appropriate factories
      * prior to calling {@link #canAdapt(IResolve, Class)}.
      * 
-     * @return list of adapter types this factory can connenct to
+     * @return list of adapter types this factory can connect to
      */
-    public List<Class<?>> getAdapterList();
+    public abstract List<Class<?>> getAdapterList();
+    
+    public abstract List<String> getAdapterNames();
+    
+    public abstract Class<?> getResolveType();
+    
+    public abstract String getResolveName();
 }

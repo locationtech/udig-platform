@@ -21,6 +21,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import net.refractions.udig.catalog.internal.CatalogImpl;
 import net.refractions.udig.catalog.internal.Messages;
 import net.refractions.udig.catalog.internal.ResolveManager;
+import net.refractions.udig.catalog.internal.ResolveManager2;
 import net.refractions.udig.catalog.internal.ServiceFactoryImpl;
 import net.refractions.udig.core.internal.ExtensionPointProcessor;
 import net.refractions.udig.core.internal.ExtensionPointUtil;
@@ -111,7 +112,7 @@ public class CatalogPlugin extends Plugin {
         local = new CatalogImpl();
         catalogs = Collections.emptyList();
         serviceFactory = new ServiceFactoryImpl();
-        resolveManager = new ResolveManager();
+        resolveManager = new ResolveManager2();
         
         // ensure a preference store is around so we can save to it in the shutdown hook
         preferenceStore = new ScopedPreferenceStore(new InstanceScope(), getBundle().getSymbolicName());
