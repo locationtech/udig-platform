@@ -314,7 +314,7 @@ public class DocumentDialog extends IconAndMessageDialog {
     
     @Override
     protected Image getImage() {
-        return getQuestionImage();
+        return getInfoImage();
     }
 
     @Override
