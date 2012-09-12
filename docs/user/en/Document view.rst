@@ -10,24 +10,19 @@ The Document view shows attachments, links and hotlinks associated with the sele
 Documents
 ---------
 
-The documents are presented in a tree, with folders used to represent
-the files associated with the select feature or layer.
+The documents are presented in a tree-table structure. Documents are grouped into folders that represent their associated feature or layer.
 
 Within each folder several kinds of information are displayed:
 
-|file_logo| - File Document
+|file_logo| - File Document (or the operating system's default program for file's type)
 
 |web_logo| - Web Document
 
 |action_logo| - Action Document
 
-When storing documents associated with a selected feature, specific
-attributes are marked along with the type of content they can reference.
+Some layers and features support storing of documents as attachments. Attachments are copied into the application and managed along with the resource.
 
-Hotlink attributes that are not currently used will show up as "Unassigned".
-
-Some layers and features support the storing of documents as attachments, where attachments are copied
-into the application and managed along with the layer.
+For features, specific attributes can be marked to reference a document, we call these *hotlinks*. Hotlinks that are not currently used will show up as "Unassigned".
 
 Attach
 ------
