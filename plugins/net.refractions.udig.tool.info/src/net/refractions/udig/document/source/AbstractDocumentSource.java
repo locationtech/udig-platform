@@ -17,9 +17,12 @@ package net.refractions.udig.document.source;
 import java.net.URL;
 import java.util.List;
 
+import org.opengis.feature.simple.SimpleFeature;
+
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.document.IAbstractDocumentSource;
 import net.refractions.udig.catalog.document.IDocument;
+import net.refractions.udig.document.model.AbstractDocument;
 
 /**
  * The base class for document sources.
@@ -36,6 +39,28 @@ public abstract class AbstractDocumentSource implements IAbstractDocumentSource 
     public AbstractDocumentSource(IGeoResource resource) {
         this.url = resource.getIdentifier();
         this.resource = resource;
+    }
+    
+    /**
+     * Sets the related feature to the document.
+     * 
+     * @param doc
+     * @param feature
+     */
+    protected void setFeature(IDocument doc, SimpleFeature feature) {
+        ((AbstractDocument) doc).setFeature(feature);
+    }
+    
+    /**
+     * Sets the related feature to the documents.
+     * 
+     * @param docs
+     * @param feature
+     */
+    protected void setFeature(List<IDocument> docs, SimpleFeature feature) {
+        for (IDocument doc : docs) {
+            setFeature(doc, feature);
+        }
     }
     
 }

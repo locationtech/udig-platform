@@ -20,7 +20,6 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.document.IAbstractDocumentSource;
 import net.refractions.udig.catalog.document.IDocument;
 
 import org.eclipse.swt.program.Program;
@@ -31,18 +30,8 @@ import org.eclipse.swt.program.Program;
  * @author paul.pfeiffer
  * @author Naz Chan 
  */
-public abstract class AbstractDocument implements IDocument {
-    
-    protected IAbstractDocumentSource source;
-
-    public IAbstractDocumentSource getSource() {
-        return source;
-    }
-
-    public void setSource(IAbstractDocumentSource source) {
-        this.source = source;
-    }
-    
+public abstract class AbstractDocument extends AbstractDocumentItem implements IDocument {
+        
     @Override
     public boolean isEmpty() {
         return (getContent() == null);

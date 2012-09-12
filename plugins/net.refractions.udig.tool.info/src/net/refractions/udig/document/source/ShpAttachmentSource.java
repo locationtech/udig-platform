@@ -84,7 +84,9 @@ public class ShpAttachmentSource extends AbstractShpDocumentSource implements IA
         docs = new ArrayList<IDocument>();
         final List<DocumentInfo> infos = propParser.getFeatureDocumentInfos(feature);
         if (infos != null && infos.size() > 0) {
-            docs.addAll(docFactory.create(infos));
+            final List<IDocument> newDocs = docFactory.create(infos); 
+            setFeature(newDocs, feature);
+            docs.addAll(newDocs);
         }
         return docs;
     }
@@ -121,6 +123,7 @@ public class ShpAttachmentSource extends AbstractShpDocumentSource implements IA
             // Do special handling here for linked documents, if needed
         }
         final IDocument newDoc = docFactory.create(info);
+        setFeature(newDoc, feature);
         getDocsInternal(feature, monitor).add(newDoc);
         return newDoc;
     }

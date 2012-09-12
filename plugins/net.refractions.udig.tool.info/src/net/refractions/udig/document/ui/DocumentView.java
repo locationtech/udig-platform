@@ -89,6 +89,7 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ListDialog;
 import org.eclipse.ui.part.ViewPart;
@@ -154,25 +155,26 @@ public class DocumentView extends ViewPart {
      * view's contents. Eg. workbench selection, view activation, etc.
      */
     private void addWorkbenchListeners() {
+
+        final IWorkbenchPartSite partSite = getSite();
+        final ISelectionService selectionService = partSite.getWorkbenchWindow()
+                .getSelectionService();
         
         // Add workbench selection listener
         workbenchSelectionListener = new ISelectionListener() {
             @Override
             public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-                handleWorkbenchSelection(selection);
+                handleWorkbenchSelection(part, selection);
             }
         };
-        getSite().getWorkbenchWindow().getSelectionService()
-                .addPostSelectionListener(workbenchSelectionListener);
+        selectionService.addPostSelectionListener(workbenchSelectionListener);
         
         // Add workbench part listener
         workbenchPartListener = new IPartListener() {
             @Override
             public void partOpened(IWorkbenchPart part) {
                 if (part instanceof DocumentView) {
-                    final ISelectionService selectionService = getSite().getWorkbenchWindow()
-                            .getSelectionService();
-                    handleWorkbenchSelection(selectionService.getSelection());
+                    handleWorkbenchSelection(part, selectionService.getSelection());
                 }
             }
             @Override
@@ -192,7 +194,7 @@ public class DocumentView extends ViewPart {
                 // Nothing
             }
         };
-        getSite().getPage().addPartListener(workbenchPartListener);
+        partSite.getPage().addPartListener(workbenchPartListener);
         
     }
     
@@ -295,6 +297,8 @@ public class DocumentView extends ViewPart {
                 handleListDoubleClick(event.getSelection());
             }
         });
+        
+        getSite().setSelectionProvider(viewer);
         
     }
     
@@ -492,30 +496,31 @@ public class DocumentView extends ViewPart {
      * 
      * @param selection
      */
-    private void handleWorkbenchSelection(ISelection selection) {
-
-        if (selection != null) {
-            if (selection instanceof IStructuredSelection) {
-                final IStructuredSelection newSelection = (IStructuredSelection) selection;
-                if (workbenchSelection == null) {
-                    // Go Update!
-                    updateList(UpdateType.UPDATE, newSelection);
-                } else {
-                    final boolean isSameCount = (workbenchSelection.size() == newSelection.size());
-                    if (isSameCount) {
-                        // Check and update!
-                        updateList(UpdateType.CHECK_UPDATE, newSelection);
-                    } else {
+    private void handleWorkbenchSelection(IWorkbenchPart part, ISelection selection) {
+ 
+        if (part != this) {
+            if (selection != null) {
+                if (selection instanceof IStructuredSelection) {
+                    final IStructuredSelection newSelection = (IStructuredSelection) selection;
+                    if (workbenchSelection == null) {
                         // Go Update!
                         updateList(UpdateType.UPDATE, newSelection);
+                    } else {
+                        final boolean isSameCount = (workbenchSelection.size() == newSelection.size());
+                        if (isSameCount) {
+                            // Check and update!
+                            updateList(UpdateType.CHECK_UPDATE, newSelection);
+                        } else {
+                            // Go Update!
+                            updateList(UpdateType.UPDATE, newSelection);
+                        }
                     }
+                    return;
                 }
-                return;
             }
+            // Clear list!        
+            updateList(UpdateType.CLEAR, null);    
         }
-        
-        // Clear list!        
-        updateList(UpdateType.CLEAR, null);
         
     }
     
@@ -656,7 +661,7 @@ public class DocumentView extends ViewPart {
                     
                     if (isFeatureEnabled || isHotlinkEnabled) {
                         final String featureLabel = getFeatureLabel(geoResource, feature);
-                        final IDocumentFolder folder = ShpDocFactory.createFolder(featureLabel, attachmentSource);
+                        final IDocumentFolder folder = ShpDocFactory.createFolder(feature, featureLabel, attachmentSource);
                         if (isFeatureEnabled) {
                             // Set so that source's document list is same with folder's
                             folder.setDocuments(attachmentSource.getDocuments(feature, monitor));    
@@ -673,7 +678,7 @@ public class DocumentView extends ViewPart {
                 isResourceEnabled = docSource != null && docSource.isEnabled();
                 
                 if (isResourceEnabled) {
-                    final IDocumentFolder folder = ShpDocFactory.createFolder(geoResource.getTitle(), docSource);
+                    final IDocumentFolder folder = ShpDocFactory.createFolder(null, geoResource.getTitle(), docSource);
                     // Set so that source's document list is same with folder's
                     folder.setDocuments(docSource.getDocuments(monitor));
                     items.add(folder);
