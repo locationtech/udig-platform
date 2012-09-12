@@ -32,11 +32,16 @@ public class InfoPlugin extends AbstractUIPlugin {
 
     public static final String ID = "net.refractions.udig.tool.info"; //$NON-NLS-1$
 
-    public static final String IMG_OBJ_FILE = "icons/obj16/file_doc_obj.png"; //$NON-NLS-1$
-    public static final String IMG_OBJ_LINK = "icons/obj16/link_doc_obj.png"; //$NON-NLS-1$
-    public static final String IMG_OBJ_ACTION = "icons/obj16/action_doc_obj.png"; //$NON-NLS-1$
+    public static final String IMG_OBJ_PATH = "icons/obj16/"; //$NON-NLS-1$
+    public static final String IMG_OBJ_BASE = IMG_OBJ_PATH + "base_doc_obj.png"; //$NON-NLS-1$
+    public static final String IMG_OBJ_FILE = IMG_OBJ_PATH + "file_doc_obj.png"; //$NON-NLS-1$
+    public static final String IMG_OBJ_LINK = IMG_OBJ_PATH + "link_doc_obj.png"; //$NON-NLS-1$
+    public static final String IMG_OBJ_ACTION = IMG_OBJ_PATH + "action_doc_obj.png"; //$NON-NLS-1$
     
-    public static final String IMG_OVR_ATTACHMENT = "icons/ovr16/attachment.gif"; //$NON-NLS-1$
+    public static final String IMG_OVR_PATH = "icons/ovr16/"; //$NON-NLS-1$
+    public static final String IMG_OVR_ATTACHMENT = IMG_OVR_PATH + "attach_ovr.png"; //$NON-NLS-1$
+    public static final String IMG_OVR_TEMPLATE = IMG_OVR_PATH + "template_ovr.png"; //$NON-NLS-1$
+    public static final String IMG_OVR_HOTLINK = IMG_OVR_PATH + "hotlink_ovr.png"; //$NON-NLS-1$
 
     /**
      * The constructor.
@@ -113,28 +118,33 @@ public class InfoPlugin extends AbstractUIPlugin {
     @Override
     protected void initializeImageRegistry(ImageRegistry reg) {
         super.initializeImageRegistry(reg);
+
+        addImage(reg, IMG_OBJ_BASE);
+        
+        addImage(reg, IMG_OBJ_FILE);
+        addImage(reg, IMG_OBJ_LINK);
+        addImage(reg, IMG_OBJ_ACTION);
+        
+        addImage(reg, IMG_OVR_ATTACHMENT);
+        addImage(reg, IMG_OVR_HOTLINK);
+        addImage(reg, IMG_OVR_TEMPLATE);
+        
+    }
+    
+    /**
+     * Adds image to the registry.
+     * 
+     * @param reg
+     * @param imagePath
+     */
+    private void addImage(ImageRegistry reg, String imagePath) {
         
         final Bundle bundle = Platform.getBundle(ID);
-
-        final Path fileImgPath = new Path(IMG_OBJ_FILE);
-        final ImageDescriptor fileImg = ImageDescriptor.createFromURL(
-                FileLocator.find(bundle, fileImgPath, null));
-        reg.put(IMG_OBJ_FILE, fileImg);
         
-        final Path linkImgPath = new Path(IMG_OBJ_LINK);
-        final ImageDescriptor linkImg = ImageDescriptor.createFromURL(
-                FileLocator.find(bundle, linkImgPath, null));
-        reg.put(IMG_OBJ_LINK, linkImg);
-        
-        final Path actionImgPath = new Path(IMG_OBJ_ACTION);
-        final ImageDescriptor actionImg = ImageDescriptor.createFromURL(
-                FileLocator.find(bundle, actionImgPath, null));
-        reg.put(IMG_OBJ_ACTION, actionImg);
-        
-        final Path attachImgPath = new Path(IMG_OVR_ATTACHMENT);
+        final Path attachImgPath = new Path(imagePath);
         final ImageDescriptor attachImg = ImageDescriptor.createFromURL(
                 FileLocator.find(bundle, attachImgPath, null));
-        reg.put(IMG_OVR_ATTACHMENT, attachImg);
+        reg.put(imagePath, attachImg);
         
     }
     

@@ -43,7 +43,6 @@ import net.refractions.udig.document.ui.DocumentDialog.Mode;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.commands.edit.SetAttributeCommand;
 import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.tool.info.InfoPlugin;
 import net.refractions.udig.tool.info.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -87,10 +86,8 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
-import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ListDialog;
 import org.eclipse.ui.part.ViewPart;
 import org.geotools.data.simple.SimpleFeatureCollection;
@@ -1406,10 +1403,10 @@ public class DocumentView extends ViewPart {
      */
     private class DocumentViewTableLabelProvider implements ITableLabelProvider {
 
-        private FileImageDescriptor fileImageDescriptor;
+        private DocumentImageProvider imageProvider;
         
         public DocumentViewTableLabelProvider() {
-            fileImageDescriptor = new FileImageDescriptor();
+            imageProvider = new DocumentImageProvider();
         }
         
         @Override
@@ -1417,27 +1414,12 @@ public class DocumentView extends ViewPart {
             switch (columnIndex) {
             case DOCUMENT_INDEX:
                 if (element instanceof IDocumentFolder) {
-                    return PlatformUI.getWorkbench().getSharedImages()
-                            .getImage(ISharedImages.IMG_OBJ_FOLDER);
+                    return imageProvider.createFolderImage();
                 } else if (element instanceof IDocument) {
-                    final IDocument doc = (IDocument) element;
-                    switch (doc.getContentType()) {
-                    case FILE:
-                        final File file = (File) doc.getContent();
-                        final boolean isAttachment = (Type.ATTACHMENT == doc.getType());
-                        return fileImageDescriptor.createFileImage(file, isAttachment);
-                    case WEB:
-                        return InfoPlugin.getDefault().getImageRegistry()
-                                .get(InfoPlugin.IMG_OBJ_LINK);
-                    case ACTION:
-                        return InfoPlugin.getDefault().getImageRegistry()
-                                .get(InfoPlugin.IMG_OBJ_ACTION);
-                    default:
-                        break;
-                    }
+                    final IDocument doc = (IDocument) element;                
+                    return imageProvider.createDocumentImage(doc);
                 }
-                return PlatformUI.getWorkbench().getSharedImages()
-                        .getImage(ISharedImages.IMG_OBJ_ELEMENT);
+                return imageProvider.createDefaultImage();
             }
             return null;
         }
