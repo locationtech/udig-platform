@@ -29,13 +29,13 @@ import net.refractions.udig.catalog.document.IAbstractDocumentSource;
 import net.refractions.udig.catalog.document.IAttachment;
 import net.refractions.udig.catalog.document.IAttachmentSource;
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IHotlinkSource;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocumentFolder;
 import net.refractions.udig.catalog.document.IDocumentSource;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.document.IHotlink;
+import net.refractions.udig.catalog.document.IHotlinkSource;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.core.AdapterUtil;
 import net.refractions.udig.document.source.ShpDocFactory;
@@ -84,7 +84,9 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
@@ -128,6 +130,7 @@ public class DocumentView extends ViewPart {
     private DocumentItemModel itemModel;
     
     private ISelectionListener workbenchSelectionListener;
+    private IPartListener workbenchPartListener;
     
     private boolean isResourceEnabled = false;
     private boolean isFeatureEnabled = false;
@@ -146,6 +149,69 @@ public class DocumentView extends ViewPart {
         this.itemModel = new DocumentItemModel();
     }
 
+    /**
+     * Adds workbench listeners. This will give us control over workbench events that drive the
+     * view's contents. Eg. workbench selection, view activation, etc.
+     */
+    private void addWorkbenchListeners() {
+        
+        // Add workbench selection listener
+        workbenchSelectionListener = new ISelectionListener() {
+            @Override
+            public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+                handleWorkbenchSelection(selection);
+            }
+        };
+        getSite().getWorkbenchWindow().getSelectionService()
+                .addPostSelectionListener(workbenchSelectionListener);
+        
+        // Add workbench part listener
+        workbenchPartListener = new IPartListener() {
+            @Override
+            public void partOpened(IWorkbenchPart part) {
+                if (part instanceof DocumentView) {
+                    final ISelectionService selectionService = getSite().getWorkbenchWindow()
+                            .getSelectionService();
+                    handleWorkbenchSelection(selectionService.getSelection());
+                }
+            }
+            @Override
+            public void partDeactivated(IWorkbenchPart part) {
+                // Nothing
+            }
+            @Override
+            public void partClosed(IWorkbenchPart part) {
+                // Nothing
+            }
+            @Override
+            public void partBroughtToTop(IWorkbenchPart part) {
+                // Nothing
+            }
+            @Override
+            public void partActivated(IWorkbenchPart part) {
+                // Nothing
+            }
+        };
+        getSite().getPage().addPartListener(workbenchPartListener);
+        
+    }
+    
+    /**
+     * Removes the workbench listeners. This cleans up the listeners we are adding during startup of
+     * the view.
+     */
+    private void removeWorkbenchListeners() {
+        if (workbenchSelectionListener != null) {
+            getSite().getWorkbenchWindow().getSelectionService()
+                    .removePostSelectionListener(workbenchSelectionListener);
+            workbenchSelectionListener = null;
+        }
+        if (workbenchPartListener != null) {
+            getSite().getPage().removePartListener(workbenchPartListener);
+            workbenchPartListener = null;
+        }
+    }
+    
     @Override
     public void createPartControl(final Composite viewParent) {
         
@@ -161,17 +227,9 @@ public class DocumentView extends ViewPart {
         createTreeControlArea(parent);
         createButtonControlArea(parent);
         refreshBtns();
-        
-        // Add workbench selection lister
-        workbenchSelectionListener = new ISelectionListener() {
-            @Override
-            public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-                handleWorkbenchSelection(selection);
-            }
-        };
-        getSite().getWorkbenchWindow().getSelectionService()
-                .addPostSelectionListener(workbenchSelectionListener);
-        
+
+        addWorkbenchListeners();
+
     }
 
     /**
@@ -310,11 +368,7 @@ public class DocumentView extends ViewPart {
 
     @Override
     public void dispose() {
-        if (workbenchSelectionListener != null) {
-            getSite().getWorkbenchWindow().getSelectionService()
-                    .removePostSelectionListener(workbenchSelectionListener);
-            workbenchSelectionListener = null;
-        }
+        removeWorkbenchListeners();
         super.dispose();
     }
 
