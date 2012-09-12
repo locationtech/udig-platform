@@ -77,7 +77,9 @@ public class BasicHotlinkSource extends AbstractDocumentSource implements IHotli
                         .get(attributeName);
                 final String info = (String) feature.getAttribute(attributeName);
                 final String decodedInfo = decodeInfo(attributeDescriptors.get(0).getType(), info);
-                docs.add(create(decodedInfo, attributeDescriptors));
+                final IDocument doc = create(decodedInfo, attributeDescriptors);
+                setFeature(doc, feature);
+                docs.add(doc);
             }
         }
         return docs;

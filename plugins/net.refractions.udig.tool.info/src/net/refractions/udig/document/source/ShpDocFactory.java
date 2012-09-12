@@ -19,6 +19,8 @@ package net.refractions.udig.document.source;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.opengis.feature.simple.SimpleFeature;
+
 import net.refractions.udig.catalog.document.IAbstractDocumentSource;
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
@@ -122,8 +124,11 @@ public class ShpDocFactory {
      * @param source
      * @return document folder
      */
-    public static DocumentFolder createFolder(String name, IAbstractDocumentSource source) {
-        return new DocumentFolder(name, source);
+    public static DocumentFolder createFolder(SimpleFeature feature, String name,
+            IAbstractDocumentSource source) {
+        final DocumentFolder folder = new DocumentFolder(name, source);
+        folder.setFeature(feature);
+        return folder;
     }
     
 }

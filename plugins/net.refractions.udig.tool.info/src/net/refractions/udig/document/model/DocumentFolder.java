@@ -26,14 +26,11 @@ import net.refractions.udig.catalog.document.IDocumentFolder;
  * 
  * @author Naz Chan
  */
-public class DocumentFolder implements IDocumentFolder {
+public class DocumentFolder extends AbstractDocumentItem implements IDocumentFolder {
 
     private String name;
-
-    private IAbstractDocumentSource source;
-
+    
     private List<IDocumentFolder> folders;
-
     private List<IDocument> docs;
 
     public DocumentFolder(String name, IAbstractDocumentSource source) {
@@ -42,17 +39,12 @@ public class DocumentFolder implements IDocumentFolder {
         this.folders = new ArrayList<IDocumentFolder>();
         this.docs = new ArrayList<IDocument>();
     }
-
+    
     @Override
     public String getName() {
         return name;
     }
-
-    @Override
-    public IAbstractDocumentSource getSource() {
-        return source;
-    }
-
+    
     @Override
     public boolean contains(IDocument doc) {
         return docs.contains(doc);
@@ -115,7 +107,7 @@ public class DocumentFolder implements IDocumentFolder {
     public void insertDocuments(List<IDocument> docs, int index) {
         this.docs.addAll(index, docs);
     }
-    
+
     @Override
     public void removeDocument(IDocument doc) {
         this.docs.remove(doc);
