@@ -597,7 +597,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         
         @Override
         protected Image getImage() {
-            return getQuestionImage();
+            return getInfoImage();
         }
         
         public void setSchema(SimpleFeatureType schema) {
