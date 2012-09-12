@@ -6,7 +6,7 @@ You can work with documents associated with a feature or layer using the **Docum
 .. toctree::
    :maxdepth: 1
 
-   Configure hotlink attributes
+   Configure documents
    Attaching a document
    Linking a document
    Setting a hotlink
