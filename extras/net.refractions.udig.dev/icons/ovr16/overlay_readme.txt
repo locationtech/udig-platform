@@ -34,11 +34,15 @@ Layer Overlay:
   Overlays are displayed in the Layer, Info and Document view to identify attributes of an object.
   It is important to make sure the base object icon can support the addition of overlays without compromising readability.
   
+  +--+
+  |  A B
+  |   C
+  +--+
   
   Slots A and B are used to communicate attributes.
   Slot C is used to communicate "action".
   
-  Example: Document marked with attachment in position A, and a "new" in position C to indicate a template. 
+  Example: Document marked with "paperclip" attachment in position A, and a "T" in position C to indicate a template. 
   
 Underlay
 --------
