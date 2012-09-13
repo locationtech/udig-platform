@@ -80,9 +80,12 @@ public class DocumentImageProvider extends CompositeImageDescriptor {
     
     private ImageData getFileImageData(File file) {
         if (file != null) {
-            final Program program = Program.findProgram(DocUtils.getExtension(file));
-            if (program != null) {
-                return program.getImageData();    
+            final String extension = DocUtils.getExtension(file);
+            if (extension != null) {
+                final Program program = Program.findProgram(extension);
+                if (program != null) {
+                    return program.getImageData();    
+                }                
             }
         }
         return null;
