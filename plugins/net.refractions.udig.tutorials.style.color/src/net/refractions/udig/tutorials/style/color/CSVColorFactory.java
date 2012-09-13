@@ -9,10 +9,10 @@ import net.refractions.udig.catalog.IResolveAdapterFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class CSVColorFactory implements IResolveAdapterFactory {
-    public Object adapt( IResolve resolve, Class< ? extends Object> adapter,
+    public <T> T adapt( IResolve resolve, Class<T> adapter,
             IProgressMonitor monitor ) throws IOException {        
         if( Color.class.isAssignableFrom(adapter) ){
-            return Color.ORANGE;
+            return adapter.cast( Color.ORANGE );
         }
         return null;
     }

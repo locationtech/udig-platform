@@ -45,21 +45,19 @@ public class JGrassServiceMover implements IResolveAdapterFactory, ServiceMover 
         this.resolve = resolve;
     }
 
-    @SuppressWarnings("unchecked")
-    public Object adapt( IResolve resolve, Class adapter, IProgressMonitor monitor )
+    public <T> T adapt( IResolve resolve, Class<T>adapter, IProgressMonitor monitor )
             throws IOException {
 
         if (adapter.isAssignableFrom(JGrassServiceMover.class)) {
             this.resolve = resolve;
             this.monitor = monitor;
-            return new JGrassServiceMover(resolve);
+            return adapter.cast( new JGrassServiceMover(resolve) );
         }
 
         return null;
     }
 
-    @SuppressWarnings("unchecked")
-    public boolean canAdapt( IResolve resolve, Class adapter ) {
+    public boolean canAdapt( IResolve resolve, Class<?> adapter ) {
         return adapter.isAssignableFrom(JGrassServiceMover.class);
     }
 

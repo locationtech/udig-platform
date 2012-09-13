@@ -52,17 +52,24 @@ public class ResolveManagerTest extends TestCase {
      */
     public void testRegisterResolves() {
         assertFalse(resolveManager.canResolve(service, Integer.class));
-        IResolveAdapterFactory factory = new IResolveAdapterFactory(){
-        
-                    public Object adapt( IResolve resolve, Class adapter, IProgressMonitor monitor ) throws IOException {
-                        return new Integer(1);
-                    }
-        
-                    public boolean canAdapt( IResolve resolve, Class adapter ) {
-                        return adapter == Integer.class;
-                    }
-                    
-                };
+        IResolveAdapterFactory factory = new IResolveAdapterFactory() {
+
+            public <T> T adapt(IResolve resolve, Class<T> adapter, IProgressMonitor monitor)
+                    throws IOException {
+                if( adapter == Integer.class ){
+                    return adapter.cast( new Integer(1) );
+                }
+                return null;
+            }
+
+            public boolean canAdapt(IResolve resolve, Class adapter) {
+                return adapter == Integer.class;
+            }
+
+            public String toString() {
+                return "Generic ResolveAdapterFactory";
+            }
+        };
         resolveManager.registerResolves(factory);
         assertTrue(resolveManager.canResolve(service, Integer.class));
         resolveManager.unregisterResolves(factory);
@@ -82,14 +89,23 @@ public class ResolveManagerTest extends TestCase {
     public void testUnregisterResolvesIResolveAdapterFactoryClass() {
         IResolveAdapterFactory factory = new IResolveAdapterFactory(){
             
-            public Object adapt( IResolve resolve, Class adapter, IProgressMonitor monitor ) throws IOException {
-                return new Integer(1);
-            }
+            public <T> T adapt( IResolve resolve, Class<T> adapter, IProgressMonitor monitor ) throws IOException {
+                if( adapter == Integer.class ){
+                    return adapter.cast( Integer.valueOf(1) );                   
+                }
+                else if (adapter == Float.class ){
+                    return adapter.cast( Float.valueOf(2.0f));
+                }
+                return null; // unable to handle this one
+             }
 
             public boolean canAdapt( IResolve resolve, Class adapter ) {
                 return adapter == Integer.class || adapter == Float.class;
             }
             
+            public String toString() {
+                return "Generic ResolveAdapterFactory";
+            }
         };
 
         resolveManager.registerResolves(factory);

@@ -1,9 +1,9 @@
 /*
  *    uDig - User Friendly Desktop Internet GIS client
  *    http://udig.refractions.net
- *    (C) 2006, Refractions Research Inc.
+ *    (C) 2006-2012, Refractions Research Inc.
  *    (C) 2006, GeoTools Project Management Committee (PMC).
- *
+ *    
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
  *    License as published by the Free Software Foundation;
@@ -31,12 +31,19 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * <li>we need to explicitly account for contacting external resources
  * </ul>
  * 
- * @author Justin Deoliveira, The Open Planning Project, jdeolive@openplans.org
- *
+ * @author Justin Deoliveira, The Open Planning Project
+ * @since 1.0
+ * @version 1.3.2
  */
 public interface IResolveAdapterFactory {
+    
     /**
-     * Determines if a particular adaptation is supported.  
+     * Check to determine if a connecting using the specified adapterType is possible.
+     * <p>
+     * Please be advised that a return value of true only indicates that a connection
+     * can be attempted using the information on hand. As an example if a service is offline
+     * we will get an IOException when connecting using the {@link #adapt(IResolve, Class, IProgressMonitor)}
+     * method even though we have enough information to try and contact the service.   
      * 
      * <p>
      * <b>NOTE</b>  If this factory is declared in an extension point
@@ -45,23 +52,32 @@ public interface IResolveAdapterFactory {
      * </p>
      *
      * @param resolve The handle being adapted.
-     * @param adapter The adapting class.
+     * @param adapterType The type of adapter to connect to
      *
      * @return True if supported, otherwise false.
      */
-    boolean canAdapt(IResolve resolve, Class<? extends Object> adapter);
+    boolean canAdapt(IResolve resolve, Class<? extends Object> adapterType);
 
     /**
-     * Performs an adaptation to a particular adapter.
+     * Connect to an IResolve using the requested adapter API.
+     * <p>
+     * This method is expected to involve considerable deplay, and is not suitable for
+     * use from the display thread. A full progress monitor is supported if you need
+     * to advise the user of progress during the connection process.
+     * <p>
+     * In the event connection is successful an object of the requested adapter type
+     * is returned. Do not assume this value is cached, and keep hold of this object
+     * as it is considered expensive to request.
      *
-     * @param resolve The handle being adapted.
-     * @param adapter The adapting class.
-     * @param monitor Progress monitor for blocking class.
+     * @param resolve IResolve handle being adapted
+     * @param adapterType The type of adapter to connect to
+     * @param monitor monitor used to monitor the process of connecting
      *
-     * @return The adapter, or null if adaptation not possible.
+     * @return The adapter, or null if connection was not available
      *
-     * @throws IOException Any I/O errors that occur.
+     * @throws IOException If connection failed an IOException is provided
      */
-    Object adapt(IResolve resolve, Class<? extends Object> adapter, IProgressMonitor monitor)
+    <T> T adapt(IResolve resolve, Class<T> adapterType, IProgressMonitor monitor)
         throws IOException;
+
 }

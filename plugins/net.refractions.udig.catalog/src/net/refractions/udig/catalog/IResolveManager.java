@@ -50,9 +50,37 @@ public interface IResolveManager {
      * @return true if the resolve can be resolved to the targetClass.
      */
     public boolean canResolve(IResolve resolve, Class<?> targetClass);
-    
+
+    //
+    // Manage RsolveAdapterFacotry instances
+    //
     /**
-     * Registers a factory with the ResolveManager
+     * Register factory with the Resolve manager.
+     * <p>
+     * The {@link ResolveAdapterFactory#getResolveName()} is used
+     * register.
+     * 
+     * @param factory
+     */
+    public void register(ResolveAdapterFactory factory );
+    
+
+    /**
+     *  Unregisters a factory from the ResolveManager.
+     * <p>
+     * The {@link ResolveAdapterFactory#getResolveName()} is used.
+     * 
+     * @param factory
+     */
+    public void unregister( ResolveAdapterFactory factory );
+    
+    //
+    // Generic IResolveAdapterFactory management
+    // (Does not provide type information)
+    //
+    /**
+     * Registers factory with the ResolveManager with the
+     * adaptable type of {@link IResolve}.
      *
      * @param factory new factory to use for resolving IResolves
      */
@@ -66,11 +94,13 @@ public interface IResolveManager {
     public void unregisterResolves(IResolveAdapterFactory factory);
     
     /**
-     * Excludes a type from being resolved for a given factory.  IE ResolveManager will not use the provided factory to
-     * resolve to the resolveType
+     * Excludes a type from being resolved for a given factory.
+     * <p>
+     * ResolveManager will not use the provided factory to resolve to the resolveType
      *
      * @param factory 
      * @param resolveType
+     * @deprecated Functionality superseded by {@link ResolveAdapterFactory#getAdapterNames()}
      */
     public void unregisterResolves(IResolveAdapterFactory factory, Class<?> resolveType);
 
