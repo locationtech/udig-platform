@@ -95,7 +95,7 @@ GNU Lesser General Public License for more details.
          unpack="false"/>
 
    <plugin
-         id="net.refractions.udig.tool.info"
+         id="net.refractions.udig.info"
          download-size="0"
          install-size="0"
          version="0.0.0"
