@@ -127,6 +127,7 @@ public class DocumentView extends ViewPart {
     private IStructuredSelection workbenchSelection;
     private DocumentItemModel itemModel;
     
+    private boolean isActive = false;
     private ISelectionListener workbenchSelectionListener;
     private IPartListener workbenchPartListener;
     
@@ -160,8 +161,10 @@ public class DocumentView extends ViewPart {
         // Add workbench selection listener
         workbenchSelectionListener = new ISelectionListener() {
             @Override
-            public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-                handleWorkbenchSelection(part, selection);
+            public void selectionChanged(IWorkbenchPart part, ISelection selection) {                
+                if (!(part instanceof DocumentView)) {
+                    handleWorkbenchSelection(selection);    
+                }
             }
         };
         selectionService.addPostSelectionListener(workbenchSelectionListener);
@@ -171,7 +174,7 @@ public class DocumentView extends ViewPart {
             @Override
             public void partOpened(IWorkbenchPart part) {
                 if (part instanceof DocumentView) {
-                    handleWorkbenchSelection(part, selectionService.getSelection());
+                    handleWorkbenchSelection(selectionService.getSelection());
                 }
             }
             @Override
@@ -188,7 +191,7 @@ public class DocumentView extends ViewPart {
             }
             @Override
             public void partActivated(IWorkbenchPart part) {
-                // Nothing
+                isActive = (part instanceof DocumentView);
             }
         };
         partSite.getPage().addPartListener(workbenchPartListener);
@@ -493,32 +496,30 @@ public class DocumentView extends ViewPart {
      * 
      * @param selection
      */
-    private void handleWorkbenchSelection(IWorkbenchPart part, ISelection selection) {
- 
-        if (part != this) {
-            if (selection != null) {
-                if (selection instanceof IStructuredSelection) {
-                    final IStructuredSelection newSelection = (IStructuredSelection) selection;
-                    if (workbenchSelection == null) {
+    private void handleWorkbenchSelection(ISelection selection) {
+
+        if (selection != null) {
+            if (selection instanceof IStructuredSelection) {
+                final IStructuredSelection newSelection = (IStructuredSelection) selection;
+                if (workbenchSelection == null) {
+                    // Go Update!
+                    updateList(UpdateType.UPDATE, newSelection);
+                } else {
+                    final boolean isSameCount = (workbenchSelection.size() == newSelection.size());
+                    if (isSameCount) {
+                        // Check and update!
+                        updateList(UpdateType.CHECK_UPDATE, newSelection);
+                    } else {
                         // Go Update!
                         updateList(UpdateType.UPDATE, newSelection);
-                    } else {
-                        final boolean isSameCount = (workbenchSelection.size() == newSelection.size());
-                        if (isSameCount) {
-                            // Check and update!
-                            updateList(UpdateType.CHECK_UPDATE, newSelection);
-                        } else {
-                            // Go Update!
-                            updateList(UpdateType.UPDATE, newSelection);
-                        }
                     }
-                    return;
                 }
+                return;
             }
-            // Clear list!        
-            updateList(UpdateType.CLEAR, null);    
         }
-        
+        // Clear list!
+        updateList(UpdateType.CLEAR, null);
+
     }
     
     private enum UpdateType {
@@ -569,6 +570,7 @@ public class DocumentView extends ViewPart {
 
     }
     
+    
     /**
      * Updates the document list with the related documents of the selection. This transitions the
      * processing back to the UI thread.
@@ -576,11 +578,20 @@ public class DocumentView extends ViewPart {
     private void updateListCallback() {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                viewer.setInput(itemModel);
-                viewer.expandAll();
+                if (viewer != null) {
+                    final Tree viewerTree = viewer.getTree();
+                    if (viewerTree != null && !viewerTree.isDisposed()) {
+                        viewer.setInput(itemModel);
+                        viewer.expandAll();
+                        if (isActive) {
+                            viewerTree.setFocus();
+                        }
+                    }
+                }
             }
         });
     }
+    
     
     /**
      * Checks if the selection is the same as the previous one.
@@ -602,6 +613,7 @@ public class DocumentView extends ViewPart {
         
         return true;
     }
+    
     
     /**
      * Checks if the selection object is the same as the previous selection's object in the same
@@ -633,6 +645,7 @@ public class DocumentView extends ViewPart {
 
         return false;
     }
+    
     
     /**
      * Gets the document items from the current selection.
