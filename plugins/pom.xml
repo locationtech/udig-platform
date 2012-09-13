@@ -28,6 +28,7 @@
                 <module>net.refractions.udig.catalog.tests.geotiff</module>-->
                 <module>net.refractions.udig.catalog.tests.wfs</module>
                 <module>net.refractions.udig.catalog.tests.wms</module>
+                <module>net.refractions.udig.tests.info</module>
                 <module>net.refractions.udig.issues.test</module>
                 <module>net.refractions.udig.libs.tests</module>
                 <module>net.refractions.udig.location.test</module>
@@ -124,6 +125,7 @@
         <module>net.refractions.udig.feature.editor</module>
         <module>net.refractions.udig.graph</module>
         <module>net.refractions.udig.help</module>
+        <module>net.refractions.udig.info</module>
         <module>net.refractions.udig.issues</module>
         <module>net.refractions.udig.jai</module>
         <module>net.refractions.udig.jai.macosx</module>
@@ -151,7 +153,6 @@
         <module>net.refractions.udig.style.wms</module>
         <module>net.refractions.udig.tool.default</module>
         <module>net.refractions.udig.tool.edit</module>
-        <module>net.refractions.udig.tool.info</module>
         <module>net.refractions.udig.tool.select</module>
         <module>net.refractions.udig.ui</module>
         <module>net.refractions.udig.validation</module>
