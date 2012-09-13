@@ -47,11 +47,13 @@ import net.refractions.udig.tool.info.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -61,6 +63,7 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -89,6 +92,7 @@ import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.dialogs.ListDialog;
+import org.eclipse.ui.dialogs.PropertyDialogAction;
 import org.eclipse.ui.part.ViewPart;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
@@ -121,6 +125,7 @@ public class DocumentView extends ViewPart {
     private Action saveAsAction;
     private Button removeButton;
 
+    private ResourceSelectionProvider resourceSelectionProvider = new ResourceSelectionProvider();
     private IGeoResource geoResource;
     private SimpleFeature feature;
     private IStructuredSelection viewerSelection;
@@ -250,7 +255,10 @@ public class DocumentView extends ViewPart {
         final IActionBars actionBars = getViewSite().getActionBars();
         final IMenuManager menuManager = actionBars.getMenuManager();
         menuManager.add(saveAsAction);
-
+        menuManager.add( new Separator() );
+        
+        PropertyDialogAction resourcePropertyAction = new PropertyDialogAction( getSite(), resourceSelectionProvider );  
+        menuManager.add( resourcePropertyAction );
     }
     
     /**
@@ -645,8 +653,12 @@ public class DocumentView extends ViewPart {
 
         return false;
     }
-    
-    
+
+    void setGeoResourceInternal(IGeoResource geoResource) {
+        this.geoResource = geoResource;
+        this.resourceSelectionProvider.setSelection( geoResource );
+    }
+
     /**
      * Gets the document items from the current selection.
      * 
@@ -658,7 +670,7 @@ public class DocumentView extends ViewPart {
         for (Iterator<?> iterator = workbenchSelection.iterator(); iterator.hasNext();) {
             
             final Object obj = iterator.next();
-            this.geoResource = toGeoResource(obj, monitor);
+            setGeoResourceInternal( toGeoResource(obj, monitor) );
             if (geoResource != null) {
                 
                 feature = getFeature(geoResource, toFilter(obj, monitor));
@@ -1648,4 +1660,55 @@ public class DocumentView extends ViewPart {
         return null;
     }
     
+    /**
+     * Selection provider that reports back the {@link #geoReosurce}.
+     */
+    public class ResourceSelectionProvider implements ISelectionProvider {
+        protected ListenerList listeners;
+        ISelection selection;
+        
+        public ResourceSelectionProvider() {
+            listeners = new ListenerList( ListenerList.IDENTITY );
+            selection = StructuredSelection.EMPTY;
+        }
+
+        @Override
+        public void addSelectionChangedListener(ISelectionChangedListener listener) {
+            listeners.add( listener );
+        }
+        @Override
+        public void removeSelectionChangedListener(ISelectionChangedListener listener) {
+            listeners.remove(listener);
+        }
+
+        @Override
+        public ISelection getSelection() {
+            return this.selection;
+        }
+        public void setSelection(IGeoResource resource){
+            if ( resource != null ){
+                this.selection = new StructuredSelection( DocumentView.this.geoResource );
+            }
+            else {
+                this.selection = StructuredSelection.EMPTY; // no dice!
+            }            
+        }
+        
+        @Override
+        public void setSelection(ISelection selection) {
+            this.selection = selection;
+            fire();
+        }
+        
+        private void fire() {
+            SelectionChangedEvent event = null;
+            for( Object item : listeners.getListeners() ){
+                ISelectionChangedListener listener = (ISelectionChangedListener) item;
+                if( event == null ){
+                    event = new SelectionChangedEvent( this, this.selection);
+                }
+                listener.selectionChanged( event );                
+            }
+        }
+    }
 }
