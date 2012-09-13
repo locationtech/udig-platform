@@ -82,9 +82,7 @@ public abstract class AbstractDocument extends AbstractDocumentItem implements I
     protected static File createFile(String fileSpec) {
         if (fileSpec != null) {
             final File newFile = new File(fileSpec);
-            if (newFile.exists()) {
-                return newFile;
-            }
+            return newFile;
         }
         return null;
     }
