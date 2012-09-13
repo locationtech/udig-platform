@@ -48,12 +48,12 @@ public class BasicHotlinkResolveFactory implements IResolveAdapterFactory {
     }
 
     @Override
-    public Object adapt(IResolve resolve, Class<? extends Object> adapter, IProgressMonitor monitor)
+    public <T> T adapt(IResolve resolve, Class<T> adapter, IProgressMonitor monitor)
             throws IOException {
         IGeoResource resource = (IGeoResource) resolve; // safe cast due to extension point config
         if (resource.getPersistentProperties().containsKey(BasicHotlinkResolveFactory.HOTLINK)) {
             IHotlinkSource hotlink = new BasicHotlink((ShpGeoResourceImpl) resource);
-            return hotlink;
+            return adapter.cast(hotlink);
         }
         return null; // not available
     }

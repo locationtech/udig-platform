@@ -36,11 +36,12 @@ public class ShpImageMoasicAdaptorFactory implements IResolveAdapterFactory {
 	 */
 	static ImageMosaicFormat format = new ImageMosaicFormat();
 	
-	public Object adapt(IResolve resolve, Class<? extends Object> adapter,
+	public <T> T adapt(IResolve resolve, Class<T> adapter,
 			IProgressMonitor monitor) throws IOException {
 		
 		if( adapter.isAssignableFrom(ImageMosaicReader.class)){
-			return toGridCoverage2DReader( resolve, monitor);
+		    AbstractGridCoverage2DReader reader = toGridCoverage2DReader( resolve, monitor);
+		    return adapter.cast( reader);
 		}		
 		return null;
 	}
