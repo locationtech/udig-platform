@@ -34,17 +34,17 @@ public class ShpHotlinkSource extends BasicHotlinkSource {
 
     @Override
     protected String decodeInfo(ContentType contentType, String featureInfo) {
-        // if (ContentType.FILE == contentType) {
-        // return ShpDocUtils.getAbsolutePath(url, featureInfo);
-        // }
+        if (ContentType.FILE == contentType) {
+            return ShpDocUtils.getAbsolutePath(url, featureInfo);
+        }
         return super.decodeInfo(contentType, featureInfo);
     }
-    
+
     @Override
     protected String encodeInfo(ContentType contentType, String documentInfo) {
-        // if (ContentType.FILE == contentType) {
-        // return ShpDocUtils.getRelativePath(url, documentInfo);
-        // }
+        if (ContentType.FILE == contentType) {
+            return ShpDocUtils.getRelativePath(url, documentInfo);
+        }
         return super.encodeInfo(contentType, documentInfo);
     }
     
