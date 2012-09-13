@@ -1,0 +1,19 @@
+STATE: color
+TYPE: view
+SIZE: 16x16
+PALETTE: Eclipse 256 colour palette
+
+View
+----
+View icons are found on the left side of the titlebar of each view within the
+workbench. These icons indicate each view’s function. 
+
+View Icon Size & Placement
+--------------------------
+- Maximum 16 pixels wide x 16 pixels high, always centered.
+- Empty pixels must be on the left, and bottom.
+
+    Designed within an area of 16 x 16 pixels. Within that area, a 15 x 15 pixel
+space is reserved for the image itself, leaving both a vertical and horizontal
+line of empty pixels to allow for proper placement of the image within the
+interface.

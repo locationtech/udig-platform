@@ -239,7 +239,10 @@ public class LegendGraphic implements MapGraphic {
             final FeatureTypeStyle[] styles = map.values().iterator().next();
 
             final String layerName = layer.getName();
-
+            try{
+            	layer.getGeoResources().get(0).getInfo(null);
+            }catch (Exception ex){}
+            
             PlatformGIS.syncInDisplayThread(new Runnable(){
                 public void run() {
                     if (styles != null && rules(styles).size() > 1) {

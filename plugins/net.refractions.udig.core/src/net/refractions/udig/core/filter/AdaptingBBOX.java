@@ -2,6 +2,7 @@ package net.refractions.udig.core.filter;
 
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.spatial.BBOX;
+import org.opengis.geometry.BoundingBox;
 
 @SuppressWarnings("deprecation")
 class AdaptingBBOX extends AdaptingFilter<BBOX> implements BBOX {
@@ -44,5 +45,10 @@ class AdaptingBBOX extends AdaptingFilter<BBOX> implements BBOX {
 
     public MatchAction getMatchAction() {
         return wrapped.getMatchAction();
+    }
+
+    @Override
+    public BoundingBox getBounds() {
+        return wrapped.getBounds();
     }    
 }

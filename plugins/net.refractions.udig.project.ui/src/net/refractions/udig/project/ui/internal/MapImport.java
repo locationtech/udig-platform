@@ -24,11 +24,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * A CatalogImport that selects individual resources to form the layers
  * of a new map (or add to an existing map).
  * @since 1.1
+ * @version 1.3.3
  */
 public class MapImport extends CatalogImport {
 
     private int layerPosition = -1;
-
+    
+    /**
+     * Capture where new layers should be inserted.
+     * @param layerPosition
+     */
     public void setLayerPosition( int layerPosition ) {
         this.layerPosition = layerPosition;
     }

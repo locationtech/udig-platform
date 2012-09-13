@@ -25,13 +25,11 @@ import net.refractions.udig.catalog.internal.wms.WmsPlugin;
 import net.refractions.udig.catalog.wmsc.WMSCTileUtils;
 import net.refractions.udig.catalog.wmsc.server.TileSet;
 import net.refractions.udig.catalog.wmsc.server.TiledWebMapServer;
-import net.refractions.udig.project.internal.render.impl.ScaleUtils;
 import net.refractions.udig.project.ui.preferences.PreferenceConstants;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.ows.AbstractOpenWebService;
 import org.geotools.data.wms.WebMapServer;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 
 /**
  * Allow any WebMapServer to supply a TileSet definition under user control (allowing it to
@@ -47,7 +45,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 public class WMSCTileSetAdapter implements IResolveAdapterFactory {
 
     @Override
-    public boolean canAdapt( IResolve resolve, Class< ? extends Object> adapter ) {
+    public boolean canAdapt( IResolve resolve, Class<?> adapter ) {
 
         if (adapter.isAssignableFrom(TileSet.class)) {
 
@@ -67,7 +65,7 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
     }
 
     @Override
-    public Object adapt( IResolve resolve, Class< ? extends Object> adapter,
+    public <T> T adapt( IResolve resolve, Class< T> adapter,
             IProgressMonitor monitor ) throws IOException {
 
         AbstractOpenWebService< ? , ? > server = null;
@@ -86,7 +84,9 @@ public class WMSCTileSetAdapter implements IResolveAdapterFactory {
 
         if (resolve instanceof IGeoResource && adapter.isAssignableFrom(TileSet.class)) {
             IGeoResource resource = (IGeoResource) resolve;
-            return WMSCTileUtils.toTileSet(resource, server, monitor);
+            TileSet tileSet = WMSCTileUtils.toTileSet(resource, server, monitor);
+            
+            return adapter.cast( tileSet );
         }
         return null;
     }

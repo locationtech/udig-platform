@@ -39,13 +39,13 @@ public class BasicHotlinkResolveFactory implements IResolveAdapterFactory {
     }
 
     @Override
-    public Object adapt(IResolve resolve, Class<? extends Object> adapter, IProgressMonitor monitor)
+    public <T> T adapt(IResolve resolve, Class<T> adapter, IProgressMonitor monitor)
             throws IOException {
         if (resolve instanceof PostgisGeoResource2) {
             final PostgisGeoResource2 resource = (PostgisGeoResource2) resolve;
             if (adapter.isAssignableFrom(IHotlinkSource.class)) {
                 final IHotlinkSource source = new BasicHotlinkSource(resource);
-                return source;
+                return adapter.cast(source);
             }    
         }
         return null;

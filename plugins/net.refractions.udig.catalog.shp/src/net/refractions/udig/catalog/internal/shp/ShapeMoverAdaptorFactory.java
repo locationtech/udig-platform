@@ -22,8 +22,7 @@ public class ShapeMoverAdaptorFactory implements IResolveAdapterFactory {
 	 * Check the provided resolve (should be a ShpServiceImpl) and check
 	 * if we provided the requested adapter.
 	 */
-    @SuppressWarnings("unchecked")
-    public Object adapt( IResolve resolve, Class adapter, IProgressMonitor monitor )
+    public <T> T adapt( IResolve resolve, Class<T> adapter, IProgressMonitor monitor )
             throws IOException {
 
         if (adapter.isAssignableFrom(ShapeMover.class)) {
@@ -33,7 +32,7 @@ public class ShapeMoverAdaptorFactory implements IResolveAdapterFactory {
         	// If that is too hard a programming model please let us
         	// know and we can cache this result (or provided session
         	// properties for you do store your adapter in
-            return new ShapeMover(resolve);
+            return adapter.cast( new ShapeMover(resolve) );
         }
         return null;
     }

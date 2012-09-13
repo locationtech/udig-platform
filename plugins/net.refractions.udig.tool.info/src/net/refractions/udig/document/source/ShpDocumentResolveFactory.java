@@ -34,7 +34,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class ShpDocumentResolveFactory implements IResolveAdapterFactory {
 
     @Override
-    public boolean canAdapt(IResolve resolve, Class<? extends Object> adapter) {
+    public boolean canAdapt(IResolve resolve, Class<?> adapter) {
         if (resolve instanceof ShpGeoResourceImpl) {
             if (adapter.isAssignableFrom(IDocumentSource.class)
                     || adapter.isAssignableFrom(IHotlinkSource.class)
@@ -46,7 +46,7 @@ public class ShpDocumentResolveFactory implements IResolveAdapterFactory {
     }
 
     @Override
-    public Object adapt(IResolve resolve, Class<? extends Object> adapter, IProgressMonitor monitor)
+    public <T> T adapt(IResolve resolve, Class<T> adapter, IProgressMonitor monitor)
             throws IOException {
 
         if (resolve instanceof ShpGeoResourceImpl) {

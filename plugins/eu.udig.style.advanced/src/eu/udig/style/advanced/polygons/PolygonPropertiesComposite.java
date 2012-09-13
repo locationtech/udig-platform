@@ -95,8 +95,6 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
     public void setRule( RuleWrapper ruleWrapper ) {
         this.ruleWrapper = ruleWrapper;
 
-        System.out.println("setting rule: " + ruleWrapper.getName()); //$NON-NLS-1$
-
         if (mainComposite == null) {
             init();
             createSimpleComposite();
@@ -118,8 +116,6 @@ public class PolygonPropertiesComposite implements ModifyListener, IStyleChanges
     }
 
     private void init() {
-        // System.out.println("open: " + rule.getName());
-
         List<String> numericAttributeNames = polygonPropertiesEditor.getNumericAttributeNames();
         numericAttributesArrays = (String[]) numericAttributeNames.toArray(new String[numericAttributeNames.size()]);
         List<String> allAttributeNames = polygonPropertiesEditor.getAllAttributeNames();

@@ -25,6 +25,7 @@ import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
 import net.refractions.udig.catalog.IResolveManager;
+import net.refractions.udig.catalog.ResolveAdapterFactory;
 import net.refractions.udig.core.internal.ExtensionPointList;
 
 import org.eclipse.core.runtime.CoreException;
@@ -270,6 +271,10 @@ public class ResolveManager implements IResolveManager {
         registeredFactories.add(factory);
     }
 
+    @Override
+    public void register(ResolveAdapterFactory factory) {
+        registeredFactories.add( factory );
+    }
     /**
      * Used as a placeholder to mark broken IResolveAdapatorFactory instances.
      * <p>
@@ -283,7 +288,7 @@ public class ResolveManager implements IResolveManager {
     	public BrokenIResolveAdapaterFactory( CoreException coreException ){
     		problem = coreException;
     	}
-		public Object adapt(IResolve resolve, Class<? extends Object> adapter,
+		public <T> T adapt(IResolve resolve, Class<T> adapter,
 				IProgressMonitor monitor) throws IOException {
 			if( monitor == null ) monitor = new NullProgressMonitor();
 
@@ -451,6 +456,12 @@ public class ResolveManager implements IResolveManager {
      * @param factory
      */
     public void unregisterResolves( IResolveAdapterFactory factory ) {
+        registeredFactories.remove(factory);
+        exceptions.remove(registeredFactories);
+    }
+    
+    @Override
+    public void unregister(ResolveAdapterFactory factory) {
         registeredFactories.remove(factory);
         exceptions.remove(registeredFactories);
     }

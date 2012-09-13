@@ -210,7 +210,7 @@ public class ServiceFactoryImpl extends IServiceFactory {
         if( services.isEmpty()){
             for( ServiceExtension serviceExtension : CatalogPlugin.getDefault().getServiceExtensions() ) {
                 String name = serviceExtension.getClass().getName();
-                if( isGeneric(serviceExtension)){
+                if( !isGeneric(serviceExtension)){
                     continue; // only generic for this pass
                 }
                 try {

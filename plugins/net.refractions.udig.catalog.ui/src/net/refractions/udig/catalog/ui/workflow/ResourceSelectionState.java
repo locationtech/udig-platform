@@ -23,11 +23,12 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
 /**
+ * State capturing selected IGeoResources.
+ * <p>
+ * The selected resources are those in the {@link #getResources()} map.  The keys are the selected
+ * resources and the values are the parents.  State normally uses a ConnectionState but it
+ * isn't required is {@link #setServices(List)} is used to set the services.
  * 
- * State selects IGeoResources.  The selected resources are those in the {@link #getResources()} map.  The keys are the selected
- * resources and the values are the parents.  State normally uses a ConnectionState but it isn't required is {@link #setServices(List)} 
- * is used to set the services.
- *    
  * @author Justin Deolive
  * @since 1.1.0
  */
@@ -114,7 +115,7 @@ public class ResourceSelectionState extends State {
         for( IGeoResource geoResource : members ) {
             for( URL url : selectedResources ) {
                 if (resources.size() < selectedResources.size()) {
-                	if (URLUtils.urlEquals(url, geoResource.getIdentifier(), false)) {
+                    if (URLUtils.urlEquals(url, geoResource.getIdentifier(), false)) {
                         resources.put(geoResource, service);
                         break;
                     }
@@ -168,20 +169,20 @@ public class ResourceSelectionState extends State {
         
         Collection<IService> services = getServices();
         try{
-        	monitor.beginTask("",services.size()*10); //$NON-NLS-1$
+            monitor.beginTask("",services.size()*10); //$NON-NLS-1$
         for( IService service : services ) {
-        	SubProgressMonitor subMonitor = new SubProgressMonitor(monitor,10);
-        	try{
+            SubProgressMonitor subMonitor = new SubProgressMonitor(monitor,10);
+            try{
 
                 URL identifier = service.getIdentifier();
                 monitor.setTaskName(MessageFormat.format(Messages.ResourceSelectionState_taskName, new Object[] {identifier.getProtocol()+"://"+identifier.getPath()})); //$NON-NLS-1$
             count += service.resources(subMonitor).size();
-        	}finally{
-        		subMonitor.done();
-        	}
+            }finally{
+                subMonitor.done();
+            }
         }
         }finally{
-        	monitor.done();
+            monitor.done();
         }
 
         return resources.size()>0;
@@ -191,7 +192,7 @@ public class ResourceSelectionState extends State {
     private IGeoResource match( Collection<IService> services, URL url, IProgressMonitor monitor )
             throws IOException {
 
-    	// if there is no ref then the url is not matching a georesource
+        // if there is no ref then the url is not matching a georesource
         if (url.getRef() == null || url.getRef().equals("")) //$NON-NLS-1$
             return null;
 
@@ -208,8 +209,8 @@ public class ResourceSelectionState extends State {
         return null;
     }
 
-	@Override
-	public String getName() {
-		return Messages.ResourceSelectionState_stateName; 
-	}
+    @Override
+    public String getName() {
+        return Messages.ResourceSelectionState_stateName; 
+    }
 }
