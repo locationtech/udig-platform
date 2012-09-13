@@ -14,7 +14,7 @@ The documents are presented in a tree-table structure. Documents are grouped int
 
 Within each folder several kinds of information are displayed:
 
-|file_logo| - File Document (or the operating system's default program for file's type)
+|file_logo| - File Document (or the icon of the operating system's default program for file type)
 
 |web_logo| - Web Document
 
