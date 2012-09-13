@@ -7,7 +7,7 @@ Bundle-Activator: net.refractions.udig.tool.info.tests.Activator
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- net.refractions.udig.tool.info,
+ net.refractions.udig.info,
  org.junit,
  net.refractions.udig.project.ui,
  net.refractions.udig.project.tests,

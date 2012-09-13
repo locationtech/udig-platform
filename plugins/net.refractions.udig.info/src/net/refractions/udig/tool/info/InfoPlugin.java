@@ -1,5 +1,7 @@
 package net.refractions.udig.tool.info;
 
+import java.net.URL;
+
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -30,7 +32,7 @@ public class InfoPlugin extends AbstractUIPlugin {
     // The shared instance.
     private static InfoPlugin plugin;
 
-    public static final String ID = "net.refractions.udig.tool.info"; //$NON-NLS-1$
+    public static final String ID = "net.refractions.udig.info"; //$NON-NLS-1$
 
     public static final String IMG_OBJ_PATH = "icons/obj16/"; //$NON-NLS-1$
     public static final String IMG_OBJ_BASE = IMG_OBJ_PATH + "base_doc_obj.png"; //$NON-NLS-1$
@@ -142,10 +144,15 @@ public class InfoPlugin extends AbstractUIPlugin {
         final Bundle bundle = Platform.getBundle(ID);
         
         final Path attachImgPath = new Path(imagePath);
-        final ImageDescriptor attachImg = ImageDescriptor.createFromURL(
-                FileLocator.find(bundle, attachImgPath, null));
+        URL url = FileLocator.find(bundle, attachImgPath, null);
+        ImageDescriptor attachImg;
+        if( url != null ){
+            attachImg = ImageDescriptor.createFromURL(url);            
+        }
+        else {
+            log("Unable to find image for "+imagePath, null);
+            attachImg = ImageDescriptor.getMissingImageDescriptor();
+        }
         reg.put(imagePath, attachImg);
-        
-    }
-    
+    }    
 }

@@ -73,7 +73,7 @@
    </extension>
    <extension
          name="Information Displays"
-         point="net.refractions.udig.tool.info.infoDisplay">
+         point="net.refractions.udig.info.infoDisplay">
       <display
             name="text.name"
             mime="text/html"
