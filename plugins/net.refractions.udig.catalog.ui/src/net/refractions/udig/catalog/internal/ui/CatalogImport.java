@@ -58,7 +58,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * This is the catalog import workflow.
+ * Used to configure a {@link WorkflowWizardDialog} and {@link WorkflowWizard} with
+ * an initial workflow provided by {@link #createWorkflow()}.
  * <p>
  * Example use: dragging and dropping a URL into the catalog.
  * </p>
