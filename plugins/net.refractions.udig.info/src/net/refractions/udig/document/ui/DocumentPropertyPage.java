@@ -116,7 +116,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         
         final Group resourceGrp = new Group(page, SWT.SHADOW_IN);
         resourceGrp.setText(Messages.DocumentPropertyPage_resourceGrpTitle);
-        resourceGrp.setLayoutData("growx"); //$NON-NLS-1$
+        resourceGrp.setLayoutData("w 100%!"); //$NON-NLS-1$
         resourceGrp.setLayout(new MigLayout());
         
         resourceDocumentsFlag = new Button(resourceGrp, SWT.CHECK);
@@ -125,19 +125,19 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         
         final Group featureGrp = new Group(page, SWT.SHADOW_IN);
         featureGrp.setText(Messages.DocumentPropertyPage_featureGrpTitle);
-        featureGrp.setLayoutData("grow, push"); //$NON-NLS-1$
-        final String layoutConst = "wrap 2, fill, insets 5"; //$NON-NLS-1$
+        featureGrp.setLayoutData("pushy, growy, w 100%!"); //$NON-NLS-1$
+        final String layoutConst = "wrap 2, insets 5"; //$NON-NLS-1$
         final String columnConst = "[90%]5[10%]"; //$NON-NLS-1$
         final String rowConst = ""; //$NON-NLS-1$
         featureGrp.setLayout(new MigLayout(layoutConst, columnConst, rowConst));
         
         featureDocumentsFlag = new Button(featureGrp, SWT.CHECK);
         featureDocumentsFlag.setText(Messages.DocumentPropertyPage_featureEnable);
-        featureDocumentsFlag.setLayoutData("span 2, growx"); //$NON-NLS-1$
+        featureDocumentsFlag.setLayoutData("span 2"); //$NON-NLS-1$
         
         featureHotlinksFlag = new Button(featureGrp, SWT.CHECK);
         featureHotlinksFlag.setText(Messages.DocumentPropertyPage_hotlinkEnable);
-        featureHotlinksFlag.setLayoutData("span 2, growx"); //$NON-NLS-1$
+        featureHotlinksFlag.setLayoutData("span 2"); //$NON-NLS-1$
         featureHotlinksFlag.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -161,7 +161,7 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
         final Composite tableComposite = new Composite(parent, SWT.NONE);
         final TableColumnLayout columnLayout = new TableColumnLayout();
         tableComposite.setLayout(columnLayout);
-        tableComposite.setLayoutData("grow, push"); //$NON-NLS-1$
+        tableComposite.setLayoutData("pushy, grow, wmax 85%"); //$NON-NLS-1$
         
         hotlinkViewer = new TableViewer(tableComposite, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL
                 | SWT.H_SCROLL | SWT.FULL_SELECTION);

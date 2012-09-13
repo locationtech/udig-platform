@@ -259,7 +259,7 @@ public class DocumentView extends ViewPart {
         
         final Tree viewerTree = new Tree(parent, SWT.FULL_SELECTION | SWT.BORDER
                 | SWT.H_SCROLL | SWT.V_SCROLL);
-        viewerTree.setLayoutData("grow, h 200:100%:100%, w 300:pref:100%"); //$NON-NLS-1$
+        viewerTree.setLayoutData("grow, h 100%!, w 85%!"); //$NON-NLS-1$
         viewerTree.setHeaderVisible(true);
         viewerTree.setLinesVisible(true);
         
