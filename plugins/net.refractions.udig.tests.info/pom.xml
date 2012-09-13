@@ -11,8 +11,10 @@
         <version>1.3.3-SNAPSHOT</version>
     </parent>
 
-    <artifactId>net.refractions.udig.tool.info.tests</artifactId>
-    <version>1.0.0</version>
+    <groupId>net.refractions</groupId>
+    <artifactId>net.refractions.udig.tests.info</artifactId>
+    <version>1.3.3</version>
+
     <packaging>eclipse-test-plugin</packaging>
 
     <build>
