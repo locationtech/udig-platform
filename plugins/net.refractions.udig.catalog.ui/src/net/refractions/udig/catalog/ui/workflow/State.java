@@ -89,7 +89,7 @@ public abstract class State {
      * be very efficient and to this end it may return an incorrect result.    
      *
      * @return a pair where the boolean is true if it is likely that the state can be run correct and the State 
-     * is the next state or null if the next state is not known of if this state cannot be ran completely.
+     * is the next state or null if the next state is not known or if this state cannot be ran completely.
      */
     public Pair<Boolean, State> dryRun(){
         return new Pair<Boolean, State>(true, null);
