@@ -1,11 +1,13 @@
 package net.refractions.udig.catalog.ui.workflow;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.ui.internal.Messages;
 import net.refractions.udig.core.Pair;
@@ -90,4 +92,54 @@ public class ResourceSearchState extends State {
     public String getName() {
         return Messages.ResourceSelectionPage_searching ; 
     }
+}
+class ImportPlaceholder implements IResolve {
+    private ID identifier = new ID("internal:///localhost/import","import");
+    
+    @Override
+    public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
+        return null;
+    }
+    @Override
+    public <T> boolean canResolve(Class<T> adaptee) {
+        return false;
+    }
+    @Override
+    public IResolve parent(IProgressMonitor monitor) throws IOException {
+        return null;
+    }
+    @Override
+    public List<IResolve> members(IProgressMonitor monitor) throws IOException {
+        return null;
+    }
+
+    @Override
+    public Status getStatus() {
+        return Status.CONNECTED;
+    }
+
+    @Override
+    public Throwable getMessage() {
+        return null;
+    }
+
+    @Override
+    public URL getIdentifier() {
+        return identifier.toURL();
+    }
+
+    @Override
+    public ID getID() {
+        return identifier;
+    }
+
+    @Override
+    public String getTitle() {
+        return Messages.WorkflowWizardDialog_importTask;
+    }
+
+    @Override
+    public void dispose(IProgressMonitor monitor) {        
+    }
+    
 }

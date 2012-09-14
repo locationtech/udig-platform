@@ -53,6 +53,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -74,9 +75,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 public class ResourceSearchComposite extends Composite implements ISelectionProvider {
 
     private Text text;
-
     private List<ISearch> catalogs;
-
     private TreeViewer treeViewer;
     private static final long DELAY = 5000;
 
@@ -135,6 +134,10 @@ public class ResourceSearchComposite extends Composite implements ISelectionProv
         catalogs = Arrays.asList(CatalogPlugin.getDefault().getCatalogs());
     }
 
+    public Control getControl(){
+        return treeViewer != null ? treeViewer.getControl() : null;
+    }
+    
     public IStructuredSelection getSelection() {
         return (IStructuredSelection) treeViewer.getSelection();
     }

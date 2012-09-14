@@ -188,25 +188,34 @@ public class ResourceSelectionState extends State {
         return resources.size()>0;
     }
 
-    // Seems to try to match the url to a Georesource.
+    /**
+     * Scan through provided services to look up the requested URL as a GeoResource.
+     * 
+     * @param services
+     * @param url
+     * @param monitor
+     * @return
+     * @throws IOException
+     */
     private IGeoResource match( Collection<IService> services, URL url, IProgressMonitor monitor )
             throws IOException {
 
-        // if there is no ref then the url is not matching a georesource
-        if (url.getRef() == null || url.getRef().equals("")) //$NON-NLS-1$
+        // if there is no ref then the url is not matching a GeoResource
+        if (url.getRef() == null || url.getRef().isEmpty()){
             return null;
+        }
 
         for( IService service : services ) {
             for( IGeoResource resource : service.resources(monitor) ) {
-                if (resource.getIdentifier() == null)
+                if (resource.getIdentifier() == null){
                     continue;
-
-                if (url.equals(resource.getIdentifier()))
+                }
+                if (url.equals(resource.getIdentifier())){
                     return resource;
+                }
             }
         }
-
-        return null;
+        return null; // not found
     }
 
     @Override

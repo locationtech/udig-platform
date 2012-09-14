@@ -36,6 +36,7 @@ public class IResolveAdapterFactory implements IAdapterFactory {
     /**
      * @see org.eclipse.core.runtime.IAdapterFactory#getAdapter(java.lang.Object, java.lang.Class)
      */
+    @SuppressWarnings("rawtypes")
     public Object getAdapter( Object adaptableObject, Class adapterType ) {
         if (IBlockingAdaptable.class.isAssignableFrom(adapterType)
                 && adaptableObject instanceof IResolve)
@@ -46,6 +47,7 @@ public class IResolveAdapterFactory implements IAdapterFactory {
     /**
      * @see org.eclipse.core.runtime.IAdapterFactory#getAdapterList()
      */
+    @SuppressWarnings("rawtypes")
     public Class[] getAdapterList() {
         return new Class[]{IBlockingAdaptable.class};
     }
