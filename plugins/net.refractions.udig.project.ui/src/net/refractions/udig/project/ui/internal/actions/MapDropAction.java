@@ -21,6 +21,7 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.impl.LayerResource;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.MapImport;
+import net.refractions.udig.project.ui.internal.MapImportWizard;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import net.refractions.udig.project.ui.internal.Trace;
 import net.refractions.udig.ui.ViewerDropLocation;
