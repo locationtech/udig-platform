@@ -188,17 +188,27 @@
             id="net.refractions.udig.project.ui.wizards.newProject">
       </primaryWizard>
       <wizard
-            name="%NewProjectWizard.name"
-            id="net.refractions.udig.project.ui.wizards.newProject"
             category="net.refractions.udig.project.ui.new"
             class="net.refractions.udig.project.ui.internal.wizard.NewProjectWizard"
-            icon="icons/etool16/newprj_wiz.gif"
+            descriptionImage="icons/wizban/newprj_wiz.gif"
             finalPerspective="net.refractions.udig.ui.mapPerspective"
-            project="false"
             helpHref="New Project wizard.html"
-            preferredPerspectives="net.refractions.udig.ui.mapPerspective">
+            icon="icons/etool16/newprj_wiz.gif"
+            id="net.refractions.udig.project.ui.wizards.newProject"
+            name="%NewProjectWizard.name"
+            preferredPerspectives="net.refractions.udig.ui.mapPerspective"
+            project="false">
          <description>
             %NewProjectWizard.description
+         </description>
+      </wizard>
+      <wizard
+            class="net.refractions.udig.project.ui.internal.wizard.NewLayerWizard"
+            icon="icons/etool16/newlayer_wiz.gif"
+            id="net.refractions.udig.project.ui.wizard.newLayer"
+            name="%NewLayerWizard.name">
+         <description>
+            %NewLayerWizard.description
          </description>
       </wizard>
    </extension>
@@ -978,7 +988,9 @@
                targetClass="net.refractions.udig.project.ILayer">
            <enablement>
              <and>
-               <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
+               <property
+                     expectedValue="true"
+                     propertyId="FeatureStoreResourceProperty"/>  
              </and>
             </enablement>
          </operation>         

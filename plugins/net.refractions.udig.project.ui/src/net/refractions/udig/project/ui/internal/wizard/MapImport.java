@@ -14,7 +14,7 @@
  *    Lesser General Public License for more details.
  *
  */
-package net.refractions.udig.project.ui.internal;
+package net.refractions.udig.project.ui.internal.wizard;
 
 import java.util.Map;
 
@@ -27,6 +27,7 @@ import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.Workflow;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
 import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import net.refractions.udig.project.ui.internal.Messages;
 
 
 /**

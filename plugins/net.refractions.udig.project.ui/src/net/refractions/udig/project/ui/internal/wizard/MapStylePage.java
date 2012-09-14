@@ -14,7 +14,7 @@
  *    Lesser General Public License for more details.
  *
  */
-package net.refractions.udig.project.ui.internal;
+package net.refractions.udig.project.ui.internal.wizard;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -22,6 +22,9 @@ import java.util.List;
 
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.render.impl.Styling;
+import net.refractions.udig.project.ui.internal.ISharedImages;
+import net.refractions.udig.project.ui.internal.Messages;
+import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
