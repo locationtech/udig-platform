@@ -1,4 +1,4 @@
-package net.refractions.udig.project.ui.internal;
+package net.refractions.udig.project.ui.internal.wizard;
 
 import java.util.List;
 

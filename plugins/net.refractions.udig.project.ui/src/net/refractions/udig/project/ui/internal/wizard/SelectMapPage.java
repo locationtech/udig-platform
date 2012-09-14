@@ -1,4 +1,4 @@
-package net.refractions.udig.project.ui.internal;
+package net.refractions.udig.project.ui.internal.wizard;
 
 import java.util.List;
 
@@ -9,6 +9,8 @@ import net.refractions.udig.project.internal.Project;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.render.RenderManager;
 import net.refractions.udig.project.internal.render.ViewportModel;
+import net.refractions.udig.project.ui.internal.Messages;
+import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;

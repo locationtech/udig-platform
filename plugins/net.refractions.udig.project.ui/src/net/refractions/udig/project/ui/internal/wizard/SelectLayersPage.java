@@ -2,7 +2,7 @@
  * Created on 4-Oct-2004 TODO To change the template for this generated file go to Window - Preferences - Java - Code
  * Style - Code Templates
  */
-package net.refractions.udig.project.ui.internal;
+package net.refractions.udig.project.ui.internal.wizard;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -12,6 +12,8 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ui.CatalogTreeViewer;
 import net.refractions.udig.project.internal.ProjectFactory;
+import net.refractions.udig.project.ui.internal.Messages;
+import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;

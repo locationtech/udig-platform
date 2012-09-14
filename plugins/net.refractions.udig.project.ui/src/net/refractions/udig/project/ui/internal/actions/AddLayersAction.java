@@ -16,7 +16,7 @@
  */
 package net.refractions.udig.project.ui.internal.actions;
 
-import net.refractions.udig.project.ui.internal.MapImport;
+import net.refractions.udig.project.ui.internal.wizard.MapImport;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuCreator;
