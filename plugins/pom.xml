@@ -4,14 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>udig-tycho</artifactId>
         <groupId>net.refractions</groupId>
-        <version>1.3.2-SNAPSHOT</version>
+        <artifactId>udig-tycho</artifactId>
+        <version>1.3.3-SNAPSHOT</version>
     </parent>
 
-    <groupId>net.refractions</groupId>
     <artifactId>plugins</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <profiles>
