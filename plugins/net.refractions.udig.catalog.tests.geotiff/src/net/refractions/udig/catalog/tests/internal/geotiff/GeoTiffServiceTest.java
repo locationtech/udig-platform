@@ -1,5 +1,7 @@
 package net.refractions.udig.catalog.tests.internal.geotiff;
 
+import it.geosolutions.imageio.gdalframework.GDALUtilities;
+
 import java.io.File;
 import java.net.URL;
 
@@ -10,6 +12,7 @@ import net.refractions.udig.catalog.tests.AbstractServiceTest;
 
 import org.geotools.gce.geotiff.GeoTiffFormat;
 import org.geotools.gce.geotiff.GeoTiffFormatFactorySpi;
+import org.junit.Assume;
 import org.junit.Before;
 
 public class GeoTiffServiceTest extends AbstractServiceTest {
@@ -18,6 +21,8 @@ public class GeoTiffServiceTest extends AbstractServiceTest {
 
     @Before
     public void setUp() throws Exception {
+        Assume.assumeTrue(GDALUtilities.isGDALAvailable());
+        
         GeoTiffServiceExtension fac = new GeoTiffServiceExtension();
         URL url = Data.getResource(GeoTiffServiceTest.class, TIFF_1);
         

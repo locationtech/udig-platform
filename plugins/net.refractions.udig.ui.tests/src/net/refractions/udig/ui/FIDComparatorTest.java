@@ -14,14 +14,15 @@
  */
 package net.refractions.udig.ui;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Collections;
-
-import junit.framework.TestCase;
 
 import org.eclipse.swt.SWT;
 import org.geotools.data.DataUtilities;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -34,12 +35,9 @@ import com.vividsolutions.jts.geom.GeometryFactory;
  * @author Jesse
  * @since 1.1.0
  */
-public class FIDComparatorTest extends TestCase {
+public class FIDComparatorTest {
 
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
+    @Test
     public void testCompare() throws Throwable {
         GeometryFactory fac = new GeometryFactory();
         SimpleFeatureType type = DataUtilities.createType("type", "geom:Point,name:String,id:int"); //$NON-NLS-1$ //$NON-NLS-2$

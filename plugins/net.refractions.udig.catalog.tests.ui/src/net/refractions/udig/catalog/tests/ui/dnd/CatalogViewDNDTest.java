@@ -27,7 +27,6 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.PlatformUI;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class CatalogViewDNDTest {
@@ -64,7 +63,6 @@ public class CatalogViewDNDTest {
 		handler.setViewerLocation(ViewerDropLocation.NONE);
 	}
 	
-	@Ignore
     @Test
 	public void testSingle() throws Throwable {
 		Object data = getData();
@@ -98,15 +96,13 @@ public class CatalogViewDNDTest {
 			};
 		};
 
-        UDIGTestUtil.inDisplayThreadWait(4000, condition, true);
-//        UDIGTestUtil.inDisplayThreadWait(400000, condition);
+        UDIGTestUtil.inDisplayThreadWait(5000, condition, true);
 
         if( failure[0]!=null )
             throw failure[0];
 		makeAssertion(getSingleDataAssertionDescription(), catalog);
 	}
 
-	@Ignore
     @Test
 	public void testMulti() throws Throwable {
 		Object data = getDataMulti();
@@ -142,8 +138,7 @@ public class CatalogViewDNDTest {
 			};
 		};
 
-		UDIGTestUtil.inDisplayThreadWait(4000, condition, false);
-//		UDIGTestUtil.inDisplayThreadWait(400000, condition);
+		UDIGTestUtil.inDisplayThreadWait(20000, condition, false);
         
         if( failure[0]!=null )
             throw failure[0];
@@ -168,7 +163,7 @@ public class CatalogViewDNDTest {
 		return new URL[] {
 				new URL(DummyService.url.toExternalForm() + "/dummy1"), //$NON-NLS-1$
 				new URL(DummyService.url.toExternalForm() + "/dummy2"), //$NON-NLS-1$
-				new File("Does Not Exist").toURL() //$NON-NLS-1$
+				new File("Does Not Exist").toURI().toURL() //$NON-NLS-1$
 		};
 	}
 
@@ -178,7 +173,7 @@ public class CatalogViewDNDTest {
 
 	void makeAssertionMulti(String assertionDescription, ICatalog catalog) {
 		try {
-			assertEquals(assertionDescription, catalog.members(null).size(), 2);
+			assertEquals(assertionDescription, 2, catalog.members(null).size());
 		} catch (IOException e) {
 			fail();
 		}

@@ -14,6 +14,10 @@
  */
 package net.refractions.udig.catalog.shp.tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,6 +33,7 @@ import net.refractions.udig.document.source.ShpDocPropertyParser;
 import net.refractions.udig.document.source.ShpDocumentSource;
 
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
+import org.junit.Test;
 
 /**
  * Test class for {@link ShpDocumentSource}.
@@ -61,10 +66,12 @@ public class ShpDocumentSourceTest extends AbstractShpDocTest {
         
     }
     
+    @Test
     public void testGet() {
         assertEquals("Count is not expected.", 0, source.getDocuments().size());
     }
     
+    @Test
     public void testAddRemove() {
         
         List<IDocument> docs = source.getDocuments();
@@ -94,6 +101,7 @@ public class ShpDocumentSourceTest extends AbstractShpDocTest {
         
     }
     
+    @Test
     public void testUpdateFile() {
         
         List<IDocument> docs = source.getDocuments();

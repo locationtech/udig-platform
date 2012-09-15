@@ -1,12 +1,16 @@
 package net.refractions.udig.tools.edit;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.internal.commands.NullCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
-public class EditToolHandlerTest extends TestCase {
+import org.junit.Test;
+
+public class EditToolHandlerTest {
     LockingBehaviour object = new LockingBehaviour(){
 
         public Object getKey(EditToolHandler handler) {
@@ -31,6 +35,7 @@ public class EditToolHandlerTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.latest.EditToolHandler.setActive(boolean)'
      */
+    @Test
     public void testSetActive() throws Exception {
         class TestActivator implements Activator {
             boolean activated = false;
@@ -66,6 +71,7 @@ public class EditToolHandlerTest extends TestCase {
      * 'net.refractions.udig.tools.edit.latest.EditToolHandler.handleEvent(MapMouseEvent,
      * EventType)'
      */
+    @Test
     public void testHandleEvent() throws Exception {
         class TrueMode implements EventBehaviour {
 
@@ -117,6 +123,7 @@ public class EditToolHandlerTest extends TestCase {
 
     }
 
+    @Test
     public void testBehaviourLocking() throws Exception {
         TestHandler handler = new TestHandler();
 

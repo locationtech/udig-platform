@@ -1,11 +1,12 @@
 package net.refractions.udig.catalog.tests.ui.workflow;
 
+import static org.junit.Assert.assertFalse;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.internal.ui.ConnectionPageDecorator;
 import net.refractions.udig.catalog.internal.ui.ResourceSelectionPage;
 import net.refractions.udig.catalog.tests.DummyService;
@@ -23,8 +24,11 @@ import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-public class SingleResourceSelectionTest extends TestCase {
+public class SingleResourceSelectionTest {
 	
 	Shell shell;
 	
@@ -36,10 +40,8 @@ public class SingleResourceSelectionTest extends TestCase {
 	
 	ResourceSelectionPage page;
 	
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		
+	@Before
+	public void setUp() throws Exception {
 		ArrayList<String> l = new ArrayList<String>();
 		l.add("net.refractions.udig.catalog.tests.ui.dummyPage"); //$NON-NLS-1$
 		
@@ -65,12 +67,13 @@ public class SingleResourceSelectionTest extends TestCase {
 		dialog.setBlockOnOpen(true);
 	}
 	
-	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		if (!shell.isDisposed())
 			shell.dispose();
 	}
 	
+	@Test
 	public void test() {
 		Assertion a1 = new Assertion() {
 			@Override

@@ -14,9 +14,11 @@
  */
 package net.refractions.udig.tools.edit.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import java.awt.Dimension;
 
-import junit.framework.TestCase;
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.Map;
@@ -28,6 +30,8 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -42,16 +46,15 @@ import com.vividsolutions.jts.geom.GeometryFactory;
  * @author jones
  * @since 1.1.0
  */
-public class CreateOrSetFeatureTest extends TestCase {
+public class CreateOrSetFeatureTest {
 
     private Map map;
     private ILayer layer;
     private SimpleFeature original;
     private FeatureSource<SimpleFeatureType, SimpleFeature> resource;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         map=MapTests.createDefaultMap("TypeName", 1, true, new Dimension(10,10)); //$NON-NLS-1$
         layer=map.getMapLayers().get(0);
         resource = layer.getResource(FeatureSource.class, new NullProgressMonitor());
@@ -61,6 +64,7 @@ public class CreateOrSetFeatureTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.commands.CreateOrSetFeature.run(IProgressMonitor)'
      */
+    @Test
     public void testCreateNew() throws Exception {
         GeometryFactory fac=new GeometryFactory();
         fac.createPoint(new Coordinate(10,10));
@@ -89,6 +93,7 @@ public class CreateOrSetFeatureTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.commands.CreateOrSetFeature.run(IProgressMonitor)'
      */
+    @Test
     public void testModifyExistingFeature() throws Exception {
         GeometryFactory fac=new GeometryFactory();
         fac.createPoint(new Coordinate(10,10));

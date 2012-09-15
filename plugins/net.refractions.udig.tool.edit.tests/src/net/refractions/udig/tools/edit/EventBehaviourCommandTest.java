@@ -1,9 +1,12 @@
 package net.refractions.udig.tools.edit;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.command.Command;
 import net.refractions.udig.project.command.UndoableMapCommand;
@@ -13,12 +16,14 @@ import net.refractions.udig.tools.edit.support.TestHandler;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Test;
 
-public class EventBehaviourCommandTest extends TestCase {
+public class EventBehaviourCommandTest {
 
     /*
      * Test method for 'net.refractions.udig.tools.edit.EventBehaviourCommand.run(IProgressMonitor)'
      */
+    @Test
     public void testRun() throws Exception {
 
         TestHandler handler=new TestHandler();

@@ -1,24 +1,28 @@
 package net.refractions.udig.ui;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-public class BooleanCellEditorTest extends TestCase {
+public class BooleanCellEditorTest {
 
     private Shell shell;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         shell=new Shell(Display.getCurrent());
     }
     
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         shell.dispose();
     }
 
+    @Test(expected = Exception.class)
     public void testDoGetValue() {
         BooleanCellEditor editor;
         editor = new BooleanCellEditor(shell);
@@ -29,12 +33,7 @@ public class BooleanCellEditorTest extends TestCase {
         editor.setValue(false);
         assertEquals( false, editor.getValue() );
         
-        try{
-            editor.setValue("illegal"); //$NON-NLS-1$
-            fail();
-        }catch( Exception e ){
-            //good
-        }
+        editor.setValue("illegal"); //$NON-NLS-1$
     }
 
 }

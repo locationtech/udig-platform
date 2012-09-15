@@ -1,6 +1,8 @@
 package net.refractions.udig.tools.edit.commands;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
@@ -15,10 +17,13 @@ import net.refractions.udig.tools.edit.support.TestHandler;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.feature.FeatureCollection;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-public class StartEditingCommandTest extends TestCase {
+@SuppressWarnings("nls")
+public class StartEditingCommandTest {
     private TestHandler handler;
     private EditBlackboard bb;
     private EditGeom editGeom;
@@ -27,9 +32,8 @@ public class StartEditingCommandTest extends TestCase {
     private Layer layer;
     private SimpleFeature feature;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         handler=new TestHandler();
         bb= handler.getEditBlackboard();
         editGeom = bb.getGeoms().get(0);
@@ -75,6 +79,7 @@ public class StartEditingCommandTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.commands.StartEditingCommand.run(IProgressMonitor)'
      */
+    @Test
     public void testRun() throws Exception {
         
         MapMouseEvent event = new MapMouseEvent(null, 10,10, MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
@@ -110,7 +115,7 @@ public class StartEditingCommandTest extends TestCase {
         
     }
     
-    public void assertFeatureEqual( String msg, SimpleFeature expected, SimpleFeature actual ){
+    private void assertFeatureEqual( String msg, SimpleFeature expected, SimpleFeature actual ){
         if( expected == null ){
             assertNull( msg, actual );
         }

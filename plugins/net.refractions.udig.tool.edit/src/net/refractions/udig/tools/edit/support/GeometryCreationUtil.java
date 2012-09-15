@@ -23,7 +23,9 @@ import net.refractions.udig.core.internal.GeometryBuilder;
 import net.refractions.udig.tool.edit.internal.Messages;
 import net.refractions.udig.tools.edit.EditPlugin;
 
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.shapefile.shp.JTSUtilities;
 import org.opengis.feature.type.GeometryDescriptor;
@@ -203,11 +205,15 @@ public class GeometryCreationUtil {
             if (showError) {
                 display.asyncExec(new Runnable(){
                     public void run() {
-                        MessageDialog
+                        IStatus errorStatus = new Status(IStatus.ERROR,
+                                EditPlugin.ID, IStatus.ERROR,
+                                Messages.GeometryCreationUtil_errorMsg, null);
+                        ErrorDialog
                                 .openError(
                                         display.getActiveShell(),
                                         Messages.GeometryCreationUtil_errorTitle,
-                                        Messages.GeometryCreationUtil_errorMsg);
+                                        Messages.GeometryCreationUtil_errorMsg,
+                                        errorStatus);
                     }
                 });
                 throw new IllegalStateException("Geometry constructed from EditGeom: " //$NON-NLS-1$

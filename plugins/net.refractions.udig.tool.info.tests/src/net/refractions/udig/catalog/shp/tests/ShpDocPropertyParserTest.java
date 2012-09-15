@@ -14,6 +14,12 @@
  */
 package net.refractions.udig.catalog.shp.tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -21,13 +27,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
-import org.opengis.feature.simple.SimpleFeature;
-
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.document.source.ShpDocPropertyParser;
+
+import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
+import org.junit.Test;
+import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * Test class for {@link ShpDocPropertyParser}.
@@ -37,6 +44,7 @@ import net.refractions.udig.document.source.ShpDocPropertyParser;
 @SuppressWarnings("nls")
 public class ShpDocPropertyParserTest extends AbstractShpDocTest {
     
+    @Test
     public void testHasProperties() throws MalformedURLException {
         
         ShpDocPropertyParser parser = new ShpDocPropertyParser(url);
@@ -48,6 +56,7 @@ public class ShpDocPropertyParserTest extends AbstractShpDocTest {
         
     }
     
+    @Test
     public void testSetGetShapeDocInfos() {
         
         final ShpDocPropertyParser parser = new ShpDocPropertyParser(url);
@@ -91,6 +100,7 @@ public class ShpDocPropertyParserTest extends AbstractShpDocTest {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testSetGetFeatureDocInfos() {
         
         SimpleFeatureTypeBuilder fb = new SimpleFeatureTypeBuilder();
@@ -123,6 +133,7 @@ public class ShpDocPropertyParserTest extends AbstractShpDocTest {
         
     }
     
+    @Test
     public void testSetGetFeatureHotlinkDescriptors() {
         
         final ShpDocPropertyParser parser = new ShpDocPropertyParser(url);

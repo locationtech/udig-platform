@@ -14,7 +14,9 @@
  */
 package net.refractions.udig.tools.edit.behaviour;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.EditState;
 import net.refractions.udig.tools.edit.EventType;
@@ -24,17 +26,20 @@ import net.refractions.udig.tools.edit.support.Point;
 import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * Tests for the SelectioBoxBehaviour
  * @author jones
  * @since 1.1.0
  */
-public class SelectionBoxBehaviourTest extends TestCase {
+public class SelectionBoxBehaviourTest {
     private TestHandler handler;
     private PrimitiveShape shell;
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    
+    @Before
+    public void setUp() throws Exception {
         handler = new TestHandler();
         shell = handler.getEditBlackboard().getGeoms().get(0).getShell();
         handler.getEditBlackboard().addPoint(0, 10, shell);
@@ -51,6 +56,7 @@ public class SelectionBoxBehaviourTest extends TestCase {
      * 'net.refractions.udig.tools.edit.behaviour.AddVertexOnEdgeBehaviour.isValid(EditToolHandler,
      * MapMouseEvent, EventType)'
      */
+    @Test
     public void testIsValid() {
         SelectVerticesWithBoxBehaviour behaviour = new SelectVerticesWithBoxBehaviour();
 
@@ -132,6 +138,7 @@ public class SelectionBoxBehaviourTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.SelectionBoxBehaviour.getCommand(EditToolHandler, MapMouseEvent, EventType)'
      */
+    @Test
     public void testGetCommand() {
         handler.getBehaviours().add( new SelectVerticesWithBoxBehaviour() );
         
@@ -216,6 +223,7 @@ public class SelectionBoxBehaviourTest extends TestCase {
         assertEquals(0, handler.getEditBlackboard().getSelection().size());
     }
 
+    @Test
     public void testSelectingWhen2ShapesAreOnBB() throws Exception {
         EditBlackboard bb = handler.getEditBlackboard();
         EditGeom geom2 = bb.newGeom("new", null); //$NON-NLS-1$

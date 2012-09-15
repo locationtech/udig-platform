@@ -1,5 +1,13 @@
 package net.refractions.udig.tools.edit.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.awt.Dimension;
 import java.awt.geom.AffineTransform;
 import java.io.InputStream;
@@ -11,7 +19,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.internal.render.impl.ScaleUtils;
 import net.refractions.udig.tool.edit.tests.TestsPlugin;
 import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
@@ -28,6 +35,8 @@ import org.geotools.gml.GMLReceiver;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.referencing.operation.transform.IdentityTransform;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.operation.MathTransform;
 import org.xml.sax.InputSource;
@@ -41,7 +50,7 @@ import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 
-public class EditBlackboardTest extends TestCase {
+public class EditBlackboardTest {
     static {
        new PreferenceUtil(){
             {
@@ -59,15 +68,12 @@ public class EditBlackboardTest extends TestCase {
 
     java.awt.Point SCREEN=new java.awt.Point(500,500);
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        layerToWorld=IdentityTransform.create(2);    
+    @Before
+    public void setUp() throws Exception {
+        layerToWorld=IdentityTransform.create(2);
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
+    @Test
     public void testSetup() throws Exception {
         EventListener l=new EventListener();
         EditBlackboard map = new EditBlackboard(SCREEN.x,SCREEN.y, transform, layerToWorld);
@@ -227,6 +233,7 @@ public class EditBlackboardTest extends TestCase {
         }
     }
     
+    @Test
     public void testGetCandidate() throws Exception {
         GeometryFactory factory=new GeometryFactory();
         LinearRing ring1=createShellRing(factory, 10);
@@ -267,6 +274,7 @@ public class EditBlackboardTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.PixelCoordMap.addCoord(int, int, Coordinate)'
      */
+    @Test
     public void testAddCoord() {
         EventListener l=new EventListener();
         
@@ -469,6 +477,7 @@ public class EditBlackboardTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.PixelCoordMap.moveCoords(int, int, int, int)'
      */
+    @Test
     public void testMoveCoords() throws Exception, Exception {
         EventListener l=new EventListener();
         GeometryFactory factory=new GeometryFactory();
@@ -554,6 +563,7 @@ public class EditBlackboardTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.PixelCoordMap.deleteCoords(int, int)'
      */
+    @Test
     public void testDeleteCoords() {
         
         GeometryFactory factory=new GeometryFactory();
@@ -600,6 +610,7 @@ public class EditBlackboardTest extends TestCase {
         assertEquals(new Coordinate(15,7), modified.get(1));
     }
     
+    @Test
     public void testTransform() throws Exception {
         MathTransform t=CRS.findMathTransform(CRS.decode("EPSG:3005"), DefaultGeographicCRS.WGS84); //$NON-NLS-1$
         AffineTransform translateInstance = AffineTransform.getTranslateInstance(180, 90);
@@ -615,7 +626,8 @@ public class EditBlackboardTest extends TestCase {
         t.inverse().transform(tmp, 0, expected,0,1);
         assertEquals(new Coordinate(expected[0], expected[1]),map.getCoords(x,y).get(0));
     }
-        
+    
+    @Test
     public void testAddOverlappingVertex() throws Exception {
         new PreferenceUtil(){
             {
@@ -662,6 +674,7 @@ public class EditBlackboardTest extends TestCase {
         };     
     }
     
+    @Test
     public void testLakeDrawingCase() throws Exception {
         URL url = TestsPlugin.getDefault().getBundle().getResource("data/lake.gml"); //$NON-NLS-1$
         InputStream in = url.openConnection().getInputStream();
@@ -715,6 +728,7 @@ public class EditBlackboardTest extends TestCase {
         }
     }
     
+    @Test
     public void testSetTransform() throws Exception {
         GeometryFactory factory=new GeometryFactory();
         Polygon poly = createPolygon(factory, 10);
@@ -807,10 +821,12 @@ public class EditBlackboardTest extends TestCase {
         assertEquals(Point.valueOf(25+diffX,12+diffY), geom.getHoles().get(0).getPoint(4));
     }
     
+    @Test
     public void testRemovePoint() throws Exception {
         
     }
     
+    @Test
     public void testRemoveGeoms() throws Exception {
         EventListener l=new EventListener();
         EditBlackboard map = new EditBlackboard(SCREEN.x,SCREEN.y, new AffineTransform(), layerToWorld);
@@ -850,6 +866,7 @@ public class EditBlackboardTest extends TestCase {
     }
     
     // Test the move method that declares which coords to move.
+    @Test
     public void testMoveVertexSrcDestToMove() throws Exception {
         EventListener l=new EventListener();
         EditBlackboard map = new EditBlackboard(SCREEN.x,SCREEN.y, new AffineTransform(), layerToWorld);
@@ -956,6 +973,7 @@ public class EditBlackboardTest extends TestCase {
         assertEquals(5, (int)c.y);
     }
     
+    @Test
     public void testSetEditGeom() throws Exception {
         EditBlackboard bb=new EditBlackboard(SCREEN.x, SCREEN.y, transform, layerToWorld);
         EventListener l=new EventListener();
@@ -973,6 +991,7 @@ public class EditBlackboardTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.EditUtils.overVertex(Point, PixelCoordMap, int)'
      */
+    @Test
     public void testOverVertex() {
         EditBlackboard map=new EditBlackboard(SCREEN.x, SCREEN.y, AffineTransform.getTranslateInstance(0,0),
                 layerToWorld);
@@ -994,6 +1013,7 @@ public class EditBlackboardTest extends TestCase {
         assertNull(map.overVertex(Point.valueOf(12,11), 1));
     }
 
+    @Test
     public void testNewGeom() throws Exception {
         TestEditBlackboard bb=new TestEditBlackboard();
         bb.getGeoms().get(0).setChanged(false);
@@ -1011,6 +1031,7 @@ public class EditBlackboardTest extends TestCase {
         
     }
     
+    @Test
     public void testMoveGeom() throws Exception {
         TestEditBlackboard bb=new TestEditBlackboard();
         EditGeom geom = bb.getGeoms().get(0);

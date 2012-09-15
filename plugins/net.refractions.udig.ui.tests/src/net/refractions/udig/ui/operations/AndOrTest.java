@@ -1,14 +1,14 @@
 package net.refractions.udig.ui.operations;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-public class AndOrTest extends TestCase {
+import org.junit.Test;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+public class AndOrTest {
 
-    }
-
+    @Test
     public void testOrAccept() {
         Or or = new Or();
         or.getFilters().add(new NoCacheNoBlock(false));
@@ -20,6 +20,8 @@ public class AndOrTest extends TestCase {
         assertTrue(or.accept("")); //$NON-NLS-1$
 
     }
+    
+    @Test
     public void testAndAccept() {
         And and = new And();
         and.getFilters().add(new NoCacheNoBlock(true));
@@ -31,6 +33,7 @@ public class AndOrTest extends TestCase {
         assertFalse(and.accept("")); //$NON-NLS-1$
     }
 
+    @Test
     public void testANDListenersMethods() {
         And and = new And();
         final int[] added = new int[1];
@@ -87,6 +90,7 @@ public class AndOrTest extends TestCase {
 
     }
 
+    @Test
     public void testORListenersMethods() {
         Or or = new Or();
         final int[] added = new int[1];
@@ -142,6 +146,8 @@ public class AndOrTest extends TestCase {
         assertEquals(3, removed[0]);
 
     }
+    
+    @Test
     public void testANDCanCacheResult() {
         And and = new And();
 
@@ -154,6 +160,8 @@ public class AndOrTest extends TestCase {
 
         assertFalse(and.canCacheResult());
     }
+    
+    @Test
     public void testORCanCacheResult() {
         Or or = new Or();
 
@@ -167,6 +175,7 @@ public class AndOrTest extends TestCase {
         assertFalse(or.canCacheResult());
     }
 
+    @Test
     public void testANDIsBlocking() {
         And and = new And();
 
@@ -179,6 +188,8 @@ public class AndOrTest extends TestCase {
 
         assertTrue(and.isBlocking());
     }
+    
+    @Test
     public void testORIsBlocking() {
         Or or = new Or();
 

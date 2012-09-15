@@ -14,6 +14,8 @@
  */
 package net.refractions.udig.tools.edit.impl;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.Dimension;
 
 import net.refractions.udig.TestViewportPane;
@@ -31,6 +33,8 @@ import org.geotools.data.FeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureIterator;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
@@ -47,9 +51,8 @@ import com.vividsolutions.jts.geom.LinearRing;
  */
 public class SelectionToolTest extends AbstractToolTest{
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         handler=new TestHandler(3);
         
         FeatureStore<SimpleFeatureType, SimpleFeature> source = ((ILayer) handler.getContext().getMapLayers().get(0)).getResource(FeatureStore.class, null);
@@ -93,6 +96,7 @@ public class SelectionToolTest extends AbstractToolTest{
         return new SelectionTool();
     }
     
+    @Test
     public void testSelect1FeatureThenAnother() throws Exception{
         
         Point p=handler.getEditBlackboard().toPoint(new Coordinate(0,10));
@@ -109,6 +113,6 @@ public class SelectionToolTest extends AbstractToolTest{
         tool.mouseReleased(new MapMouseEvent(handler.getContext().getMapDisplay(), p.getX(), p.getY(), 0,0,MapMouseEvent.BUTTON1));
         
         assertEquals("feature2", handler.getContext().getEditManager().getEditFeature().getAttribute("name")); //$NON-NLS-1$ //$NON-NLS-2$
-}
+    }
     
 }

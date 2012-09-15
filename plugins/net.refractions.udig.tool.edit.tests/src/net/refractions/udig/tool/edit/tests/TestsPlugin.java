@@ -2,13 +2,11 @@ package net.refractions.udig.tool.edit.tests;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.junit.Ignore;
 import org.osgi.framework.BundleContext;
 
 /**
  * The main plugin class to be used in the desktop.
  */
-@Ignore
 public class TestsPlugin extends AbstractUIPlugin {
 
 	//The shared instance.

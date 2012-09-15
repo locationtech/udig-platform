@@ -40,7 +40,6 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.view.issues.IssueHandler.restorePerspective()'
      */
-    @Ignore
     @Test
     public void testRestorePerspective() throws WorkbenchException {
         int windows=PlatformUI.getWorkbench().getWorkbenchWindowCount();

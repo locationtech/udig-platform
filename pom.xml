@@ -299,7 +299,7 @@ Includes the ossim feaure (this may be dead code)
                     <configuration>
                         <useUIHarness>true</useUIHarness>
                         <product>net.refractions.udig-product</product>
-                        <argLine>-Xmx1024m -XX:MaxPermSize=256m -Dsdtcore.headless ${tycho.test.OSspecific}</argLine>
+                        <argLine>-Xmx1024m -XX:MaxPermSize=256m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific}</argLine>
                     </configuration>
                 </plugin>
             </plugins>

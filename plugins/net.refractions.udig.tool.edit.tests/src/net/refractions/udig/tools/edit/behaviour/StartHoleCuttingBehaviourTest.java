@@ -1,8 +1,12 @@
 package net.refractions.udig.tools.edit.behaviour;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.awt.Dimension;
 
-import junit.framework.TestCase;
 import net.refractions.udig.TestViewportPane;
 import net.refractions.udig.project.command.PostDeterminedEffectCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
@@ -18,12 +22,14 @@ import net.refractions.udig.tools.edit.support.ShapeType;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Test;
 
-public class StartHoleCuttingBehaviourTest extends TestCase {
+public class StartHoleCuttingBehaviourTest {
 
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.SelectHoleBehaviour.isValid(EditToolHandler, MapMouseEvent, EventType)'
      */
+    @Test
     public void testIsValid() throws Exception {
         TestHandler handler=new TestHandler();
         handler.getTestEditBlackboard().util.setVertexRadius(4);
@@ -94,6 +100,7 @@ public class StartHoleCuttingBehaviourTest extends TestCase {
 
     }
 
+    @Test
     public void testRunCommands() throws Exception {
         TestHandler handler=new TestHandler();
         ((RenderManager)handler.getContext().getRenderManager()).setMapDisplay(new TestViewportPane(new Dimension(500,500)));
