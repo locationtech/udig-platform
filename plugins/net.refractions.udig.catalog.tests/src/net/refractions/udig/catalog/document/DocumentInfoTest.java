@@ -14,10 +14,12 @@
  */
 package net.refractions.udig.catalog.document;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IDocument.Type;
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
+
+import org.junit.Test;
 
 /**
  * Test class for {@link DocumentInfo}.
@@ -25,7 +27,7 @@ import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
  * @author Naz Chan
  */
 @SuppressWarnings("nls")
-public class DocumentInfoTest extends TestCase {
+public class DocumentInfoTest {
 
     private static final String LABEL = "label";
     private static final String DESCRIPTION = "description";
@@ -41,6 +43,7 @@ public class DocumentInfoTest extends TestCase {
     /**
      * Tests if the string definition is parsed correctly.
      */
+    @Test
     public void testFromString() {
 
         String infoString = String.format(FORMAT, INFO, TYPE.toString(), CONTENT_TYPE.toString(),
@@ -78,6 +81,7 @@ public class DocumentInfoTest extends TestCase {
     /**
      * Tests if the descriptor is encoded into a string correctly.
      */
+    @Test
     public void testToString() {
         
         String infoString = String.format(FORMAT, INFO, TYPE.toString(), CONTENT_TYPE.toString(),

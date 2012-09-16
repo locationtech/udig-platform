@@ -1,5 +1,10 @@
 package net.refractions.udig.ui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -7,22 +12,24 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import junit.framework.TestCase;
 import net.refractions.udig.core.StaticProvider;
 
 import org.geotools.data.DataUtilities;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-public class FidSelectionTest extends TestCase {
+@SuppressWarnings("nls")
+public class FidSelectionTest {
 
     private ArrayList<SimpleFeature> features;
     private SimpleFeature feature1;
     private SimpleFeature feature2;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         SimpleFeatureType type = DataUtilities.createType("type", "name:String,id:int"); //$NON-NLS-1$ //$NON-NLS-2$
 
         features = new ArrayList<SimpleFeature>(2);
@@ -38,6 +45,7 @@ public class FidSelectionTest extends TestCase {
 
     }
 
+    @Test
     public void testGetFirstElement() {
         Set<String> fids=new HashSet<String>();
         FidSelection selection=new FidSelection(fids, new StaticProvider<Collection<SimpleFeature>>(features));
@@ -68,6 +76,7 @@ public class FidSelectionTest extends TestCase {
         }
     }
 
+    @Test
     public void testIterator() {
 
         Set<String> fids=new HashSet<String>();
@@ -87,7 +96,7 @@ public class FidSelectionTest extends TestCase {
 
     private void assertNumberElements( final FidSelection selection, final int i ) {
         int j=0;
-        for( Iterator iter = selection.iterator(); iter.hasNext(); ) {
+        for( Iterator<?> iter = selection.iterator(); iter.hasNext(); ) {
             iter.next();
             j++;
         }
@@ -95,6 +104,7 @@ public class FidSelectionTest extends TestCase {
         assertEquals(i,j);
     }
 
+    @Test
     public void testSize() {
         Set<String> fids=new HashSet<String>();
         FidSelection selection=new FidSelection(fids, new StaticProvider<Collection<SimpleFeature>>(features));
@@ -110,6 +120,7 @@ public class FidSelectionTest extends TestCase {
         assertEquals(0, selection.size() );
     }
 
+    @Test
     public void testToArray() {
         Set<String> fids=new HashSet<String>();
         FidSelection selection=new FidSelection(fids, new StaticProvider<Collection<SimpleFeature>>(features));
@@ -133,6 +144,7 @@ public class FidSelectionTest extends TestCase {
         }
     }
 
+    @Test
     public void testToList() {
         Set<String> fids=new HashSet<String>();
         FidSelection selection=new FidSelection(fids, new StaticProvider<Collection<SimpleFeature>>(features));
@@ -149,6 +161,7 @@ public class FidSelectionTest extends TestCase {
         
     }
 
+    @Test
     public void testIsEmpty() {
         Set<String> fids=new HashSet<String>();
         FidSelection selection=new FidSelection(fids, new StaticProvider<Collection<SimpleFeature>>(features));

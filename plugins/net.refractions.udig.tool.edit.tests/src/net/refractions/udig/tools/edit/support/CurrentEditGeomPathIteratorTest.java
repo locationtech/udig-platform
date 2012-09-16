@@ -1,5 +1,7 @@
 package net.refractions.udig.tools.edit.support;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,13 +13,14 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import junit.framework.TestCase;
-
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.referencing.operation.MathTransform;
 
-public class CurrentEditGeomPathIteratorTest extends TestCase {
+public class CurrentEditGeomPathIteratorTest {
 
     private static final boolean INTERACTIVE = false;
     private static final long SLEEP = 1000;
@@ -32,8 +35,8 @@ public class CurrentEditGeomPathIteratorTest extends TestCase {
 
     private MathTransform layerToWorld;
     
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         layerToWorld=CRS.findMathTransform(DefaultGeographicCRS.WGS84, DefaultGeographicCRS.WGS84);    
     if (INTERACTIVE) {
             frame = new JFrame("EditGeomPathIterator Test"); //$NON-NLS-1$
@@ -69,12 +72,12 @@ public class CurrentEditGeomPathIteratorTest extends TestCase {
         }
     }
     
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         if( frame != null )
             frame.dispose();
-        super.tearDown();
     }
+    
     private void update() throws Exception{
         if( INTERACTIVE ){
             frame.repaint();
@@ -82,6 +85,7 @@ public class CurrentEditGeomPathIteratorTest extends TestCase {
         }
     }
 
+    @Test
     public void testDrawPolygon() throws Exception {
         
         Graphics2D testG = testImage.createGraphics();

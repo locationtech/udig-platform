@@ -7,29 +7,28 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
 
-import org.junit.Ignore;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.junit.Test;
 
 public abstract class AbstractServiceTest extends AbstractResolveTest {
     
     protected abstract IService getResolve();
 
-    @Ignore
     @Test
     public void testInfo() throws IOException {
-        IServiceInfo info = getResolve().getInfo(null);
+        IServiceInfo info = getInfo(getResolve(), null);
         assertNotNull("Info is required", info); //$NON-NLS-1$
     }
 
-    @Ignore
     @Test
     public void testInfoMonitor() throws IOException {
         FakeProgress monitor = new FakeProgress();
-        IServiceInfo info = getResolve().getInfo(monitor);
+        IServiceInfo info = getInfo(getResolve(), monitor);
         assertNotNull("Info is required", info); //$NON-NLS-1$
     }
 
@@ -45,21 +44,32 @@ public abstract class AbstractServiceTest extends AbstractResolveTest {
         assertTrue("Must resolve IServiceInfo.class", getResolve().canResolve(IServiceInfo.class)); //$NON-NLS-1$
     }
 
-    @Ignore
     @Test
     public void testResolve() throws IOException {
-        IServiceInfo info = getResolve().resolve(IServiceInfo.class, null);
+        IServiceInfo info = resolve(getResolve(), IServiceInfo.class, null);
         if (!isLeaf())
             assertTrue("May not have null info", info != null); //$NON-NLS-1$
     }
 
-    @Ignore
     @Test
     public void testResolveMonitor() throws IOException {
         FakeProgress monitor = new FakeProgress();
-        IServiceInfo info = getResolve().resolve(IServiceInfo.class, monitor);
+        IServiceInfo info = resolve(getResolve(), IServiceInfo.class, monitor);
         if (!isLeaf())
             assertTrue("May not have null info", info != null); //$NON-NLS-1$
     }
-    
+
+    protected IServiceInfo getInfo(final IService service, final IProgressMonitor monitor) throws IOException {
+        final Callable<IServiceInfo> job = new Callable<IServiceInfo>() {
+            
+            @Override
+            public IServiceInfo call() throws Exception {
+                return service.getInfo(monitor);
+            }
+            
+        };
+        
+        return retrieveInNewThread(job);
+    }
+
 }

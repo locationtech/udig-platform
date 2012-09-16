@@ -58,7 +58,7 @@ public class NewFeatureTypeOpTest {
         
         delete(file);
         // test if shapefile is not local
-        URL url=new URL("http://svn.geotools.org/udig/trunk/plugins/net.refractions.udig.catalog.tests.ui/data/streams.shp"); //$NON-NLS-1$
+        URL url=new URL("https://github.com/uDig/udig-platform/blob/master/plugins/net.refractions.udig.catalog.tests.ui/data/streams.shp?raw=true"); //$NON-NLS-1$
         
         services = CatalogPlugin.getDefault().getServiceFactory().createService(url);
         
@@ -100,7 +100,6 @@ public class NewFeatureTypeOpTest {
         }
     }
 
-    @Ignore
     @Test
     public void testMemoryDataStoreType() throws Exception {
         IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
@@ -118,11 +117,10 @@ public class NewFeatureTypeOpTest {
         assertEquals( "TestName", members.get(0).resolve(FeatureSource.class, new NullProgressMonitor()).getSchema().getName().getLocalPart()); //$NON-NLS-1$
     }
 
-    @Ignore
     @Test
     public void testCreateTypeOnIllegalDS() throws Exception {
         WFSServiceExtension ext=new WFSServiceExtension();
-        URL id=new URL("http://www.refractions.net:8080/geoserver/wfs"); //$NON-NLS-1$
+        URL id=new URL("http://demo.opengeo.org/geoserver/wfs"); //$NON-NLS-1$
         Map<String, Serializable> params = ext.createParams(id);
         
         IService service = ext.createService(id, params);

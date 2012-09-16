@@ -11,7 +11,6 @@ import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -149,22 +148,23 @@ public class AddVertexOnEdgeBehaviourTest {
      * 'net.refractions.udig.tools.edit.behaviour.AddVertexOnEdgeBehaviour.getCommand(EditToolHandler,
      * MapMouseEvent, EventType)'
      */
-    @Ignore
     @Test
     public void testGetCommand() {
-        MapMouseEvent event = new MapMouseEvent(null, 10, 8, MapMouseEvent.NONE,
+        int x = 10;
+        int y = 8;
+        MapMouseEvent event = new MapMouseEvent(null, x, y, MapMouseEvent.NONE,
                 MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
         handler.getBehaviours().add(new InsertVertexOnEdgeBehaviour());
 
         handler.setCurrentState(EditState.MODIFYING);
         handler.setCurrentShape(shell);
         handler.handleEvent(event, EventType.RELEASED);
-        assertTrue("Shape should have a new point", shell.hasVertex(Point.valueOf(10, 10))); //$NON-NLS-1$
+        assertTrue("Shape should have a new point", shell.hasVertex(Point.valueOf(x, y))); //$NON-NLS-1$
         assertEquals(
-                "Blackboard should also reflect the change", 1, handler.getEditBlackboard().getCoords(10, 10).size()); //$NON-NLS-1$
+                "Blackboard should also reflect the change", 1, handler.getEditBlackboard().getCoords(x, y).size()); //$NON-NLS-1$
         Coordinate[] array = shell.coordArray();
         boolean found = false;
-        Coordinate expected = handler.getEditBlackboard().toCoord(Point.valueOf(10, 10));
+        Coordinate expected = handler.getEditBlackboard().toCoord(Point.valueOf(x, y));
         for( Coordinate coordinate : array ) {
             if (coordinate.equals(expected)) {
                 found = true;

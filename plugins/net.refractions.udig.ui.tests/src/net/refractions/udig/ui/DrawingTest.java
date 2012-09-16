@@ -1,9 +1,11 @@
 package net.refractions.udig.ui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
-import junit.framework.TestCase;
 import net.refractions.udig.ui.graphics.SWTGraphics;
 
 import org.eclipse.swt.SWT;
@@ -15,20 +17,24 @@ import org.geotools.styling.Graphic;
 import org.geotools.styling.Mark;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
+import org.junit.After;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
 
-public class DrawingTest extends TestCase {
+public class DrawingTest {
     Image image;
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         image.dispose();
     }
 
+    @Test
     public void testDrawFeaturePolygon() throws Exception {
         Drawing d = Drawing.create();
         Display display = Display.getCurrent();
@@ -64,6 +70,7 @@ public class DrawingTest extends TestCase {
 
     }
 
+    @Test
     public void testLineWidth() throws Exception {
         Drawing d = Drawing.create();
         Display display = Display.getCurrent();
@@ -99,7 +106,9 @@ public class DrawingTest extends TestCase {
         }
     }
 
-    public void XtestPoint() throws Exception {
+    @Ignore
+    @Test
+    public void testPoint() throws Exception {
         Drawing d = Drawing.create();
         Display display = Display.getCurrent();
         GeometryFactory factory = new GeometryFactory();

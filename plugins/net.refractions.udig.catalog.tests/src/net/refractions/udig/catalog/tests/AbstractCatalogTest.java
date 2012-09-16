@@ -15,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.ICatalogInfo;
@@ -258,33 +259,32 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
     protected abstract Envelope getSearchBounds();
     protected abstract String getSearchString();
 
-    @Ignore
+    @Ignore("fails")
     @Test
     public void testSearch() throws IOException {
         if (getSearchString() != null) {
-            List<IResolve> results = getResolve().search(getSearchString(), null, null);
+            List<IResolve> results = search(getResolve(), getSearchString(), null, null);
             assertNotNull("Must return a non-null list", results); //$NON-NLS-1$
             assertTrue("Must have found at least one item", results.size() > 0); //$NON-NLS-1$
         }
         if (getSearchBounds() != null && !getSearchBounds().isNull()) {
-            List<IResolve> results = getResolve().search(null, getSearchBounds(), null);
+            List<IResolve> results = search(getResolve(), null, getSearchBounds(), null);
             assertNotNull("Must return a non-null list", results); //$NON-NLS-1$
             assertTrue("Must have found at least one item", results.size() > 0); //$NON-NLS-1$
         }
         if (getSearchString() != null && getSearchBounds() != null) {
-            List<IResolve> results = getResolve()
-                    .search(getSearchString(), getSearchBounds(), null);
+            List<IResolve> results = search(getResolve(), getSearchString(), getSearchBounds(), null);
             assertNotNull("Must return a non-null list", results); //$NON-NLS-1$
             assertTrue("Must have found at least one item", results.size() > 0); //$NON-NLS-1$
         }
     }
 
-    @Ignore
+    @Ignore("fails")
     @Test
     public void testSearchMonitor() throws IOException {
         if (getSearchString() != null) {
             FakeProgress monitor = new FakeProgress();
-            List<IResolve> results = getResolve().search(getSearchString(), null, monitor);
+            List<IResolve> results = search(getResolve(), getSearchString(), null, monitor);
             assertNotNull("Must return a non-null list", results); //$NON-NLS-1$
             assertTrue("Must have found at least one item", results.size() > 0); //$NON-NLS-1$
             assertEquals( "Monitor must be finished",  monitor.total, monitor.completed); //$NON-NLS-1$
@@ -292,7 +292,7 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
         }
         if (getSearchBounds() != null) {
             FakeProgress monitor = new FakeProgress();
-            List<IResolve> results = getResolve().search(null, getSearchBounds(), monitor);
+            List<IResolve> results = search(getResolve(), null, getSearchBounds(), monitor);
             assertNotNull("Must return a non-null list", results); //$NON-NLS-1$
             assertTrue("Must have found at least one item", results.size() > 0); //$NON-NLS-1$
             assertEquals( "Monitor must be finished",  monitor.total, monitor.completed); //$NON-NLS-1$
@@ -300,8 +300,7 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
         }
         if (getSearchString() != null && getSearchBounds() != null) {
             FakeProgress monitor = new FakeProgress();
-            List<IResolve> results = getResolve()
-                    .search(getSearchString(), getSearchBounds(), monitor);
+            List<IResolve> results = search(getResolve(), getSearchString(), getSearchBounds(), monitor);
             assertNotNull("Must return a non-null list", results); //$NON-NLS-1$
             assertTrue("Must have found at least one item", results.size() > 0); //$NON-NLS-1$
             assertEquals( "Monitor must be finished",  monitor.total, monitor.completed); //$NON-NLS-1$
@@ -397,7 +396,7 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
 
     @Test
     public void testResolve() throws IOException {
-        List children = getResolve().resolve(List.class, null);
+        List<?> children = getResolve().resolve(List.class, null);
         if (!isLeaf())
             assertTrue("May not have null children", children != null); //$NON-NLS-1$
         ICatalogInfo info = getResolve().resolve(ICatalogInfo.class, null);
@@ -408,7 +407,7 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
     @Test
     public void testResolveMonitor() throws IOException {
         FakeProgress monitor = new FakeProgress();
-        List children = getResolve().resolve(List.class, monitor);
+        List<?> children = getResolve().resolve(List.class, monitor);
         if (!isLeaf())
             assertTrue("May not have null children", children != null); //$NON-NLS-1$
         // should still be taken care of
@@ -422,5 +421,20 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
         // should still be taken care of
         assertTrue("Monitor must be used.", //$NON-NLS-1$
                 ((monitor.total == monitor.completed) && (monitor.total != 0)));
+    }
+
+    protected List<IResolve> search(final ICatalog catalog, final String pattern, final Envelope bbox,
+        final IProgressMonitor monitor) throws IOException {
+        
+        final Callable<List<IResolve>> job = new Callable<List<IResolve>>() {
+            
+            @Override
+            public List<IResolve> call() throws Exception {
+                return catalog.search(pattern, bbox, monitor);
+            }
+            
+        };
+        
+        return retrieveInNewThread(job);
     }
 }

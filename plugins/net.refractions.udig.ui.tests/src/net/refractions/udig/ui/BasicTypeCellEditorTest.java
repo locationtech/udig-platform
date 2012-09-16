@@ -14,10 +14,14 @@
  */
 package net.refractions.udig.ui;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test Cell Editor
@@ -25,20 +29,21 @@ import org.eclipse.swt.widgets.Shell;
  * @author Jesse
  * @since 1.1.0
  */
-public class BasicTypeCellEditorTest extends TestCase {
+public class BasicTypeCellEditorTest {
 
     private Shell shell;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         shell=new Shell(Display.getCurrent());
     }
     
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         shell.dispose();
     }
     
+    @Test
     public void testShort() throws Exception {
         try{
             @SuppressWarnings("unused")
@@ -47,34 +52,38 @@ public class BasicTypeCellEditorTest extends TestCase {
         }catch( Exception e){
             // good
         }
-        runTest(Short.valueOf((short) 2), Short.valueOf((short) 3), Short.class);        
+        runTest(Short.valueOf((short) 2), Short.valueOf((short) 3), Short.class);
     }
 
+    @Test
     public void testInteger() throws Exception {
-        runTest(Integer.valueOf(2), Integer.valueOf(3), Integer.class);     
+        runTest(Integer.valueOf(2), Integer.valueOf(3), Integer.class);
     }
 
+    @Test
     public void testByte() throws Exception {
         runTest(Byte.valueOf((byte) 2), Byte.valueOf((byte) 3), Byte.class);
     }
 
+    @Test
     public void testCharacter() throws Exception {
         runTest('a', 'b', Character.class);
     }
 
+    @Test
     public void testLong() throws Exception {
         runTest(Long.valueOf(2l), Long.valueOf(3l), Long.class); 
-        
     }
     
+    @Test
     public void testDouble() throws Exception {
         runTest(Double.valueOf(2), Double.valueOf(3), Double.class); 
     }
 
+    @Test
     public void testFloat() throws Exception {
         runTest(Float.valueOf(2), Float.valueOf(3), Float.class); 
     }
-
 
     private void runTest( Object value, Object value2, Class<? extends Object> class1 ) {
         BasicTypeCellEditor editor;
@@ -94,5 +103,4 @@ public class BasicTypeCellEditorTest extends TestCase {
         }
     }
 
-    
 }

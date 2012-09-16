@@ -14,11 +14,13 @@
  */
 package net.refractions.udig.catalog.shp.tests;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.document.IDocument;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IDocument.Type;
@@ -32,13 +34,15 @@ import net.refractions.udig.document.model.WebHotlinkDocument;
 import net.refractions.udig.document.model.WebLinkedDocument;
 import net.refractions.udig.document.source.ShpDocFactory;
 
+import org.junit.Test;
+
 /**
  * Test case for {@link ShpDocFactory}.
  * 
  * @author Naz Chan
  */
 @SuppressWarnings("nls")
-public class ShpDocFactoryTest extends TestCase {
+public class ShpDocFactoryTest {
     
     private static final String LABEL = "label";
     private static final String DESCRIPTION = "description";
@@ -46,6 +50,7 @@ public class ShpDocFactoryTest extends TestCase {
     private static final String ATTRIBUTE_NAME = "name";
     private static final String CONFIG = "config";
     
+    @Test
     public void testCreateDocument() {
         
         final ShpDocFactory factory = new ShpDocFactory(null);
@@ -67,6 +72,7 @@ public class ShpDocFactoryTest extends TestCase {
         
     }
     
+    @Test
     public void testCreateHotlink() {
 
         final ShpDocFactory factory = new ShpDocFactory(null);

@@ -1,23 +1,27 @@
 package net.refractions.udig.tools.edit.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.geom.AffineTransform;
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LinearRing;
 
-public class SelectionSetTest extends TestCase {
+public class SelectionSetTest {
 
     private TestEditBlackboard blackboard;
     private TestEditBlackboardListener listener;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         blackboard=new TestEditBlackboard();
         EditGeom editGeom = blackboard.getGeoms().get(0);
         blackboard.addPoint(10,10,editGeom.getShell());
@@ -38,6 +42,7 @@ public class SelectionSetTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.SelectionSet.add(Point)'
      */
+    @Test
     public void testAdd() {
         assertFalse(blackboard.selectionAdd(Point.valueOf(100,15)));
         blackboard.selectionAdd(Point.valueOf(10,15));
@@ -50,6 +55,7 @@ public class SelectionSetTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.SelectionSet.addAll(Collection<? extends Point>)'
      */
+    @Test
     public void testAddAll() {
         HashSet<Point> set=new HashSet<Point>();
         set.add(Point.valueOf(10,15));
@@ -67,6 +73,7 @@ public class SelectionSetTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.SelectionSet.clear()'
      */
+    @Test
     public void testClear() {
         blackboard.selectionClear();
         assertEquals(0, listener.getAdded().size());
@@ -94,6 +101,7 @@ public class SelectionSetTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.SelectionSet.remove(Object)'
      */
+    @Test
     public void testRemove() {
         blackboard.selectionRemove(Point.valueOf(10,10));
         assertEquals(0, listener.getAdded().size());
@@ -104,6 +112,7 @@ public class SelectionSetTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.SelectionSet.removeAll(Collection<?>)'
      */
+    @Test
     public void testRemoveAll() {
         HashSet<Point> set=new HashSet<Point>();
         set.add(Point.valueOf(10,10));
@@ -121,6 +130,7 @@ public class SelectionSetTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.SelectionSet.retainAll(Collection<?>)'
      */
+    @Test
     public void testRetainAll() {
         HashSet<Point> set=new HashSet<Point>();
         set.add(Point.valueOf(10,10));
@@ -135,6 +145,7 @@ public class SelectionSetTest extends TestCase {
         
     }
     
+    @Test
     public void testMoveVertex() throws Exception {
         blackboard.moveCoords(10,10, 10,15);
         
@@ -144,6 +155,7 @@ public class SelectionSetTest extends TestCase {
         assertTrue(listener.getAdded().contains(Point.valueOf(10,15)));
     }
     
+    @Test
     public void testRemoveVertex() throws Exception {
         blackboard.removeCoordsAtPoint(10,10);
         
@@ -153,6 +165,7 @@ public class SelectionSetTest extends TestCase {
         assertTrue(listener.getRemoved().contains(Point.valueOf(10,10)));
     }
     
+    @Test
     public void testSetTranslationTransform() throws Exception {
         blackboard.setToScreenTransform(AffineTransform.getTranslateInstance(0,5));
         assertEquals(1, listener.getNum());
@@ -167,6 +180,7 @@ public class SelectionSetTest extends TestCase {
         assertTrue(listener.getRemoved().contains(Point.valueOf(40,10)));
     }
     
+    @Test
     public void testSetTranslationScale() throws Exception {
         blackboard.setToScreenTransform(AffineTransform.getScaleInstance(.5,.5));
         assertEquals(1, listener.getNum());
@@ -180,11 +194,13 @@ public class SelectionSetTest extends TestCase {
         assertTrue(listener.getRemoved().contains(Point.valueOf(30,10)));
         assertTrue(listener.getRemoved().contains(Point.valueOf(40,10)));
     }
+    
     /**
      * now case where 2 coords map to same point before set translation but 2 different ones after
      * both should be selected in this case.
      * @throws Exception
      */
+    @Test
     public void testSetTransformScale() throws Exception {
         GeometryFactory factory = new GeometryFactory();
         LinearRing linearRing = factory.createLinearRing(new Coordinate[]{
@@ -206,6 +222,7 @@ public class SelectionSetTest extends TestCase {
         assertTrue(blackboard.getSelection().contains(Point.valueOf(10,41)));
     }
     
+    @Test
     public void testSetGeometries() throws Exception {
         GeometryFactory factory = new GeometryFactory();
         int offset=0;

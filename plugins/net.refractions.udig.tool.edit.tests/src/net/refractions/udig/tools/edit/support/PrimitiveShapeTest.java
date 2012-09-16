@@ -1,8 +1,13 @@
 package net.refractions.udig.tools.edit.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Iterator;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -10,18 +15,19 @@ import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.impl.PackedCoordinateSequenceFactory;
 
-public class PrimitiveShapeTest extends TestCase {
+@SuppressWarnings("nls")
+public class PrimitiveShapeTest {
 
     private TestHandler handler;
     private EditBlackboard bb;
     private EditGeom geom;
     private PrimitiveShape shell;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         handler = new TestHandler();
         bb = handler.getEditBlackboard();
-        geom = bb.newGeom("newFeature", ShapeType.LINE); //$NON-NLS-1$
+        geom = bb.newGeom("newFeature", ShapeType.LINE);
 
         shell = geom.getShell();
         bb.addPoint(10, 10, shell);
@@ -36,6 +42,7 @@ public class PrimitiveShapeTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.getNumPoints()'
      */
+    @Test
     public void testGetNumPoints() {
         assertEquals(5, shell.getNumPoints());
     }
@@ -43,6 +50,7 @@ public class PrimitiveShapeTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.getPoint(int)'
      */
+    @Test
     public void testGetPoint() {
         assertEquals(Point.valueOf(10, 10), shell.getPoint(0));
         assertEquals(Point.valueOf(11, 10), shell.getPoint(1));
@@ -54,6 +62,7 @@ public class PrimitiveShapeTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.getNumCoords()'
      */
+    @Test
     public void testGetNumCoords() {
         assertEquals(7, shell.getNumCoords());
     }
@@ -61,6 +70,7 @@ public class PrimitiveShapeTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.getCoord(int)'
      */
+    @Test
     public void testGetCoord() {
         assertEquals(bb.toCoord(Point.valueOf(10, 10)), shell.getCoord(0));
         assertEquals(bb.toCoord(Point.valueOf(11, 10)), shell.getCoord(1));
@@ -70,9 +80,11 @@ public class PrimitiveShapeTest extends TestCase {
         assertEquals(bb.toCoord(Point.valueOf(4000, 8000)), shell.getCoord(5));
         assertEquals(bb.toCoord(Point.valueOf(4000, 8000)), shell.getCoord(6));
     }
+
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.iterator()'
      */
+    @Test
     public void testIterator() {
         Iterator<Point> iter = shell.iterator();
         assertTrue(iter.hasNext());
@@ -83,6 +95,7 @@ public class PrimitiveShapeTest extends TestCase {
         assertEquals(Point.valueOf(4000, 8000), iter.next());
     }
 
+    @Test
     public void testRemovePoint() throws Exception {
         bb.removeCoordsAtPoint(10, 10);
 
@@ -91,6 +104,7 @@ public class PrimitiveShapeTest extends TestCase {
         assertEquals(Point.valueOf(4000, 8000), shell.getPoint(2));
     }
 
+    @Test
     public void testRemoveCoordinate() throws Exception {
 
         bb.removeCoordinate(4, shell.getCoord(6), shell);
@@ -105,6 +119,7 @@ public class PrimitiveShapeTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.coordIterator()'
      */
+    @Test
     public void testCoordIterator() {
 
         Iterator<Coordinate> iter = shell.coordIterator();
@@ -121,6 +136,7 @@ public class PrimitiveShapeTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.coordArray()'
      */
+    @Test
     public void testCoordArray() {
         Coordinate[] array = shell.coordArray();
         assertEquals(bb.toCoord(Point.valueOf(10, 10)), array[0]);
@@ -135,6 +151,7 @@ public class PrimitiveShapeTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.hasVertex(Point)'
      */
+    @Test
     public void testHasVertexPoint() {
         assertTrue(shell.hasVertex(Point.valueOf(10, 10)));
         assertTrue(shell.hasVertex(Point.valueOf(11, 10)));
@@ -147,6 +164,7 @@ public class PrimitiveShapeTest extends TestCase {
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.hasVertex(Point,
      * LazyCoord)'
      */
+    @Test
     public void testHasVertexPointLazyCoord() {
 
     }
@@ -155,9 +173,10 @@ public class PrimitiveShapeTest extends TestCase {
      * Test method for
      * 'net.refractions.udig.tools.edit.support.PrimitiveShape.getClosestEdge(Point)'
      */
+    @Test
     public void testGetClosestEdge() {
         bb = new TestEditBlackboard();
-        geom = bb.newGeom("id", ShapeType.POLYGON); //$NON-NLS-1$
+        geom = bb.newGeom("id", ShapeType.POLYGON);
         bb.addPoint(10, 10, geom.getShell());
         bb.addPoint(20, 10, geom.getShell());
         bb.addPoint(20, 20, geom.getShell());
@@ -186,6 +205,7 @@ public class PrimitiveShapeTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.getBounds()'
      */
+    @Test
     public void testGetBounds() {
 
     }
@@ -194,6 +214,7 @@ public class PrimitiveShapeTest extends TestCase {
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.contains(Point,
      * boolean)'
      */
+    @Test
     public void testContainsPointBoolean() {
 
     }
@@ -201,6 +222,7 @@ public class PrimitiveShapeTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.getBounds2D()'
      */
+    @Test
     public void testGetBounds2D() {
 
     }
@@ -209,6 +231,7 @@ public class PrimitiveShapeTest extends TestCase {
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.contains(double,
      * double)'
      */
+    @Test
     public void testContainsDoubleDouble() {
 
     }
@@ -216,6 +239,7 @@ public class PrimitiveShapeTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.contains(Point2D)'
      */
+    @Test
     public void testContainsPoint2D() {
 
     }
@@ -224,6 +248,7 @@ public class PrimitiveShapeTest extends TestCase {
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.intersects(double,
      * double, double, double)'
      */
+    @Test
     public void testIntersectsDoubleDoubleDoubleDouble() {
 
     }
@@ -232,6 +257,7 @@ public class PrimitiveShapeTest extends TestCase {
      * Test method for
      * 'net.refractions.udig.tools.edit.support.PrimitiveShape.intersects(Rectangle2D)'
      */
+    @Test
     public void testIntersectsRectangle2D() {
 
     }
@@ -240,6 +266,7 @@ public class PrimitiveShapeTest extends TestCase {
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.contains(double,
      * double, double, double)'
      */
+    @Test
     public void testContainsDoubleDoubleDoubleDouble() {
 
     }
@@ -248,6 +275,7 @@ public class PrimitiveShapeTest extends TestCase {
      * Test method for
      * 'net.refractions.udig.tools.edit.support.PrimitiveShape.contains(Rectangle2D)'
      */
+    @Test
     public void testContainsRectangle2D() {
 
     }
@@ -256,6 +284,7 @@ public class PrimitiveShapeTest extends TestCase {
      * Test method for
      * 'net.refractions.udig.tools.edit.support.PrimitiveShape.getPathIterator(AffineTransform)'
      */
+    @Test
     public void testGetPathIteratorAffineTransform() {
 
     }
@@ -265,6 +294,7 @@ public class PrimitiveShapeTest extends TestCase {
      * 'net.refractions.udig.tools.edit.support.PrimitiveShape.getPathIterator(AffineTransform,
      * double)'
      */
+    @Test
     public void testGetPathIteratorAffineTransformDouble() {
 
     }
@@ -272,10 +302,12 @@ public class PrimitiveShapeTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.PrimitiveShape.getCoordsAt(int)'
      */
+    @Test
     public void testGetCoordsAt() {
 
     }
 
+    @Test
     public void testIntersectsPrimitiveShape() throws Exception {
         // Test point - point
         EditGeom geom1 = bb.newGeom("shp1", ShapeType.POINT);
@@ -453,6 +485,7 @@ public class PrimitiveShapeTest extends TestCase {
 
     }
     
+    @Test
     public void testMovePointOnGeometry() throws Exception {
     	GeometryFactory fac = new GeometryFactory();
     	

@@ -1,9 +1,12 @@
 package net.refractions.udig.tutorials.catalog.csv;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.net.URL;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.IGeoResource;
@@ -11,7 +14,6 @@ import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceFactory;
-import net.refractions.udig.tutorials.catalog.csv.CSVService;
 import net.refractions.udig.tutorials.catalog.csv.internal.Activator;
 
 import org.eclipse.core.runtime.FileLocator;
@@ -22,9 +24,11 @@ import org.osgi.framework.Bundle;
 import com.csvreader.CsvReader;
 import com.vividsolutions.jts.geom.Point;
 
-public class CSVServiceTest extends TestCase {
+@SuppressWarnings("nls")
+public class CSVServiceTest {
+    
     @Test
-    public void testCreateService() throws Exception {        
+    public void testCreateService() throws Exception {
         Activator instance = Activator.getDefault();
         assertNotNull("Run as a JUnit Plug-in Test", instance );
         
@@ -55,8 +59,6 @@ public class CSVServiceTest extends TestCase {
         
         List<IResolve> found = catalog.search("csv",null, null );
         assertEquals( 2, found.size() );
-        
-        CSVService csvService = (CSVService) service;
         
         //get all the resources from the service
         List<? extends IGeoResource> resources = service.resources(null);

@@ -9,12 +9,10 @@ import net.refractions.udig.catalog.tests.AbstractGeoResourceTest;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.junit.Before;
-import org.junit.Ignore;
 
 /**
  * @author dzwiers
  */
-@Ignore
 public class WFSGeoResourceTest extends AbstractGeoResourceTest {
 
     private IService service = null;
@@ -23,7 +21,7 @@ public class WFSGeoResourceTest extends AbstractGeoResourceTest {
     @Before
     public void setUp() throws Exception {
         WFSServiceExtension fac = new WFSServiceExtension();
-        URL url = new URL("http://www.refractions.net:8080/geoserver/wfs?"); //$NON-NLS-1$
+        URL url = new URL("http://demo.opengeo.org/geoserver/wfs?"); //$NON-NLS-1$
         service = fac.createService(url, fac.createParams(url));
         resource = service.resources((IProgressMonitor) null).get(0);
     }

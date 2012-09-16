@@ -14,12 +14,15 @@
  */
 package net.refractions.udig.tools.edit.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Dimension;
 import java.awt.geom.AffineTransform;
 import java.util.Arrays;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.TestViewportPane;
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.project.internal.Map;
@@ -40,6 +43,8 @@ import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureIterator;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
@@ -59,15 +64,14 @@ import com.vividsolutions.jts.geom.Polygon;
  * @author jones
  * @since 1.1.0
  */
-public class DifferenceFeatureCommandTest extends TestCase {
+public class DifferenceFeatureCommandTest {
 
     private SimpleFeature[] features;
     private Map map;
     private TestHandler handler;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         GeometryFactory fac=new GeometryFactory();
         LineString line = fac.createLineString(new Coordinate[]{
            new Coordinate(0,10),new Coordinate(10,10), new Coordinate(20,10) 
@@ -96,6 +100,7 @@ public class DifferenceFeatureCommandTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.commands.SplitFeatureCommand.run(IProgressMonitor)'
      */
+    @Test
     public void testDifferencePolygonOnce() throws Exception {
         handler.resetEditBlackboard();
         EditBlackboard bb = handler.getEditBlackboard();
@@ -141,6 +146,7 @@ public class DifferenceFeatureCommandTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.commands.SplitFeatureCommand.run(IProgressMonitor)'
      */
+    @Test
     public void testDifferenceMultiPolygon() throws Exception {
         handler.resetEditBlackboard();
         GeometryFactory fac=new GeometryFactory();
@@ -188,6 +194,7 @@ public class DifferenceFeatureCommandTest extends TestCase {
         assertEquals( 1, found );
     }
 
+    @Test
     public void testDiffOnMultipleGeoms() throws Exception {
         handler.resetEditBlackboard();
         GeometryFactory fac=new GeometryFactory();
@@ -253,6 +260,7 @@ public class DifferenceFeatureCommandTest extends TestCase {
         assertEquals( 1, found );
     }
     
+    @Test
     public void testMultiGeometry() throws Exception {
         handler.resetEditBlackboard();
         GeometryFactory fac=new GeometryFactory();
@@ -325,5 +333,4 @@ public class DifferenceFeatureCommandTest extends TestCase {
         assertEquals( 1, found );
     }
     
-        
 }

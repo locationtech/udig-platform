@@ -1,6 +1,6 @@
 package net.refractions.udig.tools.edit.commands;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
@@ -8,12 +8,14 @@ import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Test;
 
-public class SelectHoleCommandTest extends TestCase {
+public class SelectHoleCommandTest {
 
     /*
      * Test method for 'net.refractions.udig.tools.edit.commands.SelectHoleCommand.run(IProgressMonitor)'
      */
+    @Test
     public void testRun() throws Exception {
         TestHandler handler=new TestHandler();
         

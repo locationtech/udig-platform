@@ -14,6 +14,12 @@
  */
 package net.refractions.udig.catalog.shp.tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +30,7 @@ import net.refractions.udig.document.source.ShpAttachmentSource;
 import net.refractions.udig.document.source.ShpDocPropertyParser;
 
 import org.geotools.filter.identity.FeatureIdImpl;
+import org.junit.Test;
 
 /**
  * Test class for {@link ShpAttachmentSource}.
@@ -53,6 +60,7 @@ public class ShpAttachmentSourceTest extends ShpHotlinkSourceTest {
         
     }
     
+    @Test
     public void testGetDocuments() {
         
         List<IDocument> docs = attachSource.getDocuments(feature);
@@ -60,6 +68,7 @@ public class ShpAttachmentSourceTest extends ShpHotlinkSourceTest {
         
     }
     
+    @Test
     public void testAddRemove() {
         
         List<IDocument> docs = attachSource.getDocuments(feature);
@@ -90,6 +99,7 @@ public class ShpAttachmentSourceTest extends ShpHotlinkSourceTest {
         
     }
     
+    @Test
     public void testUpdate() {
         
         List<IDocument> docs = attachSource.getDocuments(feature);

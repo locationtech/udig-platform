@@ -7,12 +7,10 @@ import net.refractions.udig.catalog.internal.wfs.WFSServiceExtension;
 import net.refractions.udig.catalog.tests.AbstractServiceTest;
 
 import org.junit.Before;
-import org.junit.Ignore;
 
 /**
  * @author dzwiers
  */
-@Ignore
 public class WFSServiceTest extends AbstractServiceTest {
 
     private IService service = null;
@@ -20,7 +18,7 @@ public class WFSServiceTest extends AbstractServiceTest {
     @Before
     public void setUp() throws Exception {
         WFSServiceExtension fac = new WFSServiceExtension();
-        URL url = new URL("http://www.refractions.net:8080/geoserver/wfs?"); //$NON-NLS-1$
+        URL url = new URL("http://demo.opengeo.org/geoserver/wfs?"); //$NON-NLS-1$
         service = fac.createService(url, fac.createParams(url));
     }
     
@@ -39,7 +37,7 @@ public class WFSServiceTest extends AbstractServiceTest {
      * @see net.refractions.udig.catalog.tests.AbstractResolveTest#hasParent()
      */
     protected boolean hasParent() {
-        return true;
+        return false;
     }
 
     /*

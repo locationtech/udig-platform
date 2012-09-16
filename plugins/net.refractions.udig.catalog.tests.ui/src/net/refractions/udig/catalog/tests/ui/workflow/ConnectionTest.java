@@ -91,13 +91,13 @@ public class ConnectionTest {
 		driver.cancel();
 	}
 	
-	   @Test
+	@Test
 	public void testWorkbenchSelection() {
         init("net.refractions.udig.catalog.ui.WMS"); //$NON-NLS-1$
 
 		// create a workbench selection
 		try {
-			URL url = new URL("http://www.refractions.net:8080/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
+			URL url = new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
 			workflow.setContext(url);
 		} 
 		catch (Exception e) {
@@ -122,17 +122,14 @@ public class ConnectionTest {
 		assertFalse(a1.fail);
 		driver.cancel();
 	}
-	    @Test
+	
+	@Test
 	public void testConnection() {
         init("net.refractions.udig.catalog.ui.WMS"); //$NON-NLS-1$
 
 		//create a workbench selection
 		try {
-//			URL url = CatalogTestsUIPlugin.getDefault().getBundle()
-//				.getEntry("data/"); //$NON-NLS-1$
-//			url = FileLocator.toFileURL(new URL(url, "lakes.shp")); //$NON-NLS-1$
-//			
-			URL url = new URL("http://www.refractions.net:8080/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
+			URL url = new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
 			workflow.setContext(url);
 			
 		} 

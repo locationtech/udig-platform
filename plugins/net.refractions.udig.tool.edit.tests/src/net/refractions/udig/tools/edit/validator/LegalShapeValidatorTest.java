@@ -10,7 +10,6 @@ import net.refractions.udig.tools.edit.support.ShapeType;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class LegalShapeValidatorTest {
@@ -28,7 +27,6 @@ public class LegalShapeValidatorTest {
         validator=new LegalShapeValidator(); 
     }
 
-    @Ignore
     @Test
     public void testLine() throws Exception {
         EditGeom line = bb.newGeom("line", ShapeType.LINE); //$NON-NLS-1$
@@ -36,7 +34,7 @@ public class LegalShapeValidatorTest {
         
         bb.addPoint(10, 10, shell);
         bb.addPoint(20, 20, shell);
-        bb.addPoint(10, 10, shell);
+        bb.addPoint(20, 30, shell);
         bb.addPoint(5, 20, shell);
         bb.addPoint(10, 40, shell);
         
