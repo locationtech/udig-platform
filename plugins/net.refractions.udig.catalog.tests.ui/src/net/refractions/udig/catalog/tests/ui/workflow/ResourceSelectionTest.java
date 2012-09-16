@@ -25,7 +25,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ResourceSelectionTest {
@@ -79,12 +78,11 @@ public class ResourceSelectionTest {
 			shell.dispose();
 	}
     
-	@Ignore
 	@Test
 	public void testNormal() throws Exception {
 		//create a context
-			URL url = new URL("http://www.refractions.net:8080/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
-			workflow.setContext(url);
+		URL url = new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
+		workflow.setContext(url);
 			
 		Assertion a1 = new Assertion() {
 			@Override
@@ -108,11 +106,10 @@ public class ResourceSelectionTest {
 		driver.cancel();
 	}
 
-	@Ignore
     @Test
 	public void testNormalSelectedGeoResource() throws Exception {
 		//create a workbench selection
-		URL url = new URL("http://www.refractions.net:8080/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities#gd:swamps"); //$NON-NLS-1$
+		URL url = new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities#topp:tasmania_cities"); //$NON-NLS-1$
 		workflow.setContext(url);
 		
 		Assertion a1 = new Assertion() {

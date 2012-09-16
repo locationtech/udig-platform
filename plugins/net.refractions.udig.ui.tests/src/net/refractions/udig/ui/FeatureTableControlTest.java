@@ -1,10 +1,15 @@
 package net.refractions.udig.ui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.TestCase;
 import net.refractions.udig.core.StaticProvider;
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.internal.ui.UiPlugin;
@@ -33,13 +38,18 @@ import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
 import org.opengis.filter.identity.Identifier;
 
-public class FeatureTableControlTest extends TestCase {
+@SuppressWarnings({"nls", "deprecation"})
+public class FeatureTableControlTest {
 
     private Shell shell;
     private FeatureTableControl table;
@@ -49,18 +59,17 @@ public class FeatureTableControlTest extends TestCase {
     private SimpleFeature feature4;
     private FeatureCollection<SimpleFeatureType, SimpleFeature>  features;
 
-    @SuppressWarnings("unchecked")
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         Display display = Display.getCurrent();
         shell = new Shell(display.getActiveShell());
         shell.setLayout(new FillLayout());
 
-        SimpleFeatureType ft = DataUtilities.createType("type", "name:String,id:int"); //$NON-NLS-1$//$NON-NLS-2$
-        feature1 = SimpleFeatureBuilder.build(ft, new Object[]{"feature1", 1}, "feature1"); //$NON-NLS-1$ //$NON-NLS-2$
-        feature2 = SimpleFeatureBuilder.build(ft, new Object[]{"feature2", 2}, "feature2"); //$NON-NLS-1$ //$NON-NLS-2$
-        feature3 = SimpleFeatureBuilder.build(ft, new Object[]{"feature3", 3}, "feature3"); //$NON-NLS-1$ //$NON-NLS-2$
-        feature4 = SimpleFeatureBuilder.build(ft, new Object[]{"feature4", 4}, "feature4"); //$NON-NLS-1$ //$NON-NLS-2$
+        SimpleFeatureType ft = DataUtilities.createType("type", "name:String,id:int");
+        feature1 = SimpleFeatureBuilder.build(ft, new Object[]{"feature1", 1}, "feature1");
+        feature2 = SimpleFeatureBuilder.build(ft, new Object[]{"feature2", 2}, "feature2");
+        feature3 = SimpleFeatureBuilder.build(ft, new Object[]{"feature3", 3}, "feature3");
+        feature4 = SimpleFeatureBuilder.build(ft, new Object[]{"feature4", 4}, "feature4");
 
         features = FeatureCollections.newCollection();
 
@@ -82,11 +91,12 @@ public class FeatureTableControlTest extends TestCase {
 
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         shell.dispose();
     }
 
+    @Test
     public void testDeleteSelection() throws Exception{
         IStructuredSelection selection=new StructuredSelection(new SimpleFeature[]{feature1, feature3});
         table.setSelection(selection);
@@ -115,7 +125,7 @@ public class FeatureTableControlTest extends TestCase {
         assertTrue( table.getSelection().isEmpty());
     }
     
-    @SuppressWarnings("unchecked")
+    @Test
     public void testUpdateFeatureCollection() throws Exception {
         SimpleFeatureType ft = DataUtilities.createType("type", "name:String,id:int"); //$NON-NLS-1$//$NON-NLS-2$
         SimpleFeature f1 = SimpleFeatureBuilder.build(ft, new Object[]{"feature1", 10}, "feature1"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -145,7 +155,8 @@ public class FeatureTableControlTest extends TestCase {
         table.assertInternallyConsistent();
     }
     
-    public void XtestUpdate() throws Exception {
+    @Test
+    public void testUpdate() throws Exception {
 
         TableViewer viewer = (TableViewer) table.getViewer();
 
@@ -161,12 +172,13 @@ public class FeatureTableControlTest extends TestCase {
         assertEquals("newName", table.getViewer().getTable().getItem(0).getText(1)); //$NON-NLS-1$
     }
 
+    @Test
     public void testGetFeatures() {
         assertEquals(features, table.getFeatures());
     }
 
-    @SuppressWarnings("unchecked")
-    public void XtestSetFeatures() {
+    @Test
+    public void testSetFeatures() {
     	FeatureCollection<SimpleFeatureType, SimpleFeature> newFeatures = FeatureCollections.newCollection();
         newFeatures.add(feature1);
         table.setFeatures(newFeatures);
@@ -192,7 +204,8 @@ public class FeatureTableControlTest extends TestCase {
 
     }
 
-    public void XtestClear() {
+    @Test
+    public void testClear() {
         table.clear();
         while( Display.getCurrent().readAndDispatch() );
         Table t = table.getViewer().getTable();
@@ -201,6 +214,7 @@ public class FeatureTableControlTest extends TestCase {
         }
     }
 
+    @Test
     public void testMessage() {
         String string = "Test Message"; //$NON-NLS-1$
         table.message(string);
@@ -222,8 +236,9 @@ public class FeatureTableControlTest extends TestCase {
 
     }
 
-    @SuppressWarnings("unchecked")
-    public void XtestGetSelection() throws Exception {
+    @Ignore
+    @Test
+    public void testGetSelection() throws Exception {
 
         SimpleFeatureType featureType = feature1.getFeatureType();
         List<SimpleFeature> newFeatures = new ArrayList<SimpleFeature>();
@@ -313,7 +328,9 @@ public class FeatureTableControlTest extends TestCase {
         }, false);
     }
 
-    public void XtestSort() {
+    @Ignore
+    @Test
+    public void testSort() {
         TableColumn column = table.getViewer().getTable().getColumn(0);
         table.sort(new FIDComparator(SWT.DOWN), SWT.UP, column);
         while( Display.getCurrent().readAndDispatch() );
@@ -347,6 +364,8 @@ public class FeatureTableControlTest extends TestCase {
         }
     }
 
+    @Ignore
+    @Test
     public void s() throws Exception {
         selectFeature(3, true);
         table.promoteSelection();
@@ -366,7 +385,9 @@ public class FeatureTableControlTest extends TestCase {
         assertEquals(tree.getItem(2).getBackground(), selectedBackColor);
     }
 
-    public void XtestUserSelection() throws Exception {
+    @Ignore
+    @Test
+    public void testUserSelection() throws Exception {
 
         // test normal click
         doEventBasedSelection(1, 0, 1);

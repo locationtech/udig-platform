@@ -239,66 +239,70 @@ public class BasicWorkflowTest {
 		assertEquals(pipe.getCurrentState(),s4);
 	}
 	
-////	public void testStateFailureBlocking() {
-////		//test where one state craps out
-////		s4.run = false;
-////		
-////		Listener1 l = new Listener2() {
-////			@Override
-////			public void finished(State state) {
-////				super.finished(state);
-////			}
-////		};
-////		pipe.addListener(l);
-////	
-////		pipe.start(null);
-////		pipe.next(null);
-////		pipe.next(null);
-////		pipe.next(null);
-////		pipe.next(null);
-////		pipe.next(null);
-////		
-////		assertTrue(l.state1);
-////		assertTrue(l.state2);
-////		assertTrue(l.state3);
-////		assertTrue(!l.state4);
-////		assertTrue(!l.state5);
-////		assertTrue(!l.finished);
-////		assertTrue(!l.fail);
-////		assertEquals(i,4);
-////
-////		assertNotNull(pipe.getState(State1.class));
-////		assertNotNull(pipe.getState(State2.class));
-////		assertNotNull(pipe.getState(State3.class));
-////		assertNotNull(pipe.getState(State4.class));
-////		assertNull(pipe.getState(State5.class));
-////		
-////		assertTrue(pipe.getState(State1.class).ran);
-////		assertTrue(pipe.getState(State2.class).ran);
-////		assertTrue(pipe.getState(State3.class).ran);
-////		assertTrue(pipe.getState(State4.class).ran);
-////		
-////		assertEquals(pipe.getCurrentState(),s4);
-////	}
-//	
-////	public void testRun() {
-////		
-////		assertTrue(!pipe.isFinished());
-////		assertTrue(!pipe.isStarted());
-////		assertTrue(!pipe.getState(State1.class).ran);
-////		assertTrue(!pipe.getState(State4.class).ran);
-////		
-////		
-////		pipe.run(new DummyMonitor());
-////		
-////		assertTrue(pipe.isFinished());
-////		assertTrue(pipe.isStarted());
-////		assertTrue(pipe.getState(State1.class).ran);
-////		assertTrue(pipe.getState(State2.class).ran);
-////		assertTrue(pipe.getState(State3.class).ran);
-////		assertTrue(pipe.getState(State4.class).ran);
-////		
-////	}
+	@Ignore
+    @Test
+	public void testStateFailureBlocking() {
+		//test where one state craps out
+		s4.run = false;
+		
+		Listener1 l = new Listener2() {
+			@Override
+			public void finished(State state) {
+				super.finished(state);
+			}
+		};
+		pipe.addListener(l);
+	
+		pipe.start(null);
+		pipe.next(null);
+		pipe.next(null);
+		pipe.next(null);
+		pipe.next(null);
+		pipe.next(null);
+		
+		assertTrue(l.state1);
+		assertTrue(l.state2);
+		assertTrue(l.state3);
+		assertTrue(!l.state4);
+		assertTrue(!l.state5);
+		assertTrue(!l.finished);
+		assertTrue(!l.fail);
+		assertEquals(i,4);
+
+		assertNotNull(pipe.getState(State1.class));
+		assertNotNull(pipe.getState(State2.class));
+		assertNotNull(pipe.getState(State3.class));
+		assertNotNull(pipe.getState(State4.class));
+		assertNull(pipe.getState(State5.class));
+		
+		assertTrue(pipe.getState(State1.class).ran);
+		assertTrue(pipe.getState(State2.class).ran);
+		assertTrue(pipe.getState(State3.class).ran);
+		assertTrue(pipe.getState(State4.class).ran);
+		
+		assertEquals(pipe.getCurrentState(),s4);
+	}
+
+	@Ignore
+	@Test
+	public void testRun() {
+		
+		assertTrue(!pipe.isFinished());
+		assertTrue(!pipe.isStarted());
+		assertTrue(!pipe.getState(State1.class).ran);
+		assertTrue(!pipe.getState(State4.class).ran);
+		
+		
+		pipe.run(new DummyMonitor());
+		
+		assertTrue(pipe.isFinished());
+		assertTrue(pipe.isStarted());
+		assertTrue(pipe.getState(State1.class).ran);
+		assertTrue(pipe.getState(State2.class).ran);
+		assertTrue(pipe.getState(State3.class).ran);
+		assertTrue(pipe.getState(State4.class).ran);
+		
+	}
 	
 	class Listener1 implements Listener {
 

@@ -14,14 +14,15 @@
  */
 package net.refractions.udig.ui;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Collections;
-
-import junit.framework.TestCase;
 
 import org.eclipse.swt.SWT;
 import org.geotools.data.DataUtilities;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -30,11 +31,8 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * @author Jesse
  * @since 1.1.0
  */
-public class AttributeComparatorTest extends TestCase {
-
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
+@SuppressWarnings("nls")
+public class AttributeComparatorTest {
 
     /**
      * Test method for
@@ -42,8 +40,9 @@ public class AttributeComparatorTest extends TestCase {
      * 
      * @throws Throwable
      */
+    @Test
     public void testCompare() throws Throwable {
-       SimpleFeatureType type = DataUtilities.createType("type", "name:String,id:int"); //$NON-NLS-1$ //$NON-NLS-2$
+       SimpleFeatureType type = DataUtilities.createType("type", "name:String,id:int");
 
         ArrayList<SimpleFeature> features = new ArrayList<SimpleFeature>(2);
 

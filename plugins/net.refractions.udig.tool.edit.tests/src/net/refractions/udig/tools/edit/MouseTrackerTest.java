@@ -1,15 +1,18 @@
 package net.refractions.udig.tools.edit;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.Dimension;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.tests.support.TestMapDisplay;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.support.Point;
 import net.refractions.udig.tools.edit.support.TestHandler;
 import net.refractions.udig.tools.edit.support.TestMouseTracker;
 
-public class MouseTrackerTest extends TestCase {
+import org.junit.Test;
+
+public class MouseTrackerTest {
 
     final static int BUTTON1=MapMouseEvent.BUTTON1;
     final static int BUTTON2=MapMouseEvent.BUTTON2;
@@ -17,9 +20,11 @@ public class MouseTrackerTest extends TestCase {
     final static int SHIFT=MapMouseEvent.SHIFT_DOWN_MASK;
     final static int CTRL=MapMouseEvent.CTRL_DOWN_MASK;
     final static TestMapDisplay DISPLAY = new TestMapDisplay(new Dimension(500,500));
+    
     /*
      * Test method for 'net.refractions.udig.tools.edit.latest.MouseTracker.updateState(MapMouseEvent, EventType)'
      */
+    @Test
     public void testUpdateState() throws Exception {
         TestMouseTracker tracker=new TestMouseTracker(new TestHandler() );
 

@@ -1,16 +1,19 @@
 package net.refractions.udig.tools.edit.support;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class PointTest extends TestCase {
+public class PointTest {
 
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.Point.valueOf(int, int)'
      */
+    @Test
     public void testValueOf() {
         List<Point> points=new ArrayList<Point>();
         List<Integer> xs=new ArrayList<Integer>();

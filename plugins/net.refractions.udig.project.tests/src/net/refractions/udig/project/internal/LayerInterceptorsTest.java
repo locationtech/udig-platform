@@ -1,17 +1,22 @@
 package net.refractions.udig.project.internal;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import net.refractions.udig.project.tests.support.MapTests;
 
-public class LayerInterceptorsTest extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+public class LayerInterceptorsTest {
+
+    @Before
+    public void setUp() throws Exception {
         TestLayerAddedInterceptor.layerAdded=null;
         TestLayerRemovedInterceptor.layerRemoved=null;
         TestLayerCreatedInterceptor.layerCreated=null;
     }
 
+    @Test
     public void testLayerInterceptors() throws Exception {
         assertNull(TestLayerAddedInterceptor.layerAdded);
         assertNull(TestLayerRemovedInterceptor.layerRemoved);

@@ -30,12 +30,12 @@ public abstract class AbstractProjectTestCase {
      * Should be called first by overriding tests.
      */
     @Before
-    public void setUp() throws Exception {
+    public void abstractProjectTestCaseSetUp() throws Exception {
 		ProjectPlugin.getPlugin().setUndoableCommandWarning(false);
 	}
     
     @After
-    public void tearDown() throws Exception {
+    public void abstractProjectTestCaseTearDown() throws Exception {
         List<Project> projects = ProjectPlugin.getPlugin().getProjectRegistry().getProjects();
         List<Resource> resources=new ArrayList<Resource>();
         for( Project project : projects ) {

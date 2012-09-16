@@ -14,17 +14,19 @@
  */
 package net.refractions.udig.tools.edit.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import junit.framework.TestCase;
 
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -46,12 +48,14 @@ import com.vividsolutions.jts.io.WKTReader;
  * @author Jody Garnett
  * @since 1.1.0
  */
-public class DifferenceFeatureCommandQuickTest extends TestCase {
+@SuppressWarnings("nls")
+public class DifferenceFeatureCommandQuickTest {
 
 	/**
 	 * This test case is based on the experience of 
 	 * @throws Exception
 	 */
+    @Test
 	public void testDiffOnDonut() throws Exception {
         GeometryFactory geometryFactory = new GeometryFactory();
         WKTReader reader = new WKTReader( geometryFactory );
@@ -64,11 +68,11 @@ public class DifferenceFeatureCommandQuickTest extends TestCase {
         //2. hole
         Polygon hole = (Polygon) reader.read("POLYGON ((112 112, 118 112, 118 118, 112 118, 112 112))");
         
-        //add the two geometries to a FeatureCollection                
+        //add the two geometries to a FeatureCollection
         SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
         b.setName( "Test" );
         b.add( "location", Polygon.class );
-        SimpleFeatureType type = b.buildFeatureType();        
+        SimpleFeatureType type = b.buildFeatureType();
         SimpleFeature donutFeature = SimpleFeatureBuilder.build(type, new Object[]{donut}, "fid.1");
         SimpleFeature holeFeature = SimpleFeatureBuilder.build(type, new Object[]{hole}, "fid.2");
         FeatureCollection<SimpleFeatureType, SimpleFeature> fc = FeatureCollections.newCollection();
@@ -83,7 +87,7 @@ public class DifferenceFeatureCommandQuickTest extends TestCase {
         List<Geometry> geoms = new ArrayList<Geometry>();
         geoms.add(userDrawnPoly);
         
-        DifferenceFeatureCommand.runDifferenceOp(iterator, geoms);        
+        DifferenceFeatureCommand.runDifferenceOp(iterator, geoms);
         assertEquals(1, geoms.size());
 
         Geometry result = geoms.get(0);

@@ -1,9 +1,11 @@
 package net.refractions.udig.project.ui.internal.render.displayAdapter.impl;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener;
@@ -11,11 +13,15 @@ import net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListe
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
 
-public class EventJobTest extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class EventJobTest {
 
     private EventJob job;
     private TestListener l;
 
+    @Before
     public void setUp() {
         job=new EventJob();
         l = new TestListener();
@@ -23,9 +29,11 @@ public class EventJobTest extends TestCase {
         job.addMouseMotionListener(l);
         job.addMouseWheelListener(l);
     }
+    
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventJob.fire(int, Object)'
      */
+    @Test
     public void testFire() throws Exception {
         
         job.fire(EventJob.PRESSED, null);
@@ -50,6 +58,7 @@ public class EventJobTest extends TestCase {
         l.type.clear();
     }
     
+    @Test
     public void testClickTest1() throws Exception {
         job.fire(EventJob.PRESSED, null);
         job.fire(EventJob.MOVED, null);
@@ -59,6 +68,7 @@ public class EventJobTest extends TestCase {
         assertEquals(EventType.MOVED, l.type.get(1));
     }
     
+    @Test
     public void testDoubleClick() throws Exception {
         job.fire(EventJob.PRESSED, null);
         job.fire(EventJob.RELEASED, null);
@@ -130,6 +140,7 @@ public class EventJobTest extends TestCase {
         
     }
     
+    @Test
     public void testConcurrency() throws Exception {
         EventJob job=new EventJob();
         TestListener l=new TestListener();

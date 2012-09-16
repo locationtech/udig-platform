@@ -53,7 +53,6 @@ public class EditFeatureTest extends AbstractProjectTestCase {
         
     }
 
-    @Override
     @After
     public void tearDown() throws Exception {
         CatalogPlugin.getDefault().getLocalCatalog().remove(service);

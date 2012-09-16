@@ -6,11 +6,11 @@ package net.refractions.udig.ui.tests.support;
 import net.refractions.udig.ui.WaitCondition;
 
 import org.eclipse.swt.widgets.Display;
-import org.geotools.feature.IllegalAttributeException;
 import org.geotools.feature.SchemaException;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -26,6 +26,7 @@ import com.vividsolutions.jts.geom.Polygon;
  * 
  * @author jeichar
  */
+@SuppressWarnings("nls")
 public class UDIGTestUtil {
 	/**
 	 * The features created have a polygon geometry and have the SimpleFeatureType:
@@ -42,7 +43,7 @@ public class UDIGTestUtil {
 	 * @return array of features as described above.
 	 */
 	public static SimpleFeature[] createDefaultTestFeatures(String typename,
-			int numFeatures) throws SchemaException, IllegalAttributeException {
+			int numFeatures) throws SchemaException {
         
 		GeometryFactory factory = new GeometryFactory();
 		Polygon[] polys = new Polygon[numFeatures];
@@ -74,8 +75,7 @@ public class UDIGTestUtil {
 	 * If crs is null WGS84 will be used.
 	 */
 	public static SimpleFeature[] createTestFeatures(String typename,
-			Geometry[] geom, String[] attributeValue) throws SchemaException,
-			IllegalAttributeException {
+			Geometry[] geom, String[] attributeValue) throws SchemaException {
 		return createTestFeatures(typename, geom, attributeValue, null);
 	}
 
@@ -86,11 +86,9 @@ public class UDIGTestUtil {
 	 * <p>
 	 * If crs is null WGS84 will be used.
 	 */
-	@SuppressWarnings("deprecation") 
     public static SimpleFeature[] createTestFeatures(String typename,
 			Geometry[] geom2, String[] attributeValue2,
-			CoordinateReferenceSystem crs) throws SchemaException,
-			IllegalAttributeException {
+			CoordinateReferenceSystem crs) throws SchemaException {
         Geometry[] geom=geom2;
         String[] attributeValue=attributeValue2;
 		if (geom.length == 0) {
@@ -98,6 +96,9 @@ public class UDIGTestUtil {
 		}
 		if (attributeValue == null || attributeValue.length == 0) {
 			attributeValue = new String[1];
+		}
+		if (crs == null) {
+		    crs = DefaultGeographicCRS.WGS84;
 		}
 		SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
 		builder.setName("test");

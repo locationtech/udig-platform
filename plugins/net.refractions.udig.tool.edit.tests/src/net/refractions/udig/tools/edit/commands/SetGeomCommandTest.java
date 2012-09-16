@@ -18,10 +18,10 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.feature.FeatureIterator;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 
+@SuppressWarnings("nls")
 public class SetGeomCommandTest {
 
     private TestHandler handler;
@@ -81,13 +81,12 @@ public class SetGeomCommandTest {
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.SetGeomCommand.run(IProgressMonitor)'
      */
-    @Ignore
     @Test
     public void testRun() throws Exception {
         IEditManager editManager = handler.getContext().getEditManager();
         
         assertEquals("Does the ID match",feature.getID(), editManager.getEditFeature().getID());
-		assertEquals("Is the feature equal",feature, editManager.getEditFeature());
+		assertEquals("Is the feature equal",feature.getDefaultGeometry(), editManager.getEditFeature().getDefaultGeometry());
         assertEquals("Is the layer equal",layer, editManager.getEditLayer());
         
         SelectFeatureAsEditFeatureCommand command = new SelectFeatureAsEditFeatureCommand(handler, feature2, layer, Point.valueOf(10,10));
@@ -98,7 +97,7 @@ public class SetGeomCommandTest {
         assertEquals(EditState.MODIFYING, handler.getCurrentState());
         assertFalse(bb.getGeoms().contains(editGeom));
         assertFalse(bb.getGeoms().contains(editGeom2));
-        assertEquals(feature2, editManager.getEditFeature());
+        assertEquals(feature2.getDefaultGeometry(), editManager.getEditFeature().getDefaultGeometry());
         assertEquals( feature2.getID(), handler.getCurrentGeom().getFeatureIDRef().get());
 
         ((CommandManager)((Map)handler.getContext().getMap()).getCommandStack()).undo(false);
@@ -112,7 +111,7 @@ public class SetGeomCommandTest {
         assertEquals(2, bb.getGeoms().size());
         assertEquals( editGeom2.getFeatureIDRef().get(), handler.getCurrentGeom().getFeatureIDRef().get());
 
-        assertEquals(feature, editManager.getEditFeature());
+        assertEquals(feature.getDefaultGeometry(), editManager.getEditFeature().getDefaultGeometry());
         assertEquals(layer, editManager.getEditLayer());
     }
 

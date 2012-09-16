@@ -55,7 +55,6 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.IssuesManager.removeIssues(String)'
      */
-    @Ignore
     @Test
     public void testRemoveIssues() {
         IssuesManager m = new IssuesManager();
@@ -83,7 +82,6 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
         assertEquals(4, issueslist.size());
     }
 
-    @Ignore
     @Test
     public void testSetIssuesList() throws Exception {
         IssuesManager m = new IssuesManager();
@@ -122,7 +120,6 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
         assertFalse(removedListener.get());
     }
 
-    @Ignore
     @Test
     public void testListeners() throws Exception {
 
@@ -167,7 +164,6 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
 
     }
 
-    @Ignore
     @Test
     public void testDirtyEvents() throws Exception {
             IssuesManager m = new IssuesManager();
@@ -200,7 +196,6 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
                     .iterator().next());
     }
 
-    @Ignore
     @Test
     public void testSaveIssuesList() throws Exception {
         IssuesManager m = new IssuesManager();
@@ -243,7 +238,7 @@ public class IssuesManagerTest extends AbstractProjectUITestCase {
         assertEquals(createIssue.getId(), listener.saved.iterator().next().getId());
     }
 
-    @Ignore
+    @Ignore("fails in tycho")
     @Test
     public void testLoadedIssueThrowsException() throws Exception {
         final IIssuesList list = IIssuesManager.defaultInstance.getIssuesList();

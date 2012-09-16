@@ -1,6 +1,6 @@
 package net.refractions.udig.tools.edit.commands;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 import net.refractions.udig.project.command.CommandManager;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
@@ -9,6 +9,8 @@ import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -18,15 +20,14 @@ import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 
-public class AddGeomCommandTest extends TestCase {
+public class AddGeomCommandTest {
     private TestHandler handler;
     private EditBlackboard bb;
     private EditGeom editGeom;
     private PrimitiveShape hole;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         handler=new TestHandler();
         bb= handler.getEditBlackboard();
         editGeom = bb.getGeoms().get(0);
@@ -48,6 +49,7 @@ public class AddGeomCommandTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.commands.AddGeomCommand.run(IProgressMonitor)'
      */
+    @Test
     public void testRun() throws Exception {
         GeometryFactory factory = new GeometryFactory();
         MultiPolygon mp=factory.createMultiPolygon(new Polygon[]{createPolygon(factory, 0), createPolygon(factory, 10)});

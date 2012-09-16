@@ -14,9 +14,11 @@
  */
 package net.refractions.udig.catalog.document;
 
+import static org.junit.Assert.assertEquals;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import junit.framework.TestCase;
+
+import org.junit.Test;
 
 /**
  * Test class for {@link HotlinkDescriptor}.
@@ -24,7 +26,7 @@ import junit.framework.TestCase;
  * @author Naz Chan
  */
 @SuppressWarnings("nls")
-public class HotlinkDescriptorTest extends TestCase {
+public class HotlinkDescriptorTest {
 
     private static final String LABEL = "label";
     private static final String DESCRIPTION = "description";
@@ -38,6 +40,7 @@ public class HotlinkDescriptorTest extends TestCase {
     /**
      * Tests if the string definition is parsed correctly.
      */
+    @Test
     public void testFromString() {
 
         String descStr = String.format(FORMAT, NAME, TYPE.toString(), CONFIG, LABEL, DESCRIPTION);
@@ -69,6 +72,7 @@ public class HotlinkDescriptorTest extends TestCase {
     /**
      * Tests if the descriptor is encoded into a string correctly.
      */
+    @Test
     public void testToString() {
         
         String descStr = String.format(FORMAT, NAME, TYPE.toString(), CONFIG, LABEL, DESCRIPTION);

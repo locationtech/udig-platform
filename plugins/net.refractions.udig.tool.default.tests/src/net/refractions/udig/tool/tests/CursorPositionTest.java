@@ -1,16 +1,20 @@
 package net.refractions.udig.tool.tests;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import net.refractions.udig.tools.internal.CursorPosition;
 
 import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.junit.Test;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-public class CursorPositionTest extends TestCase {
+public class CursorPositionTest {
+    
+    @Test
 	public void testParseString() throws Exception {
 		Coordinate coord=CursorPosition.parse("124,88", DefaultGeographicCRS.WGS84); //$NON-NLS-1$
 		assertEquals(new Coordinate(124,88), coord);

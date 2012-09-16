@@ -6,7 +6,6 @@ import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class EventHandlerTest {
@@ -61,7 +60,6 @@ public class EventHandlerTest {
     /*
      * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseDown(Event)'
      */
-    @Ignore
     @Test
     public void testMouseDown() {
         Event e=new Event();

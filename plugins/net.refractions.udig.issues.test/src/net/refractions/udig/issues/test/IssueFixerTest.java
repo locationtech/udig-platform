@@ -12,7 +12,6 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.XMLMemento;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class IssueFixerTest extends AbstractProjectUITestCase {
@@ -57,7 +56,6 @@ public class IssueFixerTest extends AbstractProjectUITestCase {
         assertEquals(Resolution.RESOLVED, issue1.getResolution());
     }
     
-    @Ignore
     @Test
     public void testExtension() {
         fixerMemento.putString(DummyIssueFixer.KEY_FIXABLE, "TRUE"); //$NON-NLS-1$

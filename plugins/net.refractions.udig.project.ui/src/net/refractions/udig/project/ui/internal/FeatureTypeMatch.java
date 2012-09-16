@@ -198,7 +198,7 @@ public class FeatureTypeMatch {
             Name featureName = schema.getName();
             if (namespace != null) {
 
-                if (namespace.equals(featureName.getNamespaceURI())
+                if (namespace.compareTo(URI.create(featureName.getNamespaceURI())) == 0
                         && typeName.equals(featureName.getLocalPart())) {
                     return PERFECT;
                 }

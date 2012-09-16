@@ -32,7 +32,6 @@ import net.refractions.udig.tools.edit.support.TestEditBlackboard;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -72,7 +71,6 @@ public class MoveGeometryBehaviourTest {
      * 'net.refMapMouseEvent.BUTTON1ractions.udig.tools.edit.behaviour.MoveGeometryBehaviour.isValid(EditToolHandler,
      * MapMouseEvent, EventType)'
      */
-    @Ignore
     @Test
     public void testIsValid() {
         MapMouseEvent event = new MapMouseEvent(null, 100, 100, MapMouseEvent.ALT_DOWN_MASK
@@ -115,7 +113,6 @@ public class MoveGeometryBehaviourTest {
      * 'net.refractions.udig.tools.edit.behaviour.MoveVertexBehaviour.getCommand(EditToolHandler,
      * MapMouseEvent, EventType)'
      */
-    @Ignore
     @Test
     public void testGetCommand() {
 
@@ -166,7 +163,6 @@ public class MoveGeometryBehaviourTest {
         assertEquals(Point.valueOf(15, 5), hole.getPoint(4));
     }
 
-    @Ignore
     @Test
     public void testMoveDecimatedGeometry() throws Exception {
         Coordinate[] coords = new Coordinate[]{new Coordinate(-128.6898, 59.0493),
