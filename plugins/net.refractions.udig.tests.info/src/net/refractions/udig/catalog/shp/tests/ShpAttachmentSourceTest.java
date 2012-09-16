@@ -109,7 +109,7 @@ public class ShpAttachmentSourceTest extends AbstractShpDocTest {
         }
         return null;
     }
-    @Test
+    
     public void testGetDocuments() {
         
         List<IDocument> docs = attachSource.getDocuments(feature, monitor);

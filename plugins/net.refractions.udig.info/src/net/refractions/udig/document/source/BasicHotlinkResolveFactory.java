@@ -25,9 +25,6 @@ public class BasicHotlinkResolveFactory implements IResolveAdapterFactory {
 
     /**
      * {@link IGeoResource#getPersistentProperties()} key used to record hotlink descriptor list.
-     * <p>
-     * The value is stored as a definition consisting of:
-     * <code>attributeName:file,attributeName:link</code>
      */
     final static String HOTLINK = "hotlink"; //$NON-NLS-1$
 
@@ -42,13 +39,13 @@ public class BasicHotlinkResolveFactory implements IResolveAdapterFactory {
     }
 
     @Override
-    public Object adapt(IResolve resolve, Class<? extends Object> adapter, IProgressMonitor monitor)
+    public <T> T adapt(IResolve resolve, Class<T> adapter, IProgressMonitor monitor)
             throws IOException {
         if (resolve instanceof PostgisGeoResource2) {
             final PostgisGeoResource2 resource = (PostgisGeoResource2) resolve;
             if (adapter.isAssignableFrom(IHotlinkSource.class)) {
                 final IHotlinkSource source = new BasicHotlinkSource(resource);
-                return source;
+                return adapter.cast(source);
             }    
         }
         return null;

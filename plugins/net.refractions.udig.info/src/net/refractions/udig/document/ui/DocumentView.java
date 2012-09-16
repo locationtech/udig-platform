@@ -83,7 +83,6 @@ import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
@@ -656,8 +655,12 @@ public class DocumentView extends ViewPart {
 
         return false;
     }
-    
-    
+
+    void setGeoResourceInternal(IGeoResource geoResource) {
+        this.geoResource = geoResource;
+        this.resourceSelectionProvider.setSelection( geoResource );
+    }
+
     /**
      * Gets the document items from the current selection.
      * 
