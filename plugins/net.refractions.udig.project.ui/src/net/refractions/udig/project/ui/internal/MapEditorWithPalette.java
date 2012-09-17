@@ -1404,6 +1404,13 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                             if (element instanceof SimpleFeature) {
                                 SimpleFeature feature = (SimpleFeature) element;
                                 features.add(feature);
+                            } else if (element instanceof IAdaptable) {
+                                final IAdaptable adaptable = (IAdaptable) element;
+                                final Object featureObj = adaptable.getAdapter(SimpleFeature.class);
+                                if (featureObj != null && featureObj instanceof SimpleFeature) {
+                                    final SimpleFeature feature = (SimpleFeature) featureObj;
+                                    features.add(feature);
+                                }
                             }
                         }
                         if (features.size() == 0)
