@@ -24,6 +24,15 @@ Some layers and features support storing of documents as attachments. Attachment
 
 For features, specific attributes can be marked to reference a document, we call these *hotlinks*. Hotlinks that are not currently used will show up as "Unassigned".
 
+View Menu
+---------
+
+The following commands are available in the view menu:
+
+:guilabel:`Save As` - used to save an attachment as another file.
+
+:guilabel:`Properties` - used to open the Document properties page of the selected resource.
+
 Attach
 ------
 
@@ -65,6 +74,10 @@ The :guilabel:`Delete` button is used remove the selected attached or linked doc
 
 For attached files, a confirmation message will be shown as the file will be removed from disk.
 For linked files, the referenced file will not removed from disk, the reference is simply cleared.
+
+**Related reference**
+
+:doc:`Resource page`
 
 **Related tasks**
 

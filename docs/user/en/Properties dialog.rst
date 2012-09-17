@@ -21,6 +21,10 @@ The following property pages are in use:
 
 * :doc:`Tileset page`
 
+* :doc:`Service page`
+
+* :doc:`Resource page`
+
 
 Restore Defaults
 ----------------

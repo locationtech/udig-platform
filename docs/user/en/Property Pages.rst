@@ -8,6 +8,8 @@ Property Pages
    Projection page
    Summary page
    Tileset page
+   Service page
+   Resource page
 
 
 **Related reference**

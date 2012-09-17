@@ -40,3 +40,5 @@ A sample dataset is provided:
 **Related reference**
 
 :doc:`Document view`
+
+:doc:`Resource page`
