@@ -33,7 +33,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.actions.ActionDelegate;
 
 /**
- * Performs the open action from the file menu of uDig. It is responseible for creating new maps
+ * Performs the open action from the file menu of uDig. It is responsible for creating new maps
  * from selected resources.
  * 
  * @author rgould
