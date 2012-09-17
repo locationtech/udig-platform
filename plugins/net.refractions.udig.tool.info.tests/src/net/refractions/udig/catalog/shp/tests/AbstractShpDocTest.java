@@ -25,7 +25,7 @@ import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.document.model.AbstractLinkedDocument;
 
-import junit.framework.TestCase;
+import org.junit.Before;
 
 /**
  * Abstract test class for shape document tests.
@@ -33,7 +33,7 @@ import junit.framework.TestCase;
  * @author Naz Chan
  */
 @SuppressWarnings("nls")
-public abstract class AbstractShpDocTest extends TestCase {
+public abstract class AbstractShpDocTest {
 
     protected File file;
     protected URL url;
@@ -62,10 +62,8 @@ public abstract class AbstractShpDocTest extends TestCase {
     protected static final String LINK_ATTR = "LINK";
     protected static final String STATE_ATTR = "STATE";
     
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
+    @Before
+    public void setUp() throws Exception {
         final File directory = new File(DIRECTORY);
         
         file = new File(directory, SHAPEFILE);

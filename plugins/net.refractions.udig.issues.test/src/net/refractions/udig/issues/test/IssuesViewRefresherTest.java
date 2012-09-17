@@ -7,12 +7,10 @@ import net.refractions.udig.issues.internal.view.IssuesContentProvider;
 import net.refractions.udig.issues.internal.view.IssuesView;
 
 import org.eclipse.ui.PlatformUI;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class IssuesViewRefresherTest {
     
-    @Ignore
     @Test
     public void testRefresh() throws Exception {
         IssuesView view = (IssuesView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(IssueConstants.VIEW_ID);

@@ -1,6 +1,7 @@
 package net.refractions.udig.tools.edit.validator;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tool.edit.internal.Messages;
 import net.refractions.udig.tools.edit.EventType;
@@ -10,7 +11,10 @@ import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import net.refractions.udig.tools.edit.support.ShapeType;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
-public class PolygonCreationValidatorTest extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class PolygonCreationValidatorTest {
 
     private EditBlackboard bb;
     private EditGeom geom;
@@ -18,9 +22,8 @@ public class PolygonCreationValidatorTest extends TestCase {
     private ValidHoleValidator validator;
     private PrimitiveShape hole;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         handler=new TestHandler();
         bb=handler.getEditBlackboard();
         geom=bb.newGeom("id", ShapeType.POLYGON); //$NON-NLS-1$
@@ -37,6 +40,7 @@ public class PolygonCreationValidatorTest extends TestCase {
         handler.setCurrentShape(hole);
     }
     
+    @Test
     public void testStartingHoles() throws Exception {
 
         MapMouseEvent event=new MapMouseEvent(null, 10,10,MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
@@ -49,6 +53,7 @@ public class PolygonCreationValidatorTest extends TestCase {
         
     }
 
+    @Test
     public void testSelfIntersection() {
         bb.addPoint(10, 10, hole);
         bb.addPoint(20, 10, hole);
@@ -68,6 +73,7 @@ public class PolygonCreationValidatorTest extends TestCase {
         assertEquals(Messages.ValidHoleValidator_selfIntersection, validator.isValid(handler, event, EventType.RELEASED));
     }
     
+    @Test
     public void testOutSideOfShell() throws Exception {
 
         bb.addPoint(10, 10, hole);
@@ -78,6 +84,7 @@ public class PolygonCreationValidatorTest extends TestCase {
         assertEquals(Messages.ValidHoleValidator_outsideShell, validator.isValid(handler, event, EventType.RELEASED));
     }
     
+    @Test
     public void testInOtherHole() throws Exception {
 
         bb.addPoint(10, 10, hole);

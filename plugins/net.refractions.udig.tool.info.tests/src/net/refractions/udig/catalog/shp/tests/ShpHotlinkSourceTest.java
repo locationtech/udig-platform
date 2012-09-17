@@ -14,6 +14,11 @@
  */
 package net.refractions.udig.catalog.shp.tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -42,6 +47,7 @@ import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.identity.FeatureIdImpl;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 
@@ -106,11 +112,13 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
         return null;
     }
 
+    @Test
     public void testGetDescriptors() {
         final List<HotlinkDescriptor> descriptors = source.getHotlinkDescriptors();
         assertEquals("Descriptor count is not expected.", 3, descriptors.size());
     }
 
+    @Test
     public void testGetDocuments() {
 
         final List<IDocument> docs = source.getDocuments(feature);
@@ -132,6 +140,7 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
 
     }
 
+    @Test
     public void testSetAndClearFile() {
 
         source.setFile(feature, FILE_ATTR, file1);
@@ -150,6 +159,7 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
 
     }
 
+    @Test
     public void testSetAndClearWeb() {
 
         URL url = null;
@@ -174,6 +184,7 @@ public class ShpHotlinkSourceTest extends AbstractShpDocTest {
 
     }
 
+    @Test
     public void testSetAndClearAction() {
 
         final String action = "ACTION";

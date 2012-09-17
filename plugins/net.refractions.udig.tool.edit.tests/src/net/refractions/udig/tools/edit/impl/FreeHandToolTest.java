@@ -14,6 +14,7 @@
  */
 package net.refractions.udig.tools.edit.impl;
 
+import static org.junit.Assert.assertNull;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.impl.EditManagerImpl;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
@@ -22,6 +23,7 @@ import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.support.Point;
 
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -37,6 +39,8 @@ public class FreeHandToolTest extends AbstractToolTest {
     protected AbstractEditTool createTool() {
         return new FreeHandTool();
     }
+    
+    @Test
     public void testCommitAndStartNew() throws Exception {
         tool.setHandler(handler);
         tool.testinitAcceptBehaviours(handler.getAcceptBehaviours());

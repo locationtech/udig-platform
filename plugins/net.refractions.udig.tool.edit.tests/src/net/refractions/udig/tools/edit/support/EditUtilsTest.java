@@ -14,7 +14,12 @@
  */
 package net.refractions.udig.tools.edit.support;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
  * Tests EditUtils methods
@@ -22,11 +27,12 @@ import junit.framework.TestCase;
  * @author Jesse
  * @since 1.1.0
  */
-public class EditUtilsTest extends TestCase {
+public class EditUtilsTest {
 
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.EditUtils.intersectingLines(Point, Point, Point, Point)'
      */
+    @Test
     public void testIntersectingLines() {
         assertNull(EditUtils.instance.intersectingLines( Point.valueOf(0,0), Point.valueOf(10,10), 
                 Point.valueOf(20,20), Point.valueOf(30,30) ));
@@ -51,6 +57,7 @@ public class EditUtilsTest extends TestCase {
         assertEquals(Point.valueOf( 5,5), result );
     }
 
+    @Test
     public void testSelfIntersection() throws Exception {
         TestEditBlackboard bb=new TestEditBlackboard();
         EditGeom geom = bb.newGeom("id", null); //$NON-NLS-1$

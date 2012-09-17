@@ -1,17 +1,15 @@
 package net.refractions.udig.issues.test;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 import net.refractions.udig.issues.internal.datastore.FeatureTypeAttributeMapper;
 
 import org.geotools.data.DataUtilities;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-public class FeatureTypeAttributeMapperTest extends TestCase {
+public class FeatureTypeAttributeMapperTest {
 
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
+    @Test
     public void testStraightMappingWithExtraAtts() throws Exception {
         SimpleFeatureType featureType = DataUtilities.createType("IssuesFeatureType", //$NON-NLS-1$
                 "bounds:MultiPolygon," + //$NON-NLS-1$ 
@@ -39,6 +37,7 @@ public class FeatureTypeAttributeMapperTest extends TestCase {
         
     }
 
+    @Test
     public void testDifficultMapping() throws Exception {
         SimpleFeatureType featureType = DataUtilities.createType("IssuesFeatureType", //$NON-NLS-1$
                 "b:MultiPolygon," + //$NON-NLS-1$ 

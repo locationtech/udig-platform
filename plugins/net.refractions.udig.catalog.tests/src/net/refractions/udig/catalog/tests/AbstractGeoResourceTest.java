@@ -5,8 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
@@ -24,42 +22,17 @@ public abstract class AbstractGeoResourceTest extends AbstractResolveTest {
     protected boolean isLeaf() {
         return true;
     }
-    
-    protected IGeoResourceInfo getInfo(final IProgressMonitor monitor) {
-        final IGeoResource geoResource = getResolve();
-        
-        final Callable<IGeoResourceInfo> job = new Callable<IGeoResourceInfo>() {
-
-            @Override
-            public IGeoResourceInfo call() throws Exception {
-                return geoResource.getInfo(monitor);
-            }
-            
-        };
-        FutureTask<IGeoResourceInfo> task = new FutureTask<IGeoResourceInfo>(job);
-        Thread t = new Thread(task);
-        t.start();
-        IGeoResourceInfo info = null;
-        
-        try {
-            info = task.get();
-        } catch (InterruptedException e) {
-        } catch (ExecutionException e) {
-        }
-        
-        return info;
-    }
 
     @Test
     public void testInfo() throws IOException {
-        IGeoResourceInfo info = getInfo(null);
+        IGeoResourceInfo info = getInfo(getResolve(), null);
         assertNotNull("Info is required", info); //$NON-NLS-1$
     }
 
     @Test
     public void testInfoMonitor() throws IOException {
         FakeProgress monitor = new FakeProgress();
-        IGeoResourceInfo info = getInfo(monitor);
+        IGeoResourceInfo info = getInfo(getResolve(), monitor);
         assertNotNull("Info is required", info); //$NON-NLS-1$
     }
 
@@ -95,6 +68,20 @@ public abstract class AbstractGeoResourceTest extends AbstractResolveTest {
     public void testGetId() {
     	assertNotNull( getResolve().getIdentifier() );
         assertNotNull(getResolve().getIdentifier().getRef());
+    }
+ 
+    protected IGeoResourceInfo getInfo(final IGeoResource geoResource, final IProgressMonitor monitor)
+            throws IOException {
+        final Callable<IGeoResourceInfo> job = new Callable<IGeoResourceInfo>() {
+            
+            @Override
+            public IGeoResourceInfo call() throws Exception {
+                return geoResource.getInfo(monitor);
+            }
+            
+        };
+        
+        return retrieveInNewThread(job);
     }
 
 }

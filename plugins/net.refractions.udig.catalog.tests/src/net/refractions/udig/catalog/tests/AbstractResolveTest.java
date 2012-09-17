@@ -8,6 +8,9 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 import net.refractions.udig.catalog.IResolve;
 
@@ -155,6 +158,34 @@ public abstract class AbstractResolveTest {
     @Test(timeout = BLOCK)
     public void testID() {
         assertNotNull("Id is required for admission", getResolve().getIdentifier()); //$NON-NLS-1$
+    }
+
+    protected <T> T resolve(final IResolve resolve, final Class<T> adaptee, final IProgressMonitor monitor) throws IOException {
+        final Callable<T> job = new Callable<T>() {
+            
+            @Override
+            public T call() throws Exception {
+                return resolve.resolve(adaptee, monitor);
+            }
+            
+        };
+        
+        return retrieveInNewThread(job);
+    }
+
+    protected <T> T retrieveInNewThread(final Callable<T> job) {
+        FutureTask<T> task = new FutureTask<T>(job);
+        Thread t = new Thread(task);
+        t.start();
+        T info = null;
+        
+        try {
+            info = task.get();
+        } catch (InterruptedException e) {
+        } catch (ExecutionException e) {
+        }
+        
+        return info;
     }
 
 }

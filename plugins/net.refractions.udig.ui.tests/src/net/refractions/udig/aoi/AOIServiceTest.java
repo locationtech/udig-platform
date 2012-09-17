@@ -9,7 +9,7 @@ import net.refractions.udig.internal.aoi.AOIServiceFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-
+@SuppressWarnings("nls")
 public class AOIServiceTest {
 
 	private AOIServiceFactory aoiFactory = null;
@@ -28,7 +28,7 @@ public class AOIServiceTest {
 		}*/
 	}
 
-	@Test
+    @Test
 	public void testAllStrategy() {
         aOIService.setProxy(aOIService.findProxy("net.refractions.udig.ui.aoiAll"));
         String id = aOIService.getProxy().getId();

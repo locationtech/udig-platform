@@ -74,7 +74,7 @@ public abstract class IntegrityValidationOp implements IOp  {
             typeName = layer[i].getSchema().getName().getLocalPart();
             source = layer[i].getResource(FeatureSource.class, monitor);
             //map = dataStoreID:typeName
-            map.put(nameSpace.toString()+":"+typeName, source); //$NON-NLS-1$
+            map.put(nameSpace+":"+typeName, source); //$NON-NLS-1$
         }
         
         GenericValidationResults results = new GenericValidationResults();

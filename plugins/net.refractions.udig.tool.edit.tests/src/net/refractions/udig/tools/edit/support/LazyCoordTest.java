@@ -14,12 +14,13 @@
  */
 package net.refractions.udig.tools.edit.support;
 
-import java.awt.geom.AffineTransform;
+import static org.junit.Assert.assertEquals;
 
-import junit.framework.TestCase;
+import java.awt.geom.AffineTransform;
 
 import org.geotools.referencing.ReferencingFactoryFinder;
 import org.geotools.referencing.operation.matrix.GeneralMatrix;
+import org.junit.Test;
 import org.opengis.referencing.operation.MathTransform;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -29,13 +30,12 @@ import com.vividsolutions.jts.geom.Coordinate;
  * @author jones
  * @since 1.1.0
  */
-public class LazyCoordTest extends TestCase {
-
-
+public class LazyCoordTest {
     
     /*
      * Test method for 'net.refractions.udig.tools.edit.support.LazyCoord.get(Point)'
      */
+    @Test
     public void testGet() throws Exception{
         MathTransform layerTransform = ReferencingFactoryFinder.getMathTransformFactory(null).createAffineTransform(new GeneralMatrix(new AffineTransform()));
         EditBlackboard bb = new EditBlackboard(100,100, new AffineTransform(), layerTransform);

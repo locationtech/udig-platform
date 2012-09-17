@@ -23,7 +23,7 @@ import org.junit.Before;
 public abstract class AbstractProjectUITestCase extends AbstractProjectTestCase {
 
     @Before
-    public void setUp() throws Exception {
+    public void abstractProjectUITestCaseSetUp() throws Exception {
         final IIntroManager introManager = PlatformUI.getWorkbench().getIntroManager();
 		IIntroPart intro = introManager.getIntro();
 		if( intro!=null ){
@@ -39,8 +39,7 @@ public abstract class AbstractProjectUITestCase extends AbstractProjectTestCase 
     }
 
     @After
-    public void tearDown() throws Exception {
-
+    public void abstractProjectUITestCaseTearDown() throws Exception {
         UDIGTestUtil.inDisplayThreadWait(10000, new WaitCondition(){
 
             public boolean isTrue() {
@@ -69,7 +68,7 @@ public abstract class AbstractProjectUITestCase extends AbstractProjectTestCase 
             }
         }
         while ( !activePage.closeAllEditors(false)  ||  activePage.getEditorReferences().length!=0);         
-        super.tearDown();
+        //super.tearDown();
         
         editors = activePage.getEditorReferences();
         for( IEditorReference reference : editors ) {

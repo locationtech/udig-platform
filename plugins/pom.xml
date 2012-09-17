@@ -4,14 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>udig-tycho</artifactId>
         <groupId>net.refractions</groupId>
-        <version>1.3.2-SNAPSHOT</version>
+        <artifactId>udig-tycho</artifactId>
+        <version>1.3.3-SNAPSHOT</version>
     </parent>
 
-    <groupId>net.refractions</groupId>
     <artifactId>plugins</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <profiles>
@@ -24,8 +22,7 @@
                 <module>net.refractions.udig.project.tests</module>
                 <module>net.refractions.udig.project.tests.ui</module>
                 
-                <!-- jai not found probably my fault
-                <module>net.refractions.udig.catalog.tests.geotiff</module>-->
+                <module>net.refractions.udig.catalog.tests.geotiff</module>
                 <module>net.refractions.udig.catalog.tests.wfs</module>
                 <module>net.refractions.udig.catalog.tests.wms</module>
                 <module>net.refractions.udig.issues.test</module>
@@ -36,8 +33,7 @@
                 <module>net.refractions.udig.style.tests</module>
                 <module>net.refractions.udig.tests.catalog.wmt</module>
                 <module>net.refractions.udig.tool.default.tests</module>
-                <!-- has error dilog popup - Messages.GeometryCreationUtil_errorTitle
-                <module>net.refractions.udig.tool.edit.tests</module>-->
+                <module>net.refractions.udig.tool.edit.tests</module>
                 <module>net.refractions.udig.tool.select.tests</module>
                 <module>net.refractions.udig.validation.test</module>
                 

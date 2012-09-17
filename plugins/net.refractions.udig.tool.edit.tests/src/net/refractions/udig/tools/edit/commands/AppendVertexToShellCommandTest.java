@@ -1,8 +1,10 @@
 package net.refractions.udig.tools.edit.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.geom.AffineTransform;
 
-import junit.framework.TestCase;
 import net.refractions.udig.core.StaticBlockingProvider;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
 import net.refractions.udig.tools.edit.support.Point;
@@ -12,20 +14,23 @@ import net.refractions.udig.tools.edit.support.TestHandler;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.referencing.operation.MathTransform;
 
-public class AppendVertexToShellCommandTest extends TestCase {
+public class AppendVertexToShellCommandTest {
     AffineTransform transform=AffineTransform.getTranslateInstance(0,0);
     private MathTransform layerToWorld;
     
 
     java.awt.Point SCREEN=new java.awt.Point(500,500);
     
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         layerToWorld=CRS.findMathTransform(DefaultGeographicCRS.WGS84, DefaultGeographicCRS.WGS84);    
     }
     
+    @Test
     public void testRunAndUndo() throws Exception {
         EditBlackboard map=new EditBlackboard(SCREEN.x, SCREEN.y, transform, layerToWorld);
         
@@ -55,6 +60,7 @@ public class AppendVertexToShellCommandTest extends TestCase {
         assertEquals(0, map.getGeoms().get(0).getShell().getNumCoords());
     }
 
+    @Test
     public void testRunAndUndoWhenVerticesAreSnappedIntoOne() throws Exception {
         EditBlackboard map=new EditBlackboard(SCREEN.x, SCREEN.y, transform, layerToWorld);
         

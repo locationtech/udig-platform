@@ -1,20 +1,26 @@
 package net.refractions.udig.ui;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+import org.junit.Before;
+import org.junit.Test;
 
-public class ShutdownTaskListTest extends TestCase {
+public class ShutdownTaskListTest {
 
     private ShutdownTaskList list;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         list = new ShutdownTaskList();
     }
 
+    @Test
     public void testPostShutdown() {
         final boolean[] ran = new boolean[1];
         ran[0] = false;
@@ -75,6 +81,7 @@ public class ShutdownTaskListTest extends TestCase {
 
     }
 
+    @Test
     public void testPreShutdown() {
         final boolean[] ran = new boolean[1];
         ran[0] = false;

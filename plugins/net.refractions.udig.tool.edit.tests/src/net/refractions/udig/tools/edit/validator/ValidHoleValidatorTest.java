@@ -1,6 +1,7 @@
 package net.refractions.udig.tools.edit.validator;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tool.edit.internal.Messages;
 import net.refractions.udig.tools.edit.EventType;
@@ -10,8 +11,11 @@ import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import net.refractions.udig.tools.edit.support.ShapeType;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
+import org.junit.Before;
+import org.junit.Test;
 
-public class ValidHoleValidatorTest extends TestCase {
+
+public class ValidHoleValidatorTest {
 
     private EditBlackboard bb;
     private EditGeom geom;
@@ -19,9 +23,8 @@ public class ValidHoleValidatorTest extends TestCase {
     private PolygonCreationValidator validator;
     private PrimitiveShape shell;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         handler=new TestHandler();
         bb=handler.getEditBlackboard();
         geom=bb.newGeom("id", ShapeType.POLYGON); //$NON-NLS-1$
@@ -32,6 +35,7 @@ public class ValidHoleValidatorTest extends TestCase {
         handler.setCurrentShape(shell);
     }
     
+    @Test
     public void testStartingPolygon() throws Exception {
 
         MapMouseEvent event=new MapMouseEvent(null, 10,10,MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.BUTTON1);
@@ -49,6 +53,7 @@ public class ValidHoleValidatorTest extends TestCase {
         
     }
 
+    @Test
     public void testSelfIntersection() {
         bb.addPoint(10, 10, shell);
         bb.addPoint(20, 10, shell);
