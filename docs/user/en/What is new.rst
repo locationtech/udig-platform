@@ -109,3 +109,16 @@ application and show you the step that is being described.
 .. |image0| image:: /images/what_is_new/PaletteSettings.jpg
 .. |image1| image:: /images/what_is_new/PanToolOptions.jpg
 .. |image2| image:: /images/what_is_new/uDigCheatsheet.jpg
+
+Documents
+=========
+
+We now support assigning documents to resources and features:
+
+-  Attach support files\*
+-  Link websites or files from the filesystem\*
+-  Set attributes as *hotlinks* and store links to files, websites or set actions on the attribute's value
+
+\*Supported on the resource and/or feature level
+
+For more information, check out the Tasks section on :doc:`Working with Documents`.
