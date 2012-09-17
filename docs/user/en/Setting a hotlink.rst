@@ -10,12 +10,9 @@ To set a hotlink attribute:
 #. Press the :guilabel:`Edit...` button, a dialog will be provided to input details
 #. Press the :guilabel:`Commit` button to write this change out as the hotlink is stored in the assigned attribute
 
-**Note:** For `Action` hotlinks, the marker '{0}' should be used in the action string for replacement with the attribute's value.
-
 A sample dataset is provided:
 
 - Try out **australia.shp**
-- File, Web and Action hotlinks are already defined
 
 **Related tasks**
 

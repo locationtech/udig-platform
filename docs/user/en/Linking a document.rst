@@ -20,7 +20,6 @@ To link a document to a feature:
 A sample dataset is provided:
 
 - Try out **australia.shp**
-- File, Web and Action hotlinks are already defined
 
 **Related tasks**
 

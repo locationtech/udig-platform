@@ -27,10 +27,11 @@ To mark attributes as hotlinks:
    * Use the :guilabel:`Edit...` to update an existing hotlink definition
    * Use the :guilabel:`Remove` to remove an attribute as a hotlink
    
+**Note:** For `Action` hotlinks, the marker '{0}' should be used in the action string for replacement with the attribute's value.
+   
 A sample dataset is provided:
 
 - Try out **australia.shp**
-- File, Web and Action hotlinks are already defined
 
 **Related tasks**
 
