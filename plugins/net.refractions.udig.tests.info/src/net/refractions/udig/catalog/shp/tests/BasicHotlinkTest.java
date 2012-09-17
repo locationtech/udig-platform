@@ -1,6 +1,8 @@
 package net.refractions.udig.catalog.shp.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.Serializable;
@@ -9,16 +11,14 @@ import java.util.List;
 import java.util.Map;
 
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolveAdapterFactory;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ServiceExtension;
 import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IHotlinkSource;
 import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 import net.refractions.udig.catalog.internal.shp.ShpServiceExtension;
 import net.refractions.udig.document.source.BasicHotlinkDescriptorParser;
-import net.refractions.udig.document.source.BasicHotlinkResolveFactory;
+import net.refractions.udig.document.source.BasicHotlinkSource;
 import net.refractions.udig.tool.info.tests.Activator;
 
 import org.eclipse.core.runtime.FileLocator;
@@ -81,11 +81,14 @@ public class BasicHotlinkTest {
 
     @Test
     public void testBasicResolveAdaptorFactory() throws Exception {
-        IResolveAdapterFactory adaptorFactory = new BasicHotlinkResolveFactory();
-        assertTrue(adaptorFactory.canAdapt(resource, IHotlinkSource.class));
+        
+        // IResolveAdapterFactory adaptorFactory = new BasicHotlinkResolveFactory();
+        // assertTrue(adaptorFactory.canAdapt(resource, IHotlinkSource.class));
+        //
+        // IHotlinkSource hotlink = (IHotlinkSource) adaptorFactory.adapt(resource,
+        // IHotlinkSource.class, new NullProgressMonitor());
 
-        IHotlinkSource hotlink = (IHotlinkSource) adaptorFactory.adapt(resource,
-                IHotlinkSource.class, new NullProgressMonitor());
+        final BasicHotlinkSource hotlink = new BasicHotlinkSource(resource);
         assertNotNull(hotlink);
 
         List<HotlinkDescriptor> list = hotlink.getHotlinkDescriptors(null, new NullProgressMonitor());

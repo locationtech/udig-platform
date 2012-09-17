@@ -179,7 +179,7 @@ public class BasicHotlinkSource extends AbstractDocumentSource implements IHotli
         final AbstractHotlinkDocument doc = (AbstractHotlinkDocument) getDocument(feature,
                 attributeName, monitor);
         final String encodedValue = encodeInfo(doc.getContentType(), value);
-        doc.setInfo(encodedValue);
+        doc.setInfo(value);
         feature.setAttribute(attributeName, encodedValue);
         return true;
     }
