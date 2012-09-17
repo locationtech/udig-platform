@@ -1,11 +1,12 @@
 package net.refractions.udig.ui;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.TestCase;
 import net.refractions.udig.core.internal.FeatureUtils;
 
 import org.eclipse.swt.SWT;
@@ -13,6 +14,8 @@ import org.geotools.data.DataUtilities;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -23,7 +26,8 @@ import org.opengis.filter.identity.Identifier;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
-public class SelectionComparatorTest extends TestCase {
+@SuppressWarnings("nls")
+public class SelectionComparatorTest {
 
     private SimpleFeatureType type;
     private ArrayList<SimpleFeature> features;
@@ -33,21 +37,17 @@ public class SelectionComparatorTest extends TestCase {
     private SimpleFeature feature4;
     private FilterFactory ff;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         GeometryFactory fac = new GeometryFactory();
-        type = DataUtilities.createType("type", "geom:Point,name:String,id:int"); //$NON-NLS-1$ //$NON-NLS-2$
+        type = DataUtilities.createType("type", "geom:Point,name:String,id:int");
 
         features = new ArrayList<SimpleFeature>(2);
 
-        feature1 = SimpleFeatureBuilder.build(type, new Object[]{fac.createPoint(new Coordinate(10, 10)), "name1", //$NON-NLS-1$
-                1}, "ID1"); //$NON-NLS-1$
-        feature2 = SimpleFeatureBuilder.build(type, new Object[]{fac.createPoint(new Coordinate(10, 10)), "name2", //$NON-NLS-1$
-                2}, "ID2"); //$NON-NLS-1$
-        feature3 = SimpleFeatureBuilder.build(type, new Object[]{fac.createPoint(new Coordinate(10, 10)), "name3", //$NON-NLS-1$
-                3}, "ID3"); //$NON-NLS-1$
-        feature4 = SimpleFeatureBuilder.build(type, new Object[]{fac.createPoint(new Coordinate(10, 10)), "name4", //$NON-NLS-1$
-                4}, "ID4"); //$NON-NLS-1$
+        feature1 = SimpleFeatureBuilder.build(type, new Object[]{fac.createPoint(new Coordinate(10, 10)), "name1", 1}, "ID1");
+        feature2 = SimpleFeatureBuilder.build(type, new Object[]{fac.createPoint(new Coordinate(10, 10)), "name2", 2}, "ID2");
+        feature3 = SimpleFeatureBuilder.build(type, new Object[]{fac.createPoint(new Coordinate(10, 10)), "name3", 3}, "ID3");
+        feature4 = SimpleFeatureBuilder.build(type, new Object[]{fac.createPoint(new Coordinate(10, 10)), "name4", 4}, "ID4");
 
         features.add(feature1);
         features.add(feature2);
@@ -57,8 +57,8 @@ public class SelectionComparatorTest extends TestCase {
         ff = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
     }
 
+    @Test
     public void testCompare() throws Exception{
-      
         
         Filter fidFilter=ff.id(FeatureUtils.stringToId(ff, "ID3")); //$NON-NLS-1$
         Collections.sort(features, new SelectionComparator(fidFilter, SWT.UP));
@@ -76,10 +76,11 @@ public class SelectionComparatorTest extends TestCase {
         assertEquals( feature3, features.get(3));
     }
     
+    @Test
     public void testCompareWithSubComparator() throws Exception{
         Set<Identifier> fids = new HashSet<Identifier>();
         fids.add(ff.featureId("ID3"));
-        Id fidFilter=ff.id(fids); //$NON-NLS-1$
+        Id fidFilter=ff.id(fids);
         Collections.sort(features, new SelectionComparator(fidFilter, SWT.UP, new FIDComparator(SWT.UP)));
         
         assertEquals( feature3, features.get(0));

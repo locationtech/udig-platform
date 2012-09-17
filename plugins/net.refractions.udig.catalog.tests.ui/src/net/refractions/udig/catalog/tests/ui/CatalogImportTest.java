@@ -22,7 +22,6 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class CatalogImportTest {
@@ -34,7 +33,6 @@ public class CatalogImportTest {
 		catalogImport = new CatalogImport();
 	}
 	
-	@Ignore
     @Test
 	public void testNormal() throws Exception{
 			Object context = getContext();
@@ -104,7 +102,7 @@ public class CatalogImportTest {
 	}
 	
 	Object getContext() throws Exception {
-		return new URL("http://www.refractions.net:8080/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
+		return new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
 	}
 	
 	void assertServiceType(IService service) {

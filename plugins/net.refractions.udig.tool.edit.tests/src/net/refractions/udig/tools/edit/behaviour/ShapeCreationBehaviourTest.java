@@ -14,11 +14,16 @@
  */
 package net.refractions.udig.tools.edit.behaviour;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Rectangle;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.CommandManager;
 import net.refractions.udig.project.internal.EditManager;
@@ -38,6 +43,7 @@ import net.refractions.udig.ui.WaitCondition;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import org.geotools.data.FeatureSource;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -48,8 +54,9 @@ import com.vividsolutions.jts.geom.Polygon;
  * @author jones
  * @since 1.1.0
  */
-public class ShapeCreationBehaviourTest extends TestCase {
+public class ShapeCreationBehaviourTest {
 
+    @Test
     public void testIsValid() throws Exception {
         TestHandler handler=new TestHandler();
         
@@ -106,6 +113,7 @@ public class ShapeCreationBehaviourTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.ShapeCreationBehaviour.getCommand(EditToolHandler, MapMouseEvent, EventType)'
      */
+    @Test
     public void testRectangleShape() throws Exception {
         final TestHandler handler=new TestHandler();
         ILayer layer = handler.getContext().getMapLayers().get(0);
@@ -173,6 +181,7 @@ public class ShapeCreationBehaviourTest extends TestCase {
         
     }
 
+    @Test
     public void testDonut() throws Exception {
         TestHandler handler=new TestHandler();
         

@@ -1,6 +1,5 @@
 package net.refractions.udig.ui;
 
-import org.junit.Ignore;
 
 /**
  * 
@@ -9,8 +8,6 @@ import org.junit.Ignore;
  * @author Jesse
  * @since 1.1.0
  */
-
-@Ignore
 public class TestDropDestination {
 
 }

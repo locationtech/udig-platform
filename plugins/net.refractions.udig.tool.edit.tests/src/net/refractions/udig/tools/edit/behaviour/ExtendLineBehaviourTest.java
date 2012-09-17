@@ -14,7 +14,9 @@
  */
 package net.refractions.udig.tools.edit.behaviour;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.EditState;
 import net.refractions.udig.tools.edit.EventType;
@@ -22,23 +24,19 @@ import net.refractions.udig.tools.edit.support.EditGeom;
 import net.refractions.udig.tools.edit.support.Point;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
+import org.junit.Test;
+
 /**
  * Extend a line test
  * @author jones
  * @since 1.1.0
  */
-public class ExtendLineBehaviourTest extends TestCase {
-
-    /*
-     * @see TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
+public class ExtendLineBehaviourTest {
 
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.ExtendLineBehaviour.isValid(EditToolHandler, MapMouseEvent, EventType)'
      */
+    @Test
     public void testIsValid() throws Exception {
         TestHandler handler=new TestHandler();
         handler.getTestEditBlackboard().util.setVertexRadius(4);
@@ -101,6 +99,7 @@ public class ExtendLineBehaviourTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.ExtendLineBehaviour.getCommand(EditToolHandler, MapMouseEvent, EventType)'
      */
+    @Test
     public void testGetCommand() throws Exception {
         TestHandler handler=new TestHandler();
         handler.getTestEditBlackboard().util.setVertexRadius(4);

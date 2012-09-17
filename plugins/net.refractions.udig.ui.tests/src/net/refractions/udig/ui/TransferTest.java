@@ -1,6 +1,6 @@
 package net.refractions.udig.ui;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertSame;
 import net.refractions.udig.internal.ui.UDigByteAndLocalTransfer;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Display;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.referencing.CRS;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
@@ -17,7 +18,9 @@ import org.opengis.filter.spatial.BBOX;
 import org.opengis.geometry.BoundingBox;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-public class TransferTest extends TestCase {
+public class TransferTest {
+    
+    @Test
     public void testFeatureTransfering() throws Exception {
         Display display=Display.getCurrent();
         Clipboard cp=new Clipboard(display);
@@ -30,6 +33,8 @@ public class TransferTest extends TestCase {
 //        Geometry defaultGeometry = features[0].getDefaultGeometry();
 //        assertTrue(defaultGeometry.equalsExact(contents.getDefaultGeometry()));
     }
+    
+    @Test
     public void testGeometryTransfering() throws Exception {
         Display display=Display.getCurrent();
         Clipboard cp=new Clipboard(display);
@@ -43,6 +48,7 @@ public class TransferTest extends TestCase {
 //        assertTrue(defaultGeometry.equalsExact(contents));
     }
 
+    @Test
     public void testSelectionTransfering() throws Exception{
         Display display=Display.getCurrent();
         Clipboard cp=new Clipboard(display);

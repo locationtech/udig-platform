@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Display;
 import org.junit.Ignore;
 import org.junit.Test;
 
+@SuppressWarnings("nls")
 public class PathToPathIteratorAdapterTest {
     GeneralPath gp=new GeneralPath();
     Path p=new Path(Display.getCurrent());
@@ -22,7 +23,7 @@ public class PathToPathIteratorAdapterTest {
     	case PathIterator.SEG_MOVETO:
     		return "SEG_MOVETO";
     	case PathIterator.SEG_CLOSE:
-    		return "SEG_CLOSE";    		
+    		return "SEG_CLOSE";
     	case PathIterator.SEG_CUBICTO:
     		return "SEG_CUBICTO";
     	case PathIterator.SEG_LINETO:
@@ -57,7 +58,7 @@ public class PathToPathIteratorAdapterTest {
             assertEquals(toName(expectedSegment), toName(actualSegement));
             
             for( int j = 0; j < actual.length; j++ ) {
-                assertEquals(expected[j], actual[j]);
+                assertEquals(expected[j], actual[j], 0);
             }
             i.next();
             pi.next();
@@ -77,7 +78,7 @@ public class PathToPathIteratorAdapterTest {
                     pi.currentSegment(actual));
             
             for( int j = 0; j < actual.length; j++ ) {
-                assertEquals(expected[j], actual[j]);
+                assertEquals(expected[j], actual[j], 0);
             }
             i.next();
             pi.next();

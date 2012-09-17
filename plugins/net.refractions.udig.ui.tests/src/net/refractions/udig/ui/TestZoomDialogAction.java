@@ -7,9 +7,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.actions.ActionDelegate;
-import org.junit.Ignore;
 
-@Ignore
+@SuppressWarnings("nls")
 public class TestZoomDialogAction extends ActionDelegate implements IWorkbenchWindowActionDelegate {
 
     public void init( IWorkbenchWindow window ) {

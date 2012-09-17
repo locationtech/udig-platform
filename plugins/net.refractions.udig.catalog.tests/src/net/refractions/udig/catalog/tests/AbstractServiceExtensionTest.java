@@ -1,14 +1,19 @@
 package net.refractions.udig.catalog.tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.io.Serializable;
 import java.net.URL;
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ServiceExtension;
 
-public abstract class AbstractServiceExtensionTest extends TestCase {
+import org.junit.Test;
+
+public abstract class AbstractServiceExtensionTest {
 	private static final long BLOCK = 150;
 
 	/**
@@ -27,46 +32,43 @@ public abstract class AbstractServiceExtensionTest extends TestCase {
 	 * @return
 	 */
 	public abstract Map<String, Serializable> getExpectedParams();
+	
+	@Test(timeout = BLOCK)
 	public void testCreateParams() throws Exception {
-		long start=System.currentTimeMillis();
 		Map<String, Serializable> params = getServiceExtension().createParams(getTestURL());
-		assertTrue("Took too long, shouldn't be blocking", start+BLOCK>=System.currentTimeMillis()); //$NON-NLS-1$
 		assertEquals(getExpectedParams(), params);
 	}
 	
+	@Test(timeout = BLOCK)
 	public void testCreateParamsNullURL() throws Exception {
-		long start=System.currentTimeMillis();
 		Map<String, Serializable> params = getServiceExtension().createParams(null);
-		assertTrue("Took too long, shouldn't be blocking", start+BLOCK>=System.currentTimeMillis()); //$NON-NLS-1$
 		assertNull( params );
 	}
 	
+	@Test(timeout = BLOCK)
 	public void testCreateParamsCrazyURL() throws Exception {
 		URL url=new URL("http://erk.bom"); //$NON-NLS-1$
-		long start=System.currentTimeMillis();
 		Map<String, Serializable> params = getServiceExtension().createParams(url);
-		assertTrue("Took too long, shouldn't be blocking", start+BLOCK>=System.currentTimeMillis()); //$NON-NLS-1$
 		assertNull( params );
 	}
 	
+	@Test(timeout = BLOCK)
 	public void testCreateService() throws Exception {
 		Map<String, Serializable> params = getServiceExtension().createParams(getTestURL());
-		long start=System.currentTimeMillis();
 		IService service = getServiceExtension().createService(getTestURL(), params);
-		assertTrue("Took too long, shouldn't be blocking", start+BLOCK>=System.currentTimeMillis()); //$NON-NLS-1$
 		assertNotNull(service);
-	}	
+	}
+	
+	@Test(timeout = BLOCK)
 	public void testCreateServiceNullId() throws Exception {
 		Map<String, Serializable> params = getServiceExtension().createParams(getTestURL());
-		long start=System.currentTimeMillis();
 		IService service = getServiceExtension().createService(null, params);
-		assertTrue("Took too long, shouldn't be blocking", start+BLOCK>=System.currentTimeMillis()); //$NON-NLS-1$
 		assertNotNull(service);
-	}	
+	}
+	
+	@Test(timeout = BLOCK)
 	public void testCreateServiceNullParams() throws Exception {
-		long start=System.currentTimeMillis();
 		IService service = getServiceExtension().createService(getTestURL(), null);
-		assertTrue("Took too long, shouldn't be blocking", start+BLOCK>=System.currentTimeMillis()); //$NON-NLS-1$
 		assertNotNull(service);
-	}	
+	}
 }

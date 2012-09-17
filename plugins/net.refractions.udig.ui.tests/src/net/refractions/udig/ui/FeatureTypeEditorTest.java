@@ -1,9 +1,13 @@
 package net.refractions.udig.ui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.ui.internal.Messages;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
@@ -24,6 +28,10 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -31,7 +39,7 @@ import org.opengis.feature.type.AttributeDescriptor;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 
-public class FeatureTypeEditorTest extends TestCase {
+public class FeatureTypeEditorTest {
 
     private SimpleFeature[] features;
     private SimpleFeatureType featureType;
@@ -39,12 +47,10 @@ public class FeatureTypeEditorTest extends TestCase {
     private Dialog dialog;
     private String featureTypeName = "FeatureTypeEditorFeatures"; //$NON-NLS-1$
     
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         features = UDIGTestUtil.createDefaultTestFeatures(featureTypeName, 1); 
         featureType = features[0].getFeatureType();
-        if( true ){
-            return;
-        }
         dialog = new Dialog(Display.getCurrent().getActiveShell()){
             SimpleFeatureTypeBuilder builder=null;
             @Override
@@ -88,16 +94,13 @@ public class FeatureTypeEditorTest extends TestCase {
         }, true);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         if( dialog != null ){
             dialog.close();
         }
     }
-    public void testPlaceholder(){
-        
-    }
+    
     public void labels() throws Exception {
 
         assertTrue(dialog.getShell().isVisible());
@@ -113,7 +116,9 @@ public class FeatureTypeEditorTest extends TestCase {
         assertEquals("String", items[1].getText(1)); //$NON-NLS-1$
     }
 
-    public void XtestCellModifierGetValue() throws Exception {
+    @Ignore
+    @Test
+    public void testCellModifierGetValue() throws Exception {
         TreeViewer testingGetViewer = editor.testingGetViewer();
         testingGetViewer.editElement(featureType.getDescriptor(0), 0);
         testingGetViewer.cancelEditing();
@@ -140,7 +145,9 @@ public class FeatureTypeEditorTest extends TestCase {
         assertEquals(stringindex, cellModifier.getValue(featureType.getDescriptor(1), "1")); //$NON-NLS-1$ 
     }
 
-    public void XtestCellModifierModify() throws Exception {
+    @Ignore
+    @Test
+    public void testCellModifierModify() throws Exception {
         TreeViewer testingGetViewer = editor.testingGetViewer();
 
         ICellModifier cellModifier = testingGetViewer.getCellModifier();
@@ -166,13 +173,15 @@ public class FeatureTypeEditorTest extends TestCase {
 		return attributeType;
 	}
 
-    public void XtestGetCreateAttributeAction() throws Exception {
+    @Ignore
+    @Test
+    public void testGetCreateAttributeAction() throws Exception {
         IAction action = editor.getCreateAttributeAction();
 
         assertNotNull( action.getId() );
         action.runWithEvent(new Event());
 
-        SimpleFeatureTypeBuilder builder = (SimpleFeatureTypeBuilder) editor.testingGetViewer().getInput();
+        editor.testingGetViewer().getInput();
         assertEquals(
                 Messages.FeatureTypeEditor_newAttributeTypeDefaultName + 0, getAttributeDescriptor(2).getName()); 
         assertEquals(String.class, getAttributeDescriptor(2).getType());
@@ -187,7 +196,9 @@ public class FeatureTypeEditorTest extends TestCase {
 
     }
 
-    public void XtestSetFeatureType() throws Exception {
+    @Ignore
+    @Test
+    public void testSetFeatureType() throws Exception {
         editor.setFeatureType(null);
 
         SimpleFeatureTypeBuilder builder = (SimpleFeatureTypeBuilder) editor.testingGetViewer().getInput();
@@ -205,7 +216,9 @@ public class FeatureTypeEditorTest extends TestCase {
         labels();
     }
 
-    public void XtestGetDeleteAction() throws Exception {
+    @Ignore
+    @Test
+    public void testGetDeleteAction() throws Exception {
         IAction action = editor.getDeleteAction();
 
         assertNotNull( action.getId() );
@@ -238,7 +251,9 @@ public class FeatureTypeEditorTest extends TestCase {
 
     }
     
-    public void XtestCreateLabel() throws Exception {
+    @Ignore
+    @Test
+    public void testCreateLabel() throws Exception {
         SimpleFeatureTypeBuilder builder = (SimpleFeatureTypeBuilder) editor.testingGetViewer().getInput();
         
         Text text=editor.testingGetNameText();
@@ -262,7 +277,9 @@ public class FeatureTypeEditorTest extends TestCase {
         assertEquals(new Point(0,text.getText().length()), text.getSelection());
     }
     
-    public void XtestCloseOpenDialog() throws Exception {
+    @Ignore
+    @Test
+    public void testCloseOpenDialog() throws Exception {
         dialog.close();
         dialog.open();
         labels();

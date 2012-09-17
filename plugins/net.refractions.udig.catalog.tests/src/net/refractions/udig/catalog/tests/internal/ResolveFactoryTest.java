@@ -1,16 +1,15 @@
 package net.refractions.udig.catalog.tests.internal;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import net.refractions.udig.catalog.tests.DummyService;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Test;
 
-public class ResolveFactoryTest extends TestCase {
+public class ResolveFactoryTest {
 
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-    
+    @Test
     public void testResolve() throws Exception {
         DummyService service=new DummyService();
         assertTrue(service.canResolve(ResolvedTo.class));

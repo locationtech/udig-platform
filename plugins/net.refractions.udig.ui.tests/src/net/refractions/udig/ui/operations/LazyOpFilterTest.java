@@ -14,9 +14,15 @@
  */
 package net.refractions.udig.ui.operations;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import net.refractions.udig.ui.WaitCondition;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * TODO Purpose of 
@@ -26,12 +32,9 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
  * @author Jesse
  * @since 1.1.0
  */
-public class LazyOpFilterTest extends TestCase {
+public class LazyOpFilterTest {
 
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
+    @Test
     public void testTrueFalse() throws Exception {
 
         final boolean[] value=new boolean[1];
@@ -62,6 +65,7 @@ public class LazyOpFilterTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.ui.operations.LazyOpFilter#accept(java.lang.Object)}.
      */
+    @Test
     public void testAcceptWithCachingNoBlocking() {
         CacheNoBlock filter=new CacheNoBlock(false);
         final boolean[] value=new boolean[1];
@@ -92,7 +96,9 @@ public class LazyOpFilterTest extends TestCase {
         assertTrue(lazy.accept(string));
     }
 
-    public void XtestAcceptWithNoCachingNoBlocking() {
+    @Ignore
+    @Test
+    public void testAcceptWithNoCachingNoBlocking() {
         NoCacheNoBlock filter=new NoCacheNoBlock(false);
         final boolean[] value=new boolean[1];
         value[0]=false;
@@ -130,6 +136,7 @@ public class LazyOpFilterTest extends TestCase {
         
     }
 
+    @Test
     public void testAcceptWithNoCachingBlocking() throws Exception {
         NoCacheBlock filter=new NoCacheBlock(false);
         final boolean[] value=new boolean[2];
@@ -194,7 +201,7 @@ public class LazyOpFilterTest extends TestCase {
         assertTrue(value[0]);
     }
 
-
+    @Test
     public void testAcceptWithCachingBlocking() throws Exception {
         CacheBlock filter=new CacheBlock(false);
         final boolean[] value=new boolean[2];
@@ -256,6 +263,7 @@ public class LazyOpFilterTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.ui.operations.LazyOpFilter#addListener(net.refractions.udig.ui.operations.IOpFilterListener)}.
      */
+    @Test
     public void testUnsupportedMethods() {
         LazyOpFilter f=new LazyOpFilter(null, new CacheBlock(false));
         try{
@@ -294,6 +302,7 @@ public class LazyOpFilterTest extends TestCase {
         }
     }
 
+    @Test
     public void testDisable() throws Exception {
         CacheNoBlock filter=new CacheNoBlock(false);
         final boolean[] value=new boolean[1];

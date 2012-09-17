@@ -1,5 +1,9 @@
 package net.refractions.udig;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -8,21 +12,23 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import junit.framework.TestCase;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.UDIGDisplaySafeLock;
 import net.refractions.udig.ui.WaitCondition;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.swt.widgets.Display;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
-public class UDIGDisplaySafeLockTest extends TestCase {
+public class UDIGDisplaySafeLockTest {
 
     int WAIT_LENGTH = 10000;
     private UDIGDisplaySafeLock lock;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         lock = new UDIGDisplaySafeLock();
     }
 
@@ -30,6 +36,7 @@ public class UDIGDisplaySafeLockTest extends TestCase {
         NO_LOCK, THREAD_HAS_LOCK, DISPLAY_WAITING_FOR_LOCK, THREAD_RELEASED_LOCK, DISPLAY_HAS_LOCK, THREAD_WAITING_FOR_LOCK
     }
 
+    @Test
     public void testLock() throws Throwable {
         final Thread displayThread = Thread.currentThread();
         final Set<State> states = new HashSet<State>();
@@ -160,6 +167,7 @@ public class UDIGDisplaySafeLockTest extends TestCase {
 
     }
 
+    @Test
     public void testUnlockOrder() throws Exception {
 
         final boolean[] canQuit = new boolean[1];
@@ -232,6 +240,7 @@ public class UDIGDisplaySafeLockTest extends TestCase {
 
     }
 
+    @Test
     public void testTryLock() throws Exception {
         assertTrue(lock.tryLock());
         
@@ -254,6 +263,7 @@ public class UDIGDisplaySafeLockTest extends TestCase {
         }, true);
     }
 
+    @Test
     public void testTryLockTimout() throws Throwable {
         assertTrue(lock.tryLock(100, TimeUnit.MICROSECONDS));
         
@@ -301,6 +311,7 @@ public class UDIGDisplaySafeLockTest extends TestCase {
         
     }
 
+    @Test
     public void testReentrance() throws Exception {
         final Thread current = Thread.currentThread();
         Thread t = new Thread(){
@@ -346,6 +357,7 @@ public class UDIGDisplaySafeLockTest extends TestCase {
 
     }
 
+    @Test
     public void testWaitQueueLength() throws Exception {
         final Condition condition = lock.newCondition();
         assertEquals(0, lock.getWaitQueueLength(condition));
@@ -393,6 +405,8 @@ public class UDIGDisplaySafeLockTest extends TestCase {
 
         assertFalse(lock.hasWaiters(condition));
     }
+    
+    @Test
     public void testLockInterruptibly() throws Exception {
         final boolean[] interrupted = new boolean[1];
         final boolean[] isLocked = new boolean[1];
@@ -433,6 +447,8 @@ public class UDIGDisplaySafeLockTest extends TestCase {
         assertTrue(interrupted[0]);
         lock.unlock();
     }
+    
+    @Test
     public void testConditionWithDisplay() throws Exception {
         lock.lock();
         try {
@@ -455,7 +471,10 @@ public class UDIGDisplaySafeLockTest extends TestCase {
             lock.unlock();
         }
     }
-    public void XtestSignalAll() throws Exception {
+    
+    @Ignore("fails in tycho")
+    @Test
+    public void testSignalAll() throws Exception {
             final Condition condition = lock.newCondition();
             final Exception[] exception=new Exception[1];
             final boolean[] awake=new boolean[2];
@@ -524,6 +543,7 @@ public class UDIGDisplaySafeLockTest extends TestCase {
      *
      * @throws Exception
      */
+    @Test
     public void testLockSignalLockUnlockUnlock() throws Exception {
         final Display display=Display.getCurrent();
         final Set<State> state=new CopyOnWriteArraySet<State>();

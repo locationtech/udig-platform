@@ -101,7 +101,7 @@ public class MapMouseEvent {
         this.y = y;
         this.button = button;
         this.buttons=buttons;
-        this.modifiers=modifiers;
+        this.modifiers=modifiers & SWT.MODIFIER_MASK;
         timestamp=System.currentTimeMillis();
     }
 
@@ -164,13 +164,7 @@ public class MapMouseEvent {
      * @return Returns true if a keyboard modifier is down.
      */
     public boolean modifiersDown() {
-        return isModifierDown(MOD1_DOWN_MASK) 
-                || isModifierDown(MOD2_DOWN_MASK)
-                || isModifierDown(MOD3_DOWN_MASK)
-                || isModifierDown(MOD4_DOWN_MASK)
-                || isModifierDown(ALT_DOWN_MASK)
-                || isModifierDown(CTRL_DOWN_MASK)
-                || isModifierDown(SHIFT_DOWN_MASK);
+        return modifiers != 0;
     }
 
     /**

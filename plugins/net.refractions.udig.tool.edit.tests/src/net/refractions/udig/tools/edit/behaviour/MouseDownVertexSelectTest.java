@@ -1,16 +1,21 @@
 package net.refractions.udig.tools.edit.behaviour;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.support.Point;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
-public class MouseDownVertexSelectTest extends TestCase {
+import org.junit.Test;
+
+public class MouseDownVertexSelectTest {
 
     /*
      * Test method for 'net.refractions.udig.tools.edit.mode.VertexSelectorMode.isValid(EditToolHandler, MapMouseEvent, EventType)'
      */
+    @Test
     public void testIsValid() throws Exception {
         SelectVertexOnMouseDownBehaviour mode=new SelectVertexOnMouseDownBehaviour();
         final int none=MapMouseEvent.NONE;
@@ -48,6 +53,7 @@ public class MouseDownVertexSelectTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.mode.VertexSelectorMode.run(EditToolHandler, MapMouseEvent, EventType)'
      */
+    @Test
     public void testRun() throws Exception {
         SelectVertexOnMouseDownBehaviour mode=new SelectVertexOnMouseDownBehaviour();
 
