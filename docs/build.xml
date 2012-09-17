@@ -74,13 +74,13 @@
         </antcall>
     </target>
 	
-	<target name="deploy-clean">
+	<target name="help-clean">
 		<delete includeemptydirs="true">
             <fileset dir="${basedir}/../plugins/net.refractions.udig.help/EN" includes="**/*"/>
         </delete>
 	</target>
 	
-	<target name="deploy" depends="user-help">
+	<target name="help-deploy" depends="user-help">
 		<description>Deploy docs.zip and toc.xml to net.refractions.udig.help</description>
 		<copy file="${basedir}/user/toc.xml" todir="${basedir}/../plugins/net.refractions.udig.help"/>
         <copy todir="${basedir}/../plugins/net.refractions.udig.help/EN">
