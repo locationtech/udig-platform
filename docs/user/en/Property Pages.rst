@@ -2,7 +2,7 @@ Property Pages
 ##############
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    
    Interaction Properties page
    Projection page
@@ -10,8 +10,6 @@ Property Pages
    Tileset page
    Service page
    Resource page
-   Resource Information page
-   Resource Document page
 
 
 **Related reference**

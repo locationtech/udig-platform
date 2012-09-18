@@ -7,6 +7,12 @@ The Resource properties page shows general information and settings about the se
    :align: center
    :alt: 
 
+.. toctree::
+   :hidden:
+      
+   Resource Information page
+   Resource Document page
+
 Resource Details
 ================
 
@@ -16,7 +22,6 @@ Resource Details
 **Related reference**
 
 :doc:`Resource Information page`
-
 :doc:`Resource Document page`
 
 **Related concepts**
