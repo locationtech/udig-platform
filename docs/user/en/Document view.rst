@@ -22,7 +22,7 @@ Within each folder several kinds of information are displayed:
 
 Some layers and features support storing of documents as attachments. Attachments are copied into the application and managed along with the resource.
 
-For features, specific attributes can be marked to reference a document, we call these *hotlinks*. Hotlinks that are not currently set will show up as "Unassigned".
+For features, specific attributes can be marked as a *hotlink* to reference a document. Hotlinks that are not currently set will show up as "Unassigned".
 
 View Menu
 ---------
@@ -140,7 +140,7 @@ Fig. Edit website hotlink dialog
    :align: left
    :figwidth: 100%
 
-Fig. Edit action hotlink dialog
+   Edit action hotlink dialog
    
 - :guilabel:`Type` - used to display the type of hotlink.
 - :guilabel:`Value` - used to set the attribute value.
@@ -156,7 +156,22 @@ Open
 
 The :guilabel:`Open` button is used to open the selected document.
 
-The document is opened using the default system application.
+* File: Opened using the default system application
+* Link: Opened using your web browser
+* Action: Opened as defined by the action.
+  
+  * Action referencing ``notepad {0}`` opens in notepad
+  * Action resulting in a web links opened in the system browser
+  * Action resulting in a file link opens in default system application
+  
+  The :guilabel:`Open Action` dialog is used if more than one hotlink action is defined
+  for an attribute.
+  
+  .. figure:: /images/document_view/OpenActionDialog.png
+     :align: left
+     :figwidth: 100%
+     
+     Open Action Dialog
 
 Save As
 -------

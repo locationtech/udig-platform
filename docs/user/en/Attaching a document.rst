@@ -1,20 +1,6 @@
 Attaching a document
 ####################
 
-To load documents related to a layer:
--------------------------------------
-
-#. Open the :doc:`Document view`
-#. Select a layer in the :doc:`Layers view`
-#. The list of documents associated with this layer will be shown in the view
-
-To load documents related to a feature:
----------------------------------------
-
-#. Open the :doc:`Document view`
-#. Select a feature using the :guilabel:`Feature Selection` tool
-#. The list of documents associated with this feature will be shown in the view 
-
 To attach a document to a layer or feature:
 -------------------------------------------
 

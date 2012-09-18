@@ -65,7 +65,7 @@
 <p><img alt="web_logo" src="_images/link_doc_obj.png" /> - Web Document</p>
 <p><img alt="action_logo" src="_images/action_doc_obj.png" /> - Action Document</p>
 <p>Some layers and features support storing of documents as attachments. Attachments are copied into the application and managed along with the resource.</p>
-<p>For features, specific attributes can be marked to reference a document, we call these <em>hotlinks</em>. Hotlinks that are not currently set will show up as &#8220;Unassigned&#8221;.</p>
+<p>For features, specific attributes can be marked as a <em>hotlink</em> to reference a document. Hotlinks that are not currently set will show up as &#8220;Unassigned&#8221;.</p>
 </div>
 <div class="section" id="view-menu">
 <h2>View Menu<a class="headerlink" href="#view-menu" title="Permalink to this headline">¶</a></h2>
@@ -168,8 +168,8 @@
 </ul>
 <div class="figure align-left" style="width: 100%">
 <img alt="_images/EditActionHotlink.png" src="_images/EditActionHotlink.png" />
+<p class="caption">Edit action hotlink dialog</p>
 </div>
-<p>Fig. Edit action hotlink dialog</p>
 <ul class="simple">
 <li><em class="guilabel">Type</em> - used to display the type of hotlink.</li>
 <li><em class="guilabel">Value</em> - used to set the attribute value.</li>
@@ -184,7 +184,25 @@
 <div class="section" id="open">
 <h2>Open<a class="headerlink" href="#open" title="Permalink to this headline">¶</a></h2>
 <p>The <em class="guilabel">Open</em> button is used to open the selected document.</p>
-<p>The document is opened using the default system application.</p>
+<ul>
+<li><p class="first">File: Opened using the default system application</p>
+</li>
+<li><p class="first">Link: Opened using your web browser</p>
+</li>
+<li><p class="first">Action: Opened as defined by the action.</p>
+<ul class="simple">
+<li>Action referencing <tt class="docutils literal"><span class="pre">notepad</span> <span class="pre">{0}</span></tt> opens in notepad</li>
+<li>Action resulting in a web links opened in the system browser</li>
+<li>Action resulting in a file link opens in default system application</li>
+</ul>
+<p>The <em class="guilabel">Open Action</em> dialog is used if more than one hotlink action is defined
+for an attribute.</p>
+<div class="figure align-left" style="width: 100%">
+<img alt="_images/OpenActionDialog.png" src="_images/OpenActionDialog.png" />
+<p class="caption">Open Action Dialog</p>
+</div>
+</li>
+</ul>
 </div>
 <div class="section" id="save-as">
 <h2>Save As<a class="headerlink" href="#save-as" title="Permalink to this headline">¶</a></h2>

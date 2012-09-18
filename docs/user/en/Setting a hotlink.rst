@@ -1,12 +1,12 @@
 Setting a hotlink
 #################
 
-To load documents related to a feature:
----------------------------------------
+To list hotlinks related to a feature:
+--------------------------------------
 
 #. Open the :doc:`Document view`
 #. Select a feature using the :guilabel:`Feature Selection` tool
-#. The list of documents associated with this feature will be shown in the view 
+#. The select feature is presented as a folder, containing any associated documents including hotlinks.
 
 To set a file hotlink:
 ----------------------

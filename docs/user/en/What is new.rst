@@ -11,6 +11,45 @@ The following features are new for the uDig 1.3 series.
    What is new 1.1.0
    What is new 1.2.0
 
+Documents
+=========
+
+The :doc:`Document view` added to list resource and feature documents.
+
+Attachments and links:
+
+- Resource attachments: Attach files and web links to a layer for easy access
+- Feature attachments:  Attach files and web links to individual features
+- Attachments are copied in the same fashion as email attachments, alternatively both web and file links are supported (and are not copied).
+- Out of the box support for Shapefile attachments, files are stored in a folder next to your shapefile
+
+Feature Hotlinks:
+
+- Configure an attribute to act as a *hotlinks* for file or website
+- Or define custom action to open a local action or fire off a google search using an attribute value
+
+.. figure:: /images/document_view/DocumentView.png
+   :align: center
+   :alt: 
+   :figwidth: 80%
+      
+For more information, check out the Tasks section on :doc:`Working with Documents`.
+
+New Property Pages
+==================
+
+* :doc:`Resource Information page`: Use an :doc:`Expression viewer` to configure how each feature should be labeled.
+  This allows the :doc:`Information view` and :doc:`Document view` to list features by name (rather
+  than ID).
+* :doc:`Resource Information page`: Configure document and hotlink support for a resource
+* :doc:`Resource page`
+* :doc:`Service page`
+
+.. figure:: /images/resource_page/ResourceInformationPage.png
+   :align: center
+   :alt:
+   :figwidth: 80%
+   
 SLD 1.1
 =======
 
@@ -109,16 +148,3 @@ application and show you the step that is being described.
 .. |image0| image:: /images/what_is_new/PaletteSettings.jpg
 .. |image1| image:: /images/what_is_new/PanToolOptions.jpg
 .. |image2| image:: /images/what_is_new/uDigCheatsheet.jpg
-
-Documents
-=========
-
-We now support assigning documents to resources and features:
-
--  Attach support files\*
--  Link websites or files from the filesystem\*
--  Set attributes as *hotlinks* and store links to files, websites or set actions on the attribute's value
-
-\*Supported on the resource and/or feature level
-
-For more information, check out the Tasks section on :doc:`Working with Documents`.

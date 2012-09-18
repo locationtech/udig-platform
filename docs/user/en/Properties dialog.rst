@@ -11,23 +11,37 @@ resource.
 The Properties dialog is divided into a series of :doc:`Property Pages`, the
 specific Property pages available depend on the resource selected.
 
-The following property pages are in use:
+Layer pages:
 
 * :doc:`Interaction Properties page`
 
 * :doc:`Projection page`
 
-* :doc:`Summary page`
+* *Query*: Supply a filter to create a read-only view of the original data
 
-* :doc:`Tileset page`
+* :doc:`Summary page`: Layer details including bounds and feature type information
+
+* :doc:`Tileset page`: Used to configure a local tile-set for WMS Layers
+
+Service pages:
 
 * :doc:`Service page`
+
+Resource pages:
 
 * :doc:`Resource page`
 
 * :doc:`Resource Information page`
 
 * :doc:`Resource Document page`
+
+Map pages:
+
+* *Coordinate Reference System*: Choose from a list or supply a custom co-ordinate reference system
+
+* *Palette*: Configure background color and select palette used when adding new layers
+
+* *Summary*: Map details
 
 Restore Defaults
 ----------------
