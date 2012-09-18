@@ -180,7 +180,9 @@ For linked files, the referenced file will not be removed from disk, the referen
 
 **Related reference**
 
-:doc:`Resource page`
+:doc:`Resource Information page`
+
+:doc:`Resource Document page`
 
 **Related tasks**
 
