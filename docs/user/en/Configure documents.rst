@@ -2,36 +2,75 @@ Configure documents
 ###################
 
 To open settings page:
+----------------------
 
 #. Use :guilabel:`Catalog` view to select the resource or select a layer from the :guilabel:`Layers` view 
-#. Open the :guilabel:`Resource Properties` from the Data menu.
-#. Choose the :guilabel:`Document` property page
+#. Open the :doc:`Resource page` from the **Data** menu.
+#. Select the :doc:`Resource Document page` tab
 
 To enable resource documents:
+-----------------------------
 
+#. Open settings page
 #. Check :guilabel:`Enable support for resource documents`
 
 To enable feature documents:
+----------------------------
 
+#. Open settings page
 #. Check :guilabel:`Enable support for feature documents`
 
 To enable feature hotlinks:
+---------------------------
 
+#. Open settings page
 #. Check :guilabel:`Enable support for hotlink on marked attributes`
 
-To mark attributes as hotlinks:
+To set an attribute as a file hotlink:
+--------------------------------------
 
-#. List the attributes you want as hotlinks
+#. Enable feature hotlinks
+#. Click :guilabel:`Add...` to open the **Add Hotlink Descriptor** dialog 
+#. Select *File* as the **Type**
+#. Select the **Attribute** containing the reference information
+#. Provide the appropriate **Label**
+#. (Optional) Provide the appropriate **Description**
+#. Click :guilabel:`OK`
    
-   * Use the :guilabel:`Add...` to add an attribute as a hotlink
-   * Use the :guilabel:`Edit...` to update an existing hotlink definition
-   * Use the :guilabel:`Remove` to remove an attribute as a hotlink
-   
-**Note:** For `Action` hotlinks, the marker '{0}' should be used in the action string for replacement with the attribute's value.
-   
-A sample dataset is provided:
+To set an attribute as a web hotlink:
+-------------------------------------
 
-- Try out **australia.shp**
+#. Enable feature hotlinks
+#. Click :guilabel:`Add...` to open the **Add Hotlink Descriptor** dialog 
+#. Select *Web* as the **Type**
+#. Select the **Attribute** containing the reference information
+#. Provide the appropriate **Label**
+#. (Optional) Provide the appropriate **Description**
+#. Click :guilabel:`OK`
+   
+To set an attribute as an action hotlink:
+-----------------------------------------
+
+#. Enable feature hotlinks
+#. Click :guilabel:`Add...` to open the **Add Hotlink Descriptor** dialog 
+#. Select *Action* as the **Type**
+#. Select the **Attribute** containing the reference information
+#. Provide the appropriate **Label**
+#. (Optional) Provide the appropriate **Description**
+#. Provide the **Action** definition
+#. Click :guilabel:`OK`
+
+Action definition examples:
+
+- *https://www.google.com.au/search?q={0}* - For a Google search action
+- *http://au.search.yahoo.com/search?p={0}* - For a Yahoo! search action
+- *C:\\Reports\\{0}.pdf* - For a file reference action
+
+**Note:** Use the marker '{0}' in the action definition to mark parts to be replaced with the attribute's value.
+   
+**Sample dataset:**
+
+- Try out *australia.shp* in data_1_4.zip of the Quickstart sample data.
 
 **Related tasks**
 
@@ -42,3 +81,5 @@ A sample dataset is provided:
 :doc:`Document view`
 
 :doc:`Resource page`
+
+:doc:`Resource Document page`
