@@ -25,6 +25,9 @@ The following property pages are in use:
 
 * :doc:`Resource page`
 
+* :doc:`Resource Information page`
+
+* :doc:`Resource Document page`
 
 Restore Defaults
 ----------------

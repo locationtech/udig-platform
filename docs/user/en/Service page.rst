@@ -10,8 +10,8 @@ The Service properties page shows general information about the selected service
 Service Details
 ===============
 
--  ID: id of the service
--  Title: title of the service
+-  :guilabel:`ID`: id of the service
+-  :guilabel:`Title`: title of the service
 
 **Related concepts**
 

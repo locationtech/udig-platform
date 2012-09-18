@@ -10,6 +10,8 @@ Property Pages
    Tileset page
    Service page
    Resource page
+   Resource Information page
+   Resource Document page
 
 
 **Related reference**

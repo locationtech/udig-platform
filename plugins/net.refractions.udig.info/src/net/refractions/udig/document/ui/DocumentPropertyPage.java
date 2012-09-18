@@ -857,7 +857,8 @@ public class DocumentPropertyPage extends PropertyPage implements IWorkbenchProp
                 typeViewer.setSelection(new StructuredSelection(descriptor.getType()), true);
                 setActionText(descriptor.getType(), descriptor.getConfig());
             }
-          
+            labelText.setFocus();
+            
             return control;
         }
         
