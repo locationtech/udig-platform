@@ -11,7 +11,7 @@ To load documents related to a feature:
 To set a file hotlink:
 ----------------------
 
-#. Load documents related to layer or feature 
+#. Load documents related to feature 
 #. Select the hotlink from the list
 #. Click :guilabel:`Edit...` to open the **Edit File Hotlink** dialog
 #. Provide the file to be linked by doing one of the following:
@@ -35,7 +35,7 @@ To set a file hotlink:
 To set a web hotlink:
 ---------------------
 
-#. Load documents related to layer or feature 
+#. Load documents related to feature 
 #. Select the hotlink from the list
 #. Click :guilabel:`Edit...` to open the **Edit File Hotlink** dialog
 #. Set **Value**  with the website URL to be linked
@@ -46,7 +46,7 @@ To set a web hotlink:
 To set an action hotlink:
 -------------------------
 
-#. Load documents related to layer or feature 
+#. Load documents related to feature 
 #. Select the hotlink from the list
 #. Click :guilabel:`Edit...` to open the **Edit File Hotlink** dialog
 #. Set **Value**  with the appropriate attribute value
