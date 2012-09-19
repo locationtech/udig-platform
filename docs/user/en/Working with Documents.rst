@@ -1,7 +1,9 @@
 Working with Documents
 ######################
 
-You can work with documents associated with a feature or layer using the **Documents** view.
+You can work with documents associated with a feature or layer using the **Documents** view. 
+
+Contents:
 
 .. toctree::
    :maxdepth: 1
@@ -10,6 +12,9 @@ You can work with documents associated with a feature or layer using the **Docum
    Attaching a document
    Linking a document
    Setting a hotlink
+
+Please note you must configure documents in :menuselection:`Data --> Resource Properties` to enable
+this functionality.
    
 To list documents for a layer
 -----------------------------
@@ -26,8 +31,10 @@ To list documents for a feature
 #. The list of documents associated with this feature will be shown in the view in one folder,
    (followed by a separate folder for the layer documents).
 
-Tip:
+Tips:
 
+* Ensure you are using the :guilabel:`Feature Selection` tool, the bounding box selection tool
+  does not work with the document view at this time.
 * Configure the :doc:`Resource Information page` to list your features by name (rather than ID).
 
 **Related tasks**
@@ -41,4 +48,5 @@ Tip:
 **Related reference**
 
 :doc:`Document view`
+
 :doc:`Resource Information page`

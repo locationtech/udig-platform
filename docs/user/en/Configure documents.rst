@@ -1,77 +1,88 @@
 Configure documents
 ###################
 
-To open settings page:
-----------------------
+Configuration is required to enable resource documents, feature documents
+or feature hotlinks.
 
-#. Use :guilabel:`Catalog` view to select the resource or select a layer from the :guilabel:`Layers` view 
-#. Open the :doc:`Resource page` from the **Data** menu.
-#. Select the :doc:`Resource Document page` tab
+Support for documents is dependent on the resource selected and may not always be appropriate.
 
-To enable resource documents:
------------------------------
-
-#. Open settings page
-#. Check :guilabel:`Enable support for resource documents`
-
-To enable feature documents:
+Configure resource documents
 ----------------------------
 
-#. Open settings page
-#. Check :guilabel:`Enable support for feature documents`
+To enable resource documents (currently supported for shapefiles):
 
-To enable feature hotlinks:
+#. Use :guilabel:`Catalog` view to select the resource (or select a layer from the :guilabel:`Layers` view).
+#. Select :menuselection:`Data --> Resource Properties` from the menu bar to open the :guilabel:`Property Dialog`.
+#. Navigate open :guilabel:`Resource` and select the :guilabel:`Document` page.
+#. From the :guilabel:`Document` page:
+   
+   * Check :guilabel:`Enable support for resource documents`
+
+Configure feature documents
 ---------------------------
 
-#. Open settings page
-#. Check :guilabel:`Enable support for hotlink on marked attributes`
+To enable feature documents (currently supported for shapefiles):
 
-To set an attribute as a file hotlink:
---------------------------------------
+#. Use :guilabel:`Catalog` view to select the resource (or select a layer from the :guilabel:`Layers` view).
+#. Select :menuselection:`Data --> Resource Properties` from the menu bar to open the :guilabel:`Property Dialog`.
+#. Navigate open :guilabel:`Resource` and select the :guilabel:`Document` page.
+#. From the :guilabel:`Document` page:
+   
+   * Check :guilabel:`Enable support for feature documents`
 
-#. Enable feature hotlinks
+Configure feature hotlinks
+--------------------------
+
+To enable feature hotlinks:
+
+#. Use :guilabel:`Catalog` view to select the resource (or select a layer from the :guilabel:`Layers` view).
+#. Select :menuselection:`Data --> Resource Properties` from the menu bar to open the :guilabel:`Property Dialog`.
+#. Navigate open :guilabel:`Resource` and select the :guilabel:`Document` page.
+#. From the :guilabel:`Document` page:
+   
+   * Check :guilabel:`Enable support for hotlink on marked attributes`
+
+
+To set an attribute as a file hotlink
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. From the :guilabel:`Document` page 
 #. Click :guilabel:`Add...` to open the **Add Hotlink Descriptor** dialog 
-#. Select *File* as the **Type**
-#. Select the **Attribute** containing the reference information
-#. Provide the appropriate **Label**
-#. (Optional) Provide the appropriate **Description**
+#. Select *File* as the **Type** and select the **Attribute** containing the reference information
+#. Provide the appropriate **Label**, and optionally **Description**
 #. Click :guilabel:`OK`
    
-To set an attribute as a web hotlink:
--------------------------------------
+To set an attribute as a web hotlink
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Enable feature hotlinks
+#. From the :guilabel:`Document` page 
 #. Click :guilabel:`Add...` to open the **Add Hotlink Descriptor** dialog 
-#. Select *Web* as the **Type**
-#. Select the **Attribute** containing the reference information
-#. Provide the appropriate **Label**
-#. (Optional) Provide the appropriate **Description**
+#. Select *Web* as the **Type** and select the **Attribute** containing the reference information
+#. Provide the appropriate **Label**, and optionally **Description**
 #. Click :guilabel:`OK`
    
-To set an attribute as an action hotlink:
------------------------------------------
+To set an attribute as an action hotlink
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Enable feature hotlinks
-#. Click :guilabel:`Add...` to open the **Add Hotlink Descriptor** dialog 
-#. Select *Action* as the **Type**
-#. Select the **Attribute** containing the reference information
-#. Provide the appropriate **Label**
-#. (Optional) Provide the appropriate **Description**
-#. Provide the **Action** definition
+#. From the :guilabel:`Document` page 
+#. Click :guilabel:`Add...` to open the **Add Hotlink Descriptor** dialog
+#. Select *Action* as the **Type** and select the **Attribute** containing the reference information
+#. Provide the appropriate **Label**, and optionally **Description**
+#. Provide the **Action** definition, using the marker '{0}' to indicate where the attribute
+   value is used.
 #. Click :guilabel:`OK`
 
-Action definition examples:
-
-- *https://www.google.com.au/search?q={0}* - For a Google search action
-- *http://au.search.yahoo.com/search?p={0}* - For a Yahoo! search action
-- *C:\\Reports\\{0}.pdf* - For a file reference action
-
-**Note:** Use the marker '{0}' in the action definition to mark parts to be replaced with the attribute's value.
+Example Actions:
    
-To edit an existing hotlink definition:
----------------------------------------
+* Google search: ``https://www.google.com.au/search?q={0}`` 
+* Yahoo search: ``http://au.search.yahoo.com/search?p={0}``
+* File reference: ``C:\\Reports\\{0}.pdf``
+* Open in application: ``notepad {0}``
    
-#. Open settings page
+To edit an existing hotlink definition
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   
+#. From the :guilabel:`Document` page 
 #. Select hotlink from the list
 #. Click :guilabel:`Edit...` to open the **Edit Hotlink Descriptor** dialog
 #. Select **Type**
@@ -81,13 +92,13 @@ To edit an existing hotlink definition:
 #. (For Action types) Provide the **Action** definition
 #. Click :guilabel:`OK`
    
-To remove an existing hotlink definition:
------------------------------------------
+To remove an existing hotlink definition
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
    
-#. Open settings page
+#. From the :guilabel:`Document` page 
 #. Select hotlink from the list
 #. Click :guilabel:`Remove`
-   
+
 **Sample dataset:**
 
 - Try out *australia.shp* in data_1_4.zip of the Quickstart sample data.

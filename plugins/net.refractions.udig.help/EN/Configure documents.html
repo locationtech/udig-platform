@@ -53,83 +53,90 @@
             
   <div class="section" id="configure-documents">
 <h1>Configure documents<a class="headerlink" href="#configure-documents" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="to-open-settings-page">
-<h2>To open settings page:<a class="headerlink" href="#to-open-settings-page" title="Permalink to this headline">¶</a></h2>
+<p>Configuration is required to enable resource documents, feature documents
+or feature hotlinks.</p>
+<p>Support for documents is dependent on the resource selected and may not always be appropriate.</p>
+<div class="section" id="configure-resource-documents">
+<h2>Configure resource documents<a class="headerlink" href="#configure-resource-documents" title="Permalink to this headline">¶</a></h2>
+<p>To enable resource documents (currently supported for shapefiles):</p>
 <ol class="arabic simple">
-<li>Use <em class="guilabel">Catalog</em> view to select the resource or select a layer from the <em class="guilabel">Layers</em> view</li>
-<li>Open the <a class="reference internal" href="Resource page.html"><em>Resource page</em></a> from the <strong>Data</strong> menu.</li>
-<li>Select the <a class="reference internal" href="Resource Document page.html"><em>Document page</em></a> tab</li>
-</ol>
-</div>
-<div class="section" id="to-enable-resource-documents">
-<h2>To enable resource documents:<a class="headerlink" href="#to-enable-resource-documents" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic simple">
-<li>Open settings page</li>
+<li>Use <em class="guilabel">Catalog</em> view to select the resource (or select a layer from the <em class="guilabel">Layers</em> view).</li>
+<li>Select <em class="menuselection">Data ‣ Resource Properties</em> from the menu bar to open the <em class="guilabel">Property Dialog</em>.</li>
+<li>Navigate open <em class="guilabel">Resource</em> and select the <em class="guilabel">Document</em> page.</li>
+<li>From the <em class="guilabel">Document</em> page:<ul>
 <li>Check <em class="guilabel">Enable support for resource documents</em></li>
+</ul>
+</li>
 </ol>
 </div>
-<div class="section" id="to-enable-feature-documents">
-<h2>To enable feature documents:<a class="headerlink" href="#to-enable-feature-documents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="configure-feature-documents">
+<h2>Configure feature documents<a class="headerlink" href="#configure-feature-documents" title="Permalink to this headline">¶</a></h2>
+<p>To enable feature documents (currently supported for shapefiles):</p>
 <ol class="arabic simple">
-<li>Open settings page</li>
+<li>Use <em class="guilabel">Catalog</em> view to select the resource (or select a layer from the <em class="guilabel">Layers</em> view).</li>
+<li>Select <em class="menuselection">Data ‣ Resource Properties</em> from the menu bar to open the <em class="guilabel">Property Dialog</em>.</li>
+<li>Navigate open <em class="guilabel">Resource</em> and select the <em class="guilabel">Document</em> page.</li>
+<li>From the <em class="guilabel">Document</em> page:<ul>
 <li>Check <em class="guilabel">Enable support for feature documents</em></li>
+</ul>
+</li>
 </ol>
 </div>
-<div class="section" id="to-enable-feature-hotlinks">
-<h2>To enable feature hotlinks:<a class="headerlink" href="#to-enable-feature-hotlinks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="configure-feature-hotlinks">
+<h2>Configure feature hotlinks<a class="headerlink" href="#configure-feature-hotlinks" title="Permalink to this headline">¶</a></h2>
+<p>To enable feature hotlinks:</p>
 <ol class="arabic simple">
-<li>Open settings page</li>
+<li>Use <em class="guilabel">Catalog</em> view to select the resource (or select a layer from the <em class="guilabel">Layers</em> view).</li>
+<li>Select <em class="menuselection">Data ‣ Resource Properties</em> from the menu bar to open the <em class="guilabel">Property Dialog</em>.</li>
+<li>Navigate open <em class="guilabel">Resource</em> and select the <em class="guilabel">Document</em> page.</li>
+<li>From the <em class="guilabel">Document</em> page:<ul>
 <li>Check <em class="guilabel">Enable support for hotlink on marked attributes</em></li>
+</ul>
+</li>
 </ol>
-</div>
 <div class="section" id="to-set-an-attribute-as-a-file-hotlink">
-<h2>To set an attribute as a file hotlink:<a class="headerlink" href="#to-set-an-attribute-as-a-file-hotlink" title="Permalink to this headline">¶</a></h2>
+<h3>To set an attribute as a file hotlink<a class="headerlink" href="#to-set-an-attribute-as-a-file-hotlink" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
-<li>Enable feature hotlinks</li>
+<li>From the <em class="guilabel">Document</em> page</li>
 <li>Click <em class="guilabel">Add...</em> to open the <strong>Add Hotlink Descriptor</strong> dialog</li>
-<li>Select <em>File</em> as the <strong>Type</strong></li>
-<li>Select the <strong>Attribute</strong> containing the reference information</li>
-<li>Provide the appropriate <strong>Label</strong></li>
-<li>(Optional) Provide the appropriate <strong>Description</strong></li>
+<li>Select <em>File</em> as the <strong>Type</strong> and select the <strong>Attribute</strong> containing the reference information</li>
+<li>Provide the appropriate <strong>Label</strong>, and optionally <strong>Description</strong></li>
 <li>Click <em class="guilabel">OK</em></li>
 </ol>
 </div>
 <div class="section" id="to-set-an-attribute-as-a-web-hotlink">
-<h2>To set an attribute as a web hotlink:<a class="headerlink" href="#to-set-an-attribute-as-a-web-hotlink" title="Permalink to this headline">¶</a></h2>
+<h3>To set an attribute as a web hotlink<a class="headerlink" href="#to-set-an-attribute-as-a-web-hotlink" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
-<li>Enable feature hotlinks</li>
+<li>From the <em class="guilabel">Document</em> page</li>
 <li>Click <em class="guilabel">Add...</em> to open the <strong>Add Hotlink Descriptor</strong> dialog</li>
-<li>Select <em>Web</em> as the <strong>Type</strong></li>
-<li>Select the <strong>Attribute</strong> containing the reference information</li>
-<li>Provide the appropriate <strong>Label</strong></li>
-<li>(Optional) Provide the appropriate <strong>Description</strong></li>
+<li>Select <em>Web</em> as the <strong>Type</strong> and select the <strong>Attribute</strong> containing the reference information</li>
+<li>Provide the appropriate <strong>Label</strong>, and optionally <strong>Description</strong></li>
 <li>Click <em class="guilabel">OK</em></li>
 </ol>
 </div>
 <div class="section" id="to-set-an-attribute-as-an-action-hotlink">
-<h2>To set an attribute as an action hotlink:<a class="headerlink" href="#to-set-an-attribute-as-an-action-hotlink" title="Permalink to this headline">¶</a></h2>
+<h3>To set an attribute as an action hotlink<a class="headerlink" href="#to-set-an-attribute-as-an-action-hotlink" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
-<li>Enable feature hotlinks</li>
+<li>From the <em class="guilabel">Document</em> page</li>
 <li>Click <em class="guilabel">Add...</em> to open the <strong>Add Hotlink Descriptor</strong> dialog</li>
-<li>Select <em>Action</em> as the <strong>Type</strong></li>
-<li>Select the <strong>Attribute</strong> containing the reference information</li>
-<li>Provide the appropriate <strong>Label</strong></li>
-<li>(Optional) Provide the appropriate <strong>Description</strong></li>
-<li>Provide the <strong>Action</strong> definition</li>
+<li>Select <em>Action</em> as the <strong>Type</strong> and select the <strong>Attribute</strong> containing the reference information</li>
+<li>Provide the appropriate <strong>Label</strong>, and optionally <strong>Description</strong></li>
+<li>Provide the <strong>Action</strong> definition, using the marker &#8216;{0}&#8217; to indicate where the attribute
+value is used.</li>
 <li>Click <em class="guilabel">OK</em></li>
 </ol>
-<p>Action definition examples:</p>
+<p>Example Actions:</p>
 <ul class="simple">
-<li><em>https://www.google.com.au/search?q={0}</em> - For a Google search action</li>
-<li><em>http://au.search.yahoo.com/search?p={0}</em> - For a Yahoo! search action</li>
-<li><em>C:\Reports\{0}.pdf</em> - For a file reference action</li>
+<li>Google search: <tt class="docutils literal"><span class="pre">https://www.google.com.au/search?q={0}</span></tt></li>
+<li>Yahoo search: <tt class="docutils literal"><span class="pre">http://au.search.yahoo.com/search?p={0}</span></tt></li>
+<li>File reference: <tt class="docutils literal"><span class="pre">C:\\Reports\\{0}.pdf</span></tt></li>
+<li>Open in application: <tt class="docutils literal"><span class="pre">notepad</span> <span class="pre">{0}</span></tt></li>
 </ul>
-<p><strong>Note:</strong> Use the marker &#8216;{0}&#8217; in the action definition to mark parts to be replaced with the attribute&#8217;s value.</p>
 </div>
 <div class="section" id="to-edit-an-existing-hotlink-definition">
-<h2>To edit an existing hotlink definition:<a class="headerlink" href="#to-edit-an-existing-hotlink-definition" title="Permalink to this headline">¶</a></h2>
+<h3>To edit an existing hotlink definition<a class="headerlink" href="#to-edit-an-existing-hotlink-definition" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
-<li>Open settings page</li>
+<li>From the <em class="guilabel">Document</em> page</li>
 <li>Select hotlink from the list</li>
 <li>Click <em class="guilabel">Edit...</em> to open the <strong>Edit Hotlink Descriptor</strong> dialog</li>
 <li>Select <strong>Type</strong></li>
@@ -141,9 +148,9 @@
 </ol>
 </div>
 <div class="section" id="to-remove-an-existing-hotlink-definition">
-<h2>To remove an existing hotlink definition:<a class="headerlink" href="#to-remove-an-existing-hotlink-definition" title="Permalink to this headline">¶</a></h2>
+<h3>To remove an existing hotlink definition<a class="headerlink" href="#to-remove-an-existing-hotlink-definition" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
-<li>Open settings page</li>
+<li>From the <em class="guilabel">Document</em> page</li>
 <li>Select hotlink from the list</li>
 <li>Click <em class="guilabel">Remove</em></li>
 </ol>
@@ -157,6 +164,7 @@
 <p><a class="reference internal" href="Document view.html"><em>Document view</em></a></p>
 <p><a class="reference internal" href="Resource page.html"><em>Resource page</em></a></p>
 <p><a class="reference internal" href="Resource Document page.html"><em>Document page</em></a></p>
+</div>
 </div>
 </div>
 
