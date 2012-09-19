@@ -26,7 +26,7 @@
             <isset property="build.directory" />
         </condition>
 
-        <condition property="project.version" value="${project.version}" else="1.3.2">
+        <condition property="project.version" value="${project.version}" else="1.3.3">
             <isset property="project.version" />
         </condition>
 
@@ -74,13 +74,13 @@
         </antcall>
     </target>
 	
-	<target name="deploy-clean">
+	<target name="help-clean">
 		<delete includeemptydirs="true">
             <fileset dir="${basedir}/../plugins/net.refractions.udig.help/EN" includes="**/*"/>
         </delete>
 	</target>
 	
-	<target name="deploy" depends="user-help">
+	<target name="help-deploy" depends="user-help">
 		<description>Deploy docs.zip and toc.xml to net.refractions.udig.help</description>
 		<copy file="${basedir}/user/toc.xml" todir="${basedir}/../plugins/net.refractions.udig.help"/>
         <copy todir="${basedir}/../plugins/net.refractions.udig.help/EN">
