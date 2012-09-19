@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.3.2',
+        VERSION:     '1.3.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -29,7 +29,7 @@
     <link rel="top" title="User Guide" href="index.html" />
     <link rel="up" title="Working with Documents" href="Working with Documents.html" />
     <link rel="next" title="Linking a document" href="Linking a document.html" />
-    <link rel="prev" title="Configure hotlink attributes" href="Configure hotlink attributes.html" /> 
+    <link rel="prev" title="Configure documents" href="Configure documents.html" /> 
   </head>
   <body>
     <div class="header">
@@ -53,31 +53,57 @@
             
   <div class="section" id="attaching-a-document">
 <h1>Attaching a document<a class="headerlink" href="#attaching-a-document" title="Permalink to this headline">¶</a></h1>
-<p>To attach a document to a layer:</p>
+<div class="section" id="to-attach-a-document-to-a-layer-or-feature">
+<h2>To attach a document to a layer or feature:<a class="headerlink" href="#to-attach-a-document-to-a-layer-or-feature" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li>Open the <em class="guilabel">Documents</em> view</li>
-<li>Select the layer</li>
-<li>The list of documents associated with this layer will be shown in the <em class="guilabel">Documents</em> view</li>
-<li>Select the layer&#8217;s folder or a document inside the folder</li>
-<li>Press the <em class="guilabel">Attach...</em> button, a dialog will be provided to input details</li>
+<li>Load documents related to layer or feature</li>
+<li>Select the layer or feature&#8217;s folder or a document inside the folder</li>
+<li>Click <em class="guilabel">Attach...</em> to open the <strong>Add Attachment</strong> dialog</li>
+<li>Provide the file to be attached by doing one of the following:</li>
 </ol>
-<p>To attach a document to a feature:</p>
-<ol class="arabic simple">
-<li>Open the <em class="guilabel">Documents</em> view</li>
-<li>Select a feature using the <em class="guilabel">Feature Selection</em> tool</li>
-<li>The list of documents associated with this feature will be shown in the <em class="guilabel">Documents</em> view</li>
-<li>Select the feature&#8217;s folder or a document inside the folder</li>
-<li>Press the <em class="guilabel">Attach...</em> button, a dialog will be provided to input details</li>
+<ul>
+<li><p class="first">Manually set the file&#8217;s path to <strong>File</strong></p>
+</li>
+<li><dl class="first docutils">
+<dt>Select an existing file</dt>
+<dd><ul class="first last simple">
+<li>Click <em class="guilabel">Browse...</em> to open the file selection dialog</li>
+<li>Select a file from the dialog</li>
+<li>Click <em class="guilabel">Open</em> to set <strong>File</strong> with the selected file&#8217;s path</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Create a new file from template</dt>
+<dd><ul class="first last simple">
+<li>Click <em class="guilabel">New...</em> to open the select template dialog</li>
+<li>Select a template from the list</li>
+<li>Click <em class="guilabel">OK</em> to open the save file dialog</li>
+<li>Select directory and enter filename</li>
+<li>Click <em class="guilabel">Save</em> to set <strong>File</strong> with the new file&#8217;s path</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<ol class="arabic simple" start="7">
+<li>(Optional) Check <em class="guilabel">Set as template</em> to set attachment as a template</li>
+<li>Set the <strong>Label</strong> with appropriate label</li>
+<li>(Optional) Set the <strong>Description</strong> with appropriate description</li>
+<li>(Optional) Click <em class="guilabel">Open</em> to verify that set file is valid and existing</li>
+<li>Click <em class="guilabel">Attach</em> to save attachment</li>
 </ol>
-<p>A sample dataset is provided:</p>
+<p><strong>Sample dataset:</strong></p>
 <ul class="simple">
-<li>Try out <strong>australia.shp</strong></li>
-<li>File, Web and Action hotlinks are already defined</li>
+<li>Try out <em>australia.shp</em> in data_1_4.zip of the Quickstart sample data.</li>
 </ul>
 <p><strong>Related tasks</strong></p>
 <p><a class="reference internal" href="Working with Documents.html"><em>Working with Documents</em></a></p>
 <p><strong>Related reference</strong></p>
 <p><a class="reference internal" href="Document view.html"><em>Document view</em></a></p>
+<p><a class="reference internal" href="Resource Document page.html"><em>Document page</em></a></p>
+</div>
 </div>
 
 

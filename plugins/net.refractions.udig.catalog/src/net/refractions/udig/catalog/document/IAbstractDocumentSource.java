@@ -15,10 +15,24 @@
 package net.refractions.udig.catalog.document;
 
 /**
- * Marker (flag) interface for document sources.
+ * Base interface for document sources.
  * 
  * @author Naz Chan
  */
 public interface IAbstractDocumentSource {
-    // Nothing
+    
+    /**
+     * Checks if this document source is enabled and should be used to provide access to documents.
+     * 
+     * @return true if enabled, otherwise false
+     */
+    public boolean isEnabled();
+    
+    /**
+     * Checks if this document source allows updating of its enabled state.
+     * 
+     * @return true if allowed, otherwise false
+     */
+    public boolean isEnabledEditable();
+    
 }

@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests Plug-in
+Bundle-SymbolicName: net.refractions.udig.tests.info
+Bundle-Version: 1.3.3
+Bundle-Activator: net.refractions.udig.tool.info.tests.Activator
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.info,
+ org.junit,
+ net.refractions.udig.project.ui,
+ net.refractions.udig.project.tests,
+ net.refractions.udig.project.tests.ui,
+ net.refractions.udig.catalog.tests.wms
+Bundle-ActivationPolicy: lazy
