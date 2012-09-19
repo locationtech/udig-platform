@@ -24,4 +24,5 @@ Using Maps, Layers and pages to visualize your spatial data
    interceptors
    adding_new_format
    map_decorator
+   documents
 

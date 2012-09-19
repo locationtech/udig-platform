@@ -20,6 +20,7 @@ import java.util.List;
 
 import net.refractions.udig.catalog.document.IDocument.ContentType;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
@@ -35,41 +36,58 @@ import org.opengis.feature.simple.SimpleFeature;
  */
 public interface IHotlinkSource extends IAbstractDocumentSource {
 
-    /**
-     * List of available attributes available to store hotlink information.
-     * 
-     * @return list of available hotlink information, may be empty if hotlinks not available.
-     */
-    public List<HotlinkDescriptor> getHotlinkDescriptors();
 
     /**
-     * Gets the list of documents in the feature.
-     * <p>
-     * Note the returned list may be a mix of {@link IDocument} types including {@link IHotlink}.
+     * Checks if the source allows setting the hotlinks.
      * 
-     * @param fid
-     * @return list of documents
-     */
-    public List<IDocument> getDocuments(SimpleFeature feature);
-    
-    /**
-     * Used to decode the indicated hotlink value as an IDocument for general use.
-     * 
-     * @param feature Feature under study, either retrieved directly from featureSource or a live
-     *        EditFeature
-     * @param attributeName Attribute to decode document reference
-     */
-    public IDocument getDocument(SimpleFeature feature, String attributeName);
-
-    /**
-     * Checks if the source allows setting the hotlinks
-     * 
-     * @return true if allows setting hotlinks, otherwise false
+     * @return true if allowed, otherwise false
      */
     public boolean canSetHotlink();
+
+    /**
+     * Checks if the source allows clearing the hotlink.
+     * 
+     * @return true if allowed, otherwise false
+     */
+    public boolean canClearHotlink();
     
     /**
-     * Used to encode the indicated file as an IDocument in the provided feature.
+     * Gets the hotlink descriptors.
+     * </p>
+     * This method may require server-side processing and should not be ran in the UI thread.
+     * </p>
+     * 
+     * @param feature
+     * @param monitor
+     * @return hotlink descriptors
+     */
+    public List<HotlinkDescriptor> getHotlinkDescriptors(SimpleFeature feature, IProgressMonitor monitor);
+
+    /**
+     * Gets the hotlink documents.
+     * </p>
+     * This method may require server-side processing and should not be ran in the UI thread.
+     * </p>
+     * 
+     * @param feature
+     * @param monitor
+     * @return documents
+     */
+    public List<IDocument> getDocuments(SimpleFeature feature, IProgressMonitor monitor);
+    
+    /**
+     * Gets the hotlink document.
+     * 
+     * @param feature - Feature under study, either retrieved directly from featureSource or a live
+     *        EditFeature
+     * @param attributeName - Attribute to decode document reference
+     * @param monitor
+     * @return document
+     */
+    public IDocument getDocument(SimpleFeature feature, String attributeName, IProgressMonitor monitor);
+    
+    /**
+     * Used to encode the file and set it as the content of the hotlink attribute.
      * <p>
      * It is the callers responsibility to record this changed value, either by using featureStore
      * to write out the changed value, or by passing in a live EditFeature for modification.
@@ -78,12 +96,13 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
      *        EditFeature
      * @param attributeName Attribute used to store the document reference
      * @param file File to encode as a reference
-     * @return The created IDocument, or null if link unsuccessful
+     * @param monitor
+     * @return true if successful, otherwise false
      */
-    public IDocument setFile(SimpleFeature feature, String attributeName, File file);
+    public boolean setFile(SimpleFeature feature, String attributeName, File file, IProgressMonitor monitor);
 
     /**
-     * Used to encode the indicated file as an IDocument in the provided feature.
+     * Used to encode the URL and set it as the content of the hotlink attribute.
      * <p>
      * It is the callers responsibility to record this changed value, either by using featureStore
      * to write out the changed value, or by passing in a live EditFeature for modification.
@@ -92,12 +111,13 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
      *        EditFeature
      * @param attributeName Attribute used to store the document reference
      * @param link URL to encode as a reference
-     * @return The created IDocument, or null if link unsuccessful
+     * @param monitor
+     * @return true if successful, otherwise false
      */
-    public IDocument setLink(SimpleFeature feature, String attributeName, URL link);
+    public boolean setLink(SimpleFeature feature, String attributeName, URL link, IProgressMonitor monitor);
     
     /**
-     * Used to encode the indicated action as an IDocument in the provided feature.
+     * Used to encode the action string and set it as the content of the hotlink attribute.
      * <p>
      * It is the callers responsibility to record this changed value, either by using featureStore
      * to write out the changed value, or by passing in a live EditFeature for modification.
@@ -105,17 +125,11 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
      * @param feature
      * @param attributeName
      * @param action
-     * @return document
+     * @param monitor
+     * @return true if successful, otherwise false
      */
-    public IDocument setAction(SimpleFeature feature, String attributeName, String action);
+    public boolean setAction(SimpleFeature feature, String attributeName, String action, IProgressMonitor monitor);
 
-    /**
-     * Checks if the source allows clearing the hotlink.
-     * 
-     * @return true if allows clearing, otherwise false
-     */
-    public boolean canClearHotlink();
-    
     /**
      * Used to clear a hotlink in the provided feature.
      * <p>
@@ -125,9 +139,10 @@ public interface IHotlinkSource extends IAbstractDocumentSource {
      * @param feature Feature under study, either retrieved directly from featureSource or a live
      *        EditFeature
      * @param attributeName Attribute used to store the document reference
-     * @return The removed IDocument, or null if not available
+     * @param monitor
+     * @return true if successful, otherwise false
      */
-    public IDocument clear(SimpleFeature feature, String attributeName);
+    public boolean clear(SimpleFeature feature, String attributeName, IProgressMonitor monitor);
 
     /**
      * Used to record additional AttributeDescriptor information marking attributes suitable to

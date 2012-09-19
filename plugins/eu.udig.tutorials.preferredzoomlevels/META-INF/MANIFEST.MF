@@ -7,7 +7,7 @@ Bundle-Activator: eu.udig.tutorials.preferredzoomlevels.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.tool.default;bundle-version="1.2.0",
- net.refractions.udig.tool.info;bundle-version="1.2.0",
+ net.refractions.udig.info,
  net.refractions.udig.tool.select;bundle-version="1.2.0",
  net.refractions.udig.project.ui;bundle-version="1.2.0",
  net.refractions.udig.project.ui.editor;bundle-version="1.2.0",

@@ -18,104 +18,93 @@ import java.util.List;
 
 import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
- * Attachment support for a IGeoResource providing the ability to record IAttachment documents
- * against individual features.
+ * Access to documents associated with a feature.
  * 
  * @author Naz Chan (LISAsoft)
  * @since 1.3.2
  */
-public interface IAttachmentSource extends IHotlinkSource {
+public interface IAttachmentSource extends IAbstractAttachmentSource {
 
     /**
-     * Gets the list of attachments related to the feature.
+     * Gets the list of documents.
+     * </p>
+     * This method may require server-side processing and should not be ran in the UI thread.
+     * </p>
      * 
-     * @param fid
-     * @return list of documents
+     * @param feature
+     * @param monitor
+     * @return documents
      */
-    public List<IDocument> getDocuments(SimpleFeature feature);
+    public List<IDocument> getDocuments(SimpleFeature feature, IProgressMonitor monitor);
     
     /**
-     * Checks if the source allows attaching new documents.
+     * Adds a document.
+     * </p>
+     * This method may require server-side processing and should not be ran in the UI thread.
+     * </p>
      * 
-     * @return true if allows attaching, otherwise false
-     */
-    public boolean canAttach();
-    
-    /**
-     * Checks if the source allows linking file documents.
-     * 
-     * @return true if allows linking, otherwise false
-     */
-    public boolean canLinkFile();
-    
-    /**
-     * Checks if the source allows linking web documents.
-     * 
-     * @return true if allows linking, otherwise false
-     */
-    public boolean canLinkWeb();
-    
-    /**
-     * Adds the document.
-     * 
-     * @param fid
-     * @param file
+     * @param feature
+     * @param info
+     * @param monitor
      * @return document
      */
-    public IDocument add(SimpleFeature feature, DocumentInfo info);
+    public IDocument add(SimpleFeature feature, DocumentInfo info, IProgressMonitor monitor);
 
     /**
-     * Adds the list of documents.
+     * Adds a list of documents.
+     * </p>
+     * This method may require server-side processing and should not be ran in the UI thread.
+     * </p>
      * 
-     * @param fid
+     * @param feature
      * @param infos
-     * @return list of documents
+     * @param monitor
+     * @return documents
      */
-    public List<IDocument> add(SimpleFeature feature, List<DocumentInfo> infos);
+    public List<IDocument> add(SimpleFeature feature, List<DocumentInfo> infos, IProgressMonitor monitor);
     
     /**
-     * Checks if the source allows updating documents.
+     * Updates the document.
+     * </p>
+     * This method may require server-side processing and should not be ran in the UI thread.
+     * </p>
      * 
-     * @return true if allows updating, otherwise false
+     * @param feature
+     * @param doc
+     * @param info
+     * @param monitor
+     * @return true if successful, otherwise false
      */
-    public boolean canUpdate();
-    
-    /**
-     * Updates the document info.
-     * 
-     * @param fid
-     * @param fileDoc
-     * @param file
-     * @return updated document
-     */
-    public IDocument update(SimpleFeature feature, IDocument doc, DocumentInfo info);
-    
-    /**
-     * Checks if the source allows removing documents.
-     * 
-     * @return true if allows removing or clearing, otherwise false
-     */
-    public boolean canRemove();
+    public boolean update(SimpleFeature feature, IDocument doc, DocumentInfo info, IProgressMonitor monitor);
     
     /**
      * Removes the document.
+     * </p>
+     * This method may require server-side processing and should not be ran in the UI thread.
+     * </p>
      * 
-     * @param fid
+     * @param feature
      * @param doc
+     * @param monitor
      * @return true if successful, otherwise false
      */
-    public boolean remove(SimpleFeature feature, IDocument doc);
+    public boolean remove(SimpleFeature feature, IDocument doc, IProgressMonitor monitor);
 
     /**
      * Removes the list of documents.
+     * </p>
+     * This method may require server-side processing and should not be ran in the UI thread.
+     * </p>
      * 
-     * @param fid
+     * @param feature
      * @param docs
-     * @return true if successfull, otherwise false
+     * @param monitor
+     * @return true if successful, otherwise false
      */
-    public boolean remove(SimpleFeature feature, List<IDocument> docs);
+    public boolean remove(SimpleFeature feature, List<IDocument> docs, IProgressMonitor monitor);
 
 }

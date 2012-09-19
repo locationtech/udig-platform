@@ -118,6 +118,14 @@ public interface IDocumentFolder {
     public void addFolders(List<IDocumentFolder> folders);
 
     /**
+     * Adds the documents to the folder at the index.
+     * 
+     * @param docs
+     * @param index
+     */
+    public void insertDocuments(List<IDocument> docs, int index);
+    
+    /**
      * Removes the document item from the folder.
      * 
      * @param item
