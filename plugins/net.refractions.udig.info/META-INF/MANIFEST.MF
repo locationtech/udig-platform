@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %plugin.name
+Bundle-SymbolicName: net.refractions.udig.info; singleton:=true
+Bundle-Version: 1.3.3.qualifier
+Bundle-Activator: net.refractions.udig.tool.info.InfoPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Export-Package: net.refractions.udig.document.model;x-friends:="net.refractions.udig.tests.info",
+ net.refractions.udig.document.source,
+ net.refractions.udig.document.ui,
+ net.refractions.udig.tool.info,
+ net.refractions.udig.tool.info.internal;x-friends:="net.refractions.udig.tests.info",
+ net.refractions.udig.tool.info.internal.display;x-friends:="net.refractions.udig.tests.info"
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.project,
+ net.refractions.udig.project.ui,
+ net.refractions.udig.ui,
+ org.eclipse.ui.views,
+ net.refractions.udig.style.wms,
+ net.refractions.udig.render.wms.basic,
+ org.eclipse.ui.forms,
+ net.refractions.udig.catalog.shp;resolution:=optional;visibility:=reexport,
+ net.refractions.udig.catalog.postgis
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

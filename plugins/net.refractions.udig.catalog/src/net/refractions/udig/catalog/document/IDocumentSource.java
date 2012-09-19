@@ -18,6 +18,8 @@ package net.refractions.udig.catalog.document;
 
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 import net.refractions.udig.catalog.document.IDocument.ContentType;
 import net.refractions.udig.catalog.document.IDocument.Type;
 
@@ -33,94 +35,84 @@ import net.refractions.udig.catalog.document.IDocument.Type;
  * @author Naz Chan
  * @since 1.3.2
  */
-public interface IDocumentSource extends IAbstractDocumentSource {
+public interface IDocumentSource extends IAbstractAttachmentSource {
 
     /**
-     * Gets the list of documents associated with this feature type.
+     * Gets the list of documents.
      * <p>
      * As an example this will return a SHAPEFILENAME.TXT file that is associated (ie a sidecar
      * file) with the provided shapefile. We may also wish to list a README.txt file in the same
      * directory (as it is the habbit of GIS professionals to record fun information about the
      * entire dataset.
      * </p>
+     * This method may require server-side processing and should not be ran in the UI thread.
+     * </p>
      * 
+     * @param monitor
      * @return documents
      */
-    public List<IDocument> getDocuments();
-
-    /**
-     * Checks if the source allows attaching new documents.
-     * 
-     * @return true if allows attaching, otherwise false
-     */
-    public boolean canAttach();
+    public List<IDocument> getDocuments(IProgressMonitor monitor);
     
     /**
-     * Checks if the source allows linking file documents.
-     * 
-     * @return true if allows linking, otherwise false
-     */
-    public boolean canLinkFile();
-    
-    /**
-     * Checks if the source allows linking web documents.
-     * 
-     * @return true if allows linking, otherwise false
-     */
-    public boolean canLinkWeb();
-    
-    /**
-     * Adds the document.
+     * Adds a document.
+     * </p>
+     * This method may require server-side processing and should not be ran in the UI thread.
+     * </p>
      * 
      * @param info
+     * @param monitor
      * @return added document
      */
-    public IDocument add(DocumentInfo info);
+    public IDocument add(DocumentInfo info, IProgressMonitor monitor);
 
     /**
-     * Adds the list of documents.
+     * Adds a list of documents.
+     * </p>
+     * This method may require server-side processing and should not be ran in the UI thread.
+     * </p>
      * 
      * @param infos
-     * @return list of new added documents
+     * @param monitor
+     * @return list added documents
      */
-    public List<IDocument> add(List<DocumentInfo> infos);
-
-    /**
-     * Checks if the source allows updating documents.
-     * 
-     * @return true if allows updating, otherwise false
-     */
-    public boolean canUpdate();
+    public List<IDocument> add(List<DocumentInfo> infos, IProgressMonitor monitor);
     
     /**
      * Updates the document with the information.
+     * </p>
+     * This method may require server-side processing and should not be ran in the UI thread.
+     * </p>
      * 
      * @param doc
      * @param info
-     * @return updated document
+     * @param monitor
+     * @return true if successful, otherwise false
      */
-    public IDocument update(IDocument doc, DocumentInfo info);
-    
-    /**
-     * Checks if the source allows removing documents.
-     * 
-     * @return true if allows removing or clearing, otherwise false
-     */
-    public boolean canRemove();
+    public boolean update(IDocument doc, DocumentInfo info, IProgressMonitor monitor);
     
     /**
      * Removes the document.
+     * </p>
+     * This method may require server-side processing and should not be ran in the UI thread.
+     * </p>
      * 
-     * @param true if removed successfully, otherwise false
+     * @param doc
+     * @param monitor
+     * @param true if successful, otherwise false
      */
-    public boolean remove(IDocument doc);
+    public boolean remove(IDocument doc, IProgressMonitor monitor);
 
     /**
      * Removes the list of documents.
+     * </p>
+     * This method may require server-side processing and should not be ran in the UI thread.
+     * </p>
      * 
-     * @param true if removed successfully, otherwise false
+     * @param docs
+     * @param monitor
+     * @param true if successful, otherwise false
      */
-    public boolean remove(List<IDocument> docs);
+    public boolean remove(List<IDocument> docs, IProgressMonitor monitor);
 
     /**
      * Document info container for document. This was initially designed to contain document
