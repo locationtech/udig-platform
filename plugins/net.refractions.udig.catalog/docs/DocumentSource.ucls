@@ -1,79 +1,81 @@
 <class-diagram version="1.0.9" icons="true" automaticImage="PNG" always-add-relationships="true" generalizations="true" 
   realizations="true" associations="true" dependencies="true" nesting-relationships="true">  
-  <interface id="1" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.document.IDocument" 
+  <interface id="1" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.document.IDocumentSource" 
     project="net.refractions.udig.catalog" 
-    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/document/IDocument.java" binary="false">    
-    <position height="-1" width="-1" x="290" y="162"/>    
+    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/document/IDocumentSource.java" binary="false">    
+    <position height="-1" width="-1" x="272" y="444"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false"/>      
       <operations public="true" package="false" protected="false" private="false"/>    
     </display>  
   </interface>  
-  <enumeration id="2" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.document.IDocument.Type" 
-    project="net.refractions.udig.catalog" 
-    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/document/IDocument.java" binary="false">    
-    <position height="-1" width="-1" x="550" y="108"/>    
-    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true"/>      
-      <operations public="false" package="false" protected="false" private="false"/>    
-    </display>  
-  </enumeration>  
-  <interface id="3" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.document.IAttachment" 
-    project="net.refractions.udig.catalog" 
-    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/document/IAttachment.java" binary="false">    
-    <position height="-1" width="-1" x="219" y="395"/>    
+  <interface id="2" corner="BOTTOM_RIGHT" language="java" 
+    name="net.refractions.udig.catalog.document.IAbstractDocumentSource" project="net.refractions.udig.catalog" 
+    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/document/IAbstractDocumentSource.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="272" y="119"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false"/>      
       <operations public="true" package="false" protected="false" private="false"/>    
     </display>  
   </interface>  
-  <interface id="4" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.document.IHotlink" 
-    project="net.refractions.udig.catalog" 
-    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/document/IHotlink.java" binary="false">    
-    <position height="-1" width="-1" x="470" y="404"/>    
+  <interface id="3" corner="BOTTOM_RIGHT" language="java" 
+    name="net.refractions.udig.catalog.document.IAbstractAttachmentSource" project="net.refractions.udig.catalog" 
+    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/document/IAbstractAttachmentSource.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="272" y="264"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false"/>      
       <operations public="true" package="false" protected="false" private="false"/>    
     </display>  
   </interface>  
-  <class id="5" corner="BOTTOM_RIGHT" language="java" 
-    name="net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor" project="net.refractions.udig.catalog" 
+  <interface id="4" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.document.IAttachmentSource" 
+    project="net.refractions.udig.catalog" 
+    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/document/IAttachmentSource.java" binary="false">    
+    <position height="-1" width="-1" x="704" y="445"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <interface id="5" corner="BOTTOM_RIGHT" language="java" name="net.refractions.udig.catalog.document.IHotlinkSource" 
+    project="net.refractions.udig.catalog" 
     file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/document/IHotlinkSource.java" binary="false">    
-    <position height="-1" width="-1" x="478" y="601"/>    
+    <position height="-1" width="-1" x="679" y="125"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false"/>      
       <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <class id="6" corner="BOTTOM_RIGHT" language="java" 
+    name="net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo" project="net.refractions.udig.catalog" 
+    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/document/IDocumentSource.java" binary="false">    
+    <position height="-1" width="-1" x="274" y="633"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="true" protected="true" private="true"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
     </display>  
   </class>  
-  <enumeration id="6" corner="BOTTOM_RIGHT" language="java" 
-    name="net.refractions.udig.catalog.document.IDocument.ContentType" project="net.refractions.udig.catalog" 
-    file="/net.refractions.udig.catalog/src/net/refractions/udig/catalog/document/IDocument.java" binary="false">    
-    <position height="-1" width="-1" x="552" y="228"/>    
-    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false"/>      
-      <operations public="false" package="false" protected="false" private="false"/>    
-    </display>  
-  </enumeration>  
-  <nesting id="7">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="6"/>  
-  </nesting>  
+  <generalization id="7">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
   <generalization id="8">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="1"/>  
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="3"/>  
   </generalization>  
   <nesting id="9">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="2"/>  
+    <end type="TARGET" refId="6"/>  
   </nesting>  
   <generalization id="10">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="1"/>  
-  </generalization>  
-  <dependency id="11">    
     <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="5"/>  
-  </dependency>  
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="11">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
   <classifier-display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
     visibility="true">    
     <attributes public="false" package="false" protected="false" private="false"/>    
