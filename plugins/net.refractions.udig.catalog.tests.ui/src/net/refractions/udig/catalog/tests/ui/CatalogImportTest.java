@@ -11,12 +11,12 @@ import java.util.List;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.ui.CatalogImport;
 import net.refractions.udig.catalog.internal.wms.WMSServiceImpl;
 import net.refractions.udig.catalog.tests.ui.workflow.Assertion;
 import net.refractions.udig.catalog.tests.ui.workflow.DialogDriver;
 import net.refractions.udig.catalog.tests.ui.workflow.DummyMonitor;
 import net.refractions.udig.catalog.ui.ConnectionErrorPage;
+import net.refractions.udig.catalog.ui.wizard.CatalogImport;
 import net.refractions.udig.ui.WaitCondition;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 

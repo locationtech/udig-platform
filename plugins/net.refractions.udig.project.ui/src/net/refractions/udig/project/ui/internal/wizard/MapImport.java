@@ -18,8 +18,8 @@ package net.refractions.udig.project.ui.internal.wizard;
 
 import java.util.Map;
 
-import net.refractions.udig.catalog.internal.ui.CatalogImport;
 import net.refractions.udig.catalog.internal.ui.ResourceSelectionPage;
+import net.refractions.udig.catalog.ui.wizard.CatalogImport;
 import net.refractions.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
 import net.refractions.udig.catalog.ui.workflow.DataSourceSelectionState;
 import net.refractions.udig.catalog.ui.workflow.ResourceSelectionState;

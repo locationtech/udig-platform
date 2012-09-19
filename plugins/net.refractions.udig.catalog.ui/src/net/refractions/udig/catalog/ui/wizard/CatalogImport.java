@@ -14,7 +14,7 @@
  *    Lesser General Public License for more details.
  *
  */
-package net.refractions.udig.catalog.internal.ui;
+package net.refractions.udig.catalog.ui.wizard;
 
 import java.net.URL;
 import java.text.MessageFormat;
@@ -23,10 +23,11 @@ import java.util.Map;
 
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
+import net.refractions.udig.catalog.internal.ui.ConnectionPageDecorator;
+import net.refractions.udig.catalog.internal.ui.ReflectionWorkflowWizardPageProvider;
 import net.refractions.udig.catalog.ui.ConnectionErrorPage;
 import net.refractions.udig.catalog.ui.DataSourceSelectionPage;
 import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.catalog.ui.wizard.CatalogImportWizard;
 import net.refractions.udig.catalog.ui.workflow.ConnectionErrorState;
 import net.refractions.udig.catalog.ui.workflow.ConnectionFailurePage;
 import net.refractions.udig.catalog.ui.workflow.ConnectionFailureState;
