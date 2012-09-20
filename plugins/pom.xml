@@ -14,16 +14,12 @@
 
     <profiles>
         <profile>
-            <id>test-ui</id>
+            <id>test</id>
             <modules>
                 <module>net.refractions.udig.ui.tests</module>
                 <module>net.refractions.udig.catalog.tests.ui</module>
                 <module>net.refractions.udig.project.tests.ui</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>test</id>
-            <modules>
+
                 <module>net.refractions.udig.catalog.tests</module>
                 <module>net.refractions.udig.project.tests</module>
                 
