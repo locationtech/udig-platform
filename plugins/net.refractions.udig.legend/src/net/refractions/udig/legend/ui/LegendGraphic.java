@@ -279,6 +279,12 @@ public class LegendGraphic implements MapGraphic {
 							//use set icon
 							awtIcon = AWTSWTImageUtils.convertToAWT(entries[i]
 									.getIcon().getImageData());
+						}else{
+							//no rule, no icon, try default for layer
+							ImageDescriptor descriptor = LayerGeneratedGlyphDecorator.generateIcon((Layer)layer);
+							if (descriptor != null){
+								awtIcon = AWTSWTImageUtils.convertToAWT(descriptor.getImageData());	
+							}
 						}
 						drawRow(graphics, x[0], y[0], awtIcon, entries[i].getText(), i != 0);
 
