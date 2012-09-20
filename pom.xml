@@ -47,7 +47,7 @@ We need to ask you to download some libs prior to doing a full build:
 Our maven tests require a bit more memory:
    export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 
-Once that is done you can a normal build on the command line:
+Once that is done you can run a full build on the command line:
    mvn install -Dall
 
 If you run into any problems (to list debug and stack trace)
@@ -59,13 +59,8 @@ error messages are often misleading and evil.
 
 The build supports the use of profiles - the following profiles are defined:
 
-To run a normal build with tests:
-  mvn install -Dall -Ptest
-  
-To quickly build the product:
+To quickly build the product (result is in features/net.refractions.udig-product/target):
    mvn install -Pproduct
-
-The product is available in features/net.refractions.udig-product/target
 
 Builds documentation (requires sphinx-build is installed):
   mvn install -Pdocs
@@ -73,8 +68,11 @@ Builds documentation (requires sphinx-build is installed):
 Gathers the tutorials and source code for the software developers kit
   mvn install -Dall -Psdk
 
-Includes test plugins (this is optional):
-  mvn install -Ptest
+To run a full build with tests:
+  mvn install -Dall -Ptest
+  
+To run a full build with user interfaces tests (requires a display):
+  mvn install -Dall -Ptest,test-ui
 
 To profile the tests you will need:
   mvn install -Ptest -Pprofile

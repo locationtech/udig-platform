@@ -14,13 +14,18 @@
 
     <profiles>
         <profile>
-            <id>test</id>
+            <id>test-ui</id>
             <modules>
                 <module>net.refractions.udig.ui.tests</module>
-                <module>net.refractions.udig.catalog.tests</module>
                 <module>net.refractions.udig.catalog.tests.ui</module>
-                <module>net.refractions.udig.project.tests</module>
                 <module>net.refractions.udig.project.tests.ui</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>test</id>
+            <modules>
+                <module>net.refractions.udig.catalog.tests</module>
+                <module>net.refractions.udig.project.tests</module>
                 
                 <module>net.refractions.udig.catalog.tests.geotiff</module>
                 <module>net.refractions.udig.catalog.tests.wfs</module>
@@ -89,6 +94,7 @@
         <module>eu.udig.catalog.jgrass</module>
         <module>eu.udig.catalog.kml</module>
         <module>eu.udig.catalog.teradata</module>
+        <module>eu.udig.image.georeferencing</module>
         <module>eu.udig.omsbox</module>
         <module>eu.udig.style.advanced</module>
         <module>eu.udig.style.jgrass</module>
