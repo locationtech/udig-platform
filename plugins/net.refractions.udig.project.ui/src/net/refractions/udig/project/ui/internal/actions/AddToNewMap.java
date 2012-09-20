@@ -49,7 +49,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
@@ -138,7 +140,10 @@ public class AddToNewMap
         }
         
         if( needsUserInput ){
-            PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().setActive();
+            IWorkbench workbench = PlatformUI.getWorkbench();
+            IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
+            Shell shell = activeWorkbenchWindow.getShell();
+            shell.setActive();
             Map<Class< ? extends State>, WorkflowWizardPageProvider> pageMapping=new HashMap<Class<? extends State>, WorkflowWizardPageProvider>();
             ResourceSelectionPage resourceSelectionPage = new ResourceSelectionPage(Messages.AddToNewMap_resource_selection_page_title);
             resourceSelectionPage.setCollapseCheckedInput(true);

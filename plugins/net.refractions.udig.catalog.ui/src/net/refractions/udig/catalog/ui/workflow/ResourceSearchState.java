@@ -3,6 +3,7 @@ package net.refractions.udig.catalog.ui.workflow;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,16 +27,17 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
  * @since 1.3.3
  */
 public class ResourceSearchState extends State {
-
+    
+    public static final IResolve IMPORT_PLACEHOLDER = new ImportPlaceholder();
+    
     private String search;
     private ReferencedEnvelope extent;
     private List<IResolve> results;
-    private Set<IResolve> selected;
+    private Set<IResolve> selected = Collections.emptySet();
     
     /**
      * Initial results based on workflow context.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public void init( IProgressMonitor monitor ) throws IOException {
         // try to generate some default resources based on context
@@ -67,6 +69,28 @@ public class ResourceSearchState extends State {
             selected.add( results.get(0) ); 
         }
     }
+    public String getSearch() {
+        return search;
+    }
+    public void setSearch(String search) {
+        this.search = search;
+    }
+    public ReferencedEnvelope getExtent() {
+        return extent;
+    }
+    public void setExtent(ReferencedEnvelope extent) {
+        this.extent = extent;
+    }
+    public List<IResolve> getResults() {
+        return results;
+    }
+    public Set<IResolve> getSelected() {
+        return selected;
+    }
+    public void setSelected(Set<IResolve> selected) {
+        this.selected = selected;
+    }
+    
     @Override
     public Pair<Boolean, State> dryRun() {
         boolean singeSelection = selected != null && selected.size() == 1;
@@ -88,6 +112,33 @@ public class ResourceSearchState extends State {
         return true;
     }
 
+    public boolean hasNext() {
+        if (selected == null || selected.isEmpty()){
+            return false;
+        }
+        if( selected.contains( IMPORT_PLACEHOLDER )){
+            return true; // will queue a data import next
+        }
+        return false;
+    }
+    
+    @Override
+    public State next() {
+        if( selected.isEmpty() ){
+            return null;
+        }
+        if( selected.contains( IMPORT_PLACEHOLDER )){
+            DataSourceSelectionState dsState = new DataSourceSelectionState(true);
+            return dsState;
+            //return getWorkflow().getState( DataSourceSelectionState.class );
+        }
+        else {
+            //ResourceSelectionState rsState = new ResourceSelectionState();
+            //return rsState;
+            return null;
+        }
+    }
+    
     @Override
     public String getName() {
         return Messages.ResourceSelectionPage_searching ; 
@@ -110,7 +161,7 @@ class ImportPlaceholder implements IResolve {
     }
     @Override
     public List<IResolve> members(IProgressMonitor monitor) throws IOException {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
