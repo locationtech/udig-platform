@@ -102,10 +102,6 @@ public class Messages extends NLS {
 
     public static String DocumentDialog_editLinkHeader;
 
-    public static String DocumentDialog_enterFilenameErr;
-
-    public static String DocumentDialog_enterFilenameMsg;
-
     public static String DocumentDialog_enterFilenameTitle;
 
     public static String DocumentDialog_errValidFile;
