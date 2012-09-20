@@ -140,9 +140,7 @@ public class PlatformGIS {
                         wait(mutex, 200);
                     }
                 } catch (Exception e) {
-                    UiPlugin
-                            .log(
-                                    "Error occurred net.refractions.udig.issues.internal while waiting for an operation to complete", e); //$NON-NLS-1$
+                    UiPlugin.log("Error occurred while waiting for an operation to complete", e); //$NON-NLS-1$
                 }
             }
         }

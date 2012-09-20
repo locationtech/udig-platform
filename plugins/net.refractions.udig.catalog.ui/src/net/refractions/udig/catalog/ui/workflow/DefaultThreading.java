@@ -17,6 +17,9 @@ package net.refractions.udig.catalog.ui.workflow;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import net.refractions.udig.catalog.ui.CatalogUIPlugin;
+import net.refractions.udig.internal.ui.UiPlugin;
+
 import org.eclipse.swt.widgets.Display;
 
 /**
@@ -70,6 +73,7 @@ public class DefaultThreading implements ThreadingStrategy {
                         runnable.run();
                     } catch (Throwable e) {
                         exception[0] = e;
+                        CatalogUIPlugin.log( e.getMessage() , e); //$NON-NLS-1$
                     } finally {
                         done[0] = true;
                     }

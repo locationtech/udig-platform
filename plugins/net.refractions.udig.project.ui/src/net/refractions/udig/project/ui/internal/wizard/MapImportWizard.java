@@ -19,10 +19,14 @@ package net.refractions.udig.project.ui.internal.wizard;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ui.wizard.CatalogImportWizard;
+import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
+import net.refractions.udig.catalog.ui.workflow.ResourceSearchState;
 import net.refractions.udig.catalog.ui.workflow.ResourceSelectionState;
 import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.Workflow;
@@ -64,19 +68,41 @@ public class MapImportWizard extends CatalogImportWizard {
         String name = Messages.MapImport_createMap;
         monitor.beginTask(name, IProgressMonitor.UNKNOWN);
         monitor.setTaskName(name);
-        boolean superFinished = super.performFinish(monitor);
-        if (!superFinished)
-            return superFinished;
-
+        
+        EndConnectionState catalogImportState = getWorkflow().getState(EndConnectionState.class);
+        if( catalogImportState != null ){
+            boolean superFinished = super.performFinish(monitor);
+            if (!superFinished){
+                return superFinished; // connection failed unable to add to catalog
+            }
+        }
+        
+        List<IGeoResource> resourceList = new ArrayList<IGeoResource>();
+        /*
+        ResourceSearchState search = getWorkflow().getState( ResourceSearchState.class);
+        if( search != null ){
+            for( IResolve item : search.getSelected() ){
+                if( item == ResourceSearchState.IMPORT_PLACEHOLDER ){
+                    continue;
+                }
+                if( item instanceof IGeoResource ){
+                    resourceList.add( (IGeoResource) item );
+                }
+            }
+        }
+        */
         ResourceSelectionState state = getWorkflow().getState(ResourceSelectionState.class);
-        java.util.Map<IGeoResource, IService> resourceMap = state.getResources();
-
-        if (resourceMap == null || resourceMap.isEmpty())
-            return false;
-
-        // add the resources to the mapa
-        List<IGeoResource> resourceList = new ArrayList<IGeoResource>(resourceMap.keySet());
-
+        if( state != null ){
+            java.util.Map<IGeoResource, IService> resourceMap = state.getResources();
+            if (resourceMap != null && !resourceMap.isEmpty() ){
+                resourceList.addAll( resourceMap.keySet() );                
+            }
+        }
+        if( resourceList.isEmpty() ){
+            return false; // nothing to see here
+        }
+        // add the resources to the map
+        
         // reverse the list as ApplicationGIS.addLayersToMap add the first layer at the bottom
         // and so on
         Collections.reverse(resourceList);
