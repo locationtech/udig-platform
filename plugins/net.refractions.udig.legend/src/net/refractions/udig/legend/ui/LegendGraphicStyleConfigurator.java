@@ -19,9 +19,7 @@ package net.refractions.udig.legend.ui;
 import java.awt.Color;
 
 import net.refractions.udig.legend.internal.Messages;
-import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.project.ui.internal.dialogs.ColorEditor;
 import net.refractions.udig.style.IStyleConfigurator;
 
@@ -48,7 +46,11 @@ public class LegendGraphicStyleConfigurator extends IStyleConfigurator implement
     private Text indentSize;
     private ColorEditor fontColour;
     private ColorEditor backgroundColour;
-
+    
+    private LegendStyle style = null;
+    
+    private boolean fireEvents = true;
+    
     /*
      *         verticalMargin = 3; 
         horizontalMargin = 2; 
@@ -67,20 +69,6 @@ public class LegendGraphicStyleConfigurator extends IStyleConfigurator implement
      */
     
     public void createControl( Composite parent) {
-        IBlackboard blackboard = getStyleBlackboard();
-        LegendStyle style = null;
-        if (blackboard != null) {
-            style = (LegendStyle) blackboard.get(LegendStyleContent.ID);
-        }
-        
-        if (style == null) {
-            style = LegendStyleContent.createDefault();
-            if (blackboard != null) {
-                blackboard.put(LegendStyleContent.ID, style);
-                ((StyleBlackboard) blackboard).setSelected(new String[]{LegendStyleContent.ID});
-            }
-        }
-        
         ScrolledComposite scrollComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
         Composite composite = new Composite(scrollComposite, SWT.BORDER);
         
@@ -130,28 +118,11 @@ public class LegendGraphicStyleConfigurator extends IStyleConfigurator implement
         backgroundColourLabel.setText(Messages.LegendGraphicStyleConfigurator_background_colour);
         backgroundColour = new ColorEditor(composite);
         
-        
-        
         composite.layout();
         Point size = composite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         composite.setSize(size);
         scrollComposite.setContent(composite);
-        
-        verticalMargin.setText(Integer.toString(style.verticalMargin));
-        horizontalMargin.setText(Integer.toString(style.horizontalMargin));
-        verticalSpacing.setText(Integer.toString(style.verticalSpacing));
-        horizontalSpacing.setText(Integer.toString(style.horizontalSpacing));
-        indentSize.setText(Integer.toString(style.indentSize));
-        fontColour.setColorValue(new RGB(
-                style.foregroundColour.getRed(),
-                style.foregroundColour.getGreen(), 
-                style.foregroundColour.getBlue()));
-        backgroundColour.setColorValue(new RGB(
-                style.backgroundColour.getRed(),
-                style.backgroundColour.getGreen(),
-                style.backgroundColour.getBlue()
-                ));
-        
+ 
         verticalMargin.addModifyListener(this);
         horizontalMargin.addModifyListener(this);
         verticalSpacing.addModifyListener(this);
@@ -168,28 +139,36 @@ public class LegendGraphicStyleConfigurator extends IStyleConfigurator implement
 
     @Override
     protected void refresh() {
-        System.out.println("refresh"); //$NON-NLS-1$ //TODO erase this line
-        IBlackboard blackboard = getStyleBlackboard();
-        LegendStyle style = (LegendStyle) blackboard.get(LegendStyleContent.ID);
+        LegendStyle oldstyle = (LegendStyle) getStyleBlackboard().get(LegendStyleContent.ID);
         
-        if (style == null) {
-            style = LegendStyleContent.createDefault();
-            blackboard.put(LegendStyleContent.ID, style);
-            ((StyleBlackboard) blackboard).setSelected(new String[]{LegendStyleContent.ID});
+        if (oldstyle == null) {
+            oldstyle = LegendStyleContent.createDefault();
         }
+        style = new LegendStyle(oldstyle);
+        
+        //update components
+        fireEvents = false;
+        verticalMargin.setText(Integer.toString(style.verticalMargin));
+        horizontalMargin.setText(Integer.toString(style.horizontalMargin));
+        verticalSpacing.setText(Integer.toString(style.verticalSpacing));
+        horizontalSpacing.setText(Integer.toString(style.horizontalSpacing));
+        indentSize.setText(Integer.toString(style.indentSize));
+        fontColour.setColorValue(new RGB(
+                style.foregroundColour.getRed(),
+                style.foregroundColour.getGreen(), 
+                style.foregroundColour.getBlue()));
+        backgroundColour.setColorValue(new RGB(
+                style.backgroundColour.getRed(),
+                style.backgroundColour.getGreen(),
+                style.backgroundColour.getBlue()
+                ));
+        fireEvents = true;
+        updateBlackboard();
     }
     
     private void updateBlackboard() {
-        IBlackboard blackboard = getStyleBlackboard();
-        LegendStyle style = (LegendStyle) blackboard.get(LegendStyleContent.ID);
         
-        if (style == null) {
-            style = LegendStyleContent.createDefault();
-            blackboard.put(LegendStyleContent.ID, style);
-            ((StyleBlackboard) blackboard).setSelected(new String[]{LegendStyleContent.ID});
-        }
-        
-        RGB bg = backgroundColour.getColorValue();
+    	RGB bg = backgroundColour.getColorValue();
         style.backgroundColour = new Color(bg.red, bg.green, bg.blue);
         
         RGB fg = fontColour.getColorValue();
@@ -200,6 +179,8 @@ public class LegendGraphicStyleConfigurator extends IStyleConfigurator implement
         style.indentSize = Integer.parseInt(indentSize.getText());
         style.verticalMargin = Integer.parseInt(verticalMargin.getText());
         style.verticalSpacing = Integer.parseInt(verticalSpacing.getText());
+        
+        getStyleBlackboard().put(LegendStyleContent.ID, style);
     }
 
     public void widgetSelected( SelectionEvent e ) {
@@ -211,6 +192,8 @@ public class LegendGraphicStyleConfigurator extends IStyleConfigurator implement
     }
 
     public void modifyText( ModifyEvent e ) {
-        updateBlackboard();
+    	if (fireEvents){
+    		updateBlackboard();
+    	}
     }
 }

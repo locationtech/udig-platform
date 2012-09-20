@@ -663,8 +663,8 @@ public class Glyph {
                 gc.setForeground( c = color( Color.BLACK ) );
                 gc.drawRectangle( 0, 0, 7, 7 );
                 gc.drawRectangle( 0, 0, 15, 7 );
-                gc.drawRectangle( 0, 7, 7, 15 );
-                gc.drawRectangle( 0, 7, 15, 15 );
+                gc.drawRectangle( 0, 0, 7, 15 );
+                gc.drawRectangle( 0, 0, 15, 15 );
                 c.dispose();
                 
                 ImageData clone = (ImageData) swtImage.getImageData().clone();                
