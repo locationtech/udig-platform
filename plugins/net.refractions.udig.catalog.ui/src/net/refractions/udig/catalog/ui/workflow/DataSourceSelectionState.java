@@ -141,10 +141,10 @@ public class DataSourceSelectionState extends State {
         this.descriptor = descriptor;
     }
 
-	@Override
-	public String getName() {
-		return Messages.DataSourceSelectionState_name; 
-	}
+    @Override
+    public String getName() {
+        return Messages.DataSourceSelectionState_name;
+    }
 
     public List<UDIGConnectionFactoryDescriptor> getShortlist() {
         return shortlist;

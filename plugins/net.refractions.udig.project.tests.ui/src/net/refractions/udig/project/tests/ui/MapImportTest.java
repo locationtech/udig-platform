@@ -33,8 +33,8 @@ import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
 import net.refractions.udig.project.ui.internal.LayersView;
-import net.refractions.udig.project.ui.internal.MapImport;
 import net.refractions.udig.project.ui.internal.Messages;
+import net.refractions.udig.project.ui.internal.wizard.MapImport;
 import net.refractions.udig.ui.WaitCondition;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
