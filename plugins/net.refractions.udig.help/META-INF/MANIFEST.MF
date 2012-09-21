@@ -18,6 +18,5 @@ Require-Bundle: org.apache.ant,
  net.refractions.udig.project.ui.editor,
  net.refractions.udig.catalog.ui,
  net.refractions.udig.tool.default
-Import-Package: net.refractions.udig.catalog.internal.ui,
- net.refractions.udig.project.ui.internal
+Import-Package: net.refractions.udig.project.ui.internal
 

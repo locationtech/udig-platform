@@ -485,7 +485,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         SimpleFeatureType finalFeatureType;
         FeatureCollection<SimpleFeatureType, SimpleFeature> temp;
 
-        File lineFile = addFileNameSuffix(file, CatalogExport.LINE_SUFFIX);
+        File lineFile = addFileNameSuffix(file, LINE_SUFFIX);
 
         finalFeatureType = createFeatureType(schema, MultiLineString.class, data.getCRS());
         temp = new ToMultiLineFeatureCollection(lineCollection, finalFeatureType, schema
@@ -501,7 +501,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
 
         SimpleFeatureType createFeatureType;
         FeatureCollection<SimpleFeatureType, SimpleFeature> temp;
-        File pointFile = addFileNameSuffix(file, CatalogExport.POINT_SUFFIX);
+        File pointFile = addFileNameSuffix(file, POINT_SUFFIX);
 
         createFeatureType = createFeatureType(schema, MultiPoint.class, data.getCRS());
         temp = new ToMultiPointFeatureCollection(pointCollection, createFeatureType, schema
@@ -515,7 +515,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
             FeatureCollection<SimpleFeatureType, SimpleFeature> polygonCollection,
             SimpleFeatureType schema, String geomName, MathTransform mt )
             throws IllegalFilterException, IOException, SchemaException, MalformedURLException {
-        File polyFile = addFileNameSuffix(file, CatalogExport.POLY_SUFFIX);
+        File polyFile = addFileNameSuffix(file, POLY_SUFFIX);
 
         SimpleFeatureType createFeatureType = createFeatureType(schema, MultiPolygon.class, data
                 .getCRS());
@@ -593,16 +593,18 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         // return Geometry.class==geometryType;
     }
 
+    static String SHAPEFILE_EXT = ".shp"; //$NON-NLS-1$
+    static String POLY_SUFFIX = "_poly"; //$NON-NLS-1$
+    static String POINT_SUFFIX = "_point"; //$NON-NLS-1$
+    static String LINE_SUFFIX = "_line"; //$NON-NLS-1$
+
     private File addFileNameSuffix( File file, String suffix ) {
         String path = file.getPath();
-        path = path.replaceAll(CatalogExport.POLY_SUFFIX + CatalogExport.SHAPEFILE_EXT,
-                CatalogExport.SHAPEFILE_EXT);
-        path = path.replaceAll(CatalogExport.POINT_SUFFIX + CatalogExport.SHAPEFILE_EXT,
-                CatalogExport.SHAPEFILE_EXT);
-        path = path.replaceAll(CatalogExport.LINE_SUFFIX + CatalogExport.SHAPEFILE_EXT,
-                CatalogExport.SHAPEFILE_EXT);
+        path = path.replaceAll(POLY_SUFFIX + SHAPEFILE_EXT, SHAPEFILE_EXT);
+        path = path.replaceAll(POINT_SUFFIX + SHAPEFILE_EXT, SHAPEFILE_EXT);
+        path = path.replaceAll(LINE_SUFFIX + SHAPEFILE_EXT, SHAPEFILE_EXT);
 
-        if (path.toLowerCase().endsWith(CatalogExport.SHAPEFILE_EXT)) {
+        if (path.toLowerCase().endsWith(SHAPEFILE_EXT)) {
             String start = path.substring(0, path.length() - 4);
             String end = path.substring(path.length() - 4);
             return new File(start + suffix + end);

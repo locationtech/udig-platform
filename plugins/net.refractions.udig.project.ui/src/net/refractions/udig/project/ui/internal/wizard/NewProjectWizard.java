@@ -1,9 +1,18 @@
 /*
- * uDig - User Friendly Desktop Internet GIS client http://udig.refractions.net (C) 2004, Refractions Research Inc. This
- * library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; version 2.1 of the License. This library is distributed in the
- * hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ *    uDig - User Friendly Desktop Internet GIS client
+ *    http://udig.refractions.net
+ *    (C) 2004-2012, Refractions Research Inc.
+ *
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation;
+ *    version 2.1 of the License.
+ *
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *    Lesser General Public License for more details.
+ *
  */
 package net.refractions.udig.project.ui.internal.wizard;
 
@@ -33,8 +42,8 @@ import org.eclipse.ui.IWorkbench;
  */
 public class NewProjectWizard extends Wizard implements INewWizard {
 
-    /** 
-     * Wizard page used to fill parameters of new project 
+    /**
+     * Wizard page used to fill parameters of new project
      */
     protected NewProjectWizardPage page;
 
@@ -43,10 +52,11 @@ public class NewProjectWizard extends Wizard implements INewWizard {
      * 
      * @param page The page to set.
      */
-    public void setPage( NewProjectWizardPage page ) {
+    public void setPage(NewProjectWizardPage page) {
         this.page = page;
         setWindowTitle(page.getTitle());
     }
+
     /**
      * The <code>Wizard</code> implementation of this <code>IWizard</code> method does nothing.
      * Subclasses should extend if extra pages need to be added before the wizard opens. New pages
@@ -67,28 +77,31 @@ public class NewProjectWizard extends Wizard implements INewWizard {
      * @return <code>true</code> when project successfully created
      */
     public boolean performFinish() {
-    	if(!page.validate()){
-    		return false;
-    	}
-    	
+        if (!page.validate()) {
+            return false;
+        }
+
         String projectPath = page.getProjectPath();
         final String projectName = page.getProjectName();
-        projectPath = projectPath.replaceAll("\\\\", "/");  //$NON-NLS-1$//$NON-NLS-2$
-        
-        while( projectPath.endsWith("/") ){ //$NON-NLS-1$
-        	projectPath = projectPath.substring(0,projectPath.length()-2);
-    	}
-        Project project  = ProjectPlugin.getPlugin().getProjectRegistry().getProject(projectPath+File.separator+projectName+".udig"); //$NON-NLS-1$ //$NON-NLS-2$
+        projectPath = projectPath.replaceAll("\\\\", "/"); //$NON-NLS-1$//$NON-NLS-2$
+
+        while (projectPath.endsWith("/")) { //$NON-NLS-1$
+            projectPath = projectPath.substring(0, projectPath.length() - 2);
+        }
+        Project project = ProjectPlugin.getPlugin().getProjectRegistry()
+                .getProject(projectPath + File.separator + projectName + ".udig"); //$NON-NLS-1$ //$NON-NLS-2$
         project.setName(projectName);
         Resource projectResource = project.eResource();
         try {
-			projectResource.save(Collections.EMPTY_MAP);
-		} catch (IOException e) {
-			ProjectUIPlugin.log("Error during saving the project file of an anew created project", e); //$NON-NLS-1$
-		}
-        
+            projectResource.save(Collections.EMPTY_MAP);
+        } catch (IOException e) {
+            ProjectUIPlugin.log(
+                    "Error during saving the project file of an anew created project", e); //$NON-NLS-1$
+        }
+
         return true;
     }
+
     /**
      * We can finish if the user has entered a file.
      * 
@@ -97,6 +110,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
     public boolean canFinish() {
         return page.isPageComplete();
     }
+
     /**
      * Hook us up to the world .. I mean workbench.
      * <p>
@@ -111,7 +125,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
      * @param workbench
      * @param selection
      */
-    public void init( IWorkbench workbench, IStructuredSelection selection ) {
+    public void init(IWorkbench workbench, IStructuredSelection selection) {
         // TODO: Magic to remember previous directory
     }
 

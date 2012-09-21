@@ -17,6 +17,7 @@
 package net.refractions.udig.catalog.ui.search;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -29,6 +30,7 @@ import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.ResolveContentProvider;
 import net.refractions.udig.catalog.ui.ResolveLabelProviderSimple;
 import net.refractions.udig.catalog.ui.ResolveTitlesDecorator;
+import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -53,6 +55,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -72,13 +75,10 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
  * @author Levi Putna
  */
 public class ResourceSearchComposite extends Composite implements ISelectionProvider {
-
     private Text text;
-
     private List<ISearch> catalogs;
-
     private TreeViewer treeViewer;
-    private static final long DELAY = 5000;
+    private static final long DELAY = 500;
 
     /**
      * Listen for key press and issue a search.
@@ -123,7 +123,7 @@ public class ResourceSearchComposite extends Composite implements ISelectionProv
         text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     
         // Using SWT.SINGLE until we have "join" functionality
-        treeViewer = new TreeViewer(this, SWT.BORDER | SWT.CHECK | SWT.SINGLE);
+        treeViewer = new TreeViewer(this, SWT.BORDER | SWT.MULTI ); //  SWT.CHECK ?
         
         Tree tree = treeViewer.getTree();
     
@@ -133,6 +133,10 @@ public class ResourceSearchComposite extends Composite implements ISelectionProv
         treeViewer.setLabelProvider(createLabelProvider());
         
         catalogs = Arrays.asList(CatalogPlugin.getDefault().getCatalogs());
+    }
+
+    public Control getControl(){
+        return treeViewer != null ? treeViewer.getControl() : null;
     }
 
     public IStructuredSelection getSelection() {
@@ -165,6 +169,26 @@ public class ResourceSearchComposite extends Composite implements ISelectionProv
         treeViewer.removeSelectionChangedListener(listener);
     }
 
+    public void setSearchText( final String search ){
+        PlatformGIS.asyncInDisplayThread(
+        new Runnable() {
+            
+            @Override
+            public void run() {
+                if( text != null && !text.isDisposed() ){
+                    text.setText( search != null ? search : "" );
+                    doSearch( 0 );                
+                }
+            }
+        },true );
+    }
+    public String getSearchText(){
+        if( text != null && !text.isDisposed() ){
+            return text.getText();
+        }
+        return null;
+    }
+    
     /**
      * LabelProvider; override to take charge of your labels and icons.
      * 
@@ -174,7 +198,7 @@ public class ResourceSearchComposite extends Composite implements ISelectionProv
         ResolveLabelProviderSimple base = new ResolveLabelProviderSimple();
         return new DecoratingLabelProvider(base, new ResolveTitlesDecorator(base));
     }
-
+    
     /**
      * Default implementation will work for lists, please overide if you are into the whole tree
      * thing.
@@ -191,7 +215,7 @@ public class ResourceSearchComposite extends Composite implements ISelectionProv
      * search results.
      * @param delay a time delay in milliseconds before the search should run
      */
-    private void doSearch(long delay) {
+    protected void doSearch(long delay) {
         if( search.getState() == Job.RUNNING ){
             search.cancel();
         }
@@ -201,7 +225,7 @@ public class ResourceSearchComposite extends Composite implements ISelectionProv
             search.schedule( delay );
         }
         else {
-            List<IResolve> empty = Collections.emptyList();
+            List<IResolve> empty = new ArrayList<IResolve>();
             doSearchCallback( empty );
         }
     }
@@ -211,17 +235,19 @@ public class ResourceSearchComposite extends Composite implements ISelectionProv
      * 
      * @param resolves
      */
-    private void doSearchCallback(final List<IResolve> resolves) {
-        
+    protected void doSearchCallback(final List<IResolve> resolves) {
+        reviewResults( resolves );
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
                 treeViewer.setInput(resolves);
             }
         });
-        
+    }
+    protected void reviewResults(List<IResolve> resolves) {
+        // do nothing
     }
     /**
-     * Search catalogs in a seperate job.
+     * Search catalogs in a separate job.
      * 
      * @author Jody Garnett
      */
