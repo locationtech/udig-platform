@@ -17,7 +17,7 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
    </copyright>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">
-       Eclipse Public License v1.0
+      Eclipse Public License v1.0
    </license>
 
    <url>
@@ -617,13 +617,6 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
 
    <plugin
          id="org.eclipse.team.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ui.ide"
          download-size="0"
          install-size="0"
          version="0.0.0"
