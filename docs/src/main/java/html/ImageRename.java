@@ -59,6 +59,9 @@ public class ImageRename {
 
         @Override
         public boolean accept(File f) {
+            if( target.startsWith("*.")){
+                return f.getName().endsWith( target.substring(1) );
+            }
             return f.getName().equals(target);
         }
     }
@@ -237,15 +240,15 @@ public class ImageRename {
         File renameFile = args.length > 1 ? new File(args[1]) : null;
 
         if (rstFile != null && rstFile.isDirectory()) {
-            rstFile = new File(rstFile, "index.rst");
+            rstFile = new File(rstFile, "*.rst");
         }
 
         if (rstFile == null || !rstFile.exists()) {
-            File cd = new File("user/en/getting_started");
+            File cd = new File("user");
 
             JFileChooser dialog = new JFileChooser(cd);
             dialog.setFileFilter(new TargetFileFilter("index.rst"));
-            dialog.setDialogTitle("odt2sphinx index.rst file");
+            dialog.setDialogTitle("Step 1: odt2sphinx RST file");
 
             int open = dialog.showDialog(null, "Rename Images");
 
@@ -258,7 +261,7 @@ public class ImageRename {
 
         if (rstFile == null || !rstFile.exists() || rstFile.isDirectory()) {
             System.out
-                    .println("Locate index.rst file generated from odt2sphinx: '" + rstFile + "'");
+                    .println("Locate *.RST file generated from odt2sphinx: '" + rstFile + "'");
             System.exit(-1);
         }
         File rstDirectory = null;
@@ -272,7 +275,7 @@ public class ImageRename {
         if (renameFile == null) {
             JFileChooser dialog = new JFileChooser(rstDirectory.getParentFile());
             dialog.setFileFilter(new TargetFileFilter("rename.properties"));
-            dialog.setDialogTitle("rename.properties");
+            dialog.setDialogTitle("Step 2: rename.properties");
 
             int open = dialog.showDialog(null, "Rename Images");
 
