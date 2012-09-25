@@ -80,7 +80,7 @@ as we wait for some of the larger downloads.
 
 * Visit and click on the link for “Eclipse Modeling Tools” and download the appropriate:
 
-  |10000000000002D60000006969C9BC42_png|
+  |eclipse_modeling_tools_png|
 
   Tested with `Eclipse Indigo 3.7.2 Packages <http://www.eclipse.org/downloads/packages/eclipse-modeling-tools/indigosr2>`_ :
 
@@ -121,7 +121,7 @@ as we wait for some of the larger downloads.
   .. hint::
      Please ensure your eclipse and jre match (both win32 – or both win64).
 
-.. |10000000000002D60000006969C9BC42_png| image:: images/10000000000002D60000006969C9BC42.png
+.. |eclipse_modeling_tools_png| image:: images/eclipse_modeling_tools.png
     :width: 15.36cm
     :height: 2.221cm
 
@@ -139,7 +139,7 @@ When your eclipse download has finished and we can begin to installation.
   .. warning::
      Unzipping using windows does not support long filenames.
 
-  |1000000000000300000001BC134E78A3_png|
+  |install_eclipse_png|
 
   .. hint::
      If you need a good program to unzip archive files try `7zip <http://www.7-zip.org>`_.
@@ -147,12 +147,12 @@ When your eclipse download has finished and we can begin to installation.
 
 * Open up the jre zip file Drag from the 7zip window.
 
-  |10000000000001D90000015F4869EDF0_png|
+  |install_jre_7zip_png|
 
 
 * Drop into your :file:`C:\\java\\eclipse`
 
-  |1000000000000300000001BCC4A03AEE_png|
+  |install_jre_png|
 
   .. hint::
      The folder must be called “jre” for the :command:`eclipse.exe` to recognize it.
@@ -163,7 +163,7 @@ When your eclipse download has finished and we can begin to installation.
   .. warning::
      Be careful when extracting this zip not to get something silly like dropins/dropins.
 
-  |1000000000000300000001BCF0784F92_png|
+  |install_dropins_png|
 
 
 * Navigate to :file:`C:\java\eclipse` and right-click on the :command:`eclipse.exe`
@@ -174,22 +174,22 @@ When your eclipse download has finished and we can begin to installation.
      You may want to modify the “eclipse.ini” file to specify additional command line 
      options such as more memory.
 
-.. |1000000000000300000001BCF0784F92_png| image:: images/1000000000000300000001BCF0784F92.png
+.. |install_dropins_png| image:: images/install_dropins.png
     :width: 12.19cm
     :height: 7.05cm
 
 
-.. |1000000000000300000001BCC4A03AEE_png| image:: images/1000000000000300000001BCC4A03AEE.png
+.. |install_jre_png| image:: images/install_jre.png
     :width: 12.19cm
     :height: 7.05cm
 
 
-.. |10000000000001D90000015F4869EDF0_png| image:: images/10000000000001D90000015F4869EDF0.png
+.. |install_jre_7zip_png| image:: images/install_jre_7zip.png
     :width: 8.01cm
     :height: 5.941cm
 
 
-.. |1000000000000300000001BC134E78A3_png| image:: images/1000000000000300000001BC134E78A3.png
+.. |install_eclipse_png| image:: images/install_eclipse.png
     :width: 12.19cm
     :height: 7.05cm
 
@@ -206,22 +206,22 @@ for different projects) each with its own configuration.
 
 * Choose a workspace for your sdk development: :file:`C:\\java\\workspace`
 
-  |100000000000028800000135E311BA3E_jpg|
+  |eclipse_workspace_jpg|
 
 
 * Wait a few moments while eclipse starts up.
 
 * On the Welcome view press the :guilabel:`Workbench` button along the right hand side.
 
-  |100000000000035C0000028A184A902D_jpg|
+  |eclipse_welcome_jpg|
 
 
-.. |100000000000028800000135E311BA3E_jpg| image:: images/100000000000028800000135E311BA3E.jpg
+.. |eclipse_workspace_jpg| image:: images/eclipse_workspace.jpg
     :width: 10.97cm
     :height: 5.23cm
 
 
-.. |100000000000035C0000028A184A902D_jpg| image:: images/100000000000035C0000028A184A902D.jpg
+.. |eclipse_welcome_jpg| image:: images/eclipse_welcome.jpg
     :width: 14.559cm
     :height: 11cm
 
@@ -254,7 +254,7 @@ We have a few global settings to configure before we can proceed.
     Regardless of platform we are interested in making sure :file:`jai_core.jar`, :file:`jai_imageio.jar` 
     and :file:`jai_codec.jar` are available.
 
-  |10000000000002290000022FF6824562_jpg|
+  |jre_definitino_jpg|
 
   .. note::
      On OSX we are not able to provide a JRE for you to download – uDig will install JAI and ImageIO when 
@@ -265,7 +265,7 @@ We have a few global settings to configure before we can proceed.
     Simply accept this request; it won't take long since we don't yet have any source code.
 
 
-.. |10000000000002290000022FF6824562_jpg| image:: images/10000000000002290000022FF6824562.jpg
+.. |jre_definitino_jpg| image:: images/jre_definitino.jpg
     :width: 9.359cm
     :height: 9.47cm
 
@@ -281,7 +281,7 @@ We are now going to unpack the udig sdk and use it as our plug-in target platfor
 
 * You will be left with the following directory structure:
 
-  |1000000000000300000001C44CE3D1F6_png|
+  |install_delta_png|
 
 
 * Go back to eclipse and open :menuselection:`Window --> Preferences`.
@@ -292,7 +292,7 @@ We are now going to unpack the udig sdk and use it as our plug-in target platfor
 
 * Choose :guilabel:`Default` as we are going to include the eclipse plugins.
 
-  |10000000000002CF000001561A929436_png|
+  |target_platform_definition_png|
 
 * Press :guilabel:`Next` to continue. This will open the “Target Content” page.
 
@@ -300,17 +300,17 @@ We are now going to unpack the udig sdk and use it as our plug-in target platfor
 * Press the :guilabel:`Add` button and add a Directory. Choose the :file:`C:\\java\\target\\eclipse` 
   directory where you unpacked the eclipse-delta-pack.
 
-  |100000000000020D0000011563943DB1_png|
+  |target_platform_add_eclipse_png|
 
 
 * Press :guilabel:`Add...` again and add the :file:`C:\\java\\target\\udig_sdk` directory.
 
-  |100000000000020D0000011E62AF5DA4_png|
+  |target_platform_add_sdk_png|
 
 
 * Change the name to “uDig SDK” and confirm all three folders are listed.
 
-  |10000000000002CF000001DA33230A27_png|
+  |target_platform_locations_png|
 
 * Press :guilabel:`Finish` to complete the “uDig SDK” target platform.
 
@@ -327,27 +327,27 @@ working on uDig plug-ins, but before we do that lets try running the application
    are running – then these instructions are out of date!
 
 
-.. |100000000000020D0000011563943DB1_png| image:: images/100000000000020D0000011563943DB1.png
+.. |target_platform_add_eclipse_png| image:: images/target_platform_add_eclipse.png
     :width: 8.331cm
     :height: 4.399cm
 
 
-.. |10000000000002CF000001561A929436_png| image:: images/10000000000002CF000001561A929436.png
+.. |target_platform_definition_png| image:: images/target_platform_definition.png
     :width: 11.411cm
     :height: 5.429cm
 
 
-.. |100000000000020D0000011E62AF5DA4_png| image:: images/100000000000020D0000011E62AF5DA4.png
+.. |target_platform_add_sdk_png| image:: images/target_platform_add_sdk.png
     :width: 8.331cm
     :height: 4.54cm
 
 
-.. |1000000000000300000001C44CE3D1F6_png| image:: images/1000000000000300000001C44CE3D1F6.png
+.. |install_delta_png| image:: images/install_delta.png
     :width: 12.19cm
     :height: 7.181cm
 
 
-.. |10000000000002CF000001DA33230A27_png| image:: images/10000000000002CF000001DA33230A27.png
+.. |target_platform_locations_png| image:: images/target_platform_locations.png
     :width: 11.411cm
     :height: 7.519cm
 
@@ -361,18 +361,18 @@ good way to test that everything is installed correctly.
 
   In the top right of the toolbar you can choose **Other** to open the Open Perspective dialog
 
-  |10000000000000C70000009D4D0BCF71_jpg|
+  |perspective_other_jpg|
 
 
 * Chose **Plugin-Development** from the list and press :guilabel:`OK`
 
-  |1000000000000183000001907C2E19E5_jpg|
+  |perspective_open_jpg|
 
 
 * Click on the :guilabel:`Plugins view` and right click on **net.refractions.udig** plug-in the list. 
   Select :menuselection:`Import As --> Source Project` to copy the plugin into your workspace.
 
-  |100000000000035C0000028AAD3294F1_jpg|
+  |import_source_project_jpg|
 
 * Change to the :guilabel:`Package Explorer` view and open up the **net.refractions.udig** plugin and 
   double click to open **udig.product**.
@@ -384,46 +384,46 @@ good way to test that everything is installed correctly.
 
   The result should look like:
 
-  |1000000000000233000001E6EB8CC584_png|
+  |product_dependencies_png|
 
 
 * Return to the :guilabel:`overview` tab of **udig.product** click on the :guilabel:`Launch Eclipse Application`
   link (it is located under testing as shown below).
 
-  |100000000000038E000001FFF67803BB_png|
+  |product_launch_png|
 
 
 * The application will now start!
 
-  |100000000000035C0000028AD4061D1A_jpg|
+  |udig_welcome_jpg|
 
 
-.. |10000000000000C70000009D4D0BCF71_jpg| image:: images/10000000000000C70000009D4D0BCF71.jpg
+.. |perspective_other_jpg| image:: images/perspective_other.jpg
     :width: 3.371cm
     :height: 2.66cm
 
 
-.. |1000000000000183000001907C2E19E5_jpg| image:: images/1000000000000183000001907C2E19E5.jpg
+.. |perspective_open_jpg| image:: images/perspective_open.jpg
     :width: 6.549cm
     :height: 6.77cm
 
 
-.. |1000000000000233000001E6EB8CC584_png| image:: images/1000000000000233000001E6EB8CC584.png
+.. |product_dependencies_png| image:: images/product_dependencies.png
     :width: 8.939cm
     :height: 7.721cm
 
 
-.. |100000000000038E000001FFF67803BB_png| image:: images/100000000000038E000001FFF67803BB.png
+.. |product_launch_png| image:: images/product_launch.png
     :width: 12.839cm
     :height: 7.211cm
 
 
-.. |100000000000035C0000028AD4061D1A_jpg| image:: images/100000000000035C0000028AD4061D1A.jpg
+.. |udig_welcome_jpg| image:: images/udig_welcome.jpg
     :width: 14.559cm
     :height: 11cm
 
 
-.. |100000000000035C0000028AAD3294F1_jpg| image:: images/100000000000035C0000028AAD3294F1.jpg
+.. |import_source_project_jpg| image:: images/import_source_project.jpg
     :width: 13.651cm
     :height: 10.321cm
 
@@ -443,7 +443,7 @@ Here are some additional things to try when running uDig.
 
   to your “program arguments”.
 
-  |10000000000003820000028AA509C26F_jpg|
+  |run_arguments_jpg|
 
   You can also review the VM arguments; including changing the amount of memory available to your uDig 
   application::
@@ -463,7 +463,7 @@ Here are some additional things to try when running uDig.
 * The running uDig application makes use of the “Workspace Data” folder defined in the Run dialog. Try checking
   clear and workspace in order to simulate starting uDig from a fresh install.
 
-  |10000000000003820000028AA8CFBF1E_jpg|
+  |run_main_jpg|
 
 
 * Have a look on the Tracing tab of the Run dialog; you can control the amount of logging 
@@ -473,7 +473,7 @@ Here are some additional things to try when running uDig.
      Tracing is especially useful when the -consolelog program argument is used.
 
 
-  |10000000000003820000028A7A68C47D_jpg|
+  |run_tracing_jpg|
 
 
 * Have a look at the plug-ins tab and see if you can turn off: printing support.
@@ -482,7 +482,7 @@ Here are some additional things to try when running uDig.
      Normally the plugins included by an application are organized into features – we will cover 
      how to do this in the :doc:`Custom Application Tutorial <../CustomApplication/CustomApplication>`.
 
-  |10000000000003820000028A45F419F0_jpg|
+  |run_plugins_jpg|
 
 
 * Advanced: When working on the uDig project itself we use the FindBugz tool to check for obvious 
@@ -490,30 +490,30 @@ Here are some additional things to try when running uDig.
 
   `<http://findbugs.cs.umd.edu/eclipse>`_
 
-  |10000000000001FB000000CE8E433C82_jpg|
+  |install_findbugs_jpg|
 
 
-.. |10000000000003820000028A7A68C47D_jpg| image:: images/10000000000003820000028A7A68C47D.jpg
+.. |run_tracing_jpg| image:: images/run_tracing.jpg
     :width: 15.199cm
     :height: 11cm
 
 
-.. |10000000000003820000028A45F419F0_jpg| image:: images/10000000000003820000028A45F419F0.jpg
+.. |run_plugins_jpg| image:: images/run_plugins.jpg
     :width: 15.199cm
     :height: 11cm
 
 
-.. |10000000000003820000028AA509C26F_jpg| image:: images/10000000000003820000028AA509C26F.jpg
+.. |run_arguments_jpg| image:: images/run_arguments.jpg
     :width: 15.199cm
     :height: 11cm
 
 
-.. |10000000000001FB000000CE8E433C82_jpg| image:: images/10000000000001FB000000CE8E433C82.jpg
+.. |install_findbugs_jpg| image:: images/install_findbugs.jpg
     :width: 8.58cm
     :height: 3.491cm
 
 
-.. |10000000000003820000028AA8CFBF1E_jpg| image:: images/10000000000003820000028AA8CFBF1E.jpg
+.. |run_main_jpg| image:: images/run_main.jpg
     :width: 15.199cm
     :height: 11cm
 
