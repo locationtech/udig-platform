@@ -72,4 +72,15 @@
             </resolve>
          </factory>
       </extension>
+       <extension
+            point="net.refractions.udig.project.layerInterceptor">
+         <layerRemoved
+               class="net.refractions.udig.legend.internal.RemoveMapgraphicLayerInterceptor"
+               id="net.refractions.udig.legend.layerRemoved">
+         </layerRemoved>
+         <layerAdded
+               class="net.refractions.udig.legend.internal.AddMapgraphicLayerInterceptor"
+               id="net.refractions.udig.legend.layerAdded">
+         </layerAdded>
+      </extension>
 </plugin>

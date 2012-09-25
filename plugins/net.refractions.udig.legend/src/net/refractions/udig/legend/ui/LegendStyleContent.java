@@ -60,6 +60,10 @@ public class LegendStyleContent extends StyleContent {
         return createDefault();
     }
     
+    /**
+     * Creates the default legend style
+     * @return
+     */
     public static LegendStyle createDefault() {
         LegendStyle style = new LegendStyle();
         
