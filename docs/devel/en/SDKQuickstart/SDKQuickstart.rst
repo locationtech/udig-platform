@@ -1,7 +1,7 @@
 SDK Quickstart
 ##############
 
- |udig_logo_gif| |refractions_png| |lisasoft_png| |camptocamp_logo| |sponsor_logo| |hydrologis_logo| 
+ |udig_logo_gif| |refractions_png| |lisasoft_png| |camptocamp_logo| |sponsor_logo| |hydrologis_logo| 
 
 .. image:: ../../../images/background.png
    :width: 100%
@@ -591,13 +591,4 @@ to your command line options::
    -vm C:\java\eclipse\jre\\bin\javaw.exe
 
 This will force :command:`eclipse.exe` to use the jre you downloaded.
-
-
-References
-==========
-
-.. toctree::
-   :maxdepth: 1
-
-   SDK_Quickstart_for_uDig_1.1.0
 
