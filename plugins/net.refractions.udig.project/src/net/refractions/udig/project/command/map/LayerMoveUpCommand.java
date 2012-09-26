@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.viewers.IStructuredSelection;
-
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.Layer;
+import net.refractions.udig.project.internal.LayerLegendItem;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.viewers.IStructuredSelection;
 
 /**
  * Move the selected layers up.
@@ -20,11 +20,14 @@ import net.refractions.udig.project.internal.Layer;
  * @since 1.2.0
  */
 public class LayerMoveUpCommand extends AbstractCommand implements UndoableMapCommand {
+    
     private List<ILayer> selection;
+    
     public LayerMoveUpCommand( ILayer layer ) {
         selection = new ArrayList<ILayer>();
         selection.add(layer);
     }
+    
     public LayerMoveUpCommand( IStructuredSelection structuredSelection ) {
         selection = new ArrayList<ILayer>();
         if (structuredSelection.isEmpty()) {
@@ -35,14 +38,19 @@ public class LayerMoveUpCommand extends AbstractCommand implements UndoableMapCo
             if (item instanceof ILayer) {
                 ILayer layer = (ILayer) item;
                 selection.add(layer);
+            } else if (item instanceof LayerLegendItem) {
+                final LayerLegendItem layerItem = (LayerLegendItem) item;
+                selection.add(layerItem.getLayer());
             }
         }
     }
+    
     public LayerMoveUpCommand( List<ILayer> selection ) {
         this.selection = selection;
     }
+    
     public String getName() {
-        return "Move Up";
+        return "Move Up"; //$NON-NLS-1$
     }
 
     public void run( IProgressMonitor monitor ) throws Exception {

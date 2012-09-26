@@ -14,7 +14,6 @@
  */
 package net.refractions.udig.project.ui.internal;
 
-import java.util.Iterator;
 import java.util.List;
 
 import net.refractions.udig.internal.ui.IDropTargetProvider;
@@ -92,7 +91,6 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IKeyBindingService;
 import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
@@ -420,7 +418,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
     
     private void initToobarActions() {
         
-        IToolBarManager mgr = getViewSite().getActionBars().getToolBarManager();
+        final IToolBarManager mgr = getViewSite().getActionBars().getToolBarManager();
         
         mgr.add(newFolderAction());
         // Just to initialise object, will be shown on context menu
@@ -448,8 +446,8 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
     private LayerAction downAction() {
         downAction = new LayerAction(){
             public void run() {
-                if (isSelectionAllOrNothing(selection)) return;
-                getCurrentMap().sendCommandASync(new LayerMoveDownCommand(selection));
+                if (isSelectionAllOrNothing(structSelection)) return;
+                getCurrentMap().sendCommandASync(new LayerMoveDownCommand(structSelection));
             }
         };
         downAction.setEnabled(false);
@@ -468,8 +466,8 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
              * @see org.eclipse.jface.action.Action#run()
              */
             public void run() {
-                if (isSelectionAllOrNothing(selection)) return;
-                getCurrentMap().sendCommandASync(new LayerMoveUpCommand(selection));
+                if (isSelectionAllOrNothing(structSelection)) return;
+                getCurrentMap().sendCommandASync(new LayerMoveUpCommand(structSelection));
             }
         };
         upAction.setEnabled(false);
@@ -485,8 +483,8 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
     private LayerAction moveFrontAction() {
         frontAction = new LayerAction(){
             public void run() {
-                if (isSelectionAllOrNothing(selection)) return;
-                getCurrentMap().sendCommandASync(new LayerMoveFrontCommand(currentMap, selection));
+                if (isSelectionAllOrNothing(structSelection)) return;
+                getCurrentMap().sendCommandASync(new LayerMoveFrontCommand(currentMap, structSelection));
             }
         };
         frontAction.setEnabled(false);
@@ -505,8 +503,8 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
              * @see org.eclipse.jface.action.Action#run()
              */
             public void run() {
-                if (isSelectionAllOrNothing(selection)) return;
-                getCurrentMap().sendCommandASync(new LayerMoveBackCommand(currentMap, selection));
+                if (isSelectionAllOrNothing(structSelection)) return;
+                getCurrentMap().sendCommandASync(new LayerMoveBackCommand(currentMap, structSelection));
             }
         };
         backAction.setEnabled(false);
@@ -801,44 +799,34 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
 
     /**
      * Function sets the status message on the bottom left of the application relative to the status
-     * of the currently selected item on the view. Method implemented from
-     * ISelectionChangedListener.
+     * of the currently selected item on the view. 
      */
     @Override
     public void selectionChanged( SelectionChangedEvent event ) {
         
-        gridHandler.getClass();
-        
-        if (event.getSelection().isEmpty()) {
-            return;
-        }
-
-        if (!(event.getSelection() instanceof IStructuredSelection)) { 
-            return;
-        }
-        
-        IStructuredSelection structured = (IStructuredSelection) event.getSelection();
-        Object firstElement = structured.getFirstElement();
-        
-        IStatusLineManager statusLineManager = getViewSite().getActionBars().getStatusLineManager();
-        
-        if (firstElement instanceof ILayer) {
+        final ISelection selection = event.getSelection();
+        if (!selection.isEmpty() && selection instanceof IStructuredSelection) {
             
-            ILayer layer = ((ILayer) firstElement);
+            final IStructuredSelection structSelection = (IStructuredSelection) selection;
+            final Object obj = structSelection.getFirstElement();
+            final IStatusLineManager statusLineManager = getViewSite().getActionBars().getStatusLineManager();
             
-            if (layer.getStatus() == ILayer.ERROR) {
-                statusLineManager.setErrorMessage(layer.getStatusMessage());
+            if (obj instanceof LayerLegendItem) {
+                final LayerLegendItem layerItem = ((LayerLegendItem) obj);
+                final Layer layer = layerItem.getLayer();
+                if (layer.getStatus() == ILayer.ERROR) {
+                    statusLineManager.setErrorMessage(layer.getStatusMessage());
+                } else {
+                    statusLineManager.setErrorMessage(null);
+                    statusLineManager.setMessage(layer.getStatusMessage());
+                }
             } else {
+                statusLineManager.setMessage(null);
                 statusLineManager.setErrorMessage(null);
-                statusLineManager.setMessage(layer.getStatusMessage());
-
             }
             
-        } else {
-            statusLineManager.setMessage(null);
-            statusLineManager.setErrorMessage(null);
         }
-
+        
     }
     
     /**
@@ -901,48 +889,23 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
      * The abstract class for the sorting actions. This also acts as a selection listener to manage
      * enabling/disabling of the buttons.
      */
-    private abstract class LayerAction extends Action implements ISelectionListener {
+    private abstract class LayerAction extends Action implements ISelectionChangedListener {
 
-        protected IStructuredSelection selection;
+        protected IStructuredSelection structSelection;
 
-        /**
-         * Construct <code>LayerAction</code>.
-         */
         public LayerAction() {
-            getSite().getPage().addSelectionListener(this);
+            viewer.addSelectionChangedListener(this);
         }
 
-        /**
-         * @see org.eclipse.ui.ISelectionListener#selectionChanged(org.eclipse.ui.IWorkbenchPart,
-         *      org.eclipse.jface.viewers.ISelection)
-         */
-        public void selectionChanged( IWorkbenchPart part, ISelection selection ) {
-            if (!(selection instanceof IStructuredSelection)) return;
-            this.selection = (IStructuredSelection) selection;
-            if (part instanceof LegendView && selection != null && !selection.isEmpty()) {
-                setEnabled(true);
-            }
-        }
-
-        /**
-         * @see org.eclipse.jface.action.Action#setEnabled(boolean)
-         */
-        @SuppressWarnings("unchecked")
-        public void setEnabled( boolean enabled ) {
-            super.setEnabled(false);
-
-            if (!enabled || selection == null || selection.isEmpty()) {
-                return;
-            }
-
-            for( Iterator iter = selection.iterator(); iter.hasNext(); ) {
-                final Object obj = iter.next();
-                if (!(obj instanceof Layer)) {
-                    return;
-                }
+        @Override
+        public void selectionChanged(SelectionChangedEvent event) {
+            
+            final ISelection selection = event.getSelection();
+            if (!selection.isEmpty() && selection instanceof IStructuredSelection) {
+                structSelection = (IStructuredSelection) selection;
+                setEnabled((structSelection.getFirstElement() instanceof LayerLegendItem));
             }
             
-            super.setEnabled(true);
         }
 
     }
