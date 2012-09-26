@@ -1,18 +1,25 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.ui">
+<schema targetNamespace="net.refractions.udig.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.ui" id="newObjectAction" name="newObjectAction"/>
+         <meta.schema plugin="net.refractions.udig.ui" id="newObjectAction" name="New Object Action"/>
       </appInfo>
       <documentation>
-         [Enter description of this extension point.]
+         Used to register create actions that do not require user interaction.
+
+The application displays these as quick options in the File New menu and in the Toolbar New actions.
       </documentation>
    </annotation>
 
    <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
       <complexType>
-         <sequence minOccurs="1" maxOccurs="unbounded">
+         <sequence minOccurs="0" maxOccurs="unbounded">
             <element ref="action"/>
          </sequence>
          <attribute name="point" type="string" use="required">
@@ -47,10 +54,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  Provided ActionDelegate may choose to implement IWorkbenchWindowPulldownDelegate to populate a submenu.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.ui.IWorkbenchWindowActionDelegate"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -74,7 +81,7 @@
          <attribute name="label" type="string">
             <annotation>
                <documentation>
-                  
+                  Displayed in the menu or toolbar as appropraite
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -89,7 +96,7 @@
          <meta.section type="since"/>
       </appInfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         0.9
       </documentation>
    </annotation>
 
@@ -98,7 +105,7 @@
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         [Enter extension point usage example here.]
+         The AddLayersAction  and AddToNewMap action are both registered in this fashion.
       </documentation>
    </annotation>
 
@@ -107,25 +114,17 @@
          <meta.section type="apiInfo"/>
       </appInfo>
       <documentation>
-         [Enter API information here.]
+         Implementation of ActionDelegate is expected
       </documentation>
    </annotation>
 
-   <annotation>
-      <appInfo>
-         <meta.section type="implementation"/>
-      </appInfo>
-      <documentation>
-         [Enter information about supplied implementation of this extension point.]
-      </documentation>
-   </annotation>
 
    <annotation>
       <appInfo>
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         
+         (c) 2004 Refractions Research
       </documentation>
    </annotation>
 

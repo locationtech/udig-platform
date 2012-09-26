@@ -60,7 +60,9 @@ public class BasicWMSMetricsFactory2 implements IRenderMetricsFactory {
         } catch (IOException e) {
             return false;
         }
-
+        if( layer == null ){
+            return false;
+        }
         Set<CoordinateReferenceSystem> crss = legalCRSCache.get(layer);
         if( crss!=null && crss.contains(crs))
             return true;

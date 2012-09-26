@@ -1,0 +1,182 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configure documents &mdash; User Guide</title>
+    
+    <link rel="stylesheet" href="_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/udig.ico"/>
+    <link rel="top" title="User Guide" href="index.html" />
+    <link rel="up" title="Working with Documents" href="Working with Documents.html" />
+    <link rel="next" title="Attaching a document" href="Attaching a document.html" />
+    <link rel="prev" title="Working with Documents" href="Working with Documents.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+ 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="configure-documents">
+<h1>Configure documents<a class="headerlink" href="#configure-documents" title="Permalink to this headline">¶</a></h1>
+<p>Configuration is required to enable resource documents, feature documents
+or feature hotlinks.</p>
+<p>Support for documents is dependent on the resource selected and may not always be appropriate.</p>
+<div class="section" id="configure-resource-documents">
+<h2>Configure resource documents<a class="headerlink" href="#configure-resource-documents" title="Permalink to this headline">¶</a></h2>
+<p>To enable resource documents (currently supported for shapefiles):</p>
+<ol class="arabic simple">
+<li>Use <em class="guilabel">Catalog</em> view to select the resource (or select a layer from the <em class="guilabel">Layers</em> view).</li>
+<li>Select <em class="menuselection">Data ‣ Resource Properties</em> from the menu bar to open the <em class="guilabel">Property Dialog</em>.</li>
+<li>Navigate open <em class="guilabel">Resource</em> and select the <em class="guilabel">Document</em> page.</li>
+<li>From the <em class="guilabel">Document</em> page:<ul>
+<li>Check <em class="guilabel">Enable support for resource documents</em></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="configure-feature-documents">
+<h2>Configure feature documents<a class="headerlink" href="#configure-feature-documents" title="Permalink to this headline">¶</a></h2>
+<p>To enable feature documents (currently supported for shapefiles):</p>
+<ol class="arabic simple">
+<li>Use <em class="guilabel">Catalog</em> view to select the resource (or select a layer from the <em class="guilabel">Layers</em> view).</li>
+<li>Select <em class="menuselection">Data ‣ Resource Properties</em> from the menu bar to open the <em class="guilabel">Property Dialog</em>.</li>
+<li>Navigate open <em class="guilabel">Resource</em> and select the <em class="guilabel">Document</em> page.</li>
+<li>From the <em class="guilabel">Document</em> page:<ul>
+<li>Check <em class="guilabel">Enable support for feature documents</em></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="configure-feature-hotlinks">
+<h2>Configure feature hotlinks<a class="headerlink" href="#configure-feature-hotlinks" title="Permalink to this headline">¶</a></h2>
+<p>To enable feature hotlinks:</p>
+<ol class="arabic simple">
+<li>Use <em class="guilabel">Catalog</em> view to select the resource (or select a layer from the <em class="guilabel">Layers</em> view).</li>
+<li>Select <em class="menuselection">Data ‣ Resource Properties</em> from the menu bar to open the <em class="guilabel">Property Dialog</em>.</li>
+<li>Navigate open <em class="guilabel">Resource</em> and select the <em class="guilabel">Document</em> page.</li>
+<li>From the <em class="guilabel">Document</em> page:<ul>
+<li>Check <em class="guilabel">Enable support for hotlink on marked attributes</em></li>
+</ul>
+</li>
+</ol>
+<div class="section" id="to-set-an-attribute-as-a-file-hotlink">
+<h3>To set an attribute as a file hotlink<a class="headerlink" href="#to-set-an-attribute-as-a-file-hotlink" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>From the <em class="guilabel">Document</em> page</li>
+<li>Click <em class="guilabel">Add...</em> to open the <strong>Add Hotlink Descriptor</strong> dialog</li>
+<li>Select <em>File</em> as the <strong>Type</strong> and select the <strong>Attribute</strong> containing the reference information</li>
+<li>Provide the appropriate <strong>Label</strong>, and optionally <strong>Description</strong></li>
+<li>Click <em class="guilabel">OK</em></li>
+</ol>
+</div>
+<div class="section" id="to-set-an-attribute-as-a-web-hotlink">
+<h3>To set an attribute as a web hotlink<a class="headerlink" href="#to-set-an-attribute-as-a-web-hotlink" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>From the <em class="guilabel">Document</em> page</li>
+<li>Click <em class="guilabel">Add...</em> to open the <strong>Add Hotlink Descriptor</strong> dialog</li>
+<li>Select <em>Web</em> as the <strong>Type</strong> and select the <strong>Attribute</strong> containing the reference information</li>
+<li>Provide the appropriate <strong>Label</strong>, and optionally <strong>Description</strong></li>
+<li>Click <em class="guilabel">OK</em></li>
+</ol>
+</div>
+<div class="section" id="to-set-an-attribute-as-an-action-hotlink">
+<h3>To set an attribute as an action hotlink<a class="headerlink" href="#to-set-an-attribute-as-an-action-hotlink" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>From the <em class="guilabel">Document</em> page</li>
+<li>Click <em class="guilabel">Add...</em> to open the <strong>Add Hotlink Descriptor</strong> dialog</li>
+<li>Select <em>Action</em> as the <strong>Type</strong> and select the <strong>Attribute</strong> containing the reference information</li>
+<li>Provide the appropriate <strong>Label</strong>, and optionally <strong>Description</strong></li>
+<li>Provide the <strong>Action</strong> definition, using the marker &#8216;{0}&#8217; to indicate where the attribute
+value is used.</li>
+<li>Click <em class="guilabel">OK</em></li>
+</ol>
+<p>Example Actions:</p>
+<ul class="simple">
+<li>Google search: <tt class="docutils literal"><span class="pre">https://www.google.com.au/search?q={0}</span></tt></li>
+<li>Yahoo search: <tt class="docutils literal"><span class="pre">http://au.search.yahoo.com/search?p={0}</span></tt></li>
+<li>File reference: <tt class="docutils literal"><span class="pre">C:\\Reports\\{0}.pdf</span></tt></li>
+<li>Open in application: <tt class="docutils literal"><span class="pre">notepad</span> <span class="pre">{0}</span></tt></li>
+</ul>
+</div>
+<div class="section" id="to-edit-an-existing-hotlink-definition">
+<h3>To edit an existing hotlink definition<a class="headerlink" href="#to-edit-an-existing-hotlink-definition" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>From the <em class="guilabel">Document</em> page</li>
+<li>Select hotlink from the list</li>
+<li>Click <em class="guilabel">Edit...</em> to open the <strong>Edit Hotlink Descriptor</strong> dialog</li>
+<li>Select <strong>Type</strong></li>
+<li>Select the <strong>Attribute</strong> containing the reference information</li>
+<li>Provide the appropriate <strong>Label</strong></li>
+<li>(Optional) Provide the appropriate <strong>Description</strong></li>
+<li>(For Action types) Provide the <strong>Action</strong> definition</li>
+<li>Click <em class="guilabel">OK</em></li>
+</ol>
+</div>
+<div class="section" id="to-remove-an-existing-hotlink-definition">
+<h3>To remove an existing hotlink definition<a class="headerlink" href="#to-remove-an-existing-hotlink-definition" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>From the <em class="guilabel">Document</em> page</li>
+<li>Select hotlink from the list</li>
+<li>Click <em class="guilabel">Remove</em></li>
+</ol>
+<p><strong>Sample dataset:</strong></p>
+<ul class="simple">
+<li>Try out <em>australia.shp</em> in data_1_4.zip of the Quickstart sample data.</li>
+</ul>
+<p><strong>Related tasks</strong></p>
+<p><a class="reference internal" href="Working with Documents.html"><em>Working with Documents</em></a></p>
+<p><strong>Related reference</strong></p>
+<p><a class="reference internal" href="Document view.html"><em>Document view</em></a></p>
+<p><a class="reference internal" href="Resource page.html"><em>Resource page</em></a></p>
+<p><a class="reference internal" href="Resource Document page.html"><em>Document page</em></a></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

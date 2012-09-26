@@ -13,4 +13,4 @@ while [ -h "$PRG" ]; do
 done
 
 PRG=`dirname "$PRG"`
-$PRG/udig.app/Contents/MacOS/udig_internal -debug
+$PRG/udig_internal -debug

@@ -14,6 +14,10 @@
  */
 package net.refractions.udig.project.tests.ui.dnd;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 
 import net.refractions.udig.AbstractProjectUITestCase;
@@ -30,6 +34,8 @@ import net.refractions.udig.ui.WaitCondition;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the LayerDropAction
@@ -42,9 +48,8 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
     private LayerDropAction action;
     private Map map;
 
-    protected void setUp() throws Exception {
-        super.setUp();
-
+    @Before
+    public void setUp() throws Exception {
         map=MapTests.createDefaultMap("DropActionTestFeatures", 2, true, null); //$NON-NLS-1$
         IGeoResource[] resources = new IGeoResource[]{
                 MapTests.createGeoResource("DropActionTestFeatures2", 3, true), //$NON-NLS-1$
@@ -57,6 +62,7 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         action = new LayerDropAction();
     }
 
+    @Test
     public void testAccept() throws Exception {
         //      layer dropped on another layer in same map.
         action.init(null, null, ViewerDropLocation.ON, map.getLayersInternal().get(0), map.getLayersInternal().get(1));
@@ -88,6 +94,7 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
     }
 
 //  if dropped on previous or next layer it should ALWAY swap
+    @Test
     public void testDropOnNextLayer() throws Exception {
         Layer data = map.getLayersInternal().get(0);
         Layer destination = map.getLayersInternal().get(1);
@@ -115,6 +122,7 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
     }
     
 //  if dropped on previous or next layer it should ALWAY swap
+    @Test
     public void testDropOnPreviousLayer() throws Exception {
         Layer data = map.getLayersInternal().get(1);
         Layer destination = map.getLayersInternal().get(0);
@@ -141,6 +149,7 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         assertEquals( 1, destination.getZorder());
     }
     
+    @Test
     public void testDropBeforeOtherLayer() throws Exception {
         Layer data = map.getLayersInternal().get(0);
         Layer destination = map.getLayersInternal().get(2);
@@ -161,6 +170,7 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         
     }
 
+    @Test
     public void testDropOnOtherLayer() throws Exception {
         Layer data = map.getLayersInternal().get(0);
         Layer destination = map.getLayersInternal().get(2);
@@ -179,6 +189,7 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         assertEquals( 1, destination.getZorder());
     }
 
+    @Test
     public void testDropAfterOtherLayer() throws Exception {
         Layer data = map.getLayersInternal().get(0);
         Layer destination = map.getLayersInternal().get(2);
@@ -197,6 +208,7 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         assertEquals( 1, destination.getZorder());
     }
 
+    @Test
     public void testDropNoWhere() throws Exception {
         Layer data = map.getLayersInternal().get(2);
         Layer destination = map.getLayersInternal().get(1);
@@ -207,7 +219,7 @@ public class LayerDropActionTest extends AbstractProjectUITestCase {
         assertEquals( 2, destination.getZorder());
     }
 
-    
+    @Test
     public void testIntegrationTest() throws Exception {
         UDIGDropHandler handler = new UDIGDropHandler();
         final Layer data = map.getLayersInternal().get(0);

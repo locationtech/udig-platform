@@ -6,7 +6,6 @@
  */
 package net.refractions.udig.project.internal.impl;
 
-import java.io.Serializable;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -18,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import net.refractions.udig.core.internal.ExtensionPointProcessor;
 import net.refractions.udig.core.internal.ExtensionPointUtil;
@@ -30,25 +31,19 @@ import net.refractions.udig.project.internal.Blackboard;
 import net.refractions.udig.project.internal.BlackboardEntry;
 import net.refractions.udig.project.internal.ProjectPackage;
 import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ui.XMLMemento;
-import org.osgi.framework.Bundle;
-
-import com.sun.org.apache.bcel.internal.generic.BALOAD;
 
 /**
  * A blackboard that saves its state out as an EObject.
@@ -66,15 +61,20 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * @uml.associationEnd qualifier="key:java.lang.Object
      *                     net.refractions.udig.project.internal.impl.BlackboardEntryImpl"
      */
-    HashMap<String, BlackboardEntry> blackboard = new HashMap<String, BlackboardEntry>();
+    Map<String, BlackboardEntry> blackboard = new HashMap<String, BlackboardEntry>();
 
+    /**
+     * Lock used for protecting the blackboard
+     */
+    final Lock blackboardLock = new ReentrantLock();
+    
     /** persisters */
     ArrayList<IPersister< ? >> persisters;
 
     /** providers * */
     ArrayList<IProvider<Object>> providers;
 
-    boolean initialized = false;
+    volatile boolean initialized = false;
 
     /**
      * The cached value of the '{@link #getEntries() <em>Entries</em>}' containment reference list.
@@ -106,7 +106,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    @SuppressWarnings("unchecked")
     public List<BlackboardEntry> getEntries() {
         if (entries == null) {
             entries = new EObjectContainmentEList<BlackboardEntry>(BlackboardEntry.class, this,
@@ -207,66 +206,80 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         if (!initialized) {
             initialize();
         }
-        if (key == null) return null;
+        if (key == null)
+            return null;
 
-        // look up the entry
-        BlackboardEntry entry = blackboard.get(key);
-        if (entry != null) {
-            if (entry.getObject() != null) {
-                return entry.getObject();
+        blackboardLock.lock();
+        try {
+            // look up the entry
+            BlackboardEntry entry = blackboard.get(key);
+            if (entry != null) {
+                if (entry.getObject() != null) {
+                    return entry.getObject();
+                } else {
+                    Object object = null;
+                    try {
+                        // have to load from memento
+                        String memento2 = entry.getMemento();
+                        if (memento2 == null || memento2.length() == 0) {
+                            return null;
+                        }
+                        XMLMemento memento = XMLMemento
+                                .createReadRoot(new StringReader(memento2));
+                        IPersister<Object> persister = (IPersister<Object>) findPersister(
+                                entry, memento);
+                        if (persister != null) {
+                            object = persister.load(memento);
+                            entry.setObject(object);
+                            entry.setObjectClass(object.getClass());
+                        } else {
+                            // real object which cannot be saved between runs
+                        }
+                    } catch (Exception e) {
+                        String msg = "Error loading content: " + entry.getObjectClass(); //$NON-NLS-1$
+                        IStatus status = new Status(IStatus.WARNING,
+                                ProjectPlugin.ID, 0, msg, e); //$NON-NLS-1$
+                        ProjectPlugin.getPlugin().getLog().log(status);
+                    }
+
+                    return object;
+                }
             } else {
-                Object object = null;
-                try {
-                    // have to load from memento
-                    String memento2 = entry.getMemento();
-                    if (memento2 == null || memento2.length() == 0) {
-                        return null;
-                    }
-                    XMLMemento memento = XMLMemento.createReadRoot(new StringReader(memento2));
-                    IPersister<Object> persister = (IPersister<Object>) findPersister(entry,
-                            memento);
-                    if (persister != null) {
-                        object = persister.load(memento);
-                        entry.setObject(object);
-                        entry.setObjectClass(object.getClass());
-                    } else {
-                        // real object which cannot be saved between runs
-                    }
-                } catch (Exception e) {
-                    String msg = "Error loading content: " + entry.getObjectClass(); //$NON-NLS-1$
-                    IStatus status = new Status(IStatus.WARNING, ProjectPlugin.ID, 0, msg, e); //$NON-NLS-1$
-                    ProjectPlugin.getPlugin().getLog().log(status);
-                }
+                // object does not exists, try to find a provider
+                IProvider provider = findProvider(key);
+                if (provider != null) {
+                    try {
+                        Object object = provider.provide();
+                        if (object != null) {
+                            createEntry(key, object);
+                            return object;
+                        }
+                    } catch (Exception e) {
+                        String msg = "provider exception :" + key; //$NON-NLS-1$
+                        String id = provider.getExtension().getNamespace();
+                        IStatus status = new Status(IStatus.WARNING, id, 0,
+                                msg, e);
 
-                return object;
-            }
-        } else {
-            // object does not exists, try to find a provider
-            IProvider provider = findProvider(key);
-            if (provider != null) {
-                try {
-                    Object object = provider.provide();
-                    if (object != null) {
-                        createEntry(key, object);
-                        return object;
+                        ProjectPlugin.getPlugin().getLog().log(status);
                     }
-                } catch (Exception e) {
-                    String msg = "provider exception :" + key; //$NON-NLS-1$
-                    String id = provider.getExtension().getNamespace();
-                    IStatus status = new Status(IStatus.WARNING, id, 0, msg, e);
-
-                    ProjectPlugin.getPlugin().getLog().log(status);
                 }
             }
+
+            return null;
+        } finally {
+            blackboardLock.unlock();
         }
-
-        return null;
     }
 
     private void initialize() {
         initialized = true;
-        for( BlackboardEntry entry : this.getEntries() ) {
-            blackboard.put(entry.getKey(), entry);
+        blackboardLock.lock();
+        try {
+            for (BlackboardEntry entry : this.getEntries()) {
+                blackboard.put(entry.getKey(), entry);
+            }
+        } finally {
+            blackboardLock.unlock();
         }
     }
 
@@ -274,23 +287,28 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         if (key == null) return null;
 
         // look up the entry
-        BlackboardEntry entry = blackboard.remove(key);
-        if (entry == null) {
-            return null;
-        }
-        Object oldValue = entry.getObject();
-        entry.setMemento(null);
-        entry.setObject(null);
-
-        BlackboardEvent event = new BlackboardEvent(this, key, oldValue, null);
-        for( IBlackboardListener l : listeners ) {
-            try {
-                l.blackBoardChanged(event);
-            } catch (Exception e) {
-                ProjectPlugin.log("", e); //$NON-NLS-1$
+        blackboardLock.lock();
+        try{
+            BlackboardEntry entry = blackboard.remove(key);
+            if (entry == null) {
+                return null;
             }
+            Object oldValue = entry.getObject();
+            entry.setMemento(null);
+            entry.setObject(null);
+            
+            BlackboardEvent event = new BlackboardEvent(this, key, oldValue, null);
+            for( IBlackboardListener l : listeners ) {
+                try {
+                    l.blackBoardChanged(event);
+                } catch (Exception e) {
+                    ProjectPlugin.log("", e); //$NON-NLS-1$
+                }
+            }
+            return oldValue;
+        } finally {
+            blackboardLock.unlock();
         }
-        return oldValue;
     }
     /*
      * (non-Javadoc)
@@ -304,50 +322,55 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
             this.remove(key);
             return;
         }
-        Object oldValue = null;
-        BlackboardEntry entry = blackboard.get(key);
-
-        if (entry == null) {
-            entry = createEntry(key, value);
-        } else {
-            oldValue = entry.getObject();
-        }
-        // set the cache
-        entry.setObject(value);
-
-        // find the persister to save the state
-        @SuppressWarnings("unchecked")
-        IPersister<Object> persister = (IPersister<Object>) findPersister(entry, null);
+        blackboardLock.lock();
         try {
-            if (persister != null) {
-                XMLMemento memento = XMLMemento.createWriteRoot("blackboardContent"); //$NON-NLS-1$
-                persister.save(value, memento);
-                memento.putString("internalObjectClassStorage", entry.getObjectClass().getName()); //$NON-NLS-1$
-
-                StringWriter writer = new StringWriter();
-                memento.save(writer);
-                entry.setMemento(writer.getBuffer().toString());
+            Object oldValue = null;
+            BlackboardEntry entry = blackboard.get(key);
+    
+            if (entry == null) {
+                entry = createEntry(key, value);
             } else {
-                // this is a "real" object that cannot be shared between runs
+                oldValue = entry.getObject();
             }
-        } catch (Exception e) {
-            String msg = "Error persisting content: " + value.getClass(); //$NON-NLS-1$
-            if (persister != null) {
-                IExtension ext = persister.getExtension();
-                IStatus status = new Status(IStatus.WARNING, ext.getNamespaceIdentifier(), 0, msg,
-                        e);
-                ProjectPlugin.getPlugin().getLog().log(status);
-            } else {
-                ProjectPlugin.log("error loading persister", e); //$NON-NLS-1$
-            }
-        }
-        BlackboardEvent event = new BlackboardEvent(this, key, oldValue, value);
-        for( IBlackboardListener l : listeners ) {
+            // set the cache
+            entry.setObject(value);
+    
+            // find the persister to save the state
+            @SuppressWarnings("unchecked")
+            IPersister<Object> persister = (IPersister<Object>) findPersister(entry, null);
             try {
-                l.blackBoardChanged(event);
+                if (persister != null) {
+                    XMLMemento memento = XMLMemento.createWriteRoot("blackboardContent"); //$NON-NLS-1$
+                    persister.save(value, memento);
+                    memento.putString("internalObjectClassStorage", entry.getObjectClass().getName()); //$NON-NLS-1$
+    
+                    StringWriter writer = new StringWriter();
+                    memento.save(writer);
+                    entry.setMemento(writer.getBuffer().toString());
+                } else {
+                    // this is a "real" object that cannot be shared between runs
+                }
             } catch (Exception e) {
-                ProjectPlugin.log("", e); //$NON-NLS-1$
+                String msg = "Error persisting content: " + value.getClass(); //$NON-NLS-1$
+                if (persister != null) {
+                    IExtension ext = persister.getExtension();
+                    IStatus status = new Status(IStatus.WARNING, ext.getNamespaceIdentifier(), 0, msg,
+                            e);
+                    ProjectPlugin.getPlugin().getLog().log(status);
+                } else {
+                    ProjectPlugin.log("error loading persister", e); //$NON-NLS-1$
+                }
             }
+            BlackboardEvent event = new BlackboardEvent(this, key, oldValue, value);
+            for( IBlackboardListener l : listeners ) {
+                try {
+                    l.blackBoardChanged(event);
+                } catch (Exception e) {
+                    ProjectPlugin.log("", e); //$NON-NLS-1$
+                }
+            }
+        } finally {
+            blackboardLock.unlock();
         }
     }
 
@@ -420,9 +443,14 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * @see net.refractions.udig.project.IBlackboard#clear()
      */
     public void clear() {
-        blackboard.clear();
-        for( IBlackboardListener l : listeners ) {
-            l.blackBoardCleared(this);
+        blackboardLock.lock();
+        try {
+            blackboard.clear();
+            for( IBlackboardListener l : listeners ) {
+                l.blackBoardCleared(this);
+            }
+        } finally {
+            blackboardLock.unlock();
         }
     }
 
@@ -439,8 +467,13 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * Flushes all the cached objects. Useful for testing.
      */
     public void flush() {
-        for( BlackboardEntry entry : blackboard.values() ) {
-            entry.setObject(null);
+        blackboardLock.lock();
+        try {
+            for( BlackboardEntry entry : blackboard.values() ) {
+                entry.setObject(null);
+            }
+        } finally {
+            blackboardLock.unlock();
         }
     }
 
@@ -459,13 +492,13 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         return null;
     }
 
-    @SuppressWarnings("unchecked")
     private BlackboardEntryImpl createEntry( String key, Object object ) {
 
         BlackboardEntryImpl entry = new BlackboardEntryImpl();
 
         entry.setKey(key);
         entry.setObjectClass(object != null ? object.getClass() : null);
+
         blackboard.put(key, entry);
 
         // add to entries for persistance
@@ -609,22 +642,32 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     }
 
     public Set<String> keySet() {
-        return this.blackboard.keySet();
+        blackboardLock.lock();
+        try {
+            return this.blackboard.keySet();
+        } finally {
+            blackboardLock.unlock();
+        }
     }
 
     @SuppressWarnings("nls")
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer();
-        buf.append("StyleBlackBoardImpl: ");
-        buf.append(blackboard.size());
-        buf.append(" entries");
-        for( Map.Entry entry : blackboard.entrySet() ) {
-            buf.append("\n\t");
-            buf.append(entry.getKey());
-            buf.append("=");
-            buf.append(entry.getValue());
+        blackboardLock.lock();
+        try {
+            StringBuffer buf = new StringBuffer();
+            buf.append("StyleBlackBoardImpl: ");
+            buf.append(blackboard.size());
+            buf.append(" entries");
+            for( Map.Entry<String, BlackboardEntry> entry : blackboard.entrySet() ) {
+                buf.append("\n\t");
+                buf.append(entry.getKey());
+                buf.append("=");
+                buf.append(entry.getValue());
+            }
+            return buf.toString();
+        } finally {
+            blackboardLock.unlock();
         }
-        return buf.toString();
     }
 } // BlackboardImpl

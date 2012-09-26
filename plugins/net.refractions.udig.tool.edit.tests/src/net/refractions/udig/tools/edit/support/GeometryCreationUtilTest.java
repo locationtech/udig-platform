@@ -14,12 +14,14 @@
  */
 package net.refractions.udig.tools.edit.support;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.refractions.udig.tools.edit.support.GeometryCreationUtil.Bag;
 
 import org.geotools.feature.AttributeTypeBuilder;
+import org.junit.Test;
 import org.opengis.feature.type.GeometryDescriptor;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -32,17 +34,20 @@ import com.vividsolutions.jts.geom.Polygon;
  * @author jones
  * @since 1.1.0
  */
-public class GeometryCreationUtilTest extends TestCase {
+@SuppressWarnings("nls")
+public class GeometryCreationUtilTest {
+    
+    @Test
     public void testCreateBasedOnGeomToCreate() throws Exception {
         TestEditBlackboard bb=new TestEditBlackboard();
-        String fid="FeatureID"; //$NON-NLS-1$
+        String fid="FeatureID";
         EditGeom geom = bb.newGeom(fid, null);
         bb.addPoint(10,10,geom.getShell());
         EditGeom geom2 = bb.newGeom(fid, null);
         AttributeTypeBuilder builder = new AttributeTypeBuilder();
         builder.setBinding(Geometry.class);
         builder.setName("geom");
-        GeometryDescriptor at = (GeometryDescriptor) builder.buildDescriptor("geom", builder.buildGeometryType()); //$NON-NLS-1$
+        GeometryDescriptor at = (GeometryDescriptor) builder.buildDescriptor("geom", builder.buildGeometryType());
         Map<String, Bag> result = GeometryCreationUtil.createAllGeoms(geom, Point.class, at, false);
         
         assertEquals(1, result.get(fid).jts.size());
@@ -55,7 +60,7 @@ public class GeometryCreationUtilTest extends TestCase {
         assertEquals(Point.class, result.get(fid).jts.get(0).getClass());
         assertEquals(Point.class, result.get(fid).jts.get(1).getClass());
         
-        String fid2="FID2"; //$NON-NLS-1$
+        String fid2="FID2";
         EditGeom differentGeom=bb.newGeom(fid2, null);
         bb.addPoint(200,200, differentGeom.getShell());
         
@@ -96,19 +101,20 @@ public class GeometryCreationUtilTest extends TestCase {
         
     }
     
+    @Test
     public void testCreateBasedOnShapeType() throws Exception {
         TestEditBlackboard bb=new TestEditBlackboard();
-        String fid="FeatureID"; //$NON-NLS-1$
+        String fid="FeatureID";
         EditGeom geom = bb.newGeom(fid, null);
         bb.addPoint(10,10,geom.getShell());
         EditGeom geom2 = bb.newGeom(fid, null);
         AttributeTypeBuilder builder = new AttributeTypeBuilder();
         builder.setBinding(Geometry.class);
         builder.setName("geom");
-        GeometryDescriptor at = builder.buildDescriptor("geom", builder.buildGeometryType()); //$NON-NLS-1$
+        GeometryDescriptor at = builder.buildDescriptor("geom", builder.buildGeometryType());
         bb.addPoint(100,100, geom2.getShell());
         
-        String fid2="FID2"; //$NON-NLS-1$
+        String fid2="FID2";
         EditGeom differentGeom=bb.newGeom(fid2, null);
         bb.addPoint(200,200, differentGeom.getShell());
         

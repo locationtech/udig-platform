@@ -14,6 +14,9 @@
  */
 package net.refractions.udig.render.internal.feature.basic;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Dimension;
 
 import net.refractions.udig.catalog.IGeoResource;
@@ -30,6 +33,8 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.ReferencingFactoryFinder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.crs.CRSFactory;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -46,7 +51,7 @@ import com.vividsolutions.jts.geom.LineString;
  * @since 1.1.0
  */
 public class BasicFeatureRendererTest extends AbstractProjectTestCase {
-    public boolean DISABLE = true;
+    
     public static final String BC_ALBERS_WKT=
         "PROJCS[\"BC_Albers\",GEOGCS[\"GCS_North_American_1983\"," + //$NON-NLS-1$
             "DATUM[\"North_American_Datum_1983\"," + //$NON-NLS-1$
@@ -68,10 +73,6 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
     
     private RenderContextImpl context;
 
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
     private void createContext( Map map ) {
         context=new RenderContextImpl();
         context.setGeoResourceInternal(map.getLayersInternal().get(0).getGeoResources().get(0));
@@ -83,6 +84,8 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
     /**
      * Test method for {@link net.refractions.udig.render.internal.feature.basic.BasicFeatureRenderer#validateBounds(com.vividsolutions.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor, net.refractions.udig.project.render.IRenderContext)}.
      */
+    @Ignore
+    @Test
     public void testValidateBounds() throws Exception {
         Map map = MapTests.createDefaultMap("BasicFeatureRenderer", 4, true, new Dimension(1024,1024)); //$NON-NLS-1$
         map.getViewportModelInternal().setCRS(DefaultGeographicCRS.WGS84);
@@ -95,7 +98,6 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
         CoordinateReferenceSystem crs = DefaultGeographicCRS.WGS84;
         Envelope result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope(0,50,0,10, crs), new NullProgressMonitor(), context);
         
-        if( DISABLE ) return;
         assertEquals( new Envelope( 0,50,0,10 ), result);
 
         result = BasicFeatureRenderer.validateBounds(new ReferencedEnvelope( 0,170,0,10, crs), new NullProgressMonitor(), context);
@@ -109,6 +111,8 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
     }
 
     @SuppressWarnings("deprecation")
+    @Ignore
+    @Test
     public void testBC_ALBERS_Viewport() throws Exception {
         CRSFactory fac = (CRSFactory) ReferencingFactoryFinder.getCRSFactories(null).iterator().next();
         CoordinateReferenceSystem crs = fac.createFromWKT(BC_ALBERS_WKT);
@@ -136,7 +140,6 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
         map.getViewportModelInternal().setCRS(DefaultGeographicCRS.WGS84);
         
         createContext(map);
-        if( DISABLE ) return;
         
         map.getViewportModelInternal().setBounds(-150,-120,45,65);
         
@@ -164,9 +167,9 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
     }
     
     @SuppressWarnings("deprecation")
+    @Ignore
+    @Test
     public void testLayerWithNoBounds() throws Exception {
-        if( DISABLE ) return;
-        
         SimpleFeature[] features = UDIGTestUtil.createTestFeatures("testNoBounds_Viewport", new Geometry[]{ //$NON-NLS-1$
         }
         , null, DefaultGeographicCRS.WGS84);
@@ -196,6 +199,7 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
         assertEquals(expected.getMaxY(), result.getMaxY(), ACCURACY);
     }
 
+    @Test
     public void testPoint() throws Exception {
         
     }

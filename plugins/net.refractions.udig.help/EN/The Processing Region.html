@@ -1,0 +1,116 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Processing Region &mdash; User Guide</title>
+    
+    <link rel="stylesheet" href="_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/udig.ico"/>
+    <link rel="top" title="User Guide" href="index.html" />
+    <link rel="up" title="Map Decoration page" href="Map Decoration page.html" />
+    <link rel="next" title="MySQL page" href="MySQL page.html" />
+    <link rel="prev" title="Scalebar Decoration" href="Scalebar Decoration.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+ 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="the-processing-region">
+<h1>The Processing Region<a class="headerlink" href="#the-processing-region" title="Permalink to this headline">¶</a></h1>
+<p>The <strong>Processing Region</strong> Decoration is used to show the region on which processing is limited.</p>
+<p>Through that you make sure that even if you have a map of resolution 1x1 meter and size of
+60000x60000 (which would kill your machine if running analyses on it) it gets downsized and
+re-sampled to the needed resolution and boundaries.</p>
+<p>In the following image you can see the <strong>Processing Region</strong> set to the bounds and resolution of a
+raster map:</p>
+<div class="figure align-center">
+<img alt="" src="_images/01_processing_region.png" />
+</div>
+<p>If we have a look into the <strong>Processing Region</strong> style, we can manually change the settings of the
+region, which means we can change:</p>
+<ul class="simple">
+<li>north, south, east, west bounds</li>
+<li>number of row and cols</li>
+<li>x and y resolution</li>
+</ul>
+<p>Obviously the rows/cols and resolution are connected and since the number of columns and rows can
+only be an integer number, every time resolution is changed, everything is recalculated to work
+properly.</p>
+<p>It is also possible to set the region to the bounds and resolution of an available raster map or
+vector map.</p>
+<div class="figure align-center">
+<img alt="" src="_images/02_region_setting_manual.png" />
+</div>
+<p>One might want to select his region interactively through a bounding box, and that is what the
+<strong>Processing Region</strong> tool if there for:</p>
+<div class="figure align-center">
+<img alt="" src="_images/03_region_setting_box.png" />
+</div>
+<p>Through that tool the <strong>Processing Region</strong> is set to the bounding box drawn on the map. Since
+usually people want to align on the initial grip (usually the native data grid), when the user
+releases the tool, the region is snapped to the original grid, leaving the resolution untouched:</p>
+<div class="figure align-center">
+<img alt="" src="_images/04_region_set.png" />
+</div>
+<p>The <strong>Processing Region</strong> can then be considered in the Spatial Toolbox.</p>
+<p>Let&#8217;s assume for example that you want to work only on a small part of the map (the smaller box we
+created a few steps ago). You open the Spatial Toolbox, select the module you want to execute (here
+aspect) and you select the toggle button on the view bar, that will force to work on the processing
+region instead of the whole map:</p>
+<div class="figure align-center">
+<img alt="" src="_images/05_aspect.png" />
+</div>
+<p>And voila&#8217;, the process was executed only on the part defined by the <strong>Processing Region</strong>:</p>
+<div class="figure align-center">
+<img alt="" src="_images/06_aspect_calculated.png" />
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

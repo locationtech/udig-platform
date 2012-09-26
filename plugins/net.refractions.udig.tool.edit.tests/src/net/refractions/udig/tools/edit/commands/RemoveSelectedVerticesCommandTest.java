@@ -1,6 +1,6 @@
 package net.refractions.udig.tools.edit.commands;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.tools.edit.support.Point;
 import net.refractions.udig.tools.edit.support.PrimitiveShape;
@@ -8,14 +8,16 @@ import net.refractions.udig.tools.edit.support.ShapeType;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
-public class RemoveSelectedVerticesCommandTest extends TestCase {
+public class RemoveSelectedVerticesCommandTest {
 
     private TestHandler handler;
     private PrimitiveShape shell;
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    
+    @Before
+    public void setUp() throws Exception {
         handler=new TestHandler();
         shell = handler.getEditBlackboard().getGeoms().get(0).getShell();
         handler.getEditBlackboard().addPoint(10,10, shell);
@@ -26,9 +28,11 @@ public class RemoveSelectedVerticesCommandTest extends TestCase {
         
         handler.setCurrentShape(shell);
     }
+    
     /*
      * Test method for 'net.refractions.udig.tools.edit.commands.RemoveSelectedVerticesCommand.run(IProgressMonitor)'
      */
+    @Test
     public void testRun() throws Exception {
         handler.getEditBlackboard().selectionAdd(Point.valueOf(10,10));
         handler.getEditBlackboard().selectionAdd(Point.valueOf(10,20));
@@ -62,6 +66,7 @@ public class RemoveSelectedVerticesCommandTest extends TestCase {
     /*
      * If shape is a polygon even after deletion the geometry still be a polygon.
      */
+    @Test
     public void testRemoveStartVertexOnPolygon() throws Exception {
         handler.getEditBlackboard().selectionAdd(Point.valueOf(10,10));
         handler.getEditBlackboard().selectionAdd(Point.valueOf(10,20));

@@ -1,10 +1,11 @@
 package net.refractions.udig.project.internal.render.impl;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.SortedSet;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.render.RenderExecutor;
@@ -12,12 +13,11 @@ import net.refractions.udig.project.internal.render.RendererCreator;
 import net.refractions.udig.project.internal.render.SelectionLayer;
 import net.refractions.udig.project.tests.support.MapTests;
 
-public class CompositeRendererImplTest extends TestCase {
+import org.junit.Test;
 
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
+public class CompositeRendererImplTest {
 
+    @Test
     public void testZorder() throws Exception {
         Map map = MapTests.createDefaultMap("typename", 2, true, null); //$NON-NLS-1$
         map.getLayersInternal().add(map.getLayerFactory().createLayer(MapTests.createGeoResource("type2", 3, false))); //$NON-NLS-1$

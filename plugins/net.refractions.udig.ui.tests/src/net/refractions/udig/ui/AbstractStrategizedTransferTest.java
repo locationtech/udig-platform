@@ -1,22 +1,26 @@
 package net.refractions.udig.ui;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 import net.refractions.udig.internal.ui.TransferStrategy;
 
 import org.eclipse.swt.dnd.TransferData;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
-public class AbstractStrategizedTransferTest extends TestCase {
+public class AbstractStrategizedTransferTest {
 
 	private TransferImpl transfer;
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	
+	@Before
+	public void setUp() throws Exception {
 		transfer=new TransferImpl();
 	}
 	
 	/*
 	 * Test method for 'net.refractions.udig.ui.AbstractStrategizedTransfer.javaToNative(Object, TransferData)'
 	 */
+	@Test
 	public void testJavaToNativeObjectTransferData() {
 		TransferData transferData = new TransferData();
 		transfer.javaToNative(true, transferData);
@@ -34,7 +38,9 @@ public class AbstractStrategizedTransferTest extends TestCase {
 	/*
 	 * Test method for 'net.refractions.udig.ui.AbstractStrategizedTransfer.nativeToJava(TransferData)'
 	 */
-	public void XtestNativeToJavaTransferData() {
+	@Ignore
+    @Test
+	public void testNativeToJavaTransferData() {
 		TransferData transferData = new TransferData();
 		transfer.javaToNative(true, transferData);
 		assertEquals(1, transfer.nativeToJava(transferData));
@@ -52,7 +58,9 @@ public class AbstractStrategizedTransferTest extends TestCase {
 	/*
 	 * Test method for 'net.refractions.udig.ui.AbstractStrategizedTransfer.addStrategy(TransferStrategy)'
 	 */
-	public void XtestAddStrategy() {
+	@Ignore
+    @Test
+	public void testAddStrategy() {
 		transfer.addStrategy(new AddedStrategy());
 		TransferData transferData = new TransferData();
 		//transferData.result=3;

@@ -1,6 +1,6 @@
 package net.refractions.udig.tests.catalog.wmt;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 import net.refractions.udig.catalog.internal.wmt.tile.OSMTile;
 import net.refractions.udig.catalog.internal.wmt.tile.OSMTile.OSMTileName;
 import net.refractions.udig.catalog.internal.wmt.tile.OSMTile.OSMTileName.OSMZoomLevel;
@@ -9,17 +9,13 @@ import net.refractions.udig.catalog.internal.wmt.wmtsource.OSMSource;
 import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
 import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSourceFactory;
 
-import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.CRS;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-import org.opengis.referencing.operation.MathTransform;
-
-import com.vividsolutions.jts.geom.Coordinate;
+import org.junit.Test;
 
 
-public class OSMTileTest extends TestCase{
+public class OSMTileTest {
 
+    @Test
     public void testGetTileFromCoordinate() {
         OSMSource osmSource = (OSMMapnikSource) WMTSourceFactory.createSource(null, WMTSource.getRelatedServiceUrl(OSMMapnikSource.class), null, true);
         
@@ -28,6 +24,7 @@ public class OSMTileTest extends TestCase{
         assertEquals("http://tile.openstreetmap.org/6/33/21.png", tile.getUrl().toString()); //$NON-NLS-1$
     }
     
+    @Test
     public void testGetTileFromCoordinateLatitude() {
         OSMSource osmSource = (OSMMapnikSource) WMTSourceFactory.createSource(null, WMTSource.getRelatedServiceUrl(OSMMapnikSource.class), null, true);
         
@@ -36,6 +33,7 @@ public class OSMTileTest extends TestCase{
         assertEquals("http://tile.openstreetmap.org/0/0/0.png", tile.getUrl().toString()); //$NON-NLS-1$
     }
     
+    @Test
     public void testGetExtentFromTileName() {
         OSMTileName tileName = new OSMTileName(33, 21, new OSMZoomLevel(6), null);
         
@@ -52,6 +50,7 @@ public class OSMTileTest extends TestCase{
         System.out.println("Max-Y: " + extent.getMaxY()); //$NON-NLS-1$        
     }
     
+    @Test
     public void testNeighbourCalculation() {
         OSMZoomLevel zoomLevel = new OSMZoomLevel(1);        
         OSMTileName tileName = new OSMTileName(1, 0, zoomLevel, null);
@@ -60,6 +59,7 @@ public class OSMTileTest extends TestCase{
         //assertEquals(new OSMTileName(1, 1, zoomLevel, null), tileName.getUpperNeighbour());     
     }
     
+    @Test
     public void testNeighbourCalculation2() {
         OSMZoomLevel zoomLevel = new OSMZoomLevel(2);        
         OSMTileName tileName = new OSMTileName(2, 2, zoomLevel, null);
@@ -67,6 +67,7 @@ public class OSMTileTest extends TestCase{
         assertEquals(new OSMTileName(3, 2, zoomLevel, null), tileName.getRightNeighbour());     
     }
     
+    @Test
     public void testGetExtentFromTileName2() {
         // actually not a test, just printing out the extent of the whole map
         OSMTileName tileName = new OSMTileName(0, 0, new OSMZoomLevel(0), null);

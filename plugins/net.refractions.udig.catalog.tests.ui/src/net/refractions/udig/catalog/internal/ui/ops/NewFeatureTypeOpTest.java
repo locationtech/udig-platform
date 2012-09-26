@@ -1,5 +1,8 @@
 package net.refractions.udig.catalog.internal.ui.ops;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -8,7 +11,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
@@ -25,10 +27,14 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.shapefile.ShapefileDataStore;
+import org.junit.Ignore;
+import org.junit.Test;
 
-public class NewFeatureTypeOpTest extends TestCase {
+public class NewFeatureTypeOpTest {
 
-    public void xtestCreateShapefileType() throws Exception {
+    @Ignore
+    @Test
+    public void testCreateShapefileType() throws Exception {
         
         URL fileURL = FileLocator.toFileURL( CatalogTestsUIPlugin.getDefault().
                 getBundle().getEntry("data/streams.shp")); //$NON-NLS-1$
@@ -52,7 +58,7 @@ public class NewFeatureTypeOpTest extends TestCase {
         
         delete(file);
         // test if shapefile is not local
-        URL url=new URL("http://svn.geotools.org/udig/trunk/plugins/net.refractions.udig.catalog.tests.ui/data/streams.shp"); //$NON-NLS-1$
+        URL url=new URL("https://github.com/uDig/udig-platform/blob/master/plugins/net.refractions.udig.catalog.tests.ui/data/streams.shp?raw=true"); //$NON-NLS-1$
         
         services = CatalogPlugin.getDefault().getServiceFactory().createService(url);
         
@@ -94,7 +100,8 @@ public class NewFeatureTypeOpTest extends TestCase {
         }
     }
 
-    public void xtestMemoryDataStoreType() throws Exception {
+    @Test
+    public void testMemoryDataStoreType() throws Exception {
         IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
         URL dragNdrop = new URL("http://localhost/scratch/TestNewFeatureTypeOp");
         List<IService> services = serviceFactory.createService(dragNdrop); //$NON-NLS-1$
@@ -110,9 +117,10 @@ public class NewFeatureTypeOpTest extends TestCase {
         assertEquals( "TestName", members.get(0).resolve(FeatureSource.class, new NullProgressMonitor()).getSchema().getName().getLocalPart()); //$NON-NLS-1$
     }
 
-    public void xtestCreateTypeOnIllegalDS() throws Exception {
+    @Test
+    public void testCreateTypeOnIllegalDS() throws Exception {
         WFSServiceExtension ext=new WFSServiceExtension();
-        URL id=new URL("http://www.refractions.net:8080/geoserver/wfs"); //$NON-NLS-1$
+        URL id=new URL("http://demo.opengeo.org/geoserver/wfs"); //$NON-NLS-1$
         Map<String, Serializable> params = ext.createParams(id);
         
         IService service = ext.createService(id, params);
@@ -124,10 +132,6 @@ public class NewFeatureTypeOpTest extends TestCase {
         UDIGTestUtil.inDisplayThreadWait(500, WaitCondition.FALSE_CONDITION, false);
         
         assertTrue(op.testingIsError() );
-    }
-    
-    public void testStub() throws Exception {
-        assertTrue(true);
     }
 
 }

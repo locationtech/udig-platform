@@ -17,32 +17,46 @@
 package net.refractions.udig.ui.graphics;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.refractions.udig.internal.ui.UiPlugin;
+
 import org.eclipse.swt.graphics.FontData;
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.factory.GeoTools;
 import org.geotools.feature.NameImpl;
 import org.geotools.filter.Filters;
-import org.geotools.filter.expression.AbstractExpressionVisitor;
+import org.geotools.sld.v1_1.SLDConfiguration;
+import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Font;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.Mark;
+import org.geotools.styling.NamedStyle;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.SLD;
+import org.geotools.styling.SLDParser;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactory;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
-import org.opengis.filter.Filter;
+import org.geotools.styling.UserLayer;
+import org.geotools.xml.Parser;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Add;
 import org.opengis.filter.expression.Divide;
@@ -72,6 +86,7 @@ import org.opengis.style.GraphicalSymbol;
  * </p>
  * @author Jody Garnett, Refractions Research.
  * @since 0.7.0
+ * @version 1.3.2
  */
 public class SLDs extends SLD {
     private static StyleFactory sf = CommonFactoryFinder.getStyleFactory(null);
@@ -360,10 +375,10 @@ public class SLDs extends SLD {
      * Returns the min scale of the default rule, or 0 if none is set 
      */
     public static double minScale( FeatureTypeStyle fts ) {
-        if (fts == null || fts.getRules().length == 0)
+        if (fts == null || fts.rules().isEmpty()){
             return 0.0;
-
-        Rule r = fts.getRules()[0];
+        }
+        Rule r = fts.rules().get(0);
         return r.getMinScaleDenominator();
     }
 
@@ -371,10 +386,10 @@ public class SLDs extends SLD {
      * Returns the max scale of the default rule, or {@linkplain Double#NaN} if none is set 
      */
     public static double maxScale( FeatureTypeStyle fts ) {
-        if (fts == null || fts.getRules().length == 0)
+        if (fts == null || fts.rules().isEmpty()){
             return Double.NaN;
-
-        Rule r = fts.getRules()[0];
+        }
+        Rule r = fts.rules().get(0);
         return r.getMaxScaleDenominator();
     }
 
@@ -382,9 +397,9 @@ public class SLDs extends SLD {
      * gets the first FeatureTypeStyle
      */
     public static FeatureTypeStyle getFeatureTypeStyle( Style s ) {
-        FeatureTypeStyle[] fts = s.getFeatureTypeStyles();
-        if (fts.length > 0) {
-            return fts[0];
+         List<FeatureTypeStyle> fts = s.featureTypeStyles();
+        if (!fts.isEmpty()) {
+            return fts.get(0);
         }
         return null;
     }
@@ -396,20 +411,13 @@ public class SLDs extends SLD {
      * @return a rule, or null if no raster symbolizers are found.
      */
     public static Rule getRasterSymbolizerRule( Style s ) {
-        FeatureTypeStyle[] fts = s.getFeatureTypeStyles();
-        for( int i = 0; i < fts.length; i++ ) {
-            FeatureTypeStyle featureTypeStyle = fts[i];
-            Rule[] rules = featureTypeStyle.getRules();
-            for( int j = 0; j < rules.length; j++ ) {
-                Rule rule = rules[j];
-                Symbolizer[] symbolizers = rule.getSymbolizers();
-                for( int k = 0; k < symbolizers.length; k++ ) {
-                    Symbolizer symbolizer = symbolizers[k];
+        for( FeatureTypeStyle featureTypeStyle : s.featureTypeStyles() ) {
+            for( Rule rule : featureTypeStyle.rules()  ) {
+                for( Symbolizer symbolizer : rule.getSymbolizers()) {
                     if (symbolizer instanceof RasterSymbolizer) {
                         return rule;
                     }
                 }
-
             }
         }
         return null;
@@ -420,6 +428,140 @@ public class SLDs extends SLD {
      */
     public static final String GENERIC_FEATURE_TYPENAME = "Feature";
 
-    // TODO: port these methods to the geotools parent class
+    public static StyledLayerDescriptor parseSLD(File file) throws IOException {
+        StyleFactory styleFactory = CommonFactoryFinder.getStyleFactory();
+     // try SLD 1.1 first
+        SLDConfiguration config = new SLDConfiguration();
+        Reader reader = null;
+        try {
+            Parser parser = new Parser( config );
+            reader = new FileReader(file);
+            Object object = parser.parse( reader );
+            if( object instanceof StyledLayerDescriptor){
+                StyledLayerDescriptor sld = (StyledLayerDescriptor) object;
+                return sld;
+            }
+            else if ( object instanceof NamedStyle ){
+                NamedStyle style = (NamedStyle) object;
+                StyledLayerDescriptor sld = createDefaultSLD( style );
+                return sld;
+            }
+        }
+        catch(Exception ignore){
+            // we are ignoring this error and will try the more forgiving option below
+            UiPlugin.trace(SLDs.class,"SLD 1.1 configuration failed to parse "+file, ignore);
+        }
+        finally {
+            if( reader != null){
+                reader.close();
+            }
+        }
+        // parse it up
+        SLDParser parser = new SLDParser(styleFactory);
+        try {
+            parser.setInput(file);
+            StyledLayerDescriptor sld = parser.parseSLD();
+            return sld;
+        } catch (FileNotFoundException e) {
+            return null; // well that is unexpected since f.exists()
+        }
+    }
+    
+    public static Style parseStyle(URL url) throws IOException {
+        // try SLD 1.1 first
+        SLDConfiguration config = new SLDConfiguration();
+        InputStream input = null;
+        try {
+            Parser parser = new Parser( config );
+            input = url.openStream();
+            Object object = parser.parse( input );
+            if( object instanceof StyledLayerDescriptor){
+                StyledLayerDescriptor sld = (StyledLayerDescriptor) object;
+                Style[] array = SLDs.styles( sld );
+                if( array != null && array.length > 0 ){
+                    return array[0];
+                }
+            }
+            else if ( object instanceof NamedStyle ){
+                NamedStyle style = (NamedStyle) object;
+                return style;
+            }
+        }
+        catch(Exception ignore){
+            // we are ignoring this error and will try the more forgiving option below
+            UiPlugin.trace(SLDs.class,"SLD 1.1 configuration failed to parse "+url, ignore);
+        }
+        finally {
+            if( input != null){
+                input.close();
+            }
+        }
+        // The SLD 1.0 parser is far more forgiving 
+        StyleFactory factory = CommonFactoryFinder.getStyleFactory(GeoTools.getDefaultHints());
+        SLDParser styleReader = new SLDParser(factory, url);
+        Style style = styleReader.readXML()[0];
+        return style;
+    }
+    
+    public static Style praseStyle(File file) throws IOException {
+        StyleFactory styleFactory = CommonFactoryFinder.getStyleFactory();
+        // try SLD 1.1 first
+        SLDConfiguration config = new SLDConfiguration();
+        Reader reader = null;
+        try {
+            Parser parser = new Parser( config );
+            reader = new FileReader(file);
+            Object object = parser.parse( reader );
+            if( object instanceof StyledLayerDescriptor){
+                StyledLayerDescriptor sld = (StyledLayerDescriptor) object;
+                Style[] array = SLDs.styles( sld );
+                if( array != null && array.length > 0 ){
+                    return array[0];
+                }
+            }
+            else if ( object instanceof NamedStyle ){
+                NamedStyle style = (NamedStyle) object;
+                return style;
+            }
+        }
+        catch(Exception ignore){
+            // we are ignoring this error and will try the more forgiving option below
+            UiPlugin.trace(SLDs.class,"SLD 1.1 configuration failed to parse "+file, ignore);
+        }
+        finally {
+            if( reader != null){
+                reader.close();
+            }
+        }
+        
+        // parse it up
+        SLDParser parser = new SLDParser(styleFactory);
+        try {
+            parser.setInput(file);
+            Style[] array = parser.readXML();
+            if( array != null && array.length > 0 ){
+                return array[0];
+            }
+        } catch (FileNotFoundException e) {
+            return null; // well that is unexpected since f.exists()
+        }
+        return null;
+    }
+    /**
+     * Creates an SLD and UserLayer, and nests the style (SLD-->UserLayer-->Style). 
+     * 
+     * @see net.refractions.project.internal.render.SelectionStyleContent#createDefaultStyledLayerDescriptor
+     * @param style
+     * @return SLD
+     */
+    public static StyledLayerDescriptor createDefaultSLD(Style style) {
+        StyledLayerDescriptor sld = sf.createStyledLayerDescriptor();
+        UserLayer layer = sf.createUserLayer();
+        //FeatureTypeConstraint ftc = styleFactory.createFeatureTypeConstraint(null, Filter.INCLUDE, null);
+        layer.setLayerFeatureConstraints(new FeatureTypeConstraint[] {null});
+        sld.addStyledLayer(layer);
+        layer.addUserStyle(style);
+        return sld;
+    }
 
 }

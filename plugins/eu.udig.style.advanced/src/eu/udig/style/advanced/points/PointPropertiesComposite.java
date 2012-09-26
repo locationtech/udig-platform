@@ -106,8 +106,6 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
     public void setRule( RuleWrapper ruleWrapper ) {
         this.ruleWrapper = ruleWrapper;
 
-        System.out.println("setting rule: " + ruleWrapper.getName()); //$NON-NLS-1$
-
         if (mainComposite == null) {
             init();
             if (simplePointComposite == null) {
@@ -175,8 +173,6 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
     }
 
     private void init() {
-        // System.out.println("open: " + rule.getName());
-
         List<String> numericAttributeNames = pointPropertiesEditor.getNumericAttributeNames();
         numericAttributesArrays = (String[]) numericAttributeNames.toArray(new String[numericAttributeNames.size()]);
         List<String> allAttributeNames = pointPropertiesEditor.getAllAttributeNames();
@@ -494,7 +490,6 @@ public class PointPropertiesComposite extends SelectionAdapter implements Modify
     @Override
     public void widgetSelected( SelectionEvent e ) {
         Object source = e.getSource();
-        System.out.println(ruleWrapper.getName());
 
         PointSymbolizerWrapper pointSymbolizerWrapper = ruleWrapper.getGeometrySymbolizersWrapper().adapt(
                 PointSymbolizerWrapper.class);

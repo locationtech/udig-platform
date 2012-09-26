@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Random;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.internal.render.impl.ScaleUtils;
 import net.refractions.udig.tool.edit.tests.TestsPlugin;
 
@@ -19,6 +18,7 @@ import org.geotools.gml.GMLFilterGeometry;
 import org.geotools.gml.GMLReceiver;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.MathTransform;
@@ -28,7 +28,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 import com.vividsolutions.jts.geom.Geometry;
 
-public class TimingTests extends TestCase {
+public class TimingTests {
     
     private static final MathTransform layerToWorld;
     static {
@@ -39,21 +39,18 @@ public class TimingTests extends TestCase {
         }    
     }
 
-
-    public void dtestPointCreation(){
+    @Test(timeout = 5000)
+    public void testPointCreation(){
         Random r=new Random(298719283471298L);
 
-      long start=System.currentTimeMillis();
       for( int j=0; j<1000; j++){
           r=new Random(298719283471298L);
           for( int i=0; i<100000;i++)
               Point.valueOf(r.nextInt(1000),r.nextInt(1000));
       }
-      long end=System.currentTimeMillis();
-      
-      System.out.println("100000 creations of points: " + (end-start) +" msec"); //$NON-NLS-1$ //$NON-NLS-2$
     }
     
+    @Test
     public void testPrimitiveShapeIterator() throws Exception {
         URL url = TestsPlugin.getDefault().getBundle().getResource("data/lake.gml"); //$NON-NLS-1$
         InputStream in = url.openConnection().getInputStream();

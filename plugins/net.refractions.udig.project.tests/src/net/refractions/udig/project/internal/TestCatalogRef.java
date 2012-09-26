@@ -1,5 +1,7 @@
 package net.refractions.udig.project.internal;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
@@ -14,12 +16,14 @@ import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.junit.Ignore;
+import org.junit.Test;
 
 public class TestCatalogRef extends AbstractProjectTestCase {
-    public void testStub() throws Exception {
-        assertTrue(true);
-    }
-    public void xtestSerialization() throws Exception {
+    
+    @Ignore
+    @Test
+    public void testSerialization() throws Exception {
         Layer layer=new LayerDecorator(null){
         	
         	@Override

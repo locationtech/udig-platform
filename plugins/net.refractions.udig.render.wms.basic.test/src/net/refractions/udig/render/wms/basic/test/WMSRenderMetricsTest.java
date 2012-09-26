@@ -1,12 +1,14 @@
 package net.refractions.udig.render.wms.basic.test;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.tests.DummyService;
@@ -19,9 +21,10 @@ import net.refractions.udig.render.internal.wms.basic.BasicWMSMetricsFactory2;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.ows.CRSEnvelope;
 import org.geotools.data.ows.Layer;
-import org.opengis.geometry.Envelope;
+import org.junit.Before;
+import org.junit.Test;
 
-public class WMSRenderMetricsTest extends TestCase {
+public class WMSRenderMetricsTest {
 
     private static final HashMap<String, CRSEnvelope> BBOXES1;
     static{
@@ -51,8 +54,8 @@ public class WMSRenderMetricsTest extends TestCase {
     private List< ? extends IGeoResource> members;
     private List< ? extends IGeoResource> members2;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         IService service = createService(new URL("http://serviceWMSRenderMetricsTest"), true); //$NON-NLS-1$
         members = service.resources(new NullProgressMonitor());
         service = createService(new URL("http://serviceWMSRenderMetricsTest2"), true); //$NON-NLS-1$
@@ -81,6 +84,7 @@ public class WMSRenderMetricsTest extends TestCase {
         return service;
     }
 
+    @Test
     public void testCanAddLayer() throws Throwable {
         BasicWMSMetricsFactory2 fac=new BasicWMSMetricsFactory2();
         CompositeRenderContextImpl comp = createCompositeRenderer();
@@ -99,8 +103,10 @@ public class WMSRenderMetricsTest extends TestCase {
         return comp;
     }
 
+    @Test
     public void testCanStyle() {
          // TODO
     }
 
 }
+

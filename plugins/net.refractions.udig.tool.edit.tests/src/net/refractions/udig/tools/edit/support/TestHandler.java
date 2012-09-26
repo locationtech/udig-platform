@@ -36,7 +36,6 @@ import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.junit.Ignore;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.FactoryException;
@@ -48,7 +47,6 @@ import org.opengis.referencing.operation.MathTransform;
  * @author jones
  * @since 1.1.0
  */
-@Ignore
 public class TestHandler extends EditToolHandler {
     
     private Map map;

@@ -23,6 +23,10 @@ import org.eclipse.core.runtime.IAdapterFactory;
 
 /**
  * AdapterFactory that adapts IResolves to IAdaptables
+ * <p>
+ * Please be aware that although this will allow getAdapter to negotiate
+ * the IResolve methods; the result uses IBlocableAdapter and actually
+ * performs IO resulting in the possibility of long delays and IOExceptions.
  * 
  * @author jeichar
  * @since 0.9
@@ -32,6 +36,7 @@ public class IResolveAdapterFactory implements IAdapterFactory {
     /**
      * @see org.eclipse.core.runtime.IAdapterFactory#getAdapter(java.lang.Object, java.lang.Class)
      */
+    @SuppressWarnings("rawtypes")
     public Object getAdapter( Object adaptableObject, Class adapterType ) {
         if (IBlockingAdaptable.class.isAssignableFrom(adapterType)
                 && adaptableObject instanceof IResolve)
@@ -42,6 +47,7 @@ public class IResolveAdapterFactory implements IAdapterFactory {
     /**
      * @see org.eclipse.core.runtime.IAdapterFactory#getAdapterList()
      */
+    @SuppressWarnings("rawtypes")
     public Class[] getAdapterList() {
         return new Class[]{IBlockingAdaptable.class};
     }

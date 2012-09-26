@@ -1,22 +1,28 @@
 package net.refractions.udig.project.internal.impl;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import net.refractions.udig.project.internal.Blackboard;
 import net.refractions.udig.project.internal.ProjectFactory;
 import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
+
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 public class BlackboardImplTest extends AbstractProjectTestCase {
 	
 	Blackboard blackboard;
 	
-	 @Override
-	protected void setUp() throws Exception {
-         super.setUp();
-		 blackboard = ProjectFactory.eINSTANCE.createBlackboard();
-		 APersister.enabled = true;
-		 BPersister.enabled = true;
-		 CPersister.enabled = true;
+	@Before
+	public void setUp() throws Exception {
+		blackboard = ProjectFactory.eINSTANCE.createBlackboard();
+		APersister.enabled = true;
+		BPersister.enabled = true;
+		CPersister.enabled = true;
 	}
-	 
+	
+	@Test
 	public void testPersist0() {
 		//test a simple put
 		A a = new A("a"); //$NON-NLS-1$
@@ -28,7 +34,9 @@ public class BlackboardImplTest extends AbstractProjectTestCase {
 		assertEquals("a", a.getMessage()); //$NON-NLS-1$
 	}
 	
-	public void xtestPersist1() {
+	@Ignore
+	@Test
+	public void testPersist1() {
 		//test persistance through inheritance
 		B b = new B("b"); //$NON-NLS-1$
 		blackboard.put("b", b); //$NON-NLS-1$
@@ -41,7 +49,9 @@ public class BlackboardImplTest extends AbstractProjectTestCase {
 		assertEquals("c", b.getMessage()); //$NON-NLS-1$
 	}
 	
-	public void xtestPersist2() {
+	@Ignore
+    @Test
+	public void testPersist2() {
 		//test persistance through inheritance with multiple persisters
 		B b = new B("b"); //$NON-NLS-1$
 		blackboard.put("b", b); //$NON-NLS-1$
@@ -52,6 +62,7 @@ public class BlackboardImplTest extends AbstractProjectTestCase {
 		assertEquals("b", b.getMessage()); //$NON-NLS-1$
 	}
 	
+    @Test
 	public void testProvide() {
 		A a = (A) blackboard.get("a"); //$NON-NLS-1$
 		assertNotNull(a);

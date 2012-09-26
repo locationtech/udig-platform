@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Users Guide : Merge Tool</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Users Guide : Merge Tool -->
+       <h1>Merge Tool</h1>
+       
+<p><img src="download/attachments/12276/merge_feature_mode.gif" align="absmiddle" border="0"/> Merges geometries and attributes from various Features.</p>
+
+<p>The <em>Merge Tool</em> works by selecting a set of features to be merged into one. It allows to set the geometry and attributes of the merged Feature. The geometry could be either the <b>geometric union</b> of the geometries from the input features, or the single geometry from one of the input features.</p>
+
+<h2><a name="MergeTool-TousetheMergetool%3A"></a>To use the Merge tool:</h2>
+
+<ol>
+	<li>Select the <b>Merge Tool</b> from the feature tool category in the tool bar.
+<br clear="all" />
+You can use the keyboard short cut <b>F</b> to cycle through the available feature tools</li>
+	<li>Draw a box covering one or more features</li>
+	<li>The <b>Feature Merge</b> view will display two columns:
+	<ul>
+		<li>Sources: these are the features that are being combined; check off the attributes you wish to appear in the result</li>
+		<li>Merge Feature: this is the resulting Geometry</li>
+	</ul>
+	</li>
+	<li>For doing a Merge you will need 2 or more features.</li>
+	<li>You can continue selecting more features by drawing a box.</li>
+	<li>Press <b>Finish</b> to perform the operation</li>
+	<li>You can inspect your work in the <a href="http://udig.refractions.net/confluence//display/EN/Map+editor" title="Map editor">Map editor</a></li>
+	<li>To save your work please press <b>Edit &gt; Commit</b> from the menu bar</li>
+</ol>
+
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/12276/Merge1.png' target='Merge1.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/12276/Merge1.png", "Merge1.png", "height=885,width=1044,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/12276/Merge1.png" align="left" border="0"/></a><br clear="all" /></p>
+
+<h2><a name="MergeTool-Behavior"></a>Behavior</h2>
+
+<p>The <em>Merge Tool</em> operates upon the current Layer. Once the <em>Merge Tool</em> is selected, you can drag a bounding box to select which Features to merge. A view will be opened so you can specify exactly which attribute values from the input Features the <em>merged Feature</em> attributes shall assume the values of.</p>
+
+<p>It could be the case that the <em>geometric union</em> produces a geometry whose type is not compatible with the allowable geometry type declared at the <em>Layer</em>'s <em>FeatureType</em>. For example, merging two non touching <em>Polygons</em> on a polygon <em>Layer</em> would produce a <em>MultiPolygon</em>. In this case, assigning the geometric union to the merged <em>Feature</em> geometry attribute will not be possible, but one of the geometries from the source <em>Features</em> could be set through the <em>Merge View</em>.</p>
+
+<p>When the <em>Merge Tool</em> proceeds to create the new, merged Feature, the ones it comes from will be deleted at the same time.</p>
+
+<p>Note that the <em>Merge Tool</em> does not commit the result, but lets you undo the operation if desired, or commit the changes to the backend data repository as you would normally do in uDig.</p>
+<div class='panelMacro'><table class='infoMacro'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="images/icons/emoticons/information.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td>
+<p><b>Coordinate Reference System</b></p>
+
+<p>When the <em>Merge Tool</em> is instructed to create the new geometry as the union of the geometries from the input <em>Features</em>, the union is performed in the current <em>Layer</em>'s <em>Coordinate Reference System</em>.</p></td></tr></table></div>
+<p><br clear="all" />
+<br clear="all" /></p>
+
+<h2><a name="MergeTool-UsageExample"></a>Usage Example</h2>
+
+<p>Select the <em>Merge Tool</em> from the drop down buttons list as shown in <em>Figure 1</em>.<br/>
+<a href='http://udig.refractions.net/confluence//download/attachments/12276/merge_1_select_tool.png' target='merge_1_select_tool.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/12276/merge_1_select_tool.png", "merge_1_select_tool.png", "height=177,width=229,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/12276/merge_1_select_tool.png" align="left" border="0"/></a><br clear="all" />
+<b>Figure 1. Selecting the Merge Tool.</b>
+<br clear="all" />
+<br clear="all" />
+Draw the <em>Bounding Box</em> to be used as the filter to select the <em>Feature</em> to be merged. At least two <em>Features</em> need to be selected for doing a Merge, but the view will be opened if one feature is selected.<br/>
+<a href='http://udig.refractions.net/confluence//download/attachments/12276/merge_2_select_features.png' target='merge_2_select_features.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/12276/merge_2_select_features.png", "merge_2_select_features.png", "height=572,width=813,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/12276/merge_2_select_features.png" align="left" border="0"/></a><br clear="all" />
+<b>Figure 2. Selecting the Features to merge.</b>
+<br clear="all" />
+<br clear="all" />
+Once you release the mouse button, the <em>features</em> matching the bounding box will be looked up and the <em>Merge View</em> will show up.<br/>
+<em>Figure 3</em> shows the <em>Merge View</em>, which consists of two panels.<br/>
+The panel at the left is the <em>Source Features</em> panel and presents the selected <em>features</em>, their attributes, and allows to select attribute values from source features to assign to the <em>Merge Feature</em>.</p>
+
+<p>The panel, at the right, is called the <em>Merge Feature</em> panel and presents the attributes of the <em>feature</em> to be created as the result of setting its attributes through the <em>Source Features</em>.</p>
+
+<p>When the <em>Merge View</em> is opened, the <em>Merge Feature</em> panel is populated with the attributes from the first <em>Source</em> feature found (the one at the top on the <em>Source Features</em> panel). The geometry attribute of the <em>Merge Feature</em> assumes the value of the geometric union of the geometries from the source Features, and if that is not possible due to a type conflict with the Layer's <em>FeatureType</em>, it assumes the value of the geometry from the first Feature.<br/>
+<a href='http://udig.refractions.net/confluence//download/attachments/12276/MergeDialog1.png' target='MergeDialog1.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/12276/MergeDialog1.png", "MergeDialog1.png", "height=601,width=775,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/12276/MergeDialog1.png" align="left" border="0"/></a><br clear="all" />
+<b>Figure 3. Merge View.</b>
+<br clear="all" />
+<br clear="all" />
+While the <em>Merge View</em> is opened, the user can set specific attributes in the <em>Merge Feature</em> to assume the values from other <em>Source Features</em> than the one at the top, by activating the checkbox corresponding to the desired attribute on the desired <em>Source Feature</em>.</p>
+
+<p>It is also possible to select the whole set of attribute of a single <em>Source Feature</em> by activating the checkbox corresponding to the desired <em>Source Feature</em>.</p>
+
+<p><em>Figure 4</em> shows how two attributes, <tt>SOVEREIGN</tt> and <tt>COLOR_MAP</tt> have been assigned to the <em>Merge Feature</em> from another <em>Source Feature</em> than the default one.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/12276/MergeDialog2.png' target='MergeDialog2.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/12276/MergeDialog2.png", "MergeDialog2.png", "height=601,width=775,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/12276/MergeDialog2.png" align="left" border="0"/></a><br clear="all" />
+<b>Figure 4. Merge View with user specified attributes.</b>
+<br clear="all" />
+<br clear="all" />
+Finally, when you're ready setting the geometric and non geometric attribute values for the <em>Merge Feature</em>, press the <em>Finish</em> button on the <em>Merge View</em>.<br/>
+The <em>Merge Tool</em> will create the new <em>Merge Feature</em> and delete the <em>Source Features</em> in a single, undoable step.</p>
+
+<p>The <em>Map</em> in <em>Figure 5</em> shows how the two buildings on this example have been merged into one, and the <em>Table View</em> with the newly created <em>Feature</em>.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/12276/merge_5_merged_result.png' target='merge_5_merged_result.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/12276/merge_5_merged_result.png", "merge_5_merged_result.png", "height=572,width=813,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/12276/merge_5_merged_result.png" align="left" border="0"/></a><br clear="all" />
+<b>Figure 5. Merge result</b>
+<br clear="all" />
+<br clear="all" /></p>
+<h3><a name="MergeTool-Addinganddeletingfeatures."></a>Adding and deleting features.</h3>
+
+<p>For adding more features to be merged, select those features drawing a bounding box and they will be added to the view.<br/>
+For deleting features, select the feature to be deleted and click on the delete button or draw a bounding box with Ctrl key pushed over the desired feature.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/12276/MergeDelete.png' target='MergeDelete.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/12276/MergeDelete.png", "MergeDelete.png", "height=324,width=779,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/12276/MergeDelete.png" align="left" border="0"/></a><br clear="all" />
+<b>Figure 6. Delete button</b></p>
+
+<small>(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.</small>
+    </body>
+</html>

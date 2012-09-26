@@ -188,17 +188,27 @@
             id="net.refractions.udig.project.ui.wizards.newProject">
       </primaryWizard>
       <wizard
-            name="%NewProjectWizard.name"
-            id="net.refractions.udig.project.ui.wizards.newProject"
             category="net.refractions.udig.project.ui.new"
             class="net.refractions.udig.project.ui.internal.wizard.NewProjectWizard"
-            icon="icons/etool16/newprj_wiz.gif"
+            descriptionImage="icons/wizban/newprj_wiz.gif"
             finalPerspective="net.refractions.udig.ui.mapPerspective"
-            project="false"
             helpHref="New Project wizard.html"
-            preferredPerspectives="net.refractions.udig.ui.mapPerspective">
+            icon="icons/etool16/newprj_wiz.gif"
+            id="net.refractions.udig.project.ui.wizards.newProject"
+            name="%NewProjectWizard.name"
+            preferredPerspectives="net.refractions.udig.ui.mapPerspective"
+            project="false">
          <description>
             %NewProjectWizard.description
+         </description>
+      </wizard>
+      <wizard
+            class="net.refractions.udig.project.ui.internal.wizard.NewLayerWizard"
+            icon="icons/etool16/newlayer_wiz.gif"
+            id="net.refractions.udig.project.ui.wizard.newLayer"
+            name="%NewLayerWizard.name">
+         <description>
+            %NewLayerWizard.description
          </description>
       </wizard>
    </extension>
@@ -211,7 +221,7 @@
             objectClass="net.refractions.udig.project.IMap"/>
       <page
             class="net.refractions.udig.project.ui.internal.property.pages.MapCRSPropertyPage"
-            id="net.refractions.udig.project.ui.page1"
+            id="net.refractions.udig.project.ui.property.mapCrs"
             name="%crs.page.name"
             objectClass="net.refractions.udig.project.IMap"/>
       <page
@@ -223,8 +233,18 @@
       <page
             class="net.refractions.udig.project.ui.internal.property.pages.LayerSummary"
             id="net.refractions.udig.configuration.property.layer.summary"
-            name="%LayerSummary.name"
-            objectClass="net.refractions.udig.catalog.IGeoResource"/>
+            name="%LayerSummary.name">
+         <enabledWhen>
+            <or>
+               <instanceof
+                     value="net.refractions.udig.project.internal.Layer">
+               </instanceof>
+               <adapt
+                     type="net.refractions.udig.project.internal.Layer">
+               </adapt>
+            </or>
+         </enabledWhen>
+      </page>
       <page
             class="net.refractions.udig.project.ui.internal.property.pages.LayerCRSPropertyPage"
             id="net.refractions.udig.project.ui.layer.crs"
@@ -235,13 +255,31 @@
             class="net.refractions.udig.project.ui.internal.property.pages.LayerInteractionPropertyPage"
             id="net.refractions.udig.project.ui.property.layer.interaction"
             name="Interaction"
-            objectClass="net.refractions.udig.project.internal.Layer">
+            objectClass="net.refractions.udig.project.internal.Layer"
+            selectionFilter="single">
       </page>
       <page
             class="net.refractions.udig.project.ui.tileset.TileSetPropertyPage"
             id="net.refractions.udig.configuration.property.layer.tileset"
             name="%tilesetDefine"
-            objectClass="net.refractions.udig.project.ILayer">
+            selectionFilter="single">
+         <enabledWhen>
+            <or>
+               <instanceof
+                     value="net.refractions.udig.project.internal.Layer">
+               </instanceof>
+               <adapt
+                     type="net.refractions.udig.project.internal.Layer">
+               </adapt>
+            </or>
+         </enabledWhen>
+      </page>
+      <page
+            class="net.refractions.udig.project.ui.internal.property.pages.LayerQueryPropertyPage"
+            id="net.refractions.udig.project.ui.property.layer.query"
+            name="Query"
+            objectClass="net.refractions.udig.project.internal.Layer"
+            selectionFilter="single">
       </page>
    </extension>
 
@@ -996,7 +1034,9 @@
                targetClass="net.refractions.udig.project.ILayer">
            <enablement>
              <and>
-               <property propertyId="net.refractions.udig.project.FeatureStoreResourceProperty" expectedValue=""/>  
+               <property
+                     expectedValue="true"
+                     propertyId="FeatureStoreResourceProperty"/>  
              </and>
             </enablement>
          </operation>         
@@ -1025,7 +1065,7 @@
         <handler
               class="net.refractions.udig.project.ui.internal.handlers.MapPropertiesCommandHandler"
               commandId="net.refractions.udig.project.ui.mapProperties">
-           <enabledWhen>
+           <activeWhen>
               <iterate
                     ifEmpty="false"
                     operator="or">
@@ -1036,7 +1076,7 @@
                        value="net.refractions.udig.project.IMap">
                  </instanceof>
               </iterate>
-           </enabledWhen>
+           </activeWhen>
         </handler>
         <handler
               class="net.refractions.udig.project.ui.internal.handlers.LayerPropertiesCommandHandler"

@@ -1,6 +1,7 @@
 package net.refractions.udig.tools.edit.behaviour;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.tools.edit.EditState;
 import net.refractions.udig.tools.edit.EventType;
@@ -8,11 +9,14 @@ import net.refractions.udig.tools.edit.support.EditGeom;
 import net.refractions.udig.tools.edit.support.ShapeType;
 import net.refractions.udig.tools.edit.support.TestHandler;
 
-public class SelectHoleBehaviourTest extends TestCase {
+import org.junit.Test;
+
+public class SelectHoleBehaviourTest {
 
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.SelectHoleBehaviour.isValid(EditToolHandler, MapMouseEvent, EventType)'
      */
+    @Test
     public void testIsValid() throws Exception {
         TestHandler handler=new TestHandler();
         handler.getTestEditBlackboard().util.setVertexRadius(4);

@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.refractions</groupId>
     <artifactId>udig-tycho</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.3.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <description>
         This is the base uDig pom that controls the version numbers
@@ -30,9 +30,14 @@
     </prerequisites>
 
     <properties>
-        <tycho-version>0.13.0</tycho-version>
-        <tycho-provider>org.eclipse.tycho</tycho-provider>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <java-version>1.6</java-version>
+        <tycho-version>0.15.0</tycho-version>
+        <tycho-extras-version>0.15.0</tycho-extras-version>
     </properties>
+    
     <!--
 We need to ask you to download some libs prior to doing a full build:
    cd plugins/net.refractions.udig.libs
@@ -40,9 +45,9 @@ We need to ask you to download some libs prior to doing a full build:
    cd ../..
 
 Our maven tests require a bit more memory:
-   export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m"
+   export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 
-Once that is done you can a normal build on the command line:
+Once that is done you can run a full build on the command line:
    mvn install -Dall
 
 If you run into any problems (to list debug and stack trace)
@@ -52,22 +57,22 @@ Please note the Tycho maven plugin used to build RCP projects is a a work in pro
 will do better to review the stack trace with a checkout of the Tycho code in hand as the
 error messages are often misleading and evil.
 
-To quickly build the product:
-   mvn install
+The build supports the use of profiles - the following profiles are defined:
 
-The build supports the use of profiles - to run a normal build with tests:
-  mvn install -Dall -Ptest
+To quickly build the product (result is in features/net.refractions.udig-product/target):
+   mvn install -Pproduct
 
-The following profiles are defined:
-
-Defines the appropriate p2 update repository
-  mvn install -PudigProfile (on by default)
+Builds documentation (requires sphinx-build is installed):
+  mvn install -Pdocs
 
 Gathers the tutorials and source code for the software developers kit
-  mvn install -Psdk (included by -Dall)
+  mvn install -Dall -Psdk
 
-Includes test plugins (this is optional):
-  mvn install -Ptest
+To run a full build with tests:
+  mvn install -Dall -Ptest
+  
+To run a full build with user interfaces tests (requires a display):
+  mvn install -Dall -Ptest,test-ui
 
 To profile the tests you will need:
   mvn install -Ptest -Pprofile
@@ -81,44 +86,15 @@ Includes the udig and community sites:
 Includes the ossim feaure (this may be dead code) 
   -Possim
 
-    -->    
+    -->
     <profiles>
         <profile>
-            <id>udigProfile</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>indigo-web</id>
-                    <layout>p2</layout>
-                    <url>http://download.eclipse.org/releases/indigo/</url>
-                    <releases>
-                        <enabled>true</enabled>
-                        <updatePolicy>never</updatePolicy>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                        <updatePolicy>never</updatePolicy>
-                    </snapshots>
-                </repository>
-
-                <repository>
-                    <id>indigo-babel-web</id>
-                    <layout>p2</layout>
-                    <url>http://download.eclipse.org/technology/babel/update-site/R0.9.1/indigo</url>
-                    <releases>
-                        <enabled>true</enabled>
-                        <updatePolicy>never</updatePolicy>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                        <updatePolicy>never</updatePolicy>
-                    </snapshots>
-                </repository>
-            </repositories>
+            <id>docs</id>
+            <modules>
+                 <module>docs</module>
+             </modules>
         </profile>
-
+        
         <profile>
             <id>coverage</id>
             <activation>
@@ -157,8 +133,8 @@ Includes the ossim feaure (this may be dead code)
                     </plugin>
 
                     <plugin>
-                        <groupId>org.sonatype.tycho</groupId>
-                        <artifactId>maven-osgi-test-plugin</artifactId>
+                        <groupId>org.eclipse.tycho</groupId>
+                        <artifactId>tycho-surefire-plugin</artifactId>
                         <version>${tycho-version}</version>
                         <configuration>
                             <systemProperties combine.children="append">
@@ -179,25 +155,63 @@ Includes the ossim feaure (this may be dead code)
                 </plugins>
             </build>
         </profile>
+        
+        <profile>
+            <id>mac-os</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+            <properties>
+                <tycho.test.OSspecific>-XstartOnFirstThread</tycho.test.OSspecific>
+            </properties>
+        </profile>
 
+        <profile>
+            <id>other-os</id>
+            <activation>
+                <os>
+                    <family>!mac</family>
+                </os>
+            </activation>
+            <properties>
+                <tycho.test.OSspecific />
+            </properties>
+        </profile>
     </profiles>
     
+    <repositories>
+        <repository>
+            <id>indigo-web</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/releases/indigo</url>
+        </repository>
+        
+        <repository>
+            <id>indigo-babel-web</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/technology/babel/update-site/R0.10.0/indigo</url>
+        </repository>
+
+    </repositories>
     
     <build>
         <plugins>
             <plugin>
-                <groupId>${tycho-provider}</groupId>
+                <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-maven-plugin</artifactId>
                 <version>${tycho-version}</version>
                 <extensions>true</extensions>
             </plugin>
+            
             <plugin>
-                <groupId>${tycho-provider}</groupId>
+                <groupId>org.eclipse.tycho</groupId>
                 <artifactId>target-platform-configuration</artifactId>
                 <version>${tycho-version}</version>
                 <configuration>
                     <resolver>p2</resolver>
-                    <!-- pomDependencies>consider</pomDependencies -->
+                    <!--pomDependencies>consider</pomDependencies-->
                     <environments>
                         <environment>
                             <os>win32</os>
@@ -205,61 +219,108 @@ Includes the ossim feaure (this may be dead code)
                             <arch>x86</arch>
                         </environment>
                         <environment>
+                            <os>win32</os>
+                            <ws>win32</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                        <environment>
                             <os>linux</os>
                             <ws>gtk</ws>
                             <arch>x86</arch>
                         </environment>
                         <environment>
+                            <os>linux</os>
+                            <ws>gtk</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                        <environment>
                             <os>macosx</os>
-                            <ws>carbon</ws>
+                            <ws>cocoa</ws>
                             <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>macosx</os>
+                            <ws>cocoa</ws>
+                            <arch>x86_64</arch>
                         </environment>
                     </environments>
                 </configuration>
             </plugin>
+            
             <plugin>
-                <groupId>${tycho-provider}</groupId>
+                <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-compiler-plugin</artifactId>
                 <version>${tycho-version}</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <encoding>UTF-8</encoding>
+                    <source>${java-version}</source>
+                    <target>${java-version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
-			<plugin>
-			   	<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			   <executions>
-			      <execution>
-			         <id>the-execution-id</id>
-			         <phase>none</phase>
-			      </execution>
-			   </executions>			
-			</plugin>
+            
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-source-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <executions>
+                    <execution>
+                        <id>plugin-source</id>
+                        <goals>
+                            <goal>plugin-source</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>the-execution-id</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+        
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-surefire-plugin</artifactId>
+                    <version>${tycho-version}</version>
+                    <configuration>
+                        <useUIHarness>true</useUIHarness>
+                        <product>net.refractions.udig-product</product>
+                        <argLine>-Xmx1024m -XX:MaxPermSize=256m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific}</argLine>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
+    
     <reporting>
-      <plugins>
-        <!-- Code coverage report -->
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>cobertura-maven-plugin</artifactId>
-          <!-- not a maven core plugin, specify version -->
-          <version>2.2</version>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>findbugs-maven-plugin</artifactId>
-          <!-- not a maven core plugin, specify version -->
-          <version>2.1</version>
-      </plugin>
-    </plugins>
+        <plugins>
+            <!-- Code coverage report -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.2</version>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>2.1</version>
+            </plugin>
+        </plugins>
     </reporting>
+    
     <modules>
         <module>plugins</module>
         <module>features</module>

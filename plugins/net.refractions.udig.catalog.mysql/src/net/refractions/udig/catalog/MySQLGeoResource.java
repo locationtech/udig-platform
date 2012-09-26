@@ -33,6 +33,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.geotools.data.DataSourceException;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
@@ -112,13 +114,14 @@ public class MySQLGeoResource extends IGeoResource {
             return adaptee.cast(createInfo(monitor));
         if (adaptee.isAssignableFrom(IGeoResource.class))
             return adaptee.cast(this);
-        if (adaptee.isAssignableFrom(FeatureStore.class)) {
-            FeatureSource<SimpleFeatureType, SimpleFeature> fs = parent.getDS().getFeatureSource(
-                    typename);
-            if (fs instanceof FeatureStore)
+        if (adaptee.isAssignableFrom(SimpleFeatureStore.class)) {
+            SimpleFeatureSource fs = parent.getDS().getFeatureSource( typename);
+            if (fs instanceof SimpleFeatureStore){
                 return adaptee.cast(fs);
-            if (adaptee.isAssignableFrom(FeatureSource.class))
+            }
+            if (adaptee.isAssignableFrom(SimpleFeatureSource.class)){
                 return adaptee.cast(parent.getDS().getFeatureSource(typename));
+            }
         }
         if (adaptee.isAssignableFrom(Connection.class)) {
             return parent.resolve(adaptee, monitor);
@@ -133,8 +136,8 @@ public class MySQLGeoResource extends IGeoResource {
         if (adaptee == null)
             return false;
         return (adaptee.isAssignableFrom(IGeoResourceInfo.class)
-                || adaptee.isAssignableFrom(FeatureStore.class)
-                || adaptee.isAssignableFrom(FeatureSource.class) || adaptee
+                || adaptee.isAssignableFrom(SimpleFeatureStore.class)
+                || adaptee.isAssignableFrom(SimpleFeatureSource.class) || adaptee
                 .isAssignableFrom(IService.class))
                 || adaptee.isAssignableFrom(Connection.class) || super.canResolve(adaptee);
     }

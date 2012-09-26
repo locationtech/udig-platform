@@ -73,17 +73,19 @@ public abstract class AbstractRasterService extends IService {
             super.canResolve(adaptee) );
     }
     public Status getStatus() {
-        if( reader != null ){
-            return Status.CONNECTED;
+        if( reader == null ){
+            return super.getStatus();
         }
-        else if (message != null ){
-            return Status.BROKEN;
-        }
-        else {
-            return Status.NOTCONNECTED;
-        }
+        return Status.CONNECTED;
     }
-
+    public void dispose( IProgressMonitor monitor ) {
+        if( reader != null ){
+            reader.dispose();
+            reader = null;
+        }
+        super.dispose(monitor);
+    }
+    
     public Throwable getMessage() {
         return this.message;
     }
@@ -120,13 +122,13 @@ public abstract class AbstractRasterService extends IService {
                 AbstractGridFormat frmt = (AbstractGridFormat) getFormat();
                 ID id = getID();
                 if( id.isFile() ){
-	                File file = id.toFile();
-	                if( file != null ){
-	                	// to force  crs
-//	                	Hints hints = new Hints();
-//	                	hints.put(Hints.DEFAULT_COORDINATE_REFERENCE_SYSTEM, )
-						this.reader = (AbstractGridCoverage2DReader) frmt.getReader( file );
-	                	return this.reader;
+                    File file = id.toFile();
+                    if (file != null) {
+                        // to force crs
+                        // Hints hints = new Hints();
+                        // hints.put(Hints.DEFAULT_COORDINATE_REFERENCE_SYSTEM, )
+                        this.reader = (AbstractGridCoverage2DReader) frmt.getReader(file);
+                        return this.reader;
 	                }
 	                else {
 	                	throw new FileNotFoundException( id.toFile().toString() );

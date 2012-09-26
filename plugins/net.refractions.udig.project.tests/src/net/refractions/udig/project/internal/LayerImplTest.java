@@ -14,12 +14,19 @@
  */
 package net.refractions.udig.project.internal;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.ITransientResolve;
 import net.refractions.udig.catalog.tests.CatalogTests;
@@ -43,6 +50,9 @@ import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -58,13 +68,13 @@ import com.vividsolutions.jts.geom.Point;
  * @author Jesse
  * @since 1.1.0
  */
-public class LayerImplTest extends TestCase {
+public class LayerImplTest {
 
     private Map map;
     private LayerImpl layer;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         map=MapTests.createDefaultMap("typename1", 3, true, null); //$NON-NLS-1$
         layer=(LayerImpl) map.getMapLayers().get(0);
     }
@@ -72,6 +82,7 @@ public class LayerImplTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#getGeoResources()}.
      */
+    @Test
     public void testGetGeoResources() {
         assertEquals(1, layer.getGeoResources().size());
         assertTrue("Was :"+layer.getGeoResources().get(0).getClass(),layer.getGeoResources().get(0) instanceof LayerResource); //$NON-NLS-1$
@@ -82,6 +93,7 @@ public class LayerImplTest extends TestCase {
      * Testing that the CachingInterceptor is being ran correctly
      * Testing that the TestInterceptor is being ran correctly.
      */
+    @Test
     public void testGetGeoResourcesInterceptors() throws IOException {
         NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
         FeatureStore<SimpleFeatureType, SimpleFeature> resource = layer.getResource(FeatureStore.class, nullProgressMonitor);
@@ -133,6 +145,7 @@ public class LayerImplTest extends TestCase {
      *
      * @throws Exception
      */
+    @Test
     public void testRunCoDependentInterceptors() throws Exception {
         LayerResource resource=(LayerResource) layer.getGeoResources().get(0);
         
@@ -161,9 +174,11 @@ public class LayerImplTest extends TestCase {
 
         }
     }
+    
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#getResource(java.lang.Class, org.eclipse.core.runtime.IProgressMonitor)}.
      */
+    @Test
     public void testGetResource() throws IOException {
         assertNotNull(layer.getResource(FeatureStore.class, new NullProgressMonitor()));
     }
@@ -173,6 +188,7 @@ public class LayerImplTest extends TestCase {
      * @throws Exception 
      */
     @SuppressWarnings("unchecked")
+    @Test
     public void testFindGeoResource() throws Exception{
         String string = "value"; //$NON-NLS-1$
         layer = MapTests.createLayer(new URL("http://testresourcefindGeoResource.org"), string , null); //$NON-NLS-1$
@@ -191,6 +207,7 @@ public class LayerImplTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#isType(java.lang.Class)}.
      */
+    @Test
     public void testHasResource() {
         assertTrue(layer.hasResource(FeatureStore.class));
         assertTrue(layer.hasResource(FeatureSource.class));
@@ -200,6 +217,7 @@ public class LayerImplTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#getCRS()}.
      */
+    @Test
     public void testGetCRS() {
         //TODO implement test
     }
@@ -207,6 +225,7 @@ public class LayerImplTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#getDefaultColor()}.
      */
+    @Test
     public void testGetDefaultColor() {
         //TODO implement test 
     }
@@ -214,6 +233,7 @@ public class LayerImplTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#getMinScaleDenominator()}.
      */
+    @Test
     public void testGetMinScaleDenominator() {
         //TODO implement test 
     }
@@ -221,6 +241,7 @@ public class LayerImplTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#getMaxScaleDenominator()}.
      */
+    @Test
     public void testGetMaxScaleDenominator() {
         //TODO implement test 
     }
@@ -228,6 +249,7 @@ public class LayerImplTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#refresh(com.vividsolutions.jts.geom.Envelope)}.
      */
+    @Test
     public void testRefresh() {
         //TODO implement test 
     }
@@ -235,6 +257,7 @@ public class LayerImplTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#layerToMapTransform()}.
      */
+    @Test
     public void testLayerToMapTransform() {
         //TODO implement test 
     }
@@ -242,6 +265,7 @@ public class LayerImplTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#mapToLayerTransform()}.
      */
+    @Test
     public void testMapToLayerTransform() {
         //TODO implement test 
     }
@@ -249,6 +273,7 @@ public class LayerImplTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#createBBoxFilter(com.vividsolutions.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor)}.
      */
+    @Test
     public void testCreateBBoxFilter() {
         //TODO implement test 
     }
@@ -256,10 +281,12 @@ public class LayerImplTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.project.internal.impl.LayerImpl#changed(net.refractions.udig.catalog.IResolveChangeEvent)}.
      */
+    @Test
     public void testChanged() {
         //TODO implement test 
     }
     
+    @Test
     public void testSetZOrder() throws Exception {
         IGeoResource resource = CatalogTests.createGeoResource("resource", 3, false); //$NON-NLS-1$
         Layer createLayer = map.getLayerFactory().createLayer(resource);
@@ -289,7 +316,9 @@ public class LayerImplTest extends TestCase {
     }
     
     @SuppressWarnings("unchecked")
-    public void xtestGetBounds() throws Exception {
+    @Ignore
+    @Test
+    public void testGetBounds() throws Exception {
         IGeoResource resource = CatalogTests.createGeoResource("resource", 0, false); //$NON-NLS-1$
         FeatureStore<SimpleFeatureType, SimpleFeature> fs = resource.resolve(FeatureStore.class, null);
         FeatureCollection<SimpleFeatureType, SimpleFeature> collection = FeatureCollections.newCollection();

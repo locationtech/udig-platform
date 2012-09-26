@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Spanish Users Guide : Herramienta Dividir</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Spanish Users Guide : Herramienta Dividir -->
+       <h1>Herramienta Dividir</h1>
+       <p> <img src="download/attachments/7962785/split_feature_mode.gif" align="absmiddle" border="0"/> Divide features cruzados por una línea</p>
+
+<p>La <em>Herramienta Dividir</em> lleva a cabo la división de features en dos o más partes usando una línea dibujada por el usuario como línea de corte.</p>
+
+<h2><a name="HerramientaDividir-Comportamiento"></a>Comportamiento</h2>
+
+<p>La <em>Herramienta Dividir</em> opera sobre los features seleccionados de la Capa actual. Se puede usar la selección mediante <em>Bounding Box</em> o cualquier otro método de selección de features, para limitar los features a dividir antes de usar la <em>Herramienta Dividir</em>. Si la actual capa no tiene establecida ninguna selección, la <em>Herramienta Dividir</em> operará sobre cualquier Feature en la actual capa cuya geometría por defecto sea cruzada por la <em>línea de corte</em>.</p>
+
+<p>Cuando la <em>Herramienta Dividir</em> procede a dividir un feature, borrará el feature a ser dividido y creará tantos features nuevos como partes resulten de la división.</p>
+
+<p>Hay que recordar que la <em>Herramienta Dividir</em> no guarda el resultado, sino que permite deshacer la operación si se desea, o guardar los cambios en el repositorio de datos de fondo como normalmente haría con uDig.</p>
+
+<h3><a name="HerramientaDividir-Consistenciavisual"></a>Consistencia visual</h3>
+
+<p>Con el fin de preservar la consistencia visual, y por lo tanto ser consistente con las acciones del usuario, las geometrías creadas por la <em>Herramienta Dividir</em> serán primeramente creadas en el CRS del mapa, y después proyectadas al CRS de fondo para su almacenamiento. Con esto se asegura que las geometrías resultantes son cortadas por la línea dibujada por el usuario, ya que haciéndolo al contrario puede llevar a un resultado distinto si los CRS de mapa y datos difieren.</p>
+
+<h2><a name="HerramientaDividir-Uso"></a>Uso</h2>
+
+<p>Seleccionar la <em>Herramienta Dividir</em> desde la lista desplegable como se muestra en la <em>Figura 1</em>.</p>
+
+<p><img src="download/attachments/7962785/split_1.png" align="absmiddle" border="0"/><br clear="all" />
+<b>Figura 1. Seleccionando la Herramienta Dividir</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<p>Dibujar la línea que vaya a ser usada como línea de corte, asegurándose de que cruza las geometrías que se desean dividir, como se muestra en la <em>Figura 2</em>.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962785/split_2.png' target='split_2.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962785/split_2.png", "split_2.png", "height=492,width=822,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962785/split_2.png" align="left" border="0"/></a><br clear="all" />
+<b>Figura 2. Dibujar la línea de corte para dividir un LineString</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<p>Hacer doble click para añadir el último vértice de línea de corte e indicar a la operación de división que proceda.<br/>
+La <em>Figura 3</em> muestra como el LineString de la capa actual que era cruzado por la línea de corte ha sido dividida en dos.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962785/split_3.png' target='split_3.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962785/split_3.png", "split_3.png", "height=492,width=822,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962785/split_3.png" align="left" border="0"/></a><br clear="all" />
+<b>Figura 3. LineString dividido en dos</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<p>El siguiente es otro ejemplo de cómo dividir un polígono en varias partes.<br/>
+La <em>Figura 4</em> muestra una <em>línea de corte</em> siendo dibujada sobre un polígono previamente seleccionado en la capa actual. La Vista de Tabla muestra los datos de atributo de los polígonos seleccionados.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962785/split_4.png' target='split_4.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962785/split_4.png", "split_4.png", "height=571,width=812,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962785/split_4.png" align="left" border="0"/></a><br clear="all" />
+<b>Figura 4. Dividiendo un polígono seleccionado</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<p>La <em>Figura 5</em> muestra los polígonos recientemente creados una vez que la <em>línea de corte</em> se ha terminado y se ha procedido con la operación de división.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962785/split_5.png' target='split_5.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962785/split_5.png", "split_5.png", "height=571,width=812,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962785/split_5.png" align="left" border="0"/></a><br clear="all" />
+<b>Figura 5. Resultado de dividir un polígono</b>
+<br clear="all" />
+<br clear="all" /></p>
+
+<p>En la <em>Figura 6</em> se pueden observar los datos de atributo de los recientemente creados Features en la <em>Vista de Tabla</em>, después de seleccionar los polígonos resultantes mediante un <em>Bounding Box</em>. Comprobar que cada uno de ellos tiene un nuevo Feature ID como se esperaba, y comparten los mismos datos de atributo del Feature original.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962785/split_6.png' target='split_6.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962785/split_6.png", "split_6.png", "height=571,width=812,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962785/split_6.png" align="left" border="0"/></a><br clear="all" />
+<b>Figura 6. Creados nuevos features sin guardar</b></p>
+
+<h3><a name="HerramientaDividir-Agregarverticesalosfeaturesvecinos"></a>Agregar vertices a los features vecinos</h3>
+
+<p>La herramienta dividir agregar vertices a los features vecinos en el siguiente caso:<br/>
+-El feature al que se le añaden los vertices no va a ser dividido.<br/>
+-El feature al que se le añaden los vertices debe estar tocando con un feature que haya sido dividido.</p>
+
+<p>En el siguiente ejemplo vamos a dividir el feature que yace en el interior.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962785/split-doing.png' target='split-doing.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962785/split-doing.png", "split-doing.png", "height=752,width=917,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962785/split-doing.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 7 Antes de realizar la división</b></p>
+
+<p>El feature del interior es dividio y 2 vertices son agregados al feature del exterior.</p>
+
+<p><a href='http://udig.refractions.net/confluence//download/attachments/7962785/split-after1.png' target='split-after1.png' onClick='window.open("http://udig.refractions.net/confluence//download/attachments/7962785/split-after1.png", "split-after1.png", "height=721,width=918,menubar=no,status=no,toolbar=no"); return false;'><img src="download/thumbnails/7962785/split-after1.png" align="absmiddle" border="0"/></a><br/>
+<b>Figure 8, 2 vertices son agregado</b></p>
+
+<small>(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.</small>
+    </body>
+</html>

@@ -14,9 +14,12 @@
  */
 package net.refractions.udig.catalog.tests.internal;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
@@ -25,24 +28,23 @@ import net.refractions.udig.catalog.tests.DummyService;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Test;
 
 /**
  * Test the resolve manager
  * @author Jesse
  * @since 1.1.0
  */
-public class ResolveManagerTest extends TestCase {
+public class ResolveManagerTest {
 
     IResolveManager resolveManager = CatalogPlugin.getDefault().getResolveManager();
     DummyService service=new DummyService();
 
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
 
     /**
      * Test method for {@link net.refractions.udig.catalog.internal.ResolveManager#canResolve(net.refractions.udig.catalog.IResolve, java.lang.Class)}.
      */
+    @Test
     public void testCanResolve() {
         assertTrue(resolveManager.canResolve(service, ResolvedTo.class));
     }
@@ -50,19 +52,27 @@ public class ResolveManagerTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.catalog.internal.ResolveManager#registerResolves(net.refractions.udig.catalog.IResolveAdapterFactory)}.
      */
+    @Test
     public void testRegisterResolves() {
         assertFalse(resolveManager.canResolve(service, Integer.class));
-        IResolveAdapterFactory factory = new IResolveAdapterFactory(){
-        
-                    public Object adapt( IResolve resolve, Class adapter, IProgressMonitor monitor ) throws IOException {
-                        return new Integer(1);
-                    }
-        
-                    public boolean canAdapt( IResolve resolve, Class adapter ) {
-                        return adapter == Integer.class;
-                    }
-                    
-                };
+        IResolveAdapterFactory factory = new IResolveAdapterFactory() {
+
+            public <T> T adapt(IResolve resolve, Class<T> adapter, IProgressMonitor monitor)
+                    throws IOException {
+                if( adapter == Integer.class ){
+                    return adapter.cast( new Integer(1) );
+                }
+                return null;
+            }
+
+            public boolean canAdapt(IResolve resolve, Class adapter) {
+                return adapter == Integer.class;
+            }
+
+            public String toString() {
+                return "Generic ResolveAdapterFactory";
+            }
+        };
         resolveManager.registerResolves(factory);
         assertTrue(resolveManager.canResolve(service, Integer.class));
         resolveManager.unregisterResolves(factory);
@@ -72,6 +82,7 @@ public class ResolveManagerTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.catalog.internal.ResolveManager#resolve(net.refractions.udig.catalog.IResolve, java.lang.Class, IProgressMonitor)}.
      */
+    @Test
     public void testResolve() throws Exception {
         assertNotNull(resolveManager.resolve(service, ResolvedTo.class, new NullProgressMonitor()));
     }
@@ -79,17 +90,27 @@ public class ResolveManagerTest extends TestCase {
     /**
      * Test method for {@link net.refractions.udig.catalog.internal.ResolveManager#unregisterResolves(net.refractions.udig.catalog.IResolveAdapterFactory, java.lang.Class)}.
      */
+    @Test
     public void testUnregisterResolvesIResolveAdapterFactoryClass() {
         IResolveAdapterFactory factory = new IResolveAdapterFactory(){
             
-            public Object adapt( IResolve resolve, Class adapter, IProgressMonitor monitor ) throws IOException {
-                return new Integer(1);
-            }
+            public <T> T adapt( IResolve resolve, Class<T> adapter, IProgressMonitor monitor ) throws IOException {
+                if( adapter == Integer.class ){
+                    return adapter.cast( Integer.valueOf(1) );                   
+                }
+                else if (adapter == Float.class ){
+                    return adapter.cast( Float.valueOf(2.0f));
+                }
+                return null; // unable to handle this one
+             }
 
             public boolean canAdapt( IResolve resolve, Class adapter ) {
                 return adapter == Integer.class || adapter == Float.class;
             }
             
+            public String toString() {
+                return "Generic ResolveAdapterFactory";
+            }
         };
 
         resolveManager.registerResolves(factory);

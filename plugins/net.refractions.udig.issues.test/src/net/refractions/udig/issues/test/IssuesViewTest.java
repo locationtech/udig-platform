@@ -1,5 +1,11 @@
 package net.refractions.udig.issues.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Dimension;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -34,11 +40,8 @@ import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.tests.support.MapTests;
 import net.refractions.udig.project.tests.ui.ViewPart1;
 import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.MapEditor;
 import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
-
-import opendap.servlet.GetDirHandler;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -55,6 +58,10 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 
 public class IssuesViewTest extends AbstractProjectUITestCase {
@@ -62,14 +69,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
     private TreeViewer viewer;
     private IssuesView view;
 
-    
-    @Override
-    protected void setUp() throws Exception {
-        // ignore this it's broken
-        if (true) {
-            return;
-        }
- 
+    @Before
+    public void setUp() throws Exception {
         FeatureIssue.setTesting(true);
         ((IssuesList)IIssuesManager.defaultInstance.getIssuesList()).listeners.clear();
         IIssuesManager.defaultInstance.getIssuesList().clear();
@@ -99,22 +100,14 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         assertEquals(5, ((Tree)viewer.getControl()).getItemCount());
     }
     
-    @Override
-    protected void tearDown() throws Exception {
-        // ignore this it's broken
-        if (true) {
-            return;
-        }
- 
+    @After
+    public void tearDown() throws Exception {
     	PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().hideView(view);
         FeatureIssue.setTesting(false);
     }
-
-    public void testStub() throws Exception {
-        assertTrue(true);
-    }
     
-    public void xtestIconsAndText() throws Exception {
+    @Test
+    public void testIconsAndText() throws Exception {
 
         Display.getDefault().syncExec(new Runnable(){
             public void run() {
@@ -210,7 +203,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
 
     }
 
-    public void xtestSetFocus() throws Exception {
+    @Test
+    public void testSetFocus() throws Exception {
         assertEquals(5, list.size());
         
         for ( int i=0; i<15; i++ )
@@ -223,7 +217,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
 
     }
 
-    public void xtestSorterChange() throws Exception {
+    @Test
+    public void testSorterChange() throws Exception {
         Display.getDefault().syncExec(new Runnable(){
             public void run() {
 
@@ -255,7 +250,9 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         });
     }
 
-    public void xtestFixIssue() throws Exception {
+    @Ignore
+    @Test
+    public void testFixIssue() throws Exception {
         list.clear();
         
         list.add(new TestIssue(Priority.CRITICAL, Resolution.UNRESOLVED){
@@ -352,7 +349,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
 //        assertEquals(Resolution.RESOLVED, list.get(0).getResolution());
 //    }
     
-    public void xtestResolutionChange() throws Exception {
+    @Test
+    public void testResolutionChange() throws Exception {
         Display.getDefault().syncExec(new Runnable(){
             public void run()  {
                 assertEquals(Resolution.RESOLVED, list.get(2).getResolution());
@@ -370,7 +368,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         });
     }
 
-    public void xtestPriorityChange() throws Exception {
+    @Test
+    public void testPriorityChange() throws Exception {
         assertEquals(Priority.CRITICAL, list.get(0).getPriority());
         viewer.editElement(list.get(0),IssuesView.PRIORITY_COLUMN);
         assertEquals(Priority.TRIVIAL, list.get(0).getPriority());
@@ -384,7 +383,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         assertEquals(Priority.CRITICAL, list.get(0).getPriority());
     }
     
-    public void xtestShowFixedIssues() throws Exception {
+    @Test
+    public void testShowFixedIssues() throws Exception {
         list.clear();
         for ( int i=0; i<15; i++ )
             list.add(new TestIssue(null, Resolution.RESOLVED));
@@ -429,7 +429,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
 
     }
     
-    public void xtestCloseView() throws Exception {
+    @Test
+    public void testCloseView() throws Exception {
         IIssuesList old = IIssuesManager.defaultInstance.getIssuesList();
         try{
         IIssuesManager.defaultInstance.setIssuesList(IssuesListTestHelper.createInMemoryDatastoreIssuesList(null, null));
@@ -452,7 +453,9 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         }
         
     }
-    public void xtestDispose() throws Exception {
+    
+    @Test
+    public void testDispose() throws Exception {
         view.disposeListeners();
         viewer.getControl().getMenu().setVisible(true);
         viewer.getControl().getMenu().setVisible(false);
@@ -460,7 +463,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         view.restoreListeners();
     }
 
-    public void xtestDelete() throws Exception {
+    @Test
+    public void testDelete() throws Exception {
 		IIssue issue = list.get(0);
 		viewer.setSelection(new StructuredSelection(issue));
 		view.forTestingGetDeleteAction().runWithEvent(new Event());
@@ -475,7 +479,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
 		assertEquals("All items should have been deleted except 1", 1,list.size()); //$NON-NLS-1$
 	}
 
-    public void xtestDeleteResolvedIssues() throws Exception {
+    @Test
+    public void testDeleteResolvedIssues() throws Exception {
     	for (IIssue issue : list) {
 			issue.setResolution(Resolution.RESOLVED);
 		}
@@ -496,7 +501,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
 		assertEquals("All items should have been deleted except 1", 1,list.size()); //$NON-NLS-1$
 	}
 
-    public void xtestGroupDelete() throws Exception {
+    @Test
+    public void testGroupDelete() throws Exception {
 		IIssue issue = list.get(0);
 		viewer.setSelection(new StructuredSelection(issue));
 		Event event = new Event();
@@ -506,7 +512,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
 		
 	}
 
-    public void xtestGroupDeleteResolvedIssues() throws Exception {
+    @Test
+    public void testGroupDeleteResolvedIssues() throws Exception {
     	for (IIssue issue : list) {
 			issue.setResolution(Resolution.RESOLVED);
 		}
@@ -522,7 +529,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
 		
 	}
     
-    public void xtestButtonEnablement(){
+    @Test
+    public void testButtonEnablement() {
     	viewer.setSelection(new StructuredSelection());
     	assertFalse(view.forTestingGetDeleteAction().isEnabled());
     	assertFalse(view.forTestingGetDeleteGroupAction().isEnabled());
@@ -534,7 +542,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
     	assertTrue(view.forTestingGetFixAction().isEnabled());
     }
     
-    public void xtestRefreshSaveButtonEnablement() throws Exception {
+    @Test
+    public void testRefreshSaveButtonEnablement() throws Exception {
         IIssuesList old = IIssuesManager.defaultInstance.getIssuesList();
         try{
             assertFalse(view.forTestingGetRefreshButton().isEnabled());
@@ -565,7 +574,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         }
     }
     
-    public void xtestRefreshAction() throws Exception {
+    @Test
+    public void testRefreshAction() throws Exception {
         IIssuesList old = IIssuesManager.defaultInstance.getIssuesList();
         try{
             IIssuesManager.defaultInstance.setIssuesList(IssuesListTestHelper.createInMemoryDatastoreIssuesList(null, null));
@@ -588,7 +598,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         }
     }
     
-    public void xtestSaveAction() throws Exception {
+    @Test
+    public void testSaveAction() throws Exception {
         IIssuesList old = IIssuesManager.defaultInstance.getIssuesList();
         try{
             IIssuesManager.defaultInstance.setIssuesList(IssuesListTestHelper.createInMemoryDatastoreIssuesList(null, null));
@@ -614,7 +625,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         }
     }
 
-    public void xtestSetContentProvider() throws Exception {
+    @Test
+    public void testSetContentProvider() throws Exception {
         view.setContentProvider(new TestContentProvider.Provider1());
         assertEquals(TestContentProvider.Provider1.CHILD,viewer.getTree().getTopItem().getData());
         
@@ -625,7 +637,8 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         assertEquals(TestContentProvider.Provider1.CHILD,viewer.getTree().getTopItem().getData());
     }
 
-    public void xtestSetLabelProvider() throws Exception {
+    @Test
+    public void testSetLabelProvider() throws Exception {
         view.setLabelProvider(new TestLabelProvider.Provider1());
 
         assertEquals(TestLabelProvider.Provider1.ROWTEXT,viewer.getTree().getItem(0).getText());
@@ -644,7 +657,9 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         
     }
 
-    public void xtestSetExpansionProvider() throws Exception {
+    @Ignore
+    @Test
+    public void testSetExpansionProvider() throws Exception {
         viewer.setSelection(new StructuredSelection());
         view.setContentProvider(new IIssuesContentProvider(){
             String parent= "parent";//$NON-NLS-1$
@@ -706,7 +721,9 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
         assertTrue(viewer.getTree().getTopItem().getExpanded());
     }
     
-    public void xtestInit() throws Exception {
+    @Ignore
+    @Test
+    public void testInit() throws Exception {
         IPreferenceStore preferenceStore = IssuesActivator.getDefault().getPreferenceStore();
         preferenceStore.setValue(PreferenceConstants.KEY_VIEW_CONTENT_PROVIDER, "net.refractions.udig.issues.test.TestContentProvider"); //$NON-NLS-1$
         preferenceStore.setValue(PreferenceConstants.KEY_VIEW_SORTER, "net.refractions.udig.issues.test.TestSorter"); //$NON-NLS-1$

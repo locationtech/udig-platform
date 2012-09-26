@@ -1,14 +1,16 @@
 package net.refractions.udig.tools.edit.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Collections;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.command.CommandManager;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.ui.feature.EditFeature;
 import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
 import net.refractions.udig.tools.edit.support.EditGeom;
 import net.refractions.udig.tools.edit.support.PrimitiveShape;
@@ -17,11 +19,13 @@ import net.refractions.udig.tools.edit.support.TestHandler;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureTypes;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-public class DeselectEditGeomsCommandTest extends TestCase {
+public class DeselectEditGeomsCommandTest {
 
     private TestHandler handler;
     private EditBlackboard bb;
@@ -31,9 +35,8 @@ public class DeselectEditGeomsCommandTest extends TestCase {
     private Layer layer;
     private SimpleFeature feature;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         handler=new TestHandler();
         bb= handler.getEditBlackboard();
         editGeom = bb.getGeoms().get(0);
@@ -75,7 +78,8 @@ public class DeselectEditGeomsCommandTest extends TestCase {
         feature = collection.features().next();
         ((Map)handler.getContext().getMap()).getEditManagerInternal().setEditFeature(feature, layer);
     }
-    public void assertFeatureEqual( String msg, SimpleFeature expected, SimpleFeature actual ){
+    
+    private void assertFeatureEqual( String msg, SimpleFeature expected, SimpleFeature actual ){
         if( expected == null ){
             assertNull( msg, actual );
         }
@@ -86,9 +90,12 @@ public class DeselectEditGeomsCommandTest extends TestCase {
         //FeatureTypes.equals( expected, actual );
         //assertEquals( msg, expected, actual );
     }
+    
     /*
      * Test method for 'net.refractions.udig.tools.edit.commands.DeselectEditGeoms.run(IProgressMonitor)'
      */
+    @Ignore
+    @Test
     public void testRunDeselectAll() throws Exception {
 
         SimpleFeature editFeature = handler.getContext().getEditManager().getEditFeature();
@@ -108,8 +115,6 @@ public class DeselectEditGeomsCommandTest extends TestCase {
         assertFalse(bb.getGeoms().contains(editGeom));
         assertFalse(bb.getGeoms().contains(editGeom2));
         
-        if( EditTestControl.DISABLE ) return;
-        
         assertNull(editFeature);
         
         ((CommandManager)((Map)handler.getContext().getMap()).getCommandStack()).undo(false);
@@ -126,9 +131,9 @@ public class DeselectEditGeomsCommandTest extends TestCase {
         assertEquals(layer, handler.getContext().getEditManager().getEditLayer());
     }
     
+    @Ignore
+    @Test
     public void testDeselectSingle() throws Exception {
-        if( EditTestControl.DISABLE ) return;
-        
         DeselectEditGeomCommand command = new DeselectEditGeomCommand(handler, 
                 Collections.singletonList(bb.getGeoms().get(1)));
         

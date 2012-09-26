@@ -16,7 +16,10 @@
  */
 package net.refractions.udig.project.ui.tool;
 
+import java.util.List;
+
 import net.refractions.udig.project.ui.ApplicationGIS;
+
 
 import org.eclipse.jface.action.IStatusLineManager;
 

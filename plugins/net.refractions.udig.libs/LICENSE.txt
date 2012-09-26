@@ -1,17 +1,86 @@
-/*
- *    uDig - User-friendly Desktop Internet GIS
- *    http://udig.refractions.net
- *    (C) 2004,2005 Refractions Research Inc.
- *    http://www.refractions.net
- *
- *    This library is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU Lesser General Public
- *    License as published by the Free Software Foundation;
- *    version 2.1 of the License.
- *
- *    This library is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *    Lesser General Public License for more details.
- *
- */
+The source code for net.refractions.udig.libs is distributed under the LGPL license:
+
+     uDig - User-friendly Desktop Internet GIS
+     http://udig.refractions.net
+     (C) 2004,2005 Refractions Research Inc.
+     http://www.refractions.net
+ 
+     This library is free software; you can redistribute it and/or
+     modify it under the terms of the GNU Lesser General Public
+     License as published by the Free Software Foundation;
+     version 2.1 of the License.
+ 
+     This library is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+     Lesser General Public License for more details.
+
+This plug-in also download and includes the GeoTools library and supporting projects.
+ 
+For more information please visit the GeoTools website:
+
+* http://docs.geotools.org/latest/userguide/welcome/license.html
+
+The source code for the GeoTools library is distributed under the LGPL license:
+
+	GeoTools - The Open Source Java GIS Toolkit
+	http://geotools.org
+	(C) 2002-2011, Open Source Geospatial Foundation (OSGeo)
+	
+	This library is free software; you can redistribute it and/or modify it under
+	the terms of the GNU Lesser General Public License as published by the Free
+	Software Foundation; version 2.1 of the License.
+	
+	This library is distributed in the hope that it will be useful, but WITHOUT
+	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+	FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+
+In addition several GeoTools modules contain code made available to us under a different license:
+
+* gt-main (SOSNOKILLLICENSE)
+* gt-xsd-core (Apache License)
+* gt-brewer (Apache License)
+* gt-geotiff (Happy Fun Ball License)
+* gt-referencing3d (some code available from nasa for unlimited distribution)
+
+The supporting projects are automatically included by our maven build.
+For more information visit the uDig website:
+
+* http://udig.refractions.net/confluence/display/ADMIN/Dependencies
+ 
+The most recent code audit was performed in 2010:
+
+* Batik 1.7 (Apache License 2.0)
+* Google Collections 0.6 (Apache License 2.0)
+* MIGLayout 3.7 (BSD or GPL)
+* JTS Topology Suite 1.10 (LGPL)
+* Apache Commons (Apache License 2.0)
+** Bean Utils 1.7.0
+** Codec (1.3.0 included in eclipse)
+** Collections 3.1
+** DBCP 1.2.2
+** IO 1.1
+** HTTP Client (3.1.0 included in eclipse)
+** JXPath
+** Lang (2.3.0 included in eclipse)
+** Logging (1.04 included in eclipse)
+** Pool 1.3
+* HSQL REMOVED (hypersonic license derivative of BSD)
+* H2 1.1.104
+* ImageIO-EXT (LGPL)
+* Vecmath 1.3.2 (JDL)
+* JAXB
+* JDOM
+* JFreeChart / Eastwood / JCommon (license?)
+* JODA 1.6 (license?)
+* JSQLParser (license?)
+* MYSQL (license?)
+* JSR-275 (license?)
+* JSR-305 (license?)
+* PostGIS Driver (license?)
+* Pico Container 1.2 (license?)
+* PostgreSQL Driver (license?)
+* Xerces (2.9.0 included in eclipse)
+* XMLRCP (license?)
+* XSOAP (license?)
+

@@ -196,6 +196,7 @@ public class Messages extends NLS {
 	public static String FeaturePropertySource_feature;
 	public static String GeomPropertySource_WKT;
 	public static String GeomPropertySource_area;
+	public static String GeomPropertySource_length;
 	public static String IGeoResourcePropertySource_data;
 	public static String IGeoResourcePropertySource_schema;
 	public static String IGeoResourcePropertySource_1;

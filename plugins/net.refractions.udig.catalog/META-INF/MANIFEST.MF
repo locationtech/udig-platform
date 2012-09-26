@@ -7,10 +7,12 @@ Bundle-Activator: net.refractions.udig.catalog.CatalogPlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Export-Package: net.refractions.udig.catalog,
+ net.refractions.udig.catalog.document,
  net.refractions.udig.catalog.interceptor,
- net.refractions.udig.catalog.internal,
+ net.refractions.udig.catalog.internal;x-friends:="net.refractions.udig.catalog.tests",
  net.refractions.udig.catalog.memory,
  net.refractions.udig.catalog.memory.internal;x-internal:=true,
+ net.refractions.udig.catalog.moved,
  net.refractions.udig.catalog.objectproperty,
  net.refractions.udig.catalog.util
 Require-Bundle: org.eclipse.core.runtime,

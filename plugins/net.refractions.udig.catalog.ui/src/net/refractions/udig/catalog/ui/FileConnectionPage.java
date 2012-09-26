@@ -18,13 +18,10 @@ package net.refractions.udig.catalog.ui;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -32,14 +29,12 @@ import java.util.Set;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IService;
+import net.refractions.udig.catalog.ui.FileConnectionFactory.FileType;
 import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -296,20 +291,43 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
                 CatalogUIPlugin.PREF_OPEN_DIALOG_DIRECTORY);
         fileDialog = new FileDialog(parent.getShell(), SWT.MULTI | SWT.OPEN);
 
-        List<String> fileTypes = factory.getExtensionList();
-
-        StringBuffer all = new StringBuffer();
-        for( Iterator<String> i = fileTypes.iterator(); i.hasNext(); ) {
-            all.append(i.next());
-            if (i.hasNext())
-                all.append(";"); //$NON-NLS-1$ //semicolon is magic in eclipse FileDialog
+        
+        List<String> names = new ArrayList<String>();
+        List<String> extensions = new ArrayList<String>();
+        StringBuilder all = new StringBuilder();
+        
+        for( FileType fileType : factory.getTypeList()){
+            String name = fileType.getName();
+            String fileExtensions = fileType.getExtensions();
+            if( name == null ){
+                name = fileExtensions;
+            }
+            names.add( name );
+            extensions.add( fileExtensions );
+         
+            if( all.length() != 0 ){
+                all.append( ";" );    
+            }
+            all.append( fileExtensions );
+            
         }
-        fileTypes.add(0, all.toString());
-
-        fileTypes.add("*.*"); //$NON-NLS-1$
-
-        fileDialog.setFilterExtensions(fileTypes.toArray(new String[fileTypes.size()]));
-
+        // default to all supported files
+        names.add(0,"Supported Files");
+        extensions.add( 0, all.toString() );
+        
+        // provide an option to select any file
+        String platform = SWT.getPlatform();
+        if (platform.equals("win32") || platform.equals("wpf")) {
+            names.add("All Files (*.*)");
+            extensions.add("*.*");
+        }
+        else {
+            names.add("All Files (*)");
+            extensions.add("*");
+        }
+        fileDialog.setFilterExtensions(extensions.toArray(new String[0]));
+        fileDialog.setFilterNames( names.toArray(new String[0]));
+        
         if (lastOpenedDirectory != null && !checkDND(fileDialog)) {
             fileDialog.setFilterPath(lastOpenedDirectory);
         }

@@ -1,0 +1,206 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Edit Geometry Tool &mdash; User Guide</title>
+    
+    <link rel="stylesheet" href="_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/udig.ico"/>
+    <link rel="top" title="User Guide" href="index.html" />
+    <link rel="up" title="Using Vertex Tools" href="Using Vertex Tools.html" />
+    <link rel="next" title="EditBlackboard" href="EditBlackboard.html" />
+    <link rel="prev" title="Add Vertex Tool" href="Add Vertex Tool.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+ 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="edit-geometry-tool">
+<h1>Edit Geometry Tool<a class="headerlink" href="#edit-geometry-tool" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="edit-geometry-tool-cannot-resolve-external-resource-into-attachment">
+<h2>Edit Geometry Tool – Cannot resolve external resource into attachment.<a class="headerlink" href="#edit-geometry-tool-cannot-resolve-external-resource-into-attachment" title="Permalink to this headline">¶</a></h2>
+<p>The Edit Geometry Tool can add, remove, select and move vertices. It can also move geometries. The
+functionality illustrated on this page is also available when using the <a class="reference internal" href="Polygon Creation Tool.html"><em>Polygon Creation Tool</em></a>, <a class="reference internal" href="Line Creation Tool.html"><em>Line Creation Tool</em></a> and
+<a class="reference internal" href="Point Creation Tool.html"><em>Point Creation Tool</em></a></p>
+<ol class="arabic">
+<li><p class="first">Create a map using the sample data.</p>
+<ol class="arabic simple">
+<li>Add <strong>bc_border.shp</strong> to new map</li>
+<li>Add <strong>bc_hospitals.shp</strong></li>
+<li>Add <strong>bc_municipality.shp</strong></li>
+</ol>
+</li>
+<li><p class="first">Zoom into a small area of the map.</p>
+<p><img alt="image0" src="_images/tooledit1.png" /></p>
+</li>
+<li><p class="first">Select the layer in the Layers view that you wish to edit (bc_municipality)</p>
+</li>
+<li><p class="first">Using the <strong>Edit Geometry</strong> tool, select a municipality.</p>
+<p><img alt="image1" src="_images/tooleditfeature.png" /></p>
+</li>
+<li><p class="first">You can use the <strong>Feature Edit</strong> tool to move points. Move your mouse over a vertex. Click and
+drag the vertex.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">The circle around the point is the current snap area. For more information about
+snapping click <a class="reference internal" href="Snapping.html"><em>here</em></a>.</p>
+</div>
+<p><img alt="image2" src="_images/movevertex.png" /></p>
+</li>
+<li><p class="first">You can also create new points with the <strong>Feature Edit</strong> tool. Click on a straight line where
+there is no vertex. A vertex will appear and it can be moved.</p>
+<p><img alt="image3" src="_images/addvertex.png" /></p>
+</li>
+<li><p class="first">To delete a vertex select a vertex and press the delete key or select <strong>Edit &gt; Delete</strong>.</p>
+<p><img alt="image4" src="_images/removevertex.png" /></p>
+</li>
+<li><p class="first">Multiple vertices can be selected by dragging selection box around multiple vertices.</p>
+<p><img alt="image5" src="_images/selectmanyvertex.png" /></p>
+</li>
+<li><p class="first">All selected vertices can be moved or deleted together</p>
+<p><img alt="image6" src="_images/movemany.png" /></p>
+</li>
+<li><p class="first">The geometry can be moved as a whole by holding down <tt class="kbd docutils literal"><span class="pre">CTRL</span></tt> + <tt class="kbd docutils literal"><span class="pre">ALT</span></tt> and dragging the geometry.</p>
+<p><img alt="image7" src="_images/movegeometry.png" /></p>
+</li>
+<li><p class="first">Once the geometry has been modified as much as desired the changes can be <em>accepted</em> by</p>
+<ol class="arabic">
+<li><p class="first">Double clicking the left mouse button</p>
+</li>
+<li><p class="first">Selecting another tool</p>
+</li>
+<li><p class="first">Clicking the commit button.</p>
+<p><img alt="image8" src="_images/accept.png" /></p>
+</li>
+</ol>
+</li>
+</ol>
+<p>Any operation/change performed can be undone by <tt class="kbd docutils literal"><span class="pre">CTRL</span></tt> +  <tt class="kbd docutils literal"><span class="pre">Z</span></tt> or <strong>Edit &gt; Undo</strong>. Undone changes can be
+redone by <tt class="kbd docutils literal"><span class="pre">CTRL</span></tt> + <tt class="kbd docutils literal"><span class="pre">Y</span></tt> or <strong>Edit &gt; Redo</strong>.</p>
+<p>You may also wish to look at the Feature Editor, in order to change attribute information.</p>
+</div>
+<div class="section" id="tips">
+<h2>Tips<a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Advanced Editing Mode can be used to reduce the amount of tool switching that is required. For
+example adding vertices can be performed with the Edit Geometry Tool in advanced mode.</p>
+</li>
+<li><p class="first">Multiple Geometries can be added to the <a class="reference internal" href="EditBlackboard.html"><em>EditBlackboard</em></a> and edited
+together.</p>
+<ul class="simple">
+<li><tt class="kbd docutils literal"><span class="pre">SHIFT</span></tt> -click adds features to the <a class="reference internal" href="EditBlackboard.html"><em>EditBlackboard</em></a></li>
+<li><tt class="kbd docutils literal"><span class="pre">ALT</span></tt> -click adds/removes features</li>
+</ul>
+</li>
+<li><p class="first">Esc (or Esc-Esc depending on the platform) clears <a class="reference internal" href="EditBlackboard.html"><em>EditBlackboard</em></a>.</p>
+</li>
+<li><p class="first">If two selected features share a vertex moving the vertex will move the vertex on both features.</p>
+</li>
+<li><p class="first">Use <a class="reference internal" href="Snapping.html"><em>Snapping</em></a> to snap to existing features.</p>
+</li>
+<li><p class="first">A line can split by</p>
+<ol class="arabic">
+<li><p class="first">Selecting a line (select bc_borders and select a line)</p>
+<p><img alt="image9" src="_images/selectline.png" /></p>
+</li>
+<li><p class="first">Adding a vertex at location where the split will take place using the <a class="reference internal" href="Add Vertex Tool.html"><em>Add Vertex Tool</em></a></p>
+<p><img alt="image10" src="_images/addlinevertex.png" /></p>
+</li>
+<li><p class="first">The split can now be done by:</p>
+<ol class="arabic">
+<li><p class="first">Selecting <strong>Edit &gt; Split Line</strong></p>
+<p><img alt="image11" src="_images/editmenu.png" /></p>
+</li>
+<li><p class="first">Or right clicking and selecting <strong>Operations &gt; Split Line</strong> from the context menu.</p>
+<p><img alt="image12" src="_images/contextmenu.png" /></p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<p><strong>Related reference</strong></p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="EditBlackboard.html">EditBlackboard</a></li>
+</ul>
+</div>
+<p><a class="reference internal" href="Snapping.html"><em>Snapping</em></a></p>
+<p><a class="reference internal" href="Using Vertex Tools.html"><em>Using Vertex Tools</em></a></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="Add Vertex Tool.html"><em>Add Vertex Tool</em></a></li>
+<li><a class="reference internal" href="Remove Vertex Tool.html"><em>Remove Vertex Tool</em></a></li>
+<li><a class="reference internal" href="Hole Cutter.html"><em>Hole Cutter</em></a></li>
+</ul>
+</div></blockquote>
+<p><a class="reference internal" href="Using Geometry Creation Tools.html"><em>Using Geometry Creation Tools</em></a></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="Polygon Creation Tool.html"><em>Polygon Creation Tool</em></a></li>
+<li><a class="reference internal" href="Line Creation Tool.html"><em>Line Creation Tool</em></a></li>
+<li><a class="reference internal" href="Point Creation Tool.html"><em>Point Creation Tool</em></a></li>
+<li><a class="reference internal" href="Draw Geometry Tool.html"><em>Draw Geometry Tool</em></a></li>
+<li><a class="reference internal" href="Rectangle Tool.html"><em>Rectangle Tool</em></a></li>
+<li><a class="reference internal" href="Ellipse Tool.html"><em>Ellipse Tool</em></a></li>
+</ul>
+</div></blockquote>
+<p><a class="reference internal" href="Using Feature Edit Tools.html"><em>Using Feature Edit Tools</em></a></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="Fill Tool.html"><em>Fill Tool</em></a></li>
+<li><a class="reference internal" href="Split Tool.html"><em>Split Tool</em></a></li>
+<li><a class="reference internal" href="Delete Tool.html"><em>Delete Tool</em></a></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

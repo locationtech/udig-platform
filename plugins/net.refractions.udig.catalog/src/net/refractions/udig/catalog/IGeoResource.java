@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * Represents a handle to a spatial resource.
@@ -215,6 +215,9 @@ public abstract class IGeoResource implements IResolve {
         if (info == null) { // lazy creation
             synchronized (this) { // support concurrent access
                 if (info == null) {
+                    if (Display.getCurrent() != null) {
+                        throw new IllegalStateException("Lookup of getInfo not available from the display thread"); //$NON-NLS-1$
+                    }
                     info = createInfo(monitor);
                     if (info == null) {
                         // could not connect or INFO_UNAVAILABLE
@@ -240,8 +243,7 @@ public abstract class IGeoResource implements IResolve {
     }
     
     /**
-     * Returns a copy of the map of this resource's persistent properties. Returns an empty map if
-     * this resource has no persistent properties.
+     * Map of this resource's persistent properties, may be empty.
      * 
      * @return The map containing the persistent properties where the key is the
      *         {@link QualifiedName} of the property and the value is the {@link String} value of

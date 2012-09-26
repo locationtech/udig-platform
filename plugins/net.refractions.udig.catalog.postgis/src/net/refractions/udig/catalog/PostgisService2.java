@@ -66,13 +66,6 @@ public class PostgisService2 extends IService {
         this.params = new HashMap<String, Serializable>(map);
         status = Status.NOTCONNECTED;
     }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-        // clean up connection
-        dispose(new NullProgressMonitor());
-    }
     
     @Override
     public String getTitle() {
@@ -204,8 +197,11 @@ public class PostgisService2 extends IService {
 
     @Override
     public void dispose( IProgressMonitor monitor ) {
-        for( IResolve folder : members ) {
-            folder.dispose(monitor);
-        }
+        super.dispose( monitor ); // responsible for calling dispose on each folder
+//        for( IResolve folder : members ) {
+//            folder.dispose(monitor);
+//        }
+//        status = Status.NOTCONNECTED;
+        status = Status.DISPOSED;
     }
 }

@@ -31,6 +31,8 @@ import org.eclipse.core.runtime.Status;
 import org.geotools.data.DataAccessFactory;
 import org.geotools.data.DataAccessFactory.Param;
 import org.geotools.data.DataAccessFinder;
+import org.geotools.data.DataStoreFactorySpi;
+import org.geotools.data.DataStoreFinder;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.FileDataStoreFactorySpi;
 import org.geotools.jdbc.JDBCDataStoreFactory;
@@ -185,9 +187,9 @@ public class DataStoreServiceExtension extends IServiceExtension {
      * @param params ConnectionParameters
      */
     public IService createService( URL providedId, Map<String, Serializable> params ) {
-        Iterator<DataAccessFactory> available = DataAccessFinder.getAvailableDataStores();
+        Iterator<DataStoreFactorySpi> available = DataStoreFinder.getAvailableDataStores();
         while( available.hasNext() ) {
-            DataAccessFactory factory = available.next();
+            DataStoreFactorySpi factory = available.next();
             if (factory.canProcess(params)) {
                 ID id = createID(providedId, factory, params);
                 if( id == null ){

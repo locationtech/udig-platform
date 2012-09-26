@@ -8,10 +8,8 @@ import net.refractions.udig.catalog.CatalogPlugin;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.junit.Ignore;
 import org.osgi.framework.BundleContext;
 
-@Ignore
 public class TestActivator extends Plugin {
     public static final String ID = "net.refractions.udig.catalog.tests"; //$NON-NLS-1$
 

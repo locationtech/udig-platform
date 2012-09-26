@@ -3,22 +3,29 @@
  */
 package net.refractions.udig.catalog.tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.IResolve;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.junit.Test;
 
 /**
  * Sub-class me and fill in the appripriate protected methods ...
  * 
  * @author dzwiers
  */
-public abstract class AbstractResolveTest extends TestCase {
-    protected abstract IResolve getResolve();
-
+public abstract class AbstractResolveTest {
+    
+    public static final int BLOCK = 150; // number of acceptable milliseconds for a run
+    
     public static final class FakeProgress implements IProgressMonitor {
 
         /*
@@ -108,8 +115,11 @@ public abstract class AbstractResolveTest extends TestCase {
 
     }
 
+    protected abstract IResolve getResolve();
+    
     protected abstract boolean hasParent();
 
+    @Test
     public void testParent() throws IOException {
         if (hasParent()) {
             IResolve parent = getResolve().parent(null);
@@ -117,6 +127,7 @@ public abstract class AbstractResolveTest extends TestCase {
         }
     }
 
+    @Test
     public void testParentMonitor() throws IOException {
         FakeProgress monitor = new FakeProgress();
         IResolve parent = getResolve().parent(monitor);
@@ -127,12 +138,14 @@ public abstract class AbstractResolveTest extends TestCase {
 
     protected abstract boolean isLeaf();
 
+    @Test
     public void testMembers() throws IOException {
         List< ? extends IResolve> children = getResolve().members(null);
         if (!isLeaf())
             assertNotNull("Child list null", children); //$NON-NLS-1$
     }
 
+    @Test
     public void testMembersMonitor() throws IOException {
         FakeProgress monitor = new FakeProgress();
         List< ? extends IResolve> children = getResolve().members(monitor);
@@ -142,11 +155,37 @@ public abstract class AbstractResolveTest extends TestCase {
         }
     }
 
+    @Test(timeout = BLOCK)
     public void testID() {
-        long start = System.currentTimeMillis();
         assertNotNull("Id is required for admission", getResolve().getIdentifier()); //$NON-NLS-1$
-        assertTrue("Took too long ... blocking?", (start + BLOCK) >= System.currentTimeMillis()); //$NON-NLS-1$
     }
 
-    public static final int BLOCK = 150; // number of acceptable milliseconds for a run
+    protected <T> T resolve(final IResolve resolve, final Class<T> adaptee, final IProgressMonitor monitor) throws IOException {
+        final Callable<T> job = new Callable<T>() {
+            
+            @Override
+            public T call() throws Exception {
+                return resolve.resolve(adaptee, monitor);
+            }
+            
+        };
+        
+        return retrieveInNewThread(job);
+    }
+
+    protected <T> T retrieveInNewThread(final Callable<T> job) {
+        FutureTask<T> task = new FutureTask<T>(job);
+        Thread t = new Thread(task);
+        t.start();
+        T info = null;
+        
+        try {
+            info = task.get();
+        } catch (InterruptedException e) {
+        } catch (ExecutionException e) {
+        }
+        
+        return info;
+    }
+
 }

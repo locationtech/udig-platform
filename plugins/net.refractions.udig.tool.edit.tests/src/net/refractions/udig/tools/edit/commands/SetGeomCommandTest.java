@@ -1,12 +1,13 @@
 package net.refractions.udig.tools.edit.commands;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.command.CommandManager;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
 import net.refractions.udig.tools.edit.support.EditGeom;
 import net.refractions.udig.tools.edit.support.Point;
@@ -16,9 +17,12 @@ import net.refractions.udig.tools.edit.support.TestHandler;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.feature.FeatureIterator;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 
-public class SetGeomCommandTest extends TestCase {
+@SuppressWarnings("nls")
+public class SetGeomCommandTest {
 
     private TestHandler handler;
     private EditBlackboard bb;
@@ -29,9 +33,8 @@ public class SetGeomCommandTest extends TestCase {
     private SimpleFeature feature;
     private SimpleFeature feature2;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         handler=new TestHandler(2);
         bb= handler.getEditBlackboard();
         editGeom = bb.newGeom("testing", null); //$NON-NLS-1$
@@ -78,13 +81,12 @@ public class SetGeomCommandTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.tools.edit.behaviour.SetGeomCommand.run(IProgressMonitor)'
      */
+    @Test
     public void testRun() throws Exception {
         IEditManager editManager = handler.getContext().getEditManager();
         
-        if( EditTestControl.DISABLE ) return;
-        
         assertEquals("Does the ID match",feature.getID(), editManager.getEditFeature().getID());
-		assertEquals("Is the feature equal",feature, editManager.getEditFeature());
+		assertEquals("Is the feature equal",feature.getDefaultGeometry(), editManager.getEditFeature().getDefaultGeometry());
         assertEquals("Is the layer equal",layer, editManager.getEditLayer());
         
         SelectFeatureAsEditFeatureCommand command = new SelectFeatureAsEditFeatureCommand(handler, feature2, layer, Point.valueOf(10,10));
@@ -95,7 +97,7 @@ public class SetGeomCommandTest extends TestCase {
         assertEquals(EditState.MODIFYING, handler.getCurrentState());
         assertFalse(bb.getGeoms().contains(editGeom));
         assertFalse(bb.getGeoms().contains(editGeom2));
-        assertEquals(feature2, editManager.getEditFeature());
+        assertEquals(feature2.getDefaultGeometry(), editManager.getEditFeature().getDefaultGeometry());
         assertEquals( feature2.getID(), handler.getCurrentGeom().getFeatureIDRef().get());
 
         ((CommandManager)((Map)handler.getContext().getMap()).getCommandStack()).undo(false);
@@ -109,7 +111,7 @@ public class SetGeomCommandTest extends TestCase {
         assertEquals(2, bb.getGeoms().size());
         assertEquals( editGeom2.getFeatureIDRef().get(), handler.getCurrentGeom().getFeatureIDRef().get());
 
-        assertEquals(feature, editManager.getEditFeature());
+        assertEquals(feature.getDefaultGeometry(), editManager.getEditFeature().getDefaultGeometry());
         assertEquals(layer, editManager.getEditLayer());
     }
 

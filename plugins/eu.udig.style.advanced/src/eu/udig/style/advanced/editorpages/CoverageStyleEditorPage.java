@@ -159,11 +159,6 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
         return null;
     }
 
-    public void gotFocus() {
-        System.out.println("colr got focus"); //$NON-NLS-1$
-
-    }
-
     public boolean performCancel() {
         return false;
     }
@@ -336,6 +331,10 @@ public class CoverageStyleEditorPage extends StyleEditorPage {
         Double quantityString = (Double) quantity.evaluate(null, Double.class);
         double q = quantityString.doubleValue();
         return q;
+    }
+
+    public void gotFocus() {
+        // do nothing here
     }
 
 }

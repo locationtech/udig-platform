@@ -81,7 +81,6 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
@@ -170,8 +169,7 @@ public class CatalogImpl extends ICatalog {
         
         IResolveDelta deltaAdded = new ResolveDelta(service, IResolveDelta.Kind.ADDED);
         IResolveDelta deltaChanged = new ResolveDelta(this, Collections.singletonList(deltaAdded));
-        fire(new ResolveChangeEvent(CatalogImpl.this, IResolveChangeEvent.Type.POST_CHANGE,
-                deltaChanged));
+        fire(new ResolveChangeEvent(CatalogImpl.this, IResolveChangeEvent.Type.POST_CHANGE,deltaChanged));
         
         return service;
     }
@@ -1009,23 +1007,34 @@ public class CatalogImpl extends ICatalog {
             IPreferencesService preferencesService = Platform.getPreferencesService();
             IExportedPreferences paramsNode = preferencesService.readPreferences(input);
 
-            ServiceParameterPersister persister = new ServiceParameterPersister(this, factory,
-                    catalogLocation);
-
-            persister.restore(findParameterNode(paramsNode));
+            ServiceParameterPersister persister = new ServiceParameterPersister(this, factory, catalogLocation);
+            Preferences parameterNode = findParameterNode(paramsNode);
+            
+            persister.restore(parameterNode);
         } catch (Throwable e) {
-            // ok maybe it is an from an older version of uDig so try the oldCatalogRef
+            CatalogPlugin.trace("Unable to restore catalog:"+e, e); //$NON-NLS-1$
             try {
-                IPreferencesService prefs = Platform.getPreferencesService();
-                IEclipsePreferences root = prefs.getRootNode();
-                Preferences node = root.node(InstanceScope.SCOPE).node(
-                        CatalogPlugin.ID + ".services"); //$NON-NLS-1$
-                ServiceParameterPersister persister = new ServiceParameterPersister(this, factory);
-                persister.restore(node);
-            } catch (Throwable e2) {
-                CatalogPlugin.log("Unable to load services", e); //$NON-NLS-1$
+                loadFromFileOld(factory, e);
+                CatalogPlugin.trace("Restored from old catalog format",null);
+            }
+            catch (Throwable e2) {
+                CatalogPlugin.log("Unable to restore from old catalog format", e); //$NON-NLS-1$
             }
         }
+    }
+    /**
+     * Ok maybe it is an from an older version of uDig so try the oldCatalogRef.
+     * 
+     * @param factory
+     * @param e
+     */
+    public void loadFromFileOld(IServiceFactory factory, Throwable e) {
+        IPreferencesService prefs = Platform.getPreferencesService();
+        IEclipsePreferences root = prefs.getRootNode();
+        Preferences node = root.node(InstanceScope.SCOPE).node(
+                CatalogPlugin.ID + ".services"); //$NON-NLS-1$
+        ServiceParameterPersister persister = new ServiceParameterPersister(this, factory);
+        persister.restore(node);
     }
 
     private Preferences findParameterNode( IExportedPreferences paramsNode )

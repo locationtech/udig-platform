@@ -1,0 +1,123 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Re-projection &mdash; User Guide</title>
+    
+    <link rel="stylesheet" href="../../_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.3.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/udig.ico"/>
+    <link rel="top" title="User Guide" href="../../index.html" />
+    <link rel="up" title="uDig Walkthrough 1" href="index.html" />
+    <link rel="next" title="What to do Next" href="WhattodoNext.html" />
+    <link rel="prev" title="Web View" href="WebView.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="../../search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="../../_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+ 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="re-projection">
+<h1>Re-projection<a class="headerlink" href="#re-projection" title="Permalink to this headline">¶</a></h1>
+<p>The shapes making up a map can come from a range of coordinate reference systems - each using different measurements
+to record locations on the earth.</p>
+<p>In order to combine these data sets on screen automatic reprojection is used to transform information
+into the common coordinate reference system you have selected for your map.</p>
+<ul>
+<li><p class="first">Open your <em class="guilabel">Canada</em> map from the previous section.</p>
+</li>
+<li><p class="first">Add some additional shape files to the map from your data directory.</p>
+<ul class="simple">
+<li><em class="guilabel">10m_admin_1_states_provinces.shp</em></li>
+<li><em class="guilabel">10m_geography_regions_points.shp</em></li>
+</ul>
+</li>
+<li><p class="first">The resulting map is taking information from a variety of different sources
+and re-projecting the data into a single display.</p>
+<p><img alt="reproject_nad83_png" src="../../_images/reproject_nad83.png" style="width: 8.999cm; height: 6.181cm;" /></p>
+</li>
+<li><p class="first">You can ask that the map change its projection to match a layer.</p>
+<p>Right click on <em class="guilabel">10m admin 1 states provinces</em> and use
+<em class="menuselection">Operation ‣ Set Map Projection from Layer</em>
+to use this layers projection.</p>
+<p><img alt="reproject_wgs84_png" src="../../_images/reproject_wgs84.png" style="width: 9.029cm; height: 6.181cm;" /></p>
+<ul>
+<li><p class="first">Not all coordinate reference systems can display all information. Some
+are only valid for a specific region.</p>
+<p>This operation can be useful if you are having any trouble displaying
+a layer and want to directly view the data.</p>
+</li>
+</ul>
+</li>
+<li><p class="first">You can also choose the map coordinate reference system yourself.</p>
+<p>In the <em class="guilabel">Map</em> editor status area pess the <em class="guilabel">GCS_WGS_1984</em> button
+to bring up the <em class="guilabel">Coordinate Systems</em> property page for your map.</p>
+</li>
+<li><p class="first">The <em class="guilabel">Coordinate Systems</em> property page allows you to change the Coordinate Reference
+System of your map. The <em class="guilabel">Standard CRS</em> tab allows you to search the predefined coordinate reference systems.</p>
+<p>Please type in <tt class="docutils literal"><span class="pre">4326</span></tt> and press <tt class="kbd docutils literal"><span class="pre">ENTER</span></tt>.</p>
+<p><img alt="crs_standard_png" src="../../_images/crs_standard.png" style="width: 12.73cm; height: 8.14cm;" /></p>
+<ul class="simple">
+<li>This selects the <em class="guilabel">World Geodetic System 1984</em> which is commonly
+used to represent lat/lon information.</li>
+<li>You can also search by name, try typing in <tt class="docutils literal"><span class="pre">WGS84</span></tt> to list matching projections</li>
+</ul>
+</li>
+<li><p class="first">You can have a look at the formal definition of <em class="guilabel">EPSG:4326</em> by
+switching to the <em class="guilabel">Custom CRS</em> tab.</p>
+<p><img alt="crs_custom_png" src="../../_images/crs_custom.png" style="width: 12.73cm; height: 8.14cm;" /></p>
+<ul class="simple">
+<li>The definition is provided in <em>Well Known Text</em> - you can use this format for your own custom CRS.</li>
+</ul>
+</li>
+<li><p class="first">Press the <em class="guilabel">OK</em> button to change the coordinate reference system of your map.</p>
+</li>
+</ul>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

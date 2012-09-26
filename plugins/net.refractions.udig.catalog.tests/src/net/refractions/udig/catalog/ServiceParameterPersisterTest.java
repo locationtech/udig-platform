@@ -1,5 +1,7 @@
 package net.refractions.udig.catalog;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
@@ -9,37 +11,38 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
-public class ServiceParameterPersisterTest extends TestCase {
+public class ServiceParameterPersisterTest {
 
     private static final String NODE_ID = "ServiceParameterPersisterTest"; //$NON-NLS-1$
     private TestPersister storer;
     private Preferences preferences;
     private NullProgressMonitor monitor;
     private TestPersister restorer;
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    
+    @Before
+    public void setUp() throws Exception {
         storer = new TestPersister();
         restorer = new TestPersister();
         preferences = Platform.getPreferencesService().getRootNode().node(NODE_ID);
         monitor = new NullProgressMonitor();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         preferences.clear();
         preferences.removeNode();
     }
 
+    @Test
     public void testPersistString() throws Exception {
         URL url = new URL("http://someurl.org"); //$NON-NLS-1$
         String id = new String("SomeString"); //$NON-NLS-1$
@@ -58,11 +61,12 @@ public class ServiceParameterPersisterTest extends TestCase {
         
         
         ID id = restorer.id;
-        URL url = service.url;
         assertEquals( new ID( service.url), id );
+        //URL url = service.url;
         //assertTrue(URLUtils.urlEquals(service.url, restorer.id.toURL(), false));
     }
 
+    @Test
     public void testPersistURL() throws Exception {
         URL url = new URL("http://someurl.org"); //$NON-NLS-1$
         URL id = new URL("http://anotherURL.org"); //$NON-NLS-1$
@@ -71,6 +75,7 @@ public class ServiceParameterPersisterTest extends TestCase {
         assertPersistance(service);
     }
 
+    @Test
     public void testPersistInteger() throws Exception {
         URL url = new URL("http://someurl.org"); //$NON-NLS-1$
         Integer id = Integer.valueOf(66);
@@ -80,6 +85,7 @@ public class ServiceParameterPersisterTest extends TestCase {
 
     }
 
+    @Test
     public void testPersistFileURL() throws Exception {
         URL url = new URL("file:/c:\\someurl.org"); //$NON-NLS-1$
         URL id = new URL("file:/c:\\anotherURL.org"); //$NON-NLS-1$

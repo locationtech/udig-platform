@@ -90,8 +90,6 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
     public void setRule( RuleWrapper ruleWrapper ) {
         this.ruleWrapper = ruleWrapper;
 
-        System.out.println("setting rule: " + ruleWrapper.getName()); //$NON-NLS-1$
-
         if (mainComposite == null) {
             init();
             createSimpleComposite();
@@ -112,8 +110,6 @@ public class LinePropertiesComposite implements ModifyListener, IStyleChangesLis
     }
 
     private void init() {
-        // System.out.println("open: " + rule.getName());
-
         List<String> numericAttributeNames = linePropertiesEditor.getNumericAttributeNames();
         numericAttributesArrays = numericAttributeNames.toArray(new String[0]);
         List<String> allAttributeNames = linePropertiesEditor.getAllAttributeNames();

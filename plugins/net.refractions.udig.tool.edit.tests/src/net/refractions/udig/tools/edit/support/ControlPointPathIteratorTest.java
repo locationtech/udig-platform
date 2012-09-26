@@ -1,5 +1,9 @@
 package net.refractions.udig.tools.edit.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.GeneralPath;
@@ -7,22 +11,22 @@ import java.awt.geom.PathIterator;
 
 import javax.swing.JFrame;
 
-import net.refractions.udig.tools.edit.EditTestControl;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Tests the case where a polygon is just starting to be created.  There are only 2 lines
  * @author jeichar
  */
-public class ControlPointPathIteratorTest extends TestCase {
+public class ControlPointPathIteratorTest {
 
     private static final boolean DO_SHOW = true;
     private TestEditBlackboard bb;
     private EditGeom editGeom;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         bb=new TestEditBlackboard();
         editGeom = bb.newGeom("id", ShapeType.POLYGON); //$NON-NLS-1$
         
@@ -41,10 +45,10 @@ public class ControlPointPathIteratorTest extends TestCase {
 
     }
 
+    @Ignore
+    @Test
     public void testDraw() throws Exception {
         ControlPointPathIterator pathIterator = new ControlPointPathIterator(editGeom, true, 5, 5);
-        
-        if( EditTestControl.DISABLE ) return;
         
         assertCorrectPath(pathIterator, false);
 
@@ -103,65 +107,65 @@ public class ControlPointPathIteratorTest extends TestCase {
 
         int result=pathIterator.currentSegment(nextDoubles);
         assertEquals(PathIterator.SEG_MOVETO, result);
-        assertEquals( (double)expectedPoint.getX()-2, nextDoubles[0] );
-        assertEquals( (double)expectedPoint.getY()-2, nextDoubles[1] );
+        assertEquals( (double)expectedPoint.getX()-2, nextDoubles[0], 0);
+        assertEquals( (double)expectedPoint.getY()-2, nextDoubles[1], 0);
 
         result=pathIterator.currentSegment(nextFloats);
         assertEquals(PathIterator.SEG_MOVETO, result);
-        assertEquals( (float)expectedPoint.getX()-2, nextFloats[0] );
-        assertEquals( (float)expectedPoint.getY()-2, nextFloats[1] );
+        assertEquals( (float)expectedPoint.getX()-2, nextFloats[0], 0);
+        assertEquals( (float)expectedPoint.getY()-2, nextFloats[1], 0);
 
         pathIterator.next();
         assertFalse( pathIterator.isDone());
 
         result=pathIterator.currentSegment(nextDoubles);
         assertEquals(PathIterator.SEG_LINETO, result);
-        assertEquals( (double)expectedPoint.getX()+2, nextDoubles[0] );
-        assertEquals( (double)expectedPoint.getY()-2, nextDoubles[1] );
+        assertEquals( (double)expectedPoint.getX()+2, nextDoubles[0], 0);
+        assertEquals( (double)expectedPoint.getY()-2, nextDoubles[1], 0);
 
         result=pathIterator.currentSegment(nextFloats);
         assertEquals(PathIterator.SEG_LINETO, result);
-        assertEquals( (float)expectedPoint.getX()+2, nextFloats[0] );
-        assertEquals( (float)expectedPoint.getY()-2, nextFloats[1] );
+        assertEquals( (float)expectedPoint.getX()+2, nextFloats[0], 0);
+        assertEquals( (float)expectedPoint.getY()-2, nextFloats[1], 0);
 
         pathIterator.next();
         assertFalse( pathIterator.isDone());
 
         result=pathIterator.currentSegment(nextDoubles);
         assertEquals(PathIterator.SEG_LINETO, result);
-        assertEquals( (double)expectedPoint.getX()+2, nextDoubles[0] );
-        assertEquals( (double)expectedPoint.getY()+2, nextDoubles[1] );
+        assertEquals( (double)expectedPoint.getX()+2, nextDoubles[0], 0);
+        assertEquals( (double)expectedPoint.getY()+2, nextDoubles[1], 0);
 
         result=pathIterator.currentSegment(nextFloats);
         assertEquals(PathIterator.SEG_LINETO, result);
-        assertEquals( (float)expectedPoint.getX()+2, nextFloats[0] );
-        assertEquals( (float)expectedPoint.getY()+2, nextFloats[1] );
+        assertEquals( (float)expectedPoint.getX()+2, nextFloats[0], 0);
+        assertEquals( (float)expectedPoint.getY()+2, nextFloats[1], 0);
 
         pathIterator.next();
         assertFalse( pathIterator.isDone());
 
         result=pathIterator.currentSegment(nextDoubles);
         assertEquals(PathIterator.SEG_LINETO, result);
-        assertEquals( (double)expectedPoint.getX()-2, nextDoubles[0] );
-        assertEquals( (double)expectedPoint.getY()+2, nextDoubles[1] );
+        assertEquals( (double)expectedPoint.getX()-2, nextDoubles[0], 0);
+        assertEquals( (double)expectedPoint.getY()+2, nextDoubles[1], 0);
 
         result=pathIterator.currentSegment(nextFloats);
         assertEquals(PathIterator.SEG_LINETO, result);
-        assertEquals( (float)expectedPoint.getX()-2, nextFloats[0] );
-        assertEquals( (float)expectedPoint.getY()+2, nextFloats[1] );
+        assertEquals( (float)expectedPoint.getX()-2, nextFloats[0], 0);
+        assertEquals( (float)expectedPoint.getY()+2, nextFloats[1], 0);
 
         pathIterator.next();
         assertFalse( pathIterator.isDone() );
 
         result=pathIterator.currentSegment(nextDoubles);
         assertEquals(PathIterator.SEG_LINETO, result);
-        assertEquals( (double)expectedPoint.getX()-2, nextDoubles[0] );
-        assertEquals( (double)expectedPoint.getY()-2, nextDoubles[1] );
+        assertEquals( (double)expectedPoint.getX()-2, nextDoubles[0], 0);
+        assertEquals( (double)expectedPoint.getY()-2, nextDoubles[1], 0);
 
         result=pathIterator.currentSegment(nextFloats);
         assertEquals(PathIterator.SEG_LINETO, result);
-        assertEquals( (float)expectedPoint.getX()-2, nextFloats[0] );
-        assertEquals( (float)expectedPoint.getY()-2, nextFloats[1] );
+        assertEquals( (float)expectedPoint.getX()-2, nextFloats[0], 0);
+        assertEquals( (float)expectedPoint.getY()-2, nextFloats[1], 0);
         
         if( isLastPoint ){
             pathIterator.next();

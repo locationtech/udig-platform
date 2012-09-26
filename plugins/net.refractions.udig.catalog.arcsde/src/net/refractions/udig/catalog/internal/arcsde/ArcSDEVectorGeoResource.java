@@ -28,8 +28,9 @@ import net.refractions.udig.catalog.util.GeotoolsResourceInfoAdapter;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
-import org.geotools.data.FeatureStore;
 import org.geotools.data.ResourceInfo;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.data.simple.SimpleFeatureStore;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -93,15 +94,15 @@ class ArcSDEVectorGeoResource extends IGeoResource {
             return adaptee.cast(this);
         if (adaptee.isAssignableFrom(IGeoResourceInfo.class))
             return adaptee.cast(createInfo(monitor));
-        if (adaptee.isAssignableFrom(FeatureStore.class)) {
+        if (adaptee.isAssignableFrom(SimpleFeatureStore.class)) {
             DataStore dataStore = getDataStore(monitor);
-            FeatureSource<SimpleFeatureType, SimpleFeature> fs;
+            SimpleFeatureSource fs;
             fs = dataStore.getFeatureSource(typename);
 
-            if (fs instanceof FeatureStore) {
+            if (fs instanceof SimpleFeatureStore) {
                 return adaptee.cast(fs);
             }
-            if (adaptee.isAssignableFrom(FeatureSource.class)) {
+            if (adaptee.isAssignableFrom(SimpleFeatureSource.class)) {
                 return adaptee.cast(fs);
             }
         }
@@ -121,8 +122,8 @@ class ArcSDEVectorGeoResource extends IGeoResource {
             return false;
         }
         return adaptee.isAssignableFrom(IGeoResourceInfo.class)
-                || adaptee.isAssignableFrom(FeatureStore.class)
-                || adaptee.isAssignableFrom(FeatureSource.class) || super.canResolve(adaptee);
+                || adaptee.isAssignableFrom(SimpleFeatureStore.class)
+                || adaptee.isAssignableFrom(SimpleFeatureSource.class) || super.canResolve(adaptee);
     }
     @Override
     protected IGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {

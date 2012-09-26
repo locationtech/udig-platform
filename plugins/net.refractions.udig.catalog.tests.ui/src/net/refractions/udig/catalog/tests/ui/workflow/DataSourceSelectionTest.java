@@ -1,11 +1,13 @@
 package net.refractions.udig.catalog.tests.ui.workflow;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
+
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.ui.DataSourceSelectionPage;
 import net.refractions.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
 import net.refractions.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
@@ -23,8 +25,11 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-public class DataSourceSelectionTest extends TestCase {
+public class DataSourceSelectionTest {
 
 	Shell shell;
 
@@ -38,10 +43,8 @@ public class DataSourceSelectionTest extends TestCase {
 
 	DataSourceSelectionPage page;
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-
+	@Before
+	public void setUp() throws Exception {
 		state = new DataSourceSelectionState(true);
 		page = new DataSourceSelectionPage();
 
@@ -58,12 +61,13 @@ public class DataSourceSelectionTest extends TestCase {
 		dialog.setBlockOnOpen(true);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		if (!shell.isDisposed())
 			shell.dispose();
 	}
 
+	@Test
 	public void testWorkbenchSelection() {
 		try {
 			URL url = new URL("http://wms.jpl.nasa.gov/wms.cgi?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
@@ -101,8 +105,9 @@ public class DataSourceSelectionTest extends TestCase {
 		
 		assertFalse(a1.fail);
 		
-	}	
+	}
 
+	@Test
 	public void testSelection() {
 		// turn on and off a viewer selection
 		Runnable r1 = new Runnable() {
@@ -126,7 +131,7 @@ public class DataSourceSelectionTest extends TestCase {
 		Runnable r2 = new Runnable() {
 
 			public void run() {
-				List l = page.getDescriptors();
+				List<UDIGConnectionFactoryDescriptor> l = page.getDescriptors();
 				page.getViewer()
 						.setSelection(new StructuredSelection(l.get(0)));
 			}

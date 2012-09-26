@@ -1,29 +1,45 @@
 package net.refractions.udig.catalog.tests.internal.geotiff;
 
+import it.geosolutions.imageio.gdalframework.GDALUtilities;
+
+import java.io.File;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.internal.geotiff.GeoTiffServiceExtension;
 import net.refractions.udig.catalog.tests.AbstractServiceTest;
 
-import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.gce.geotiff.GeoTiffFormat;
+import org.geotools.gce.geotiff.GeoTiffFormatFactorySpi;
+import org.junit.Assume;
+import org.junit.Before;
 
 public class GeoTiffServiceTest extends AbstractServiceTest {
     public static String TIFF_1 = "cir.tif"; //$NON-NLS-1$
-    private IGeoResource resource;
     private IService service;
 
-    public GeoTiffServiceTest() {
-        super();
-    }
-
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
+        Assume.assumeTrue(GDALUtilities.isGDALAvailable());
+        
         GeoTiffServiceExtension fac = new GeoTiffServiceExtension();
-        URL url = Data.getResource(GeoTiffGeoResourceTest.class, TIFF_1);
+        URL url = Data.getResource(GeoTiffServiceTest.class, TIFF_1);
+        
+        GeoTiffFormatFactorySpi factory = GeoTiffServiceExtension.getFactory();
+        GeoTiffFormat format = (GeoTiffFormat) factory.createFormat();
+        
+        try {
+            ID id = new ID(url);
+            File file = id.toFile();
+        
+            format.accepts(file);
+            
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
+        }
+        
         service = fac.createService(url, fac.createParams(url));
-        resource = service.resources((IProgressMonitor) null).get(0);
     }
 
     @Override

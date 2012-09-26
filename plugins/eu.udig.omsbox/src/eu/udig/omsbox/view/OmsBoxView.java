@@ -19,12 +19,15 @@ package eu.udig.omsbox.view;
 
 import i18n.omsbox.Messages;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
+import net.refractions.udig.ui.PlatformGIS;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -72,6 +75,9 @@ import eu.udig.omsbox.view.widgets.ModuleGui;
  */
 public class OmsBoxView extends ViewPart {
 
+    public static final String SPATIAL_TOOLBOX = "Spatial Toolbox...";
+    public static final String LOADING_MODULES_FROM_LIBRARIES = "Loading modules from libraries...";
+
     public static final String ID = "eu.udig.omsbox.view.DatabaseView"; //$NON-NLS-1$
 
     private Composite modulesGuiComposite;
@@ -103,7 +109,7 @@ public class OmsBoxView extends ViewPart {
         GridLayout modulesCompositeLayout = new GridLayout(3, true);
         modulesCompositeLayout.marginWidth = 0;
         modulesComposite.setLayout(modulesCompositeLayout);
-        
+
         Label modulesLabel = new Label(modulesComposite, SWT.NONE);
         modulesLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         modulesLabel.setText(Messages.OmsBoxView_Modules);
@@ -111,14 +117,15 @@ public class OmsBoxView extends ViewPart {
         GridData dummyLabelGD = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
         dummyLabelGD.horizontalSpan = 2;
         dummyLabel.setLayoutData(dummyLabelGD);
-        
+
         Composite modulesListComposite = new Composite(modulesComposite, SWT.NONE);
         modulesListComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         modulesListComposite.setLayout(new GridLayout(1, false));
 
-        HashMap<String, List<ModuleDescription>> availableModules = OmsModulesManager.getInstance().browseModules(false);
+        // HashMap<String, List<ModuleDescription>> availableModules =
+        // OmsModulesManager.getInstance().browseModules(false);
         modulesViewer = createTreeViewer(modulesListComposite);
-        List<ViewerFolder> viewerFolders = ViewerFolder.hashmap2ViewerFolders(availableModules);
+        List<ViewerFolder> viewerFolders = new ArrayList<ViewerFolder>(); // ViewerFolder.hashmap2ViewerFolders(availableModules);
         modulesViewer.setInput(viewerFolders);
         addFilterButtons(modulesListComposite);
         addQuickSettings(modulesListComposite);
@@ -132,6 +139,8 @@ public class OmsBoxView extends ViewPart {
         Label l = new Label(modulesGuiComposite, SWT.SHADOW_ETCHED_IN);
         l.setText(Messages.OmsBoxView_No_module_selected);
         modulesGuiStackLayout.topControl = l;
+
+        relayout();
 
     }
 
@@ -311,7 +320,7 @@ public class OmsBoxView extends ViewPart {
                 }
             }
         });
-        
+
         Label logLabel = new Label(quickSettingsGroup, SWT.NONE);
         logLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         logLabel.setText("Debug info");
@@ -358,14 +367,21 @@ public class OmsBoxView extends ViewPart {
      * Resfresh the viewer.
      */
     public void relayout() {
-        Display.getDefault().syncExec(new Runnable(){
-            public void run() {
-                // refresh widgets
+        IRunnableWithProgress operation = new IRunnableWithProgress(){
+            public void run( IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
+                pm.beginTask(LOADING_MODULES_FROM_LIBRARIES, IProgressMonitor.UNKNOWN);
                 HashMap<String, List<ModuleDescription>> availableModules = OmsModulesManager.getInstance().browseModules(false);
-                List<ViewerFolder> viewerFolders = ViewerFolder.hashmap2ViewerFolders(availableModules);
-                modulesViewer.setInput(viewerFolders);
+                final List<ViewerFolder> viewerFolders = ViewerFolder.hashmap2ViewerFolders(availableModules);
+
+                Display.getDefault().syncExec(new Runnable(){
+                    public void run() {
+                        modulesViewer.setInput(viewerFolders);
+                    }
+                });
+                pm.done();
             }
-        });
+        };
+        PlatformGIS.runInProgressDialog(SPATIAL_TOOLBOX, true, operation, true);
     }
 
     /**

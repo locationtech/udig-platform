@@ -1,5 +1,9 @@
 package net.refractions.udig.issues.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Dimension;
 
 import net.refractions.udig.AbstractProjectUITestCase;
@@ -37,6 +41,10 @@ import org.geotools.feature.FeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Id;
@@ -63,23 +71,26 @@ public class FeatureIssueTest extends AbstractProjectUITestCase {
     private Map map;
 	private IGeoResource resource;
 	private SimpleFeature[] features;
-	protected void setUp() throws Exception {
-        super.setUp();
+	
+	@Before
+	public void setUp() throws Exception {
 		features = UDIGTestUtil.createDefaultTestFeatures("test", 20); //$NON-NLS-1$
 		resource = CatalogTests.createGeoResource(features, true);
 		map=MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(10,10));
 	}
 
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		map.getProjectInternal().getElementsInternal().remove(map);
 		CatalogPlugin.getDefault().getLocalCatalog().remove(resource.service(null));
-        super.tearDown();
 	}
 
 	/*
 	 * Test method for 'net.refractions.udig.project.ui.FeatureIssue.fixIssue(IViewPart, IEditorPart)'
 	 */
-	public void xtestFixIssue() throws Exception {
+	@Ignore
+	@Test
+	public void testFixIssue() throws Exception {
 		final Layer layer= map.getLayersInternal().get(0);
 		layer.setCRS(DefaultGeographicCRS.WGS84);
 		CoordinateReferenceSystem crs = CRS.decode("EPSG:3005");//$NON-NLS-1$
@@ -122,6 +133,7 @@ public class FeatureIssueTest extends AbstractProjectUITestCase {
         assertTrue("Map must contain feature", map.getViewportModel().getBounds().contains((Envelope)env.transform(layer.getCRS(), true,5))); //$NON-NLS-1$
 	}
     
+    @Test
     public void testSetDescriptionEvents() throws Exception {
         FeatureIssue issue=IssuesListTestHelper.createFeatureIssue("Issue"); //$NON-NLS-1$
         
@@ -136,6 +148,7 @@ public class FeatureIssueTest extends AbstractProjectUITestCase {
         assertEquals(IssueChangeType.DESCRIPTION, l.change);
     }
     
+    @Test
     public void testSetPriorityEvents() throws Exception {
         FeatureIssue issue=IssuesListTestHelper.createFeatureIssue("Issue"); //$NON-NLS-1$
         
@@ -150,6 +163,7 @@ public class FeatureIssueTest extends AbstractProjectUITestCase {
         assertEquals(IssueChangeType.PRIORITY, l.change);
     }
     
+    @Test
     public void testSetResolutionEvents() throws Exception {
         FeatureIssue issue=IssuesListTestHelper.createFeatureIssue("Issue"); //$NON-NLS-1$
         
@@ -164,6 +178,7 @@ public class FeatureIssueTest extends AbstractProjectUITestCase {
         assertEquals(IssueChangeType.RESOLUTION, l.change);
     }
     
+    @Test
     public void testPersistence() throws Exception {
         IMap map=MapTests.createDefaultMap("name", 1, true, new Dimension(10,10)); //$NON-NLS-1$
         ILayer layer=map.getMapLayers().get(0);

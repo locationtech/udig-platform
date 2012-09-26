@@ -23,10 +23,10 @@ import net.refractions.udig.catalog.IGeoResourceInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.DataAccess;
-import org.geotools.data.FeatureSource;
-import org.geotools.data.FeatureStore;
+import org.geotools.data.DataStore;
 import org.geotools.data.ResourceInfo;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.data.simple.SimpleFeatureStore;
 import org.opengis.feature.type.Name;
 
 public class FeatureSourceGeoResource extends IGeoResource {
@@ -42,13 +42,13 @@ public class FeatureSourceGeoResource extends IGeoResource {
     public DataStoreService service( IProgressMonitor monitor ) throws IOException {
         return (DataStoreService) this.service;
     };
-    public FeatureSource< ? , ? > toFeatureSource() throws IOException {
-        DataAccess< ? , ? > access = service(null).toDataAccess();
-        return access.getFeatureSource(name);
+    public SimpleFeatureSource toFeatureSource() throws IOException {
+        DataStore dataStore = service(null).toDataAccess();
+        return dataStore.getFeatureSource(name);
     }
     @Override
     protected IGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-        FeatureSource< ? , ? > featureSource = toFeatureSource();
+        SimpleFeatureSource featureSource = toFeatureSource();
         ResourceInfo gtInfo = featureSource.getInfo();
         return new FeatureSourceGeoResourceInfo(gtInfo);
     }
@@ -76,12 +76,10 @@ public class FeatureSourceGeoResource extends IGeoResource {
         if (adaptee == null) {
             return false;
         }
-        return adaptee.isInstance(this) ||
-            adaptee.isAssignableFrom( FeatureSourceGeoResourceInfo.class )
-            ||  adaptee.isAssignableFrom( FeatureSource.class ) ||
-            adaptee.isAssignableFrom(  FeatureStore.class )
-         
-         
+        return adaptee.isInstance(this)
+                || adaptee.isAssignableFrom(FeatureSourceGeoResourceInfo.class)
+                || adaptee.isAssignableFrom(SimpleFeatureSource.class)
+                || adaptee.isAssignableFrom(SimpleFeatureStore.class)
                 || super.canResolve(adaptee);
     }
 
@@ -100,13 +98,13 @@ public class FeatureSourceGeoResource extends IGeoResource {
         if (adaptee.isAssignableFrom(FeatureSourceGeoResourceInfo.class)) {
             return adaptee.cast(createInfo(monitor));
         }
-        if (adaptee.isAssignableFrom(FeatureStore.class)) {
-            FeatureSource fs = toFeatureSource();
-            if (fs instanceof FeatureStore) {
+        if (adaptee.isAssignableFrom(SimpleFeatureStore.class)) {
+            SimpleFeatureSource fs = toFeatureSource();
+            if (fs instanceof SimpleFeatureStore) {
                 return adaptee.cast(fs);
             }
         }
-        if (adaptee.isAssignableFrom(FeatureSource.class)) {
+        if (adaptee.isAssignableFrom(SimpleFeatureSource.class)) {
             return adaptee.cast(toFeatureSource());
         }
         return super.resolve(adaptee, monitor);

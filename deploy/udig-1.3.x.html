@@ -2,10 +2,10 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>1.3.1 Release Notes</title>
+  <title>1.3.2 Release Notes</title>
 </head>
 <body>
-<p>Welcome to the uDig 1.3.1 release.
+<p>Welcome to the uDig 1.3.2 release.
 
 <h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">Installation</h2>
 <p>Download the package appropriate to your platform, unzip and run:</p>
@@ -13,20 +13,27 @@
   <li>Windows</li>
   <li>Linux</li>
   <li>Mac</li>
-  <li>SDK: For use with <a href="http://udig.refractions.net/confluence/display/DEV/1+SDK+Quickstart">SDK Quickstart</a> instructions</li>
+  <li>SDK: For use with <a href="http://udig.github.com/docs/dev/SDKQuickstart/SDKQuickstart.html">SDK Quickstart</a> instructions</li>
 </ul>
-<p>Windows and Linux packages includes a Java Runtime so you really can unzip and run without making any configuration changes to your Machine. On Mac OSX uDig is able to check for Java Advanced Imaging and install if needed.</p>
+<p>Windows and Linux packages includes a Java Runtime so you really can unzip and run without making
+any configuration changes to your Machine. On Mac OSX uDig is able to check for Java Advanced Imaging
+and install if needed.</p>
 <p>To get started with uDig:</p>
 <ul>
-  <li>Help Menu provides a <a href="http://udig.refractions.net/confluence/display/EN/Quickstart">Quickstart</a> and Guided Cheatsheet</li>
-  <li><a href="http://udig.refractions.net/confluence/display/EN/Walkthrough+1">Walkthrough 1</a></li>
-  <li><a href="http://udig.refractions.net/confluence/display/EN/Walkthrough+2">Walkthrough 2</a></li>
+  <li>Help Menu provides a <a href="http://udig.github.com/docs/user/Quickstart.html">Quickstart</a> and Guided Cheatsheet</li>
+  <li><a href="http://udig.github.com/docs/user/Walkthrough%201.html">Walkthrough 1</a></li>
+  <li><a href="http://udig.github.com/docs/user/Walkthrough%202.html">Walkthrough 2</a></li>
 </ul>
 
-<h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">About uDig 1.3.1</h2>
+<h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">About uDig 1.3.2</h2>
 <p>
-The 1.3.1 release is a minor patch release addressing issues with the spatial toolbox, zoom tool and copying
-features between layers. 
+The 1.3.2 release showcases active assistance when writing CQL expressions and filters.
+This technology will be used to making editing styles a more rewarding and dynamic experience.
+<p>
+This release has been generated with maven using the tycho plugin. This technology will allow us
+to issues on a more frequent basis. Thanks to Cliff Broadbent and Sam Guymer for the required
+research and effort required to set this up. 
+</p>
 </p>
 <p>
 The 1.3 series features some great usability improvements with a new tool palette and easy to
@@ -36,13 +43,24 @@ For developers this release of the uDig platform provides access to the latest o
 <p>
 Here are some new features you can look forward to:</p>
 <ul>
-  <li>Area of Interest support - define your area of interest based on CRS, current screen or a bookmark</li>
-  <li>Filter the Table view using the current area of interest - a great way to focus on what is on screen</li>
+  <li>Includes a revitalised User Guide a new clean look (available <a href="http://udig.github.com/docs/user/index.html">online</a>)</li>
+  <li>Import SLD 1.1 Styles</li>
+  <li>Additional bundled Edit Tools - no longer require a separate download</li>
+  <li>Active assistance when editing CQL Filters and Expressions</li>
+  <li>Area - define your area of interest based on CRS, current screen or a bookmark. You can use the
+     area of interest to filter the Table view, this is a great way to focus on only the features displayed
+     on screen.</li>
+  <li>Filter Map Layers using a dynamic Constraint Query Language edit. There is also a checkbox
+to filter a Map Layer using the current area of interest which can be used to answer simple feature
+containment questions.
+  <li>Transform operation with dynamic expression editor for generating new values.</li>
+  <li>Define an expression to generate a label for individual features, allowing the Information view
+  to report back features by name.</li>
   <li>Updated Info and Profile tool for raster data</li>
   <li>Teradata support</li>
   <li>Spatial Toolbox view allowing access to OMS3 processing; with tutorial!</li>
   <li>New import and export formats: CSV and KML.</li>
-  <li>Checkout <a href="http://udig.refractions.net/confluence/display/EN/What+is+new">What is new page</a> for details</li>
+  <li>For details on these and other features check out the <a href="http://udig.github.com/docs/user/What%20is%20new.html">What is new</a>!</li>
 </ul>
 
 <p>Usability Improvements</p>
@@ -54,22 +72,23 @@ Here are some new features you can look forward to:</p>
 
 <p>Additional documentation:</p>
 <ul>
-  <li>Updated <a href="http://udig.refractions.net/confluence/display/EN/Walkthrough+1">Walkthrough 1</a> and <a href="http://udig.refractions.net/confluence/display/EN/Walkthrough+2">Walkthrough 2</a> for the new Tool Palette and Tool Options</li>
-  <li>Extensive update to online help including <a href="http://udig.refractions.net/confluence/display/EN/uDig+Overview">uDig Overview</a></li>
-  <li>New step by step <a href="http://udig.refractions.net/confluence/display/EN/Introduction+to+the+Spatial+Toolbox">Introduction to Spatial Toolbox</a></li>
-  <li>Updated <a href="http://udig.refractions.net/confluence/display/EN/What+is+new">What is new page</a></li>
-  <li>Reorganisation of the <a href="http://udig.refractions.net/confluence/display/EN/Tasks">Tasks</a> section with step by step instructions for using new features</li>
+  <li>Updated <a href="http://udig.github.com/docs/user/Walkthrough%201.html">Walkthrough 1</a> and <a href="http://udig.github.com/docs/user/Walkthrough%202.html">Walkthrough 2</a> for the new Tool Palette and Tool Options</li>
+  <li>Extensive update to online help including <a href="http://udig.github.com/docs/user/uDig%20Overview.html">uDig Overview</a></li>
+  <li>New step by step <a href="http://udig.github.com/docs/user/Introduction%20to%20the%20Spatial%20Toolbox.html">Introduction to Spatial Toolbox</a></li>
+  <li>Updated <a href="http://udig.github.com/docs/user/What%20is%20new.html">What is new page</a></li>
+  <li>Reorganised the <a href="http://udig.github.com/docs/user/What%20is%20new.html">Tasks</a> section with step by step instructions for using new features</li>
 </ul>
 
 For developers:
 <ul>
-   <li>Access to the latest GeoTools 8.0-M4 release</li>
+   <li>Access to the latest GeoTools 8.1 release</li>
    <li>Access to the latest JTS 1.12</li>
-   <li>Access to the latest ImageIO-EXT 1.1.2</li>
+   <li>Access to the latest ImageIO-EXT 1.1.4</li>
 </ul>
 
 Release notes:
 <ul>
+   <li><a href="https://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10600&version=18235">uDig 1.3.2 Release Notes</a></li>
    <li><a href="https://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10600&version=18149">uDig 1.3.1 Release Notes</a></li>
    <li><a href="https://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10600&version=17485">uDig 1.3.0 Release Notes</a></li>
    <li><a href="https://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10600&version=15072">uDig 1.2.2 Release Notes</a></li>
@@ -80,6 +99,7 @@ Release notes:
 <h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">Known Issues:</h2>
 <ul>
   <li>The mac release is unable to support the full range of ImageIO-EXT formats. Please contact udig-devel if you are able to build GDAL on Mac OSX.</li>
+  <li>The ImageIO-EXT / GDAL library requires native code for MrSID and ECW available on limited platforms (win32, linux32)</li>
 </ul>
 </body>
 </html>

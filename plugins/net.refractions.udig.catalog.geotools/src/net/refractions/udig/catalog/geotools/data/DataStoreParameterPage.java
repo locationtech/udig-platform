@@ -27,9 +27,9 @@ import java.util.Map.Entry;
 
 import net.miginfocom.swt.MigLayout;
 import net.refractions.udig.catalog.geotools.Activator;
-import net.refractions.udig.catalog.internal.ui.CatalogImport.CatalogImportWizard;
 import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
 import net.refractions.udig.catalog.ui.UDIGConnectionPage;
+import net.refractions.udig.catalog.ui.wizard.CatalogImportWizard;
 import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.Workflow;
 import net.refractions.udig.ui.PlatformGIS;

@@ -20,9 +20,10 @@ import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.impl.LayerResource;
 import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.MapImport;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 import net.refractions.udig.project.ui.internal.Trace;
+import net.refractions.udig.project.ui.internal.wizard.MapImport;
+import net.refractions.udig.project.ui.internal.wizard.MapImportWizard;
 import net.refractions.udig.ui.ViewerDropLocation;
 
 import org.eclipse.core.runtime.IAdaptable;

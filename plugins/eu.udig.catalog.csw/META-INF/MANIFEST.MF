@@ -11,3 +11,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: libs/csw-client_2.9.1-1.0-SNAPSHOT.min.jar,
  .
+Eclipse-BundleShape: dir

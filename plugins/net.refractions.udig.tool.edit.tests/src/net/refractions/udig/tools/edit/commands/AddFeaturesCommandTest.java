@@ -14,10 +14,13 @@
  */
 package net.refractions.udig.tools.edit.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.TestCase;
 import net.refractions.udig.core.internal.FeatureUtils;
 import net.refractions.udig.tools.edit.support.EditGeom;
 import net.refractions.udig.tools.edit.support.TestHandler;
@@ -26,6 +29,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
@@ -35,20 +40,20 @@ import org.opengis.filter.Id;
  * @author jones
  * @since 1.1.0
  */
-public class AddFeaturesCommandTest extends TestCase {
+public class AddFeaturesCommandTest {
 
     private TestHandler handler;
     static final String FEATURE_TYPE_NAME = "AddFeaturesCommandTestFeatures"; //$NON-NLS-1$
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         handler=new TestHandler(5, FEATURE_TYPE_NAME); 
     }
     
     /*
      * Test method for 'net.refractions.udig.tools.edit.commands.AddFeaturesCommand.run(IProgressMonitor)'
      */
+    @Test
     public void testRun() throws Exception {
         FilterFactory fac=CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
         String fid = FEATURE_TYPE_NAME+".1";//$NON-NLS-1$
@@ -67,6 +72,7 @@ public class AddFeaturesCommandTest extends TestCase {
         assertFalse(handler.getEditBlackboard().getGeoms().get(0).isChanged());
     }
 
+    @Test
     public void testDiscriminatingFilter() throws Exception {
         FilterFactory fac=CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
         String fid1 =  FEATURE_TYPE_NAME+".1"; //$NON-NLS-1$
@@ -108,6 +114,7 @@ public class AddFeaturesCommandTest extends TestCase {
         
     }
     
+    @Test
     public void testFilterNONE() throws Exception {
         SelectFeaturesInFilterCommand command = new SelectFeaturesInFilterCommand(handler.getEditBlackboard(), handler.getEditLayer(), Filter.INCLUDE);
         

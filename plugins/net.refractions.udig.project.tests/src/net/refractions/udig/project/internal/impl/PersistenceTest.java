@@ -1,5 +1,10 @@
 package net.refractions.udig.project.internal.impl;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Dimension;
 import java.io.File;
 import java.util.HashSet;
@@ -26,6 +31,10 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -44,9 +53,8 @@ public class PersistenceTest extends AbstractProjectTestCase {
 	private IGeoResource resource2;
 
 	@SuppressWarnings("unchecked")
-    protected void setUp() throws Exception {
-        super.setUp();
-
+	@Before
+    public void setUp() throws Exception {
         ProjectRegistry registry = ProjectPlugin.getPlugin().getProjectRegistry();
         List<Project> projects = registry.getProjects();
         registry.getProjects().removeAll(projects);
@@ -91,8 +99,8 @@ public class PersistenceTest extends AbstractProjectTestCase {
 		map.getLayersInternal().get(0).setName(secondMapLayerName); 
 	}
 
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() throws Exception {
 		if( file.exists() ){
 			if( file.isFile() ){
 				file.delete();
@@ -107,11 +115,9 @@ public class PersistenceTest extends AbstractProjectTestCase {
 		}
 	}
 	
-    public void testStub() throws Exception {
-        assertTrue(true);
-    }
-    
-    public void xtestSaveAndLoad() throws Exception {
+	@Ignore
+	@Test
+    public void testSaveAndLoad() throws Exception {
 		EList list=project.eResource().getResourceSet().getResources();
 		
 		for (Iterator iter = list.iterator(); iter.hasNext();) {

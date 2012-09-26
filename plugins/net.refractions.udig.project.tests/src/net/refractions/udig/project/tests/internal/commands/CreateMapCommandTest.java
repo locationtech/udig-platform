@@ -1,5 +1,8 @@
 package net.refractions.udig.project.tests.internal.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -15,13 +18,15 @@ import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.commands.CreateMapCommand;
 import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
 
+import org.junit.Before;
+import org.junit.Test;
+
 public class CreateMapCommandTest extends AbstractProjectTestCase {
 	
 	IService service;
 	
-	@Override
-	protected void setUp() throws Exception {
-        super.setUp();
+	@Before
+	public void setUp() throws Exception {
 		//get a georesource
 		IServiceFactory sFactory 
 			= CatalogPlugin.getDefault().getServiceFactory();
@@ -35,6 +40,7 @@ public class CreateMapCommandTest extends AbstractProjectTestCase {
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Test
     public void testWithProjectWithName() throws Exception {
 		Project project = ProjectPlugin.getPlugin().getProjectRegistry()
 			.getDefaultProject();
@@ -51,6 +57,7 @@ public class CreateMapCommandTest extends AbstractProjectTestCase {
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Test
     public void testWithoutProjectWithoutName() throws Exception {
 		Project project = ProjectPlugin.getPlugin().getProjectRegistry()
 		.getDefaultProject();

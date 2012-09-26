@@ -1,8 +1,9 @@
 package net.refractions.udig.catalog.tests.ui.workflow;
 
-
-
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import net.refractions.udig.catalog.ui.workflow.Listener;
 import net.refractions.udig.catalog.ui.workflow.State;
 import net.refractions.udig.catalog.ui.workflow.Workflow;
@@ -11,18 +12,19 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
-public class BasicWorkflowTest extends TestCase {
+public class BasicWorkflowTest {
 	
 	int i = 0;
 	Workflow pipe;
 	State1 s1;
 	State4 s4;
 	
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		
+	@Before
+	public void setUp() throws Exception {
 		pipe = new Workflow();
 		s1 = new State1();
 		s4 = new State4();
@@ -31,16 +33,12 @@ public class BasicWorkflowTest extends TestCase {
 		i = 1;
 	}
 	
+	@Test(expected = IllegalStateException.class)
 	public void testPipeState() {
-		try {
-			pipe.next(new DummyMonitor());
-			fail();
-		}
-		catch(IllegalStateException e) {
-			//cool, we are ok
-		}
+		pipe.next(new DummyMonitor());
 	}
 	
+	@Test
 	public void testNonBlocking() {
 		Shell shell = new Shell(Display.getDefault());
 		final Dialog dialog = new Dialog(shell) {};
@@ -99,6 +97,7 @@ public class BasicWorkflowTest extends TestCase {
 		assertTrue(pipe.getState(State5.class).ran);
 	}
 	
+	@Test
 	public void testBlocking() {
 		Listener1 l = new Listener1();
 		pipe.addListener(l);
@@ -143,7 +142,9 @@ public class BasicWorkflowTest extends TestCase {
 		assertTrue(pipe.getState(State5.class).ran);
 	}
 	
-	public void xtestStateFailureNonBlocking() {
+	@Ignore
+	@Test
+	public void testStateFailureNonBlocking() {
 		Shell shell = new Shell(Display.getDefault());
 		final Dialog dialog = new Dialog(shell) {};
 		
@@ -238,66 +239,70 @@ public class BasicWorkflowTest extends TestCase {
 		assertEquals(pipe.getCurrentState(),s4);
 	}
 	
-////	public void testStateFailureBlocking() {
-////		//test where one state craps out
-////		s4.run = false;
-////		
-////		Listener1 l = new Listener2() {
-////			@Override
-////			public void finished(State state) {
-////				super.finished(state);
-////			}
-////		};
-////		pipe.addListener(l);
-////	
-////		pipe.start(null);
-////		pipe.next(null);
-////		pipe.next(null);
-////		pipe.next(null);
-////		pipe.next(null);
-////		pipe.next(null);
-////		
-////		assertTrue(l.state1);
-////		assertTrue(l.state2);
-////		assertTrue(l.state3);
-////		assertTrue(!l.state4);
-////		assertTrue(!l.state5);
-////		assertTrue(!l.finished);
-////		assertTrue(!l.fail);
-////		assertEquals(i,4);
-////
-////		assertNotNull(pipe.getState(State1.class));
-////		assertNotNull(pipe.getState(State2.class));
-////		assertNotNull(pipe.getState(State3.class));
-////		assertNotNull(pipe.getState(State4.class));
-////		assertNull(pipe.getState(State5.class));
-////		
-////		assertTrue(pipe.getState(State1.class).ran);
-////		assertTrue(pipe.getState(State2.class).ran);
-////		assertTrue(pipe.getState(State3.class).ran);
-////		assertTrue(pipe.getState(State4.class).ran);
-////		
-////		assertEquals(pipe.getCurrentState(),s4);
-////	}
-//	
-////	public void testRun() {
-////		
-////		assertTrue(!pipe.isFinished());
-////		assertTrue(!pipe.isStarted());
-////		assertTrue(!pipe.getState(State1.class).ran);
-////		assertTrue(!pipe.getState(State4.class).ran);
-////		
-////		
-////		pipe.run(new DummyMonitor());
-////		
-////		assertTrue(pipe.isFinished());
-////		assertTrue(pipe.isStarted());
-////		assertTrue(pipe.getState(State1.class).ran);
-////		assertTrue(pipe.getState(State2.class).ran);
-////		assertTrue(pipe.getState(State3.class).ran);
-////		assertTrue(pipe.getState(State4.class).ran);
-////		
-////	}
+	@Ignore
+    @Test
+	public void testStateFailureBlocking() {
+		//test where one state craps out
+		s4.run = false;
+		
+		Listener1 l = new Listener2() {
+			@Override
+			public void finished(State state) {
+				super.finished(state);
+			}
+		};
+		pipe.addListener(l);
+	
+		pipe.start(null);
+		pipe.next(null);
+		pipe.next(null);
+		pipe.next(null);
+		pipe.next(null);
+		pipe.next(null);
+		
+		assertTrue(l.state1);
+		assertTrue(l.state2);
+		assertTrue(l.state3);
+		assertTrue(!l.state4);
+		assertTrue(!l.state5);
+		assertTrue(!l.finished);
+		assertTrue(!l.fail);
+		assertEquals(i,4);
+
+		assertNotNull(pipe.getState(State1.class));
+		assertNotNull(pipe.getState(State2.class));
+		assertNotNull(pipe.getState(State3.class));
+		assertNotNull(pipe.getState(State4.class));
+		assertNull(pipe.getState(State5.class));
+		
+		assertTrue(pipe.getState(State1.class).ran);
+		assertTrue(pipe.getState(State2.class).ran);
+		assertTrue(pipe.getState(State3.class).ran);
+		assertTrue(pipe.getState(State4.class).ran);
+		
+		assertEquals(pipe.getCurrentState(),s4);
+	}
+
+	@Ignore
+	@Test
+	public void testRun() {
+		
+		assertTrue(!pipe.isFinished());
+		assertTrue(!pipe.isStarted());
+		assertTrue(!pipe.getState(State1.class).ran);
+		assertTrue(!pipe.getState(State4.class).ran);
+		
+		
+		pipe.run(new DummyMonitor());
+		
+		assertTrue(pipe.isFinished());
+		assertTrue(pipe.isStarted());
+		assertTrue(pipe.getState(State1.class).ran);
+		assertTrue(pipe.getState(State2.class).ran);
+		assertTrue(pipe.getState(State3.class).ran);
+		assertTrue(pipe.getState(State4.class).ran);
+		
+	}
 	
 	class Listener1 implements Listener {
 

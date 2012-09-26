@@ -1,0 +1,381 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Constraint Query Language &mdash; User Guide</title>
+    
+    <link rel="stylesheet" href="_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/udig.ico"/>
+    <link rel="top" title="User Guide" href="index.html" />
+    <link rel="up" title="Geospatial" href="Geospatial.html" />
+    <link rel="next" title="Coordinate Reference System" href="Coordinate Reference System.html" />
+    <link rel="prev" title="Geospatial" href="Geospatial.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+ 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="constraint-query-language">
+<h1>Constraint Query Language<a class="headerlink" href="#constraint-query-language" title="Permalink to this headline">¶</a></h1>
+<p>The Constraint Query Language is used to define expressions and filters in several parts of the uDig
+application.</p>
+<p>The CQL syntax is defined as part of the <a class="reference external" href="http://www.opengeospatial.org/standards/cat">OGC Catalog
+specification</a> (in much the same way the
+well-known-text representation of geometry is defined as part of the Simple Feature for SQL
+specification).</p>
+<div class="section" id="filters">
+<h2>Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h2>
+<p>A <strong>Filters</strong> is used to test content, similar in spirit to a WHERE statement in SQL. Filters are
+used to define the selected Features in a uDig layer.</p>
+<div class="section" id="comparisons">
+<h3>Comparisons<a class="headerlink" href="#comparisons" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">CITY</span> <span class="o">=</span> <span class="s">&#39;Nelson&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ATTR1</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">((</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ATTR1</span> <span class="o">&lt;</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ATTR2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>ATTR1 &lt; 10 AND ATTR2 &lt; 2 OR ATTR3 &gt; 10</pre>
+</div>
+</div>
+<div class="section" id="text">
+<h3>Text<a class="headerlink" href="#text" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>ATTR1 LIKE 'abc%'</pre>
+</div>
+<div class="highlight-python"><pre>ATTR1 NOT LIKE 'abc%'</pre>
+</div>
+</div>
+<div class="section" id="null">
+<h3>Null<a class="headerlink" href="#null" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>ATTR1 IS NULL</pre>
+</div>
+<div class="highlight-python"><pre>ATTR1 IS NOT NULL</pre>
+</div>
+</div>
+<div class="section" id="exists">
+<h3>Exists<a class="headerlink" href="#exists" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>ATTR1 EXISTS</pre>
+</div>
+<div class="highlight-python"><pre>ATTR1 DOES-NOT-EXIST</pre>
+</div>
+</div>
+<div class="section" id="between">
+<h3>Between<a class="headerlink" href="#between" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>ATTR1 BETWEEN 10 AND 20</pre>
+</div>
+</div>
+<div class="section" id="spatial-relationships">
+<h3>Spatial Relationships<a class="headerlink" href="#spatial-relationships" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>CONTAINS(ATTR1, POINT(1 2))</pre>
+</div>
+<div class="highlight-python"><pre>CROSS(ATTR1, LINESTRING(1 2, 10 15))</pre>
+</div>
+<div class="highlight-python"><pre>INTERSECT(ATTR1, GEOMETRYCOLLECTION (POINT (10 10),POINT (30 30),LINESTRING (15 15, 20 20)) )</pre>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">BBOX</span><span class="p">(</span><span class="n">ATTR1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">40</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>DWITHIN(ATTR1, POINT(1 2), 10, kilometers)</pre>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">BBOX</span><span class="p">(</span><span class="n">ATTR1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">40</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="time">
+<h3>Time<a class="headerlink" href="#time" title="Permalink to this headline">¶</a></h3>
+<p>Before a date.</p>
+<div class="highlight-python"><pre>ATTR1 BEFORE 2006-11-30T01:30:00Z</pre>
+</div>
+<p>Before a period</p>
+<div class="highlight-python"><pre>ATTR1 BEFORE 2006-11-30T01:30:00Z/2006-12-31T01:30:00Z</pre>
+</div>
+<p>After a date.</p>
+<div class="highlight-python"><pre>ATTR1 AFTER 2006-11-30T01:30:00Z</pre>
+</div>
+<p>After a period</p>
+<div class="highlight-python"><pre>ATTR1 AFTER 2006-11-30T01:30:00Z/2006-12-31T01:30:00Z</pre>
+</div>
+<p>Temporal predicate with dutation (ten day after 2006-11-30T01:30:00Z )</p>
+<div class="highlight-python"><pre>ATTR1 AFTER 2006-11-30T01:30:00Z/P10D</pre>
+</div>
+<div class="highlight-python"><pre>ATTR1 AFTER 2006-11-30T01:30:00Z/T10H</pre>
+</div>
+<p>During predicate</p>
+<div class="highlight-python"><pre>ATTR1 DURING 2006-11-30T01:30:00Z/2006-12-31T01:30:00Z</pre>
+</div>
+</div>
+<div class="section" id="compound-attributes">
+<h3>Compound Attributes<a class="headerlink" href="#compound-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>gmd:MD_Metadata.gmd:identificationInfo.gmd:MD_DataIdentification.gmd:abstract LIKE  'abc%'</pre>
+</div>
+<div class="section" id="expressions">
+<h4>Expressions<a class="headerlink" href="#expressions" title="Permalink to this headline">¶</a></h4>
+<p>Expressions are used to extract a value similar in spirit to a SELECT statement in SQL. Unlike SQL
+expressions are strictly untyped; the following produces the same result:</p>
+<ul class="simple">
+<li>sin( 0 )</li>
+<li>sin( 0.0 )</li>
+<li>sin( &#8216;0&#8217; )</li>
+</ul>
+<p>In many cases you will see several functions defined with similar names; differing only in how they
+interpret the provided argument expressions. The functions functions that produce a boolean value
+are <strong>very</strong> similar to a filter.</p>
+</div>
+</div>
+<div class="section" id="literals">
+<h3>Literals<a class="headerlink" href="#literals" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mf">3.14159</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">&#39;abc&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>2006-11-30T01:30:00Z</pre>
+</div>
+</div>
+<div class="section" id="geometry">
+<h3>Geometry<a class="headerlink" href="#geometry" title="Permalink to this headline">¶</a></h3>
+<p>Geometry literals are provided in Well Known Text format:</p>
+<div class="highlight-python"><pre>POINT(1 2)</pre>
+</div>
+<div class="highlight-python"><pre>LINESTRING (15 15, 20 20)</pre>
+</div>
+<p>This is the same format used by <a class="reference internal" href="PostGIS.html"><em>PostGIS</em></a> and other applications.</p>
+</div>
+<div class="section" id="attribute">
+<h3>Attribute<a class="headerlink" href="#attribute" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NAME</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>prefix:name</pre>
+</div>
+</div>
+<div class="section" id="math">
+<h3>Math<a class="headerlink" href="#math" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sin</span><span class="p">(</span> <span class="n">pi</span><span class="p">()</span> <span class="o">/</span> <span class="mi">4</span> <span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sin</span><span class="p">(</span> <span class="n">toRadians</span><span class="p">(</span> <span class="n">ANGLE</span> <span class="p">)</span> <span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">getX</span><span class="p">(</span> <span class="n">pointN</span><span class="p">(</span> <span class="n">THE_GEOM</span><span class="p">,</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">area</span><span class="p">(</span> <span class="n">THE_GEOM</span> <span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ID</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Function List:</p>
+<div class="highlight-python"><pre>double Area(Geometry)   // alternate implementation
+double area(Geometry)
+long abs( number )      // number treated as long
+double abs_2( number )  // number treated as double
+float abs_3( number )   // number treated as float
+int abs_4( number )    // number treated as int
+double acos( cos )
+double asin( sin )
+double atan( tan )
+double atan2( x, y )    // convert x, y to theta
+boolean between( value, min, max )
+boundary(Geometry)
+boundaryDimension(Geometry)
+buffer(Geometry, double)
+bufferWithSegments(Geometry, double, int)
+double ceil( number )
+centroid(Geometry)
+contains(Geometry, Geometry)
+convexHull(Geometry)
+double cos( radians )
+crosses(Geometry, Geometry)
+difference(Geometry, Geometry)
+dimension(Geometry)
+disjoint(Geometry, Geometry)
+distance(Geometry, Geometry)
+double2bool(double)
+endPoint(Geometry)
+envelope(Geometry)
+equalsExact(Geometry, Geometry)
+equalsExactTolerance(Geometry, Geometry, double)
+equalTo(Object, Object)
+double exp( number )
+exteriorRing(Geometry)
+double floor( number )
+String geometryType(Geometry)
+Geometry geomFromWKT(String)
+double geomLength(Geometry)
+Geometry getGeometryN(Geometry, int)
+double getX( Point )
+double getY( Point )
+boolean greaterEqualThan(Object, Object)
+boolean greaterThan(Object, Object)
+double IEEEremainder( dividend, divisor )
+value if_then_else(boolean, value, value )
+in2(value, Object, Object) // tests to is if value is equal to one of the listed objects
+in3(value, Object, Object, Object)
+in4(value, Object, Object, Object, Object)
+in5(value, Object, Object, Object, Object, Object)
+in6(value, Object, Object, Object, Object, Object, Object)
+in7(value, Object, Object, Object, Object, Object, Object, Object)
+in8(value, Object, Object, Object, Object, Object, Object, Object, Object)
+in9(value, Object, Object, Object, Object, Object, Object, Object, Object, Object)
+in10(value, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object)
+boolean int2bbool(int)
+double int2ddouble(int)
+Point interiorPoint(Geometry)
+LinearRing interiorRingN(Geometry, int)
+Geometry intersection(Geometry, Geometry)
+boolean intersects(Geometry, Geometry)
+boolean isClosed(Geometry)
+boolean isEmpty(Geometry)
+isLike(String, String)
+isNull(Object)
+isRing(Geometry)
+isSimple(Geometry)
+isValid(Geometry)
+isWithinDistance(Geometry, Geometry, double)
+lessEqualThan(Object, Object)
+lessThan(Object, Object)
+double log( number )
+double max( number, number )
+float max_2( number, number )
+int max_3( number, number )
+long max_4( number, number )
+double min( number, number )
+float min_2( number, number )
+int min_3( number, number )
+long min_4( number, number )
+not(boolean)
+notEqualTo(Object, Object)
+numGeometries(Geometry)
+numInteriorRing(Geometry)
+numPoints(Geometry)
+overlaps(Geometry, Geometry)
+parseBoolean(String)
+parseDouble(String)
+parseInt(String)
+pointN(Geometry, int)
+double pow( base, exponent )
+double random()
+String relate(Geometry, Geometry)
+boolean relatePattern(Geometry, Geometry, String)
+double rint( number ) // closest integer
+int round( number )
+long round_2( number )
+int roundDouble( number ) // number is treated as a double
+double sin( radians )
+double sqrt( number )
+startPoint(Geometry)
+strConcat(String, String)
+strEndsWith(String, String)
+strEqualsIgnoreCase(String, String)
+strIndexOf(String, String)
+strLastIndexOf(String, String)
+strLength(String)
+strMatches(String, String)
+strStartsWith(String, String)
+strSubstring(String, int, int)
+strSubstringStart(String, int)
+strTrim(String)
+symDifference(Geometry, Geometry)
+double tan( radians )
+touches(Geometry, Geometry)
+double toDegrees( radians )
+double toRadians( degrees )
+String toWKT(Geometry)
+union(Geometry, Geometry)
+within(Geometry, Geometry)</pre>
+</div>
+</div>
+<div class="section" id="extended-cql">
+<h2>Extended CQL<a class="headerlink" href="#extended-cql" title="Permalink to this headline">¶</a></h2>
+<p>The common query language cannot quite do everything we would like it to. The following extensions
+are not strictly common query language (so please do not expect them to work with other
+applications).</p>
+<div class="section" id="feature-id">
+<h3>Feature ID<a class="headerlink" href="#feature-id" title="Permalink to this headline">¶</a></h3>
+<p>You can select against a feature identifier using:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">IN</span> <span class="p">(</span><span class="s">&#39;river.1&#39;</span><span class="p">,</span> <span class="s">&#39;river.2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Or if you have an integer type as feature id:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">IN</span> <span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">301</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Related tasks</strong></p>
+<p><a class="reference internal" href="Selection using CQL.html"><em>Selection using CQL</em></a></p>
+<p><strong>Related reference</strong></p>
+<p><a class="reference internal" href="Table view.html"><em>Table view</em></a></p>
+<p><a class="reference external" href="http://www.opengeospatial.org/standards/cat">OGC Catalog Specification</a></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

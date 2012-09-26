@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import net.refractions.udig.core.TransparencyRemovingVisitor;
 import net.refractions.udig.core.jts.ReferencedEnvelopeCache;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ProjectBlackboardConstants;
 import net.refractions.udig.project.internal.ProjectPlugin;
 import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.project.internal.render.SelectionLayer;
@@ -33,15 +34,20 @@ import net.refractions.udig.project.render.ILabelPainter;
 import net.refractions.udig.project.render.IRenderContext;
 import net.refractions.udig.project.render.RenderException;
 import net.refractions.udig.render.feature.basic.internal.Messages;
+import net.refractions.udig.style.filter.FilterStyle;
 import net.refractions.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.Query;
 import org.geotools.data.crs.ForceCoordinateSystemFeatureResults;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.data.simple.SimpleFeatureStore;
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.SchemaException;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -59,6 +65,8 @@ import org.geotools.styling.Style;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.filter.Filter;
+import org.opengis.filter.FilterFactory;
 import org.opengis.geometry.BoundingBox;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -80,7 +88,9 @@ public class BasicFeatureRenderer extends RendererImpl {
     protected MapContent map = null;
 
     protected Layer[] layers = null;
-
+    /**
+     * Listens to the rendering process; and reports progress to our IProgressMonitor.
+     */
     protected BasicRenderListener listener = new BasicRenderListener();
 
     public BasicFeatureRenderer() {
@@ -107,7 +117,7 @@ public class BasicFeatureRenderer extends RendererImpl {
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public void render( Graphics2D destination, IProgressMonitor monitor ) throws RenderException {
-        render(destination, getContext().getImageBounds(), monitor);
+        render(destination, getContext().getImageBounds(), monitor, false);
     }
 
     private final static int NOT_INITIALIZED = -2;
@@ -117,15 +127,15 @@ public class BasicFeatureRenderer extends RendererImpl {
     private int expandSizePaintArea = 0;
 
     protected void setQueries() {
-        try {
-            // The context seems to have other ideas about the query we should draw
-            // (in order to filter out the features being edited at the moment)
-            //
-            Query featureQuery = getContext().getFeatureQuery();
-            ((FeatureLayer)layers[0]).setQuery(featureQuery);
-        } catch (Exception e) {
-            // do nothing.
-        }
+//        try {
+//            // The context seems to have other ideas about the query we should draw
+//            // (in order to filter out the features being edited at the moment)
+//            //
+//            Query featureQuery = getContext().getFeatureQuery();
+//            ((FeatureLayer)layers[0]).setQuery(featureQuery);
+//        } catch (Exception e) {
+//            // do nothing.
+//        }
     }
 
     /**
@@ -142,29 +152,53 @@ public class BasicFeatureRenderer extends RendererImpl {
         // check for style information on the blackboard
         ILayer layer = getContext().getLayer();
         StyleBlackboard styleBlackboard = (StyleBlackboard) layer.getStyleBlackboard();
-        FeatureSource<SimpleFeatureType, SimpleFeature> featureSource;
-        featureSource = layer.getResource(FeatureStore.class, new SubProgressMonitor(monitor, 0));
+        SimpleFeatureSource featureSource;
+        featureSource = layer.getResource(SimpleFeatureStore.class, new SubProgressMonitor(monitor, 0));
         if (featureSource == null) {
-            featureSource = layer.getResource(FeatureSource.class, new SubProgressMonitor(monitor,
+            featureSource = layer.getResource(SimpleFeatureSource.class, new SubProgressMonitor(monitor,
                     0));
         }
         Style style = getStyle(styleBlackboard, featureSource);
         layers = new Layer[1];
         CoordinateReferenceSystem layerCRS = layer.getCRS();
-        CoordinateReferenceSystem dataCRS = featureSource.getSchema()
-                .getCoordinateReferenceSystem();
+        SimpleFeatureType schema = featureSource.getSchema();
+        
+        // Original Query provided by Layer.getFilter() as adjusted by selection and edit filter
+        Query query = getContext().getFeatureQuery();
+        if( styleBlackboard.contains(ProjectBlackboardConstants.LAYER__STYLE_FILTER)){
+            // Additional Filter provided as Style used to reduce onscreen clutter
+            FilterStyle filterStyle = (FilterStyle) styleBlackboard.get(ProjectBlackboardConstants.LAYER__STYLE_FILTER);
+            query = new Query();
+            query.setTypeName(schema.getTypeName());
+            
+            Filter styleFilter = filterStyle.toFilter(schema);
+            if( styleFilter != Filter.INCLUDE ){
+                Filter queryFilter = query.getFilter();
+                if( queryFilter == Filter.INCLUDE ){
+                    query.setFilter( styleFilter );
+                }
+                else {
+                    FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+                    Filter combinedFilter = ff.and(styleFilter, queryFilter);
+                    query.setFilter( combinedFilter );
+                }
+            }
+        }
 
+        CoordinateReferenceSystem dataCRS = schema.getCoordinateReferenceSystem();
         if (!layerCRS.equals(dataCRS)) {
             // need to force the coordinate reference system to match the layer definition
             FeatureLayer featureLayer = new FeatureLayer(featureSource, style, layer.getName()); //$NON-NLS-1$
-            Query query = new Query();
-            query.setTypeName(featureSource.getSchema().getTypeName());
+            if( query == null ){
+                query = new Query();
+                query.setTypeName(schema.getTypeName());
+            }
             query.setCoordinateSystem(layerCRS);
             featureLayer.setQuery(query);
-            
             // double check the implementation is respecting our layer CRS
             FeatureCollection<SimpleFeatureType, SimpleFeature> features = featureSource.getFeatures( query );
             CoordinateReferenceSystem queryCRS = features.getSchema().getCoordinateReferenceSystem();
+            
             if(queryCRS.equals(layerCRS)){
                 layers[0] = featureLayer;
             } else {
@@ -175,7 +209,11 @@ public class BasicFeatureRenderer extends RendererImpl {
             }
         }
         else {
-            layers[0] = new FeatureLayer(featureSource, style, layer.getName());
+            FeatureLayer featureLayer = new FeatureLayer(featureSource, style, layer.getName());
+            if( query != null ){
+                featureLayer.setQuery( query );
+            }
+            layers[0] = featureLayer;
         }
         map = new MapContent();
         map.getViewport().setCoordinateReferenceSystem(getContext().getCRS());
@@ -273,22 +311,36 @@ public class BasicFeatureRenderer extends RendererImpl {
         Graphics2D graphics = null;
         try {
             graphics = getContext().getImage().createGraphics();
-            render(graphics, getRenderBounds(), monitor);
+            render(graphics, getRenderBounds(), monitor, true);
         } finally {
             if (graphics != null)
                 graphics.dispose();
         }
     }
-
+    /**
+     * Internal method used to draw into the provided graphics.
+     * 
+     * @param graphics
+     * @param bounds
+     * @param monitor
+     * @param clear
+     * @throws RenderException
+     */
     @SuppressWarnings("unchecked")
-    private void render( Graphics2D graphics, ReferencedEnvelope bounds, IProgressMonitor monitor )
+    private void render( Graphics2D graphics, ReferencedEnvelope bounds, IProgressMonitor monitor, boolean clear)
             throws RenderException {
+        
+        if( monitor == null ){
+            monitor = new NullProgressMonitor();
+        }
+        
         getContext().setStatus(ILayer.WAIT);
         getContext().setStatusMessage(Messages.BasicFeatureRenderer_rendering_status);
         String endMessage = null;
         int endStatus = ILayer.DONE;
         try {
-
+            monitor.beginTask("rendering features", 100);
+            
             if (getContext().getLayer().getSchema() == null
                     || getContext().getLayer().getSchema().getGeometryDescriptor() == null) {
                 endStatus = ILayer.WARNING;
@@ -296,18 +348,19 @@ public class BasicFeatureRenderer extends RendererImpl {
                 return;
             }
 
-            prepareDraw(monitor);
+            prepareDraw( new SubProgressMonitor(monitor, 2));
 
-            if (monitor.isCanceled())
+            if (monitor.isCanceled()){
                 return;
+            }
             // setFeatureLoading(monitor);
+            ReferencedEnvelope validBounds = validateBounds(bounds, new SubProgressMonitor(monitor, 3), getContext());
 
-            ReferencedEnvelope validBounds = validateBounds(bounds, monitor, getContext());
-
-            if (validBounds.isNull())
+            if (validBounds.isNull()){
                 return;
-
+            }
             try {
+                monitor.setTaskName("rendering features - area");
                 validBounds.transform(getContext().getLayer().getCRS(), true);
             } catch (TransformException te) {
                 RendererPlugin.log("viewable area is available in the layer CRS", te); //$NON-NLS-1$
@@ -323,10 +376,12 @@ public class BasicFeatureRenderer extends RendererImpl {
             } catch (FactoryException e) {
                 throw (RenderException) new RenderException().initCause(e);
             }
-
-            listener.init(monitor);
+            
+            listener.init( new SubProgressMonitor( monitor,90) );
             setQueries();
-
+            
+            monitor.worked(5);
+            
             Point min = getContext().worldToPixel(
                     new Coordinate(validBounds.getMinX(), validBounds
                             .getMinY()));
@@ -351,7 +406,12 @@ public class BasicFeatureRenderer extends RendererImpl {
             // lower right
             paintArea.add(  Math.max(min.x, max.x) + expandPaintAreaBy,
                             Math.max(min.y, max.y) + expandPaintAreaBy);
-
+            
+            if( clear ){ // if partial update on live screen
+                graphics.setBackground(new Color(0,0,0,0));
+                graphics.clearRect(paintArea.x, paintArea.y, paintArea.width, paintArea.height);
+            }
+            
             validBounds=getContext().worldBounds(paintArea);
 
             MapViewport mapViewport = new MapViewport( validBounds );
@@ -406,7 +466,8 @@ public class BasicFeatureRenderer extends RendererImpl {
             if (monitor.isCanceled()){
                 return;
             }
-            if( paintArea == null || paintArea.isEmpty() || validBounds == null || validBounds.isEmpty() || validBounds.isNull() ){
+            if( paintArea == null || paintArea.isEmpty() || validBounds == null || validBounds.isEmpty() || validBounds.isNull() || validBounds.getWidth() <=0 || validBounds.getHeight()<=0 ){
+                System.out.println("nothing to draw");
                 // nothing to draw yet
             }
             else {
@@ -451,6 +512,7 @@ public class BasicFeatureRenderer extends RendererImpl {
                     getContext().setStatusMessage(Messages.BasicFeatureRenderer_noFeatures);
                 }
             }
+            monitor.done();
         }
     }
 

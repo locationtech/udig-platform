@@ -1,9 +1,13 @@
 package net.refractions.udig.project.internal.commands.edit;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Dimension;
 import java.io.IOException;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.tests.CatalogTests;
 import net.refractions.udig.core.internal.FeatureUtils;
@@ -22,6 +26,10 @@ import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -38,7 +46,7 @@ import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
-public class CopyFeaturesCommandTest extends TestCase {
+public class CopyFeaturesCommandTest {
 
     GeometryBuilder builder=GeometryBuilder.create();
     private SimpleFeatureType sourceType;
@@ -49,9 +57,9 @@ public class CopyFeaturesCommandTest extends TestCase {
     private Map targetMap;
     private SimpleFeature[] sourceFeatures;
 
-    @SuppressWarnings("deprecation") 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @SuppressWarnings("deprecation")
+    @Before
+    public void setUp() throws Exception {
         sourceType=DataUtilities.createType("source", "*geom:LineString,geom2:Point,nAme:String"); //$NON-NLS-1$ //$NON-NLS-2$
         sourceFeatures = new SimpleFeature[1];
         GeometryFactory fac=new GeometryFactory();
@@ -70,8 +78,8 @@ public class CopyFeaturesCommandTest extends TestCase {
 
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         FeatureStore<SimpleFeatureType, SimpleFeature> store = sourceResource.resolve(FeatureStore.class, null);
         store.removeFeatures(Filter.INCLUDE);
         
@@ -79,13 +87,12 @@ public class CopyFeaturesCommandTest extends TestCase {
         store.removeFeatures(Filter.INCLUDE);
     }
 
-    public void testStub() throws Exception {
-        assertTrue(true);
-    }
     /*
      * Test method for 'net.refractions.udig.project.ui.DropFilterAction.perform(Object, Object, IProgressMonitor)'
      */
-    public void xtestPerform() throws Exception {
+    @Ignore
+    @Test
+    public void testPerform() throws Exception {
         FilterFactory fac=CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
         Filter filter=fac.id(FeatureUtils.stringToId(fac, sourceFeatures[0].getID()));
         Layer layer = targetMap.getLayersInternal().get(0);
@@ -107,14 +114,19 @@ public class CopyFeaturesCommandTest extends TestCase {
         assertEquals(targetType, addedFeature.getFeatureType());
     }
 
-    @SuppressWarnings("deprecation") 
-    public void xtestLine2Polygon() throws Exception {
+    @SuppressWarnings("deprecation")
+    @Ignore
+    @Test
+    public void testLine2Polygon() throws Exception {
         setTarget("targetGeom", "Polygon", builder.safeCreateGeometry(Polygon.class, new Coordinate[]{new Coordinate(10,10)}));
 
         copyFeatures(Polygon.class, 1);
     }
+    
     @SuppressWarnings("deprecation")
-    public void xtestLine2Point() throws Exception {
+    @Ignore
+    @Test
+    public void testLine2Point() throws Exception {
         setTarget("targetGeom", "Point", builder.safeCreateGeometry(Point.class, new Coordinate[]{new Coordinate(10,10)}));
         LineString line = builder.safeCreateGeometry(LineString.class, new Coordinate[]{new Coordinate(10,10), new Coordinate(20,10), new Coordinate(20,20)});
         setSource("LineString", line);
@@ -127,7 +139,9 @@ public class CopyFeaturesCommandTest extends TestCase {
         assertEquals( line.getCentroid().getCoordinate(), ((Geometry)feature.getDefaultGeometry()).getCoordinate() );
     }
     
-    public void xtestPolygonWithHole2MultiPolygon() throws Exception {
+    @Ignore
+    @Test
+    public void testPolygonWithHole2MultiPolygon() throws Exception {
         setTarget("name2","MultiPolygon", builder.safeCreateGeometry(MultiPolygon.class, new Coordinate[]{new Coordinate(10,10)}));
 
         LinearRing r1 = builder.safeCreateGeometry(LinearRing.class, new Coordinate[]{
@@ -144,7 +158,9 @@ public class CopyFeaturesCommandTest extends TestCase {
         copyFeatures(MultiPolygon.class, 1);
     }
     
-    public void xtestPolygonWithHole2MultiLine() throws Exception {
+    @Ignore
+    @Test
+    public void testPolygonWithHole2MultiLine() throws Exception {
         setTarget("name2","MultiLineString", builder.safeCreateGeometry(MultiLineString.class, new Coordinate[]{new Coordinate(10,10)}));
 
         LinearRing r1 = builder.safeCreateGeometry(LinearRing.class, new Coordinate[]{
@@ -168,7 +184,9 @@ public class CopyFeaturesCommandTest extends TestCase {
     }
 
     @SuppressWarnings("deprecation")
-    public void xtestPoint2Polygon() throws Exception {
+    @Ignore
+    @Test
+    public void testPoint2Polygon() throws Exception {
         setTarget("name2", "Polygon", builder.safeCreateGeometry(Polygon.class, new Coordinate[]{new Coordinate(10,10)}));
 
         copyFeatures(Polygon.class, 1);
@@ -184,21 +202,30 @@ public class CopyFeaturesCommandTest extends TestCase {
         FeatureStore<SimpleFeatureType, SimpleFeature> store = targetResource.resolve(FeatureStore.class, null);
         store.removeFeatures(Filter.INCLUDE);
     }
+    
     @SuppressWarnings("deprecation")
-    public void xtestPoint2Line() throws Exception {
+    @Ignore
+    @Test
+    public void testPoint2Line() throws Exception {
 
         setTarget("name2", "LineString", builder.safeCreateGeometry(LineString.class, new Coordinate[]{new Coordinate(10,10)}));
 
         copyFeatures(LineString.class, 1);
     }
+    
     @SuppressWarnings("deprecation")
-    public void xtestLine2MultiLine() throws Exception {
+    @Ignore
+    @Test
+    public void testLine2MultiLine() throws Exception {
         setTarget("target2", "MultiLineString", builder.safeCreateGeometry(MultiLineString.class, new Coordinate[]{new Coordinate(10,10)}));
 
         copyFeatures(MultiLineString.class, 1);
     }
+    
     @SuppressWarnings("deprecation")
-    public void xtestPolygon2LineString() throws Exception {
+    @Ignore
+    @Test
+    public void testPolygon2LineString() throws Exception {
         setTarget("target2", "LineString", builder.safeCreateGeometry(LineString.class, new Coordinate[]{new Coordinate(10,10)}));
         LinearRing r1 = builder.safeCreateGeometry(LinearRing.class, new Coordinate[]{
             new Coordinate(0,0), new Coordinate(10,0), new Coordinate(10,10), new Coordinate(0,10), new Coordinate(0,0)
@@ -214,15 +241,21 @@ public class CopyFeaturesCommandTest extends TestCase {
         copyFeatures(LineString.class, 2);
 
     }
+    
     @SuppressWarnings("deprecation")
-    public void xtestPoint2LinearRing() throws Exception {
+    @Ignore
+    @Test
+    public void testPoint2LinearRing() throws Exception {
 
         setTarget("name2", "com.vividsolutions.jts.geom.LinearRing", builder.safeCreateGeometry(LinearRing.class, new Coordinate[]{new Coordinate(10,10)}));
 
         copyFeatures(LinearRing.class, 1);
     }
+    
     @SuppressWarnings("deprecation")
-    public void xtestPolygon2LinearRing() throws Exception {
+    @Ignore
+    @Test
+    public void testPolygon2LinearRing() throws Exception {
         setTarget("target2", "com.vividsolutions.jts.geom.LinearRing", builder.safeCreateGeometry(LinearRing.class, new Coordinate[]{new Coordinate(10,10)}));
         LinearRing r1 = builder.safeCreateGeometry(LinearRing.class, new Coordinate[]{
             new Coordinate(0,0), new Coordinate(10,0), new Coordinate(10,10), new Coordinate(0,10), new Coordinate(0,0)
@@ -237,6 +270,7 @@ public class CopyFeaturesCommandTest extends TestCase {
         
         copyFeatures(LinearRing.class, 2);
     }
+    
     private void setSource(String type, Geometry attribute) throws Exception {
         sourceType=DataUtilities.createType("source2", "*geom:"+type+",nAme:String"); //$NON-NLS-1$ //$NON-NLS-2$
         sourceFeatures = new SimpleFeature[1];
@@ -247,7 +281,9 @@ public class CopyFeaturesCommandTest extends TestCase {
     }
 
     @SuppressWarnings("deprecation")
-    public void xtestPolygon2Point() throws Exception {
+    @Ignore
+    @Test
+    public void testPolygon2Point() throws Exception {
         setTarget("name2", "Point", builder.safeCreateGeometry(Point.class, new Coordinate[]{new Coordinate(10,10)}));
 
         Polygon poly = builder.safeCreateGeometry(Polygon.class, new Coordinate[]{
@@ -264,7 +300,9 @@ public class CopyFeaturesCommandTest extends TestCase {
     }
 
     @SuppressWarnings("deprecation")
-    public void xtestMultiPolygon2Point() throws Exception {
+    @Ignore
+    @Test
+    public void testMultiPolygon2Point() throws Exception {
         setTarget("name2", "Point", builder.safeCreateGeometry(Point.class, new Coordinate[]{new Coordinate(10,10)}));
 
         Polygon poly = builder.safeCreateGeometry(Polygon.class, new Coordinate[]{
@@ -288,9 +326,10 @@ public class CopyFeaturesCommandTest extends TestCase {
         iter.close();
     }
 
-
     @SuppressWarnings("deprecation")
-    public void xtestMultiPolygon2MultiPoint() throws Exception {
+    @Ignore
+    @Test
+    public void testMultiPolygon2MultiPoint() throws Exception {
         setTarget("name2", "MultiPoint", builder.safeCreateGeometry(MultiPoint.class, new Coordinate[]{new Coordinate(10,10)}));
 
         Polygon poly = builder.safeCreateGeometry(Polygon.class, new Coordinate[]{
@@ -312,7 +351,9 @@ public class CopyFeaturesCommandTest extends TestCase {
     }
     
     @SuppressWarnings("deprecation")
-    public void xtestMultiPolygon2LineString() throws Exception {
+    @Ignore
+    @Test
+    public void testMultiPolygon2LineString() throws Exception {
         setTarget("name2", "LineString", builder.safeCreateGeometry(LineString.class, new Coordinate[]{new Coordinate(10,10)}));
 
         Polygon poly = builder.safeCreateGeometry(Polygon.class, new Coordinate[]{
@@ -325,9 +366,12 @@ public class CopyFeaturesCommandTest extends TestCase {
         setSource("MultiPolygon", fac.createMultiPolygon(new Polygon[]{poly,poly2}));
         
         copyFeatures(LineString.class, 2);
-    }      
+    }
+    
     @SuppressWarnings("deprecation")
-    public void xtestMultiPolygonWithHole2LineString() throws Exception {
+    @Ignore
+    @Test
+    public void testMultiPolygonWithHole2LineString() throws Exception {
         setTarget("name2", "LineString", builder.safeCreateGeometry(LineString.class, new Coordinate[]{new Coordinate(10,10)}));
 
         LinearRing r1 = builder.safeCreateGeometry(LinearRing.class, new Coordinate[]{
@@ -350,9 +394,12 @@ public class CopyFeaturesCommandTest extends TestCase {
         feature=iter.next();
         assertTrue( r1.equals(feature.getDefaultGeometry()) || r2.equals(feature.getDefaultGeometry()) );
         iter.close();
-    }   
+    }
+    
     @SuppressWarnings("deprecation")
-    public void xtestMultiPolygonWithHole2Polygon() throws Exception {
+    @Ignore
+    @Test
+    public void testMultiPolygonWithHole2Polygon() throws Exception {
         setTarget("name2","Polygon", builder.safeCreateGeometry(Polygon.class, new Coordinate[]{new Coordinate(10,10)}));
 
         LinearRing r1 = builder.safeCreateGeometry(LinearRing.class, new Coordinate[]{
@@ -367,10 +414,12 @@ public class CopyFeaturesCommandTest extends TestCase {
         setSource("MultiPolygon", fac.createMultiPolygon(new Polygon[]{poly, fac.createPolygon(r2, new LinearRing[0])}));
         
         copyFeatures(Polygon.class, 2);
-    }   
+    }
     
     @SuppressWarnings("deprecation")
-    public void xtestPolygonWithHole2LineString() throws Exception {
+    @Ignore
+    @Test
+    public void testPolygonWithHole2LineString() throws Exception {
         setTarget("name2", "LineString", builder.safeCreateGeometry(LineString.class, new Coordinate[]{new Coordinate(10,10)}));
 
         LinearRing r1 = builder.safeCreateGeometry(LinearRing.class, new Coordinate[]{
@@ -396,7 +445,9 @@ public class CopyFeaturesCommandTest extends TestCase {
     }   
     
     @SuppressWarnings("deprecation")
-    public void xtestMultiLineString2MultiPolygon() throws Exception {
+    @Ignore
+    @Test
+    public void testMultiLineString2MultiPolygon() throws Exception {
         setTarget("name2", "MultiPolygon", builder.safeCreateGeometry(MultiPolygon.class, new Coordinate[]{new Coordinate(10,10)}));
 
         LineString poly = builder.safeCreateGeometry(LineString.class, new Coordinate[]{
@@ -431,7 +482,9 @@ public class CopyFeaturesCommandTest extends TestCase {
         assertEquals( type, feature.getDefaultGeometry().getClass());
     }
     
-    public void xtestPointToGeomDragDrop() throws Exception {
+    @Ignore
+    @Test
+    public void testPointToGeomDragDrop() throws Exception {
         targetType=DataUtilities.createType("target3", "*geom2:Geometry"); //$NON-NLS-1$ //$NON-NLS-2$
         SimpleFeature[] targetFeatures = new SimpleFeature[1];
         targetFeatures[0]=SimpleFeatureBuilder.build(targetType, new Object[]{null}, "id");
@@ -456,7 +509,9 @@ public class CopyFeaturesCommandTest extends TestCase {
     /*
      * Test method for 'net.refractions.udig.project.internal.commands.edit.CopyFeaturesCommand.rollback(IProgressMonitor)'
      */
-    public void xtestRollback() throws Exception {
+    @Ignore
+    @Test
+    public void testRollback() throws Exception {
         FilterFactory fac=CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
         Filter filter=fac.id(FeatureUtils.stringToId(fac, sourceFeatures[0].getID()));
         Layer layer = targetMap.getLayersInternal().get(0);

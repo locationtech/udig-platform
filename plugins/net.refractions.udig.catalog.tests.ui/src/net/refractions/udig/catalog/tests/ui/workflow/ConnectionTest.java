@@ -1,11 +1,14 @@
 package net.refractions.udig.catalog.tests.ui.workflow;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.internal.ui.ConnectionPageDecorator;
 import net.refractions.udig.catalog.ui.ConnectionFactoryManager;
 import net.refractions.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
@@ -21,10 +24,11 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.After;
 import org.junit.Ignore;
+import org.junit.Test;
 
-@Ignore
-public class ConnectionTest extends TestCase {
+public class ConnectionTest {
 	Shell shell;
 
 	WorkflowWizard wizard;
@@ -36,12 +40,6 @@ public class ConnectionTest extends TestCase {
 	ConnectionPageDecorator page;
 
 	private Workflow workflow;
-
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		
-	}
 
     private void init( String urlString ) {
         ArrayList<String> l = new ArrayList<String>();
@@ -64,12 +62,14 @@ public class ConnectionTest extends TestCase {
 		dialog.setBlockOnOpen(true);
     }
 
-	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		if (!shell.isDisposed())
 			shell.dispose();
 	}
 	
+	@Ignore // fails when running from maven
+	@Test
 	public void testButtonState() {
         init("net.refractions.udig.catalog.ui.WMS"); //$NON-NLS-1$
 
@@ -91,12 +91,13 @@ public class ConnectionTest extends TestCase {
 		driver.cancel();
 	}
 	
+	@Test
 	public void testWorkbenchSelection() {
         init("net.refractions.udig.catalog.ui.WMS"); //$NON-NLS-1$
 
 		// create a workbench selection
 		try {
-			URL url = new URL("http://www.refractions.net:8080/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
+			URL url = new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
 			workflow.setContext(url);
 		} 
 		catch (Exception e) {
@@ -121,17 +122,14 @@ public class ConnectionTest extends TestCase {
 		assertFalse(a1.fail);
 		driver.cancel();
 	}
-
+	
+	@Test
 	public void testConnection() {
         init("net.refractions.udig.catalog.ui.WMS"); //$NON-NLS-1$
 
 		//create a workbench selection
 		try {
-//			URL url = CatalogTestsUIPlugin.getDefault().getBundle()
-//				.getEntry("data/"); //$NON-NLS-1$
-//			url = FileLocator.toFileURL(new URL(url, "lakes.shp")); //$NON-NLS-1$
-//			
-			URL url = new URL("http://www.refractions.net:8080/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
+			URL url = new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
 			workflow.setContext(url);
 			
 		} 

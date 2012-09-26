@@ -159,6 +159,13 @@ public interface RenderContext extends AbstractContext, Comparable<RenderContext
     public void clearImage();
 
     /**
+     * Query used to obtain features to be drawn (this may be adjusted by the current selection,
+     * or if the EditManager is currently drawing a few of the features as EditGeometry).
+     * <p>
+     * This implementation takes the time to check Layer.getQuery( selected ) along with
+     * any filter overrides provided on the style blackboard, and any temporarily excluded
+     * features being held by the EditManager.
+     * 
      * @return The filter that will return all the features that need to be rendered
      * @throws Exception In case something goes wrong, IOException, IllegalTransformException etc...
      */

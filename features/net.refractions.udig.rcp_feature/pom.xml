@@ -5,10 +5,9 @@
   <parent>
     <artifactId>features</artifactId>
     <groupId>net.refractions</groupId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.3.3-SNAPSHOT</version>
   </parent>
-  <groupId>net.refractions</groupId>
   <artifactId>net.refractions.udig.rcp-feature</artifactId>
-  <version>1.3.0.qualifier</version>
+  <version>1.3.0-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 </project>

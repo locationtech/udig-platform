@@ -1,4 +1,17 @@
-
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2010, Refractions Research Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ */
 package net.refractions.udig.catalog.internal.wmt.ww;
 
 import java.io.IOException;
@@ -51,21 +64,24 @@ public class WWService extends IService {
     protected final Lock rLock=new UDIGDisplaySafeLock();
     private static final Lock dsLock = new UDIGDisplaySafeLock();
 
-    public WWService(URL url, Map<String,Serializable> params) {
+    public WWService(URL url, Map<String, Serializable> params) {
         this.params = params;
         this.url = url;
 
         if (params.containsKey(WW_LAYERSET_KEY)) {
-        	Object obj = params.get(WW_LAYERSET_KEY);
-        	
-        	if (obj instanceof LayerSet) {
-        		this.layerSet = (LayerSet) obj;
-        	}        	
+            Object obj = params.get(WW_LAYERSET_KEY);
+
+            if (obj instanceof LayerSet) {
+                this.layerSet = (LayerSet) obj;
+            }
         }
     }
     
     public Status getStatus() {
-        return error != null? Status.BROKEN : layerSet == null? Status.NOTCONNECTED : Status.CONNECTED;
+        if( layerSet == null ){
+            return super.getStatus();
+        }
+        return Status.CONNECTED;
     }
 
     /**
@@ -167,19 +183,13 @@ public class WWService extends IService {
         return adaptee.isAssignableFrom(LayerSet.class) || super.canResolve(adaptee);
     }
     public void dispose( IProgressMonitor monitor ) {
-        if( members==null)
-            return;
-
-        int steps = (int) ((double) 99 / (double) members.size());
-        for(IResolve resolve : members) {
-            try {
-                SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, steps);
-                resolve.dispose(subProgressMonitor);
-                subProgressMonitor.done();
-            } catch (Throwable e) {
-                ErrorManager.get().displayException(e,
-                        "Error disposing members of service: " + getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
-            }
+        super.dispose(monitor);
+        if( members != null ){
+            members = null;
+        }
+        if( layerSet != null ){
+            layerSet.dispose(); // clean up
+            layerSet = null;
         }
     }
     

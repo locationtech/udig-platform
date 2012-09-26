@@ -28,10 +28,10 @@ import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.URLUtils;
+import net.refractions.udig.ui.graphics.SLDs;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureSource;
-import org.geotools.data.FeatureStore;
 import org.geotools.data.shapefile.indexed.IndexedShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.data.simple.SimpleFeatureStore;
@@ -146,13 +146,13 @@ public class ShpGeoResourceImpl extends IGeoResource {
             return adaptee.cast(createInfo(monitor));
         }
         if (adaptee.isAssignableFrom(SimpleFeatureStore.class)) {
-            FeatureSource<SimpleFeatureType, SimpleFeature> fs = featureSource(monitor);
+            SimpleFeatureSource fs = featureSource(monitor);
             if (fs instanceof SimpleFeatureStore) {
                 return adaptee.cast(fs);
             }
         }
         if (adaptee.isAssignableFrom(SimpleFeatureStore.class)) {
-            FeatureSource<SimpleFeatureType, SimpleFeature> fs = featureSource(monitor);
+            SimpleFeatureSource fs = featureSource(monitor);
             if (fs instanceof SimpleFeatureStore) {
                 return adaptee.cast(fs);
             }
@@ -179,53 +179,43 @@ public class ShpGeoResourceImpl extends IGeoResource {
         return parent.getDS(monitor).getFeatureSource();
     }
 
-    public Style style( IProgressMonitor monitor ) {
-        URL url = parent.getIdentifier();
-        File file = URLUtils.urlToFile(url);
-        String shp = file.getAbsolutePath();
+    
+    public Style style( IProgressMonitor monitor ) throws IOException {
+        SimpleFeatureSource source  = featureSource(null);
 
-        StyleFactory styleFactory = CommonFactoryFinder.getStyleFactory(GeoTools.getDefaultHints());
-
-        // strip off the extension and check for sld
-        String sld = shp.substring(0, shp.length() - 4) + ".sld"; //$NON-NLS-1$
-        File f = new File(sld);
-        if (!f.exists()) {
-            // try upper case
-            sld = shp.substring(0, shp.length() - 4) + ".SLD"; //$NON-NLS-1$
-            f = new File(sld);
+        SimpleFeatureType featureType = source.getSchema();
+        
+        ID fileID = parent.getID();
+        if( !fileID.isFile() ){
+            return null; // we are only checking for sidecar files 
         }
-
-        if (f.exists()) {
-            // parse it up
-            SLDParser parser = new SLDParser(styleFactory);
-            try {
-                parser.setInput(f);
-            } catch (FileNotFoundException e) {
-                return null; // well that is unexpected since f.exists()
+        File file = fileID.toFile("sld");
+        if( !file.exists()){
+            file =fileID.toFile("SLD");
+            if( !file.exists()){
+                return null; // sidecar file not avaialble
             }
-            Style[] styles = parser.readXML();
-
-            FeatureSource<SimpleFeatureType, SimpleFeature> source;
-            try {
-                source = featureSource(null);
-            } catch (IOException e) {
-                return null; // does not look like there is anything in the shapefile
+        }
+        StyledLayerDescriptor sld = SLDs.parseSLD( file );
+        if( sld == null ){
+            return null; // well that is unexpected since f.exists()
+        }
+        
+        Style[] styles = SLDs.styles( sld );
+        // Style[] styles = parser.readXML();
+        
+        // put the first one on
+        if (styles != null && styles.length > 0) {
+            Style style = SLDs.matchingStyle(styles, featureType);
+            if (style == null) {
+                style = styles[0];
             }
-            SimpleFeatureType featureType = source.getSchema();
-            // put the first one on
-            if (styles != null && styles.length > 0) {
-                Style style = SLD.matchingStyle(styles, featureType);
-                if (style == null) {
-                    style = styles[0];
-                }
-
-                makeGraphicsAbsolute(file, style);
-                return style;
-            }
+            makeGraphicsAbsolute(file, style);
+            return style;
         }
         return null; // well nothing worked out; make your own style
     }
-
+    
     /**
      * This transforms all external graphics references that are relative to absolute.
      * This is a workaround to be able to visualize png and svg in relative mode, which 
@@ -416,11 +406,13 @@ public class ShpGeoResourceImpl extends IGeoResource {
         if (adaptee == null) {
             return false;
         }
-        return (adaptee.isAssignableFrom(IGeoResourceInfo.class) || adaptee.isAssignableFrom(FeatureStore.class)
+        return (adaptee.isAssignableFrom(IGeoResourceInfo.class) || adaptee.isAssignableFrom(SimpleFeatureStore.class)
                 || adaptee.isAssignableFrom(FeatureSource.class) 
                 || adaptee.isAssignableFrom(SimpleFeatureSource.class) 
-                || adaptee.isAssignableFrom(IService.class) || adaptee
-                .isAssignableFrom(Style.class)) || super.canResolve(adaptee);
+                || adaptee.isAssignableFrom(IService.class) 
+                || adaptee.isAssignableFrom(Style.class)
+                ) 
+                || super.canResolve(adaptee);
     }
     @Override
     public ShpGeoResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {

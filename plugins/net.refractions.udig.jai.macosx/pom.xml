@@ -2,38 +2,38 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
 
-
     <parent>
         <artifactId>plugins</artifactId>
         <groupId>net.refractions</groupId>
-        <version>1.3.0-SNAPSHOT</version>
+        <version>1.3.3-SNAPSHOT</version>
     </parent>
 
-
-    <groupId>net.refractions</groupId>
     <artifactId>net.refractions.udig.jai.macosx</artifactId>
     <version>1.2.0-SNAPSHOT</version>
     <packaging>eclipse-plugin</packaging>
 
-
     <build>
         <plugins>
             <plugin>
-                <groupId>${tycho-provider}</groupId>
+                <groupId>org.eclipse.tycho</groupId>
                 <artifactId>target-platform-configuration</artifactId>
                 <version>${tycho-version}</version>
                 <configuration>
                     <environments>
                         <environment>
                             <os>macosx</os>
-                            <ws>carbon</ws>
+                            <ws>cocoa</ws>
                             <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>macosx</os>
+                            <ws>cocoa</ws>
+                            <arch>x86_64</arch>
                         </environment>
                     </environments>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 
 </project>

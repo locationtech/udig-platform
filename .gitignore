@@ -1,4 +1,5 @@
 .DS_Store
+Thumbs.db
 plugins/net.refractions.udig.libs.source/util/bin/
 plugins/net.refractions.udig.*/bin
 tutorials/net.refractions.udig.tutorials.*/bin
@@ -15,3 +16,6 @@ target
 javaCompiler...args
 build.xml
 workspace
+
+/plugins/org.tcat.citd.sim.udig.bookmarks.tests/bin/
+/plugins/net.refractions.udig.libs/lib-src/

@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tools Tests
+Bundle-SymbolicName: eu.udig.tools.tests; singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: eu.udig.tools.tests.Activator
+Bundle-Vendor: uDig Community
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ eu.udig.tools;bundle-version="1.0.0",
+ org.junit
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Import-Package: com.vividsolutions.jts.geom,
+ com.vividsolutions.jts.io,
+ com.vividsolutions.jts.operation.polygonize,
+ org.opengis.feature.simple
+Export-Package: es.udig.tools.geometry.split,
+ eu.udig.tools.tests

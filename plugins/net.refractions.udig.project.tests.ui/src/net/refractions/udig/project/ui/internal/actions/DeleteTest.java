@@ -1,5 +1,12 @@
 package net.refractions.udig.project.ui.internal.actions;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Dimension;
 import java.io.File;
 import java.util.ArrayList;
@@ -20,24 +27,26 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.window.Window;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 
 public class DeleteTest extends AbstractProjectUITestCase {
 
 	private Project project;
 
-	@Override
-	protected void setUp() throws Exception {
-        super.setUp();
+	@Before
+	public void setUp() throws Exception {
 		SimpleFeature [] features=UDIGTestUtil.createDefaultTestFeatures("Tests",4); //$NON-NLS-1$
 		IGeoResource resource = MapTests.createGeoResource(features, true);
 		Map map=MapTests.createNonDynamicMapAndRenderer(resource, new Dimension(512,512));
 		project=map.getProjectInternal();
 	}
 	
-	@Override
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() throws Exception {
 		ProjectRegistry registry = ProjectPlugin.getPlugin().getProjectRegistry();
 		Resource registryResource=registry.eResource();
 		List<Project> project=new ArrayList<Project>();
@@ -58,12 +67,12 @@ public class DeleteTest extends AbstractProjectUITestCase {
 			if( file.exists() )
 				file.delete();
 		}
-        super.tearDown();
 	}
 	
 	/*
 	 * Test method for 'net.refractions.udig.project.ui.internal.actions.Delete.operate(SimpleFeature)'
 	 */
+	@Test
 	public void testOperateFeature() {
 
 	}
@@ -71,6 +80,7 @@ public class DeleteTest extends AbstractProjectUITestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.ui.internal.actions.Delete.operate(Layer)'
 	 */
+	@Test
 	public void testOperateLayer() {
 
 	}
@@ -78,6 +88,7 @@ public class DeleteTest extends AbstractProjectUITestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.ui.internal.actions.Delete.operate(ProjectElement)'
 	 */
+	@Test
 	public void testOperateProjectElement() {
 		ProjectElement element = project.getElementsInternal().get(0);
 		Resource resource=element.eResource();
@@ -94,7 +105,9 @@ public class DeleteTest extends AbstractProjectUITestCase {
 	/*
 	 * Test method for 'net.refractions.udig.project.ui.internal.actions.Delete.operate(Project)'
 	 */
-	public void xtestOperateProject() throws Exception {
+	@Ignore
+	@Test
+	public void testOperateProject() throws Exception {
 		
 		DeleteAccessor deleteAction=new DeleteAccessor();
 		URI projecturi=project.eResource().getURI();

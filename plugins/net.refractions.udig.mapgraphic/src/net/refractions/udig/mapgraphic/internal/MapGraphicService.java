@@ -21,7 +21,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
- * Service implementation for map graphics
+ * Registers the internal service used to represents
+ * map graphics or decorators.
  */
 public class MapGraphicService extends IService {
     public static String ID = "mapgraphic:///localhost/mapgraphic"; //$NON-NLS-1$
@@ -133,6 +134,10 @@ public class MapGraphicService extends IService {
         return Status.CONNECTED;
     }
 
+    @Override
+    public void dispose(IProgressMonitor monitor) {
+        // built-in
+    }
     /*
      * @see net.refractions.udig.catalog.IResolve#getMessage()
      */

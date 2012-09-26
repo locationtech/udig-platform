@@ -8,7 +8,9 @@
  */
 package net.refractions.udig.catalog.tests;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,10 +28,12 @@ import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
+import org.geotools.data.FileDataStore;
+import org.geotools.data.FileDataStoreFinder;
 import org.geotools.data.shapefile.indexed.IndexedShapefileDataStore;
 import org.geotools.data.shapefile.ng.ShapefileDataStore;
-
-import junit.framework.TestCase;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * TODO Purpose of 
@@ -41,27 +45,43 @@ import junit.framework.TestCase;
  * @author leviputna
  * @since 0.0.4
  */
-public class ShapeCatalogTest extends TestCase{
-    
+public class ShapeCatalogTest {
+    /**
+     * We expect the default to change during GeoTools 9.x development 
+     * @throws IOException
+     */
+    public void testDefaultShapefileImplemenation()  throws IOException {
+        File file = new File("data/point.shp");
+        
+        FileDataStore raw = FileDataStoreFinder.getDataStore( file );
+        assertNotNull( raw );
+        assertTrue( "shapefile implementation", raw instanceof org.geotools.data.shapefile.ShapefileDataStore );
+        assertFalse( "shapefile next generation", raw instanceof org.geotools.data.shapefile.ng.ShapefileDataStore );
+    }
+   
+    @Test
     public void testCreateShapeNG() throws IOException {
         File file = new File("data/point.shp");
+        
         Map<String, Serializable> map = new HashMap<String, Serializable>();
-        map.put( "url", file.toURL() );
+        map.put( "url", file.toURI().toURL() );
         map.put( "fstype", "shape-ng" );
         DataStore dataStore = DataStoreFinder.getDataStore(map);
         
         boolean test = false;
-        if(dataStore instanceof ShapefileDataStore)
-            test  = true;
         
-        assertTrue( "Check is ShapefileDataStore", test );
-        assertEquals(dataStore.getClass().getPackage(), ShapefileDataStore.class.getPackage());
+        if(dataStore instanceof org.geotools.data.shapefile.ng.ShapefileDataStore){
+            test  = true;
+        }
+        assertTrue( "Check Next Generation ShapefileDataStore", test );
+        assertEquals("package",dataStore.getClass().getPackage(), ShapefileDataStore.class.getPackage());
     }
     
+    @Test
     public void testCreateShape() throws IOException {
         File file = new File("data/point.shp");
         Map<String, Serializable> map = new HashMap<String, Serializable>();
-        map.put( "url", file.toURL() );
+        map.put( "url", file.toURI().toURL() );
         map.put( "fstype", "shape" );
         DataStore dataStore = DataStoreFinder.getDataStore(map);
         
@@ -69,63 +89,54 @@ public class ShapeCatalogTest extends TestCase{
         System.out.println(packageName);
         
         boolean test = false;
-        if(dataStore instanceof IndexedShapefileDataStore)
+        if(dataStore instanceof IndexedShapefileDataStore){
             test  = true;
+        }
         
         assertTrue( "Check is IndexedShapefileDataStore", test );
         assertEquals(dataStore.getClass().getPackage(), IndexedShapefileDataStore.class.getPackage());
     }
     
+    @Test
     public void testCatalogPluginShape() throws IOException {
         File file = new File("data/point.shp");
         Map<String, Serializable> map = new HashMap<String, Serializable>();
-        map.put( "url", file.toURL() );
+        map.put( "url", file.toURI().toURL() );
         map.put( "fstype", "shape" );
-        
+               
         IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
-        ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-        
-        //List<IService> test = serviceFactory.acquire(map);
         List<IService> test = serviceFactory.createService(map);
-        boolean found = false;
-        for ( IService victim : test ){
-            if( victim instanceof ShpServiceImpl){
-                found = true;
-                break;
-            }
-        }
+        assertFalse( "Able to connect to shapefile", test.isEmpty() );
+        
+        boolean found = checkForInstanceOf( test, ShpServiceImpl.class);
         assertTrue( "ShpServiceImpl", found );
     }
     
+    private <T> boolean checkForInstanceOf( List<T> list, Class<? extends T> type ){
+        if( list != null ){
+            for( T item : list){
+                if( type.isInstance( item )){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    @Test
     public void testCatalogPluginShapeNG() throws IOException {
         File file = new File("data/point.shp");
         Map<String, Serializable> map = new HashMap<String, Serializable>();
-        map.put( "url", file.toURL() );
+        map.put( "url", file.toURI().toURL() );
         map.put( "fstype", "shape-ng" );
         
         IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
-        ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-        
-        //List<IService> test = serviceFactory.acquire(map);
         List<IService> test = serviceFactory.createService(map);
         
-        boolean found = false;
-        for ( IService victim : test ){
-            if( victim instanceof ShpServiceImpl){
-                found = true;
-                break;
-            }
-        }
+        boolean found = checkForInstanceOf( test, ShpServiceImpl.class );
         assertTrue( "ShpServiceImpl", !found );
         
-        found = false;
-        for ( IService victim : test ){
-            if( victim instanceof DataStoreService){
-                found = true;
-                break;
-            }
-        }
-        assertTrue( "DataStoreService", found );
+        found = checkForInstanceOf( test, DataStoreService.class );
+        assertTrue( "ServiceFactory was unable to connect", found );
     }
     
 

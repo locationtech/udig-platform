@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2004, Refractions Research Inc.
+ * (C) 2004-2012, Refractions Research Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,6 +25,7 @@ import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
 import net.refractions.udig.catalog.IResolveManager;
+import net.refractions.udig.catalog.ResolveAdapterFactory;
 import net.refractions.udig.core.internal.ExtensionPointList;
 
 import org.eclipse.core.runtime.CoreException;
@@ -40,6 +41,7 @@ import org.eclipse.core.runtime.SubMonitor;
  * Default implementation of {@link IResolveManager}
  * @author Jesse
  * @since 1.1.0
+ * @version 1.3.2
  */
 public class ResolveManager implements IResolveManager {
 
@@ -182,25 +184,27 @@ public class ResolveManager implements IResolveManager {
     	IConfigurationElement[] resolveList  = element.getChildren("resolve"); //$NON-NLS-1$
         for( IConfigurationElement child : resolveList ) {
             String resolveType=child.getAttribute("type"); //$NON-NLS-1$
-            // We first try a class loader trick to grab the target class
-            // without forcing the load of the plugin where the element
-            // comes from (this works in may cases where the type is something
-            // common from net.refractions.udig.libs)
-            try{
-                ClassLoader classLoader = target.getClassLoader();
-                if( classLoader==null ){
-                    classLoader=ClassLoader.getSystemClassLoader();
+            if( !resolveType.startsWith("net.refractions") && !resolveType.startsWith("eu.udig") ){
+                // We first try a class loader trick to grab the target class
+                // without forcing the load of the plugin where the element
+                // comes from (this works in may cases where the type is something
+                // common from net.refractions.udig.libs)
+                try{
+                    ClassLoader classLoader = target.getClassLoader();
+                    if( classLoader==null ){
+                        classLoader=ClassLoader.getSystemClassLoader();
+                    }
+                    Class< ? > resolvedClass = classLoader.loadClass(resolveType);
+                    
+                    if( target.isAssignableFrom(resolvedClass) ){
+                        return true;
+                    }
+                    else {                	
+                    	continue; // we were able to load the class and it did not match
+                    }
+                } catch(ClassNotFoundException e2){
+                    // that is no good, let's try using the RCP classloader
                 }
-                Class< ? > resolvedClass = classLoader.loadClass(resolveType);
-                
-                if( target.isAssignableFrom(resolvedClass) ){
-                    return true;
-                }
-                else {                	
-                	continue; // we were able to load the class and it did not match
-                }
-            } catch(ClassNotFoundException e2){
-                // that is no good, let's try using the RCP classloader
             }
             // Okay that optimisation failed; lets use the platform facilities
             // like a good RCP programmer
@@ -267,6 +271,10 @@ public class ResolveManager implements IResolveManager {
         registeredFactories.add(factory);
     }
 
+    @Override
+    public void register(ResolveAdapterFactory factory) {
+        registeredFactories.add( factory );
+    }
     /**
      * Used as a placeholder to mark broken IResolveAdapatorFactory instances.
      * <p>
@@ -280,7 +288,7 @@ public class ResolveManager implements IResolveManager {
     	public BrokenIResolveAdapaterFactory( CoreException coreException ){
     		problem = coreException;
     	}
-		public Object adapt(IResolve resolve, Class<? extends Object> adapter,
+		public <T> T adapt(IResolve resolve, Class<T> adapter,
 				IProgressMonitor monitor) throws IOException {
 			if( monitor == null ) monitor = new NullProgressMonitor();
 
@@ -313,21 +321,24 @@ public class ResolveManager implements IResolveManager {
         	return factory;
     	}
     }
-    protected IResolveAdapterFactory getResolveAdapterFactory( IConfigurationElement element ){
-    	synchronized (factories) {
-        	IResolveAdapterFactory factory = factories.get( element );
-        	if( factory != null ) return factory;
-        	
-        	try {
-	        	factory= (IResolveAdapterFactory)
-	        		element.createExecutableExtension("class"); //$NON-NLS-1$        	
-	        } catch (CoreException e) {
-	        	CatalogPlugin.log( e.toString(), e );
-	        	factory = new BrokenIResolveAdapaterFactory(e);
-	        }
-        	factories.put( element, factory );
-        	return factory;
-    	}
+
+    protected IResolveAdapterFactory getResolveAdapterFactory(IConfigurationElement element) {
+        synchronized (factories) {
+            IResolveAdapterFactory factory = factories.get(element);
+            if (factory != null)
+                return factory;
+
+            try {
+                factory = (IResolveAdapterFactory) element.createExecutableExtension("class"); //$NON-NLS-1$        	
+            } catch (CoreException e) {
+                String message = "Marking IResolveAdaptorFactory as unavaiable:"+e;
+                IStatus status = new Status( IStatus.WARNING, element.getContributor().getName(), message, e);
+                CatalogPlugin.getDefault().getLog().log(status);
+                factory = new BrokenIResolveAdapaterFactory(e);
+            }
+            factories.put(element, factory);
+            return factory;
+        }
     }
     
     /**
@@ -445,6 +456,12 @@ public class ResolveManager implements IResolveManager {
      * @param factory
      */
     public void unregisterResolves( IResolveAdapterFactory factory ) {
+        registeredFactories.remove(factory);
+        exceptions.remove(registeredFactories);
+    }
+    
+    @Override
+    public void unregister(ResolveAdapterFactory factory) {
         registeredFactories.remove(factory);
         exceptions.remove(registeredFactories);
     }

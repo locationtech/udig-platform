@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Panel" id="22" x="14" y="40" width="579" height="323" measuredWidth="579" measuredHeight="323"/>
+  <widgets xsi:type="model:Button" id="6" x="464" y="63" width="116" text="Add..." measuredWidth="116" measuredHeight="23">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="8" x="464" y="330" width="118" text="Remove" measuredWidth="118" measuredHeight="23" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Tabs" id="20" x="14" y="41" text="Documents" measuredWidth="83" measuredHeight="23" selection="0">
+    <items x="1" y="0" width="81" height="23" text="Documents"/>
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Icon" id="23" x="567" y="45" measuredWidth="16" measuredHeight="16" icon="empty-arrow-down (small)"/>
+  <widgets xsi:type="model:Icon" id="24" x="544" y="45" measuredWidth="16" measuredHeight="16" icon="find (small)"/>
+  <widgets xsi:type="model:Button" id="27" x="464" y="96" width="116" text="Edit..." measuredWidth="116" measuredHeight="23">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="29" x="464" y="160" width="116" text="Save As..." measuredWidth="116" measuredHeight="23" state="disabled">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Table" id="160" x="14" y="63" width="443" height="300" text="Document, Type, Description&#xA;{desc} {open} Tasmania&#xA;   {internet} Flag_of_Tasmania.svg (flag), web, Link to state flag&#xA;   {pdf}  tasmania.pdf (report), file, carbon trading report&#xA;   {lightning} Australia, action, google search\, wikipedia search&#xA;   {excel} Australian carbon charts, excel, Australia carbon emission charts&#xA;   {internet} Australian Carbon Traders, link, related internet site&#xA;{desc} {folder} Countries&#xA;   {snapshot} Earth from space, web, external web link&#xA;   {pdf} Global Carbon Emmision Policies " measuredWidth="443" measuredHeight="300" selection="2" alternative="#eeeeee">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="163" x="464" y="128" width="116" text="Open" measuredWidth="116" measuredHeight="23">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Popup" id="164" x="582" y="60" text="Zoom to Feature&#xA;----&#xA;Document Properties..." measuredWidth="153" measuredHeight="59">
+    <items x="0" y="2" width="153" height="22" text="Zoom to Feature"/>
+    <items x="0" y="24" width="153" height="11" text="----"/>
+    <items x="0" y="35" width="153" height="22" text="Document Properties..."/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="11px"/>
+</model:Screen>

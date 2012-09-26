@@ -51,7 +51,7 @@
    <element name="category">
       <annotation>
          <appInfo>
-            <meta.element labelAttribute="name" translatable="true"/>
+            <meta.element labelAttribute="name"/>
          </appInfo>
          <documentation>
             A way of organizing operations in menus. The operation menus will be organized into submenus for each category of operations.
@@ -91,13 +91,23 @@ For example: &quot;net.refractions.udig.ui.edit&quot;
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="description" type="string">
+            <annotation>
+               <documentation>
+                  Description of the operation category, may be displayed in the Operation Dialog.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 
    <element name="operation">
       <annotation>
          <appInfo>
-            <meta.element labelAttribute="name" icon="icon" translatable="true"/>
+            <meta.element labelAttribute="name" icon="icon"/>
          </appInfo>
          <documentation>
             An definition for an operation on a data element.  Operations can be performed on objects including but not limited to Layers, FeatureSources/Stores, IGeoResources, etc...  
@@ -106,7 +116,7 @@ For example: &quot;net.refractions.udig.ui.edit&quot;
       </annotation>
       <complexType>
          <sequence>
-            <element ref="enablement"/>
+            <element ref="enablement" minOccurs="0" maxOccurs="1"/>
          </sequence>
          <attribute name="id" type="string" use="required">
             <annotation>
@@ -119,6 +129,16 @@ For example: &quot;net.refractions.udig.ui.edit&quot;
             <annotation>
                <documentation>
                   
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string">
+            <annotation>
+               <documentation>
+                  Description of the operation, displayed in the  Operation Dialog.
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -222,6 +242,11 @@ For example if the menuPath=layer/additions then the operation will appear the l
    </element>
 
    <element name="enablement">
+      <annotation>
+         <documentation>
+            Use enablement to sepcify when the operation is avaialble.
+         </documentation>
+      </annotation>
       <complexType>
          <choice>
             <element ref="adaptsTo"/>

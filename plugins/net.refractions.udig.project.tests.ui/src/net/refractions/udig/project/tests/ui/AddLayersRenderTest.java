@@ -1,5 +1,7 @@
 package net.refractions.udig.project.tests.ui;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,9 @@ import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.ui.PlatformUI;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 
 public class AddLayersRenderTest extends AbstractProjectUITestCase {
@@ -35,13 +40,8 @@ public class AddLayersRenderTest extends AbstractProjectUITestCase {
     private CompositeContextListener contextListener;
 
     @SuppressWarnings("unchecked")
-    protected void setUp() throws Exception {
-        // ignore... tests are broken
-        if (true) {
-            return;
-        }
-        
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         map = MapTests.createDefaultMap("type1", 2, true, null); //$NON-NLS-1$
         map.setRenderManagerInternal(null);
         ApplicationGIS.openMap(map, true);
@@ -115,14 +115,10 @@ public class AddLayersRenderTest extends AbstractProjectUITestCase {
         ApplicationGISInternal.getActiveEditor().setTesting(true);
 
     }
-    
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
 
-
-    public void xtestAddOneLayer() throws Exception {
+    @Ignore
+    @Test
+    public void testAddOneLayer() throws Exception {
         renders=0;
         
         List<IGeoResource> resources=new ArrayList<IGeoResource>();
@@ -138,7 +134,10 @@ public class AddLayersRenderTest extends AbstractProjectUITestCase {
         }, false);
         assertEquals(1,renders);
     }
-    public void xtestAddMultipleLayers() throws Exception {
+    
+    @Ignore
+    @Test
+    public void testAddMultipleLayers() throws Exception {
         renders=0;
         List<IGeoResource> resources=new ArrayList<IGeoResource>();
         SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures("type3", 3); //$NON-NLS-1$

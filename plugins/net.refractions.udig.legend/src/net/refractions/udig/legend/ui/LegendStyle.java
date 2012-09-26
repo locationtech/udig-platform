@@ -27,5 +27,32 @@ public class LegendStyle {
     public  Color backgroundColour;
     public  int indentSize;
     public int imageWidth;
-    public  int imageHeight; //size of image
+    public  int imageHeight; //size of glyph image
+    
+    /**
+     * Creates a new empty legend style
+     */
+    public LegendStyle() {
+    	
+    }
+    
+    
+	/**
+	 * Creates a new legend style copying the values
+	 * from the old legend style
+	 * @param oldStyle
+	 */
+	public LegendStyle(LegendStyle oldStyle) {
+		super();
+		this.verticalMargin = oldStyle.verticalMargin;
+		this.horizontalMargin = oldStyle.horizontalMargin;
+		this.verticalSpacing = oldStyle.verticalSpacing;
+		this.horizontalSpacing = oldStyle.horizontalSpacing;
+		this.foregroundColour = oldStyle.foregroundColour;
+		this.backgroundColour = oldStyle.backgroundColour;
+		this.indentSize = oldStyle.indentSize;
+		this.imageWidth = oldStyle.imageWidth;
+		this.imageHeight = oldStyle.imageHeight;
+	}
+    
 }

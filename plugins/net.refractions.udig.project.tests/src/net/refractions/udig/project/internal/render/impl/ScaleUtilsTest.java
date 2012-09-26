@@ -17,7 +17,9 @@ import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
+import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -27,13 +29,12 @@ import com.vividsolutions.jts.geom.Envelope;
  * @author jesse
  * 
  */
-@Ignore
 public class ScaleUtilsTest {
 
 	private IMapDisplay display;
 	private Mockery mockery;
 
-	@Ignore//@Before
+	@Before
 	public void setUp() throws Exception {
 		mockery = new Mockery();
 		display = mockery.mock(IMapDisplay.class);
@@ -60,6 +61,7 @@ public class ScaleUtilsTest {
 	}
 
 	@Ignore
+	@Test
 	public void roundTripSetScaleDenomWithinWorld() throws Exception {
 		configureDisplaySize(360, 180, 100);
 
@@ -80,6 +82,7 @@ public class ScaleUtilsTest {
 	}
 
 	@Ignore
+	@Test
 	public void roundTripSetScaleDenomAlbers() throws Exception {
 		configureDisplaySize(360, 180, 100);
 
@@ -100,6 +103,7 @@ public class ScaleUtilsTest {
 	}
 
 	@Ignore
+	@Test
 	public void roundTripSetScaleDenomOutOfBounds() throws Exception {
 		configureDisplaySize(360, 180, 100);
 
@@ -124,6 +128,7 @@ public class ScaleUtilsTest {
 	 * {@link net.refractions.udig.project.internal.render.impl.ScaleUtils#calculateBoundsFromScale(double, java.awt.Dimension, double, org.geotools.geometry.jts.ReferencedEnvelope)}.
 	 */
 	@Ignore
+	@Test
 	public void testCalculateWidth() {
 		// ScaleUtils.calculateWidth(scaleDenominator, displaySize, dpi,
 		// currentBounds)
@@ -134,6 +139,7 @@ public class ScaleUtilsTest {
 	 * {@link net.refractions.udig.project.internal.render.impl.ScaleUtils#toValidPixelBoundsClosestToCenter(java.awt.Dimension, org.geotools.geometry.jts.ReferencedEnvelope)}.
 	 */
 	@Ignore
+	@Test
 	public void testToValidPixelBoundsClosestToCenter1() {
 		Dimension d = new Dimension(360, 180);
 		ReferencedEnvelope currentBounds = new ReferencedEnvelope(-370, -10,
@@ -151,6 +157,7 @@ public class ScaleUtilsTest {
 	 * {@link net.refractions.udig.project.internal.render.impl.ScaleUtils#toValidPixelBoundsClosestToCenter(java.awt.Dimension, org.geotools.geometry.jts.ReferencedEnvelope)}.
 	 */
 	@Ignore
+	@Test
 	public void testToValidPixelBoundsClosestToCenter2() {
 		Dimension d = new Dimension(753, 371);
 		ReferencedEnvelope currentBounds = new ReferencedEnvelope(
@@ -166,6 +173,7 @@ public class ScaleUtilsTest {
 	}
 
 	@Ignore
+	@Test
 	public void worldToPixelToWorld() throws Exception {
 		Dimension displaySize = new Dimension(753, 371);
 		ReferencedEnvelope bounds = new ReferencedEnvelope(
@@ -181,6 +189,7 @@ public class ScaleUtilsTest {
 	 * {@link net.refractions.udig.project.internal.render.impl.ScaleUtils#nearestPixel(java.awt.geom.Rectangle2D, int, int)}.
 	 */
 	@Ignore
+	@Test
 	public void testNearestPixel() {
 		Dimension display = new Dimension(360,180);
 		ReferencedEnvelope world = new ReferencedEnvelope(-180,180,-90,90,DefaultGeographicCRS.WGS84);
@@ -200,6 +209,7 @@ public class ScaleUtilsTest {
 	 * {@link net.refractions.udig.project.internal.render.impl.ScaleUtils#pixelBounds(int, int, org.geotools.geometry.jts.ReferencedEnvelope, java.awt.Dimension)}.
 	 */
 	@Ignore
+	@Test
 	public void testPixelBounds() {
 		ReferencedEnvelope currentBounds = new ReferencedEnvelope(-180, 180,
 				-90, 90, DefaultGeographicCRS.WGS84);
@@ -216,11 +226,13 @@ public class ScaleUtilsTest {
 	 * {@link net.refractions.udig.project.internal.render.impl.ScaleUtils#calculateScaleDenominator(org.geotools.geometry.jts.ReferencedEnvelope, Dimension, int)}.
 	 */
 	@Ignore
+	@Test
 	public void testCalculateScaleDenominator() {
 		fail("Not yet implemented");
 	}
 
 	@Ignore
+	@Test
 	public void shiftToWorld() throws Exception {
 		ReferencedEnvelope env = new ReferencedEnvelope(-200,200,-20,20, DefaultGeographicCRS.WGS84);
 		ReferencedEnvelope result = ScaleUtils.shiftToWorld(env);

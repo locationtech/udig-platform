@@ -1,9 +1,10 @@
 package net.refractions.udig;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import net.refractions.udig.internal.ui.UDIGDropHandler;
 import net.refractions.udig.internal.ui.UDIGDropHandler.CompositeDropActionJob;
 import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
-import net.refractions.udig.project.ui.internal.MapEditor;
 import net.refractions.udig.project.ui.internal.MapEditorPart;
 import net.refractions.udig.ui.WaitCondition;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
@@ -16,18 +17,13 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.ErrorEditorPart;
 import org.eclipse.ui.intro.IIntroManager;
 import org.eclipse.ui.intro.IIntroPart;
+import org.junit.After;
+import org.junit.Before;
 
-public class AbstractProjectUITestCase extends AbstractProjectTestCase {
+public abstract class AbstractProjectUITestCase extends AbstractProjectTestCase {
 
-    public AbstractProjectUITestCase(String name) {
-        super(name);
-    }
-    public AbstractProjectUITestCase() {
-        super();
-    }
-    
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void abstractProjectUITestCaseSetUp() throws Exception {
         final IIntroManager introManager = PlatformUI.getWorkbench().getIntroManager();
 		IIntroPart intro = introManager.getIntro();
 		if( intro!=null ){
@@ -38,12 +34,12 @@ public class AbstractProjectUITestCase extends AbstractProjectTestCase {
 					return introManager.getIntro()==null;
 				}
 	        	
-	        }, true);		
+	        }, true);
 		}
     }
 
-    protected void tearDown() throws Exception {
-
+    @After
+    public void abstractProjectUITestCaseTearDown() throws Exception {
         UDIGTestUtil.inDisplayThreadWait(10000, new WaitCondition(){
 
             public boolean isTrue() {
@@ -72,7 +68,7 @@ public class AbstractProjectUITestCase extends AbstractProjectTestCase {
             }
         }
         while ( !activePage.closeAllEditors(false)  ||  activePage.getEditorReferences().length!=0);         
-        super.tearDown();
+        //super.tearDown();
         
         editors = activePage.getEditorReferences();
         for( IEditorReference reference : editors ) {

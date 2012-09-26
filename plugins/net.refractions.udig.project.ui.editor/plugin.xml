@@ -173,9 +173,6 @@
              label="%Map.properties.name"
              style="push"
              tooltip="%Map.properties.tooltip">
-          <visibleWhen
-                checkEnabled="true">
-          </visibleWhen>
        </command>
     </menuContribution>
     <menuContribution
@@ -330,21 +327,21 @@
          </action>
       </actionSet>
       <actionSet
-            description="%Layer.Query.Description"
+            description="%queryActionSet.description"
             id="net.refractions.udig.project.ui.layerQuerySet"
-            label="%Layer.Query.Name"
+            label="%queryActionSet.label"
             visible="true">
       </actionSet>
       <actionSet
-            description="%Layer.Modify.Description"
+            description="%modifyActionSet.description"
             id="net.refractions.udig.project.ui.layerModifySet"
-            label="%Layer.Modify.Name"
+            label="%modifyActionSet.label"
             visible="true">
       </actionSet>
       <actionSet
-            description="%Layer.Style.Description"
+            description="%styleActionSet.description"
             id="net.refractions.udig.project.ui.layerStyleSet"
-            label="%Layer.Style.Name"
+            label="%styleActionSet.label"
             visible="true">
       </actionSet>
    </extension>

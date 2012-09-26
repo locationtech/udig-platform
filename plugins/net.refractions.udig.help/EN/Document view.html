@@ -1,0 +1,240 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Document view &mdash; User Guide</title>
+    
+    <link rel="stylesheet" href="_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/udig.ico"/>
+    <link rel="top" title="User Guide" href="index.html" />
+    <link rel="up" title="Views and editors" href="Views and editors.html" />
+    <link rel="next" title="Help view" href="Help view.html" />
+    <link rel="prev" title="Cheat Sheet view" href="Cheat Sheet view.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+ 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="document-view">
+<h1>Document view<a class="headerlink" href="#document-view" title="Permalink to this headline">¶</a></h1>
+<p>The Document view shows attachments, links and hotlinks associated with the selected layer or feature.</p>
+<div class="figure align-center">
+<img alt="" src="_images/DocumentView.png" />
+</div>
+<div class="section" id="documents">
+<h2>Documents<a class="headerlink" href="#documents" title="Permalink to this headline">¶</a></h2>
+<p>The documents are presented in a tree-table structure. Documents are grouped into folders that represent their associated feature or layer.</p>
+<p>Within each folder several kinds of information are displayed:</p>
+<p><img alt="file_logo" src="_images/file_doc_obj.jpg" /> - File Document (or the icon of the operating system&#8217;s default program for file type)</p>
+<p><img alt="web_logo" src="_images/link_doc_obj.png" /> - Web Document</p>
+<p><img alt="action_logo" src="_images/action_doc_obj.png" /> - Action Document</p>
+<p>Some layers and features support storing of documents as attachments. Attachments are copied into the application and managed along with the resource.</p>
+<p>For features, specific attributes can be marked as a <em>hotlink</em> to reference a document. Hotlinks that are not currently set will show up as &#8220;Unassigned&#8221;.</p>
+</div>
+<div class="section" id="view-menu">
+<h2>View Menu<a class="headerlink" href="#view-menu" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-left" style="width: 100%">
+<img alt="_images/ViewMenu.png" src="_images/ViewMenu.png" />
+</div>
+<p>Fig. View menu</p>
+<ul class="simple">
+<li><em class="guilabel">Save As</em> - used to save an attachment as another file.</li>
+<li><em class="guilabel">Properties</em> - used to open the Document properties page of the selected resource.</li>
+</ul>
+</div>
+<div class="section" id="attach">
+<h2>Attach<a class="headerlink" href="#attach" title="Permalink to this headline">¶</a></h2>
+<p>The <em class="guilabel">Attach...</em> button is used to attach a document to the selected feature or layer.</p>
+<div class="figure align-left" style="width: 100%">
+<img alt="_images/AddAttachment.png" src="_images/AddAttachment.png" />
+</div>
+<p>Fig. Add attachment dialog</p>
+<ul class="simple">
+<li><em class="guilabel">Type</em> - used to determine the type of attachment.</li>
+<li><em class="guilabel">File</em> - used to set the file to be attached.</li>
+<li><em class="guilabel">Set as template</em> - used to mark the attachment as a template.</li>
+<li><em class="guilabel">Label</em> - used to set a label.</li>
+<li><em class="guilabel">Description</em> - used to set a description.</li>
+<li><em class="guilabel">Open</em> - used to open the file set to be attached.</li>
+<li><em class="guilabel">Browse...</em> - used to open a file selection dialog and select a file to be attached.</li>
+<li><em class="guilabel">New...</em> - used to create a new file from a template and set it as the file to be attached.</li>
+<li><em class="guilabel">Attach</em> - used to save the attachment.</li>
+<li><em class="guilabel">Cancel</em> - used to cancel adding the attachment.</li>
+</ul>
+</div>
+<div class="section" id="link">
+<h2>Link<a class="headerlink" href="#link" title="Permalink to this headline">¶</a></h2>
+<p>The <em class="guilabel">Link...</em> button is used to link a document to the selected feature or layer.</p>
+<p>A link can either be a file link or a website link as shown below. Selecting the <strong>Type</strong> determines what will be linked.</p>
+<div class="figure align-left" style="width: 100%">
+<img alt="_images/AddFileLink.png" src="_images/AddFileLink.png" />
+</div>
+<p>Fig. Add file link dialog</p>
+<ul class="simple">
+<li><em class="guilabel">Type</em> - used to determine the type of link.</li>
+<li><em class="guilabel">File</em> - used to set the file to be linked.</li>
+<li><em class="guilabel">Label</em> - used to set a label.</li>
+<li><em class="guilabel">Description</em> - used to set a description.</li>
+<li><em class="guilabel">Open</em> - used to open the file set to be linked.</li>
+<li><em class="guilabel">Browse...</em> - used to open a file selection dialog and select a file to be linked.</li>
+<li><em class="guilabel">New...</em> - used to create a new file from a template and set it as the file to be linked.</li>
+<li><em class="guilabel">Link</em> - used to save the link.</li>
+<li><em class="guilabel">Cancel</em> - used to cancel adding the link.</li>
+</ul>
+<div class="figure align-left" style="width: 100%">
+<img alt="_images/AddWebLink.png" src="_images/AddWebLink.png" />
+</div>
+<p>Fig. Add web link dialog</p>
+<ul class="simple">
+<li><em class="guilabel">Type</em> - used to determine the type of link.</li>
+<li><em class="guilabel">URL</em> - used to set the website to be linked.</li>
+<li><em class="guilabel">Label</em> - used to set a label.</li>
+<li><em class="guilabel">Description</em> - used to set a description.</li>
+<li><em class="guilabel">Open</em> - used to open the website set to be linked.</li>
+<li><em class="guilabel">Link</em> - used to save the link.</li>
+<li><em class="guilabel">Cancel</em> - used to cancel adding the link.</li>
+</ul>
+</div>
+<div class="section" id="edit">
+<h2>Edit<a class="headerlink" href="#edit" title="Permalink to this headline">¶</a></h2>
+<p>The <em class="guilabel">Edit...</em> button is used to update the selected document.</p>
+<p>For <em>attachments</em> and <em>links</em>, the same dialog shown above will be opened in edit mode to allow updating inputed values.</p>
+<p>For <em>hotlinks</em>, a dialog below will be shown depending on the type.</p>
+<div class="figure align-left" style="width: 100%">
+<img alt="_images/EditFileHotlink.png" src="_images/EditFileHotlink.png" />
+</div>
+<p>Fig. Edit file hotlink dialog</p>
+<ul class="simple">
+<li><em class="guilabel">Type</em> - used to display the type of hotlink.</li>
+<li><em class="guilabel">Value</em> - used to set the file to be hotlinked.</li>
+<li><em class="guilabel">Attribute</em> - used to display the attribute name.</li>
+<li><em class="guilabel">Label</em> - used to display the label.</li>
+<li><em class="guilabel">Description</em> - used to display the description.</li>
+<li><em class="guilabel">Open</em> - used to open the file set to be linked.</li>
+<li><em class="guilabel">Browse...</em> - used to open a file selection dialog and select a file to be hotlinked.</li>
+<li><em class="guilabel">New...</em> - used to create a new file from a template and set it as the file to be hotlinked.</li>
+<li><em class="guilabel">OK</em> - used to save changes.</li>
+<li><em class="guilabel">Cancel</em> - used to discard changes.</li>
+</ul>
+<div class="figure align-left" style="width: 100%">
+<img alt="_images/EditWebHotlink.png" src="_images/EditWebHotlink.png" />
+</div>
+<p>Fig. Edit website hotlink dialog</p>
+<ul class="simple">
+<li><em class="guilabel">Type</em> - used to display the type of hotlink.</li>
+<li><em class="guilabel">Value</em> - used to set the website URL to be hotlinked.</li>
+<li><em class="guilabel">Attribute</em> - used to display the attribute name.</li>
+<li><em class="guilabel">Label</em> - used to display the label.</li>
+<li><em class="guilabel">Description</em> - used to display the description.</li>
+<li><em class="guilabel">Open</em> - used to open the website set to be linked.</li>
+<li><em class="guilabel">OK</em> - used to save changes.</li>
+<li><em class="guilabel">Cancel</em> - used to discard changes.</li>
+</ul>
+<div class="figure align-left" style="width: 100%">
+<img alt="_images/EditActionHotlink.png" src="_images/EditActionHotlink.png" />
+<p class="caption">Edit action hotlink dialog</p>
+</div>
+<ul class="simple">
+<li><em class="guilabel">Type</em> - used to display the type of hotlink.</li>
+<li><em class="guilabel">Value</em> - used to set the attribute value.</li>
+<li><em class="guilabel">Action</em> and <em class="guilabel">Go</em> - used to select and perform an action on the attribute value.</li>
+<li><em class="guilabel">Attribute</em> - used to display the attribute name.</li>
+<li><em class="guilabel">Label</em> - used to display the label.</li>
+<li><em class="guilabel">Description</em> - used to display the description.</li>
+<li><em class="guilabel">OK</em> - used to save changes.</li>
+<li><em class="guilabel">Cancel</em> - used to discard changes.</li>
+</ul>
+</div>
+<div class="section" id="open">
+<h2>Open<a class="headerlink" href="#open" title="Permalink to this headline">¶</a></h2>
+<p>The <em class="guilabel">Open</em> button is used to open the selected document.</p>
+<ul>
+<li><p class="first">File: Opened using the default system application</p>
+</li>
+<li><p class="first">Link: Opened using your web browser</p>
+</li>
+<li><p class="first">Action: Opened as defined by the action.</p>
+<ul class="simple">
+<li>Action referencing <tt class="docutils literal"><span class="pre">notepad</span> <span class="pre">{0}</span></tt> opens in notepad</li>
+<li>Action resulting in a web links opened in the system browser</li>
+<li>Action resulting in a file link opens in default system application</li>
+</ul>
+<p>The <em class="guilabel">Open Action</em> dialog is used if more than one hotlink action is defined
+for an attribute.</p>
+<div class="figure align-left" style="width: 100%">
+<img alt="_images/OpenActionDialog.png" src="_images/OpenActionDialog.png" />
+<p class="caption">Open Action Dialog</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="save-as">
+<h2>Save As<a class="headerlink" href="#save-as" title="Permalink to this headline">¶</a></h2>
+<p>The <em class="guilabel">Save As...</em> button is used to save a new copy of an attachment document.</p>
+</div>
+<div class="section" id="clear">
+<h2>Clear<a class="headerlink" href="#clear" title="Permalink to this headline">¶</a></h2>
+<p>The <em class="guilabel">Clear</em> button is used remove the document reference from the selected hotlink attribute.</p>
+<p>For file hotlinks, the referenced file will not be removed from disk, the reference is simply cleared.</p>
+</div>
+<div class="section" id="delete">
+<h2>Delete<a class="headerlink" href="#delete" title="Permalink to this headline">¶</a></h2>
+<p>The <em class="guilabel">Delete</em> button is used remove the selected attached or linked document.</p>
+<p>For attached files, a confirmation message will be shown as the file will be removed from disk.
+For linked files, the referenced file will not be removed from disk, the reference is simply cleared.</p>
+<p><strong>Related reference</strong></p>
+<p><a class="reference internal" href="Resource Information page.html"><em>Information page</em></a></p>
+<p><a class="reference internal" href="Resource Document page.html"><em>Document page</em></a></p>
+<p><strong>Related tasks</strong></p>
+<p><a class="reference internal" href="Working with Documents.html"><em>Working with Documents</em></a></p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

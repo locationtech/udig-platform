@@ -44,6 +44,7 @@ public class SelectionCommandFactory extends net.refractions.udig.project.comman
 		return instance;
 	}
 	private static final SelectionCommandFactory instance = new SelectionCommandFactory();
+	
     protected SelectionCommandFactory(){
 		// no op;
 	}
@@ -60,7 +61,8 @@ public class SelectionCommandFactory extends net.refractions.udig.project.comman
 	 * @see Envelope
 	 * @see MapCommand
 	 */
-	public UndoableMapCommand createBBoxSelectionCommand(Envelope bbox, int modifiers) {
+	@Override
+    public UndoableMapCommand createBBoxSelectionCommand(Envelope bbox, int modifiers) {
 		return new BBoxSelectionCommand(bbox, modifiers);
 	}
 
@@ -75,6 +77,7 @@ public class SelectionCommandFactory extends net.refractions.udig.project.comman
      * @see Envelope
      * @see MapCommand
      */
+    @Override
     public UndoableMapCommand createBBoxSelectionCommand( Envelope boundingBox ) {
         return new BBoxSelectionCommand(boundingBox, BBoxSelectionCommand.NONE);
     }
@@ -87,7 +90,8 @@ public class SelectionCommandFactory extends net.refractions.udig.project.comman
 	 *         {@linkplain SelectionManager}to be executed.
 	 * @see MapCommand
 	 */
-	public UndoableMapCommand createNoSelectCommand() {
+	@Override
+    public UndoableMapCommand createNoSelectCommand() {
 		return new NoSelectCommand();
 	}
 
@@ -97,6 +101,7 @@ public class SelectionCommandFactory extends net.refractions.udig.project.comman
      * @return a {@linkplain FIDSelectCommand}
      * @see MapCommand
      */
+    @Override
     public UndoableMapCommand createFIDSelectCommand(ILayer layer, String fid) {
         return new FIDSelectCommand(layer, fid);
     }
@@ -107,6 +112,7 @@ public class SelectionCommandFactory extends net.refractions.udig.project.comman
      * @return a {@linkplain FIDSelectCommand}
      * @see MapCommand
      */
+    @Override
     public UndoableMapCommand createFIDSelectCommand(ILayer layer, SimpleFeature feature) {
         return new FIDSelectCommand(layer, feature.getID());
     }
@@ -117,6 +123,7 @@ public class SelectionCommandFactory extends net.refractions.udig.project.comman
      * @return a {@linkplain SelectCommand}
      * @see MapCommand
      */
+    @Override
     public UndoableMapCommand createSelectCommand(ILayer layer, Filter filter) {
         return new SelectCommand(layer, filter);
     }
@@ -128,7 +135,8 @@ public class SelectionCommandFactory extends net.refractions.udig.project.comman
 	 * @return a {@linkplain CompositeCommand}
 	 * @see MapCommand
 	 */
-	public MapCommand createCompositeCommand(List<? extends MapCommand> commands) {
+	@Override
+    public MapCommand createCompositeCommand(List<? extends MapCommand> commands) {
 		return new CompositeCommand(commands);
 	}
 
@@ -139,7 +147,8 @@ public class SelectionCommandFactory extends net.refractions.udig.project.comman
 	 * @return a {@linkplain CompositeCommand}
 	 * @see MapCommand
 	 */
-	public UndoableMapCommand createUndoableCompositeCommand(List<? extends UndoableMapCommand> commands) {
+	@Override
+    public UndoableMapCommand createUndoableCompositeCommand(List<? extends UndoableMapCommand> commands) {
 		return new UndoableComposite(commands);
 	}
 

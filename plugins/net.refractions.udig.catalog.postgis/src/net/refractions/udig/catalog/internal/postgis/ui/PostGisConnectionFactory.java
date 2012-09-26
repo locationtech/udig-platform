@@ -60,7 +60,8 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
         if( url == null ){
             // so we are not sure it is a postgis url
             // lets guess
-            url = ID.cast( context ).toURL();
+            ID sample = ID.cast( context );
+            url = sample != null ? sample.toURL() : null;
         }
         if( url != null && PostgisServiceExtension2.isPostGIS(url)) {  
             // well we have a url - lets try it!            
@@ -141,7 +142,7 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
         else if( data instanceof String ){
             return toCapabilitiesURL( (String) data );
         }
-        else if( ID.cast( data ).toURL() != null ){
+        else if( ID.cast( data ) != null && ID.cast( data ).toURL() != null ){
             return toCapabilitiesURL( ID.cast( data ).toURL() );
         }
         else {

@@ -32,6 +32,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.jdbc.JDBCDataStore;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -116,7 +118,7 @@ public class TeradataGeoResource extends IGeoResource {
 		if (adaptee.isAssignableFrom(DataStore.class)) {
 			return adaptee.cast(dataStore);
 		}
-		if (adaptee.isAssignableFrom(FeatureStore.class)) {
+		if (adaptee.isAssignableFrom(SimpleFeatureStore.class)) {
 			FeatureSource<SimpleFeatureType, SimpleFeature> fs = dataStore
 					.getFeatureSource(typename);
 			if (fs instanceof FeatureStore) {
@@ -125,7 +127,7 @@ public class TeradataGeoResource extends IGeoResource {
 			} else {
 				readOnly = true;
 			}
-			if (adaptee.isAssignableFrom(FeatureSource.class)) {
+			if (adaptee.isAssignableFrom(SimpleFeatureSource.class)) {
 				return adaptee.cast(dataStore.getFeatureSource(typename));
 			}
 		}
@@ -143,9 +145,9 @@ public class TeradataGeoResource extends IGeoResource {
 		if (adaptee == null) {
 			return false;
 		}
-		boolean isFeatureStore = adaptee.isAssignableFrom(FeatureStore.class)
+		boolean isFeatureStore = adaptee.isAssignableFrom(SimpleFeatureStore.class)
 				&& (readOnly == null || readOnly == false);
-		boolean isFeatureSource = adaptee.isAssignableFrom(FeatureSource.class);
+		boolean isFeatureSource = adaptee.isAssignableFrom(SimpleFeatureSource.class);
 		boolean isGeoResource = adaptee
 				.isAssignableFrom(IGeoResourceInfo.class);
 		boolean isIService = adaptee.isAssignableFrom(IService.class);

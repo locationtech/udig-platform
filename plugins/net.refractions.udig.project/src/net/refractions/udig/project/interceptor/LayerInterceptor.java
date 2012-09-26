@@ -19,7 +19,7 @@ import net.refractions.udig.project.internal.Layer;
 /**
  * An interceptor that is ran on a layer.  See the net.refractions.udig.mapInterceptor extension point for more details.
  * 
- * @author Jesse
+ * @author Jessegit 
  * @since 1.1.0
  */
 public interface LayerInterceptor {

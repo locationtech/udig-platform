@@ -14,11 +14,14 @@
  */
 package net.refractions.udig.ui;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.PropertyIsEqualTo;
@@ -28,23 +31,22 @@ import org.opengis.filter.PropertyIsEqualTo;
  * @author Jesse
  * @since 1.1.0
  */
-public class AttributeValidatorTest extends TestCase {
-
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
+@SuppressWarnings("nls")
+public class AttributeValidatorTest {
 
     /**
      * Test method for {@link net.refractions.udig.ui.AttributeValidator#isValid(java.lang.Object)}.
      * @throws Exception 
      */
+    @Ignore
+    @Test
     public void testIsValid() throws Exception {
         FilterFactory fac=CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
         
         String attributeName = "string";
-		PropertyIsEqualTo filter = fac.equals(fac.property(attributeName), fac.literal("Value"));
+        PropertyIsEqualTo filter = fac.equals(fac.property(attributeName), fac.literal("Value"));
         
-        SimpleFeatureTypeBuilder builder=new SimpleFeatureTypeBuilder(); //$NON-NLS-1$
+        SimpleFeatureTypeBuilder builder=new SimpleFeatureTypeBuilder();
         builder.setName("test");
         builder.restriction(filter).add(attributeName, String.class);
         
@@ -52,23 +54,21 @@ public class AttributeValidatorTest extends TestCase {
         
         AttributeValidator validator=new AttributeValidator(featureType.getDescriptor(attributeName), featureType);
         
-        if( false ){
-            String valid = validator.isValid("Value");
-            assertNull( "Valid", valid ); //$NON-NLS-1$
-            
-            assertNotNull( "Should not allow 'IllegalValue'", validator.isValid("IllegalValue") ); //$NON-NLS-1$
-            
-            assertNotNull( "Should not allow 3", validator.isValid(3) );
-            
-            builder.length(5).nillable(true).add(attributeName,String.class);
-            featureType = builder.buildFeatureType();
-    
-            validator=new AttributeValidator(featureType.getDescriptor(attributeName), featureType);
-            
-            assertNull( validator.isValid("name") ); //$NON-NLS-1$
-            assertNotNull( validator.isValid("IllegalValue") ); //$NON-NLS-1$
-            assertNotNull( validator.isValid(3) );
-        }
+        String valid = validator.isValid("Value");
+        assertNull( "Valid", valid );
+        
+        assertNotNull( "Should not allow 'IllegalValue'", validator.isValid("IllegalValue") );
+        
+        assertNotNull( "Should not allow 3", validator.isValid(3) );
+        
+        builder.length(5).nillable(true).add(attributeName,String.class);
+        featureType = builder.buildFeatureType();
+
+        validator=new AttributeValidator(featureType.getDescriptor(attributeName), featureType);
+        
+        assertNull( validator.isValid("name") );
+        assertNotNull( validator.isValid("IllegalValue") );
+        assertNotNull( validator.isValid(3) );
     }
 
 }

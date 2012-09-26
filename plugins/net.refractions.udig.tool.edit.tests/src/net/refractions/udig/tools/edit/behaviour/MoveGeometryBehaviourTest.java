@@ -14,12 +14,14 @@
  */
 package net.refractions.udig.tools.edit.behaviour;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.project.internal.render.ViewportModel;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.EditTestControl;
 import net.refractions.udig.tools.edit.EventType;
 import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
 import net.refractions.udig.tools.edit.support.EditBlackboard;
@@ -28,6 +30,9 @@ import net.refractions.udig.tools.edit.support.Point;
 import net.refractions.udig.tools.edit.support.PrimitiveShape;
 import net.refractions.udig.tools.edit.support.TestEditBlackboard;
 import net.refractions.udig.tools.edit.support.TestHandler;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
@@ -41,13 +46,13 @@ import com.vividsolutions.jts.geom.Polygon;
  * @author jones
  * @since 1.1.0
  */
-public class MoveGeometryBehaviourTest extends TestCase {
+public class MoveGeometryBehaviourTest {
 
     private MoveGeometryBehaviour moveGeometryBehaviour;
     private TestHandler handler;
 
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         handler = new TestHandler();
         moveGeometryBehaviour = new MoveGeometryBehaviour();
         handler.getBehaviours().add(moveGeometryBehaviour);
@@ -66,9 +71,8 @@ public class MoveGeometryBehaviourTest extends TestCase {
      * 'net.refMapMouseEvent.BUTTON1ractions.udig.tools.edit.behaviour.MoveGeometryBehaviour.isValid(EditToolHandler,
      * MapMouseEvent, EventType)'
      */
+    @Test
     public void testIsValid() {
-        if( EditTestControl.DISABLE ) return;
-        
         MapMouseEvent event = new MapMouseEvent(null, 100, 100, MapMouseEvent.ALT_DOWN_MASK
                 | MapMouseEvent.CTRL_DOWN_MASK, MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         assertFalse(moveGeometryBehaviour.isValid(handler, event, EventType.DRAGGED));
@@ -109,6 +113,7 @@ public class MoveGeometryBehaviourTest extends TestCase {
      * 'net.refractions.udig.tools.edit.behaviour.MoveVertexBehaviour.getCommand(EditToolHandler,
      * MapMouseEvent, EventType)'
      */
+    @Test
     public void testGetCommand() {
 
         EditGeom geom = handler.getCurrentGeom();
@@ -126,8 +131,6 @@ public class MoveGeometryBehaviourTest extends TestCase {
                 | MapMouseEvent.CTRL_DOWN_MASK, MapMouseEvent.BUTTON1, MapMouseEvent.BUTTON1);
         handler.handleEvent(event, EventType.DRAGGED);
 
-        if( EditTestControl.DISABLE ) return;
-        
         assertEquals(2, handler.getEditBlackboard().getCoords(10, 0).size());
         assertEquals(1, handler.getEditBlackboard().getCoords(60, 0).size());
         assertEquals(1, handler.getEditBlackboard().getCoords(60, 50).size());
@@ -160,9 +163,8 @@ public class MoveGeometryBehaviourTest extends TestCase {
         assertEquals(Point.valueOf(15, 5), hole.getPoint(4));
     }
 
+    @Test
     public void testMoveDecimatedGeometry() throws Exception {
-        if( EditTestControl.DISABLE ) return;
-        
         Coordinate[] coords = new Coordinate[]{new Coordinate(-128.6898, 59.0493),
                 new Coordinate(-128.6894, 59.0502), new Coordinate(-128.6892, 59.052),
                 new Coordinate(-128.6883, 59.0525), new Coordinate(-128.6865, 59.0526),

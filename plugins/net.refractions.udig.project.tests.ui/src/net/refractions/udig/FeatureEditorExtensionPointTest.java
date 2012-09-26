@@ -1,7 +1,10 @@
 package net.refractions.udig;
 
-import java.net.URI;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 import net.refractions.udig.project.ui.internal.FeatureEditorExtensionProcessor;
 
 import org.eclipse.jface.action.ActionContributionItem;
@@ -13,131 +16,205 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiLineString;
 
+@SuppressWarnings("nls")
 public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
     
-    
-    @SuppressWarnings("deprecation")
-    public void xtestGetEditWithMenu() throws Exception{
-        FeatureEditorExtensionProcessor processor=new FeatureEditorExtensionProcessor();
-        IContributionItem item=processor.getEditWithFeatureMenu(new StructuredSelection());
-        assertTrue(item instanceof GroupMarker);
-        SimpleFeatureTypeBuilder builder=new SimpleFeatureTypeBuilder();
-        builder.setName("testType"); //$NON-NLS-1$
-        builder.setNamespaceURI(new URI("http://test.uri")); //$NON-NLS-1$
-        builder.add("geo",Geometry.class); //$NON-NLS-1$
-        builder.setDefaultGeometry("geo");
-        SimpleFeatureType featureType = builder.buildFeatureType();
-		Object[] defaultAtts = new Object[]{null};
-		String id = "id";
-		item = processor.getEditWithFeatureMenu(new StructuredSelection(SimpleFeatureBuilder.build(featureType, defaultAtts, id)));
-        MenuManager manager=(MenuManager) item;
-        assertTrue(0<((MenuManager) item).getItems().length );
-        assertNotNull(manager.find("net.refractions.udig.feature.editor.MatchAnyGeom")); //$NON-NLS-1$
-        assertNotNull(manager.find("net.refractions.udig.feature.editor.MatchGeomNamedGeo")); //$NON-NLS-1$
-        assertNotNull(manager.find("net.refractions.udig.feature.editor.MatchOnTypeName")); //$NON-NLS-1$
-        assertNull(manager.find("net.refractions.udig.feature.editor.NeverShown")); //$NON-NLS-1$
+    private static final String MATCH_ALL = "net.refractions.udig.feature.editor.MatchAll";
+    private static final String MATCH_ON_TYPE_NAME = "net.refractions.udig.feature.editor.MatchOnTypeName";
+    private static final String MATCH_GEOM_NAMED_GEO = "net.refractions.udig.feature.editor.MatchGeomNamedGeo";
+    private static final String MATCH_ANY_GEOM = "net.refractions.udig.feature.editor.MatchAnyGeom";
+    private static final String NEVER_SHOWN = "net.refractions.udig.feature.editor.NeverShown";
 
-        builder=new SimpleFeatureTypeBuilder();
-        builder.setName("testType2"); //$NON-NLS-1$
-        builder.setNamespaceURI(new URI("http://test.uri")); //$NON-NLS-1$
-        builder.add("the_geom",MultiLineString.class);
-        StructuredSelection selection = new StructuredSelection(SimpleFeatureBuilder.build(builder.buildFeatureType(), defaultAtts, id));
-		item = processor.getEditWithFeatureMenu(selection);
-        manager=(MenuManager) item;
-        assertTrue(0<((MenuManager) item).getItems().length );
-        assertNull(manager.find("net.refractions.udig.feature.editor.MatchAnyGeom")); //$NON-NLS-1$
-        assertNull(manager.find("net.refractions.udig.feature.editor.MatchGeomNamedGeo")); //$NON-NLS-1$
-        assertNull(manager.find("net.refractions.udig.feature.editor.MatchOnTypeName")); //$NON-NLS-1$
-        assertNull(manager.find("net.refractions.udig.feature.editor.NeverShown")); //$NON-NLS-1$
+    private static final String TEST_TYPE = "testType";
+    private static final String INVALID_TEST_TYPE = "testType2";
+ 
+    private static final String TEST_URI = "http://test.uri";
+    private static final String INVALID_TEST_URI = "http://test.uri1";
 
-        builder=new SimpleFeatureTypeBuilder();
-        builder.setName("testType"); //$NON-NLS-1$
-        builder.setNamespaceURI(new URI("http://test.uri1")); //$NON-NLS-1$
-        builder.add("the_geom",Geometry.class); //$NON-NLS-1$
-        item = processor.getEditWithFeatureMenu(new StructuredSelection(SimpleFeatureBuilder.build(builder.buildFeatureType(), defaultAtts, id)));
-        manager=(MenuManager) item;
-        assertTrue(0<((MenuManager) item).getItems().length );
-        assertNotNull(manager.find("net.refractions.udig.feature.editor.MatchAnyGeom")); //$NON-NLS-1$
-        assertNull(manager.find("net.refractions.udig.feature.editor.MatchGeomNamedGeo")); //$NON-NLS-1$
-        assertNull(manager.find("net.refractions.udig.feature.editor.MatchOnTypeName")); //$NON-NLS-1$
-        assertNull(manager.find("net.refractions.udig.feature.editor.NeverShown")); //$NON-NLS-1$
+    private static final Object[] DEFAULT_ATTS = new Object[]{null};
+    private static final String ID = "id";
 
-        builder=new SimpleFeatureTypeBuilder();
-        builder.setName("testType"); //$NON-NLS-1$
-        builder.setNamespaceURI(new URI("http://test.uri1")); //$NON-NLS-1$
-        item = processor.getEditWithFeatureMenu(new StructuredSelection(SimpleFeatureBuilder.build(builder.buildFeatureType(), new Object[0], id)));
-        manager=(MenuManager) item;
-        assertTrue(0<((MenuManager) item).getItems().length );
-        assertNull(manager.find("net.refractions.udig.feature.editor.MatchAnyGeom")); //$NON-NLS-1$
-        assertNull(manager.find("net.refractions.udig.feature.editor.MatchGeomNamedGeo")); //$NON-NLS-1$
-        assertNull(manager.find("net.refractions.udig.feature.editor.MatchOnTypeName")); //$NON-NLS-1$
-        assertNull(manager.find("net.refractions.udig.feature.editor.NeverShown")); //$NON-NLS-1$
+    private FeatureEditorExtensionProcessor processor;
+
+    @Before
+    public void setUp() {
+        processor = new FeatureEditorExtensionProcessor();
     }
-    
-    @SuppressWarnings("deprecation")
-    public void xtestOpenMemory()throws Exception{
-        FeatureEditorExtensionProcessor processor=new FeatureEditorExtensionProcessor();
-        SimpleFeatureTypeBuilder builder=new SimpleFeatureTypeBuilder();
-        
-        builder.setName("testType"); //$NON-NLS-1$
-        builder.setNamespaceURI(new URI("http://test.uri")); //$NON-NLS-1$
-        builder.add("the_geo",Geometry.class); //$NON-NLS-1$
-        Object[] defaultAtts = new Object[]{null};
-		String id = "id";
-		StructuredSelection selection1 = new StructuredSelection(SimpleFeatureBuilder.build(builder.buildFeatureType(), defaultAtts, id));
-        IContributionItem item = processor.getEditFeatureAction(selection1);
-        assertEquals( "net.refractions.udig.feature.editor.MatchOnTypeName", item.getId() ); //$NON-NLS-1$
 
-        Event event=new Event();
-        event.display=Display.getDefault();
-        MenuManager editWith=(MenuManager) processor.getEditWithFeatureMenu(selection1);
-        IContributionItem[] items = editWith.getItems();
-        for( IContributionItem item2 : items ) {
-            if ( !(item2.getId().equals(item.getId() ) ) ){
-                item=item2;
-                //simulate the ui menubutton being pressed.
-                ((ActionContributionItem)item2).getAction().setChecked(true);
-                
-                ((ActionContributionItem)item2).getAction().runWithEvent(event);
-                break;
-            }
-        }
+    @Test
+    public void testGetEditWithMenuGroupMarker() {
+        StructuredSelection selection = new StructuredSelection();
+        IContributionItem item = processor.getEditWithFeatureMenu(selection);
+        
+        assertTrue(item instanceof GroupMarker);
+    }
+
+    @Test
+    public void testGetEditWithMenuAll() {
+        SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
+        builder.setName(TEST_TYPE);
+        builder.setNamespaceURI(TEST_URI);
+        builder.add("geo", Geometry.class);
+        builder.setDefaultGeometry("geo");
+        
+        MenuManager manager = getEditWithFeatureMenuManager(builder);
+        
+        assertTrue(manager.getItems().length > 0);
+        assertNotNull(manager.find(MATCH_ALL));
+        assertNotNull(manager.find(MATCH_ANY_GEOM));
+        assertNotNull(manager.find(MATCH_GEOM_NAMED_GEO));
+        assertNotNull(manager.find(MATCH_ON_TYPE_NAME));
+        assertNull(manager.find(NEVER_SHOWN));
+    }
+
+    @Test
+    public void testGetEditWithMenuAnyGeom() {
+        SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
+        builder.setName(TEST_TYPE);
+        builder.setNamespaceURI(INVALID_TEST_URI);
+        builder.add("the_geom", Geometry.class);
+        
+        MenuManager manager = getEditWithFeatureMenuManager(builder);
+        
+        assertTrue(manager.getItems().length > 0);
+        assertNotNull(manager.find(MATCH_ALL));
+        assertNotNull(manager.find(MATCH_ANY_GEOM));
+        assertNull(manager.find(MATCH_GEOM_NAMED_GEO));
+        assertNull(manager.find(MATCH_ON_TYPE_NAME));
+        assertNull(manager.find(NEVER_SHOWN));
+    }
+
+    @Test
+    public void testGetEditWithMenuTypeName() {
+        SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
+        builder.setName(TEST_TYPE);
+        builder.setNamespaceURI(TEST_URI);
+        builder.add("the_geom", MultiLineString.class);
+        
+        MenuManager manager = getEditWithFeatureMenuManager(builder);
+        
+        assertTrue(manager.getItems().length > 0);
+        assertNotNull(manager.find(MATCH_ALL));
+        assertNull(manager.find(MATCH_ANY_GEOM));
+        assertNull(manager.find(MATCH_GEOM_NAMED_GEO));
+        assertNotNull(manager.find(MATCH_ON_TYPE_NAME));
+        assertNull(manager.find(NEVER_SHOWN));
+    }
+
+    @Test
+    public void testGetEditWithMenuNone() {
+        SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
+        builder.setName(INVALID_TEST_TYPE);
+        builder.setNamespaceURI(TEST_URI);
+        builder.add("the_geom", MultiLineString.class);
+        
+        MenuManager manager = getEditWithFeatureMenuManager(builder);
+        
+        assertTrue(manager.getItems().length > 0);
+        assertNotNull(manager.find(MATCH_ALL));
+        assertNull(manager.find(MATCH_ANY_GEOM));
+        assertNull(manager.find(MATCH_GEOM_NAMED_GEO));
+        assertNull(manager.find(MATCH_ON_TYPE_NAME));
+        assertNull(manager.find(NEVER_SHOWN));
+    }
+
+    @Test
+    public void testGetEditWithMenuNoGeom() {
+        SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
+        builder.setName(TEST_TYPE);
+        builder.setNamespaceURI(INVALID_TEST_URI);
+        
+        MenuManager manager = getEditWithFeatureMenuManager(builder, new Object[0], ID);
+        
+        assertTrue(manager.getItems().length > 0);
+        assertNotNull(manager.find(MATCH_ALL));
+        assertNull(manager.find(MATCH_ANY_GEOM));
+        assertNull(manager.find(MATCH_GEOM_NAMED_GEO));
+        assertNull(manager.find(MATCH_ON_TYPE_NAME));
+        assertNull(manager.find(NEVER_SHOWN));
+    }
+
+    private MenuManager getEditWithFeatureMenuManager(SimpleFeatureTypeBuilder builder) {
+        return getEditWithFeatureMenuManager(builder, DEFAULT_ATTS, ID);
+    }
+
+    private MenuManager getEditWithFeatureMenuManager(SimpleFeatureTypeBuilder builder, Object[] atts, String id) {
+        SimpleFeatureType featureType = builder.buildFeatureType();
+        StructuredSelection selection = new StructuredSelection(SimpleFeatureBuilder.build(featureType, atts, id));
+        IContributionItem item = processor.getEditWithFeatureMenu(selection);
+        MenuManager manager = (MenuManager) item;
+        
+        return manager;
+    }
+
+    @Ignore("test fails in tycho")
+    @Test
+    public void testOpenMemory() throws Exception {
+        SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
+        builder.setName(TEST_TYPE);
+        builder.setNamespaceURI(TEST_URI);
+        builder.add("the_geo", Geometry.class);
+        
+        SimpleFeatureType featureType = builder.buildFeatureType();
+        StructuredSelection selection1 = new StructuredSelection(SimpleFeatureBuilder.build(featureType, DEFAULT_ATTS, ID));
+        IContributionItem item = processor.getEditFeatureAction(selection1);
+        
+        assertEquals(MATCH_ON_TYPE_NAME, item.getId());
+        
+        item = checkItems(selection1, item);
+        
         assertSame(item.getId(), processor.getEditFeatureAction(selection1).getId());
-        editWith=(MenuManager) processor.getEditWithFeatureMenu(selection1);
-        item= editWith.findUsingPath(item.getId());
-        assertTrue( ((ActionContributionItem)item).getAction().isChecked() );
+        MenuManager editWith = (MenuManager) processor.getEditWithFeatureMenu(selection1);
+        item = editWith.findUsingPath(item.getId());
+        assertTrue(((ActionContributionItem) item).getAction().isChecked());
         
         SimpleFeatureTypeBuilder builder2 = new SimpleFeatureTypeBuilder();
-        builder2.setName("testType"); //$NON-NLS-1$
-        builder2.setNamespaceURI(new URI("http://test.uri1")); //$NON-NLS-1$
-        builder2.add("geo",Geometry.class); //$NON-NLS-1$
-        StructuredSelection selection2 = new StructuredSelection(SimpleFeatureBuilder.build(builder.buildFeatureType(), defaultAtts, id));
-        IContributionItem item6 = processor.getEditFeatureAction(selection2);
-        assertEquals( "net.refractions.udig.feature.editor.MatchGeomNamedGeo", item6.getId() ); //$NON-NLS-1$
+        builder2.setName(TEST_TYPE);
+        builder2.setNamespaceURI(INVALID_TEST_URI);
+        builder2.add("geo", Geometry.class);
+        
+        SimpleFeatureType featureType2 = builder2.buildFeatureType();
+        StructuredSelection selection2 = new StructuredSelection(SimpleFeatureBuilder.build(featureType2, DEFAULT_ATTS, ID));
+        IContributionItem item2 = processor.getEditFeatureAction(selection2);
+        
+        assertEquals(MATCH_GEOM_NAMED_GEO, item2.getId());
+        
+        item2 = checkItems(selection2, item2);
+        
+        assertSame(item2.getId(), processor.getEditFeatureAction(selection2).getId());
+        editWith = (MenuManager) processor.getEditWithFeatureMenu(selection1);
+        item2 = editWith.findUsingPath(item2.getId());
+        assertTrue( ((ActionContributionItem)item2).getAction().isChecked() );
+        
+        assertSame(item.getId(), processor.getEditFeatureAction(selection1).getId());
+    }
 
-        editWith=(MenuManager) processor.getEditWithFeatureMenu(selection2);
-        items = editWith.getItems();
-        for( IContributionItem item2 : items ) {
-            if ( !(item2.getId().equals(item6.getId() ) ) ){
-                item6=item2;
+    private IContributionItem checkItems(StructuredSelection selection, IContributionItem initialItem) {
+        IContributionItem initialItemTmp = initialItem;
+        Event event = new Event();
+        event.display = Display.getDefault();
+        MenuManager editWith = (MenuManager) processor.getEditWithFeatureMenu(selection);
+        IContributionItem[] items = editWith.getItems();
+        
+        for (IContributionItem item : items) {
+            if (!(item.getId().equals(initialItemTmp.getId()))) {
+                initialItemTmp = item;
+                
                 //simulate the ui menubutton being pressed.
-                ((ActionContributionItem)item2).getAction().setChecked(true);
-                ((ActionContributionItem)item2).getAction().runWithEvent(event);
+                ((ActionContributionItem) item).getAction().setChecked(true);
+                ((ActionContributionItem) item).getAction().runWithEvent(event);
                 break;
             }
         }
         
-        assertSame(item6.getId(), processor.getEditFeatureAction(selection2).getId());
-        editWith=(MenuManager) processor.getEditWithFeatureMenu(selection1);
-        item6= editWith.findUsingPath(item6.getId());
-        assertTrue( ((ActionContributionItem)item6).getAction().isChecked() );
-
-
-        assertSame(item.getId(), processor.getEditFeatureAction(selection1).getId());
+        return initialItemTmp;
     }
 }

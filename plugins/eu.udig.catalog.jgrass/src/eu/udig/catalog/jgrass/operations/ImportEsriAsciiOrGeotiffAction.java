@@ -17,27 +17,9 @@
  */
 package eu.udig.catalog.jgrass.operations;
 
-import it.geosolutions.imageio.plugins.arcgrid.AsciiGridsImageMetadataFormat;
-import it.geosolutions.imageio.plugins.arcgrid.raster.AsciiGridRaster;
-import it.geosolutions.imageio.plugins.arcgrid.raster.AsciiGridRaster.AsciiGridRasterType;
-
-import java.awt.geom.AffineTransform;
-import java.awt.image.ComponentSampleModel;
-import java.awt.image.DataBuffer;
-import java.awt.image.RenderedImage;
-import java.awt.image.SampleModel;
-import java.awt.image.WritableRaster;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-
-import javax.imageio.stream.FileImageInputStream;
-import javax.media.jai.RasterFactory;
-import javax.media.jai.iterator.RandomIter;
-import javax.media.jai.iterator.RandomIterFactory;
-import javax.media.jai.iterator.WritableRandomIter;
 
 import net.refractions.udig.ui.ExceptionDetailsDialog;
 import net.refractions.udig.ui.PlatformGIS;
@@ -62,26 +44,17 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.IWorkbenchWindowPulldownDelegate;
 import org.eclipse.ui.PlatformUI;
-import org.geotools.coverage.CoverageFactoryFinder;
 import org.geotools.coverage.grid.GridCoverage2D;
-import org.geotools.coverage.grid.GridCoverageFactory;
-import org.geotools.coverage.grid.GridEnvelope2D;
-import org.geotools.coverage.grid.GridGeometry2D;
 import org.geotools.coverage.grid.ViewType;
 import org.geotools.coverage.processing.Operations;
 import org.geotools.gce.arcgrid.ArcGridReader;
 import org.geotools.gce.geotiff.GeoTiffReader;
-import org.geotools.gce.grassraster.GrassCoverageWriter;
 import org.geotools.gce.grassraster.JGrassConstants;
 import org.geotools.gce.grassraster.JGrassMapEnvironment;
 import org.geotools.gce.grassraster.format.GrassCoverageFormat;
 import org.geotools.gce.grassraster.format.GrassCoverageFormatFactory;
-import org.geotools.geometry.Envelope2D;
 import org.geotools.referencing.CRS;
-import org.geotools.referencing.operation.matrix.XAffineTransform;
 import org.opengis.coverage.grid.GridCoverageWriter;
-import org.opengis.geometry.DirectPosition;
-import org.opengis.geometry.Envelope;
 import org.opengis.parameter.GeneralParameterValue;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 

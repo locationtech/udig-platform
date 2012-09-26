@@ -1,38 +1,40 @@
 package net.refractions.udig.catalog.tests.ui;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ICatalog;
 import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.ui.CatalogImport;
 import net.refractions.udig.catalog.internal.wms.WMSServiceImpl;
 import net.refractions.udig.catalog.tests.ui.workflow.Assertion;
 import net.refractions.udig.catalog.tests.ui.workflow.DialogDriver;
 import net.refractions.udig.catalog.tests.ui.workflow.DummyMonitor;
 import net.refractions.udig.catalog.ui.ConnectionErrorPage;
+import net.refractions.udig.catalog.ui.wizard.CatalogImport;
 import net.refractions.udig.ui.WaitCondition;
 import net.refractions.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.junit.Before;
+import org.junit.Test;
 
-public class CatalogImportTest extends TestCase {
+public class CatalogImportTest {
 	
 	CatalogImport catalogImport;
 	
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		
+	@Before
+	public void setUp() throws Exception {
 		catalogImport = new CatalogImport();
 	}
 	
-	public void xtestNormal() throws Exception{
+    @Test
+	public void testNormal() throws Exception{
 			Object context = getContext();
 			
 			final ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
@@ -72,6 +74,7 @@ public class CatalogImportTest extends TestCase {
 			}
 	}
 
+    @Test
 	public void testConnectionError() throws MalformedURLException {
 			//create a bad context object, lets say a wfs that doesn't exist
 			URL context = new URL("http://foo.blah.hehehe/geoserver/wfs"); //$NON-NLS-1$
@@ -99,7 +102,7 @@ public class CatalogImportTest extends TestCase {
 	}
 	
 	Object getContext() throws Exception {
-		return new URL("http://www.refractions.net:8080/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
+		return new URL("http://demo.opengeo.org/geoserver/wms?Service=WMS&Version=1.1.1&Request=GetCapabilities"); //$NON-NLS-1$
 	}
 	
 	void assertServiceType(IService service) {

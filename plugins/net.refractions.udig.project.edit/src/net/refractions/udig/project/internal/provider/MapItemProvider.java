@@ -257,7 +257,7 @@ public class MapItemProvider extends AbstractLazyLoadingItemProvider
      * 
      * @generated NOT
      */
-    public List getPropertyDescriptors( Object object ) {
+    public List<IItemPropertyDescriptor> getPropertyDescriptors( Object object ) {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
             addAbstractPropertyDescriptor(object);

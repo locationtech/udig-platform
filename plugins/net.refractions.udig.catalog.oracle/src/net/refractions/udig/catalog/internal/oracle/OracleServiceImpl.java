@@ -33,6 +33,7 @@ import net.refractions.udig.catalog.IResolveChangeEvent;
 import net.refractions.udig.catalog.IResolveDelta;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.IServiceInfo;
+import net.refractions.udig.catalog.IResolve.Status;
 import net.refractions.udig.catalog.internal.CatalogImpl;
 import net.refractions.udig.catalog.internal.ResolveChangeEvent;
 import net.refractions.udig.catalog.internal.ResolveDelta;
@@ -57,6 +58,10 @@ public class OracleServiceImpl extends IService {
 
     private URL url = null;
     private Map<String, Serializable> params = null;
+    private Throwable msg = null;
+    private volatile JDBCDataStore ds = null;
+    protected Lock rLock = new UDIGDisplaySafeLock();
+    private static final Lock dsLock = new UDIGDisplaySafeLock();
     public OracleServiceImpl( URL arg1, Map<String, Serializable> arg2 ) {
         if (arg1 == null) {
             String jdbc_url = OracleServiceExtension.getJDBCUrl(arg2);
@@ -100,19 +105,13 @@ public class OracleServiceImpl extends IService {
         return (adaptee.isAssignableFrom(JDBCDataStore.class)) || super.canResolve(adaptee);
     }
     public void dispose( IProgressMonitor monitor ) {
-        if (members == null)
-            return;
-
-        int steps = (int) ((double) 99 / (double) members.size());
-        for( IResolve resolve : members ) {
-            try {
-                SubProgressMonitor subProgressMonitor = new SubProgressMonitor(monitor, steps);
-                resolve.dispose(subProgressMonitor);
-                subProgressMonitor.done();
-            } catch (Throwable e) {
-                ErrorManager.get().displayException(e,
-                        "Error disposing members of service: " + getIdentifier(), CatalogPlugin.ID); //$NON-NLS-1$
-            }
+        super.dispose(monitor);
+        
+        if( ds != null ){
+            ds.dispose();
+        }
+        if( members != null ){
+            members = null;
         }
     }
 
@@ -170,11 +169,6 @@ public class OracleServiceImpl extends IService {
     public Map<String, Serializable> getConnectionParams() {
         return params;
     }
-    private Throwable msg = null;
-    private volatile JDBCDataStore ds = null;
-    protected Lock rLock = new UDIGDisplaySafeLock();
-    private static final Lock dsLock = new UDIGDisplaySafeLock();
-
     JDBCDataStore getDS( IProgressMonitor monitor ) throws IOException {
         if (ds == null) {
             dsLock.lock();
@@ -205,7 +199,10 @@ public class OracleServiceImpl extends IService {
      * @see net.refractions.udig.catalog.IResolve#getStatus()
      */
     public Status getStatus() {
-        return msg != null ? Status.BROKEN : ds == null ? Status.NOTCONNECTED : Status.CONNECTED;
+        if( ds == null ){
+            return super.getStatus();
+        }
+        return Status.CONNECTED;
     }
     /*
      * @see net.refractions.udig.catalog.IResolve#getMessage()

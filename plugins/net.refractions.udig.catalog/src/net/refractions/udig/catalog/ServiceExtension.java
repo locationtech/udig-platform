@@ -58,7 +58,7 @@ public interface ServiceExtension {
      * methods. It is important to note that this method must inspect the url to determine if it can
      * be used to create the service. If it cannot, null must be returned.
      * 
-     * @param id The sugested service id, should be generated when null.
+     * @param id The suggested service id, should be generated when null.
      * @param params The set of connection params. These param values may either be parsed, or
      *        unparsed (String).
      * @return the IService created, or null when a service cannot be created from these params.

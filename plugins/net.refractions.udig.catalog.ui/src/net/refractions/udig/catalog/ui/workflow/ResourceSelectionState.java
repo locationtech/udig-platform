@@ -14,20 +14,24 @@ import java.util.Set;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.URLUtils;
+import net.refractions.udig.catalog.ui.CatalogUIPlugin;
 import net.refractions.udig.catalog.ui.internal.Messages;
 import net.refractions.udig.core.Pair;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
 /**
+ * State capturing selected IGeoResources.
+ * <p>
+ * The selected resources are those in the {@link #getResources()} map.  The keys are the selected
+ * resources and the values are the parents.  State normally uses a ConnectionState but it
+ * isn't required is {@link #setServices(List)} is used to set the services.
  * 
- * State selects IGeoResources.  The selected resources are those in the {@link #getResources()} map.  The keys are the selected
- * resources and the values are the parents.  State normally uses a ConnectionState but it isn't required is {@link #setServices(List)} 
- * is used to set the services.
- *    
  * @author Justin Deolive
  * @since 1.1.0
  */
@@ -38,13 +42,38 @@ public class ResourceSelectionState extends State {
     private Collection<IService> services;
 
     public Collection<IService> getServices() {
-        if( services!=null )
+        if( services!=null ){
             return services;
+        }
+        List<IService> list = new ArrayList<IService>();
+        
+        ResourceSearchState search = getWorkflow().getState( ResourceSearchState.class );
+        if( search != null ){
+            for( IResolve resolve : search.getSelected() ){
+                if( resolve instanceof IGeoResource ){
+                    try {
+                        IGeoResource geoResource = (IGeoResource) resolve;
+                        IService service = geoResource.service( new NullProgressMonitor() );
+                        list.add( service );
+                    }
+                    catch( IOException t){
+                        CatalogUIPlugin.log("Unable to connect to service "+ t, t);
+                    }
+                }
+                if( resolve instanceof IService ){
+                    IService service =(IService) resolve;
+                    list.add( service );
+                }
+            }
+        }
         EndConnectionState state = getWorkflow().getState(EndConnectionState.class);
-        if (state == null)
-            return null; // could occur if the connection state added dynamically
-
-        return state.getServices();
+        if (state != null){
+            Collection<IService> imported = state.getServices();
+            if( imported != null ){
+                list.addAll( imported );
+            }
+        }
+        return list;
     }
     
     public void setServices( Collection<IService> services ) {
@@ -63,11 +92,11 @@ public class ResourceSelectionState extends State {
     @Override
     public void init( IProgressMonitor monitor ) throws IOException {
         super.init(monitor);
-
         // try to generate some default resources based on context
         // LinkedHashMap to keep the order
         resources = new LinkedHashMap<IGeoResource, IService>();
-
+        
+        // DnD and Workflow Context
         Object context = getWorkflow().getContext();
         
         // use the context object to try and match a resource
@@ -84,17 +113,30 @@ public class ResourceSelectionState extends State {
                 }
             }
         }
-
-        Collection<IService> services = getServices();
-        List<IService> toRemove=new ArrayList<IService>();
-        for( IService service : services ) {
-            List< ? extends IGeoResource> members = service.resources(monitor);
-            if (members != null && members.size() < 1){
-                toRemove.add(service);
-                continue;
+        ResourceSearchState search = getWorkflow().getState( ResourceSearchState.class );
+        if( search != null ){
+            for( IResolve resolve : search.getSelected() ){
+                if( resolve instanceof IGeoResource ){
+                    IGeoResource geoResource = (IGeoResource) resolve;
+                    IService service = geoResource.service( new NullProgressMonitor() );
+                    resources.put( geoResource, service );
+                }
             }
-            addPreferredResources(service, members);
-            selectResourcesForDND(service,members);
+        }
+        
+        Collection<IService> services = getServices();
+        
+        List<IService> toRemove=new ArrayList<IService>();
+        if( services != null ){
+            for( IService service : services ) {
+                List< ? extends IGeoResource> members = service.resources(monitor);
+                if (members != null && members.size() < 1){
+                    toRemove.add(service);
+                    continue;
+                }
+                addPreferredResources(service, members);
+                selectResourcesForDND(service,members);
+            }
         }
         if (!toRemove.isEmpty())
             services.removeAll(toRemove);
@@ -114,7 +156,7 @@ public class ResourceSelectionState extends State {
         for( IGeoResource geoResource : members ) {
             for( URL url : selectedResources ) {
                 if (resources.size() < selectedResources.size()) {
-                	if (URLUtils.urlEquals(url, geoResource.getIdentifier(), false)) {
+                    if (URLUtils.urlEquals(url, geoResource.getIdentifier(), false)) {
                         resources.put(geoResource, service);
                         break;
                     }
@@ -167,49 +209,59 @@ public class ResourceSelectionState extends State {
         }
         
         Collection<IService> services = getServices();
-        try{
-        	monitor.beginTask("",services.size()*10); //$NON-NLS-1$
-        for( IService service : services ) {
-        	SubProgressMonitor subMonitor = new SubProgressMonitor(monitor,10);
-        	try{
-
-                URL identifier = service.getIdentifier();
-                monitor.setTaskName(MessageFormat.format(Messages.ResourceSelectionState_taskName, new Object[] {identifier.getProtocol()+"://"+identifier.getPath()})); //$NON-NLS-1$
-            count += service.resources(subMonitor).size();
-        	}finally{
-        		subMonitor.done();
-        	}
-        }
-        }finally{
-        	monitor.done();
+        if( services != null ){
+            try{
+                monitor.beginTask("",services.size()*10); //$NON-NLS-1$
+                for( IService service : services ) {
+                    SubProgressMonitor subMonitor = new SubProgressMonitor(monitor,10);
+                    try{
+                        URL identifier = service.getIdentifier();
+                        monitor.setTaskName(MessageFormat.format(Messages.ResourceSelectionState_taskName, new Object[] {identifier.getProtocol()+"://"+identifier.getPath()})); //$NON-NLS-1$
+                    count += service.resources(subMonitor).size();
+                    }finally{
+                        subMonitor.done();
+                    }
+                }
+                }finally{
+                monitor.done();
+            }
         }
 
         return resources.size()>0;
     }
 
-    // Seems to try to match the url to a Georesource.
+    /**
+     * Scan through provided services to look up the requested URL as a GeoResource.
+     * 
+     * @param services
+     * @param url
+     * @param monitor
+     * @return
+     * @throws IOException
+     */
     private IGeoResource match( Collection<IService> services, URL url, IProgressMonitor monitor )
             throws IOException {
 
-    	// if there is no ref then the url is not matching a georesource
-        if (url.getRef() == null || url.getRef().equals("")) //$NON-NLS-1$
+        // if there is no ref then the url is not matching a GeoResource
+        if (url.getRef() == null || url.getRef().isEmpty()){
             return null;
+        }
 
         for( IService service : services ) {
             for( IGeoResource resource : service.resources(monitor) ) {
-                if (resource.getIdentifier() == null)
+                if (resource.getIdentifier() == null){
                     continue;
-
-                if (url.equals(resource.getIdentifier()))
+                }
+                if (url.equals(resource.getIdentifier())){
                     return resource;
+                }
             }
         }
-
-        return null;
+        return null; // not found
     }
 
-	@Override
-	public String getName() {
-		return Messages.ResourceSelectionState_stateName; 
-	}
+    @Override
+    public String getName() {
+        return Messages.ResourceSelectionState_stateName; 
+    }
 }

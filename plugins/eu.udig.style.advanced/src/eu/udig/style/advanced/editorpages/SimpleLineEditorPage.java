@@ -20,7 +20,6 @@ package eu.udig.style.advanced.editorpages;
 import java.util.List;
 
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.style.internal.StyleLayer;
 import net.refractions.udig.style.sld.SLDContent;
@@ -175,17 +174,6 @@ public class SimpleLineEditorPage extends StyleEditorPage {
 
         StyleBlackboard styleBlackboard = layer.getStyleBlackboard();
         styleBlackboard.put(SLDContent.ID, newStyle);
-        try {
-            System.out.println("***********************"); //$NON-NLS-1$
-            System.out.println("***********************"); //$NON-NLS-1$
-            System.out.println("***********************"); //$NON-NLS-1$
-            System.out.println(Utilities.styleToString(style));
-            System.out.println("***********************"); //$NON-NLS-1$
-            System.out.println("***********************"); //$NON-NLS-1$
-            System.out.println("***********************"); //$NON-NLS-1$
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public boolean performOk() {
