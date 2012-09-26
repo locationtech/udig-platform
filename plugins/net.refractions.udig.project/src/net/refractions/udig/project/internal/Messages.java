@@ -129,6 +129,15 @@ public class Messages extends NLS {
     public static  String SaveProject_Success;
     public static  String SaveProject_Fail;
 	
+    public static String AddLayerItemsCommand_name;
+    public static String AddLayerItemCommand_Name;
+    public static String AddFolderItemCommand_Name;
+
+    public static String DeleteLayerItemCommand_Name;
+
+    public static String DeleteLayerItemsCommand_Name;
+    public static String DeleteFolderItemCommand_Name;
+    
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

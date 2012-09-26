@@ -180,4 +180,18 @@ public interface ISharedImages {
 
     /** Represents the "Start new Project wizard" action */
     public static final String NEW_PROJECT = ETOOL + "newprj_wiz.gif"; //$NON-NLS-1$    
+    
+    /** Front arrow * */
+    public final static String FRONT_CO = Icons.ELOCALTOOL + "front_co.gif"; //$NON-NLS-1$
+    /** Back arrow * */
+    public final static String BACK_CO = Icons.ELOCALTOOL + "back_co.gif"; //$NON-NLS-1$
+    /** Toggle Grid command */
+    public static final String TOG_GRID_CO = Icons.ELOCALTOOL + "toggle_grid_co.gif"; //$NON-NLS-1$;
+    /** Toggle Map Graphic command */
+    public static final String TOG_MAP_GRAPHIC_CO = Icons.ELOCALTOOL + "toggle_map_graphic_co.gif"; //$NON-NLS-1$;
+    /** Toggle Background Layer command */
+    public static final String TOG_BG_LAYER_CO = Icons.ELOCALTOOL + "toggle_bg_layer_co.gif"; //$NON-NLS-1$;
+    /** New folder action */
+    public static final String NEW_FOLDER_CO = Icons.ELOCALTOOL + "newfolder_co.gif"; //$NON-NLS-1$
+    
 }

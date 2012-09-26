@@ -151,6 +151,9 @@
          <viewShortcut
                id="net.refractions.udig.project.ui.layerManager">
          </viewShortcut>
+         <viewShortcut
+               id="net.refractions.udig.project.ui.legendManager">
+         </viewShortcut>
          <newWizardShortcut
                id="net.refractions.udig.project.ui.wizard.newMap">
          </newWizardShortcut>
@@ -383,6 +386,37 @@
                </enablement>
             </action>
          </viewContribution>
+         <viewContribution
+               id="net.refractions.udig.project.ui.legendContributor"
+               targetID="net.refractions.udig.project.ui.legendManager">
+            <action
+                  disabledIcon="icons/dlcl16/zoom_layer_co.gif"
+                  enablesFor="+"
+                  toolbarPath="additions"
+                  label="%zoomToMultipleLayers.label"
+                  class="net.refractions.udig.project.ui.internal.actions.ZoomToLayer"
+                  icon="icons/elcl16/zoom_layer_co.gif"
+                  tooltip="%zoomToMultipleLayers.tooltip"
+                  style="push"
+                  id="net.refractions.udig.project.ui.zoomToLayerViewAction">
+               <enablement>
+                  <objectClass name="net.refractions.udig.project.ILayer"/>
+               </enablement>
+            </action>
+            <action
+                  class="net.refractions.udig.project.ui.internal.actions.MylarAction"
+                  enablesFor="+"
+                  icon="icons/elcl16/mylar_mode.gif"
+                  id="net.refractions.udig.project.ui.mylar"
+                  label="%mylarAction.label"
+                  style="toggle"
+                  tooltip="%mylarAction.tooltip"
+                  toolbarPath="additions">
+               <enablement>
+                  <objectClass name="net.refractions.udig.project.ILayer"/>
+               </enablement>
+            </action>
+         </viewContribution>
       </extension>
       <extension
             id="net.refractions.udig.ui.layerDecorators"
@@ -448,6 +482,9 @@
 	       <destination class="net.refractions.udig.project.ui.internal.MapPart"/>
            <destination
                  class="net.refractions.udig.project.ui.internal.LayersView"/>
+           <destination
+                 class="net.refractions.udig.project.ui.internal.LegendView">
+           </destination>
            <acceptedType
                  adapt="true"
                  class="net.refractions.udig.catalog.IResolve"/>
@@ -462,6 +499,17 @@
         <acceptedType class="java.net.URL"/>
         <acceptedType class="java.lang.String"/>
         <destination class="net.refractions.udig.project.internal.Map"/>
+     </action>
+     <action
+           class="net.refractions.udig.project.ui.internal.actions.LegendDropAction"
+           enablesFor="+"
+           name="Legend Drag and Drop">
+        <destination
+              class="net.refractions.udig.project.ILegendItem">
+        </destination>
+        <acceptedType
+              class="net.refractions.udig.project.ILegendItem">
+        </acceptedType>
      </action>
      <action
            class="net.refractions.udig.project.ui.internal.actions.LayerDropAction"
@@ -491,6 +539,9 @@
         <acceptedType class="net.refractions.udig.project.IMap"/>
         <acceptedType class="java.lang.String"/>
         <destination class="net.refractions.udig.project.ui.internal.LayersView"/>
+        <destination
+              class="net.refractions.udig.project.ui.internal.LegendView">
+        </destination>
         <acceptedType class="java.net.URL"/>
         <destination class="net.refractions.udig.project.ILayer"/>
         <acceptedType
@@ -540,6 +591,9 @@
            %MoveLayerAction.desc
         </description>
         <destination class="net.refractions.udig.project.ui.internal.LayersView"/>
+        <destination
+              class="net.refractions.udig.project.ui.internal.LegendView">
+        </destination>
         <acceptedType
               adapt="false"
               class="net.refractions.udig.project.ui.internal.MapEditorPart"/>

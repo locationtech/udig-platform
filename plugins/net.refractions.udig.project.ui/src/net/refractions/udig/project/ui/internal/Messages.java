@@ -337,6 +337,15 @@ public class Messages extends NLS {
     public static String TileSet_dialog_onoff_desc;
     public static String TileSet_dialog_image_type;
 
+    public static String LegendView_up_tooltip;
+    public static String LegendView_down_tooltip;
+  public static String LegendView_front_tooltip;
+    public static String LegendView_back_tooltip;
+  public static String LegendView_hide_mg_tooltip;
+  public static String LegendView_hide_bg_tooltip;
+  public static String LegendView_show_grid_tooltip;
+  public static String LegendView_new_folder_tooltip;
+    
     static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
