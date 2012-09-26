@@ -299,11 +299,11 @@
             <artifactId>gt-jdbc-sqlserver</artifactId>
             <version>${geotools.version}</version>
         </dependency>
-        <!--<dependency>
-            <groupId>org.geotools.jdbc</groupId>
-            <artifactId>gt-jdbc-spatialite</artifactId>
-            <version>${geotools.version}</version>
-        </dependency>-->
+        <dependency>
+          <groupId>org.geotools.jdbc</groupId>
+          <artifactId>gt-jdbc-spatialite</artifactId>
+          <version>${geotools.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.geotools.jdbc</groupId>
             <artifactId>gt-jdbc-h2</artifactId>
@@ -760,11 +760,8 @@
             <artifactId>gt-grid</artifactId>
             <version>${geotools.version}</version>
         </dependency>
-	<dependency>
-      	    <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc-spatialite</artifactId>
-            <version>3.7.2-1</version>
-        </dependency>
+        
+        
     </dependencies>
 
     <build>
