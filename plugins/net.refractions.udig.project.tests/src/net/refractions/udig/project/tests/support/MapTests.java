@@ -230,7 +230,7 @@ public class MapTests {
      * @param serviceURL
      * @param resourceURL
      * @param name
-     * @return
+     * @return Layer
      * @throws MalformedURLException
      * @throws IOException
      */
