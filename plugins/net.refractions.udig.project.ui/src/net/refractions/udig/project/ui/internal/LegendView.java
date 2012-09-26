@@ -31,8 +31,10 @@ import net.refractions.udig.project.command.map.LayerMoveBackCommand;
 import net.refractions.udig.project.command.map.LayerMoveDownCommand;
 import net.refractions.udig.project.command.map.LayerMoveFrontCommand;
 import net.refractions.udig.project.command.map.LayerMoveUpCommand;
+import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
+import net.refractions.udig.project.internal.LayerLegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.ProjectFactory;
 import net.refractions.udig.project.internal.ProjectPackage;
@@ -1116,6 +1118,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
      */
     private class MapDeepListener extends AdapterImpl {
         
+        @SuppressWarnings("deprecation")
         public void notifyChanged( final Notification msg ) {
             
             //Skip processing if workbench is closing
@@ -1124,9 +1127,9 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
             }
             
             //Do processing
-            if (msg.getNotifier() instanceof Map) {
+            if (msg.getNotifier() instanceof ContextModel) {
                 
-                if (ProjectPackage.MAP__LEGEND == msg.getFeatureID(Map.class)) {
+                if (ProjectPackage.CONTEXT_MODEL__LAYERS == msg.getFeatureID(ContextModel.class)) {
                     switch( msg.getEventType() ) {
                     case Notification.ADD: {
                         System.out.println("[LegendView] LegendItem - Add Event"); //$NON-NLS-1$
@@ -1275,35 +1278,64 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
 
         @Override
         public void checkStateChanged( CheckStateChangedEvent event ) {
-            if (event.getElement() instanceof Folder) {
-                checkFolder(event);
-            } else if (event.getElement() instanceof Layer) {
-                checkLayer(event);
+            final Object eventObj = event.getElement(); 
+            if (eventObj instanceof Folder) {
+                setFolder(event);
+            } else if (eventObj instanceof LayerLegendItem) {
+                setLayer(event);
             }
         }
         
-        private void checkLayer(CheckStateChangedEvent event) {
-            final Layer eventLayer = (Layer) event.getElement();
-            if (eventLayer.isVisible() != event.getChecked()) {
-                eventLayer.setVisible(event.getChecked());
-                processParentFolder(eventLayer);
+        /**
+         * Sets the visibility of layer relative to the checkbox value.
+         * 
+         * @param event
+         */
+        private Layer setLayerInternal(Object eventObj, boolean isChecked) {
+            final LayerLegendItem eventItem = (LayerLegendItem) eventObj;
+            final Layer eventLayer = eventItem.getLayer();
+            if (eventLayer.isVisible() != isChecked) {
+                eventLayer.setVisible(isChecked);                
             }
+            return eventLayer;
+        }
+
+        /**
+         * Sets the visibility of the layer relative to the checkbox value. This also updates
+         * related tree elements.
+         * 
+         * @param event
+         */
+        private void setLayer(CheckStateChangedEvent event) {
+            final Layer eventLayer = setLayerInternal(event.getElement(), event.getChecked());
+            setParentFolder(eventLayer);
         }
         
-        private void checkFolder(CheckStateChangedEvent event) {
+        /**
+         * Sets the visibility of the layers inside the folder relative to the checkbox value. This
+         * also updates related tree elements.
+         * 
+         * @param event
+         */
+        private void setFolder(CheckStateChangedEvent event) {
+            final boolean isChecked = event.getChecked();
             final Folder eventFolder = (Folder) event.getElement();
             viewer.setGrayed(eventFolder, false);
             for( ILegendItem item : eventFolder.getItems() ) {
-                final Layer layer = (Layer) item;
-                if (layer.isVisible() != event.getChecked()) {
-                    layer.setVisible(event.getChecked());
-                    viewer.setChecked(layer, event.getChecked());    
+                if (item instanceof LayerLegendItem) {
+                    setLayerInternal(item, isChecked);
                 }
             }
+            viewer.setChecked(eventFolder, isChecked);
         }
         
-        private void processParentFolder(Layer layer) {
-            final Object parent = LegendViewUtils.getParent(layer);
+        /**
+         * Sets the checked status of the parent folder of the layer relative to its visibility.
+         * 
+         * @param layer
+         */
+        private void setParentFolder(Layer layer) {
+            final Object parent = LegendViewCheckboxUtils.getParent(layer);
             if (parent instanceof Folder) {
                 LegendViewCheckboxUtils.setFolderCheckbox(viewer, (Folder) parent);
             }

@@ -16,7 +16,6 @@ package net.refractions.udig.project.ui.internal;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import net.refractions.udig.catalog.CatalogPlugin;
@@ -29,13 +28,11 @@ import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.Interaction;
 import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import net.refractions.udig.project.internal.LayerLegendItem;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.jaitools.jiffle.parser.RuntimeSourceGenerator.listAssignment_return;
 
 /**
  * The utility class of the Legend View. This contains static helper methods for Legend View
@@ -47,9 +44,8 @@ import org.jaitools.jiffle.parser.RuntimeSourceGenerator.listAssignment_return;
 public final class LegendViewUtils {
 
     private static final String MAP_GRAPHIC_PROTOCOL = "mapgraphic"; //$NON-NLS-1$
-    private static final String MAP_GRAPHIC_URL = "mapgraphic:/localhost"; //$NON-NLS-1$
     private static final String GRID_ID_STR = "grid"; //$NON-NLS-1$
-    private static final String GRID_URL = "mapgraphic:/localhost/mapgraphic#grid"; //$NON-NLS-1$
+    private static final String GRID_URL = MAP_GRAPHIC_PROTOCOL + ":/localhost/mapgraphic#" + GRID_ID_STR; //$NON-NLS-1$
     private static final ID GRID_ID = new ID(GRID_URL, null);
 
     /**
@@ -135,99 +131,70 @@ public final class LegendViewUtils {
     }
     
     /**
-     * Gets the parent object of the input object.
-     * 
-     * @param map
-     * @param object
-     * @return map - if object is inside the LegendItems list, folder - if object is a layer inside a
-     *         folder
-     */
-    public static Object getParent(Map map, Object object) {
-        
-        if (object instanceof Folder) {
-            return map;
-        } else if (object instanceof Layer) {
-            final List legendItems = map.getLegend();
-            for( Object legendItem : legendItems ) {
-                if (legendItem instanceof Folder) {
-                    final List folderItems = ((Folder) legendItem).getItems();
-                    for( Object folderItem : folderItems ) {
-                        if (folderItem == object) {
-                            return legendItem;
-                        }
-                    }
-                } else {
-                    if (legendItem == object) {
-                        return map;
-                    }
-                }
-            }
-        }
-        
-        return null;
-        
-    }
-    
-    /**
-     * Gets the parent object of the input object.
-     * 
-     * @param object
-     * @return map - if object is inside the LegendItems list, folder - if object is a layer inside a
-     *         folder
-     */
-    public static Object getParent(Object object) {
-        return getParent(((Map) ApplicationGIS.getActiveMap()), object);
-    }
-    
-    /**
      * Gets the list of layers from the legendItems. Option can be specified to return an ordered
      * list by z-order.
      * 
-     * @param legendItems
+     * @param items
      * @param isOrdered
      * @return list of layers
      */
-    public static List<Layer> getLayers(List<? extends ILegendItem> legendItems, boolean isOrdered) {
-        
-        //Gets the layers from the LegendItems list
+    public static List<Layer> getLayers(List<ILegendItem> items, boolean isOrdered) {
+        // Gets the layers from the LegendItems list
         final List<Layer> layers = new ArrayList<Layer>();
-        for( ILegendItem item : legendItems ) {
-            if (item instanceof Folder) {
-                final Folder folder = (Folder) item;
-                for( ILegendItem folderItem : folder.getItems() ) {
-                    layers.add((Layer) folderItem);
-                }
-            } else if (item instanceof Layer) {
-                layers.add((Layer) item);
-            }
+        for (ILegendItem item : items) {
+            layers.addAll(getLayers(item));
         }
-        
+        // Sorts the layers according to z-order (defined in LayerImpl)
         if (isOrdered) {
-            //Sorts the layers according to z-order (defined in LayerImpl)
-            Collections.sort(layers);            
+            Collections.sort(layers);
         }
-        
         return layers;
-        
     }
     
+    /**
+     * Checks the item type and filters all the legend items that references layers.
+     * 
+     * @param item
+     * @return layers
+     */
+    private static List<Layer> getLayers(ILegendItem item) {
+        final List<Layer> layers = new ArrayList<Layer>();
+        if (item instanceof Folder) {
+            layers.addAll(getLayers(item));
+        } else if (item instanceof LayerLegendItem) {
+            final LayerLegendItem layerItem = (LayerLegendItem) item;
+            layers.add(layerItem.getLayer());
+        }
+        return layers;
+    }
+    
+    /**
+     * Filters and gets the referenced grid layers from the legend item.
+     * 
+     * @param legendItems
+     * @return grid layers
+     */
     public static List<Layer> getGridLayers( List<ILegendItem> legendItems ) {
 
         // Gets the grid layers from the LegendItems list
         final List<Layer> layers = new ArrayList<Layer>();
-        for( ILegendItem item : legendItems ) {
+        for (ILegendItem item : legendItems) {
             if (item instanceof Folder) {
                 final Folder folder = (Folder) item;
-                for( ILegendItem folderItem : folder.getItems() ) {
-                    final Layer layer = (Layer) folderItem; 
-                    if (isGridLayer(layer)) {
-                        layers.add(layer);    
+                for (ILegendItem folderItem : folder.getItems()) {
+                    if (folderItem instanceof LayerLegendItem) {
+                        final LayerLegendItem layerItem = (LayerLegendItem) folderItem;
+                        final Layer layer = layerItem.getLayer();
+                        if (isGridLayer(layer)) {
+                            layers.add(layer);
+                        }
                     }
                 }
-            } else if (item instanceof Layer) {
-                final Layer layer = (Layer) item; 
+            } else if (item instanceof LayerLegendItem) {
+                final LayerLegendItem layerItem = (LayerLegendItem) item;
+                final Layer layer = layerItem.getLayer();
                 if (isGridLayer(layer)) {
-                    layers.add(layer);    
+                    layers.add(layer);
                 }
             }
         }

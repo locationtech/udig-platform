@@ -15,6 +15,7 @@
 package net.refractions.udig.project.ui.internal;
 
 import net.refractions.udig.project.internal.Layer;
+import net.refractions.udig.project.internal.LayerLegendItem;
 import net.refractions.udig.project.internal.Map;
 
 import org.eclipse.jface.action.Action;
@@ -243,8 +244,9 @@ public class LegendViewFiltersHandler {
 
         @Override
         public boolean select( Viewer viewer, Object parentElement, Object element ) {
-            if (element instanceof Layer) {
-                final Layer layer = (Layer) element;
+            if (element instanceof LayerLegendItem) {
+                final LayerLegendItem layerItem = (LayerLegendItem) element;
+                final Layer layer = layerItem.getLayer();
                 if (!this.showLayer && isLayerType(layer)) {
                     return false;
 

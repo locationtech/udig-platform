@@ -20,7 +20,9 @@ import java.util.List;
 import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
+import net.refractions.udig.project.internal.LayerLegendItem;
 import net.refractions.udig.project.internal.Map;
+import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
@@ -57,7 +59,7 @@ public final class LegendViewCheckboxUtils {
                     // Set layer checkbox
                     setLayerCheckbox(viewer, layer);
                     // Set folder checkbox, if parent is folder
-                    final Object parent = LegendViewUtils.getParent(view.getCurrentMap(), layer);
+                    final Object parent = getParent(view.getCurrentMap(), layer);
                     if (parent instanceof Folder) {
                         setFolderCheckbox(viewer, (Folder) parent);
                     }
@@ -85,8 +87,9 @@ public final class LegendViewCheckboxUtils {
                     final CheckboxTreeViewer viewer = view.getViewer();
                     if (updateLayers) {
                         for( ILegendItem folderItem : folder.getItems() ) {
-                            final Layer layer = (Layer) folderItem;
-                            setLayerCheckbox(viewer, layer);
+                            if (folderItem instanceof LayerLegendItem) {
+                                setLayerCheckbox(viewer, (LayerLegendItem) folderItem);
+                            }
                         }    
                     }
                     setFolderCheckbox(viewer, folder);
@@ -110,21 +113,20 @@ public final class LegendViewCheckboxUtils {
 
                 if (!PlatformUI.getWorkbench().isClosing()) {
 
-                    final Map map = view.getCurrentMap();
                     final CheckboxTreeViewer viewer = view.getViewer();
-                    final List<? extends ILegendItem> legendItems = map.getLegend();
+                    final List<ILegendItem> items = view.getCurrentMap().getLegend();
 
-                    for( ILegendItem legendItem : legendItems ) {
-                        if (legendItem instanceof Folder) {
-                            final Folder folder = (Folder) legendItem;
+                    for( ILegendItem item : items ) {
+                        if (item instanceof Folder) {
+                            final Folder folder = (Folder) item;
                             for( ILegendItem folderItem : folder.getItems() ) {
-                                final Layer layer = (Layer) folderItem;
-                                setLayerCheckbox(viewer, layer);
+                                if (folderItem instanceof LayerLegendItem) {
+                                    setLayerCheckbox(viewer, (LayerLegendItem) folderItem);
+                                }
                             }
                             setFolderCheckbox(viewer, folder);
-                        } else if (legendItem instanceof Layer) {
-                            final Layer layer = (Layer) legendItem;
-                            setLayerCheckbox(viewer, layer);
+                        } else if (item instanceof LayerLegendItem) {
+                            setLayerCheckbox(viewer, (LayerLegendItem) item);
                         }
                     }
 
@@ -137,13 +139,46 @@ public final class LegendViewCheckboxUtils {
     }
     
     /**
+     * Sets the checkbox static of the layer item on the viewer.
+     * 
+     * @param viewer
+     * @param layerItem
+     */
+    private static void setLayerCheckbox(final CheckboxTreeViewer viewer, final LayerLegendItem layerItem ) {
+        viewer.setChecked(layerItem, layerItem.getLayer().isVisible());
+    }
+    
+    /**
      * Sets the checkbox status of the layer on the viewer.
      * 
      * @param viewer
      * @param layer
      */
     private static void setLayerCheckbox(final CheckboxTreeViewer viewer, final Layer layer ) {
-        viewer.setChecked(layer, layer.isVisible());
+        final Map map = (Map) viewer.getInput();
+        if (map != null) {
+            setLayerCheckbox(viewer, getLayerLegendItem(map, layer));    
+        }
+    }
+    
+    /**
+     * Gets the legend item that references the layer.
+     * 
+     * @param map
+     * @param layer
+     */
+    private static LayerLegendItem getLayerLegendItem(Map map, Layer layer) {
+        LayerLegendItem referredLayerLegendItem = null;
+        for (ILegendItem legendItem : map.getLegend()) {
+            if (legendItem instanceof LayerLegendItem) {
+                final LayerLegendItem layerLegendItem = (LayerLegendItem) legendItem;
+                if (layer == layerLegendItem.getLayer()) {
+                    referredLayerLegendItem = layerLegendItem;
+                    break;
+                }
+            }
+        }
+        return referredLayerLegendItem;
     }
     
     /**
@@ -214,10 +249,13 @@ public final class LegendViewCheckboxUtils {
         final List<Layer> filterVisibleLayers = new ArrayList<Layer>();
         
         for( ILegendItem item : folder.getItems() ) {
-            final Layer layer = (Layer) item;
-            if (isFilterVisible(viewer, layer)) {
-                filterVisibleLayers.add(layer);
-            }    
+            if (item instanceof LayerLegendItem) {
+                final LayerLegendItem layerItem = (LayerLegendItem) item;
+                final Layer layer = layerItem.getLayer();
+                if (isFilterVisible(viewer, layer)) {
+                    filterVisibleLayers.add(layer);
+                }    
+            }
         }
             
         return filterVisibleLayers;
@@ -240,6 +278,50 @@ public final class LegendViewCheckboxUtils {
         
         return true;
         
+    }
+    
+    /**
+     * Gets the parent object of the input object.
+     * 
+     * @param map
+     * @param obj
+     * @return map - if object is inside the LegendItems list, folder - if object is a layer inside a
+     *         folder
+     */
+    public static Object getParent(Map map, Object obj) {
+        
+        if (obj instanceof Folder) {
+            return map;
+        } else if (obj instanceof LayerLegendItem) {
+            for (Object legendItem : map.getLegend()) {
+                if (legendItem instanceof Folder) {
+                    final List<ILegendItem> folderItems = ((Folder) legendItem).getItems();
+                    for (Object folderItem : folderItems) {
+                        if (folderItem == obj) {
+                            return legendItem;
+                        }
+                    }
+                } else {
+                    if (legendItem == obj) {
+                        return map;
+                    }
+                }
+            }
+        }
+        
+        return null;
+        
+    }
+    
+    /**
+     * Gets the parent object of the input object.
+     * 
+     * @param object
+     * @return map - if object is inside the LegendItems list, folder - if object is a layer inside a
+     *         folder
+     */
+    public static Object getParent(Object object) {
+        return getParent(((Map) ApplicationGIS.getActiveMap()), object);
     }
     
 }

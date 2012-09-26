@@ -130,7 +130,8 @@ public class LegendViewGridHandler implements ILayerListener {
     }
     
     /**
-     * Adds a grid layer to the grid layer list
+     * Adds the grid layer to the internal grid layer list.
+     * 
      * @param layer
      */
     private void addGridLayer(Layer layer) {
@@ -200,12 +201,11 @@ public class LegendViewGridHandler implements ILayerListener {
     /**
      * Refreshes the grid toggle button display and sets/unsets the grid layers handled by the handler 
      */
-    public void refresh( int eventType, Object object ) {
+    public void refresh( int eventType, Object obj ) {
 
-        if (object instanceof Layer) {
+        if (obj instanceof Layer) {
 
-            final Layer layer = (Layer) object;
-            
+            final Layer layer = (Layer) obj;
             if (Notification.ADD == eventType) {
                 if (LegendViewUtils.isGridLayer(layer)) {
                     if (this.isLegendViewAddingGrid) {
