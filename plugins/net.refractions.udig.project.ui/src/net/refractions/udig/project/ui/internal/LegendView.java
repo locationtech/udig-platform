@@ -81,6 +81,7 @@ import org.eclipse.jface.window.SameShellProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
@@ -316,7 +317,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
         contextMenu.addMenuListener(new IMenuListener(){
 
             public void menuAboutToShow( IMenuManager mgr ) {
-
+                
                 contextMenu.add(newFolderAction());
                 if (LegendViewUtils.isFolderSelected(viewer.getSelection())) {
                     contextMenu.add(renameFolderAction());    
@@ -339,30 +340,13 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                 }
 
             }
-
-            private LayerApplicabilityMenuCreator applicabilityCreator;
-
-            private LayerApplicabilityMenuCreator getApplicabilityMenu() {
-                if (applicabilityCreator == null) {
-                    applicabilityCreator = new LayerApplicabilityMenuCreator();
-                }
-
-                IStructuredSelection selection = (IStructuredSelection) targetViewer.getSelection();
-                for( Iterator iter = selection.iterator(); iter.hasNext(); ) {
-                    Object element = iter.next();
-                    if (!(element instanceof Layer)) {
-                        return null;
-                    }
-                }
-
-                return applicabilityCreator;
-            }
-
+            
         });
 
-        // Create menu
-        final Menu menu = contextMenu.createContextMenu(targetViewer.getControl());
-        targetViewer.getControl().setMenu(menu);
+        // Create menu against viewer's control
+        final Control control = targetViewer.getControl();
+        final Menu menu = contextMenu.createContextMenu(control);
+        control.setMenu(menu);
 
         // Register menu for extension
         getSite().registerContextMenu(contextMenu, targetViewer);
@@ -550,7 +534,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                     doNewFolderAction();
                 }
             };
-            newFolderAction.setText("Add folder");
+            newFolderAction.setText(Messages.LegendView_new_folder_action_lbl);
             newFolderAction.setToolTipText(Messages.LegendView_new_folder_tooltip);
             newFolderAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.NEW_FOLDER_CO));
             setNewFolderActionState();
@@ -560,7 +544,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
     
     private void doNewFolderAction() {
         final Folder folder = ProjectFactory.eINSTANCE.createFolder();
-        folder.setName("New Folder");
+        folder.setName(Messages.LegendView_new_folder_default_lbl);
         currentMap.sendCommandSync(new AddFolderItemCommand(folder));
         viewer.refresh();
     }

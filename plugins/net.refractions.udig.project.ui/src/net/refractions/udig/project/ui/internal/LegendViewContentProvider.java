@@ -17,7 +17,6 @@ package net.refractions.udig.project.ui.internal;
 import net.refractions.udig.project.IFolder;
 import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
