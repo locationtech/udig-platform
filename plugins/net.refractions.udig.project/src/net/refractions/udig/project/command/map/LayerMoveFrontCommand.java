@@ -52,8 +52,7 @@ public class LayerMoveFrontCommand extends AbstractLayerMoveCommand {
     @Override
     public void run( IProgressMonitor monitor ) throws Exception {
         for( int i = getSelection().size() -1; i >= 0; i-- ) {
-          //TODO - Fix this
-//            getMap().sendToFrontLayer((Layer) getSelection().get(i));
+            getMap().sendToFrontLayer((Layer) getSelection().get(i));
         }
     }
 
@@ -61,8 +60,7 @@ public class LayerMoveFrontCommand extends AbstractLayerMoveCommand {
     public void rollback( IProgressMonitor monitor ) throws Exception {
         for( int i = getSelection().size() - 1; i >= 0; i-- ) {
             final int index = getIndex().get(i);
-          //TODO - Fix this
-//            getMap().sendToIndexLayer((Layer) getSelection().get(i), index);
+            getMap().sendToIndexLayer((Layer) getSelection().get(i), index);
         }
     }
 

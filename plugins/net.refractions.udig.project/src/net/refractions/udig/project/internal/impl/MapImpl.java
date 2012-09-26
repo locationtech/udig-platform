@@ -17,13 +17,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import net.refractions.udig.project.ILegendItem;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.locks.Lock;
 
 import net.refractions.udig.project.IBlackboard;
 import net.refractions.udig.project.IEditManager;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.IMapCompositionListener;
 import net.refractions.udig.project.IMapListener;
 import net.refractions.udig.project.IProject;
@@ -40,7 +40,6 @@ import net.refractions.udig.project.internal.ContextModelListenerAdapter;
 import net.refractions.udig.project.internal.EditManager;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.internal.LegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Messages;
 import net.refractions.udig.project.internal.Project;
@@ -66,8 +65,8 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -1747,6 +1746,21 @@ public class MapImpl extends EObjectImpl implements Map {
         int index = getLayersInternal().indexOf(layer);
         if (index > getLayersInternal().size() - 2) return;
         ((LayersList2) getLayersInternal()).move(index++, index);
+    }
+    
+    public void sendToFrontLayer( Layer layer ) {
+        int index = getLayersInternal().indexOf(layer);
+        ((LayersList2) getLayersInternal()).move(getLayersInternal().size() - 1, index);
+    }
+
+    public void sendToBackLayer( Layer layer ) {
+        int index = getLayersInternal().indexOf(layer);
+        ((LayersList2) getLayersInternal()).move(0, index);
+    }
+
+    public void sendToIndexLayer( Layer layer, int index ) {
+        int currentIndex = getLayersInternal().indexOf(layer);
+        ((LayersList2) getLayersInternal()).move(index, currentIndex);
     }
 
     private SpatialOperator localize( SimpleFeatureType schema, SpatialOperator filter ) {

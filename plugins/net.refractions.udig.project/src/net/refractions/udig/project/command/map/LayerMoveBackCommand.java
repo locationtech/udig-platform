@@ -52,16 +52,14 @@ public class LayerMoveBackCommand extends AbstractLayerMoveCommand {
     @Override
     public void run( IProgressMonitor monitor ) throws Exception {
         for( ILayer layer : getSelection() ) {
-            //TODO - Fix this
-//            getMap().sendToBackLayer((Layer) layer);
+            getMap().sendToBackLayer((Layer) layer);
         }
     }
 
     @Override
     public void rollback( IProgressMonitor monitor ) throws Exception {
         for( int i = 0; i < getSelection().size(); i++ ) {
-            //TODO - Fix this
-//            getMap().sendToIndexLayer((Layer) getSelection().get(i), getIndex().get(i));
+            getMap().sendToIndexLayer((Layer) getSelection().get(i), getIndex().get(i));
         }
     }
 
