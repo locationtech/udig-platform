@@ -210,7 +210,10 @@ public class Messages extends NLS {
 	public static String ScemaDescriptor_geometry;
 	public static String GeometryPropertyDescriptor_viewButton_text;
 	public static String Rename_enterNewName;
-	public static String ResourceSelectionPage_title;
+	public static String RenameFolderAction_dialogMsg;
+    public static String RenameFolderAction_dialogTitle;
+    public static String RenameFolderAction_label;
+    public static String ResourceSelectionPage_title;
 	public static String OpenMapCommand_taskName;
 	public static String OpenProject_ErrorMessage;
     public static String OpenProject_ErrorTitle;
