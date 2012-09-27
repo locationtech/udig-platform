@@ -160,10 +160,29 @@ public final class LegendViewUtils {
     private static List<Layer> getLayers(ILegendItem item) {
         final List<Layer> layers = new ArrayList<Layer>();
         if (item instanceof Folder) {
-            layers.addAll(getLayers(item));
+            layers.addAll(getLayers((Folder) item));
         } else if (item instanceof LayerLegendItem) {
             final LayerLegendItem layerItem = (LayerLegendItem) item;
             layers.add(layerItem.getLayer());
+        }
+        return layers;
+    }
+    
+    /**
+     * Traverse the contents of the folder and gets all the layers that legend items refer to.
+     * 
+     * @param folder
+     * @return layers
+     */
+    private static List<Layer> getLayers(Folder folder) {
+        final List<Layer> layers = new ArrayList<Layer>();
+        for (ILegendItem item : folder.getItems()) {
+            if (item instanceof Folder) {
+                layers.addAll(getLayers((Folder) item));
+            } else if (item instanceof LayerLegendItem) {
+                final LayerLegendItem layerItem = (LayerLegendItem) item;
+                layers.add(layerItem.getLayer());
+            }
         }
         return layers;
     }

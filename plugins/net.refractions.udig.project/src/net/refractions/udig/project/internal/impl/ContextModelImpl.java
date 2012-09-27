@@ -8,6 +8,7 @@ import java.util.List;
 
 import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.internal.ContextModel;
+import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerLegendItem;
 import net.refractions.udig.project.internal.Map;
@@ -50,7 +51,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
         super();
         setLegendItemSynchronizer();
     }
-
+    
     /**
      * This method adds a listener to the layer list that synchronizes the contents of the context
      * model's layers list and the map's legend item's list.
@@ -76,19 +77,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
                         final Object eventOldObj = msg.getOldValue();    
                         if (eventOldObj instanceof Layer) {
                             final Layer layer = (Layer) eventOldObj;
-                            LayerLegendItem legendItemWithRemovedLayer = null;
-                            for (ILegendItem legendItem : getMap().getLegend()) {
-                                if (legendItem instanceof LayerLegendItem) {
-                                    final LayerLegendItem layerLegendItem = (LayerLegendItem) legendItem;
-                                    if (layer == layerLegendItem.getLayer()) {
-                                        legendItemWithRemovedLayer = layerLegendItem;
-                                        break;
-                                    }
-                                }
-                            }
-                            if (legendItemWithRemovedLayer != null) {
-                                getMap().getLegend().remove(legendItemWithRemovedLayer);
-                            }
+                            removeLayerLegendItem(layer);
                         }
                         break;
                     }
@@ -97,6 +86,67 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
             }
         });
         
+    }
+    
+    /**
+     * Removes the legend item referencing the layer.
+     * 
+     * @param layer
+     * @return true if removed, otherwise false
+     */
+    private boolean removeLayerLegendItem(Layer layer) {
+        LayerLegendItem flaggedLayerItem = null;
+        for (ILegendItem item : getMap().getLegend()) {
+            if (item instanceof Folder) {
+                final boolean isRemoved = removeLayerLegendItem((Folder) item, layer);
+                if (isRemoved) {
+                    return true;
+                }
+            } else if (item instanceof LayerLegendItem) {
+                final LayerLegendItem layerItem = (LayerLegendItem) item;
+                if (layer == layerItem.getLayer()) {
+                    flaggedLayerItem = layerItem;
+                    break;
+                }
+            }
+        }
+        if (flaggedLayerItem != null) {
+            getMap().getLegend().remove(flaggedLayerItem);
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Removes the legend item referencing the layer in the folder or in any sub-folder.
+     * 
+     * @param folder
+     * @param layer
+     * @return true if removed, otherwise false
+     */
+    private boolean removeLayerLegendItem(Folder folder, Layer layer) {
+        Folder flaggedFolder = null;
+        LayerLegendItem flaggedLayerItem = null;
+        for (ILegendItem item : folder.getItems()) {
+            if (item instanceof Folder) {
+                final boolean isRemoved = removeLayerLegendItem((Folder) item, layer);
+                if (isRemoved) {
+                    return true;
+                }
+            } else if (item instanceof LayerLegendItem) {
+                final LayerLegendItem layerItem = (LayerLegendItem) item;
+                if (layer == layerItem.getLayer()) {
+                    flaggedFolder = folder;
+                    flaggedLayerItem = layerItem;
+                    break;
+                }
+            }
+        }
+        if (flaggedLayerItem != null) {
+            flaggedFolder.getItems().remove(flaggedLayerItem);
+            return true;
+        }
+        return false;
     }
     
     /**
