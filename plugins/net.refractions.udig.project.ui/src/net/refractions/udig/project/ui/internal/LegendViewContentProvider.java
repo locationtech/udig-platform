@@ -18,7 +18,6 @@ import net.refractions.udig.project.IFolder;
 import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Map;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 
 /**
@@ -34,21 +33,6 @@ public class LegendViewContentProvider extends AdapterFactoryContentProvider {
     public LegendViewContentProvider( LegendView view ) {
         super(ProjectUIPlugin.getDefault().getAdapterFactory());
         this.view = view;
-    }
-    
-    @Override
-    public void notifyChanged( Notification notification ) {
-        super.notifyChanged(notification);
-        /*
-        switch( notification.getFeatureID(Map.class) ) {
-        case ProjectPackage.MAP__CONTEXT_MODEL: {
-            if (notification.getNotifier() == view.getCurrentMap()) {
-                LegendViewCheckboxUtils.updateCheckboxes(view);
-            }
-            break;
-        }
-        }
-        */
     }
 
     @Override
@@ -84,6 +68,5 @@ public class LegendViewContentProvider extends AdapterFactoryContentProvider {
         }
         return false;
     }
-    
     
 }

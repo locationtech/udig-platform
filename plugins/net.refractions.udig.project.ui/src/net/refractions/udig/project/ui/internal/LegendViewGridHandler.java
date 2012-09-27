@@ -22,6 +22,7 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.ILayerListener;
 import net.refractions.udig.project.LayerEvent;
 import net.refractions.udig.project.internal.Layer;
+import net.refractions.udig.project.internal.LayerLegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.commands.AddLayersCommand;
 
@@ -203,9 +204,10 @@ public class LegendViewGridHandler implements ILayerListener {
      */
     public void refresh( int eventType, Object obj ) {
 
-        if (obj instanceof Layer) {
+        if (obj instanceof LayerLegendItem) {
 
-            final Layer layer = (Layer) obj;
+            final LayerLegendItem layerItem = (LayerLegendItem) obj;
+            final Layer layer = layerItem.getLayer();
             if (Notification.ADD == eventType) {
                 if (LegendViewUtils.isGridLayer(layer)) {
                     if (this.isLegendViewAddingGrid) {

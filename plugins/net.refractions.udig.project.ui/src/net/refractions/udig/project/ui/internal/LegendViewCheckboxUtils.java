@@ -14,19 +14,16 @@
  */
 package net.refractions.udig.project.ui.internal;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.LayerLegendItem;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.ui.PlatformGIS;
 
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
-import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -37,106 +34,52 @@ import org.eclipse.ui.PlatformUI;
  */
 public final class LegendViewCheckboxUtils {
 
-    public static final int UNCHECKED = 0;
-    public static final int CHECKED = 1;
-    public static final int BLOCKED = 2;
-
-    /**
-     * Updates the checkbox of the input layer and checks if the parent folder (if inside a folder)
-     * also needs update.
-     * 
-     * @param viewer
-     * @param layer
-     */
-    public static void updateCheckbox( final LegendView view, final Layer layer ) {
-
-        PlatformGIS.asyncInDisplayThread(new Runnable(){
-            public void run() {
-                
-                if (!PlatformUI.getWorkbench().isClosing()) {
-                    
-                    final CheckboxTreeViewer viewer = view.getViewer();
-                    // Set layer checkbox
-                    setLayerCheckbox(viewer, layer);
-                    // Set folder checkbox, if parent is folder
-                    final Object parent = getParent(view.getCurrentMap(), layer);
-                    if (parent instanceof Folder) {
-                        setFolderCheckbox(viewer, (Folder) parent);
-                    }
-                    
-                }
-                
-            }
-        }, true);
-
-    }
-
-    /**
-     * Updates the checkbox of the input folder and its child layers.
-     * 
-     * @param viewer
-     * @param folder
-     */
-    public static void updateCheckbox( final LegendView view, final Folder folder, final boolean updateLayers ) {
-
-        PlatformGIS.asyncInDisplayThread(new Runnable(){
-            public void run() {
-                
-                if (!PlatformUI.getWorkbench().isClosing()) {
-                    
-                    final CheckboxTreeViewer viewer = view.getViewer();
-                    if (updateLayers) {
-                        for( ILegendItem folderItem : folder.getItems() ) {
-                            if (folderItem instanceof LayerLegendItem) {
-                                setLayerCheckbox(viewer, (LayerLegendItem) folderItem);
-                            }
-                        }    
-                    }
-                    setFolderCheckbox(viewer, folder);
-                    
-                }
-                
-            }
-        }, true);
-
+    enum FolderState {
+        UNCHECKED, CHECKED, BLOCKED;
     }
     
-    /**
-     * Updates the checkboxes of the viewer of the input view.
-     * 
-     * @param view
-     */
-    public static void updateCheckboxes( final LegendView view ) {
-
-        PlatformGIS.asyncInDisplayThread(new Runnable(){
+    public static void updateCheckboxesv0Async(final LegendView view) {
+        PlatformGIS.asyncInDisplayThread(new Runnable() {
             public void run() {
+                updateCheckboxesv0(view);
+            }
+        }, true);
+    }
+    
+    public static void updateCheckboxesv0(final LegendView view) {
+        if (!PlatformUI.getWorkbench().isClosing()) {
 
-                if (!PlatformUI.getWorkbench().isClosing()) {
-
-                    final CheckboxTreeViewer viewer = view.getViewer();
-                    final List<ILegendItem> items = view.getCurrentMap().getLegend();
-
-                    for( ILegendItem item : items ) {
-                        if (item instanceof Folder) {
-                            final Folder folder = (Folder) item;
-                            for( ILegendItem folderItem : folder.getItems() ) {
-                                if (folderItem instanceof LayerLegendItem) {
-                                    setLayerCheckbox(viewer, (LayerLegendItem) folderItem);
-                                }
-                            }
-                            setFolderCheckbox(viewer, folder);
-                        } else if (item instanceof LayerLegendItem) {
-                            setLayerCheckbox(viewer, (LayerLegendItem) item);
-                        }
-                    }
-
-                }
-
+            final CheckboxTreeViewer viewer = view.getViewer();
+            final List<ILegendItem> items = view.getCurrentMap().getLegend();
+            
+            for (ILegendItem item : items) {
+                updateCheckbox(viewer, item);
             }
 
-        }, true);
-
+        }
     }
+    
+    private static void updateCheckbox(final CheckboxTreeViewer viewer, final ILegendItem item) {
+        if (item instanceof Folder) {
+            final Folder folder = (Folder) item;
+            updateCheckbox(viewer, folder);
+        } else if (item instanceof LayerLegendItem) {
+            final LayerLegendItem layerItem = (LayerLegendItem) item; 
+            updateCheckbox(viewer, layerItem);
+        }
+    }
+
+    private static void updateCheckbox(final CheckboxTreeViewer viewer, final Folder folder) {
+        for (ILegendItem item : folder.getItems()) {
+            updateCheckbox(viewer, item);
+        }
+        setFolderCheckbox(viewer, folder);
+    }
+
+    private static void updateCheckbox(final CheckboxTreeViewer viewer, final LayerLegendItem layerItem) {
+        setLayerCheckbox(viewer, layerItem);
+    }
+
     
     /**
      * Sets the checkbox static of the layer item on the viewer.
@@ -144,41 +87,10 @@ public final class LegendViewCheckboxUtils {
      * @param viewer
      * @param layerItem
      */
-    private static void setLayerCheckbox(final CheckboxTreeViewer viewer, final LayerLegendItem layerItem ) {
-        viewer.setChecked(layerItem, layerItem.getLayer().isVisible());
-    }
-    
-    /**
-     * Sets the checkbox status of the layer on the viewer.
-     * 
-     * @param viewer
-     * @param layer
-     */
-    private static void setLayerCheckbox(final CheckboxTreeViewer viewer, final Layer layer ) {
-        final Map map = (Map) viewer.getInput();
-        if (map != null) {
-            setLayerCheckbox(viewer, getLayerLegendItem(map, layer));    
-        }
-    }
-    
-    /**
-     * Gets the legend item that references the layer.
-     * 
-     * @param map
-     * @param layer
-     */
-    private static LayerLegendItem getLayerLegendItem(Map map, Layer layer) {
-        LayerLegendItem referredLayerLegendItem = null;
-        for (ILegendItem legendItem : map.getLegend()) {
-            if (legendItem instanceof LayerLegendItem) {
-                final LayerLegendItem layerLegendItem = (LayerLegendItem) legendItem;
-                if (layer == layerLegendItem.getLayer()) {
-                    referredLayerLegendItem = layerLegendItem;
-                    break;
-                }
-            }
-        }
-        return referredLayerLegendItem;
+    private static void setLayerCheckbox(final CheckboxTreeViewer viewer,
+            final LayerLegendItem layerItem) {
+        final Layer layer = layerItem.getLayer();
+        viewer.setChecked(layerItem, layer.isVisible());
     }
     
     /**
@@ -188,9 +100,9 @@ public final class LegendViewCheckboxUtils {
      * @param viewer
      * @param folder
      */
-    public static void setFolderCheckbox(final CheckboxTreeViewer viewer, final Folder folder ) {
-        
-        switch( getFolderCheckboxDisplay(viewer, folder) ) {
+    private static void setFolderCheckbox(final CheckboxTreeViewer viewer, final Folder folder) {
+
+        switch (getFolderCheckboxDisplay(viewer, folder)) {
         case CHECKED:
             viewer.setChecked(folder, true);
             viewer.setGrayed(folder, false);
@@ -207,7 +119,7 @@ public final class LegendViewCheckboxUtils {
         }
 
     }
-    
+
     /**
      * Returns what the status of the folder's checkbox should be with respect to its child layers.
      * 
@@ -216,112 +128,49 @@ public final class LegendViewCheckboxUtils {
      * @return CHECKED - the folder should be checked, BLOCKED - folder should be blocked, UNCHECKED
      *         - folder should be unchecked
      */
-    private static int getFolderCheckboxDisplay( CheckboxTreeViewer viewer, Folder folder ) {
+    private static FolderState getFolderCheckboxDisplay(CheckboxTreeViewer viewer, Folder folder) {
         
-        final List<Layer> filterVisibleLayers = getFilterVisibleLayers(viewer, folder); 
-        
-        int checkedCnt = 0;
-        for( Layer layer : filterVisibleLayers ) {
-            if (layer.isVisible()) {
-                checkedCnt++;
-            }
-        }
-        
-        if (checkedCnt > 0) {
-            if (checkedCnt == filterVisibleLayers.size()) {
-                return CHECKED;
-            } else {
-                return BLOCKED;
-            }
-        }
-        
-        return UNCHECKED;
-    }
-    
-    /**
-     * Gets the list of visible layers with the given filters on the view
-     * @param viewer
-     * @param folder
-     * @return list of filter visible layers
-     */
-    private static List<Layer> getFilterVisibleLayers( CheckboxTreeViewer viewer, Folder folder ) {
-        
-        final List<Layer> filterVisibleLayers = new ArrayList<Layer>();
-        
-        for( ILegendItem item : folder.getItems() ) {
-            if (item instanceof LayerLegendItem) {
-                final LayerLegendItem layerItem = (LayerLegendItem) item;
-                final Layer layer = layerItem.getLayer();
-                if (isFilterVisible(viewer, layer)) {
-                    filterVisibleLayers.add(layer);
-                }    
-            }
-        }
+        final List<ILegendItem> items = folder.getItems();
+        if (items.size() == 0) {
             
-        return filterVisibleLayers;
-    }
-    
-    /**
-     * Checks if the layer is visible with the given filters on the viewer.
-     * @param viewer
-     * @param layer
-     * @return true if layer is visible, false otherwise
-     */
-    private static boolean isFilterVisible( CheckboxTreeViewer viewer, Layer layer ) {
-        
-        for( int i = 0; i < viewer.getFilters().length; i++ ) {
-            final ViewerFilter filter = viewer.getFilters()[i];
-            if (!filter.select(viewer, null, layer)) {
-                return false;
+            final boolean isGrayed = viewer.getGrayed(folder);
+            if (isGrayed) {
+                return FolderState.BLOCKED;
             }
-        }
-        
-        return true;
-        
-    }
-    
-    /**
-     * Gets the parent object of the input object.
-     * 
-     * @param map
-     * @param obj
-     * @return map - if object is inside the LegendItems list, folder - if object is a layer inside a
-     *         folder
-     */
-    public static Object getParent(Map map, Object obj) {
-        
-        if (obj instanceof Folder) {
-            return map;
-        } else if (obj instanceof LayerLegendItem) {
-            for (Object legendItem : map.getLegend()) {
-                if (legendItem instanceof Folder) {
-                    final List<ILegendItem> folderItems = ((Folder) legendItem).getItems();
-                    for (Object folderItem : folderItems) {
-                        if (folderItem == obj) {
-                            return legendItem;
-                        }
-                    }
-                } else {
-                    if (legendItem == obj) {
-                        return map;
-                    }
+            final boolean isChecked = viewer.getChecked(folder);
+            if (isChecked) {
+                return FolderState.CHECKED;
+            }
+            
+        } else {
+
+            int checkedCnt = 0;
+            int grayedCnt = 0;
+            final List<Object> grayedElements = Arrays.asList(viewer.getGrayedElements());
+            final List<Object> checkedElements = Arrays.asList(viewer.getCheckedElements());
+            
+            for (ILegendItem item : items) {
+                if (grayedElements.contains(item)) {
+                    grayedCnt++;
+                } else if (checkedElements.contains(item)) {
+                    checkedCnt++;
                 }
             }
+            if (checkedCnt > 0) {
+                if (checkedCnt == items.size()) {
+                    return FolderState.CHECKED;
+                } else {
+                    return FolderState.BLOCKED;
+                }
+            }
+            if (grayedCnt > 0) {
+                return FolderState.BLOCKED;
+            }
+            
         }
         
-        return null;
+        return FolderState.UNCHECKED; 
         
-    }
-    
-    /**
-     * Gets the parent object of the input object.
-     * 
-     * @param object
-     * @return map - if object is inside the LegendItems list, folder - if object is a layer inside a
-     *         folder
-     */
-    public static Object getParent(Object object) {
-        return getParent(((Map) ApplicationGIS.getActiveMap()), object);
     }
     
 }
