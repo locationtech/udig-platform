@@ -47,7 +47,6 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 
 import eu.udig.omsbox.OmsBoxPlugin;
-import eu.udig.omsbox.utils.OmsBoxConstants;
 
 /**
  * Jar chooser dialog.

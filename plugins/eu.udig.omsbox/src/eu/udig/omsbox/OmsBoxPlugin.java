@@ -256,6 +256,20 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
                 }
             }
 
+            // add jars in the default folder
+            File extraSpatialtoolboxLibsFolder = getExtraSpatialtoolboxLibsFolder();
+            if (extraSpatialtoolboxLibsFolder != null) {
+                File[] extraJars = extraSpatialtoolboxLibsFolder.listFiles(new FilenameFilter(){
+                    public boolean accept( File dir, String name ) {
+                        return name.endsWith(".jar");
+                    }
+                });
+                for( File extraJar : extraJars ) {
+                    sb.append(File.pathSeparator);
+                    sb.append(extraJar.getAbsolutePath());
+                }
+            }
+
             // add loaded jars
             String[] retrieveSavedJars = retrieveSavedJars();
             for( String file : retrieveSavedJars ) {
@@ -269,6 +283,23 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    /**
+     * Get the folder named spatialtoolbox in the installation folder.
+     * 
+     * @return the folder or <code>null</code>.
+     */
+    public static File getExtraSpatialtoolboxLibsFolder() {
+        Location installLocation = Platform.getInstallLocation();
+        File installFolder = DataUtilities.urlToFile(installLocation.getURL());
+        if (installFolder != null && installFolder.exists()) {
+            File omsboxLibsFolder = new File(installFolder, "spatialtoolbox");
+            if (omsboxLibsFolder.exists()) {
+                return omsboxLibsFolder;
+            }
+        }
         return null;
     }
 
