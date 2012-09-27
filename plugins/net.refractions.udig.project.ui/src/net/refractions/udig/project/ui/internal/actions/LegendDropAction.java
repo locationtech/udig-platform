@@ -15,22 +15,19 @@
 package net.refractions.udig.project.ui.internal.actions;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
+import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.internal.Folder;
-import net.refractions.udig.project.internal.Layer;
+import net.refractions.udig.project.internal.LayerLegendItem;
 import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.LegendView;
 import net.refractions.udig.ui.IDropAction;
 import net.refractions.udig.ui.ViewerDropLocation;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.swt.dnd.DropTargetEvent;
-import org.eclipse.swt.widgets.Display;
 
 /**
  * Action that moves legend items within the legend items list. This moves layers in and out of
@@ -42,330 +39,357 @@ import org.eclipse.swt.widgets.Display;
 public class LegendDropAction extends IDropAction {
 
     /**
-     * Flags if source data is a layer
+     * Flags if source object is a layer.
      */
     private boolean isLayerSource;
-    
+
     /**
-     * Flags if source data is a folder
+     * Flags if source object is a folder.
      */
     private boolean isFolderSource;
-    
+
     /**
-     * Flags if source data is a mix of layers and/or folders
+     * Flags if source object is a mix of layers and/or folders.
      */
     private boolean isMixedSource;
-    
+
     /**
-     * Flags if target data is a layer
+     * Flags if target object is a layer.
      */
     private boolean isLayerTarget;
-    
+
     /**
-     * Flags if target data is a folder
+     * Flags if target object is a folder.
      */
     private boolean isFolderTarget;
-    
+
     /**
-     * List contains the source data
+     * Source objects.
      */
-    private List sourceList;
-    
+    private List<Object> sources;
+
     /**
-     * The drop action destination
+     * Target object.
      */
-    private Object destination;
-    
+    private Object target;
+
     /**
      * Creates a legend item drop action
      */
     public LegendDropAction() {
         // Nothing
     }
-    
+
     @Override
-    public void init( IConfigurationElement element2, DropTargetEvent event2,
-            ViewerDropLocation location2, Object destination2, Object data2 ) {
+    public void init(IConfigurationElement element2, DropTargetEvent event2,
+            ViewerDropLocation location2, Object destination2, Object data2) {
         super.init(element2, event2, location2, destination2, data2);
         initDropConditions();
     }
     
     @Override
     public boolean accept() {
-        
-        //CHeck if either source or destination is null
-        if (sourceList == null || getData() == null || getDestination() == null) {
+        if (isValidObjects() && isValidDropLocation(getViewerLocation())) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the source and target objects are valid for drag and drop action.
+     * 
+     * @return trur if valid, otherwise false
+     */
+    private boolean isValidObjects() {
+        // Check if either source or destination is null
+        if (sources == null || target == null) {
             return false;
         }
-        //Check if selection is more than 1
-        if (sourceList.size() > 1) {
+        // Check if selection is more than 1
+        if (sources.size() > 1) {
             return false;
         }
-        //Check if source and destination is the same
-        if (sourceList.size() == 1 && sourceList.get(0) == getDestination()) {
+        // Check if source and destination is the same
+        if (sources.size() == 1 && sources.get(0) == getDestination()) {
             return false;
         }
-        //Check relative to drop locations
-        final ViewerDropLocation location = getViewerLocation();
-        //Check if there is a drop location
+        return true;
+    }
+    
+    /**
+     * Checks if the drop location if valid relative to the source and target objects.
+     * 
+     * @param location
+     * @return true if valid, otherwise false
+     */
+    private boolean isValidDropLocation(ViewerDropLocation location) {
+        // Check if there is a drop location
         if (location == ViewerDropLocation.NONE) {
             return false;
         } else if (location == ViewerDropLocation.ON) {
-            //Check if data being put inside is a folder or is mixed
-            if (isFolderSource || isMixedSource) {
+            // Check if data being put inside is mixed
+            if (isMixedSource) {
                 return false;
             }
-            //Check if layer data is being put inside another layer
+            // Check if layer data is being put inside another layer
             if (isLayerSource && isLayerTarget) {
                 return false;
             }
-            //Check if data is being put inside its own parent (folder)
-            if (getParent(getData()) == getDestination()) {
+            // Check if layer data is being put inside another layer
+            if (isFolderSource && isLayerTarget) {
+                return false;
+            }
+            // Check if data is being put inside its own parent
+            if (isParent(getData(), getDestination())) {
+                return false;
+            }
+            // Check if folder is being put inside its own descendant
+            if (isDescendant(getData(), getDestination())) {
                 return false;
             }
         } else {
-            //Check if folder is being put inside a folder
-            if (isFolderSource && getParent(getDestination()) instanceof Folder) {
+            // Check if folder is being moved its own descendant
+            if (isDescendant(getData(), getDestination())) {
                 return false;
             }
         }
-        
         return true;
-        
     }
-
+    
     @Override
-    public void perform( IProgressMonitor monitor ) {
-        
-        for( Object source : sourceList ) {
-            
-            final ViewerDropLocation location = getViewerLocation();
+    public void perform(IProgressMonitor monitor) {
 
-            if (location == ViewerDropLocation.NONE) {
-                //Do nothing
-            } else if (location == ViewerDropLocation.ON) {
+        for (Object source : sources) {
+
+            final ViewerDropLocation location = getViewerLocation();
+            if (ViewerDropLocation.NONE == location) {
+                // Do nothing
+            } else if (ViewerDropLocation.ON == location) {
                 moveIn(source);
             } else {
                 move(source, location);
             }
-            
+
         }
-        
-        refresh();
-        
+
     }
 
     /**
-     * Refreshes the LegendView viewer
-     * @deprecated - Should expand (in general, update the viewer) in the LegendView itself by
-     *             listening to changes to the map and legenditems list
-     */
-    private void refresh() {
-        /*
-        final Runnable runnable = new Runnable(){
-            public void run() {
-                if (LegendView.getViewer() != null) {
-                    LegendView.getViewer().refresh();    
-                }
-            }
-        };
-
-        if (Display.getCurrent() == null) {
-            Display.getDefault().asyncExec(runnable);
-        } else {
-            runnable.run();
-        }
-        */
-    }
-    
-    /**
-     * Expands the node of the element in the LegendView viewer.
+     * Performs moving in the source object into a folder.
      * 
-     * @param element
-     * @deprecated - Should expand (in general, update the viewer) in the LegendView itself by
-     *             listening to changes to the map and legenditems list
-     */
-    private void expandElement(final Object element) {
-        
-        // Should expand (in general, update the viewer) in the LegendView itself by listening to
-        // changes to the map and legenditems list
-        
-        /*
-        final Runnable runnable = new Runnable(){
-            public void run() {
-                final CheckboxTreeViewer viewer = (CheckboxTreeViewer) LegendView.getViewer();
-                if (viewer != null) {
-                    viewer.setExpandedState(element, true);    
-                }
-            }
-        };
-
-        if (Display.getCurrent() == null) {
-            Display.getDefault().asyncExec(runnable);
-        } else {
-            runnable.run();
-        }
-        */
-        
-    }
-    
-    /**
-     * Performs moving in the source item into a folder
      * @param source
      */
-    private void moveIn( Object source ) {
-        final Folder folder = (Folder) getDestination(); 
-        folder.getItems().add(0, ((Layer) source));
-        expandElement(folder);
+    private void moveIn(Object source) {
+        final ILegendItem sourceItem = (ILegendItem) source;
+        final Folder folder = (Folder) target;
+        folder.getItems().add(sourceItem);
     }
-    
+
     /**
-     * Performs moving the source item below or above another item, either inside or outside a
-     * folder.
+     * Performs moving the source object below or above another object. This can also move objects
+     * in and out of a folder with a specific drop location.
      * 
      * @param source
      * @param location
      */
     private void move(Object source, ViewerDropLocation location) {
+
+        final ILegendItem sourceItem = (ILegendItem) source;
         
-        final List sourceParent = getParentList(source);
-        final List targetParent = getParentList(getDestination());
-        
-        if (sourceParent == targetParent) {
-            
-            sourceParent.remove(source);
-            int targetIndexNew = targetParent.indexOf(getDestination());
-            
+        final List<ILegendItem> sourceSiblings = getSiblings(source);
+        final List<ILegendItem> targetSiblings = getSiblings(target);
+
+        if (sourceSiblings == targetSiblings) {
+
+            sourceSiblings.remove(source);
+            int targetIndexNew = targetSiblings.indexOf(getDestination());
+
             if (location == ViewerDropLocation.BEFORE) {
-                targetParent.add(targetIndexNew, source);
+                targetSiblings.add(targetIndexNew, sourceItem);
             } else if (location == ViewerDropLocation.AFTER) {
-                targetParent.add(targetIndexNew + 1, source);
+                targetSiblings.add(targetIndexNew + 1, sourceItem);
             }
-            
+
         } else {
-            int targetIndex = targetParent.indexOf(getDestination());
+            int targetIndex = targetSiblings.indexOf(getDestination());
             if (location == ViewerDropLocation.AFTER) {
                 targetIndex++;
             }
-            targetParent.add(targetIndex, source);
+            targetSiblings.add(targetIndex, sourceItem);
         }
-        
+
     }
     
     /**
-     * Gets the actual list of the parent of the object
+     * Gets siblings of the object. This includes the object in the correct order in their
+     * containing list.
+     * <p>
+     * Examples: map.getLegend() or folder.getItems()
+     * 
      * @param object
-     * @return map.getLegend() or folder.getItems()
+     * @return siblings
      */
-    private List getParentList(Object object) {
-        
+    private List<ILegendItem> getSiblings(Object object) {
         final Object parent = getParent(object);
-        
         if (parent instanceof Map) {
             return ((Map) parent).getLegend();
         } else if (parent instanceof Folder) {
             return ((Folder) parent).getItems();
         }
-        
         return null;
     }
     
     /**
-     * Gets the parent of the object, relative to the LegendItems list. For example a folder or the
-     * map if the object is contained in the LegendItem list itself.
+     * Gets the parent of the object inside the legend items list. This returns null if the object
+     * is not a descendant of the list.
      * 
      * @param object
-     * @return map or folder
+     * @return parent
      */
     private Object getParent(Object object) {
-        
-        if (object instanceof Folder) {
-            return ((Map) ApplicationGIS.getActiveMap());
-        } else if (object instanceof Layer) {
-            final List legendItems = ((Map) ApplicationGIS.getActiveMap()).getLegend();
-            for( Object legendItem : legendItems ) {
-                if (legendItem instanceof Folder) {
-                    final List folderItems = ((Folder) legendItem).getItems();
-                    for( Object folderItem : folderItems ) {
-                        if (folderItem == object) {
-                            return legendItem;
-                        }
-                    }
-                } else {
-                    if (legendItem == object) {
-                        return ((Map) ApplicationGIS.getActiveMap());
+        final Map map = getActiveMap();
+        final List<ILegendItem> items = map.getLegend();
+        if (items.contains(object)) {
+            return map;
+        }
+        for (ILegendItem item : items) {
+            if (item instanceof Folder) {
+                final Object parent = getParent((Folder) item, object);
+                if (parent != null) {
+                    return parent;
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Gets the parent of the object inside the folder. This returns null if the object is not a
+     * descendant of the folder.
+     * 
+     * @param folder
+     * @param object
+     * @return parent
+     */
+    private Object getParent(Folder folder, Object object) {
+        if (folder.getItems().contains(object)) {
+            return folder;
+        }
+        for (ILegendItem folderItem : folder.getItems()) {
+            if (folderItem instanceof Folder) {
+                final Object parent = getParent((Folder) folderItem, object);
+                if (parent != null) {
+                    return parent;
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Checks if the target is the parent of the source.
+     * 
+     * @param source
+     * @param target
+     * @return true if parent, otherwise false
+     */
+    private boolean isParent(Object source, Object target) {
+        return getParent(source) == target;
+    }
+    
+    /**
+     * Checks if the target is a descendant of the source.
+     * 
+     * @param source
+     * @param target
+     * @return true if descendant, otherwise false
+     */
+    private boolean isDescendant(Object source, Object target) {
+        if (source instanceof Folder) {
+            final Folder folder = (Folder) source;
+            for (ILegendItem folderItem : folder.getItems()) {
+                if (folderItem == target) {
+                    return true;
+                } else if (folderItem instanceof Folder) {
+                    if (isDescendant(folderItem, target)) {
+                        return true;
                     }
                 }
             }
         }
-        
-        return null;
-        
+        return false;
+    }
+
+    /**
+     * Gets the active map.
+     * 
+     * @return map
+     */
+    private Map getActiveMap() {
+        return (Map) ApplicationGIS.getActiveMap();
     }
     
     /**
-     * Initialises the drop conditions and flags used in this drop action
+     * Initialises the drag/drop conditions and flags to process the action.
      */
     private void initDropConditions() {
-        getSource(getData());
-        getTarget(getDestination());
+        checkSource(getData());
+        checkTarget(getDestination());
     }
-    
+
     /**
-     * Checks and analyses the source data initialises flags related to it
+     * Checks the source data then sets flags and variables to process the drop/drop action.
+     * 
      * @param data
      */
-    private void getSource( Object data ) {
+    private void checkSource(Object data) {
 
-        if (data == null) {
-            this.sourceList = null;
-            this.isFolderSource = false;
-            this.isLayerSource = false;
-            this.isMixedSource = false;
-        } else {
-            if (data instanceof Layer) {
-                sourceList = Collections.singletonList(data);
-                this.isFolderSource = false;
-                this.isLayerSource = true;
-                this.isMixedSource = false;
-            } else if (data instanceof Folder) {
-                sourceList = Collections.singletonList(data);
-                this.isFolderSource = true;
-                this.isLayerSource = false;
-                this.isMixedSource = false;
-            } else {
-                sourceList = new ArrayList<Object>();
-                Object[] array = (Object[]) data;
-                for( Object object : array ) {
-                    sourceList.add(object);
+        sources = null;
+        isFolderSource = false;
+        isLayerSource = false;
+        isMixedSource = false;
+
+        if (data != null) {
+            sources = new ArrayList<Object>();
+            if (data instanceof Object[]) {
+                for (Object dataItem : (Object[]) data) {
+                    sources.add(dataItem);
                 }
-                this.isFolderSource = false;
-                this.isLayerSource = false;
-                this.isMixedSource = true;
-            }    
+                isMixedSource = true;
+            } else {
+                if (data instanceof LayerLegendItem) {
+                    sources.add(data);
+                    isLayerSource = true;
+                } else if (data instanceof Folder) {
+                    sources.add(data);
+                    isFolderSource = true;
+                }
+            }
         }
-        
+
     }
-    
+
     /**
-     * Checks and analyses the target data initialises flags related to it
+     * Checks the target data then sets flags and variables to process the drop/drop action.
+     * 
      * @param data
      */
-    private void getTarget( Object data ) {
+    private void checkTarget(Object data) {
 
-        if (data == null) {
-            this.isFolderTarget = false;
-            this.isLayerTarget = false;
-        } else {
-            if (data instanceof Layer) {
-                this.isFolderTarget = false;
-                this.isLayerTarget = true;
+        target = null;
+        isFolderTarget = false;
+        isLayerTarget = false;
+
+        if (data != null) {
+            if (data instanceof LayerLegendItem) {
+                target = data;
+                isLayerTarget = true;
             } else if (data instanceof Folder) {
-                this.isFolderTarget = true;
-                this.isLayerTarget = false;
-            }            
+                target = data;
+                isFolderTarget = true;
+            }
         }
-        
+
     }
-    
+
 }

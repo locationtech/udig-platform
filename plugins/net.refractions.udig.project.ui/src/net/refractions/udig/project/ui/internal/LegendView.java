@@ -45,7 +45,6 @@ import net.refractions.udig.project.ui.AdapterFactoryLabelProviderDecorator;
 import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.internal.actions.Delete;
 import net.refractions.udig.project.ui.internal.actions.MylarAction;
-import net.refractions.udig.project.ui.internal.actions.RenameFolderAction;
 import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.UDIGDragDropUtilities;
@@ -55,7 +54,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
@@ -123,7 +122,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
     private LayerAction backAction;
     
     private IAction newFolderAction;
-    private RenameFolderAction renameFolderAction;
+    private LegendViewRenameFolderAction renameFolderAction;
     
     private CheckboxTreeViewer viewer;
     private LegendViewContentProvider contentProvider;
@@ -564,7 +563,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
      */
     private IAction renameFolderAction() {
         if (renameFolderAction == null) {
-            renameFolderAction = new RenameFolderAction(viewer);
+            renameFolderAction = new LegendViewRenameFolderAction(viewer);
         }
         return renameFolderAction;
     }
@@ -639,7 +638,9 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                 mapDeepListener = new MapDeepListener();
             }
             this.currentMap.addDeepAdapter(mapDeepListener);
-            addLegendItemsDeepListeners();
+            EObjectContainmentEList<ILegendItem> legendEObject = (EObjectContainmentEList<ILegendItem>) currentMap
+                    .getLegend();
+            legendEObject.getEObject().eAdapters().add(mapDeepListener);
             
             if (mylarListener == null) {
                 mylarListener = new BlackboardListener();
@@ -671,7 +672,9 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
             
             //Remove deep listener
             this.currentMap.removeDeepAdapter(mapDeepListener);
-            removeLegendItemsDeepListeners();
+            EObjectContainmentEList<ILegendItem> legendEObject = (EObjectContainmentEList<ILegendItem>) currentMap
+                    .getLegend();
+            legendEObject.getEObject().eAdapters().remove(mapDeepListener);
             mapDeepListener = null;
             
             //Remove other listeners
@@ -682,58 +685,6 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
             
         }
         
-    }
-    
-    /**
-     * Adds the deepAdapter to the LegendItems list and to the contents of the list
-     */
-    private void addLegendItemsDeepListeners() {
-        
-      //TODO - CHECK WHY THIS IS THIS!
-        //Add to list
-//        ((EObjectContainmentEList<LegendItem>) this.currentMap.getLegend()).getEObject()
-//                .eAdapters().add(mapDeepListener);
-        
-        //Add to list children
-        for( ILegendItem legendItem : this.currentMap.getLegend() ) {
-            if (legendItem instanceof Folder) {
-                final Folder folder = (Folder) legendItem;
-                for( ILegendItem folderItem : folder.getItems() ) {
-                    final Layer layer = (Layer) folderItem;
-                    layer.eAdapters().add(mapDeepListener);
-                }
-                folder.eAdapters().add(mapDeepListener);
-            } else if (legendItem instanceof Layer) {
-                final Layer layer = (Layer) legendItem;
-                layer.eAdapters().add(mapDeepListener);
-            }
-        }
-    }
-    
-    /**
-     * Removes the deepAdapter from the LegendItems list and from the contents of the list
-     */
-    private void removeLegendItemsDeepListeners() {
-        
-        //TODO - CHECK WHY THIS IS THIS!
-        //Remove from list
-//        ((EObjectContainmentEList<LegendItem>) this.currentMap.getLegend()).getEObject()
-//                .eAdapters().remove(mapDeepListener);
-        
-        //Remove from list children
-        for( ILegendItem legendItem : currentMap.getLegend() ) {
-            if (legendItem instanceof Folder) {
-                final Folder folder = (Folder) legendItem;
-                for( ILegendItem folderItem : folder.getItems() ) {
-                    final Layer layer = (Layer) folderItem;
-                    layer.eAdapters().remove(mapDeepListener);
-                }
-                folder.eAdapters().remove(mapDeepListener);
-            } else if (legendItem instanceof Layer) {
-                final Layer layer = (Layer) legendItem;
-                layer.eAdapters().remove(mapDeepListener);
-            }
-        }
     }
     
     /**
@@ -760,6 +711,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
      * @param key The desired class
      * @return An object of type key or null;
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public Object getAdapter( Class key ) {
         if (key.equals(IPropertySheetPage.class)) {
             return ProjectUIPlugin.getDefault().getPropertySheetPage();
@@ -771,30 +723,12 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
     }
     
     /**
-     * Method implemented from IDropTargetProvider
+     * Method implemented from IDropTargetProvider.
      */
     @Override
     public Object getTarget( DropTargetEvent event ) {
-        
-        if (getCurrentMap() == null) {
-            return this;
-        }
-        
-        List<ILayer> mapLayers = getCurrentMap().getMapLayers();
-        if (mapLayers.isEmpty()) {
-            return this;
-        }
-
-        return mapLayers.get(mapLayers.size() - 1);
-        
-        /* TODO - Implement when rendering has been migrated
-        final List<ILegendItem> legendItems = getCurrentMap().getLegend();
-        if (legendItems.isEmpty()) {
-            return this;
-        }
-
-        return legendItems.get(legendItems.size() - 1);
-        */
+        // Add additional processing if needed
+        return null;
     }
 
     /**
@@ -1089,14 +1023,15 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                 return;
             }
             
+            final Object notifier = msg.getNotifier();
+            
             //Do processing
-            if (msg.getNotifier() instanceof ContextModel) {
+            if (notifier instanceof ContextModel) {
                 
                 if (ProjectPackage.CONTEXT_MODEL__LAYERS == msg.getFeatureID(ContextModel.class)) {
                     switch( msg.getEventType() ) {
                     case Notification.ADD: {
                         System.out.println("[LegendView] LegendItem - Add Event"); //$NON-NLS-1$
-                        setAdapter(msg.getNewValue(), false);
                         filtersHandler.refresh();
                         gridHandler.refresh(msg.getEventType(), msg.getNewValue());
                         LegendViewCheckboxUtils.updateCheckboxes(LegendView.this);
@@ -1105,7 +1040,6 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                     }
                     case Notification.REMOVE: {
                         System.out.println("[LegendView] LegendItem - Remove Event"); //$NON-NLS-1$
-                        setAdapter(msg.getOldValue(), true);
                         filtersHandler.refresh();
                         gridHandler.refresh(msg.getEventType(), msg.getOldValue());
                         refreshView();
@@ -1113,8 +1047,25 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                     }
                     }
                 }
+            
+            } else if (notifier instanceof Map) {
                 
-            } else if (msg.getNotifier() instanceof Folder) {
+                if (ProjectPackage.MAP__LEGEND == msg.getFeatureID(Map.class)) {
+                    switch( msg.getEventType() ) {
+                    case Notification.ADD: {
+                        System.out.println("[LegendView] LegendList - Add Event"); //$NON-NLS-1$
+                        refreshView();
+                        break;
+                    }
+                    case Notification.REMOVE: {
+                        System.out.println("[LegendView] LegendList - Remove Event"); //$NON-NLS-1$
+                        refreshView();
+                        break;
+                    }
+                    }
+                }
+                
+            } else if (notifier instanceof Folder) {
                 
                 if (ProjectPackage.FOLDER__ITEMS == msg.getFeatureID(Folder.class)) {
                     
@@ -1123,18 +1074,15 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                     switch( msg.getEventType() ) {
                     case Notification.ADD: {
                         System.out.println("[LegendView] FolderItem - Add Event"); //$NON-NLS-1$
-                        setAdapter(msg.getNewValue(), false);
                         filtersHandler.refresh();
                         gridHandler.refresh(msg.getEventType(), msg.getNewValue());
                         setExpandedState((Folder) msg.getNotifier());
                         LegendViewCheckboxUtils.updateCheckbox(LegendView.this, folder, true);
-                        viewer.getTree();
                         refreshView();
                         break;
                     }
                     case Notification.REMOVE: {
-                        System.out.println("[LegendView] LegendItem - Remove Event"); //$NON-NLS-1$
-                        setAdapter(msg.getOldValue(), true);
+                        System.out.println("[LegendView] FolderItem - Remove Event"); //$NON-NLS-1$
                         filtersHandler.refresh();
                         gridHandler.refresh(msg.getEventType(), msg.getOldValue());
                         setExpandedState((Folder) msg.getNotifier());
@@ -1145,7 +1093,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                     }
                 }
 
-            } else if (msg.getNotifier() instanceof Layer) {
+            } else if (notifier instanceof Layer) {
                 // When layer is set to visible/invisible outside of UI
                 if (msg.getFeatureID(Layer.class) == ProjectPackage.LAYER__VISIBLE) {
                     if (msg.getOldBooleanValue() != msg.getNewBooleanValue()) {
@@ -1159,19 +1107,6 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                    
             }
             
-        }
-
-        private void setAdapter(Object object, boolean doRemove) {
-            final EObject eObject = (EObject) object;
-            if (doRemove) {
-                if (eObject.eAdapters().contains(this)) {
-                    eObject.eAdapters().remove(this);    
-                }
-            } else { 
-                if (!eObject.eAdapters().contains(this)) {
-                    eObject.eAdapters().add(this);    
-                }
-            }
         }
         
         private void setExpandedState(final Folder folder) {
@@ -1198,6 +1133,10 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                     viewer.setExpandedState(folder, false);    
                 }
             }
+        }
+        
+        private void refreshView(Object eventObj) {
+            
         }
         
         private void refreshView() {
