@@ -9,7 +9,7 @@ echo "Release SDK ${VERSION}"
 # ls ${BASE}/../features/net.refractions.udig_sdk-product/target/udig-1.3.SNAPSHOT-sdk-linux.gtk.x86.zip
 
 #SDK_FILE="udig-${VERSION}-sdk.zip"
-SDK_FILE="udig-1.3.2-SNAPSHOT-sdk.zip"
+SDK_FILE="udig-${VERSION}-sdk.zip"
 
 # Release sdk if available
 if [ -f ${SDK_TARGET}/${SDK_FILE} ] 

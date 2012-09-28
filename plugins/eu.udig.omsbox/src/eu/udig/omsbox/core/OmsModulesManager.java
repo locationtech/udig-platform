@@ -32,10 +32,6 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.osgi.service.datalocation.Location;
-import org.geotools.data.DataUtilities;
-
 import oms3.Access;
 import oms3.ComponentAccess;
 import oms3.annotations.Description;
@@ -90,21 +86,17 @@ public class OmsModulesManager {
          * and also search in a folder inside the installation
          * folder for some library jars
          */
-        Location installLocation = Platform.getInstallLocation();
-        File installFolder = DataUtilities.urlToFile(installLocation.getURL());
-        if (installFolder != null && installFolder.exists()) {
-            File omsboxLibsFolder = new File(installFolder, "omsbox");
-            OmsBoxPlugin.log("Searching module libraries in: " + omsboxLibsFolder.getAbsolutePath());
-            if (omsboxLibsFolder.exists()) {
-                File[] extraJars = omsboxLibsFolder.listFiles(new FilenameFilter(){
-                    public boolean accept( File dir, String name ) {
-                        return name.endsWith(".jar");
-                    }
-                });
-                for( File extraJar : extraJars ) {
-                    addJar(extraJar.getAbsolutePath());
-                    jarsPathList.add(extraJar.getAbsolutePath());
+        File extraSpatialtoolboxLibsFolder = OmsBoxPlugin.getExtraSpatialtoolboxLibsFolder();
+        if (extraSpatialtoolboxLibsFolder != null) {
+            OmsBoxPlugin.log("Searching module libraries in: " + extraSpatialtoolboxLibsFolder.getAbsolutePath());
+            File[] extraJars = extraSpatialtoolboxLibsFolder.listFiles(new FilenameFilter(){
+                public boolean accept( File dir, String name ) {
+                    return name.endsWith(".jar");
                 }
+            });
+            for( File extraJar : extraJars ) {
+                addJar(extraJar.getAbsolutePath());
+                jarsPathList.add(extraJar.getAbsolutePath());
             }
         }
         return jarsPathList;

@@ -1,7 +1,7 @@
 SDK Quickstart
 ##############
 
- |udig_logo_gif| |refractions_png| |lisasoft_png| |camptocamp_logo| |sponsor_logo| |hydrologis_logo| 
+ |udig_logo_gif| |refractions_png| |lisasoft_png| |camptocamp_logo| |sponsor_logo| |hydrologis_logo| 
 
 .. image:: ../../../images/background.png
    :width: 100%
@@ -121,7 +121,7 @@ as we wait for some of the larger downloads.
   .. hint::
      Please ensure your eclipse and jre match (both win32 – or both win64).
 
-.. |eclipse_modeling_tools_png| image:: images/eclipse_modeling_tools.png
+.. |eclipse_modeling_tools_png| image:: images/eclipse_modeling_tools.jpg
     :width: 15.36cm
     :height: 2.221cm
 
@@ -174,22 +174,22 @@ When your eclipse download has finished and we can begin to installation.
      You may want to modify the “eclipse.ini” file to specify additional command line 
      options such as more memory.
 
-.. |install_dropins_png| image:: images/install_dropins.png
+.. |install_dropins_png| image:: images/install_dropins.jpg
     :width: 12.19cm
     :height: 7.05cm
 
 
-.. |install_jre_png| image:: images/install_jre.png
+.. |install_jre_png| image:: images/install_jre.jpg
     :width: 12.19cm
     :height: 7.05cm
 
 
-.. |install_jre_7zip_png| image:: images/install_jre_7zip.png
+.. |install_jre_7zip_png| image:: images/install_jre_7zip.jpg
     :width: 8.01cm
     :height: 5.941cm
 
 
-.. |install_eclipse_png| image:: images/install_eclipse.png
+.. |install_eclipse_png| image:: images/install_eclipse.jpg
     :width: 12.19cm
     :height: 7.05cm
 
@@ -327,27 +327,27 @@ working on uDig plug-ins, but before we do that lets try running the application
    are running – then these instructions are out of date!
 
 
-.. |target_platform_add_eclipse_png| image:: images/target_platform_add_eclipse.png
+.. |target_platform_add_eclipse_png| image:: images/target_platform_add_eclipse.jpg
     :width: 8.331cm
     :height: 4.399cm
 
 
-.. |target_platform_definition_png| image:: images/target_platform_definition.png
+.. |target_platform_definition_png| image:: images/target_platform_definition.jpg
     :width: 11.411cm
     :height: 5.429cm
 
 
-.. |target_platform_add_sdk_png| image:: images/target_platform_add_sdk.png
+.. |target_platform_add_sdk_png| image:: images/target_platform_add_sdk.jpg
     :width: 8.331cm
     :height: 4.54cm
 
 
-.. |install_delta_png| image:: images/install_delta.png
+.. |install_delta_png| image:: images/install_delta.jpg
     :width: 12.19cm
     :height: 7.181cm
 
 
-.. |target_platform_locations_png| image:: images/target_platform_locations.png
+.. |target_platform_locations_png| image:: images/target_platform_locations.jpg
     :width: 11.411cm
     :height: 7.519cm
 
@@ -408,12 +408,12 @@ good way to test that everything is installed correctly.
     :height: 6.77cm
 
 
-.. |product_dependencies_png| image:: images/product_dependencies.png
+.. |product_dependencies_png| image:: images/product_dependencies.jpg
     :width: 8.939cm
     :height: 7.721cm
 
 
-.. |product_launch_png| image:: images/product_launch.png
+.. |product_launch_png| image:: images/product_launch.jpg
     :width: 12.839cm
     :height: 7.211cm
 
@@ -591,13 +591,4 @@ to your command line options::
    -vm C:\java\eclipse\jre\\bin\javaw.exe
 
 This will force :command:`eclipse.exe` to use the jre you downloaded.
-
-
-References
-==========
-
-.. toctree::
-   :maxdepth: 1
-
-   SDK_Quickstart_for_uDig_1.1.0
 
