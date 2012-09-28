@@ -14,6 +14,9 @@
  */
 package net.refractions.udig.project.ui.internal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.refractions.udig.internal.ui.IDropTargetProvider;
 import net.refractions.udig.project.BlackboardEvent;
 import net.refractions.udig.project.EditManagerEvent;
@@ -45,7 +48,6 @@ import net.refractions.udig.project.ui.internal.actions.MylarAction;
 import net.refractions.udig.project.ui.tool.IToolManager;
 import net.refractions.udig.ui.PlatformGIS;
 import net.refractions.udig.ui.UDIGDragDropUtilities;
-import net.refractions.udig.ui.ZoomingDialog;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.notify.Adapter;
@@ -53,7 +55,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -74,25 +75,20 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.window.SameShellProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IKeyBindingService;
 import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
-import org.eclipse.ui.dialogs.PropertyDialogAction;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 
@@ -128,7 +124,6 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
     private CheckStateListener checkStateListener = new CheckStateListener();
     private CollapseExpandListener collapeExpandListener = new CollapseExpandListener();
     
-    private Action propertiesAction;
     private IAction deleteAction;
     
     //Listens to changes to selected views/editors
@@ -314,27 +309,19 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
 
             public void menuAboutToShow( IMenuManager mgr ) {
                 
-                contextMenu.add(newFolderAction());
+                if (canAddFolder()) {
+                    contextMenu.add(newFolderAction());    
+                }
+                
                 if (LegendViewUtils.isFolderSelected(viewer.getSelection())) {
                     contextMenu.add(renameFolderAction());    
                 }
-                contextMenu.add(new Separator());
                 
-                contextMenu.add(ApplicationGIS.getToolManager().getCOPYAction(LegendView.this));
-                contextMenu.add(ApplicationGIS.getToolManager().getPASTEAction(LegendView.this));
-                contextMenu.add(getDeleteAction());
-                contextMenu.add(new Separator());
-                contextMenu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-                contextMenu.add(ApplicationGIS.getToolManager().createOperationsContextMenu(
-                        viewer.getSelection()));
-                contextMenu.add(new Separator());
-                contextMenu.add(ActionFactory.EXPORT.create(getSite().getWorkbenchWindow()));
-                contextMenu.add(new Separator());
-
-                if (viewer.getTree().getSelectionCount() == 1) {
-                    contextMenu.add(getPropertiesAction());
+                if (canDelete()) {
+                    contextMenu.add(new Separator());
+                    contextMenu.add(getDeleteAction());    
                 }
-
+                
             }
             
         });
@@ -348,7 +335,35 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
         getSite().registerContextMenu(contextMenu, targetViewer);
 
     }
-
+    
+    private boolean canAddFolder() {
+        return newFolderAction.isEnabled();
+    }
+    
+    private boolean canDelete() {
+        return !viewer.getSelection().isEmpty();
+    }
+    
+    private ISelection getDeleteSelection() {
+        
+        final ISelection selection = viewer.getSelection();
+        final StructuredSelection strucSelection = (StructuredSelection) selection;
+        
+        final List<Object> adaptedObjs = new ArrayList<Object>();
+        for (Object obj : strucSelection.toList()) {
+            if (obj instanceof Folder) {
+                adaptedObjs.add(obj);
+            } else if (obj instanceof LayerLegendItem) {
+                final LayerLegendItem layerItem = (LayerLegendItem) obj;
+                adaptedObjs.add(layerItem.getLayer());
+            }    
+        }
+        
+        final StructuredSelection adaptedSelection = new StructuredSelection(adaptedObjs);
+        return adaptedSelection;
+        
+    }
+    
     private IAction getDeleteAction() {
         
         if (deleteAction == null) {
@@ -356,11 +371,12 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
             deleteAction = new Action(){
                 @Override
                 public void run() {
-                    Delete delete = new Delete(false);
-                    ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                            .getSelectionService().getSelection();
-                    delete.selectionChanged(this, selection);
-                    delete.run(this);
+                    final ISelection selection = getDeleteSelection();
+                    if (!selection.isEmpty()) {
+                        final Delete delete = new Delete(false);
+                        delete.selectionChanged(this, selection);
+                        delete.run(this);
+                    }
                 }
             };
             
@@ -376,39 +392,6 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
         }
         
         return deleteAction;
-        
-    }
-
-    protected IAction getPropertiesAction() {
-        
-        if (propertiesAction == null) {
-            
-            final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-            final PropertyDialogAction propDialogAction = new PropertyDialogAction(new SameShellProvider(shell),
-                    viewer);
-
-            propertiesAction = new Action(){
-                @Override
-                public void runWithEvent( Event event ) {
-                    ZoomingDialog dialog = new ZoomingDialog(shell, propDialogAction.createDialog(),
-                            ZoomingDialog.calculateBounds(viewer.getTree().getSelection()[0], -1));
-                    dialog.open();
-                }
-            };
-
-            propertiesAction.setText(propDialogAction.getText());
-            propertiesAction.setActionDefinitionId(propDialogAction.getActionDefinitionId());
-            propertiesAction.setDescription(propDialogAction.getDescription());
-            propertiesAction.setHoverImageDescriptor(propDialogAction.getHoverImageDescriptor());
-            propertiesAction.setImageDescriptor(propDialogAction.getImageDescriptor());
-            propertiesAction.setToolTipText(propDialogAction.getToolTipText());
-
-        }
-        
-        getViewSite().getActionBars().setGlobalActionHandler(ActionFactory.PROPERTIES.getId(),
-                propertiesAction);
-        
-        return propertiesAction;
         
     }
     
