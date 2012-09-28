@@ -224,7 +224,7 @@ public class LegendViewFiltersHandler {
              //Apply filter on viewer elements
              view.getViewer().refresh();
              //Set checkbox status
-             LegendViewCheckboxUtils.updateCheckboxesv0Async(view);
+             LegendViewCheckboxUtils.updateCheckboxesAsync(view);
         }
          
     }

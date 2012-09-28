@@ -542,7 +542,8 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
         final Folder folder = ProjectFactory.eINSTANCE.createFolder();
         folder.setName(Messages.LegendView_new_folder_default_lbl);
         currentMap.sendCommandSync(new AddFolderItemCommand(folder));
-        viewer.refresh();
+//        viewer.refresh();
+        viewer.update(currentMap.getLegend().toArray(), null);
     }
     
     private void setNewFolderActionState() {
@@ -611,7 +612,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
             }
 
             // Set checkbox state
-            LegendViewCheckboxUtils.updateCheckboxesv0Async(this);
+            LegendViewCheckboxUtils.updateCheckboxesAsync(this);
         }
 
     }
@@ -1032,19 +1033,13 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                     switch( msg.getEventType() ) {
                     case Notification.ADD: {
                         System.out.println("[LegendView] LegendList - Add Event"); //$NON-NLS-1$
-                        if (msg.getNewValue() instanceof Folder) {
-                            final Folder folder = (Folder) msg.getNewValue();
-                            folder.eAdapters().add(mapDeepListener);
-                        }
+                        addListeners(msg);
                         refreshOnAddAndRemove(msg);
                         break;
                     }
                     case Notification.REMOVE: {
                         System.out.println("[LegendView] LegendList - Remove Event"); //$NON-NLS-1$
-                        if (msg.getOldValue() instanceof Folder) {
-                            final Folder folder = (Folder) msg.getOldValue();
-                            folder.eAdapters().remove(mapDeepListener);
-                        }
+                        removeListeners(msg);
                         refreshOnAddAndRemove(msg);
                         break;
                     }
@@ -1057,11 +1052,13 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                     switch( msg.getEventType() ) {
                     case Notification.ADD: {
                         System.out.println("[LegendView] FolderItem - Add Event"); //$NON-NLS-1$
+                        addListeners(msg);
                         refreshOnAddAndRemove(msg);
                         break;
                     }
                     case Notification.REMOVE: {
                         System.out.println("[LegendView] FolderItem - Remove Event"); //$NON-NLS-1$
+                        removeListeners(msg);
                         refreshOnAddAndRemove(msg);
                         break;
                     }
@@ -1072,7 +1069,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                 // When layer's visibility is changed
                 if (msg.getFeatureID(Layer.class) == ProjectPackage.LAYER__VISIBLE) {
                     if (msg.getOldBooleanValue() != msg.getNewBooleanValue()) {
-                        LegendViewCheckboxUtils.updateCheckboxesv0Async(LegendView.this);
+                        LegendViewCheckboxUtils.updateCheckboxesAsync(LegendView.this);
                     }
                     // When layer's interaction property is changed
                 } else if (msg.getFeatureID(Layer.class) == ProjectPackage.LAYER__INTERACTION_MAP) {
@@ -1082,6 +1079,30 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                    
             }
             
+        }
+        
+        /**
+         * Adds needed listeners to the event object.
+         * 
+         * @param msg
+         */
+        private void addListeners(Notification msg) {
+            if (msg.getNewValue() instanceof Folder) {
+                final Folder folder = (Folder) msg.getNewValue();
+                folder.eAdapters().add(mapDeepListener);
+            }
+        }
+
+        /**
+         * Removes needed listeners to the event object.
+         * 
+         * @param msg
+         */
+        private void removeListeners(Notification msg) {
+            if (msg.getOldValue() instanceof Folder) {
+                final Folder folder = (Folder) msg.getOldValue();
+                folder.eAdapters().remove(mapDeepListener);
+            }
         }
         
         /**
@@ -1099,8 +1120,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
             final Object notifier = msg.getNotifier();
             if (notifier instanceof Folder) {
                 final Folder folder = (Folder) msg.getNotifier(); 
-                final int eventType = msg.getEventType();
-                refreshViewer(folder, (Notification.ADD == eventType));
+                refreshViewer(folder);
             } else if (notifier instanceof Map) {
                 refreshViewer();
             }
@@ -1111,7 +1131,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
          * Refreshes the viewer.
          */
         private void refreshViewer() {
-            refreshViewer(null, false);
+            refreshViewer(null);
         }
         
         /**
@@ -1119,15 +1139,12 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
          * 
          * @param folder
          */
-        private void refreshViewer(final Folder folder, final boolean updateLayers) {
+        private void refreshViewer(final Folder folder) {
             final Runnable run = new Runnable(){
                 @Override
                 public void run() {
-                    if (folder != null) {
-                        doSetExpandedState(folder);
-                    }
                     viewer.refresh();
-                    LegendViewCheckboxUtils.updateCheckboxesv0(LegendView.this);
+                    LegendViewCheckboxUtils.updateCheckboxes(LegendView.this);
                 }
             };
             if (Display.getCurrent() == null) {
@@ -1136,16 +1153,6 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                 run.run();
             }
         }
-    }
-    
-    /**
-     * Sets the expended state of the folder node in the viewer.
-     * 
-     * @param folder
-     */
-    private void doSetExpandedState(Folder folder) {
-        final boolean hasItems = (folder.getItems().size() > 0);
-        viewer.setExpandedState(folder, hasItems);
     }
     
     /**
@@ -1161,7 +1168,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
 
         @Override
         public void treeExpanded( TreeExpansionEvent event ) {
-            LegendViewCheckboxUtils.updateCheckboxesv0Async(LegendView.this);
+            LegendViewCheckboxUtils.updateCheckboxesAsync(LegendView.this);
         }
         
     }
@@ -1178,7 +1185,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                 final ILegendItem item = (ILegendItem) eventObj;
                 final boolean isChecked = event.getChecked();
                 setVisibilityState(item, isChecked);
-                LegendViewCheckboxUtils.updateCheckboxesv0(LegendView.this);
+                LegendViewCheckboxUtils.updateCheckboxes(LegendView.this);
             }
         }
         
@@ -1196,6 +1203,8 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
             for (ILegendItem item : folder.getItems()) {
                 setVisibilityState(item, isChecked);
             }
+            viewer.setGrayed(folder, false);
+            viewer.setChecked(folder, isChecked);
         }
 
         private void setVisibilityState(LayerLegendItem layerItem, boolean isChecked) {

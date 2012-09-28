@@ -38,15 +38,15 @@ public final class LegendViewCheckboxUtils {
         UNCHECKED, CHECKED, BLOCKED;
     }
     
-    public static void updateCheckboxesv0Async(final LegendView view) {
+    public static void updateCheckboxesAsync(final LegendView view) {
         PlatformGIS.asyncInDisplayThread(new Runnable() {
             public void run() {
-                updateCheckboxesv0(view);
+                updateCheckboxes(view);
             }
         }, true);
     }
     
-    public static void updateCheckboxesv0(final LegendView view) {
+    public static void updateCheckboxes(final LegendView view) {
         if (!PlatformUI.getWorkbench().isClosing()) {
 
             final CheckboxTreeViewer viewer = view.getViewer();
@@ -74,6 +74,7 @@ public final class LegendViewCheckboxUtils {
             updateCheckbox(viewer, item);
         }
         setFolderCheckbox(viewer, folder);
+        setFolderExpansion(viewer, folder);
     }
 
     private static void updateCheckbox(final CheckboxTreeViewer viewer, final LayerLegendItem layerItem) {
@@ -91,6 +92,17 @@ public final class LegendViewCheckboxUtils {
             final LayerLegendItem layerItem) {
         final Layer layer = layerItem.getLayer();
         viewer.setChecked(layerItem, layer.isVisible());
+    }
+    
+    /**
+     * Sets the expanded state of the folder on the view.
+     * 
+     * @param viewer
+     * @param folder
+     */
+    private static void setFolderExpansion(final CheckboxTreeViewer viewer, final Folder folder) {
+        final boolean isEmpty = (folder.getItems().size() == 0);
+        viewer.setExpandedState(folder, !isEmpty);
     }
     
     /**
