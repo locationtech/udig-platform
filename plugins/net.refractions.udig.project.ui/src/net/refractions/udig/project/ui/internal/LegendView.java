@@ -542,8 +542,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
         final Folder folder = ProjectFactory.eINSTANCE.createFolder();
         folder.setName(Messages.LegendView_new_folder_default_lbl);
         currentMap.sendCommandSync(new AddFolderItemCommand(folder));
-//        viewer.refresh();
-        viewer.update(currentMap.getLegend().toArray(), null);
+        viewer.refresh();
     }
     
     private void setNewFolderActionState() {
@@ -1114,7 +1113,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
             
             // Refresh handlers' variables
             filtersHandler.refresh();
-            gridHandler.refresh(msg.getEventType(), msg.getNewValue());
+            gridHandler.refresh(msg);
             
             // Refresh viewer
             final Object notifier = msg.getNotifier();

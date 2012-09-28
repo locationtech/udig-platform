@@ -202,9 +202,18 @@ public class LegendViewGridHandler implements ILayerListener {
     /**
      * Refreshes the grid toggle button display and sets/unsets the grid layers handled by the handler 
      */
-    public void refresh( int eventType, Object obj ) {
+    public void refresh( Notification msg ) {
 
-        if (obj instanceof LayerLegendItem) {
+        final int eventType = msg.getEventType();
+        
+        Object obj = null;
+        if (Notification.ADD == eventType) {
+            obj = msg.getNewValue();
+        } else if (Notification.REMOVE == eventType) {
+            obj = msg.getOldValue();
+        }
+        
+        if (obj != null && obj instanceof LayerLegendItem) {
 
             final LayerLegendItem layerItem = (LayerLegendItem) obj;
             final Layer layer = layerItem.getLayer();
