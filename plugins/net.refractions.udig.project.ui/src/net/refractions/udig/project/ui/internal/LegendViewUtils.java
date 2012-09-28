@@ -68,8 +68,10 @@ public final class LegendViewUtils {
      * @return true - if layer is a map graphics layer, otherwise false
      */
     public static boolean isMapGraphicLayer( ILayer layer ) {
-        if (MAP_GRAPHIC_PROTOCOL.equals(layer.getID().getProtocol())) {
-            return true;
+        if (layer != null && layer.getID() != null) {
+            if (MAP_GRAPHIC_PROTOCOL.equals(layer.getID().getProtocol())) {
+                return true;
+            }    
         }
         return false;
     }
@@ -81,8 +83,10 @@ public final class LegendViewUtils {
      * @return true - if layer is a grid layer, otherwise false
      */
     public static boolean isGridLayer( ILayer layer ) {
-        if (isMapGraphicLayer(layer) && GRID_ID_STR.equals(layer.getID().getRef())) {
-            return true;
+        if (layer != null && layer.getID() != null) {
+            if (isMapGraphicLayer(layer) && GRID_ID_STR.equals(layer.getID().getRef())) {
+                return true;
+            }    
         }
         return false;
     }
