@@ -14,9 +14,13 @@
  */
 package net.refractions.udig.project.internal.commands;
 
+import java.util.List;
+
+import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
 import net.refractions.udig.project.internal.Folder;
+import net.refractions.udig.project.internal.Map;
 import net.refractions.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -35,18 +39,14 @@ public class DeleteFolderItemCommand extends AbstractCommand implements Undoable
      */
     private Folder folder;
 
+    private Object parent;
+
     /**
      * Index of the folder to be deleted in the LegendItem list
      */
     private int index;
 
-    /**
-     * Flags if folder is existing in the map. Assigned on run. 
-     * true - folder is existing in the map, otherwise, false
-     */
-    private boolean isInMap;
-
-    public DeleteFolderItemCommand( Folder folder ) {
+    public DeleteFolderItemCommand(Folder folder) {
         this.folder = folder;
     }
 
@@ -56,34 +56,65 @@ public class DeleteFolderItemCommand extends AbstractCommand implements Undoable
     }
 
     @Override
-    public void run( IProgressMonitor monitor ) throws Exception {
-        initRunConditions();
-        if (isInMap) {
-            getMap().getLegend().remove(folder);
-            // TODO - Save currently selected item
-            // TODO - If currently selected item is folder, select next item
+    public void run(IProgressMonitor monitor) throws Exception {
+        initializeDelete();
+        if (parent != null) {
+            
+            if (parent instanceof Map) {
+                getMap().getLegend().remove(folder);
+            } else if (parent instanceof Folder) {
+                final Folder parentFolder = (Folder) parent;
+                parentFolder.getItems().remove(folder);
+            }
         }
+        // TODO - Save currently selected item
+        // TODO - If currently selected item is folder, select next item
     }
 
     @Override
-    public void rollback( IProgressMonitor monitor ) throws Exception {
-        if (isInMap) {
-            getMap().getLegend().add(index, folder);
-            // TODO - Restore currently selected item
-        }
+    public void rollback(IProgressMonitor monitor) throws Exception {
+        getMap().getLegend().add(index, folder);
+        // TODO - Restore currently selected item
     }
 
     /**
      * Checks if folder is existing in the map and initialises isInMap and index variables.
      */
-    private void initRunConditions() {
-        if (folder != null && getMap().getLegend().contains(folder)) {
-            isInMap = true;
-            index = getMap().getLegend().indexOf(folder);
+    private void initializeDelete() {
+        final Map map = getMap();
+        final List<ILegendItem> items = map.getLegend();
+        if (items.contains(folder)) {
+            parent = getMap();
+            index = items.indexOf(folder);
         } else {
-            isInMap = false;
-            index = -1;
+            for (ILegendItem item : items) {
+                if (item instanceof Folder) {
+                    final boolean isSet = setParent((Folder) item); 
+                    if (isSet) {
+                        break;
+                    }
+                }
+            }    
         }
     }
 
+    private boolean setParent(Folder parentFolder) {
+        final List<ILegendItem> items = parentFolder.getItems();
+        if (items.contains(folder)) {
+            parent = parentFolder;
+            index = items.indexOf(folder);
+            return true;
+        } else {
+            for (ILegendItem item : items) {
+                if (item instanceof Folder) {
+                    final boolean isSet = setParent((Folder) item); 
+                    if (isSet) {
+                        return true;
+                    }
+                }
+            }    
+        }
+        return false;
+    }
+    
 }

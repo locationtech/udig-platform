@@ -222,7 +222,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
     private void initViewer(Composite parent) {
         
         //Init viewer object
-        viewer = new CheckboxTreeViewer(parent, SWT.MULTI);
+        viewer = new CheckboxTreeViewer(parent, SWT.SINGLE);
         
         //Set content provider settings
         contentProvider = new LegendViewContentProvider(this);
@@ -336,14 +336,40 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
 
     }
     
+    /**
+     * Checks if the current state of the view allows adding a folder.
+     * 
+     * @return true if allowed, otherwise false
+     */
     private boolean canAddFolder() {
         return newFolderAction.isEnabled();
     }
     
+    /**
+     * Checks if the current selection allows deletion.
+     * 
+     * @return true if allowed, otherwise false
+     */
     private boolean canDelete() {
-        return !viewer.getSelection().isEmpty();
+        final ISelection selection = viewer.getSelection(); 
+        if (!selection.isEmpty() && selection instanceof StructuredSelection) {
+            final StructuredSelection structSelection = (StructuredSelection) selection;
+            final Object selectedObj = structSelection.getFirstElement(); 
+            if (selectedObj instanceof LayerLegendItem) {
+                return true;
+            }
+        }
+        return false;
     }
     
+    /**
+     * Gets an adapted selection from the current selection. This method checks each object in the
+     * selection if they can adapt to an object that can be deleted.
+     * <p>
+     * Example. if LayerLegendItem, return LayerLegendItem.getLayer()
+     * 
+     * @return selection to be deleted
+     */
     private ISelection getDeleteSelection() {
         
         final ISelection selection = viewer.getSelection();
@@ -425,7 +451,6 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
     private LayerAction downAction() {
         downAction = new LayerAction(){
             public void run() {
-                if (isSelectionAllOrNothing(structSelection)) return;
                 getCurrentMap().sendCommandASync(new LayerMoveDownCommand(structSelection));
             }
         };
@@ -445,7 +470,6 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
              * @see org.eclipse.jface.action.Action#run()
              */
             public void run() {
-                if (isSelectionAllOrNothing(structSelection)) return;
                 getCurrentMap().sendCommandASync(new LayerMoveUpCommand(structSelection));
             }
         };
@@ -462,7 +486,6 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
     private LayerAction moveFrontAction() {
         frontAction = new LayerAction(){
             public void run() {
-                if (isSelectionAllOrNothing(structSelection)) return;
                 getCurrentMap().sendCommandASync(new LayerMoveFrontCommand(currentMap, structSelection));
             }
         };
@@ -482,7 +505,6 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
              * @see org.eclipse.jface.action.Action#run()
              */
             public void run() {
-                if (isSelectionAllOrNothing(structSelection)) return;
                 getCurrentMap().sendCommandASync(new LayerMoveBackCommand(currentMap, structSelection));
             }
         };
@@ -491,16 +513,6 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
         backAction.setImageDescriptor(ProjectUIPlugin.getDefault().getImageDescriptor(
                 ISharedImages.BACK_CO));
         return backAction;
-    }
-    
-    private boolean isSelectionAllOrNothing(IStructuredSelection selection) {
-      //TODO - Update to get LegendItems list
-        /*
-        if (selection.isEmpty() || selection.size() == currentMap.getMapLayers().size()) {
-            return true;
-        }
-        */
-        return false;
     }
     
     /**
@@ -845,11 +857,20 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
             final ISelection selection = event.getSelection();
             if (!selection.isEmpty() && selection instanceof IStructuredSelection) {
                 structSelection = (IStructuredSelection) selection;
-                setEnabled((structSelection.getFirstElement() instanceof LayerLegendItem));
+                setEnabled(isValidSelection(structSelection));
             }
             
         }
 
+        private boolean isValidSelection(IStructuredSelection selection) {
+            if (selection.size() == 1) {
+                if (selection.getFirstElement() instanceof LayerLegendItem) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
     }
     
     /**
@@ -875,7 +896,7 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
          * @see org.eclipse.ui.IPartListener#partActivated(org.eclipse.ui.IWorkbenchPart)
          */
         public void partActivated( IWorkbenchPart part ) {
-            //If newly activated part is different map, set current map to refresh view
+            // If newly activated part is different map, set current map to refresh view
             if (part != currentPart) {
                 if (part instanceof IAdaptable) {
                     IAdaptable adaptable = (IAdaptable) part;
