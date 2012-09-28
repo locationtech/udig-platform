@@ -45,6 +45,9 @@ public class LayerLegendItemItemProvider extends LegendItemItemProvider
             ITreeItemContentProvider,
             IItemLabelProvider,
             IItemPropertySource {
+    
+    private LayerItemProvider layerItemProvider;
+    
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->
@@ -53,6 +56,7 @@ public class LayerLegendItemItemProvider extends LegendItemItemProvider
      */
     public LayerLegendItemItemProvider( AdapterFactory adapterFactory ) {
         super(adapterFactory);
+        this.layerItemProvider = new LayerItemProvider(adapterFactory);
     }
 
     /**
@@ -97,7 +101,8 @@ public class LayerLegendItemItemProvider extends LegendItemItemProvider
      */
     @Override
     public Object getImage( Object object ) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/LayerLegendItem")); //$NON-NLS-1$
+        final LayerLegendItem layerLegendItem = (LayerLegendItem) object;
+        return layerItemProvider.getImage(layerLegendItem.getLayer());
     }
 
     /**
@@ -118,9 +123,8 @@ public class LayerLegendItemItemProvider extends LegendItemItemProvider
      */
     @Override
     public String getText( Object object ) {
-        String label = ((LayerLegendItem) object).getName();
-        return label == null || label.length() == 0 ? getString("_UI_LayerLegendItem_type") : //$NON-NLS-1$
-                getString("_UI_LayerLegendItem_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+        final LayerLegendItem layerLegendItem = (LayerLegendItem) object;
+        return layerItemProvider.getText(layerLegendItem.getLayer());
     }
 
     /**
