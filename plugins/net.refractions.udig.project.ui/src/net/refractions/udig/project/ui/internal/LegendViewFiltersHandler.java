@@ -229,7 +229,6 @@ public class LegendViewFiltersHandler {
          
     }
     
-    
     /**
      * This abstract class provides the base implementation of the viewer filter used to manage
      * filtering the map graphics and background layers.

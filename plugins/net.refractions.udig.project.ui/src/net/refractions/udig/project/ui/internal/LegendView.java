@@ -1031,13 +1031,11 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                 if (ProjectPackage.MAP__LEGEND == msg.getFeatureID(Map.class)) {
                     switch( msg.getEventType() ) {
                     case Notification.ADD: {
-                        System.out.println("[LegendView] LegendList - Add Event"); //$NON-NLS-1$
                         addListeners(msg);
                         refreshOnAddAndRemove(msg);
                         break;
                     }
                     case Notification.REMOVE: {
-                        System.out.println("[LegendView] LegendList - Remove Event"); //$NON-NLS-1$
                         removeListeners(msg);
                         refreshOnAddAndRemove(msg);
                         break;
@@ -1050,13 +1048,11 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                 if (ProjectPackage.FOLDER__ITEMS == msg.getFeatureID(Folder.class)) {
                     switch( msg.getEventType() ) {
                     case Notification.ADD: {
-                        System.out.println("[LegendView] FolderItem - Add Event"); //$NON-NLS-1$
                         addListeners(msg);
                         refreshOnAddAndRemove(msg);
                         break;
                     }
                     case Notification.REMOVE: {
-                        System.out.println("[LegendView] FolderItem - Remove Event"); //$NON-NLS-1$
                         removeListeners(msg);
                         refreshOnAddAndRemove(msg);
                         break;
@@ -1065,17 +1061,17 @@ public class LegendView extends ViewPart implements IDropTargetProvider, ISelect
                 }
 
             } else if (notifier instanceof Layer) {
-                // When layer's visibility is changed
                 if (msg.getFeatureID(Layer.class) == ProjectPackage.LAYER__VISIBLE) {
+                    // When layer's visibility is changed
                     if (msg.getOldBooleanValue() != msg.getNewBooleanValue()) {
                         LegendViewCheckboxUtils.updateCheckboxesAsync(LegendView.this);
                     }
-                    // When layer's interaction property is changed
+
                 } else if (msg.getFeatureID(Layer.class) == ProjectPackage.LAYER__INTERACTION_MAP) {
-                    //TODO - Update filters display when a layer's interaction property changes
-                    System.out.println("LAYER__INTERACTION_MAP"); //$NON-NLS-1$
+                    // When layer's interaction property is changed - note that the event does not
+                    // fire properly maybe a bug in the properties page?
+                    refreshViewer();
                 }
-                   
             }
             
         }
