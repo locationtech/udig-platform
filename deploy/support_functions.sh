@@ -52,15 +52,17 @@ function assemble() {
 function prepare_resources () {
 
     for opt in `find ../plugins/ -name .options` ; do cat $opt >> ${BUILD}/${PLATFORM}/udig/debug-options ; done
-    cp ${BASE}/udig-1.3.x.html ${BUILD}/${PLATFORM}/udig/udig-${VERSION}.html
+    
+    # cp ${BASE}/udig-1.3.x.html ${BUILD}/${PLATFORM}/udig/udig-${VERSION}.html
+    sed -e "s/VersionXXXX/${VERSION}/g;s/SeriesXXXX/${SERIES}/g" ${BASE}/udig.html > ${BUILD}/${PLATFORM}/udig/udig-${VERSION}.html
+            
     cat ../plugins/net.refractions.udig.libs/.options >> ${BUILD}/${PLATFORM}/udig/.options
     mkdir ${BUILD}/${PLATFORM}/udig/dropins
     
     if [ ! -f ${BUILD}/udig-${VERSION}.html ]
     then
-        cp ${BASE}/udig-1.3.x.html ${BUILD}/udig-${VERSION}.html
-    fi
-         
+        sed -e "s/VersionXXXX/${VERSION}/g;s/SeriesXXXX/${SERIES}/g" ${BASE}/udig.html > ${BUILD}/udig-${VERSION}.html
+    fi         
          
     if [[ $PLATFORM == linux* ]] ; then
         cp udig.sh "${BUILD}/${PLATFORM}/udig"
