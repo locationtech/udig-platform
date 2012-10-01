@@ -1,7 +1,7 @@
 SDK Quickstart
 ##############
 
- |udig_logo_gif| |refractions_png| |lisasoft_png| |camptocamp_logo| |sponsor_logo| |hydrologis_logo| 
+ |udig_logo_gif| |refractions_png| |lisasoft_png| |camptocamp_logo| |sponsor_logo| |hydrologis_logo|
 
 .. image:: ../../../images/background.png
    :width: 100%
@@ -23,21 +23,21 @@ SDK Quickstart
 Introduction
 ============
 
-This workbook is aimed at those doing plug-in development against the uDig platform. Follow these instructions 
+This workbook is aimed at those doing plug-in development against the uDig platform. Follow these instructions
 to quickly set up a development environment for working on your own plug-ins.
 
-Eclipse is familiar to most developers as a Java Integrated Development Environment (IDE). The Eclipse IDE 
-can be extended with additional “capabilities” to work with alternate programming languages (like C++ or Ruby), 
+Eclipse is familiar to most developers as a Java Integrated Development Environment (IDE). The Eclipse IDE
+can be extended with additional “capabilities” to work with alternate programming languages (like C++ or Ruby),
 or additional subject matter such as Java Enterprise Edition or in this case Eclipse Plug-in development.
 
-In this Quickstart we are going to use the Eclipse Plug-in Development capability; with the uDIG SDK as the 
+In this Quickstart we are going to use the Eclipse Plug-in Development capability; with the uDIG SDK as the
 target platform. This workbook covers setting up a development environment for working on your own plug-ins.
 
-If you have an existing Eclipse installation please do not skip this tutorial – we are going to very carefully 
+If you have an existing Eclipse installation please do not skip this tutorial – we are going to very carefully
 set up a copy of Eclipse with a few more additional tools then you are perhaps used to.
 
-The Eclipse developers themselves make use of the Plug-in Development Environment (PDE) day in and day out – 
-so it has gotten a lot of polish over the years. In some respects it is more polished then the Java development 
+The Eclipse developers themselves make use of the Plug-in Development Environment (PDE) day in and day out –
+so it has gotten a lot of polish over the years. In some respects it is more polished then the Java development
 environment (with custom editors for all kinds of little files).
 
 Some of the terminology used when working with the PDE:
@@ -49,7 +49,7 @@ Some of the terminology used when working with the PDE:
 * A plug-in can provide an **extension-point** for others
 
 
-Please keep these ideas in mind – even an “Application” is considered an extension when working with the 
+Please keep these ideas in mind – even an “Application” is considered an extension when working with the
 Eclipse Platform.
 
 .. figure:: images/uDigApplicationAsPlugin.jpg
@@ -59,7 +59,7 @@ Eclipse Platform.
 Downloads
 =========
 
-We are going to start by downloading all the software we need; we will be able to proceed with installation 
+We are going to start by downloading all the software we need; we will be able to proceed with installation
 as we wait for some of the larger downloads.
 
 .. note::
@@ -71,7 +71,7 @@ as we wait for some of the larger downloads.
   `<http://udig.refractions.net/download/>`_
 
   Early access downloads are available here:
- 
+
   `<http://udig.refractions.net/download/unstable/>`_
 
   Normally you would grab the latest stable SDK from the public uDig download page.
@@ -100,7 +100,7 @@ as we wait for some of the larger downloads.
 
   `<http://udig.refractions.net/files/downloads/jre/>`_
 
-  This is a special JRE that has been extended with Java Advanced Imaging and Image IO and GDAL for 
+  This is a special JRE that has been extended with Java Advanced Imaging and Image IO and GDAL for
   spatial image formats.
 
   .. note::
@@ -113,7 +113,7 @@ as we wait for some of the larger downloads.
 
   `<http://download.eclipse.org/eclipse/downloads/eclipse3x.html>`_
 
-  Download the RCP-Delta Pack from you will need to choose the "Latest Release" build; and the scroll 
+  Download the RCP-Delta Pack from you will need to choose the "Latest Release" build; and the scroll
   down to the "Delta Pack" link to download.
 
   At the time of writing: `eclipse-3.7.2-delta-pack.zip <http://download.eclipse.org/eclipse/downloads/drops/R-3.7.2-201202080800/download.php?dropFile=eclipse-3.7.2-delta-pack.zip>`_
@@ -133,7 +133,7 @@ When your eclipse download has finished and we can begin to installation.
 
 * Create a folder\: :file:`C:\\java\\`
 
-* Unzip the downloaded `eclipse-modeling-indigo-SR2-win32.zip <http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/indigo/SR2/eclipse-modeling-indigo-SR2-win32.zip>`_ 
+* Unzip the downloaded `eclipse-modeling-indigo-SR2-win32.zip <http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/indigo/SR2/eclipse-modeling-indigo-SR2-win32.zip>`_
   file to your directory – the folder :file:`C:\\java\\eclipse` will be created
 
   .. warning::
@@ -157,7 +157,7 @@ When your eclipse download has finished and we can begin to installation.
   .. hint::
      The folder must be called “jre” for the :command:`eclipse.exe` to recognize it.
 
-* Unzip the dropins file to your eclipse/dropins folder. The download will add additional plug-ins 
+* Unzip the dropins file to your eclipse/dropins folder. The download will add additional plug-ins
   and features to to your eclipse installation without getting mixed up with the bare-bones eclipse.
 
   .. warning::
@@ -166,12 +166,11 @@ When your eclipse download has finished and we can begin to installation.
   |install_dropins_png|
 
 
-* Navigate to :file:`C:\java\eclipse` and right-click on the :command:`eclipse.exe`
+* Navigate to :file:`C:\\java\\eclipse` and right-click on the :command:`eclipse.exe`
   file and select :menuselection:`Send To --> Desktop (create shortcut)`.
 
-
   .. note::
-     You may want to modify the “eclipse.ini” file to specify additional command line 
+     You may want to modify the “eclipse.ini” file to specify additional command line
      options such as more memory.
 
 .. |install_dropins_png| image:: images/install_dropins.jpg
@@ -197,10 +196,10 @@ When your eclipse download has finished and we can begin to installation.
 Eclipse Workspace
 =================
 
-The Eclipse IDE keeps track of what you are doing in a workspace. You can have several workspaces (often 
+The Eclipse IDE keeps track of what you are doing in a workspace. You can have several workspaces (often
 for different projects) each with its own configuration.
 
-* Double click on your desktop short cut to start up eclipse. When you start up eclipse for the first 
+* Double click on your desktop short cut to start up eclipse. When you start up eclipse for the first
   time it prompt you for a workspace.
 
 
@@ -245,19 +244,19 @@ We have a few global settings to configure before we can proceed.
 
   * Should have Location: :file:`C:\\java\\eclipse`
 
-    If the setting is not correct you can use the :guilabel:`Add..` button and create a 
+    If the setting is not correct you can use the :guilabel:`Add..` button and create a
     JRE entry for :file:`C:\\java\\eclipse`
 
 
   * You can press :guilabel:`Edit` to look at the installed JRE.
 
-    Regardless of platform we are interested in making sure :file:`jai_core.jar`, :file:`jai_imageio.jar` 
+    Regardless of platform we are interested in making sure :file:`jai_core.jar`, :file:`jai_imageio.jar`
     and :file:`jai_codec.jar` are available.
 
   |jre_definitino_jpg|
 
   .. note::
-     On OSX we are not able to provide a JRE for you to download – uDig will install JAI and ImageIO when 
+     On OSX we are not able to provide a JRE for you to download – uDig will install JAI and ImageIO when
      run for the first time.
 
   * As a result of these changes, Eclipse may prompt you to perform a clean build.
@@ -297,7 +296,7 @@ We are now going to unpack the udig sdk and use it as our plug-in target platfor
 * Press :guilabel:`Next` to continue. This will open the “Target Content” page.
 
 
-* Press the :guilabel:`Add` button and add a Directory. Choose the :file:`C:\\java\\target\\eclipse` 
+* Press the :guilabel:`Add` button and add a Directory. Choose the :file:`C:\\java\\target\\eclipse`
   directory where you unpacked the eclipse-delta-pack.
 
   |target_platform_add_eclipse_png|
@@ -314,16 +313,16 @@ We are now going to unpack the udig sdk and use it as our plug-in target platfor
 
 * Press :guilabel:`Finish` to complete the “uDig SDK” target platform.
 
-* Back in the **Target Platform** preference page tick the checkbox next to the “uDig SDK” 
+* Back in the **Target Platform** preference page tick the checkbox next to the “uDig SDK”
   so it will be the Active target platform.
 
 * Press :guilabel:`OK`.
 
-At this point all the source code for the Eclipse and uDig plug-ins are available. We can now start 
+At this point all the source code for the Eclipse and uDig plug-ins are available. We can now start
 working on uDig plug-ins, but before we do that lets try running the application.
 
 .. hint::
-   If you get a message indicating the SDK is newer then the version of eclipse you 
+   If you get a message indicating the SDK is newer then the version of eclipse you
    are running – then these instructions are out of date!
 
 
@@ -354,10 +353,10 @@ working on uDig plug-ins, but before we do that lets try running the application
 Running uDig
 ============
 
-With all this in place we can now run the uDig application from your development environment. This is a 
+With all this in place we can now run the uDig application from your development environment. This is a
 good way to test that everything is installed correctly.
 
-* To start out with we will switch to the **Plug-in Development** perspective; 
+* To start out with we will switch to the **Plug-in Development** perspective;
 
   In the top right of the toolbar you can choose **Other** to open the Open Perspective dialog
 
@@ -369,17 +368,17 @@ good way to test that everything is installed correctly.
   |perspective_open_jpg|
 
 
-* Click on the :guilabel:`Plugins view` and right click on **net.refractions.udig** plug-in the list. 
+* Click on the :guilabel:`Plugins view` and right click on **net.refractions.udig** plug-in the list.
   Select :menuselection:`Import As --> Source Project` to copy the plugin into your workspace.
 
   |import_source_project_jpg|
 
-* Change to the :guilabel:`Package Explorer` view and open up the **net.refractions.udig** plugin and 
+* Change to the :guilabel:`Package Explorer` view and open up the **net.refractions.udig** plugin and
   double click to open **udig.product**.
 
 * Switch to the :guilabel:`dependencies` tab as we have a little bit of clean up work.
 
-  Remove the line for net.refractions.udig_language-feature. Select net.refractions.udig-feature and press 
+  Remove the line for net.refractions.udig_language-feature. Select net.refractions.udig-feature and press
   :guilabel:`Properties` button. Remove the version and press :guilabel:`OK`.
 
   The result should look like:
@@ -432,11 +431,11 @@ What to Do Next
 
 Here are some additional things to try when running uDig.
 
-* From Eclipse open up :menuselection:`Run --> Run Configurations` to examine or customize configuration 
+* From Eclipse open up :menuselection:`Run --> Run Configurations` to examine or customize configuration
   of uDig you are running. Many of these fields were filled in for you by the udig.product.
 
 
-* The number one tip is to go to the Arguments tab and enable console logging. To send log information to 
+* The number one tip is to go to the Arguments tab and enable console logging. To send log information to
   the console as udig runs add::
 
   -consolelog
@@ -445,7 +444,7 @@ Here are some additional things to try when running uDig.
 
   |run_arguments_jpg|
 
-  You can also review the VM arguments; including changing the amount of memory available to your uDig 
+  You can also review the VM arguments; including changing the amount of memory available to your uDig
   application::
 
   -Xmx512m
@@ -466,7 +465,7 @@ Here are some additional things to try when running uDig.
   |run_main_jpg|
 
 
-* Have a look on the Tracing tab of the Run dialog; you can control the amount of logging 
+* Have a look on the Tracing tab of the Run dialog; you can control the amount of logging
   information produced (for example WMS logging is turned on below).
 
   .. hint::
@@ -479,13 +478,13 @@ Here are some additional things to try when running uDig.
 * Have a look at the plug-ins tab and see if you can turn off: printing support.
 
   .. hint::
-     Normally the plugins included by an application are organized into features – we will cover 
+     Normally the plugins included by an application are organized into features – we will cover
      how to do this in the :doc:`Custom Application Tutorial <../CustomApplication/CustomApplication>`.
 
   |run_plugins_jpg|
 
 
-* Advanced: When working on the uDig project itself we use the FindBugz tool to check for obvious 
+* Advanced: When working on the uDig project itself we use the FindBugz tool to check for obvious
   mistakes prior to committing. You can add FindBugz to your environment using the following update site:
 
   `<http://findbugs.cs.umd.edu/eclipse>`_
@@ -526,10 +525,10 @@ you have any questions feel free to drop by and introduce yourself.
 ClassNotFoundException at EclipseStarter
 ----------------------------------------
 
-If your uDig application fails to load due to a ClassNotFoundException at 
-org.eclipse.core.runtime.adaptor.EclipseStarter then we have a problem with the plugin dependencies. 
-The EclipseStarter is doing its best to load the UDIGApplication; however the UDIGApplication is 
-not available as the Platform refused to load the net.refractions.udig.ui plugin as some of the 
+If your uDig application fails to load due to a ClassNotFoundException at
+org.eclipse.core.runtime.adaptor.EclipseStarter then we have a problem with the plugin dependencies.
+The EclipseStarter is doing its best to load the UDIGApplication; however the UDIGApplication is
+not available as the Platform refused to load the net.refractions.udig.ui plugin as some of the
 dependencies were not available.
 
 This usually happens each time we update the version of Eclipse we use. Each version of eclipse
@@ -539,11 +538,11 @@ As a temporary measure:
 
 #. Open up your Run Configuration
 #. Navigate to the Plugins tab
-#. Hit "Verify Plugins" (to list the plugins that failed to load; you should see that 
+#. Hit "Verify Plugins" (to list the plugins that failed to load; you should see that
    net.refractions.udig.ui is in this list)
 #. Hit add required plugins
 
-Please email the `udig-devel <http://lists.refractions.net/mailman/listinfo/udig-devel>`_ list; and 
+Please email the `udig-devel <http://lists.refractions.net/mailman/listinfo/udig-devel>`_ list; and
 volunteer to test the SDK with the version of eclipse you are using.
 
 NoClassDefFoundError JAI
@@ -553,7 +552,7 @@ The class JAI is provided as part of the custom **jre** you downloaded. In order
 this class it needs to be run using the "ext" classpath. This information is part of the
 udig.product file you run during the SDK Quickstart.
 
-For reference here is the command line option it sets:: 
+For reference here is the command line option it sets::
 
    -Dosgi.parentClassloader:ext
 
