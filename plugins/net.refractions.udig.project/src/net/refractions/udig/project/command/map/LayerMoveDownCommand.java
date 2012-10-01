@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.viewers.IStructuredSelection;
-
 import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.command.AbstractCommand;
 import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.ContextModel;
 import net.refractions.udig.project.internal.Layer;
+import net.refractions.udig.project.internal.LayerLegendItem;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.viewers.IStructuredSelection;
 
 /**
  * Move the selected layers down.
@@ -40,6 +40,9 @@ public class LayerMoveDownCommand extends AbstractCommand implements UndoableMap
             if (item instanceof ILayer) {
                 ILayer layer = (ILayer) item;
                 selection.add(layer);
+            } else if (item instanceof LayerLegendItem) {
+                final LayerLegendItem layerItem = (LayerLegendItem) item;
+                selection.add(layerItem.getLayer());
             }
         }
     }
@@ -47,7 +50,7 @@ public class LayerMoveDownCommand extends AbstractCommand implements UndoableMap
         this.selection = selection;
     }
     public String getName() {
-        return "Move Up";
+        return "Move Up"; //$NON-NLS-1$
     }
 
     public void run( IProgressMonitor monitor ) throws Exception {

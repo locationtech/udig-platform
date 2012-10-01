@@ -210,7 +210,10 @@ public class Messages extends NLS {
 	public static String ScemaDescriptor_geometry;
 	public static String GeometryPropertyDescriptor_viewButton_text;
 	public static String Rename_enterNewName;
-	public static String ResourceSelectionPage_title;
+	public static String RenameFolderAction_dialogMsg;
+    public static String RenameFolderAction_dialogTitle;
+    public static String RenameFolderAction_label;
+    public static String ResourceSelectionPage_title;
 	public static String OpenMapCommand_taskName;
 	public static String OpenProject_ErrorMessage;
     public static String OpenProject_ErrorTitle;
@@ -337,6 +340,17 @@ public class Messages extends NLS {
     public static String TileSet_dialog_onoff_desc;
     public static String TileSet_dialog_image_type;
 
+    public static String LegendView_up_tooltip;
+    public static String LegendView_down_tooltip;
+  public static String LegendView_front_tooltip;
+    public static String LegendView_back_tooltip;
+  public static String LegendView_hide_mg_tooltip;
+  public static String LegendView_hide_bg_tooltip;
+  public static String LegendView_show_grid_tooltip;
+  public static String LegendView_new_folder_action_lbl;
+public static String LegendView_new_folder_default_lbl;
+public static String LegendView_new_folder_tooltip;
+    
     static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

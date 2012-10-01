@@ -6,22 +6,25 @@ package net.refractions.udig.project.internal.impl;
 import java.util.Collection;
 import java.util.List;
 
+import net.refractions.udig.project.ILegendItem;
 import net.refractions.udig.project.internal.ContextModel;
+import net.refractions.udig.project.internal.Folder;
 import net.refractions.udig.project.internal.Layer;
+import net.refractions.udig.project.internal.LayerLegendItem;
 import net.refractions.udig.project.internal.Map;
+import net.refractions.udig.project.internal.ProjectFactory;
 import net.refractions.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.opengis.filter.Filter;
@@ -44,11 +47,108 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
     private LayersList2 layers = new LayersList2(Layer.class, this,
             ProjectPackage.CONTEXT_MODEL__LAYERS, ProjectPackage.LAYER__CONTEXT_MODEL);
 
-    @SuppressWarnings("unchecked")
     protected ContextModelImpl() {
         super();
+        setLegendItemSynchronizer();
     }
+    
+    /**
+     * This method adds a listener to the layer list that synchronizes the contents of the context
+     * model's layers list and the map's legend item's list.
+     */
+    private void setLegendItemSynchronizer() {
 
+        layers.addDeepAdapter(new AdapterImpl() {
+            @Override
+            public void notifyChanged(Notification msg) {
+                super.notifyChanged(msg);
+                if (ProjectPackage.CONTEXT_MODEL__LAYERS == msg.getFeatureID(ContextModel.class)) {
+                    switch( msg.getEventType() ) {
+                    case Notification.ADD: {
+                        final Object eventNewObj = msg.getNewValue();    
+                        if (eventNewObj instanceof Layer) {
+                            final LayerLegendItem layerLegendItem = ProjectFactory.eINSTANCE.createLayerLegendItem();
+                            layerLegendItem.setLayer((Layer) eventNewObj);
+                            getMap().getLegend().add(layerLegendItem);
+                        }
+                        break;
+                    }
+                    case Notification.REMOVE: {
+                        final Object eventOldObj = msg.getOldValue();    
+                        if (eventOldObj instanceof Layer) {
+                            final Layer layer = (Layer) eventOldObj;
+                            removeLayerLegendItem(layer);
+                        }
+                        break;
+                    }
+                    }
+                }
+            }
+        });
+        
+    }
+    
+    /**
+     * Removes the legend item referencing the layer.
+     * 
+     * @param layer
+     * @return true if removed, otherwise false
+     */
+    private boolean removeLayerLegendItem(Layer layer) {
+        LayerLegendItem flaggedLayerItem = null;
+        for (ILegendItem item : getMap().getLegend()) {
+            if (item instanceof Folder) {
+                final boolean isRemoved = removeLayerLegendItem((Folder) item, layer);
+                if (isRemoved) {
+                    return true;
+                }
+            } else if (item instanceof LayerLegendItem) {
+                final LayerLegendItem layerItem = (LayerLegendItem) item;
+                if (layer == layerItem.getLayer()) {
+                    flaggedLayerItem = layerItem;
+                    break;
+                }
+            }
+        }
+        if (flaggedLayerItem != null) {
+            getMap().getLegend().remove(flaggedLayerItem);
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Removes the legend item referencing the layer in the folder or in any sub-folder.
+     * 
+     * @param folder
+     * @param layer
+     * @return true if removed, otherwise false
+     */
+    private boolean removeLayerLegendItem(Folder folder, Layer layer) {
+        Folder flaggedFolder = null;
+        LayerLegendItem flaggedLayerItem = null;
+        for (ILegendItem item : folder.getItems()) {
+            if (item instanceof Folder) {
+                final boolean isRemoved = removeLayerLegendItem((Folder) item, layer);
+                if (isRemoved) {
+                    return true;
+                }
+            } else if (item instanceof LayerLegendItem) {
+                final LayerLegendItem layerItem = (LayerLegendItem) item;
+                if (layer == layerItem.getLayer()) {
+                    flaggedFolder = folder;
+                    flaggedLayerItem = layerItem;
+                    break;
+                }
+            }
+        }
+        if (flaggedLayerItem != null) {
+            flaggedFolder.getItems().remove(flaggedLayerItem);
+            return true;
+        }
+        return false;
+    }
+    
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
@@ -62,7 +162,6 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated not
      */
-    @SuppressWarnings("unchecked")
     public List<Layer> getLayers() {
         return layers;
 
