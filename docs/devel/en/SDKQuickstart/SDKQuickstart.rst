@@ -373,18 +373,12 @@ good way to test that everything is installed correctly.
 
   |import_source_project_jpg|
 
-* Change to the :guilabel:`Package Explorer` view and open up the **net.refractions.udig** plugin and
-  double click to open **udig.product**.
+* Change to the :guilabel:`Package Explorer` view and open up the **net.refractions.udig** plugin
+  and double click to open **udig.product**.
 
-* Switch to the :guilabel:`dependencies` tab as we have a little bit of clean up work.
-
-  Remove the line for net.refractions.udig_language-feature. Select net.refractions.udig-feature and press
-  :guilabel:`Properties` button. Remove the version and press :guilabel:`OK`.
-
-  The result should look like:
+  Switch to the :guilabel:`dependencies` tab and review the features required for the product.
 
   |product_dependencies_png|
-
 
 * Return to the :guilabel:`overview` tab of **udig.product** click on the :guilabel:`Launch Eclipse Application`
   link (it is located under testing as shown below).
