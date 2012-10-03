@@ -54,4 +54,60 @@
         <category name="net.refractions.udig.sdk"/>
     </feature>
     
+    <feature url="features/org.eclipse.rcp.source_0.0.0.jar" id="org.eclipse.rcp.source" version="0.0.0">
+        <category name="net.refractions.udig.sdk"/>
+    </feature>
+    
+    <feature url="features/org.eclipse.platform.source_0.0.0.jar" id="org.eclipse.platform.source" version="0.0.0">
+        <category name="net.refractions.udig.sdk"/>
+    </feature>
+    
+    <feature url="features/org.eclipse.help.source_0.0.0.jar" id="org.eclipse.help.source" version="0.0.0">
+        <category name="net.refractions.udig.sdk"/>
+    </feature>
+    
+    <feature url="features/org.eclipse.pde.source_0.0.0.jar" id="org.eclipse.pde.source" version="0.0.0">
+        <category name="net.refractions.udig.sdk"/>
+    </feature>
+    
+    <feature url="features/org.eclipse.emf.source_0.0.0.jar" id="org.eclipse.emf.source" version="0.0.0">
+        <category name="net.refractions.udig.sdk"/>
+    </feature>
+    
+    <feature url="features/org.eclipse.gef.source_0.0.0.jar" id="org.eclipse.gef.source" version="0.0.0">
+        <category name="net.refractions.udig.sdk"/>
+    </feature>
+    
+    <feature url="features/org.eclipse.xsd.source_0.0.0.jar" id="org.eclipse.xsd.source" version="0.0.0">
+        <category name="net.refractions.udig.sdk"/>
+    </feature>
+
+    <feature url="features/org.eclipse.rcp.source_0.0.0.jar" id="org.eclipse.rcp.source" version="0.0.0">
+        <category name="net.refractions.udig.sdk"/>
+    </feature>
+    
+    <feature url="features/org.eclipse.platform.source_0.0.0.jar" id="org.eclipse.platform.source" version="0.0.0">
+        <category name="net.refractions.udig.sdk"/>
+    </feature>
+    
+    <feature url="features/org.eclipse.help.source_0.0.0.jar" id="org.eclipse.help.source" version="0.0.0">
+        <category name="net.refractions.udig.sdk"/>
+    </feature>
+    
+    <feature url="features/org.eclipse.pde.source_0.0.0.jar" id="org.eclipse.pde.source" version="0.0.0">
+        <category name="net.refractions.udig.sdk"/>
+    </feature>
+    
+    <feature url="features/org.eclipse.emf.source_0.0.0.jar" id="org.eclipse.emf.source" version="0.0.0">
+        <category name="net.refractions.udig.sdk"/>
+    </feature>
+    
+    <feature url="features/org.eclipse.gef.source_0.0.0.jar" id="org.eclipse.gef.source" version="0.0.0">
+        <category name="net.refractions.udig.sdk"/>
+    </feature>
+    
+    <feature url="features/org.eclipse.xsd.source_0.0.0.jar" id="org.eclipse.xsd.source" version="0.0.0">
+        <category name="net.refractions.udig.sdk"/>
+    </feature>
+
 </site>
