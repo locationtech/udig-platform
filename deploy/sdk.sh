@@ -47,7 +47,7 @@ then
             BASENAME=$(basename "${FILE}" .jar)
             
             if [ ! -d "${BASENAME}" ]; then
-                unzip -d "${BUILD_SDK}/features/${BASENAME}" "${FILE}" && rm "${FILE}"
+                unzip -q -d "${BUILD_SDK}/features/${BASENAME}" "${FILE}" && rm "${FILE}"
             fi
         done
         
@@ -55,24 +55,29 @@ then
         # read the plugin manifests for directive Eclipse-BundleShape: dir
         MANIFESTS=$(grep -irl "Eclipse-BundleShape: dir" --include "MANIFEST.MF" --exclude-dir "src" --exclude-dir "bin" --exclude-dir "target" --exclude-dir "lib*" ../plugins)
         for MANIFEST in ${MANIFESTS}; do
-            PLUGIN_NAME=$(grep "Bundle-SymbolicName" ${MANIFEST} | sed -e "s/;.*//" -e "s/^.*:\s*//")
-            PLUGIN_VERSION=$(grep "Bundle-Version" ${MANIFEST} | sed -e "s/\.qualifier.*//" -e "s/^.*:\s*//")
-
+            PLUGIN_NAME=$(grep "Bundle-SymbolicName" ${MANIFEST} | sed -e "s/;.*//" -e "s/^.*:\ \s*//")
+            PLUGIN_VERSION=$(grep "Bundle-Version" ${MANIFEST} | sed -e "s/\.qualifier.*//" -e "s/^.*:\ \s*//")
+            
+            echo Plugin:${PLUGIN_NAME}
+            echo Version:${PLUGIN_VERSION}
+            echo "${BUILD_SDK}"/plugins/${PLUGIN_NAME}_${PLUGIN_VERSION}*.jar
+            
             for FILE in "${BUILD_SDK}"/plugins/${PLUGIN_NAME}_${PLUGIN_VERSION}*.jar
             do
                 BASENAME=$(basename "${FILE}" .jar)
                 if [ ! -d "${BASENAME}" ]; then
-                    unzip -d "${BUILD_SDK}/plugins/${BASENAME}" "${FILE}" && rm "${FILE}"
+                    unzip -q -d "${BUILD_SDK}/plugins/${BASENAME}" "${FILE}" && rm "${FILE}"
                 fi
             done
         done
 
         # reassemble net.refractions.udig.libs.source*.jar, maybe tycho can do this?
+        # maybe it will get better if we file a bug report for now lets fix here ...
         LIBS_SOURCE_JARFILE=$(find "${BUILD_SDK}"/plugins/ -name "net.refractions.udig.libs.source*.jar" | head -1)
         if [ -f "${LIBS_SOURCE_JARFILE}" ]; then
             echo "Extracting ${LIBS_SOURCE_JARFILE}"
             LIBS_SOURCE_BASEDIR="${LIBS_SOURCE_JARFILE%.*}"
-            unzip -d "${LIBS_SOURCE_BASEDIR}" "${LIBS_SOURCE_JARFILE}" && rm "${LIBS_SOURCE_JARFILE}"
+            unzip -q -d "${LIBS_SOURCE_BASEDIR}" "${LIBS_SOURCE_JARFILE}" && rm "${LIBS_SOURCE_JARFILE}"
 
             LIB_SRC_DIR="lib-src"
             ROOTS="."
@@ -84,15 +89,17 @@ then
                 JARNAME=${JARNAME%-sources.jar*}
                 if [ ! -d "${JARNAME}" ]; then
                     echo "Extracting ${JARFILE}"
-                    unzip -d "${LIBS_SOURCE_BASEDIR}/${LIB_SRC_DIR}/${JARNAME}" "${JARFILE}" && rm "${JARFILE}"
+                    unzip -q -d "${LIBS_SOURCE_BASEDIR}/${LIB_SRC_DIR}/${JARNAME}" "${JARFILE}" && rm "${JARFILE}"
                 fi
                 ROOTS="${ROOTS}${ROOTS_SEPARATOR}${LIB_SRC_DIR}/${JARNAME}"
             done
             
             MANIFESTFILE="${LIBS_SOURCE_BASEDIR}"/META-INF/MANIFEST.MF
             echo "Editing manifest ${MANIFESTFILE}"
-            sed -E -n -i '1h;1!H;${;g;s#(Eclipse-SourceBundle: .*;roots\:=\")\."#\1'"${ROOTS}"'\"#g;p;}' "${MANIFESTFILE}"
-        
+            #sed -E -n -i '1h;1!H;${;g;s#(Eclipse-SourceBundle: .*;roots\:=\")\."#\1'"${ROOTS}"'\"#g;p;}' "${MANIFESTFILE}"
+
+            sed -E -n -i '' '1h;1!H;${;g;s#(Eclipse-SourceBundle: .*;roots\:=\")\."#\1'"${ROOTS}"'\"#g;p;}' "${MANIFESTFILE}"
+            
             echo "Reassembling jar ${LIBS_SOURCE_JARFILE}"
             jar Mcvf "${LIBS_SOURCE_JARFILE}" -C "${LIBS_SOURCE_BASEDIR}" .
 
