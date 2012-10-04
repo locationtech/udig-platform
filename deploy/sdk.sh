@@ -58,14 +58,11 @@ then
             PLUGIN_NAME=$(grep "Bundle-SymbolicName" ${MANIFEST} | sed -e "s/;.*//" -e "s/^.*:\ \s*//")
             PLUGIN_VERSION=$(grep "Bundle-Version" ${MANIFEST} | sed -e "s/\.qualifier.*//" -e "s/^.*:\ \s*//")
             
-            echo Plugin:${PLUGIN_NAME}
-            echo Version:${PLUGIN_VERSION}
-            echo "${BUILD_SDK}"/plugins/${PLUGIN_NAME}_${PLUGIN_VERSION}*.jar
-            
             for FILE in "${BUILD_SDK}"/plugins/${PLUGIN_NAME}_${PLUGIN_VERSION}*.jar
             do
                 BASENAME=$(basename "${FILE}" .jar)
                 if [ ! -d "${BASENAME}" ]; then
+                    echo Unpacking plugin "${FILE}"
                     unzip -q -d "${BUILD_SDK}/plugins/${BASENAME}" "${FILE}" && rm "${FILE}"
                 fi
             done
