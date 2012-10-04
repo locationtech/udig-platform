@@ -55,8 +55,8 @@ then
         # read the plugin manifests for directive Eclipse-BundleShape: dir
         MANIFESTS=$(grep -irl "Eclipse-BundleShape: dir" --include "MANIFEST.MF" --exclude-dir "src" --exclude-dir "bin" --exclude-dir "target" --exclude-dir "lib*" ../plugins)
         for MANIFEST in ${MANIFESTS}; do
-            PLUGIN_NAME=$(grep "Bundle-SymbolicName" ${MANIFEST} | sed -e "s/;.*//" -e "s/^.*:\ \s*//")
-            PLUGIN_VERSION=$(grep "Bundle-Version" ${MANIFEST} | sed -e "s/\.qualifier.*//" -e "s/^.*:\ \s*//")
+            PLUGIN_NAME=$(grep "Bundle-SymbolicName" ${MANIFEST} | sed -e "s/;.*//" -e "s/^.*:[[:blank:]]*//")
+            PLUGIN_VERSION=$(grep "Bundle-Version" ${MANIFEST} | sed -e "s/\.qualifier.*//" -e "s/^.*:[[:blank:]]*//")
             
             for FILE in "${BUILD_SDK}"/plugins/${PLUGIN_NAME}_${PLUGIN_VERSION}*.jar
             do
@@ -93,9 +93,7 @@ then
             
             MANIFESTFILE="${LIBS_SOURCE_BASEDIR}"/META-INF/MANIFEST.MF
             echo "Editing manifest ${MANIFESTFILE}"
-            #sed -E -n -i '1h;1!H;${;g;s#(Eclipse-SourceBundle: .*;roots\:=\")\."#\1'"${ROOTS}"'\"#g;p;}' "${MANIFESTFILE}"
-
-            sed -E -n -i '' '1h;1!H;${;g;s#(Eclipse-SourceBundle: .*;roots\:=\")\."#\1'"${ROOTS}"'\"#g;p;}' "${MANIFESTFILE}"
+            sed -E -n --in-place="" '1h;1!H;${;g;s#(Eclipse-SourceBundle: .*;roots\:=\")\."#\1'"${ROOTS}"'\"#g;p;}' "${MANIFESTFILE}"
             
             echo "Reassembling jar ${LIBS_SOURCE_JARFILE}"
             jar Mcvf "${LIBS_SOURCE_JARFILE}" -C "${LIBS_SOURCE_BASEDIR}" .
