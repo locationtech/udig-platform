@@ -102,7 +102,7 @@ then
             echo "Not found net.refractions.udig.libs.source*.jar"
         fi
         
-        cp ${BASE}/udig-1.3.x.html ${BUILD_SDK}/udig-${VERSION}.html
+        sed -e "s/VersionXXXX/${VERSION}/g;s/SeriesXXXX/${SERIES}/g" ${BASE}/udig.html > ${BUILD_SDK}/udig-${VERSION}.html
         
         echo "Assemble ${BUILD}/udig-${VERSION}-sdk.zip "
         cd ${BUILD}/sdk
