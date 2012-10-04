@@ -58,7 +58,7 @@ then
             PLUGIN_NAME=$(grep "Bundle-SymbolicName" ${MANIFEST} | sed -e "s/;.*//" -e "s/^.*:\s*//")
             PLUGIN_VERSION=$(grep "Bundle-Version" ${MANIFEST} | sed -e "s/\.qualifier.*//" -e "s/^.*:\s*//")
 
-            for FILE in ${BUILD_SDK}/plugins/${PLUGIN_NAME}_${PLUGIN_VERSION}*.jar
+            for FILE in "${BUILD_SDK}"/plugins/${PLUGIN_NAME}_${PLUGIN_VERSION}*.jar
             do
                 BASENAME=$(basename "${FILE}" .jar)
                 if [ ! -d "${BASENAME}" ]; then
@@ -89,7 +89,7 @@ then
                 ROOTS="${ROOTS}${ROOTS_SEPARATOR}${LIB_SRC_DIR}/${JARNAME}"
             done
             
-            MANIFESTFILE=${LIBS_SOURCE_BASEDIR}/META-INF/MANIFEST.MF
+            MANIFESTFILE="${LIBS_SOURCE_BASEDIR}"/META-INF/MANIFEST.MF
             echo "Editing manifest ${MANIFESTFILE}"
             sed -E -n -i '1h;1!H;${;g;s#(Eclipse-SourceBundle: .*;roots\:=\")\."#\1'"${ROOTS}"'\"#g;p;}' "${MANIFESTFILE}"
         
