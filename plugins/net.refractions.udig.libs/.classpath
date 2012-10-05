@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="lib/antlr-2.7.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/antlr-3.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/antlr-runtime-3.3.jar"/>
@@ -114,11 +117,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/jsr-275-1.0-beta-2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jsr305-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-all-1.2.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-attributeop-1.2.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-contour-1.2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-jiffle-language-0.2.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-rangelookup-1.2.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jt-vectorize-1.2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jts-1.12.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/miglayout-3.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.1.17.jar"/>
@@ -143,8 +142,5 @@
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-client-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-common-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xpp3_min-1.1.4c.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
