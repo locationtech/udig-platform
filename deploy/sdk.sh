@@ -93,10 +93,10 @@ then
             
             MANIFESTFILE="${LIBS_SOURCE_BASEDIR}"/META-INF/MANIFEST.MF
             echo "Editing manifest ${MANIFESTFILE}"
-            sed -E -n --in-place="" '1h;1!H;${;g;s#(Eclipse-SourceBundle: .*;roots\:=\")\."#\1'"${ROOTS}"'\"#g;p;}' "${MANIFESTFILE}"
-            
+            sed -i '' -E -n '1h;1!H;${;g;s#(Eclipse-SourceBundle: .*;roots\:=\")\."#\1'"${ROOTS}"'\"#g;p;}' "${MANIFESTFILE}"
+                        
             echo "Reassembling jar ${LIBS_SOURCE_JARFILE}"
-            jar Mcvf "${LIBS_SOURCE_JARFILE}" -C "${LIBS_SOURCE_BASEDIR}" .
+            jar Mcvf "${LIBS_SOURCE_JARFILE}" -C "${LIBS_SOURCE_BASEDIR}" . > /dev/null
 
             echo "Removing ${LIBS_SOURCE_BASEDIR}"
             rm -fr "${LIBS_SOURCE_BASEDIR}"
