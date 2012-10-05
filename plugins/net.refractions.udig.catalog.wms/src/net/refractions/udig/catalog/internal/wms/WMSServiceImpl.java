@@ -43,6 +43,7 @@ import org.geotools.data.ows.WMSCapabilities;
 import org.geotools.data.wms.WMS1_0_0;
 import org.geotools.data.wms.WMS1_1_0;
 import org.geotools.data.wms.WMS1_1_1;
+import org.geotools.data.wms.WMS1_3_0;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.data.wms.request.GetFeatureInfoRequest;
 import org.geotools.data.wms.request.GetMapRequest;
@@ -382,10 +383,11 @@ public class WMSServiceImpl extends IService {
         }
 
         protected void setupSpecifications() {
-            specs = new Specification[3];
+            specs = new Specification[4];
             specs[0] = new WMS1_0_0();
             specs[1] = new WMS1_1_0();
             specs[2] = new WMS1_1_1();
+            specs[3] = new WMS1_3_0();
         }
     }
 
