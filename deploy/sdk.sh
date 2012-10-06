@@ -93,7 +93,8 @@ then
             
             MANIFESTFILE="${LIBS_SOURCE_BASEDIR}"/META-INF/MANIFEST.MF
             echo "Editing manifest ${MANIFESTFILE}"
-            sed -i '.ignore' -E -n '1h;1!H;${;g;s#(Eclipse-SourceBundle: .*;roots\:=\")\."#\1'"${ROOTS}"'\"#g;p;}' "${MANIFESTFILE}"
+            
+            sed -i'.ignore' -E -n '1h;1!H;${;g;s#(Eclipse-SourceBundle: .*;roots\:=\")\."#\1'"${ROOTS}"'\"#g;p;}' "${MANIFESTFILE}"
             rm "${MANIFESTFILE}.ignore"
                         
             echo "Reassembling jar ${LIBS_SOURCE_JARFILE}"
