@@ -82,6 +82,7 @@ import org.geotools.data.wms.request.GetMapRequest;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.geometry.GeneralEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.gml2.SrsSyntax;
 import org.geotools.ows.ServiceException;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
@@ -165,19 +166,16 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
         render(graphics, getRenderBounds(), monitor);
     }
 
-    public synchronized void render( Graphics2D destination, Envelope bounds2,
+    public synchronized void render( Graphics2D destination, ReferencedEnvelope bounds,
             IProgressMonitor monitor ) throws RenderException {
 
         
-        ReferencedEnvelope bounds = null;
-        
         int endLayerStatus = ILayer.DONE;
         try {
-            if (bounds2 == null || bounds2.isNull()) {
+            if (bounds == null || bounds.isNull()) {
                 bounds = getContext().getImageBounds();
-            }else{
-                bounds = new ReferencedEnvelope(bounds2, getViewportCRS());
             }
+            
             if (monitor.isCanceled())
                 return;
 
@@ -252,7 +250,8 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
             Envelope backprojectedBBox = null; // request bbox projected to the viewport crs
 //            viewport = new ReferencedEnvelope(viewportBBox, viewportCRS);
 //            requestBBox = calculateRequestBBox(wmsLayers, viewport, requestCRS);
-            requestBBox = calculateRequestBBox(wmsLayers, bounds, requestCRS);
+            
+            requestBBox = calculateRequestBBox(wmsLayers, bounds, requestCRS, wms.getCapabilities().getVersion() );
 
             // check that a request is needed (not out of a bounds, invalid, etc)
             if (requestBBox == NILL_BOX) {
@@ -270,8 +269,8 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
             if (WMSPlugin.isDebugging(Trace.RENDER)) {
                 WMSPlugin.trace("Viewport CRS: " + getViewportCRS().getName()); //$NON-NLS-1$
                 WMSPlugin.trace("Request CRS: " + requestCRS.getName()); //$NON-NLS-1$
-                WMSPlugin.trace("Context bounds: " + getContext().getImageBounds()); //$NON-NLS-1$
-                WMSPlugin.trace("Request bounds: " + requestBBox); //$NON-NLS-1$
+                WMSPlugin.trace("Context Image bounds: " + getContext().getImageBounds()); //$NON-NLS-1$
+                WMSPlugin.trace("Request BBox  bounds: " + requestBBox); //$NON-NLS-1$
                 WMSPlugin.trace("Backprojected request bounds: " + backprojectedBBox); //$NON-NLS-1$
             }
 
@@ -285,19 +284,14 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
                 endLayerStatus = ILayer.WARNING;
                 return;
             }
-
             request.setDimensions(imageDimensions.width + "", imageDimensions.height + ""); //$NON-NLS-1$ //$NON-NLS-2$
-            request.setBBox(requestBBox.getMinX() + "," + requestBBox.getMinY() //$NON-NLS-1$
-                    + "," + requestBBox.getMaxX() //$NON-NLS-1$
-                    + "," + requestBBox.getMaxY()); //$NON-NLS-1$
-
             // epsg could be under identifiers or authority.
             Set<ReferenceIdentifier> identifiers = requestCRS.getIdentifiers();
-            if (identifiers.isEmpty())
-                request.setSRS(EPSG_4326);
-            else
-                request.setSRS(identifiers.iterator().next().toString());
-
+            String srs = identifiers.isEmpty() ? EPSG_4326 : identifiers.iterator().next().toString();            
+            request.setSRS(EPSG_4326);
+            request.setBBox( requestBBox );
+            // request.setBBox(requestBBox.getMinX() + "," + requestBBox.getMinY()+ "," + requestBBox.getMaxX()+ "," + requestBBox.getMaxY());
+            
             if (monitor.isCanceled())
                 return;
 
@@ -563,6 +557,11 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
         return new Point(Math.min(min.x, max.x), max.y);
     }
 
+    public static ReferencedEnvelope calculateRequestBBox(List<Layer> wmsLayers,
+            ReferencedEnvelope viewport, CoordinateReferenceSystem requestCRS)
+            throws MismatchedDimensionException, TransformException, FactoryException {
+        return calculateRequestBBox(wmsLayers, viewport, requestCRS, "1.1.1");
+    }
     /**
      * Using the viewport bounds and combined wms layer extents, determines an appropriate bounding
      * box by projecting the viewport into the request CRS, intersecting the bounds, and returning
@@ -577,10 +576,10 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
      * @throws FactoryException
      */
     public static ReferencedEnvelope calculateRequestBBox( List<Layer> wmsLayers,
-            ReferencedEnvelope viewport, CoordinateReferenceSystem requestCRS )
+            ReferencedEnvelope viewport, CoordinateReferenceSystem requestCRS, String version )
             throws MismatchedDimensionException, TransformException, FactoryException {
         /* The bounds of all wms layers on this server combined */
-        Envelope layersBBox = getLayersBoundingBox(requestCRS, wmsLayers);
+        ReferencedEnvelope layersBBox = getLayersBoundingBox(requestCRS, wmsLayers, version);
         if (isEnvelopeNull(layersBBox)) {
             // the wms server has no bounds
             WMSPlugin.log("Zero width/height envelope: wmsLayers = " + layersBBox); //$NON-NLS-1$
@@ -712,17 +711,25 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
     //
     // return clippedBBox;
     // }
-
-    public static Envelope getLayersBoundingBox( CoordinateReferenceSystem crs, List<Layer> layers ) {
-        Envelope envelope = null;
-
+    private static ReferencedEnvelope swapAxis( ReferencedEnvelope envelope ){
+        double min0 = envelope.getLowerCorner().getOrdinate(0);
+        double min1 = envelope.getLowerCorner().getOrdinate(1);
+        double max0 = envelope.getUpperCorner().getOrdinate(0);
+        double max1 = envelope.getUpperCorner().getOrdinate(1);
+        ReferencedEnvelope swap = new ReferencedEnvelope( min1,max1,min0,max0,envelope.getCoordinateReferenceSystem());
+        
+        return swap;
+    }
+    
+    public static ReferencedEnvelope getLayersBoundingBox( CoordinateReferenceSystem crs, List<Layer> layers,String version ) {
+        ReferencedEnvelope envelope = null;
         for( Layer layer : layers ) {
-
-            GeneralEnvelope temp = layer.getEnvelope(crs);
-
+            GeneralEnvelope temp = layer.getEnvelope(crs);            
             if (temp != null) {
-                Envelope jtsTemp = new Envelope(temp.getMinimum(0), temp.getMaximum(0), temp
-                        .getMinimum(1), temp.getMaximum(1));
+                ReferencedEnvelope jtsTemp = ReferencedEnvelope.reference( temp );
+//              if( version != null && version.startsWith("1.3")){
+//                  jtsTemp = swapAxis(jtsTemp);
+//              }
                 if (envelope == null) {
                     envelope = jtsTemp;
                 } else {
@@ -751,23 +758,21 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
 
         Collection<String> viewportEPSG=extractEPSG(map, viewportCRS);
         if( viewportEPSG!=null ){
-        	
-        	String match=matchEPSG(layers, viewportEPSG);
-			if( match!=null )
-        		return match;
+            String match=matchEPSG(layers, viewportEPSG);
+            if( match!=null )
+                return match;
         }
         
-		if( matchEPSG(layers, EPSG_4326) )
-			return EPSG_4326;
+        if( matchEPSG(layers, EPSG_4326) )
+            return EPSG_4326;
 
         if ( matchEPSG(layers, EPSG_4269)) {
             return EPSG_4269;
         }
 
         Layer firstLayer = layers.get(0);
-        for( Object object : firstLayer.getSrs() ) {
+        for (Object object : firstLayer.getSrs()) {
             String epsgCode = (String) object;
-
 
             try {
                 // Check to see if *we* can actually use this code first.
@@ -775,9 +780,9 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
             } catch (NoSuchAuthorityCodeException e) {
                 continue;
             } catch (FactoryException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
             if (matchEPSG(layers, epsgCode)) {
                 requestCRS = epsgCode;
@@ -794,13 +799,13 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
         return requestCRS;
     }
 
-	private static String matchEPSG(List<Layer> layers, Collection<String> epsgCodes) {
-		for (String epsg : epsgCodes) {
-			if( matchEPSG(layers, epsg) )
-				return epsg;
-		}
-		return null;
-	}
+    private static String matchEPSG(List<Layer> layers, Collection<String> epsgCodes) {
+        for (String epsg : epsgCodes) {
+            if (matchEPSG(layers, epsg))
+                return epsg;
+        }
+        return null;
+    }
 
 
 	private static Collection<String> extractEPSG( final IMap map,
@@ -863,18 +868,17 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
                 DONT_FIND);
     }
 
-	@SuppressWarnings("unchecked")
     private static boolean matchEPSG(List<Layer> layers, String epsgCode) {
-		boolean match=true;
-		for( Layer layer : layers ) {
-            Set srs = layer.getSrs();
+        boolean match = true;
+        for (Layer layer : layers) {
+            Set<String> srs = layer.getSrs();
             if (!srs.contains(epsgCode)) {
                 match = false;
                 break;
             }
         }
-		return match;
-	}
+        return match;
+    }
 
     private List<ILayer> getLayers() {
         List<ILayer> layers = new ArrayList<ILayer>();
