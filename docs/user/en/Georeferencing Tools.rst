@@ -56,6 +56,8 @@ the image.
 Georeferencing Image Tools
 --------------------------
 
+
+
 Select Image
 ~~~~~~~~~~~~
 
@@ -101,7 +103,7 @@ tool.
 
 **Related tasks**
 
-:doc:`Georeference an Image`
+:doc:`Image Georeferencing`
 
 
 .. |image0| image:: images/georeferencing_tools/ref_load_image.png
