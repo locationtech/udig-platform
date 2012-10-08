@@ -56,73 +56,66 @@ class PostgisResourceInfo extends IGeoResourceInfo {
 
 	@Override
 	public synchronized ReferencedEnvelope getBounds() {
-		if (bounds == null) {
-		    SimpleFeatureSource source = null;
-			try {
-				source = owner.resolve(SimpleFeatureSource.class, new NullProgressMonitor());
-			}
-			catch (IOException e){
-			    PostgisPlugin.log("Could not establish bounds of dataset.", e); //$NON-NLS-1$
-			    bounds = new ReferencedEnvelope(new Envelope(), null);
-			    return bounds;
-            }
-			try{
-			    ReferencedEnvelope temp = source.getBounds();
-			    bounds = temp;
-			}
-			catch (IOException e){
+        if (bounds == null) {
+            SimpleFeatureSource source = null;
+            try {
+                source = owner.resolve(SimpleFeatureSource.class, new NullProgressMonitor());
+            } catch (IOException e) {
                 PostgisPlugin.log("Could not establish bounds of dataset.", e); //$NON-NLS-1$
                 bounds = new ReferencedEnvelope(new Envelope(), null);
                 return bounds;
-			}
+            }
+            try {
+                ReferencedEnvelope temp = source.getBounds();
+                bounds = temp;
+            } catch (Exception e) {
+                PostgisPlugin.log("PostGIS unable to calculate bounds directly: "+e, e); //$NON-NLS-1$
+            }
             if (bounds == null) {
                 try {
-					CoordinateReferenceSystem crs = getCRS();
-					// try getting an envelope out of the crs
-					org.opengis.geometry.Envelope envelope = CRS.getEnvelope(crs);
+                    CoordinateReferenceSystem crs = getCRS();
+                    // try getting an envelope out of the crs
+                    org.opengis.geometry.Envelope envelope = CRS.getEnvelope(crs);
 
-					if (envelope != null) {
-						bounds = new ReferencedEnvelope(new Envelope(envelope
-								.getLowerCorner().getOrdinate(0), envelope
-								.getUpperCorner().getOrdinate(0), envelope
-								.getLowerCorner().getOrdinate(1), envelope
-								.getUpperCorner().getOrdinate(1)), crs);
-					}
-					else {
-						// TODO: perhaps access a preference which indicates
-						// whether to do a full table scan
-						// bounds = new ReferencedEnvelope(new Envelope(),crs);
-						// as a last resort do the full scan
-						bounds = new ReferencedEnvelope(new Envelope(), crs);
-						FeatureIterator<SimpleFeature> iter = source
-								.getFeatures().features();
-						try {
-							while (iter.hasNext()) {
-								SimpleFeature element = iter.next();
-								if (bounds.isNull())
-									bounds.init(element.getBounds());
-								else
-									bounds.include(element.getBounds());
-							}
-						} finally {
-							iter.close();
-						}
-					}
-    			} catch (DataSourceException e) {
-    				PostgisPlugin.log("Could not establish bounds of dataset.", e); //$NON-NLS-1$
-    			} catch (Exception e) {
-    				CatalogPlugin
-    						.getDefault()
-    						.getLog()
-    						.log(new org.eclipse.core.runtime.Status(
-    								IStatus.WARNING,
-    								"net.refractions.udig.catalog", 0, Messages.PostGISGeoResource_error_layer_bounds, e)); //$NON-NLS-1$
-    				bounds = new ReferencedEnvelope(new Envelope(), null);
-    			}
+                    if (envelope != null) {
+                        bounds = new ReferencedEnvelope(new Envelope(envelope.getLowerCorner()
+                                .getOrdinate(0), envelope.getUpperCorner().getOrdinate(0), envelope
+                                .getLowerCorner().getOrdinate(1), envelope.getUpperCorner()
+                                .getOrdinate(1)), crs);
+                    } else {
+                        // TODO: perhaps access a preference which indicates
+                        // whether to do a full table scan
+                        // bounds = new ReferencedEnvelope(new Envelope(),crs);
+                        // as a last resort do the full scan
+                        bounds = new ReferencedEnvelope(new Envelope(), crs);
+                        FeatureIterator<SimpleFeature> iter = source.getFeatures().features();
+                        try {
+                            while (iter.hasNext()) {
+                                SimpleFeature element = iter.next();
+                                if (bounds.isNull())
+                                    bounds.init(element.getBounds());
+                                else
+                                    bounds.include(element.getBounds());
+                            }
+                        } finally {
+                            iter.close();
+                        }
+                    }
+                } catch (DataSourceException e) {
+                    PostgisPlugin.log("Could not establish bounds of dataset.", e); //$NON-NLS-1$
+                } catch (Exception e) {
+                    CatalogPlugin
+                            .getDefault()
+                            .getLog()
+                            .log(new org.eclipse.core.runtime.Status(
+                                    IStatus.WARNING,
+                                    "net.refractions.udig.catalog", 0, Messages.PostGISGeoResource_error_layer_bounds, e)); //$NON-NLS-1$
+                    bounds = new ReferencedEnvelope(new Envelope(), null);
+                }
             }
-		}
-		return bounds;
-	}
+        }
+        return bounds;
+    }
 
 	public CoordinateReferenceSystem getCRS() {
 		SimpleFeatureType ft = getFeatureType();
