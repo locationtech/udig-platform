@@ -24,7 +24,7 @@ import org.eclipse.swt.graphics.Point;
  * 
  * @author Mauricio Pazos
  * @author Aritz Davila
- * @since 1.0.0
+ * @since 1.3.3
  *
  */
 public final class ImagePanelUtil {
