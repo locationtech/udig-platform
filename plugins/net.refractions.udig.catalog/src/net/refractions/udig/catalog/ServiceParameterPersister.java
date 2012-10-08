@@ -458,8 +458,9 @@ public class ServiceParameterPersister {
                 } catch (Exception e) {
                     throw (RuntimeException) new RuntimeException( ).initCause( e );
                 }
-                try {
-                    if( service.getStatus() == Status.CONNECTED ){
+                boolean resourcePropertiesSaved = false;
+                if( service.getStatus() == Status.CONNECTED ){
+                    try {
                         // we can check against the available resources (and thus clean up from any removed resources)
                         List< ? extends IGeoResource> resources = service.resources(null);
                         if( resources != null && !resources.isEmpty() ){
@@ -475,25 +476,28 @@ public class ServiceParameterPersister {
                                 storeProperties( childNode, childProperties );
                                 childNode.flush();
                             }
-                        }
+                        }        
+                        resourcePropertiesSaved=true;
+                    } catch (Exception e) {
+                        CatalogPlugin.log("Unable to access resource list for "+service.getID()+":"+e, e);
                     }
-                    else {
-                        // we are not connected - so go ahead and save everything back out
-                        //
-                        for( Entry<ID, Map<String, Serializable>> entry : service.resourceProperties.entrySet() ){
-                            Map<String, Serializable> childProperties = entry.getValue();
-                            
-                            String encodeID = encodeID( entry.getKey() );
-                            String childKey = CHILD_PREFIX+encodeID;
-                            
-                            Preferences childNode = serviceNode.node(childKey);
-                            storeProperties( childNode, childProperties );
-                            childNode.flush();
-                        }
-                    }
-                } catch (Exception e) {
-                    throw (RuntimeException) new RuntimeException( ).initCause( e );
                 }
+                
+                if( !resourcePropertiesSaved ){
+                    // We could not confirm the list of resources - so go ahead and save everything back out
+                    //
+                    for( Entry<ID, Map<String, Serializable>> entry : service.resourceProperties.entrySet() ){
+                        Map<String, Serializable> childProperties = entry.getValue();
+                        
+                        String encodeID = encodeID( entry.getKey() );
+                        String childKey = CHILD_PREFIX+encodeID;
+                        
+                        Preferences childNode = serviceNode.node(childKey);
+                        storeProperties( childNode, childProperties );
+                        childNode.flush();
+                    }
+                }
+
                 if (serviceNode.keys().length > 0){
                     serviceNode.flush();
                 }
