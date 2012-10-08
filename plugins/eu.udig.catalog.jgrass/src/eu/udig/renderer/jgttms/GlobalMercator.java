@@ -1,6 +1,3 @@
-package eu.udig.renderer.jgttms;
-import java.util.Arrays;
-
 /**
  *    Copyright (C) 2009, 2010 
  *    State of California,
@@ -17,8 +14,9 @@ import java.util.Arrays;
  *    GNU General Public License for more details. [http://www.gnu.org/licenses]
  *    
  *    @author Nicky Sandhu
- *    
  */
+package eu.udig.renderer.jgttms;
+import java.util.Arrays;
 
 /**
  * TMS Global Mercator Profile ---------------------------

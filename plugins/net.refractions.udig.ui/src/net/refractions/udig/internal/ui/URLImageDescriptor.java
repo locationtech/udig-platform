@@ -1,4 +1,3 @@
-
 package net.refractions.udig.internal.ui;
 
 import java.io.BufferedInputStream;

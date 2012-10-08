@@ -1,4 +1,3 @@
-
 package net.refractions.udig.catalog.internal.wms.ui;
 import java.io.Serializable;
 import java.net.ConnectException;

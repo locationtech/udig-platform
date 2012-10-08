@@ -1,4 +1,3 @@
-package eu.udig.style.jgrass.legend;
 /*
  * JGrass - Free Open Source Java GIS http://www.jgrass.org 
  * (C) HydroloGIS - www.hydrologis.com 
@@ -16,6 +15,7 @@ package eu.udig.style.jgrass.legend;
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package eu.udig.style.jgrass.legend;
  //    /* line color alpha blending value */
 //    private float alpha = .5f;
 //
