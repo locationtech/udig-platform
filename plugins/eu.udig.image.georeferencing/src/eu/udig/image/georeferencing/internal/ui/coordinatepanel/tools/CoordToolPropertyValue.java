@@ -18,12 +18,6 @@ public class CoordToolPropertyValue extends AbstractPropertyValue<Object> {
 	
 	private static boolean geoRefViewOpen;
 
-	/** 
-	 * 
-	 */
-	public CoordToolPropertyValue() {
-		geoRefViewOpen = false;
-	}
 
 	private static synchronized boolean isVisible() {
 		return geoRefViewOpen;
