@@ -15,7 +15,7 @@ do
         SRC_JAR="${LIB_SRC_DIR}/${JAR_NAME}${SRC}${EXT}"
 
         if [[ -f "${SRC_JAR}" ]]; then
-            sed -E -i 's#(path="'"${JAR}"'")/>$#\1 sourcepath="'"${SRC_JAR}"'"/>#' .classpath
+            sed -i '' -E 's#(path="'"${JAR}"'")/>$#\1 sourcepath="'"${SRC_JAR}"'"/>#' .classpath
         fi
     fi
 done
