@@ -36,7 +36,7 @@ import com.vividsolutions.jts.geom.Coordinate;
  * </p>
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
- * @since 1.0.0
+ * @since 1.3.3
  * 
  */
 public interface MarkModel{

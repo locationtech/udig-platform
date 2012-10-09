@@ -15,10 +15,21 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0eea40ed5fda933d8c5f7abb7664146c3d827e6f
 package eu.udig.image.georeferencing.internal.i18n;
 
 import org.eclipse.osgi.util.NLS;
-
+/**
+ * 
+ * 
+ * @author Mauricio Pazos
+ * 
+ *  @since 1.3.3
+ *
+ */
 public class Messages extends NLS {
 	private static final String	BUNDLE_NAME	= "eu.udig.image.georeferencing.internal.i18n.messages"; //$NON-NLS-1$
 	public static String 		GeoreferencingView_openMarksFile; 

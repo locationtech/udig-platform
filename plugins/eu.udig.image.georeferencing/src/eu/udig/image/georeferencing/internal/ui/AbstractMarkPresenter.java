@@ -26,7 +26,7 @@ import java.awt.Rectangle;
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
- * @since 1.0.0
+ * @since 1.3.3
  * 
  */
 public abstract class AbstractMarkPresenter implements MarkPresenter {

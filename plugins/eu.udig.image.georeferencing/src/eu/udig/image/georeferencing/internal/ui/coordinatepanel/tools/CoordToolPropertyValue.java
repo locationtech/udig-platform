@@ -11,6 +11,7 @@ import net.refractions.udig.ui.operations.AbstractPropertyValue;
  * in order to become visible/invisible
  * 
  * @author Mauricio Pazos
+ * @since 1.3.3
  *
  */
 public class CoordToolPropertyValue extends AbstractPropertyValue<Object> {

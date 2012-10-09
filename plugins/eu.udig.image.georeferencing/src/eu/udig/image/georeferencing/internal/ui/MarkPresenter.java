@@ -30,7 +30,7 @@ import eu.udig.image.georeferencing.internal.process.MarkModel;
  * 
  * @author Aritz Davila
  * @author Mauricio Pazos
- * @since 1.0.0
+ * @since 1.3.3
  * 
  */
 public interface MarkPresenter extends Observer {
