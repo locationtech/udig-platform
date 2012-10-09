@@ -41,6 +41,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-mysql-9-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-oracle-9-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-postgis-9-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-spatialite-9-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-sqlserver-9-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-teradata-9-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-main-9-SNAPSHOT.jar"/>
@@ -116,7 +117,11 @@
 	<classpathentry exported="true" kind="lib" path="lib/jsr-275-1.0-beta-2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jsr305-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-all-1.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-attributeop-1.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-contour-1.2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-jiffle-language-0.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-rangelookup-1.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jt-vectorize-1.2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jts-1.12.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/miglayout-3.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.1.17.jar"/>
@@ -132,6 +137,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/scannotation-1.0.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-api-1.5.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-log4j12-1.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/sqlite-jdbc-spatialite-3.7.2-2.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/stringtemplate-3.2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/vecmath-1.3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/ws-commons-util-1.0.1.jar"/>
