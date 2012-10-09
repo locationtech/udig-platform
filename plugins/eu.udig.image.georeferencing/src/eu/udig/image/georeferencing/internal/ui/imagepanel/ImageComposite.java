@@ -83,7 +83,7 @@ import eu.udig.image.georeferencing.internal.ui.imagepanel.tools.ZoomOutImageToo
  * 
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
- * @since 1.0.0
+ * @since 1.3.3
  * 
  */
 public final class ImageComposite extends Composite implements Observer, GeoReferencingComposite {

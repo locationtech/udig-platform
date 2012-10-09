@@ -27,7 +27,7 @@ package eu.udig.image.georeferencing.internal.process;
  * 
  * @author Mauricio Pazos (www.axios.es)
  * @author Aritz Davila (www.axios.es)
- * @since 1.0.0
+ * @since 1.3.3
  * 
  */
 public final class MarkModelFactory {

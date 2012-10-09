@@ -33,7 +33,7 @@ import eu.udig.image.georeferencing.internal.ui.imagepanel.MarkImagePresenterFac
  * 
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
- * @since 1.0.0
+ * @since 1.3.3
  * 
  */
 public class AddMarkImageTool extends AbstractImageTool {
