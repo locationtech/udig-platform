@@ -129,23 +129,21 @@ final class MarkStorage {
 
 	private MarkModel parseMarkData(String markValues) {
 
-		String id = null;
-		Integer xImage = null;
-		Integer yImage = null;
-		Double xCoord = Double.NaN;
-		Double yCoord = Double.NaN;
+		MarkModel newMark = null;
 
 		StringTokenizer tokenizer = new StringTokenizer(markValues, ";"); //$NON-NLS-1$
-		id = tokenizer.nextToken();
+		String id = tokenizer.nextToken();
 
 		// we don't know how many values have been set to the model, so try to
 		// get all of the values catching the exception nextToken throws
 		// when there aren't any more tokens
 		try {
-			xImage = Integer.parseInt(tokenizer.nextToken());
-			yImage = Integer.parseInt(tokenizer.nextToken());
-			xCoord = Double.parseDouble(tokenizer.nextToken());
-			yCoord = Double.parseDouble(tokenizer.nextToken());
+			Integer xImage = Integer.parseInt(tokenizer.nextToken());
+			Integer yImage = Integer.parseInt(tokenizer.nextToken());
+			Double xCoord = Double.parseDouble(tokenizer.nextToken());
+			Double yCoord = Double.parseDouble(tokenizer.nextToken());
+			newMark = MarkModelFactory.getInstance().create(id, xImage, yImage, xCoord, yCoord);
+
 			this.index = Integer.parseInt(tokenizer.nextToken());
 		} catch (NoSuchElementException e) {
 			// do nothing
@@ -154,7 +152,6 @@ final class MarkStorage {
 		if (this.index > this.highestIndex) {
 			this.highestIndex = this.index;
 		}
-		MarkModel newMark = MarkModelFactory.getInstance().create(id, xImage, yImage, xCoord, yCoord);
 
 		return newMark;
 
