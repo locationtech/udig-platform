@@ -16,100 +16,137 @@ package net.refractions.udig.mapgraphic.graticule;
 
 import java.awt.Color;
 
+import net.refractions.udig.mapgraphic.MapGraphicContext;
+import net.refractions.udig.mapgraphic.style.FontStyle;
+import net.refractions.udig.mapgraphic.style.FontStyleContent;
+import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.IStyleBlackboard;
 import net.refractions.udig.ui.graphics.ViewportGraphics;
 
 /**
  * Style for the {@link GridMapGraphic}.
  * 
- * @author Jesse
- * @since 1.1.0
+ * @author kengu
+ * @since 1.3.3
  */
 public class GraticuleStyle {
 
-    public enum Type {
-        SCREEN, WORLD
-    }
+    /**
+     * {@link GraticuleStyle} id.
+     * 
+     * @see {@link ILayer#getStyleBlackboard()}
+     * @see {@link IStyleBlackboard#get(String)}
+     */
+    public static final String ID = "net.refractions.udig.tool.edit.mapgraphic.graticule.style"; //$NON-NLS-1$
 
-    public static final String ID = "net.refractions.udig.tool.edit.mapgraphic.grid.style"; //$NON-NLS-1$
-    public static final GraticuleStyle DEFAULT_STYLE = new GraticuleStyle(Type.SCREEN, 25, 25, new Color(0,
-            0, 255, 100), ViewportGraphics.LINE_DOT, 1);
+    /**
+     * Default {@link GraticuleStyle style}
+     */
+    public static final GraticuleStyle DEFAULT = new GraticuleStyle(
+            new Color(0, 180, 255, 100), 
+            new Color(0, 180, 255, 100),
+            100, ViewportGraphics.LINE_SOLID, 1, true);
 
-    private double[] gridSize;
-    private Type type;
-    private Color color;
-    private boolean centerGrid;
-    private boolean showLabels;
+    /**
+     * Graticule opacity (0-255)
+     */
+    private int opacity;
     
     /**
-     * One of
+     * Graticule line {@link Color}
+     */
+    private Color lineColor;
+
+    /**
+     * Graticule line style. One of
      * <ul>
      * <li>{@link ViewportGraphics#LINE_DASH},</li>
-     * <li>{@link ViewportGraphics#LINE_DASHDOT}, </li>
-     * <li>{@link ViewportGraphics#LINE_DASHDOTDOT}, </li>
-     * <li>{@link ViewportGraphics#LINE_DOT}, </li>
-     * <li>{@link ViewportGraphics#LINE_SOLID} </li>
+     * <li>{@link ViewportGraphics#LINE_DASHDOT},</li>
+     * <li>{@link ViewportGraphics#LINE_DASHDOTDOT},</li>
+     * <li>{@link ViewportGraphics#LINE_DOT},</li>
+     * <li>{@link ViewportGraphics#LINE_SOLID}</li>
+     * </ul>
      */
     private int lineStyle;
+
     /**
-     * Width of the grid line in pixels
+     * Graticule line widths (pixels)
      */
     private int lineWidth;
 
-    public GraticuleStyle( Type type, double dx, double dy, Color color, int lineStyle, int lineWidth ) {
-        gridSize = new double[]{dx, dy};
-        this.type = type;
-        this.color = color;
+    
+    /**
+     * Flag controlling label state
+     */
+    private Boolean showLabels;
+
+    /**
+     * Graticule font {@link Color}
+     */
+    private Color fontColor;
+    
+    
+    /**
+     * Constructor.
+     * 
+     * @param fontColor - Graticule font {@link Color}
+     * @param lineColor - Graticule line {@link Color}
+     * @param opacity - Graticule opacity (0-255)
+     * @param lineStyle - Graticule line style
+     * @param lineWidth - Graticule line widht
+     * @param showLabels - Flag controlling graticule state
+     */
+    public GraticuleStyle(
+            Color fontColor, 
+            Color lineColor, 
+            int opacity, 
+            int lineStyle, 
+            int lineWidth, 
+            Boolean showLabels) {
+        
+        this.opacity = opacity;
+        this.fontColor = fontColor;
+        this.lineColor = lineColor;
         this.lineStyle = lineStyle;
         this.lineWidth = lineWidth;
-        this.centerGrid = false;
-        this.showLabels = false;
-    }
-
-    public GraticuleStyle( GraticuleStyle oldStyle ) {
-        gridSize = oldStyle.getGridSize();
-        type = oldStyle.getType();
-        color = oldStyle.getColor();
-        lineStyle = oldStyle.getLineStyle();
-        lineWidth = oldStyle.getLineWidth();
-        centerGrid = oldStyle.isCenterGrid();
-        showLabels = oldStyle.isShowLabels();
+        this.showLabels = showLabels;
     }
 
     /**
-     * Returns a copy of the grid size array - use setGridSize to modify
-     *
-     * @return copy of grid size array
+     * Copy constructor.
+     * 
+     * @param oldStyle - copy style from this.
      */
-    public double[] getGridSize() {
-        return new double[]{ gridSize[0], gridSize[1] };
+    public GraticuleStyle(GraticuleStyle oldStyle) {
+        opacity = oldStyle.getOpacity();
+        fontColor = oldStyle.getFontColor();
+        lineColor = oldStyle.getLineColor();
+        lineStyle = oldStyle.getLineStyle();
+        lineWidth = oldStyle.getLineWidth();
+        showLabels = oldStyle.isShowLabels();
     }
 
-    public Type getType() {
-        return type;
+    public Color getFontColor() {
+        return new Color(fontColor.getRed(),fontColor.getGreen(),fontColor.getBlue(),getOpacity());
     }
 
-    public void setType( Type type ) {
-        this.type = type;
+    public void setFontColor(Color color) {
+        this.fontColor = color;
+    }
+    
+    public Color getLineColor() {
+        return new Color(lineColor.getRed(),lineColor.getGreen(),lineColor.getBlue(),getOpacity());
     }
 
-    public void setGridSize( double dx, double dy ) {
-        this.gridSize[0] = dx;
-        this.gridSize[1] = dy;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor( Color color ) {
-        this.color = color;
+    public void setLineColor(Color color) {
+        this.lineColor = color;
     }
 
     public int getLineStyle() {
         return lineStyle;
     }
 
-    public void setLineStyle( int lineStyle ) {
+    public void setLineStyle(int lineStyle) {
         this.lineStyle = lineStyle;
     }
 
@@ -117,24 +154,57 @@ public class GraticuleStyle {
         return lineWidth;
     }
 
-    public void setLineWidth( int lineWidth ) {
+    public void setLineWidth(int lineWidth) {
         this.lineWidth = lineWidth;
     }
 
-	public boolean isCenterGrid() {
-		return centerGrid;
-	}
+    public int getOpacity() {
+        return opacity;
+    }
 
-	public void setCenterGrid(boolean centerGrid) {
-		this.centerGrid = centerGrid;
-	}
+    public void setOpacity(int opacity) {
+        this.opacity = opacity;
+    }
+    
+    public boolean isShowLabels() {
+        return showLabels != null ? showLabels : false;
+    }
 
-	public boolean isShowLabels() {
-		return showLabels;
-	}
-
-	public void setShowLabels(boolean showLabels) {
-		this.showLabels = showLabels;
-	}
+    public void setShowLabels(boolean showLabels) {
+        this.showLabels = showLabels;
+    }
+    
+    
+    /**
+     * Get {@link GraticuleStyle style} from {@link ILayer#getStyleBlackboard()}.
+     * <p>
+     * If not found, {@link GraticuleStyle#DEFAULT} is used.
+     * @param layer {@link ILayer}
+     * @return {@link GraticuleStyle}
+     */
+    public static final GraticuleStyle getStyle( ILayer layer ) {
+        GraticuleStyle style = (GraticuleStyle) layer.getStyleBlackboard().get(GraticuleStyle.ID);
+        if( style==null ){
+            return GraticuleStyle.DEFAULT;
+        }
+        return style;
+    }
+    
+    /**
+     * Get {@link FontStyle style} from {@link ILayer#getStyleBlackboard()}.
+     * <p>
+     * If not found, a new font style is instantiated.
+     * @param layer {@link ILayer}
+     * @return {@link FontStyle}
+     */
+    public static FontStyle getFontStyle( MapGraphicContext context ) {
+        IStyleBlackboard styleBlackboard = context.getLayer().getStyleBlackboard();
+        FontStyle style = (FontStyle) styleBlackboard.get(FontStyleContent.ID);
+        if (style == null) {
+            style = new FontStyle();
+            styleBlackboard.put(FontStyleContent.ID, style);
+        }
+        return style;
+    }    
 
 }

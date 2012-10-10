@@ -16,7 +16,6 @@ package net.refractions.udig.mapgraphic.graticule;
 
 import java.awt.Color;
 
-import net.refractions.udig.mapgraphic.graticule.GraticuleStyle.Type;
 import net.refractions.udig.mapgraphic.internal.Messages;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.style.IStyleConfigurator;
@@ -37,6 +36,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Spinner;
 
 /**
@@ -53,18 +53,30 @@ public class GraticuleStyleConfigurator extends IStyleConfigurator implements Li
     private static final String LINE_DASHDOTDOT = "dash-dot-dot"; //$NON-NLS-1$
     private static final String LINE_DOT = "dot"; //$NON-NLS-1$
     private static final String LINE_SOLID = "solid"; //$NON-NLS-1$
-    private static final String[] LINE_STYLES = new String[]{LINE_SOLID, LINE_DASH, LINE_DOT,
-            LINE_DASHDOT, LINE_DASHDOTDOT};
+    private static final String[] LINE_STYLES = new String[]
+    {
+        LINE_SOLID, LINE_DASH, LINE_DOT, LINE_DASHDOT, LINE_DASHDOTDOT
+    };
 
-    SpacerController xSpacer, ySpacer;
     Combo lineStyle;
+    Button fontColor;
+    Button lineColor;
+    Button showLabels;
     Spinner lineWidth;
-    Button color;
-    Label xlabel, ylabel, message, colorLabel, colorDisplay, lineStyleLabel, lineWidthLabel;
+    Scale opacity;
+    Label messageLabel;
+    Label fontColorLabel;
+    Label fontColorPreview;
+    Label lineColorLabel;
+    Label lineColorPreview;
+    Label lineStyleLabel;
+    Label lineWidthLabel;
+    Label showLabelsLabel;
+    Label opacityLabel;
+    
     private GraticuleStyle style;
-    private UnitListener xUnitListener, yUnitListener;
     private ColorListener colorListener;
-    private Composite comp;
+    private Composite container;
 
     @Override
     public boolean canStyle( Layer aLayer ) {
@@ -76,9 +88,13 @@ public class GraticuleStyleConfigurator extends IStyleConfigurator implements Li
     public void createControl( Composite parent ) {
         parent.setLayout(new FillLayout());
 
-        Composite comp = createWidgets(parent);
+        Composite widgets = createWidgets(parent);
         addListeners();
-        layoutWidgets(comp);
+        layoutWidgets(widgets);
+    }
+    
+    protected GraticuleStyle getStyle() {
+        return style;
     }
 
     private void layoutWidgets( Composite comp ) {
@@ -86,119 +102,129 @@ public class GraticuleStyleConfigurator extends IStyleConfigurator implements Li
 
         GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
 
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-        xlabel.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        xSpacer.getSpinner().setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-        xSpacer.getUnit().setLayoutData(layoutData);
-
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-        ylabel.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        ySpacer.getSpinner().setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-        ySpacer.getUnit().setLayoutData(layoutData);
-
         layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
-        lineStyleLabel.setLayoutData(layoutData);
+        lineStyleLabel.setLayoutData(layoutData);        
         layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         lineStyle.setLayoutData(layoutData);
 
         layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
-        lineWidthLabel.setLayoutData(layoutData);
+        lineWidthLabel.setLayoutData(layoutData);        
         layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         lineWidth.setLayoutData(layoutData);
 
         layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-        colorLabel.setLayoutData(layoutData);
+        lineColorLabel.setLayoutData(layoutData);
         layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-        colorDisplay.setLayoutData(layoutData);
+        lineColorPreview.setLayoutData(layoutData);
         layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        color.setLayoutData(layoutData);
+        lineColor.setLayoutData(layoutData);
 
+        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        fontColorLabel.setLayoutData(layoutData);
+        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        fontColorPreview.setLayoutData(layoutData);
+        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        fontColor.setLayoutData(layoutData);
+        
+        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
+        showLabelsLabel.setLayoutData(layoutData);
+        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        showLabels.setLayoutData(layoutData);
+        
+        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
+        opacityLabel.setLayoutData(layoutData);
+        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        opacity.setLayoutData(layoutData);
+        
         layoutData = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
-        message.setLayoutData(layoutData);
+        messageLabel.setLayoutData(layoutData);
 
     }
 
     private void addListeners() {
-
-        if (xUnitListener == null) {
-            xUnitListener = new UnitListener(ySpacer, xSpacer, message);
-            yUnitListener = new UnitListener(xSpacer, ySpacer, message);
-        }
-        xSpacer.addListeners(xUnitListener, this);
-        ySpacer.addListeners(yUnitListener, this);
-
         colorListener = new ColorListener(this);
-        color.addSelectionListener(colorListener);
-
+        fontColor.addSelectionListener(colorListener);
+        lineColor.addSelectionListener(colorListener);
         lineStyle.addListener(SWT.Modify, this);
         lineStyle.addListener(SWT.KeyUp, this);
         lineWidth.addListener(SWT.Modify, this);
         lineWidth.addListener(SWT.KeyUp, this);
+        showLabels.addListener(SWT.Selection, this);
+        opacity.addListener(SWT.Selection, this);
     }
 
     private void removeListeners() {
-        xSpacer.removeListeners(xUnitListener, this);
-        ySpacer.removeListeners(yUnitListener, this);
 
-        color.removeSelectionListener(colorListener);
-
+        fontColor.removeSelectionListener(colorListener);
+        lineColor.removeSelectionListener(colorListener);
         lineStyle.removeListener(SWT.Modify, this);
         lineWidth.removeListener(SWT.Modify, this);
         lineStyle.removeListener(SWT.KeyUp, this);
         lineWidth.removeListener(SWT.KeyUp, this);
+        showLabels.removeListener(SWT.Selection, this);
+        opacity.removeListener(SWT.Selection, this);
     }
 
     private Composite createWidgets( Composite parent ) {
-        comp = new Composite(parent, SWT.NONE);
+        container = new Composite(parent, SWT.NONE);
 
-        xlabel = new Label(comp, SWT.NONE);
-        xlabel.setText(Messages.GridStyleConfigurator_HSpacing);
-        Spinner x = new Spinner(comp, SWT.NONE);
-        Combo xUnit = new Combo(comp, SWT.READ_ONLY);
-
-        xSpacer = new SpacerController(x, xUnit);
-
-        ylabel = new Label(comp, SWT.NONE);
-        ylabel.setText(Messages.GridStyleConfigurator_VSpacing);
-        Spinner y = new Spinner(comp, SWT.NONE);
-        Combo yUnit = new Combo(comp, SWT.READ_ONLY);
-
-        ySpacer = new SpacerController(y, yUnit);
-
-        colorLabel = new Label(comp, SWT.NONE);
-        colorLabel.setText(Messages.GridStyleConfigurator_LineColor);
-
-        colorDisplay = new Label(comp, SWT.NONE);
-        colorDisplay.addListener(SWT.Resize, new Listener(){
+        fontColorLabel = new Label(container, SWT.NONE);
+        fontColorLabel.setText(Messages.GraticuleStyleConfigurator_Font_Color);
+        fontColorPreview = new Label(container, SWT.NONE);
+        fontColorPreview.addListener(SWT.Resize, new Listener(){
             
             public void handleEvent( Event event ) {
-                updateColorButton();
+                updateColorButton(fontColor, fontColorLabel, fontColorPreview);
             }
             
         });
-        color = new Button(comp, SWT.PUSH);
-        color.setText(Messages.GridStyleConfigurator_ChangeColor);
+        fontColor = new Button(container, SWT.PUSH);        
+        fontColor.setText(Messages.GridStyleConfigurator_ChangeColor);
+        
+        lineColorLabel = new Label(container, SWT.NONE);
+        lineColorLabel.setText(Messages.GridStyleConfigurator_LineColor);
 
-        lineStyleLabel = new Label(comp, SWT.NONE);
+        lineColorPreview = new Label(container, SWT.NONE);
+        lineColorPreview.addListener(SWT.Resize, new Listener(){
+            
+            public void handleEvent( Event event ) {
+                updateColorButton(lineColor, lineColorLabel, lineColorPreview);
+            }
+            
+        });
+        lineColor = new Button(container, SWT.PUSH);
+        lineColor.setText(Messages.GridStyleConfigurator_ChangeColor);
+
+        lineStyleLabel = new Label(container, SWT.NONE);
         lineStyleLabel.setText(Messages.GridStyleConfigurator_LineStyle);
-        lineStyle = new Combo(comp, SWT.NONE);
+        lineStyle = new Combo(container, SWT.NONE);
         lineStyle.setItems(LINE_STYLES);
         lineStyle.select(0);
 
-        lineWidthLabel = new Label(comp, SWT.NONE);
+        lineWidthLabel = new Label(container, SWT.NONE);
         lineWidthLabel.setText(Messages.GridStyleConfigurator_LineWidth);
-        lineWidth = new Spinner(comp, SWT.NONE);
+        lineWidth = new Spinner(container, SWT.NONE);
         lineWidth.setIncrement(1);
         lineWidth.setDigits(0);
         lineWidth.setMinimum(1);
+        
+        showLabelsLabel = new Label(container, SWT.NONE);
+        showLabelsLabel.setText(Messages.GraticuleStyleConfigurator_Show_Labels);
+        showLabels = new Button(container, SWT.CHECK);
+        showLabels.setData(true);
 
-        message = new Label(comp, SWT.WRAP);
+        opacityLabel = new Label(container, SWT.NONE);
+        opacityLabel.setText(Messages.GraticuleStyleConfigurator_Opacity);
+        opacity = new Scale(container, SWT.BORDER);
+        Rectangle clientArea = container.getClientArea();
+        opacity.setBounds (clientArea.x, clientArea.y, 200, 64);
+        opacity.setMaximum(255);
+        opacity.setPageIncrement(5);        
+        opacity.setSelection(100);
+        
+        messageLabel = new Label(container, SWT.WRAP);
 
-        return comp;
+        return container;
     }
 
     @Override
@@ -208,33 +234,21 @@ public class GraticuleStyleConfigurator extends IStyleConfigurator implements Li
         try {
             GraticuleStyle oldStyle = (GraticuleStyle) getStyleBlackboard().get(GraticuleStyle.ID);
             if (oldStyle == null) {
-                oldStyle = GraticuleStyle.DEFAULT_STYLE;
+                oldStyle = GraticuleStyle.DEFAULT;
             }
 
             this.style = new GraticuleStyle(oldStyle);
 
-            message.setText(""); //$NON-NLS-1$
+            messageLabel.setText(""); //$NON-NLS-1$
             lineWidth.setSelection(style.getLineWidth());
             setLineStyle(style);
-            Color color2 = style.getColor();
-            color.setData(color2);
-            updateColorButton();
+            fontColor.setData(style.getFontColor());
+            updateColorButton(fontColor, fontColorLabel, fontColorPreview);
+            lineColor.setData(style.getLineColor());
+            updateColorButton(lineColor, lineColorLabel, lineColorPreview);
+            showLabels.setData(style.isShowLabels());
+            opacity.setSelection(style.getOpacity());
 
-            switch( style.getType() ) {
-            case SCREEN:
-                xSpacer.setPixelSpacing(style.getGridSize()[0]);
-                ySpacer.setPixelSpacing(style.getGridSize()[1]);
-                break;
-            case WORLD:
-                xSpacer.setWorldSpacing(style.getGridSize()[0]);
-                ySpacer.setWorldSpacing(style.getGridSize()[1]);
-                break;
-
-            default:
-                throw new RuntimeException(Messages.bind(Messages.GridStyleConfigurator_0, style.getType() ));
-            }
-            xSpacer.getUnit().setData(selectedString(xSpacer.getUnit()));
-            ySpacer.getUnit().setData(selectedString(ySpacer.getUnit()));
         } finally {
             addListeners();
         }
@@ -264,14 +278,19 @@ public class GraticuleStyleConfigurator extends IStyleConfigurator implements Li
         }
     }
 
-    void updateColorButton() {
-        Image oldImage = colorDisplay.getImage();
+    void updateColorButtons() {
+        updateColorButton(fontColor, fontColorLabel, fontColorPreview);
+        updateColorButton(lineColor, lineColorLabel, lineColorPreview);        
+    }
+    
+    void updateColorButton(Button color, Label label, Label preview) {
+        Image oldImage = preview.getImage();
 
-        Rectangle bounds = colorDisplay.getBounds();
+        Rectangle bounds = preview.getBounds();
         if (bounds.width == 0 || bounds.height == 0)
             return;
 
-        Display display = colorDisplay.getDisplay();
+        Display display = preview.getDisplay();
         Image newImage = new Image(display, bounds.width, bounds.width);
 
         Color awtColor = (Color) color.getData();
@@ -294,21 +313,17 @@ public class GraticuleStyleConfigurator extends IStyleConfigurator implements Li
             color2.dispose();
         }
 
-        colorDisplay.setImage(newImage);
+        preview.setImage(newImage);
         if (oldImage != null)
             oldImage.dispose();
-        colorLabel.redraw();
+        label.redraw();
 
 
     }
 
     @Override
     public void preApply() {
-        if( xSpacer.getSpinner().isFocusControl() ){
-            kickWidget(xSpacer.getSpinner());
-        } else if( ySpacer.getSpinner().isFocusControl() ){
-            kickWidget( ySpacer.getSpinner() );
-        } else if( lineWidth.isFocusControl() ) {
+        if( lineWidth.isFocusControl() ) {
             kickWidget(lineWidth);
         } else if( lineStyle.isFocusControl() ) {
             kickWidget(lineStyle);
@@ -322,7 +337,7 @@ public class GraticuleStyleConfigurator extends IStyleConfigurator implements Li
      * the displayed value.
      */
     private void kickWidget( Control widget ) {
-        comp.setFocus();
+        container.setFocus();
         widget.setFocus();
         while (widget.getDisplay().readAndDispatch());
     }
@@ -332,30 +347,20 @@ public class GraticuleStyleConfigurator extends IStyleConfigurator implements Li
         if (e.type == SWT.KeyUp && e.character == SWT.CR) {
             makeActionDoStuff();
         } else {
-            boolean changed = isChanged(e);
-            if (!changed)
-                return;
+            
+            // Consume?
+            if (!isChanged(e)) return;
+            
             getApplyAction().setEnabled(true);
-            if (e.widget != xSpacer.getUnit() && e.widget != ySpacer.getUnit()) {
-                message.setText(""); //$NON-NLS-1$
-            }
-            // parses all the values and updates the style on the Style blackboard
 
-            style.setColor((Color) color.getData());
+            // parses all the values and updates the style on the Style blackboard
+            style.setLineColor((Color) lineColor.getData());
             style.setLineStyle(parseLineStyle());
             style.setLineWidth(lineWidth.getSelection());
+            style.setFontColor((Color) fontColor.getData());
+            style.setShowLabels((Boolean) showLabels.getData());  
+            style.setOpacity((Integer) opacity.getSelection());  
 
-            Type type;
-
-            if (xSpacer.getUnit().getSelectionIndex() == 0) {
-                type = Type.SCREEN;
-            } else {
-                type = Type.WORLD;
-            }
-
-            style.setType(type);
-
-            style.setGridSize(xSpacer.getSpacing(), ySpacer.getSpacing());
             getStyleBlackboard().put(GraticuleStyle.ID, style);
         }
 
@@ -367,7 +372,7 @@ public class GraticuleStyleConfigurator extends IStyleConfigurator implements Li
             return true;
         }
 
-        if (!style.getColor().equals(color.getData())) {
+        if (!style.getLineColor().equals(lineColor.getData())) {
             return true;
         }
 
@@ -375,27 +380,14 @@ public class GraticuleStyleConfigurator extends IStyleConfigurator implements Li
             return true;
         }
 
-        if (!xSpacer.getUnit().getData().equals(selectedString(xSpacer.getUnit()))) {
+        if (style.isShowLabels() != showLabels.getSelection()) {
             return true;
         }
-
-        if (!ySpacer.getUnit().getData().equals(selectedString(ySpacer.getUnit()))) {
+        
+        if (style.getOpacity() != opacity.getSelection()) {
             return true;
         }
-
-        if (Math.abs(xSpacer.getSpacing() - style.getGridSize()[0]) > 0.0000000001) {
-            return true;
-        }
-
-        if (Math.abs(ySpacer.getSpacing() - style.getGridSize()[1]) > 0.0000000001) {
-            return true;
-        }
-
-        if (e.widget == lineWidth || e.widget == xSpacer.getSpinner()
-                || e.widget == ySpacer.getSpinner()) {
-            return true;
-        }
-
+        
         return false;
     }
 

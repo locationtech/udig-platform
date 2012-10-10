@@ -19,22 +19,25 @@ import java.io.IOException;
 import java.net.URL;
 
 import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.mapgraphic.graticule.GraticuleStyle.Type;
 import net.refractions.udig.project.StyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
 
 public class GraticuleStyleContent extends StyleContent {
+    
     private static final String LINE_STYLE_ID = "LINE_STYLE_ID"; //$NON-NLS-1$
     private static final String LINE_WIDTH_ID = "LINE_WIDTH_ID"; //$NON-NLS-1$
-    private static final String RED_ID = "RED_ID"; //$NON-NLS-1$
-    private static final String GREEN_ID = "GREEN_ID"; //$NON-NLS-1$
-    private static final String BLUE_ID = "BLUE_ID"; //$NON-NLS-1$
-    private static final String ALPHA_ID = "ALPHA_ID"; //$NON-NLS-1$
-    private static final String TYPE_ID = "TYPE_ID"; //$NON-NLS-1$
-    private static final String DX_ID = "DX_ID"; //$NON-NLS-1$
-    private static final String DY_ID = "DY_ID"; //$NON-NLS-1$
+    private static final String LINE_RED_ID = "LINE_RED_ID"; //$NON-NLS-1$
+    private static final String LINE_GREEN_ID = "LINE_GREEN_ID"; //$NON-NLS-1$
+    private static final String LINE_BLUE_ID = "LINE_BLUE_ID"; //$NON-NLS-1$
+    private static final String LINE_ALPHA_ID = "LINE_ALPHA_ID"; //$NON-NLS-1$
+    private static final String FONT_RED_ID = "FONT_RED_ID"; //$NON-NLS-1$
+    private static final String FONT_GREEN_ID = "FONT_GREEN_ID"; //$NON-NLS-1$
+    private static final String FONT_BLUE_ID = "FONT_BLUE_ID"; //$NON-NLS-1$
+    private static final String FONT_ALPHA_ID = "FONT_ALPHA_ID"; //$NON-NLS-1$
+    private static final String SHOW_LABELS_ID = "SHOW_LABELS_ID"; //$NON-NLS-1$
+    private static final String OPACITY_ID = "OPACITY_ID"; //$NON-NLS-1$    
 
     public GraticuleStyleContent( ) {
         super(GraticuleStyle.ID);
@@ -44,7 +47,7 @@ public class GraticuleStyleContent extends StyleContent {
     public Object createDefaultStyle( IGeoResource resource, Color colour,
             IProgressMonitor monitor ) throws IOException {
         if( resource.canResolve(GraticuleGraphic.class))
-            return GraticuleStyle.DEFAULT_STYLE;
+            return GraticuleStyle.DEFAULT;
         
         return null;
     }
@@ -58,16 +61,20 @@ public class GraticuleStyleContent extends StyleContent {
     public Object load( IMemento memento ) {
         int lineStyle = memento.getInteger(LINE_STYLE_ID);
         int lineWidth = memento.getInteger(LINE_WIDTH_ID);
-        int red = memento.getInteger(RED_ID);
-        int green = memento.getInteger(GREEN_ID);
-        int blue = memento.getInteger(BLUE_ID);
-        int alpha = memento.getInteger(ALPHA_ID);
-        Color color = new Color(red, green, blue, alpha);
+        Color lineColor = new Color(
+                memento.getInteger(LINE_RED_ID), 
+                memento.getInteger(LINE_GREEN_ID), 
+                memento.getInteger(LINE_BLUE_ID), 
+                memento.getInteger(LINE_ALPHA_ID));
+        Color fontColor = new Color(
+                memento.getInteger(FONT_RED_ID), 
+                memento.getInteger(FONT_GREEN_ID), 
+                memento.getInteger(FONT_BLUE_ID), 
+                memento.getInteger(FONT_ALPHA_ID));
+        Boolean showLabels = memento.getBoolean(SHOW_LABELS_ID);
+        int opacity = memento.getInteger(OPACITY_ID);
 
-        Type type = Type.valueOf(memento.getString(TYPE_ID));
-        double dx = Double.parseDouble(memento.getString(DX_ID));
-        double dy = Double.parseDouble(memento.getString(DY_ID));
-        return new GraticuleStyle(type, dx, dy, color, lineStyle, lineWidth);
+        return new GraticuleStyle(fontColor, lineColor, opacity, lineStyle, lineWidth, showLabels);
     }
 
     @Override
@@ -82,13 +89,16 @@ public class GraticuleStyleContent extends StyleContent {
 
             memento.putInteger(LINE_STYLE_ID, style.getLineStyle());
             memento.putInteger(LINE_WIDTH_ID, style.getLineWidth());
-            memento.putInteger(RED_ID, style.getColor().getRed());
-            memento.putInteger(GREEN_ID, style.getColor().getGreen());
-            memento.putInteger(BLUE_ID, style.getColor().getBlue());
-            memento.putInteger(ALPHA_ID, style.getColor().getAlpha());
-            memento.putString(TYPE_ID, style.getType().name());
-            memento.putString(DX_ID, String.valueOf(style.getGridSize()[0]));
-            memento.putString(DY_ID, String.valueOf(style.getGridSize()[1]));
+            memento.putInteger(LINE_RED_ID, style.getLineColor().getRed());
+            memento.putInteger(LINE_GREEN_ID, style.getLineColor().getGreen());
+            memento.putInteger(LINE_BLUE_ID, style.getLineColor().getBlue());
+            memento.putInteger(LINE_ALPHA_ID, style.getLineColor().getAlpha());
+            memento.putInteger(FONT_RED_ID, style.getFontColor().getRed());
+            memento.putInteger(FONT_GREEN_ID, style.getFontColor().getGreen());
+            memento.putInteger(FONT_BLUE_ID, style.getFontColor().getBlue());
+            memento.putInteger(FONT_ALPHA_ID, style.getFontColor().getAlpha());
+            memento.putInteger(OPACITY_ID, style.getOpacity());
+            memento.putBoolean(SHOW_LABELS_ID, style.isShowLabels());
         }
     }
 }

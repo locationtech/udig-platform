@@ -63,8 +63,6 @@ public class GraticuleGraphic implements MapGraphic {
 
     private static final String EMPTY = ""; //$NON-NLS-1$
 
-    private static final String FONT = "Sans"; //$NON-NLS-1$
-
     private static final String GEOM = "element"; //$NON-NLS-1$
 
     private static final String FORMAT = "0000000"; //$NON-NLS-1$
@@ -152,18 +150,15 @@ public class GraticuleGraphic implements MapGraphic {
         final Display display = workbench.getDisplay();
 
         // Set styles
-        Color lc = new Color(0, 180, 255, 100);
-        Color fc = new Color(0, 180, 255, 100);
+        GraticuleStyle style = GraticuleStyle.getStyle(context.getLayer());
+        Font plain = GraticuleStyle.getFontStyle(context).getFont();
+        Font bold = plain.deriveFont(Font.BOLD);
 
         // Initialize the graphics handle
         ViewportGraphics g = context.getGraphics();
 
         // Get bounds of viewport
         ReferencedEnvelope bounds = context.getViewportModel().getBounds();
-
-        // Create fonts
-        Font plain = new Font(FONT,Font.PLAIN, 9);
-        Font bold = plain.deriveFont(Font.BOLD);
 
         try {
 
@@ -214,7 +209,7 @@ public class GraticuleGraphic implements MapGraphic {
                         // -----------------------
 
                         // Create line path
-                        current = vert(display, g, sy, current, context.worldToPixel(c), hgap, vgap, lines);
+                        current = vert(display, g, sy, style.getLineWidth(), current, context.worldToPixel(c), hgap, vgap, lines);
 
                         // Add xx label?
                         if (hgap) labels.add(new Label(new Point(current.x, current.y + sy / 2), tx, vgap ? bold : plain));
@@ -227,7 +222,7 @@ public class GraticuleGraphic implements MapGraphic {
                         // -----------------------
 
                         // Create line path
-                        current = horz(display, g, sx, current, context.worldToPixel(c), vgap, hgap, lines);
+                        current = horz(display, g, sx, style.getLineWidth(), current, context.worldToPixel(c), vgap, hgap, lines);
 
                         // Add yy label?
                         if (vgap) labels.add(new Label(new Point(current.x - sx / 2, current.y), ty, hgap ? bold : plain));
@@ -242,13 +237,17 @@ public class GraticuleGraphic implements MapGraphic {
                     i++;
                 }
                 
-                if(i>5) System.out.println("Coordinate Count: " + i); //$NON-NLS-1$
+//                if(i>5) System.out.println("Coordinate Count: " + i); //$NON-NLS-1$
 
-                // Draw lines and labels
+                // Draw lines
                 for (Line line : lines)
-                    line.draw(g, lc);
-                for (Label label : labels)
-                    label.draw(g, fc);
+                    line.draw(g, style);
+                
+                // Draw labels?
+                if(style.isShowLabels()) {
+                    for (Label label : labels)
+                        label.draw(g, style);
+                }
 
             }
 
@@ -296,6 +295,7 @@ public class GraticuleGraphic implements MapGraphic {
      * @param display - active {@link Display}
      * @param g - active {@link ViewportGraphics}
      * @param sy - Square height
+     * @param lw - line width
      * @param current - Current square coordinate (corner)
      * @param next - Next square coordinate (corner)
      * @param gap - Gap where label is inserted (pixels)
@@ -303,7 +303,8 @@ public class GraticuleGraphic implements MapGraphic {
      * @param lines - already created square lines
      * @return 'next' coordinate
      */
-    private Point vert(Display display, ViewportGraphics g, int sy, Point current, Point next,
+    private Point vert(Display display, ViewportGraphics g, 
+            int sy, int lw, Point current, Point next,
             boolean gap, boolean bold, List<Line> lines) {
 
         // Initialize
@@ -344,6 +345,7 @@ public class GraticuleGraphic implements MapGraphic {
      * @param display - active {@link Display}
      * @param g - active {@link ViewportGraphics}
      * @param sx - Square width
+     * @param lw - line width
      * @param current - Current square coordinate (corner)
      * @param next - Next square coordinate (corner)
      * @param gap - Gap where label is inserted (pixels)
@@ -351,7 +353,8 @@ public class GraticuleGraphic implements MapGraphic {
      * @param lines - already created square lines
      * @return 'next' coordinate
      */
-    private Point horz(Display display, ViewportGraphics g, int sx, Point current, Point next,
+    private Point horz(Display display, ViewportGraphics g, 
+            int sx, int lw, Point current, Point next,
             boolean gap, boolean bold, List<Line> lines) {
 
         // Initialize
@@ -378,9 +381,9 @@ public class GraticuleGraphic implements MapGraphic {
         }
 
         // Close path
-        path.lineTo(next.x - (bold ? 2 : 1), next.y);
+        path.lineTo(next.x - (bold ? 2*lw : lw), next.y);
         paths.add(path);
-        lines.add(new Line(paths, bold ? 2 : 1));
+        lines.add(new Line(paths, bold ? 2*lw : lw));
 
         // Finished
         return next;
@@ -400,11 +403,10 @@ public class GraticuleGraphic implements MapGraphic {
             this.paths = paths;
         }
 
-        public void draw(ViewportGraphics g, Color lc) {
-            g.setColor(lc);
-            g.setStroke(ViewportGraphics.LINE_SOLID, w);
+        public void draw(ViewportGraphics g, GraticuleStyle style) {
+            g.setColor(style.getLineColor());
+            g.setStroke(style.getLineStyle(), w);
             for (Path path : paths) g.drawPath(path);
-
         }
     }
 
@@ -425,9 +427,9 @@ public class GraticuleGraphic implements MapGraphic {
             this.anchor = anchor;
         }
 
-        public void draw(ViewportGraphics g, Color fg) {
+        public void draw(ViewportGraphics g, GraticuleStyle style) {
             Color old = g.getColor();
-            g.setColor(fg);
+            g.setColor(style.getFontColor());
             g.setFont(font);
             g.drawString(text, anchor.x, anchor.y, ViewportGraphics.ALIGN_MIDDLE, ViewportGraphics.ALIGN_MIDDLE);
             // Restore old state
