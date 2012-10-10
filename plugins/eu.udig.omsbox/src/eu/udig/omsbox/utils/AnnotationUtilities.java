@@ -89,9 +89,10 @@ public class AnnotationUtilities {
         } catch (Exception e) {
             // ignore
         }
+        String valueStr = "value";
         if (method == null) {
             try {
-                method = annotationclass.getMethod("value");
+                method = annotationclass.getMethod(valueStr);
             } catch (Exception e) {
                 // ignore
             }
@@ -104,6 +105,21 @@ public class AnnotationUtilities {
                     String descriptionStr = (String) result;
                     if (descriptionStr.length() > 0) {
                         return descriptionStr;
+                    } else {
+                        // the method of the language exists but was not filled
+                        // try with value()
+                        try {
+                            method = annotationclass.getMethod(valueStr);
+                            result = method.invoke(object);
+                            if (result instanceof String) {
+                                descriptionStr = (String) result;
+                                if (descriptionStr.length() > 0) {
+                                    return descriptionStr;
+                                }
+                            }
+                        } catch (Exception e) {
+                            // ignore
+                        }
                     }
                 }
             } catch (Exception e) {

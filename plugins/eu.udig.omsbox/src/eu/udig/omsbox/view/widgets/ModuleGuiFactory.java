@@ -52,6 +52,9 @@ public class ModuleGuiFactory {
             if (isAtLeastOneAssignable(inputData.fieldType, String.class)) {
                 if (inputData.guiHints != null && inputData.guiHints.startsWith(OmsBoxConstants.MULTILINE_UI_HINT)) {
                     handleTextArea(inputData, row, guiElements);
+                }
+                if (inputData.guiHints != null && inputData.guiHints.startsWith(OmsBoxConstants.COMBO_UI_HINT)) {
+                    handleComboField(inputData, row, guiElements);
                 } else {
                     handleTextField(inputData, row, guiElements);
                 }
@@ -578,5 +581,38 @@ public class ModuleGuiFactory {
 
         GuiGridgeometryInputField gridgeometry = new GuiGridgeometryInputField(data, textConstraint);
         guiElements.add(gridgeometry);
+    }
+
+    private void handleComboField( FieldData data, int[] row, List<ModuleGuiElement> guiElements ) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("cell ");
+        sb.append(0);
+        sb.append(" ");
+        sb.append(row[0]);
+        sb.append(" ");
+        int labelCol = COLUMNS / 5;
+        sb.append(labelCol);
+        sb.append(" ");
+        sb.append(1);
+        // sb.append(", growx");
+        String labelConstraint = sb.toString();
+
+        GuiLabel label = new GuiLabel(data, labelConstraint);
+        guiElements.add(label);
+
+        sb = new StringBuilder();
+        sb.append("cell ");
+        sb.append(labelCol + 1);
+        sb.append(" ");
+        sb.append(row[0]);
+        sb.append(" ");
+        sb.append(COLUMNS - labelCol);
+        sb.append(" ");
+        sb.append(1);
+        sb.append(", growx");
+        String textConstraint = sb.toString();
+
+        GuiComboField text = new GuiComboField(data, textConstraint);
+        guiElements.add(text);
     }
 }
