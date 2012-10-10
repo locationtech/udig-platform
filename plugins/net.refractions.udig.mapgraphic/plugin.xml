@@ -56,7 +56,7 @@
                menubarPath="layer/mapGraphic.ext"
                style="push"/>
          <action
-               class="net.refractions.udig.mapgraphic.grid.AddGraticuleAction"
+               class="net.refractions.udig.mapgraphic.graticule.AddGraticuleAction"
                icon="icons/obj16/graticule_obj.gif"
                id="net.refractions.udig.project.ui.action.addgraticule"
                label="%action.addgraticule.label"
@@ -115,6 +115,20 @@
             requires="net.refractions.udig.mapgraphic.scalebar.ScalebarMapGraphic"
             styleId="net.refractions.udig.printing.ui.locationStyle"/>
     <styleConfigurator
+          class="net.refractions.udig.mapgraphic.style.FontStyleConfigurator"
+          id="font"
+          label="%font.style.label"
+          requires="net.refractions.udig.mapgraphic.scalebar.ScalebarMapGraphic"
+          styleId="net.refractions.udig.mapgraphic.style.font">
+    </styleConfigurator>
+    <styleConfigurator
+          class="net.refractions.udig.mapgraphic.scalebar.BarStyleConfigurator"
+          id="bartype"
+          label="BarType"
+          requires="net.refractions.udig.mapgraphic.scalebar.ScalebarMapGraphic"
+          styleId="net.refractions.udig.mapgraphic.style.bartype">
+    </styleConfigurator>
+    <styleConfigurator
           class="net.refractions.udig.mapgraphic.grid.GridStyleConfigurator"
           id="net.refractions.udig.tool.edit.mapgraphic.grid.configurator"
           label="Grid"
@@ -131,15 +145,8 @@
           class="net.refractions.udig.mapgraphic.style.FontStyleConfigurator"
           id="font"
           label="%font.style.label"
-          requires="net.refractions.udig.mapgraphic.scalebar.ScalebarMapGraphic"
+          requires="net.refractions.udig.mapgraphic.graticule.GraticuleGraphic"
           styleId="net.refractions.udig.mapgraphic.style.font">
-    </styleConfigurator>
-    <styleConfigurator
-          class="net.refractions.udig.mapgraphic.scalebar.BarStyleConfigurator"
-          id="bartype"
-          label="BarType"
-          requires="net.refractions.udig.mapgraphic.scalebar.ScalebarMapGraphic"
-          styleId="net.refractions.udig.mapgraphic.style.bartype">
     </styleConfigurator>
    </extension>
    <extension

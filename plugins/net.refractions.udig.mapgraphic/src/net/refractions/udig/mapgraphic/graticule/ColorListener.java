@@ -23,10 +23,12 @@ import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Event;
 
 /**
- * Opens a color chooser dialog and fires the modify method in the ModifyListener.
+ * Opens a lineColor chooser dialog and fires the modify method in the ModifyListener.
  * 
  * @author Jesse
- * @since 1.1.0
+ * @author kengu
+ * 
+ * @since 1.3.3
  */
 public class ColorListener implements SelectionListener {
 
@@ -41,6 +43,7 @@ public class ColorListener implements SelectionListener {
     }
 
     public void widgetSelected( SelectionEvent e ) {
+        
         ColorDialog dialog = new ColorDialog(e.display.getActiveShell());
         Color currentColor = (Color) e.widget.getData();
         RGB currentRGB = new RGB(currentColor.getRed(), currentColor.getGreen(), currentColor.getBlue());
@@ -51,7 +54,7 @@ public class ColorListener implements SelectionListener {
         
         e.widget.setData(new Color(rgb.red, rgb.green, rgb.blue));
         
-        configurator.updateColorButton();
+        configurator.updateColorButtons();
         Event event = new Event();
         event.item=e.item;
         event.widget=e.widget;
