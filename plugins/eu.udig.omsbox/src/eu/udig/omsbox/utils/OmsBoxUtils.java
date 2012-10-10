@@ -150,7 +150,7 @@ public class OmsBoxUtils {
         // modules documentation
         Documentation documentation = moduleClass.getAnnotation(Documentation.class);
         if (documentation != null) {
-            String documentationStr = documentation.value();
+            String documentationStr = AnnotationUtilities.getLocalizedDocumentation(documentation);
             if (documentationStr.endsWith(DOCSSUFFIX)) {
                 // have to get the file
                 String modulePackage = moduleClassName.substring(0, moduleClassName.lastIndexOf('.'));
@@ -183,11 +183,12 @@ public class OmsBoxUtils {
         } else {
             // try with module description
             Description description = moduleClass.getAnnotation(Description.class);
+            String descriptionStr = AnnotationUtilities.getLocalizedDescription(description);
             if (description != null) {
                 sb.append("<h2>Description</h2>").append(NEWLINE);
                 sb.append(NEWLINE);
                 sb.append("<blockquote>");
-                sb.append(description.value());
+                sb.append(descriptionStr);
                 sb.append("</blockquote>");
                 sb.append(NEWLINE);
                 sb.append(NEWLINE);
@@ -207,8 +208,8 @@ public class OmsBoxUtils {
 
         // general info: script name
         Name name = moduleClass.getAnnotation(Name.class);
+        String nameStr = AnnotationUtilities.getLocalizedName(name);
         if (name != null) {
-            String nameStr = name.value();
             sb.append("<blockquote>");
             sb.append(" Name to use in a script: <b>" + nameStr + "</b>").append(NEWLINE);
             sb.append("</blockquote>");
@@ -253,7 +254,7 @@ public class OmsBoxUtils {
         // general info: license
         License license = moduleClass.getAnnotation(License.class);
         if (license != null) {
-            String licenseStr = license.value();
+            String licenseStr = AnnotationUtilities.getLocalizedLicense(license);
             sb.append("<blockquote>");
             sb.append(" License: " + licenseStr).append(NEWLINE);
             sb.append("</blockquote>");
@@ -262,7 +263,7 @@ public class OmsBoxUtils {
         // general info: keywords
         Keywords keywords = moduleClass.getAnnotation(Keywords.class);
         if (keywords != null) {
-            String keywordsStr = keywords.value();
+            String keywordsStr = AnnotationUtilities.getLocalizedKeywords(keywords);
             sb.append("<blockquote>");
             sb.append(" Keywords: " + keywordsStr).append(NEWLINE);
             sb.append("</blockquote>");
@@ -306,7 +307,7 @@ public class OmsBoxUtils {
         FileUtils.writeStringToFile(htmlDocs, sb.toString());
     }
 
-    private static void collectParameters( StringBuilder sbTmp, Collection<Access> accessList ) {
+    private static void collectParameters( StringBuilder sbTmp, Collection<Access> accessList ) throws Exception {
         for( Access access : accessList ) {
             Field field = access.getField();
             String fieldName = field.getName();
@@ -318,7 +319,7 @@ public class OmsBoxUtils {
             }
             String fieldDescription = " - ";
             if (descriptionAnnot != null) {
-                fieldDescription = descriptionAnnot.value();
+                fieldDescription = AnnotationUtilities.getLocalizedDescription(descriptionAnnot);
                 if (fieldDescription == null) {
                     fieldDescription = " - ";
                 }
