@@ -87,12 +87,12 @@ public class ColorMapLegendCreator {
 	 * @return list of legend entries in the first color map found or
 	 * null if no color map found
 	 */
-	public static List<LegendEntry> findEntries(FeatureTypeStyle[] style, Dimension imageSize){
+	public static List<LegendEntry> findEntries(FeatureTypeStyle[] style, Dimension imageSize, Dimension textSize){
 		ColorMap cm = findColorMap(style);
 		if (cm == null || cm.getColorMapEntries().length == 0){
 			return null;
 		}
-		return findEntries(cm, imageSize);
+		return findEntries(cm, imageSize, textSize);
 		
 	}
 	
@@ -103,11 +103,14 @@ public class ColorMapLegendCreator {
 	 * @param imageSize
 	 * @return list of legend entries or null if entries could not be created 
 	 */
-	public static List<LegendEntry> findEntries(ColorMap colorMap, Dimension imageSize){
+	public static List<LegendEntry> findEntries(ColorMap colorMap, Dimension imageSize, Dimension textSize){
 		
 		if (colorMap.getType() == ColorMap.TYPE_INTERVALS){
 			return createIntervalEntries(colorMap, imageSize);
 		}else if (colorMap.getType() == ColorMap.TYPE_RAMP){
+			if (imageSize.height < textSize.height){
+				imageSize = new Dimension(imageSize.width, textSize.height);
+			}
 			return createRampEntries(colorMap, imageSize);
 		}else if (colorMap.getType() == ColorMap.TYPE_VALUES){
 			return createValuesEntries(colorMap,imageSize);
@@ -128,6 +131,7 @@ public class ColorMapLegendCreator {
 			final ColorMapEntry entry = entries[i];
 			final ColorMapEntry prevEntry = entries[i-1];
 			ImageDescriptor dd = null;
+			final int index = i;
 			dd = new ImageDescriptor() {
 				@Override
 				public ImageData getImageData() {
@@ -147,9 +151,20 @@ public class ColorMapLegendCreator {
 					gc.setAlpha(getAlpha(entry.getOpacity()));
 					gc.setBackground(c1);
 					gc.setForeground(c2);
-					gc.fillGradientRectangle(1, 1, imageSize.width - 2,
-							imageSize.height - 2, false);
+					gc.fillGradientRectangle(1, 0, imageSize.width-2,
+							imageSize.height, true);
 
+					gc.setAlpha(150);
+					gc.setForeground(display.getSystemColor(SWT.COLOR_BLACK));
+					gc.drawLine(0, 0, 0, imageSize.height);
+					gc.drawLine(imageSize.width-1, 0, imageSize.width-1, imageSize.height);
+	                if (index == 1){
+	                	gc.drawLine(0, 0, imageSize.width-1, 0);	
+	                }else if (index > entries.length-2){
+	                	gc.drawLine(0, imageSize.height - 1, imageSize.width-1, imageSize.height - 1);
+	                }
+					//gc.drawRectangle(0, 0, imageSize.width-1, imageSize.height-1);
+	                
 					c1.dispose();
 					c2.dispose();
 
@@ -162,36 +177,39 @@ public class ColorMapLegendCreator {
 			};
 			
 		        
-			String text = null;
+			String[] text = null;
 			String q1 = entry.getQuantity().evaluate(null, String.class);
 			String q2 = prevEntry.getQuantity().evaluate(null, String.class);
 
 			String l1 = entry.getLabel();
 			String l2 = prevEntry.getLabel();
-
-			if (q1.equals(q2)
-					&& ((l1 == null && l2 == null) || (l1 != null && l1
-							.equals(l2)))) {
-				text = q1;
-				if (l1 != null) {
-					text = l1 + " (" + text + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+			if (i <= entries.length - 3){
+				if (l2 == null){
+					text = new String[]{q2};
+				}else{
+					text = new String[]{l2 + " (" + q2 + ")"};
 				}
-			} else {
-				text = q2 + " - " + q1; //$NON-NLS-1$ 
-				if (l1 != null || l2 != null) {
-					// include label provided
-					if (l1 == null) {
-						l1 = ""; //$NON-NLS-1$ 
-					}
-					if (l2 == null) {
-						l2 = ""; //$NON-NLS-1$ 
-					}
-					text = l2 + " - " + l1 + " (" + text + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			}else{
+				text = new String[2];
+				if (l2 == null){
+					text[0] = q2;
+				}else{
+					text[0] = l2 + " (" + q2 + ")";
+				}
+				if (l1 == null){
+					text[1] = q1;
+				}else{
+					text[1] = l1 + " (" + q1 + ")";
 				}
 			}
+			
 			LegendEntry le = new LegendEntry(text, dd);
-			lentries.add(le);
+			le.setSpacingAfter(0);
+	        le.setTextPosition(SWT.TOP);
+	        lentries.add(le);
+			
 		}
+		lentries.get(lentries.size()-1).setSpacingAfter(null);	//default spacing
 		return lentries;
 	}
 	
@@ -228,6 +246,10 @@ public class ColorMapLegendCreator {
 		                gc.fillRectangle( 1, 1, imageSize.width-2, imageSize.height-2);
 		                c.dispose();
 		                
+		                gc.setAlpha(150);
+		                gc.setForeground(display.getSystemColor(SWT.COLOR_BLACK));
+		                gc.drawRectangle(1, 1, imageSize.width - 2, imageSize.height-2);
+		                
 		                ImageData clone = (ImageData) swtImage.getImageData().clone();                
 		                swtImage.dispose();
 		                
@@ -261,6 +283,7 @@ public class ColorMapLegendCreator {
 		        }
 		        LegendEntry le = new LegendEntry(text, dd);
 		        lentries.add(le);
+
 			
 		}
 		return lentries;
@@ -286,10 +309,15 @@ public class ColorMapLegendCreator {
 		                GC gc = new GC(swtImage);
 		                gc.setAntialias(SWT.ON);
 		                org.eclipse.swt.graphics.Color c = getColor(display, entry.getColor());
-		               
+
 		                gc.setAlpha(getAlpha(entry.getOpacity()));
 		                gc.setBackground( c );
 		                gc.fillRectangle( 1, 1, imageSize.width-2, imageSize.height-2);
+		                
+		                gc.setAlpha(150);
+		                gc.setForeground(display.getSystemColor(SWT.COLOR_BLACK));
+		                gc.drawRectangle(1, 1, imageSize.width - 2, imageSize.height-2);
+		                
 		                c.dispose();
 		                
 		                ImageData clone = (ImageData) swtImage.getImageData().clone();                

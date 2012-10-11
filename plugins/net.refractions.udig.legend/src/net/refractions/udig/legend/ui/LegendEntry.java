@@ -15,6 +15,7 @@
 package net.refractions.udig.legend.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.SWT;
 import org.geotools.styling.Rule;
 
 /**
@@ -25,9 +26,12 @@ import org.geotools.styling.Rule;
  */
 public class LegendEntry {
 
-	private String text;
+	private int textPosition = SWT.CENTER;
+	private String[] text;
 	private ImageDescriptor icon;
 	private Rule rule;
+	
+	private Integer spacingAfter = null;
 
 	/**
 	 * Creates a new legend entry based on a rule.
@@ -46,7 +50,7 @@ public class LegendEntry {
 	 * @param text
 	 */
 	public LegendEntry(String text) {
-		this.text = text;
+		this.text = new String[] {text};
 		this.icon = null;
 		this.rule = null;
 	}
@@ -58,11 +62,23 @@ public class LegendEntry {
 	 * @param icon
 	 */
 	public LegendEntry(String text, ImageDescriptor icon) {
-		this.text = text;
+		this.text = new String[] {text};
 		this.icon = icon;
 		this.rule = null;
 	}
 
+	/**
+	 * Creates a new legend entry with the given text and icon
+	 * 
+	 * @param text
+	 * @param icon
+	 */
+	public LegendEntry(String[] text, ImageDescriptor icon) {
+		this.text = text;
+		this.icon = icon;
+		this.rule = null;
+	}
+	
 	/**
 	 * Gets the legend entry text.
 	 * <p>
@@ -72,13 +88,13 @@ public class LegendEntry {
 	 * 
 	 * @return
 	 */
-	public String getText() {
+	public String[] getText() {
 		if (this.text != null) {
 			return this.text;
 		} else if (rule != null) {
-			return getText(rule);
+			return new String[]{getText(rule)};
 		}
-		return ""; //$NON-NLS-1$ 
+		return new String[]{}; //$NON-NLS-1$ 
 	}
 	
 	/**
@@ -96,12 +112,49 @@ public class LegendEntry {
 	}
 	
 	/**
+	 * Position of text in cell
+	 * @return
+	 */
+	public int getTextPosition(){
+		return this.textPosition;
+	}
+	
+	/**
+	 * 
+	 * Position of text in cell.  Only SWT.TOP and
+	 * SWT.MIDDLE supported
+	 * @param textPosition SWT.TOP or SWT.MIDDLE
+	 */
+	public void setTextPosition(int textPosition){
+		this.textPosition = textPosition;
+	}
+	
+	/**
 	 * The icon explicity set by the caller.  Will not
 	 * generate an icon from the rule.
 	 * @return
 	 */
 	public ImageDescriptor getIcon(){
 		return this.icon;
+	}
+	
+	/**
+	 * Spacing after image
+	 * @return null if default else number
+	 * of pixel to draw between current cell and next
+	 * cell
+	 */
+	public Integer getSpacingAfter(){
+		return this.spacingAfter;
+	}
+	
+	/**
+	 * Sets the spacing after image.  Set
+	 * to null to use default
+	 * @param spacing
+	 */
+	public void setSpacingAfter(Integer spacing){
+		this.spacingAfter = spacing;
 	}
 
 	/**
