@@ -728,7 +728,7 @@
         <dependency>
             <groupId>org.jgrasstools</groupId>
             <artifactId>jgt-oms3</artifactId>
-            <version>0.7.5</version>
+            <version>0.7.6</version>
         </dependency>
         <dependency>
             <groupId>javassist</groupId>

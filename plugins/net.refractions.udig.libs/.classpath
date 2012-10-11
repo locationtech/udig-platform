@@ -109,7 +109,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/jfreechart-experimental-1.0.13.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jfreechart-swt-1.0.13.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jgridshift-1.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jgt-oms3-0.7.5.jar" sourcepath="lib-src/jgt-oms3-0.7.5-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jgt-oms3-0.7.6.jar" sourcepath="lib-src/jgt-oms3-0.7.6-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jline-0.9.94.jar" sourcepath="lib-src/jline-0.9.94-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jna-3.0.9.jar" sourcepath="lib-src/jna-3.0.9-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/joda-time-1.6.jar" sourcepath="lib-src/joda-time-1.6-sources.jar"/>
