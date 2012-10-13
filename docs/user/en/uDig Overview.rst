@@ -3,7 +3,7 @@ uDig Overview
 
 The User-friendly Desktop Internet GIS is an `open
 source <http://www.opensource.org/docs/definition.php>`_
-(`LGPL <http://www.opensource.org/licenses/lgpl-2.1.php>`_) desktop application framework, built
+(`EPL <http://www.eclipse.org/legal/epl-v10.html>`_) desktop application framework, built
 with the Eclipse Rich Client (`RCP <http://wiki.eclipse.org/index.php/Rich_Client_Platform>`_)
 technology.
 

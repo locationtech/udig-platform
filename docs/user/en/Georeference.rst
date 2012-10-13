@@ -11,7 +11,7 @@ automatically.
 
 **Related tasks**
 
-:doc:`Image Georeferencing`
+.. :doc:`Image Georeferencing`
 
 
 **Related reference**

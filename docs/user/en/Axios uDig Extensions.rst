@@ -16,8 +16,9 @@ es.axios.udig.extensions:
    :maxdepth: 1
 
    Editing Tools
-   Image Georeferencing
    Spatial Operations
+
+.. Image Georeferencing
 
 Installation
 ============
