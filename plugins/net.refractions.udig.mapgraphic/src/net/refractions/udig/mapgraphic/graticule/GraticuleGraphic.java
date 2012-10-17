@@ -29,6 +29,8 @@ import javax.measure.unit.Unit;
 
 import net.refractions.udig.mapgraphic.MapGraphic;
 import net.refractions.udig.mapgraphic.MapGraphicContext;
+import net.refractions.udig.mapgraphic.MapGraphicPlugin;
+import net.refractions.udig.mapgraphic.internal.Messages;
 import net.refractions.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.swt.graphics.Path;
@@ -141,7 +143,8 @@ public class GraticuleGraphic implements MapGraphic {
         // Sanity checks
         Unit<?> unit = CRSUtilities.getUnit(context.getCRS().getCoordinateSystem());
         if(!SI.METER.equals(unit)) {
-            throw new IllegalArgumentException(Messages.GraticuleGraphic_Illegal_CRS);
+            MapGraphicPlugin.log(Messages.GraticuleGraphic_Illegal_CRS, null);
+            return;
         }        
         final IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench == null) return;
@@ -156,6 +159,9 @@ public class GraticuleGraphic implements MapGraphic {
 
         // Initialize the graphics handle
         ViewportGraphics g = context.getGraphics();
+        
+        // Set font size
+        g.setFont(bold);
 
         // Get bounds of viewport
         ReferencedEnvelope bounds = context.getViewportModel().getBounds();
@@ -314,26 +320,29 @@ public class GraticuleGraphic implements MapGraphic {
         Path path = new Path(display);
 
         // Move to last point
-        path.moveTo(current.x, current.y - (bold ? 2 : 1));
+        path.moveTo(current.x, current.y - (bold ? 2*lw : lw));
 
         // Insert gap?
         if (gap) {
-
+            
+            // Calculate gap/2
+            int gy = Math.max(1,g.getFontHeight());
+            
             // Make gap in line
-            path.lineTo(next.x, next.y + sy / 2 + 15);
+            path.lineTo(next.x, next.y + sy / 2 + gy);
             paths.add(path);
 
             // Create second segment
             path = new Path(display);
 
             // Move to last point
-            path.moveTo(next.x, next.y + sy / 2 - 15);
+            path.moveTo(next.x, next.y + sy / 2 - gy);
         }
 
         // Close path
-        path.lineTo(next.x, next.y + (bold ? 0 : 1));
+        path.lineTo(next.x, next.y + (bold ? 0 : lw));
         paths.add(path);
-        lines.add(new Line(paths, bold ? 2 : 1));
+        lines.add(new Line(paths, bold ? 2*lw : lw));
 
         // Finished
         return next;
@@ -368,16 +377,19 @@ public class GraticuleGraphic implements MapGraphic {
 
         // Insert gap?
         if (gap) {
+            
+            // Calculate gap/2
+            int gx = Math.max(1,g.getFontHeight());
 
             // Make gap in line
-            path.lineTo(next.x - sx / 2 - 15, next.y);
+            path.lineTo(next.x - sx / 2 - gx, next.y);
             paths.add(path);
 
             // Create second segment
             path = new Path(display);
 
             // Move to last point
-            path.moveTo(next.x - sx / 2 + 15, next.y);
+            path.moveTo(next.x - sx / 2 + gx, next.y);
         }
 
         // Close path
