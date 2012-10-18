@@ -56,6 +56,14 @@
                menubarPath="layer/mapGraphic.ext"
                style="push"/>
          <action
+               class="net.refractions.udig.mapgraphic.graticule.AddGraticuleAction"
+               icon="icons/obj16/graticule_obj.gif"
+               id="net.refractions.udig.project.ui.action.addgraticule"
+               label="%action.addgraticule.label"
+               menubarPath="layer/mapGraphic.ext"
+               style="push">
+         </action>
+         <action
                class="net.refractions.udig.mapgraphic.internal.ui.OtherAction"
                id="net.refractions.udig.mapgraphic.other"
                label="%action.other.name"
@@ -83,6 +91,11 @@
           id="net.refractions.udig.tool.edit.mapgraphic.grid.style"
           name="Grid Style"/>
     <style
+          class="net.refractions.udig.mapgraphic.graticule.GraticuleStyleContent"
+          id="net.refractions.udig.tool.edit.mapgraphic.graticule.style"
+          name="Graticule Style">
+    </style>
+    <style
           class="net.refractions.udig.mapgraphic.style.FontStyleContent"
           id="net.refractions.udig.mapgraphic.style.font"
           name="Font Style">
@@ -102,12 +115,6 @@
             requires="net.refractions.udig.mapgraphic.scalebar.ScalebarMapGraphic"
             styleId="net.refractions.udig.printing.ui.locationStyle"/>
     <styleConfigurator
-          class="net.refractions.udig.mapgraphic.grid.GridStyleConfigurator"
-          id="net.refractions.udig.tool.edit.mapgraphic.grid.configurator"
-          label="Grid"
-          requires="net.refractions.udig.mapgraphic.grid.GridMapGraphic"
-          styleId="net.refractions.udig.tool.edit.mapgraphic.grid.style"/>
-    <styleConfigurator
           class="net.refractions.udig.mapgraphic.style.FontStyleConfigurator"
           id="font"
           label="%font.style.label"
@@ -120,6 +127,26 @@
           label="BarType"
           requires="net.refractions.udig.mapgraphic.scalebar.ScalebarMapGraphic"
           styleId="net.refractions.udig.mapgraphic.style.bartype">
+    </styleConfigurator>
+    <styleConfigurator
+          class="net.refractions.udig.mapgraphic.grid.GridStyleConfigurator"
+          id="net.refractions.udig.tool.edit.mapgraphic.grid.configurator"
+          label="Grid"
+          requires="net.refractions.udig.mapgraphic.grid.GridMapGraphic"
+          styleId="net.refractions.udig.tool.edit.mapgraphic.grid.style"/>
+    <styleConfigurator
+          class="net.refractions.udig.mapgraphic.graticule.GraticuleStyleConfigurator"
+          id="net.refractions.udig.tool.edit.mapgraphic.graticule.configurator"
+          label="Graticule"
+          requires="net.refractions.udig.mapgraphic.graticule.GraticuleGraphic"
+          styleId="net.refractions.udig.tool.edit.mapgraphic.graticule.style">
+    </styleConfigurator>
+    <styleConfigurator
+          class="net.refractions.udig.mapgraphic.style.FontStyleConfigurator"
+          id="font"
+          label="%font.style.label"
+          requires="net.refractions.udig.mapgraphic.graticule.GraticuleGraphic"
+          styleId="net.refractions.udig.mapgraphic.style.font">
     </styleConfigurator>
    </extension>
    <extension
@@ -140,6 +167,12 @@
             id="net.refractions.udig.mapgraphic.NorthArrowMapGraphic"
             name="%mapgraphic.northarrow.name">
       </mapGraphic>
+	<mapGraphic
+            class="net.refractions.udig.mapgraphic.graticule.GraticuleGraphic"
+            icon="icons/etool16/graticule.png"
+            id="org.discotools.udig.graticule.graphic"
+            name="Graticule">
+      </mapGraphic>      
     <!--  <mapGraphic
             class="net.refractions.udig.mapgraphic.scalebar.ScaleDenomMapGraphic"
             id="net.refractions.udig.mapgraphic.scalebar.ScaleDenomMapGraphic"
