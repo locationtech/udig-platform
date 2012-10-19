@@ -31,6 +31,7 @@ import net.refractions.udig.mapgraphic.MapGraphic;
 import net.refractions.udig.mapgraphic.MapGraphicContext;
 import net.refractions.udig.mapgraphic.MapGraphicPlugin;
 import net.refractions.udig.mapgraphic.internal.Messages;
+import net.refractions.udig.project.ILayer;
 import net.refractions.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.swt.graphics.Path;
@@ -131,24 +132,30 @@ public class GraticuleGraphic implements MapGraphic {
      */
     private double size(MapGraphicContext context, int min) {
         double scale = context.getMap().getViewportModel().getScaleDenominator();
-        if(scale<100000) return 1000.0;
-        if(scale<1000000) return 1000.0;
-        return 100000.0;
+        if(scale<100000) return 1000.0;         //   1 km square
+        if(scale<1000000) return 10000.0;       //  10 km square
+        return 100000.0;                        // 100 km square
     }
 
     public void draw(MapGraphicContext context) {
 
 //        long tic = System.currentTimeMillis();
         
-        // Sanity checks
-        Unit<?> unit = CRSUtilities.getUnit(context.getCRS().getCoordinateSystem());
+        // Sanity checks        
+//        Unit<?> unit = CRSUtilities.getUnit(context.getCRS().getCoordinateSystem());
+        Unit<?> unit = CRSUtilities.getUnit(context.getLayer().getCRS().getCoordinateSystem());
         if(!SI.METER.equals(unit)) {
-            MapGraphicPlugin.log(Messages.GraticuleGraphic_Illegal_CRS, null);
+            context.getLayer().setStatus(ILayer.ERROR);
+            context.getLayer().setStatusMessage(Messages.GraticuleGraphic_Illegal_CRS);
             return;
-        }        
+        }
         final IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench == null) return;
 
+        // Start working on layer
+        context.getLayer().setStatus(ILayer.WORKING);
+        context.getLayer().setStatusMessage(null);
+        
         // Get display to work on
         final Display display = workbench.getDisplay();
 
@@ -287,10 +294,13 @@ public class GraticuleGraphic implements MapGraphic {
 //            g.drawRect(x, y + h - d, w, d);
 //            g.fillRect(x, y + h - d, w, d);
 
-        } catch (IOException e1) {
-            e1.printStackTrace();
+        } catch (IOException ex) {
+            MapGraphicPlugin.log(Messages.GraticuleGraphic_Error, ex);
         }
 
+        // Finished working on layer
+        context.getLayer().setStatus(ILayer.DONE);
+        
 //        System.out.println("Display (w,h): " + context.getMapDisplay().getWidth() + "," + context.getMapDisplay().getHeight());
 //        System.out.println("Time: " + (System.currentTimeMillis() - tic) + "ms");
     }
