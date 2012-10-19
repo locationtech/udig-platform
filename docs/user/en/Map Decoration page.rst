@@ -21,6 +21,7 @@ Several options are available:
    North Arrow Decoration
    Scalebar Decoration
    The Processing Region
+   Graticule Decoration
 
 
 **Related reference**
