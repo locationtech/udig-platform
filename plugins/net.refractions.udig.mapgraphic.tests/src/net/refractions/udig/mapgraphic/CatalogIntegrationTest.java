@@ -2,8 +2,6 @@ package net.refractions.udig.mapgraphic;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
-
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
@@ -19,11 +17,19 @@ public class CatalogIntegrationTest {
     public void testAquire() throws Exception {
         IRepository local = CatalogPlugin.getDefault().getLocal();
         local.acquire(MapGraphicService.SERVICE_URL, null);
-        final ID SCALE_BAR = new ID("mapgraphic:/localhost/mapgraphic#scalebar", null);
-        IGeoResource scalebarRessource = local.getById(IGeoResource.class, SCALE_BAR,
+        
+        // Test ScaleBar
+        final ID SCALE_BAR = new ID("mapgraphic:/localhost/mapgraphic#scalebar", null); //$NON-NLS-1$
+        IGeoResource scalebarResource = local.getById(IGeoResource.class, SCALE_BAR,
                 new NullProgressMonitor());
-
-        assertNotNull(scalebarRessource);
+        assertNotNull(scalebarResource);
+        
+        // Test Graticule
+        final ID GRATICULE = new ID("mapgraphic:/localhost/mapgraphic#graticule", null); //$NON-NLS-1$
+        IGeoResource graticuleResource = local.getById(IGeoResource.class, GRATICULE,
+                new NullProgressMonitor());
+        assertNotNull(graticuleResource);
+        
     }
 
 }
