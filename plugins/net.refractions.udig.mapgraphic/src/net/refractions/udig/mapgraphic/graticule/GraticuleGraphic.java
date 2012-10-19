@@ -32,6 +32,7 @@ import net.refractions.udig.mapgraphic.MapGraphicContext;
 import net.refractions.udig.mapgraphic.MapGraphicPlugin;
 import net.refractions.udig.mapgraphic.internal.Messages;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.internal.impl.LayerImpl;
 import net.refractions.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.swt.graphics.Path;
@@ -41,13 +42,19 @@ import org.eclipse.ui.PlatformUI;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.grid.Grids;
+import org.geotools.referencing.CRS;
 import org.geotools.resources.CRSUtilities;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.geometry.DirectPosition;
+import org.opengis.geometry.MismatchedDimensionException;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.operation.MathTransform;
+import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -73,7 +80,7 @@ public class GraticuleGraphic implements MapGraphic {
     SimpleFeatureSource grid;
 
     NumberFormat cf = new DecimalFormat(FORMAT);
-
+    
     private SimpleFeatureIterator squares(ReferencedEnvelope bounds, double size)
             throws IOException {
 
@@ -137,30 +144,43 @@ public class GraticuleGraphic implements MapGraphic {
         return 100000.0;                        // 100 km square
     }
 
+    @Override
     public void draw(MapGraphicContext context) {
 
 //        long tic = System.currentTimeMillis();
         
+        // Initialize
+        ILayer graticule = context.getLayer();
+        GraticuleStyle style = GraticuleStyle.getStyle(graticule);
+        
+        // Initialize CRS?        
+        if(style.isInitCRS() && (graticule instanceof LayerImpl)) {
+            // Only initialize once
+            style.setInitCRS(false);
+            // Apply change to workspace
+            graticule.getStyleBlackboard().put(GraticuleStyle.ID, style);
+            // Initialize CRS
+            ((LayerImpl)graticule).setCRS(context.getCRS()); 
+        }
+        
         // Sanity checks        
-//        Unit<?> unit = CRSUtilities.getUnit(context.getCRS().getCoordinateSystem());
-        Unit<?> unit = CRSUtilities.getUnit(context.getLayer().getCRS().getCoordinateSystem());
+        Unit<?> unit = CRSUtilities.getUnit(graticule.getCRS().getCoordinateSystem());
         if(!SI.METER.equals(unit)) {
-            context.getLayer().setStatus(ILayer.ERROR);
-            context.getLayer().setStatusMessage(Messages.GraticuleGraphic_Illegal_CRS);
+            graticule.setStatus(ILayer.ERROR);
+            graticule.setStatusMessage(Messages.GraticuleGraphic_Illegal_CRS);
             return;
         }
         final IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench == null) return;
 
         // Start working on layer
-        context.getLayer().setStatus(ILayer.WORKING);
-        context.getLayer().setStatusMessage(null);
+        graticule.setStatus(ILayer.WORKING);
+        graticule.setStatusMessage(null);
         
         // Get display to work on
         final Display display = workbench.getDisplay();
 
         // Set styles
-        GraticuleStyle style = GraticuleStyle.getStyle(context.getLayer());
         Font plain = GraticuleStyle.getFontStyle(context).getFont();
         Font bold = plain.deriveFont(Font.BOLD);
 
@@ -172,7 +192,7 @@ public class GraticuleGraphic implements MapGraphic {
 
         // Get bounds of viewport
         ReferencedEnvelope bounds = context.getViewportModel().getBounds();
-
+        
         try {
 
             // Get square size limited to minimum size of 100 pixels
@@ -181,7 +201,17 @@ public class GraticuleGraphic implements MapGraphic {
             // Convert square size to pixels
             int sx = (int) (size / context.getViewportModel().getPixelSize().x);
             int sy = (int) (size / context.getViewportModel().getPixelSize().y);
-
+            
+            // Make transform from Graticule to map CRS
+            MathTransform transform = CRS.findMathTransform(
+                    graticule.getCRS(), 
+                    context.getCRS(), 
+                    false);
+            
+            // Transform bounds into Graticule CRS
+            bounds = bounds.transform(graticule.getCRS(), true);
+            
+            // Get squares inside bounds
             SimpleFeatureIterator it = squares(bounds, size);
 
 //            int count = 0;
@@ -193,25 +223,41 @@ public class GraticuleGraphic implements MapGraphic {
 
                 // if(count++ < 27 || count > 29) continue;
 
-                // Initialize
+                // Initialize states
                 int i = 0;
                 Point current = null;
-                Geometry geom = (Geometry) feature.getDefaultGeometry();
+                
+                // Initialize lines
                 List<Line> lines = new ArrayList<Line>(2);
                 List<Label> labels = new ArrayList<Label>(2);
 
+                // Get geometry
+                Geometry geom = (Geometry) feature.getDefaultGeometry();
+                
+                // Get coordinates in graticule CRS
+                Coordinate[] coords = geom.getCoordinates();
+                
+                // Get upper left corner
+                Coordinate ulc = coords[0];
+                
+                // Get 0xx00 coordinate
+                String tx = (Math.signum(ulc.x) == -1 ? DELIM : EMPTY) + cf.format(Math.abs(ulc.x)).substring(2, 4);
+
+                // Get upper left corner
+                Coordinate llc = coords[2];
+                
+                // Get 0yy00 coordinate
+                String ty = (Math.signum(llc.y) == -1 ? DELIM : EMPTY) + cf.format(Math.abs(llc.y)).substring(2, 4);
+
+                // Insert gap with label?
+                boolean vgap = (Integer.valueOf(tx) % 10 == 0);
+                boolean hgap = (Integer.valueOf(ty) % 10 == 0);
+                
+                // Transform coordinates into Map CRS
+                coords = JTS.transform(geom, transform).getCoordinates();
+                
                 // Create lines and labels for this square
-                for (Coordinate c : geom.getCoordinates()) {
-
-                    // Get 0xx00 coordinate
-                    String tx = (Math.signum(c.x) == -1 ? DELIM : EMPTY) + cf.format(Math.abs(c.x)).substring(2, 4);
-
-                    // Get 0yy00 coordinate
-                    String ty = (Math.signum(c.x) == -1 ? DELIM : EMPTY) + cf.format(Math.abs(c.y)).substring(2, 4);
-
-                    // Insert gap with label?
-                    boolean vgap = (Integer.valueOf(tx) % 10 == 0);
-                    boolean hgap = (Integer.valueOf(ty) % 10 == 0);
+                for (Coordinate c : coords) {
 
                     // Build paths
                     switch (i) {
@@ -225,7 +271,10 @@ public class GraticuleGraphic implements MapGraphic {
                         current = vert(display, g, sy, style.getLineWidth(), current, context.worldToPixel(c), hgap, vgap, lines);
 
                         // Add xx label?
-                        if (hgap) labels.add(new Label(new Point(current.x, current.y + sy / 2), tx, vgap ? bold : plain));
+                        if (hgap) { 
+                            labels.add(new Label(current, tx, vgap ? bold : plain));
+                            current = context.worldToPixel(c);
+                        }
 
                         break;
                     case 2:
@@ -238,10 +287,13 @@ public class GraticuleGraphic implements MapGraphic {
                         current = horz(display, g, sx, style.getLineWidth(), current, context.worldToPixel(c), vgap, hgap, lines);
 
                         // Add yy label?
-                        if (vgap) labels.add(new Label(new Point(current.x - sx / 2, current.y), ty, hgap ? bold : plain));
+                        if (vgap) { 
+                            labels.add(new Label(current, ty, hgap ? bold : plain));
+                            current = context.worldToPixel(c);
+                        }
 
                         break;
-
+                    
                     default:
                         current = context.worldToPixel(c);
                         break;
@@ -296,15 +348,53 @@ public class GraticuleGraphic implements MapGraphic {
 
         } catch (IOException ex) {
             MapGraphicPlugin.log(Messages.GraticuleGraphic_Error, ex);
+        } catch (FactoryException ex) {
+            MapGraphicPlugin.log(Messages.GraticuleGraphic_Error, ex);
+        } catch (MismatchedDimensionException ex) {
+            MapGraphicPlugin.log(Messages.GraticuleGraphic_Error, ex);
+        } catch (TransformException ex) {
+            MapGraphicPlugin.log(Messages.GraticuleGraphic_Error, ex);
         }
 
         // Finished working on layer
-        context.getLayer().setStatus(ILayer.DONE);
+        graticule.setStatus(ILayer.DONE);
         
 //        System.out.println("Display (w,h): " + context.getMapDisplay().getWidth() + "," + context.getMapDisplay().getHeight());
 //        System.out.println("Time: " + (System.currentTimeMillis() - tic) + "ms");
     }
 
+    /**
+     * Offset point from mid-point between p1 and p2 given length
+     * 
+     * @see {@linkplain http://www.teacherschoice.com.au/Maths_Library/Analytical%20Geometry/AnalGeom_3.htm}
+     * 
+     * @param p1
+     * @param p2
+     * @param length
+     * @param internal
+     * @return Point
+     */
+    private Point offset(Point p1, Point p2, int offset) {
+        
+        // Get segment length
+        int segment = (int)p1.distance(p2);
+        
+        // Calculate length along line from p1
+        int length = segment/2 + offset;
+        
+        // Calculate ratio        
+        int k1 = length;
+        int k2 = segment - length;
+        
+        // Calculate division of line segment
+        int x = (k1*p2.x + k2*p1.x)/(k1 + k2); 
+        int y = (k1*p2.y + k2*p1.y)/(k1 + k2); 
+        
+        // Finished
+        return new Point(x, y);
+    }
+    
+    
     /**
      * Create vertical line
      *  
@@ -336,17 +426,20 @@ public class GraticuleGraphic implements MapGraphic {
         if (gap) {
             
             // Calculate gap/2
-            int gy = Math.max(1,g.getFontHeight());
+            int offset = Math.max(1,g.getFontHeight());
             
-            // Make gap in line
-            path.lineTo(next.x, next.y + sy / 2 + gy);
+            // End first segment before mid-point
+            Point p = offset(current,next,-offset);
+            path.lineTo(p.x, p.y);
             paths.add(path);
-
+            
             // Create second segment
             path = new Path(display);
 
-            // Move to last point
-            path.moveTo(next.x, next.y + sy / 2 - gy);
+            // Move past mid-point
+            p = offset(current,next,offset);
+            path.moveTo(p.x, p.y);
+            
         }
 
         // Close path
@@ -355,7 +448,7 @@ public class GraticuleGraphic implements MapGraphic {
         lines.add(new Line(paths, bold ? 2*lw : lw));
 
         // Finished
-        return next;
+        return gap ? offset(current,next,0) : next;
     }
 
     /**
@@ -387,19 +480,22 @@ public class GraticuleGraphic implements MapGraphic {
 
         // Insert gap?
         if (gap) {
-            
+
             // Calculate gap/2
-            int gx = Math.max(1,g.getFontHeight());
-
-            // Make gap in line
-            path.lineTo(next.x - sx / 2 - gx, next.y);
+            int offset = Math.max(1,g.getFontHeight());
+            
+            // End first segment before mid-point
+            Point p = offset(current,next,-offset);
+            path.lineTo(p.x, p.y);
             paths.add(path);
-
+            
             // Create second segment
             path = new Path(display);
 
-            // Move to last point
-            path.moveTo(next.x - sx / 2 + gx, next.y);
+            // Move past mid-point
+            p = offset(current,next,offset);
+            path.moveTo(p.x, p.y);
+            
         }
 
         // Close path
@@ -408,7 +504,7 @@ public class GraticuleGraphic implements MapGraphic {
         lines.add(new Line(paths, bold ? 2*lw : lw));
 
         // Finished
-        return next;
+        return gap ? offset(current,next,0) : next;
     }
 
     /**
