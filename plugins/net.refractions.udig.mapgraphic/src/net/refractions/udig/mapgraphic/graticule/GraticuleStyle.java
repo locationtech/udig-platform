@@ -45,7 +45,7 @@ public class GraticuleStyle {
     public static final GraticuleStyle DEFAULT = new GraticuleStyle(
             new Color(0, 180, 255, 100), 
             new Color(0, 180, 255, 100),
-            100, ViewportGraphics.LINE_SOLID, 1, true);
+            100, ViewportGraphics.LINE_SOLID, 1, true, true);
 
     /**
      * Graticule opacity (0-255)
@@ -78,13 +78,19 @@ public class GraticuleStyle {
     /**
      * Flag controlling label state
      */
-    private Boolean showLabels;
+    private Boolean isShowLabels;
 
+    
     /**
      * Graticule font {@link Color}
      */
     private Color fontColor;
     
+    
+    /**
+     * Flag controlling CRS initialization;
+     */
+    private Boolean isInitCRS;
     
     /**
      * Constructor.
@@ -94,7 +100,8 @@ public class GraticuleStyle {
      * @param opacity - Graticule opacity (0-255)
      * @param lineStyle - Graticule line style
      * @param lineWidth - Graticule line widht
-     * @param showLabels - Flag controlling graticule state
+     * @param isShowLabels - Flag controlling graticule state
+     * @param isInitCRS - Flag controlling graticule CRS initialization
      */
     public GraticuleStyle(
             Color fontColor, 
@@ -102,14 +109,16 @@ public class GraticuleStyle {
             int opacity, 
             int lineStyle, 
             int lineWidth, 
-            Boolean showLabels) {
+            Boolean isShowLabels,
+            Boolean isInitCRS) {
         
         this.opacity = opacity;
         this.fontColor = fontColor;
         this.lineColor = lineColor;
         this.lineStyle = lineStyle;
         this.lineWidth = lineWidth;
-        this.showLabels = showLabels;
+        this.isShowLabels = isShowLabels;
+        this.isInitCRS = isInitCRS;
     }
 
     /**
@@ -123,7 +132,8 @@ public class GraticuleStyle {
         lineColor = oldStyle.getLineColor();
         lineStyle = oldStyle.getLineStyle();
         lineWidth = oldStyle.getLineWidth();
-        showLabels = oldStyle.isShowLabels();
+        isShowLabels = oldStyle.isShowLabels();
+        isInitCRS = oldStyle.isInitCRS();
     }
 
     public Color getFontColor() {
@@ -167,13 +177,20 @@ public class GraticuleStyle {
     }
     
     public boolean isShowLabels() {
-        return showLabels != null ? showLabels : false;
+        return isShowLabels != null ? isShowLabels : false;
     }
 
-    public void setShowLabels(boolean showLabels) {
-        this.showLabels = showLabels;
+    public void setShowLabels(boolean isShowLabels) {
+        this.isShowLabels = isShowLabels;
     }
     
+    public boolean isInitCRS() {
+        return isInitCRS != null ? isInitCRS : true;
+    }
+
+    public void setInitCRS(boolean isInitCRS) {
+        this.isInitCRS = isInitCRS;
+    }
     
     /**
      * Get {@link GraticuleStyle style} from {@link ILayer#getStyleBlackboard()}.

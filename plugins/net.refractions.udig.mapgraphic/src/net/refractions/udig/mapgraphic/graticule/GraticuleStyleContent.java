@@ -37,6 +37,7 @@ public class GraticuleStyleContent extends StyleContent {
     private static final String FONT_BLUE_ID = "FONT_BLUE_ID"; //$NON-NLS-1$
     private static final String FONT_ALPHA_ID = "FONT_ALPHA_ID"; //$NON-NLS-1$
     private static final String SHOW_LABELS_ID = "SHOW_LABELS_ID"; //$NON-NLS-1$
+    private static final String INIT_CRS_ID = "INIT_CRS_ID"; //$NON-NLS-1$
     private static final String OPACITY_ID = "OPACITY_ID"; //$NON-NLS-1$    
 
     public GraticuleStyleContent( ) {
@@ -71,10 +72,18 @@ public class GraticuleStyleContent extends StyleContent {
                 memento.getInteger(FONT_GREEN_ID), 
                 memento.getInteger(FONT_BLUE_ID), 
                 memento.getInteger(FONT_ALPHA_ID));
-        Boolean showLabels = memento.getBoolean(SHOW_LABELS_ID);
+        Boolean isShowLabels = memento.getBoolean(SHOW_LABELS_ID);
+        Boolean isInitCRS = memento.getBoolean(INIT_CRS_ID);
         int opacity = memento.getInteger(OPACITY_ID);
 
-        return new GraticuleStyle(fontColor, lineColor, opacity, lineStyle, lineWidth, showLabels);
+        return new GraticuleStyle(
+                fontColor, 
+                lineColor, 
+                opacity, 
+                lineStyle, 
+                lineWidth, 
+                isShowLabels, 
+                isInitCRS);
     }
 
     @Override
@@ -99,6 +108,7 @@ public class GraticuleStyleContent extends StyleContent {
             memento.putInteger(FONT_ALPHA_ID, style.getFontColor().getAlpha());
             memento.putInteger(OPACITY_ID, style.getOpacity());
             memento.putBoolean(SHOW_LABELS_ID, style.isShowLabels());
+            memento.putBoolean(INIT_CRS_ID, style.isInitCRS());
         }
     }
 }
