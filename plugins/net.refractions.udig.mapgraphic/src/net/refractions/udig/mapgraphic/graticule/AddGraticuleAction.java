@@ -21,21 +21,26 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
 /**
  * Adds or removes {@link GraticuleGraphic}
- *  
+ * 
  * @author kengu
  * 
  * @since 1.3.3
  */
-public class AddGraticuleAction extends AbstractToggleMapGraphicAction implements IWorkbenchWindowActionDelegate {
+public class AddGraticuleAction extends AbstractToggleMapGraphicAction implements
+        IWorkbenchWindowActionDelegate {
 
+    @Override
     protected Class<GraticuleGraphic> getMapGraphicClass() {
         return GraticuleGraphic.class;
     }
 
-    public void init( IWorkbenchWindow window ) { }
+    @Override
+    public void init(IWorkbenchWindow window) {
+    }
 
+    @Override
     protected String getExtensionID() {
         return "graticule"; //$NON-NLS-1$
     }
-    
+
 }

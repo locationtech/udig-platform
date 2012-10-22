@@ -31,6 +31,8 @@ import net.refractions.udig.ui.graphics.ViewportGraphics;
  */
 public class GraticuleStyle {
 
+    private static final String EPSG_4326 = "EPSG:4326"; //$NON-NLS-1$
+
     /**
      * {@link GraticuleStyle} id.
      * 
@@ -42,16 +44,14 @@ public class GraticuleStyle {
     /**
      * Default {@link GraticuleStyle style}
      */
-    public static final GraticuleStyle DEFAULT = new GraticuleStyle(
-            new Color(0, 180, 255, 100), 
-            new Color(0, 180, 255, 100),
-            100, ViewportGraphics.LINE_SOLID, 1, true, true);
+    public static final GraticuleStyle DEFAULT = new GraticuleStyle(new Color(0, 180, 255, 100),
+            new Color(0, 180, 255, 100), 100, ViewportGraphics.LINE_SOLID, 1, true, true, EPSG_4326);
 
     /**
      * Graticule opacity (0-255)
      */
     private int opacity;
-    
+
     /**
      * Graticule line {@link Color}
      */
@@ -74,24 +74,26 @@ public class GraticuleStyle {
      */
     private int lineWidth;
 
-    
     /**
      * Flag controlling label state
      */
     private Boolean isShowLabels;
 
-    
     /**
      * Graticule font {@link Color}
      */
     private Color fontColor;
-    
-    
+
     /**
      * Flag controlling CRS initialization;
      */
     private Boolean isInitCRS;
-    
+
+    /**
+     * CRS definition
+     */
+    private String crs;
+
     /**
      * Constructor.
      * 
@@ -103,15 +105,9 @@ public class GraticuleStyle {
      * @param isShowLabels - Flag controlling graticule state
      * @param isInitCRS - Flag controlling graticule CRS initialization
      */
-    public GraticuleStyle(
-            Color fontColor, 
-            Color lineColor, 
-            int opacity, 
-            int lineStyle, 
-            int lineWidth, 
-            Boolean isShowLabels,
-            Boolean isInitCRS) {
-        
+    public GraticuleStyle(Color fontColor, Color lineColor, int opacity, int lineStyle,
+            int lineWidth, Boolean isShowLabels, Boolean isInitCRS, String crs) {
+
         this.opacity = opacity;
         this.fontColor = fontColor;
         this.lineColor = lineColor;
@@ -119,6 +115,7 @@ public class GraticuleStyle {
         this.lineWidth = lineWidth;
         this.isShowLabels = isShowLabels;
         this.isInitCRS = isInitCRS;
+        this.crs = crs;
     }
 
     /**
@@ -134,18 +131,21 @@ public class GraticuleStyle {
         lineWidth = oldStyle.getLineWidth();
         isShowLabels = oldStyle.isShowLabels();
         isInitCRS = oldStyle.isInitCRS();
+        crs = oldStyle.getCRS();
     }
 
     public Color getFontColor() {
-        return new Color(fontColor.getRed(),fontColor.getGreen(),fontColor.getBlue(),getOpacity());
+        return new Color(fontColor.getRed(), fontColor.getGreen(), fontColor.getBlue(),
+                getOpacity());
     }
 
     public void setFontColor(Color color) {
         this.fontColor = color;
     }
-    
+
     public Color getLineColor() {
-        return new Color(lineColor.getRed(),lineColor.getGreen(),lineColor.getBlue(),getOpacity());
+        return new Color(lineColor.getRed(), lineColor.getGreen(), lineColor.getBlue(),
+                getOpacity());
     }
 
     public void setLineColor(Color color) {
@@ -175,7 +175,7 @@ public class GraticuleStyle {
     public void setOpacity(int opacity) {
         this.opacity = opacity;
     }
-    
+
     public boolean isShowLabels() {
         return isShowLabels != null ? isShowLabels : false;
     }
@@ -183,7 +183,7 @@ public class GraticuleStyle {
     public void setShowLabels(boolean isShowLabels) {
         this.isShowLabels = isShowLabels;
     }
-    
+
     public boolean isInitCRS() {
         return isInitCRS != null ? isInitCRS : true;
     }
@@ -191,30 +191,40 @@ public class GraticuleStyle {
     public void setInitCRS(boolean isInitCRS) {
         this.isInitCRS = isInitCRS;
     }
-    
+
+    public String getCRS() {
+        return crs != null ? crs : EPSG_4326;
+    }
+
+    public void setCRS(String crs) {
+        this.crs = crs;
+    }
+
     /**
      * Get {@link GraticuleStyle style} from {@link ILayer#getStyleBlackboard()}.
      * <p>
      * If not found, {@link GraticuleStyle#DEFAULT} is used.
+     * 
      * @param layer {@link ILayer}
      * @return {@link GraticuleStyle}
      */
-    public static final GraticuleStyle getStyle( ILayer layer ) {
+    public static final GraticuleStyle getStyle(ILayer layer) {
         GraticuleStyle style = (GraticuleStyle) layer.getStyleBlackboard().get(GraticuleStyle.ID);
-        if( style==null ){
+        if (style == null) {
             return GraticuleStyle.DEFAULT;
         }
         return style;
     }
-    
+
     /**
      * Get {@link FontStyle style} from {@link ILayer#getStyleBlackboard()}.
      * <p>
      * If not found, a new font style is instantiated.
+     * 
      * @param layer {@link ILayer}
      * @return {@link FontStyle}
      */
-    public static FontStyle getFontStyle( MapGraphicContext context ) {
+    public static FontStyle getFontStyle(MapGraphicContext context) {
         IStyleBlackboard styleBlackboard = context.getLayer().getStyleBlackboard();
         FontStyle style = (FontStyle) styleBlackboard.get(FontStyleContent.ID);
         if (style == null) {
@@ -222,6 +232,6 @@ public class GraticuleStyle {
             styleBlackboard.put(FontStyleContent.ID, style);
         }
         return style;
-    }    
+    }
 
 }
