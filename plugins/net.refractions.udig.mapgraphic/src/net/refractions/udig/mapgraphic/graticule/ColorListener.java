@@ -32,33 +32,36 @@ import org.eclipse.swt.widgets.Event;
  */
 public class ColorListener implements SelectionListener {
 
-    private GraticuleStyleConfigurator configurator;
+    private GraticuleLinesConfigurator configurator;
 
-    public ColorListener( GraticuleStyleConfigurator configurator ) {
+    public ColorListener(GraticuleLinesConfigurator configurator) {
         this.configurator = configurator;
     }
 
-    public void widgetDefaultSelected( SelectionEvent e ) {
+    @Override
+    public void widgetDefaultSelected(SelectionEvent e) {
         widgetSelected(e);
     }
 
-    public void widgetSelected( SelectionEvent e ) {
-        
+    @Override
+    public void widgetSelected(SelectionEvent e) {
+
         ColorDialog dialog = new ColorDialog(e.display.getActiveShell());
         Color currentColor = (Color) e.widget.getData();
-        RGB currentRGB = new RGB(currentColor.getRed(), currentColor.getGreen(), currentColor.getBlue());
+        RGB currentRGB = new RGB(currentColor.getRed(), currentColor.getGreen(),
+                currentColor.getBlue());
         dialog.setRGB(currentRGB);
         dialog.open();
-        
+
         RGB rgb = dialog.getRGB();
-        
+
         e.widget.setData(new Color(rgb.red, rgb.green, rgb.blue));
-        
+
         configurator.updateColorButtons();
         Event event = new Event();
-        event.item=e.item;
-        event.widget=e.widget;
-        event.detail=e.detail;
+        event.item = e.item;
+        event.widget = e.widget;
+        event.detail = e.detail;
         configurator.handleEvent(event);
     }
 
