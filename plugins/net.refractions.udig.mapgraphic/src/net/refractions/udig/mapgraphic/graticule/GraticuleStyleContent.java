@@ -25,31 +25,45 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
 
 public class GraticuleStyleContent extends StyleContent {
-    
+
     private static final String LINE_STYLE_ID = "LINE_STYLE_ID"; //$NON-NLS-1$
+
     private static final String LINE_WIDTH_ID = "LINE_WIDTH_ID"; //$NON-NLS-1$
+
     private static final String LINE_RED_ID = "LINE_RED_ID"; //$NON-NLS-1$
+
     private static final String LINE_GREEN_ID = "LINE_GREEN_ID"; //$NON-NLS-1$
+
     private static final String LINE_BLUE_ID = "LINE_BLUE_ID"; //$NON-NLS-1$
+
     private static final String LINE_ALPHA_ID = "LINE_ALPHA_ID"; //$NON-NLS-1$
+
     private static final String FONT_RED_ID = "FONT_RED_ID"; //$NON-NLS-1$
+
     private static final String FONT_GREEN_ID = "FONT_GREEN_ID"; //$NON-NLS-1$
+
     private static final String FONT_BLUE_ID = "FONT_BLUE_ID"; //$NON-NLS-1$
+
     private static final String FONT_ALPHA_ID = "FONT_ALPHA_ID"; //$NON-NLS-1$
+
     private static final String SHOW_LABELS_ID = "SHOW_LABELS_ID"; //$NON-NLS-1$
+
     private static final String INIT_CRS_ID = "INIT_CRS_ID"; //$NON-NLS-1$
+
     private static final String OPACITY_ID = "OPACITY_ID"; //$NON-NLS-1$    
 
-    public GraticuleStyleContent( ) {
+    private static final String CRS_ID = "CRS_ID"; //$NON-NLS-1$    
+
+    public GraticuleStyleContent() {
         super(GraticuleStyle.ID);
     }
 
     @Override
-    public Object createDefaultStyle( IGeoResource resource, Color colour,
-            IProgressMonitor monitor ) throws IOException {
-        if( resource.canResolve(GraticuleGraphic.class))
+    public Object createDefaultStyle(IGeoResource resource, Color colour, IProgressMonitor monitor)
+            throws IOException {
+        if (resource.canResolve(GraticuleGraphic.class))
             return GraticuleStyle.DEFAULT;
-        
+
         return null;
     }
 
@@ -59,40 +73,31 @@ public class GraticuleStyleContent extends StyleContent {
     }
 
     @Override
-    public Object load( IMemento memento ) {
+    public Object load(IMemento memento) {
         int lineStyle = memento.getInteger(LINE_STYLE_ID);
         int lineWidth = memento.getInteger(LINE_WIDTH_ID);
-        Color lineColor = new Color(
-                memento.getInteger(LINE_RED_ID), 
-                memento.getInteger(LINE_GREEN_ID), 
-                memento.getInteger(LINE_BLUE_ID), 
+        Color lineColor = new Color(memento.getInteger(LINE_RED_ID),
+                memento.getInteger(LINE_GREEN_ID), memento.getInteger(LINE_BLUE_ID),
                 memento.getInteger(LINE_ALPHA_ID));
-        Color fontColor = new Color(
-                memento.getInteger(FONT_RED_ID), 
-                memento.getInteger(FONT_GREEN_ID), 
-                memento.getInteger(FONT_BLUE_ID), 
+        Color fontColor = new Color(memento.getInteger(FONT_RED_ID),
+                memento.getInteger(FONT_GREEN_ID), memento.getInteger(FONT_BLUE_ID),
                 memento.getInteger(FONT_ALPHA_ID));
         Boolean isShowLabels = memento.getBoolean(SHOW_LABELS_ID);
         Boolean isInitCRS = memento.getBoolean(INIT_CRS_ID);
         int opacity = memento.getInteger(OPACITY_ID);
+        String crs = memento.getString(CRS_ID);
 
-        return new GraticuleStyle(
-                fontColor, 
-                lineColor, 
-                opacity, 
-                lineStyle, 
-                lineWidth, 
-                isShowLabels, 
-                isInitCRS);
+        return new GraticuleStyle(fontColor, lineColor, opacity, lineStyle, lineWidth,
+                isShowLabels, isInitCRS, crs);
     }
 
     @Override
-    public Object load( URL url, IProgressMonitor monitor ) throws IOException {
+    public Object load(URL url, IProgressMonitor monitor) throws IOException {
         return null;
     }
 
     @Override
-    public void save( IMemento memento, Object value ) {
+    public void save(IMemento memento, Object value) {
         if (value instanceof GraticuleStyle) {
             GraticuleStyle style = (GraticuleStyle) value;
 
@@ -109,6 +114,7 @@ public class GraticuleStyleContent extends StyleContent {
             memento.putInteger(OPACITY_ID, style.getOpacity());
             memento.putBoolean(SHOW_LABELS_ID, style.isShowLabels());
             memento.putBoolean(INIT_CRS_ID, style.isInitCRS());
+            memento.putString(CRS_ID, style.getCRS());
         }
     }
 }

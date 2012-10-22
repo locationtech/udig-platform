@@ -135,18 +135,25 @@
           requires="net.refractions.udig.mapgraphic.grid.GridMapGraphic"
           styleId="net.refractions.udig.tool.edit.mapgraphic.grid.style"/>
     <styleConfigurator
-          class="net.refractions.udig.mapgraphic.graticule.GraticuleStyleConfigurator"
-          id="net.refractions.udig.tool.edit.mapgraphic.graticule.configurator"
-          label="Graticule"
-          requires="net.refractions.udig.mapgraphic.graticule.GraticuleGraphic"
-          styleId="net.refractions.udig.tool.edit.mapgraphic.graticule.style">
-    </styleConfigurator>
-    <styleConfigurator
           class="net.refractions.udig.mapgraphic.style.FontStyleConfigurator"
           id="font"
           label="%font.style.label"
           requires="net.refractions.udig.mapgraphic.graticule.GraticuleGraphic"
           styleId="net.refractions.udig.mapgraphic.style.font">
+    </styleConfigurator>
+    <styleConfigurator
+          class="net.refractions.udig.mapgraphic.graticule.GraticuleCRSConfigurator"
+          id="net.refractions.udig.tool.edit.mapgraphic.graticule.crs"
+          label="Projection"
+          requires="net.refractions.udig.mapgraphic.graticule.GraticuleGraphic"
+          styleId="net.refractions.udig.tool.edit.mapgraphic.graticule.style">
+    </styleConfigurator>
+    <styleConfigurator
+          class="net.refractions.udig.mapgraphic.graticule.GraticuleLinesConfigurator"
+          id="net.refractions.udig.tool.edit.mapgraphic.graticule.lines"
+          label="Lines"
+          requires="net.refractions.udig.mapgraphic.graticule.GraticuleGraphic"
+          styleId="net.refractions.udig.tool.edit.mapgraphic.graticule.style">
     </styleConfigurator>
    </extension>
    <extension
