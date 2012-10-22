@@ -67,8 +67,10 @@ public class Messages extends NLS {
     public static String ScalebarStyleConfigurator_top;
     public static String GridMapGraphic_grids_too_close;
     public static String UnitListener_MixedUnits;
+    public static String GraticuleCRSConfigurator_CRS;
     public static String GraticuleGraphic_Error;
     public static String GraticuleGraphic_Illegal_CRS;
+    public static String GraticuleGraphic_Maximum_Scale;
     public static String GraticuleStyleConfigurator_Font_Color;
     public static String GraticuleStyleConfigurator_Show_Labels;
     public static String GraticuleStyleConfigurator_Opacity;
