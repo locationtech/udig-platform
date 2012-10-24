@@ -6,7 +6,7 @@ Reference for the uDig application describing wizards, views, and shortcuts.
 
 .. toctree::
    :maxdepth: 1
-   
+
    Drag and Drop
    Filters and Expressions
    Help contents
@@ -17,4 +17,4 @@ Reference for the uDig application describing wizards, views, and shortcuts.
    Property Pages
    Views and editors
    Wizards and Dialogs
-
+   Style Pages
