@@ -1,20 +1,35 @@
 Graticule Decoration
 ####################
 
-The graticule decoration displays a grapgraphic coordinate grid aligned with current map CRS.
+Graticule decorations displays a grid aligned with longitude and latitude lines defined by
+a `geographic coordinate system <http://en.wikipedia.org/wiki/Geographic_coordinate_system>`_.
 
 .. figure:: images/graticule_decoration/graticule.png
    :align: center
    :alt: 
 
-Style
------
+Styles
+------
 
-Graticule font can be styled.
+Graticule font, lines and projection (geographic coordinate system) are configurable. 
+You can change them by opening the `Style Editor dialog` and select the style you want
+to change.
+
+Font
+----
+
+Graticule font can be styled. 
 
 .. figure:: images/graticule_decoration/style-font.png
    :align: center
    :alt: 
+   
+**"Select..." button** 
+
+Opens :doc:`Font Selector dialog`.
+
+Lines
+-----
 
 Graticule lines can be styled.
 
@@ -22,23 +37,28 @@ Graticule lines can be styled.
    :align: center
    :alt: 
    
-Show different coordinate system grids
---------------------------------------
+**Font and Line Color buttons** 
 
-If you want to show different coordinate grids on top of each other, just add two graticules and change 
-the projections from the *projection* paged in the style dialog.
+Opens :doc:`Color Selector dialog`.
 
-.. figure:: images/graticule_decoration/style-crs.png
-   :align: center
-   :alt: 
+**Opacity scale** 
 
-which should produce something like this
+Set opacity of font and line colors
+
+**Line Style** 
+
+List of grid line styles
+
+**Line Width** 
+
+Grid line width spinner.
+
+**Show labels** 
+
+Check to show labels
+
    
-.. figure:: images/graticule_decoration/multiple.png
-   :align: center
-   :alt: 
-
-
-**Related reference**
+Related reference
+-----------------
 
 :doc:`Style Editor dialog`

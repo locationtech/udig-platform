@@ -14,4 +14,6 @@ Wizards and Dialogs
    Send Log dialog
    Style Editor dialog
    Transform dialog
+   Font Selector dialog
+   Color Selector dialog   
 
