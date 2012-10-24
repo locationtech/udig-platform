@@ -16,7 +16,6 @@ es.axios.udig.extensions:
    :maxdepth: 1
 
    Editing Tools
-   Image Georeferencing
    Spatial Operations
 
 Installation
@@ -25,7 +24,7 @@ Installation
 #. Open up :menuselection:`Help --> Find and Install...` from the menu bar
 #. Select the **Search for New Features to Install** radio button and press **Next**
 #. Check the **uDig 1.1 Discovery Site** and press **Finish**
-#. From the Search Results page place a checkmark next to the latest release available in 
+#. From the Search Results page place a checkmark next to the latest release available in
    :menuselection:`Axios --> es.axios.udig.extensions` and press **Next** to download.
 #. Agree to the license (which is LGPL)
 #. Confirm the installation location
@@ -33,10 +32,10 @@ Installation
 #. When prompted press **Yes** to restart uDig
 
 .. warning::
-   
+
    **Updating previous es.axios.udig.extensions**
 
-   If you have a previous release (1.1.0-rc9 or older) in your desk, you must delete it. To do that 
+   If you have a previous release (1.1.0-rc9 or older) in your desk, you must delete it. To do that
    follow this instructions:
 
    -  Go to your uDig installation directory.

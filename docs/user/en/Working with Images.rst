@@ -11,7 +11,6 @@ Contents:
 .. toctree::
    :maxdepth: 1
 
-   Image Georeferencing
    Set raster transparent color
 
 
