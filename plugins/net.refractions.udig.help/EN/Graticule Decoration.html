@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Set raster transparent color &mdash; User Guide</title>
+    <title>Graticule Decoration &mdash; User Guide</title>
     
     <link rel="stylesheet" href="_static/udig.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,9 +27,9 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/udig.ico"/>
     <link rel="top" title="User Guide" href="index.html" />
-    <link rel="up" title="Working with Images" href="Working with Images.html" />
-    <link rel="next" title="Working with Layers" href="Working with Layers.html" />
-    <link rel="prev" title="Working with Images" href="Working with Images.html" /> 
+    <link rel="up" title="Map Decoration page" href="Map Decoration page.html" />
+    <link rel="next" title="MySQL page" href="MySQL page.html" />
+    <link rel="prev" title="The Processing Region" href="The Processing Region.html" /> 
   </head>
   <body>
     <div class="header">
@@ -51,33 +51,36 @@
       <div class="documentwrapper">
           <div class="body">
             
-  <div class="section" id="set-raster-transparent-color">
-<h1>Set raster transparent color<a class="headerlink" href="#set-raster-transparent-color" title="Permalink to this headline">¶</a></h1>
-<p>Raster files often have a set colour that is used to indicate &#8220;no data&#8221;. This occurs where a
-satellite field covers a diagonal swath of territory that does not line up with a rectangular image.
-It can also occur where simple line work (such a topographical map) is recorded on a white
-background; by marking the background as transparent you can see through to the other layers.</p>
-<ol class="arabic simple">
-<li>Select your raster layer</li>
-<li>Open the <strong>Style Editor</strong> dialog using the button on the <strong>Layers</strong> view toolbar</li>
-<li>Choose the <strong>Raster Color Mask</strong> style page</li>
-<li>Press the <strong>checkbox</strong> to <strong>Enable color mask</strong></li>
-<li>Press the color chooser and select the color to be made transparent</li>
-</ol>
+  <div class="section" id="graticule-decoration">
+<h1>Graticule Decoration<a class="headerlink" href="#graticule-decoration" title="Permalink to this headline">¶</a></h1>
+<p>The graticule decoration displays a grapgraphic coordinate grid aligned with current map CRS.</p>
+<div class="figure align-center">
+<img alt="" src="_images/graticule.png" />
+</div>
+<div class="section" id="style">
+<h2>Style<a class="headerlink" href="#style" title="Permalink to this headline">¶</a></h2>
+<p>Graticule font can be styled.</p>
+<div class="figure align-center">
+<img alt="" src="_images/style-font.png" />
+</div>
+<p>Graticule lines can be styled.</p>
+<div class="figure align-center">
+<img alt="" src="_images/style-lines.png" />
+</div>
+</div>
+<div class="section" id="show-different-coordinate-system-grids">
+<h2>Show different coordinate system grids<a class="headerlink" href="#show-different-coordinate-system-grids" title="Permalink to this headline">¶</a></h2>
+<p>If you want to show different coordinate grids on top of each other, just add two graticules and change
+the projections from the <em>projection</em> paged in the style dialog.</p>
+<div class="figure align-center">
+<img alt="" src="_images/style-crs.png" />
+</div>
+<p>which should produce something like this</p>
+<div class="figure align-center">
+<img alt="" src="_images/multiple.png" />
+</div>
 <p><strong>Related reference</strong></p>
-<p><a class="reference internal" href="Raster Style Pages.html"><em>Raster Style Pages</em></a></p>
-<div class="section" id="example-use">
-<h2>Example Use<a class="headerlink" href="#example-use" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic">
-<li><p class="first">In the original image the white background is opaque preventing you from seeing the elevation map
-layer.</p>
-<img alt="_images/color_mask.png" src="_images/color_mask.png" style="width: 60%;" />
-</li>
-<li><p class="first">This is result of setting transparent color to white; allowing the elevation map in yellow to
-show through:</p>
-<img alt="_images/color_mask_2.png" src="_images/color_mask_2.png" style="width: 60%;" />
-</li>
-</ol>
+<p><a class="reference internal" href="Style Editor dialog.html"><em>Style Editor dialog</em></a></p>
 </div>
 </div>
 
