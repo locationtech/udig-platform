@@ -10,7 +10,7 @@ The style editor dialog is used to modify the how a layer is displayed on screen
 Style Pages
 ~~~~~~~~~~~
 
-A tree of :doc:`style pages` for the selected content is displayed. Each page allowing the modification of
+A tree of :doc:`Style Pages` for the selected content is displayed. Each page allowing the modification of
 one aspect of the visualization process.
 
 Apply
