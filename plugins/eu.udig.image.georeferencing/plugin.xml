@@ -100,14 +100,6 @@
       </toolCursor>
    </extension>
    <extension
-         point="org.eclipse.help.toc">
-      <toc
-            category="es.axios.udig.extension"
-            file="nl/en/toc.xml"
-            primary="true">
-      </toc>
-   </extension>
-   <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
             class="eu.udig.image.georeferencing.internal.preferences.PreferencesInitializer">

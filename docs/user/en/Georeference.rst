@@ -13,7 +13,6 @@ automatically.
 
 .. :doc:`Image Georeferencing`
 
-
 **Related reference**
 
 :doc:`Georeferencing Tools`
