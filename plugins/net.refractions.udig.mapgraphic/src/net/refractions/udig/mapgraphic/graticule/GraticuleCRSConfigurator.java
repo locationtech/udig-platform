@@ -50,6 +50,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  */
 public class GraticuleCRSConfigurator extends IStyleConfigurator {
     
+    private static final String EPSG = "EPSG:"; //$NON-NLS-1$
     private Text crsText;
     private Label crsLabel;
 
@@ -82,14 +83,9 @@ public class GraticuleCRSConfigurator extends IStyleConfigurator {
                 CRSChooserDialog dialog = new CRSChooserDialog(crsButton.getShell(), crs);
                 int code = dialog.open();
                 if (Window.OK == code) {
-                    String property;
                     try {
-                        property = "EPSG:"+CRS.lookupEpsgCode(dialog.getResult(),false);  //$NON-NLS-1$
-                        crsText.setText(property); 
-                        GraticuleStyle style = getStyle();
-                        style.setCRS(property); 
-                        getStyleBlackboard().put(GraticuleStyle.ID, style);
-                        GraticuleCRSConfigurator.this.makeActionDoStuff();
+                        crs = dialog.getResult();
+                        crsText.setText(EPSG+CRS.lookupEpsgCode(crs,false));
                     } catch (FactoryException ex) {
                         MapGraphicPlugin.log(Messages.GraticuleGraphic_Error, ex);
                         getLayer().setStatus(Layer.ERROR);
@@ -106,11 +102,21 @@ public class GraticuleCRSConfigurator extends IStyleConfigurator {
     
     @Override
     protected void refresh() {
-        crsText.setText(getCRS(getStyle()).getName().getCode()); 
+        try {
+            CoordinateReferenceSystem crs = getCRS(getStyle());
+            crsText.setText(EPSG+CRS.lookupEpsgCode(crs,false));
+        } catch (FactoryException ex) {
+            MapGraphicPlugin.log(Messages.GraticuleGraphic_Error, ex);
+            getLayer().setStatus(Layer.ERROR);
+            getLayer().setStatusMessage(ex.getMessage());
+        } 
     }
     
     @Override
     public void preApply() {
+        GraticuleStyle style = getStyle();
+        style.setCRS(crsText.getText()); 
+        getStyleBlackboard().put(GraticuleStyle.ID, style);        
         apply(getLayer(),getStyle().getCRS());
     }
     
