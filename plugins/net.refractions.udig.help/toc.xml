@@ -647,10 +647,6 @@
     <topic label="Working with Images" href="EN/Working with Images.html">
         
                             
-        <topic label="Image Georeferencing" href="EN/Image Georeferencing.html">
-        
-                </topic>
-                    
         <topic label="Set raster transparent color" href="EN/Set raster transparent color.html">
         
                 </topic>
@@ -1061,7 +1057,10 @@
         <topic label="The Processing Region" href="EN/The Processing Region.html">
         
                 </topic>
-        </topic>
+
+				<topic label="Graticule Decoration" href="EN/Graticule Decoration.html">
+
+								</topic>
                     
         <topic label="MySQL page" href="EN/MySQL page.html">
         
@@ -1231,10 +1230,6 @@
         
                 </topic>
         </topic>
-                    
-        <topic label="Image Georeferencing View" href="EN/Image Georeferencing.html">
-        
-                </topic>
                     
         <topic label="Spatial Operations" href="EN/Spatial Operations.html">
         

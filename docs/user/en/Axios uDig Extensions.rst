@@ -18,6 +18,8 @@ es.axios.udig.extensions:
    Editing Tools
    Spatial Operations
 
+.. Image Georeferencing
+
 Installation
 ============
 

@@ -419,6 +419,9 @@ public class OmsBoxView extends ViewPart {
      */
     public String generateScriptForSelectedModule() throws Exception {
         ScriptHandler handler = new ScriptHandler();
+        if (currentSelectedModuleGui == null) {
+            return null;
+        }
         String script = handler.genereateScript(currentSelectedModuleGui);
         return script;
     }

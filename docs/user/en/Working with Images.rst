@@ -13,6 +13,7 @@ Contents:
 
    Set raster transparent color
 
+.. Image Georeferencing
 
 **Related tasks**
 

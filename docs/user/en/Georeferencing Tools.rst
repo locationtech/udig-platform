@@ -101,11 +101,6 @@ tool.
 :doc:`Georeference`
 
 
-**Related tasks**
-
-:doc:`Image Georeferencing`
-
-
 .. |image0| image:: images/georeferencing_tools/ref_load_image.png
 .. |image1| image:: images/georeferencing_tools/ref_warp_image.png
 .. |image2| image:: images/georeferencing_tools/ref_delete_image.png

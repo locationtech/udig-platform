@@ -37,8 +37,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.geotools.process.feature.gs.TransformProcess;
-import org.geotools.process.feature.gs.TransformProcess.Definition;
+import org.geotools.process.vector.TransformProcess;
+import org.geotools.process.vector.TransformProcess.Definition;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 

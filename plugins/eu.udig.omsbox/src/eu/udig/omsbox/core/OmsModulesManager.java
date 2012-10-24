@@ -42,6 +42,7 @@ import oms3.annotations.UI;
 import oms3.annotations.Unit;
 import oms3.util.Components;
 import eu.udig.omsbox.OmsBoxPlugin;
+import eu.udig.omsbox.utils.AnnotationUtilities;
 import eu.udig.omsbox.utils.OmsBoxConstants;
 import eu.udig.omsbox.utils.OmsBoxUtils;
 
@@ -346,7 +347,7 @@ public class OmsModulesManager {
         Description descriptionAnn = field.getAnnotation(Description.class);
         String descriptionStr = "No description available";
         if (descriptionAnn != null) {
-            descriptionStr = descriptionAnn.value();
+            descriptionStr = AnnotationUtilities.getLocalizedDescription(descriptionAnn);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -391,7 +392,7 @@ public class OmsModulesManager {
         Description descriptionAnn = field.getAnnotation(Description.class);
         String descriptionStr = "No description available";
         if (descriptionAnn != null) {
-            descriptionStr = descriptionAnn.value();
+            descriptionStr = AnnotationUtilities.getLocalizedDescription(descriptionAnn);
         }
         StringBuilder sb = new StringBuilder();
         sb.append(descriptionStr);

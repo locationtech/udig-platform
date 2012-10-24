@@ -25,7 +25,7 @@ Windows install:
     :width: 8cm
 
   .. note:: Licences
-     uDig is released with a business friendly LGPL license.
+     uDig is released with a business friendly Eclipse Public License (`EPL <http://www.eclipse.org/legal/epl-v10.html>`_).
 
      ECW/JP2 support is freely available to desktop applications.
 

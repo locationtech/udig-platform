@@ -36,7 +36,7 @@
         <geotools.version>9-SNAPSHOT</geotools.version>
         <imageio-ext.version>1.1.5</imageio-ext.version>
         <jfreechart.version>1.0.13</jfreechart.version>
-        
+        <jt.version>1.3.0</jt.version>
         <lib.dir>${basedir}/lib</lib.dir>
         <lib.source.dir>${basedir}/lib-src</lib.source.dir>
     </properties>
@@ -672,29 +672,29 @@
         <dependency>
             <groupId>org.jaitools</groupId>
             <artifactId>jt-all</artifactId>
-            <version>1.2.0</version>
+            <version>${jt.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jaitools</groupId>
             <artifactId>jt-jiffle-language</artifactId>
-            <version>0.2.0</version>
+            <version>0.2.1</version>
         </dependency>
         <dependency>
             <groupId>org.jaitools</groupId>
             <artifactId>jt-utils</artifactId>
-            <version>1.2.0</version>
+            <version>${jt.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jaitools</groupId>
             <artifactId>jt-vectorbinarize</artifactId>
-            <version>1.2.0</version>
+            <version>${jt.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jaitools</groupId>
             <artifactId>jt-zonalstats</artifactId>
-            <version>1.2.0</version>
+            <version>${jt.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -728,7 +728,7 @@
         <dependency>
             <groupId>org.jgrasstools</groupId>
             <artifactId>jgt-oms3</artifactId>
-            <version>0.7.5</version>
+            <version>0.7.6</version>
         </dependency>
         <dependency>
             <groupId>javassist</groupId>

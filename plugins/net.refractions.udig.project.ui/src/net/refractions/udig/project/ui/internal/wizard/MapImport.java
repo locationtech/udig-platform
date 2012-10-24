@@ -63,12 +63,13 @@ public class MapImport extends CatalogImport {
 
     @Override
     protected Workflow createWorkflow() {
-        ResourceSearchState searchState = new ResourceSearchState();
-        // DataSourceSelectionState dsState = new DataSourceSelectionState(true);
+        // FIXME Andrea: Jody, this is the part that breaks DnD. Uncomment it to have it working
+        // ResourceSearchState searchState = new ResourceSearchState();
+        DataSourceSelectionState dsState = new DataSourceSelectionState(true);
         ResourceSelectionState rsState = new ResourceSelectionState();
 
-        // Workflow workflow = new Workflow(new State[] { dsState, rsState });
-        Workflow workflow = new Workflow(new State[] { searchState, rsState });
+        Workflow workflow = new Workflow(new State[]{dsState, rsState});
+        // Workflow workflow = new Workflow(new State[] { searchState, rsState });
         return workflow;
     }
 

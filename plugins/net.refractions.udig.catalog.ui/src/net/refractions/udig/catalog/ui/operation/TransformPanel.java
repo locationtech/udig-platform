@@ -14,8 +14,6 @@
  */
 package net.refractions.udig.catalog.ui.operation;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +27,7 @@ import net.refractions.udig.ui.filter.ExpressionViewer;
 import net.refractions.udig.ui.filter.IExpressionViewer;
 
 import org.eclipse.core.runtime.ListenerList;
-import org.eclipse.core.runtime.Preferences.IPropertyChangeListener;
 import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.jface.util.SafeRunnable;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
@@ -60,8 +55,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.text.ecql.ECQL;
-import org.geotools.process.feature.gs.TransformProcess;
-import org.geotools.process.feature.gs.TransformProcess.Definition;
+import org.geotools.process.vector.TransformProcess;
+import org.geotools.process.vector.TransformProcess.Definition;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
