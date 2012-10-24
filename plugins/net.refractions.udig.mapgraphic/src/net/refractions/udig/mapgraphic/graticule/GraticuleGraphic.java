@@ -77,7 +77,7 @@ public class GraticuleGraphic implements MapGraphic {
     private static final String FORMAT = "0000000"; //$NON-NLS-1$
 
     private static final int MAX_SCALE = 100000000;
-    
+
     SimpleFeatureSource grid;
 
     NumberFormat cf = new DecimalFormat(FORMAT);
@@ -90,27 +90,27 @@ public class GraticuleGraphic implements MapGraphic {
         GraticuleStyle style = GraticuleStyle.getStyle(graticule);
 
         // Ensure CRS?
-        if (graticule instanceof Layer) {            
+        if (graticule instanceof Layer) {
             // Initialize CRS?
-            if(style.isInitCRS()) {
+            if (style.isInitCRS()) {
                 // Only initialize once
                 style.setInitCRS(false);
                 // Apply CRS from context
-                GraticuleCRSConfigurator.apply((Layer)graticule, context.getCRS());
-            } else if(mismatch(graticule,style)) {
-                // Apply CRS from 
-                GraticuleCRSConfigurator.apply((Layer)graticule, style.getCRS());
+                GraticuleCRSConfigurator.apply((Layer) graticule, context.getCRS());
+            } else if (mismatch(graticule, style)) {
+                // Apply CRS from
+                GraticuleCRSConfigurator.apply((Layer) graticule, style.getCRS());
             }
         }
 
         // Sanity checks
-        if(MAX_SCALE<context.getMap().getViewportModel().getScaleDenominator()) {
-            graticule.setStatus(ILayer.ERROR);
-            graticule.setStatusMessage(Messages.GraticuleGraphic_Maximum_Scale+MAX_SCALE);
+        if (MAX_SCALE < context.getMap().getViewportModel().getScaleDenominator()) {
+            graticule.setStatus(ILayer.WARNING);
+            graticule.setStatusMessage(Messages.GraticuleGraphic_Maximum_Scale + MAX_SCALE);
             return;
         }
         Unit<?> unit = CRSUtilities.getUnit(graticule.getCRS().getCoordinateSystem());
-        if (!SI.METER.equals(unit)) {
+        if (!(unit==null || SI.METER.equals(unit) || SI.RADIAN.equals(unit.getStandardUnit()))) { // $NON-NLS-1$
             graticule.setStatus(ILayer.ERROR);
             graticule.setStatusMessage(Messages.GraticuleGraphic_Illegal_CRS);
             return;
@@ -142,14 +142,18 @@ public class GraticuleGraphic implements MapGraphic {
         try {
 
             // Get square size limited to minimum size of 100 pixels
-            double size = size(context, unit, 100);
-            
-            // Sanity check
-            if(size<100) return;
+            double size = size(context, unit, 10);
 
             // Convert square size to pixels
             int sx = (int) (size / context.getViewportModel().getPixelSize().x);
             int sy = (int) (size / context.getViewportModel().getPixelSize().y);
+
+//          // Sanity check
+            if (sx < 10 || sy < 10) {
+                graticule.setStatus(ILayer.ERROR);
+                graticule.setStatusMessage(Messages.GraticuleGraphic_Error_Too_Many_Squares);
+                return;
+            }
 
             // Make transform from Graticule to map CRS
             MathTransform transform = CRS.findMathTransform(graticule.getCRS(), context.getCRS(),
@@ -160,6 +164,13 @@ public class GraticuleGraphic implements MapGraphic {
 
             // Get squares inside bounds
             SimpleFeatureIterator it = squares(bounds, size);
+
+//            // Initialize border tick positions
+//            List<Geometry> ticks = new ArrayList<Geometry>();
+//
+//            // Get map borders as geometry in graticule CRS
+//            Geometry outer = JTS.toGeometry(bounds);
+//            Geometry inner = JTS.toGeometry(expand(bounds,-500));
 
             // Draw one squares at the time (only top and left lines are drawn)
             while (it.hasNext()) {
@@ -239,6 +250,12 @@ public class GraticuleGraphic implements MapGraphic {
                     i++;
                 }
 
+//                // Is square on border?
+//                if (geom.crosses(outer) || geom.overlaps(outer)) {
+//                    // Get intersection as multi-point geometry
+//                    ticks.add(geom.intersection(outer));
+//                }
+
                 // Draw lines
                 for (Line line : lines)
                     line.draw(g, style);
@@ -249,6 +266,46 @@ public class GraticuleGraphic implements MapGraphic {
                         label.draw(g, style);
 
             }
+
+//            // Draw borders?
+//            if (false && !ticks.isEmpty()) {
+//
+////                System.out.println("Ticks: " + ticks.size() + ", " + ticks);
+////                outer = JTS.transform(outer, context.worldToScreenMathTransform());
+//                
+//                // Print borders
+//                g.setColor(Color.RED);
+//                g.setStroke(ViewportGraphics.LINE_SOLID, 2);
+//                for (Geometry tick : ticks) {
+//                    int i = 0;
+//                    Path path = new Path(display);
+////                    tick = tick.intersection(inner);
+//                    if(tick.isEmpty()) continue;
+//                    // Transform coordinates to map CRS
+//                    tick = JTS.transform(tick, transform);
+//                    
+//                    int b = 10;
+//                    int w = context.getMapDisplay().getWidth();
+//                    int h = context.getMapDisplay().getHeight();
+//                    
+////                    tick = tick.getEnvelope();
+//                    for(Coordinate c : tick.getCoordinates()) {
+//                        Point p = context.worldToPixel(c);
+////                        if(p.x<b) p.x=b;
+////                        if(p.y<b) p.y=b;
+////                        if(p.x>w-b) p.x=w-b;
+////                        if(p.y>h-b) p.y=h-b;
+//                        if(i==0) path.moveTo(p.x, p.y);
+//                        else path.lineTo(p.x, p.y);
+//                        i++;
+//                    }
+//                    // Calculate intersection with inner border
+//                    
+////                    Point p = context.worldToPixel(null);
+////                    g.drawOval(p.x, p.y, 10, 10);                        
+//                    g.drawPath(path);
+//                }
+//            }
 
             // // Get lower left corner coordinates
             // int x = llc.x;
@@ -294,11 +351,11 @@ public class GraticuleGraphic implements MapGraphic {
         graticule.setStatus(ILayer.DONE);
 
     }
-    
+
     private boolean mismatch(ILayer graticule, GraticuleStyle style) {
         String code;
         try {
-            code = "EPSG:"+CRS.lookupEpsgCode(graticule.getCRS(), false); //$NON-NLS-1$
+            code = "EPSG:" + CRS.lookupEpsgCode(graticule.getCRS(), false); //$NON-NLS-1$
             return !code.equals(style.getCRS());
         } catch (FactoryException ex) {
             MapGraphicPlugin.log(Messages.GraticuleGraphic_Error, ex);
@@ -322,7 +379,7 @@ public class GraticuleGraphic implements MapGraphic {
         Filter filter = ff.bbox(ff.property(GEOM), bounds);
 
         // Align bound to square size and expand by 150%
-        bounds = align(bounds, size, 1.5);
+        bounds = align(bounds, size, 1.6);
 
         // Create grid for given bounds
         SimpleFeatureSource grid = Grids.createSquareGrid(bounds, size);
@@ -332,6 +389,20 @@ public class GraticuleGraphic implements MapGraphic {
     }
 
     /**
+     * Expand bounds by given fraction
+     * 
+     * 
+     * @param bounds
+     * @param distance
+     * @return ReferencedEnvelope
+     */
+    private ReferencedEnvelope expand(ReferencedEnvelope bounds, double distance) {
+        bounds = new ReferencedEnvelope(bounds);
+        bounds.expandBy(distance);
+        return bounds;
+    }
+    
+    /**
      * Align given bounds with square size and expand by given fraction
      * 
      * 
@@ -340,8 +411,7 @@ public class GraticuleGraphic implements MapGraphic {
      * @return
      */
     private ReferencedEnvelope align(ReferencedEnvelope bounds, double size, double expand) {
-        bounds = new ReferencedEnvelope(bounds);
-        bounds.expandBy(expand * size);
+        bounds = expand(bounds, expand * size);
         double x = offset(bounds.getLowerCorner(), 0, size);
         double y = offset(bounds.getLowerCorner(), 1, size);
         bounds.translate(-x, -y);
@@ -361,29 +431,32 @@ public class GraticuleGraphic implements MapGraphic {
     }
 
     /**
-     * Calculate appropriate square size.
+     * Calculate appropriate square size in CRS units.
      * 
-     * @param context
-     * @param min
-     * @return
+     * @param context - {@link MapGraphicContext} instance
+     * @param unit - CRS {@link Unit} 
+     * @param min - minimum pixel size
+     * @return double
      */
     private double size(MapGraphicContext context, Unit<?> unit, int min) {
+        // Get flags
+        boolean meter = SI.METER.equals(unit);
         // Get scale
         double scale = context.getMap().getViewportModel().getScaleDenominator();
         // 1 km square?
         if (scale < 100000)
-            return 1000.0;
+            return meter ? 1000.0 : unit.getConverterTo(SI.METER).convert(0.1);
         // 10 km square?
         if (scale < 1000000)
-            return 10000.0;
+            return meter ? 10000.0 : unit.getConverterTo(SI.METER).convert(1.0);
         // 100 km square?
         if (scale < 10000000)
-            return 100000.0;
+            return meter ? 100000.0 : unit.getConverterTo(SI.METER).convert(5.0);
         // 1000 km square?
         if (scale < 100000000)
-            return 1000000.0;
+            return meter ? 1000000.0 : unit.getConverterTo(SI.METER).convert(10.0);
         // 10000 km square
-        return 100000000.0;
+        return meter ? 100000000.0 : unit.getConverterTo(SI.METER).convert(50.0);
     }
 
     /**
@@ -413,7 +486,7 @@ public class GraticuleGraphic implements MapGraphic {
         int digits = 2;
 
         // Calculate offset
-        int offset = Math.max(1,3 - String.valueOf(Math.round(size / 1000)).length());
+        int offset = Math.max(1, 3 - String.valueOf(Math.round(size / 1000)).length());
 
         // Finished
         return (Math.signum(coordinate) == -1 ? DELIM : EMPTY)

@@ -31,7 +31,6 @@ public class Messages extends NLS {
     public static String BarStyleConfigurator_MetricUnits;
     public static String BarStyleConfigurator_AutoUnits;
     public static String BarStyleConfigurator_UnitsLabel;
-    public static String Font_ExampleText;
     public static String GridStyleConfigurator_0;
     public static String GridStyleConfigurator_1;
     public static String GridStyleConfigurator_2;
@@ -65,10 +64,13 @@ public class Messages extends NLS {
     public static String ScalebarStyleConfigurator_bottom;
     public static String ScalebarStyleConfigurator_middle;
     public static String ScalebarStyleConfigurator_top;
+    public static String Font_ExampleText;
     public static String GridMapGraphic_grids_too_close;
     public static String UnitListener_MixedUnits;
     public static String GraticuleCRSConfigurator_CRS;
+    public static String GraticuleCRSConfigurator_Select;
     public static String GraticuleGraphic_Error;
+    public static String GraticuleGraphic_Error_Too_Many_Squares;
     public static String GraticuleGraphic_Illegal_CRS;
     public static String GraticuleGraphic_Maximum_Scale;
     public static String GraticuleStyleConfigurator_Font_Color;

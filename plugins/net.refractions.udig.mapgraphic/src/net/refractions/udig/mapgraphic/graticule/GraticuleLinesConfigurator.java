@@ -18,14 +18,13 @@ import java.awt.Color;
 
 import net.refractions.udig.mapgraphic.internal.Messages;
 import net.refractions.udig.project.internal.Layer;
+import net.refractions.udig.project.ui.internal.dialogs.ColorEditor;
 import net.refractions.udig.style.IStyleConfigurator;
 import net.refractions.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -33,7 +32,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -64,9 +62,9 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
 
     Combo lineStyle;
 
-    Button fontColor;
+    private ColorEditor fontColor;
 
-    Button lineColor;
+    private ColorEditor lineColor;
 
     Button showLabels;
 
@@ -78,11 +76,7 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
 
     Label fontColorLabel;
 
-    Label fontColorPreview;
-
     Label lineColorLabel;
-
-    Label lineColorPreview;
 
     Label lineStyleLabel;
 
@@ -118,45 +112,42 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
     }
 
     private void layoutWidgets(Composite comp) {
-        comp.setLayout(new GridLayout(3, false));
 
-        GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
+        comp.setLayout(new GridLayout(4, false));
 
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
-        lineStyleLabel.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        lineStyle.setLayoutData(layoutData);
-
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
-        lineWidthLabel.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        lineWidth.setLayoutData(layoutData);
+        GridData layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        fontColorLabel.setLayoutData(layoutData);
+        layoutData = new GridData(SWT.NONE, SWT.FILL, true, false, 3, 1);
+        fontColor.getButton().setLayoutData(layoutData);
 
         layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
         lineColorLabel.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-        lineColorPreview.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        lineColor.setLayoutData(layoutData);
-
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-        fontColorLabel.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-        fontColorPreview.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        fontColor.setLayoutData(layoutData);
-
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
-        showLabelsLabel.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        showLabels.setLayoutData(layoutData);
-
-        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
+        layoutData = new GridData(SWT.NONE, SWT.FILL, true, false, 3, 1);
+        lineColor.getButton().setLayoutData(layoutData);
+         
+        layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+        layoutData.heightHint = 20;
         opacityLabel.setLayoutData(layoutData);
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
+        layoutData.heightHint = 20;
         opacity.setLayoutData(layoutData);
 
-        layoutData = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
+        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        lineStyleLabel.setLayoutData(layoutData);
+        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
+        lineStyle.setLayoutData(layoutData);
+
+        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        lineWidthLabel.setLayoutData(layoutData);
+        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
+        lineWidth.setLayoutData(layoutData);
+
+        layoutData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        showLabelsLabel.setLayoutData(layoutData);
+        layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
+        showLabels.setLayoutData(layoutData);
+
+        layoutData = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
         messageLabel.setLayoutData(layoutData);
 
     }
@@ -190,32 +181,18 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
 
         fontColorLabel = new Label(container, SWT.NONE);
         fontColorLabel.setText(Messages.GraticuleStyleConfigurator_Font_Color);
-        fontColorPreview = new Label(container, SWT.NONE);
-        fontColorPreview.addListener(SWT.Resize, new Listener() {
-
-            @Override
-            public void handleEvent(Event event) {
-                updateColorButton(fontColor, fontColorLabel, fontColorPreview);
-            }
-
-        });
-        fontColor = new Button(container, SWT.PUSH);
-        fontColor.setText(Messages.GridStyleConfigurator_ChangeColor);
+        fontColor = new ColorEditor(container);
 
         lineColorLabel = new Label(container, SWT.NONE);
         lineColorLabel.setText(Messages.GridStyleConfigurator_LineColor);
+        lineColor = new ColorEditor(container);
 
-        lineColorPreview = new Label(container, SWT.NONE);
-        lineColorPreview.addListener(SWT.Resize, new Listener() {
-
-            @Override
-            public void handleEvent(Event event) {
-                updateColorButton(lineColor, lineColorLabel, lineColorPreview);
-            }
-
-        });
-        lineColor = new Button(container, SWT.PUSH);
-        lineColor.setText(Messages.GridStyleConfigurator_ChangeColor);
+        opacityLabel = new Label(container, SWT.NONE);
+        opacityLabel.setText(Messages.GraticuleStyleConfigurator_Opacity);
+        opacity = new Scale(container, SWT.BORDER);
+        opacity.setMaximum(255);
+        opacity.setPageIncrement(5);
+        opacity.setSelection(100);
 
         lineStyleLabel = new Label(container, SWT.NONE);
         lineStyleLabel.setText(Messages.GridStyleConfigurator_LineStyle);
@@ -225,7 +202,7 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
 
         lineWidthLabel = new Label(container, SWT.NONE);
         lineWidthLabel.setText(Messages.GridStyleConfigurator_LineWidth);
-        lineWidth = new Spinner(container, SWT.NONE);
+        lineWidth = new Spinner(container, SWT.BORDER);
         lineWidth.setIncrement(1);
         lineWidth.setDigits(0);
         lineWidth.setMinimum(1);
@@ -234,15 +211,6 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
         showLabelsLabel.setText(Messages.GraticuleStyleConfigurator_Show_Labels);
         showLabels = new Button(container, SWT.CHECK);
         showLabels.setData(true);
-
-        opacityLabel = new Label(container, SWT.NONE);
-        opacityLabel.setText(Messages.GraticuleStyleConfigurator_Opacity);
-        opacity = new Scale(container, SWT.BORDER);
-        Rectangle clientArea = container.getClientArea();
-        opacity.setBounds(clientArea.x, clientArea.y, 200, 64);
-        opacity.setMaximum(255);
-        opacity.setPageIncrement(5);
-        opacity.setSelection(100);
 
         messageLabel = new Label(container, SWT.WRAP);
 
@@ -264,10 +232,15 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
             messageLabel.setText(""); //$NON-NLS-1$
             lineWidth.setSelection(style.getLineWidth());
             setLineStyle(style);
-            fontColor.setData(style.getFontColor());
-            updateColorButton(fontColor, fontColorLabel, fontColorPreview);
-            lineColor.setData(style.getLineColor());
-            updateColorButton(lineColor, lineColorLabel, lineColorPreview);
+            // fontColor.setData(style.getFontColor());
+            // updateColorButton(fontColor, fontColorLabel, fontColorPreview);
+            // lineColor.setData(style.getLineColor());
+            // updateColorButton(lineColor, lineColorLabel, lineColorPreview);
+            Color color = style.getFontColor();
+            fontColor.setColorValue(new RGB(color.getRed(), color.getGreen(), color.getBlue()));
+            color = style.getLineColor();
+            lineColor.setColorValue(new RGB(color.getRed(), color.getGreen(), color.getBlue()));
+
             showLabels.setData(style.isShowLabels());
             opacity.setSelection(style.getOpacity());
 
@@ -301,47 +274,47 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
         }
     }
 
-    void updateColorButtons() {
-        updateColorButton(fontColor, fontColorLabel, fontColorPreview);
-        updateColorButton(lineColor, lineColorLabel, lineColorPreview);
-    }
-
-    void updateColorButton(Button color, Label label, Label preview) {
-        Image oldImage = preview.getImage();
-
-        Rectangle bounds = preview.getBounds();
-        if (bounds.width == 0 || bounds.height == 0)
-            return;
-
-        Display display = preview.getDisplay();
-        Image newImage = new Image(display, bounds.width, bounds.width);
-
-        Color awtColor = (Color) color.getData();
-        int red = awtColor.getRed();
-        int green = awtColor.getGreen();
-        int blue = awtColor.getBlue();
-        org.eclipse.swt.graphics.Color color2 = new org.eclipse.swt.graphics.Color(display, red,
-                green, blue);
-
-        GC gc = new GC(newImage);
-        try {
-            gc.setForeground(display.getSystemColor(SWT.COLOR_BLACK));
-            gc.drawRectangle(0, 0, bounds.width - 1, bounds.height - 1);
-            int alpha = awtColor.getAlpha();
-            gc.setAlpha(alpha);
-            gc.setBackground(color2);
-            gc.fillRectangle(1, 1, bounds.width - 2, bounds.height - 2);
-        } finally {
-            gc.dispose();
-            color2.dispose();
-        }
-
-        preview.setImage(newImage);
-        if (oldImage != null)
-            oldImage.dispose();
-        label.redraw();
-
-    }
+    // void updateColorButtons() {
+    // updateColorButton(fontColor, fontColorLabel, fontColorPreview);
+    // updateColorButton(lineColor, lineColorLabel, lineColorPreview);
+    // }
+    //
+    // void updateColorButton(Button color, Label label, Label preview) {
+    // Image oldImage = preview.getImage();
+    //
+    // Rectangle bounds = preview.getBounds();
+    // if (bounds.width == 0 || bounds.height == 0)
+    // return;
+    //
+    // Display display = preview.getDisplay();
+    // Image newImage = new Image(display, bounds.width, bounds.width);
+    //
+    // Color awtColor = (Color) color.getData();
+    // int red = awtColor.getRed();
+    // int green = awtColor.getGreen();
+    // int blue = awtColor.getBlue();
+    // org.eclipse.swt.graphics.Color color2 = new org.eclipse.swt.graphics.Color(display, red,
+    // green, blue);
+    //
+    // GC gc = new GC(newImage);
+    // try {
+    // gc.setForeground(display.getSystemColor(SWT.COLOR_BLACK));
+    // gc.drawRectangle(0, 0, bounds.width - 1, bounds.height - 1);
+    // int alpha = awtColor.getAlpha();
+    // gc.setAlpha(alpha);
+    // gc.setBackground(color2);
+    // gc.fillRectangle(1, 1, bounds.width - 2, bounds.height - 2);
+    // } finally {
+    // gc.dispose();
+    // color2.dispose();
+    // }
+    //
+    // preview.setImage(newImage);
+    // if (oldImage != null)
+    // oldImage.dispose();
+    // label.redraw();
+    //
+    // }
 
     @Override
     public void preApply() {
@@ -378,10 +351,10 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
             getApplyAction().setEnabled(true);
 
             // parses all the values and updates the style on the Style blackboard
-            style.setLineColor((Color) lineColor.getData());
+            style.setFontColor(toColor(fontColor.getColorValue()));
+            style.setLineColor(toColor(lineColor.getColorValue()));
             style.setLineStyle(parseLineStyle());
             style.setLineWidth(lineWidth.getSelection());
-            style.setFontColor((Color) fontColor.getData());
             style.setShowLabels((Boolean) showLabels.getData());
             style.setOpacity(opacity.getSelection());
 
@@ -392,13 +365,17 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
 
     private boolean isChanged(Event e) {
 
+        if (!style.getFontColor().equals(toColor(fontColor.getColorValue()))) {
+            return true;
+        }
+        
         if (style.getLineStyle() != parseLineStyle()) {
             return true;
         }
 
-        if (!style.getLineColor().equals(lineColor.getData())) {
+        if (!style.getLineColor().equals(toColor(lineColor.getColorValue()))) {
             return true;
-        }
+        }        
 
         if (style.getLineWidth() != lineWidth.getSelection()) {
             return true;
@@ -434,6 +411,10 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
         }
         throw new IllegalArgumentException(NLS.bind(Messages.GridStyleConfigurator_2,
                 selectedString));
+    }
+    
+    static Color toColor(RGB rgb) {
+        return new Color(rgb.red, rgb.green, rgb.blue); 
     }
 
     static String selectedString(Combo item) {

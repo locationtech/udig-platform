@@ -14,12 +14,8 @@
  */
 package net.refractions.udig.mapgraphic.graticule;
 
-import java.awt.Color;
-
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Event;
 
 /**
@@ -44,20 +40,7 @@ public class ColorListener implements SelectionListener {
     }
 
     @Override
-    public void widgetSelected(SelectionEvent e) {
-
-        ColorDialog dialog = new ColorDialog(e.display.getActiveShell());
-        Color currentColor = (Color) e.widget.getData();
-        RGB currentRGB = new RGB(currentColor.getRed(), currentColor.getGreen(),
-                currentColor.getBlue());
-        dialog.setRGB(currentRGB);
-        dialog.open();
-
-        RGB rgb = dialog.getRGB();
-
-        e.widget.setData(new Color(rgb.red, rgb.green, rgb.blue));
-
-        configurator.updateColorButtons();
+    public void widgetSelected(SelectionEvent e) {        
         Event event = new Event();
         event.item = e.item;
         event.widget = e.widget;

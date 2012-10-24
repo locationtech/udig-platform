@@ -76,7 +76,7 @@ public class GraticuleCRSConfigurator extends IStyleConfigurator {
         crsText.setEditable(false);
 
         final Button crsButton = new Button(composite, SWT.BORDER);
-        crsButton.setText("..."); //$NON-NLS-1$
+        crsButton.setText(Messages.GraticuleCRSConfigurator_Select); 
         crsButton.addSelectionListener(new SelectionAdapter(){
             public void widgetSelected( SelectionEvent e ) {
                 CoordinateReferenceSystem crs = getCRS(getStyle());
