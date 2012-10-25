@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Working with Maps &mdash; User Guide</title>
+    <title>Add multiple Graticules with different CRS &mdash; User Guide</title>
     
     <link rel="stylesheet" href="_static/udig.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,9 +27,9 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/udig.ico"/>
     <link rel="top" title="User Guide" href="index.html" />
-    <link rel="up" title="Tasks" href="Tasks.html" />
-    <link rel="next" title="Creating a new Map" href="Creating a new Map.html" />
-    <link rel="prev" title="Add multiple Graticules with different CRS" href="Add multiple Graticules with different CRS.html" /> 
+    <link rel="up" title="Working with Decorations" href="Working with Decorations.html" />
+    <link rel="next" title="Working with Maps" href="Working with Maps.html" />
+    <link rel="prev" title="Add new Graticule" href="Add new Graticule.html" /> 
   </head>
   <body>
     <div class="header">
@@ -51,18 +51,31 @@
       <div class="documentwrapper">
           <div class="body">
             
-  <div class="section" id="working-with-maps">
-<h1>Working with Maps<a class="headerlink" href="#working-with-maps" title="Permalink to this headline">¶</a></h1>
-<p>Working with maps is one of the central activities of a GIS system such as uDig.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Creating a new Map.html">Creating a new Map</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Map Navigation.html">Map Navigation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Printing the current Map.html">Printing the current Map</a></li>
-</ul>
+  <div class="section" id="add-multiple-graticules-with-different-crs">
+<h1>Add multiple Graticules with different CRS<a class="headerlink" href="#add-multiple-graticules-with-different-crs" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li>Adding two Graticules to any map (see <a class="reference internal" href="Add new Graticule.html"><em>Add new Graticule</em></a>)</li>
+<li>Right click on any <em class="guilabel">Graticule</em> in <em class="guilabel">Layer View</em></li>
+<li>Left click on <em class="guilabel">Rename</em> and give it a new name</li>
+<li>Right click on any <em class="guilabel">Graticule</em> in <em class="guilabel">Layer View</em></li>
+<li>Select <em class="menuselection">Change Style... ‣ Projection</em></li>
+<li>Left click on <em class="guilabel">Select...</em> to open coordinate reference system (CRS) selector dialog</li>
+<li>Choose a CRS with meter as unit on both axis</li>
+<li>Left click <em class="guilabel">Finish</em></li>
+<li>Repeat steps 2-5 on a Graticule with another name</li>
+<li>Choose a different CRS with meter as unit on both axis</li>
+<li>Left click <em class="guilabel">Finish</em></li>
+</ol>
+<p>You should now see something similar to the example below</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="" src="_images/multiple.png" />
 </div>
-<p><strong>Related concepts</strong></p>
-<p><a class="reference internal" href="Map.html"><em>Map</em></a></p>
+</div></blockquote>
+<p><strong>Note</strong>: Graticule only support CRS with unit &#8220;meter&#8221; on all axis. Support for degrees is comming soon.</p>
+<p><strong>Related tasks</strong></p>
+<p><a class="reference internal" href="Using the Catalog.html"><em>Using the Catalog</em></a></p>
+<p><a class="reference internal" href="Working with Layers.html"><em>Working with Layers</em></a></p>
 </div>
 
 
