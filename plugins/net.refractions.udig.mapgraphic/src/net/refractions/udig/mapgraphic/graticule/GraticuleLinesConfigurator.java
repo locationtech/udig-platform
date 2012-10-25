@@ -232,16 +232,12 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
             messageLabel.setText(""); //$NON-NLS-1$
             lineWidth.setSelection(style.getLineWidth());
             setLineStyle(style);
-            // fontColor.setData(style.getFontColor());
-            // updateColorButton(fontColor, fontColorLabel, fontColorPreview);
-            // lineColor.setData(style.getLineColor());
-            // updateColorButton(lineColor, lineColorLabel, lineColorPreview);
             Color color = style.getFontColor();
             fontColor.setColorValue(new RGB(color.getRed(), color.getGreen(), color.getBlue()));
             color = style.getLineColor();
             lineColor.setColorValue(new RGB(color.getRed(), color.getGreen(), color.getBlue()));
 
-            showLabels.setData(style.isShowLabels());
+            showLabels.setSelection(style.isShowLabels());
             opacity.setSelection(style.getOpacity());
 
         } finally {
@@ -274,48 +270,6 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
         }
     }
 
-    // void updateColorButtons() {
-    // updateColorButton(fontColor, fontColorLabel, fontColorPreview);
-    // updateColorButton(lineColor, lineColorLabel, lineColorPreview);
-    // }
-    //
-    // void updateColorButton(Button color, Label label, Label preview) {
-    // Image oldImage = preview.getImage();
-    //
-    // Rectangle bounds = preview.getBounds();
-    // if (bounds.width == 0 || bounds.height == 0)
-    // return;
-    //
-    // Display display = preview.getDisplay();
-    // Image newImage = new Image(display, bounds.width, bounds.width);
-    //
-    // Color awtColor = (Color) color.getData();
-    // int red = awtColor.getRed();
-    // int green = awtColor.getGreen();
-    // int blue = awtColor.getBlue();
-    // org.eclipse.swt.graphics.Color color2 = new org.eclipse.swt.graphics.Color(display, red,
-    // green, blue);
-    //
-    // GC gc = new GC(newImage);
-    // try {
-    // gc.setForeground(display.getSystemColor(SWT.COLOR_BLACK));
-    // gc.drawRectangle(0, 0, bounds.width - 1, bounds.height - 1);
-    // int alpha = awtColor.getAlpha();
-    // gc.setAlpha(alpha);
-    // gc.setBackground(color2);
-    // gc.fillRectangle(1, 1, bounds.width - 2, bounds.height - 2);
-    // } finally {
-    // gc.dispose();
-    // color2.dispose();
-    // }
-    //
-    // preview.setImage(newImage);
-    // if (oldImage != null)
-    // oldImage.dispose();
-    // label.redraw();
-    //
-    // }
-
     @Override
     public void preApply() {
         if (lineWidth.isFocusControl()) {
@@ -333,8 +287,7 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
     private void kickWidget(Control widget) {
         container.setFocus();
         widget.setFocus();
-        while (widget.getDisplay().readAndDispatch())
-            ;
+        while (widget.getDisplay().readAndDispatch());
     }
 
     @Override
@@ -355,7 +308,7 @@ public class GraticuleLinesConfigurator extends IStyleConfigurator implements Li
             style.setLineColor(toColor(lineColor.getColorValue()));
             style.setLineStyle(parseLineStyle());
             style.setLineWidth(lineWidth.getSelection());
-            style.setShowLabels((Boolean) showLabels.getData());
+            style.setShowLabels(showLabels.getSelection());
             style.setOpacity(opacity.getSelection());
 
             getStyleBlackboard().put(GraticuleStyle.ID, style);

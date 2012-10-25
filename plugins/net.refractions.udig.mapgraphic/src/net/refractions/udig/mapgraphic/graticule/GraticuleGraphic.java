@@ -135,6 +135,9 @@ public class GraticuleGraphic implements MapGraphic {
 
         // Set font size
         g.setFont(bold);
+        
+        // Show labels?
+        boolean isShowLabels = style.isShowLabels();
 
         // Get bounds of viewport
         ReferencedEnvelope bounds = context.getViewportModel().getBounds();
@@ -215,10 +218,10 @@ public class GraticuleGraphic implements MapGraphic {
 
                         // Create line path
                         current = vert(display, g, sy, style.getLineWidth(), current,
-                                context.worldToPixel(c), hgap, vgap, lines);
+                                context.worldToPixel(c), isShowLabels & hgap, vgap, lines);
 
                         // Add xx label?
-                        if (hgap) {
+                        if (isShowLabels & hgap) {
                             labels.add(new Label(current, tx, vgap ? bold : plain));
                             current = context.worldToPixel(c);
                         }
@@ -232,10 +235,10 @@ public class GraticuleGraphic implements MapGraphic {
 
                         // Create line path
                         current = horz(display, g, sx, style.getLineWidth(), current,
-                                context.worldToPixel(c), vgap, hgap, lines);
+                                context.worldToPixel(c), isShowLabels & vgap, hgap, lines);
 
                         // Add yy label?
-                        if (vgap) {
+                        if (isShowLabels & vgap) {
                             labels.add(new Label(current, ty, hgap ? bold : plain));
                             current = context.worldToPixel(c);
                         }
