@@ -16,6 +16,7 @@ Web Map Server, and for adding a layer into a Map.
    Working with Documents
    Working with Images
    Working with Layers
+   Working with Decorations
    Working with Maps
    Working with Projects
    Working with Selection
