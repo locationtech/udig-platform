@@ -684,7 +684,13 @@
         
                 </topic>
         </topic>
-                    
+		<topic label="Working with Decorations" href="EN/Working with Decorations.html">
+			<topic label="Add new Graticule" href="EN/Add new Graticule.html">
+		        </topic>
+			<topic label="Add multiple Graticules with different CRS" href="EN/Add multiple Graticules with different CRS.html">
+		        </topic>
+		
+		    </topic>
         <topic label="Working with Maps" href="EN/Working with Maps.html">
         
                             
@@ -1184,6 +1190,13 @@
         <topic label="Transform dialog" href="EN/Transform dialog.html">
                 </topic>
         </topic>
+
+		<topic label="Font Selector dialog" href="EN/Font Selector dialog.html">
+		                </topic>
+
+		<topic label="Color Selector dialog" href="EN/Color Selector dialog.html">
+		                </topic>
+
     </topic>
             
 <topic label="Tips and Tricks" href="EN/Tips and Tricks.html">
@@ -1265,17 +1278,6 @@
     <topic label="sphinxSyntax" href="EN/docguide/sphinxSyntax.html">
         </topic>
 	</topic>
-
-<topic label="Font Selector dialog" href="EN/Font Selector dialog.html">
-                </topic>
-<topic label="Color Selector dialog" href="EN/Color Selector dialog.html">
-                </topic>
-<topic label="Add new Graticule" href="EN/Add new Graticule.html">
-                </topic>
-<topic label="Working with Decorations" href="EN/Working with Decorations.html">
-                </topic>
-<topic label="Add multiple Graticules with different CRS" href="EN/Add multiple Graticules with different CRS.html">
-                </topic>
 
 
 </toc>

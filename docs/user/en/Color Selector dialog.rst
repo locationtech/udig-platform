@@ -1,7 +1,8 @@
 Color Selector dialog
 #####################
 
-The color selector dialog is used to select or change a color.
+The color selector dialog is used to select or change a color.  This
+dialog is operating system specific, the one provided by unbuntu is shown below.
 
 .. figure:: images/color_selector_dialog/dialog.png
    :align: center
