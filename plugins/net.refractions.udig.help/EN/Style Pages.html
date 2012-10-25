@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Set raster transparent color &mdash; User Guide</title>
+    <title>Style Pages &mdash; User Guide</title>
     
     <link rel="stylesheet" href="_static/udig.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,9 +27,9 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/udig.ico"/>
     <link rel="top" title="User Guide" href="index.html" />
-    <link rel="up" title="Working with Images" href="Working with Images.html" />
-    <link rel="next" title="Working with Layers" href="Working with Layers.html" />
-    <link rel="prev" title="Working with Images" href="Working with Images.html" /> 
+    <link rel="up" title="Reference" href="Reference.html" />
+    <link rel="next" title="Feature Style Pages" href="Feature Style Pages.html" />
+    <link rel="prev" title="Transform dialog" href="Transform dialog.html" /> 
   </head>
   <body>
     <div class="header">
@@ -51,34 +51,28 @@
       <div class="documentwrapper">
           <div class="body">
             
-  <div class="section" id="set-raster-transparent-color">
-<h1>Set raster transparent color<a class="headerlink" href="#set-raster-transparent-color" title="Permalink to this headline">¶</a></h1>
-<p>Raster files often have a set colour that is used to indicate &#8220;no data&#8221;. This occurs where a
-satellite field covers a diagonal swath of territory that does not line up with a rectangular image.
-It can also occur where simple line work (such a topographical map) is recorded on a white
-background; by marking the background as transparent you can see through to the other layers.</p>
-<ol class="arabic simple">
-<li>Select your raster layer</li>
-<li>Open the <strong>Style Editor</strong> dialog using the button on the <strong>Layers</strong> view toolbar</li>
-<li>Choose the <strong>Raster Color Mask</strong> style page</li>
-<li>Press the <strong>checkbox</strong> to <strong>Enable color mask</strong></li>
-<li>Press the color chooser and select the color to be made transparent</li>
-</ol>
-<p><strong>Related reference</strong></p>
-<p><a class="reference internal" href="Raster Style Pages.html"><em>Raster Style Pages</em></a></p>
-<div class="section" id="example-use">
-<h2>Example Use<a class="headerlink" href="#example-use" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic">
-<li><p class="first">In the original image the white background is opaque preventing you from seeing the elevation map
-layer.</p>
-<img alt="_images/color_mask.png" src="_images/color_mask.png" style="width: 60%;" />
-</li>
-<li><p class="first">This is result of setting transparent color to white; allowing the elevation map in yellow to
-show through:</p>
-<img alt="_images/color_mask_2.png" src="_images/color_mask_2.png" style="width: 60%;" />
-</li>
-</ol>
+  <div class="section" id="style-pages">
+<h1>Style Pages<a class="headerlink" href="#style-pages" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Feature Style Pages.html">Feature Style Pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Raster Style Pages.html">Raster Style Pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Web Map Server Style Pages.html">Web Map Server Style Pages</a></li>
+</ul>
 </div>
+<p>The style pages used by Map Graphics are each unique; for more information please visit:</p>
+<ul class="simple">
+<li><a class="reference internal" href="Grid Decoration.html"><em>Grid Decoration</em></a></li>
+<li><a class="reference internal" href="JGrass Raster Legend.html"><em>JGrass Raster Legend</em></a></li>
+<li><a class="reference internal" href="JGrass Vector Legend.html"><em>JGrass Vector Legend</em></a></li>
+<li><a class="reference internal" href="Legend Decoration.html"><em>Legend Decoration</em></a></li>
+<li><a class="reference internal" href="North Arrow Decoration.html"><em>North Arrow Decoration</em></a></li>
+<li><a class="reference internal" href="Scalebar Decoration.html"><em>Scalebar Decoration</em></a></li>
+<li><a class="reference internal" href="The Processing Region.html"><em>The Processing Region</em></a></li>
+<li><a class="reference internal" href="Graticule Decoration.html"><em>Graticule Decoration</em></a></li>
+</ul>
+<p><strong>Related reference</strong></p>
+<p><a class="reference internal" href="Style Editor dialog.html"><em>Style Editor dialog</em></a></p>
 </div>
 
 
