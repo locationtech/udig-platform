@@ -110,7 +110,8 @@ public class GraticuleGraphic implements MapGraphic {
             return;
         }
         Unit<?> unit = CRSUtilities.getUnit(graticule.getCRS().getCoordinateSystem());
-        if (!(unit==null || SI.METER.equals(unit) || SI.RADIAN.equals(unit.getStandardUnit()))) { // $NON-NLS-1$
+        if (!(unit==null || SI.METER.equals(unit))) {
+//        if (!(unit==null || SI.METER.equals(unit) || SI.RADIAN.equals(unit.getStandardUnit()))) { // $NON-NLS-1$
             graticule.setStatus(ILayer.ERROR);
             graticule.setStatusMessage(Messages.GraticuleGraphic_Illegal_CRS);
             return;
@@ -442,24 +443,40 @@ public class GraticuleGraphic implements MapGraphic {
      * @return double
      */
     private double size(MapGraphicContext context, Unit<?> unit, int min) {
-        // Get flags
-        boolean meter = SI.METER.equals(unit);
         // Get scale
         double scale = context.getMap().getViewportModel().getScaleDenominator();
         // 1 km square?
         if (scale < 100000)
-            return meter ? 1000.0 : unit.getConverterTo(SI.METER).convert(0.1);
+            return 1000.0;
         // 10 km square?
         if (scale < 1000000)
-            return meter ? 10000.0 : unit.getConverterTo(SI.METER).convert(1.0);
+            return 10000.0;
         // 100 km square?
         if (scale < 10000000)
-            return meter ? 100000.0 : unit.getConverterTo(SI.METER).convert(5.0);
+            return 100000.0;
         // 1000 km square?
         if (scale < 100000000)
-            return meter ? 1000000.0 : unit.getConverterTo(SI.METER).convert(10.0);
+            return 1000000.0;
         // 10000 km square
-        return meter ? 100000000.0 : unit.getConverterTo(SI.METER).convert(50.0);
+        return 100000000.0;
+//        // Get flags
+//        boolean meter = SI.METER.equals(unit);
+//        // Get scale
+//        double scale = context.getMap().getViewportModel().getScaleDenominator();
+//        // 1 km square?
+//        if (scale < 100000)
+//            return meter ? 1000.0 : unit.getConverterTo(SI.METER).convert(0.1);
+//        // 10 km square?
+//        if (scale < 1000000)
+//            return meter ? 10000.0 : unit.getConverterTo(SI.METER).convert(1.0);
+//        // 100 km square?
+//        if (scale < 10000000)
+//            return meter ? 100000.0 : unit.getConverterTo(SI.METER).convert(5.0);
+//        // 1000 km square?
+//        if (scale < 100000000)
+//            return meter ? 1000000.0 : unit.getConverterTo(SI.METER).convert(10.0);
+//        // 10000 km square
+//        return meter ? 100000000.0 : unit.getConverterTo(SI.METER).convert(50.0);
     }
 
     /**
