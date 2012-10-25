@@ -92,7 +92,9 @@ public class TocTest {
             }
             // scan rst files!
             File en = new File( new File( docs, "user" ), "en");
-            checkDirectory( "EN",en, pages );
+            boolean check = checkDirectory( "EN",en, pages );
+            
+            assertTrue("Some RST pages not mentioned in toc.xml. Please review standard output for details",check);
         }
         finally {
             if( reader != null ) reader.close();
@@ -108,10 +110,14 @@ public class TocTest {
 
     }
 
-    private void checkDirectory(String path, File directory, Map<String, String> pages) {
+    private boolean checkDirectory(String path, File directory, Map<String, String> pages) {
+        boolean check = true;
         for( File file : directory.listFiles() ){
             if( file.isDirectory() ){
-                checkDirectory( path+"/"+file.getName(), file, pages );
+                boolean checked = checkDirectory( path+"/"+file.getName(), file, pages );
+                if( checked == false){
+                    check = false;
+                }
             }
             if( file.getName().endsWith(".rst")){
                 String name = file.getName();
@@ -122,9 +128,6 @@ public class TocTest {
                     pages.remove(key); // checked!
                 }
                 else {
-//                    if( key.contains("walkthrough")){
-//                        return; // skip for now
-//                    }
                     System.out.println("toc.xml does not reference '"+key+".html'");
                     
                     System.out.print("        <topic label=\"");
@@ -135,10 +138,12 @@ public class TocTest {
                     System.out.print( name );
                     System.out.println( ".html\">");
                     System.out.println("                </topic>");
+                    
+                    check = false;
                 }
             }
         }
-        
+        return check;
     }
 
     private void conflict(int number, String page, String reference, String origional) {
