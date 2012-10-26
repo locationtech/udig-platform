@@ -155,5 +155,5 @@ Tips
 .. |image8| image:: /images/edit_geometry_tool/accept.png
 .. |image9| image:: /images/edit_geometry_tool/selectline.png
 .. |image10| image:: /images/edit_geometry_tool/addlinevertex.png
-.. |image11| image:: /images/edit_geometry_tool/editmenu.png
+.. |image11| image:: /images/edit_geometry_tool/edit_geometry_menu.png
 .. |image12| image:: /images/edit_geometry_tool/contextmenu.png

@@ -4,7 +4,7 @@ Legend Decoration
 The Legend Decoration is used to provide an in map summary of the visible feature layers. It is able
 to look at your style and show categories of data.
 
-.. figure:: /images/legend_decoration/Legend.png
+.. figure:: /images/legend_decoration/legend_decoration.png
    :align: center
    :alt: 
 
