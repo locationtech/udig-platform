@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.geotools.data.FeatureSource;
 import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
 import org.geotools.validation.FeatureValidation;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -63,15 +64,19 @@ abstract class FeatureValidationOp implements IOp {
         SimpleFeatureType type;
         
         // iterate through the collection and validate each feature
-        Iterator iterator;
-        for( iterator = collection.iterator(); iterator.hasNext(); ){
-            SimpleFeature feature = (SimpleFeature) iterator.next();
-            type = feature.getFeatureType();
-            if (canValidate(type)) {
-                featureValidation.validate(feature, type, results);
+        FeatureIterator<SimpleFeature> iterator = collection.features();
+        try {
+            while(iterator.hasNext()){
+                SimpleFeature feature = iterator.next();
+                type = feature.getFeatureType();
+                if (canValidate(type)) {
+                    featureValidation.validate(feature, type, results);
+                }
             }
         }
-        collection.close( iterator );
+        finally {
+            iterator.close();
+        }
         
         OpUtils.setSelection(layer, results);
         //OpUtils.notifyUser(display, results);
