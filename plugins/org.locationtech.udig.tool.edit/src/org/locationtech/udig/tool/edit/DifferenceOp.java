@@ -42,12 +42,14 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.internal.presentations.defaultpresentation.DefaultSimpleTabListener;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.FeatureReader;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.FeatureIterator;
@@ -117,7 +119,7 @@ public class DifferenceOp implements IOp {
             return;
         }
         
-        final FeatureCollection<SimpleFeatureType, SimpleFeature> diffFeatures = FeatureCollections.newCollection();
+        final DefaultFeatureCollection diffFeatures = new DefaultFeatureCollection();
         diffFeatures.addAll(diffSource.getFeatures());
         
         FeatureStore<SimpleFeatureType, SimpleFeature> destStore = (FeatureStore<SimpleFeatureType, SimpleFeature>)ds.getFeatureSource("diff"); //$NON-NLS-1$

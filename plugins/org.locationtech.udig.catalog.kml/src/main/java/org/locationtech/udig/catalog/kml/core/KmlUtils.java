@@ -120,6 +120,7 @@ public class KmlUtils {
      * @throws Exception
      */
     public static void writeKml( File kmlFile, FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection ) throws Exception {
+        
         CoordinateReferenceSystem epsg4326 = DefaultGeographicCRS.WGS84;
         CoordinateReferenceSystem crs = featureCollection.getSchema().getCoordinateReferenceSystem();
         MathTransform mtrans = CRS.findMathTransform(crs, epsg4326, true);

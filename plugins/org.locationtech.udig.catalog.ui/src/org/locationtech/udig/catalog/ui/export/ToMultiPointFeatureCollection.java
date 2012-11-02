@@ -10,8 +10,7 @@
 package org.locationtech.udig.catalog.ui.export;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.feature.FeatureCollection;
-import org.opengis.feature.simple.SimpleFeature;
+import org.geotools.data.simple.SimpleFeatureCollection;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.referencing.operation.MathTransform;
@@ -29,8 +28,11 @@ import com.vividsolutions.jts.geom.Point;
  */
 class ToMultiPointFeatureCollection extends AbstractGeometryTransformingFeatureCollection{
 
-    public ToMultiPointFeatureCollection( FeatureCollection<SimpleFeatureType, SimpleFeature> source, SimpleFeatureType schema, GeometryDescriptor typeToUseAsGeometry, 
+    public ToMultiPointFeatureCollection( 
+            SimpleFeatureCollection source, SimpleFeatureType schema, 
+            GeometryDescriptor typeToUseAsGeometry, 
             MathTransform mt, IProgressMonitor currentMonitor ) {
+        
         super(source, schema, typeToUseAsGeometry, mt, currentMonitor);
     }
 

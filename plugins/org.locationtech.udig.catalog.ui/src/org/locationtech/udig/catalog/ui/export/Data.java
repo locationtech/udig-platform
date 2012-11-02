@@ -14,11 +14,9 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 
+import org.geotools.data.Query;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.ui.ProgressManager;
-
-import org.geotools.data.DefaultQuery;
-import org.geotools.data.Query;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
@@ -60,7 +58,7 @@ public class Data {
         this.query = query;
     }
     public Data(final IGeoResource resource) {
-        this( resource, new DefaultQuery());
+        this( resource, new Query());
     }
 
     public CoordinateReferenceSystem getCRS() {

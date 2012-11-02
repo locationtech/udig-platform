@@ -19,6 +19,7 @@ import java.util.NoSuchElementException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.opengis.feature.Feature;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -29,9 +30,11 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * @since 1.1.0
  */
 public class FeatureCollectionSelection implements IStructuredSelection, IBlockingSelection {
-    Collection<Iterator> openIterators=new ArrayList<Iterator>(); 
+    
+    Collection<Iterator<Feature>> openIterators=new ArrayList<Iterator<Feature>>(); 
     FeatureCollection<SimpleFeatureType, SimpleFeature> wrapped;
     private volatile SimpleFeature firstElement;
+    
     public FeatureCollectionSelection( FeatureCollection<SimpleFeatureType, SimpleFeature> selectedFeatures ) {
         this.wrapped=selectedFeatures;
     }
