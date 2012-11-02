@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.FeatureIterator;
@@ -75,7 +76,7 @@ public class DifferenceFeatureCommandQuickTest {
         SimpleFeatureType type = b.buildFeatureType();
         SimpleFeature donutFeature = SimpleFeatureBuilder.build(type, new Object[]{donut}, "fid.1");
         SimpleFeature holeFeature = SimpleFeatureBuilder.build(type, new Object[]{hole}, "fid.2");
-        FeatureCollection<SimpleFeatureType, SimpleFeature> fc = FeatureCollections.newCollection();
+        DefaultFeatureCollection fc = new DefaultFeatureCollection();
         fc.add(donutFeature);
         fc.add(holeFeature);
         

@@ -554,7 +554,7 @@ public class EditUtils {
                 }
             } finally {
                 if (iter != null) {
-                    features.close(iter);
+                    iter.close();
                 }
             }
         } catch (Exception e) {

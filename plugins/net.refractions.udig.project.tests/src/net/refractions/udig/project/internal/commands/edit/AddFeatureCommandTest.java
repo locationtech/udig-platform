@@ -18,7 +18,6 @@ package net.refractions.udig.project.internal.commands.edit;
 import static org.junit.Assert.assertEquals;
 
 import java.awt.Dimension;
-import java.util.Iterator;
 
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.Map;
@@ -28,6 +27,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
@@ -55,11 +55,16 @@ public class AddFeatureCommandTest {
         command.rollback(new NullProgressMonitor());
         FeatureCollection<SimpleFeatureType, SimpleFeature> collection = source.getFeatures();
         int i=0;
-        for( Iterator iter = collection.iterator(); iter.hasNext(); ) {
-            iter.next();
-            i++;
+        FeatureIterator<SimpleFeature> iter = collection.features();
+        try {
+            while( iter.hasNext() ){
+                iter.next();
+                i++;
+            }
         }
-        
+        finally {
+            iter.close();
+        }
         assertEquals(2, i);
         
     }

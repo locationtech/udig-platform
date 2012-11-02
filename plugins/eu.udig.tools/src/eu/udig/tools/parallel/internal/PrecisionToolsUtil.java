@@ -104,7 +104,7 @@ public class PrecisionToolsUtil {
 			e1.printStackTrace();
 		} finally {
 			if (iterator != null) {
-				collection.close(iterator);
+			    iterator.close();
 			}
 		}
 		return false;
@@ -189,7 +189,7 @@ public class PrecisionToolsUtil {
 			e1.printStackTrace();
 		} finally {
 			if (iterator != null) {
-				collection.close(iterator);
+			    iterator.close();
 			}
 		}
 

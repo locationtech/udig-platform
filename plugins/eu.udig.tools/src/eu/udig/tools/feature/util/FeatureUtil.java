@@ -550,7 +550,7 @@ public final class FeatureUtil {
 	 */
 	public static int computeCollectionSize(FeatureCollection<SimpleFeatureType, SimpleFeature> features) {
 
-		Iterator<SimpleFeature> iter = features.iterator();
+		FeatureIterator<SimpleFeature> iter = features.features();
 		int count = 0;
 		try {
 			while (iter.hasNext()) {
@@ -560,7 +560,7 @@ public final class FeatureUtil {
 		} catch (ArithmeticException e) {
 			count = Integer.MAX_VALUE;
 		} finally {
-			features.close(iter);
+		    iter.close();
 		}
 
 		return count;
@@ -707,7 +707,7 @@ public final class FeatureUtil {
 			return featureList;
 		} finally {
 			if (iter != null) {
-				featureCollection.close(iter);
+			    iter.close();
 			}
 		}
 

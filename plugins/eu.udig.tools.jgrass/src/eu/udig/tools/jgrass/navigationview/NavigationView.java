@@ -78,8 +78,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.data.FeatureStore;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureCollections;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.geometry.jts.JTS;
@@ -104,7 +103,6 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 
-import eu.udig.catalog.jgrass.JGrassPlugin;
 import eu.udig.tools.jgrass.JGrassToolsPlugin;
 
 /**
@@ -545,8 +543,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                                 b.add("name", String.class);
                                 SimpleFeatureType type = b.buildFeatureType();
 
-                                FeatureCollection<SimpleFeatureType, SimpleFeature> newCollection = FeatureCollections
-                                        .newCollection();
+                                DefaultFeatureCollection newCollection = new DefaultFeatureCollection();
 
                                 int size = keySet.size();
 

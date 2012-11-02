@@ -15,6 +15,7 @@
 package net.refractions.udig.catalog.ui.export;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -32,9 +33,9 @@ import com.vividsolutions.jts.geom.LineString;
  * @author Jesse
  * @since 1.1.0
  */
-class ToMultiLineFeatureCollection extends AbstractGeometryTransformingFeatureCollection{
+class ToMultiLineFeatureCollection extends AbstractGeometryTransformingFeatureCollection {
 
-    public ToMultiLineFeatureCollection( FeatureCollection<SimpleFeatureType, SimpleFeature> source, SimpleFeatureType schema, GeometryDescriptor typeToUseAsGeometry, 
+    public ToMultiLineFeatureCollection( SimpleFeatureCollection source, SimpleFeatureType schema, GeometryDescriptor typeToUseAsGeometry, 
             MathTransform mt, IProgressMonitor monitor ) {
         super(source, schema, typeToUseAsGeometry, mt, monitor);
     }

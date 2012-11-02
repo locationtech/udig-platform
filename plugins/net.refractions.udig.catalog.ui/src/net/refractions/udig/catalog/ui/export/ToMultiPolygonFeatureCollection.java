@@ -16,6 +16,7 @@
 package net.refractions.udig.catalog.ui.export;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -34,7 +35,7 @@ import com.vividsolutions.jts.geom.Polygon;
 class ToMultiPolygonFeatureCollection extends
 		AbstractGeometryTransformingFeatureCollection {
 
-    public ToMultiPolygonFeatureCollection( FeatureCollection<SimpleFeatureType, SimpleFeature> source, SimpleFeatureType schema, GeometryDescriptor typeToUseAsGeometry, MathTransform mt, IProgressMonitor monitor ) {
+    public ToMultiPolygonFeatureCollection( SimpleFeatureCollection source, SimpleFeatureType schema, GeometryDescriptor typeToUseAsGeometry, MathTransform mt, IProgressMonitor monitor ) {
         super(source, schema, typeToUseAsGeometry, mt, monitor);
     }
 

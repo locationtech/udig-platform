@@ -50,8 +50,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IProgressService;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureCollections;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.geometry.jts.JTS;
@@ -205,7 +204,7 @@ public class ImportGeopaparazziFolderWizard extends Wizard implements IImportWiz
         SimpleFeatureType featureType = b.buildFeatureType();
         MathTransform transform = CRS.findMathTransform(DefaultGeographicCRS.WGS84, mapCrs);
         pm.beginTask("Import notes...", IProgressMonitor.UNKNOWN);
-        FeatureCollection<SimpleFeatureType, SimpleFeature> newCollection = FeatureCollections.newCollection();
+        DefaultFeatureCollection newCollection = new DefaultFeatureCollection();
 
         Statement statement = null;
         try {
@@ -335,7 +334,7 @@ public class ImportGeopaparazziFolderWizard extends Wizard implements IImportWiz
         try {
             MathTransform transform = CRS.findMathTransform(DefaultGeographicCRS.WGS84, mapCrs);
             pm.beginTask("Import gps to lines...", logsList.size());
-            FeatureCollection<SimpleFeatureType, SimpleFeature> newCollection = FeatureCollections.newCollection();
+            DefaultFeatureCollection newCollection = new DefaultFeatureCollection();
             int index = 0;
             for( GpsLog log : logsList ) {
                 List<GpsPoint> points = log.points;
@@ -400,7 +399,7 @@ public class ImportGeopaparazziFolderWizard extends Wizard implements IImportWiz
             MathTransform transform = CRS.findMathTransform(DefaultGeographicCRS.WGS84, mapCrs);
 
             pm.beginTask("Import gps to points...", logsList.size());
-            FeatureCollection<SimpleFeatureType, SimpleFeature> newCollection = FeatureCollections.newCollection();
+            DefaultFeatureCollection newCollection = new DefaultFeatureCollection();
             int index = 0;
             for( GpsLog log : logsList ) {
                 List<GpsPoint> gpsPointList = log.points;
@@ -477,7 +476,7 @@ public class ImportGeopaparazziFolderWizard extends Wizard implements IImportWiz
 
             MathTransform transform = CRS.findMathTransform(DefaultGeographicCRS.WGS84, mapCrs);
 
-            FeatureCollection<SimpleFeatureType, SimpleFeature> newCollection = FeatureCollections.newCollection();
+            DefaultFeatureCollection newCollection = new DefaultFeatureCollection();
             for( File imageFile : listFiles ) {
                 String name = imageFile.getName();
                 if (name.endsWith("jpg") || imageFile.getName().endsWith("JPG") || imageFile.getName().endsWith("png")

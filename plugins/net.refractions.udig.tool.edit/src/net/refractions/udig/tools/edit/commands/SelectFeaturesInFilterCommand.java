@@ -92,7 +92,7 @@ public class SelectFeaturesInFilterCommand extends AbstractCommand implements Un
                 }
             }
         }finally{
-            features.close(iter);
+            iter.close();
         }
         
         monitor.done();

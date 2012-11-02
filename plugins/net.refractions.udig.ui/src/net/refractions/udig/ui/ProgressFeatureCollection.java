@@ -39,8 +39,8 @@ public class ProgressFeatureCollection extends DecoratingSimpleFeatureCollection
 
     protected IProgressMonitor monitor;
     
-    int progress = -1;
-    int size = -1;
+    protected int progress = -1;
+    protected int size = -1;
     
     public ProgressFeatureCollection( SimpleFeatureCollection delegate, IProgressMonitor monitor ) {
         super( delegate );

@@ -107,7 +107,7 @@ public class AddFeatureCommand extends AbstractCommand implements UndoableMapCom
             try {
                 return iter.next();
             } finally {
-                features.close(iter);
+                iter.close();
             }
         }
         return null;

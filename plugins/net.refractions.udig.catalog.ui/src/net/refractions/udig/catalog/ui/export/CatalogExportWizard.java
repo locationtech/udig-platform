@@ -42,7 +42,6 @@ import net.refractions.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -65,9 +64,11 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.shapefile.indexed.IndexedShapefileDataStore;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.SchemaException;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
@@ -79,7 +80,6 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.GeometryDescriptor;
-import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.expression.Function;
 import org.opengis.filter.identity.FeatureId;
@@ -170,10 +170,8 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         IGeoResource resource = data.getResource();
 
         try {
-            FeatureSource<SimpleFeatureType, SimpleFeature> fs = resource.resolve(
-                    FeatureSource.class, null);
-            FeatureCollection<SimpleFeatureType, SimpleFeature> fc = fs
-                    .getFeatures(data.getQuery());
+            SimpleFeatureSource fs = resource.resolve(SimpleFeatureSource.class, null);
+            SimpleFeatureCollection fc = fs.getFeatures(data.getQuery());
 
             // TODO: remove from catalog/close layers if open?
             SimpleFeatureType schema = fs.getSchema();
@@ -208,12 +206,9 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
                 // possibly multiple geometry types
                 String geomName = schema.getGeometryDescriptor().getName().getLocalPart();
 
-                FeatureCollection<SimpleFeatureType, SimpleFeature> pointCollection = FeatureCollections
-                        .newCollection();
-                FeatureCollection<SimpleFeatureType, SimpleFeature> lineCollection = FeatureCollections
-                        .newCollection();
-                FeatureCollection<SimpleFeatureType, SimpleFeature> polygonCollection = FeatureCollections
-                        .newCollection();
+                DefaultFeatureCollection pointCollection = new DefaultFeatureCollection();
+                DefaultFeatureCollection lineCollection = new DefaultFeatureCollection();
+                DefaultFeatureCollection polygonCollection = new DefaultFeatureCollection();
 
                 FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection = fs
                         .getFeatures();
@@ -478,7 +473,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
     }
 
     private void exportLineFeatures( Data data, IProgressMonitor currentMonitor, File file,
-            FeatureCollection<SimpleFeatureType, SimpleFeature> lineCollection,
+            SimpleFeatureCollection lineCollection,
             SimpleFeatureType schema, String geomName, MathTransform mt )
             throws IllegalFilterException, IOException, SchemaException, MalformedURLException {
 
@@ -495,7 +490,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
     }
 
     private void exportPointFeatures( Data data, IProgressMonitor currentMonitor, File file,
-            FeatureCollection<SimpleFeatureType, SimpleFeature> pointCollection,
+            SimpleFeatureCollection pointCollection,
             SimpleFeatureType schema, String geomName, MathTransform mt )
             throws IllegalFilterException, IOException, SchemaException, MalformedURLException {
 
@@ -512,7 +507,7 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
     }
 
     private void exportPolygonFeatures( Data data, IProgressMonitor currentMonitor, File file,
-            FeatureCollection<SimpleFeatureType, SimpleFeature> polygonCollection,
+            SimpleFeatureCollection polygonCollection,
             SimpleFeatureType schema, String geomName, MathTransform mt )
             throws IllegalFilterException, IOException, SchemaException, MalformedURLException {
         File polyFile = addFileNameSuffix(file, POLY_SUFFIX);
