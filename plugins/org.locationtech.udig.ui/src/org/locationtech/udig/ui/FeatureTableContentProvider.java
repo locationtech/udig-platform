@@ -9,6 +9,7 @@
  */
 package org.locationtech.udig.ui;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -17,11 +18,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-
-import org.locationtech.udig.core.IProvider;
-import org.locationtech.udig.internal.ui.Trace;
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
@@ -34,13 +30,24 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Scrollable;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.PlatformUI;
+import org.geotools.data.FeatureEvent;
+import org.geotools.data.FeatureListener;
+import org.geotools.data.Query;
+import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.CollectionEvent;
 import org.geotools.feature.CollectionListener;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.FeatureIterator;
+import org.locationtech.udig.core.IProvider;
+import org.locationtech.udig.internal.ui.Trace;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.internal.Messages;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+
+import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Type;
 
 class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Collection<SimpleFeature>> {
 
@@ -56,47 +63,79 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
         this.progressMonitorProvider=progressMonitorProvider;
     }
 
-    private CollectionListener listener = new CollectionListener(){
-        public void collectionChanged( CollectionEvent event ) {
-            if (listener == null)
-                event.getCollection().removeListener(this);
-            SimpleFeature changed[] = event.getFeatures();
+    private FeatureListener listener = new FeatureListener() {
+
+        @Override
+        public void changed(FeatureEvent event) {
+            if (listener == null) {
+                event.getFeatureSource().removeFeatureListener(this);
+                return;
+            }
+
             TableViewer viewer = FeatureTableContentProvider.this.owningFeatureTableControl
                     .getViewer();
 
-            switch( event.getEventType() ) {
-            case CollectionEvent.FEATURES_ADDED:
-                for( int i = 0; i < changed.length; i++ ) {
-                    features.add(changed[i]);
+            switch (event.getType()) {
+            case ADDED:
+                try {
+                    SimpleFeatureCollection changed = (SimpleFeatureCollection) event
+                            .getFeatureSource().getFeatures(event.getFilter());
+                    FeatureIterator<SimpleFeature> iterator = changed.features();
+                    try {
+                        while (iterator.hasNext()) {
+                            SimpleFeature newFeature = iterator.next();
+                            features.add(newFeature);
+                        }
+                        viewer.setItemCount(event.getFeatureSource().getCount(Query.ALL));
+                        viewer.getTable().clearAll();
+                    } finally {
+                        iterator.close();
+                    }
+                } catch (IOException accessError) {
+                }
+                break;
+            case REMOVED:
+                for (Iterator<SimpleFeature> iter = features.iterator(); iter.hasNext();) {
+                    SimpleFeature feature = iter.next();
+                    if (event.getFilter().evaluate(feature)) {
+                        iter.remove(); // event indicated this feature has been removed
+                    }
                 }
                 viewer.setItemCount(features.size());
                 viewer.getTable().clearAll();
                 break;
-            case CollectionEvent.FEATURES_REMOVED:
-                for( int i = 0; i < changed.length; i++ ) {
-                    for( Iterator<SimpleFeature> iter = features.iterator(); iter.hasNext(); ) {
-                        if (iter.next().getID().equals(changed[i].getID())) {
-                            iter.remove();
-                            break;
-                        }
+            case CHANGED:
+                try {
+                    SimpleFeatureCollection changed = (SimpleFeatureCollection) event
+                            .getFeatureSource().getFeatures(event.getFilter());
 
-                    }
-                    viewer.setItemCount(features.size());
-                    viewer.getTable().clearAll();
-                }
-                break;
-            case CollectionEvent.FEATURES_CHANGED:
-                for( int i = 0; i < changed.length; i++ ) {
-                    int j = 0;
-                    for( ListIterator<SimpleFeature> iter = features.listIterator(); iter.hasNext(); ) {
-                        j++;
-                        if (iter.next().getID().equals(changed[i].getID())) {
-                            iter.set(changed[i]);
-                            break;
+                    FeatureIterator<SimpleFeature> iterator = changed.features();
+                    try {
+                        while (iterator.hasNext()) {
+                            SimpleFeature changedFeature = iterator.next();
+                            SCAN: for (ListIterator<SimpleFeature> iter = features.listIterator(); iter
+                                    .hasNext();) {
+                                SimpleFeature item = iter.next();
+                                if (item.getID().equals(changedFeature.getID())) {
+                                    iter.set(changedFeature);
+                                    break SCAN;
+                                }
+                            }
                         }
+                        viewer.setItemCount(event.getFeatureSource().getCount(Query.ALL));
+                        viewer.getTable().clearAll();
+                    } finally {
+                        iterator.close();
                     }
+                } catch (IOException accessError) {
                 }
                 viewer.getTable().clearAll();
+                break;
+            case COMMIT:
+                //TBD
+                break;
+            case ROLLBACK:
+                //TBD
                 break;
 
             default:
@@ -104,6 +143,55 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
             }
         }
     };
+
+//    private CollectionListener listener = new CollectionListener(){
+//        public void collectionChanged( CollectionEvent event ) {
+//            if (listener == null)
+//                event.getCollection().removeListener(this);
+//            SimpleFeature changed[] = event.getFeatures();
+//            TableViewer viewer = FeatureTableContentProvider.this.owningFeatureTableControl
+//                    .getViewer();
+//
+//            switch( event.getEventType() ) {
+//            case CollectionEvent.FEATURES_ADDED:
+//                for( int i = 0; i < changed.length; i++ ) {
+//                    features.add(changed[i]);
+//                }
+//                viewer.setItemCount(features.size());
+//                viewer.getTable().clearAll();
+//                break;
+//            case CollectionEvent.FEATURES_REMOVED:
+//                for( int i = 0; i < changed.length; i++ ) {
+//                    for( Iterator<SimpleFeature> iter = features.iterator(); iter.hasNext(); ) {
+//                        if (iter.next().getID().equals(changed[i].getID())) {
+//                            iter.remove();
+//                            break;
+//                        }
+//
+//                    }
+//                    viewer.setItemCount(features.size());
+//                    viewer.getTable().clearAll();
+//                }
+//                break;
+//            case CollectionEvent.FEATURES_CHANGED:
+//                for( int i = 0; i < changed.length; i++ ) {
+//                    int j = 0;
+//                    for( ListIterator<SimpleFeature> iter = features.listIterator(); iter.hasNext(); ) {
+//                        j++;
+//                        if (iter.next().getID().equals(changed[i].getID())) {
+//                            iter.set(changed[i]);
+//                            break;
+//                        }
+//                    }
+//                }
+//                viewer.getTable().clearAll();
+//                break;
+//
+//            default:
+//                break;
+//            }
+//        }
+//    };
 
     // Memory bound cache of features for table
     // May be sorted according to FID or any of the attributes so don't rely on any given order because
@@ -152,12 +240,12 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
             features.clear();
 
             if (oldInput != null) {
-            	FeatureCollection<SimpleFeatureType, SimpleFeature> old = ((FeatureCollection<SimpleFeatureType, SimpleFeature>) oldInput);
-                old.removeListener(listener);
+            	SimpleFeatureCollection old = (SimpleFeatureCollection) oldInput;
+                //old.removeListener(listener);
             }
             if (newInput != null) {
-            	FeatureCollection<SimpleFeatureType, SimpleFeature> input = ((FeatureCollection<SimpleFeatureType, SimpleFeature>) newInput);
-                input.addListener(listener);
+            	SimpleFeatureCollection input = (SimpleFeatureCollection) newInput;
+                //input.addListener(listener);
             }
 
             if (newInput == null)
@@ -276,7 +364,7 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
                 return;
             } finally {
                 if (iterator != null)
-                    input.close(iterator);
+                    iterator.close();
                 UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableContentProvider.class, 
                         "Ending ContentLoader, Cancel state is:"+monitor.isCanceled(), null); //$NON-NLS-1$
             }
@@ -570,11 +658,12 @@ class FeatureTableContentProvider implements ILazyContentProvider, IProvider<Col
      * @return returns a collection of the deleted features
      */
     public FeatureCollection<SimpleFeatureType, SimpleFeature> deleteSelection() {
-        final FeatureCollection<SimpleFeatureType, SimpleFeature> deletedFeatures = FeatureCollections.newCollection();
+        final DefaultFeatureCollection deletedFeatures = new DefaultFeatureCollection();
         Runnable updateTable = new Runnable(){
             @SuppressWarnings("unchecked")
             public void run() {
                 Collection<String> selectionFids = owningFeatureTableControl.getSelectionProvider().getSelectionFids();
+                
                 for( Iterator<SimpleFeature> iter = features.iterator(); iter.hasNext(); ) {
                     SimpleFeature feature =  iter.next();
                     if( selectionFids.contains(feature.getID()) ){

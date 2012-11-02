@@ -13,22 +13,19 @@ import java.io.StringReader;
 
 import javax.xml.transform.TransformerException;
 
-import org.locationtech.udig.ui.AbstractTextStrategizedTransfer;
-import org.locationtech.udig.ui.internal.Messages;
-
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
 import org.geotools.data.DataUtilities;
-import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureCollections;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.gml.GMLFilterDocument;
 import org.geotools.gml.GMLFilterFeature;
 import org.geotools.gml.GMLFilterGeometry;
 import org.geotools.gml.GMLReceiver;
 import org.geotools.gml.producer.FeatureTransformer;
+import org.locationtech.udig.ui.AbstractTextStrategizedTransfer;
+import org.locationtech.udig.ui.internal.Messages;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.xml.sax.InputSource;
@@ -41,31 +38,31 @@ import com.vividsolutions.jts.io.WKTWriter;
 
 public class FeatureTextTransfer extends AbstractTextStrategizedTransfer implements
 		UDIGTransfer {
-	private static FeatureTextTransfer _instance = new FeatureTextTransfer();
+    private static FeatureTextTransfer _instance = new FeatureTextTransfer();
 
-	private FeatureTextTransfer() {
-	}
+    private FeatureTextTransfer() {
+    }
 
-	/**
-	 * Returns the singleton instance of the TextTransfer class.
-	 * 
-	 * @return the singleton instance of the TextTransfer class
-	 */
-	public static FeatureTextTransfer getInstance() {
-		return _instance;
-	}
-	private TransferStrategy[] transferStrategies ;
+    /**
+     * Returns the singleton instance of the TextTransfer class.
+     * 
+     * @return the singleton instance of the TextTransfer class
+     */
+    public static FeatureTextTransfer getInstance() {
+        return _instance;
+    }
 
-	@Override
-    public
-	synchronized TransferStrategy[] getAllStrategies() {
-		if( transferStrategies==null ){
-			transferStrategies=new TransferStrategy[]{new GMLStrategy(), new JtsWktStrategy()};
-		}
-        TransferStrategy[] copy=new TransferStrategy[transferStrategies.length];
+    private TransferStrategy[] transferStrategies;
+
+    @Override
+    public synchronized TransferStrategy[] getAllStrategies() {
+        if (transferStrategies == null) {
+            transferStrategies = new TransferStrategy[] { new GMLStrategy(), new JtsWktStrategy() };
+        }
+        TransferStrategy[] copy = new TransferStrategy[transferStrategies.length];
         System.arraycopy(transferStrategies, 0, copy, 0, transferStrategies.length);
-		return copy;
-	}
+        return copy;
+    }
 
     @Override
     public String[] getStrategyNames() {
@@ -78,50 +75,51 @@ public class FeatureTextTransfer extends AbstractTextStrategizedTransfer impleme
     }
 
 	
-	@Override
+    @Override
     public TransferStrategy getDefaultStrategy() {
-		return getAllStrategies()[0];
-	}
+        return getAllStrategies()[0];
+    }
 
-	@Override
-	public TransferData[] getSupportedTypes() {
-		return TextTransfer.getInstance().getSupportedTypes();
-	}
+    @Override
+    public TransferData[] getSupportedTypes() {
+        return TextTransfer.getInstance().getSupportedTypes();
+    }
 
-	@Override
-	public boolean isSupportedType(TransferData transferData) {
-		return TextTransfer.getInstance().isSupportedType(transferData);
-	}
+    @Override
+    public boolean isSupportedType(TransferData transferData) {
+        return TextTransfer.getInstance().isSupportedType(transferData);
+    }
 
-	public boolean validate(Object object) {
-		return object instanceof SimpleFeature;
-	}
-	/**
-	 * Encodes a SimpleFeature as a GML string.
-	 * 
-	 * @author jeichar
-	 */
-	public static class GMLStrategy implements TransferStrategy {
-		@SuppressWarnings("unchecked") //$NON-NLS-1$
-		public void javaToNative(Object object, TransferData transferData) {
-			SimpleFeature feature=(SimpleFeature) object;
-			FeatureCollection<SimpleFeatureType, SimpleFeature> collection = FeatureCollections.newCollection();
-			collection.add(feature);
-			FeatureTransformer transformer=new FeatureTransformer();
-			transformer.setIndentation(4);
+    public boolean validate(Object object) {
+        return object instanceof SimpleFeature;
+    }
+
+    /**
+     * Encodes a SimpleFeature as a GML string.
+     * 
+     * @author jeichar
+     */
+    public static class GMLStrategy implements TransferStrategy {
+
+        public void javaToNative(Object object, TransferData transferData) {
+            SimpleFeature feature = (SimpleFeature) object;
+            DefaultFeatureCollection collection = new DefaultFeatureCollection();
+            collection.add(feature);
+            FeatureTransformer transformer = new FeatureTransformer();
+            transformer.setIndentation(4);
             try {
-                TextTransfer.getInstance().javaToNative(transformer.transform(collection), transferData);
+                TextTransfer.getInstance().javaToNative(transformer.transform(collection),
+                        transferData);
             } catch (TransformerException e) {
                 throw (RuntimeException) new RuntimeException().initCause(e);
             }
-		}
+        }
 
-		@SuppressWarnings("deprecation") 
-		public Object nativeToJava(TransferData transferData) {
+        public Object nativeToJava(TransferData transferData) {
             String string = (String) TextTransfer.getInstance().nativeToJava(transferData);
             InputSource input = new InputSource(new StringReader(string));
-            SimpleFeatureCollection collection = FeatureCollections.newCollection();
-            GMLReceiver receiver=new GMLReceiver(collection);
+            DefaultFeatureCollection collection = new DefaultFeatureCollection();
+            GMLReceiver receiver = new GMLReceiver(collection);
             GMLFilterFeature filterFeature = new GMLFilterFeature(receiver);
             GMLFilterGeometry filterGeometry = new GMLFilterGeometry(filterFeature);
             GMLFilterDocument filterDocument = new GMLFilterDocument(filterGeometry);
@@ -135,8 +133,8 @@ public class FeatureTextTransfer extends AbstractTextStrategizedTransfer impleme
             }
 
             return collection.features().next();
-		}
-	}
+        }
+    }
 
     /**
      * This strategy exports a feature as Well Known Text as generated by JTS WKTWriter.
