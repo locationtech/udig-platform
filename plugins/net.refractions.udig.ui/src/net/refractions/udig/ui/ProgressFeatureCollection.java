@@ -18,8 +18,13 @@ import java.util.Iterator;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.collection.AdaptorFeatureCollection;
+import org.geotools.feature.collection.BaseFeatureCollection;
+import org.geotools.feature.collection.DecoratingSimpleFeatureCollection;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
@@ -30,46 +35,43 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * @author Jesse
  * @since 1.1.0
  */
-public class ProgressFeatureCollection extends AdaptorFeatureCollection {
+public class ProgressFeatureCollection extends DecoratingSimpleFeatureCollection {
 
-    protected FeatureCollection<SimpleFeatureType, SimpleFeature> delegate;
     protected IProgressMonitor monitor;
     
-    public ProgressFeatureCollection( FeatureCollection<SimpleFeatureType, SimpleFeature> delegate, IProgressMonitor monitor ) {
-    	super("Progress Listener", delegate.getSchema());
-        this.delegate = delegate;
+    int progress = -1;
+    int size = -1;
+    
+    public ProgressFeatureCollection( SimpleFeatureCollection delegate, IProgressMonitor monitor ) {
+        super( delegate );
         this.monitor = monitor;
     }
-
+    
     @Override
-    protected void closeIterator( Iterator close ) {
-        delegate.close(close);
-    }
-
-    @Override
-    protected Iterator openIterator() {
-        final Iterator iterator = delegate.iterator();
-        return new Iterator(){
-
+    public SimpleFeatureIterator features() {
+        final SimpleFeatureIterator iterator = delegate.features();
+        
+        if( size == -1 ){
+            size = delegate.size();
+            monitor.beginTask(delegate.getID(), size );
+        }
+        return new SimpleFeatureIterator(){
+            int index = 0;
             public boolean hasNext() {
                 return iterator.hasNext();
             }
-
-            public Object next() {
-                monitor.worked(1);
+            public SimpleFeature next() {
+                index++;
+                if( index > progress){
+                    progress = index;
+                    monitor.worked(1);
+                }
                 return iterator.next();
             }
-
-            public void remove() {
-                iterator.next();
-            }
-            
+            public void close() {
+                monitor.done();
+                iterator.close();                
+            }            
         };
     }
-
-    @Override
-    public int size() {
-        return delegate.size();
-    }
-
 }
