@@ -9,14 +9,12 @@
  */
 package org.locationtech.udig.catalog.ui.export;
 
-import java.util.Iterator;
-
-import org.locationtech.udig.catalog.ui.internal.Messages;
-
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.collection.AdaptorFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.feature.collection.BaseSimpleFeatureCollection;
 import org.geotools.geometry.jts.JTS;
+import org.locationtech.udig.catalog.ui.internal.Messages;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
@@ -32,9 +30,9 @@ import com.vividsolutions.jts.geom.Geometry;
  * @author Jesse
  * @since 1.1.0
  */
-abstract class AbstractGeometryTransformingFeatureCollection extends AdaptorFeatureCollection {
+abstract class AbstractGeometryTransformingFeatureCollection extends BaseSimpleFeatureCollection {
 
-    private final FeatureCollection<SimpleFeatureType, SimpleFeature> source;
+    private final SimpleFeatureCollection source;
     private final SimpleFeatureType schema;
     private final GeometryDescriptor typeToUseAsGeometry;
     private final IProgressMonitor monitor;
@@ -48,9 +46,9 @@ abstract class AbstractGeometryTransformingFeatureCollection extends AdaptorFeat
      * @param mt the math transform to use to transform the geometries from the source projection to the destination projection
      * @param monitor2 progress monitor
      */
-    public AbstractGeometryTransformingFeatureCollection( FeatureCollection<SimpleFeatureType, SimpleFeature> source, SimpleFeatureType schema,
+    public AbstractGeometryTransformingFeatureCollection( SimpleFeatureCollection source, SimpleFeatureType schema,
             GeometryDescriptor typeToUseAsGeometry, MathTransform mt, IProgressMonitor monitor2) {
-        super("transform", schema);
+        super( schema);
         
         this.source=source;
         this.schema=schema;
@@ -59,16 +57,11 @@ abstract class AbstractGeometryTransformingFeatureCollection extends AdaptorFeat
         this.mt=mt;
     }
 
-    @Override
-    protected void closeIterator( Iterator close ) {
-        source.close(close);
-    }
+    public SimpleFeatureIterator features() {
+        
+        final SimpleFeatureIterator iter = source.features();
 
-    @SuppressWarnings("unchecked")
-    @Override
-    protected Iterator<SimpleFeature> openIterator() {
-        final Iterator<SimpleFeature> iter=source.iterator();
-        return new Iterator<SimpleFeature>(){
+        return new SimpleFeatureIterator() {
 
             private SimpleFeature feature;
 
@@ -81,15 +74,17 @@ abstract class AbstractGeometryTransformingFeatureCollection extends AdaptorFeat
                         continue;
                     Geometry geometry=(Geometry) next.getAttribute(typeToUseAsGeometry.getName());
                     geometry = toCollection(geometry);
-                    if( geometry!=null ){
-	                    try {
-	                        geometry = JTS.transform(geometry, mt);
-	                    } catch (TransformException e) {
-	                        throw (RuntimeException) new RuntimeException( Messages.ReprojectingFeatureCollection_transformationError+next.getID()).initCause( e );
-	                    }
+                    if (geometry != null) {
+                        try {
+                            geometry = JTS.transform(geometry, mt);
+                        } catch (TransformException e) {
+                            throw (RuntimeException) new RuntimeException(
+                                    Messages.ReprojectingFeatureCollection_transformationError
+                                            + next.getID()).initCause(e);
+                        }
                     }
                     feature = new FeatureWrapper(next, schema, new Geometry[]{geometry}, 
-                    		new String[]{ schema.getGeometryDescriptor().getName().getLocalPart()});
+                                new String[]{ schema.getGeometryDescriptor().getName().getLocalPart()});
                 }
                 
                 return feature!=null;
@@ -102,12 +97,58 @@ abstract class AbstractGeometryTransformingFeatureCollection extends AdaptorFeat
                 return tmp;
             }
 
-            public void remove() {
-                iter.remove();
+            @Override
+            public void close() {
+                iter.close();
             }
             
         };
     }
+
+//    @SuppressWarnings("unchecked")
+//    @Override
+//    protected Iterator<SimpleFeature> openIterator() {
+//        final Iterator<SimpleFeature> iter=source.iterator();
+//        return new Iterator<SimpleFeature>(){
+//
+//            private SimpleFeature feature;
+//
+//            public boolean hasNext() {
+//                while( feature==null ){
+//                    if ( !iter.hasNext() )
+//                        return false;
+//                    SimpleFeature next = iter.next();
+//                    if( next==null )
+//                        continue;
+//                    Geometry geometry=(Geometry) next.getAttribute(typeToUseAsGeometry.getName());
+//                    geometry = toCollection(geometry);
+//                    if( geometry!=null ){
+//	                    try {
+//	                        geometry = JTS.transform(geometry, mt);
+//	                    } catch (TransformException e) {
+//	                        throw (RuntimeException) new RuntimeException( Messages.ReprojectingFeatureCollection_transformationError+next.getID()).initCause( e );
+//	                    }
+//                    }
+//                    feature = new FeatureWrapper(next, schema, new Geometry[]{geometry}, 
+//                    		new String[]{ schema.getGeometryDescriptor().getName().getLocalPart()});
+//                }
+//                
+//                return feature!=null;
+//            }
+//
+//            public SimpleFeature next() {
+//                SimpleFeature tmp = feature;
+//                feature=null;
+//                monitor.worked(1);
+//                return tmp;
+//            }
+//
+//            public void remove() {
+//                iter.remove();
+//            }
+//            
+//        };
+//    }
     
     /**
      * Method should ensure that the geometry is a GeometryCollection of the correct type.  For example a polygon should be

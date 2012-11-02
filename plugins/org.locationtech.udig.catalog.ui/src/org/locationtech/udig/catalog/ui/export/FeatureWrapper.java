@@ -93,7 +93,9 @@ class FeatureWrapper extends DecoratingFeature implements SimpleFeature{
     public ReferencedEnvelope getBounds() {
     	ReferencedEnvelope bounds = new ReferencedEnvelope( delegate.getBounds());
     	if( bounds != null ) return bounds;
-    	CoordinateReferenceSystem crs = featureType.getCoordinateReferenceSystem();    	
+    	
+    	CoordinateReferenceSystem crs = featureType.getCoordinateReferenceSystem();    
+    	
         return new ReferencedEnvelope( defaultGeometry.getEnvelopeInternal(), crs );
     }
 
@@ -103,10 +105,10 @@ class FeatureWrapper extends DecoratingFeature implements SimpleFeature{
     public Geometry getPrimaryGeometry() {
     	return getDefaultGeometry();
     }
-	public void setPrimaryGeometry(Geometry geometry)
-			throws IllegalAttributeException {
-		setDefaultGeometry(geometry);
-	}
+
+    public void setPrimaryGeometry(Geometry geometry) throws IllegalAttributeException {
+        setDefaultGeometry(geometry);
+    }
 
     public SimpleFeatureType getFeatureType() {
         return featureType;

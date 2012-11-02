@@ -96,13 +96,14 @@ public class AddFeatureCommand extends AbstractCommand implements UndoableMapCom
         if (resource != null) {
             FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools
                     .getDefaultHints());
-            FeatureCollection<SimpleFeatureType, SimpleFeature> features = resource
-                    .getFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory, fid)));
+            FeatureCollection<SimpleFeatureType, SimpleFeature> features = resource.getFeatures(
+                                                                                        filterFactory.id(
+                                                                                                FeatureUtils.stringToId(filterFactory, fid)));
             FeatureIterator<SimpleFeature> iter = features.features();
             try {
                 return iter.next();
             } finally {
-                features.close(iter);
+                iter.close();
             }
         }
         return null;

@@ -13,28 +13,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.core.internal.FeatureUtils;
-import org.locationtech.udig.project.AdaptableFeature;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.ILayerListener;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.IMapCompositionListener;
-import org.locationtech.udig.project.Interaction;
-import org.locationtech.udig.project.LayerEvent;
-import org.locationtech.udig.project.LayerEvent.EventType;
-import org.locationtech.udig.project.MapCompositionEvent;
-import org.locationtech.udig.project.internal.impl.LayerImpl;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.properties.FeaturePropertySource;
-import org.locationtech.udig.tool.info.CoveragePointInfo;
-import org.locationtech.udig.tool.info.InfoPlugin;
-import org.locationtech.udig.tool.info.InfoTool;
-import org.locationtech.udig.tool.info.LayerPointInfo;
-import org.locationtech.udig.tool.info.internal.display.BrowserInfoDisplay;
-import org.locationtech.udig.tool.info.internal.display.TextInfoDisplay;
-import org.locationtech.udig.ui.SearchPart;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.IAction;
@@ -67,16 +45,37 @@ import org.geotools.data.FeatureEvent;
 import org.geotools.data.FeatureEvent.Type;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.ows.Layer;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureIterator;
 import org.geotools.filter.text.cql2.CQLException;
 import org.geotools.filter.text.ecql.ECQL;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.AdaptableFeature;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerListener;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IMapCompositionListener;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.project.LayerEvent.EventType;
+import org.locationtech.udig.project.MapCompositionEvent;
+import org.locationtech.udig.project.internal.impl.LayerImpl;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.properties.FeaturePropertySource;
+import org.locationtech.udig.tool.info.CoveragePointInfo;
+import org.locationtech.udig.tool.info.InfoPlugin;
+import org.locationtech.udig.tool.info.InfoTool;
+import org.locationtech.udig.tool.info.LayerPointInfo;
+import org.locationtech.udig.tool.info.internal.display.BrowserInfoDisplay;
+import org.locationtech.udig.tool.info.internal.display.TextInfoDisplay;
+import org.locationtech.udig.ui.SearchPart;
 import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
@@ -599,11 +598,10 @@ public class InfoView2 extends SearchPart {
              */
             private boolean isFeatureOnStore( Filter id ) {
 
-                FeatureCollection<SimpleFeatureType, SimpleFeature> collection = null;
-                FeatureIterator<SimpleFeature> iter = null;
+                SimpleFeatureCollection collection = null;
+                SimpleFeatureIterator iter = null;
                 try {
-                    collection = layerList.get(0).getResource(FeatureSource.class, null)
-                            .getFeatures(id);
+                    collection = layerList.get(0).getResource(SimpleFeatureSource.class, null).getFeatures(id);
                     iter = collection.features();
                     if (iter.hasNext()) {
                         return true;
@@ -611,7 +609,7 @@ public class InfoView2 extends SearchPart {
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
-                    collection.close(iter);
+                    if(iter != null) iter.close();
                 }
                 return false;
             }
