@@ -19,20 +19,14 @@
 package eu.udig.tools.jgrass.profile.borrowedfromjgrasstools;
 
 import java.awt.geom.AffineTransform;
-import java.awt.image.RenderedImage;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.media.jai.iterator.RandomIter;
-import javax.media.jai.iterator.RandomIterFactory;
-
-import org.geotools.coverage.grid.GridCoordinates2D;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridEnvelope2D;
 import org.geotools.coverage.grid.GridGeometry2D;
-import org.geotools.geometry.DirectPosition2D;
-import org.geotools.geometry.Envelope2D;
 import org.geotools.referencing.operation.matrix.XAffineTransform;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.geometry.Envelope;
@@ -59,6 +53,8 @@ public class CoverageUtilities {
     public static final String YRES = "YRES"; //$NON-NLS-1$
     public static final String ROWS = "ROWS"; //$NON-NLS-1$
     public static final String COLS = "COLS"; //$NON-NLS-1$
+
+    private static GeometryFactory gf = new GeometryFactory();
 
     /**
      * Get the parameters of the region covered by the {@link GridCoverage2D coverage}. 
@@ -106,46 +102,32 @@ public class CoverageUtilities {
      * @return the list of {@link ProfilePoint}s.
      * @throws Exception
      */
-    public static List<ProfilePoint> doProfile( GridCoverage2D coverage, Coordinate... coordinates ) throws Exception {
-        RegionMap regionMap = CoverageUtilities.getRegionParamsFromGridCoverage(coverage);
-        double xres = regionMap.getXres();
-        double yres = regionMap.getYres();
-        int cols = regionMap.getCols();
-        int rows = regionMap.getRows();
-        double step = Math.min(xres, yres);
-
-        GridGeometry2D gridGeometry = coverage.getGridGeometry();
-        RenderedImage renderedImage = coverage.getRenderedImage();
-        RandomIter iter = RandomIterFactory.create(renderedImage, null);
-        Envelope2D envelope2d = gridGeometry.getEnvelope2D();
-
+    public static List<ProfilePoint> doProfile( GridCoverage2D coverage, double step, Coordinate... coordinates )
+            throws Exception {
         List<ProfilePoint> profilePointsList = new ArrayList<ProfilePoint>();
 
-        GeometryFactory gf = new GeometryFactory();
         LineString line = gf.createLineString(coordinates);
         double lineLength = line.getLength();
         LengthIndexedLine indexedLine = new LengthIndexedLine(line);
 
         double progressive = 0.0;
-        GridCoordinates2D gridCoords;
+        Point2D point = new Point2D.Double();
         while( progressive < lineLength + step ) { // run over by a step to make sure we get the
                                                    // last coord back from the extractor
             Coordinate c = indexedLine.extractPoint(progressive);
-            gridCoords = gridGeometry.worldToGrid(new DirectPosition2D(c.x, c.y));
             double value = JGTConstants.doubleNovalue;
-            if (envelope2d.contains(c.x, c.y) && isInside(cols, rows, gridCoords)) {
-                value = iter.getSampleDouble(gridCoords.x, gridCoords.y, 0);
+            try {
+                point.setLocation(c.x, c.y);
+                double[] evaluated = coverage.evaluate(point, (double[]) null);
+                value = evaluated[0];
+            } catch (Exception e) {
+                // ignore problematic points (outside etc)
             }
             ProfilePoint profilePoint = new ProfilePoint(progressive, value, c.x, c.y);
             profilePointsList.add(profilePoint);
             progressive = progressive + step;
         }
-
-        iter.done();
         return profilePointsList;
     }
 
-    private static boolean isInside( int cols, int rows, GridCoordinates2D gridCoords ) {
-        return gridCoords.x >= 0 && gridCoords.x <= cols && gridCoords.y >= 0 && gridCoords.y <= rows;
-    }
 }

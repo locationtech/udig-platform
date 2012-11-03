@@ -28,7 +28,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.project.EditManagerEvent;
+import net.refractions.udig.project.IEditManager;
+import net.refractions.udig.project.IEditManagerListener;
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.ui.ApplicationGIS;
 import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
 import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import net.refractions.udig.project.ui.tool.SimpleTool;
@@ -57,6 +61,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import eu.udig.tools.jgrass.JGrassToolsPlugin;
 import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities;
 import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.ProfilePoint;
+import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.RegionMap;
 
 /**
  * <p>
@@ -68,7 +73,7 @@ import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.ProfilePoint;
  * 
  * @author Andrea Antonello - www.hydrologis.com
  */
-public class ProfileTool extends SimpleTool {
+public class ProfileTool extends SimpleTool implements IEditManagerListener {
 
     private int currentPointNumber = 0;
 
@@ -81,9 +86,22 @@ public class ProfileTool extends SimpleTool {
     private GridCoverage2D rasterMapResource;
     private ProfileView chartView;
     private Coordinate begin;
+    private double step;
+
+    private ILayer selectedLayer;
 
     public ProfileTool() {
         super(MOUSE | MOTION);
+
+        IEditManager editManager = ApplicationGIS.getActiveMap().getEditManager();
+        editManager.addListener(this);
+        selectedLayer = editManager.getSelectedLayer();
+    }
+
+    @Override
+    protected void onMousePressed( MapMouseEvent e ) {
+        super.onMousePressed(e);
+        checkFirstActivation();
     }
 
     protected void onMouseMoved( MapMouseEvent e ) {
@@ -103,6 +121,9 @@ public class ProfileTool extends SimpleTool {
 
     public void onMouseReleased( MapMouseEvent e ) {
         // necessary to restart from begin, having an empty view
+        if (now == null) {
+            return;
+        }
         if (currentPointNumber == 0) {
             chartView.clearSeries();
             latestProgessiveDistance = 0;
@@ -185,19 +206,19 @@ public class ProfileTool extends SimpleTool {
             Point lastPoint = points.get(points.size() - 1);
             Coordinate end = getContext().pixelToWorld(lastPoint.x, lastPoint.y);
 
-            final List<ProfilePoint> profile = CoverageUtilities.doProfile(rasterMapResource, begin, end);
+            final List<ProfilePoint> profile = CoverageUtilities.doProfile(rasterMapResource, step, begin, end);
             begin = end;
 
             Display.getDefault().syncExec(new Runnable(){
                 public void run() {
                     for( ProfilePoint profilePoint : profile ) {
                         double elevation = profilePoint.getElevation();
-                        if (!Double.isNaN(elevation)) {
-                            chartView.addToSeries(latestProgessiveDistance + profilePoint.getProgressive(), elevation);
-                        } else {
-                            // chartView.addToSeries(latestProgessiveDistance +
-                            // profilePoint.getProgressive(), Double.NaN);
-                        }
+                        // if (!Double.isNaN(elevation)) {
+                        chartView.addToSeries(latestProgessiveDistance + profilePoint.getProgressive(), elevation);
+                        // } else {
+                        // // chartView.addToSeries(latestProgessiveDistance +
+                        // // profilePoint.getProgressive(), Double.NaN);
+                        // }
                     }
                     ProfilePoint last = profile.get(profile.size() - 1);
                     chartView.addStopLine(latestProgessiveDistance + last.getProgressive());
@@ -214,30 +235,68 @@ public class ProfileTool extends SimpleTool {
     public void setActive( boolean active ) {
 
         if (!active) {
-            // on tool deactivation
-            rasterMapResource = null;
-            disposeCommand();
-        } else {
-            // on tool activation
-            final ILayer selectedLayer = getContext().getSelectedLayer();
+            cleanupOnDeactivation();
+            IEditManager editManager = ApplicationGIS.getActiveMap().getEditManager();
+            editManager.removeListener(this);
+        }
+        super.setActive(active);
+    }
+
+    private void cleanupOnDeactivation() {
+        // on tool deactivation
+        rasterMapResource = null;
+        now = null;
+        points.clear();
+        doubleClicked = false;
+        disposeCommand();
+    }
+
+    private void checkFirstActivation() {
+        if (rasterMapResource == null) {
             final IGeoResource geoResource = selectedLayer.getGeoResource();
             if (geoResource.canResolve(GridCoverage.class)) {
                 IRunnableWithProgress operation = new IRunnableWithProgress(){
+
                     public void run( IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
                         try {
                             rasterMapResource = (GridCoverage2D) geoResource.resolve(GridCoverage.class,
                                     new NullProgressMonitor());
                             rasterMapResource = rasterMapResource.view(ViewType.GEOPHYSICS);
-                        } catch (IOException e) {
+
+                            RegionMap regionMap = CoverageUtilities.getRegionParamsFromGridCoverage(rasterMapResource);
+                            double xres = regionMap.getXres();
+                            double yres = regionMap.getYres();
+                            step = Math.min(xres, yres);
+
+                            Display.getDefault().syncExec(new Runnable(){
+                                public void run() {
+                                    final IStatusLineManager statusBar = getContext().getActionBars().getStatusLineManager();
+                                    disposeCommand();
+                                    if (statusBar == null)
+                                        return; // shouldn't happen if the tool is being used.
+                                    statusBar.setErrorMessage(null);
+                                    statusBar.setMessage(null);
+                                    try {
+                                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                                                .showView(ProfileView.ID);
+                                    } catch (PartInitException e) {
+                                        e.printStackTrace();
+                                    }
+                                    chartView = ((ProfileView) PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                                            .getActivePage().findView(ProfileView.ID));
+                                }
+                            });
+                        } catch (Exception e) {
                             e.printStackTrace();
+
+                            String message = "Profile tool error";
+                            ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassToolsPlugin.PLUGIN_ID, e);
                         }
                     }
                 };
                 PlatformGIS.runInProgressDialog("Reading map for profile...", false, operation, false);
 
-            }
-
-            if (rasterMapResource == null) {
+            } else {
                 getContext().updateUI(new Runnable(){
                     public void run() {
                         Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
@@ -250,27 +309,7 @@ public class ProfileTool extends SimpleTool {
                 return;
             }
 
-            final IStatusLineManager statusBar = getContext().getActionBars().getStatusLineManager();
-            disposeCommand();
-            if (statusBar == null)
-                return; // shouldn't happen if the tool is being used.
-
-            getContext().updateUI(new Runnable(){
-                public void run() {
-                    statusBar.setErrorMessage(null);
-                    statusBar.setMessage(null);
-
-                    try {
-                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(ProfileView.ID);
-                        chartView = ((ProfileView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                                .findView(ProfileView.ID));
-                    } catch (PartInitException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
         }
-        super.setActive(active);
     }
 
     private double distance() throws TransformException {
@@ -294,19 +333,6 @@ public class ProfileTool extends SimpleTool {
             distance += JTS.orthodromicDistance(begin, end, getContext().getCRS());
         }
         return distance;
-    }
-
-    private void displayError() {
-        final IStatusLineManager statusBar = getContext().getActionBars().getStatusLineManager();
-
-        if (statusBar == null)
-            return; // shouldn't happen if the tool is being used.
-
-        getContext().updateUI(new Runnable(){
-            public void run() {
-                statusBar.setErrorMessage("Profile Tool Error");
-            }
-        });
     }
 
     private void displayOnStatusBar( double distance ) {
@@ -387,6 +413,14 @@ public class ProfileTool extends SimpleTool {
             double distance = distance();
             displayOnStatusBar(distance);
 
+        }
+    }
+
+    @Override
+    public void changed( EditManagerEvent event ) {
+        if (event.getType() == EditManagerEvent.SELECTED_LAYER) {
+            cleanupOnDeactivation();
+            selectedLayer = (ILayer) event.getNewValue();
         }
     }
 }

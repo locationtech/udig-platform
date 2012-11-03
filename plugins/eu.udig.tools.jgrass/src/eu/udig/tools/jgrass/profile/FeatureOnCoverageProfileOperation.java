@@ -48,6 +48,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import eu.udig.tools.jgrass.JGrassToolsPlugin;
 import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities;
 import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.ProfilePoint;
+import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.RegionMap;
 
 /**
  * Operation to create a profile of a line feature over a coverage.
@@ -58,6 +59,7 @@ public class FeatureOnCoverageProfileOperation implements IOp {
     private ProfileView chartView;
     private GridCoverage2D coverage = null;
     private SimpleFeature lineFeature = null;
+    private double step;
 
     public void op( final Display display, Object target, IProgressMonitor monitor ) throws Exception {
         ILayer[] layers = (ILayer[]) target;
@@ -79,6 +81,10 @@ public class FeatureOnCoverageProfileOperation implements IOp {
             }
             if (geoResource.canResolve(GridCoverage.class)) {
                 coverage = (GridCoverage2D) geoResource.resolve(GridCoverage.class, monitor);
+                RegionMap regionMap = CoverageUtilities.getRegionParamsFromGridCoverage(coverage);
+                double xres = regionMap.getXres();
+                double yres = regionMap.getYres();
+                step = Math.min(xres, yres);
             }
         }
 
@@ -103,7 +109,7 @@ public class FeatureOnCoverageProfileOperation implements IOp {
                     Geometry geometry = (Geometry) lineFeature.getDefaultGeometry();
                     Coordinate[] coordinates = geometry.getCoordinates();
 
-                    List<ProfilePoint> profile = CoverageUtilities.doProfile(coverage, coordinates);
+                    List<ProfilePoint> profile = CoverageUtilities.doProfile(coverage, step, coordinates);
 
                     for( ProfilePoint profilePoint : profile ) {
                         double elevation = profilePoint.getElevation();

@@ -92,9 +92,11 @@ public class ProfileView extends ViewPart {
     public void setFocus() {
     }
 
-    public void addToSeries( final double x, final double y ) {
-        max = Math.max(max, y);
-        min = Math.min(min, y);
+    public void addToSeries( double x, double y ) {
+        if (Math.abs(y - -9999.0) >= .0000001 && !Double.isNaN(y)) {
+            max = Math.max(max, y);
+            min = Math.min(min, y);
+        }
         series.add(x, y);
     }
 
@@ -104,6 +106,8 @@ public class ProfileView extends ViewPart {
     }
 
     public void clearSeries() {
+        max = Double.NEGATIVE_INFINITY;
+        min = Double.POSITIVE_INFINITY;
         series.clear();
     }
 
