@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.refractions.udig.project.ILayer;
+import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.render.ICompositeRenderContext;
 import net.refractions.udig.project.render.IRenderContext;
 import net.refractions.udig.render.internal.wms.basic.BasicWMSRenderer2;
@@ -166,83 +167,51 @@ public class WMSDescribeLayer {
      * 
      * TODO: this requires some testing
      */
-    public static LayerPointInfo info2( ILayer layer, ReferencedEnvelope bbox ) throws IOException {        
+    public static LayerPointInfo info2( ILayer layer, ReferencedEnvelope query ) throws IOException {        
 
 		Envelope reprojected = null;
-		try {
-			reprojected = bbox.transform(layer.getMap().getViewportModel().getCRS(), true);
-		} catch (Exception e) {
-			InfoPlugin.log("", e); //$NON-NLS-1$
-			return null;
-		}
-		
-		Point centre = layer.getMap().getViewportModel().worldToPixel(reprojected.centre());
-    	
-		Envelope sanebbox = layer.getMap().getViewportModel().getBounds();
-		bbox = new ReferencedEnvelope(sanebbox, bbox.getCoordinateReferenceSystem());
+		IMap map = layer.getMap();
+        try {
+            reprojected = query.transform(map.getViewportModel().getCRS(), true);
+        } catch (Exception e) {
+            InfoPlugin.log("", e); //$NON-NLS-1$
+            return null;
+        }
+        Point centre = map.getViewportModel().worldToPixel(reprojected.centre());
+
+        Envelope sanebbox = map.getViewportModel().getBounds();
+        ReferencedEnvelope bbox = new ReferencedEnvelope(sanebbox, query.getCoordinateReferenceSystem());
 		
     	Layer wmslayer;
         wmslayer = layer.getResource( Layer.class, null );
         
         if( wmslayer == null ) {
-            throw new IllegalArgumentException("Provided layer cannot resolve to a wms layer" ); //$NON-NLS-1$
+            throw new IllegalArgumentException("Provided layer is not a WMS layer" ); //$NON-NLS-1$
+        }
+        if( !wmslayer.isQueryable() ){
+            return null;
         }
         // TODO: Fix wmslayer so we can ask who its "source" is.
         final WebMapServer wms = layer.getResource( WebMapServer.class, null );        
         if( wms == null ) {
             throw new IllegalArgumentException("Provided layer cannot resolve to a wms" ); //$NON-NLS-1$
         }
-        if( !wmslayer.isQueryable() ) return null;
-                            
         String desiredFormat = desiredInfoFormat( wms );                
-        if( desiredFormat == null ) return null;
-                        
-        GetMapRequest getmap = wms.createGetMapRequest();
-        Set srs = wmslayer.getSrs();
-        
-        //String code = commonCode( layer.getMap().getViewportModel().getCRS(), srs );
+        if( desiredFormat == null ){
+            return null;
+        }
+        GetMapRequest getmap = wms.createGetMapRequest();        
         String code = BasicWMSRenderer2.findRequestCRS(
-                Collections.singletonList( wmslayer ), layer.getMap().getViewportModel().getCRS(), layer.getMap() );
-//        if( code != null ) {
-//            // we have a common crs! Use the bbox as is            
-//        }
-//        else {
-//            // lets reproject our bounding box then
-//            for( Iterator i= srs.iterator(); code == null && i.hasNext(); ) {
-//                try {
-//                    String tryCode = (String) i.next();
-//                    CoordinateReferenceSystem crs = CRS.decode( tryCode );
-//                    bbox = bbox.transform(crs, true);
-//                    code = tryCode;
-//                    break;
-//                }
-//                catch (Throwable t ) {
-//                    // could not use tryCode
-//                }
-//            }
-//            if( code == null ) {
-//                return null; // we really can't get there from here
-//            }            
-//            try {
-//                CoordinateReferenceSystem crs = CRS.decode(code);                
-//                bbox = bbox.transform(crs, true);
-//            } catch (Exception e) {
-//                return null; // we cannot transform this
-//            }
-//        }
-        
-        // okay we got the bbox
-        // lets fake a request to query against
-        // 3x3 pixels the dimension of the bbox                
-        getmap.setBBox(bbox.getMinX() + "," + bbox.getMinY() + "," +  //$NON-NLS-1$ //$NON-NLS-2$
-                bbox.getMaxX() + "," + bbox.getMaxY()); //$NON-NLS-1$
+                Collections.singletonList( wmslayer ), map.getViewportModel().getCRS(), map );
+
+        getmap.setBBox( bbox );
         getmap.setProperty( GetMapRequest.LAYERS, wmslayer.getName() );
-        int width = layer.getMap().getRenderManager().getMapDisplay().getWidth();
-        int height = layer.getMap().getRenderManager().getMapDisplay().getHeight();
+        int width = map.getRenderManager().getMapDisplay().getWidth();
+        int height = map.getRenderManager().getMapDisplay().getHeight();
         getmap.setDimensions(width, height);
-        getmap.setSRS(code);
+        //getmap.setSRS(code);
         
-        List formats = wms.getCapabilities().getRequest().getGetMap().getFormats();
+        List<String> formats = wms.getCapabilities().getRequest().getGetMap().getFormats();
         if (formats.contains("image/png")) { //$NON-NLS-1$
             getmap.setProperty(GetMapRequest.FORMAT, "image/png"); //$NON-NLS-1$
         } else if (formats.contains("image/gif")) { //$NON-NLS-1$

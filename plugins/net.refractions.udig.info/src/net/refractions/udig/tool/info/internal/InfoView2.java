@@ -41,6 +41,7 @@ import net.refractions.udig.tool.info.internal.display.TextInfoDisplay;
 import net.refractions.udig.ui.SearchPart;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -430,8 +431,13 @@ public class InfoView2 extends SearchPart {
             }            
             if( layer.hasResource( Layer.class ) ) {
                 try {
-                    LayerPointInfo hit = WMSDescribeLayer.info2( layer, request.bbox );
-                    if( hit != null ) set.add( hit );
+                    Layer wmsLayer = layer.getResource(Layer.class, new NullProgressMonitor());
+                    if( wmsLayer.isQueryable()){
+                        LayerPointInfo hit = WMSDescribeLayer.info2( layer, request.bbox );
+                        if( hit != null ) {
+                            set.add( hit );
+                        }
+                    }
                 }
                 catch( Throwable t ) {
                     InfoPlugin.log( "Information request "+layer.getName()+" failed "+t, t ); //$NON-NLS-1$ //$NON-NLS-2$
