@@ -205,15 +205,6 @@
             %NewProjectWizard.description
          </description>
       </wizard>
-      <wizard
-            class="net.refractions.udig.project.ui.internal.wizard.NewLayerWizard"
-            icon="icons/etool16/newlayer_wiz.gif"
-            id="net.refractions.udig.project.ui.wizard.newLayer"
-            name="%NewLayerWizard.name">
-         <description>
-            %NewLayerWizard.description
-         </description>
-      </wizard>
    </extension>
    <extension
          point="org.eclipse.ui.propertyPages">
