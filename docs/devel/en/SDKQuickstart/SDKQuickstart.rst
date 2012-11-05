@@ -65,8 +65,9 @@ as we wait for some of the larger downloads.
 .. note::
    If you are using this work book in a lab setting you will find these downloads available on your course DVD.
 
+**Target Platform Downloads**
 
-* For uDig 1.2 we are going going to download the latest SDK from here:
+* For uDig 1.3 we are going going to download the latest SDK from here:
 
   `<http://udig.refractions.net/download/>`_
 
@@ -74,9 +75,18 @@ as we wait for some of the larger downloads.
 
   `<http://udig.refractions.net/download/unstable/>`_
 
-  Normally you would grab the latest stable SDK from the public uDig download page.
-  At the time of writing the latest uDig SDK was: udig-1.3-SNAPSHOT.zip
+  At the time of writing the latest uDig SDK was: udig-1.3.3-SNAPSHOT.zip
 
+* Download Eclipse RCP Delta Pack
+
+  `<http://download.eclipse.org/eclipse/downloads/eclipse3x.html>`_
+
+  Download the RCP-Delta Pack from you will need to choose the "Latest Release" build; and the scroll
+  down to the "Delta Pack" link to download.
+
+  At the time of writing: `eclipse-3.7.2-delta-pack.zip <http://download.eclipse.org/eclipse/downloads/drops/R-3.7.2-201202080800/download.php?dropFile=eclipse-3.7.2-delta-pack.zip>`_
+
+**IDE Downloads**
 
 * Visit and click on the link for “Eclipse Modeling Tools” and download the appropriate:
 
@@ -86,15 +96,18 @@ as we wait for some of the larger downloads.
 
   `eclipse-modeling-indigo-SR2-win32.zip <http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/indigo/SR2/eclipse-modeling-indigo-SR2-win32.zip>`_
 
+  .. hint::
+     New for uDig 1.3.3 is the ability to use the uDig SDK as a stand alone target platform.
+     This allows you to use a newer version of the Eclipse IDE than the one referenced by
+     the uDig SDK.
 
 * We have prepared an “dropins” download in the following folder:
 
   `<http://udig.refractions.net/files/downloads/extras/>`_
 
-  This download includes a developers guide for udig, platform language packs, and a resource bundle editor.
+  This download includes a developers guide for udig, and a resource bundle editor.
 
   At the time of writing: **dropins-3.7.2.zip**
-
 
 * Download a Java Runtime Environment from this folder:
 
@@ -108,18 +121,8 @@ as we wait for some of the larger downloads.
 
   At the time of writing: **jre1.6.0_25.win32_gdal_ecw.zip**
 
-
-* Download Eclipse RCP Delta Pack
-
-  `<http://download.eclipse.org/eclipse/downloads/eclipse3x.html>`_
-
-  Download the RCP-Delta Pack from you will need to choose the "Latest Release" build; and the scroll
-  down to the "Delta Pack" link to download.
-
-  At the time of writing: `eclipse-3.7.2-delta-pack.zip <http://download.eclipse.org/eclipse/downloads/drops/R-3.7.2-201202080800/download.php?dropFile=eclipse-3.7.2-delta-pack.zip>`_
-
   .. hint::
-     Please ensure your eclipse and jre match (both win32 – or both win64).
+     Please ensure your Eclipse IDE and jre match (both win32 – or both win64).
 
 .. |eclipse_modeling_tools_png| image:: images/eclipse_modeling_tools.jpg
     :width: 15.36cm
@@ -269,10 +272,10 @@ We have a few global settings to configure before we can proceed.
     :height: 9.47cm
 
 
-uDIG SDK
-========
+uDIG SDK Target Platform
+========================
 
-We are now going to unpack the udig sdk and use it as our plug-in target platform.
+We are now going to unpack the udig sdk and use it as our target platform for plug-in development:
 
 * Extract the **udig sdk** download into :file:`C:\\java\\target\\udig_sdk`
 
@@ -281,7 +284,6 @@ We are now going to unpack the udig sdk and use it as our plug-in target platfor
 * You will be left with the following directory structure:
 
   |install_delta_png|
-
 
 * Go back to eclipse and open :menuselection:`Window --> Preferences`.
 
@@ -295,17 +297,14 @@ We are now going to unpack the udig sdk and use it as our plug-in target platfor
 
 * Press :guilabel:`Next` to continue. This will open the “Target Content” page.
 
-
 * Press the :guilabel:`Add` button and add a Directory. Choose the :file:`C:\\java\\target\\eclipse`
   directory where you unpacked the eclipse-delta-pack.
 
   |target_platform_add_eclipse_png|
 
-
 * Press :guilabel:`Add...` again and add the :file:`C:\\java\\target\\udig_sdk` directory.
 
   |target_platform_add_sdk_png|
-
 
 * Change the name to “uDig SDK” and confirm all three folders are listed.
 
@@ -321,30 +320,21 @@ We are now going to unpack the udig sdk and use it as our plug-in target platfor
 At this point all the source code for the Eclipse and uDig plug-ins are available. We can now start
 working on uDig plug-ins, but before we do that lets try running the application.
 
-.. hint::
-   If you get a message indicating the SDK is newer then the version of eclipse you
-   are running – then these instructions are out of date!
-
-
 .. |target_platform_add_eclipse_png| image:: images/target_platform_add_eclipse.jpg
     :width: 8.331cm
     :height: 4.399cm
-
 
 .. |target_platform_definition_png| image:: images/target_platform_definition.jpg
     :width: 11.411cm
     :height: 5.429cm
 
-
 .. |target_platform_add_sdk_png| image:: images/target_platform_add_sdk.jpg
     :width: 8.331cm
     :height: 4.54cm
 
-
 .. |install_delta_png| image:: images/install_delta.jpg
     :width: 12.19cm
     :height: 7.181cm
-
 
 .. |target_platform_locations_png| image:: images/target_platform_locations.jpg
     :width: 11.411cm
@@ -353,63 +343,64 @@ working on uDig plug-ins, but before we do that lets try running the application
 Running uDig
 ============
 
-With all this in place we can now run the uDig application from your development environment. This is a
-good way to test that everything is installed correctly.
+With all this in place we can now run the uDig application from your development environment. This
+is a good way to test that everything is installed correctly.
 
-* To start out with we will switch to the **Plug-in Development** perspective;
+1. To start out with we will switch to the **Plug-in Development** perspective;
 
-  In the top right of the toolbar you can choose **Other** to open the Open Perspective dialog
+   In the top right of the toolbar you can choose **Other** to open the Open Perspective dialog
 
-  |perspective_other_jpg|
-
-
-* Chose **Plugin-Development** from the list and press :guilabel:`OK`
-
-  |perspective_open_jpg|
+   |perspective_other_jpg|
 
 
-* Click on the :guilabel:`Plugins view` and right click on **net.refractions.udig** plug-in the list.
-  Select :menuselection:`Import As --> Source Project` to copy the plugin into your workspace.
+2. Chose **Plugin-Development** from the list and press :guilabel:`OK`
 
-  |import_source_project_jpg|
-
-* Change to the :guilabel:`Package Explorer` view and open up the **net.refractions.udig** plugin
-  and double click to open **udig.product**.
-
-  Switch to the :guilabel:`dependencies` tab and review the features required for the product.
-
-  |product_dependencies_png|
-
-* Return to the :guilabel:`overview` tab of **udig.product** click on the :guilabel:`Launch Eclipse Application`
-  link (it is located under testing as shown below).
-
-  |product_launch_png|
+   |perspective_open_jpg|
 
 
-* The application will now start!
+3.  Click on the :guilabel:`Plugins view` and right click on **net.refractions.udig** plug-in the list.
+    Select :menuselection:`Import As --> Source Project` to copy the plugin into your workspace.
 
-  |udig_welcome_jpg|
+    |import_source_project_jpg|
 
+4.  Change to the :guilabel:`Package Explorer` view and open up the **net.refractions.udig** plugin
+    and double click to open **udig.product**.
+
+    |product_open_jpg|
+
+5.  Switch to the :guilabel:`dependencies` tab and review the features required for the product.
+
+    |product_dependencies_png|
+
+6.  Return to the :guilabel:`overview` tab of **udig.product** click on the :guilabel:`Launch Eclipse Application`
+    link (it is located under testing as shown below).
+
+    |product_launch_png|
+
+
+7.  The application will now start!
+
+    |udig_welcome_jpg|
 
 .. |perspective_other_jpg| image:: images/perspective_other.jpg
     :width: 3.371cm
     :height: 2.66cm
 
-
 .. |perspective_open_jpg| image:: images/perspective_open.jpg
     :width: 6.549cm
     :height: 6.77cm
 
+.. |product_open_jpg| image:: images/product_open.jpg
+    :width: 3.08cm
+    :height: 7.08cm
 
 .. |product_dependencies_png| image:: images/product_dependencies.jpg
-    :width: 8.939cm
-    :height: 7.721cm
-
+    :width: 8.94cm
+    :height: 7.72cm
 
 .. |product_launch_png| image:: images/product_launch.jpg
-    :width: 12.839cm
-    :height: 7.211cm
-
+    :width: 6.458cm
+    :height: 7.083cm
 
 .. |udig_welcome_jpg| image:: images/udig_welcome.jpg
     :width: 14.559cm
