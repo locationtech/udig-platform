@@ -79,8 +79,7 @@
   ;I tried to use the same windows uninstaller I did, but NSIS doesn't seem
   ;to like icons of different sizes -ch
 
-;  !define MUI_UNICON "udig\plugins\net.refractions.udig.ui_0.3.0\icons\udig.ico"
-
+  ;!define MUI_UNICON "udig\plugins\net.refractions.udig.ui_0.3.0\icons\udig.ico"
   ;!define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\win-uninstall.ico"
   !define MUI_UNICON "udig\icons\32-uninstallIcon.ico"
   
@@ -91,11 +90,15 @@
       installation of uDig \r\n \r\n\
       Please report any problems or suggestions for improvement to \
       udig-devel@lists.refractions.net. \r\n \r\n \
+      uDig is distributed under a dual Eclipse Public License \
+      and Refractions BSD License. There is also a license for \
+      ECW/JP2 support. \r\n \r\n \
       Click Next to continue."
 ;--------------------------------
 ;Pages
 
   !insertmacro MUI_PAGE_WELCOME
+  
   ;custom page I made to detect java.  I have it repeat the java version that
   ;it found.  I like the functionality, unfortunately it looks ghetto, as I 
   ;just did a pop up box.  See my comments on the echoJava function -ch
@@ -111,11 +114,13 @@
   ; ---------------------------------------------------------------------------
 
   ;A text file for the license here would be better.  And it probably should
-  ;be your license text, as aren't you doing lgpl instead of the eclipse one?
+  ;be your license text, dual license requires two pages?
   ;You should explain something here, have the license as users install it. -ch
-  !insertmacro MUI_PAGE_LICENSE "LICENSE.txt"
   
-  ;Add a license for ECW?
+  !insertmacro MUI_PAGE_LICENSE "epl-v10.txt"  
+  
+  !insertmacro MUI_PAGE_LICENSE "bsd3-v10.txt"
+  
   !insertmacro MUI_PAGE_LICENSE "ECWEULA.txt"
   
   !insertmacro MUI_PAGE_DIRECTORY
