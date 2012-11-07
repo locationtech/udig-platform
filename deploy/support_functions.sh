@@ -56,6 +56,7 @@ function prepare_resources () {
     sed -e "s/VersionXXXX/${VERSION}/g;s/SeriesXXXX/${SERIES}/g" ${BASE}/udig.html > ${BUILD}/${PLATFORM}/udig/udig-${VERSION}.html
     cp ${BASE}/epl-v10.html ${BUILD}/${PLATFORM}/udig
     cp ${BASE}/bsd3-v10.html ${BUILD}/${PLATFORM}/udig
+    cp ${BASE}/notice.html ${BUILD}/${PLATFORM}/udig
     
     cat ../plugins/net.refractions.udig.libs/.options >> ${BUILD}/${PLATFORM}/udig/.options
     mkdir ${BUILD}/${PLATFORM}/udig/dropins
