@@ -5,7 +5,7 @@ function assemble() {
     EXT=$2
     PLATFORM_JRE=$3
     
-    echo "Looking for ${TARGET}/udig-${VERSION}.${EXT}.zip"
+    echo "Looking for ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip"
     
     # Release win32 if available
     if [ -f ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip ] 
@@ -22,7 +22,7 @@ function assemble() {
         then
             echo "Building ${BUILD}/udig-${VERSION}.${EXT}.zip ..."
 
-            echo "Extracting ${TARGET}/udig-${VERSION}.${EXT}.zip"
+            echo "Extracting ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip"
             unzip -q -d ${BUILD}/${PLATFORM}/udig ${PRODUCT_TARGET}/net.refractions.udig-product-${EXT}.zip
 
             echo "Preparing ${BUILD}/${PLATFORM} with ${JRE}/${PLATFORM_JRE}"
