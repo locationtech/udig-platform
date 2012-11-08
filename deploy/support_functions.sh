@@ -103,13 +103,11 @@ function windows_installer () {
         HERE=`pwd`
         # todo use sed or something to update VERSION inside uDigInstallScript.nsi
         
-        cp ${INSTALLER}/32-uDigIcon.ico ${BUILD}/${PLATFORM}
-        cp ${INSTALLER}/ECWEULA.txt ${BUILD}/${PLATFORM}
-        cp ${INSTALLER}/LICENSE.txt ${BUILD}/${PLATFORM}
-        sed -e "s/VersionXXXX/${VERSION}/g" ${INSTALLER}/uDigInstallScript.nsi > ${BUILD}/${PLATFORM}/uDigInstallScript.nsi
-        cp ${INSTALLER}/32-uninstallIcon.ico ${BUILD}/${PLATFORM}
-        cp ${INSTALLER}/LGPL.txt ${BUILD}/${PLATFORM}
+        cp ${INSTALLER}/* ${BUILD}/${PLATFORM}
+        cp ${INSTALLER}/*.txt ${BUILD}/${PLATFORM}
         cp ${INSTALLER}/udig/icons ${BUILD}/${PLATFORM}/icons
+        
+        sed -e "s/VersionXXXX/${VERSION}/g" ${INSTALLER}/uDigInstallScript.nsi > ${BUILD}/${PLATFORM}/uDigInstallScript.nsi
         
         cd ${BUILD}/${PLATFORM}
         makensis "-NOCD" uDigInstallScript.nsi
