@@ -77,6 +77,7 @@ import org.geotools.data.Query;
 import org.geotools.data.ows.Layer;
 import org.geotools.data.ows.Service;
 import org.geotools.data.ows.StyleImpl;
+import org.geotools.data.ows.WMSCapabilities;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.data.wms.request.GetMapRequest;
 import org.geotools.factory.CommonFactoryFinder;
@@ -182,8 +183,15 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
             getContext().setStatus(ILayer.WAIT);
 
             WebMapServer wms = getWMS();
+            
             GetMapRequest request = wms.createGetMapRequest();
-            request.setExceptions(GetMapRequest.EXCEPTION_XML);
+            
+            // put in default exception format we understand as a client
+            // (if suppoted by the server)
+            WMSCapabilities capabilities = wms.getCapabilities();
+            if( capabilities.getRequest().getGetMap().getFormats().contains(GetMapRequest.EXCEPTION_XML) ){
+                request.setExceptions(GetMapRequest.EXCEPTION_XML);
+            }
             setImageFormat(wms, request);
 
             if (monitor.isCanceled())
@@ -251,7 +259,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
 //            viewport = new ReferencedEnvelope(viewportBBox, viewportCRS);
 //            requestBBox = calculateRequestBBox(wmsLayers, viewport, requestCRS);
             
-            requestBBox = calculateRequestBBox(wmsLayers, bounds, requestCRS, wms.getCapabilities().getVersion() );
+            requestBBox = calculateRequestBBox(wmsLayers, bounds, requestCRS, capabilities.getVersion() );
 
             // check that a request is needed (not out of a bounds, invalid, etc)
             if (requestBBox == NILL_BOX) {
@@ -274,7 +282,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
                 WMSPlugin.trace("Backprojected request bounds: " + backprojectedBBox); //$NON-NLS-1$
             }
 
-            Service wmsService = wms.getCapabilities().getService();
+            Service wmsService = capabilities.getService();
             Dimension maxDimensions = new Dimension(wmsService.getMaxWidth(), wmsService
                     .getMaxHeight());
 //            Dimension imageDimensions = calculateImageDimensions(getContext().getMapDisplay()
