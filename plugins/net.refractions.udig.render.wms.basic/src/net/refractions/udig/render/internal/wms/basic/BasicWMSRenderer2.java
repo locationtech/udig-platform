@@ -3,15 +3,10 @@
  *    http://udig.refractions.net
  *    (C) 2004, Refractions Research Inc.
  *
- *    This library is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU Lesser General Public
- *    License as published by the Free Software Foundation;
- *    version 2.1 of the License.
- *
- *    This library is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *    Lesser General Public License for more details.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
 package net.refractions.udig.render.internal.wms.basic;
@@ -296,7 +291,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
             // epsg could be under identifiers or authority.
             Set<ReferenceIdentifier> identifiers = requestCRS.getIdentifiers();
             String srs = identifiers.isEmpty() ? EPSG_4326 : identifiers.iterator().next().toString();            
-            request.setSRS(EPSG_4326);
+            request.setSRS(srs); // EPSG_4326
             request.setBBox( requestBBox );
             // request.setBBox(requestBBox.getMinX() + "," + requestBBox.getMinY()+ "," + requestBBox.getMaxX()+ "," + requestBBox.getMaxY());
             

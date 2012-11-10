@@ -7,16 +7,12 @@
  *      http://www.axios.es 
  *
  * (C) 2006, Diputación Foral de Gipuzkoa, Ordenación Territorial (DFG-OT). 
- * DFG-OT agree to license under Lesser General Public License (LGPL).
+ * DFG-OT agrees to licence under Lesser General Public License (LGPL).
  * 
- * You can redistribute it and/or modify it under the terms of the 
- * GNU Lesser General Public License as published by the Free Software 
- * Foundation; version 2.1 of the License.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
+ * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
 package eu.udig.tools.internal.mediator;
 

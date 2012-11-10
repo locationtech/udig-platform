@@ -3,15 +3,10 @@
  *    http://udig.refractions.net
  *    (C) 2012, Refractions Research Inc.
  *
- *    This library is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU Lesser General Public
- *    License as published by the Free Software Foundation;
- *    version 2.1 of the License.
- *
- *    This library is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *    Lesser General Public License for more details.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package net.refractions.udig.tool.info.internal;
 
@@ -47,6 +42,7 @@ import org.geotools.data.wms.request.GetMapRequest;
 import org.geotools.data.wms.response.GetFeatureInfoResponse;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.metadata.Identifier;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
@@ -205,6 +201,9 @@ public class WMSDescribeLayer {
                 Collections.singletonList( wmslayer ), map.getViewportModel().getCRS(), map );
 
         getmap.setBBox( bbox );
+        String srs = CRS.toSRS(bbox.getCoordinateReferenceSystem() );
+        //getmap.setSRS( code != null ? code : srs );
+        
         getmap.setProperty( GetMapRequest.LAYERS, wmslayer.getName() );
         int width = map.getRenderManager().getMapDisplay().getWidth();
         int height = map.getRenderManager().getMapDisplay().getHeight();
