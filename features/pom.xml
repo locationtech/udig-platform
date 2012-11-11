@@ -27,13 +27,6 @@
                 <module>net.refractions.udig-site.community</module>
              </modules>
         </profile>
-
-        <profile>
-            <id>ossim</id>
-            <modules>
-                <module>org.ossim-feature</module>
-             </modules>
-        </profile>
         
         <profile>
             <id>sdk</id>
