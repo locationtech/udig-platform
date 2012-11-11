@@ -13,13 +13,12 @@ depend on some &quot;test&quot; plugins that are not are not included in
 the Babel downloads.
    </description>
 
-   <copyright>
-      (c) 2010 udig.refractions.net
+   <copyright url="http://www.eclipse.org/eclipse">
+      (c) Copyright Eclipse contributors and others 2000, 2012.  All rights reserved.
    </copyright>
 
-   <license url="Eclipse Public License (EPL): The fundamental license document for the Eclipse projects and community.">
-      Eclipse Public License (EPL): The fundamental license document
-for the Eclipse projects and community.
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
+      Eclipse Public License v1.0
    </license>
 
    <url>
