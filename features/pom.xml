@@ -42,7 +42,6 @@
     </profiles>
 
     <modules>
-        <module>eu.udig.teradata-feature</module>
         <module>net.refractions.udig_application-feature</module>
         <module>net.refractions.udig_base-feature</module>
         <module>net.refractions.udig_language-feature</module>

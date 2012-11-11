@@ -39,7 +39,6 @@
 <setEntry value="com.objectaid.uml:default"/>
 <setEntry value="com.wireframesketcher:default"/>
 <setEntry value="edu.umd.cs.findbugs.plugin.eclipse:default"/>
-<setEntry value="eu.udig.teradata-feature:default"/>
 <setEntry value="net.refractions.udig-feature:default"/>
 <setEntry value="net.refractions.udig.extras:default"/>
 <setEntry value="net.refractions.udig.libs.source-feature:default"/>

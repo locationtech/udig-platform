@@ -45,10 +45,6 @@ Lesser General Public License for more details.
          version="0.0.0"/>
 
    <includes
-         id="eu.udig.teradata-feature"
-         version="0.0.0"/>
-
-   <includes
          id="net.refractions.udig_application-feature"
          version="0.0.0"/>
 
