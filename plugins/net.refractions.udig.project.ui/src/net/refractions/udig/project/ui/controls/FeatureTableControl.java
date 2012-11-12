@@ -114,7 +114,7 @@ public class FeatureTableControl {
 
         features = new ArrayList<SimpleFeature>();
 
-        // /features = (DefaultFeatureCollection) DefaultFeatureCollections.newCollection();
+        // /features = (DefaultFeatureCollection) Defaultnew DefaultFeatureCollection();
 
         // initial page
         next();

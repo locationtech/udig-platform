@@ -24,6 +24,7 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.SchemaException;
 import org.opengis.feature.simple.SimpleFeature;
@@ -139,7 +140,9 @@ public abstract class AbstractDatastoreStrategy implements IListStrategy{
     }
 
     public Collection<? extends IIssue> getIssues() throws IOException {
-        return new FeatureCollectionToIssueCollectionAdapter(getFeatures(), getAttributeMapper());
+        DefaultFeatureCollection features = new DefaultFeatureCollection( getFeatures());
+        
+        return new FeatureCollectionToIssueCollectionAdapter( features , getAttributeMapper());
     }
 
     protected FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatures() throws IOException {

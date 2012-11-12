@@ -21,6 +21,7 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
@@ -102,10 +103,9 @@ public class FeatureTextTransfer extends AbstractTextStrategizedTransfer impleme
 	 * @author jeichar
 	 */
 	public static class GMLStrategy implements TransferStrategy {
-		@SuppressWarnings("unchecked") //$NON-NLS-1$
 		public void javaToNative(Object object, TransferData transferData) {
 			SimpleFeature feature=(SimpleFeature) object;
-			FeatureCollection<SimpleFeatureType, SimpleFeature> collection = FeatureCollections.newCollection();
+			DefaultFeatureCollection collection = new DefaultFeatureCollection();
 			collection.add(feature);
 			FeatureTransformer transformer=new FeatureTransformer();
 			transformer.setIndentation(4);
@@ -116,11 +116,10 @@ public class FeatureTextTransfer extends AbstractTextStrategizedTransfer impleme
             }
 		}
 
-		@SuppressWarnings("deprecation") 
 		public Object nativeToJava(TransferData transferData) {
             String string = (String) TextTransfer.getInstance().nativeToJava(transferData);
             InputSource input = new InputSource(new StringReader(string));
-            SimpleFeatureCollection collection = FeatureCollections.newCollection();
+            DefaultFeatureCollection collection = new DefaultFeatureCollection();
             GMLReceiver receiver=new GMLReceiver(collection);
             GMLFilterFeature filterFeature = new GMLFilterFeature(receiver);
             GMLFilterGeometry filterGeometry = new GMLFilterGeometry(filterFeature);

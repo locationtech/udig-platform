@@ -611,7 +611,7 @@ public class InfoView2 extends SearchPart {
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
-                    collection.close(iter);
+                    iter.close();
                 }
                 return false;
             }

@@ -23,6 +23,7 @@ import net.refractions.udig.issues.internal.PlaceholderIssue;
 
 import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.XMLMemento;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.feature.simple.SimpleFeature;
@@ -30,16 +31,19 @@ import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Converts a features collection(issues that have been saved as features) to a collection of issues.
+ * <p>
+ * Note a DefaultFeatureCollection is explicitly used inorder to force the contents
+ * into memory (allowing us to use an iterator through memory).
  * 
  * @author Jesse
  * @since 1.1.0
  */
 public class FeatureCollectionToIssueCollectionAdapter extends AbstractCollection<IIssue> implements Collection<IIssue> {
 
-    private FeatureCollection<SimpleFeatureType, SimpleFeature>  features;
+    private DefaultFeatureCollection features;
     private FeatureTypeAttributeMapper mapper;
 
-    public FeatureCollectionToIssueCollectionAdapter( FeatureCollection<SimpleFeatureType, SimpleFeature> features, FeatureTypeAttributeMapper mapper ) {
+    public FeatureCollectionToIssueCollectionAdapter( DefaultFeatureCollection features, FeatureTypeAttributeMapper mapper ) {
         this.features=features;
         this.mapper=mapper;
     }

@@ -14,8 +14,11 @@ import java.util.Iterator;
 import net.refractions.udig.catalog.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.collection.AdaptorFeatureCollection;
+import org.geotools.feature.collection.BaseFeatureCollection;
 import org.geotools.geometry.jts.JTS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -32,9 +35,8 @@ import com.vividsolutions.jts.geom.Geometry;
  * @author Jesse
  * @since 1.1.0
  */
-abstract class AbstractGeometryTransformingFeatureCollection extends AdaptorFeatureCollection {
-
-    private final FeatureCollection<SimpleFeatureType, SimpleFeature> source;
+abstract class AbstractGeometryTransformingFeatureCollection extends BaseFeatureCollection {
+    private final SimpleFeatureCollection source;
     private final SimpleFeatureType schema;
     private final GeometryDescriptor typeToUseAsGeometry;
     private final IProgressMonitor monitor;
@@ -48,9 +50,9 @@ abstract class AbstractGeometryTransformingFeatureCollection extends AdaptorFeat
      * @param mt the math transform to use to transform the geometries from the source projection to the destination projection
      * @param monitor2 progress monitor
      */
-    public AbstractGeometryTransformingFeatureCollection( FeatureCollection<SimpleFeatureType, SimpleFeature> source, SimpleFeatureType schema,
+    public AbstractGeometryTransformingFeatureCollection( SimpleFeatureCollection source, SimpleFeatureType schema,
             GeometryDescriptor typeToUseAsGeometry, MathTransform mt, IProgressMonitor monitor2) {
-        super("transform", schema);
+        super( schema);
         
         this.source=source;
         this.schema=schema;
@@ -60,18 +62,10 @@ abstract class AbstractGeometryTransformingFeatureCollection extends AdaptorFeat
     }
 
     @Override
-    protected void closeIterator( Iterator close ) {
-        source.close(close);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    protected Iterator<SimpleFeature> openIterator() {
-        final Iterator<SimpleFeature> iter=source.iterator();
-        return new Iterator<SimpleFeature>(){
-
+    public SimpleFeatureIterator features() {
+        final SimpleFeatureIterator iter=source.features();
+        return new SimpleFeatureIterator(){
             private SimpleFeature feature;
-
             public boolean hasNext() {
                 while( feature==null ){
                     if ( !iter.hasNext() )
@@ -101,11 +95,10 @@ abstract class AbstractGeometryTransformingFeatureCollection extends AdaptorFeat
                 monitor.worked(1);
                 return tmp;
             }
-
-            public void remove() {
-                iter.remove();
-            }
-            
+            @Override
+            public void close() {
+                iter.close();
+            }            
         };
     }
     

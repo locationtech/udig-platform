@@ -19,8 +19,7 @@ import java.util.Random;
 import net.refractions.udig.project.internal.render.impl.ScaleUtils;
 import net.refractions.udig.tool.edit.tests.TestsPlugin;
 
-import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.feature.FeatureCollections;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.gml.GMLFilterDocument;
 import org.geotools.gml.GMLFilterFeature;
@@ -68,7 +67,7 @@ public class TimingTests {
         InputStreamReader filereader=new InputStreamReader(in);
         
         InputSource input = new InputSource(filereader);
-        SimpleFeatureCollection collection = FeatureCollections.newCollection();
+        DefaultFeatureCollection collection = new DefaultFeatureCollection();
         GMLReceiver receiver=new GMLReceiver(collection);
         GMLFilterFeature filterFeature = new GMLFilterFeature(receiver);
         GMLFilterGeometry filterGeometry = new GMLFilterGeometry(filterFeature);

@@ -18,6 +18,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.FeatureIterator;
@@ -84,7 +85,7 @@ public class KmlUtils {
         
         StreamingParser parser = new StreamingParser(new KMLConfiguration(), inputStream, KML.Placemark);
 
-        FeatureCollection<SimpleFeatureType, SimpleFeature> newCollection = FeatureCollections.newCollection();
+        DefaultFeatureCollection newCollection = new DefaultFeatureCollection();
         int index = 0;
         SimpleFeature f;
         DefaultGeographicCRS crs = DefaultGeographicCRS.WGS84;
@@ -124,7 +125,7 @@ public class KmlUtils {
         CoordinateReferenceSystem crs = featureCollection.getSchema().getCoordinateReferenceSystem();
         MathTransform mtrans = CRS.findMathTransform(crs, epsg4326, true);
 
-        FeatureCollection<SimpleFeatureType, SimpleFeature> newCollection = FeatureCollections.newCollection();
+        DefaultFeatureCollection newCollection = new DefaultFeatureCollection();
         FeatureIterator<SimpleFeature> featuresIterator = featureCollection.features();
         while( featuresIterator.hasNext() ) {
             SimpleFeature f = featuresIterator.next();

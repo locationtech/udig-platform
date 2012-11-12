@@ -9,14 +9,13 @@
  */
 package net.refractions.udig.catalog.ui.export;
 
-import java.util.Iterator;
-
 import net.refractions.udig.catalog.ui.internal.Messages;
 import net.refractions.udig.ui.ProgressFeatureCollection;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureIterator;
 import org.geotools.geometry.jts.JTS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -49,7 +48,7 @@ public class ReprojectingFeatureCollection extends ProgressFeatureCollection
      * type declares the projection <em>after</em> the transformation.
      * @param mt
      */
-    public ReprojectingFeatureCollection( FeatureCollection<SimpleFeatureType, SimpleFeature> delegate, IProgressMonitor monitor, 
+    public ReprojectingFeatureCollection( SimpleFeatureCollection delegate, IProgressMonitor monitor, 
             SimpleFeatureType SimplefeatureType, MathTransform mt ) {
         super(delegate, monitor);
         this.mt=mt;
@@ -57,12 +56,16 @@ public class ReprojectingFeatureCollection extends ProgressFeatureCollection
     }
     
     @Override
-    protected Iterator<SimpleFeature> openIterator() {
-        final FeatureIterator<SimpleFeature> iterator = delegate.features();
-        return new Iterator<SimpleFeature>(){
-
+    public SimpleFeatureIterator features() {
+        final SimpleFeatureIterator iterator = delegate.features();
+        
+        if( size == -1 ){
+            size = delegate.size();
+            monitor.beginTask(delegate.getID(), size );
+        }
+        return new SimpleFeatureIterator(){
+            int index = 0;
             private FeatureWrapper feature;
-
             public boolean hasNext() {
                 while( feature == null ) {
                     if( !iterator.hasNext() )
@@ -72,35 +75,36 @@ public class ReprojectingFeatureCollection extends ProgressFeatureCollection
                         continue;
                     Geometry geometry = (Geometry) next.getDefaultGeometry();
                     if( geometry!=null ){
-	                    try {
-	                        geometry = JTS.transform(geometry, mt);
-	                    } catch (TransformException e) {
-	                        throw (RuntimeException) new RuntimeException(
-	                                Messages.ReprojectingFeatureCollection_transformationError + next.getID()).initCause(e);
-	                    }
+                            try {
+                                geometry = JTS.transform(geometry, mt);
+                            } catch (TransformException e) {
+                                throw (RuntimeException) new RuntimeException(
+                                        Messages.ReprojectingFeatureCollection_transformationError + next.getID()).initCause(e);
+                            }
                     }
                     GeometryDescriptor defaultGeometry2 = featureType.getGeometryDescriptor();
                     Name name = defaultGeometry2.getName();
                     String localPart = name.getLocalPart();
                     feature = new FeatureWrapper(next, featureType, new Geometry[]{geometry}, 
-                    		new String[]{ localPart});
+                                new String[]{ localPart});
                 }
                 return feature!=null;
             }
-
             public SimpleFeature next() {
-                monitor.worked(1);
+                index++;
+                if( index > progress){
+                    progress = index;
+                    monitor.worked(1);
+                }
                 FeatureWrapper tmp = feature;
                 feature=null;
                 return tmp;
             }
-
-            public void remove() {
-                iterator.next();
-            }
-            
+            public void close() {
+                monitor.done();
+                iterator.close();                
+            }            
         };
     }
-
 
 }

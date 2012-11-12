@@ -141,7 +141,7 @@ final class TrimFeaturesCommand extends AbstractCommand implements UndoableMapCo
 						}
 					}
 				} finally {
-					featuresToTrim.close(iterator);
+				    iterator.close();
 				}
 
 				if (!fidNotTrimmed.equals("")) { //$NON-NLS-1$

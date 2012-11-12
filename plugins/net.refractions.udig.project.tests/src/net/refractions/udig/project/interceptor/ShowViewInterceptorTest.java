@@ -33,6 +33,7 @@ import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -40,6 +41,7 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
+import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.Id;
 
 /**
@@ -57,6 +59,16 @@ public class ShowViewInterceptorTest {
     private SimpleFeature f;
     private Layer layer2;
 
+    SimpleFeature sample( FeatureCollection<SimpleFeatureType, SimpleFeature> featureCollection  ) throws IOException {
+        FeatureIterator<SimpleFeature> iterator = featureCollection.features();
+        try {
+            return (SimpleFeature) iterator.next();
+        }
+        finally {
+            iterator.close();
+        }
+    }
+    
     @Before
     public void setUp() throws Exception {
         map = MapTests.createDefaultMap("type1", 5, true, null); //$NON-NLS-1$
@@ -64,13 +76,10 @@ public class ShowViewInterceptorTest {
         layer2 = map.getLayerFactory().createLayer(
                 CatalogTests.createGeoResource("type2", 3, true)); //$NON-NLS-1$
         map.getLayersInternal().add(layer2);
-        featureSource = layer.getResource(FeatureSource.class,
-                new NullProgressMonitor());
-        f = (SimpleFeature) featureSource.getFeatures().iterator().next();
-        FilterFactory filterFactory = CommonFactoryFinder
-                .getFilterFactory(GeoTools.getDefaultHints());
-        filter = filterFactory.id(FeatureUtils.stringToId(filterFactory, f
-                .getID()));
+        featureSource = layer.getResource(FeatureSource.class,new NullProgressMonitor());
+        f = sample( featureSource.getFeatures() );
+        FilterFactory2 filterFactory = CommonFactoryFinder.getFilterFactory2();
+        filter = filterFactory.id(f.getIdentifier());
     }
 
     /**
@@ -83,7 +92,8 @@ public class ShowViewInterceptorTest {
         layer.getStyleBlackboard().put(ShowViewInterceptor.KEY, filter);
 
         FeatureCollection<SimpleFeatureType, SimpleFeature>  features = assertFilter(layer, 1);
-        assertEquals(f, features.iterator().next());
+        
+        assertEquals(f, sample( features ) );
         assertFilter(layer2, 3);
 
         layer.getStyleBlackboard().clear();
@@ -102,7 +112,7 @@ public class ShowViewInterceptorTest {
         layer.getBlackboard().put(ShowViewInterceptor.KEY, filter);
 
         FeatureCollection<SimpleFeatureType, SimpleFeature>  features = assertFilter(layer, 1);
-        assertEquals(f, features.iterator().next());
+        assertEquals(f, sample( features ));
         assertFilter(layer2, 3);
 
         layer.getStyleBlackboard().clear();
@@ -132,7 +142,7 @@ public class ShowViewInterceptorTest {
                 new DefaultQuery(f.getFeatureType().getTypeName(), filter));
 
         FeatureCollection<SimpleFeatureType, SimpleFeature>  features = assertFilter(layer, 1);
-        assertEquals(f, features.iterator().next());
+        assertEquals(f, sample( features ) );
         assertFilter(layer2, 3);
         
         layer.getStyleBlackboard().clear();
@@ -152,7 +162,7 @@ public class ShowViewInterceptorTest {
                 new DefaultQuery(f.getFeatureType().getTypeName(), filter));
 
         FeatureCollection<SimpleFeatureType, SimpleFeature>  features = assertFilter(layer, 1);
-        assertEquals(f, features.iterator().next());
+        assertEquals(f, sample( features));
         assertFilter(layer2, 3);
 
         layer.getStyleBlackboard().clear();

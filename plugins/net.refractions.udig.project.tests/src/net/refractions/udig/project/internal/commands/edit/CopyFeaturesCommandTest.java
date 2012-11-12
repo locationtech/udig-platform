@@ -544,8 +544,14 @@ public class CopyFeaturesCommandTest {
         assertEquals(targetType, addedFeature.getFeatureType());
         
         action.rollback(new NullProgressMonitor());
-        
-        assertFalse( featureSource.getFeatures(filter).iterator().hasNext() );
+        FeatureCollection<SimpleFeatureType, SimpleFeature> collection = featureSource.getFeatures(filter);
+        FeatureIterator<SimpleFeature> iter = collection.features();
+        try {
+            assertFalse( iter.hasNext() );
+        }
+        finally {
+            iter.close();
+        }
         assertEquals(Filter.EXCLUDE, layer.getFilter());
         
     }

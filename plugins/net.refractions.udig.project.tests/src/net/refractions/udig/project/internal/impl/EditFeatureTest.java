@@ -76,7 +76,7 @@ public class EditFeatureTest extends AbstractProjectTestCase {
         FeatureCollection<SimpleFeatureType, SimpleFeature> collection=store.getFeatures(fac.id(FeatureUtils.stringToId(fac, features[1].getID())));
         FeatureIterator<SimpleFeature> iter = collection.features();
         assertEquals(ORIGINAL_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);
+        iter.close();
         store.modifyFeatures(store.getSchema().getDescriptor(1), MODIFIED_VALUE, fac.id(FeatureUtils.stringToId(fac, features[1].getID()) )); 
 
         //not committed so other featurestores should not get modified value
@@ -85,13 +85,13 @@ public class EditFeatureTest extends AbstractProjectTestCase {
         
         iter = collection.features();
         assertEquals(ORIGINAL_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);
+        iter.close();
         
         //layer featureStore has transactions so should have new value
         collection=store.getFeatures(fac.id(FeatureUtils.stringToId(fac, features[1].getID()))); 
         iter = collection.features();
         assertEquals(MODIFIED_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);
+        iter.close();
 
         //Create and send a commit command 
         map.sendCommandSync(EditCommandFactory.getInstance().createCommitCommand());
@@ -100,7 +100,7 @@ public class EditFeatureTest extends AbstractProjectTestCase {
         collection=dsSource.getFeatures(fac.id(FeatureUtils.stringToId(fac, features[1].getID())));
         iter = collection.features();
         assertEquals(MODIFIED_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);   
+        iter.close();   
     }
     
     @Ignore
@@ -112,7 +112,7 @@ public class EditFeatureTest extends AbstractProjectTestCase {
         FeatureCollection<SimpleFeatureType, SimpleFeature> collection=store.getFeatures(fac.id(FeatureUtils.stringToId(fac, id)));
         FeatureIterator<SimpleFeature> iter = collection.features();
         assertEquals(ORIGINAL_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);
+        iter.close();
         store.modifyFeatures(store.getSchema().getDescriptor(1), MODIFIED_VALUE, fac.id(FeatureUtils.stringToId(fac, id)) ); 
 
         //not committed so other featurestores should not get modified value
@@ -120,13 +120,13 @@ public class EditFeatureTest extends AbstractProjectTestCase {
         collection=dsSource.getFeatures(fac.id(FeatureUtils.stringToId(fac, id))); 
         iter = collection.features();
         assertEquals(ORIGINAL_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);
+        iter.close();
         
         //layer featureStore has transactions so should have new value
         collection=store.getFeatures(fac.id(FeatureUtils.stringToId(fac, id))); 
         iter = collection.features();
         assertEquals(MODIFIED_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);
+        iter.close();
 
         //Create and send a commit command 
         map.sendCommandSync(EditCommandFactory.getInstance().createRollbackCommand());
@@ -135,7 +135,7 @@ public class EditFeatureTest extends AbstractProjectTestCase {
         collection=store.getFeatures(fac.id(FeatureUtils.stringToId(fac, id))); 
         iter = collection.features();
         assertEquals(ORIGINAL_VALUE, iter.next().getAttribute(1));
-        collection.close(iter);   
+        iter.close();   
     }
 
 }

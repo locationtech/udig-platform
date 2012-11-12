@@ -35,6 +35,7 @@ import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.opengis.feature.simple.SimpleFeature;
@@ -195,7 +196,7 @@ public final class LayerUtil {
 					.instance().get());
 
 		if (source == null) {
-			return FeatureCollections.newCollection();
+			return new DefaultFeatureCollection();
 		}
 
 		FeatureCollection<SimpleFeatureType, SimpleFeature> features;
