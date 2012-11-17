@@ -33,7 +33,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <geotools.version>9-SNAPSHOT</geotools.version>
+        <geotools.version>9.0-M0</geotools.version>
         <imageio-ext.version>1.1.5</imageio-ext.version>
         <jfreechart.version>1.0.13</jfreechart.version>
         <jt.version>1.3.0</jt.version>
