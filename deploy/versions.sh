@@ -9,7 +9,7 @@ export INSTALLER="${BASE}/installer"
 #export TARGET=${BASE}/target
 #export TARGET=${BASE}/../features/net.refractions.udig-product/target/products/
 export SERIES=1.3
-export VERSION=1.3.3-SNAPSHOT
+export VERSION=1.3.3
 export BUILD="${BASE}/build"
 
 # Tycho Build
