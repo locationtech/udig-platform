@@ -34,7 +34,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.WorkbenchAdvisor;
-import org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory;
 import org.osgi.framework.Bundle;
 
 /**
@@ -148,7 +147,8 @@ public class UDIGApplication implements IApplication {
         
         return EXIT_OK;
     }
-
+    /** Used to supress feedback during load */
+    boolean quiet = true; 
     /**
      * We have a couple things that need to happen
      * before the workbench is opened. The org.eclipse.ui.startup
@@ -167,7 +167,7 @@ public class UDIGApplication implements IApplication {
         // We should kick the libs plugin to load the EPSG database now
         File epsgFile = Activator.epsgDatabaseFile();
         boolean unpacked = epsgFile != null && epsgFile.exists();
-        if( unpacked ){
+        if( unpacked || quiet){
             // if there is not going to be a long delay don't annoy users with a dialog
             Activator.initializeReferencingModule( null );
         }
