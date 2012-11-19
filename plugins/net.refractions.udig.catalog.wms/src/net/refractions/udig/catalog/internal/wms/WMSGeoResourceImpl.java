@@ -458,8 +458,12 @@ public class WMSGeoResourceImpl extends IGeoResource {
         try {
             ImageDescriptor imageDescriptor;
             request.setFormat(desiredFormat);
-
-            request.setStyle(""); //$NON-NLS-1$
+            if( wms.getCapabilities().getVersion().startsWith("1.3") ){
+                // NO STYLE as it is optional
+            }
+            else {
+                request.setStyle(""); //$NON-NLS-1$
+            }
 
             System.out.println(request.getFinalURL().toExternalForm());
 

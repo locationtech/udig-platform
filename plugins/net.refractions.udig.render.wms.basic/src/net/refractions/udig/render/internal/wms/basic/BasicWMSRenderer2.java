@@ -110,6 +110,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
 
     private static final String REFRESH_JOB = Messages.BasicWMSRenderer2_refreshJob_title;
     private static final String EPSG_4326 = "EPSG:4326"; //$NON-NLS-1$
+    private static final String CRS_84 = "CRS:84"; //$NON-NLS-1$
     private static final String EPSG_4269 = "EPSG:4269"; //$NON-NLS-1$
     private static final ReferencedEnvelope NILL_BOX = new ReferencedEnvelope(0, 0, 0, 0,
             DefaultGeographicCRS.WGS84);
@@ -231,7 +232,11 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
             }
             
             // figure out request CRS
-            String requestCRScode = findRequestCRS(wmsLayers, getViewportCRS(), getContext().getMap());
+            CoordinateReferenceSystem viewportCRS = getViewportCRS();
+            IMap map = getContext().getMap();
+            
+            String requestCRScode = findRequestCRS(wmsLayers, viewportCRS, map);
+            
             // TODO: make findRequestCRS more efficient (we are running CRS.decode at *least* twice)
             CoordinateReferenceSystem requestCRS = CRS.decode(requestCRScode);
 
@@ -263,14 +268,14 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
             }
             assert requestBBox.getCoordinateReferenceSystem().equals(requestCRS);
 
-            if (requestBBox.getCoordinateReferenceSystem().equals(getViewportCRS())) {
+            if (requestBBox.getCoordinateReferenceSystem().equals(viewportCRS)) {
                 backprojectedBBox = (Envelope) requestBBox;
             } else {
-                backprojectedBBox = (Envelope) requestBBox.transform(getViewportCRS(), true);
+                backprojectedBBox = (Envelope) requestBBox.transform(viewportCRS, true);
             }
 
             if (WMSPlugin.isDebugging(Trace.RENDER)) {
-                WMSPlugin.trace("Viewport CRS: " + getViewportCRS().getName()); //$NON-NLS-1$
+                WMSPlugin.trace("Viewport CRS: " + viewportCRS.getName()); //$NON-NLS-1$
                 WMSPlugin.trace("Request CRS: " + requestCRS.getName()); //$NON-NLS-1$
                 WMSPlugin.trace("Context Image bounds: " + getContext().getImageBounds()); //$NON-NLS-1$
                 WMSPlugin.trace("Request BBox  bounds: " + requestBBox); //$NON-NLS-1$
@@ -762,15 +767,22 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
         Collection<String> viewportEPSG=extractEPSG(map, viewportCRS);
         if( viewportEPSG!=null ){
             String match=matchEPSG(layers, viewportEPSG);
-            if( match!=null )
+            if( match!=null ){
                 return match;
+            }
         }
         
-        if( matchEPSG(layers, EPSG_4326) )
-            return EPSG_4326;
-
+        if( matchEPSG(layers, CRS_84) ){
+            return CRS_84;    // preferred default
+        }
+        
+        if( matchEPSG(layers, EPSG_4326) ){
+            return EPSG_4326; // recommended from WMS specification
+        }
+        
+        // Why prefer NAD84?
         if ( matchEPSG(layers, EPSG_4269)) {
-            return EPSG_4269;
+            return EPSG_4269; // similar to CRS_84
         }
 
         Layer firstLayer = layers.get(0);
@@ -779,14 +791,16 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
 
             try {
                 // Check to see if *we* can actually use this code first.
-                CRS.decode(epsgCode);
+                CoordinateReferenceSystem check = CRS.decode(epsgCode);
+                if( check == null ) {
+                    continue; // skip this one!
+                }
             } catch (NoSuchAuthorityCodeException e) {
-                continue;
+                continue; // skip this one we do not have an authority for it
             } catch (FactoryException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                e.printStackTrace(); // internal trouble :(
             }
-
+            
             if (matchEPSG(layers, epsgCode)) {
                 requestCRS = epsgCode;
                 return requestCRS;
@@ -811,57 +825,58 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
     }
 
 
-	private static Collection<String> extractEPSG( final IMap map,
-            final CoordinateReferenceSystem crs ) {
-	    
-	    if( CRS.equalsIgnoreMetadata(crs, DefaultGeographicCRS.WGS84)){
-	        return Collections.singleton(EPSG_4326);
-	    }
-        final Collection<String> codes = new HashSet<String>();
+    private static Collection<String> extractEPSG(final IMap map,
+            final CoordinateReferenceSystem crs) {
+
+        final Collection<String> codes = new ArrayList<String>();
+        if (CRS.equalsIgnoreMetadata(crs, DefaultGeographicCRS.WGS84)) {
+            codes.add(CRS_84);
+            codes.add(EPSG_4326);
+            return codes;
+        }        
         codes.addAll(CRSUtil.extractAuthorityCodes(crs));
 
         final String DONT_FIND = "DONT_FIND";
-        boolean search = map.getBlackboard().get(EPSG_CODE)!=DONT_FIND;
+        boolean search = map.getBlackboard().get(EPSG_CODE) != DONT_FIND;
         if (codes.isEmpty() && search) {
-                PlatformGIS.syncInDisplayThread(new Runnable(){
-                    public void run() {
-                        Shell shell = Display.getCurrent().getActiveShell();
+            PlatformGIS.syncInDisplayThread(new Runnable() {
+                public void run() {
+                    Shell shell = Display.getCurrent().getActiveShell();
 
-                        ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
-                            try {
-                                dialog.run(false, true, new IRunnableWithProgress(){
+                    ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
+                    try {
+                        dialog.run(false, true, new IRunnableWithProgress() {
 
-                                    public void run( IProgressMonitor monitor )
-                                            throws InvocationTargetException, InterruptedException {
-                                    CoordinateReferenceSystem found = CRSUtil.findEPSGCode(crs,
-                                            monitor);
-                                    if (found == null) {
-                                        return;
-                                    }
-
-                                    ViewportModel model = (ViewportModel) map.getViewportModel();
-                                    model.eSetDeliver(false);
-                                    try {
-                                        model.setCRS(found);
-                                        codes.addAll(CRSUtil.extractAuthorityCodes(found));
-                                    } finally {
-                                        model.eSetDeliver(true);
-                                    }
+                            public void run(IProgressMonitor monitor)
+                                    throws InvocationTargetException, InterruptedException {
+                                CoordinateReferenceSystem found = CRSUtil
+                                        .findEPSGCode(crs, monitor);
+                                if (found == null) {
+                                    return;
                                 }
 
-                                });
-                            } catch (InvocationTargetException e) {
-                                WMSPlugin.log("Error tracking down EPSG Code", e);
-                                dontFind(map, DONT_FIND);
-                            } catch (InterruptedException e) {
-                                WMSPlugin.log("Error tracking down EPSG Code", e);
-                                dontFind(map, DONT_FIND);
+                                ViewportModel model = (ViewportModel) map.getViewportModel();
+                                model.eSetDeliver(false);
+                                try {
+                                    model.setCRS(found);
+                                    codes.addAll(CRSUtil.extractAuthorityCodes(found));
+                                } finally {
+                                    model.eSetDeliver(true);
+                                }
                             }
+
+                        });
+                    } catch (InvocationTargetException e) {
+                        WMSPlugin.log("Error tracking down EPSG Code", e);
+                        dontFind(map, DONT_FIND);
+                    } catch (InterruptedException e) {
+                        WMSPlugin.log("Error tracking down EPSG Code", e);
                         dontFind(map, DONT_FIND);
                     }
-                });
+                    dontFind(map, DONT_FIND);
+                }
+            });
         }
-
         return codes;
     }
 	
@@ -870,7 +885,13 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
         map.getBlackboard().put(EPSG_CODE,
                 DONT_FIND);
     }
-
+    /**
+     * Quickly check provided layers to ensure they have the provided epsgCode in common.
+     * 
+     * @param layers
+     * @param epsgCode
+     * @return
+     */
     private static boolean matchEPSG(List<Layer> layers, String epsgCode) {
         boolean match = true;
         for (Layer layer : layers) {
