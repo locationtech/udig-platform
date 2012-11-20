@@ -85,15 +85,19 @@ function prepare_resources () {
 
         chmod 755 "${PLATFORMCONTENT}/udig/udig_internal.app/Contents/MacOS/udig_internal"
         mv "${PLATFORMCONTENT}/udig/udig_internal.app" "${PLATFORMCONTENT}/udig/udig.app"
+        
+        # add in -data ~/udig-workspace to Info.plist
+        sed -e "s/\<\string\>-showlocation\<\/string\>/<\string\>-showlocation\<\/string\>\<string\>-data<\/string>\\<string\>~\/udig-workspace\<\/string\>/g" "${PLATFORMCONTENT}/udig/udig.app/Contents/Info.plist" > "${PLATFORMCONTENT}/udig/udig.app/Contents/Info2.plist"
+        rm "${PLATFORMCONTENT}/udig/udig.app/Contents/Info.plist"
+        mv "${PLATFORMCONTENT}/udig/udig.app/Contents/Info2.plist" "${PLATFORMCONTENT}/udig/udig.app/Contents/Info.plist"
+        
         rm "${PLATFORMCONTENT}/udig/udig_internal"
         ln -s "${PLATFORMCONTENT}/udig/udig.app/Contents/MacOS/udig_internal" "${PLATFORMCONTENT}/udig/udig"
         cp "${HERE}/mac-udig-clean.sh" "${PLATFORMCONTENT}/udig/udig-clean.sh"
         cp "${HERE}/mac-udig-debug.sh" "${PLATFORMCONTENT}/udig/udig-debug.sh"
         mv "${PLATFORMCONTENT}/udig/.options" "${PLATFORMCONTENT}/udig/udig.app/Contents/MacOS/"
         
-        # if [[ PLATFORM == mac64 ]] ; then # only 64 is working right now
-            make_dmg
-        #fi
+        make_dmg
     fi
 }
 
