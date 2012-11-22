@@ -30,10 +30,27 @@ Feature Hotlinks:
 
 .. figure:: /images/document_view/DocumentView.png
    :align: center
-   :alt: 
+   :alt:
    :figwidth: 80%
-      
+
 For more information, check out the Tasks section on :doc:`Working with Documents`.
+
+
+Graticule
+==========
+
+A new Graticule map decoration has been added.
+
+It is also possible to overlay grids in different coordinate systems:
+
+.. figure:: images/graticule_decoration/graticule.png
+  :align: center
+  :alt:
+
+And here the tasks that can get you started with the graticule:
+
+* :doc:`Add new Graticule`
+* :doc:`Add multiple Graticules with different CRS`
 
 New Property Pages
 ==================
@@ -49,7 +66,7 @@ New Property Pages
    :align: center
    :alt:
    :figwidth: 80%
-   
+
 SLD 1.1
 =======
 
@@ -74,7 +91,7 @@ dynamic assistance and function lookup while you type.
 To access this functionality:
 
 - Constrain the data made avaialble to a layer using the :guilabel:`Query` page (accessed via layer properties).
-- To quickly limit just the map display use the :guilabel:`Filter` page of the :doc:`Style Editor dialog`. 
+- To quickly limit just the map display use the :guilabel:`Filter` page of the :doc:`Style Editor dialog`.
 - Process your data using CQL Expressions using the :doc:`Transform dialog`
 
 Transform Dialog
@@ -97,29 +114,12 @@ We now support the concept of :doc:`Area of Interest`:
    current projection
 -  You can use Area of Interest to:
 
-   -  Quickly filter a layer using the :guilabel:`Filter` page of the :doc:`Style Editor dialog`. 
+   -  Quickly filter a layer using the :guilabel:`Filter` page of the :doc:`Style Editor dialog`.
    -  Quickly filter the contents of the :doc:`Table view`
    -  Define the area searched in the :doc:`Search view`
    -  Set the extent used by :guilabel:`Show All`
 
 For more information check out the Tasks section on :doc:`Working with AOI`
-
-Graticule
-==========
-
-A new Graticule map decoration has been added.
-
-It is also possible to overlay grids in different coordinate systems:
-
-.. figure:: images/graticule_decoration/graticule.png
-  :align: center
-  :alt:
-
-And here the tasks that can get you started with the graticule:
-
-* :doc:`Add new Graticule`
-* :doc:`Add multiple Graticules with different CRS`
-
 
 Tool Interaction
 ================
@@ -140,7 +140,7 @@ Tools have gotten a major usability improvement featuring:
    |image0|
 
    By default the Palette is displayed along side your Map; you can also Choose :menuselection:`Show View --> Other`
-   and Open the Palette on its own as a tear off View. This is great for users with more than one monitor or when 
+   and Open the Palette on its own as a tear off View. This is great for users with more than one monitor or when
    you have multiple maps open side by side. This is the same Palette used during Page printing.
 
 -  **ToolOptions** - quick access to common tool preferences from the Map Status Line. This has
@@ -148,7 +148,7 @@ Tools have gotten a major usability improvement featuring:
 
    |image1|
 
-   These change combine to make uDig even more User-friendly with a presentation of tools similar to 
+   These change combine to make uDig even more User-friendly with a presentation of tools similar to
    a paint program.
 
 Cheatsheets
