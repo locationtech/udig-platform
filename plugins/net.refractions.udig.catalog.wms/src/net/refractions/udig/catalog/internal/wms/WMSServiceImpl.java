@@ -379,7 +379,7 @@ public class WMSServiceImpl extends IService {
 
         public GetMapResponse issueRequest( GetMapRequest arg0 ) throws IOException,
                 ServiceException {
-            WmsPlugin.log("GetMap: " + arg0.getFinalURL(), null); //$NON-NLS-1$
+            WmsPlugin.trace("GetMap: " + arg0.getFinalURL(), null); //$NON-NLS-1$
             return super.issueRequest(arg0);
         }
 
