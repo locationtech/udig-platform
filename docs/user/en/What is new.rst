@@ -104,6 +104,23 @@ We now support the concept of :doc:`Area of Interest`:
 
 For more information check out the Tasks section on :doc:`Working with AOI`
 
+Graticule
+==========
+
+A new Graticule map decoration has been added.
+
+It is also possible to overlay grids in different coordinate systems:
+
+.. figure:: images/graticule_decoration/graticule.png
+  :align: center
+  :alt:
+
+And here the tasks that can get you started with the graticule:
+
+* :doc:`Add new Graticule`
+* :doc:`Add multiple Graticules with different CRS`
+
+
 Tool Interaction
 ================
 
