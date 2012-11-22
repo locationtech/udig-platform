@@ -7,16 +7,16 @@ We will also make use of some of the more interesting selection features.
 * Start uDig, from the menubar select :menuselection:`File --> New Map` to create a new map.
 
 * Make sure your local GeoServer is started and ready to go.
-   
+
    You can run GeoServer from the Start menu.
- 
+
   .. image:: images/10000000000000E60000008785B4FD09.png
     :width: 3.889cm
     :height: 2.281cm
 
 * Navigate to the GeoServer **Welcome** page: `http://localhost:8080/geoserver/ <http://localhost:8080/geoserver/>`_
 
-* Drag and Drop the :guilabel:`WMS 1.1.1 Capabilities` link on to your Map.
+* Drag and Drop the :guilabel:`WMS 1.1.1 Capabilities` link on to your :guilabel:`Layers` view.
 
   .. image:: images/10000000000001F60000022CE8FD80B1.png
     :width: 8.5cm
@@ -24,7 +24,7 @@ We will also make use of some of the more interesting selection features.
 
 * This will bring up the :guilabel:`Add Data` wizard allowing you to choose which Layers
    are added to your map.
-   
+
    Select **Tasmania state boundaries** and **Tasmania cities** and Press the :guilabel:`Finish` button.
 
   .. image:: images/100000000000020D00000268D3218E51.png
@@ -33,7 +33,7 @@ We will also make use of some of the more interesting selection features.
 
 
 * Move **tasmania_cities_Type** to the top of your layers view.
-  
+
   .. image:: images/10000000000000FC00000062A77BE7DE.png
     :width: 3.66cm
     :height: 1.42cm
@@ -47,7 +47,7 @@ We will also make use of some of the more interesting selection features.
 
 
 * This will bring up a Dialog allowing you to choose which Layers you wish to see.
-  
+
   Select **Tasmania roads** and **Tasmania water bodies** and press the :guilabel:`Finish` button.
 
   .. image:: images/100000000000020D000001E47880A046.png
