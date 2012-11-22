@@ -151,6 +151,11 @@ public interface IRenderContext extends IAbstractContext {
     public void clearImage();
 
     /**
+     * Filter returning all the features that need to be rendered.
+     * <p>
+     * This filter will skip over features that are currently being edited
+     * (as they are already displayed as an "edit geometry" by the EditManger).
+     * 
      * @return The filter that will return all the features that need to be rendered
      */
     public Query getFeatureQuery();

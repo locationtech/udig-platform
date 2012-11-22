@@ -342,7 +342,11 @@ public class RenderContextImpl extends AbstractContextImpl implements RenderCont
         } catch (IllegalFilterException e) {
             return query;
         }
-        return new Query( query.getTypeName(), query.getNamespace(), newFilter, query.getMaxFeatures(), query.getPropertyNames(), query.getHandle());
+        // return new Query( query.getTypeName(), query.getNamespace(), newFilter, query.getMaxFeatures(), query.getPropertyNames(), query.getHandle());
+        // Use copy constructor to allow for Query API to change over time
+        Query newQuery = new Query( query );
+        newQuery.setFilter( newFilter );
+        return newQuery;
     }
 
     public synchronized void clearImage( Rectangle paintArea ) {

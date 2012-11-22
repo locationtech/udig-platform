@@ -1017,17 +1017,20 @@ public class LayerImpl extends EObjectImpl implements Layer {
      */
     public Query getQuery( boolean selection ) {
         try {
-            if (selection)
-                return new DefaultQuery(getSchema().getName().getLocalPart(), getFilter());
-            else
+            if (selection){
+                return new Query( getSchema().getName().getLocalPart(), getFilter());
+            }
+            else {
                 return Query.ALL;
+            }
         } catch (Exception e) {
             if (selection) {
-                DefaultQuery q = new DefaultQuery();
+                Query q = new Query();
                 q.setFilter(Filter.EXCLUDE);
                 return q;
-            } else
+            } else {
                 return Query.ALL;
+            }
         }
     }
 

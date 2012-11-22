@@ -31,6 +31,7 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
+import org.opengis.filter.FilterFactory2;
 
 /**
  * Sets the current editable SimpleFeature
@@ -125,13 +126,12 @@ UndoableMapCommand{
                 editManager.setEditFeature(feature, layer);
                 oldSelection=(Filter) layer.getFilter();
                 Filter filter;
-                if( feature==null )
-                    filter=(Filter) Filter.EXCLUDE;
-				else {
-					FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-					filter = filterFactory.id(
-                    		FeatureUtils.stringToId(filterFactory, feature.getID()));
-				}
+                if (feature == null) {
+                    filter = (Filter) Filter.EXCLUDE;
+                } else {
+                    FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
+                    filter = ff.id(feature.getIdentifier());
+                }
                 layer.setFilter(filter);
             }
         }
@@ -152,8 +152,9 @@ UndoableMapCommand{
     }
 
     public void rollback( IProgressMonitor monitor ) throws Exception {
-        if( layer!=null )
+        if( layer!=null ){
             layer.setFilter(oldSelection);
+        }
         editManager.setEditFeature(oldEditVictim, oldEditLayer);
     }
 

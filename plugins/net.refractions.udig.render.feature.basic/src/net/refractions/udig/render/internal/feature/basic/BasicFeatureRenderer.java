@@ -168,11 +168,11 @@ public class BasicFeatureRenderer extends RendererImpl {
         // Original Query provided by Layer.getFilter() as adjusted by selection and edit filter
         Query query = getContext().getFeatureQuery();
         if( styleBlackboard.contains(ProjectBlackboardConstants.LAYER__STYLE_FILTER)){
+            if( query == null ){
+                query = new Query( schema.getTypeName() );
+            }
             // Additional Filter provided as Style used to reduce onscreen clutter
             FilterStyle filterStyle = (FilterStyle) styleBlackboard.get(ProjectBlackboardConstants.LAYER__STYLE_FILTER);
-            query = new Query();
-            query.setTypeName(schema.getTypeName());
-            
             Filter styleFilter = filterStyle.toFilter(schema);
             if( styleFilter != Filter.INCLUDE ){
                 Filter queryFilter = query.getFilter();
@@ -192,8 +192,7 @@ public class BasicFeatureRenderer extends RendererImpl {
             // need to force the coordinate reference system to match the layer definition
             FeatureLayer featureLayer = new FeatureLayer(featureSource, style, layer.getName()); //$NON-NLS-1$
             if( query == null ){
-                query = new Query();
-                query.setTypeName(schema.getTypeName());
+                query = new Query(schema.getTypeName());
             }
             query.setCoordinateSystem(layerCRS);
             featureLayer.setQuery(query);
@@ -204,7 +203,7 @@ public class BasicFeatureRenderer extends RendererImpl {
             if(queryCRS.equals(layerCRS)){
                 layers[0] = featureLayer;
             } else {
-                // workaround!
+                // workaround 
                 FeatureCollection<SimpleFeatureType, SimpleFeature> reprojectingFc = new ForceCoordinateSystemFeatureResults(
                         features, layerCRS);
                 layers[0] = new FeatureLayer(reprojectingFc, style, layer.getName());
