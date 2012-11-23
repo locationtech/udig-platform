@@ -35,6 +35,19 @@ Feature Hotlinks:
 
 For more information, check out the Tasks section on :doc:`Working with Documents`.
 
+License Change
+==============
+
+The uDig project has changed to a dual BSD / EPL license.
+
+.. figure:: /getting_started/walkthrough1/images/splash.png
+   :align: center
+   :alt:
+   :figwidth: 80%
+
+This license change has enabled the uDig project to
+`apply <http://locationtech.org/proposals/user-friendly-desktop-internet-gis-udig>`_ to the Eclipse Foundation
+`LocationTech <http://locationtech.org>`_ industry working group.
 
 Graticule
 ==========

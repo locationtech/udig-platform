@@ -12,6 +12,6 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.catalog,
  net.refractions.udig.libs,
  net.refractions.udig.catalog.ui
-Export-Package: net.refractions.udig.catalog.internal.shp;x-friends:="net.refractions.udig.project.tests.ui,net.refractions.udig.info,net.refractions.udig.tests.info"
+Export-Package: net.refractions.udig.catalog.internal.shp
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

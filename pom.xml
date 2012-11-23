@@ -137,9 +137,6 @@ Includes the ossim feaure (this may be dead code)
                         <artifactId>tycho-surefire-plugin</artifactId>
                         <version>${tycho-version}</version>
                         <configuration>
-                            <dependency-resolution>
-                                <optionalDependencies>ignore</optionalDependencies>
-                            </dependency-resolution>
                             <systemProperties combine.children="append">
                                 <eclemma.help>true</eclemma.help>
                                 <emma.session.out.file>${emma.session.out.file}</emma.session.out.file>
@@ -214,6 +211,9 @@ Includes the ossim feaure (this may be dead code)
                 <version>${tycho-version}</version>
                 <configuration>
                     <resolver>p2</resolver>
+                    <!--dependency-resolution>
+                        <optionalDependencies>ignore</optionalDependencies>
+                    </dependency-resolution-->
                     <!--pomDependencies>consider</pomDependencies-->
                     <environments>
                         <environment>
