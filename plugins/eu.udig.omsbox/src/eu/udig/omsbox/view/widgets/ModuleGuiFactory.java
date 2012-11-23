@@ -44,8 +44,7 @@ public class ModuleGuiFactory {
             if (isAtLeastOneAssignable(inputData.fieldType, String.class)) {
                 if (inputData.guiHints != null && inputData.guiHints.startsWith(OmsBoxConstants.MULTILINE_UI_HINT)) {
                     handleTextArea(inputData, row, guiElements);
-                }
-                if (inputData.guiHints != null && inputData.guiHints.startsWith(OmsBoxConstants.COMBO_UI_HINT)) {
+                } else if (inputData.guiHints != null && inputData.guiHints.startsWith(OmsBoxConstants.COMBO_UI_HINT)) {
                     handleComboField(inputData, row, guiElements);
                 } else {
                     handleTextField(inputData, row, guiElements);
