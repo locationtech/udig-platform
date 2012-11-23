@@ -211,9 +211,9 @@ Includes the ossim feaure (this may be dead code)
                 <version>${tycho-version}</version>
                 <configuration>
                     <resolver>p2</resolver>
-                    <!--dependency-resolution>
+                    <!dependency-resolution>
                         <optionalDependencies>ignore</optionalDependencies>
-                    </dependency-resolution-->
+                    </dependency-resolution>
                     <!--pomDependencies>consider</pomDependencies-->
                     <environments>
                         <environment>
