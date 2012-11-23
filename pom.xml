@@ -214,6 +214,13 @@ Includes the ossim feaure (this may be dead code)
                     <dependency-resolution>
                         <optionalDependencies>ignore</optionalDependencies>
                     </dependency-resolution>
+                    <filters>
+                       <filter>
+                          <type>eclipse-plugin</type>
+                          <id>org.eclipse.ui.ide</id>
+                          <removeAll/>
+                       </filter>
+                    </filters>
                     <!--pomDependencies>consider</pomDependencies-->
                     <environments>
                         <environment>
