@@ -436,8 +436,17 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
 
     private void addMapMouseListener() {
         final IMap activeMap = ApplicationGIS.getActiveMap();
+        if (activeMap == null) {
+            return;
+        }
         final IRenderManager renderManager = activeMap.getRenderManager();
+        if (renderManager == null) {
+            return;
+        }
         final ViewportPane viewportPane = (ViewportPane) renderManager.getMapDisplay();
+        if (viewportPane == null) {
+            return;
+        }
 
         currentMapMouseListener = new MapMouseListener(){
             public void mouseReleased( MapMouseEvent event ) {
