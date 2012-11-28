@@ -19,16 +19,4 @@
             class="net.refractions.udig.catalog.imageio.internal.GDALFormatProvider">
       </provider>
    </extension>
-   <extension
-         point="org.eclipse.ui.importWizards">
-      <wizard
-            class="net.refractions.udig.catalog.imageio.mosaicwizard.MosaicImportWizard"
-            icon="icons/obj16/worldimage_obj.gif"
-            id="eu.hydrologis.jgrass.dxfdwg.wizard.DxfImportWizard"
-            name="%Import.ImagesAsMosaic">
-         <description>
-            %Import.ImagesAsMosaic.tooltip
-         </description>
-      </wizard>
-   </extension>
 </plugin>
