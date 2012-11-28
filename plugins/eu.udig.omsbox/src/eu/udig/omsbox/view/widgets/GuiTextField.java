@@ -254,6 +254,7 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
                     } else {
                         path = checkBackSlash(path, isFile);
                         text.setText(path);
+                        text.setSelection(text.getCharCount());
                         setDataValue();
                     }
                     OmsBoxPlugin.getDefault().setLastFolderChosen(fileDialog.getFilterPath());
@@ -277,6 +278,7 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
                     } else {
                         path = checkBackSlash(path, isFile);
                         text.setText(path);
+                        text.setSelection(text.getCharCount());
                         setDataValue();
                     }
                     OmsBoxPlugin.getDefault().setLastFolderChosen(directoryDialog.getFilterPath());
