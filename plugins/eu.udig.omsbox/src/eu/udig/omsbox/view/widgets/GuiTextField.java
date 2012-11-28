@@ -629,6 +629,7 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
             insertTextAtCaretPosition(text, map);
         } else {
             text.setText(file.getAbsolutePath());
+            text.setSelection(text.getCharCount());
         }
     }
 
