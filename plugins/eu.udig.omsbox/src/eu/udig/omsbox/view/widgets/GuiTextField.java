@@ -222,6 +222,8 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
             textGD.widthHint = 100;
             text.setLayoutData(textGD);
         }
+        text.addModifyListener(this);
+        text.addFocusListener(this);
         if (data.fieldValue != null) {
             String tmp = data.fieldValue;
 
@@ -240,8 +242,6 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
             text.setText(data.fieldValue);
             text.setSelection(text.getCharCount());
         }
-        text.addModifyListener(this);
-        text.addFocusListener(this);
 
         if (isMultiline) {
             for( int i = 0; i < rows; i++ ) {
@@ -430,10 +430,11 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
 
     public void modifyText( ModifyEvent e ) {
         setDataValue();
+        text.setSelection(text.getCharCount());
     }
 
     public void focusGained( FocusEvent e ) {
-
+        text.setSelection(text.getCharCount());
     }
 
     @Override
