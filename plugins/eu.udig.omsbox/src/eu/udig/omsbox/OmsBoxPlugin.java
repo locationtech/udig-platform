@@ -511,7 +511,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
         if (workingFolder.length() == 0) {
             return null;
         }
-        return workingFolder;
+        return workingFolder + "/";
     }
 
     public void setWorkingFolder( String path ) {
