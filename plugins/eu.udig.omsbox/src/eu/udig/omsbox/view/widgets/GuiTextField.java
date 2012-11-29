@@ -224,6 +224,14 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
         }
         if (data.fieldValue != null) {
             data.fieldValue = checkBackSlash(data.fieldValue, isFile);
+
+            if (isFolder || isFile) {
+                // check if there is a working folder defined
+                String workingFolder = OmsBoxPlugin.getDefault().getWorkingFolder();
+                if (workingFolder != null) {
+                    data.fieldValue = data.fieldValue.replaceFirst(OmsBoxConstants.WORKINGFOLDER, workingFolder);
+                }
+            }
             text.setText(data.fieldValue);
         }
         text.addModifyListener(this);

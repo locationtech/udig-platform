@@ -69,6 +69,7 @@ public class OmsBoxConstants {
     public static final String FOLDERIN_UI_HINT = "infolder";
     public static final String FILEOUT_UI_HINT = "outfile";
     public static final String FOLDEROUT_UI_HINT = "outfolder";
+    public static final String WORKINGFOLDER = "@@@WORKINGFOLDER@@@";
     public static final String FILESPATHLIST_UI_HINT = "filespathlist";
     public static final String CRS_UI_HINT = "crs";
     public static final String COMBO_UI_HINT = "combo";
@@ -87,7 +88,7 @@ public class OmsBoxConstants {
     public static final String PROCESS_XRES_UI_HINT = "process_xres";
     public static final String PROCESS_YRES_UI_HINT = "process_yres";
     public static final String GRASSFILE_UI_HINT = "grassfile";
-    
+
     /**
      * Key used to set and retrieve the grass installation location.
      * 

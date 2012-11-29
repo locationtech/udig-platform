@@ -502,4 +502,16 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
         getDefault().getLog().log(new Status(IStatus.INFO, PLUGIN_ID, message));
     }
 
+    /**
+     * @return the working folder set in the preferences.
+     */
+    public String getWorkingFolder() {
+        IPreferenceStore preferenceStore = OmsBoxPlugin.getDefault().getPreferenceStore();
+        String workingFolder = preferenceStore.getString(OmsBoxConstants.WORKINGFOLDER);
+        if (workingFolder.length() == 0) {
+            return null;
+        }
+        return workingFolder;
+    }
+
 }
