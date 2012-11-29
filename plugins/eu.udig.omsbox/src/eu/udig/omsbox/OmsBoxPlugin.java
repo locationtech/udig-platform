@@ -514,4 +514,9 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
         return workingFolder;
     }
 
+    public void setWorkingFolder( String path ) {
+        IPreferenceStore preferenceStore = OmsBoxPlugin.getDefault().getPreferenceStore();
+        preferenceStore.setValue(OmsBoxConstants.WORKINGFOLDER, path);
+    }
+
 }

@@ -82,17 +82,26 @@ public class SettingsDialog {
             protected Control createDialogArea( Composite parent ) {
                 Composite parentPanel = (Composite) super.createDialogArea(parent);
 
-                final TabFolder tabFolder = new TabFolder(parentPanel, SWT.BORDER);
+                final TabFolder tabFolder = new TabFolder(parentPanel, SWT.NONE);
                 GridData tabFolderGD = new GridData(SWT.FILL, SWT.FILL, true, true);
                 tabFolder.setLayoutData(tabFolderGD);
 
                 TabItem librariesTabItem = new TabItem(tabFolder, SWT.NULL);
-                librariesTabItem.setText("Modules Libraries ");
+                librariesTabItem.setText("General Settings");
                 Composite librariesPanel = new Composite(tabFolder, SWT.NONE);
                 librariesPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
                 librariesPanel.setLayout(new GridLayout(2, true));
-                createTableViewer(librariesPanel);
-                createAddRemoveButtons(librariesPanel);
+
+                createWorkingFolderText(librariesPanel);
+
+                final Group librariesGroup = new Group(librariesPanel, SWT.None);
+                GridData librariesGroupGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+                librariesGroupGD.horizontalSpan = 2;
+                librariesGroup.setLayoutData(librariesGroupGD);
+                librariesGroup.setLayout(new GridLayout(2, false));
+                librariesGroup.setText("Modules Libraries");
+                createTableViewer(librariesGroup);
+                createAddRemoveButtons(librariesGroup);
                 librariesTabItem.setControl(librariesPanel);
 
                 TabItem grassTabItem = new TabItem(tabFolder, SWT.NULL);
@@ -142,9 +151,42 @@ public class SettingsDialog {
         return cancelPressed;
     }
 
+    private void createWorkingFolderText( Composite librariesPanel ) {
+        final Group workingFolderGroup = new Group(librariesPanel, SWT.None);
+        GridData workingFolderGroupGD = new GridData(SWT.FILL, SWT.FILL, true, false);
+        workingFolderGroupGD.horizontalSpan = 2;
+        workingFolderGroup.setLayoutData(workingFolderGroupGD);
+        workingFolderGroup.setLayout(new GridLayout(2, false));
+        workingFolderGroup.setText("Optional Spatial Toolbox Working Folder");
+
+        final Text pathText = new Text(workingFolderGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+        pathText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+        String workingFolder = OmsBoxPlugin.getDefault().getWorkingFolder();
+        if (workingFolder == null) {
+            workingFolder = "";
+        }
+        pathText.setText(workingFolder);
+        pathText.setEditable(false);
+
+        Button browseButton = new Button(workingFolderGroup, SWT.PUSH);
+        browseButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        browseButton.setText("...");
+        browseButton.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter(){
+            public void widgetSelected( org.eclipse.swt.events.SelectionEvent e ) {
+                DirectoryDialog folderDialog = new DirectoryDialog(workingFolderGroup.getShell(), SWT.OPEN);
+                String path = folderDialog.open();
+                if (path != null && path.length() >= 1) {
+                    OmsBoxPlugin.getDefault().setWorkingFolder(path);
+                    pathText.setText(path);
+                }
+            }
+        });
+    }
+
     private void createGrassPanel( Composite grassPanel ) {
 
-        final Group gisbaseGroup = new Group(grassPanel, SWT.BORDER);
+        final Group gisbaseGroup = new Group(grassPanel, SWT.NONE);
         gisbaseGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         gisbaseGroup.setLayout(new GridLayout(2, false));
         gisbaseGroup.setText("Grass Gisbase Path");
@@ -173,7 +215,7 @@ public class SettingsDialog {
             }
         });
 
-        final Group shellGroup = new Group(grassPanel, SWT.BORDER);
+        final Group shellGroup = new Group(grassPanel, SWT.NONE);
         shellGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         shellGroup.setLayout(new GridLayout(2, false));
         shellGroup.setText("Grass Shell");
