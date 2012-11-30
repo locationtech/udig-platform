@@ -209,10 +209,11 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
         parent.setLayout(layout);
 
         if (!isMultiline) {
-            text = new StyledText(parent, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
+            text = new StyledText(parent, SWT.WRAP | SWT.BORDER);
             GridData textGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
             textGD.widthHint = 100;
             text.setLayoutData(textGD);
+            // text.setLineAlignment(0, 1, SWT.RIGHT);
         } else if (isMapcalc) {
             text = MapcalculatorUtils.createMapcalcPanel(parent, rows);
         } else {
