@@ -19,6 +19,8 @@
 package eu.udig.omsbox.view.widgets;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -35,10 +37,12 @@ public class GuiLabel extends ModuleGuiElement {
 
     public int WRAP = 25;
     private org.eclipse.swt.widgets.Label swtlabel;
+    private boolean isBold;
 
-    public GuiLabel( FieldData data, String constraints ) {
+    public GuiLabel( FieldData data, String constraints, boolean isBold ) {
         this.data = data;
         this.constraints = constraints;
+        this.isBold = isBold;
     }
 
     @Override
@@ -46,6 +50,12 @@ public class GuiLabel extends ModuleGuiElement {
         swtlabel = new org.eclipse.swt.widgets.Label(parent, SWT.WRAP | SWT.NONE);
         swtlabel.setLayoutData(constraints);
 
+        if (isBold) {
+            FontData[] fD = swtlabel.getFont().getFontData();
+            fD[0].setStyle(SWT.BOLD);
+            swtlabel.setFont(new Font(parent.getDisplay(), fD[0]));
+        }
+        
         String label = setLabel();
         swtlabel.setText(label);
 

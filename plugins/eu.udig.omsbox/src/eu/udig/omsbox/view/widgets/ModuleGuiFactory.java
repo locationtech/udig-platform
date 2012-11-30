@@ -158,7 +158,14 @@ public class ModuleGuiFactory {
         // sb.append(", growx");
         String labelConstraint = sb.toString();
 
-        GuiLabel label = new GuiLabel(data, labelConstraint);
+        boolean isBold = false;
+        String guiHints = data.guiHints;
+        if (guiHints != null) {
+            if (guiHints.contains(OmsBoxConstants.FILEOUT_UI_HINT) || guiHints.contains(OmsBoxConstants.FOLDEROUT_UI_HINT)) {
+                isBold = true;
+            }
+        }
+        GuiLabel label = new GuiLabel(data, labelConstraint, isBold);
         guiElements.add(label);
 
         sb = new StringBuilder();
@@ -191,7 +198,7 @@ public class ModuleGuiFactory {
         // sb.append(", growx");
         String labelConstraint = sb.toString();
 
-        GuiLabel label = new GuiLabel(data, labelConstraint);
+        GuiLabel label = new GuiLabel(data, labelConstraint, false);
         guiElements.add(label);
 
         String hint = extractSingleGuiHint(OmsBoxConstants.MULTILINE_UI_HINT, data.guiHints);
@@ -228,7 +235,7 @@ public class ModuleGuiFactory {
         // sb.append(", growx");
         String labelConstraint = sb.toString();
 
-        GuiLabel label = new GuiLabel(data, labelConstraint);
+        GuiLabel label = new GuiLabel(data, labelConstraint, false);
         guiElements.add(label);
 
         sb = new StringBuilder();
@@ -261,7 +268,7 @@ public class ModuleGuiFactory {
         // sb.append(", growx");
         String labelConstraint = sb.toString();
 
-        GuiLabel label = new GuiLabel(data, labelConstraint);
+        GuiLabel label = new GuiLabel(data, labelConstraint, false);
         guiElements.add(label);
 
         sb = new StringBuilder();
@@ -293,7 +300,7 @@ public class ModuleGuiFactory {
         // sb.append(", growx");
         String labelConstraint = sb.toString();
 
-        GuiLabel label = new GuiLabel(data, labelConstraint);
+        GuiLabel label = new GuiLabel(data, labelConstraint, false);
         guiElements.add(label);
 
         sb = new StringBuilder();
@@ -326,7 +333,7 @@ public class ModuleGuiFactory {
         // sb.append(", growx");
         String labelConstraint = sb.toString();
 
-        GuiLabel label = new GuiLabel(data, labelConstraint);
+        GuiLabel label = new GuiLabel(data, labelConstraint, false);
         guiElements.add(label);
 
         sb = new StringBuilder();
@@ -358,7 +365,7 @@ public class ModuleGuiFactory {
         // sb.append(", growx");
         String labelConstraint = sb.toString();
 
-        GuiLabel label = new GuiLabel(data, labelConstraint);
+        GuiLabel label = new GuiLabel(data, labelConstraint, false);
         guiElements.add(label);
 
         sb = new StringBuilder();
@@ -391,7 +398,7 @@ public class ModuleGuiFactory {
         // sb.append(", growx");
         String labelConstraint = sb.toString();
 
-        GuiLabel label = new GuiLabel(data, labelConstraint);
+        GuiLabel label = new GuiLabel(data, labelConstraint, false);
         guiElements.add(label);
 
         sb = new StringBuilder();
@@ -424,7 +431,7 @@ public class ModuleGuiFactory {
         // sb.append(", growx");
         String labelConstraint = sb.toString();
 
-        GuiLabel label = new GuiLabel(data, labelConstraint);
+        GuiLabel label = new GuiLabel(data, labelConstraint, false);
         guiElements.add(label);
 
         sb = new StringBuilder();
@@ -456,7 +463,7 @@ public class ModuleGuiFactory {
         sb.append(1);
         String labelConstraint = sb.toString();
 
-        GuiLabel label = new GuiLabel(data, labelConstraint);
+        GuiLabel label = new GuiLabel(data, labelConstraint, false);
         guiElements.add(label);
 
         sb = new StringBuilder();
@@ -487,7 +494,7 @@ public class ModuleGuiFactory {
         sb.append(1);
         String labelConstraint = sb.toString();
 
-        GuiLabel label = new GuiLabel(data, labelConstraint);
+        GuiLabel label = new GuiLabel(data, labelConstraint, false);
         guiElements.add(label);
 
         row[0] = row[0] + 1;
@@ -522,7 +529,7 @@ public class ModuleGuiFactory {
         // sb.append(", growx");
         String labelConstraint = sb.toString();
 
-        GuiLabel label = new GuiLabel(data, labelConstraint);
+        GuiLabel label = new GuiLabel(data, labelConstraint, false);
         guiElements.add(label);
 
         sb = new StringBuilder();
@@ -555,7 +562,7 @@ public class ModuleGuiFactory {
         // sb.append(", growx");
         String labelConstraint = sb.toString();
 
-        GuiLabel label = new GuiLabel(data, labelConstraint);
+        GuiLabel label = new GuiLabel(data, labelConstraint, false);
         guiElements.add(label);
 
         sb = new StringBuilder();
@@ -588,7 +595,7 @@ public class ModuleGuiFactory {
         // sb.append(", growx");
         String labelConstraint = sb.toString();
 
-        GuiLabel label = new GuiLabel(data, labelConstraint);
+        GuiLabel label = new GuiLabel(data, labelConstraint, false);
         guiElements.add(label);
 
         sb = new StringBuilder();
