@@ -11,6 +11,8 @@
 package eu.udig.jconsole.java;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.jface.text.TextAttribute;
@@ -23,20 +25,22 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.rules.WordRule;
 
-import eu.udig.jconsole.jgrasstools.JGrassTools;
+import eu.udig.jconsole.JConsolePlugin;
 import eu.udig.jconsole.util.JavaColorProvider;
 import eu.udig.jconsole.util.JavaWhitespaceDetector;
 import eu.udig.jconsole.util.JavaWordDetector;
+import eu.udig.omsbox.core.FieldData;
+import eu.udig.omsbox.core.ModuleDescription;
 
 /**
  * A Java code scanner.
  */
 public class JavaCodeScanner extends RuleBasedScanner {
 
-    private static String[] fgKeywords = {"println", "abstract", "break", "case", "catch", "class", "continue", "default", "do", "else",
-            "extends", "final", "finally", "for", "if", "implements", "import", "instanceof", "interface", "native", "new",
-            "package", "private", "protected", "public", "return", "static", "super", "switch", "synchronized", "this", "throw",
-            "throws", "transient", "try", "volatile", "while"};
+    private static String[] fgKeywords = {"println", "abstract", "break", "case", "catch", "class", "continue", "default", "do",
+            "else", "extends", "final", "finally", "for", "if", "implements", "import", "instanceof", "interface", "native",
+            "new", "package", "private", "protected", "public", "return", "static", "super", "switch", "synchronized", "this",
+            "throw", "throws", "transient", "try", "volatile", "while"};
 
     private static String[] fgTypes = {"void", "boolean", "char", "byte", "short", "int", "long", "float", "double", "def", "NaN"};
 
@@ -48,9 +52,8 @@ public class JavaCodeScanner extends RuleBasedScanner {
 
     private static String[] omsModel = {"model"}; //$NON-NLS-1$
 
-    private static String[] moduleFields = JGrassTools.getInstance().getAllFields();
-
-    private static String[] moduleNames = JGrassTools.getInstance().getAllClasses();
+    private static List<String> moduleFieldsNameList = new ArrayList<String>();
+    private static List<String> moduleClassesNameList = new ArrayList<String>();
 
     /**
      * Creates a Java code scanner with the given color provider.
@@ -58,6 +61,20 @@ public class JavaCodeScanner extends RuleBasedScanner {
      * @param provider the color provider
      */
     public JavaCodeScanner( JavaColorProvider provider ) {
+
+        HashMap<String, List<ModuleDescription>> modulesMap = JConsolePlugin.getDefault().gatherModules();
+        Collection<List<ModuleDescription>> modulesDescriptions = modulesMap.values();
+        for( List<ModuleDescription> modulesDescriptionList : modulesDescriptions ) {
+            for( ModuleDescription moduleDescription : modulesDescriptionList ) {
+                List<FieldData> inputsList = moduleDescription.getInputsList();
+                for( FieldData inFieldData : inputsList ) {
+                    moduleFieldsNameList.add(inFieldData.fieldName);
+                }
+                // String name = moduleDescription.getName();
+                String className = moduleDescription.getClassName();
+                moduleClassesNameList.add(className);
+            }
+        }
 
         IToken omsSimTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.OMS_SIM)));
         IToken omsModelTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.OMS_SIM)));
@@ -100,11 +117,11 @@ public class JavaCodeScanner extends RuleBasedScanner {
         for( int i = 0; i < omsModel.length; i++ ) {
             wordRule.addWord(omsModel[i], omsModelTok);
         }
-        for( int i = 0; i < moduleFields.length; i++ ) {
-            wordRule.addWord(moduleFields[i], modulesFieldsTok);
+        for( String moduleFieldsName : moduleFieldsNameList ) {
+            wordRule.addWord(moduleFieldsName, modulesFieldsTok);
         }
-        for( int i = 0; i < moduleNames.length; i++ ) {
-            wordRule.addWord(moduleNames[i], omsModulesTok);
+        for( String moduleClassesName : moduleClassesNameList ) {
+            wordRule.addWord(moduleClassesName, omsModulesTok);
         }
 
         rules.add(wordRule);
