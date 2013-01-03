@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+<extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="JConsole Editor"
+            icon="icons/obj16/java.gif"
+            extensions="jgrass, sim"
+            contributorClass="eu.hydrologis.jgrass.jconsole.JavaActionContributor"
+            class="eu.hydrologis.jgrass.jconsole.JavaEditor"
+            id=" eu.hydrologis.jgrass.jconsole.editor">
+      </editor>
+   </extension>
+   
+   <extension
+         id="ExampleJavaDocumentSetupParticipant"
+         name="%documentSetupParticipantName"
+         point="org.eclipse.core.filebuffers.documentSetup">
+      <participant
+            extensions="jgrass"
+            class="eu.hydrologis.jgrass.jconsole.JavaDocumentSetupParticipant">
+      </participant>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="eu.hydrologis.jgrass.jconsole.actionSet1"
+            label="JConsole"
+            visible="true">
+            <menu
+                  id="jconsole.menu"
+                  label="jconsole"
+                  path="jconsolepath">
+            </menu>
+            <action
+                  class="eu.hydrologis.jgrass.jconsole.actions.ConsoleEditorActionFromOld"
+                  icon="icons/consolefile.gif"
+                  id="eu.hydrologis.jgrass.console.editor.jconsoleaction1"
+                  label="Open Script"
+                  style="push"
+                  toolbarPath="jconsolepath"
+                  tooltip="Open and existing Script">
+            </action>
+            <action
+                  class="eu.hydrologis.jgrass.jconsole.actions.ConsoleEditorActionNew"
+                  icon="icons/console.gif"
+                  id="eu.hydrologis.jgrass.console.editor.jconsoleaction2"
+                  label="New Script"
+                  style="push"
+                  toolbarPath="jconsolepath"
+                  tooltip="Create a new Script">
+            </action>
+      </actionSet>
+   </extension>
+</plugin>

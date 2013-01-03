@@ -1,0 +1,6 @@
+In this folder all the jars of the jgrasstools have to be placed:
+
+* the jgrassgears and hortonmachine jars
+* al its dependencies, which can be obtained through the command:
+        mvn dependency:copy-dependencies
+  from inside the hortonmachine folder.
