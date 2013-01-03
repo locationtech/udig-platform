@@ -31,7 +31,6 @@ import org.eclipse.ui.PlatformUI;
 import eu.udig.jconsole.JConsolePlugin;
 import eu.udig.jconsole.JavaEditor;
 import eu.udig.jconsole.JavaFileEditorInput;
-import eu.udig.jconsole.jgrasstools.JGrassTools;
 
 /**
  * Action to open an editor
@@ -50,13 +49,13 @@ public class ConsoleEditorActionFromOld implements IWorkbenchWindowActionDelegat
     }
 
     public void run( IAction action ) {
-        JGrassTools.firstModulesGathering();
+        JConsolePlugin.getDefault().gatherModules();
 
         try {
 
             File lastOpenFolder = JConsolePlugin.getDefault().getLastOpenFolder();
             FileDialog fileDialog = new FileDialog(window.getShell(), SWT.OPEN | SWT.MULTI);
-            fileDialog.setFilterExtensions(new String[]{"*.jgrass"});
+            fileDialog.setFilterExtensions(new String[]{"*.groovy"});
             fileDialog.setFilterPath(lastOpenFolder.getAbsolutePath());
             String path = fileDialog.open();
             String[] fileNames = fileDialog.getFileNames();

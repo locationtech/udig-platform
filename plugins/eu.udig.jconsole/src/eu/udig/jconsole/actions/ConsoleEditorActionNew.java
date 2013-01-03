@@ -33,7 +33,6 @@ import org.eclipse.ui.PlatformUI;
 import eu.udig.jconsole.JConsolePlugin;
 import eu.udig.jconsole.JavaEditor;
 import eu.udig.jconsole.JavaFileEditorInput;
-import eu.udig.jconsole.jgrasstools.JGrassTools;
 
 /**
  * Action to open an editor
@@ -53,7 +52,7 @@ public class ConsoleEditorActionNew implements IWorkbenchWindowActionDelegate {
 
     public void run( IAction action ) {
 
-        JGrassTools.firstModulesGathering();
+        JConsolePlugin.getDefault().gatherModules();
 
         try {
             File lastOpenFolder = JConsolePlugin.getDefault().getLastOpenFolder();
