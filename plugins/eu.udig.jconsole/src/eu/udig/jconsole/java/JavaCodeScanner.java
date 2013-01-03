@@ -70,6 +70,10 @@ public class JavaCodeScanner extends RuleBasedScanner {
                 for( FieldData inFieldData : inputsList ) {
                     moduleFieldsNameList.add(inFieldData.fieldName);
                 }
+                List<FieldData> outputsList = moduleDescription.getOutputsList();
+                for( FieldData outFieldData : outputsList ) {
+                    moduleFieldsNameList.add(outFieldData.fieldName);
+                }
                 // String name = moduleDescription.getName();
                 String className = moduleDescription.getClassName();
                 moduleClassesNameList.add(className);
