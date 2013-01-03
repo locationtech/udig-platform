@@ -169,7 +169,8 @@ Bundle-ClassPath: .,
  lib/xml-apis-xerces-2.7.1.jar,
  lib/xmlrpc-client-3.0.jar,
  lib/xmlrpc-common-3.0.jar,
- lib/xpp3_min-1.1.4c.jar
+ lib/xpp3_min-1.1.4c.jar,
+ lib/geoscript-groovy-1.1-SNAPSHOT.jar
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: .,
  antlr,
