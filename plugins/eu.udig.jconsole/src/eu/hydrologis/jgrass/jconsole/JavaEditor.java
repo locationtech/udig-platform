@@ -26,8 +26,6 @@ import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
-import eu.hydrologis.jgrass.jconsole.jgrasstools.JGrassToolsExecutor;
-
 /**
  * Java specific text editor.
  */
@@ -49,16 +47,10 @@ public class JavaEditor extends TextEditor {
         outputConsole = new JConsoleOutputConsole(null);
     }
 
-    private JGrassToolsExecutor executor;
     private Process process;
 
     private String filePath;
-    public JGrassToolsExecutor getExecutor() {
-        return executor;
-    }
-    public void setExecutor( JGrassToolsExecutor executor ) {
-        this.executor = executor;
-    }
+
     public Process getProcess() {
         return process;
     }
