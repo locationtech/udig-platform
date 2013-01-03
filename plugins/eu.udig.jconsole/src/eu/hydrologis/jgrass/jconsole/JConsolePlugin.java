@@ -1,6 +1,8 @@
 package eu.hydrologis.jgrass.jconsole;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
@@ -10,6 +12,8 @@ import org.osgi.framework.BundleContext;
 import eu.hydrologis.jgrass.jconsole.java.JavaCodeScanner;
 import eu.hydrologis.jgrass.jconsole.javadoc.JavaDocScanner;
 import eu.hydrologis.jgrass.jconsole.util.JavaColorProvider;
+import eu.udig.omsbox.core.ModuleDescription;
+import eu.udig.omsbox.core.OmsModulesManager;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -138,6 +142,11 @@ public class JConsolePlugin extends AbstractUIPlugin {
     }
     public String getRam() {
         return ram;
+    }
+
+    public HashMap<String, List<ModuleDescription>> gatherModules() {
+        HashMap<String, List<ModuleDescription>> availableModules = OmsModulesManager.getInstance().browseModules(false);
+        return availableModules;
     }
 
 }

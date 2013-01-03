@@ -6,7 +6,7 @@
       <editor
             name="JConsole Editor"
             icon="icons/obj16/java.gif"
-            extensions="jgrass, sim"
+            extensions="groovy"
             contributorClass="eu.hydrologis.jgrass.jconsole.JavaActionContributor"
             class="eu.hydrologis.jgrass.jconsole.JavaEditor"
             id=" eu.hydrologis.jgrass.jconsole.editor">
@@ -18,7 +18,7 @@
          name="%documentSetupParticipantName"
          point="org.eclipse.core.filebuffers.documentSetup">
       <participant
-            extensions="jgrass"
+            extensions="groovy"
             class="eu.hydrologis.jgrass.jconsole.JavaDocumentSetupParticipant">
       </participant>
    </extension>
