@@ -63,7 +63,7 @@ public class SimulationTemplateAction extends TextEditorAction {
         sb.append("\n");
         sb.append("\n");
 
-        URL templateUrl = Platform.getBundle(JConsolePlugin.PLUGIN_ID).getResource("templates/simtemplate.jgrass");
+        URL templateUrl = Platform.getBundle(JConsolePlugin.PLUGIN_ID).getResource("templates/simtemplate.groovy");
         String templatePath = null;
         try {
             templatePath = FileLocator.toFileURL(templateUrl).getPath();
