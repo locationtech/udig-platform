@@ -26,6 +26,8 @@ import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
+import eu.udig.omsbox.core.JConsoleOutputConsole;
+
 /**
  * Java specific text editor.
  */

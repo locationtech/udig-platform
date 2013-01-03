@@ -92,6 +92,7 @@ public class OmsScriptExecutionAction implements IViewActionDelegate, IProcessLi
             e.printStackTrace();
         }
     }
+    
     public void selectionChanged( IAction action, ISelection selection ) {
     }
 
