@@ -7,8 +7,8 @@
             name="JConsole Editor"
             icon="icons/obj16/java.gif"
             extensions="groovy"
-            contributorClass="eu.hydrologis.jgrass.jconsole.JavaActionContributor"
-            class="eu.hydrologis.jgrass.jconsole.JavaEditor"
+            contributorClass="eu.udig.jconsole.JavaActionContributor"
+            class="eu.udig.jconsole.JavaEditor"
             id=" eu.hydrologis.jgrass.jconsole.editor">
       </editor>
    </extension>
@@ -19,7 +19,7 @@
          point="org.eclipse.core.filebuffers.documentSetup">
       <participant
             extensions="groovy"
-            class="eu.hydrologis.jgrass.jconsole.JavaDocumentSetupParticipant">
+            class="eu.udig.jconsole.JavaDocumentSetupParticipant">
       </participant>
    </extension>
    <extension
@@ -34,7 +34,7 @@
                   path="jconsolepath">
             </menu>
             <action
-                  class="eu.hydrologis.jgrass.jconsole.actions.ConsoleEditorActionFromOld"
+                  class="eu.udig.jconsole.actions.ConsoleEditorActionFromOld"
                   icon="icons/consolefile.gif"
                   id="eu.hydrologis.jgrass.console.editor.jconsoleaction1"
                   label="Open Script"
@@ -43,7 +43,7 @@
                   tooltip="Open and existing Script">
             </action>
             <action
-                  class="eu.hydrologis.jgrass.jconsole.actions.ConsoleEditorActionNew"
+                  class="eu.udig.jconsole.actions.ConsoleEditorActionNew"
                   icon="icons/console.gif"
                   id="eu.hydrologis.jgrass.console.editor.jconsoleaction2"
                   label="New Script"

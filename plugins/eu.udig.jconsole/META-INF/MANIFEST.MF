@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: JConsole Plugin
 Bundle-SymbolicName: eu.udig.jconsole;singleton:=true
 Bundle-Version: 0.1
-Bundle-Activator: eu.hydrologis.jgrass.jconsole.JConsolePlugin
+Bundle-Activator: eu.udig.jconsole.JConsolePlugin
 Bundle-Vendor: HydroloGIS s.r.l.
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
