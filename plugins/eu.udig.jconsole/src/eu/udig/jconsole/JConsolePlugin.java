@@ -1,7 +1,10 @@
 package eu.udig.jconsole;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -12,6 +15,7 @@ import org.osgi.framework.BundleContext;
 import eu.udig.jconsole.java.JavaCodeScanner;
 import eu.udig.jconsole.javadoc.JavaDocScanner;
 import eu.udig.jconsole.util.JavaColorProvider;
+import eu.udig.omsbox.core.FieldData;
 import eu.udig.omsbox.core.ModuleDescription;
 import eu.udig.omsbox.core.OmsModulesManager;
 
@@ -145,8 +149,58 @@ public class JConsolePlugin extends AbstractUIPlugin {
     }
 
     public HashMap<String, List<ModuleDescription>> gatherModules() {
+        // TODO chance if necessary
         HashMap<String, List<ModuleDescription>> availableModules = OmsModulesManager.getInstance().browseModules(false);
         return availableModules;
+    }
+
+    public String[] getModulesFieldsNames() {
+        // TODO cache if necessary
+        HashMap<String, List<ModuleDescription>> availableModules = gatherModules();
+        List<String> names = new ArrayList<String>();
+
+        Collection<List<ModuleDescription>> modulesDescriptions = availableModules.values();
+        for( List<ModuleDescription> modulesDescriptionList : modulesDescriptions ) {
+            for( ModuleDescription moduleDescription : modulesDescriptionList ) {
+                List<FieldData> inputsList = moduleDescription.getInputsList();
+                for( FieldData inFieldData : inputsList ) {
+                    names.add(inFieldData.fieldName);
+                }
+                List<FieldData> outputsList = moduleDescription.getOutputsList();
+                for( FieldData outFieldData : outputsList ) {
+                    names.add(outFieldData.fieldName);
+                }
+            }
+        }
+        return names.toArray(new String[0]);
+    }
+
+    public LinkedHashMap<String, List<String>> modulesName2FieldsNames() {
+        // TODO cache if necessary
+        HashMap<String, List<ModuleDescription>> availableModules = gatherModules();
+
+        LinkedHashMap<String, List<String>> modulesName2FieldsNames = new LinkedHashMap<String, List<String>>();
+
+        Collection<List<ModuleDescription>> modulesDescriptions = availableModules.values();
+        for( List<ModuleDescription> modulesDescriptionList : modulesDescriptions ) {
+            for( ModuleDescription moduleDescription : modulesDescriptionList ) {
+                String moduleName = moduleDescription.getName();
+
+                List<String> names = new ArrayList<String>();
+                List<FieldData> inputsList = moduleDescription.getInputsList();
+                for( FieldData inFieldData : inputsList ) {
+                    names.add(inFieldData.fieldName);
+                }
+                List<FieldData> outputsList = moduleDescription.getOutputsList();
+                for( FieldData outFieldData : outputsList ) {
+                    names.add(outFieldData.fieldName);
+                }
+
+                modulesName2FieldsNames.put(moduleName, names);
+
+            }
+        }
+        return modulesName2FieldsNames;
     }
 
 }

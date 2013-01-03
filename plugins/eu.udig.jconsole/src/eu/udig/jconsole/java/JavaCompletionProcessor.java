@@ -14,8 +14,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.ITextViewer;
@@ -27,9 +27,8 @@ import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationPresenter;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
-import org.jgrasstools.gears.libs.modules.ClassField;
 
-import eu.udig.jconsole.jgrasstools.JGrassTools;
+import eu.udig.jconsole.JConsolePlugin;
 
 /**
  * Example Java completion processor.
@@ -75,7 +74,7 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
         super();
 
         if (fgProposals == null) {
-            fgProposals = JGrassTools.getInstance().getAllFields();
+            fgProposals = JConsolePlugin.getDefault().getModulesFieldsNames();
         }
     }
 
@@ -102,20 +101,19 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
         }
 
         List<ICompletionProposal> props = new ArrayList<ICompletionProposal>();
-        LinkedHashMap<String, List<ClassField>> moduleName2Fields = JGrassTools.getInstance().getModuleName2Fields();
-        Set<Entry<String, List<ClassField>>> entrySet = moduleName2Fields.entrySet();
+        LinkedHashMap<String, List<String>> moduleName2Fields = JConsolePlugin.getDefault().modulesName2FieldsNames();
+        Set<Entry<String, List<String>>> entrySet = moduleName2Fields.entrySet();
         /*
          * if the module name is named the same as the
          * class, supply only its fields. 
          */
 
-        for( Entry<String, List<ClassField>> module : entrySet ) {
+        for( Entry<String, List<String>> module : entrySet ) {
             String moduleName = module.getKey();
             if (guessedModelWord.toLowerCase().matches(moduleName.toLowerCase() + "[0-9]*")) {
-                List<ClassField> fieldsList = module.getValue();
+                List<String> fieldsNameList = module.getValue();
 
-                for( ClassField field : fieldsList ) {
-                    String fieldName = field.fieldName;
+                for( String fieldName : fieldsNameList ) {
                     if (guessedFieldWord != null && fieldName.startsWith(guessedFieldWord)) {
                         /*
                         * module. situation, fieldname == null
@@ -155,11 +153,9 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
         for( int i = 0; i < result.length; i++ )
             result[i] = new ContextInformation(
                     MessageFormat
-                            .format(
-                                    JavaEditorMessages.getString("CompletionProcessor.ContextInfo.display.pattern"), new Object[]{new Integer(i), new Integer(documentOffset)}), //$NON-NLS-1$
-                    MessageFormat
-                            .format(
-                                    JavaEditorMessages.getString("CompletionProcessor.ContextInfo.value.pattern"), new Object[]{new Integer(i), new Integer(documentOffset - 5), new Integer(documentOffset + 5)})); //$NON-NLS-1$
+                            .format(JavaEditorMessages.getString("CompletionProcessor.ContextInfo.display.pattern"), new Object[]{new Integer(i), new Integer(documentOffset)}), //$NON-NLS-1$
+                    MessageFormat.format(
+                            JavaEditorMessages.getString("CompletionProcessor.ContextInfo.value.pattern"), new Object[]{new Integer(i), new Integer(documentOffset - 5), new Integer(documentOffset + 5)})); //$NON-NLS-1$
         return result;
     }
 
