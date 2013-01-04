@@ -30,6 +30,7 @@ import eu.udig.jconsole.JConsolePlugin;
 import eu.udig.jconsole.util.JavaColorProvider;
 import eu.udig.jconsole.util.JavaWhitespaceDetector;
 import eu.udig.jconsole.util.JavaWordDetector;
+import eu.udig.jconsole.util.Keywords;
 import eu.udig.omsbox.core.FieldData;
 import eu.udig.omsbox.core.ModuleDescription;
 
@@ -37,26 +38,6 @@ import eu.udig.omsbox.core.ModuleDescription;
  * A Java code scanner.
  */
 public class JavaCodeScanner extends RuleBasedScanner {
-
-    private static String[] fgKeywords = {"println", "abstract", "break", "case", "catch", "class", "continue", "default", "do",
-            "else", "extends", "final", "finally", "for", "if", "implements", "import", "instanceof", "interface", "native",
-            "new", "package", "private", "protected", "public", "return", "static", "super", "switch", "synchronized", "this",
-            "throw", "throws", "transient", "try", "volatile", "while"};
-
-    private static String[] geoscriptKeywords = {//
-    /*    */"Point", "LineString", "Polygon", //
-            "buffer", "intersects", "intersect", "union", "centroid", "area", "length" //
-    };
-
-    private static String[] fgTypes = {"void", "boolean", "char", "byte", "short", "int", "long", "float", "double", "def", "NaN"};
-
-    private static String[] fgConstants = {"false", "null", "true"}; //$NON-NLS-3$ //$NON-NLS-2$ //$NON-NLS-1$
-
-    private static String[] omsComponents = {"components", "parameter", "connect"}; //$NON-NLS-3$ //$NON-NLS-2$ //$NON-NLS-1$
-
-    private static String[] omsSim = {"sim"}; //$NON-NLS-1$
-
-    private static String[] omsModel = {"model"}; //$NON-NLS-1$
 
     private static List<String> moduleFieldsNameList = new ArrayList<String>();
     private static List<String> moduleClassesNameList = new ArrayList<String>();
@@ -66,6 +47,7 @@ public class JavaCodeScanner extends RuleBasedScanner {
      *
      * @param provider the color provider
      */
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public JavaCodeScanner( JavaColorProvider provider ) {
 
         HashMap<String, List<ModuleDescription>> modulesMap = JConsolePlugin.getDefault().gatherModules();
@@ -86,8 +68,6 @@ public class JavaCodeScanner extends RuleBasedScanner {
             }
         }
 
-        IToken omsSimTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.OMS_SIM)));
-        IToken omsModelTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.OMS_SIM)));
         IToken omsComponentsTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.OMS_COMPONENTS)));
         IToken omsModulesTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.OMS_MODULES)));
         IToken keyword = new Token(new TextAttribute(provider.getColor(JavaColorProvider.KEYWORD), null, SWT.BOLD));
@@ -95,7 +75,7 @@ public class JavaCodeScanner extends RuleBasedScanner {
         IToken string = new Token(new TextAttribute(provider.getColor(JavaColorProvider.STRING)));
         IToken comment = new Token(new TextAttribute(provider.getColor(JavaColorProvider.SINGLE_LINE_COMMENT)));
         IToken other = new Token(new TextAttribute(provider.getColor(JavaColorProvider.DEFAULT)));
-        IToken geoscriptTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.DEFAULT), null, SWT.BOLD));
+        IToken geoscriptTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.GEOSCRIPT), null, SWT.BOLD));
         IToken modulesFieldsTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.MODULES_FIELDS)));
 
         List rules = new ArrayList();
@@ -113,23 +93,28 @@ public class JavaCodeScanner extends RuleBasedScanner {
 
         // Add word rule for keywords, types, and constants.
         WordRule wordRule = new WordRule(new JavaWordDetector(), other);
-        for( int i = 0; i < fgKeywords.length; i++ )
-            wordRule.addWord(fgKeywords[i], keyword);
-        for( int i = 0; i < fgTypes.length; i++ )
-            wordRule.addWord(fgTypes[i], type);
-        for( int i = 0; i < fgConstants.length; i++ )
-            wordRule.addWord(fgConstants[i], type);
-        for( int i = 0; i < geoscriptKeywords.length; i++ )
-            wordRule.addWord(geoscriptKeywords[i], geoscriptTok);
-        for( int i = 0; i < omsComponents.length; i++ ) {
-            wordRule.addWord(omsComponents[i], omsComponentsTok);
+
+        List<String> keywords = Keywords.getValues(Keywords.KEYWORDS);
+        for( int i = 0; i < keywords.size(); i++ )
+            wordRule.addWord(keywords.get(i), keyword);
+
+        List<String> types = Keywords.getValues(Keywords.TYPES);
+        for( int i = 0; i < types.size(); i++ )
+            wordRule.addWord(types.get(i), type);
+
+        List<String> constants = Keywords.getValues(Keywords.CONSTANTS);
+        for( int i = 0; i < constants.size(); i++ )
+            wordRule.addWord(constants.get(i), type);
+
+        List<String> geoscript = Keywords.getValues(Keywords.GEOSCRIPT);
+        for( int i = 0; i < geoscript.size(); i++ )
+            wordRule.addWord(geoscript.get(i), geoscriptTok);
+
+        List<String> oms = Keywords.getValues(Keywords.OMS);
+        for( int i = 0; i < oms.size(); i++ ) {
+            wordRule.addWord(oms.get(i), omsComponentsTok);
         }
-        for( int i = 0; i < omsSim.length; i++ ) {
-            wordRule.addWord(omsSim[i], omsSimTok);
-        }
-        for( int i = 0; i < omsModel.length; i++ ) {
-            wordRule.addWord(omsModel[i], omsModelTok);
-        }
+
         for( String moduleFieldsName : moduleFieldsNameList ) {
             wordRule.addWord(moduleFieldsName, modulesFieldsTok);
         }
