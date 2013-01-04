@@ -24,6 +24,7 @@ import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.rules.WordRule;
+import org.eclipse.swt.SWT;
 
 import eu.udig.jconsole.JConsolePlugin;
 import eu.udig.jconsole.util.JavaColorProvider;
@@ -41,6 +42,11 @@ public class JavaCodeScanner extends RuleBasedScanner {
             "else", "extends", "final", "finally", "for", "if", "implements", "import", "instanceof", "interface", "native",
             "new", "package", "private", "protected", "public", "return", "static", "super", "switch", "synchronized", "this",
             "throw", "throws", "transient", "try", "volatile", "while"};
+
+    private static String[] geoscriptKeywords = {//
+    /*    */"Point", "LineString", "Polygon", //
+            "buffer", "intersects", "intersect", "union", "centroid", "area", "length" //
+    };
 
     private static String[] fgTypes = {"void", "boolean", "char", "byte", "short", "int", "long", "float", "double", "def", "NaN"};
 
@@ -84,11 +90,12 @@ public class JavaCodeScanner extends RuleBasedScanner {
         IToken omsModelTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.OMS_SIM)));
         IToken omsComponentsTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.OMS_COMPONENTS)));
         IToken omsModulesTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.OMS_MODULES)));
-        IToken keyword = new Token(new TextAttribute(provider.getColor(JavaColorProvider.KEYWORD)));
+        IToken keyword = new Token(new TextAttribute(provider.getColor(JavaColorProvider.KEYWORD), null, SWT.BOLD));
         IToken type = new Token(new TextAttribute(provider.getColor(JavaColorProvider.TYPE)));
         IToken string = new Token(new TextAttribute(provider.getColor(JavaColorProvider.STRING)));
         IToken comment = new Token(new TextAttribute(provider.getColor(JavaColorProvider.SINGLE_LINE_COMMENT)));
         IToken other = new Token(new TextAttribute(provider.getColor(JavaColorProvider.DEFAULT)));
+        IToken geoscriptTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.DEFAULT), null, SWT.BOLD));
         IToken modulesFieldsTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.MODULES_FIELDS)));
 
         List rules = new ArrayList();
@@ -112,6 +119,8 @@ public class JavaCodeScanner extends RuleBasedScanner {
             wordRule.addWord(fgTypes[i], type);
         for( int i = 0; i < fgConstants.length; i++ )
             wordRule.addWord(fgConstants[i], type);
+        for( int i = 0; i < geoscriptKeywords.length; i++ )
+            wordRule.addWord(geoscriptKeywords[i], geoscriptTok);
         for( int i = 0; i < omsComponents.length; i++ ) {
             wordRule.addWord(omsComponents[i], omsComponentsTok);
         }
