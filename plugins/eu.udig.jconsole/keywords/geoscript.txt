@@ -1,0 +1,13 @@
+# classes
+Point
+LineString
+Polygon
+
+# methods
+buffer
+intersects
+intersect
+union
+centroid
+area
+length

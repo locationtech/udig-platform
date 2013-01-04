@@ -1,0 +1,11 @@
+void
+boolean
+char
+byte
+short
+int
+long
+float
+double
+def
+NaN
