@@ -1,12 +1,12 @@
-# classes
-Point
-LineString
-Polygon
-Geometry
-Projection
-Map
-Fill
-Stroke
-Shapefile
-Plot
 Draw
+Fill
+Geometry
+Label
+LineString
+Map
+Plot
+Point
+Polygon
+Projection
+Shapefile
+Stroke

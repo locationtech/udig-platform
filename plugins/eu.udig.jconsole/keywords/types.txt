@@ -1,11 +1,11 @@
-void
 boolean
-char
 byte
-short
+char
+def
+double
+float
 int
 long
-float
-double
-def
 NaN
+short
+void
