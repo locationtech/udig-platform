@@ -9,7 +9,7 @@
             extensions="groovy"
             contributorClass="eu.udig.jconsole.JavaActionContributor"
             class="eu.udig.jconsole.JavaEditor"
-            id=" eu.hydrologis.jgrass.jconsole.editor">
+            id=" eu.udig.jconsole.editor">
       </editor>
    </extension>
    
@@ -25,7 +25,7 @@
    <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
-            id="eu.hydrologis.jgrass.jconsole.actionSet1"
+            id=" eu.udig.jconsole.actionSet1"
             label="JConsole"
             visible="true">
             <menu
@@ -36,7 +36,7 @@
             <action
                   class="eu.udig.jconsole.actions.ConsoleEditorActionFromOld"
                   icon="icons/consolefile.gif"
-                  id="eu.hydrologis.jgrass.console.editor.jconsoleaction1"
+                  id=" eu.udig.jconsole.jconsoleaction1"
                   label="Open Script"
                   style="push"
                   toolbarPath="jconsolepath"
@@ -45,7 +45,7 @@
             <action
                   class="eu.udig.jconsole.actions.ConsoleEditorActionNew"
                   icon="icons/console.gif"
-                  id="eu.hydrologis.jgrass.console.editor.jconsoleaction2"
+                  id=" eu.udig.jconsole.jconsoleaction2"
                   label="New Script"
                   style="push"
                   toolbarPath="jconsolepath"
