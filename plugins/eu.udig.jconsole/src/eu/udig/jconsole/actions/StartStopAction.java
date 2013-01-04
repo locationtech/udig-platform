@@ -9,7 +9,6 @@
  */
 package eu.udig.jconsole.actions;
 
-import java.io.File;
 import java.io.PrintStream;
 
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -107,7 +106,7 @@ public class StartStopAction extends TextEditorAction implements IProcessListene
             String loggerLevelGui = OmsBoxPlugin.getDefault().retrieveSavedLogLevel();
             String ramLevel = String.valueOf(OmsBoxPlugin.getDefault().retrieveSavedHeap());
             Process process = executor.exec(text, internalStream, errorStream, loggerLevelGui, ramLevel);
-
+            
             scriptID = "geoscript_" + new DateTime().toString(OmsBoxConstants.dateTimeFormatterYYYYMMDDHHMMSS);
             OmsBoxPlugin.getDefault().addProcess(process, scriptID);
 

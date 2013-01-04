@@ -360,10 +360,10 @@
 		          <groupId>net.sf.opencsv</groupId>
 		          <artifactId>opencsv</artifactId>
 		        </exclusion>
-		        <exclusion>
+		        <!--<exclusion>
 		          <groupId>org.json</groupId>
 		          <artifactId>json</artifactId>
-		        </exclusion>
+		        </exclusion>-->
 		        <exclusion>
 		          <groupId>com.lowagie</groupId>
 		          <artifactId>itext</artifactId>
