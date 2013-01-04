@@ -48,14 +48,15 @@ public class ConsoleEditorActionNew implements IWorkbenchWindowActionDelegate {
         try {
             File lastOpenFolder = JConsolePlugin.getDefault().getLastOpenFolder();
             FileDialog fileDialog = new FileDialog(window.getShell(), SWT.SAVE);
-            fileDialog.setFilterExtensions(new String[]{"*.jgrass"});
+            fileDialog.setText("Save the new script...");
+            fileDialog.setFilterExtensions(new String[]{"*.groovy"});
             fileDialog.setFilterPath(lastOpenFolder.getAbsolutePath());
             String path = fileDialog.open();
             if (path == null || path.length() < 1) {
                 return;
             }
-            if (!path.endsWith(".jgrass")) {
-                path = path + ".jgrass";
+            if (!path.endsWith(".groovy")) {
+                path = path + ".groovy";
             }
 
             File f = new File(path);
