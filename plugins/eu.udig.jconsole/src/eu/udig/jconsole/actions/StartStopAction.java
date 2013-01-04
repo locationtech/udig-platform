@@ -83,13 +83,10 @@ public class StartStopAction extends TextEditorAction implements IProcessListene
     }
 
     private void execute( String text ) {
-        String trimmed = text.trim();
-        int limit = 15;
-        if (trimmed.length() <= limit) {
-            limit = trimmed.length() - 1;
-        }
-        String title = trimmed.substring(0, limit);
-        JConsoleOutputConsole outputConsole = new JConsoleOutputConsole("Script: " + title);
+        String dateTimeString = new DateTime().toString(OmsBoxConstants.dateTimeFormatterYYYYMMDDHHMMSS);
+
+        String title = getTextEditor().getTitle();
+        JConsoleOutputConsole outputConsole = new JConsoleOutputConsole("Script: " + title + " (" + dateTimeString + " )");
         outputConsole.clearConsole();
 
         PrintStream internalStream = outputConsole.internal;
@@ -106,8 +103,8 @@ public class StartStopAction extends TextEditorAction implements IProcessListene
             String loggerLevelGui = OmsBoxPlugin.getDefault().retrieveSavedLogLevel();
             String ramLevel = String.valueOf(OmsBoxPlugin.getDefault().retrieveSavedHeap());
             Process process = executor.exec(text, internalStream, errorStream, loggerLevelGui, ramLevel);
-            
-            scriptID = "geoscript_" + new DateTime().toString(OmsBoxConstants.dateTimeFormatterYYYYMMDDHHMMSS);
+
+            scriptID = "geoscript_" + dateTimeString;
             OmsBoxPlugin.getDefault().addProcess(process, scriptID);
 
         } catch (Exception e) {
