@@ -26,7 +26,7 @@ import org.eclipse.ui.texteditor.TextEditorAction;
 
 import org.eclipse.ui.editors.text.TextEditorActionContributor;
 
-import eu.udig.jconsole.actions.SimulationTemplateAction;
+import eu.udig.jconsole.actions.AddCommonImportsAction;
 import eu.udig.jconsole.actions.StartStopAction;
 
 /**
@@ -53,7 +53,7 @@ public class JavaActionContributor extends TextEditorActionContributor {
         fContentAssistTip
                 .setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_CONTEXT_INFORMATION);
         fToggleStartStop = new StartStopAction();
-        templateAction = new SimulationTemplateAction();
+        templateAction = new AddCommonImportsAction();
     }
 
     /*

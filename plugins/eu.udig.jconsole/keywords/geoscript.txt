@@ -8,5 +8,6 @@ Plot
 Point
 Polygon
 Projection
+Shape
 Shapefile
 Stroke

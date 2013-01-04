@@ -30,14 +30,14 @@ import eu.udig.jconsole.JavaEditorMessages;
  * 
  * @author Andrea Antonello (www.hydrologis.com)
  */
-public class SimulationTemplateAction extends TextEditorAction {
+public class AddCommonImportsAction extends TextEditorAction {
 
     public static final String TEMPLATE = "icons/template.gif"; //$NON-NLS-1$
 
     /**
      * Constructs and updates the action.
      */
-    public SimulationTemplateAction() {
+    public AddCommonImportsAction() {
         super(JavaEditorMessages.getResourceBundle(), "Template.", null); //$NON-NLS-1$
 
         ImageDescriptor id = AbstractUIPlugin.imageDescriptorFromPlugin(JConsolePlugin.PLUGIN_ID, TEMPLATE);
@@ -51,30 +51,40 @@ public class SimulationTemplateAction extends TextEditorAction {
 
         String text = doc.get();
 
-        StringBuilder sb = new StringBuilder(text);
-        sb.append("\n");
-        sb.append("\n");
+        StringBuilder sb = new StringBuilder();
+        sb.append("import geoscript.geom.*\n");
+        sb.append("import geoscript.proj.*\n");
+        sb.append("import geoscript.render.*\n");
+        sb.append("import geoscript.layer.*\n");
+        sb.append("import geoscript.style.*\n");
+        sb.append("import geoscript.viewer.*\n");
 
-        URL templateUrl = Platform.getBundle(JConsolePlugin.PLUGIN_ID).getResource("templates/simtemplate.groovy");
-        String templatePath = null;
-        try {
-            templatePath = FileLocator.toFileURL(templateUrl).getPath();
-            BufferedReader br = null;
-            try {
-                br = new BufferedReader(new FileReader(templatePath));
-                String line = null;
-                while( (line = br.readLine()) != null ) {
-                    sb.append(line).append("\n");
-                }
-            } finally {
-                br.close();
-            }
+        StringBuilder finalSb = new StringBuilder();
+        finalSb.append(sb.toString());
+        finalSb.append("\n");
+        finalSb.append(text);
 
-            doc.set(sb.toString());
+        // URL templateUrl =
+        // Platform.getBundle(JConsolePlugin.PLUGIN_ID).getResource("templates/simtemplate.groovy");
+        // String templatePath = null;
+        // try {
+        // templatePath = FileLocator.toFileURL(templateUrl).getPath();
+        // BufferedReader br = null;
+        // try {
+        // br = new BufferedReader(new FileReader(templatePath));
+        // String line = null;
+        // while( (line = br.readLine()) != null ) {
+        // finalSb.append(line).append("\n");
+        // }
+        // } finally {
+        // br.close();
+        // }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        doc.set(finalSb.toString());
+
+        // } catch (IOException e) {
+        // e.printStackTrace();
+        // }
     }
 
 }
