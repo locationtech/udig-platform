@@ -31,6 +31,7 @@ import eu.udig.jconsole.JConsolePlugin;
 public enum Keywords {
     CONSTANTS("keywords/constants.txt"), //
     GEOSCRIPT("keywords/geoscript.txt"), //
+    METHODS("keywords/methods.txt"), //
     KEYWORDS("keywords/keywords.txt"), //
     OMS("keywords/oms.txt"), //
     TYPES("keywords/types.txt");

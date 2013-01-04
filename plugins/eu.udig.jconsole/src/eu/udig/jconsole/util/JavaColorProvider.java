@@ -26,8 +26,10 @@ public class JavaColorProvider {
     public static final RGB WHITE = new RGB(255, 255, 255);
     public static final RGB MULTI_LINE_COMMENT = new RGB(9, 144, 98);
     public static final RGB SINGLE_LINE_COMMENT = new RGB(9, 144, 98);
-    public static final RGB KEYWORD = new RGB(0, 0, 188);
-    public static final RGB TYPE = new RGB(231, 82, 231);// (0, 0, 128);
+    public static final RGB KEYWORD = new RGB(141, 28, 104);
+    public static final RGB METHOD = new RGB(0, 0, 188);
+    public static final RGB TYPE = KEYWORD;// new RGB(231, 82, 231);
+    public static final RGB CONSTANTS = new RGB(231, 82, 231);
     public static final RGB STRING = new RGB(0, 0, 255);
     public static final RGB GEOSCRIPT = new RGB(40, 40, 40);
     public static final RGB DEFAULT = new RGB(0, 0, 0);

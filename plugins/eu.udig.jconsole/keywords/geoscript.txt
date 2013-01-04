@@ -2,12 +2,11 @@
 Point
 LineString
 Polygon
-
-# methods
-buffer
-intersects
-intersect
-union
-centroid
-area
-length
+Geometry
+Projection
+Map
+Fill
+Stroke
+Shapefile
+Plot
+Draw

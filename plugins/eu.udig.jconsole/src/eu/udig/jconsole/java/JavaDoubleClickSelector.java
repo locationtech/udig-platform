@@ -26,7 +26,7 @@ public class JavaDoubleClickSelector implements ITextDoubleClickStrategy {
 	protected int fStartPos;
 	protected int fEndPos;
 
-	protected static char[] fgBrackets= { '{', '}', '(', ')', '[', ']', '"', '"' };
+	protected static char[] fgBrackets= { '{', '}', '(', ')', '[', ']', '"', '"', '\'', '\'' };
 
 	/*
 	 * Create a JavaDoubleClickSelector.

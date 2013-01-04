@@ -68,15 +68,19 @@ public class JavaCodeScanner extends RuleBasedScanner {
             }
         }
 
-        IToken omsComponentsTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.OMS_COMPONENTS)));
-        IToken omsModulesTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.OMS_MODULES)));
-        IToken keyword = new Token(new TextAttribute(provider.getColor(JavaColorProvider.KEYWORD), null, SWT.BOLD));
-        IToken type = new Token(new TextAttribute(provider.getColor(JavaColorProvider.TYPE)));
         IToken string = new Token(new TextAttribute(provider.getColor(JavaColorProvider.STRING)));
         IToken comment = new Token(new TextAttribute(provider.getColor(JavaColorProvider.SINGLE_LINE_COMMENT)));
-        IToken other = new Token(new TextAttribute(provider.getColor(JavaColorProvider.DEFAULT)));
+
+        IToken keywordTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.KEYWORD), null, SWT.BOLD));
+        IToken methodTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.METHOD), null, SWT.ITALIC));
+        IToken typeTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.TYPE)));
+        IToken constantsTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.CONSTANTS)));
         IToken geoscriptTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.GEOSCRIPT), null, SWT.BOLD));
+
+        IToken other = new Token(new TextAttribute(provider.getColor(JavaColorProvider.DEFAULT)));
         IToken modulesFieldsTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.MODULES_FIELDS)));
+        IToken omsComponentsTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.OMS_COMPONENTS)));
+        IToken omsModulesTok = new Token(new TextAttribute(provider.getColor(JavaColorProvider.OMS_MODULES)));
 
         List rules = new ArrayList();
 
@@ -85,6 +89,7 @@ public class JavaCodeScanner extends RuleBasedScanner {
 
         // Add rule for strings
         rules.add(new SingleLineRule("\"", "\"", string, '\\')); //$NON-NLS-2$ //$NON-NLS-1$
+        rules.add(new SingleLineRule("'", "'", string, '\\')); //$NON-NLS-2$ //$NON-NLS-1$
         // and character constants.
         //        rules.add(new SingleLineRule("'", "'", omsModulesTok, '\\')); //$NON-NLS-2$ //$NON-NLS-1$
 
@@ -96,19 +101,23 @@ public class JavaCodeScanner extends RuleBasedScanner {
 
         List<String> keywords = Keywords.getValues(Keywords.KEYWORDS);
         for( int i = 0; i < keywords.size(); i++ )
-            wordRule.addWord(keywords.get(i), keyword);
+            wordRule.addWord(keywords.get(i), keywordTok);
 
         List<String> types = Keywords.getValues(Keywords.TYPES);
         for( int i = 0; i < types.size(); i++ )
-            wordRule.addWord(types.get(i), type);
+            wordRule.addWord(types.get(i), typeTok);
 
         List<String> constants = Keywords.getValues(Keywords.CONSTANTS);
         for( int i = 0; i < constants.size(); i++ )
-            wordRule.addWord(constants.get(i), type);
+            wordRule.addWord(constants.get(i), constantsTok);
 
         List<String> geoscript = Keywords.getValues(Keywords.GEOSCRIPT);
         for( int i = 0; i < geoscript.size(); i++ )
             wordRule.addWord(geoscript.get(i), geoscriptTok);
+
+        List<String> method = Keywords.getValues(Keywords.METHODS);
+        for( int i = 0; i < method.size(); i++ )
+            wordRule.addWord(method.get(i), methodTok);
 
         List<String> oms = Keywords.getValues(Keywords.OMS);
         for( int i = 0; i < oms.size(); i++ ) {
