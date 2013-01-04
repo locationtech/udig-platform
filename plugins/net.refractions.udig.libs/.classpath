@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geojson-9-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/json-simple-1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/itext-2.1.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-3.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-analysis-3.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-commons-3.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-tree-3.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-util-3.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/groovy-1.8.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/json-20090211.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/geoscript-groovy-1.1-SNAPSHOT.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
@@ -19,7 +28,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/ehcache-1.6.2.jar" sourcepath="lib-src/ehcache-1.6.2-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/geodb-0.7-RC2.jar" sourcepath="lib-src/geodb-0.7-RC2-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/google-collections-0.8.jar" sourcepath="lib-src/google-collections-0.8-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/groovy-all-1.7.1.jar" sourcepath="lib-src/groovy-all-1.7.1-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-api-9.0-M0.jar" sourcepath="lib-src/gt-api-9.0-M0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-arcgrid-9.0-M0.jar" sourcepath="lib-src/gt-arcgrid-9.0-M0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-arcsde-9.0-M0.jar" sourcepath="lib-src/gt-arcsde-9.0-M0-sources.jar"/>
