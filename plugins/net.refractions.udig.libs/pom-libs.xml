@@ -362,6 +362,27 @@
 		          <groupId>net.sf.opencsv</groupId>
 		          <artifactId>opencsv</artifactId>
 		        </exclusion>
+		        <exclusion>
+		          <groupId>bouncycastle</groupId>
+		          <artifactId>bcmail-jdk14</artifactId>
+		        </exclusion>
+		        <exclusion>
+		          <groupId>bouncycastle</groupId>
+		          <artifactId>bcprov-jdk14</artifactId>
+		        </exclusion>
+		        <exclusion>
+		          <groupId>bouncycastle</groupId>
+		          <artifactId>bctsp-jdk14</artifactId>
+		        </exclusion>
+		        <exclusion>
+		          <groupId>org.bouncycastle</groupId>
+		          <artifactId>bcprov-jdk14</artifactId>
+		        </exclusion>
+		        <exclusion>
+		          <groupId>org.bouncycastle</groupId>
+		          <artifactId>bcmail-jdk14</artifactId>
+		        </exclusion>
+
 		        <!--
                 <exclusion>
 		          <groupId>org.json</groupId>
@@ -769,7 +790,7 @@
             <exclusions>
                 <exclusion>
 		          <groupId>org.codehaus.groovy</groupId>
-		          <artifactId>groovy</artifactId>
+		          <artifactId>groovy-all</artifactId>
 		        </exclusion>
             </exclusions>
         </dependency>
