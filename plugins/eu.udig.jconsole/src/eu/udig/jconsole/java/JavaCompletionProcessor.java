@@ -71,7 +71,13 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
         super();
 
         if (singleWordsProposals == null) {
-            singleWordsProposals = JConsolePlugin.getDefault().getModulesFieldsNames();
+            List<String> all = new ArrayList<String>();
+            all.addAll(Keywords.getValues(Keywords.GEOSCRIPT));
+            all.addAll(Keywords.getValues(Keywords.KEYWORDS));
+            all.addAll(Keywords.getValues(Keywords.TYPES));
+            all.addAll(Keywords.getValues(Keywords.CONSTANTS));
+
+            singleWordsProposals = all.toArray(new String[0]);
         }
         if (methodWordsProposals == null) {
             List<String> methods = Keywords.getValues(Keywords.METHODS);
@@ -105,26 +111,73 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
 
         List<ICompletionProposal> props = new ArrayList<ICompletionProposal>();
 
-        for( int i = 0; i < methodWordsProposals.length; i++ ) {
-            // pass only those words that start with the letters the user is writing
-            if (guessedMethodWord != null && methodWordsProposals[i].startsWith(guessedMethodWord)) {
-                String replacementString = methodWordsProposals[i];
-                int replacementOffset = documentOffset - guessedMethodWord.length();
-                int replacementLength = guessedMethodWord.length();
-                int cursorPosition = methodWordsProposals[i].length();
-                CompletionProposal completionProposal = new CompletionProposal(replacementString, replacementOffset,
-                        replacementLength, cursorPosition);
-                props.add(completionProposal);
-            } else if (readWord.endsWith(".")) {
-                String replacementString = methodWordsProposals[i];
-                int replacementOffset = documentOffset;
-                int replacementLength = 0;
-                int cursorPosition = methodWordsProposals[i].length();
-                CompletionProposal completionProposal = new CompletionProposal(replacementString, replacementOffset,
-                        replacementLength, cursorPosition);
-                props.add(completionProposal);
+        if (guessedMethodWord != null) {
+            List<ICompletionProposal> tmp = new ArrayList<ICompletionProposal>();
+            for( int i = 0; i < methodWordsProposals.length; i++ ) {
+                String wordProposal = methodWordsProposals[i];
+                if (wordProposal.toLowerCase().startsWith(guessedMethodWord.toLowerCase())) {
+                    // propose first only those words that start with the letters the user is
+                    // writing
+                    String replacementString = wordProposal;
+                    int replacementOffset = documentOffset - guessedMethodWord.length();
+                    int replacementLength = guessedMethodWord.length();
+                    int cursorPosition = wordProposal.length();
+                    CompletionProposal completionProposal = new CompletionProposal(replacementString, replacementOffset,
+                            replacementLength, cursorPosition);
+                    props.add(completionProposal);
+                } else if (wordProposal.toLowerCase().contains(guessedMethodWord.toLowerCase())) {
+                    // propose then those words that contain the letters the user is writing
+                    String replacementString = wordProposal;
+                    int replacementOffset = documentOffset - guessedMethodWord.length();
+                    int replacementLength = guessedMethodWord.length();
+                    int cursorPosition = wordProposal.length();
+                    CompletionProposal completionProposal = new CompletionProposal(replacementString, replacementOffset,
+                            replacementLength, cursorPosition);
+                    tmp.add(completionProposal);
+                }
+            }
+            // add second choice
+            props.addAll(tmp);
+        } else {
+            if (readWord.endsWith(".")) {
+                // after the dot, propose methods
+                for( int i = 0; i < methodWordsProposals.length; i++ ) {
+                    String replacementString = methodWordsProposals[i];
+                    int replacementOffset = documentOffset;
+                    int replacementLength = 0;
+                    int cursorPosition = methodWordsProposals[i].length();
+                    CompletionProposal completionProposal = new CompletionProposal(replacementString, replacementOffset,
+                            replacementLength, cursorPosition);
+                    props.add(completionProposal);
+                }
+            } else {
+                List<ICompletionProposal> tmp = new ArrayList<ICompletionProposal>();
+                // propose classes and other words
+                for( int i = 0; i < singleWordsProposals.length; i++ ) {
+                    String wordProposal = singleWordsProposals[i];
+                    if (guessedModelWord != null && wordProposal.toLowerCase().startsWith(guessedModelWord.toLowerCase())) {
+                        String replacementString = wordProposal;
+                        int replacementOffset = documentOffset - guessedModelWord.length();
+                        int replacementLength = guessedModelWord.length();
+                        int cursorPosition = wordProposal.length();
+                        CompletionProposal completionProposal = new CompletionProposal(replacementString, replacementOffset,
+                                replacementLength, cursorPosition);
+                        props.add(completionProposal);
+                    } else if (wordProposal.toLowerCase().contains(guessedModelWord.toLowerCase())) {
+                        // propose then those words that contain the letters the user is writing
+                        String replacementString = wordProposal;
+                        int replacementOffset = documentOffset - guessedModelWord.length();
+                        int replacementLength = guessedModelWord.length();
+                        int cursorPosition = wordProposal.length();
+                        CompletionProposal completionProposal = new CompletionProposal(replacementString, replacementOffset,
+                                replacementLength, cursorPosition);
+                        tmp.add(completionProposal);
+                    }
+                }
+                props.addAll(tmp);
             }
         }
+
         return (ICompletionProposal[]) props.toArray(new ICompletionProposal[props.size()]);
     }
 
