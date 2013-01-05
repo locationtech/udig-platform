@@ -29,6 +29,7 @@ import org.eclipse.jface.text.contentassist.IContextInformationPresenter;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 
 import eu.udig.jconsole.JConsolePlugin;
+import eu.udig.jconsole.util.Keywords;
 
 /**
  * Example Java completion processor.
@@ -65,7 +66,8 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
         }
     }
 
-    protected static String[] fgProposals = null;
+    protected static String[] singleWordsProposals = null;
+    protected static String[] methodWordsProposals = null;
 
     protected IContextInformationValidator fValidator = new Validator();
 
@@ -73,8 +75,12 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
 
         super();
 
-        if (fgProposals == null) {
-            fgProposals = JConsolePlugin.getDefault().getModulesFieldsNames();
+        if (singleWordsProposals == null) {
+            singleWordsProposals = JConsolePlugin.getDefault().getModulesFieldsNames();
+        }
+        if (methodWordsProposals == null) {
+            List<String> methods = Keywords.getValues(Keywords.METHODS);
+            methodWordsProposals = methods.toArray(new String[0]);
         }
     }
 
@@ -84,105 +90,75 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
     public ICompletionProposal[] computeCompletionProposals( ITextViewer viewer, int documentOffset ) {
         // get the word the user is currently writing
         String guessedModelWord = null;
-        String guessedFieldWord = null;
+        String guessedMethodWord = null;
         String readWord = null;
         try {
             String text = viewer.getDocument().get(0, documentOffset);
-            String[] textSplit = text.split("\\s+|'"); //$NON-NLS-1$
+            String[] textSplit = text.split("\\s+"); //$NON-NLS-1$
             readWord = textSplit[textSplit.length - 1];
 
             String[] split = readWord.split("\\.");
-            guessedModelWord = split[0];
-            if (split.length != 1) {
-                guessedFieldWord = split[1];
+            if (split.length > 0) {
+                guessedModelWord = split[0];
+                if (split.length != 1) {
+                    guessedMethodWord = split[1];
+                }
             }
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
 
         List<ICompletionProposal> props = new ArrayList<ICompletionProposal>();
-        LinkedHashMap<String, List<String>> moduleName2Fields = JConsolePlugin.getDefault().modulesName2FieldsNames();
-        Set<Entry<String, List<String>>> entrySet = moduleName2Fields.entrySet();
-        /*
-         * if the module name is named the same as the
-         * class, supply only its fields. 
-         */
 
-        for( Entry<String, List<String>> module : entrySet ) {
-            String moduleName = module.getKey();
-            if (guessedModelWord.toLowerCase().matches(moduleName.toLowerCase() + "[0-9]*")) {
-                List<String> fieldsNameList = module.getValue();
-
-                for( String fieldName : fieldsNameList ) {
-                    if (guessedFieldWord != null && fieldName.startsWith(guessedFieldWord)) {
-                        /*
-                        * module. situation, fieldname == null
-                        */
-                        props.add(new CompletionProposal(fieldName, documentOffset - guessedFieldWord.length(), guessedFieldWord
-                                .length(), fieldName.length()));
-                    } else if (guessedFieldWord == null) {
-                        props.add(new CompletionProposal(fieldName, documentOffset - 0, 0, fieldName.length()));
-                    }
-
-                }
-                return (ICompletionProposal[]) props.toArray(new ICompletionProposal[props.size()]);
-            }
-        }
-
-        for( int i = 0; i < fgProposals.length; i++ ) {
+        for( int i = 0; i < methodWordsProposals.length; i++ ) {
             // pass only those words that start with the letters the user is writing
-            if (guessedFieldWord != null && fgProposals[i].startsWith(guessedFieldWord)) {
-                // if (guessedFieldWord == null || fgProposals[i].startsWith(guessedFieldWord)
-                // || guessedModelWord.endsWith(".")){
-                props.add(new CompletionProposal(fgProposals[i], documentOffset - guessedFieldWord.length(), guessedFieldWord
-                        .length(), fgProposals[i].length()));
-                // props.add(new CompletionProposal(m_proposals[i], documentOffset -
-                // myWord.length(),
-                // myWord.length(), m_proposals[i].length()));
+            if (guessedMethodWord != null && methodWordsProposals[i].startsWith(guessedMethodWord)) {
+                String replacementString = methodWordsProposals[i];
+                int replacementOffset = documentOffset - guessedMethodWord.length();
+                int replacementLength = guessedMethodWord.length();
+                int cursorPosition = methodWordsProposals[i].length();
+                CompletionProposal completionProposal = new CompletionProposal(replacementString, replacementOffset,
+                        replacementLength, cursorPosition);
+                props.add(completionProposal);
             } else if (readWord.endsWith(".")) {
-                props.add(new CompletionProposal(fgProposals[i], documentOffset, 0, fgProposals[i].length()));
+                String replacementString = methodWordsProposals[i];
+                int replacementOffset = documentOffset;
+                int replacementLength = 0;
+                int cursorPosition = methodWordsProposals[i].length();
+                CompletionProposal completionProposal = new CompletionProposal(replacementString, replacementOffset,
+                        replacementLength, cursorPosition);
+                props.add(completionProposal);
             }
         }
         return (ICompletionProposal[]) props.toArray(new ICompletionProposal[props.size()]);
     }
-    /* (non-Javadoc)
-     * Method declared on IContentAssistProcessor
-     */
+
     public IContextInformation[] computeContextInformation( ITextViewer viewer, int documentOffset ) {
-        IContextInformation[] result = new IContextInformation[5];
-        for( int i = 0; i < result.length; i++ )
-            result[i] = new ContextInformation(
-                    MessageFormat
-                            .format(JavaEditorMessages.getString("CompletionProcessor.ContextInfo.display.pattern"), new Object[]{new Integer(i), new Integer(documentOffset)}), //$NON-NLS-1$
-                    MessageFormat.format(
-                            JavaEditorMessages.getString("CompletionProcessor.ContextInfo.value.pattern"), new Object[]{new Integer(i), new Integer(documentOffset - 5), new Integer(documentOffset + 5)})); //$NON-NLS-1$
+        // CONTEXT INFO DISABLED FOR NOW
+        IContextInformation[] result = new IContextInformation[0];
+        // for( int i = 0; i < result.length; i++ ) {
+        // result[i] = new ContextInformation(
+        // MessageFormat
+        //                            .format(JavaEditorMessages.getString("CompletionProcessor.ContextInfo.display.pattern"), new Object[]{new Integer(i), new Integer(documentOffset)}), //$NON-NLS-1$
+        // MessageFormat.format(
+        //                            JavaEditorMessages.getString("CompletionProcessor.ContextInfo.value.pattern"), new Object[]{new Integer(i), new Integer(documentOffset - 5), new Integer(documentOffset + 5)})); //$NON-NLS-1$
+        // }
         return result;
     }
 
-    /* (non-Javadoc)
-     * Method declared on IContentAssistProcessor
-     */
     public char[] getCompletionProposalAutoActivationCharacters() {
         return new char[]{'.', '('};
     }
 
-    /* (non-Javadoc)
-     * Method declared on IContentAssistProcessor
-     */
     public char[] getContextInformationAutoActivationCharacters() {
+        // CONTEXT INFO DISABLED FOR NOW
         return new char[]{'#'};
     }
 
-    /* (non-Javadoc)
-     * Method declared on IContentAssistProcessor
-     */
     public IContextInformationValidator getContextInformationValidator() {
         return fValidator;
     }
 
-    /* (non-Javadoc)
-     * Method declared on IContentAssistProcessor
-     */
     public String getErrorMessage() {
         return null;
     }
