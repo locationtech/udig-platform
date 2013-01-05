@@ -74,6 +74,7 @@ import org.joda.time.DateTime;
 
 import eu.udig.jconsole.util.ImageCache;
 import eu.udig.omsbox.OmsBoxPlugin;
+import eu.udig.omsbox.core.IProcessListener;
 import eu.udig.omsbox.core.JConsoleOutputConsole;
 import eu.udig.omsbox.core.OmsScriptExecutor;
 import eu.udig.omsbox.ui.RunningProcessListDialog;
@@ -530,13 +531,16 @@ public class JavaEditor extends TextEditor {
         manager.showConsoleView(outputConsole);
 
         try {
+            final String scriptID = "geoscript_" + dateTimeString;
             OmsScriptExecutor executor = new OmsScriptExecutor();
-            // executor.addProcessListener(this);
             String loggerLevelGui = OmsBoxPlugin.getDefault().retrieveSavedLogLevel();
             String ramLevel = String.valueOf(OmsBoxPlugin.getDefault().retrieveSavedHeap());
+            executor.addProcessListener(new IProcessListener(){
+                public void onProcessStopped() {
+                    OmsBoxPlugin.getDefault().cleanProcess(scriptID);
+                }
+            });
             Process process = executor.exec(text, internalStream, errorStream, loggerLevelGui, ramLevel);
-
-            String scriptID = "geoscript_" + dateTimeString;
             OmsBoxPlugin.getDefault().addProcess(process, scriptID);
 
         } catch (Exception e) {
