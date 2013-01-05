@@ -10,20 +10,48 @@
  *******************************************************************************/
 package eu.udig.jconsole;
 
+import java.io.File;
+import java.net.URL;
+import java.util.List;
+
+import net.refractions.udig.catalog.ID;
+import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.catalog.IService;
+import net.refractions.udig.internal.ui.UDigByteAndLocalTransfer;
+import net.refractions.udig.project.internal.impl.LayerImpl;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.ITextViewerExtension5;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DropTargetAdapter;
+import org.eclipse.swt.dnd.DropTargetEvent;
+import org.eclipse.swt.dnd.DropTargetListener;
+import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.dnd.URLTransfer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
+import org.eclipse.ui.dnd.IDragAndDropService;
 import org.eclipse.ui.editors.text.TextEditor;
+import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 import eu.udig.omsbox.core.JConsoleOutputConsole;
@@ -39,6 +67,11 @@ public class JavaEditor extends TextEditor {
     /** The projection support */
     private ProjectionSupport fProjectionSupport;
     private JConsoleOutputConsole outputConsole;
+
+    private TextTransfer textTransfer;
+    private FileTransfer fileTransfer;
+    private URLTransfer urlTransfer;
+    private UDigByteAndLocalTransfer udigTransfer;
 
     /**
      * Default constructor.
@@ -218,6 +251,121 @@ public class JavaEditor extends TextEditor {
         fProjectionSupport.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.warning"); //$NON-NLS-1$
         fProjectionSupport.install();
         viewer.doOperation(ProjectionViewer.TOGGLE);
+
+        // MultiPassContentFormatter formatter=
+        // new MultiPassContentFormatter(
+        // getConfiguredDocumentPartitioning(viewer),
+        // IDocument.DEFAULT_CONTENT_TYPE);
+        //
+        // formatter.setMasterStrategy(
+        // new JavaFormattingStrategy());
+        // formatter.setSlaveStrategy(
+        // new CommentFormattingStrategy(...),
+        // IJavaPartitions.JAVA_DOC);
+        //
+
+        final IDragAndDropService dndService = (IDragAndDropService) this.getSite().getService(IDragAndDropService.class);
+        StyledText st = viewer.getTextWidget();
+        textTransfer = TextTransfer.getInstance();
+        fileTransfer = FileTransfer.getInstance();
+        urlTransfer = URLTransfer.getInstance();
+        udigTransfer = UDigByteAndLocalTransfer.getInstance();
+        Transfer[] types = new Transfer[]{fileTransfer, textTransfer, urlTransfer, udigTransfer};
+
+        dndService.addMergedDropTarget(st, DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT, //
+                types, dropTargetListener);
+    }
+
+    private DropTargetListener dropTargetListener = new DropTargetAdapter(){
+        public void drop( DropTargetEvent event ) {
+            if (textTransfer.isSupportedType(event.currentDataType)) {
+                String text = (String) event.data;
+                System.out.println(text);
+            }
+            if (fileTransfer.isSupportedType(event.currentDataType)) {
+                String[] files = (String[]) event.data;
+                if (files.length > 0) {
+                    File file = new File(files[0]);
+                    if (file.exists()) {
+                        pasteDropContent(file);
+                        JConsolePlugin.getDefault().setLastOpenFolder(file.getParentFile().getAbsolutePath());
+                    }
+                }
+            }
+            if (urlTransfer.isSupportedType(event.currentDataType)) {
+                Object data2 = event.data;
+                System.out.println(data2);
+            }
+            if (udigTransfer.isSupportedType(event.currentDataType)) {
+                try {
+                    Object data = event.data;
+                    if (data instanceof TreeSelection) {
+                        TreeSelection selection = (TreeSelection) data;
+                        Object firstElement = selection.getFirstElement();
+
+                        IGeoResource geoResource = null;
+                        if (firstElement instanceof LayerImpl) {
+                            LayerImpl layer = (LayerImpl) firstElement;
+                            geoResource = layer.getGeoResource();
+
+                        }
+                        if (firstElement instanceof IService) {
+                            IService service = (IService) firstElement;
+                            List< ? extends IGeoResource> resources = service.resources(new NullProgressMonitor());
+                            if (resources.size() > 0) {
+                                geoResource = resources.get(0);
+                            }
+                        }
+                        if (geoResource != null) {
+                            ID id = geoResource.getID();
+                            if (id != null)
+                                if (id.isFile()) {
+                                    File file = id.toFile();
+                                    if (file.exists()) {
+                                        pasteDropContent(file);
+                                        JConsolePlugin.getDefault().setLastOpenFolder(file.getParentFile().getAbsolutePath());
+                                    }
+                                } else if (id.toString().contains("#") && id.toString().startsWith("file")) {
+                                    // try to get the file
+                                    String string = id.toString().replaceAll("#", "");
+                                    URL url = new URL(string);
+                                    File file = new File(url.toURI());
+                                    if (file.exists()) {
+                                        pasteDropContent(file);
+                                        JConsolePlugin.getDefault().setLastOpenFolder(file.getParentFile().getAbsolutePath());
+                                    }
+                                } else {
+                                    System.out.println("Not a file: " + id.toString());
+                                }
+                        }
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        };
+    };
+
+    private void pasteDropContent( File file ) {
+        String path = file.getAbsolutePath();
+        try {
+            IDocumentProvider dp = getDocumentProvider();
+            IDocument doc = dp.getDocument(getEditorInput());
+            // int numberOfLines = doc.getNumberOfLines() - 1;
+            // int offset = doc.getLineOffset(numberOfLines);
+
+            ISelectionProvider selectionProvider = getSelectionProvider();
+            ISelection selection = selectionProvider.getSelection();
+            if (selection instanceof ITextSelection) {
+                ITextSelection textSelection = (ITextSelection) selection;
+                int offset = textSelection.getOffset();
+                doc.replace(offset, 0, path);
+            }
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
     }
 
     /*
