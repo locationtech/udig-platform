@@ -29,6 +29,7 @@ public class ImageCache {
 
     public static final String START = "icons/start.gif";
     public static final String STOP = "icons/stop.gif";
+    public static final String TEMPLATE = "icons/template.gif";
 
     private static ImageCache imageCache;
 

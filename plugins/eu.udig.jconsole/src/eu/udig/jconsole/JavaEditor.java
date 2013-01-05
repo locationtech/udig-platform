@@ -11,7 +11,9 @@
 package eu.udig.jconsole;
 
 import java.io.File;
+import java.io.PrintStream;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -24,8 +26,10 @@ import net.refractions.udig.project.internal.impl.LayerImpl;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
@@ -49,17 +53,31 @@ import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.URLTransfer;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
+import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.dnd.IDragAndDropService;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
+import org.joda.time.DateTime;
 
+import eu.udig.jconsole.util.ImageCache;
+import eu.udig.omsbox.OmsBoxPlugin;
 import eu.udig.omsbox.core.JConsoleOutputConsole;
+import eu.udig.omsbox.core.OmsScriptExecutor;
+import eu.udig.omsbox.ui.RunningProcessListDialog;
+import eu.udig.omsbox.utils.OmsBoxConstants;
 
 /**
  * Java specific text editor.
@@ -115,8 +133,7 @@ public class JavaEditor extends TextEditor {
         // This action will fire a CONTENTASSIST_PROPOSALS operation
         // when executed
         IAction action = new TextOperationAction(//
-                bundle,
-                "ContentAssistProposal", this, SourceViewer.CONTENTASSIST_PROPOSALS);
+                bundle, "ContentAssistProposal", this, SourceViewer.CONTENTASSIST_PROPOSALS);
         action.setActionDefinitionId(CONTENTASSIST_PROPOSAL_ID);
         // Tell the editor about this new action
         setAction(CONTENTASSIST_PROPOSAL_ID, action);
@@ -264,7 +281,57 @@ public class JavaEditor extends TextEditor {
      * @see org.eclipse.ui.texteditor.ExtendedTextEditor#createPartControl(org.eclipse.swt.widgets.Composite)
      */
     public void createPartControl( Composite parent ) {
-        super.createPartControl(parent);
+        Composite mainComposite = new Composite(parent, SWT.NONE);
+        mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        GridLayout mainLayout = new GridLayout(1, false);
+        mainLayout.marginHeight = 0;
+        mainLayout.marginWidth = 0;
+        mainComposite.setLayout(mainLayout);
+
+        Composite buttonsComposite = new Composite(mainComposite, SWT.NONE);
+        buttonsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        GridLayout buttonsLayout = new GridLayout(3, true);
+        buttonsLayout.marginHeight = 0;
+        buttonsLayout.marginWidth = 0;
+        buttonsComposite.setLayout(buttonsLayout);
+
+        Button startButton = new Button(buttonsComposite, SWT.PUSH);
+        startButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        startButton.setToolTipText("Start the current script");
+        startButton.setImage(ImageCache.getInstance().getImage(ImageCache.START));
+        startButton.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                startScript();
+            }
+        });
+        Button stopButton = new Button(buttonsComposite, SWT.PUSH);
+        stopButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        stopButton.setToolTipText("Stop a running script");
+        stopButton.setImage(ImageCache.getInstance().getImage(ImageCache.STOP));
+        stopButton.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                stopScript();
+            }
+        });
+        Button templateButton = new Button(buttonsComposite, SWT.PUSH);
+        templateButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        templateButton.setToolTipText("Insert commonly used imports");
+        templateButton.setImage(ImageCache.getInstance().getImage(ImageCache.TEMPLATE));
+        templateButton.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                insertTemplates();
+            }
+        });
+
+        Composite editorComposite = new Composite(mainComposite, SWT.BORDER);
+        editorComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        FillLayout editorLayout = new FillLayout();
+        editorLayout.marginHeight = 0;
+        editorLayout.marginWidth = 0;
+        editorComposite.setLayout(editorLayout);
+
+        super.createPartControl(editorComposite);
+
         ProjectionViewer viewer = (ProjectionViewer) getSourceViewer();
         fProjectionSupport = new ProjectionSupport(viewer, getAnnotationAccess(), getSharedColors());
         fProjectionSupport.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.error"); //$NON-NLS-1$
@@ -397,5 +464,84 @@ public class JavaEditor extends TextEditor {
             ITextViewerExtension5 extension = (ITextViewerExtension5) viewer;
             extension.exposeModelRange(new Region(offset, length));
         }
+    }
+
+    private void insertTemplates() {
+        IDocument doc = getDocumentProvider().getDocument(getEditorInput());
+        String text = doc.get();
+        StringBuilder sb = new StringBuilder();
+        sb.append("import geoscript.geom.*\n");
+        sb.append("import geoscript.proj.*\n");
+        sb.append("import geoscript.render.*\n");
+        sb.append("import geoscript.layer.*\n");
+        sb.append("import geoscript.style.*\n");
+        sb.append("import geoscript.viewer.*\n");
+
+        StringBuilder finalSb = new StringBuilder();
+        finalSb.append(sb.toString());
+        finalSb.append("\n");
+        finalSb.append(text);
+
+        doc.set(finalSb.toString());
+
+    }
+
+    private void stopScript() {
+        HashMap<String, Process> runningProcessesMap = OmsBoxPlugin.getDefault().getRunningProcessesMap();
+
+        Shell shell = getEditorSite().getShell();
+        if (runningProcessesMap.size() == 0) {
+            MessageDialog.openInformation(shell, "Process List", "No running processes available at the current time");
+        } else {
+            RunningProcessListDialog dialog = new RunningProcessListDialog();
+            dialog.open(shell, SWT.MULTI);
+        }
+    }
+
+    private void startScript() {
+        IDocument doc = getDocumentProvider().getDocument(getEditorInput());
+        // JConsoleOutputConsole outputConsole = getOutputConsole();
+        // outputConsole.clearConsole();
+
+        String text = null;
+        ISelection selection = getSelectionProvider().getSelection();
+        if (selection instanceof ITextSelection) {
+            ITextSelection textSelection = (ITextSelection) selection;
+            if (!textSelection.isEmpty()) {
+                text = textSelection.getText();
+            }
+        }
+        if (text == null || 0 >= text.length()) {
+            text = doc.get();
+        }
+
+        String dateTimeString = new DateTime().toString(OmsBoxConstants.dateTimeFormatterYYYYMMDDHHMMSS);
+
+        String title = getTitle();
+        JConsoleOutputConsole outputConsole = new JConsoleOutputConsole("Script: " + title + " (" + dateTimeString + " )");
+        outputConsole.clearConsole();
+
+        PrintStream internalStream = outputConsole.internal;
+        // PrintStream outputStream = outputConsole.out;
+        PrintStream errorStream = outputConsole.err;
+        // open console
+        IConsoleManager manager = org.eclipse.ui.console.ConsolePlugin.getDefault().getConsoleManager();
+        manager.addConsoles(new IConsole[]{outputConsole});
+        manager.showConsoleView(outputConsole);
+
+        try {
+            OmsScriptExecutor executor = new OmsScriptExecutor();
+            // executor.addProcessListener(this);
+            String loggerLevelGui = OmsBoxPlugin.getDefault().retrieveSavedLogLevel();
+            String ramLevel = String.valueOf(OmsBoxPlugin.getDefault().retrieveSavedHeap());
+            Process process = executor.exec(text, internalStream, errorStream, loggerLevelGui, ramLevel);
+
+            String scriptID = "geoscript_" + dateTimeString;
+            OmsBoxPlugin.getDefault().addProcess(process, scriptID);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

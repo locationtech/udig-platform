@@ -11,23 +11,14 @@
 package eu.udig.jconsole;
 
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.Separator;
-
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchActionConstants;
-
+import org.eclipse.ui.editors.text.TextEditorActionContributor;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.RetargetTextEditorAction;
-import org.eclipse.ui.texteditor.TextEditorAction;
-
-import org.eclipse.ui.editors.text.TextEditorActionContributor;
-
-import eu.udig.jconsole.actions.AddCommonImportsAction;
-import eu.udig.jconsole.actions.StartStopAction;
 
 /**
  * Contributes interesting Java actions to the desktop's Edit menu and the toolbar.
@@ -36,24 +27,20 @@ public class JavaActionContributor extends TextEditorActionContributor {
 
     protected RetargetTextEditorAction fContentAssistProposal;
     protected RetargetTextEditorAction fContentAssistTip;
-    protected TextEditorAction fToggleStartStop;
-    protected TextEditorAction templateAction;
+    // protected TextEditorAction fToggleStartStop;
+    // protected TextEditorAction templateAction;
 
     /**
      * Default constructor.
      */
     public JavaActionContributor() {
         super();
-        fContentAssistProposal = new RetargetTextEditorAction(JavaEditorMessages
-                .getResourceBundle(), "ContentAssistProposal."); //$NON-NLS-1$
-        fContentAssistProposal
-                .setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
-        fContentAssistTip = new RetargetTextEditorAction(JavaEditorMessages.getResourceBundle(),
-                "ContentAssistTip."); //$NON-NLS-1$
-        fContentAssistTip
-                .setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_CONTEXT_INFORMATION);
-        fToggleStartStop = new StartStopAction();
-        templateAction = new AddCommonImportsAction();
+        fContentAssistProposal = new RetargetTextEditorAction(JavaEditorMessages.getResourceBundle(), "ContentAssistProposal."); //$NON-NLS-1$
+        fContentAssistProposal.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
+        fContentAssistTip = new RetargetTextEditorAction(JavaEditorMessages.getResourceBundle(), "ContentAssistTip."); //$NON-NLS-1$
+        fContentAssistTip.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_CONTEXT_INFORMATION);
+        // fToggleStartStop = new StartStopAction();
+        // templateAction = new AddCommonImportsAction();
     }
 
     /*
@@ -66,17 +53,17 @@ public class JavaActionContributor extends TextEditorActionContributor {
         IMenuManager editMenu = menuManager.findMenuUsingPath(IWorkbenchActionConstants.M_EDIT);
         if (editMenu != null) {
             editMenu.removeAll();
-//            editMenu.add(new Separator());
-//            editMenu.add(fContentAssistProposal);
-//            editMenu.add(fContentAssistTip);
+            // editMenu.add(new Separator());
+            // editMenu.add(fContentAssistProposal);
+            // editMenu.add(fContentAssistTip);
         }
 
-        IToolBarManager toolBarManager = bars.getToolBarManager();
-        if (toolBarManager != null) {
-            toolBarManager.add(new Separator());
-            toolBarManager.add(fToggleStartStop);
-            toolBarManager.add(templateAction);
-        }
+        // IToolBarManager toolBarManager = bars.getToolBarManager();
+        // if (toolBarManager != null) {
+        // toolBarManager.add(new Separator());
+        // toolBarManager.add(fToggleStartStop);
+        // toolBarManager.add(templateAction);
+        // }
     }
 
     private void doSetActiveEditor( IEditorPart part ) {
@@ -86,15 +73,13 @@ public class JavaActionContributor extends TextEditorActionContributor {
         if (part instanceof ITextEditor)
             editor = (ITextEditor) part;
 
-        fContentAssistProposal.setAction(getAction(editor,
-                ITextEditorActionConstants.CONTENT_ASSIST));
-        fContentAssistTip.setAction(getAction(editor,
-                ITextEditorActionConstants.CONTENT_ASSIST_CONTEXT_INFORMATION));
+        fContentAssistProposal.setAction(getAction(editor, ITextEditorActionConstants.CONTENT_ASSIST));
+        fContentAssistTip.setAction(getAction(editor, ITextEditorActionConstants.CONTENT_ASSIST_CONTEXT_INFORMATION));
 
-        fToggleStartStop.setEditor(editor);
-        fToggleStartStop.update();
-        templateAction.setEditor(editor);
-        templateAction.update();
+        // fToggleStartStop.setEditor(editor);
+        // fToggleStartStop.update();
+        // templateAction.setEditor(editor);
+        // templateAction.update();
     }
 
     /*
