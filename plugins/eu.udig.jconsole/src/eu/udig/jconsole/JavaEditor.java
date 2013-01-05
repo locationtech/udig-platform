@@ -13,6 +13,7 @@ package eu.udig.jconsole;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
@@ -23,6 +24,7 @@ import net.refractions.udig.project.internal.impl.LayerImpl;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
@@ -31,11 +33,13 @@ import org.eclipse.jface.text.ITextViewerExtension5;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
+import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetAdapter;
@@ -52,6 +56,7 @@ import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.dnd.IDragAndDropService;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
+import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 import eu.udig.omsbox.core.JConsoleOutputConsole;
@@ -72,6 +77,8 @@ public class JavaEditor extends TextEditor {
     private FileTransfer fileTransfer;
     private URLTransfer urlTransfer;
     private UDigByteAndLocalTransfer udigTransfer;
+
+    private static final String CONTENTASSIST_PROPOSAL_ID = "eu.udig.jconsole.java.JavaCompletionProcessor";
 
     /**
      * Default constructor.
@@ -103,6 +110,19 @@ public class JavaEditor extends TextEditor {
      */
     protected void createActions() {
         super.createActions();
+
+        ResourceBundle bundle = JavaEditorMessages.getResourceBundle();
+        // This action will fire a CONTENTASSIST_PROPOSALS operation
+        // when executed
+        IAction action = new TextOperationAction(//
+                bundle,
+                "ContentAssistProposal", this, SourceViewer.CONTENTASSIST_PROPOSALS);
+        action.setActionDefinitionId(CONTENTASSIST_PROPOSAL_ID);
+        // Tell the editor about this new action
+        setAction(CONTENTASSIST_PROPOSAL_ID, action);
+        // Tell the editor to execute this action
+        // when Ctrl+Spacebar is pressed
+        setActionActivationCode(CONTENTASSIST_PROPOSAL_ID, ' ', -1, SWT.CTRL);
     }
 
     /** The <code>JavaEditor</code> implementation of this
