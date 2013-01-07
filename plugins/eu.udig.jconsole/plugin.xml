@@ -53,4 +53,28 @@
             </action>
       </actionSet>
    </extension>
+   <extension
+         point="org.eclipse.ui.activities">
+      <activity
+            description="Clean up extentions from contributed plugins."
+            id="eu.udig.jconsole.activity"
+            name="CleanupActitvity">
+      </activity>
+      <category
+            id="eu.udig.jconsole.activitycategory"
+            name="Console Activity Category">
+      </category>
+      <categoryActivityBinding
+            activityId="eu.udig.jconsole.activity"
+            categoryId="eu.udig.jconsole.activitycategory">
+      </categoryActivityBinding>
+      <activityPatternBinding
+            activityId="eu.udig.jconsole.activity"
+            pattern="org.eclipse.ui.ide/.*">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="eu.udig.jconsole.activity"
+            pattern="org.eclipse.ui.editors/.*">
+      </activityPatternBinding>
+   </extension>
 </plugin>
