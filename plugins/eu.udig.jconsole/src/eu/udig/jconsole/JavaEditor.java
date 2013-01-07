@@ -334,6 +334,7 @@ public class JavaEditor extends TextEditor {
         dndService.addMergedDropTarget(st, DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT, //
                 types, dropTargetListener);
     }
+    
     private void addEditorActions( Composite mainComposite ) {
         Composite buttonsComposite = new Composite(mainComposite, SWT.NONE);
         buttonsComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));

@@ -43,7 +43,7 @@ public class ConsoleEditorActionNew implements IWorkbenchWindowActionDelegate {
 
     public void run( IAction action ) {
 
-        JConsolePlugin.getDefault().gatherModules();
+        // JConsolePlugin.getDefault().gatherModules();
 
         try {
             File lastOpenFolder = JConsolePlugin.getDefault().getLastOpenFolder();

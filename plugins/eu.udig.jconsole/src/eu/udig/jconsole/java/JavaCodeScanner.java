@@ -11,8 +11,6 @@
 package eu.udig.jconsole.java;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.jface.text.TextAttribute;
@@ -26,13 +24,10 @@ import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.rules.WordRule;
 import org.eclipse.swt.SWT;
 
-import eu.udig.jconsole.JConsolePlugin;
 import eu.udig.jconsole.util.JavaColorProvider;
 import eu.udig.jconsole.util.JavaWhitespaceDetector;
 import eu.udig.jconsole.util.JavaWordDetector;
 import eu.udig.jconsole.util.Keywords;
-import eu.udig.omsbox.core.FieldData;
-import eu.udig.omsbox.core.ModuleDescription;
 
 /**
  * A Java code scanner.
@@ -50,23 +45,26 @@ public class JavaCodeScanner extends RuleBasedScanner {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public JavaCodeScanner( JavaColorProvider provider ) {
 
-        HashMap<String, List<ModuleDescription>> modulesMap = JConsolePlugin.getDefault().gatherModules();
-        Collection<List<ModuleDescription>> modulesDescriptions = modulesMap.values();
-        for( List<ModuleDescription> modulesDescriptionList : modulesDescriptions ) {
-            for( ModuleDescription moduleDescription : modulesDescriptionList ) {
-                List<FieldData> inputsList = moduleDescription.getInputsList();
-                for( FieldData inFieldData : inputsList ) {
-                    moduleFieldsNameList.add(inFieldData.fieldName);
-                }
-                List<FieldData> outputsList = moduleDescription.getOutputsList();
-                for( FieldData outFieldData : outputsList ) {
-                    moduleFieldsNameList.add(outFieldData.fieldName);
-                }
-                // String name = moduleDescription.getName();
-                String className = moduleDescription.getClassName();
-                moduleClassesNameList.add(className);
-            }
-        }
+        // TODO review this if oms modules should be added
+        //
+        // HashMap<String, List<ModuleDescription>> modulesMap =
+        // JConsolePlugin.getDefault().gatherModules();
+        // Collection<List<ModuleDescription>> modulesDescriptions = modulesMap.values();
+        // for( List<ModuleDescription> modulesDescriptionList : modulesDescriptions ) {
+        // for( ModuleDescription moduleDescription : modulesDescriptionList ) {
+        // List<FieldData> inputsList = moduleDescription.getInputsList();
+        // for( FieldData inFieldData : inputsList ) {
+        // moduleFieldsNameList.add(inFieldData.fieldName);
+        // }
+        // List<FieldData> outputsList = moduleDescription.getOutputsList();
+        // for( FieldData outFieldData : outputsList ) {
+        // moduleFieldsNameList.add(outFieldData.fieldName);
+        // }
+        // // String name = moduleDescription.getName();
+        // String className = moduleDescription.getClassName();
+        // moduleClassesNameList.add(className);
+        // }
+        // }
 
         IToken string = new Token(new TextAttribute(provider.getColor(JavaColorProvider.STRING)));
         IToken comment = new Token(new TextAttribute(provider.getColor(JavaColorProvider.SINGLE_LINE_COMMENT)));

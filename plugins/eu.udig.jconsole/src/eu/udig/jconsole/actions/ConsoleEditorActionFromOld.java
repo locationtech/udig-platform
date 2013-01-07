@@ -40,7 +40,7 @@ public class ConsoleEditorActionFromOld implements IWorkbenchWindowActionDelegat
     }
 
     public void run( IAction action ) {
-        JConsolePlugin.getDefault().gatherModules();
+        // JConsolePlugin.getDefault().gatherModules();
 
         try {
 
