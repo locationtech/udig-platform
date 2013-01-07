@@ -26,7 +26,6 @@ import net.refractions.udig.project.internal.impl.LayerImpl;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -53,13 +52,17 @@ import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.URLTransfer;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.console.ConsolePlugin;
@@ -290,14 +293,7 @@ public class JavaEditor extends TextEditor {
         mainLayout.marginWidth = 0;
         mainComposite.setLayout(mainLayout);
 
-        Composite buttonsComposite = new Composite(mainComposite, SWT.NONE);
-        buttonsComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        GridLayout buttonsLayout = new GridLayout(3, true);
-        buttonsLayout.marginHeight = 0;
-        buttonsLayout.marginWidth = 0;
-        buttonsComposite.setLayout(buttonsLayout);
-
-        extracted(buttonsComposite);
+        addEditorActions(mainComposite);
 
         Composite editorComposite = new Composite(mainComposite, SWT.BORDER);
         editorComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -338,7 +334,15 @@ public class JavaEditor extends TextEditor {
         dndService.addMergedDropTarget(st, DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT, //
                 types, dropTargetListener);
     }
-    private void extracted( Composite buttonsComposite ) {
+    private void addEditorActions( Composite mainComposite ) {
+        Composite buttonsComposite = new Composite(mainComposite, SWT.NONE);
+        buttonsComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        GridLayout buttonsLayout = new GridLayout(6, false);
+        buttonsLayout.marginTop = 1;
+        buttonsLayout.marginBottom = 0;
+        buttonsLayout.marginWidth = 1;
+        buttonsComposite.setLayout(buttonsLayout);
+
         Button startButton = new Button(buttonsComposite, SWT.PUSH);
         startButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         startButton.setToolTipText("Start the current script");
@@ -366,6 +370,60 @@ public class JavaEditor extends TextEditor {
                 insertTemplates();
             }
         });
+        
+        Label spacer = new Label(buttonsComposite, SWT.NONE);
+        spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
+
+        final Combo heapCombo = new Combo(buttonsComposite, SWT.DROP_DOWN);
+        heapCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        heapCombo.setItems(OmsBoxConstants.HEAPLEVELS);
+        heapCombo.setToolTipText("Memory [MB]");
+        int savedHeapLevel = OmsBoxPlugin.getDefault().retrieveSavedHeap();
+        for( int i = 0; i < OmsBoxConstants.HEAPLEVELS.length; i++ ) {
+            if (OmsBoxConstants.HEAPLEVELS[i].equals(String.valueOf(savedHeapLevel))) {
+                heapCombo.select(i);
+                break;
+            }
+        }
+        heapCombo.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                String item = heapCombo.getText();
+                OmsBoxPlugin.getDefault().saveHeap(Integer.parseInt(item));
+            }
+        });
+        heapCombo.addModifyListener(new ModifyListener(){
+            public void modifyText( ModifyEvent e ) {
+                String item = heapCombo.getText();
+                try {
+                    Integer.parseInt(item);
+                } catch (Exception ex) {
+                    return;
+                }
+                if (item.length() > 0) {
+                    OmsBoxPlugin.getDefault().saveHeap(Integer.parseInt(item));
+                }
+            }
+        });
+
+        final Combo logCombo = new Combo(buttonsComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        logCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        logCombo.setItems(OmsBoxConstants.LOGLEVELS_GUI);
+        logCombo.setToolTipText("Enable/disable logging");
+        String savedLogLevel = OmsBoxPlugin.getDefault().retrieveSavedLogLevel();
+        for( int i = 0; i < OmsBoxConstants.LOGLEVELS_GUI.length; i++ ) {
+            if (OmsBoxConstants.LOGLEVELS_GUI[i].equals(savedLogLevel)) {
+                logCombo.select(i);
+                break;
+            }
+        }
+        logCombo.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                String item = logCombo.getText();
+                OmsBoxPlugin.getDefault().saveLogLevel(item);
+            }
+        });
+
     }
 
     private DropTargetListener dropTargetListener = new DropTargetAdapter(){
