@@ -73,6 +73,7 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.joda.time.DateTime;
 
 import eu.udig.jconsole.util.ImageCache;
+import eu.udig.jconsole.util.Keywords;
 import eu.udig.omsbox.OmsBoxPlugin;
 import eu.udig.omsbox.core.IProcessListener;
 import eu.udig.omsbox.core.JConsoleOutputConsole;
@@ -290,39 +291,13 @@ public class JavaEditor extends TextEditor {
         mainComposite.setLayout(mainLayout);
 
         Composite buttonsComposite = new Composite(mainComposite, SWT.NONE);
-        buttonsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        buttonsComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         GridLayout buttonsLayout = new GridLayout(3, true);
         buttonsLayout.marginHeight = 0;
         buttonsLayout.marginWidth = 0;
         buttonsComposite.setLayout(buttonsLayout);
 
-        Button startButton = new Button(buttonsComposite, SWT.PUSH);
-        startButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-        startButton.setToolTipText("Start the current script");
-        startButton.setImage(ImageCache.getInstance().getImage(ImageCache.START));
-        startButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
-                startScript();
-            }
-        });
-        Button stopButton = new Button(buttonsComposite, SWT.PUSH);
-        stopButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-        stopButton.setToolTipText("Stop a running script");
-        stopButton.setImage(ImageCache.getInstance().getImage(ImageCache.STOP));
-        stopButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
-                stopScript();
-            }
-        });
-        Button templateButton = new Button(buttonsComposite, SWT.PUSH);
-        templateButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-        templateButton.setToolTipText("Insert commonly used imports");
-        templateButton.setImage(ImageCache.getInstance().getImage(ImageCache.TEMPLATE));
-        templateButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
-                insertTemplates();
-            }
-        });
+        extracted(buttonsComposite);
 
         Composite editorComposite = new Composite(mainComposite, SWT.BORDER);
         editorComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -362,6 +337,35 @@ public class JavaEditor extends TextEditor {
 
         dndService.addMergedDropTarget(st, DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT, //
                 types, dropTargetListener);
+    }
+    private void extracted( Composite buttonsComposite ) {
+        Button startButton = new Button(buttonsComposite, SWT.PUSH);
+        startButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        startButton.setToolTipText("Start the current script");
+        startButton.setImage(ImageCache.getInstance().getImage(ImageCache.START));
+        startButton.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                startScript();
+            }
+        });
+        Button stopButton = new Button(buttonsComposite, SWT.PUSH);
+        stopButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        stopButton.setToolTipText("Stop a running script");
+        stopButton.setImage(ImageCache.getInstance().getImage(ImageCache.STOP));
+        stopButton.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                stopScript();
+            }
+        });
+        Button templateButton = new Button(buttonsComposite, SWT.PUSH);
+        templateButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        templateButton.setToolTipText("Insert commonly used imports");
+        templateButton.setImage(ImageCache.getInstance().getImage(ImageCache.TEMPLATE));
+        templateButton.addSelectionListener(new SelectionAdapter(){
+            public void widgetSelected( SelectionEvent e ) {
+                insertTemplates();
+            }
+        });
     }
 
     private DropTargetListener dropTargetListener = new DropTargetAdapter(){
@@ -471,12 +475,10 @@ public class JavaEditor extends TextEditor {
         IDocument doc = getDocumentProvider().getDocument(getEditorInput());
         String text = doc.get();
         StringBuilder sb = new StringBuilder();
-        sb.append("import geoscript.geom.*\n");
-        sb.append("import geoscript.proj.*\n");
-        sb.append("import geoscript.render.*\n");
-        sb.append("import geoscript.layer.*\n");
-        sb.append("import geoscript.style.*\n");
-        sb.append("import geoscript.viewer.*\n");
+        List<String> values = Keywords.getValues(Keywords.IMPORTS);
+        for( String value : values ) {
+            sb.append(value).append("\n");
+        }
 
         StringBuilder finalSb = new StringBuilder();
         finalSb.append(sb.toString());

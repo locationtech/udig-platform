@@ -3,6 +3,7 @@ Expression
 Fill
 Font
 Font("normal", "bold", 10, "Arial")
+Function
 GeoJSONWriter()
 GeoRSSWriter()
 Geometry

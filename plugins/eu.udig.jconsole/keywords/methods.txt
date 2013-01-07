@@ -17,6 +17,7 @@ font
 forceLeftToRight
 fromWKT
 fromWKT("wkt")
+functionNames
 geoJSON
 gml2
 gml3
