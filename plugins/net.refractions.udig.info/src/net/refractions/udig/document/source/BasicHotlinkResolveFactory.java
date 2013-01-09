@@ -14,7 +14,6 @@ import java.io.IOException;
 import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.catalog.IResolve;
 import net.refractions.udig.catalog.IResolveAdapterFactory;
-import net.refractions.udig.catalog.PostgisGeoResource2;
 import net.refractions.udig.catalog.document.IHotlinkSource;
 import net.refractions.udig.document.ui.DocumentPropertyPage;
 
@@ -39,7 +38,7 @@ public class BasicHotlinkResolveFactory implements IResolveAdapterFactory {
 
     @Override
     public boolean canAdapt(IResolve resolve, Class<? extends Object> adapter) {
-        if (resolve instanceof PostgisGeoResource2) {
+        if (resolve instanceof IGeoResource) {
             if (adapter.isAssignableFrom(IHotlinkSource.class)) {
                 return true;
             }    
@@ -50,8 +49,8 @@ public class BasicHotlinkResolveFactory implements IResolveAdapterFactory {
     @Override
     public <T> T adapt(IResolve resolve, Class<T> adapter, IProgressMonitor monitor)
             throws IOException {
-        if (resolve instanceof PostgisGeoResource2) {
-            final PostgisGeoResource2 resource = (PostgisGeoResource2) resolve;
+        if (resolve instanceof IGeoResource) {
+            final IGeoResource resource = (IGeoResource) resolve;
             if (adapter.isAssignableFrom(IHotlinkSource.class)) {
                 final IHotlinkSource source = new BasicHotlinkSource(resource);
                 return adapter.cast(source);
