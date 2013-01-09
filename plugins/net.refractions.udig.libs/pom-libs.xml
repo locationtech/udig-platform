@@ -395,6 +395,12 @@
             <groupId>jfree</groupId>
             <artifactId>jfreechart</artifactId>
             <version>${jfreechart.version}</version>
+            <exclusions>
+                <exclusion>
+		          <groupId>jfree</groupId>
+		          <artifactId>jcommon</artifactId>
+		        </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>jfree</groupId>
@@ -405,6 +411,11 @@
             <groupId>jfree</groupId>
             <artifactId>jfreechart-experimental</artifactId>
             <version>${jfreechart.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>jfree</groupId>
+            <artifactId>jcommon</artifactId>
+            <version>1.0.16</version>
         </dependency>
 
         <!-- these may already be accounted for by the above plug-ins -->

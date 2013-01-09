@@ -19,7 +19,7 @@ uDig was originally started by `Refractions Research <http://www.refractions.net
 
 uDig is intended to be used in conjunction with your existing investment in spatial information. We are of the opinion that data (your data) is what is important. To that end we support a wide range of formats, compatibility with a range of spatial databases and accessing of information services such as WMS and WFS. This information is combined with excellent desktop integration.
 
-The use of an open source license (`EPL <http://www.eclipse.org/legal/epl-v10.html>`_) allows the uDig project to be used by your organization with no per seat license.
+The use of an open source license (`EPL <http://www.eclipse.org/legal/epl-v10.html>`_ and `BSD <http://opensource.org/licenses/BSD-3-Clause>`_) allows the uDig project to be used by your organization with no per seat license.
 Any fixes you make to the core uDig codebase; do have to be passed on to your users. May we recommend submitting a patch as an easy way to accomplish this goal.
 
 For more information and a selection of case studies:
