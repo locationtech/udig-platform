@@ -218,7 +218,7 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
             text = MapcalculatorUtils.createMapcalcPanel(parent, rows);
         } else {
             text = new StyledText(parent, SWT.MULTI | SWT.WRAP | SWT.LEAD | SWT.BORDER | SWT.V_SCROLL);
-            GridData textGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+            GridData textGD = new GridData(SWT.FILL, SWT.CENTER, true, true);
             textGD.verticalSpan = rows;
             textGD.widthHint = 100;
             text.setLayoutData(textGD);
@@ -241,7 +241,7 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
             }
             data.fieldValue = checkBackSlash(data.fieldValue, isFile);
             text.setText(data.fieldValue);
-            text.setSelection(text.getCharCount());
+            // text.setSelection(text.getCharCount());
         }
 
         if (isMultiline) {
@@ -269,7 +269,7 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
                     } else {
                         path = checkBackSlash(path, isFile);
                         text.setText(path);
-                        text.setSelection(text.getCharCount());
+                        // text.setSelection(text.getCharCount());
                         setDataValue();
                     }
                     OmsBoxPlugin.getDefault().setLastFolderChosen(fileDialog.getFilterPath());
@@ -293,7 +293,7 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
                     } else {
                         path = checkBackSlash(path, isFile);
                         text.setText(path);
-                        text.setSelection(text.getCharCount());
+                        // text.setSelection(text.getCharCount());
                         setDataValue();
                     }
                     OmsBoxPlugin.getDefault().setLastFolderChosen(directoryDialog.getFilterPath());
@@ -431,11 +431,11 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
 
     public void modifyText( ModifyEvent e ) {
         setDataValue();
-        text.setSelection(text.getCharCount());
+        // text.setSelection(text.getCharCount());
     }
 
     public void focusGained( FocusEvent e ) {
-        text.setSelection(text.getCharCount());
+        // text.setSelection(text.getCharCount());
     }
 
     @Override
@@ -647,7 +647,7 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
             insertTextAtCaretPosition(text, map);
         } else {
             text.setText(file.getAbsolutePath());
-            text.setSelection(text.getCharCount());
+            // text.setSelection(text.getCharCount());
         }
     }
 
