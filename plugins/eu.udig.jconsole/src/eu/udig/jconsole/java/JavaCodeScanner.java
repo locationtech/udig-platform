@@ -113,9 +113,17 @@ public class JavaCodeScanner extends RuleBasedScanner {
         for( int i = 0; i < geoscript.size(); i++ )
             wordRule.addWord(geoscript.get(i), geoscriptTok);
 
+        List<String> jgtModules = Keywords.getValues(Keywords.JGTMODULES);
+        for( int i = 0; i < jgtModules.size(); i++ )
+            wordRule.addWord(jgtModules.get(i), geoscriptTok);
+
         List<String> method = Keywords.getValues(Keywords.METHODS);
         for( int i = 0; i < method.size(); i++ )
             wordRule.addWord(method.get(i), methodTok);
+
+        List<String> jgt_method = Keywords.getValues(Keywords.JGTMETHODS);
+        for( int i = 0; i < jgt_method.size(); i++ )
+            wordRule.addWord(jgt_method.get(i), methodTok);
 
         List<String> oms = Keywords.getValues(Keywords.OMS);
         for( int i = 0; i < oms.size(); i++ ) {

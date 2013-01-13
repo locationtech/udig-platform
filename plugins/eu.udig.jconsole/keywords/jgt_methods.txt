@@ -214,6 +214,7 @@ pRanges
 pRegex
 pRemove
 pRes
+process()
 pRows
 pScaleX
 pScaleY

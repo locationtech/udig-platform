@@ -23,7 +23,6 @@ import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationPresenter;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 
-import eu.udig.jconsole.JConsolePlugin;
 import eu.udig.jconsole.util.Keywords;
 
 /**
@@ -76,12 +75,17 @@ public class JavaCompletionProcessor implements IContentAssistProcessor {
             all.addAll(Keywords.getValues(Keywords.KEYWORDS));
             all.addAll(Keywords.getValues(Keywords.TYPES));
             all.addAll(Keywords.getValues(Keywords.CONSTANTS));
+            all.addAll(Keywords.getValues(Keywords.JGTMODULES));
 
             singleWordsProposals = all.toArray(new String[0]);
         }
         if (methodWordsProposals == null) {
+            List<String> all = new ArrayList<String>();
             List<String> methods = Keywords.getValues(Keywords.METHODS);
-            methodWordsProposals = methods.toArray(new String[0]);
+            List<String> jgtmethods = Keywords.getValues(Keywords.JGTMETHODS);
+            all.addAll(methods);
+            all.addAll(jgtmethods);
+            methodWordsProposals = all.toArray(new String[0]);
         }
     }
 

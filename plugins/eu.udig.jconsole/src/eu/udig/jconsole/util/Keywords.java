@@ -35,7 +35,9 @@ public enum Keywords {
     KEYWORDS("keywords/keywords.txt"), //
     OMS("keywords/oms.txt"), //
     TYPES("keywords/types.txt"), //
-    IMPORTS("keywords/imports.txt");
+    IMPORTS("keywords/imports.txt"), //
+    JGTMODULES("keywords/jgt_classes.txt"), //
+    JGTMETHODS("keywords/jgt_methods.txt");
 
     private static HashMap<String, List<String>> keywordsMap = new HashMap<String, List<String>>();
     private final String path;
