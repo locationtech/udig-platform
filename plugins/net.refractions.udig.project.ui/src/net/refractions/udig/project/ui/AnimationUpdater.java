@@ -77,6 +77,7 @@ public class AnimationUpdater {
         }
     }
 
+    
     /**
      * Should only be used for testing
      */
@@ -132,8 +133,16 @@ public class AnimationUpdater {
             synchronized (AnimationUpdater.class) {
                 List<AnimationUpdater> updaters = displayToTaskMap.get(frameinterval);
                 for( AnimationUpdater updater : updaters ) {
-                    if (!updater.display.isDisposed() && updater.display.isVisible())
+                    if (!updater.display.isDisposed() && updater.display.isVisible()){
                         updater.run();
+                    }else{
+                    	//we want to remove this updater
+                    	for (IAnimation anim: updater.getAnimations()){
+                    		anim.setValid(false);
+                    		anim.dispose();
+                    	}
+                    	updater.remove(updater);
+                    }
                 }
             }
         }
