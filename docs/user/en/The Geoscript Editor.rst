@@ -92,7 +92,8 @@ button and the imports are added to the top. After that the script will work:
    :align: center
    :alt: 
 
-5) Geoscript
+Geoscript
+~~~~~~~~~~~~~~~~
 
 Geoscript allows for some fun, the best way to get into it is to start 
 from the `tutorials page <http://geoscript.org/tutorials/index.html>`. 
