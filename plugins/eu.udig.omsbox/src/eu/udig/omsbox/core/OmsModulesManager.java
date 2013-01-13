@@ -21,13 +21,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.Set;
 
 import oms3.Access;
 import oms3.ComponentAccess;
 import oms3.annotations.Description;
+import oms3.annotations.Execute;
 import oms3.annotations.Label;
+import oms3.annotations.Name;
 import oms3.annotations.Range;
 import oms3.annotations.Status;
 import oms3.annotations.UI;
@@ -37,6 +41,7 @@ import eu.udig.omsbox.OmsBoxPlugin;
 import eu.udig.omsbox.utils.AnnotationUtilities;
 import eu.udig.omsbox.utils.OmsBoxConstants;
 import eu.udig.omsbox.utils.OmsBoxUtils;
+import eu.udig.omsbox.utils.ResourceFinder;
 
 /**
  * Singleton in which the modules discovery and load/unload occurrs.
@@ -234,22 +239,58 @@ public class OmsModulesManager {
             }
             urlList.add(jarFile.toURI().toURL());
         }
-
         URL[] urls = (URL[]) urlList.toArray(new URL[urlList.size()]);
 
         jarClassloader = new URLClassLoader(urls, this.getClass().getClassLoader());
 
-        List<Class< ? >> allComponents = new ArrayList<Class< ? >>();
-        try {
-            allComponents = Components.getComponentClasses(jarClassloader, urls);
-        } catch (Throwable e) {
-            e.printStackTrace();
+        long t1 = System.currentTimeMillis();
+        List<Class< ? >> classesList = new ArrayList<Class< ? >>();
+        for( URL url : urlList ) {
+            ResourceFinder finder = new ResourceFinder("META-INF/", url);
+            Map<String, Properties> servicesList = finder.mapAllProperties("services");
+            Set<Entry<String, Properties>> servicesEntrySets = servicesList.entrySet();
+            for( Entry<String, Properties> serviceEntry : servicesEntrySets ) {
+                Properties properties = serviceEntry.getValue();
+                Set<Entry<Object, Object>> entrySet = properties.entrySet();
+                for( Entry<Object, Object> entry : entrySet ) {
+                    String className = entry.getKey().toString();
+                    Class< ? > possibleModulesClass = null;
+                    try {
+                        possibleModulesClass = Class.forName(className, true, jarClassloader);
+                    } catch (Exception e) {
+                        // ignore and try to gather as much as possible
+                    }
+                    if (possibleModulesClass != null) {
+                        // extract only the ones properly annotated
+                        Name name = possibleModulesClass.getAnnotation(Name.class);
+                        if (name != null) {
+                            classesList.add(possibleModulesClass);
+                        }
+                    }
+                }
+            }
         }
+        long t2 = System.currentTimeMillis();
+        System.out.println((t2 - t1) / 1000);
+
+        if (classesList.size() == 0) {
+            // try the old and slow way
+
+            List<Class< ? >> allComponents = new ArrayList<Class< ? >>();
+            try {
+                allComponents = Components.getComponentClasses(jarClassloader, urls);
+                classesList.addAll(allComponents);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+        }
+        long t3 = System.currentTimeMillis();
+        System.out.println((t3 - t2) / 1000);
 
         // clean up html docs in config area, it will be redone
         OmsBoxUtils.cleanModuleDocumentation();
 
-        for( Class< ? > moduleClass : allComponents ) {
+        for( Class< ? > moduleClass : classesList ) {
             try {
                 UI uiHints = moduleClass.getAnnotation(UI.class);
                 if (uiHints != null) {
@@ -264,6 +305,10 @@ public class OmsModulesManager {
                 if (category != null && categoryStr.trim().length() > 1) {
                     categoryStr = category.value();
                 }
+                if (moduleClass.getName().endsWith("Buffer")) {
+                    System.out.println();
+                }
+                
                 Description description = moduleClass.getAnnotation(Description.class);
                 String descrStr = null;
                 if (description != null) {
@@ -333,6 +378,9 @@ public class OmsModulesManager {
                 e.printStackTrace();
             }
         }
+
+        long t4 = System.currentTimeMillis();
+        System.out.println((t4 - t3) / 1000);
     }
     private void addInput( Access access, ModuleDescription module ) throws Exception {
         Field field = access.getField();
