@@ -141,8 +141,16 @@ public class OmsBoxUtils {
 
         // modules documentation
         Documentation documentation = moduleClass.getAnnotation(Documentation.class);
+        String documentationStr = null;
         if (documentation != null) {
-            String documentationStr = AnnotationUtilities.getLocalizedDocumentation(documentation);
+            documentationStr = AnnotationUtilities.getLocalizedDocumentation(documentation);
+            if (documentationStr.length() == 0) {
+                documentationStr = null;
+            } else if (documentationStr.equals(" - ")) {
+                documentationStr = null;
+            }
+        }
+        if (documentation != null && documentationStr != null) {
             if (documentationStr.endsWith(DOCSSUFFIX)) {
                 // have to get the file
                 String modulePackage = moduleClassName.substring(0, moduleClassName.lastIndexOf('.'));
