@@ -1,3 +1,5 @@
+.. contents::
+
 The Geoscript editor
 -----------------------------------
 
@@ -96,7 +98,7 @@ Geoscript
 ~~~~~~~~~~~~~~~~
 
 Geoscript allows for some fun, the best way to get into it is to start 
-from the `tutorials page <http://geoscript.org/tutorials/index.html>`. 
+from the `tutorials page <http://geoscript.org/tutorials/index.html>`_. 
 Just to add one more complex example, lets see 
 a script that can render a map, properly styled, to an image:
 
