@@ -71,11 +71,12 @@ public class CoverageDescribeLayer {
                 evaluateCoord = envelopeCenterOrig;
                 targetCrs = sourceCRS;
             }
-            GeneralParameterValue[] parameterValues = createGridGeometryGeneralParameter(1, 1, evaluateCoord.y + 1,
-                    evaluateCoord.y - 1, evaluateCoord.x + 1, evaluateCoord.x - 1, targetCrs);
+            double delta = 0.0000001;
+            GeneralParameterValue[] parameterValues = createGridGeometryGeneralParameter(1, 1, evaluateCoord.y + delta,
+                    evaluateCoord.y - delta, evaluateCoord.x + delta, evaluateCoord.x - delta, targetCrs);
 
             coverage = reader.read(parameterValues);
-            
+
             /*
              * the following is done since the reader might read a singlwe pixel 
              * region and the gridcoordinate would be 0, 0 in that case. Later
@@ -97,44 +98,45 @@ public class CoverageDescribeLayer {
         }
 
         Point2D p = new Point2D.Double(evaluateCoord.x, evaluateCoord.y);
-        int bands = coverage.getSampleDimensions().length;
-        final double[] evaluated = new double[bands];
-        try {
-            coverage.evaluate(p, evaluated);
-        } catch (Exception e) {
-            // TODO make this more nice
-            return null;
+        Envelope2D envelope2d = coverage.getEnvelope2D();
+        final StringBuilder sb = new StringBuilder();
+        if (envelope2d.contains(p)) {
+            int bands = coverage.getSampleDimensions().length;
+            final double[] evaluated = new double[bands];
+            try {
+                coverage.evaluate(p, evaluated);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            final GridCoordinates2D gridCoord = gridGeometry.worldToGrid(new DirectPosition2D(p));
+            sb.append("Coverage info:\n\n");
+            int length = evaluated.length;
+            if (length > 1) {
+                for( int i = 0; i < evaluated.length; i++ ) {
+                    sb.append("Band ").append(i);
+                    sb.append(" = ").append(evaluated[i]).append("\n");
+                }
+            } else if (length == 1) {
+                sb.append("\tValue");
+                sb.append(" = ").append(evaluated[0]).append("\n\n");
+            }
+            sb.append("\tin coordinates (easting, northing):\n");
+            sb.append("\t").append(formatter.format(envelopeCenterOrig.x));
+            sb.append(", ");
+            sb.append(formatter.format(envelopeCenterOrig.y));
+            sb.append("\n\n");
+            sb.append("\tand grid coordinates (col, row):\n");
+            sb.append("\t").append(gridCoord.x);
+            sb.append(", ");
+            sb.append(gridCoord.y);
+            sb.append("\n");
+        } else {
+            sb.append("Selected point is outside of coverage region.");
         }
-        final GridCoordinates2D gridCoord = gridGeometry.worldToGrid(new DirectPosition2D(p));
-
         CoveragePointInfo info = new CoveragePointInfo(layer){
             public String getInfo() {
-                StringBuilder sb = new StringBuilder();
-                sb.append("Coverage info:\n\n");
-                int length = evaluated.length;
-                if (length > 1) {
-                    for( int i = 0; i < evaluated.length; i++ ) {
-                        sb.append("Band ").append(i);
-                        sb.append(" = ").append(evaluated[i]).append("\n");
-                    }
-                } else if (length == 1) {
-                    sb.append("\tValue");
-                    sb.append(" = ").append(evaluated[0]).append("\n\n");
-                }
-                sb.append("\tin coordinates (easting, northing):\n");
-                sb.append("\t").append(formatter.format(envelopeCenterOrig.x));
-                sb.append(", ");
-                sb.append(formatter.format(envelopeCenterOrig.y));
-                sb.append("\n\n");
-                sb.append("\tand grid coordinates (col, row):\n");
-                sb.append("\t").append(gridCoord.x);
-                sb.append(", ");
-                sb.append(gridCoord.y);
-                sb.append("\n");
-
                 return sb.toString();
             }
-
         };
         return info;
     }
