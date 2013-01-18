@@ -27,6 +27,7 @@ import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.geometry.DirectPosition2D;
 import org.geotools.geometry.Envelope2D;
+import org.geotools.geometry.GeneralEnvelope;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.parameter.Parameter;
@@ -61,8 +62,12 @@ public class CoverageDescribeLayer {
         GridGeometry2D gridGeometry = null;
         Coordinate evaluateCoord = null;
         // try to go for the reader first
+        boolean isOnGrid = false;
+        boolean hasProblem = false;
+        Point2D p = null;
         if (geoResource.canResolve(AbstractGridCoverage2DReader.class)) {
             AbstractGridCoverage2DReader reader = geoResource.resolve(AbstractGridCoverage2DReader.class, monitor);
+            GeneralEnvelope originalEnvelope = reader.getOriginalEnvelope();
             CoordinateReferenceSystem targetCrs = reader.getCrs();
 
             if (targetCrs != null) {
@@ -71,19 +76,21 @@ public class CoverageDescribeLayer {
                 evaluateCoord = envelopeCenterOrig;
                 targetCrs = sourceCRS;
             }
-            double delta = 0.0000001;
-            GeneralParameterValue[] parameterValues = createGridGeometryGeneralParameter(1, 1, evaluateCoord.y + delta,
-                    evaluateCoord.y - delta, evaluateCoord.x + delta, evaluateCoord.x - delta, targetCrs);
-
-            coverage = reader.read(parameterValues);
-
-            /*
-             * the following is done since the reader might read a singlwe pixel 
-             * region and the gridcoordinate would be 0, 0 in that case. Later
-             * we want to supply the gridcoordinate of the position in the whole
-             * coverage. 
-             */
-            gridGeometry = new GridGeometry2D(reader.getOriginalGridRange(), reader.getOriginalEnvelope());
+            p = new Point2D.Double(evaluateCoord.x, evaluateCoord.y);
+            if (originalEnvelope.contains(new DirectPosition2D(p))) {
+                double delta = 0.0000001;
+                GeneralParameterValue[] parameterValues = createGridGeometryGeneralParameter(1, 1, evaluateCoord.y + delta,
+                        evaluateCoord.y - delta, evaluateCoord.x + delta, evaluateCoord.x - delta, targetCrs);
+                coverage = reader.read(parameterValues);
+                /*
+                 * the following is done since the reader might read a singlwe pixel 
+                 * region and the gridcoordinate would be 0, 0 in that case. Later
+                 * we want to supply the gridcoordinate of the position in the whole
+                 * coverage. 
+                 */
+                gridGeometry = new GridGeometry2D(reader.getOriginalGridRange(), reader.getOriginalEnvelope());
+                isOnGrid = true;
+            }
         }
         // else try with coverage
         else if (geoResource.canResolve(GridCoverage.class)) {
@@ -91,16 +98,19 @@ public class CoverageDescribeLayer {
             CoordinateReferenceSystem targetCrs = coverage.getCoordinateReferenceSystem();
             gridGeometry = coverage.getGridGeometry();
             evaluateCoord = transform(sourceCRS, targetCrs, envelopeCenterOrig);
+            p = new Point2D.Double(evaluateCoord.x, evaluateCoord.y);
+            Envelope2D envelope2d = coverage.getEnvelope2D();
+            if (envelope2d.contains(p)) {
+                isOnGrid = true;
+            }
+        } else {
+            hasProblem = true;
         }
 
-        if (coverage == null) {
-            return null;
-        }
-
-        Point2D p = new Point2D.Double(evaluateCoord.x, evaluateCoord.y);
-        Envelope2D envelope2d = coverage.getEnvelope2D();
         final StringBuilder sb = new StringBuilder();
-        if (envelope2d.contains(p)) {
+        if (hasProblem) {
+            sb.append("The coverage information could not be read.");
+        } else if (isOnGrid) {
             int bands = coverage.getSampleDimensions().length;
             final double[] evaluated = new double[bands];
             try {
