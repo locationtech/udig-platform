@@ -44,7 +44,7 @@ public class MapGraphicContextImpl extends RenderContextImpl
             listener = new IViewportModelListener(){
                 public void changed( ViewportModelEvent event ) {
                     // need to invalidate image & refresh the layer
-                    if (!context.getViewportModel().isBoundsChanging()){
+                    if (!context.getMap().getViewportModel().isBoundsChanging()){
                         context.getLayer().getBlackboard().put(MapGraphicRenderer.BLACKBOARD_IMAGE_KEY, null);
                         context.getLayer().refresh(null);
                     }
