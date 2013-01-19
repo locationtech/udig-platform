@@ -128,12 +128,12 @@ public class JGrassCatalogUtilities {
         if (resource == null || !resource.canResolve(JGrassMapGeoResource.class)) {
             return null;
         }
-        JGrassMapGeoResource jg = null;
+        JGrassMapGeoResource mapResource = null;
         try {
-            jg = resource.resolve(JGrassMapGeoResource.class, null);
-            String tmp = jg.getInfo(null).getDescription();
-            if (!tmp.equals(JGrassConstants.GRASSBINARYRASTERMAP))
-                return null;
+            mapResource = resource.resolve(JGrassMapGeoResource.class, null);
+            // String tmp = jg.getInfo(null).getDescription();
+            // if (!tmp.equals(JGrassConstants.GRASSBINARYRASTERMAP))
+            // return null;
         } catch (IOException e) {
             JGrassPlugin
                     .log("JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#getMapsetpathAndMapnameFromJGrassMapGeoResource", e); //$NON-NLS-1$
@@ -144,9 +144,9 @@ public class JGrassCatalogUtilities {
 
         JGrassMapsetGeoResource mapsetResource = null;
         try {
-            mapsetResource = (JGrassMapsetGeoResource) jg.parent(null);
+            mapsetResource = (JGrassMapsetGeoResource) mapResource.parent(null);
             mapsetPathAndMapName[0] = mapsetResource.getFile().getAbsolutePath();
-            mapsetPathAndMapName[1] = jg.getInfo(null).getTitle();
+            mapsetPathAndMapName[1] = mapResource.getTitle();
         } catch (IOException e) {
             JGrassPlugin
                     .log("JGrassPlugin problem: eu.hydrologis.udig.catalog.utils#JGrassCatalogUtilities#getMapsetpathAndMapnameFromJGrassMapGeoResource", e); //$NON-NLS-1$

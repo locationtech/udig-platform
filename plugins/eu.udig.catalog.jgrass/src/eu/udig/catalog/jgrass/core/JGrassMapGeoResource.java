@@ -30,6 +30,7 @@ import net.refractions.udig.project.internal.render.impl.RendererImpl;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridEnvelope2D;
@@ -76,6 +77,12 @@ public class JGrassMapGeoResource extends IGeoResource {
 
     private CoordinateReferenceSystem locationCrs;
 
+    private ImageDescriptor gridIconID;
+
+    private ImageDescriptor gridMissingIconID;
+
+    private ImageDescriptor problemIconID;
+
     public JGrassMapGeoResource( IService parentService, JGrassMapsetGeoResource parentMapset, String mapName,
             String mapTypeAndPath ) {
         this.parentService = parentService;
@@ -92,6 +99,9 @@ public class JGrassMapGeoResource extends IGeoResource {
         locationCrs = parentMapset.getLocationCrs();
         // id = new ID(parentID, name);
 
+        gridIconID = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.GRID_OBJ);
+        gridMissingIconID = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.GRID_MISSING);
+        problemIconID = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/problem.gif");
     }
 
     public <T> boolean canResolve( Class<T> adaptee ) {
@@ -256,12 +266,12 @@ public class JGrassMapGeoResource extends IGeoResource {
                     File cellhd = jGrassMapEnvironment.getCELLHD();
                     fileWindow = new JGrassRegion(cellhd.getAbsolutePath());
                     bounds = new ReferencedEnvelope(fileWindow.getEnvelope(), locationCrs);
-                    super.icon = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.GRID_OBJ);
+                    super.icon = gridIconID;
                 } else {
-                    super.icon = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.GRID_MISSING);
+                    super.icon = gridMissingIconID;
                 }
             } catch (Exception e) {
-                super.icon = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/problem.gif"); //$NON-NLS-1$
+                super.icon = problemIconID;
                 e.printStackTrace();
             }
 
