@@ -178,7 +178,7 @@ public class ActiveRegionMapGraphic implements MapGraphic {
                     Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
                     mapsetDialog.open(shell);
                     List<JGrassMapsetGeoResource> selectedLayers = mapsetDialog.getSelectedLayers();
-                    if (selectedLayers.size() == 0) {
+                    if (selectedLayers==null || selectedLayers.size() == 0) {
                         return;
                     }
                     JGrassMapsetGeoResource jGrassMapsetGeoResource = selectedLayers.get(0);
