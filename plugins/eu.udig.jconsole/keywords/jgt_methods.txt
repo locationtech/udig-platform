@@ -691,3 +691,13 @@ units
 valvesList
 viscosity
 warnings
+getRows
+getCols
+valueAt( col, row )
+readRaster("path")
+writeRaster("path", raster)
+readVector("path")
+writeVector("path", vector)
+isNoValue( value )
+setValueAt( col, row, value )
+buildRaster
