@@ -100,4 +100,4 @@ RasterConverter
 PointsRasterizer
 Ab
 Aspect
-
+RasterStyle

@@ -701,3 +701,6 @@ writeVector("path", vector)
 isNoValue( value )
 setValueAt( col, row, value )
 buildRaster
+setAlpha( alpha )
+style( colorTableName )
+addPrj( path, "EPSG:xxxxx")
