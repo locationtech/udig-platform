@@ -209,7 +209,7 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
         parent.setLayout(layout);
 
         if (!isMultiline) {
-            text = new StyledText(parent, SWT.WRAP | SWT.BORDER);
+            text = new StyledText(parent,SWT.RIGHT | SWT.BORDER);
             GridData textGD = new GridData(SWT.FILL, SWT.CENTER, true, false);
             textGD.widthHint = 100;
             text.setLayoutData(textGD);
@@ -269,7 +269,7 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
                     } else {
                         path = checkBackSlash(path, isFile);
                         text.setText(path);
-                        // text.setSelection(text.getCharCount());
+                        text.setSelection(text.getCharCount());
                         setDataValue();
                     }
                     OmsBoxPlugin.getDefault().setLastFolderChosen(fileDialog.getFilterPath());
@@ -647,7 +647,7 @@ public class GuiTextField extends ModuleGuiElement implements ModifyListener, Fo
             insertTextAtCaretPosition(text, map);
         } else {
             text.setText(file.getAbsolutePath());
-            // text.setSelection(text.getCharCount());
+            text.setSelection(text.getCharCount());
         }
     }
 
