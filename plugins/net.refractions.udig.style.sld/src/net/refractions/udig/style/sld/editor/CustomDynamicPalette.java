@@ -25,9 +25,9 @@ import org.geotools.brewer.color.SampleScheme;
  */
 public class CustomDynamicPalette extends BrewerPalette {
     public enum TABLE {
-        RAINBOW, GREY
+        RAINBOW, GREY, ELEVATION
     }
-    
+
     private int[][] current = null;
 
     private int[][] rainbow = new int[][]{{255, 255, 0}, /* yellow */
@@ -36,6 +36,14 @@ public class CustomDynamicPalette extends BrewerPalette {
     {0, 0, 255}, /* blue */
     {255, 0, 255}, /* magenta */
     {255, 0, 0} /* red */
+    };
+    private int[][] elevation = new int[][]{
+    /*    */{0, 191, 191},//
+            {0, 255, 0},//
+            {255, 255, 0},//
+            {255, 127, 0},//
+            {191, 127, 63},//
+            {20, 21, 20}//
     };
     private int[][] grey = new int[][]{{0, 0, 0}, {255, 255, 255}};
 
@@ -48,6 +56,11 @@ public class CustomDynamicPalette extends BrewerPalette {
             setName("Dynamic Rainbow");
             setDescription("A rainbow colors palette dynamically adapting to the number of classes");
             current = rainbow;
+            break;
+        case ELEVATION:
+            setName("Dynamic Elevation");
+            setDescription("An elevation colors palette dynamically adapting to the number of classes");
+            current = elevation;
             break;
         case GREY:
             setName("Dynamic Greyscale");

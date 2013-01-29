@@ -26,6 +26,7 @@ import net.refractions.udig.style.sld.ImageConstants;
 import net.refractions.udig.style.sld.SLDContent;
 import net.refractions.udig.style.sld.SLDPlugin;
 import net.refractions.udig.style.sld.editor.BorderColorComboListener.Outline;
+import net.refractions.udig.style.sld.editor.CustomDynamicPalette.TABLE;
 import net.refractions.udig.style.sld.editor.internal.BrewerPaletteLabelProvider;
 import net.refractions.udig.style.sld.editor.internal.StyleTreeContentProvider;
 import net.refractions.udig.style.sld.editor.internal.StyleTreeLabelProvider;
@@ -346,11 +347,11 @@ public class StyleThemePage extends StyleEditorPage {
                 brewer.registerPalette(brewerPalette);
             }
             // add a dynamic one that support everythings
-            CustomDynamicPalette customDynamicPalette = new CustomDynamicPalette(CustomDynamicPalette.TABLE.RAINBOW);
-            brewer.registerPalette(customDynamicPalette);
-            customDynamicPalette = new CustomDynamicPalette(CustomDynamicPalette.TABLE.GREY);
-            brewer.registerPalette(customDynamicPalette);
-            
+            TABLE[] dynamicPalettes = CustomDynamicPalette.TABLE.values();
+            for( TABLE colorTable : dynamicPalettes ) {
+                CustomDynamicPalette customDynamicPalette = new CustomDynamicPalette(colorTable);
+                brewer.registerPalette(customDynamicPalette);
+            }
         }
         return brewer;
     }
