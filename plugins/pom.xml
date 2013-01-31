@@ -91,6 +91,7 @@
         <module>eu.udig.catalog.kml</module>
         <module>eu.udig.catalog.teradata</module>
         <module>eu.udig.image.georeferencing</module>
+        <module>eu.udig.jconsole</module>
         <module>eu.udig.omsbox</module>
         <module>eu.udig.style.advanced</module>
         <module>eu.udig.style.jgrass</module>

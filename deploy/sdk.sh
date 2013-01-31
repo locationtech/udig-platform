@@ -10,6 +10,13 @@ echo "Release SDK ${VERSION}"
 
 #SDK_FILE="udig-${VERSION}-sdk.zip"
 SDK_FILE="udig-${VERSION}-sdk.zip"
+SDK_SNAPSHOT_FILE="udig-${VERSION}-SNAPSHOT-sdk.zip"
+
+if [ -f ${SDK_TARGET}/${SDK_SNAPSHOT_FILE} ]
+then
+     echo "Staging ${SDK_SNAPSHOT_FILE} to ${SDK_FILE}"
+     mv ${SDK_TARGET}/${SDK_SNAPSHOT_FILE} ${SDK_TARGET}/${SDK_FILE}
+fi
 
 # Release sdk if available
 if [ -f ${SDK_TARGET}/${SDK_FILE} ] 
