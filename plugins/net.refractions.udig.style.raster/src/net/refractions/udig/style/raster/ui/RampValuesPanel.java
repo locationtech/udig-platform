@@ -10,6 +10,8 @@
  */
 package net.refractions.udig.style.raster.ui;
 
+import net.refractions.udig.style.raster.internal.Messages;
+
 import org.eclipse.jface.window.Window;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntry;
@@ -63,7 +65,7 @@ public class RampValuesPanel extends UniqueValuesPanel {
 	}
 	@Override
 	public String getName() {
-		return "Color Ramp";
+		return Messages.RampValuesPanel_RampTypeName;
 	}
 
 	@Override
@@ -76,7 +78,7 @@ public class RampValuesPanel extends UniqueValuesPanel {
 
 	@Override
 	public String getComputeValuesLabel() {
-		return "Compute Intervals...";
+		return Messages.RampValuesPanel_ComputeIntervalsButtonName;
 	}
 
 }

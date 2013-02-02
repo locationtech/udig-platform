@@ -13,10 +13,12 @@ package net.refractions.udig.style.raster.ui;
 
 import java.awt.Color;
 import java.awt.Rectangle;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.refractions.udig.style.raster.Activator;
+import net.refractions.udig.style.raster.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -72,7 +74,7 @@ import org.opengis.parameter.ParameterValueGroup;
  */
 public class ClassifyDialog extends TitleAreaDialog{
 
-	private static final String GENERATE_LABEL = "Generate Breaks";
+	private static final String GENERATE_LABEL = Messages.ClassifyDialog_GenerateBreaksButtonText;
 	
 	/*
 	 * Maximum value for warning users to limit sample size
@@ -101,8 +103,8 @@ public class ClassifyDialog extends TitleAreaDialog{
 	 *
 	 */
 	private enum ClassifyFunction{
-		EQUAL_INTERNAL("Equal Interval", "Number of Intervals:"),
-		DEFINED_INTERVAL("Defined Interval", "Size of Interval:");
+		EQUAL_INTERNAL(Messages.ClassifyDialog_EqualIntervalLabel, Messages.ClassifyDialog_NumberofIntervalsLabel),
+		DEFINED_INTERVAL(Messages.ClassifyDialog_DefinedIntervalLabel, Messages.ClassifyDialog_IntervalSizeLabel);
 		
 		String guiName;
 		String opName;
@@ -135,7 +137,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 		main.setLayout(gl);
 		
 		Label lbl = new Label(main, SWT.NONE);
-		lbl.setText("Classification Function:");
+		lbl.setText(Messages.ClassifyDialog_ClassificationFunctionLabel);
 		
 		cmbClass = new ComboViewer(main, SWT.DROP_DOWN | SWT.READ_ONLY | SWT.BORDER);
 		cmbClass.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -163,18 +165,18 @@ public class ClassifyDialog extends TitleAreaDialog{
 		
 		txtOp = new Text(main, SWT.BORDER);
 		txtOp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		txtOp.setText("10");
+		txtOp.setText("10"); //$NON-NLS-1$
 		
 		Label lbl4 = new Label(main, SWT.NONE);
-		lbl4.setText("Values To Ignore*:");
+		lbl4.setText(Messages.ClassifyDialog_ValuesToIgnoreLabel + "*"); //$NON-NLS-1$
 	
 		txtIgnore = new Text(main, SWT.BORDER);
 		txtIgnore .setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		txtIgnore .setText("-9999");
+		txtIgnore .setText("-9999"); //$NON-NLS-1$
 		
 		Label lbls = new Label(main, SWT.NONE);
-		lbls.setText("Limit Sample Size:");
-		lbls.setToolTipText("Limits the number of values read in the raster. ");
+		lbls.setText(Messages.ClassifyDialog_LimitSizeLabel);
+		lbls.setToolTipText(Messages.ClassifyDialog_LimitSizeTooltip);
 	
 		Composite compSample = new Composite(main, SWT.NONE);
 		GridLayout gla = new GridLayout(2, false);
@@ -193,7 +195,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 		});
 		txtSampleSize = new Text(compSample, SWT.BORDER);
 		txtSampleSize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		txtSampleSize.setText("100000");
+		txtSampleSize.setText("100000"); //$NON-NLS-1$
 		txtSampleSize.setEnabled(false);
 		
 		
@@ -212,7 +214,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 		lblSep.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		
 		Label lblRange = new Label(main, SWT.NONE);
-		lblRange.setText("Breaks:");
+		lblRange.setText(Messages.ClassifyDialog_BreaksLabel);
 		lblRange.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		
 		cmbRanges = new ListViewer(main, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
@@ -226,14 +228,14 @@ public class ClassifyDialog extends TitleAreaDialog{
 		
 		
 		Label lbl3 = new Label(main, SWT.WRAP);
-		lbl3.setText("*A comma separated list of values to ignore");
+		lbl3.setText("*" + Messages.ClassifyDialog_IgnoreValuesInfo); //$NON-NLS-1$
 		lbl3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		
 		cmbClass.setSelection(new StructuredSelection(ClassifyFunction.EQUAL_INTERNAL));
 		
-		setMessage("Use this dialog to compute the breaks for raster styling");
-		setTitle("Compute Values");
-		getShell().setText("Compute Breaks...");
+		setMessage(Messages.ClassifyDialog_DialogMessage);
+		setTitle(Messages.ClassifyDialog_DialogTitle);
+		getShell().setText(Messages.ClassifyDialog_ShellTitle);
 		return main;
 	}
 	
@@ -258,7 +260,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 			try{
 				currentSampleSize = Long.parseLong(txtSampleSize.getText());
 			}catch (Exception ex){
-				MessageDialog.openError(getShell(), "Error", "Invalid sample size.  Number must be an integer.");
+				MessageDialog.openError(getShell(), Messages.ClassifyDialog_ErrorDialogTitle, Messages.ClassifyDialog_ErrorMessage);
 				return;
 			}
 		}
@@ -267,7 +269,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 			try{
 				currentOption = Integer.parseInt(txtOp.getText());
 			}catch (Exception ex){
-				MessageDialog.openError(getShell(), "Error", "Invalid value for " + currentSelection.opName + ". Value must be integer.");
+				MessageDialog.openError(getShell(), Messages.ClassifyDialog_ErrorDialogTitle, MessageFormat.format(Messages.ClassifyDialog_InvalidValueOption, new Object[]{currentSelection.opName }));
 				return;
 			}
 			 
@@ -275,7 +277,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 			try{
 				currentOption = Double.parseDouble(txtOp.getText());
 			}catch (Exception ex){
-				MessageDialog.openError(getShell(), "Error", "Invalid value for " + currentSelection.opName + ". Value must be double.");
+				MessageDialog.openError(getShell(), Messages.ClassifyDialog_ErrorDialogTitle3, MessageFormat.format(Messages.ClassifyDialog_InvalidValueOption2, new Object[]{currentSelection.opName }));
 			}
 		}
 		
@@ -314,7 +316,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 	/*
 	 * Job for computing breaks
 	 */
-	private Job computeValuesJob = new Job("Compute Raster Breaks"){
+	private Job computeValuesJob = new Job(Messages.ClassifyDialog_ComputeBreaksJobName){
 
 		protected String ignoreValues;
 		protected Long sampleSize;
@@ -349,9 +351,9 @@ public class ClassifyDialog extends TitleAreaDialog{
 				Display.getDefault().syncExec(new Runnable(){
 					@Override
 					public void run() {
-						MessageDialog.openError(getShell(), "Error", "Error computing values: " + ex.getLocalizedMessage());
+						MessageDialog.openError(getShell(), Messages.ClassifyDialog_ErrorDialogTitle5, MessageFormat.format(Messages.ClassifyDialog_ErrorComputingValues, new Object[]{ex.getLocalizedMessage()}));
 					}});
-				Activator.log("Error classifying values", ex);
+				Activator.log("Error classifying values", ex); //$NON-NLS-1$
 			}finally{
 				Display.getDefault().syncExec(new Runnable(){
 					@Override
@@ -432,7 +434,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 
 				ParameterGroup readParams = new ParameterGroup(
 						new DefaultParameterDescriptorGroup(
-								"Test",
+								"Test", //$NON-NLS-1$
 								new GeneralParameterDescriptor[] { gridGeometryDescriptor }));
 
 				List<GeneralParameterValue> list = readParams.values();
@@ -450,9 +452,8 @@ public class ClassifyDialog extends TitleAreaDialog{
 				Display.getDefault().syncExec(new Runnable(){
 					@Override
 					public void run() {
-
-							if (!MessageDialog.openConfirm(getShell(), "Confirm", "The raster has more than " + WARN_VALUE + " cells. " +
-									" Processing may take some time.  Do you want to continue?")){
+							if (!MessageDialog.openConfirm(getShell(), Messages.ClassifyDialog_ConfirmDialogText, 
+									MessageFormat.format(Messages.ClassifyDialog_RasterCellWaring, new Object[]{WARN_VALUE}))){
 								ret[0] = false;
 							}
 					}});

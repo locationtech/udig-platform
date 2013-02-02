@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.image.DataBuffer;
 import java.awt.image.Raster;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,6 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.refractions.udig.style.raster.Activator;
+import net.refractions.udig.style.raster.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -75,7 +77,7 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 	 */
 	private static final Long WARN_VALUE = 1000000l;
 	
-	private static final String COMPUTE_LABEL = "Computing...";
+	private static final String COMPUTE_LABEL = Messages.UniqueValuesDialog_ComputingLabel;
 	private Long sampleSize = 100000l;
 	
 	private Text txtSampleSize;
@@ -88,7 +90,7 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 	/*
 	 * Job to compute the unique values
 	 */
-	Job computeJob = new Job("Compute Unique Values"){
+	Job computeJob = new Job(Messages.UniqueValuesDialog_JobName){
 
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
@@ -117,7 +119,7 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 
 						ParameterGroup readParams = new ParameterGroup(
 								new DefaultParameterDescriptorGroup(
-										"Test",
+										"Test", //$NON-NLS-1$
 										new GeneralParameterDescriptor[] { gridGeometryDescriptor }));
 
 						List<GeneralParameterValue> list = readParams.values();
@@ -137,8 +139,8 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 							@Override
 							public void run() {
 
-									if (!MessageDialog.openConfirm(getShell(), "Confirm", "The raster has more than " + WARN_VALUE + " cells. " +
-											" Processing may take some time.  Do you want to continue?")){
+									if (!MessageDialog.openConfirm(getShell(), Messages.UniqueValuesDialog_ConfirmDialogTitle,
+											MessageFormat.format(Messages.UniqueValuesDialog_LargeRasterWarning, new Object[]{WARN_VALUE}))){ 
 										ret[0] = false;
 									}
 							}});
@@ -205,8 +207,8 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 		sampleSizeComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		
 		Label lbls = new Label(sampleSizeComp, SWT.NONE);
-		lbls.setText("Limit Sample Size:");
-		lbls.setToolTipText("Limits the number of values read in the raster. ");
+		lbls.setText(Messages.UniqueValuesDialog_LimitLabel);
+		lbls.setToolTipText(Messages.UniqueValuesDialog_LimitTooltip);
 	
 		chSampleSize = new Button(sampleSizeComp, SWT.CHECK);
 		chSampleSize.setSelection(false);
@@ -219,11 +221,11 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 		});
 		txtSampleSize = new Text(sampleSizeComp, SWT.BORDER);
 		txtSampleSize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		txtSampleSize.setText("100000");
+		txtSampleSize.setText("100000"); //$NON-NLS-1$
 		txtSampleSize.setEnabled(false);
 		
 		btnRecompute = new Button(sampleSizeComp, SWT.NONE);
-		btnRecompute.setText("ReCalculate");
+		btnRecompute.setText(Messages.UniqueValuesDialog_ReCalcButtonName);
 		btnRecompute.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false,3,1));
 		btnRecompute.addSelectionListener(new SelectionAdapter(){
 			@Override
@@ -241,7 +243,7 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 		lowerPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 		Label lblValues = new Label(lowerPanel, SWT.NONE);
-		lblValues.setText("Values To Add:");
+		lblValues.setText(Messages.UniqueValuesDialog_ValuesToAddLabel);
 		lblValues.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false, 2, 1));
 		
 		lstViewer = new ListViewer(lowerPanel);
@@ -258,18 +260,18 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 		
 		Button btnAdd = new Button(buttons, SWT.PUSH);
 		btnAdd.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		btnAdd.setText("Add");
+		btnAdd.setText(Messages.UniqueValuesDialog_AddButton);
 		btnAdd.addSelectionListener(new SelectionAdapter(){
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				InputDialog id = new InputDialog(getParentShell(), "Add Value", "Enter the value to add", "0", new IInputValidator() {
+				InputDialog id = new InputDialog(getParentShell(), Messages.UniqueValuesDialog_AddValueDialogTitle, Messages.UniqueValuesDialog_AddValueDialogMessage, "0", new IInputValidator() { //$NON-NLS-1$
 					@Override
 					public String isValid(String newText) {
 						try{
 							Double.parseDouble(newText);
 							return null;
 						}catch(Exception ex){
-							return "Invalid number";
+							return Messages.UniqueValuesDialog_InvalidNumberText;
 						}
 					}
 				});
@@ -282,7 +284,7 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 		});
 		
 		Button btnRemove = new Button(buttons, SWT.PUSH);
-		btnRemove.setText("Remove");
+		btnRemove.setText(Messages.UniqueValuesDialog_RemoveButton);
 		btnRemove.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		btnRemove.addSelectionListener(new SelectionAdapter(){
 			@Override
@@ -299,9 +301,9 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 		
 
 		
-		super.setTitle("Compute Unqiue Values");
-		super.setMessage("Use this dialog to determine the unique values to add.");
-		super.getShell().setText("Unique Values");
+		super.setTitle(Messages.UniqueValuesDialog_DialogTitle);
+		super.setMessage(Messages.UniqueValuesDialog_DialogMessage);
+		super.getShell().setText(Messages.UniqueValuesDialog_ShellTitle);
 		
 		return main;
 		

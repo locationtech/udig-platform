@@ -17,6 +17,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.refractions.udig.style.raster.internal.Messages;
+
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
@@ -55,10 +57,10 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 
 	/* table setup */
 	private static enum TableColumn{
-		COLOR("Color", 50),
-		OPACITY("Opacity", 60),
-		VALUE("Value", 60),
-		LABEL("Label", 100);
+		COLOR(Messages.IntervalValuesPanel_ColorColumnName, 50),
+		OPACITY(Messages.IntervalValuesPanel_OpacityColumnName, 60),
+		VALUE(Messages.IntervalValuesPanel_ValueColumnName, 60),
+		LABEL(Messages.IntervalValuesPanel_LabelColumnName, 100);
 		
 		String guiName;
 		int size;
@@ -144,7 +146,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 				}
 			}else if (this == TableColumn.LABEL){
 				if (entry.getLabel() == null){
-					return "";
+					return ""; //$NON-NLS-1$
 				}
 				return entry.getLabel();
 			}
@@ -234,7 +236,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 		btnPanel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false,false));
 				
 		Button btnAdd = new Button(btnPanel, SWT.PUSH);
-		btnAdd.setText("Add");
+		btnAdd.setText(Messages.IntervalValuesPanel_AddButton);
 		btnAdd.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			
@@ -248,7 +250,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 		});
 		
 		final Button btnRemove = new Button(btnPanel, SWT.PUSH);
-		btnRemove.setText("Remove");
+		btnRemove.setText(Messages.IntervalValuesPanel_RemoveButton);
 		btnRemove.setEnabled(false);
 		btnRemove.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		tblViewer.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -273,7 +275,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 		});
 		
 		final Button btnSort = new Button(btnPanel, SWT.PUSH);
-		btnSort.setText("Sort");
+		btnSort.setText(Messages.IntervalValuesPanel_SortButton);
 		btnSort.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		btnSort.addSelectionListener(new SelectionAdapter(){
 			@Override
@@ -284,7 +286,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 		});
 		
 		final Button btnSetNoData = new Button(btnPanel, SWT.PUSH);
-		btnSetNoData.setText("Flag No Data");
+		btnSetNoData.setText(Messages.IntervalValuesPanel_NoDataFlagButton);
 		btnSetNoData.setEnabled(false);
 		btnSetNoData.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		tblViewer.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -493,7 +495,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	 */
 	@Override
 	public String getName() {
-		return "Intervals";
+		return Messages.IntervalValuesPanel_IntervalsName;
 	}
 
 	/**
@@ -512,7 +514,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	 */
 	@Override
 	public String getComputeValuesLabel() {
-		return "Compute Intervals...";
+		return Messages.IntervalValuesPanel_ComputeIntervalsButtonText;
 	}
 
 	/**

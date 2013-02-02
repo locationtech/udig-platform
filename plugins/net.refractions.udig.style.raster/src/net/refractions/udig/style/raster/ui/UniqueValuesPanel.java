@@ -17,6 +17,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.refractions.udig.style.raster.internal.Messages;
+
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
@@ -57,10 +59,10 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 
 	/* table setup */
 	private static enum TableColumn{
-		COLOR("Color", 50),
-		OPACITY("Opacity", 60),
-		VALUE("Value", 60),
-		LABEL("Label", 100);
+		COLOR(Messages.UniqueValuesPanel_ColorColumnName, 50),
+		OPACITY(Messages.UniqueValuesPanel_OpacityColumnName, 60),
+		VALUE(Messages.UniqueValuesPanel_ValueColumnName, 60),
+		LABEL(Messages.UniqueValuesPanel_LabelColumnName, 100);
 		
 		String guiName;
 		int size;
@@ -139,7 +141,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 				return String.valueOf(entry.getValue());
 			}else if (this == TableColumn.LABEL){
 				if (entry.getLabel() == null){
-					return "";
+					return ""; //$NON-NLS-1$
 				}
 				return entry.getLabel();
 			}
@@ -238,7 +240,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 		btnPanel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false,false));
 		
 		Button btnAdd = new Button(btnPanel, SWT.PUSH);
-		btnAdd.setText("Add");
+		btnAdd.setText(Messages.UniqueValuesPanel_AddButton);
 		btnAdd.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			
@@ -253,7 +255,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 		});
 		
 		final Button btnRemove = new Button(btnPanel, SWT.PUSH);
-		btnRemove.setText("Remove");
+		btnRemove.setText(Messages.UniqueValuesPanel_RemoveButton);
 		btnRemove.setEnabled(false);
 		btnRemove.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		tblViewer.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -279,7 +281,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 		});
 		
 		Button btnSort = new Button(btnPanel, SWT.PUSH);
-		btnSort.setText("Sort");
+		btnSort.setText(Messages.UniqueValuesPanel_SortButton);
 		btnSort.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		btnSort.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -291,7 +293,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 		});
 		
 		Button btnAddNoData = new Button(btnPanel, SWT.PUSH);
-		btnAddNoData.setText("Add NoData");
+		btnAddNoData.setText(Messages.UniqueValuesPanel_NoDataButton);
 		btnAddNoData.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		btnAddNoData.addSelectionListener(new SelectionAdapter() {
 			
@@ -467,7 +469,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 	 */
 	private void validate(){
 		if (colors.size() > 256){
-			page.setErrorMessage("A maximum of 256 entries can be supplied");
+			page.setErrorMessage(Messages.UniqueValuesPanel_MaxEntryLabel);
 		}else{
 			page.setErrorMessage(null);
 		}
@@ -476,7 +478,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 
 	@Override
 	public String getName() {
-		return "Unique Values";
+		return Messages.UniqueValuesPanel_UniqueValuesLabel;
 	}
 
 	@Override
@@ -489,7 +491,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 
 	@Override
 	public String getComputeValuesLabel() {
-		return "Compute Values...";
+		return Messages.UniqueValuesPanel_ComputeValuesLabel;
 	}
 
 

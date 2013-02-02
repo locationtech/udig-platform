@@ -19,6 +19,7 @@ import java.util.List;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.style.raster.Activator;
+import net.refractions.udig.style.raster.internal.Messages;
 import net.refractions.udig.style.sld.SLDContent;
 import net.refractions.udig.style.sld.editor.CustomDynamicPalette;
 import net.refractions.udig.style.sld.editor.CustomPalettesLoader;
@@ -40,7 +41,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -113,8 +113,8 @@ public class SingleBandEditorPage extends StyleEditorPage {
 		try{
 			updateStyle();
 		}catch (Exception ex){
-			Activator.log("Error applying style.", ex);
-			MessageDialog.openError(getShell(), "Error", "Error applying style - " + ex.getLocalizedMessage());
+			Activator.log("Error applying style.", ex); //$NON-NLS-1$
+			MessageDialog.openError(getShell(), Messages.SingleBandEditorPage_Error, Messages.SingleBandEditorPage_ApplyError + ex.getLocalizedMessage());
 			return false;
 		}
 		return true;
@@ -122,8 +122,6 @@ public class SingleBandEditorPage extends StyleEditorPage {
 
 	@Override
 	public void refresh() {
-		//TODO: - do something here
-		System.out.println("refresh");
 		init();
 	}
 
@@ -136,7 +134,7 @@ public class SingleBandEditorPage extends StyleEditorPage {
 		main.setLayout(new GridLayout(3, false));
 
 		Label lbl = new Label(main, SWT.NONE);
-		lbl.setText("Theming Style:");
+		lbl.setText(Messages.SingleBandEditorPage_ThemingStyleLabel);
 		cmbThemingStyle = new ComboViewer(main, SWT.DROP_DOWN | SWT.READ_ONLY);
 		cmbThemingStyle.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, false,
 				false, 2, 1));
@@ -155,11 +153,11 @@ public class SingleBandEditorPage extends StyleEditorPage {
 		
 
 		lbl = new Label(main, SWT.NONE);
-		lbl.setText("Color Palette:");
+		lbl.setText(Messages.SingleBandEditorPage_ColorPaletteLabel);
 		cmbPalette = createPaletteViewer(main);
 
 		final Button btnTest = new Button(main, SWT.PUSH);
-		btnTest.setText("Compute Breaks ...");
+		btnTest.setText(Messages.SingleBandEditorPage_ComputeBreaksButtonText);
 		btnTest.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		btnTest.addSelectionListener(new SelectionAdapter(){
 			@Override
@@ -179,7 +177,7 @@ public class SingleBandEditorPage extends StyleEditorPage {
 		}
 		
 		Link lnk = new Link(main, SWT.NONE);
-		lnk.setText("<a>" + "Reverse Colors" + "</a>");
+		lnk.setText("<a>" + Messages.SingleBandEditorPage_ReverseColorLabel + "</a>"); //$NON-NLS-1$ //$NON-NLS-2$
 		lnk.addSelectionListener(new SelectionAdapter() {
 			
 			@Override
@@ -239,7 +237,7 @@ public class SingleBandEditorPage extends StyleEditorPage {
 			return reader;
 			
 		}catch (Exception ex){
-			Activator.log("Error getting grid coverage.", ex);
+			Activator.log("Error getting grid coverage.", ex); //$NON-NLS-1$
 		}
 		return null;
 	}
