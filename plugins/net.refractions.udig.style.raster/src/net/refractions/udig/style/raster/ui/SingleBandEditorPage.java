@@ -10,12 +10,16 @@
  */
 package net.refractions.udig.style.raster.ui;
 
+import java.io.File;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+import net.refractions.udig.catalog.ID;
+import net.refractions.udig.catalog.IGeoResource;
 import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.style.raster.Activator;
@@ -23,10 +27,13 @@ import net.refractions.udig.style.raster.internal.Messages;
 import net.refractions.udig.style.sld.SLDContent;
 import net.refractions.udig.style.sld.editor.CustomDynamicPalette;
 import net.refractions.udig.style.sld.editor.CustomPalettesLoader;
+import net.refractions.udig.style.sld.editor.StyleEditor;
 import net.refractions.udig.style.sld.editor.StyleEditorPage;
 import net.refractions.udig.style.sld.editor.internal.BrewerPaletteLabelProvider;
 import net.refractions.udig.ui.PlatformGIS;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -55,6 +62,7 @@ import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntry;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.SLD;
+import org.geotools.styling.SLDTransformer;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactory;
 import org.opengis.coverage.grid.GridCoverageReader;
@@ -72,7 +80,9 @@ import org.opengis.coverage.grid.GridCoverageReader;
  */
 public class SingleBandEditorPage extends StyleEditorPage {
 
-    private StyleFactory sf = CommonFactoryFinder.getStyleFactory(null);
+    private static final String SLD_EXTENSION = ".sld"; //$NON-NLS-1$
+
+	private StyleFactory sf = CommonFactoryFinder.getStyleFactory(null);
     
     final private IColorMapTypePanel[] stylePanels = new IColorMapTypePanel[]{
     		new UniqueValuesPanel(this),
@@ -191,6 +201,39 @@ public class SingleBandEditorPage extends StyleEditorPage {
 		});
 		
 		
+		Link lnk2 = new Link(main, SWT.NONE);
+		lnk2.setText("<a>OneClick Export</a>"); //$NON-NLS-1$ //$NON-NLS-2$
+		lnk2.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false,2,1));
+		lnk2.setToolTipText("One click style export for file based layers.");
+		lnk2.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				IGeoResource geoResource = getSelectedLayer().getGeoResource();
+                ID id = geoResource.getID();
+				if (id.isFile()) {
+					try {
+						File file = id.toFile();
+						SLDTransformer aTransformer = new SLDTransformer();
+						aTransformer.setIndentation(StyleEditor.INDENT);
+						String xml = aTransformer.transform(getSLD());
+						File newFile = new File(file.getParent(), FilenameUtils
+								.getBaseName(file.getAbsolutePath())
+								+ SLD_EXTENSION);
+						FileUtils.writeStringToFile(newFile, xml);
+						MessageDialog.openInformation(getShell(), "Export Successful", "Export successful.");
+					} catch (Exception e1) {
+						MessageDialog.openError(getShell(), "Error",
+								"Error saving style to file.");
+						e1.printStackTrace();
+					}
+				} else {
+					MessageDialog.openWarning(getShell(), "Warning",
+							"The selected layer is not file based.");
+				}
+			}
+		});
+		
+		
 		cmbThemingStyle.getCombo().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -234,6 +277,7 @@ public class SingleBandEditorPage extends StyleEditorPage {
 	public GridCoverageReader getGridCoverageReader(){	
 		try {
 			GridCoverageReader reader = getSelectedLayer().getGeoResource().resolve(GridCoverageReader.class, null);
+			//TODO: we need to make sure this reader is disposed of
 			return reader;
 			
 		}catch (Exception ex){
@@ -288,7 +332,8 @@ public class SingleBandEditorPage extends StyleEditorPage {
 				new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
 		((GridData)thiscv.getControl().getLayoutData()).widthHint = 150;
 		// list of matching palettes
-		thiscv.setLabelProvider(new BrewerPaletteLabelProvider());
+		final LabelProvider provider = new BrewerPaletteLabelProvider(); 
+		thiscv.setLabelProvider(provider);
 		thiscv.setContentProvider(new IStructuredContentProvider() {
 
 			@Override
@@ -311,6 +356,13 @@ public class SingleBandEditorPage extends StyleEditorPage {
 						ColorBrewer brewer = (ColorBrewer) inputElement;
 						BrewerPalette[] palettes = brewer
 								.getPalettes(ColorBrewer.ALL);
+						
+						Arrays.sort(palettes, 0, palettes.length, new Comparator<BrewerPalette>(){
+							@Override
+							public int compare(BrewerPalette arg0,
+									BrewerPalette arg1) {
+								return Collator.getInstance().compare(provider.getText(arg0), provider.getText(arg1));
+							}});
 						return palettes;
 					}
 					return null;
