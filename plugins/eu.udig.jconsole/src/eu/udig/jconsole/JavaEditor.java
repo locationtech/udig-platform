@@ -334,7 +334,7 @@ public class JavaEditor extends TextEditor {
         dndService.addMergedDropTarget(st, DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT, //
                 types, dropTargetListener);
     }
-    
+
     private void addEditorActions( Composite mainComposite ) {
         Composite buttonsComposite = new Composite(mainComposite, SWT.NONE);
         buttonsComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -371,10 +371,9 @@ public class JavaEditor extends TextEditor {
                 insertTemplates();
             }
         });
-        
+
         Label spacer = new Label(buttonsComposite, SWT.NONE);
         spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        
 
         final Combo heapCombo = new Combo(buttonsComposite, SWT.DROP_DOWN);
         heapCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
@@ -571,6 +570,17 @@ public class JavaEditor extends TextEditor {
             ITextSelection textSelection = (ITextSelection) selection;
             if (!textSelection.isEmpty()) {
                 text = textSelection.getText();
+
+                if (text.trim().length() > 0 && !text.trim().startsWith("import")) {
+                    // something in the middle was selected, we need to add the imports
+                    StringBuilder sb = new StringBuilder();
+                    List<String> defaultImports = Keywords.getValues(Keywords.IMPORTS);
+                    for( String defaultImport : defaultImports ) {
+                        sb.append(defaultImport).append("\n");
+                    }
+                    sb.append(text);
+                    text = sb.toString();
+                }
             }
         }
         if (text == null || 0 >= text.length()) {
