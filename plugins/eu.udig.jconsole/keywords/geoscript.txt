@@ -4,9 +4,12 @@ Fill
 Font
 Font("normal", "bold", 10, "Arial")
 Function
+GeoJSONWriter
 GeoJSONWriter()
+GeoRSSWriter
 GeoRSSWriter()
 Geometry
+GeometryCollection
 GeometryCollection(p, l, ...)
 Gml2Writer()
 Gml3Writer()
@@ -39,5 +42,7 @@ Shapefile
 Shapefile("path")
 Stroke
 Stroke("#000000", width)
-WkbWriter()
+WktWriter
 WktWriter()
+WkbWriter
+WkbWriter()
