@@ -48,8 +48,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ui.XMLMemento;
 import org.osgi.framework.Bundle;
 
-import com.sun.org.apache.bcel.internal.generic.BALOAD;
-
 /**
  * A blackboard that saves its state out as an EObject.
  * 
