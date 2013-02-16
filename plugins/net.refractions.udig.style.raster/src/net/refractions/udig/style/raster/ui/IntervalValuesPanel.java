@@ -133,16 +133,16 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 		 * @param entry
 		 * @return
 		 */
-		private String getValue(ColorEntry entry, List<ColorEntry> currentEntries){
+		public String getValue(ColorEntry entry, List<ColorEntry> currentEntries, ValueFormatter formatter){
 			if (this == TableColumn.OPACITY){
 				return String.valueOf(entry.getOpacity() * 100) + "%"; //$NON-NLS-1$
 			}else if (this == TableColumn.VALUE){
 				int currentIndex = currentEntries.indexOf(entry);
 				if (currentIndex <= 0){
-					return "< " + entry.getValue(); //$NON-NLS-1$
+					return "< " + formatter.formatNumber(entry.getValue()); //$NON-NLS-1$
 				}else{
 					ColorEntry prev = currentEntries.get(currentIndex - 1);
-					return prev.getValue() + " <= x < " + entry.getValue(); //$NON-NLS-1$
+					return formatter.formatNumber(prev.getValue()) + " <= x < " + formatter.formatNumber(entry.getValue()); //$NON-NLS-1$
 				}
 			}else if (this == TableColumn.LABEL){
 				if (entry.getLabel() == null){
@@ -161,6 +161,8 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	private BrewerPalette currentPalette;
 	private SingleBandEditorPage page;
 	private boolean reverseColors = false;
+	
+	private ValueFormatter formatter;
 	
 	public IntervalValuesPanel( SingleBandEditorPage page){
 
@@ -210,7 +212,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 								Color c = ((ColorEntry)element).getColor();
 								return new RGB(c.getRed(), c.getGreen(), c.getBlue());
 							}else{
-								return col.getValue((ColorEntry)element, colors);
+								return col.getValue((ColorEntry)element, colors, formatter);
 							}
 							
 						}
@@ -376,7 +378,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 		for (int i = 0; i < colors.size(); i ++){
 			ColorEntry c1 = colors.get(i);
 			ColorMapEntryBuilder cme = new ColorMapEntryBuilder();
-			ColorMapEntry e = cme.color(c1.getColor()).opacity(c1.getOpacity()).quantity(c1.getValue()).build();
+			ColorMapEntry e = cme.color(c1.getColor()).opacity(c1.getOpacity()).quantity(formatter.formatNumber(c1.getValue())).build();
 			if (c1.getLabel() != null && !c1.getLabel().trim().isEmpty()){
 				e.setLabel(c1.getLabel());
 			}
@@ -419,7 +421,8 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	/**
 	 * Refresh table viewer
 	 */
-	private void refresh(){
+	@Override
+	public void refresh(){
 		tblViewer.setInput(this.colors.toArray(new Object[this.colors.size()]));
 		tblViewer.refresh();
 	}
@@ -475,7 +478,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 
 		public String getText(Object element, int index) {
 			if (element instanceof ColorEntry){
-				return TableColumn.values()[index].getValue((ColorEntry) element, colors);
+				return TableColumn.values()[index].getValue((ColorEntry) element, colors, formatter);
 			}
 			return null;
 		}
@@ -523,5 +526,13 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	@Override
 	public boolean canSupport(int colorMapType) {
 		return colorMapType == ColorMap.TYPE_INTERVALS;
+	}
+
+	/**
+	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#setFormatter(net.refractions.udig.style.raster.ui.ValueFormatter)
+	 */
+	@Override
+	public void setFormatter(ValueFormatter format) {
+		this.formatter = format;
 	}
 }

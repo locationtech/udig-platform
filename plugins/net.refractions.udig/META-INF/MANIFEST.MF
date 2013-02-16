@@ -10,6 +10,5 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.ui,
  org.eclipse.core.expressions,
  org.eclipse.ui.intro,
- net.refractions.udig.browser,
- eu.udig.tools
+ net.refractions.udig.browser
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

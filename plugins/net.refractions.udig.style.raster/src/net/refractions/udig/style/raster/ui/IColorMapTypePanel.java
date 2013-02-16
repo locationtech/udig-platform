@@ -71,6 +71,9 @@ public interface IColorMapTypePanel {
 	 */
 	public void init(ColorMap cm);
 	
+	
+	public void setFormatter(ValueFormatter format);
+	
 	/**
 	 * This function is called to compute
 	 * the breaks for the given raster map.
@@ -93,4 +96,6 @@ public interface IColorMapTypePanel {
 	 * @return <code>true</code> if panel supports color map type, <code>false</code> otherwise
 	 */
 	public boolean canSupport(int colorMapType);
+	
+	public void refresh();
 }

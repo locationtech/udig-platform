@@ -134,11 +134,11 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 		 * @param entry
 		 * @return
 		 */
-		private String getValue(ColorEntry entry){
+		private String getValue(ColorEntry entry, ValueFormatter formatter){
 			if (this == TableColumn.OPACITY){
 				return String.valueOf(entry.getOpacity() * 100) + "%"; //$NON-NLS-1$
 			}else if (this == TableColumn.VALUE){
-				return String.valueOf(entry.getValue());
+				return formatter.formatNumber(entry.getValue());
 			}else if (this == TableColumn.LABEL){
 				if (entry.getLabel() == null){
 					return ""; //$NON-NLS-1$
@@ -155,7 +155,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 
 	private BrewerPalette currentPalette;
 	private boolean reverseColors;
-	
+	protected ValueFormatter formatter;
 	protected SingleBandEditorPage page;
 	
 	/**
@@ -211,7 +211,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 								Color c = ((ColorEntry)element).getColor();
 								return new RGB(c.getRed(), c.getGreen(), c.getBlue());
 							}else{
-								return col.getValue((ColorEntry)element);
+								return col.getValue((ColorEntry)element, formatter);
 							}
 							
 						}
@@ -333,7 +333,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 
 		for (ColorEntry c : colors){
 			ColorMapEntryBuilder cme = new ColorMapEntryBuilder();
-			ColorMapEntry e = cme.color(c.getColor()).opacity(c.getOpacity()).quantity(c.getValue()).build();
+			ColorMapEntry e = cme.color(c.getColor()).opacity(c.getOpacity()).quantity(formatter.formatNumber(c.getValue())).build();
 			if (c.getLabel() != null && !c.getLabel().trim().isEmpty()){
 				e.setLabel(c.getLabel());
 			}
@@ -422,10 +422,13 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 	/*
 	 * refresh table viewer
 	 */
-	protected void refresh(){
+	@Override
+	public void refresh(){
 		tblViewer.setInput(this.colors.toArray(new Object[this.colors.size()]));
 		tblViewer.refresh();
 	}
+	
+	
 	
 	/**
 	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#init(org.geotools.styling.ColorMap)
@@ -516,7 +519,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 
 		public String getText(Object element, int index) {
 			if (element instanceof ColorEntry){
-				return TableColumn.values()[index].getValue((ColorEntry) element);
+				return TableColumn.values()[index].getValue((ColorEntry) element, formatter);
 			}
 			return ""; //$NON-NLS-1$
 		}
@@ -528,6 +531,12 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 			Image image = getImage(element, cell.getColumnIndex());
 			cell.setImage(image);			
 		}
+		
+	}
+
+	@Override
+	public void setFormatter(ValueFormatter format) {
+		this.formatter = format;
 		
 	}
 

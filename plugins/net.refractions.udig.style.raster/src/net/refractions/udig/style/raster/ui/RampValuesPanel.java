@@ -49,7 +49,7 @@ public class RampValuesPanel extends UniqueValuesPanel {
 		for (int i = 0; i < colors.size(); i ++){
 			ColorEntry c1 = colors.get(i);			
 			ColorMapEntryBuilder cme = new ColorMapEntryBuilder();
-			ColorMapEntry e = cme.color(c1.getColor()).opacity(c1.getOpacity()).quantity(c1.getValue()).build();
+			ColorMapEntry e = cme.color(c1.getColor()).opacity(c1.getOpacity()).quantity(formatter.formatNumber(c1.getValue())).build();
 			if (c1.getLabel() != null && !c1.getLabel().trim().isEmpty()){
 				e.setLabel(c1.getLabel());
 			}

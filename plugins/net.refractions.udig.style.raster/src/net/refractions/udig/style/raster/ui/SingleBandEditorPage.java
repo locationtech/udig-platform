@@ -12,11 +12,14 @@ package net.refractions.udig.style.raster.ui;
 
 import java.io.File;
 import java.text.Collator;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.swing.text.NumberFormatter;
 
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
@@ -24,6 +27,7 @@ import net.refractions.udig.project.internal.Layer;
 import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.style.raster.Activator;
 import net.refractions.udig.style.raster.internal.Messages;
+import net.refractions.udig.style.raster.ui.ValueFormatter.DataType;
 import net.refractions.udig.style.sld.SLDContent;
 import net.refractions.udig.style.sld.editor.CustomDynamicPalette;
 import net.refractions.udig.style.sld.editor.CustomPalettesLoader;
@@ -65,6 +69,8 @@ import org.geotools.styling.SLD;
 import org.geotools.styling.SLDTransformer;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactory;
+import org.opengis.coverage.SampleDimensionType;
+import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.coverage.grid.GridCoverageReader;
 
 /**
@@ -80,6 +86,8 @@ import org.opengis.coverage.grid.GridCoverageReader;
  */
 public class SingleBandEditorPage extends StyleEditorPage {
 
+
+	
     private static final String SLD_EXTENSION = ".sld"; //$NON-NLS-1$
 
 	private StyleFactory sf = CommonFactoryFinder.getStyleFactory(null);
@@ -97,12 +105,18 @@ public class SingleBandEditorPage extends StyleEditorPage {
 	private Composite tableComp;
 	private ColorBrewer brewer = null;
 	private boolean reverseColors = false;
+	
+
+	private ValueFormatter formatter;
+	
+	
 
 	/**
 	 * Creates a new style editor page
 	 */
 	public SingleBandEditorPage() {
 		super();
+		formatter = new ValueFormatter();
 	}
 
 	/**
@@ -135,6 +149,7 @@ public class SingleBandEditorPage extends StyleEditorPage {
 		init();
 	}
 
+	
 	
 	
 	@Override
@@ -186,7 +201,12 @@ public class SingleBandEditorPage extends StyleEditorPage {
 			stacks.put(pnl, stack);
 		}
 		
-		Link lnk = new Link(main, SWT.NONE);
+		Composite linkPnl = new Composite(main, SWT.NONE);
+		linkPnl.setLayout(new GridLayout(4, false));
+		linkPnl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+		
+		
+		Link lnk = new Link(linkPnl, SWT.NONE);
 		lnk.setText("<a>" + Messages.SingleBandEditorPage_ReverseColorLabel + "</a>"); //$NON-NLS-1$ //$NON-NLS-2$
 		lnk.addSelectionListener(new SelectionAdapter() {
 			
@@ -200,36 +220,29 @@ public class SingleBandEditorPage extends StyleEditorPage {
 			}
 		});
 		
+		Label lblSep = new Label(linkPnl, SWT.SEPARATOR | SWT.VERTICAL);
+		GridData gd = new GridData(SWT.FILL, SWT.FILL, false, false);
+		gd.heightHint = 10;
+		lblSep.setLayoutData(gd);
 		
-		Link lnk2 = new Link(main, SWT.NONE);
+		lnk = new Link(linkPnl, SWT.NONE);
+		lnk.setText("<a>" + "Format Value..." + "</a>"); //$NON-NLS-1$ //$NON-NLS-2$
+		lnk.addSelectionListener(new SelectionAdapter() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				getFormat();
+			}
+		});
+		
+		Link lnk2 = new Link(linkPnl, SWT.NONE);
 		lnk2.setText("<a>OneClick Export</a>"); //$NON-NLS-1$ //$NON-NLS-2$
-		lnk2.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false,2,1));
+		lnk2.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
 		lnk2.setToolTipText("One click style export for file based layers.");
 		lnk2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				IGeoResource geoResource = getSelectedLayer().getGeoResource();
-                ID id = geoResource.getID();
-				if (id.isFile()) {
-					try {
-						File file = id.toFile();
-						SLDTransformer aTransformer = new SLDTransformer();
-						aTransformer.setIndentation(StyleEditor.INDENT);
-						String xml = aTransformer.transform(getSLD());
-						File newFile = new File(file.getParent(), FilenameUtils
-								.getBaseName(file.getAbsolutePath())
-								+ SLD_EXTENSION);
-						FileUtils.writeStringToFile(newFile, xml);
-						MessageDialog.openInformation(getShell(), "Export Successful", "Export successful.");
-					} catch (Exception e1) {
-						MessageDialog.openError(getShell(), "Error",
-								"Error saving style to file.");
-						e1.printStackTrace();
-					}
-				} else {
-					MessageDialog.openWarning(getShell(), "Warning",
-							"The selected layer is not file based.");
-				}
+				oneClickExport();
 			}
 		});
 		
@@ -261,6 +274,52 @@ public class SingleBandEditorPage extends StyleEditorPage {
 		init();
 	}
 
+	private void getFormat(){
+		FormatDialog fd = new FormatDialog(getShell(), this.formatter);
+		if (fd.open() == FormatDialog.OK){
+			if (fd.getSelectedDataType() != null){
+				formatter.setDataType(fd.getSelectedDataType());
+				formatter.setNumberFormatter(null);
+			}else if (fd.getSelectedDataType() == null && fd.getCustom() == null){
+				formatter.setDataType(null);
+				formatter.setNumberFormatter(null);
+			}else{
+				formatter.setNumberFormatter(fd.getCustom());
+			}
+			for (IColorMapTypePanel pnl : stylePanels){
+				pnl.refresh();
+			}
+		}
+	}
+	/*
+	 * Performs a single click export which exports
+	 * the style to a .sld file beside the associated layer file.
+	 * Does nothing for non-file based layers.
+	 */
+	private void oneClickExport(){
+		IGeoResource geoResource = getSelectedLayer().getGeoResource();
+        ID id = geoResource.getID();
+		if (id.isFile()) {
+			try {
+				File file = id.toFile();
+				SLDTransformer aTransformer = new SLDTransformer();
+				aTransformer.setIndentation(StyleEditor.INDENT);
+				String xml = aTransformer.transform(getSLD());
+				File newFile = new File(file.getParent(), FilenameUtils
+						.getBaseName(file.getAbsolutePath())
+						+ SLD_EXTENSION);
+				FileUtils.writeStringToFile(newFile, xml);
+				MessageDialog.openInformation(getShell(), "Export Successful", "Export successful.");
+			} catch (Exception e1) {
+				MessageDialog.openError(getShell(), "Error",
+						"Error saving style to file.");
+				e1.printStackTrace();
+			}
+		} else {
+			MessageDialog.openWarning(getShell(), "Warning",
+					"The selected layer is not file based.");
+		}
+	}
 	/**
 	 * 
 	 * @return the current selected color map panel
@@ -268,6 +327,7 @@ public class SingleBandEditorPage extends StyleEditorPage {
 	private IColorMapTypePanel getCurrentSelection(){
 		return (IColorMapTypePanel) ((IStructuredSelection)cmbThemingStyle.getSelection()).getFirstElement();
 	}
+	
 	
 	/**
 	 * 
@@ -291,9 +351,9 @@ public class SingleBandEditorPage extends StyleEditorPage {
 
 			@Override
 			public int compare(ColorMapEntry c0, ColorMapEntry c1) {
-				Double v1 = (Double) c0.getQuantity().evaluate(null);
-				Double v2 = (Double) c1.getQuantity().evaluate(null);
-				return v1.compareTo(v2);
+				Number v1 = (Number) c0.getQuantity().evaluate(null);
+				Number v2 = (Number) c1.getQuantity().evaluate(null);
+				return ((Double)v1.doubleValue()).compareTo(v2.doubleValue());
 			}});
 	}
 	
@@ -418,6 +478,17 @@ public class SingleBandEditorPage extends StyleEditorPage {
 
 	private void init(){
 		Layer l = getSelectedLayer();
+	
+		try{
+			GridCoverage coverage = l.getGeoResource().resolve(GridCoverage.class, null);
+			if (coverage.getNumSampleDimensions() > 0){
+				formatter.setRawDataType(coverage.getSampleDimension(0).getSampleDimensionType());
+			}
+		}catch (Exception ex){
+			//eat me 
+		}
+		
+		
 		
 		String paletteName = (String) l.getStyleBlackboard().get("net.refractions.udig.style.raster.palette"); //$NON-NLS-1$
 		if (paletteName != null){
@@ -439,6 +510,26 @@ public class SingleBandEditorPage extends StyleEditorPage {
 					cmbThemingStyle.getControl().notifyListeners(SWT.Selection, new Event());
 				}
 			}
+			if (formatter.getRawDataType() == DataType.INTEGER){
+				//if some of the entries are doubles we want to format in double
+				//regardless of the fact that the raster is an integer raster.
+				try{
+					for (ColorMapEntry e : cm.getColorMapEntries()){ 
+						Double dvalue = (Double) e.getQuantity().evaluate(null, Double.class);
+						Integer ivalue = (Integer) e.getQuantity().evaluate(null, Integer.class);
+						if (ivalue.doubleValue() != dvalue){
+							formatter.setDataType(DataType.DOUBLE);
+						}
+					}
+				}catch (Exception ex){
+					//eatme
+				}
+			}
+			
+		}
+		
+		for (IColorMapTypePanel pnl : stylePanels){
+			pnl.setFormatter(this.formatter);
 		}
 	}
 
