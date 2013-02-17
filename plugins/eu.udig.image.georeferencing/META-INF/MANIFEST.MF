@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: eu.udig.image.georeferencing
 Bundle-SymbolicName: eu.udig.image.georeferencing;singleton:=true
-Bundle-Version: 1.3.3.qualifier
+Bundle-Version: 1.4.0.qualifier
 Bundle-Activator: eu.udig.image.georeferencing.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
