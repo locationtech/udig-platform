@@ -22,7 +22,7 @@ attributes and then export the resulting scratch layer.
 #. Fill in the :doc:`Expression viewer` to define the values for your new
    attribute.
 
-   -  Use :doc:`Constraint Query Language` to define your
+   -  Use :doc:`concepts/Constraint Query Language` to define your
       expression
    -  You can choose different options using the arrow to the right
 
@@ -51,8 +51,7 @@ format can only support one geometry column.
 
 **Related concepts**
 
-:doc:`Constraint Query Language`
-
+:doc:`concepts/Constraint Query Language`
 
 **Related reference**
 

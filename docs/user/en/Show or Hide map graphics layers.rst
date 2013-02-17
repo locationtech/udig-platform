@@ -15,7 +15,7 @@ Showing map graphics layers
 
 **Related concepts**
 
-:doc:`Legend`
+:doc:`concepts/Legend`
 
 
 **Related reference**

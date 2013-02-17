@@ -18,7 +18,7 @@ Adding a folder using the context menu
 
 **Related concepts**
 
-:doc:`Legend`
+:doc:`concepts/Legend`
 
 
 **Related reference**

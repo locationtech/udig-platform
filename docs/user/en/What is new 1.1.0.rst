@@ -132,7 +132,7 @@ Reshape Operation
 
 The reshape operation can be used to manipulate your data in an ad-hoc manner. The reshape operation
 allows you to list the attributes of the output you desire; defining each attribute using a short
-:doc:`Constraint Query Language` expression.
+:doc:`/concepts/Constraint Query Language` expression.
 
 -  To include a column of data; list the attribute name - with the same attribute name as the
    expression

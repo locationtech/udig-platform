@@ -26,10 +26,10 @@ the Workbench window.
 
 **Related tasks**
 
-:doc:`Rearranging views and editors`
+:doc:`/Rearranging views and editors`
 
-:doc:`Creating fast views`
+:doc:`/Creating fast views`
 
-:doc:`Working with fast views`
+:doc:`/Working with fast views`
 
-:doc:`Maximizing`
+:doc:`/Maximizing`

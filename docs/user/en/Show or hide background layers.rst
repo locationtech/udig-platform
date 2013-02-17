@@ -15,7 +15,7 @@ Showing background layers
 
 **Related concepts**
 
-:doc:`Legend`
+:doc:`concepts/Legend`
 
 
 **Related reference**

@@ -35,11 +35,11 @@ There are *three* kinds of toolbars in the Workbench.
 
 **Related tasks**
 
-:doc:`Creating fast views`
+:doc:`/Creating fast views`
 
-:doc:`Rearranging the main toolbar`
+:doc:`/Rearranging the main toolbar`
 
 
 **Related reference**
 
-:doc:`Edit Tools`
+:doc:`/Edit Tools`

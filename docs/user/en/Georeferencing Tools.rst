@@ -98,7 +98,7 @@ tool.
 
 **Related concepts**
 
-:doc:`Georeference`
+:doc:`concepts/Georeference`
 
 
 .. |image0| image:: images/georeferencing_tools/ref_load_image.png

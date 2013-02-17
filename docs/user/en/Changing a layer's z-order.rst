@@ -34,8 +34,7 @@ the Layers View and on the map editor.
 
 **Related concepts**
 
-:doc:`Legend`
-
+:doc:`concepts/Legend`
 
 **Related reference**
 

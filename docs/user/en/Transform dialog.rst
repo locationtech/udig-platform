@@ -54,7 +54,7 @@ Definition
    of your output format when choosing a name. Many formats such as shape file are unable to handle
    names that contain spaces, punctuation or start with a number.
 
--  **Expression**: The :doc:`Constraint Query Language` used to
+-  **Expression**: The :doc:`/concepts/Constraint Query Language` used to
    generate the values on output. Use the drop down arrow on the right to cycle the :doc:`Expression viewer` 
    through several helpful options.
 

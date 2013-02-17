@@ -33,8 +33,8 @@ Out of the box uDig includes:
 
 **Related concepts**
 
-:doc:`Perspective`
+:doc:`concepts/Perspective`
 
-:doc:`View`
+:doc:`concepts/View`
 
-:doc:`Editor`
+:doc:`concepts/Editor`

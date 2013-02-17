@@ -13,7 +13,7 @@ editor area. For example, if a map is being edited, a map editor is displayed in
 The figure below shows an editor open on the map continents. The name of the map appears in the tab
 of the editor. Any changes made to the map will be saved when the editor is closed.
 
-.. figure:: images/using_an_editor/continents.png
+.. figure:: /images/using_an_editor/continents.png
    :align: center
    :alt: 
 
@@ -23,11 +23,11 @@ their content can be viewed simultaneously. In the figure below, editors for cou
 been placed one beside the other. Instructions will be given later in this tutorial explaining how
 to rearrange views and editors.
 
-.. figure:: images/using_an_editor/splitEditors.png
+.. figure:: /images/using_an_editor/splitEditors.png
    :align: center
    :alt: 
 
 **Related reference**
 
-:doc:`Map editor`
+:doc:`/Map editor`
 

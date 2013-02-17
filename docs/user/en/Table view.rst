@@ -45,15 +45,14 @@ The following choices are available:
 
 -  All - a regular expression search against all attributes
 -  AttributeName(s) - a regular expression search against the selected attribute
--  CQL - use the :doc:`Constraint Query Language` to define a query
+-  CQL - use the :doc:`/concepts/Constraint Query Language` to define a query
 
 To the right of the selection field is a check box that can be used to find either all of the
 features, or the first feature, matching the query.
 
 **Related concepts**
 
-:doc:`Constraint Query Language`
-
+:doc:`/concepts/Constraint Query Language`
 
 **Related tasks**
 

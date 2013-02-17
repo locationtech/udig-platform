@@ -26,4 +26,4 @@ Resource Details
 
 **Related concepts**
 
-:doc:`Selection`
+:doc:`concepts/Selection`

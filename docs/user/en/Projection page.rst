@@ -30,6 +30,8 @@ You can supply your own custom coordinate reference system using the "Well Known
 
 **Related concepts**
 
-:doc:`Coordinate Reference System`
+:doc:`concepts/Coordinate Reference System`
+
+**Related reference**
 
 `Well Known Text <http://en.wikipedia.org/wiki/Well-known_text>`_ (Wikipedia)

@@ -49,4 +49,4 @@ wizard to try again.
 
 **Related concepts**
 
-:doc:`Shapefile`
+:doc:`concepts/Shapefile`

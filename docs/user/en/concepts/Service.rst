@@ -24,7 +24,7 @@ Feature Servers are both services. A service provides resources. From a service 
 
 **Related reference**
 
-:doc:`Catalog view`
+:doc:`/Catalog view`
 
-:doc:`Add Data wizard`
+:doc:`/Add Data wizard`
 

@@ -21,7 +21,6 @@ coordinate reference systems.
 
 * :doc:`Projection`
 
-
 **Related reference**
 
 * `<http://www.epsg.org/>`_

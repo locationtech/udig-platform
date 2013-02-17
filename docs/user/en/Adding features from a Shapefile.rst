@@ -69,13 +69,13 @@ Shape files will be imported and displayed in the map editor
 
 **Related concepts**
 
-:doc:`Service`
+:doc:`concepts/Service`
 
-:doc:`Data Store`
+:doc:`concepts/Data Store`
 
-:doc:`File Formats`
+:doc:`concepts/File Formats`
 
-:doc:`Shapefile`
+:doc:`concepts/Shapefile`
 
 
 **Related reference**

@@ -24,12 +24,11 @@ Contents:
    Using the Table View
    Working with cheat sheets
    Working with fast views
-
-
+   Creating fast views
+   
 **Related concepts**
 
-:doc:`Workbench`
-
+:doc:`concepts/Workbench`
 
 **Related tasks**
 

@@ -12,7 +12,7 @@ We can use a layer feature to define the current boundary.
 
 **Related concepts**
 
-:doc:`Area of Interest`
+:doc:`concepts/Area of Interest`
 
 
 **Related reference**

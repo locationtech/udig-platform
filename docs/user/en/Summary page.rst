@@ -22,4 +22,4 @@ Feature Metadata
 
 **Related concepts**
 
-:doc:`Selection`
+:doc:`concepts/Selection`

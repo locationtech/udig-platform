@@ -12,4 +12,4 @@ uDig provides the following perspectives.
 
 **Related concepts**
 
-:doc:`Perspective`
+:doc:`concepts/Perspective`

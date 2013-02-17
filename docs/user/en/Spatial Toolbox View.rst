@@ -14,8 +14,7 @@ distribute with the uDig application directly.
 
 :doc:`Introduction to the Spatial Toolbox`
 
-
-**Related concepts**
+**Related reference**
 
 `DemManipulation <http://code.google.com/p/jgrasstools/wiki/DemManipulation>`_ (jgrasstools)
 `Geomorphology <http://code.google.com/p/jgrasstools/wiki/Geomorphology>`_ (jgrasstools)

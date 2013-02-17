@@ -24,7 +24,7 @@ An example with the sample data set is:
 
 **Related concepts**
 
-:doc:`Area of Interest`
+:doc:`concepts/Area of Interest`
 
 
 **Related reference**

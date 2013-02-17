@@ -93,7 +93,7 @@ Files
 To start out with we are going to load some of the sample data you downloaded earlier.
 
 #. Choose :menuselection:`Layer --> Add` from the menu bar to open up the :doc:`Add Data wizard`
-#. Select :doc:`Files` from the list of data sources
+#. Select :doc:`/concepts/Files` from the list of data sources
 #. Press **Next** to open up a file dialog
 #. Select the following file from your data folder: **10m_admin_0_countries.shp**
 #. Press **Open**

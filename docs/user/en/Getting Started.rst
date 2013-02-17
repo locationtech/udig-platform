@@ -11,7 +11,7 @@ user interface.
    Walkthrough 1
    Walkthrough 2
    Introduction to the Spatial Toolbox
-
+   getting_started/The Geoscript Editor
 
 
 Tips for using Online Help

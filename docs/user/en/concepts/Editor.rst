@@ -13,7 +13,7 @@ at content simultaneously.
 
 Here is an example of a map editor in the Workbench:
 
-.. image:: images/editor/workbench.gif
+.. image:: /images/editor/workbench.gif
    :width: 80%
    :align: center
 
@@ -21,8 +21,10 @@ Here is an example of a map editor in the Workbench:
 
 :doc:`Workbench`
 
-:doc:`Projects view`
+**Related Reference**
 
-:doc:`Catalog view`
+:doc:`/Projects view`
 
-:doc:`Map editor`
+:doc:`/Catalog view`
+
+:doc:`/Map editor`

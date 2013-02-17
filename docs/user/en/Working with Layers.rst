@@ -1,7 +1,7 @@
 Working with Layers
 ###################
 
-The concept of a :doc:`Layer` is the central method of working with mapping information. A
+The concept of a :doc:`/concepts/Layer` is the central method of working with mapping information. A
 layer consists of two parts: the data being displayed and the style controlling how the data is
 rendered.
 

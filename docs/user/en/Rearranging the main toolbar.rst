@@ -19,4 +19,4 @@ line.
 
 **Related concepts**
 
-:doc:`Toolbars`
+:doc:`concepts/Toolbars`

@@ -39,14 +39,11 @@ For Layers that produce complex symbology further detail to explain the symbols 
    This can be relaxed when using a standard or well under known symbology set such as provided by
    MIL2525b or Emergency Response symbols for which the operator has been trainined.
 
-**Related concepts**
+**Related reference**
+
+:doc:`/Legend View`
 
 `Cartography - Legend (Wikipedia) <http://en.wikipedia.org/wiki/Cartography#Map_types>`_
 
 `NATO Military Symbols For Land Based Systems <http://en.wikipedia.org/wiki/NATO_Military_Symbols_for_Land_Based_Systems>`_
-
-
-**Related reference**
-
-:doc:`Legend View`
 

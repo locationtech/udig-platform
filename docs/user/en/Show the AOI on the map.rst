@@ -14,7 +14,7 @@ We can add a map decoration to visually show the extent of the current AOI.
 
 **Related concepts**
 
-:doc:`Area of Interest`
+:doc:`concepts/Area of Interest`
 
 
 **Related reference**

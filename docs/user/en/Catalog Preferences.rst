@@ -41,7 +41,7 @@ Projection Engine:
 
 This is a jar similar to "jsde-jpe-XX.jar" where XX is the version number of your ArcSDE server.
 
-**Related concepts**
+**Downloads**
 
 `ESRI 9.1 tarball <http://support.esri.com/index.cfm?fa=downloads.patchesServicePacks.viewPatch&PID=19&MetaID=1198#install-cUNIX>`_
    (you will need to untar this service pack and locate the two jar files)

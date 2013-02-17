@@ -15,7 +15,7 @@ Hiding grid layer on map
 
 **Related concepts**
 
-:doc:`Legend`
+:doc:`concepts/Legend`
 
 
 **Related reference**

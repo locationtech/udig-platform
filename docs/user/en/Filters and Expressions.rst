@@ -13,7 +13,7 @@ the application (see Constraint Query Language below).
 
 **Related concepts**
 
-:doc:`Constraint Query Language`
+:doc:`concepts/Constraint Query Language`
 
 
 **Related reference**

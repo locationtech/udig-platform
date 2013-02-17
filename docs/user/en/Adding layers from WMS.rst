@@ -77,9 +77,9 @@ You can quickly add a layer from a web browser (or the embedded **Web view**):
 
 **Related concepts**
 
-:doc:`Service`
+:doc:`concepts/Service`
 
-:doc:`Web Map Server`
+:doc:`concepts/Web Map Server`
 
 
 **Related concepts**

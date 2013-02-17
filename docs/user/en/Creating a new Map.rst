@@ -64,10 +64,10 @@ Catalog
 
 **Related concepts**
 
-:doc:`Map`
+:doc:`concepts/Map`
 
-:doc:`Projection`
+:doc:`concepts/Projection`
 
-:doc:`Layer`
+:doc:`concepts/Layer`
 
-:doc:`Decorator`
+:doc:`concepts/Decorator`

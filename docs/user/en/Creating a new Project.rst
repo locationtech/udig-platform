@@ -13,7 +13,6 @@ The new Project has been created and is now in the Project Explorer
 
 **Related concepts**
 
-:doc:`Project`
-
+:doc:`concepts/Project`
 
 .. |image0| image:: /images/creating_a_new_project/newproject.gif

@@ -55,7 +55,7 @@ Common examples:
 
        NOT( NAME LIKE 'Can%' )
 
--  You can make use of the full range of :doc:`Constraint Query Language` function:
+-  You can make use of the full range of :doc:`/concepts/Constraint Query Language` function:
 
    ::
 
@@ -63,7 +63,7 @@ Common examples:
 
 **Related concepts**
 
-:doc:`Constraint Query Language`
+:doc:`concepts/Constraint Query Language`
 
 
 **Related reference**

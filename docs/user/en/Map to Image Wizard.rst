@@ -139,11 +139,11 @@ Margins
 
 Paper margines set in millimeters.
 
-**Related tasks**
-
-:doc:`World Plus Image`
-
-
 **Related concepts**
+
+:doc:`/concepts/World Plus Image`
+
+
+**Related reference**
 
 `page sizes <http://en.wikipedia.org/wiki/Image:A_size_illustration2_with_letter_and_legal.svg>`_

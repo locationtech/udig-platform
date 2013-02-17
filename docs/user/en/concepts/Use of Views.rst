@@ -43,17 +43,17 @@ many features that provide for the creation of a custom work environment.
 
 **Related reference**
 
-:doc:`Catalog view`
+:doc:`/Catalog view`
 
-:doc:`Layers view`
+:doc:`/Layers view`
 
-:doc:`Projects view`
+:doc:`/Projects view`
 
-:doc:`Search view`
+:doc:`/Search view`
 
-:doc:`Help view`
+:doc:`/Help view`
 
-:doc:`Web view`
+:doc:`/Web view`
 
 
 .. |image0| image:: /images/use_of_views/catalog.gif

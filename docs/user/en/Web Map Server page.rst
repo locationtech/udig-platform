@@ -18,8 +18,7 @@ URL to a Web Map Service capabilieis document
 
 **Related concepts**
 
-:doc:`Web Map Server`
-
+:doc:`concepts/Web Map Server`
 
 **Related reference**
 

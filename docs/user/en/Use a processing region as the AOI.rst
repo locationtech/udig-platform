@@ -11,7 +11,7 @@ We can use a processing region to define the current AOI.
 
 **Related concepts**
 
-:doc:`Area of Interest`
+:doc:`concepts/Area of Interest`
 
 
 **Related reference**

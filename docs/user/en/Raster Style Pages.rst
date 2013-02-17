@@ -94,5 +94,5 @@ Press this button to check that your XML is valid.
 
 **Related concepts**
 
-:doc:`Style Layer Descriptor`
+:doc:`concepts/Style Layer Descriptor`
 

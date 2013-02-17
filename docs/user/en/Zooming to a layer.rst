@@ -7,10 +7,10 @@ Zooming to a layer
 
 **Related concepts**
 
+ :doc:`/concepts/Layer`
+
+**Related reference**
 
 :doc:`Layers view`
-
- :doc:`Layer`
-
 
 .. |image0| image:: /images/zooming_to_a_layer/zoomtolayer.jpg

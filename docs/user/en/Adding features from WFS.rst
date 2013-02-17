@@ -86,7 +86,7 @@ press **Next**
 
 **Related concepts**
 
-:doc:`Service`
+:doc:`concepts/Service`
 
-:doc:`Web Feature Server`
+:doc:`concepts/Web Feature Server`
 

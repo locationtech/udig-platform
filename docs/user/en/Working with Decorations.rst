@@ -1,7 +1,7 @@
 Working with Decorations
 ########################
 
-You can add different types of Map :doc:`Decorator` s to maps.
+You can add different types of Map :doc:`/concepts/Decorator` s to maps.
 
 .. toctree::
    :maxdepth: 1

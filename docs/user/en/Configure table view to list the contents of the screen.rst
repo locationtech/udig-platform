@@ -12,7 +12,7 @@ the screen.
 
 **Related concepts**
 
-:doc:`Area of Interest`
+:doc:`concepts/Area of Interest`
 
 
 **Related reference**

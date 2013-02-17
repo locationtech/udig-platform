@@ -47,8 +47,7 @@ You may wish to adjust this delay based of service reliability
 
 **Related concepts**
 
-:doc:`Web Feature Server`
-
+:doc:`concepts/Web Feature Server`
 
 **Related reference**
 

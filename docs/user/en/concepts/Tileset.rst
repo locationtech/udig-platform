@@ -6,8 +6,8 @@ backed onto either a WMS or a WMS-C service.
 
 **Related reference**
 
-* :doc:`Enabling a Tileset from a WMS Server`
+* :doc:`/Enabling a Tileset from a WMS Server`
 
-* :doc:`Tileset page`
+* :doc:`/Tileset page`
 
 * :ref:`preferences-page-rendering-wms`

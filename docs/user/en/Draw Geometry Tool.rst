@@ -5,7 +5,7 @@ Draw Geometry Tool – Cannot resolve external resource into attachment.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Draw Geometry Tool allows lines, polygons and holes to be drawn in a free-hand manner. The tool
-attempts to determine what geometry should be created by inspecting the :doc:`Feature Type` of the layer. If it is a polygon then polygons will be created;
+attempts to determine what geometry should be created by inspecting the :doc:`/concepts/Feature Type` of the layer. If it is a polygon then polygons will be created;
 similarly lines are created for line layers. If the layer's geometry type is Geometry (ie. can
 contain both lines and polygons) then lines are created unless the draw is finished over the
 starting vertex (the geometry is closed) in which case polygons are created.

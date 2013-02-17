@@ -106,7 +106,9 @@ Alternatively, you may use the deprecated "Simple" Style View:
 
 **Related concepts**
 
-:doc:`Layer`
+:doc:`concepts/Layer`
+
+**Related reference**
 
 :doc:`Layers view`
 

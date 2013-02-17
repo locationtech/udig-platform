@@ -49,4 +49,4 @@ The :guilabel:`Remove` button is used to remove a hotlink definition.
 
 **Related concepts**
 
-:doc:`Selection`
+:doc:`concepts/Selection`

@@ -24,7 +24,7 @@ different options will be listed some of which are described below:
 * `Numbers`_
 
 
-When defining an expression you can make use of the full range of :doc:`Constraint Query Language` functions.
+When defining an expression you can make use of the full range of :doc:`/concepts/Constraint Query Language` functions.
 
 -  To concatenate several values into a single text output:
 
@@ -41,7 +41,7 @@ When defining an expression you can make use of the full range of :doc:`Constrai
 
 **Related concepts**
 
-:doc:`Constraint Query Language`
+:doc:`concepts/Constraint Query Language`
 
 
 **Related reference**

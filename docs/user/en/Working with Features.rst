@@ -23,12 +23,9 @@ below.
 
 **Related concepts**
 
-
-:doc:`Selection`
-
+:doc:`concepts/Selection`
 
 **Related tasks**
-
 
 :doc:`Working with Selection`
 

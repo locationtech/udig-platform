@@ -30,13 +30,13 @@ The tool works by:
    up until no area of interest is defined)
 -  You can drag to select several features as the area of interest
 
+**Related concepts**
+
+:doc:`/concepts/Area of Interest`
 
 **Related tasks**
 
-:doc:`Area of Interest`
-
 :doc:`Working with AOI`
-
 
 **Related reference**
 

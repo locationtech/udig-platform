@@ -45,8 +45,7 @@ configuration options effecting performance.
 
 **Related concepts**
 
-:doc:`PostGIS`
-
+:doc:`concepts/PostGIS`
 
 **Related reference**
 

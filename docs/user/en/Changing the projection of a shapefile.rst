@@ -18,7 +18,7 @@ please use the following procedure.
 
 **Related concepts**
 
-:doc:`Shapefile`
+:doc:`concepts/Shapefile`
 
 
 **Related reference**

@@ -25,13 +25,11 @@ all toolbar buttons.
 
 :doc:`Fast views`
 
+:doc:`Toolbars`
 
 **Related tasks**
 
-:doc:`Creating fast views`
+:doc:`/Creating fast views`
 
 
-**Related reference**
-
-:doc:`Toolbars`
 

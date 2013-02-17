@@ -36,4 +36,4 @@ will provide you with information about the interface and, if appropriate, links
 
 **Related tasks**
 
-:doc:`Accessing context sensitive help`
+:doc:`/Accessing context sensitive help`

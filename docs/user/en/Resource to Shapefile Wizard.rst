@@ -32,4 +32,4 @@ List of selected resources:
 
 **Related concepts**
 
-:doc:`Shapefile`
+:doc:`concepts/Shapefile`

@@ -98,7 +98,7 @@ The Axios tools formally installed as a separate download are now included in th
 Constraint Query Language
 =========================
 
-The use of :doc:`Constraint Query Language` has been greatly improved with fields providing
+The use of :doc:`/concepts/Constraint Query Language` has been greatly improved with fields providing
 dynamic assistance and function lookup while you type.
 
 To access this functionality:
@@ -120,7 +120,7 @@ Here are some task pages to get you started:
 Area of Interest
 ================
 
-We now support the concept of :doc:`Area of Interest`:
+We now support the concept of :doc:`/concepts/Area of Interest`:
 
 -  This replaces the previous default value of "everything"
 -  You can define an area of interest a number of different ways: current screen, a bookmark, the

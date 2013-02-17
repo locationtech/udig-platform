@@ -22,4 +22,4 @@ Using the Expression Viewer, the :guilabel:`Label Expression` allows you to set 
 
 **Related concepts**
 
-:doc:`Selection`
+:doc:`concepts/Selection`

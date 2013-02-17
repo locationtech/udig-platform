@@ -41,21 +41,25 @@ Each layer has a filter that indicates what is selected on that layer.
 Edit Selection
 ^^^^^^^^^^^^^^
 
-The :doc:`EditBlackboard` contains the features that have been selected for
+The :doc:`/EditBlackboard` contains the features that have been selected for
 editing. At any one time a single feature on the edit blackboard is the *edit feature*, the feature
 that has the vertex handles and can directly be edited.
 
-**Related reference**
-
-:doc:`EditBlackboard`
-
-:doc:`Map editor`
+**Related concepts**
 
 :doc:`Workbench`
 
 :doc:`Layer`
 
-:doc:`Working with Features`
+**Related reference**
+
+:doc:`/EditBlackboard`
+
+:doc:`/Map editor`
+
+**Related tasks**
+
+:doc:`/Working with Features`
 
 
 Boundary Selection

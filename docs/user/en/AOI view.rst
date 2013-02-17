@@ -7,9 +7,9 @@ filter queries in the search and table view.
 
 .. figure:: /images/aoi_view/AOIView.PNG
    :align: center
-   :alt: 
+   :alt:
 
-The current options avilable to define a AOI are:
+The current options available to define a AOI are:
 
 -  All - Zooming to extent will show all data from all layers and
 -  Screen - Using the screen AOI while searching the catalog will limit the results to those within
@@ -22,7 +22,7 @@ The current options avilable to define a AOI are:
 
 **Related concepts**
 
-:doc:`Area of Interest`
+:doc:`concepts/Area of Interest`
 
 
 **Related tasks**

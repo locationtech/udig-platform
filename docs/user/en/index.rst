@@ -7,7 +7,7 @@ uDig User Guide
 
    uDig Overview
    Getting Started
-   Concepts
+   concepts/Concepts
    Tasks
    Reference
    What is new

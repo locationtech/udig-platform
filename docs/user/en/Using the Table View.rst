@@ -6,7 +6,7 @@ geometric data; while the map is used to show the geometries.
 
 **Related concepts**
 
-:doc:`Constraint Query Language`
+:doc:`concepts/Constraint Query Language`
 
 
 **Related tasks**

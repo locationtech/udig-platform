@@ -39,7 +39,7 @@ Changing layer position
 
 **Related concepts**
 
-:doc:`Legend`
+:doc:`concepts/Legend`
 
 
 **Related reference**

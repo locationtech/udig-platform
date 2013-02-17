@@ -9,8 +9,7 @@ scratch layer.
 
 **Related concepts**
 
-:doc:`Constraint Query Language`
-
+:doc:`concepts/Constraint Query Language`
 
 **Related reference**
 

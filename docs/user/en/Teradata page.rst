@@ -5,7 +5,7 @@ The Teradata page is used to define a connection to a Teradata database.
 
 .. note::
    Teradata database support is not enabled by default and requires the Teradata extension to be
-   installed prior to use. Please see the :doc:`Teradata` page for more details.
+   installed prior to use. Please see the :doc:`/concepts/Teradata` page for more details.
 
 Connecting to a Teradata database
 ---------------------------------
@@ -74,8 +74,7 @@ If you are adding data directly to a map then proceed to the :doc:`Resource Sele
 
 **Related concepts**
 
-:doc:`Teradata`
-
+:doc:`concepts/Teradata`
 
 **Related reference**
 

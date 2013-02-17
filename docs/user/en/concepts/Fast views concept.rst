@@ -26,11 +26,10 @@ You can create a new fast view by:
 
 **Related tasks**
 
-:doc:`Creating fast views`
+:doc:`/Creating fast views`
 
-:doc:`Working with fast views`
+:doc:`/Working with fast views`
 
-:doc:`Maximizing`
-
+:doc:`/Maximizing`
 
 .. Moving and docking views

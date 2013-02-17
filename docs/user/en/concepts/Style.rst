@@ -21,5 +21,7 @@ Contents:
 
 :doc:`Layer`
 
-:doc:`Style Editor dialog`
+**Related reference**
+
+:doc:`/Style Editor dialog`
 
