@@ -10,6 +10,9 @@
  */
 package net.refractions.udig.style.raster.ui;
 
+import java.io.IOException;
+
+import net.refractions.udig.style.raster.Activator;
 import net.refractions.udig.style.raster.internal.Messages;
 
 import org.eclipse.jface.window.Window;
@@ -17,6 +20,7 @@ import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntry;
 import org.geotools.styling.ColorMapImpl;
 import org.geotools.styling.builder.ColorMapEntryBuilder;
+import org.opengis.coverage.grid.GridCoverageReader;
 
 /**
  * Style panel for the ColorMap.TYPE_RAMP,
@@ -70,9 +74,19 @@ public class RampValuesPanel extends UniqueValuesPanel {
 
 	@Override
 	public void computeValues() {
-		ClassifyDialog dialog = new ClassifyDialog(page.getShell(), page.getGridCoverageReader());
-		if (dialog.open() == Window.OK){
-			dialog.updatePanel(this);
+		GridCoverageReader reader = page.getGridCoverageReader();
+		try{
+			ClassifyDialog dialog = new ClassifyDialog(page.getShell(), reader,page.getNoDataValues());
+			if (dialog.open() == Window.OK){
+				dialog.updatePanel(this);
+			}
+		}finally{
+			try {
+				reader.dispose();
+			} catch (IOException e) {
+				Activator.log("Error disposing of reader", e); //$NON-NLS-1$
+			}
+				
 		}
 	}
 

@@ -94,6 +94,7 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
+			boolean maxReached = false;
 			Long thisSampleSize = sampleSize;
 			try{
 				getShell().getDisplay().syncExec(new Runnable(){
@@ -127,7 +128,10 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 								.toArray(new GeneralParameterValue[0]);
 						gcRaw = layer.read(values);
 					}
-										
+									
+					if (monitor.isCanceled()){
+						return Status.CANCEL_STATUS;
+					}
 					GridCoordinates high = gcRaw.getGridGeometry().getGridRange().getHigh();
 					GridCoordinates low = gcRaw.getGridGeometry().getGridRange().getLow();
 					int width = high.getCoordinateValue(0) - low.getCoordinateValue(0);
@@ -150,6 +154,7 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 					}
 					
 					int recSize = 1000;
+					
 					for (int x = 0; x < width; x+=recSize){
 						for (int y = 0; y < height; y += recSize){
 							Rectangle r = new Rectangle(x, y, recSize, recSize);
@@ -157,7 +162,17 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 							DataBuffer df  = rs.getDataBuffer();
 							for (int i = 0; i < df.getSize(); i ++){
 								v.add(df.getElemDouble(i));
+								if (v.size() >= SingleBandEditorPage.MAX_ENTRIES){
+									maxReached = true;
+									break;
+								}
 							}
+						}
+						if (maxReached){
+							break;
+						}
+						if (monitor.isCanceled()){
+							return Status.CANCEL_STATUS;
 						}
 					}
 				} catch (Exception e) {
@@ -168,9 +183,19 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 				uniqueValues.addAll(v);
 				sort();
 			}finally{
+				final boolean max = maxReached;
+				if (getShell() == null){
+					return Status.CANCEL_STATUS;
+				}
 				getShell().getDisplay().syncExec(new Runnable(){
 					@Override
 					public void run() {
+						if (btnRecompute.isDisposed()){
+							return;
+						}
+						if (max){
+							setErrorMessage(MessageFormat.format(Messages.UniqueValuesDialog_MaxValueError, SingleBandEditorPage.MAX_ENTRIES));
+						}
 						btnRecompute.setEnabled(true);
 						lstViewer.setInput(uniqueValues);
 						lstViewer.refresh();
@@ -190,6 +215,14 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 		super(parentShell);
 		this.layer = layer;
 		this.uniqueValues = new ArrayList<Number>();
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.dialogs.Dialog#close()
+	 */
+	public boolean close() {
+		computeJob.cancel();
+		return super.close();
 	}
 
 	@Override

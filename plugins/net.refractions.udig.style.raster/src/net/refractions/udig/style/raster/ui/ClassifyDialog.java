@@ -98,6 +98,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 	private String currentIgnore = null;
 	private Long currentSampleSize = null;
 	
+	private double[] defaultNoData = null;
 	/**
 	 * Supported classifications
 	 *
@@ -120,12 +121,22 @@ public class ClassifyDialog extends TitleAreaDialog{
 	 * @param parentShell parent shell
 	 * @param layer layer to classify
 	 */
-	public ClassifyDialog(Shell parentShell, GridCoverageReader layer) {
+	public ClassifyDialog(Shell parentShell, GridCoverageReader layer, double[] noDataValues) {
 		super(parentShell);
 		this.layer = layer;
+		this.defaultNoData = noDataValues;
 		
 	}
 
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.dialogs.Dialog#close()
+	 */
+	public boolean close() {
+		computeValuesJob.cancel();
+		return super.close();
+	}
+	
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		breaks = new ArrayList<Double>();
@@ -172,7 +183,20 @@ public class ClassifyDialog extends TitleAreaDialog{
 	
 		txtIgnore = new Text(main, SWT.BORDER);
 		txtIgnore .setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		txtIgnore .setText("-9999"); //$NON-NLS-1$
+		if (defaultNoData == null){
+			txtIgnore.setText(String.valueOf(IColorMapTypePanel.DEFAULT_NO_DATA));
+		}else{
+			StringBuilder sb = new StringBuilder();
+			for (double d : defaultNoData){
+				sb.append(d);
+				sb.append(","); //$NON-NLS-1$
+			}
+			//remove last ","
+			if (sb.length() > 0){
+				sb.deleteCharAt(sb.length() -1);
+			}
+			txtIgnore.setText(sb.toString());
+		}
 		
 		Label lbls = new Label(main, SWT.NONE);
 		lbls.setText(Messages.ClassifyDialog_LimitSizeLabel);
@@ -272,6 +296,10 @@ public class ClassifyDialog extends TitleAreaDialog{
 				MessageDialog.openError(getShell(), Messages.ClassifyDialog_ErrorDialogTitle, MessageFormat.format(Messages.ClassifyDialog_InvalidValueOption, new Object[]{currentSelection.opName }));
 				return;
 			}
+			if (currentOption.intValue() >= SingleBandEditorPage.MAX_ENTRIES){
+				MessageDialog.openError(getShell(), Messages.ClassifyDialog_ErrorDialogTitle, MessageFormat.format(Messages.ClassifyDialog_MaxValueError, new Object[]{SingleBandEditorPage.MAX_ENTRIES-1 }));
+				return;
+			}
 			 
 		}else if (currentSelection == ClassifyFunction.DEFINED_INTERVAL){
 			try{
@@ -347,6 +375,9 @@ public class ClassifyDialog extends TitleAreaDialog{
 				}else if (function== ClassifyFunction.DEFINED_INTERVAL){
 					computeDefinedInterval((Double)op);
 				}
+				if (monitor.isCanceled()){
+					return Status.CANCEL_STATUS;
+				}
 			}catch (final Exception ex){
 				Display.getDefault().syncExec(new Runnable(){
 					@Override
@@ -358,8 +389,10 @@ public class ClassifyDialog extends TitleAreaDialog{
 				Display.getDefault().syncExec(new Runnable(){
 					@Override
 					public void run() {
-						cmbRanges.refresh();
-						btnCompute.setEnabled(true);		
+						if (!cmbRanges.getControl().isDisposed()){
+							cmbRanges.refresh();
+							btnCompute.setEnabled(true);
+						}
 					}});
 				
 			}

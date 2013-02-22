@@ -11,12 +11,15 @@
 package net.refractions.udig.style.raster.ui;
 
 import java.awt.Color;
+import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.refractions.udig.style.raster.Activator;
 import net.refractions.udig.style.raster.internal.Messages;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -46,6 +49,7 @@ import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntry;
 import org.geotools.styling.ColorMapImpl;
 import org.geotools.styling.builder.ColorMapEntryBuilder;
+import org.opengis.coverage.grid.GridCoverageReader;
 
 /**
  * Implementation of the color map type panel
@@ -183,6 +187,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 		tblViewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		tblViewer.getTable().setHeaderVisible(true);
 		tblViewer.getTable().setLinesVisible(true);
+		((GridData)tblViewer.getTable().getLayoutData()).heightHint = 250;
 		TableLabelProvider labelProvider = new TableLabelProvider();
 		
 		for (int i = 0; i < TableColumn.values().length; i++){
@@ -296,11 +301,18 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 		btnAddNoData.setText(Messages.UniqueValuesPanel_NoDataButton);
 		btnAddNoData.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		btnAddNoData.addSelectionListener(new SelectionAdapter() {
-			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ColorEntry ce = new ColorEntry(Color.WHITE,0, DEFAULT_NO_DATA, NO_DATA_LABEL);
-				colors.add(ce);
+				if (page.getNoDataValues() != null){
+					for (double noData : page.getNoDataValues()){
+						ColorEntry ce = new ColorEntry(Color.WHITE,0, noData, NO_DATA_LABEL);
+						colors.add(ce);		
+					}
+				}else{
+					ColorEntry ce = new ColorEntry(Color.WHITE,0, DEFAULT_NO_DATA, NO_DATA_LABEL);
+					colors.add(ce);
+				}
+				
 				updateColors();
 				sort();
 				refresh();
@@ -471,8 +483,8 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 	 * Validates the current model
 	 */
 	private void validate(){
-		if (colors.size() > 256){
-			page.setErrorMessage(Messages.UniqueValuesPanel_MaxEntryLabel);
+		if (colors.size() > SingleBandEditorPage.MAX_ENTRIES){
+			page.setErrorMessage(MessageFormat.format(Messages.UniqueValuesPanel_MaxValueError, SingleBandEditorPage.MAX_ENTRIES));
 		}else{
 			page.setErrorMessage(null);
 		}
@@ -486,10 +498,22 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 
 	@Override
 	public void computeValues() {
-		UniqueValuesDialog dialog = new UniqueValuesDialog(page.getShell(), page.getGridCoverageReader());
-		if (dialog.open() == Window.OK){
-			dialog.updatePanel(this);
+		GridCoverageReader reader = page.getGridCoverageReader();
+		try{
+			UniqueValuesDialog dialog = new UniqueValuesDialog(page.getShell(), reader);
+			if (dialog.open() == Window.OK){
+				dialog.updatePanel(this);
+			}
+		}finally{
+			try {
+				reader.dispose();
+			} catch (IOException e) {
+				Activator.log("Error disposing of reader", e); //$NON-NLS-1$
+			}
+				
 		}
+		
+		
 	}
 
 	@Override
@@ -538,6 +562,15 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 	public void setFormatter(ValueFormatter format) {
 		this.formatter = format;
 		
+	}
+
+
+	@Override
+	public void setInitialColorPalette(BrewerPalette palette) {
+		if (currentPalette == null){
+			currentPalette = palette;
+		}
+		refresh();
 	}
 
 }

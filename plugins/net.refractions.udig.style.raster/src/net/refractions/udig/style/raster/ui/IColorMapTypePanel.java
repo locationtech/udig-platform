@@ -58,6 +58,14 @@ public interface IColorMapTypePanel {
 	public void setColorPalette(BrewerPalette palette, boolean reverse);
 	
 	/**
+	 * Sets the default color palette to use the 
+	 * first time the panel is displayed.
+	 * 
+	 * @param palette
+	 */
+	public void setInitialColorPalette(BrewerPalette palette);
+	
+	/**
 	 * 
 	 * @return the panel control
 	 */
@@ -71,7 +79,11 @@ public interface IColorMapTypePanel {
 	 */
 	public void init(ColorMap cm);
 	
-	
+	/**
+	 * Sets the value formatter, updating the 
+	 * format of the current values
+	 * @param format new value formatter
+	 */
 	public void setFormatter(ValueFormatter format);
 	
 	/**
@@ -97,5 +109,8 @@ public interface IColorMapTypePanel {
 	 */
 	public boolean canSupport(int colorMapType);
 	
+	/**
+	 * Refresh the panel
+	 */
 	public void refresh();
 }

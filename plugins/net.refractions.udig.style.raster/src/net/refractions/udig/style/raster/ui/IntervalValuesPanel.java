@@ -11,12 +11,15 @@
 package net.refractions.udig.style.raster.ui;
 
 import java.awt.Color;
+import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.refractions.udig.style.raster.Activator;
 import net.refractions.udig.style.raster.internal.Messages;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -46,6 +49,7 @@ import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntry;
 import org.geotools.styling.ColorMapImpl;
 import org.geotools.styling.builder.ColorMapEntryBuilder;
+import org.opengis.coverage.grid.GridCoverageReader;
 /**
  * Implementation of the color map type panel
  * that colors the raster using ColorMap.TYPE_INTERVAL
@@ -182,6 +186,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 		//create table
 		tblViewer = new TableViewer(main, SWT.FULL_SELECTION | SWT.MULTI | SWT.BORDER);
 		tblViewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		((GridData)tblViewer.getTable().getLayoutData()).heightHint = 250;
 		tblViewer.getTable().setHeaderVisible(true);
 		tblViewer.getTable().setLinesVisible(true);
 		TableLabelProvider labelProvider = new TableLabelProvider();
@@ -241,13 +246,13 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 		btnAdd.setText(Messages.IntervalValuesPanel_AddButton);
 		btnAdd.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		btnAdd.addSelectionListener(new SelectionAdapter() {
-			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ColorEntry ce = new ColorEntry();
 				colors.add(ce);
 				updateColors();
 				refresh();
+				validate();
 			}
 		});
 		
@@ -272,6 +277,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 				}
 				updateColors();
 				refresh();
+				validate();
 			}
 			
 		});
@@ -443,6 +449,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 			colors.add(ce);
 		}
 		refresh();
+		validate();
 	}
 	
 	/**
@@ -461,6 +468,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 		
 		updateColors();
 		refresh();
+		validate();
 	}
 	
 	/**
@@ -492,6 +500,17 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 		}
 		
 	}
+	
+	/*
+	 * Validates the current model
+	 */
+	private void validate(){
+		if (colors.size() > SingleBandEditorPage.MAX_ENTRIES){
+			page.setErrorMessage(MessageFormat.format(Messages.IntervalValuesPanel_MaxValueError, SingleBandEditorPage.MAX_ENTRIES));
+		}else{
+			page.setErrorMessage(null);
+		}
+	}
 
 	/**
 	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#getName()
@@ -506,9 +525,19 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	 */
 	@Override
 	public void computeValues() {
-		ClassifyDialog dialog = new ClassifyDialog(page.getShell(), page.getGridCoverageReader());
-		if (dialog.open() == Window.OK){
-			dialog.updatePanel(this);
+		GridCoverageReader reader = page.getGridCoverageReader();
+		try{
+			ClassifyDialog dialog = new ClassifyDialog(page.getShell(), reader, page.getNoDataValues());
+			if (dialog.open() == Window.OK){
+				dialog.updatePanel(this);
+			}
+		}finally{
+			try {
+				reader.dispose();
+			} catch (IOException e) {
+				Activator.log("Error disposing of reader", e); //$NON-NLS-1$
+			}
+				
 		}
 	}
 
@@ -534,5 +563,13 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	@Override
 	public void setFormatter(ValueFormatter format) {
 		this.formatter = format;
+	}
+	
+	@Override
+	public void setInitialColorPalette(BrewerPalette palette) {
+		if (currentPalette == null){
+			currentPalette = palette;
+		}
+		refresh();
 	}
 }

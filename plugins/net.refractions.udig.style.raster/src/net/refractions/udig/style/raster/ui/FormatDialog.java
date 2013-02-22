@@ -12,6 +12,7 @@ package net.refractions.udig.style.raster.ui;
 
 import java.text.DecimalFormat;
 
+import net.refractions.udig.style.raster.internal.Messages;
 import net.refractions.udig.style.raster.ui.ValueFormatter.DataType;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -54,21 +55,21 @@ public class FormatDialog extends TitleAreaDialog {
 		
 		if (formatCombo.getSelectionIndex() == 3){
 			
-			if (txtCustom.getText().contains(",")){
-				invalid = "Invalid number format.  Cannot contain commas";
+			if (txtCustom.getText().contains(",")){ //$NON-NLS-1$
+				invalid = Messages.FormatDialog_CommaInvalidFormatError;
 			}
 			try{
 				custom = ((DecimalFormat)DecimalFormat.getInstance());
 				custom.applyPattern(txtCustom.getText());
 			}catch (Exception ex){
-				invalid = "Invalid number format. " + ex.getLocalizedMessage();
+				invalid = Messages.FormatDialog_InvalidFormatError + ex.getLocalizedMessage();
 			}
 		}else{
 			custom = null;
 		}
 		
 		if (invalid != null){
-			MessageDialog.openError(getShell(), "Error", invalid);
+			MessageDialog.openError(getShell(), Messages.FormatDialog_ErrorDialotTitle, invalid);
 			return;
 		}
 		super.okPressed();
@@ -76,8 +77,8 @@ public class FormatDialog extends TitleAreaDialog {
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		setTitle("Value Format");
-		setMessage("Format the value numbers.");
+		setTitle(Messages.FormatDialog_DialogTitle);
+		setMessage(Messages.FormatDialog_DialogMessage);
 		Composite composite = (Composite) super.createDialogArea(parent);
 		
 		Composite main = new Composite(composite, SWT.BORDER);
@@ -85,30 +86,32 @@ public class FormatDialog extends TitleAreaDialog {
 		main.setLayout(new GridLayout(2, false));
 		
 		Label lbl = new Label(main, SWT.NONE);
-		lbl.setText("Format Type:");
+		lbl.setText(Messages.FormatDialog_FormatTypeLabel);
 		
 		formatCombo = new Combo(main, SWT.DROP_DOWN | SWT.READ_ONLY);
 		formatCombo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		formatCombo.add("Raw (based on raster type)");
-		formatCombo.add("Integer");
-		formatCombo.add("Double");
-		formatCombo.add("Custom");
+		formatCombo.add(Messages.FormatDialog_RawOp);
+		formatCombo.add(Messages.FormatDialog_IntegerOp);
+		formatCombo.add(Messages.FormatDialog_DoubleOp);
+		formatCombo.add(Messages.FormatDialog_CustomOp);
 		
 		lblCustom = new Label(main, SWT.NONE);
-		lblCustom.setText("Custom Format String:");
+		lblCustom.setText(Messages.FormatDialog_CustomLabel);
 		
 		txtCustom = new Text(main, SWT.BORDER);
-		txtCustom.setText("#.####");
+		txtCustom.setText(Messages.FormatDialog_CustomFormat);
 		txtCustom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		
-		Label spacer = new Label(main, SWT.NONE);
+		// spacer label
+		new Label(main, SWT.NONE);
+		
+		
 		lblInfo = new Label(main, SWT.NONE | SWT.WRAP);
 		lblInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		((GridData)lblInfo.getLayoutData()).widthHint = 100;
-		lblInfo.setText("pound (#) denotes a digit, zero (0) denotes a manditory digit, period (.) a placeholder for the decimal.");
+		lblInfo.setText(Messages.FormatDialog_CustomHelp);
 		
 		formatCombo.addSelectionListener(new SelectionAdapter() {
-			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				comboSelected();

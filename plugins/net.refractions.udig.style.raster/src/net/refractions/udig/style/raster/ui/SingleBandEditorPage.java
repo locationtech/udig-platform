@@ -12,14 +12,11 @@ package net.refractions.udig.style.raster.ui;
 
 import java.io.File;
 import java.text.Collator;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.swing.text.NumberFormatter;
 
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
@@ -69,7 +66,6 @@ import org.geotools.styling.SLD;
 import org.geotools.styling.SLDTransformer;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactory;
-import org.opengis.coverage.SampleDimensionType;
 import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.coverage.grid.GridCoverageReader;
 
@@ -85,11 +81,17 @@ import org.opengis.coverage.grid.GridCoverageReader;
  *
  */
 public class SingleBandEditorPage extends StyleEditorPage {
-
+	/**
+	 * Maximum number of unique values supported by 
+	 * the geotools styling.
+	 */
+	public static final int MAX_ENTRIES = 256;
 
 	
     private static final String SLD_EXTENSION = ".sld"; //$NON-NLS-1$
 
+    private double[] noDataValues = null;
+    
 	private StyleFactory sf = CommonFactoryFinder.getStyleFactory(null);
     
     final private IColorMapTypePanel[] stylePanels = new IColorMapTypePanel[]{
@@ -105,12 +107,8 @@ public class SingleBandEditorPage extends StyleEditorPage {
 	private Composite tableComp;
 	private ColorBrewer brewer = null;
 	private boolean reverseColors = false;
-	
-
 	private ValueFormatter formatter;
 	
-	
-
 	/**
 	 * Creates a new style editor page
 	 */
@@ -148,8 +146,6 @@ public class SingleBandEditorPage extends StyleEditorPage {
 	public void refresh() {
 		init();
 	}
-
-	
 	
 	
 	@Override
@@ -226,7 +222,7 @@ public class SingleBandEditorPage extends StyleEditorPage {
 		lblSep.setLayoutData(gd);
 		
 		lnk = new Link(linkPnl, SWT.NONE);
-		lnk.setText("<a>" + "Format Value..." + "</a>"); //$NON-NLS-1$ //$NON-NLS-2$
+		lnk.setText("<a>" + Messages.SingleBandEditorPage_FormatExportLink + "</a>");  //$NON-NLS-1$ //$NON-NLS-2$
 		lnk.addSelectionListener(new SelectionAdapter() {
 			
 			@Override
@@ -236,9 +232,9 @@ public class SingleBandEditorPage extends StyleEditorPage {
 		});
 		
 		Link lnk2 = new Link(linkPnl, SWT.NONE);
-		lnk2.setText("<a>OneClick Export</a>"); //$NON-NLS-1$ //$NON-NLS-2$
+		lnk2.setText("<a>" + Messages.SingleBandEditorPage_OneClickExportLink + "</a>"); //$NON-NLS-1$ //$NON-NLS-2$
 		lnk2.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
-		lnk2.setToolTipText("One click style export for file based layers.");
+		lnk2.setToolTipText(Messages.SingleBandEditorPage_OneClickTooltip);
 		lnk2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -256,6 +252,10 @@ public class SingleBandEditorPage extends StyleEditorPage {
 					tableComp.layout();
 					btnTest.setText(panel.getComputeValuesLabel());
 					btnTest.getParent().layout();
+					
+
+					BrewerPalette palette = (BrewerPalette) ((IStructuredSelection)cmbPalette.getSelection()).getFirstElement();
+					getCurrentSelection().setInitialColorPalette(palette);
 				}
 			}
 		});
@@ -291,6 +291,7 @@ public class SingleBandEditorPage extends StyleEditorPage {
 			}
 		}
 	}
+	
 	/*
 	 * Performs a single click export which exports
 	 * the style to a .sld file beside the associated layer file.
@@ -309,15 +310,15 @@ public class SingleBandEditorPage extends StyleEditorPage {
 						.getBaseName(file.getAbsolutePath())
 						+ SLD_EXTENSION);
 				FileUtils.writeStringToFile(newFile, xml);
-				MessageDialog.openInformation(getShell(), "Export Successful", "Export successful.");
+				MessageDialog.openInformation(getShell(), Messages.SingleBandEditorPage_ExportOkDialogTitle, Messages.SingleBandEditorPage_ExportOkDialogMessage);
 			} catch (Exception e1) {
-				MessageDialog.openError(getShell(), "Error",
-						"Error saving style to file.");
+				MessageDialog.openError(getShell(), Messages.SingleBandEditorPage_ErrorDialogTitle,
+						Messages.SingleBandEditorPage_ErrorMessage);
 				e1.printStackTrace();
 			}
 		} else {
-			MessageDialog.openWarning(getShell(), "Warning",
-					"The selected layer is not file based.");
+			MessageDialog.openWarning(getShell(), Messages.SingleBandEditorPage_WarningDialogTitle,
+					Messages.SingleBandEditorPage_WarningMessage);
 		}
 	}
 	/**
@@ -330,6 +331,8 @@ public class SingleBandEditorPage extends StyleEditorPage {
 	
 	
 	/**
+	 * If you call then function you MUST dispose of the reader
+	 * when you are finished with it!
 	 * 
 	 * @return the grid coverage associated with the current
 	 * layer being styled
@@ -337,7 +340,6 @@ public class SingleBandEditorPage extends StyleEditorPage {
 	public GridCoverageReader getGridCoverageReader(){	
 		try {
 			GridCoverageReader reader = getSelectedLayer().getGeoResource().resolve(GridCoverageReader.class, null);
-			//TODO: we need to make sure this reader is disposed of
 			return reader;
 			
 		}catch (Exception ex){
@@ -476,20 +478,28 @@ public class SingleBandEditorPage extends StyleEditorPage {
 
 	}
 
+	/**
+	 * 
+	 * @return the nodata values associated with the grid coverate
+	 * <code>null</code> if no, no data values found
+	 */
+	public double[] getNoDataValues(){
+		return this.noDataValues;
+	}
+	
 	private void init(){
 		Layer l = getSelectedLayer();
 	
 		try{
 			GridCoverage coverage = l.getGeoResource().resolve(GridCoverage.class, null);
+			
 			if (coverage.getNumSampleDimensions() > 0){
 				formatter.setRawDataType(coverage.getSampleDimension(0).getSampleDimensionType());
+				this.noDataValues = coverage.getSampleDimension(0).getNoDataValues();
 			}
 		}catch (Exception ex){
 			//eat me 
 		}
-		
-		
-		
 		String paletteName = (String) l.getStyleBlackboard().get("net.refractions.udig.style.raster.palette"); //$NON-NLS-1$
 		if (paletteName != null){
 			ColorBrewer cb = getBrewer();
