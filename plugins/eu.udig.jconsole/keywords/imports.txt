@@ -3,6 +3,7 @@ import geoscript.proj.*
 import geoscript.render.*
 import geoscript.layer.*
 import geoscript.style.*
+import geoscript.style.io.*
 import geoscript.viewer.*
 import geoscript.filter.*
 import geoscript.workspace.*

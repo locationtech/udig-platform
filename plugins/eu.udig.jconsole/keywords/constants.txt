@@ -9,3 +9,6 @@ size
 true
 type
 width
+stroke
+opacity
+rotation

@@ -78,3 +78,12 @@ where
 workspace
 write
 zindex
+scale
+translate
+rotate
+shear
+create
+features
+geom
+attributes
+add

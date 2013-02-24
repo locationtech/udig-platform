@@ -46,3 +46,7 @@ WktWriter
 WktWriter()
 WkbWriter
 WkbWriter()
+Directory
+PostGIS
+SLDWriter
+SLDReader
