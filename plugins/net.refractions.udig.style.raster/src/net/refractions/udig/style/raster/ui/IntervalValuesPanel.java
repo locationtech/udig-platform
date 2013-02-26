@@ -169,7 +169,6 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	private ValueFormatter formatter;
 	
 	public IntervalValuesPanel( SingleBandEditorPage page){
-
 		this.page = page;
 	}
 	

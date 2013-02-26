@@ -489,7 +489,9 @@ public class SingleBandEditorPage extends StyleEditorPage {
 	
 	private void init(){
 		Layer l = getSelectedLayer();
-	
+		for (IColorMapTypePanel pnl : stylePanels){
+			pnl.setFormatter(this.formatter);
+		}
 		try{
 			GridCoverage coverage = l.getGeoResource().resolve(GridCoverage.class, null);
 			
@@ -538,9 +540,7 @@ public class SingleBandEditorPage extends StyleEditorPage {
 			
 		}
 		
-		for (IColorMapTypePanel pnl : stylePanels){
-			pnl.setFormatter(this.formatter);
-		}
+		
 	}
 
 	@Override

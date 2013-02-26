@@ -12,6 +12,7 @@
 package net.refractions.udig.style.sld;
 
 import java.awt.Color;
+import java.io.IOException;
 
 import javax.media.jai.Histogram;
 
@@ -42,6 +43,7 @@ import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.processing.OperationJAI;
 import org.geotools.data.wms.WebMapServer;
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.process.raster.GridCoverage2DRIA;
 import org.geotools.renderer.lite.gridcoverage2d.RasterSymbolizerHelper;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
@@ -107,9 +109,24 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
 
     @Override
     public boolean canStyle( Layer aLayer ) {
-        if (aLayer.hasResource(GridCoverage.class) || aLayer.hasResource(WebMapServer.class)
-                || aLayer.hasResource(AbstractGridCoverage2DReader.class)){
-            return true;
+    	if (aLayer.hasResource(WebMapServer.class)){
+    		return true;
+    	}
+    	
+        if (aLayer.hasResource(GridCoverage.class)){
+        	try{
+        		GridCoverage gc = aLayer.getResource(GridCoverage.class, null);
+        		if (gc.getNumSampleDimensions() >= 3){
+        			return true;
+        		}else{
+        			return false;
+        		}
+        	}catch (Exception ex){
+        		return false;
+        	}
+        }
+        if (aLayer.hasResource(AbstractGridCoverage2DReader.class)){
+        	return true;
         }
         return false;
     }

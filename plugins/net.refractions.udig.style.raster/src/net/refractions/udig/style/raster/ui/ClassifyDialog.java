@@ -76,10 +76,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 
 	private static final String GENERATE_LABEL = Messages.ClassifyDialog_GenerateBreaksButtonText;
 	
-	/*
-	 * Maximum value for warning users to limit sample size
-	 */
-	private static final Long WARN_VALUE = 1000000l;
+
 	
 	private ComboViewer cmbClass;
 	private ListViewer cmbRanges;
@@ -105,8 +102,8 @@ public class ClassifyDialog extends TitleAreaDialog{
 	 */
 	private enum ClassifyFunction{
 		EQUAL_INTERNAL(Messages.ClassifyDialog_EqualIntervalLabel, Messages.ClassifyDialog_NumberofIntervalsLabel),
-		DEFINED_INTERVAL(Messages.ClassifyDialog_DefinedIntervalLabel, Messages.ClassifyDialog_IntervalSizeLabel);
-		
+		DEFINED_INTERVAL(Messages.ClassifyDialog_DefinedIntervalLabel, Messages.ClassifyDialog_IntervalSizeLabel),
+		QUANTILE("Quantile", "Number of Bins");
 		String guiName;
 		String opName;
 		
@@ -289,7 +286,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 			}
 		}
 		
-		if (currentSelection == ClassifyFunction.EQUAL_INTERNAL){
+		if (currentSelection == ClassifyFunction.EQUAL_INTERNAL || currentSelection == ClassifyFunction.QUANTILE){
 			try{
 				currentOption = Integer.parseInt(txtOp.getText());
 			}catch (Exception ex){
@@ -307,8 +304,11 @@ public class ClassifyDialog extends TitleAreaDialog{
 			}catch (Exception ex){
 				MessageDialog.openError(getShell(), Messages.ClassifyDialog_ErrorDialogTitle3, MessageFormat.format(Messages.ClassifyDialog_InvalidValueOption2, new Object[]{currentSelection.opName }));
 			}
-		}
 		
+		}
+		if (currentOption.doubleValue() <= 0){
+			MessageDialog.openError(getShell(), Messages.ClassifyDialog_ErrorDialogTitle3, MessageFormat.format("Value for {0} must be greater than 0.", new Object[]{currentSelection.opName }));
+		}
 		computeValuesJob.schedule();
 	}
 	
@@ -346,18 +346,33 @@ public class ClassifyDialog extends TitleAreaDialog{
 	 */
 	private Job computeValuesJob = new Job(Messages.ClassifyDialog_ComputeBreaksJobName){
 
-		protected String ignoreValues;
-		protected Long sampleSize;
-		
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
 			ClassifyFunction function = currentSelection;
 			Number op = currentOption;
-			this.ignoreValues = currentIgnore;
-			this.sampleSize = currentSampleSize;
+			
+			Long sampleSize = currentSampleSize;
+			String ignore = currentIgnore;
+			
+			List<Double> toIgnore = new ArrayList<Double>();
+			if (ignore.trim().length() > 0){
+				String[] str = ignore.split(","); //$NON-NLS-1$
+				for (int i = 0; i < str.length; i ++){
+					try{
+						Double d = Double.parseDouble(str[i]);
+						toIgnore.add(d);
+					}catch (Exception ex){
+						//eatme
+					}
+				}
+			}
+			double[] valuesToIgnore = new double[toIgnore.size()];
+			for(int i = 0; i < toIgnore.size(); i++){
+				valuesToIgnore[i] = toIgnore.get(i);
+			}
 			
 			breaks.clear();
-			
+			final ClassificationEngine engine = new ClassificationEngine();
 			if (function == null || op == null){
 				return Status.CANCEL_STATUS;
 			}
@@ -369,14 +384,20 @@ public class ClassifyDialog extends TitleAreaDialog{
 						btnCompute.setEnabled(false);
 					}});
 				
-			
+				List<Double> newBreaks = null;
 				if (function == ClassifyFunction.EQUAL_INTERNAL){
-					computeEqualInterval((Integer)op);
+					newBreaks = engine.computeEqualInterval(((Integer)op).intValue(), valuesToIgnore, layer, sampleSize);
 				}else if (function== ClassifyFunction.DEFINED_INTERVAL){
-					computeDefinedInterval((Double)op);
+					newBreaks = engine.computeDefinedInterval(((Double)op).doubleValue(), valuesToIgnore, layer, sampleSize);
+				}else if (function == ClassifyFunction.QUANTILE){
+					newBreaks = engine.computeQuantile(((Integer)op).intValue(), valuesToIgnore, layer, sampleSize, monitor);
 				}
-				if (monitor.isCanceled()){
+				
+				if (newBreaks == null || monitor.isCanceled()){
 					return Status.CANCEL_STATUS;
+				}else{
+					breaks.clear();
+					breaks.addAll(newBreaks);
 				}
 			}catch (final Exception ex){
 				Display.getDefault().syncExec(new Runnable(){
@@ -390,6 +411,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 					@Override
 					public void run() {
 						if (!cmbRanges.getControl().isDisposed()){
+							setErrorMessage(engine.getLastErrorMessage());
 							cmbRanges.refresh();
 							btnCompute.setEnabled(true);
 						}
@@ -399,121 +421,6 @@ public class ClassifyDialog extends TitleAreaDialog{
 			return Status.OK_STATUS;
 		}
 		
-		
-		private void computeDefinedInterval(double interval) throws Exception{
-			double[] minmax = computeMinMax();
-			if (minmax == null){
-				return;
-			}
-			double min = minmax[0];
-			double max = minmax[1];
-			breaks.clear();
-			for (double x = min; x <= max; x += interval){
-				breaks.add(x);
-			}
-		}
-		
-		private void computeEqualInterval(int numIntervals) throws Exception{
-			double[] minmax = computeMinMax();
-			if (minmax == null){
-				return;
-			}
-			double min = minmax[0];
-			double max = minmax[1]; 
-			double interval = (max-min) / numIntervals;
-			
-			breaks.clear();
-			if (interval == 0){
-				breaks.add(min);
-			}else{
-				double value = min;
-				for (int i = 0; i < numIntervals; i ++){
-					breaks.add(value);
-					value = value + interval;
-				}
-				breaks.add(max);
-			}
-			
-		}
-		
-		private double[] computeMinMax() throws Exception{
-			final Statistic[] stats = new Statistic[] { 
-					Statistic.MIN,
-					Statistic.MAX };
-			
-			List<Range<Double>> ignore = new ArrayList<Range<Double>>();
-			if (this.ignoreValues.trim().length() > 0){
-				String[] str = this.ignoreValues.split(","); //$NON-NLS-1$
-				for (int i = 0; i < str.length; i ++){
-					try{
-						Double d = Double.parseDouble(str[i]);
-						ignore.add(new Range<Double>(d));
-					}catch (Exception ex){
-						//eatme
-					}
-				}
-			}
-			
-			
-			GridCoverage gcRaw = layer.read(null);
-			
-			if (sampleSize != null){
-				int rSize = (int) Math.ceil(Math.sqrt(sampleSize.doubleValue()));
-				GridEnvelope2D gridRange = new GridEnvelope2D(new Rectangle(0,0, rSize, rSize));
-				GridGeometry2D world = new GridGeometry2D(gridRange,  new ReferencedEnvelope(gcRaw.getEnvelope()));
-				DefaultParameterDescriptor<GridGeometry> gridGeometryDescriptor = new DefaultParameterDescriptor<GridGeometry>(
-						AbstractGridFormat.READ_GRIDGEOMETRY2D.getName()
-								.toString(), GridGeometry.class, null, world);
-
-				ParameterGroup readParams = new ParameterGroup(
-						new DefaultParameterDescriptorGroup(
-								"Test", //$NON-NLS-1$
-								new GeneralParameterDescriptor[] { gridGeometryDescriptor }));
-
-				List<GeneralParameterValue> list = readParams.values();
-				GeneralParameterValue[] values = list
-						.toArray(new GeneralParameterValue[0]);
-				gcRaw = layer.read(values);
-			}
-				
-			GridCoordinates high = gcRaw.getGridGeometry().getGridRange().getHigh();
-			GridCoordinates low = gcRaw.getGridGeometry().getGridRange().getLow();
-			int width = high.getCoordinateValue(0) - low.getCoordinateValue(0);
-			int height = high.getCoordinateValue(1) - low.getCoordinateValue(1);
-			if (width * height > WARN_VALUE){
-				final boolean[] ret = {true};
-				Display.getDefault().syncExec(new Runnable(){
-					@Override
-					public void run() {
-							if (!MessageDialog.openConfirm(getShell(), Messages.ClassifyDialog_ConfirmDialogText, 
-									MessageFormat.format(Messages.ClassifyDialog_RasterCellWaring, new Object[]{WARN_VALUE}))){
-								ret[0] = false;
-							}
-					}});
-				if (!ret[0]){
-					return null;
-				}
-			}
-				
-			final OperationJAI op = new OperationJAI("ZonalStats"); //$NON-NLS-1$
-			ParameterValueGroup params = op.getParameters();
-			params.parameter("dataImage").setValue(gcRaw); //$NON-NLS-1$
-			params.parameter("stats").setValue(stats); //$NON-NLS-1$
-			params.parameter("bands").setValue(new Integer[] { 0 }); //$NON-NLS-1$
-			if (ignore.size() > 0){
-				params.parameter("ranges").setValue(ignore); //$NON-NLS-1$
-				params.parameter("rangesType").setValue(Range.Type.EXCLUDE); //$NON-NLS-1$
-				params.parameter("rangeLocalStats").setValue(false); //$NON-NLS-1$
-			}
-			
-
-			final GridCoverage2D coverage = (GridCoverage2D) op.doOperation(params,null);
-			final ZonalStats zstats = (ZonalStats) coverage
-					.getProperty(ZonalStatsDescriptor.ZONAL_STATS_PROPERTY);
-			double min = zstats.statistic(Statistic.MIN).results().get(0).getValue();
-			double max = zstats.statistic(Statistic.MAX).results().get(0).getValue();
-			return new double[]{min,max};
-		}
 		
 	};
 }

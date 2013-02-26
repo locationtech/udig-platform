@@ -134,7 +134,7 @@ public class UniqueValuesPanel implements IColorMapTypePanel{
 		
 		/**
 		 * The string value associated with the color entry object for the current 
-		 * column,
+		 * column.
 		 * @param entry
 		 * @return
 		 */

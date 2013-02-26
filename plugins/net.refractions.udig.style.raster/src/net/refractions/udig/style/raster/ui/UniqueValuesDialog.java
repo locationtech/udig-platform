@@ -12,16 +12,12 @@ package net.refractions.udig.style.raster.ui;
 
 
 import java.awt.Color;
-import java.awt.Rectangle;
-import java.awt.image.DataBuffer;
-import java.awt.image.Raster;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.refractions.udig.style.raster.Activator;
 import net.refractions.udig.style.raster.internal.Messages;
@@ -32,7 +28,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -46,23 +41,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.geotools.coverage.grid.GridEnvelope2D;
-import org.geotools.coverage.grid.GridGeometry2D;
-import org.geotools.coverage.grid.io.AbstractGridFormat;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.parameter.DefaultParameterDescriptor;
-import org.geotools.parameter.DefaultParameterDescriptorGroup;
-import org.geotools.parameter.ParameterGroup;
-import org.opengis.coverage.grid.GridCoordinates;
-import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.coverage.grid.GridCoverageReader;
-import org.opengis.coverage.grid.GridGeometry;
-import org.opengis.parameter.GeneralParameterDescriptor;
-import org.opengis.parameter.GeneralParameterValue;
 
 /**
  * Dialog for computing the unique values
@@ -72,13 +54,9 @@ import org.opengis.parameter.GeneralParameterValue;
  *
  */
 public class UniqueValuesDialog extends TitleAreaDialog{
-	/*
-	 * Maximum value for warning users to limit sample size
-	 */
-	private static final Long WARN_VALUE = 1000000l;
 	
 	private static final String COMPUTE_LABEL = Messages.UniqueValuesDialog_ComputingLabel;
-	private Long sampleSize = 100000l;
+	private Long sampleSize = ClassificationEngine.WARN_VALUE;
 	
 	private Text txtSampleSize;
 	private Button chSampleSize;
@@ -94,8 +72,9 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
-			boolean maxReached = false;
 			Long thisSampleSize = sampleSize;
+			Set<Double> values = null;
+			final ClassificationEngine engine = new ClassificationEngine();
 			try{
 				getShell().getDisplay().syncExec(new Runnable(){
 					public void run(){
@@ -106,84 +85,15 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 					}
 				});
 			
-				HashSet<Number> v = new HashSet<Number>();
-				
 				try {
-					GridCoverage gcRaw = layer.read(null);
-					if (thisSampleSize != null){
-						int rSize = (int) Math.ceil(Math.sqrt(thisSampleSize.doubleValue()));
-						GridEnvelope2D gridRange = new GridEnvelope2D(new Rectangle(0,0, rSize, rSize));
-						GridGeometry2D world = new GridGeometry2D(gridRange,  new ReferencedEnvelope(gcRaw.getEnvelope()));
-						DefaultParameterDescriptor<GridGeometry> gridGeometryDescriptor = new DefaultParameterDescriptor<GridGeometry>(
-								AbstractGridFormat.READ_GRIDGEOMETRY2D.getName()
-										.toString(), GridGeometry.class, null, world);
-
-						ParameterGroup readParams = new ParameterGroup(
-								new DefaultParameterDescriptorGroup(
-										"Test", //$NON-NLS-1$
-										new GeneralParameterDescriptor[] { gridGeometryDescriptor }));
-
-						List<GeneralParameterValue> list = readParams.values();
-						GeneralParameterValue[] values = list
-								.toArray(new GeneralParameterValue[0]);
-						gcRaw = layer.read(values);
-					}
-									
-					if (monitor.isCanceled()){
-						return Status.CANCEL_STATUS;
-					}
-					GridCoordinates high = gcRaw.getGridGeometry().getGridRange().getHigh();
-					GridCoordinates low = gcRaw.getGridGeometry().getGridRange().getLow();
-					int width = high.getCoordinateValue(0) - low.getCoordinateValue(0);
-					int height = high.getCoordinateValue(1) - low.getCoordinateValue(1);
-					
-					if (width * height > WARN_VALUE){
-						final boolean[] ret = {true};
-						Display.getDefault().syncExec(new Runnable(){
-							@Override
-							public void run() {
-
-									if (!MessageDialog.openConfirm(getShell(), Messages.UniqueValuesDialog_ConfirmDialogTitle,
-											MessageFormat.format(Messages.UniqueValuesDialog_LargeRasterWarning, new Object[]{WARN_VALUE}))){ 
-										ret[0] = false;
-									}
-							}});
-						if (!ret[0]){
-							return Status.OK_STATUS;
-						}
-					}
-					
-					int recSize = 1000;
-					
-					for (int x = 0; x < width; x+=recSize){
-						for (int y = 0; y < height; y += recSize){
-							Rectangle r = new Rectangle(x, y, recSize, recSize);
-							Raster rs = gcRaw.getRenderedImage().getData(r);
-							DataBuffer df  = rs.getDataBuffer();
-							for (int i = 0; i < df.getSize(); i ++){
-								v.add(df.getElemDouble(i));
-								if (v.size() >= SingleBandEditorPage.MAX_ENTRIES){
-									maxReached = true;
-									break;
-								}
-							}
-						}
-						if (maxReached){
-							break;
-						}
-						if (monitor.isCanceled()){
-							return Status.CANCEL_STATUS;
-						}
-					}
+					values = engine.computeUniqueValues(layer, thisSampleSize, monitor);
 				} catch (Exception e) {
 					Activator.log(e.getMessage(), e);
 				}
-
-				uniqueValues.clear();
-				uniqueValues.addAll(v);
+				uniqueValues.addAll(values);
 				sort();
+
 			}finally{
-				final boolean max = maxReached;
 				if (getShell() == null){
 					return Status.CANCEL_STATUS;
 				}
@@ -193,9 +103,7 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 						if (btnRecompute.isDisposed()){
 							return;
 						}
-						if (max){
-							setErrorMessage(MessageFormat.format(Messages.UniqueValuesDialog_MaxValueError, SingleBandEditorPage.MAX_ENTRIES));
-						}
+						setErrorMessage(engine.getLastErrorMessage());
 						btnRecompute.setEnabled(true);
 						lstViewer.setInput(uniqueValues);
 						lstViewer.refresh();
