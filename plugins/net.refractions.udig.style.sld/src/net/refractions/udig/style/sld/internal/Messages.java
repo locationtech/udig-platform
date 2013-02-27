@@ -43,6 +43,7 @@ public class Messages extends NLS {
     public static String SimpleRasterConfigurator_GreenChannelLabel;
     public static String SimpleRasterConfigurator_RedChannelLabel;
     public static String SimpleRasterConfigurator_ScaleGroup;
+	public static String SimpleRasterConfigurator_StyleUnavailable;
     public static String SimpleStyleConfigurator_replaceButton;
 	public static String StyleEditor_error ;
 	public static String StyleEditor_import_failed ;
@@ -245,6 +246,7 @@ public class Messages extends NLS {
 	public static String SingleBandEditorPage_FormatExportLink;
 	public static String SingleBandEditorPage_OneClickExportLink;
 	public static String SingleBandEditorPage_OneClickTooltip;
+	public static String SingleBandEditorPage_predefinedStyleSeperator;
 	public static String SingleBandEditorPage_ReverseColorLabel;
 	public static String SingleBandEditorPage_ThemingStyleLabel;
 	public static String SingleBandEditorPage_WarningDialogTitle;
