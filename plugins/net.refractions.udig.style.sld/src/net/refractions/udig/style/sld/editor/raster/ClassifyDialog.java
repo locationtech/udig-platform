@@ -12,7 +12,6 @@ package net.refractions.udig.style.sld.editor.raster;
 
 
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,26 +43,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.geotools.coverage.grid.GridCoverage2D;
-import org.geotools.coverage.grid.GridEnvelope2D;
-import org.geotools.coverage.grid.GridGeometry2D;
-import org.geotools.coverage.grid.io.AbstractGridFormat;
-import org.geotools.coverage.processing.OperationJAI;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.parameter.DefaultParameterDescriptor;
-import org.geotools.parameter.DefaultParameterDescriptorGroup;
-import org.geotools.parameter.ParameterGroup;
-import org.jaitools.media.jai.zonalstats.ZonalStats;
-import org.jaitools.media.jai.zonalstats.ZonalStatsDescriptor;
-import org.jaitools.numeric.Range;
-import org.jaitools.numeric.Statistic;
-import org.opengis.coverage.grid.GridCoordinates;
-import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.coverage.grid.GridCoverageReader;
-import org.opengis.coverage.grid.GridGeometry;
-import org.opengis.parameter.GeneralParameterDescriptor;
-import org.opengis.parameter.GeneralParameterValue;
-import org.opengis.parameter.ParameterValueGroup;
 
 /**
  * Classify dialog for classifying raster values
