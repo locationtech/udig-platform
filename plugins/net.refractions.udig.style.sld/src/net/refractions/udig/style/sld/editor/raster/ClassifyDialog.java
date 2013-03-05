@@ -83,7 +83,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 	private enum ClassifyFunction{
 		EQUAL_INTERNAL(Messages.ClassifyDialog_EqualIntervalLabel, Messages.ClassifyDialog_NumberofIntervalsLabel),
 		DEFINED_INTERVAL(Messages.ClassifyDialog_DefinedIntervalLabel, Messages.ClassifyDialog_IntervalSizeLabel),
-		QUANTILE("Quantile", "Number of Bins");
+		QUANTILE(Messages.ClassifyDialog_QuantileLabel, Messages.ClassifyDialog_NumberOfBinsLabel);
 		String guiName;
 		String opName;
 		
@@ -287,7 +287,7 @@ public class ClassifyDialog extends TitleAreaDialog{
 		
 		}
 		if (currentOption.doubleValue() <= 0){
-			MessageDialog.openError(getShell(), Messages.ClassifyDialog_ErrorDialogTitle3, MessageFormat.format("Value for {0} must be greater than 0.", new Object[]{currentSelection.opName }));
+			MessageDialog.openError(getShell(), Messages.ClassifyDialog_ErrorDialogTitle3, MessageFormat.format(Messages.ClassifyDialog_InvalidValue, new Object[]{currentSelection.opName }));
 		}
 		computeValuesJob.schedule();
 	}

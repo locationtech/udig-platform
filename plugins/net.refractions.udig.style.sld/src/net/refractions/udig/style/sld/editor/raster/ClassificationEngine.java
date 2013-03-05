@@ -1,3 +1,13 @@
+/*
+ *    uDig - User Friendly Desktop Internet GIS client
+ *    http://udig.refractions.net
+ *    (C) 2011, Refractions Research Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
+ */
 package net.refractions.udig.style.sld.editor.raster;
 
 import java.awt.Rectangle;
@@ -37,6 +47,11 @@ import org.opengis.parameter.GeneralParameterDescriptor;
 import org.opengis.parameter.GeneralParameterValue;
 import org.opengis.parameter.ParameterValueGroup;
 
+/**
+ * Engine for computing classes for raster styling
+ * @author Emily
+ *
+ */
 public class ClassificationEngine {
 	
 	private String errorMessage = null;
@@ -265,11 +280,19 @@ public class ClassificationEngine {
 				ignoreset.add(d);
 			}
 		}
-		
+
 		List<Double> data = new ArrayList<Double>(width * height);
 		for (int x = 0; x < width; x+=recSize){
 			for (int y = 0; y < height; y += recSize){
-				Rectangle r = new Rectangle(x, y, recSize, recSize);
+				int w = recSize;
+				int h = recSize;
+				if (x + recSize > width){
+					w = width - x;
+				}
+				if (y + recSize > height){
+					h = height - y;
+				}
+				Rectangle r = new Rectangle(x, y, w, h);
 				Raster rs = gcRaw.getRenderedImage().getData(r);
 				DataBuffer df  = rs.getDataBuffer();
 				for (int i = 0; i < df.getSize(); i ++){
@@ -321,6 +344,7 @@ public class ClassificationEngine {
 			if (lastBigBin == binIndex)
 				binPop--; // decrease the number of items in a bin for the next item
 		}
+		
 		ArrayList<Double> results = new ArrayList<Double>(numBins + 1);
 		for (int i = 0 ; i< numBins; i ++){
 			results.add(min[i]);
@@ -381,7 +405,16 @@ public class ClassificationEngine {
 		HashSet<Double> results = new HashSet<Double>();
 		for (int x = 0; x < width; x+=recSize){
 			for (int y = 0; y < height; y += recSize){
-				Rectangle r = new Rectangle(x, y, recSize, recSize);
+				int w = recSize;
+				int h = recSize;
+				if (x + recSize > width){
+					w = width - x;
+				}
+				if (y + recSize > height){
+					h = height - y;
+				}
+				Rectangle r = new Rectangle(x, y, w, h);
+				
 				Raster rs = gcRaw.getRenderedImage().getData(r);
 				DataBuffer df  = rs.getDataBuffer();
 				for (int i = 0; i < df.getSize(); i ++){

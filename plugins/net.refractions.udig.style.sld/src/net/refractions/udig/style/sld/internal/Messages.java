@@ -200,12 +200,15 @@ public class Messages extends NLS {
 	public static String ClassifyDialog_GenerateBreaksButtonText;
 	public static String ClassifyDialog_IgnoreValuesInfo;
 	public static String ClassifyDialog_IntervalSizeLabel;
+	public static String ClassifyDialog_InvalidValue;
 	public static String ClassifyDialog_InvalidValueOption;
 	public static String ClassifyDialog_InvalidValueOption2;
 	public static String ClassifyDialog_LimitSizeLabel;
 	public static String ClassifyDialog_LimitSizeTooltip;
 	public static String ClassifyDialog_MaxValueError;
+	public static String ClassifyDialog_NumberOfBinsLabel;
 	public static String ClassifyDialog_NumberofIntervalsLabel;
+	public static String ClassifyDialog_QuantileLabel;
 	public static String ClassifyDialog_RasterCellWaring;
 	public static String ClassifyDialog_ShellTitle;
 	public static String ClassifyDialog_ValuesToIgnoreLabel;
