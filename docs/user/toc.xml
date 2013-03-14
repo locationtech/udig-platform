@@ -94,168 +94,171 @@
                 
 	    <topic label="Merge Tool" href="EN/Merge Tool.html">
 	            </topic>
+
+	    <topic label="The Geoscript Editor" href="EN/getting_started/The Geoscript Editor.html">
+	            </topic>
    
       	</topic>
 
-   <topic label="Concepts" href="EN/Concepts.html">
+   <topic label="Concepts" href="EN/concepts/index.html">
         
                             
-        <topic label="Application Concepts" href="EN/Application Concepts.html">
+        <topic label="Application Concepts" href="EN/concepts/Application Concepts.html">
         
                             
-        <topic label="Area of Interest" href="EN/Area of Interest.html">
+        <topic label="Area of Interest" href="EN/concepts/Area of Interest.html">
         
                 </topic>
                     
-        <topic label="Project" href="EN/Project.html">
+        <topic label="Project" href="EN/concepts/Project.html">
         
                 </topic>
                     
-        <topic label="Selection" href="EN/Selection.html">
+        <topic label="Selection" href="EN/concepts/Selection.html">
         
                 </topic>
                     
-        <topic label="uDig" href="EN/uDig.html">
+        <topic label="uDig" href="EN/concepts/uDig.html">
         
                 </topic>
         </topic>
                     
-        <topic label="File Formats" href="EN/File Formats.html">
+        <topic label="File Formats" href="EN/concepts/File Formats.html">
         
                             
-        <topic label="GeoTIFF" href="EN/GeoTIFF.html">
+        <topic label="GeoTIFF" href="EN/concepts/GeoTIFF.html">
         
                 </topic>
                     
-        <topic label="GML" href="EN/GML.html">
+        <topic label="GML" href="EN/concepts/GML.html">
         
                 </topic>
                     
-        <topic label="Shapefile" href="EN/Shapefile.html">
+        <topic label="Shapefile" href="EN/concepts/Shapefile.html">
         
                 </topic>
                     
-        <topic label="World Plus Image" href="EN/World Plus Image.html">
+        <topic label="World Plus Image" href="EN/concepts/World Plus Image.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Geospatial" href="EN/Geospatial.html">
+        <topic label="Geospatial" href="EN/concepts/Geospatial.html">
         
                             
-        <topic label="Constraint Query Language" href="EN/Constraint Query Language.html">
+        <topic label="Constraint Query Language" href="EN/concepts/Constraint Query Language.html">
         
                 </topic>
                     
-        <topic label="Coordinate Reference System" href="EN/Coordinate Reference System.html">
+        <topic label="Coordinate Reference System" href="EN/concepts/Coordinate Reference System.html">
         
                 </topic>
                     
-        <topic label="Feature" href="EN/Feature.html">
+        <topic label="Feature" href="EN/concepts/Feature.html">
         
                 </topic>
                     
-        <topic label="Feature Collection" href="EN/Feature Collection.html">
+        <topic label="Feature Collection" href="EN/concepts/Feature Collection.html">
         
                 </topic>
                     
-        <topic label="Feature Type" href="EN/Feature Type.html">
+        <topic label="Feature Type" href="EN/concepts/Feature Type.html">
         
                 </topic>
                     
-        <topic label="Georeference" href="EN/Georeference.html">
+        <topic label="Georeference" href="EN/concepts/Georeference.html">
         
                 </topic>
                     
-        <topic label="Projection" href="EN/Projection.html">
+        <topic label="Projection" href="EN/concepts/Projection.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Map" href="EN/Map.html">
+        <topic label="Map" href="EN/concepts/Map.html">
         
                             
-        <topic label="Decorator" href="EN/Decorator.html">
+        <topic label="Decorator" href="EN/concepts/Decorator.html">
         
                 </topic>
                     
-        <topic label="Layer" href="EN/Layer.html">
+        <topic label="Layer" href="EN/concepts/Layer.html">
         
                 </topic>
                     
-        <topic label="Legend" href="EN/Legend.html">
+        <topic label="Legend" href="EN/concepts/Legend.html">
         
                 </topic>
                     
-        <topic label="Viewport" href="EN/Viewport.html">
+        <topic label="Viewport" href="EN/concepts/Viewport.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Page" href="EN/Page.html">
+        <topic label="Page" href="EN/concepts/Page.html">
         
                             
-        <topic label="Template" href="EN/Template.html">
+        <topic label="Template" href="EN/concepts/Template.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Service" href="EN/Service.html">
+        <topic label="Service" href="EN/concepts/Service.html">
         
                             
-        <topic label="Data Store" href="EN/Data Store.html">
+        <topic label="Data Store" href="EN/concepts/Data Store.html">
         
                 </topic>
                     
-        <topic label="Files" href="EN/Files.html">
+        <topic label="Files" href="EN/concepts/Files.html">
         
                 </topic>
                     
-        <topic label="PostGIS" href="EN/PostGIS.html">
+        <topic label="PostGIS" href="EN/concepts/PostGIS.html">
         
                 </topic>
                     
-        <topic label="Teradata" href="EN/Teradata.html">
+        <topic label="Teradata" href="EN/concepts/Teradata.html">
         
                 </topic>
                     
-        <topic label="Tileset" href="EN/Tileset.html">
+        <topic label="Tileset" href="EN/concepts/Tileset.html">
         
                 </topic>
                     
-        <topic label="Web Feature Server" href="EN/Web Feature Server.html">
+        <topic label="Web Feature Server" href="EN/concepts/Web Feature Server.html">
         
                 </topic>
                     
-        <topic label="Web Map Server" href="EN/Web Map Server.html">
+        <topic label="Web Map Server" href="EN/concepts/Web Map Server.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Style" href="EN/Style.html">
+        <topic label="Style" href="EN/concepts/Style.html">
         
                             
-        <topic label="Style Layer Descriptor" href="EN/Style Layer Descriptor.html">
+        <topic label="Style Layer Descriptor" href="EN/concepts/Style Layer Descriptor.html">
         
                 </topic>
                     
-        <topic label="Symbology" href="EN/Symbology.html">
+        <topic label="Symbology" href="EN/concepts/Symbology.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Workbench" href="EN/Workbench.html">
+        <topic label="Workbench" href="EN/concepts/Workbench.html">
         
                             
-        <topic label="Active Part" href="EN/Active Part.html">
+        <topic label="Active Part" href="EN/concepts/Active Part.html">
         
                 </topic>
                     
-        <topic label="Editor" href="EN/Editor.html">
+        <topic label="Editor" href="EN/concepts/Editor.html">
         
                 </topic>
                     
-        <topic label="Fast views" href="EN/Fast views.html">
+        <topic label="Fast views" href="EN/concepts/Fast views.html">
         
                             
         <topic label="Creating fast views" href="EN/Creating fast views.html">
@@ -263,39 +266,39 @@
                 </topic>
         </topic>
                     
-        <topic label="Help system" href="EN/Help system.html">
+        <topic label="Help system" href="EN/concepts/Help system.html">
         
                 </topic>
                     
-        <topic label="Perspective" href="EN/Perspective.html">
+        <topic label="Perspective" href="EN/concepts/Perspective.html">
         
                 </topic>
                     
-        <topic label="Toolbar" href="EN/Toolbar.html">
+        <topic label="Toolbar" href="EN/concepts/Toolbar.html">
         
                 </topic>
                     
-        <topic label="Toolbars" href="EN/Toolbars.html">
+        <topic label="Toolbars" href="EN/concepts/Toolbars.html">
         
                 </topic>
                     
-        <topic label="Use of Views" href="EN/Use of Views.html">
+        <topic label="Use of Views" href="EN/concepts/Use of Views.html">
         
                 </topic>
                     
-        <topic label="Using an Editor" href="EN/Using an Editor.html">
+        <topic label="Using an Editor" href="EN/concepts/Using an Editor.html">
         
                 </topic>
                     
-        <topic label="View" href="EN/View.html">
+        <topic label="View" href="EN/concepts/View.html">
         
                             
-        <topic label="Fast views concept" href="EN/Fast views concept.html">
+        <topic label="Fast views concept" href="EN/concepts/Fast views concept.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Welcome" href="EN/Welcome.html">
+        <topic label="Welcome" href="EN/concepts/Welcome.html">
         
                 </topic>
         </topic>
