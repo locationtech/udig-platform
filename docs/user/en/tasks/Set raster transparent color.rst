@@ -14,7 +14,7 @@ background; by marking the background as transparent you can see through to the 
 
 **Related reference**
 
-:doc:`Raster Style Pages`
+:doc:`/reference/Raster Style Pages`
 
 
 Example Use

@@ -29,19 +29,17 @@ These icons appear in the toolbar:
 -  !cheatsheet-save.png!Saves the completion status of the active cheat sheet and closes it.
 
 .. todo::
-   find icon for 'cheatsheet-save.png' 
+   find icon for 'cheatsheet-save.png'
+
+**Related tasks**
+
+:doc:`/tasks/Working with cheat sheets`
+
+:doc:`/tasks/Working with composite cheat sheets`
 
 **Related reference**
 
 :doc:`Cheat Sheet Selection dialog`
-
-
-**Related tasks**
-
-:doc:`Working with cheat sheets`
-
-:doc:`Working with composite cheat sheets`
-
 
 .. |cheatsheet-collapse-icon| image:: /images/cheat_sheet_view/cheatsheet-collapse.png
 .. |cheatsheet-select-icon| image:: /images/cheat_sheet_view/cheatsheet-select.png

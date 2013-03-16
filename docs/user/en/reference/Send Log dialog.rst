@@ -6,7 +6,7 @@ developer team for support.
 
 .. figure:: /images/send_log_dialog/SendLog.png
    :align: center
-   :alt: 
+   :alt:
 
 Contact
 -------
@@ -35,4 +35,4 @@ Dismiss the dialog without sending.
 
 **Related tasks**
 
-:doc:`Submit Error Log`
+:doc:`/tasks/Submit Error Log`

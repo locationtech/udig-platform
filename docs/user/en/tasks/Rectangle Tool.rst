@@ -10,47 +10,24 @@ feature is created with rectangle as its geometry.
 
 .. note::
    Rectangles can be either polygon or lines.
-   
+
    There are no advanced editing features for the Rectangle Tool.
 
 
-**Related reference**
+**Related concepts**
 
+:doc:`/concepts/Edit Blackboard`
 
-* :doc:`Using Vertex Tools`
+**Related tasks**
 
+:doc:`Using Vertex Tools`
 
-   * :doc:`Edit Geometry Tool`
+:doc:`Using Geometry Creation Tools`
 
-   * :doc:`Add Vertex Tool`
+:doc:`Using Feature Edit Tools`
 
-   * :doc:`Remove Vertex Tool`
+**Related tasks**
 
-   * :doc:`Hole Cutter`
-
-
-* :doc:`Using Geometry Creation Tools`
-
-
-   * :doc:`Polygon Creation Tool`
-
-   * :doc:`Line Creation Tool`
-
-   * :doc:`Point Creation Tool`
-
-   * :doc:`Draw Geometry Tool`
-
-   * :doc:`Ellipse Tool`
-
-
-* :doc:`Using Feature Edit Tools`
-
-
-   * :doc:`Fill Tool`
-
-   * :doc:`Split Tool`
-
-   * :doc:`Delete Tool`
-
+:doc:`/reference/Snapping`
 
 

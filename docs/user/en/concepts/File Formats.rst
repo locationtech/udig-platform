@@ -18,7 +18,7 @@ Contents:
 Handling of Files in uDig
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When a file is added into the uDig application it shows up in the :doc:`/Catalog view` as a :doc:`Service`. You can think of the file as providing
+When a file is added into the uDig application it shows up in the :doc:`/reference/Catalog view` as a :doc:`Service`. You can think of the file as providing
 the service; you can open up the service entry to see the content being provided by the file.
 
 While this devision does not make much sense for a shapefile; it is more useful when working with

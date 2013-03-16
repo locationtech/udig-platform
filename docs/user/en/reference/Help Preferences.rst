@@ -18,7 +18,7 @@ On the Help preferences page, you can indicate how to display help books.
 
 Here is what the Help Preference page looks like:
 
-.. image:: images/help_preferences/preferenceshelp.gif
+.. image:: /images/help_preferences/preferenceshelp.gif
 
 
 **Related reference**

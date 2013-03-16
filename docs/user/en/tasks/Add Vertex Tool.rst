@@ -12,36 +12,6 @@ same as adding vertices using the :doc:`Edit Geometry Tool`.
 #. Click on an edge to add a vertex.
 #. Double click to accept change.
 
-**Related reference**
-
-:doc:`EditBlackboard`
+**Related tasks**
 
 :doc:`Using Vertex Tools`
-
-  * :doc:`Edit Geometry Tool`
-
-  * :doc:`Remove Vertex Tool`
-
-  * :doc:`Hole Cutter`
-
-:doc:`Using Geometry Creation Tools`
-
-  * :doc:`Polygon Creation Tool`
-
-  * :doc:`Line Creation Tool`
-
-  * :doc:`Point Creation Tool`
-
-  * :doc:`Draw Geometry Tool`
-
-  * :doc:`Rectangle Tool`
-
-  * :doc:`Ellipse Tool`
-
-:doc:`Using Feature Edit Tools`
-
-  * :doc:`Fill Tool`
-
-  * :doc:`Split Tool`
-
-  * :doc:`Delete Tool`

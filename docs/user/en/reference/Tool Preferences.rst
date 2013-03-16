@@ -1,18 +1,18 @@
 Tool Preferences
 ================
 
-.. figure:: images/tool_preferences/toolpreferences.png
+.. figure:: /images/tool_preferences/toolpreferences.png
    :align: center
-   :alt: 
+   :alt:
 
 
 .. toctree::
    :maxdepth: 1
-   
+
    Edit Tool Preferences
    Edit Tool Performance Preferences
 
-   
+
 
 **Related reference**
 
@@ -23,9 +23,6 @@ Tool Preferences
 
 .. :doc:`Edit Tool Performance Preferences`
 
-
-Peers
-~~~~~
 
 :doc:`Catalog Preferences`
 

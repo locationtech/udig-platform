@@ -5,7 +5,7 @@ The help menu is used to access additional information about the uDig applicatio
 
 .. figure:: /images/help_menu/HelpMenu.png
    :align: center
-   :alt: 
+   :alt:
 
 Welcome
 -------
@@ -47,13 +47,13 @@ This command displays information about the product, installed features, and ava
 
 .. figure:: /images/help_menu/About.png
    :align: center
-   :alt: 
+   :alt:
 
 **Related tasks**
 
-:doc:`Submit Error Log`
+:doc:`/tasks/Submit Error Log`
 
-:doc:`Finding new plugins`
+:doc:`/tasks/Finding new plugins`
 
 
 **Related reference**

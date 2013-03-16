@@ -36,7 +36,7 @@ The tool works by:
 
 **Related tasks**
 
-:doc:`Working with AOI`
+:doc:`/tasks/Working with AOI`
 
 **Related reference**
 

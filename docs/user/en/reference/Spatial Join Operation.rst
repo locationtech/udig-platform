@@ -90,12 +90,12 @@ The *Join Geom* operation's specific input options will show up.
 #. **Perform the operation:** Now you're ready to go. Press the *Perform* button from the View's
    tool bar and the operation will begin.
 
-.. |image0| image:: images/spatial_join_operation/legend.png
-.. |image1| image:: images/spatial_join_operation/contains.png
-.. |image2| image:: images/spatial_join_operation/crosses2.png
-.. |image3| image:: images/spatial_join_operation/disjoint.png
-.. |image4| image:: images/spatial_join_operation/equals.png
-.. |image5| image:: images/spatial_join_operation/intersects.png
-.. |image6| image:: images/spatial_join_operation/overlaps.png
-.. |image7| image:: images/spatial_join_operation/touches.png
-.. |image8| image:: images/spatial_join_operation/within.png
+.. |image0| image:: /images/spatial_join_operation/legend.png
+.. |image1| image:: /images/spatial_join_operation/contains.png
+.. |image2| image:: /images/spatial_join_operation/crosses2.png
+.. |image3| image:: /images/spatial_join_operation/disjoint.png
+.. |image4| image:: /images/spatial_join_operation/equals.png
+.. |image5| image:: /images/spatial_join_operation/intersects.png
+.. |image6| image:: /images/spatial_join_operation/overlaps.png
+.. |image7| image:: /images/spatial_join_operation/touches.png
+.. |image8| image:: /images/spatial_join_operation/within.png

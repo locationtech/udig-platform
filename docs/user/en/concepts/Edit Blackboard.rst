@@ -1,5 +1,5 @@
-EditBlackboard
-~~~~~~~~~~~~~~
+Edit Blackboard
+~~~~~~~~~~~~~~~
 
 The EditBlackboard is a construct that represents the features that are selected for editing. Using
 the selection tools features can be added to the blackboard.

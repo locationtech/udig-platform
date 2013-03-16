@@ -5,12 +5,12 @@ Point Creation Tool – Cannot resolve external resource into attachment.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Point Creation Tool allows points created. To create a point simply select a point layer in the
-:doc:`Layers view` and click to create a new point.
+:doc:`/reference/Layers view` and click to create a new point.
 
 Vertex Snapping
 ~~~~~~~~~~~~~~~
 
-By default :doc:`snapping <Snapping>` is turned off however, if desired :doc:`snapping <Snapping>`
+By default :doc:`snapping </reference/Snapping>` is turned off however, if desired Snapping
 can be used during point geometry creation.
 
 -  Point creation with snapping to the current layer.
@@ -21,55 +21,26 @@ can be used during point geometry creation.
 Advanced Editing
 ~~~~~~~~~~~~~~~~
 
-The Point Creation Tool also has an advanced mode that provides all the functionality that the 
-:doc:`Edit Geometry Tool` has, except only points can be edited. A summary of the advanced 
+The Point Creation Tool also has an advanced mode that provides all the functionality that the
+:doc:`Edit Geometry Tool` has, except only points can be edited. A summary of the advanced
 editing features are:
 
 -  Clicking an existing point will select it.
 -  Vertices in selected points can be moved.
 
-**Related reference**
+**Related concepts**
 
+:doc:`/concepts/Edit Blackboard`
 
--  Advanced Edit Mode
+**Related tasks**
 
-* :doc:`EditBlackboard`
+:doc:`Using Vertex Tools`
 
-* :doc:`Snapping`
+:doc:`Using Geometry Creation Tools`
 
-* :doc:`Using Vertex Tools`
+:doc:`Using Feature Edit Tools`
 
+**Related tasks**
 
-   * :doc:`Edit Geometry Tool`
-
-   * :doc:`Add Vertex Tool`
-
-   * :doc:`Remove Vertex Tool`
-
-   * :doc:`Hole Cutter`
-
-
-* :doc:`Using Geometry Creation Tools`
-
-
-   * :doc:`Polygon Creation Tool`
-
-   * :doc:`Line Creation Tool`
-
-   * :doc:`Draw Geometry Tool`
-
-   * :doc:`Rectangle Tool`
-
-   * :doc:`Ellipse Tool`
-
-
-* :doc:`Using Feature Edit Tools`
-
-
-   * :doc:`Fill Tool`
-
-   * :doc:`Split Tool`
-
-   * :doc:`Delete Tool`
-
+:doc:`/reference/Snapping`
 

@@ -22,13 +22,13 @@ panel is called the task detail panel and shows the task which is selected in th
 
 **Related reference**
 
-:doc:`Cheat sheets`
+:doc:`/reference/Cheat sheets`
 
 Launching a composite cheat sheet
 =================================
 
-Composite cheat sheets are launched in the same way as any other cheat sheet by selecting 
-:menuselection:`Help --> Cheat Sheets` from the menu bar. If this command is not in the menu, 
+Composite cheat sheets are launched in the same way as any other cheat sheet by selecting
+:menuselection:`Help --> Cheat Sheets` from the menu bar. If this command is not in the menu,
 it can be added from :menuselection:`Window --> Customize Perspective --> Commands`, and check Cheat Sheets.
 
 Task explorer

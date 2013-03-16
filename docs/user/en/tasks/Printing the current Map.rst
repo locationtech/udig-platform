@@ -13,9 +13,9 @@ from there.
 
 **Related concepts**
 
-:doc:`concepts/Page`
+:doc:`/concepts/Page`
 
-:doc:`concepts/Template`
+:doc:`/concepts/Template`
 
 
 .. |image0| image:: /images/printing_the_current_map/page.jpg

@@ -15,4 +15,4 @@ Working with Projects
 
 **Related reference**
 
-:doc:`Projects view`
+:doc:`/reference/Projects view`

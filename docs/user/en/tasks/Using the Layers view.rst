@@ -13,9 +13,10 @@ menu**.
    Zooming to a layer
    Deleting a layer
 
+**Related tasks**
+
+:doc:`/tasks/Change a Layers Style`
 
 **Related reference**
 
-:doc:`Change a Layers Style`
-
-:doc:`Layers view`
+:doc:`/reference/Layers view`

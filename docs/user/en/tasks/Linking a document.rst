@@ -4,13 +4,13 @@ Linking a document
 To link a file document to a layer or feature:
 ----------------------------------------------
 
-#. Load documents related to layer or feature 
+#. Load documents related to layer or feature
 #. Select the layer or feature's folder or a document inside the folder
 #. Click :guilabel:`Link...` to open the **Add Link** dialog
 #. Set *File* as the **Type**
 #. Provide the file to be linked by doing one of the following:
 
-- Manually set **File** with the file's path 
+- Manually set **File** with the file's path
 - Select an existing file
    - Click :guilabel:`Browse...` to open the file selection dialog
    - Select a file from the dialog
@@ -21,7 +21,7 @@ To link a file document to a layer or feature:
    - Click :guilabel:`OK` to open the save file dialog
    - Select directory and enter filename
    - Click :guilabel:`Save` to set **File** with the new file's path
-   
+
 #. Set the **Label** with appropriate label
 #. (Optional) Set the **Description** with appropriate description
 #. (Optional) Click :guilabel:`Open` to verify that set file is valid and existing
@@ -30,11 +30,11 @@ To link a file document to a layer or feature:
 To link a web document to a layer or feature:
 ---------------------------------------------
 
-#. Load documents related to layer or feature 
+#. Load documents related to layer or feature
 #. Select the layer or feature's folder or a document inside the folder
 #. Click :guilabel:`Link...` to open the **Add Link** dialog
 #. Set *Web* as the **Type**
-#. Set **URL**  with the website URL to be linked    
+#. Set **URL**  with the website URL to be linked
 #. Set the **Label** with appropriate label
 #. (Optional) Set the **Description** with appropriate description
 #. (Optional) Click :guilabel:`Open` to verify that set URL is valid
@@ -52,6 +52,6 @@ To link a web document to a layer or feature:
 
 **Related reference**
 
-:doc:`Document view`
+:doc:`/reference/Document view`
 
-:doc:`Resource Document page`
+:doc:`/reference/Resource Document page`

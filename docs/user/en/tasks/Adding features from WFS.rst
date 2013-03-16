@@ -68,7 +68,7 @@ press **Next**
 
 .. figure:: /images/adding_features_from_wfs/importwfs.jpg
    :align: center
-   :alt: 
+   :alt:
 
 -  Advanced checkbox can be used to :
 
@@ -80,13 +80,13 @@ press **Next**
 
 .. figure:: /images/adding_features_from_wfs/importwfsfeatures.jpg
    :align: center
-   :alt: 
+   :alt:
 
 -  WMS Layers will be added to the Catalog and a new map containing selected features will show up.
 
 **Related concepts**
 
-:doc:`concepts/Service`
+:doc:`/concepts/Service`
 
-:doc:`concepts/Web Feature Server`
+:doc:`/concepts/Web Feature Server`
 

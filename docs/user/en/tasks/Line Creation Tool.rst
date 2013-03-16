@@ -5,14 +5,14 @@ Line Creation Tool – Cannot resolve external resource into attachment.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Line Creation Tool allows lines created. To create a line simply select a line layer in the
-:doc:`Layers view` and click to begin a new line.
+:doc:`/reference/Layers view` and click to begin a new line.
 
 |image0|
 
 Vertex Snapping
 ~~~~~~~~~~~~~~~
 
-By default :doc:`snapping <Snapping>` is turned off however, if desired :doc:`snapping <Snapping>`
+By default :doc:`snapping </reference/Snapping>` is turned off however, if desired Snapping
 can be used during geometry creation.
 
 -  Line creation with snapping to the current layer. Notice that it didn't snap to the municipality
@@ -53,50 +53,21 @@ has, except that only lines can be edited. A summary of the advanced editing fea
 -  As with the :doc:`Edit Geometry Tool` the vertex operations can be
    performed on multiple vertices at once if many vertices are selected.
 
-**Related reference**
+**Related concepts**
 
+:doc:`/concepts/Edit Blackboard`
 
--  Advanced Edit Mode
+**Related tasks**
 
-* :doc:`EditBlackboard`
+:doc:`Using Vertex Tools`
 
-* :doc:`Snapping`
+:doc:`Using Geometry Creation Tools`
 
-* :doc:`Using Vertex Tools`
+:doc:`Using Feature Edit Tools`
 
+**Related tasks**
 
-   * :doc:`Edit Geometry Tool`
-
-   * :doc:`Add Vertex Tool`
-
-   * :doc:`Remove Vertex Tool`
-
-   * :doc:`Hole Cutter`
-
-
-* :doc:`Using Geometry Creation Tools`
-
-
-   * :doc:`Polygon Creation Tool`
-
-   * :doc:`Point Creation Tool`
-
-   * :doc:`Draw Geometry Tool`
-
-   * :doc:`Rectangle Tool`
-
-   * :doc:`Ellipse Tool`
-
-
-* :doc:`Using Feature Edit Tools`
-
-
-   * :doc:`Fill Tool`
-
-   * :doc:`Split Tool`
-
-   * :doc:`Delete Tool`
-
+:doc:`/reference/Snapping`
 
 .. |image0| image:: /images/line_creation_tool/createline.png
 .. |image1| image:: /images/line_creation_tool/currentlayersnapping.png

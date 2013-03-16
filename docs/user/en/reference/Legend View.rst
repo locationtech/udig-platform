@@ -10,9 +10,9 @@ layer, export the layer and view layer properties.
 
 Here is what the Legend view looks like:
 
-.. figure:: images/legend_view/legend_view.png
+.. figure:: /images/legend_view/legend_view.png
    :align: center
-   :alt: 
+   :alt:
 
 Like other views in the Workbench, the Legend view has its own toolbar. Toolbar buttons are
 provided to add a new folder, move layers up or down the rendering hierarchy, toggle map graphics
@@ -95,11 +95,11 @@ Layer
 
 .. figure:: /images/legend_view/legend_context_folder.png
    :align: center
-   :alt: 
+   :alt:
 
 .. figure:: /images/legend_view/legend_context_layer.png
    :align: center
-   :alt: 
+   :alt:
 
 Add Folder
 ~~~~~~~~~~

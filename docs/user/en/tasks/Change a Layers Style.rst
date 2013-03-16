@@ -18,27 +18,27 @@ zoom levels).
 
 .. figure:: /images/change_a_layers_style/votes_simple.gif
    :align: center
-   :alt: 
+   :alt:
 
 The above image shows the inputs used to generate the map below. This polygon layer illustrates
 voting areas with text representing the number of votes cast, rotated to 315 degrees.
 
 .. figure:: /images/change_a_layers_style/votes_map.gif
    :align: center
-   :alt: 
+   :alt:
 
 Text symbols for line strings have slightly different alignment options:
 
 .. figure:: /images/change_a_layers_style/streets_simple.gif
    :align: center
-   :alt: 
+   :alt:
 
 The perpendicular offset (set to 7 in the above image), defines the space between a line and its
 identifying text.
 
 .. figure:: /images/change_a_layers_style/streets_map.gif
    :align: center
-   :alt: 
+   :alt:
 
 Theme
 ~~~~~
@@ -48,7 +48,7 @@ information in a map by using colours.
 
 .. figure:: /images/change_a_layers_style/theme_generation.gif
    :align: center
-   :alt: 
+   :alt:
 
 The above image shows the inputs required to generate a theme illustrating population density (in
 the image below). The inputs are:
@@ -82,7 +82,7 @@ Suitability options:
 
 .. figure:: /images/change_a_layers_style/themed_pop_density.gif
    :align: center
-   :alt: 
+   :alt:
 
 XML
 ~~~
@@ -106,13 +106,13 @@ Alternatively, you may use the deprecated "Simple" Style View:
 
 **Related concepts**
 
-:doc:`concepts/Layer`
+:doc:`/concepts/Layer`
 
 **Related reference**
 
-:doc:`Layers view`
+:doc:`/reference/Layers view`
 
-:doc:`Style View`
+:doc:`/reference/Style View`
 
 
 .. |image0| image:: /images/change_a_layers_style/change_style_icon.gif

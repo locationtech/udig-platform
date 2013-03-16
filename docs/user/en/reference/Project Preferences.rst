@@ -12,11 +12,11 @@ Layer Preferences
 Currently there are no layer level preferences that can be set. Future versions will provide options
 that can be set for layers.
 
-.. figure:: images/layer_preferences/layerpreferences.png
+.. figure:: /images/layer_preferences/layerpreferences.png
    :align: center
-   :alt: 
+   :alt:
 
-   
+
 .. _preferences-page-project-map:
 
 Map Preferences
@@ -24,9 +24,9 @@ Map Preferences
 
 Map Preference page is used to supply system wide defaults for the Map Editor.
 
-.. figure:: images/map_preferences/mappreferences.png
+.. figure:: /images/map_preferences/mappreferences.png
    :align: center
-   :alt: 
+   :alt:
 
 Remove Temporary Layers on exit
 ```````````````````````````````
@@ -61,15 +61,15 @@ Selection Color
 The color that selected feature will be drawn in.
 
 Default is dark yellow.
-   
-   
+
+
 
 Printing Preferences
 --------------------
 
 .. figure:: /images/printing_preferences/printingpreferences.png
    :align: center
-   :alt: 
+   :alt:
 
 Available Preferences
 `````````````````````

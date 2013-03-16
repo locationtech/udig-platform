@@ -1,11 +1,11 @@
 Document page
 #############
 
-The Document properties page allows you to configure document settings of the resource. 
+The Document properties page allows you to configure document settings of the resource.
 
 .. figure:: /images/resource_page/ResourceDocumentPage.png
    :align: center
-   :alt: 
+   :alt:
 
 Resource documents
 ------------------
@@ -39,14 +39,15 @@ The same dialog shown above will be opened in edit mode to allow updating inpute
 
 The :guilabel:`Remove` button is used to remove a hotlink definition.
 
+**Related concepts**
+
+:doc:`/concepts/Selection`
+
 **Related tasks**
 
-:doc:`Configure documents`
+:doc:`/tasks/Configure documents`
 
 **Related reference**
 
 :doc:`Document view`
 
-**Related concepts**
-
-:doc:`concepts/Selection`

@@ -11,7 +11,6 @@ Occasionally you will have trouble connecting to a WMS service; here is how to e
 
 * `Mac OSX`_
 
-
 Traceing WMS Requests
 =====================
 
@@ -48,7 +47,7 @@ produced:
     !MESSAGE GetCapabilities: `http://wms.jpl.nasa.gov/wms.cgi?REQUEST=GetCapabilities&VERSION=1.1.1&SERVICE=WMS`_
 
    !ENTRY net.refractions.udig.catalog.internal.wms 4 0 2008-09-05 08:26:24.781
-    !MESSAGE GetMap: `http://wms.jpl.nasa.gov/wms.cgi?SERVICE=WMS&LAYERS=BMNG&EXCEPTIONS=application/vnd.ogc.se\_xml&FORMAT=image/png&HEIGHT=357&TRANSPARENT=TRUE&REQUEST=GetMap&BBOX=-180.0,-90.0,180.0,90.0&WIDTH=714&STYLES=default&SRS=EPSG:4326&VERSION=1.1.1 <http://wms.jpl.nasa.gov/wms.cgi?SERVICE=WMS&LAYERS=BMNG&EXCEPTIONS=application/vnd.ogc.se_xml&FORMAT=image/png&HEIGHT=357&TRANSPARENT=TRUE&REQUEST=GetMap&BBOX=-180.0,-90.0,180.0,90.0&WIDTH=714&STYLES=default&SRS=EPSG:4326&VERSION=1.1.1>`_ 
+    !MESSAGE GetMap: `http://wms.jpl.nasa.gov/wms.cgi?SERVICE=WMS&LAYERS=BMNG&EXCEPTIONS=application/vnd.ogc.se\_xml&FORMAT=image/png&HEIGHT=357&TRANSPARENT=TRUE&REQUEST=GetMap&BBOX=-180.0,-90.0,180.0,90.0&WIDTH=714&STYLES=default&SRS=EPSG:4326&VERSION=1.1.1 <http://wms.jpl.nasa.gov/wms.cgi?SERVICE=WMS&LAYERS=BMNG&EXCEPTIONS=application/vnd.ogc.se_xml&FORMAT=image/png&HEIGHT=357&TRANSPARENT=TRUE&REQUEST=GetMap&BBOX=-180.0,-90.0,180.0,90.0&WIDTH=714&STYLES=default&SRS=EPSG:4326&VERSION=1.1.1>`_
 
 
 The URLs mentioned during tracing can be cut and pasted into a browser to verify an error message,

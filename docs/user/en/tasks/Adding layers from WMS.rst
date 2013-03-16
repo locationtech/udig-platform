@@ -77,14 +77,14 @@ You can quickly add a layer from a web browser (or the embedded **Web view**):
 
 **Related concepts**
 
-:doc:`concepts/Service`
+:doc:`/concepts/Service`
 
-:doc:`concepts/Web Map Server`
+:doc:`/concepts/Web Map Server`
 
 
-**Related concepts**
+**Related tasks**
 
-:doc:`Drag and Drop`
+:doc:`/tasks/Drag and Drop`
 
 
 .. |image0| image:: /images/adding_layers_from_wms/importwms.jpg

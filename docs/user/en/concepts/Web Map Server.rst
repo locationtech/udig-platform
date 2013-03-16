@@ -9,7 +9,3 @@ zoom and provide a area of interest and the Web Map Server will reply with a ren
 :doc:`/reference/Add Data wizard`
 
 :doc:`/reference/Web Map Server page`
-
-:doc:`/reference/Drag and Drop`
-
-

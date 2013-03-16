@@ -11,6 +11,12 @@ and offer a button to advance to the next step.
 Cheatsheets also link to the relevant help information in this user guide saving you a documentation
 search.
 
+**Related tasks**
+
+:doc:`/tasks/Working with cheat sheets`
+
+:doc:`/tasks/Working with composite cheat sheets`
+
 **Related reference**
 
 :doc:`Cheat Sheet Selection dialog`
@@ -18,8 +24,3 @@ search.
 :doc:`Cheat Sheet view`
 
 
-**Related tasks**
-
-:doc:`Working with cheat sheets`
-
-:doc:`Working with composite cheat sheets`

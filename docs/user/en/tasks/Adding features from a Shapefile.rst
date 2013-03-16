@@ -57,27 +57,26 @@ You can quickly add a layer from a web browser (or the embedded **Web view**):
 #. Select Files Cannot resolve external resource into attachment. from the Wizard
 #. Select Shape files to import and press Open
 
-.. figure:: images/adding_features_from_a_shapefile/addshapefiles.png
+.. figure:: /images/adding_features_from_a_shapefile/addshapefiles.png
    :width: 60%
 
 
 Shape files will be imported and displayed in the map editor
 
-.. figure:: images/adding_features_from_a_shapefile/shapeimportresult.png
+.. figure:: /images/adding_features_from_a_shapefile/shapeimportresult.png
    :width: 60%
-   :alt: 
+   :alt:
 
 **Related concepts**
 
-:doc:`concepts/Service`
+:doc:`/concepts/Service`
 
-:doc:`concepts/Data Store`
+:doc:`/concepts/Data Store`
 
-:doc:`concepts/File Formats`
+:doc:`/concepts/File Formats`
 
-:doc:`concepts/Shapefile`
+:doc:`/concepts/Shapefile`
 
+**Related tasks**
 
-**Related reference**
-
-:doc:`Drag and Drop`
+:doc:`/tasks/Drag and Drop`

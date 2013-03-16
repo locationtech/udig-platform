@@ -18,9 +18,9 @@ please use the following procedure.
 
 **Related concepts**
 
-:doc:`concepts/Shapefile`
+:doc:`/concepts/Shapefile`
 
 
 **Related reference**
 
-:doc:`Resource to Shapefile Wizard`
+:doc:`/reference/Resource to Shapefile Wizard`

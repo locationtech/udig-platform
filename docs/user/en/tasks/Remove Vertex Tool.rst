@@ -9,45 +9,20 @@ select a feature then click on the vertices to delete
 
 **Tip** if features overlap clicking the same location
 
-**Related reference**
+**Related concepts**
 
+:doc:`/concepts/Edit Blackboard`
 
-* :doc:`EditBlackboard`
+**Related tasks**
 
-* :doc:`Using Vertex Tools`
+:doc:`Using Vertex Tools`
 
+:doc:`Using Geometry Creation Tools`
 
-   * :doc:`Edit Geometry Tool`
+:doc:`Using Feature Edit Tools`
 
-   * :doc:`Add Vertex Tool`
+**Related tasks**
 
-   * :doc:`Hole Cutter`
-
-
-* :doc:`Using Geometry Creation Tools`
-
-
-   * :doc:`Polygon Creation Tool`
-
-   * :doc:`Line Creation Tool`
-
-   * :doc:`Point Creation Tool`
-
-   * :doc:`Draw Geometry Tool`
-
-   * :doc:`Rectangle Tool`
-
-   * :doc:`Ellipse Tool`
-
-
-* :doc:`Using Feature Edit Tools`
-
-
-   * :doc:`Fill Tool`
-
-   * :doc:`Split Tool`
-
-   * :doc:`Delete Tool`
-
+:doc:`/reference/Snapping`
 
 

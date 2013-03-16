@@ -28,8 +28,8 @@ functionality illustrated on this page is also available when using the :doc:`Po
    drag the vertex.
 
    .. tip::
-      The circle around the point is the current snap area. For more information about 
-      snapping click :doc:`here <Snapping>`.
+      The circle around the point is the current snap area. For more information about
+      snapping click :doc:`here </reference/Snapping>`.
 
    |image2|
 
@@ -72,15 +72,15 @@ Tips
 
 -  Advanced Editing Mode can be used to reduce the amount of tool switching that is required. For
    example adding vertices can be performed with the Edit Geometry Tool in advanced mode.
--  Multiple Geometries can be added to the :doc:`EditBlackboard` and edited
+-  Multiple Geometries can be added to the :doc:`/concepts/Edit Blackboard` and edited
    together.
 
-   -  :kbd:`SHIFT` -click adds features to the :doc:`EditBlackboard`
+   -  :kbd:`SHIFT` -click adds features to the :doc:`/concepts/Edit Blackboard`
    -  :kbd:`ALT` -click adds/removes features
 
--  Esc (or Esc-Esc depending on the platform) clears :doc:`EditBlackboard`.
+-  Esc (or Esc-Esc depending on the platform) clears :doc:`/concepts/Edit Blackboard`.
 -  If two selected features share a vertex moving the vertex will move the vertex on both features.
--  Use :doc:`Snapping` to snap to existing features.
+-  Use :doc:`/reference/Snapping` to snap to existing features.
 -  A line can split by
 
    #. Selecting a line (select bc\_borders and select a line)
@@ -101,48 +101,21 @@ Tips
 
          |image12|
 
-**Related reference**
+**Related concepts**
 
-.. toctree::
-   :maxdepth: 1
+:doc:`/concepts/Edit Blackboard`
 
-   EditBlackboard
-
-
-:doc:`Snapping`
+**Related tasks**
 
 :doc:`Using Vertex Tools`
 
-  * :doc:`Add Vertex Tool`
-
-  * :doc:`Remove Vertex Tool`
-
-  * :doc:`Hole Cutter`
-
-
 :doc:`Using Geometry Creation Tools`
-
-  * :doc:`Polygon Creation Tool`
-
-  * :doc:`Line Creation Tool`
-
-  * :doc:`Point Creation Tool`
-
-  * :doc:`Draw Geometry Tool`
-
-  * :doc:`Rectangle Tool`
-
-  * :doc:`Ellipse Tool`
-
 
 :doc:`Using Feature Edit Tools`
 
-  * :doc:`Fill Tool`
+**Related tasks**
 
-  * :doc:`Split Tool`
-
-  * :doc:`Delete Tool`
-
+:doc:`/reference/Snapping`
 
 .. |image0| image:: /images/edit_geometry_tool/tooledit1.png
 .. |image1| image:: /images/edit_geometry_tool/tooleditfeature.png

@@ -7,15 +7,14 @@ URL) and display the result in the :doc:`Cheat Sheet view`.
 
 .. figure:: /images/cheat_sheet_selection_dialog/CheatSheetSelection.png
    :align: center
-   :alt: 
+   :alt:
+
+**Related tasks**
+
+:doc:`/tasks/Working with cheat sheets`
+
+:doc:`/tasks/Working with composite cheat sheets`
 
 **Related reference**
 
 :doc:`Cheat Sheet view`
-
-
-**Related tasks**
-
-:doc:`Working with cheat sheets`
-
-:doc:`Working with composite cheat sheets`

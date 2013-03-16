@@ -22,6 +22,6 @@ available in this view.
 
 **Related reference**
 
-:doc:`Legend View`
+:doc:`/reference/Legend View`
 
-:doc:`Layers view`
+:doc:`/reference/Layers view`

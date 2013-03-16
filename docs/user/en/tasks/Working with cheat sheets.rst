@@ -1,7 +1,7 @@
 Working with cheat sheets
 #########################
 
-:doc:`Cheat sheets` are available from the help menu and offer active assistance
+:doc:`/reference/Cheat sheets` are available from the help menu and offer active assistance
 stepping through common tasks.
 
 * `Cheat Sheet Selection Dialog`_
@@ -15,7 +15,7 @@ stepping through common tasks.
 
 **Related reference**
 
-:doc:`Cheat sheets`
+:doc:`/reference/Cheat sheets`
 
 
 **Related tasks**

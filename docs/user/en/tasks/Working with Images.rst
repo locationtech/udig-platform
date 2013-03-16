@@ -17,6 +17,5 @@ Contents:
 
 **Related tasks**
 
-
 :doc:`Using the Catalog`
 

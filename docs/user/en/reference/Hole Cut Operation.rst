@@ -16,7 +16,7 @@ Sample Usage
 On this example we are going to do a fill operation with the polygon layer edificios.shp and the
 lineString layer carre1.shp.
 
-.. figure:: images/hole_cut_operation/hole-before.png
+.. figure:: /images/hole_cut_operation/hole-before.png
 
    **Figure 1. Before operation.**
 
@@ -34,7 +34,7 @@ Now it's time to indicate the operation's inputs, as shown in *Figure 2*:
    by the operation. You can change the name or select an existing Layer where to store the results.
    This combo will only load existent Polygon or MultiPolygon layer.
 
-.. figure:: images/hole_cut_operation/hole-ui.png
+.. figure:: /images/hole_cut_operation/hole-ui.png
 
    **Figure 2. Define input and target layers.**
 
@@ -44,14 +44,14 @@ Now it's time to indicate the operation's inputs, as shown in *Figure 2*:
    on a progress dialog, as shown in *Figure 3*. The operation may take a while to complete,
    depending on the amount and complexity of the input geometries.
 
-.. figure:: images/hole_cut_operation/hole-progress.png
+.. figure:: /images/hole_cut_operation/hole-progress.png
 
    **Figure 3. Progress dialog.**
 
 Shows the newly created Layer (Hole\_1) added to the map, with the Features resulting of applying
 the Hole operation between the *Hole layer* and the *Using layer*.
 
-.. figure:: images/hole_cut_operation/hole-after.png
+.. figure:: /images/hole_cut_operation/hole-after.png
 
    **Figure 4. Result Layer.**
 

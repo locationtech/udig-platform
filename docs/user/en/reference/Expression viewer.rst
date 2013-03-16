@@ -7,9 +7,9 @@ feature basis.
 This is a powerful technique that can be used for on the fly styling, or directly for data
 processing.
 
-.. figure:: images/expression_viewer/CQLExpressionViewer.png
+.. figure:: /images/expression_viewer/CQLExpressionViewer.png
    :align: center
-   :alt: 
+   :alt:
 
 You can switch between appropriate options using the drop down arrow on the right hand side.
 Depending on what the expression is for, and what kind of information you are working with,
@@ -41,8 +41,7 @@ When defining an expression you can make use of the full range of :doc:`/concept
 
 **Related concepts**
 
-:doc:`concepts/Constraint Query Language`
-
+:doc:`/concepts/Constraint Query Language`
 
 **Related reference**
 
@@ -60,11 +59,11 @@ It does offer dynamic help with auto completion for:
 
 -  Attributes are listed from the feature type you are working with
 
-   .. image:: images/expression_viewer/CQLExpressionViewerAttribute.png
+   .. image:: /images/expression_viewer/CQLExpressionViewerAttribute.png
 
 -  Function are listed, with pop up function reference
-   
-   .. image:: images/expression_viewer/CQLExpressionViewerFunction.png
+
+   .. image:: /images/expression_viewer/CQLExpressionViewerFunction.png
 
 Builder
 =======
@@ -72,9 +71,9 @@ Builder
 A friendly general purpose viewer offering constraint query language input. Provides a list of
 attributes, operations and values that can be inserted into your expression.
 
-.. figure:: images/expression_viewer/BuilderExpressionViewer.png
+.. figure:: /images/expression_viewer/BuilderExpressionViewer.png
    :align: center
-   :alt: 
+   :alt:
 
 RGB Color
 =========
@@ -82,9 +81,9 @@ RGB Color
 The following expression viewers can only be used when defining colours. They are often used when
 defining fill or stroke colour.
 
-.. figure:: images/expression_viewer/RGBExpressionViewer.png
+.. figure:: /images/expression_viewer/RGBExpressionViewer.png
    :align: center
-   :alt: 
+   :alt:
 
 Numbers
 =======
@@ -92,6 +91,6 @@ Numbers
 The following expression viewers can only be used when defining numbers. An example would be
 defining fill opacity or line width.
 
-.. figure:: images/expression_viewer/NumberExpressionViewer.png
+.. figure:: /images/expression_viewer/NumberExpressionViewer.png
    :align: center
-   :alt: 
+   :alt:

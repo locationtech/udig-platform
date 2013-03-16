@@ -5,10 +5,10 @@ The DB2 page is used to connect to a DB2 spatial data base.
 
 .. figure:: /images/db2_page/DB2.jpg
    :align: center
-   :alt: 
+   :alt:
 
 **Related tasks**
 
-* :doc:`Adding Features from DB2`
+* :doc:`/tasks/Adding Features from DB2`
 
 * :ref:`preferences-page-catalog-db2`

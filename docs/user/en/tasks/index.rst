@@ -8,6 +8,7 @@ Web Map Server, and for adding a layer into a Map.
 .. toctree::
    :maxdepth: 2
 
+   Drag and Drop
    Installation and Configuration
    Using the Catalog
    Using the Workbench

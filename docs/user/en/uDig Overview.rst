@@ -2,7 +2,7 @@ uDig Overview
 =============
 
 The User-friendly Desktop Internet GIS is an `open source <http://www.opensource.org/docs/definition.php>`_
-(`EPL <http://www.eclipse.org/legal/epl-v10.html>`_ and `BSD <http://opensource.org/licenses/BSD-3-Clause>`_) 
+(`EPL <http://www.eclipse.org/legal/epl-v10.html>`_ and `BSD <http://opensource.org/licenses/BSD-3-Clause>`_)
 desktop application framework, built with the Eclipse Rich Client (`RCP <http://wiki.eclipse.org/index.php/Rich_Client_Platform>`_)
 technology.
 
@@ -28,8 +28,8 @@ defines an arrangement of views and editors allowing you to focus on one problem
 
 Out of the box uDig includes:
 
-* :doc:`Map Perspective <Map Perspective>` - used to work with and explore spatial information
-* :doc:`Style Perspective <Style Perspective>` - used to work on styling spatial data in a distraction free environment
+* :doc:`/reference/Map Perspective` - used to work with and explore spatial information
+* :doc:`/reference/Style Perspective` - used to work on styling spatial data in a distraction free environment
 
 **Related concepts**
 

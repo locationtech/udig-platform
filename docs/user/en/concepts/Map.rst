@@ -13,5 +13,6 @@ specific resource).
    Layer
    Legend
    Viewport
+   Edit Blackboard
 
 :doc:`Projection`

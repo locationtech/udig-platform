@@ -19,5 +19,5 @@ covered in the following tasks.
 
 **Related concepts**
 
-:doc:`concepts/Area of Interest`
+:doc:`/concepts/Area of Interest`
 

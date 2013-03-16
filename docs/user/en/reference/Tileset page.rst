@@ -6,11 +6,11 @@ it is not backed onto a WMS-C tile cache.
 
 .. figure:: /images/tileset_page/properties_page.png
    :align: center
-   :alt: 
+   :alt:
 
 **Related tasks**
 
-:doc:`Enabling a Tileset from a WMS Server`
+:doc:`/tasks/Enabling a Tileset from a WMS Server`
 
 
 Accessing the properties page
@@ -20,7 +20,7 @@ The page can be opened on any layer:
 
 .. figure:: /images/tileset_page/open_page.png
    :align: center
-   :alt: 
+   :alt:
 
 Use a Tileset for this resource
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

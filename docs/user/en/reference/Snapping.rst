@@ -10,18 +10,18 @@ created vertex's location will be set to the neighboring vertex's location.
 
 .. figure:: /images/snapping/snaptopoint.png
    :align: center
-   :alt: 
+   :alt:
 
 In the above image the vertex would snap to the red point feature, as long as the correct snap
 behaviour is set. The red circle in the image indicates the area that will be searched. The snap
-radius can be set in the :doc:`Edit Tool Preferences` or by holding :kbd:`ALT` while rotating 
+radius can be set in the :doc:`Edit Tool Preferences` or by holding :kbd:`ALT` while rotating
 the mouse wheel.
 
 .. note::
    One of the edit tools must be active to set the snap radius using the mouse tool.
-   
+
 .. tip::
-   The color of the snap area can be set in the :doc:`Edit Tool Preferences`. The feedback 
+   The color of the snap area can be set in the :doc:`Edit Tool Preferences`. The feedback
    color indicates the color of the snap area.
 
 
@@ -35,7 +35,7 @@ The normal snapping choices are as follows:
 +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
 | No Snapping         | Snapping is turned off. **DEFAULT**                                                                                                       |
 +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| Selected Features   | Will snap to vertices that are part of a feature that has been added to the :doc:`EditBlackboard` (has been selected)                     |
+| Selected Features   | Will snap to vertices that are part of a feature that has been added to the :doc:`/concepts/Edit Blackboard` (has been selected)          |
 +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
 | Current Layer       | Searches for the closest vertex in the current layer                                                                                      |
 +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------+

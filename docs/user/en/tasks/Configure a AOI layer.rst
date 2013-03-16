@@ -17,7 +17,7 @@ the **AOI Selection** tool.
 
 **Related reference**
 
-:doc:`Selection Tools`
+:doc:`/reference/Selection Tools`
 
-:doc:`Interaction Properties page`
+:doc:`/reference/Interaction Properties page`
 

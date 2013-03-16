@@ -42,7 +42,7 @@ following form.
   +-----------------------------+-------------------------------------------------------+
   | **Connection Mode**         | Options are one of **ANSI** or **Teradata**           |
   +-----------------------------+-------------------------------------------------------+
-  | **Query Band application**  | The name of the application to be sent as part of the | 
+  | **Query Band application**  | The name of the application to be sent as part of the |
   |                             | Teradata query band information. Default is **uDig**. |
   +-----------------------------+-------------------------------------------------------+
 
@@ -58,7 +58,7 @@ Press **Next** to connect to the database.
 
 .. figure:: /images/teradata_page/TeradataPage1.png
    :align: center
-   :alt: 
+   :alt:
 
 On the next page, details regarding the available databases and layers are displayed. Enter the name
 of the database you wish to connect to in the Database field and click **List**.
@@ -68,13 +68,13 @@ each entry for each table to load as a layer, and then click **Next**.
 
 .. figure:: /images/teradata_page/TeradataPage2.png
    :align: center
-   :alt: 
+   :alt:
 
 If you are adding data directly to a map then proceed to the :doc:`Resource Selection page`.
 
 **Related concepts**
 
-:doc:`concepts/Teradata`
+:doc:`/concepts/Teradata`
 
 **Related reference**
 

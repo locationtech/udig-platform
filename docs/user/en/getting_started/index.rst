@@ -23,4 +23,4 @@ Tips for using Online Help
 
 **Related tasks**
 
-:doc:`/tasks/Running uDig <Running uDig>` (help for running on windows, linux and macosx)
+:doc:`Running uDig </tasks/Running uDig>` (help for running on windows, linux and macosx)

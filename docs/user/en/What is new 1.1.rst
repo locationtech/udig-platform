@@ -24,29 +24,27 @@ Editing Tools
 
 .. figure:: /images/what_is_new_1.1.0/add_vertext_mode.gif
    :align: center
-   :alt: 
+   :alt:
 
 .. figure:: /images/what_is_new_1.1.0/remove_vertext_mode.gif
    :align: center
-   :alt: 
+   :alt:
 
 .. figure:: /images/what_is_new_1.1.0/edit_vertex_mode.gif
    :align: center
-   :alt: 
+   :alt:
 
 .. figure:: /images/what_is_new_1.1.0/hole_vertex_mode.gif
    :align: center
-   :alt: 
-
+   :alt:
  
-
 .. figure:: /images/what_is_new_1.1.0/delete_feature_mode.gif
    :align: center
-   :alt: 
+   :alt:
 
 .. figure:: /images/what_is_new_1.1.0/difference_feature_mode.gif
    :align: center
-   :alt: 
+   :alt:
 
 Editing tools have been revised for uDig 1.1.0. The new tools are more responsive and provide better
 feedback.
@@ -56,7 +54,8 @@ feedback.
 +------------+------------+------------+------------+------------+------------+
 
 In addition to a better user experience there is a complete framework to allow new tools to be
-created. Please visit the community section for instructions on downloading :doc:`Axios uDig Extensions` which feature a selection of advanced editing tools.
+created. Please visit the community section for instructions on downloading *Axios uDig Extensions*
+which feature a selection of advanced editing tools.
 
 Scratch Layers
 --------------
@@ -81,7 +80,7 @@ layer based on attribute values.
 
 .. figure:: /images/what_is_new_1.1.0/themed_pop_density.gif
    :align: center
-   :alt: 
+   :alt:
 
 UDig includes a great set of ready-made palettes for creating thematic styling - thanks to the Penn
 State's ColorBrewer research project! These palettes have been tested and can account for a range of
@@ -105,7 +104,7 @@ default perspective it is one of the views hiding behind the CatalogView at the 
 
 .. figure:: /images/what_is_new_1.1.0/selection_view.jpg
    :align: center
-   :alt: 
+   :alt:
 
 Feature Copy and Paste
 ----------------------

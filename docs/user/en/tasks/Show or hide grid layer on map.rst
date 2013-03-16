@@ -15,11 +15,12 @@ Hiding grid layer on map
 
 **Related concepts**
 
-:doc:`concepts/Legend`
+:doc:`/concepts/Legend`
 
+**Related tasks**
+
+:doc:`Using the Legend View`
 
 **Related reference**
 
-:doc:`Legend View`
-
-:doc:`Using the Legend View`
+:doc:`/reference/Legend View`

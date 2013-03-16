@@ -1,7 +1,7 @@
 Adding a column to a shapefile
 ##############################
 
-You can use the :doc:`Transform operation` to generate additional
+You can use the :doc:`/reference/Transform operation` to generate additional
 attributes and then export the resulting scratch layer.
 
 #. Select the contents of your shape file:
@@ -9,20 +9,20 @@ attributes and then export the resulting scratch layer.
    -  Exapand the shapefile entry in the catalog view and select the contents
    -  Select the layer (if you happen to have the shape file on screen)
 
-#. Run the :doc:`Transform operation`:
+#. Run the :doc:`/reference/Transform operation`:
 
    -  Right click to bring up the context menu and choose **Operations > Transform**
-   -  From the menu bar :menuselection:`Edit --> All Operations` to open the :doc:`Operations dialog` then select :menuselection:`Resource --> Transform` and press **Operate**
+   -  From the menu bar :menuselection:`Edit --> All Operations` to open the :doc:`/reference/Operations dialog` then select :menuselection:`Resource --> Transform` and press **Operate**
 
-#. This operation will open the :doc:`Transform dialog` listing the current
+#. This operation will open the :doc:`/reference/Transform dialog` listing the current
    attributes along with a definition of how to populate them.
 #. Select where you would like to add an attribute
 #. Press the **Add** button to create a new entry
 #. Fill in the name of your new Attribute
-#. Fill in the :doc:`Expression viewer` to define the values for your new
+#. Fill in the :doc:`/reference/Expression viewer` to define the values for your new
    attribute.
 
-   -  Use :doc:`concepts/Constraint Query Language` to define your
+   -  Use :doc:`/concepts/Constraint Query Language` to define your
       expression
    -  You can choose different options using the arrow to the right
 
@@ -38,7 +38,7 @@ attributes and then export the resulting scratch layer.
       service in the **Catalog view**.
 
 #. Right click on the above scratch entry in the catalog view and select **Export** to open the
-   :doc:`Export Wizard`
+   :doc:`/reference/Export Wizard`
 
 #. Choose **Resource to Shapefile** and press **Next>**
 #. Provide a destination directory for your new shapefile
@@ -51,12 +51,12 @@ format can only support one geometry column.
 
 **Related concepts**
 
-:doc:`concepts/Constraint Query Language`
+:doc:`/concepts/Constraint Query Language`
 
 **Related reference**
 
-:doc:`Transform operation`
+:doc:`/reference/Transform operation`
 
-:doc:`Catalog view`
+:doc:`/reference/Catalog view`
 
-:doc:`Resource to Shapefile Wizard`
+:doc:`/reference/Resource to Shapefile Wizard`

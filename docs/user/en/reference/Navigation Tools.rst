@@ -97,7 +97,6 @@ Zoom to the selected features.
 
 :doc:`Map Menu`
 
-
 .. |image0| image:: /images/navigation_tools/zoom_mode.gif
 .. |image1| image:: /images/navigation_tools/pan_mode.gif
 .. |image2| image:: /images/navigation_tools/refresh_co.gif

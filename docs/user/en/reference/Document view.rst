@@ -5,7 +5,7 @@ The Document view shows attachments, links and hotlinks associated with the sele
 
 .. figure:: /images/document_view/DocumentView.png
    :align: center
-   :alt: 
+   :alt:
 
 Documents
 ---------
@@ -61,16 +61,16 @@ Fig. Add attachment dialog
 Link
 ----
 
-The :guilabel:`Link...` button is used to link a document to the selected feature or layer. 
+The :guilabel:`Link...` button is used to link a document to the selected feature or layer.
 
 A link can either be a file link or a website link as shown below. Selecting the **Type** determines what will be linked.
 
 .. figure:: /images/document_view/AddFileLink.png
    :align: left
    :figwidth: 100%
-   
+
 Fig. Add file link dialog
-   
+
 - :guilabel:`Type` - used to determine the type of link.
 - :guilabel:`File` - used to set the file to be linked.
 - :guilabel:`Label` - used to set a label.
@@ -107,9 +107,9 @@ For *hotlinks*, a dialog below will be shown depending on the type.
 .. figure:: /images/document_view/EditFileHotlink.png
    :align: left
    :figwidth: 100%
-   
+
 Fig. Edit file hotlink dialog
-   
+
 - :guilabel:`Type` - used to display the type of hotlink.
 - :guilabel:`Value` - used to set the file to be hotlinked.
 - :guilabel:`Attribute` - used to display the attribute name.
@@ -120,13 +120,13 @@ Fig. Edit file hotlink dialog
 - :guilabel:`New...` - used to create a new file from a template and set it as the file to be hotlinked.
 - :guilabel:`OK` - used to save changes.
 - :guilabel:`Cancel` - used to discard changes.
-   
+
 .. figure:: /images/document_view/EditWebHotlink.png
    :align: left
    :figwidth: 100%
-   
+
 Fig. Edit website hotlink dialog
-   
+
 - :guilabel:`Type` - used to display the type of hotlink.
 - :guilabel:`Value` - used to set the website URL to be hotlinked.
 - :guilabel:`Attribute` - used to display the attribute name.
@@ -141,7 +141,7 @@ Fig. Edit website hotlink dialog
    :figwidth: 100%
 
    Edit action hotlink dialog
-   
+
 - :guilabel:`Type` - used to display the type of hotlink.
 - :guilabel:`Value` - used to set the attribute value.
 - :guilabel:`Action` and :guilabel:`Go` - used to select and perform an action on the attribute value.
@@ -159,18 +159,18 @@ The :guilabel:`Open` button is used to open the selected document.
 * File: Opened using the default system application
 * Link: Opened using your web browser
 * Action: Opened as defined by the action.
-  
+
   * Action referencing ``notepad {0}`` opens in notepad
   * Action resulting in a web links opened in the system browser
   * Action resulting in a file link opens in default system application
-  
+
   The :guilabel:`Open Action` dialog is used if more than one hotlink action is defined
   for an attribute.
-  
+
   .. figure:: /images/document_view/OpenActionDialog.png
      :align: left
      :figwidth: 100%
-     
+
      Open Action Dialog
 
 Save As
@@ -193,15 +193,15 @@ The :guilabel:`Delete` button is used remove the selected attached or linked doc
 For attached files, a confirmation message will be shown as the file will be removed from disk.
 For linked files, the referenced file will not be removed from disk, the reference is simply cleared.
 
+**Related tasks**
+
+:doc:`/tasks/Working with Documents`
+
 **Related reference**
 
 :doc:`Resource Information page`
 
 :doc:`Resource Document page`
-
-**Related tasks**
-
-:doc:`Working with Documents`
 
 .. |file_logo| image:: /images/document_view/file_doc_obj.jpg
 

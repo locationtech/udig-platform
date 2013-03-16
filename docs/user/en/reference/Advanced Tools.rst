@@ -13,16 +13,16 @@ Check the links bellow for specific user documentation for each of the available
 
 .. toctree::
    :hidden:
- 
+
    Arc Tool
    Parallel Tool
-   Split Tool (Axios Tools)
+   Split Tool
    Trim Line Tool
 
 -  :doc:`Arc Tool` — |image0| Creates a linestring approximating an arc given three
    control points (initial point, axis, and end point).
 -  :doc:`Parallel Tool` — |image1| Creates a parallel LineString.
--  :doc:`Split Tool (Axios Tools)` — |image2| Splits features
+-  :doc:`Split Tool` — |image2| Splits features
    crossed by a line string
 -  :doc:`Trim Line Tool` — |image3| Trims LineStrings at a point using a
    trimming line

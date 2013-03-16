@@ -32,7 +32,7 @@ The following web servies are used:
 
 Tips:
 
--  The online help includes platform specific instructions for :doc:`Running uDig`. This page covers proxy settings.
+-  The online help includes platform specific instructions for :doc:`/tasks/Running uDig`. This page covers proxy settings.
 -  Previous `data download (v1.2) <http://udig.refractions.net/files/data/data_1_2.zip>`_ focused on the British Columbia region in Canada
 -  For uDig 1.1 `Walkthrough 1 <http://udig.refractions.net/docs/uDigWalkthrough1.pdf>`_ and `data-v1_1.zip <http://udig.refractions.net/files/docs/data-v1_1.zip>`_
 -  An old `flash movie <http://udig.refractions.net/docs/walkthough1.htm>`_ is available

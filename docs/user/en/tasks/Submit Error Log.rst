@@ -3,7 +3,7 @@ Submit Error Log
 
 The error log in uDig can be submitted to the uDig development team in 3 easy clicks.
 
-#. Select :menuselection:`Help --> Submit Log...` from the menu bar to open the :doc:`Send Log dialog`
+#. Select :menuselection:`Help --> Submit Log...` from the menu bar to open the :doc:`/reference/Send Log dialog`
 #. Type in some notes describing the nature of the problem and the steps required to reproduce it.
 #. You may also include contact information.
 #. Press the **Proceed** button.
@@ -16,4 +16,4 @@ an issue to learn when it has been resolved.
 
 **Related reference**
 
-:doc:`Send Log dialog`
+:doc:`/reference/Send Log dialog`

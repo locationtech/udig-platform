@@ -11,7 +11,7 @@ Earth <http://www.naturalearthdata.com>`_ project:
 
 #. Right click on the following links and choose **Save Link As...**:
 
-   `data_1_3.zip <http://udig.refractions.net/files/data/data_1_3.zip>`_ 
+   `data_1_3.zip <http://udig.refractions.net/files/data/data_1_3.zip>`_
 
    .. tip::
       If you are using this in a classroom setting or *OSGeo Live* the files should be on your DVD
@@ -25,7 +25,7 @@ The *data_1_3.zip* download is the full dataset used by :doc:`Walkthrough 1`.
 
   We would like to thank `www.naturalearthdata.com <http://www.naturalearthdata.com>`_ for this sample data. Please
   visit their web site to download individual files (and at different scales for more detailed work):
-  
+
   * `HYP\_50M\_SR\_W.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/raster/HYP_50M_SR_W.zip>`_,
   * `10m-populated-places-simple.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-populated-places-simple.zip>`_,
   * `10m-admin-0-countries.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-0-countries.zip>`_,
@@ -50,20 +50,20 @@ uDig Application
 
 The uDig application keeps a configuration folder in your home directory, the folder will be created
 the first time the application is launched. If you have any difficulties, or are running uDig on
-Linux or Mac please review the :doc:`Running uDig` reference page.
+Linux or Mac please review the :doc:`/tasks/Running uDig` reference page.
 
 Welcome View
 ~~~~~~~~~~~~
 
 #. When you start up uDig for the first time the **Welcome** view is displayed on the right hand side
    of the screen. This view has links to tutorials, documentation and the project web site.
-   
+
    .. figure:: /getting_started/walkthrough1/images/welcome.png
       :width: 80%
       :alt: welcome screen
 
 #. To close the :guilabel:`Welcome` view click the :guilabel:`x` next to the word welcome.
-   
+
    You can return to the :guilabel:`Welcome` view at any time using the menu bar :menuselection:`Help --> Welcome`.
 
 Workbench
@@ -76,8 +76,8 @@ information about the current Map).
    :width: 80%
    :alt: workbench tour
 
-The above screen shows the uDig application in action with an open :doc:`Map editor` surrounded by the
-:doc:`Projects view`, :doc:`Layers view` and :doc:`Catalog view`. These views will be described further
+The above screen shows the uDig application in action with an open :doc:`/reference/Map editor` surrounded by the
+:doc:`/reference/Projects view`, :doc:`/reference/Layers view` and :doc:`/reference/Catalog view`. These views will be described further
 as we demonstrate their use.
 
 Interaction is provided by:
@@ -85,20 +85,20 @@ Interaction is provided by:
 * The application :guilabel:`menubar` is located along the top of the screen with a :guilabel:`toolbar` for quick access to common actions
 * The Map editor interaction is controled by selecting different tools in the :guilabel:`Palette` provided
 * Views provide a :guilabel:`View toolbar` for common actions followed by a downward arrow to access a more extensive :guilabel:`View menu`
-* Selected content provides a right click :guilabel:`context menu` 
+* Selected content provides a right click :guilabel:`context menu`
 
 Files
 ~~~~~
 
 To start out with we are going to load some of the sample data you downloaded earlier.
 
-#. Choose :menuselection:`Layer --> Add` from the menu bar to open up the :doc:`Add Data wizard`
+#. Choose :menuselection:`Layer --> Add` from the menu bar to open up the :doc:`/reference/Add Data wizard`
 #. Select :doc:`/concepts/Files` from the list of data sources
 #. Press **Next** to open up a file dialog
 #. Select the following file from your data folder: **10m_admin_0_countries.shp**
 #. Press **Open**
 
-   -  A new :doc:`Map editor` will be opened based on the contents of your
+   -  A new :doc:`/reference/Map editor` will be opened based on the contents of your
       shapefile. The default name and projection of the Map has been taken from your shapefile.
    -  You can see the **Catalog view** has been updated with an entry for **10m_admin_0_countries.shp**. This
       view is used to track the use of resources by the uDig application.
@@ -126,7 +126,7 @@ To start out with we are going to load some of the sample data you downloaded ea
 .. note::
    A common questions asked when using uDig for the first time is how big a
    shapefile can uDig load?
-   
+
    The application uses a fixed amount of memory for each layer, and does not load
    shapefiles into memory. We have a policy of keeping data on disk and drawing
    information, such as this shapefile, onto the screen as needed.
@@ -144,11 +144,11 @@ tools along the top of the :guilabel:`Palette` to control where the :guilabel:`M
    -  To zoom out draw a box with the right mouse button. The current map extents will be located
       within the box you draw.
 
-   .. tip:: 
+   .. tip::
       Most tools allow you to Pan by holding the center button and control the scale using the scroll wheel.
 
 #. The |image4| :guilabel:`Pan` tool can be used to scroll around your map with out changing scale.
-   
+
    - You can change the behavior of the :guilabel:`Pan` tool using the tool option
      area located along the bottom edge of the map.
 
@@ -172,14 +172,14 @@ information available on the web. This section covers the use of **Web Map Serve
 available layers of information that you can mix into your own maps.
 
 #. Select :menuselection:`File --> New --> New Map` from the menu bar
-#. Change to the :guilabel:`Web` view, click on the tab next to the :guilabel:`Catalog` view 
+#. Change to the :guilabel:`Web` view, click on the tab next to the :guilabel:`Catalog` view
    to reveal the :guilabel:`Web` view.
 #. Click on the link :guilabel:`WMS:dm solutions` link
 
    .. figure:: /images/quickstart/WebViewClick.png
       :alt: Copy WMS URL
 
-#. From the :doc:`Resource Selection page` we are going to choose the
+#. From the :doc:`/reference/Resource Selection page` we are going to choose the
    following layers:
 
    -  Elevation/Bathymetry
@@ -198,9 +198,9 @@ available layers of information that you can mix into your own maps.
 #. Use the |image11| :guilabel:`Zoom` tool to move closer to one of the Parks
 #. Switch to the |image12| :guilabel:`Info` tool and click on one the parks.
 
-   The :doc:`Information view` is opened for more details on the area clicked.
+   The :doc:`/reference/Information view` is opened for more details on the area clicked.
 
-.. tip:: 
+.. tip::
     You can switch between the zoom and info tools by pressing :kbd:`Z` and :kbd:`I` on the keyboard.
 
 Style
@@ -209,12 +209,12 @@ Style
 #. From the :guilabel:`Projects` view select :guilabel:`project --> 10m admin 0 countries`.
    You can double click to open this Map, or right click for :menuselection:`Context menu --> Open Map`.
 #. With the map open use the :guilabel:`Layers` view to select the :guilabel:`10m admin 0 countries` layer.
-#. Open up the :doc:`Style Editor dialog` by right clicking on :guilabel:`10m admin 0 countries`
+#. Open up the :doc:`/reference/Style Editor dialog` by right clicking on :guilabel:`10m admin 0 countries`
    layer and using :menuselection:`Context menu --> Change Style`.
 #. We are going to change a few things about how countries are displayed.
-   
+
    The :guilabel:`Polygons` page provides a series of tabs for us to fill in:
-   
+
    - :guilabel:`Border` Click on the :guilabel:`Color` and change the color to **BLACK**
    - :guilabel:`Fill` uncheck the box disable fill
    - :guilabel:`Label` check the box to enable labels. For the :guilabel:`label` value select

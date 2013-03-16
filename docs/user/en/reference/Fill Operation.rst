@@ -15,7 +15,7 @@ Sample Usage
 On this example we are going to do a fill operation with the polygon layer edificios.shp and the
 lineString layer carre1.shp and the resultant features will be added to the edificios.shp layer.
 
-.. figure:: images/fill_operation/fill-before.png
+.. figure:: /images/fill_operation/fill-before.png
 
    **Figure 1. Before operation.**
 
@@ -35,7 +35,7 @@ Now is time to indicate the operation's inputs, as shown in *Figure 2*:
    operation will create. You can change the name or select an existing Layer where to store the
    results. This combo will only load existent Polygon or MultiPolygon layer.
 
-   .. figure:: images/fill_operation/fill-ui.png
+   .. figure:: /images/fill_operation/fill-ui.png
 
       **Figure 2. Define input and target layers.**
 
@@ -45,14 +45,14 @@ Now is time to indicate the operation's inputs, as shown in *Figure 2*:
    on a progress dialog, as shown in *Figure 3*. The operation may take a while to complete,
    depending on the amount and complexity of the input geometries.
 
-   .. figure:: images/fill_operation/fill-progress.png
+   .. figure:: /images/fill_operation/fill-progress.png
 
       **Figure 3. Progress dialog.**
 
 Shows the newly created Layer (Fill\_1) added to the map, with the Features resulting of applying
 the Fill operation between the *Source layer* and the *Second layer*.
 
-.. figure:: images/fill_operation/fill-after.png
+.. figure:: /images/fill_operation/fill-after.png
 
    **Figure 4. Result Layer.**
 

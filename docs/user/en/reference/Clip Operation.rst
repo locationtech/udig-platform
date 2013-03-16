@@ -21,7 +21,7 @@ we'll use as the clipping mask against the *voting areas* *layer*.
 
 *Figure 1* shows the selected Feature, "Victoria" on the municipalities layer.
 
-.. figure:: images/clip_operation/clip_1_select_clip_mask.png
+.. figure:: /images/clip_operation/clip_1_select_clip_mask.png
 
    **Figure 1. Define clip mask through BBox selection.**
 
@@ -35,19 +35,19 @@ Now is time to indicate the operation's inputs, as shown in *Figure 2*:
 
    From the *Layer to Clip* drop down, select the Layer containing the Features to apply the
    difference to with the clipping Layer.
-   
+
 -  **Select the Using Layer**
 
    From the *Using Layer* drop down, select the layer to use as cutting mask.
-   
+
 -  **Select the** ***Result*** **Layer**
 
    At the *Result Layer* drop down, a tentative Layer name will be proposed for the layer the
    operation will create. You can change the name or select an existing Layer where to store the
    results.
 
-   .. figure:: images/clip_operation/clip_2_input_params.png
-   
+   .. figure:: /images/clip_operation/clip_2_input_params.png
+
       **Figure 2. Define input and target layers.**
 
 -  **Perform the operation**
@@ -57,8 +57,8 @@ Now is time to indicate the operation's inputs, as shown in *Figure 2*:
    on a progress dialog, as shown in *Figure 3*. The operation may take a while to complete,
    depending on the amount and complexity of the input geometries.
 
-   .. figure:: images/clip_operation/clip_3_progress.png
-   
+   .. figure:: /images/clip_operation/clip_3_progress.png
+
       **Figure 3. Progress dialog.**
 
 Once the Operation finishes, if a new Layer were created to hold the result, it will be
@@ -67,7 +67,7 @@ automatically added to the current Map.
 *Figure 4* shows the newly created Layer (Clip-1, in green) added to the map, with the Features
 resulting of applying the difference between the *Source* and *Clipping* Layers.
 
-.. figure:: images/clip_operation/clip_4_result.png
+.. figure:: /images/clip_operation/clip_4_result.png
 
    **Figure 4. Result Layer**
 

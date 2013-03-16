@@ -26,7 +26,7 @@ Select the *Parallel Tool* from the drop down buttons list as shown in *Figure 1
 |image1|
 
  **Figure 1. Selecting the Parallel Tool.**
- 
+
 Select the reference feature.
 
 |image2|
@@ -41,7 +41,7 @@ be draw as shown in *Figure 3*.
 |image3|
 
  **Figure 3. Setting the distance and drawing the parallel line.**
- 
+
 When the parallel line has been drawn, the user can change the distance between the reference
 feature and the parallel line, for doing this, set a new distance on the text box and click on Apply
 button.
@@ -56,7 +56,7 @@ feature) need to click on the switch side button.
 |image5|
 
  **Figure 5. Switching the side.**
- 
+
 When the user finished setting the parallel line and wants to add it to the layer, he can do by
 double-clicking on the map or by clicking on the Accept button situated on the tool bar of the view.
 Also if he wants to discard the change and start over again with other reference feature, he can
@@ -66,10 +66,10 @@ click on the Cancel button situated near the Accept button.
 
  **Figure 6. Add the parallel line to the layer.**
 
-.. |image0| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/7667724/parallel_mode.gif
-.. |image1| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/7667724/MenuFinal2.png
-.. |image2| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/7667724/Select_Precision_parallel_tool3.png
-.. |image3| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/7667724/Select_Precision_parallel_tool4.png
-.. |image4| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/7667724/Select_Precision_parallel_tool5.png
-.. |image5| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/7667724/Select_Precision_parallel_tool7.png
-.. |image6| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/7667724/Select_Precision_parallel_tool8.png
+.. |image0| image:: /images/parallel_tool/parallel_mode.gif
+.. |image1| image:: /images/parallel_tool/MenuFinal2.png
+.. |image2| image:: /images/parallel_tool/Select_Precision_parallel_tool3.png
+.. |image3| image:: /images/parallel_tool/Select_Precision_parallel_tool4.png
+.. |image4| image:: /images/parallel_tool/Select_Precision_parallel_tool5.png
+.. |image5| image:: /images/parallel_tool/Select_Precision_parallel_tool7.png
+.. |image6| image:: /images/parallel_tool/Select_Precision_parallel_tool8.png

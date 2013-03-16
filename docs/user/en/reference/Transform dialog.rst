@@ -6,7 +6,7 @@ manipulated or processed during import, copying or export.
 
 .. figure:: /images/transform_dialog/TransformDialog.png
    :align: center
-   :alt: 
+   :alt:
 
 Transform
 =========
@@ -55,7 +55,7 @@ Definition
    names that contain spaces, punctuation or start with a number.
 
 -  **Expression**: The :doc:`/concepts/Constraint Query Language` used to
-   generate the values on output. Use the drop down arrow on the right to cycle the :doc:`Expression viewer` 
+   generate the values on output. Use the drop down arrow on the right to cycle the :doc:`Expression viewer`
    through several helpful options.
 
 How would you like to handle the result
@@ -78,7 +78,7 @@ Cancel the operation, no result will be generated.
 
 **Related tasks**
 
-:doc:`Using Feature operations`
+:doc:`/tasks/Using Feature operations`
 
 
 **Related reference**

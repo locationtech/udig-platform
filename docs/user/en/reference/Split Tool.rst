@@ -89,15 +89,15 @@ The inside feature is modified and 2 vertexes are added to the outside feature.
 |image8|
  **Figure 8, 2 vertexes were added**
 
-.. |image0| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split_feature_mode.gif
-.. |image1| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split_1.png
-.. |image2| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split_2.png
-.. |image3| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split_3.png
-.. |image4| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split_4.png
-.. |image5| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split_5.png
-.. |image6| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split_6.png
-.. |image7| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split-doing.png
+.. |image0| image:: /images/split_tool/split_feature_mode.gif
+.. |image1| image:: /images/split_tool/split_1.png
+.. |image2| image:: /images/split_tool/split_2.png
+.. |image3| image:: /images/split_tool/split_3.png
+.. |image4| image:: /images/split_tool/split_4.png
+.. |image5| image:: /images/split_tool/split_5.png
+.. |image6| image:: /images/split_tool/split_6.png
+.. |image7| image:: /images/split_tool/split-doing.png
   :width: 60%
 
-.. |image8| image:: ../../../plugins/eu.udig.tools/nl/en/html/download/attachments/2719819/split-after1.png
+.. |image8| image:: /images/split_tool/split-after1.png
   :width: 60%

@@ -6,7 +6,7 @@ Many edit tools have an advanced mode that provides access to additional edit fe
 To try this for yourself:
 
 #. Open up the application preferences using :menuselection:`Window --> Preferences`
-#. Navigate to the :doc:`Edit Tool Preferences` page
+#. Navigate to the :doc:`/reference/Edit Tool Preferences` page
 #. Toggle the :guilabel:`Advanced Tools` checkbox
 #. Press :guilabel:`OK`
 
@@ -15,6 +15,6 @@ To try this for yourself:
 
 **Related reference**
 
-:doc:`Edit Tool Preferences`
+:doc:`/reference/Edit Tool Preferences`
 
 

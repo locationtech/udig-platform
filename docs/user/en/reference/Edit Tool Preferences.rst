@@ -3,20 +3,20 @@ Edit Tool Preferences
 
 .. figure:: /images/edit_tool_preferences/edittoolpreferences.png
    :align: center
-   :alt: 
+   :alt:
 
 Available Preferences
 ~~~~~~~~~~~~~~~~~~~~~
 
 -  Snap Radius - Declares how big the radius of the snap circle will be (in pixels) when performing
    snap operations. Default setting is 30.
-   
-   .. tip:: 
+
+   .. tip::
       Snap Radius can also be set by holding :kbd:`ALT` and moving the scroll wheel when a edit tool is active.
 
 -  Snap Behaviour - Declares how vertex snapping behaves.
 
-   .. tip:: 
+   .. tip::
       Snap behaviour can also be changed by pressing :kbd:`CTRL` + :kbd:`SHIFT` + :kbd:`S` when a edit tool is active.
 
 
@@ -26,8 +26,8 @@ Available Preferences
       * - No Snapping
         - Snapping is turned off. **DEFAULT**
       * - Selected Features
-        - Will snap to vertices that are part of a feature that has been added 
-          to the :doc:`EditBlackboard` (has been selected)
+        - Will snap to vertices that are part of a feature that has been added
+          to the :doc:`/concepts/Edit Blackboard` (has been selected)
       * - Current Layer
         - Searches for the closest vertex in the current layer
       * - All Layers
@@ -46,7 +46,7 @@ Available Preferences
     Default is red.
 
 .. note::
-   The color of the outlines of the selected features are set in the :ref:`preferences-page-project-map` 
+   The color of the outlines of the selected features are set in the :ref:`preferences-page-project-map`
    by the selection color preference.
 
 
@@ -57,7 +57,7 @@ Available Preferences
 
    Edit Tool Performance Preferences
    Snapping
-   
+
 
 Peers
 ~~~~~

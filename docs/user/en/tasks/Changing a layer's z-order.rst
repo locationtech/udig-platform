@@ -34,10 +34,14 @@ the Layers View and on the map editor.
 
 **Related concepts**
 
-:doc:`concepts/Legend`
+:doc:`/concepts/Legend`
+
+**Related tasks**
+
+:doc:`/tasks/Using the Legend View`
+
+:doc:`/tasks/Drag and Drop`
 
 **Related reference**
 
-:doc:`Legend View`
-
-:doc:`Using the Legend View`
+:doc:`/reference/Legend View`

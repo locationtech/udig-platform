@@ -21,14 +21,12 @@ An example with the sample data set is:
 
 :doc:`Configure a AOI layer`
 
-
 **Related concepts**
 
-:doc:`concepts/Area of Interest`
-
+:doc:`/concepts/Area of Interest`
 
 **Related reference**
 
-:doc:`Table view`
+:doc:`/reference/Table view`
 
-:doc:`AOI view`
+:doc:`/reference/AOI view`

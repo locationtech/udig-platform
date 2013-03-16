@@ -23,7 +23,7 @@ visualized in uDig.
 
 **Related reference**
 
-:doc:`Spatial Toolbox View`
+:doc:`/reference/Spatial Toolbox View`
 
 
 This is how it looks like when it is enabled:
@@ -31,7 +31,7 @@ This is how it looks like when it is enabled:
 .. figure:: /images/introduction_to_the_spatial_toolbox/omsbox.png
    :width: 80%
    :align: center
-   :alt: 
+   :alt:
 
 Before you Start
 ~~~~~~~~~~~~~~~~
@@ -39,7 +39,7 @@ Before you Start
 Download the Spearfish example data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In the example we will use a raster elevation model of the Spearfish region. 
+In the example we will use a raster elevation model of the Spearfish region.
 
 #. Download the following file (you can right click and choose **Save as** in most browsers):
 
@@ -55,7 +55,7 @@ In the example we will use a raster elevation model of the Spearfish region.
 
 .. figure:: /images/introduction_to_the_spatial_toolbox/elevation.png
    :width: 80%
-   :alt: 
+   :alt:
 
 The Spatial toolbox View
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,15 +74,15 @@ it up:
    .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_02.png
       :alt:
 
-#. It will probably open up a bit too small, so best thing is to detach it and use it in a separate 
+#. It will probably open up a bit too small, so best thing is to detach it and use it in a separate
    window anyways.
-   
+
 #. To do so right click on the view's bar:
 
    .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_03.png
       :width: 80%
       :alt:
-   
+
 #. And voila'!
 
    .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_04.png
@@ -125,7 +125,7 @@ To load the modules:
 
    .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_05.png
       :alt:
-   
+
 #. Which will open the settings dialog:
 
    .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_06.png
@@ -137,7 +137,7 @@ To load the modules:
 
    .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_07.png
       :alt:
-   
+
 #. Once you push the ok button, uDig will search for modules inside the library
 
    .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_08.png
@@ -166,7 +166,7 @@ already loaded from the sample dataset.
    .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_10.png
       :width: 80%
       :alt:
-   
+
 #. Please select the Aspect module so we can describe the tabs used to control a service.
 #. inputs tab:
 
@@ -181,7 +181,7 @@ already loaded from the sample dataset.
       **outputs tab**
 
 
-   .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_13.png      
+   .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_13.png
       :width: 80%
 
       **documentation tab**
@@ -203,7 +203,7 @@ already loaded from the sample dataset.
       browse button, which will open in the same folder of the last inserted map.
    -  There we simply write **aspect.asc** to create an esri ascii also as output \\ (other formats
       supported are tiffs and grass binary rasters)
-	  
+
       .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_15.png
 	     :width: 80%
 
@@ -212,7 +212,7 @@ already loaded from the sample dataset.
    -  Before we run the module there are a couple of configuration options that are useful to
       control.
    -  The most important is the amount of memory that we permit the module to use:
-      
+
 	  .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_16.png
 
 
@@ -221,10 +221,10 @@ already loaded from the sample dataset.
 #. Execute the module
 
    -  To execute the module please click the **run** button in the view toolbar
-      
+
       .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_17.png
 
-	  
+
    -  The module will execute opening a console window that gives feedback on what is going on.
 
 #. Once the process is done, the resulting map is loaded in the map window:

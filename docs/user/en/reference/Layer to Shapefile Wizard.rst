@@ -6,7 +6,7 @@ identify a subset of data for later processing.
 
 .. figure:: /images/layer_to_shapefile_wizard/ExportLayerToShapefile.png
    :align: center
-   :alt: 
+   :alt:
 
 The results of this wizard are added to the Catalog for your immediate use.
 
@@ -29,6 +29,6 @@ List of selected layers:
 
 **Related concepts**
 
-:doc:`concepts/Shapefile`
+:doc:`/concepts/Shapefile`
 
 

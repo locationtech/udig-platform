@@ -55,7 +55,7 @@ You can quickly add a layer from a web browser (or the embedded **Web view**):
 #. You can specify exactly where in the Layer view you wish to add the Layer
 #. The resource selection page will open up to allow you to choose which layers to add
 #. The layer(s) will be created (with a default style) and added to your map
-#. If you have not set your DB2 preference (:menuselection:`Window --> Preferences...`) then 
+#. If you have not set your DB2 preference (:menuselection:`Window --> Preferences...`) then
    you will have the chance to do so now. See :ref:`preferences-page-catalog-db2` for instructions on how to do this
 #. Select DB2 from the Wizard and press **Next**
 #. Fill in the DB2 page
@@ -64,7 +64,7 @@ You can quickly add a layer from a web browser (or the embedded **Web view**):
    -  Select the database connect and optionally a schema
 
 #. Press **Next**
-#. From the :doc:`Resource Selection page` select the layer(s) that
+#. From the :doc:`/reference/Resource Selection page` select the layer(s) that
    will compose the new map
 #. Press **Finish**
 
@@ -73,6 +73,6 @@ show up.
 
 **Related reference**
 
-:doc:`DB2 page`
+:doc:`/reference/DB2 page`
 
 :ref:`preferences-page-catalog-db2`

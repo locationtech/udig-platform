@@ -6,10 +6,10 @@ Consortium. Style Layer Descriptor documents defines how Features are rendered o
 
 You can use your own Style Layer Descriptor documents in several ways:
 
--  Select the **XML** page of the :doc:`/Style Editor dialog` and directly
+-  Select the **XML** page of the :doc:`/reference/Style Editor dialog` and directly
    modify what is being used directly
 -  Any sld file associated with a shapefile will be picked up and used
--  You can import and export SLD files from the :doc:`/Style Editor dialog`
+-  You can import and export SLD files from the :doc:`/reference/Style Editor dialog`
 -  you can drop an SLD file directly onto a Layer
 
 **Related reference**

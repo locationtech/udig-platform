@@ -5,14 +5,14 @@ The Spatial Toolbox view is used to call processing routines provided by the spa
 
 .. figure:: /images/spatial_toolbox_view/spatial_toolbox.png
    :align: center
-   :alt: 
+   :alt:
 
 The Spatial toolbox is a separate process allowing it to work with a wider range of code then we can
 distribute with the uDig application directly.
 
-**Related tasks**
+**Related tutorial**
 
-:doc:`Introduction to the Spatial Toolbox`
+:doc:`/getting_started/Introduction to the Spatial Toolbox`
 
 **Related reference**
 

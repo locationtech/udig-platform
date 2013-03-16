@@ -1,7 +1,7 @@
 Arc Tool
 ########
 
-.. |arc_tool_icon| image:: images/arc_tool/arc_tool.gif
+.. |arc_tool_icon| image:: /images/arc_tool/arc_tool.gif
 
 |arc_tool_icon| Creates a linestring approximating an arc given three control points (initial point, axis,
 and end point).
@@ -34,7 +34,7 @@ Usage
 As shown in *Figure 1*, to start using the *Arc Tool* you have to first select it from the drop
 down menu in the uDig's editting tools Toolbar.
 
-.. figure:: images/arc_tool/arc_1.png
+.. figure:: /images/arc_tool/arc_1.png
 
    **Figure 1 select** ***Arc Tool***
 
@@ -45,7 +45,7 @@ Feature.
 *Figure 2* shows the feedback shown when only two points have been specified. You'll see the
 resulting arc at any moment until the third point is specified.
 
-.. figure:: images/arc_tool/arc_2.png
+.. figure:: /images/arc_tool/arc_2.png
 
    **Figure 2 specify control points**
 
@@ -53,7 +53,7 @@ resulting arc at any moment until the third point is specified.
 With a single click, specify the third point and the Feature with an arc geometry will be created
 as shown in *Figure 3*. The resulting geometry will be a LineString approximation of the actual arc.
 
-.. figure:: images/arc_tool/arc_3.png
+.. figure:: /images/arc_tool/arc_3.png
 
    **Figure 3 arc created after specifying third point**
 

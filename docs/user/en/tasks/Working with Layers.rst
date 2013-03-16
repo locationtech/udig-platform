@@ -17,7 +17,6 @@ rendered.
    Validation
    Using Resource Summary
 
-
 Please note that you can also work directly with the data used by the layer.
 
 **Related tasks**

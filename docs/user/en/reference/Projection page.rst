@@ -6,7 +6,7 @@ with the incorrect projection.
 
 .. figure:: /images/projection_page/ProjectionPage.PNG
    :align: center
-   :alt: 
+   :alt:
 
 Standard CRS
 ============
@@ -25,12 +25,12 @@ Custom CRS
 You can supply your own custom coordinate reference system using the "Well Known Text" format.
 
 .. note::
-   You can switch to this tab to review a "Standard CRS\* definition using WKT as a quick 
+   You can switch to this tab to review a "Standard CRS\* definition using WKT as a quick
    informal summary; or as a starting point for your own custom definition.
 
 **Related concepts**
 
-:doc:`concepts/Coordinate Reference System`
+:doc:`/concepts/Coordinate Reference System`
 
 **Related reference**
 

@@ -30,42 +30,18 @@ functionality:
    performed on multiple vertices at once if many vertices are selected.
 
 
-**Related reference**
+**Related concepts**
 
-:doc:`EditBlackboard`
+:doc:`/concepts/Edit Blackboard`
 
-:doc:`Snapping`
+**Related tasks**
 
 :doc:`Using Vertex Tools`
 
-
-  * :doc:`Edit Geometry Tool`
-
-  * :doc:`Add Vertex Tool`
-
-  * :doc:`Remove Vertex Tool`
-
-
 :doc:`Using Geometry Creation Tools`
-
-  * :doc:`Polygon Creation Tool`
-
-  * :doc:`Line Creation Tool`
-
-  * :doc:`Point Creation Tool`
-
-  * :doc:`Draw Geometry Tool`
-
-  * :doc:`Rectangle Tool`
-
-  * :doc:`Ellipse Tool`
-
 
 :doc:`Using Feature Edit Tools`
 
-  * :doc:`Fill Tool`
+**Related tasks**
 
-  * :doc:`Split Tool`
-
-  * :doc:`Delete Tool`
-
+:doc:`/reference/Snapping`

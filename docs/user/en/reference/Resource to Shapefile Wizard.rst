@@ -8,7 +8,7 @@ The results of this wizard are added to the Catalog for your immediate use.
 
 .. figure:: /images/resource_to_shapefile_wizard/ExportResourceToShapefile.png
    :align: center
-   :alt: 
+   :alt:
 
 Please note that only feature content can be exported to a shapefile. In the above picture
 clouds.jpg cannot be selected as it is an image file.
@@ -32,4 +32,4 @@ List of selected resources:
 
 **Related concepts**
 
-:doc:`concepts/Shapefile`
+:doc:`/concepts/Shapefile`

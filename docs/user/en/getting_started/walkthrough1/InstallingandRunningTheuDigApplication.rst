@@ -54,4 +54,4 @@ Windows install:
 * If you are working in a corporate environment with a firewall please review the following page
   for details on proxy configuration.
 
-   :doc:`../../Running uDig`
+   :doc:`/tasks/Running uDig`

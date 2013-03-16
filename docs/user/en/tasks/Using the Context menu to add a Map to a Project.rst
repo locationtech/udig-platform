@@ -5,7 +5,7 @@ You can use the context menu in the projects view to add a new map to a project.
 
 1. Right click on the recently created map
 
-  .. image:: images/using_the_context_menu_to_add_a_map_to_a_project/context.gif
+  .. image:: /images/using_the_context_menu_to_add_a_map_to_a_project/context.gif
 
 #. Select :guilabel:`Add...`.
 #. Select "Files" from the list of available wizards.

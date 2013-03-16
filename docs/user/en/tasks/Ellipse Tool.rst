@@ -10,46 +10,24 @@ created with ellipse as its geometry.
 
 .. note::
    Ellipses can be either polygon or lines.
-   
+
 .. note::
    There are no advanced editing features for the Ellipse Tool.
 
 
-**Related reference**
+**Related concepts**
+
+:doc:`/concepts/Edit Blackboard`
+
+**Related tasks**
 
 :doc:`Using Vertex Tools`
 
-
-  * :doc:`Edit Geometry Tool`
-
-  * :doc:`Add Vertex Tool`
-
-  * :doc:`Remove Vertex Tool`
-
-  * :doc:`Hole Cutter`
-
-
 :doc:`Using Geometry Creation Tools`
-
-
-  * :doc:`Polygon Creation Tool`
-
-  * :doc:`Line Creation Tool`
-
-  * :doc:`Point Creation Tool`
-
-  * :doc:`Draw Geometry Tool`
-
-  * :doc:`Rectangle Tool`
-
-  * :doc:`Ellipse Tool`
-
 
 :doc:`Using Feature Edit Tools`
 
+**Related tasks**
 
-  * :doc:`Fill Tool`
+:doc:`/reference/Snapping`
 
-  * :doc:`Split Tool`
-
-  * :doc:`Delete Tool`

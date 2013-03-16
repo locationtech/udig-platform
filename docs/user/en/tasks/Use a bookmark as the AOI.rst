@@ -9,9 +9,9 @@ We can use an existing bookmark to define the current AOI.
 
 **Related concepts**
 
-:doc:`concepts/Area of Interest`
+:doc:`/concepts/Area of Interest`
 
 
 **Related reference**
 
-:doc:`AOI view`
+:doc:`/reference/AOI view`

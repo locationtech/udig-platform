@@ -3,11 +3,10 @@ Reference
 
 Reference for the uDig application describing wizards, views, and shortcuts.
 
-
 .. toctree::
    :maxdepth: 1
 
-   Drag and Drop
+   Advanced Tools
    Filters and Expressions
    Help contents
    Icons and buttons
@@ -15,6 +14,14 @@ Reference for the uDig application describing wizards, views, and shortcuts.
    Perspectives
    Preferences
    Property Pages
+   Style Pages
+   Spatial Operations
    Views and editors
    Wizards and Dialogs
-   Style Pages
+
+Other reference material:
+
+.. toctree::
+   :maxdepth: 1
+
+   Community

@@ -12,7 +12,6 @@ uDig User Guide
    reference/index
    What is new
    Tips and Tricks
-   Community
 
 Online Help
 

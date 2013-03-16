@@ -15,11 +15,12 @@ Showing map graphics layers
 
 **Related concepts**
 
-:doc:`concepts/Legend`
+:doc:`/concepts/Legend`
 
+**Related tasks**
+
+:doc:`/tasks/Using the Legend View`
 
 **Related reference**
 
-:doc:`Legend View`
-
-:doc:`Using the Legend View`
+:doc:`/reference/Legend View`

@@ -13,5 +13,5 @@ Working with maps is one of the central activities of a GIS system such as uDig.
 
 **Related concepts**
 
-:doc:`concepts/Map`
+:doc:`/concepts/Map`
 

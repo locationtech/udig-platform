@@ -41,7 +41,7 @@ Each layer has a filter that indicates what is selected on that layer.
 Edit Selection
 ^^^^^^^^^^^^^^
 
-The :doc:`/EditBlackboard` contains the features that have been selected for
+The :doc:`Edit Blackboard` contains the features that have been selected for
 editing. At any one time a single feature on the edit blackboard is the *edit feature*, the feature
 that has the vertex handles and can directly be edited.
 
@@ -51,9 +51,9 @@ that has the vertex handles and can directly be edited.
 
 :doc:`Layer`
 
-**Related reference**
+:doc:`Edit Blackboard`
 
-:doc:`/reference/EditBlackboard`
+**Related reference**
 
 :doc:`/reference/Map editor`
 

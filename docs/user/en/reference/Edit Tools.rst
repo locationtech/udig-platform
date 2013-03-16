@@ -1,4 +1,4 @@
-Edit Tools 
+Edit Tools
 ==========
 
 Edit tools are available in the palette to directly manipulate spatial information. Each map
@@ -82,8 +82,12 @@ Throw out modifications; reverting to the current contents of the server, databa
 
 **Related tasks**
 
+:doc:`/tasks/Working with Features`
+
+**Related reference**
+
 :doc:`Edit Tool Preferences`
-:doc:`Working with Features`
+
 
 
 .. |image0| image:: /images/edit_tools/edit_mode.gif

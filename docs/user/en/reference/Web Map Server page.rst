@@ -6,7 +6,7 @@ service provides layers that can be used as a backdrop on your map.
 
 .. figure:: /images/web_map_server_page/WebMapServerPage.png
    :align: center
-   :alt: 
+   :alt:
 
 Field
 
@@ -16,12 +16,10 @@ GetCapabilties URL
 
 URL to a Web Map Service capabilieis document
 
+**Related tasks**
+
+:doc:`/tasks/Drag and Drop`
+
 **Related concepts**
 
-:doc:`concepts/Web Map Server`
-
-**Related reference**
-
-:doc:`Drag and Drop`
-
-
+:doc:`/concepts/Web Map Server`

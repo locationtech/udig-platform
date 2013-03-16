@@ -9,15 +9,15 @@ scratch layer.
 
 **Related concepts**
 
-:doc:`concepts/Constraint Query Language`
+:doc:`/concepts/Constraint Query Language`
 
 **Related reference**
 
-:doc:`Transform operation`
+:doc:`/reference/Transform operation`
 
-:doc:`Catalog view`
+:doc:`/reference/Catalog view`
 
-:doc:`Resource to Shapefile Wizard`
+:doc:`/reference/Resource to Shapefile Wizard`
 
 
 Converting Polygons to Points using Centroid
@@ -38,7 +38,7 @@ Converting Polygons to Points using Centroid
 #. Press **OK**. A new scratch entry containing the result of the operation has been added to the
    scratch service in the **Catalog view**.
 #. Right click on the above scratch entry in the catalog view and select **Export** to open the
-   :doc:`Export Wizard`
+   :doc:`/reference/Export Wizard`
 
 #. Choose **Resource to Shapefile** and press :guilabel:`Next>`
 #. Provide a destination directory for your new shapefile
@@ -68,7 +68,7 @@ Converting Lines or Points into Polygons using Buffer
 #. Press **OK**. A new scratch entry containing the result of the operation has been added to the
    scratch service in the **Catalog view**.
 #. Right click on the above scratch entry in the catalog view and select **Export** to open the
-   :doc:`Export Wizard`
+   :doc:`/reference/Export Wizard`
 
 #. Choose **Resource to Shapefile** and press :guilabel:`Next>`
 #. Provide a destination directory for your new shapefile

@@ -14,11 +14,10 @@ Getting started:
 * :doc:`Adding a layer`
 
   Add information directly to your map
-  
+
 * :doc:`Importing data`
 
   Add information to your catalog for later use
-
 
 Contents:
 
@@ -41,8 +40,7 @@ Contents:
 
 :doc:`Working with Features`
 
-
 **Related reference**
 
-:doc:`Catalog view`
+:doc:`/reference/Catalog view`
 

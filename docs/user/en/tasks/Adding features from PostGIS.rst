@@ -18,6 +18,6 @@ added to the Catalog view
 
 **Related reference**
 
-:doc:`PostGIS page`
+:doc:`/reference/PostGIS page`
 
 

@@ -4,19 +4,19 @@ Setting a hotlink
 To list hotlinks related to a feature:
 --------------------------------------
 
-#. Open the :doc:`Document view`
+#. Open the :doc:`/reference/Document view`
 #. Select a feature using the :guilabel:`Feature Selection` tool
 #. The select feature is presented as a folder, containing any associated documents including hotlinks.
 
 To set a file hotlink:
 ----------------------
 
-#. Load documents related to feature 
+#. Load documents related to feature
 #. Select the hotlink from the list
 #. Click :guilabel:`Edit...` to open the **Edit File Hotlink** dialog
 #. Provide the file to be linked by doing one of the following:
 
-- Manually set **Value** with the file's path 
+- Manually set **Value** with the file's path
 - Select an existing file
    - Click :guilabel:`Browse...` to open the file selection dialog
    - Select a file from the dialog
@@ -27,7 +27,7 @@ To set a file hotlink:
    - Click :guilabel:`OK` to open the save file dialog
    - Select directory and enter filename
    - Click :guilabel:`Save` to set **Value** with the new file's path
-   
+
 5. (Optional) Click :guilabel:`Open` to verify that set file is valid and existing
 #. Click :guilabel:`OK` to set the hotlink value
 #. Click :guilabel:`Commit` to write this change out as the hotlink is stored in the assigned attribute
@@ -35,7 +35,7 @@ To set a file hotlink:
 To set a web hotlink:
 ---------------------
 
-#. Load documents related to feature 
+#. Load documents related to feature
 #. Select the hotlink from the list
 #. Click :guilabel:`Edit...` to open the **Edit File Hotlink** dialog
 #. Set **Value**  with the website URL to be linked
@@ -46,12 +46,12 @@ To set a web hotlink:
 To set an action hotlink:
 -------------------------
 
-#. Load documents related to feature 
+#. Load documents related to feature
 #. Select the hotlink from the list
 #. Click :guilabel:`Edit...` to open the **Edit File Hotlink** dialog
 #. Set **Value**  with the appropriate attribute value
 #. (Optional) Select :guilabel:`Action` and click :guilabel:`Go` to verify the value with set actions
-#. Click :guilabel:`OK` to set the hotlink value 
+#. Click :guilabel:`OK` to set the hotlink value
 #. Click :guilabel:`Commit` to write this change out as the hotlink is stored in the assigned attribute
 
 **Sample dataset:**
@@ -64,6 +64,6 @@ To set an action hotlink:
 
 **Related reference**
 
-:doc:`Document view`
+:doc:`/reference/Document view`
 
-:doc:`Resource Document page`
+:doc:`/reference/Resource Document page`

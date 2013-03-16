@@ -28,7 +28,7 @@ Terradata
 
 Support for the Terradata database has been provided.
 
-* :doc:`Teradata page`
+* :doc:`/reference/Teradata page`
 
 
 Spatial Toolbox
@@ -39,8 +39,8 @@ through Open Modeling Services 3 components.
 
 For more information:
 
-* :doc:`Introduction to the Spatial Toolbox` covers the installation and use of JGrass compoenents
-* :doc:`Spatial Toolbox View`
+* :doc:`/getting_started/Introduction to the Spatial Toolbox` covers the installation and use of JGrass compoenents
+* :doc:`/reference/Spatial Toolbox View`
 
 
 Generic DataStore
@@ -50,7 +50,7 @@ The GeoTools library provides access to more data formats than we have created c
 In the interests of encourage adopting and testing of new technologies we have created a "generic"
 GeoTools DataStore wizard allowing you to try out ... everything.
 
-* :doc:`DataStore page`
+* :doc:`/reference/DataStore page`
 
 
 Improved Tools for working with Raster Data
@@ -64,7 +64,7 @@ A couple of tools have been added for working with raster data:
 Additional Export wizards
 =========================
 
-The :doc:`Export Wizard` allows you to export new kinds of information from the
+The :doc:`/reference/Export Wizard` allows you to export new kinds of information from the
 uDig catalog for use in other applications.
 
 -  Export coverage to tiff or esri ascii
@@ -75,7 +75,7 @@ These are export wizards available from the :menuselection:`File --> Export` men
 Additional Import wizards
 =========================
 
-The :doc:`Import Wizard` allows you to import new kinds of information into the
+The :doc:`/reference/Import Wizard` allows you to import new kinds of information into the
 uDig catalog for use.
 
 -  Allows the easy creation of an image moasic from a directory of images
@@ -84,7 +84,7 @@ uDig catalog for use.
 
 These are import wizards available from the :menuselection:`File --> Import` menu.
 
-* :doc:`Import Wizard`
+* :doc:`/reference/Import Wizard`
 
 
 New Style Editor Pages
@@ -93,14 +93,14 @@ New Style Editor Pages
 A great series of new style editor pages has been created showcasing the power of the rendering
 engine.
 
-* :doc:`Raster Style Pages`
+* :doc:`/reference/Raster Style Pages`
 
-* :doc:`Feature Style Pages`
+* :doc:`/reference/Feature Style Pages`
 
 
 .. figure:: images/what_is_new_1.2.0/Simple-Points-Screen.jpg
    :align: center
-   :alt: 
+   :alt:
 
 Additional Raster Formats
 =========================
@@ -122,16 +122,16 @@ Tile Server Support
 This release provides support for Web Map Server Caching (WMS-C) allowing access to tile servers
 such as GeoWebCache and TileCache.
 
-* :doc:`NASA WorldWind page`
+* :doc:`/reference/NASA WorldWind page`
 
-* :doc:`Web Map Server Tile Cache page`
+* :doc:`/reference/Web Map Server Tile Cache page`
 
-* :doc:`Web Map Tiles page`
+* :doc:`/reference/Web Map Tiles page`
 
 
 .. figure:: /images/what_is_new_1.2.0/WebMapTiles.png
    :align: center
-   :alt: 
+   :alt:
 
 WFS 1.1.0 Support
 =================

@@ -10,9 +10,9 @@ rearranged within a tabbed notebook.
 #. Once the cursor is to the right of the Layers tab and the cursor is a stack cursor release the
    mouse button.
 
-   .. image:: images/rearranging_tabbed_views/tabs1.jpg
+   .. image:: /images/rearranging_tabbed_views/tabs1.jpg
 
 #. Observe that the Projects tab is now to the right of the Locals tab.
 
-   .. image:: images/rearranging_tabbed_views/tabs2.jpg
+   .. image:: /images/rearranging_tabbed_views/tabs2.jpg
 

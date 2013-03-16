@@ -6,7 +6,7 @@ in the catalog view can be added to your map using drag and drop.
 
 .. figure:: /images/catalog_view/CatalogView.png
    :align: center
-   :alt: 
+   :alt:
 
 The catalog view is populated as import services and you add layers to your maps. The catalog view
 is used to track service use and mange the use of information in the uDig application.
@@ -23,55 +23,55 @@ Description
 
 .. figure:: /images/catalog_view/database_obj.gif
    :align: center
-   :alt: 
+   :alt:
 
 Database
 
 .. figure:: /images/catalog_view/datastore_obj.gif
    :align: center
-   :alt: 
+   :alt:
 
 Datastore
 
 .. figure:: /images/catalog_view/grid_file_obj.gif
    :align: center
-   :alt: 
+   :alt:
 
 Grid Coverage File
 
 .. figure:: /images/catalog_view/grid_obj.gif
    :align: center
-   :alt: 
+   :alt:
 
 Grid Coverage
 
 .. figure:: /images/catalog_view/repository_obj.gif
    :align: center
-   :alt: 
+   :alt:
 
 Repository
 
 .. figure:: /images/catalog_view/server_obj.gif
    :align: center
-   :alt: 
+   :alt:
 
 Server
 
 .. figure:: /images/catalog_view/wfs_obj.gif
    :align: center
-   :alt: 
+   :alt:
 
 Web Feature Service
 
 .. figure:: /images/catalog_view/wms_obj.gif
    :align: center
-   :alt: 
+   :alt:
 
 Web Map Service
 
 .. figure:: /images/catalog_view/wrs_obj.gif
    :align: center
-   :alt: 
+   :alt:
 
 Web Catalog Service
 
@@ -115,11 +115,11 @@ Resource
 
 .. figure:: /images/catalog_view/CatalogViewServiceContext.png
    :align: center
-   :alt: 
+   :alt:
 
 .. figure:: /images/catalog_view/CatalogViewResourceContext.png
    :align: center
-   :alt: 
+   :alt:
 
 Add to Current Map
 ~~~~~~~~~~~~~~~~~~
@@ -172,9 +172,11 @@ Resources can be dragged from the Catalog view into:
 
 If you drag a Service onto the screen you will be prompted to choose which layers to add.
 
-**Related reference**
+**Related tasks**
 
-:doc:`Drag and Drop`
+:doc:`/tasks/Drag and Drop`
+
+**Related reference**
 
 :doc:`Import Wizard`
 

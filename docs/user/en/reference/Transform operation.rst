@@ -25,7 +25,7 @@ you would like the information processed.
 
 .. figure:: /images/transform_operation/TransformDialog.png
    :align: center
-   :alt: 
+   :alt:
 
 Result
 ------
@@ -38,9 +38,9 @@ to your map allowing you to preview the result directly.
 
 **Related tasks**
 
-:doc:`Working with Features`
+:doc:`/tasks/Working with Features`
 
-:doc:`Working with Layers`
+:doc:`/tasks/Working with Layers`
 
 
 **Related reference**

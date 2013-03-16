@@ -22,12 +22,12 @@ The current options available to define a AOI are:
 
 **Related concepts**
 
-:doc:`concepts/Area of Interest`
+:doc:`/concepts/Area of Interest`
 
 
 **Related tasks**
 
-:doc:`Working with AOI`
+:doc:`/tasks/Working with AOI`
 
 
 **Related reference**

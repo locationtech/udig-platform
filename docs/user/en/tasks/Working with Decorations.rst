@@ -9,7 +9,6 @@ You can add different types of Map :doc:`/concepts/Decorator` s to maps.
    Add new Graticule
    Add multiple Graticules with different CRS
 
-
 **Related tasks**
 
 :doc:`Using the Catalog`

@@ -6,7 +6,7 @@ have been tested with the uDig application.
 
 .. figure:: /images/web_view/WebView.png
    :align: center
-   :alt: 
+   :alt:
 
 The web view acts as a is a normal web browser.
 
@@ -16,19 +16,19 @@ Description
 
 .. figure:: /images/web_view/backward_nav.gif
    :align: center
-   :alt: 
+   :alt:
 
 Previous Page
 
 .. figure:: /images/web_view/forward_nav.gif
    :align: center
-   :alt: 
+   :alt:
 
 Next Page
 
 .. figure:: /images/web_view/refresh_co.gif
    :align: center
-   :alt: 
+   :alt:
 
 Refresh
 
@@ -37,11 +37,13 @@ drag and drop operation.
 
 .. figure:: /images/web_view/WebViewClick.png
    :align: center
-   :alt: 
+   :alt:
+
+**Related tasks**
+
+:doc:`/tasks/Drag and Drop`
 
 **Related reference**
-
-:doc:`Drag and Drop`
 
 `Data Wiki <http://udig.refractions.net/confluence/display/DATA/Home>`_
 

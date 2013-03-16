@@ -1,7 +1,7 @@
 Adding a folder
 ###############
 
-There are several ways to add folders to the :doc:`Legend View`.
+There are several ways to add folders to the :doc:`/reference/Legend View`.
 
 Adding a folder using the toolbar button
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -12,17 +12,19 @@ Adding a folder using the toolbar button
 Adding a folder using the context menu
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Right-click in the :doc:`Legend View`
+#. Right-click in the :doc:`/reference/Legend View`
 #. Select **Add folder** from the context menu
 #. Your new folder will be added on top of the list
 
 **Related concepts**
 
-:doc:`concepts/Legend`
+:doc:`/concepts/Legend`
 
+**Related tasks**
+
+:doc:`/tasks/Using the Legend View`
 
 **Related reference**
 
-:doc:`Legend View`
+:doc:`/reference/Legend View`
 
-:doc:`Using the Legend View`

@@ -7,7 +7,7 @@ Start by creating a simple project as follows:
 
 #. From the menubar, select :menuselection:`File --> New --> Project`
 
-  .. image:: images/using_the_file_menu_to_add_a_new_map/newproject.gif
+  .. image:: /images/using_the_file_menu_to_add_a_new_map/newproject.gif
 
 #. In the New Project field, type a filename.
    (You may also use the Browse button)

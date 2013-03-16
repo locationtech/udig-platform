@@ -52,7 +52,7 @@ the split operation between the *Split* and *Using* Layers.
 |image3|
  **Figure 4. Result Layer.**
 
-.. |image0| image:: images/split_operation/split-before.png
-.. |image1| image:: images/split_operation/split-ui.png
-.. |image2| image:: images/split_operation/split-progress.png
-.. |image3| image:: images/split_operation/split-after.png
+.. |image0| image:: /images/split_operation/split-before.png
+.. |image1| image:: /images/split_operation/split-ui.png
+.. |image2| image:: /images/split_operation/split-progress.png
+.. |image3| image:: /images/split_operation/split-after.png

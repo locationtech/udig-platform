@@ -11,7 +11,6 @@ Contents:
 
    Accessing context sensitive help
 
-
 **Related tasks**
 
 :doc:`Working with cheat sheets`

@@ -11,6 +11,6 @@ Zooming to a layer
 
 **Related reference**
 
-:doc:`Layers view`
+:doc:`/reference/Layers view`
 
 .. |image0| image:: /images/zooming_to_a_layer/zoomtolayer.jpg

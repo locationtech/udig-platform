@@ -15,4 +15,4 @@ We can use the extent of the map Coordinate Reference System to define the curre
 
 **Related reference**
 
-:doc:`AOI view`
+:doc:`/reference/AOI view`

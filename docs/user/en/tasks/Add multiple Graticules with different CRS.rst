@@ -25,16 +25,14 @@ Add multiple Graticules with different CRS
 
 You should now see something similar to the example below
 
- .. figure:: images/graticule_decoration/multiple.png
+ .. figure:: /images/graticule_decoration/multiple.png
      :align: center
      :alt:
 
 **Note**: Graticule only support CRS with unit "meter" on all axis. Support for degrees is comming soon.
 
-
-
 **Related tasks**
 
-:doc:`Using the Catalog`
+:doc:`/tasks/Using the Catalog`
 
-:doc:`Working with Layers`
+:doc:`/tasks/Working with Layers`

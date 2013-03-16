@@ -15,7 +15,7 @@ To enable resource documents (currently supported for shapefiles):
 #. Select :menuselection:`Data --> Resource Properties` from the menu bar to open the :guilabel:`Property Dialog`.
 #. Navigate open :guilabel:`Resource` and select the :guilabel:`Document` page.
 #. From the :guilabel:`Document` page:
-   
+
    * Check :guilabel:`Enable support for resource documents`
 
 Configure feature documents
@@ -27,7 +27,7 @@ To enable feature documents (currently supported for shapefiles):
 #. Select :menuselection:`Data --> Resource Properties` from the menu bar to open the :guilabel:`Property Dialog`.
 #. Navigate open :guilabel:`Resource` and select the :guilabel:`Document` page.
 #. From the :guilabel:`Document` page:
-   
+
    * Check :guilabel:`Enable support for feature documents`
 
 Configure feature hotlinks
@@ -39,32 +39,32 @@ To enable feature hotlinks:
 #. Select :menuselection:`Data --> Resource Properties` from the menu bar to open the :guilabel:`Property Dialog`.
 #. Navigate open :guilabel:`Resource` and select the :guilabel:`Document` page.
 #. From the :guilabel:`Document` page:
-   
+
    * Check :guilabel:`Enable support for hotlink on marked attributes`
 
 
 To set an attribute as a file hotlink
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. From the :guilabel:`Document` page 
-#. Click :guilabel:`Add...` to open the **Add Hotlink Descriptor** dialog 
+#. From the :guilabel:`Document` page
+#. Click :guilabel:`Add...` to open the **Add Hotlink Descriptor** dialog
 #. Select *File* as the **Type** and select the **Attribute** containing the reference information
 #. Provide the appropriate **Label**, and optionally **Description**
 #. Click :guilabel:`OK`
-   
+
 To set an attribute as a web hotlink
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. From the :guilabel:`Document` page 
-#. Click :guilabel:`Add...` to open the **Add Hotlink Descriptor** dialog 
+#. From the :guilabel:`Document` page
+#. Click :guilabel:`Add...` to open the **Add Hotlink Descriptor** dialog
 #. Select *Web* as the **Type** and select the **Attribute** containing the reference information
 #. Provide the appropriate **Label**, and optionally **Description**
 #. Click :guilabel:`OK`
-   
+
 To set an attribute as an action hotlink
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. From the :guilabel:`Document` page 
+#. From the :guilabel:`Document` page
 #. Click :guilabel:`Add...` to open the **Add Hotlink Descriptor** dialog
 #. Select *Action* as the **Type** and select the **Attribute** containing the reference information
 #. Provide the appropriate **Label**, and optionally **Description**
@@ -73,16 +73,16 @@ To set an attribute as an action hotlink
 #. Click :guilabel:`OK`
 
 Example Actions:
-   
-* Google search: ``https://www.google.com.au/search?q={0}`` 
+
+* Google search: ``https://www.google.com.au/search?q={0}``
 * Yahoo search: ``http://au.search.yahoo.com/search?p={0}``
 * File reference: ``C:\\Reports\\{0}.pdf``
 * Open in application: ``notepad {0}``
-   
+
 To edit an existing hotlink definition
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   
-#. From the :guilabel:`Document` page 
+
+#. From the :guilabel:`Document` page
 #. Select hotlink from the list
 #. Click :guilabel:`Edit...` to open the **Edit Hotlink Descriptor** dialog
 #. Select **Type**
@@ -91,11 +91,11 @@ To edit an existing hotlink definition
 #. (Optional) Provide the appropriate **Description**
 #. (For Action types) Provide the **Action** definition
 #. Click :guilabel:`OK`
-   
+
 To remove an existing hotlink definition
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   
-#. From the :guilabel:`Document` page 
+
+#. From the :guilabel:`Document` page
 #. Select hotlink from the list
 #. Click :guilabel:`Remove`
 
@@ -105,12 +105,12 @@ To remove an existing hotlink definition
 
 **Related tasks**
 
-:doc:`Working with Documents`
+:doc:`/tasks/Working with Documents`
 
 **Related reference**
 
-:doc:`Document view`
+:doc:`/reference/Document view`
 
-:doc:`Resource page`
+:doc:`/reference/Resource page`
 
-:doc:`Resource Document page`
+:doc:`/reference/Resource Document page`

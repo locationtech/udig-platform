@@ -5,7 +5,7 @@ The summary page shows general information on the layer as well as and available
 
 .. figure:: /images/summary_page/SummaryPage.PNG
    :align: center
-   :alt: 
+   :alt:
 
 General Metadata
 ================
@@ -22,4 +22,4 @@ Feature Metadata
 
 **Related concepts**
 
-:doc:`concepts/Selection`
+:doc:`/concepts/Selection`

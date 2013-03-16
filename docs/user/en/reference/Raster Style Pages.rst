@@ -22,7 +22,7 @@ Allows control of loading the image into memory.
 
 .. figure:: /images/raster_style_pages/Cache.jpg
    :align: center
-   :alt: 
+   :alt:
 
 Raster Color Mask
 =================
@@ -32,11 +32,11 @@ to indicate areas where no information was recorded.
 
 .. figure:: /images/raster_style_pages/RasterColorMask.jpg
    :align: center
-   :alt: 
+   :alt:
 
 **Related tasks**
 
-:doc:`Set raster transparent color`
+:doc:`/tasks/Set raster transparent color`
 
 
 Simple Raster
@@ -46,7 +46,7 @@ Allows simple control over the rendering of a raster image.
 
 .. figure:: /images/raster_style_pages/SimpleRaster.jpg
    :align: center
-   :alt: 
+   :alt:
 
 -  Opacity: allows the transparency of an image to be set; often useful to allow artificial
    boundaries to show through the raster.
@@ -75,7 +75,7 @@ to artificial colours for display. A number of predefined color maps are provide
 
 .. figure:: /images/raster_style_pages/SingleBandRasters.jpg
    :align: center
-   :alt: 
+   :alt:
 
 XML
 ===
@@ -85,7 +85,7 @@ used is the **Stlye Layer Descritor** specificaiton by the Open Geopspatial Cons
 
 .. figure:: /images/raster_style_pages/XML.jpg
    :align: center
-   :alt: 
+   :alt:
 
 Validate
 --------
@@ -94,5 +94,5 @@ Press this button to check that your XML is valid.
 
 **Related concepts**
 
-:doc:`concepts/Style Layer Descriptor`
+:doc:`/concepts/Style Layer Descriptor`
 

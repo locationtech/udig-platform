@@ -5,7 +5,7 @@ The PostGIS page is used to define a connection to a PostGIS database.
 
   .. figure:: /images/postgis_page/PostGISPage.png
      :align: center
-     :alt: 
+     :alt:
 
 
 +-------------------+-----------------------------------------+
@@ -30,7 +30,7 @@ to the :doc:`Resource Selection page` page.
 Advanced Options
 ----------------
 
-You can enabled the advanced options if you wish to experiment with a few 
+You can enabled the advanced options if you wish to experiment with a few
 configuration options effecting performance.
 
 +--------------------+-----------------------------------------+
@@ -45,7 +45,7 @@ configuration options effecting performance.
 
 **Related concepts**
 
-:doc:`concepts/PostGIS`
+:doc:`/concepts/PostGIS`
 
 **Related reference**
 

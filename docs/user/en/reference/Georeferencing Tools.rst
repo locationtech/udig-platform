@@ -4,7 +4,7 @@ Georeferencing Tools
 The category of georeferencing tools is used to help you align a plain image file onto a map.
 
 .. list-table::
-   :widths: 30 30 30 
+   :widths: 30 30 30
    :header-rows: 1
 
    * - `Georeferencing Tools`_
@@ -98,14 +98,14 @@ tool.
 
 **Related concepts**
 
-:doc:`concepts/Georeference`
+:doc:`/concepts/Georeference`
 
 
-.. |image0| image:: images/georeferencing_tools/ref_load_image.png
-.. |image1| image:: images/georeferencing_tools/ref_warp_image.png
-.. |image2| image:: images/georeferencing_tools/ref_delete_image.png
-.. |image3| image:: images/georeferencing_tools/ref_select_image.png
-.. |image4| image:: images/georeferencing_tools/ref_move_image.png
-.. |image5| image:: images/georeferencing_tools/ref_resize_image.png
-.. |image6| image:: images/georeferencing_tools/ref_place_markers.png
-.. |image7| image:: images/georeferencing_tools/ref_move_markers.png
+.. |image0| image:: /images/georeferencing_tools/ref_load_image.png
+.. |image1| image:: /images/georeferencing_tools/ref_warp_image.png
+.. |image2| image:: /images/georeferencing_tools/ref_delete_image.png
+.. |image3| image:: /images/georeferencing_tools/ref_select_image.png
+.. |image4| image:: /images/georeferencing_tools/ref_move_image.png
+.. |image5| image:: /images/georeferencing_tools/ref_resize_image.png
+.. |image6| image:: /images/georeferencing_tools/ref_place_markers.png
+.. |image7| image:: /images/georeferencing_tools/ref_move_markers.png

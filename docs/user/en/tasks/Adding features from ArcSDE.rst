@@ -67,22 +67,22 @@ You can quickly add a layer from a web browser (or the embedded **Web view**):
    server software.
 
    **Connection Parameters**
-      
+
    * Host
 
      Server name (or ip address) where the ArcSDE gateway is running.
 
    * Port
-     
+
 	 Port number in wich the ArcSDE server is listening for connections. The default value is **5151**
 
    * Credentials
-   
+
      - **username** : The name of a valid database user account
      - **password** : The database user's password
 
    * Database
-   
+
      The specific database to connect to. Only applicable to certain databases. Value ignored if not applicable.
 
 #. Press **Next**

@@ -9,7 +9,7 @@ display all the non-geometric data about the feature.
 
 .. figure:: /images/table_view/TableView.png
    :align: center
-   :alt: 
+   :alt:
 
 Table
 -----
@@ -56,17 +56,15 @@ features, or the first feature, matching the query.
 
 **Related tasks**
 
-:doc:`Using the Table View`
+:doc:`/tasks/Using the Table View`
 
-:doc:`Selection using Attributes`
+:doc:`/tasks/Selection using Attributes`
 
-:doc:`Selection using CQL`
-
+:doc:`/tasks/Selection using CQL`
 
 **Related reference**
 
 `Regular Expression <http://en.wikipedia.org/wiki/Regular_expression>`_
-
 
 .. |image0| image:: /images/table_view/SelectionTool.png
 .. |image1| image:: /images/table_view/ZoomSelection.png

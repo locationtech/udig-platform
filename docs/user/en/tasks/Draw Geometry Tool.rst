@@ -12,7 +12,7 @@ starting vertex (the geometry is closed) in which case polygons are created.
 
 .. figure:: /images/draw_geometry_tool/drawGeom.png
    :align: center
-   :alt: 
+   :alt:
 
 The tool can create holes in existing polygons as well. In order to do this:
 
@@ -23,43 +23,19 @@ As with the :doc:`Line Creation Tool`, the Draw Geometry Tool can extend existin
 
 1. Select the geometry you wish to edit (Draw tool will select geometries when in :doc:`Using Advanced Edit Mode`
 #. Draw a line that continues from the end of selected line.
- 
+
    .. note::
       It has to *start* at the end of the selected line. If a line is ended at an end of the
       selected line a new line will be created rather than extending the selected line.
 
-**Related reference**
+**Related concepts**
 
-:doc:`EditBlackboard`
+:doc:`/concepts/Edit Blackboard`
+
+**Related tasks**
 
 :doc:`Using Vertex Tools`
 
-  * :doc:`Edit Geometry Tool`
-
-  * :doc:`Add Vertex Tool`
-
-  * :doc:`Remove Vertex Tool`
-
-  * :doc:`Hole Cutter`
-
-
 :doc:`Using Geometry Creation Tools`
 
-  * :doc:`Polygon Creation Tool`
-
-  * :doc:`Line Creation Tool`
-
-  * :doc:`Point Creation Tool`
-
-  * :doc:`Rectangle Tool`
-
-  * :doc:`Ellipse Tool`
-
-
 :doc:`Using Feature Edit Tools`
-
-  * :doc:`Fill Tool`
-
-  * :doc:`Split Tool`
-
-  * :doc:`Delete Tool`

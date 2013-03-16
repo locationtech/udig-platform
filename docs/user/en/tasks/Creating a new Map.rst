@@ -19,11 +19,11 @@ New layer (when no map is open):
 Toolbar
 =======
 
-.. |new_map_icon| image:: ../../../plugins/net.refractions.udig.project.ui/icons/etool16/newmap_wiz.gif
+.. |new_map_icon| image:: ../../../../plugins/net.refractions.udig.project.ui/icons/etool16/newmap_wiz.gif
 
 New map:
 
-1. Press the arrow beside the new button in the Main toolbar and select New Map |new_map_icon| 
+1. Press the arrow beside the new button in the Main toolbar and select New Map |new_map_icon|
    A new blank map will be created
 
 New layer (when no map is open):
@@ -36,20 +36,20 @@ Drag and Drop
 
 From the filesystem:
 
-1. **Drag** a file or URL from the file system or a browser onto an empty :doc:`Map editor` or 
-   empty :doc:`Layers view`.
+1. **Drag** a file or URL from the file system or a browser onto an empty :doc:`/reference/Map editor` or
+   empty :doc:`/reference/Layers view`.
 2. A new map containing layers made up from the dragged resource will be created.
 
-From the :doc:`Catalog view` (or other view listing data resources such as :doc:`Search view`).
+From the :doc:`/reference/Catalog view` (or other view listing data resources such as :doc:`/reference/Search view`).
 
-1. **Drag** a service or resource from the :doc:`Catalog view` or the :doc:`Search view` onto an 
-   empty :doc:`Map editor` or empty :doc:`Layers view`.
+1. **Drag** a service or resource from the :doc:`/reference/Catalog view` or the :doc:`/reference/Search view` onto an
+   empty :doc:`/reference/Map editor` or empty :doc:`/reference/Layers view`.
 2. A new map containing layers made up from the dragged items will be created.
 
 Catalog
 =======
 
-1. Right click on a service or resource in the :doc:`Catalog view` or the :doc:`Search view` 
+1. Right click on a service or resource in the :doc:`/reference/Catalog view` or the :doc:`/reference/Search view`
    and select :guilabel:`Add to New Map`
 2. A new map containing layers made up from the dragged resource will be created.
 
@@ -61,13 +61,22 @@ Catalog
 
 :doc:`Using the File menu to add a new Map`
 
-
 **Related concepts**
 
-:doc:`concepts/Map`
+:doc:`/concepts/Map`
 
-:doc:`concepts/Projection`
+:doc:`/concepts/Projection`
 
-:doc:`concepts/Layer`
+:doc:`/concepts/Layer`
 
-:doc:`concepts/Decorator`
+:doc:`/concepts/Decorator`
+
+**Related reference**
+
+:doc:`/reference/Map editor`
+
+:doc:`/reference/Layers view`
+
+:doc:`/reference/Search view`
+
+:doc:`/reference/Catalog view`

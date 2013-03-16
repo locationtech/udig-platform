@@ -2,7 +2,7 @@ Working with Features
 #####################
 
 You can directly work with individual features using the **Feature Edit** tools. You can also update
-the attribute values in the :doc:`Table view` or if available for your dataset a
+the attribute values in the :doc:`/reference/Table view` or if available for your dataset a
 Form.
 
 .. toctree::
@@ -23,7 +23,7 @@ below.
 
 **Related concepts**
 
-:doc:`concepts/Selection`
+:doc:`/concepts/Selection`
 
 **Related tasks**
 
@@ -37,9 +37,9 @@ below.
 **Related reference**
 
 
-:doc:`Edit Tools`
+:doc:`/reference/Edit Tools`
 
-:doc:`Selection Tools`
+:doc:`/reference/Selection Tools`
 
-:doc:`Table view`
+:doc:`/reference/Table view`
 

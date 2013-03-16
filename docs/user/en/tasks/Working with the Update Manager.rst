@@ -8,7 +8,6 @@ image0|
 
 **Related tasks**
 
-
 :doc:`Keeping up to date`
 
 :doc:`Finding new plugins`
@@ -17,9 +16,8 @@ image0|
 **Related reference**
 
 
-:doc:`Community`
+:doc:`/reference/Community`
 
 `Community Wiki <http://udig.refractions.net/confluence/display/COM/Home>`_
-
 
 .. |image0| image:: /images/working_with_the_update_manager/updatemanager.jpg

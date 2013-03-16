@@ -16,6 +16,7 @@ Contents:
    Exiting the workbench
    Rearranging the main toolbar
    Rearranging views and editors
+   Creating fast views
    Using the Catalog view
    Using the help system
    Using the Layers view
@@ -24,11 +25,10 @@ Contents:
    Using the Table View
    Working with cheat sheets
    Working with fast views
-   Creating fast views
-   
+
 **Related concepts**
 
-:doc:`concepts/Workbench`
+:doc:`/concepts/Workbench`
 
 **Related tasks**
 

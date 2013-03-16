@@ -4,7 +4,7 @@ Attaching a document
 To attach a document to a layer or feature:
 -------------------------------------------
 
-#. Load documents related to layer or feature 
+#. Load documents related to layer or feature
 #. Select the layer or feature's folder or a document inside the folder
 #. Click :guilabel:`Attach...` to open the **Add Attachment** dialog
 #. Provide the file to be attached by doing one of the following:
@@ -20,7 +20,7 @@ To attach a document to a layer or feature:
    - Click :guilabel:`OK` to open the save file dialog
    - Select directory and enter filename
    - Click :guilabel:`Save` to set **File** with the new file's path
-   
+
 7. (Optional) Check :guilabel:`Set as template` to set attachment as a template
 #. Set the **Label** with appropriate label
 #. (Optional) Set the **Description** with appropriate description
@@ -37,6 +37,6 @@ To attach a document to a layer or feature:
 
 **Related reference**
 
-:doc:`Document view`
+:doc:`/reference/Document view`
 
-:doc:`Resource Document page`
+:doc:`/reference/Resource Document page`

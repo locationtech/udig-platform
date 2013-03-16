@@ -15,27 +15,6 @@ The following tools feature vertex editing:
    Hole Cutter
    Remove Vertex Tool
 
-
-
-:doc:`Polygon Creation Tool`
-
-:doc:`Line Creation Tool`
-
-:doc:`Point Creation Tool`
-
-:doc:`Draw Geometry Tool`
-
-:doc:`Rectangle Tool`
-
-:doc:`Ellipse Tool`
-
-:doc:`Fill Tool`
-
-:doc:`Split Tool`
-
-:doc:`Delete Tool`
-
-
 Notes on working with vertex tools:
 
 -  Vertexes are represented by a small square, which can be selected with a single click. Depending

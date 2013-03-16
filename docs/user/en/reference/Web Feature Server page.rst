@@ -6,7 +6,7 @@ Web Feature Servers provide direct access to raw feature data (rather than simpl
 
 .. figure:: /images/web_feature_server_page/WebFeatureServerPage.png
    :align: center
-   :alt: 
+   :alt:
 
 Field
 
@@ -45,15 +45,18 @@ Timeout
 
 You may wish to adjust this delay based of service reliability
 
+**Related tasks**
+
+:doc:`/tasks/Drag and Drop`
+
 **Related concepts**
 
-:doc:`concepts/Web Feature Server`
+:doc:`/concepts/Web Feature Server`
 
 **Related reference**
 
 :doc:`Add Data wizard`
 
-:doc:`Drag and Drop`
 
 :doc:`Web view`
 

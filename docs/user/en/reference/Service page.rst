@@ -5,7 +5,7 @@ The Service properties page shows general information about the selected service
 
 .. figure:: /images/service_page/ServicePage.png
    :align: center
-   :alt: 
+   :alt:
 
 Service Details
 ===============
@@ -15,4 +15,4 @@ Service Details
 
 **Related concepts**
 
-:doc:`concepts/Selection`
+:doc:`/concepts/Selection`

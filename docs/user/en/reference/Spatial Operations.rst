@@ -5,26 +5,26 @@ Introduction
 ============
 
 This is the root page of the user documentation for the **uDig** *Spatial Operations* extensions.
-`Axios <http://www.axios.es>`_ is providing under the 
+`Axios <http://www.axios.es>`_ is providing under the
 `Spatial Operations and Editing Tools <http://udig.refractions.net/confluence/display/COM/Spatial+Operations+and+Editing+Tools>`_ project promoted by the **Diputación Foral de Gipuzkoa**, `Departamento de Movilidad y Ordenación del Territorio <http://b5m.gipuzkoa.net/web5000/>`_.
 
 These extensions comprise a set of Spatial Operations, where each of them work over the features of
 one or more input layers and generally populate a new one with the features resulting of applying
 the specific Spatial Operation.
 
-.. list-table:: 
-    :header-rows: 0 
-    :class: center 
+.. list-table::
+    :header-rows: 0
+    :class: center
 
     * - To enable the *Spatial Operations* view,
         go to :menuselection:`Window --> Show View --> Other`
-        as shown in *Figure 1*. 
+        as shown in *Figure 1*.
       - The *Show View* dialog will pop up, then
         select the *Spatial Operations* item from the tree view
         as shown in *Figure 2* and press *OK*
 
-    * -  .. image:: images/spatial_operations/sp_1.png
-      -  .. image:: images/spatial_operations/sp_2.png
+    * -  .. image:: /images/spatial_operations/sp_1.png
+      -  .. image:: /images/spatial_operations/sp_2.png
 
     * - **Figure 1 Open others views**
       - **Figure 2 Open the Spatial Operations View**

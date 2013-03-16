@@ -1,5 +1,5 @@
-What is new
-###########
+What is new 1.3
+###############
 
 The following features are new for the uDig 1.3 series.
 
@@ -11,12 +11,12 @@ The following features are new for the uDig 1.3 series.
 New Property Pages
 ==================
 
-* :doc:`Resource Information page`: Use an :doc:`Expression viewer` to configure how each feature should be labeled.
-  This allows the :doc:`Information view` and :doc:`Document view` to list features by name (rather
+* :doc:`/reference/Resource Information page`: Use an :doc:`/reference/Expression viewer` to configure how each feature should be labeled.
+  This allows the :doc:`/reference/Information view` and :doc:`/reference/Document view` to list features by name (rather
   than ID).
-* :doc:`Resource Information page`: Configure document and hotlink support for a resource
-* :doc:`Resource page`
-* :doc:`Service page`
+* :doc:`/reference/Resource Information page`: Configure document and hotlink support for a resource
+* :doc:`/reference/Resource page`
+* :doc:`/reference/Service page`
 
 .. figure:: /images/resource_page/ResourceInformationPage.png
    :align: center
@@ -31,12 +31,12 @@ Style import has been upgraded to support Style Layer Descriptor 1.1 (and Symbol
 This functionality is available by:
 
 - Dragging an SLD file directly onto your layer
-- Using the :guilabel:`Import` directly form the :doc:`Style Editor dialog`
+- Using the :guilabel:`Import` directly form the :doc:`/reference/Style Editor dialog`
 
 New Edit Tools
 ==============
 
-The Axios tools formally installed as a separate download are now included in the default set of :doc:`Edit Tools`.
+The Axios tools formally installed as a separate download are now included in the default set of :doc:`/reference/Edit Tools`.
 
 Constraint Query Language
 =========================
@@ -47,18 +47,18 @@ dynamic assistance and function lookup while you type.
 To access this functionality:
 
 - Constrain the data made avaialble to a layer using the :guilabel:`Query` page (accessed via layer properties).
-- To quickly limit just the map display use the :guilabel:`Filter` page of the :doc:`Style Editor dialog`.
-- Process your data using CQL Expressions using the :doc:`Transform dialog`
+- To quickly limit just the map display use the :guilabel:`Filter` page of the :doc:`/reference/Style Editor dialog`.
+- Process your data using CQL Expressions using the :doc:`/reference/Transform dialog`
 
 Transform Dialog
 ================
 
-The :doc:`Transform dialog` offers a great user interface to process and transform your data.
+The :doc:`/reference/Transform dialog` offers a great user interface to process and transform your data.
 
 Here are some task pages to get you started:
 
-* :doc:`Adding a column to a shapefile`
-* :doc:`Processing the Geometry in a Shapefile`
+* :doc:`/tasks/Adding a column to a shapefile`
+* :doc:`/tasks/Processing the Geometry in a Shapefile`
 
 Area of Interest
 ================
@@ -70,17 +70,17 @@ We now support the concept of :doc:`/concepts/Area of Interest`:
    current projection
 -  You can use Area of Interest to:
 
-   -  Quickly filter a layer using the :guilabel:`Filter` page of the :doc:`Style Editor dialog`.
-   -  Quickly filter the contents of the :doc:`Table view`
-   -  Define the area searched in the :doc:`Search view`
+   -  Quickly filter a layer using the :guilabel:`Filter` page of the :doc:`/reference/Style Editor dialog`.
+   -  Quickly filter the contents of the :doc:`/reference/Table view`
+   -  Define the area searched in the :doc:`/reference/Search view`
    -  Set the extent used by :guilabel:`Show All`
 
-For more information check out the Tasks section on :doc:`Working with AOI`
+For more information check out the Tasks section on :doc:`/tasks/Working with AOI`
 
 Tool Interaction
 ================
 
-You can now control how a layer interacts with tools using the :doc:`Interaction Properties page`.
+You can now control how a layer interacts with tools using the :doc:`/reference/Interaction Properties page`.
 
 This facility is to quickly mark background layers so they do not get in the way of
 what you are working on.

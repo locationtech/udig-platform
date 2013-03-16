@@ -28,14 +28,14 @@ Allows control of loading the image into memory.
 
 .. figure:: /images/feature_style_pages/Cache-Screen.jpg
    :align: center
-   :alt: 
+   :alt:
 
 Filter
 ======
 
 .. figure:: /images/feature_style_pages/Filter-Screen.jpg
    :align: center
-   :alt: 
+   :alt:
 
 Simple Feature
 ==============
@@ -46,7 +46,7 @@ layer type you have selected.
 
 .. figure:: /images/feature_style_pages/Simple-Feature-Screen.jpg
    :align: center
-   :alt: 
+   :alt:
 
 Simple Lines
 ============
@@ -56,7 +56,7 @@ selected this will be the default Page displayed where you can update the style 
 
 .. figure:: /images/feature_style_pages/Simple-Line-Screen.jpg
    :align: center
-   :alt: 
+   :alt:
 
 Preview, Groups and Rules
 -------------------------
@@ -83,7 +83,7 @@ Layer.
 
 .. figure:: /images/feature_style_pages/Simple-Points-Screen.jpg
    :align: center
-   :alt: 
+   :alt:
 
 Preview, Groups and Rules
 -------------------------
@@ -110,7 +110,7 @@ Polygon Layer.
 
 .. figure:: /images/feature_style_pages/Simple-Polygons-Screen.jpg
    :align: center
-   :alt: 
+   :alt:
 
 Preview, Groups and Rules
 -------------------------
@@ -135,7 +135,7 @@ Allows you to choose from a selection of predefined theme's.
 
 .. figure:: /images/feature_style_pages/Theme-Screen.jpg
    :align: center
-   :alt: 
+   :alt:
 
 Category Definition
 -------------------
@@ -194,7 +194,7 @@ used is the **Style Layer Descriptor** specification by the Open Geospatial Cons
 
 .. figure:: /images/feature_style_pages/XML-Screen.jpg
    :align: center
-   :alt: 
+   :alt:
 
 Validate
 --------
@@ -203,4 +203,4 @@ Press this button to check that your XML is valid.
 
 **Related concepts**
 
-:doc:`concepts/Style Layer Descriptor`
+:doc:`/concepts/Style Layer Descriptor`

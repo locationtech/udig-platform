@@ -3,8 +3,8 @@ Files page
 
 The files page pops up a file dialog inviting you to open one or more files.
 
-.. figure:: images/files_page/OpenDialog.png
-   :alt: 
+.. figure:: /images/files_page/OpenDialog.png
+   :alt:
 
 When using windows you can:
 
@@ -40,8 +40,8 @@ Known Problems
 
 If you press **Cancel** from your File Open dialog you will be returned to the Files page:
 
-.. figure:: images/files_page/FilesPage.png
-   :alt: 
+.. figure:: /images/files_page/FilesPage.png
+   :alt:
 
 
 The only thing to do directly from this page is to press **Cancel**, you can launch the Add Data
@@ -49,4 +49,4 @@ wizard to try again.
 
 **Related concepts**
 
-:doc:`concepts/Shapefile`
+:doc:`/concepts/Shapefile`

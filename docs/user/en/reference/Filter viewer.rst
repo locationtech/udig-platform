@@ -8,9 +8,9 @@ on a feature by feature basis.
 This is a powerful technique that can be used for on the fly styling, or directly for data
 processing.
 
-.. figure:: images/filter_viewer/CQLFilterViewer.png
+.. figure:: /images/filter_viewer/CQLFilterViewer.png
    :align: center
-   :alt: 
+   :alt:
 
 You can switch between appropriate options using the drop down arrow on the right hand side.
 Depending on what content you are working with different options will be listed some of which are
@@ -63,7 +63,7 @@ Common examples:
 
 **Related concepts**
 
-:doc:`concepts/Constraint Query Language`
+:doc:`/concepts/Constraint Query Language`
 
 
 **Related reference**
@@ -78,9 +78,9 @@ Constraint Query Language
 
 This is a plain viewer offering simple constraint query language input.
 
-.. figure:: images/filter_viewer/CQLFilterViewer.png
+.. figure:: /images/filter_viewer/CQLFilterViewer.png
    :align: center
-   :alt: 
+   :alt:
 
 It does offer dynamic help with auto completion for:
 
@@ -93,18 +93,18 @@ Builder
 A friendly general purpose viewer offering constraint query language input. Provides a list of
 attributes, operations and values that can be inserted into your filter.
 
-.. figure:: images/filter_viewer/BuilderFilterViewer.png
+.. figure:: /images/filter_viewer/BuilderFilterViewer.png
    :align: center
-   :alt: 
+   :alt:
 
 Include
 =======
 
 Offers an easy way to enable or disable a rule. This is not a general purpose viewer.
 
-.. figure:: images/filter_viewer/EnableFilterViewer.png
+.. figure:: /images/filter_viewer/EnableFilterViewer.png
    :align: center
-   :alt: 
+   :alt:
 
 -  Enable: To include all features.
 

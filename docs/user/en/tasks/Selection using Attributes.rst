@@ -30,13 +30,15 @@ Examples
 
 .. note::
    The search is NOT case sensitive.
- 
+
    In most cases **\\A** can be replaced with **^** (start of line) and **\\Z** can be replaced with **$** (end of line)
+
+**Related tasks**
+
+:doc:`Selection using CQL`
 
 **Related reference**
 
-:doc:`Table view`
-
-:doc:`Selection using CQL`
+:doc:`/reference/Table view`
 
 `Regular Expression <http://en.wikipedia.org/wiki/Regular_expression>`_

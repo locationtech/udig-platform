@@ -5,7 +5,7 @@ This wizard allows you to import additional information into the uDig applicatio
 
 .. figure:: /images/import_wizard/ImportWizard.png
    :align: center
-   :alt: 
+   :alt:
 
 You can choose between the following options:
 
@@ -20,7 +20,7 @@ You can choose between the following options:
 
 **Related tasks**
 
-:doc:`Importing data`
+:doc:`/tasks/Importing data`
 
 
 **Related reference**
