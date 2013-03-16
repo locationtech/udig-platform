@@ -20,7 +20,7 @@ The following features are new for the uDig 1.2 series:
 
 **Related reference**
 
-:doc:`What is new 1.1.0`
+:doc:`What is new 1.1`
 
 
 Terradata

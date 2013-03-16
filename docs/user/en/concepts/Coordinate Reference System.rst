@@ -19,7 +19,7 @@ coordinate reference systems.
 
 **Related concepts**
 
-* :doc:`Projection`
+* :doc:`/concepts/Projection`
 
 **Related reference**
 

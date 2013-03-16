@@ -14,7 +14,7 @@ You can use your own Style Layer Descriptor documents in several ways:
 
 **Related reference**
 
-:doc:`/Style Editor dialog`
+:doc:`/reference/Style Editor dialog`
 
 `Styled Layer Descriptor <http://www.opengeospatial.org/standards/sld>`_ (OGC Specification)
 

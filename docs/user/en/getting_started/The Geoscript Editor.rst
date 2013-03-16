@@ -1,8 +1,8 @@
 The Geoscript editor
 -----------------------------------
 
-Scritping is one of the powerful things in GIS. Non developers have the possibility
-to create great automatisations through it.
+Scripting is one of the powerful things in GIS. Non developers have the possibility
+to automate common tasks.
 
 The `geoscript <http://geoscript.org/>`_ scripting engine can be used
 from within uDig to do geo-scripting.

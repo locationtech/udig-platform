@@ -23,5 +23,5 @@ Contents:
 
 **Related reference**
 
-:doc:`/Style Editor dialog`
+:doc:`/reference/Style Editor dialog`
 

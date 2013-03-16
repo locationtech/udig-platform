@@ -53,13 +53,13 @@ that has the vertex handles and can directly be edited.
 
 **Related reference**
 
-:doc:`/EditBlackboard`
+:doc:`/reference/EditBlackboard`
 
-:doc:`/Map editor`
+:doc:`/reference/Map editor`
 
 **Related tasks**
 
-:doc:`/Working with Features`
+:doc:`/tasks/Working with Features`
 
 
 Boundary Selection

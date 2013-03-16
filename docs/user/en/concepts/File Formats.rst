@@ -50,7 +50,7 @@ Here are two quick examples:
 
 **Related reference**
 
-:doc:`/Files page`
+:doc:`/reference/Files page`
 
-:doc:`/Catalog view`
+:doc:`/reference/Catalog view`
 

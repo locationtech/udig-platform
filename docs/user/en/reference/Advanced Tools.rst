@@ -1,13 +1,11 @@
-Editing Tools
-#############
+Advanced Tools
+##############
 
 Editing Tools Overview
 ======================
 
-This is the root page of the user documentation for the **uDig** *Editing Tools* extensions.
-`Axios <http://www.axios.es>`_ is providing under the 
-`Spatial Operations and Editing Tools <http://udig.refractions.net/confluence/display/COM/Spatial+Operations+and+Editing+Tools>`_
-project promoted by the **Diputación Foral de Gipuzkoa**, `Departamento de Movilidad y Ordenación del Territorio <http://b5m.gipuzkoa.net/web5000/>`_.
+These tools were origionally contributed as part of an *Editing Tools* extensions provided by the Company Axios promoted
+by the **Diputación Foral de Gipuzkoa**, `Departamento de Movilidad y Ordenación del Territorio <http://b5m.gipuzkoa.net/web5000/>`_.
 
 These extensions comprise some additional tools for the geometry based edition of features.
 
@@ -20,7 +18,6 @@ Check the links bellow for specific user documentation for each of the available
    Parallel Tool
    Split Tool (Axios Tools)
    Trim Line Tool
-
 
 -  :doc:`Arc Tool` — |image0| Creates a linestring approximating an arc given three
    control points (initial point, axis, and end point).

@@ -19,12 +19,12 @@ Here is an example of a map editor in the Workbench:
 
 **Related concepts**
 
-:doc:`Workbench`
+:doc:`/concepts/Workbench`
 
 **Related Reference**
 
-:doc:`/Projects view`
+:doc:`/reference/Projects view`
 
-:doc:`/Catalog view`
+:doc:`/reference/Catalog view`
 
 :doc:`/Map editor`

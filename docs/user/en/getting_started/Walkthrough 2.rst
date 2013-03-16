@@ -7,8 +7,8 @@ and advanced editing tools.
 .. toctree::
    :maxdepth: 1
 
-   getting_started/geoserver/index
-   getting_started/walkthrough2/index
+   geoserver/index
+   walkthrough2/index
 
 Files needed to install GeoServer:
 

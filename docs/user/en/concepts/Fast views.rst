@@ -6,5 +6,5 @@ views, except that when they are hidden they do not take up screen space on the 
 
 **Related tasks**
 
-:doc:`/Creating fast views`
+:doc:`/tasks/Creating fast views`
 

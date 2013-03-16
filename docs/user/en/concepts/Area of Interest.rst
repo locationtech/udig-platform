@@ -8,10 +8,10 @@ entire world; you can define a specific boundary as your area of interest).
 
 **Related tasks**
 
-:doc:`/Working with AOI`
+:doc:`/tasks/Working with AOI`
 
 **Related reference**
 
-:doc:`/Selection Tools`
+:doc:`/reference/Selection Tools`
 
-:doc:`/AOI view`
+:doc:`/reference/AOI view`

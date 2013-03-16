@@ -4,12 +4,6 @@ Using the WPS plugin
 Once you have uDig up and running with the **WPS plugin**, it is fairly straight forward to use. The
 first step is to load a **WPS** server into the catalog.
 
-* `Loading a WPS server into the Catalog`_
-
-* `Executing a Process`_
-
-* `Other Useful Functionality`_
-
 
 Loading a WPS server into the Catalog
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

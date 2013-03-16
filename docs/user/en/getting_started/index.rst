@@ -11,8 +11,7 @@ user interface.
    Walkthrough 1
    Walkthrough 2
    Introduction to the Spatial Toolbox
-   getting_started/The Geoscript Editor
-
+   The Geoscript Editor
 
 Tips for using Online Help
 
@@ -24,4 +23,4 @@ Tips for using Online Help
 
 **Related tasks**
 
-:doc:`Running uDig <Running uDig>` (help for running on windows, linux and macosx)
+:doc:`/tasks/Running uDig <Running uDig>` (help for running on windows, linux and macosx)

@@ -55,6 +55,11 @@ public class TocTest {
         assertTrue( "topicPattern match", matcher.matches() );
         assertEquals("topicPattern Page extract", "EN/index", matcher.group(1) );
         
+        line = "<toc label=\"Users Guide\" topic=\"EN/concept/index.html\">";
+        matcher = topicPattern.matcher(line);
+        assertTrue( "topicPattern match", matcher.matches() );
+        assertEquals("topicPattern Page extract", "EN/concept/index", matcher.group(1) );
+        
         // scan contents of toc.xml file
         //
         Map<String,String> pages = new HashMap<String,String>();

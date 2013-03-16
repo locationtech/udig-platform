@@ -29,5 +29,5 @@ to rearrange views and editors.
 
 **Related reference**
 
-:doc:`/Map editor`
+:doc:`/reference/Map editor`
 

@@ -123,7 +123,7 @@ To load the modules:
 #. Download the above two files and place them in the jgrass folder
 #. Then push the last icon of the toolbar:
 
-   .. figure:: images/introduction_to_the_spatial_toolbox/spatial_toolbox_05.png
+   .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_05.png
       :alt:
    
 #. Which will open the settings dialog:

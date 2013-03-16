@@ -41,7 +41,7 @@ For Layers that produce complex symbology further detail to explain the symbols 
 
 **Related reference**
 
-:doc:`/Legend View`
+:doc:`/reference/Legend View`
 
 `Cartography - Legend (Wikipedia) <http://en.wikipedia.org/wiki/Cartography#Map_types>`_
 

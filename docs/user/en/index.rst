@@ -6,10 +6,10 @@ uDig User Guide
    :maxdepth: 1
 
    uDig Overview
-   Getting Started
-   concepts/Concepts
-   Tasks
-   Reference
+   getting_started/index
+   concepts/index
+   tasks/index
+   reference/index
    What is new
    Tips and Tricks
    Community

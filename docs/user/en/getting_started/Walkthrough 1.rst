@@ -7,7 +7,7 @@ Server, PostGIS and Web Feature Server.
 .. toctree::
    :maxdepth: 1
 
-   getting_started/walkthrough1/index
+   walkthrough1/index
 
 This walk through makes use of the following downloads:
 

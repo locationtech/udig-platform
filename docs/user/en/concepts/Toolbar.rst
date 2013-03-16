@@ -29,7 +29,7 @@ all toolbar buttons.
 
 **Related tasks**
 
-:doc:`/Creating fast views`
+:doc:`/tasks/Creating fast views`
 
 
 
