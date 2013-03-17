@@ -28,7 +28,7 @@
             class="eu.udig.style.advanced.editorpages.CoverageStyleEditorPage"
             contentType="net.refractions.udig.project.ILayer"
             id="eu.udig.style.advanced.editorpages.CoverageStyleEditorPage"
-            label="Single Band Rasters"
+            label="Legacy Raster"
             requires="org.opengis.coverage.grid.GridCoverage">
       </StyleEditorPage>
       <StyleEditorPage
