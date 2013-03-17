@@ -62,7 +62,7 @@ public final class LocationStyleConfigurator extends IStyleConfigurator implemen
      * @see net.refractions.udig.style.StyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
      */
     public void createControl( Composite parent ) {
-        parent.setLayout( new GridLayout( 2, true ));
+        parent.setLayout( new GridLayout( 2, false ));
         
         GridData gridData;
         
@@ -73,7 +73,8 @@ public final class LocationStyleConfigurator extends IStyleConfigurator implemen
         xCombo.setItems(new String[]{LEFT, CENTER, RIGHT});
         xCombo.select(0);
         xCombo.addSelectionListener(this);
-
+        xCombo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
+        
         Label yLabel = new Label(parent, SWT.RIGHT);
         yLabel.setText(Messages.ScalebarStyleConfigurator_verticalAlignment); 
 
@@ -81,6 +82,7 @@ public final class LocationStyleConfigurator extends IStyleConfigurator implemen
         yCombo.setItems(new String[]{TOP, MIDDLE, BOTTOM});
         yCombo.select(0);
         yCombo.addSelectionListener(this);
+        yCombo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
         
         gridData = new GridData();
         Label widthLabel = new Label(parent, SWT.NONE);

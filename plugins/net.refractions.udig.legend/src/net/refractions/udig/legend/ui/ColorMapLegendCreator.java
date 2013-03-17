@@ -116,17 +116,45 @@ public class ColorMapLegendCreator {
 		
 	}
 	
+	/**
+	 * Determines if the provided color map entry
+	 * represents a no data entry.
+	 * 
+	 * @param entry
+	 * @return <code>true</code> if no data entry, <code>false</code> otherwise
+	 */
+	private static boolean isNoData(ColorMapEntry entry){
+		if (entry.getLabel() != null && entry.getLabel().equals("-no data-")){
+			return true;
+		}
+		return false;
+	}
 	/*
 	 * Create legend entries for color ramp color map
 	 */
 	private static List<LegendEntry> createRampEntries(ColorMap colorMap, final Dimension imageSize){
 		List<LegendEntry> lentries = new ArrayList<LegendEntry>();
 		final ColorMapEntry[] entries = colorMap.getColorMapEntries();
-		for (int i = 1; i < entries.length; i += 2){
+		boolean first = true;
+		for (int i = 1; i < entries.length; i += 1){
 			final ColorMapEntry entry = entries[i];
 			final ColorMapEntry prevEntry = entries[i-1];
+			
+			if (isNoData(prevEntry)){
+				//skip no data entries in legend
+				continue;
+			}
+			
 			ImageDescriptor dd = null;
-			final int index = i;
+			int idx = -1;
+			if (first){
+				idx = 0;
+			}else if (i > entries.length - 2){
+				idx = 2;
+			}
+			final int index = idx;
+			
+			first = false;
 			dd = new ImageDescriptor() {
 				@Override
 				public ImageData getImageData() {
@@ -153,12 +181,11 @@ public class ColorMapLegendCreator {
 					gc.setForeground(display.getSystemColor(SWT.COLOR_BLACK));
 					gc.drawLine(0, 0, 0, imageSize.height);
 					gc.drawLine(imageSize.width-1, 0, imageSize.width-1, imageSize.height);
-	                if (index == 1){
+	                if (index == 0){
 	                	gc.drawLine(0, 0, imageSize.width-1, 0);	
-	                }else if (index > entries.length-2){
+	                }else if (index == 2){
 	                	gc.drawLine(0, imageSize.height - 1, imageSize.width-1, imageSize.height - 1);
 	                }
-					//gc.drawRectangle(0, 0, imageSize.width-1, imageSize.height-1);
 	                
 					c1.dispose();
 					c2.dispose();
@@ -182,19 +209,19 @@ public class ColorMapLegendCreator {
 				if (l2 == null){
 					text = new String[]{q2};
 				}else{
-					text = new String[]{l2 + " (" + q2 + ")"};
+					text = new String[]{l2 + " (" + q2 + ")"}; //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}else{
 				text = new String[2];
 				if (l2 == null){
 					text[0] = q2;
 				}else{
-					text[0] = l2 + " (" + q2 + ")";
+					text[0] = l2 + " (" + q2 + ")";  //$NON-NLS-1$//$NON-NLS-2$
 				}
 				if (l1 == null){
 					text[1] = q1;
 				}else{
-					text[1] = l1 + " (" + q1 + ")";
+					text[1] = l1 + " (" + q1 + ")";  //$NON-NLS-1$//$NON-NLS-2$
 				}
 			}
 			
@@ -220,8 +247,12 @@ public class ColorMapLegendCreator {
 			if (i > 0){
 				prevEntry = entries[i-1];
 			}
-			
 			final ColorMapEntry entry = entries[i];
+			
+			if (isNoData(entry)){
+				//skip no data entries in legend
+				continue;
+			}
 			
 			ImageDescriptor dd = null;
 				 dd = new ImageDescriptor() {
@@ -257,23 +288,16 @@ public class ColorMapLegendCreator {
 		        String l1 = entry.getLabel();
 		        
 		        if (prevEntry == null){
-		        	text = "< " + q1;
+		        	text = "< " + q1; //$NON-NLS-1$
 		        	if (l1 != null){
-		        		text = l1 + " (" + text + ")";
+		        		text = l1 + " (" + text + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 		        	}
 		        }else{
 		        	String q2 = prevEntry.getQuantity().evaluate(null, String.class);
-		        	String l2 = prevEntry.getLabel();
-		        
+	        
 		        	text = q2 + " - " + q1; //$NON-NLS-1$ 
-		        	if (l1 != null || l2 != null){
-		        		if (l1 == null){
-		        			l1 = ""; //$NON-NLS-1$ 
-		        		}
-		        		if (l2 == null){
-		        			l2 = ""; //$NON-NLS-1$ 
-		        		}
-		        		text = l2 + " - " + l1 + " (" + text + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ 
+		        	if (l1 != null){
+		        		text = l1 + " (" + text + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 		        	}
 		        }
 		        LegendEntry le = new LegendEntry(text, dd);
@@ -293,7 +317,13 @@ public class ColorMapLegendCreator {
 		
 		final ColorMapEntry[] entries = colorMap.getColorMapEntries();
 		for (int i = 0; i < entries.length; i ++){
-			final ColorMapEntry entry = entries[i];			
+			final ColorMapEntry entry = entries[i];	
+			
+			if (isNoData(entry)){
+				//skip no data entries in legend
+				continue;
+			}
+			
 			ImageDescriptor dd = null;
 				 dd = new ImageDescriptor() {
 					@Override

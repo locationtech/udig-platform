@@ -35,8 +35,10 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.processing.OperationJAI;
@@ -83,6 +85,8 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
 
     private final UpdateHistoJob updateJob = new UpdateHistoJob();
 
+    private Composite parent;
+    private Label lblWarn;
     SelectionListener synchronize = new SelectionListener(){
         public void widgetSelected( SelectionEvent e ) {
             synchronize();
@@ -107,19 +111,44 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
 
     @Override
     public boolean canStyle( Layer aLayer ) {
-        if (aLayer.hasResource(GridCoverage.class) || aLayer.hasResource(WebMapServer.class)
-                || aLayer.hasResource(AbstractGridCoverage2DReader.class)){
-            return true;
+    	if (aLayer.hasResource(WebMapServer.class)){
+    		return true;
+    	}
+    	
+        if (aLayer.hasResource(GridCoverage.class)){
+        	try{
+        		GridCoverage gc = aLayer.getResource(GridCoverage.class, null);
+        		if (gc.getNumSampleDimensions() >= 3){
+        			return true;
+        		}else{
+        			return false;
+        		}
+        	}catch (Exception ex){
+        		return false;
+        	}
+        }
+        if (aLayer.hasResource(AbstractGridCoverage2DReader.class)){
+        	return true;
         }
         return false;
     }
 
     @Override
     protected void refresh() {
-
         Display.getCurrent().asyncExec(new Runnable(){
 
             public void run() {
+            	
+            	boolean canStyle = canStyle(getLayer());
+            	
+            	lblWarn.setVisible(!canStyle);
+            	for (Control c : parent.getChildren()){
+            		if (!c.equals(lblWarn)){
+            			c.setVisible(canStyle);
+            		}
+            	}
+            	if (!canStyle){return;}
+            	
                 Style style = getStyle();
                 RasterSymbolizer sym = SLD.rasterSymbolizer(style);
 
@@ -170,9 +199,15 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
 
     @Override
     public void createControl( Composite parent ) {
+
         // setLayout(parent);
+    	this.parent = parent;
         parent.setLayout(new GridLayout(1, false));
 
+        lblWarn = new Label(parent, SWT.WRAP);
+        lblWarn.setText(Messages.SimpleRasterConfigurator_StyleUnavailable);
+        lblWarn.setVisible(false);
+        
         KeyAdapter adapter = new KeyAdapter(){
             @Override
             public void keyReleased( KeyEvent e ) {
@@ -204,7 +239,16 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
 
     @Override
     public void synchronize() {
-
+    	boolean canStyle = canStyle(getLayer());
+    	
+    	lblWarn.setVisible(!canStyle);
+    	for (Control c : parent.getChildren()){
+    		if (!c.equals(lblWarn)){
+    			c.setVisible(canStyle);
+    		}
+    	}
+    	
+    	
         // get the style off the blackboard and add/modify it
         Style s = (Style) getLayer().getStyleBlackboard().get(SLDContent.ID);
 
@@ -229,8 +273,6 @@ public class SimpleRasterConfigurator extends AbstractSimpleConfigurator {
         SelectedChannelType blue = null;
 
         if (rgbViewer.isEnabled()) {
-            SelectedChannelType[] channels = rs.getChannelSelection().getRGBChannels();
-
             red = setChannel(rgbViewer.getRedChannel().getName(), rgbViewer.getRedChannel()
                     .getGamma());
             green = setChannel(rgbViewer.getGreenChannel().getName(), rgbViewer.getGreenChannel()
