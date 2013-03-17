@@ -1,0 +1,163 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Georeferencing Tools &mdash; User Guide</title>
+    
+    <link rel="stylesheet" href="../_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.3.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/udig.ico"/>
+    <link rel="top" title="User Guide" href="../index.html" />
+    <link rel="up" title="Map editor" href="Map editor.html" />
+    <link rel="next" title="Information Tools" href="Information Tools.html" />
+    <link rel="prev" title="Edit Tools" href="Edit Tools.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="../search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="../_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+ 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="georeferencing-tools">
+<h1>Georeferencing Tools<a class="headerlink" href="#georeferencing-tools" title="Permalink to this headline">¶</a></h1>
+<p>The category of georeferencing tools is used to help you align a plain image file onto a map.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><a class="reference internal" href="#georeferencing-tools">Georeferencing Tools</a></th>
+<th class="head"><a class="reference internal" href="#georeferencing-image-tools">Georeferencing Image Tools</a></th>
+<th class="head"><a class="reference internal" href="#georeferencing-marker-tools">Georeferencing Marker Tools</a></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><img alt="image0" src="../_images/ref_load_image.png" /></td>
+<td><img alt="image3" src="../_images/ref_select_image.png" /></td>
+<td><img alt="image6" src="../_images/ref_place_markers.png" /></td>
+</tr>
+<tr class="row-odd"><td><img alt="image1" src="../_images/ref_warp_image.png" /></td>
+<td><img alt="image4" src="../_images/ref_move_image.png" /></td>
+<td><img alt="image7" src="../_images/ref_move_markers.png" /></td>
+</tr>
+<tr class="row-even"><td><img alt="image2" src="../_images/ref_delete_image.png" /></td>
+<td><img alt="image5" src="../_images/ref_resize_image.png" /></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>When you have any of the image or marker tools selected, you can right-mouse-click on the map to
+rotate between them.</p>
+<ul class="simple">
+<li>Right clicking is an alternative method for rotating between these tools besides selecting them
+from the tool menu.</li>
+<li>right clicking will only work when one of the georeferencing tools is currently selected (as it
+is within this tool group context that right-clicking works).</li>
+<li>One right-click will rotate the tool to the next one in the list.</li>
+</ul>
+<p>The Load Image, Delete Image and Warp Image tools are not used frequently and must be selected from
+the tool menu as normal.</p>
+<div class="section" id="load-image">
+<h2>Load Image<a class="headerlink" href="#load-image" title="Permalink to this headline">¶</a></h2>
+<p>The Load iamge tool will load new images overtop of your map. These are plain image files such as
+jpg or png that you want to georeference onto your map. You can load multiple images and they will
+all float above the map.</p>
+</div>
+<div class="section" id="warp-image">
+<h2>Warp Image<a class="headerlink" href="#warp-image" title="Permalink to this headline">¶</a></h2>
+<p>After placing at least 6 markers on both the base map and selected image you can select this tool to
+execute the warp process. You will be prompted to save the resulting warped image as a TIF file and
+it will be loaded onto the map.</p>
+</div>
+<div class="section" id="delete-image">
+<h2>Delete Image<a class="headerlink" href="#delete-image" title="Permalink to this headline">¶</a></h2>
+<p>The delete image tool will delete the selected image. A confirmation box will appear before deleting
+the image.</p>
+</div>
+</div>
+<div class="section" id="georeferencing-image-tools">
+<h1>Georeferencing Image Tools<a class="headerlink" href="#georeferencing-image-tools" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="select-image">
+<h2>Select Image<a class="headerlink" href="#select-image" title="Permalink to this headline">¶</a></h2>
+<p>Use this tool to select an image floating overtop of the map. Only the selected image will be
+modified when you use the other image editing tools. This tool is useful for selecting a specific
+image when you have multiple images loaded overtop of the map. A selected image will have a red
+border around it.</p>
+</div>
+<div class="section" id="move-image">
+<h2>Move Image<a class="headerlink" href="#move-image" title="Permalink to this headline">¶</a></h2>
+<p>Use this tool to move the selected image around overtop of the background base map. Click and drag
+the mouse to move the image. Only the selected image with a red border around it will move.</p>
+</div>
+<div class="section" id="resize-image">
+<h2>Resize Image<a class="headerlink" href="#resize-image" title="Permalink to this headline">¶</a></h2>
+<p>Use this tool to resize the selected image overtop of the base map. Click and drag the mouse to
+stretch the image. The closest corner you click will be stretched using the same aspect ratio as the
+original image. Only the selected image with a red border around it will be resized.</p>
+</div>
+</div>
+<div class="section" id="georeferencing-marker-tools">
+<h1>Georeferencing Marker Tools<a class="headerlink" href="#georeferencing-marker-tools" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="place-markers">
+<h2>Place Markers<a class="headerlink" href="#place-markers" title="Permalink to this headline">¶</a></h2>
+<p>This is the tool you will use to place markers on your selected image and the base map to
+georeference the image onto the map. Only the selected image with a red border around it will be
+used for this function. You can place as markers as you wish on both the base map and selected
+image, with a minimum of 6 required.</p>
+</div>
+<div class="section" id="move-markers">
+<h2>Move Markers<a class="headerlink" href="#move-markers" title="Permalink to this headline">¶</a></h2>
+<p>Once you have placed markers on the map and selected image, you can move and adjust them using this
+tool.</p>
+<p><strong>Related concepts</strong></p>
+<p><a class="reference internal" href="../concepts/Georeference.html"><em>Georeference</em></a></p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
