@@ -169,10 +169,9 @@ public class OmsScriptExecutor {
             arguments.add("-D" + OmsBoxConstants.GRASS_ENVIRONMENT_SHELL_KEY + "=" + grassShell);
         }
 
-        String safeClassPath = "\"" + classPath + "\"";
         // all the arguments
         arguments.add("-cp");
-        arguments.add(safeClassPath);
+        arguments.add(classPath);
         arguments.add(CLI.class.getCanonicalName());
         arguments.add("-r");
         arguments.add(scriptFile.getAbsolutePath());
