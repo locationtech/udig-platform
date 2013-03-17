@@ -273,24 +273,9 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
                     sb.append(toolsJararray[0]);
                 }
             }
-            
-            // add some extra jars that are locked inside some eclipse plugins
-            Bundle log4jBundle = Platform.getBundle("org.apache.log4j");
-            String log4jFolderPath = getPath(log4jBundle, "/");
-            if (log4jFolderPath != null) {
-                sb.append(File.pathSeparator);
-                sb.append(log4jFolderPath);
-                sb.append(File.separator);
-                sb.append("*");
-            }
-            Bundle itextBundle = Platform.getBundle("com.lowagie.itext");
-            String itextFolderPath = getPath(itextBundle, "lib");
-            if (itextFolderPath != null) {
-                sb.append(File.pathSeparator);
-                sb.append(itextFolderPath);
-                sb.append(File.separator);
-                sb.append("*");
-            }
+
+            // add custom libs from plugins
+            addCustomLibs(sb);
 
             // add jars in the default folder
             File extraSpatialtoolboxLibsFolder = getExtraSpatialtoolboxLibsFolder();
@@ -312,7 +297,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
                 sb.append(File.pathSeparator);
                 sb.append(file);
             }
-            
+
             return sb.toString();
 
         } catch (IOException e) {
@@ -320,6 +305,55 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
         }
 
         return null;
+    }
+
+    /**
+     * Adds custom libs from the plugins.
+     * 
+     * FIXME this should hopefully get better at some point. 
+     * 
+     * @throws IOException 
+     */
+    private void addCustomLibs( StringBuilder sb ) throws IOException {
+        // add some extra jars that are locked inside some eclipse plugins
+        Bundle log4jBundle = Platform.getBundle("org.apache.log4j");
+        String log4jFolderPath = getPath(log4jBundle, "/");
+        if (log4jFolderPath != null) {
+            sb.append(File.pathSeparator);
+            sb.append(log4jFolderPath);
+            sb.append(File.separator);
+            sb.append("*");
+        }
+        Bundle itextBundle = Platform.getBundle("com.lowagie.itext");
+        String itextFolderPath = getPath(itextBundle, "lib");
+        if (itextFolderPath != null) {
+            sb.append(File.pathSeparator);
+            sb.append(itextFolderPath);
+            sb.append(File.separator);
+            sb.append("*");
+        }
+
+        Location installLocation = Platform.getInstallLocation();
+        File installFolder = DataUtilities.urlToFile(installLocation.getURL());
+        if (installFolder != null && installFolder.exists()) {
+            File pluginsFolder = new File(installFolder, "plugins");
+            if (pluginsFolder.exists()) {
+
+                File[] files = pluginsFolder.listFiles(new FilenameFilter(){
+                    public boolean accept( File dir, String name ) {
+                        boolean isCommonsLog = name.startsWith("org.apache.commons.logging_") && name.endsWith(".jar");
+                        boolean isJunit = name.startsWith("junit") && name.endsWith(".jar");
+                        return isCommonsLog || isJunit;
+                    }
+                });
+                if (files.length > 1) {
+                    for( File file : files ) {
+                        sb.append(File.pathSeparator);
+                        sb.append(file.getAbsolutePath());
+                    }
+                }
+            }
+        }
     }
 
     /**
