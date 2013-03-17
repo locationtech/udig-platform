@@ -241,7 +241,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
 
             String sysClassPath = System.getProperty("java.class.path");
             if (sysClassPath != null && sysClassPath.length() > 0 && !sysClassPath.equals("null")) {
-                sb.append(sysClassPath);
+                addPath(sysClassPath, sb);
                 sb.append(File.pathSeparator);
             }
 
@@ -249,18 +249,16 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
             Bundle omsBundle = Platform.getBundle(OmsBoxPlugin.PLUGIN_ID);
             String pluginPath = getPath(omsBundle, "/");
             if (pluginPath != null) {
-                sb.append(pluginPath);
+                addPath(pluginPath, sb);
                 sb.append(File.pathSeparator);
-                sb.append(pluginPath + File.separator + "bin");
+                addPath(pluginPath + File.separator + "bin", sb);
             }
             // add udig libs
             Bundle udigLibsBundle = Platform.getBundle("net.refractions.udig.libs");
             String udigLibsFolderPath = getPath(udigLibsBundle, "lib");
             if (udigLibsFolderPath != null) {
                 sb.append(File.pathSeparator);
-                sb.append(udigLibsFolderPath);
-                sb.append(File.separator);
-                sb.append("*");
+                addPath(udigLibsFolderPath + File.separator + "*", sb);
 
                 File libsPluginPath = new File(udigLibsFolderPath).getParentFile();
                 File[] toolsJararray = libsPluginPath.listFiles(new FilenameFilter(){
@@ -270,7 +268,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
                 });
                 if (toolsJararray.length == 1) {
                     sb.append(File.pathSeparator);
-                    sb.append(toolsJararray[0]);
+                    addPath(toolsJararray[0].getAbsolutePath(), sb);
                 }
             }
 
@@ -287,7 +285,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
                 });
                 for( File extraJar : extraJars ) {
                     sb.append(File.pathSeparator);
-                    sb.append(extraJar.getAbsolutePath());
+                    addPath(extraJar.getAbsolutePath(), sb);
                 }
             }
 
@@ -295,7 +293,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
             String[] retrieveSavedJars = retrieveSavedJars();
             for( String file : retrieveSavedJars ) {
                 sb.append(File.pathSeparator);
-                sb.append(file);
+                addPath(file, sb);
             }
 
             return sb.toString();
@@ -305,6 +303,12 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
         }
 
         return null;
+    }
+
+    private void addPath( String path, StringBuilder sb ) throws IOException {
+        // sb.append("\"").append(path).append("\"");
+        // FIXME
+        sb.append(path);
     }
 
     /**
@@ -320,17 +324,13 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
         String log4jFolderPath = getPath(log4jBundle, "/");
         if (log4jFolderPath != null) {
             sb.append(File.pathSeparator);
-            sb.append(log4jFolderPath);
-            sb.append(File.separator);
-            sb.append("*");
+            addPath(log4jFolderPath + File.separator + "*", sb);
         }
         Bundle itextBundle = Platform.getBundle("com.lowagie.itext");
         String itextFolderPath = getPath(itextBundle, "lib");
         if (itextFolderPath != null) {
             sb.append(File.pathSeparator);
-            sb.append(itextFolderPath);
-            sb.append(File.separator);
-            sb.append("*");
+            addPath(itextFolderPath + File.separator + "*", sb);
         }
 
         Location installLocation = Platform.getInstallLocation();
@@ -342,15 +342,22 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
                 File[] files = pluginsFolder.listFiles(new FilenameFilter(){
                     public boolean accept( File dir, String name ) {
                         boolean isCommonsLog = name.startsWith("org.apache.commons.logging_") && name.endsWith(".jar");
-                        boolean isJunit = name.startsWith("junit") && name.endsWith(".jar");
-                        return isCommonsLog || isJunit;
+                        return isCommonsLog;
                     }
                 });
                 if (files.length > 1) {
-                    for( File file : files ) {
-                        sb.append(File.pathSeparator);
-                        sb.append(file.getAbsolutePath());
+                    sb.append(File.pathSeparator);
+                    addPath(files[0].getAbsolutePath(), sb);
+                }
+                files = pluginsFolder.listFiles(new FilenameFilter(){
+                    public boolean accept( File dir, String name ) {
+                        boolean isJunit = name.startsWith("junit") && name.endsWith(".jar");
+                        return isJunit;
                     }
+                });
+                if (files.length > 1) {
+                    sb.append(File.pathSeparator);
+                    addPath(files[0].getAbsolutePath(), sb);
                 }
             }
         }
