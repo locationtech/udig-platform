@@ -273,6 +273,24 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
                     sb.append(toolsJararray[0]);
                 }
             }
+            
+            // add some extra jars that are locked inside some eclipse plugins
+            Bundle log4jBundle = Platform.getBundle("org.apache.log4j");
+            String log4jFolderPath = getPath(log4jBundle, "/");
+            if (log4jFolderPath != null) {
+                sb.append(File.pathSeparator);
+                sb.append(log4jFolderPath);
+                sb.append(File.separator);
+                sb.append("*");
+            }
+            Bundle itextBundle = Platform.getBundle("com.lowagie.itext");
+            String itextFolderPath = getPath(itextBundle, "lib");
+            if (itextFolderPath != null) {
+                sb.append(File.pathSeparator);
+                sb.append(itextFolderPath);
+                sb.append(File.separator);
+                sb.append("*");
+            }
 
             // add jars in the default folder
             File extraSpatialtoolboxLibsFolder = getExtraSpatialtoolboxLibsFolder();
@@ -294,7 +312,7 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
                 sb.append(File.pathSeparator);
                 sb.append(file);
             }
-
+            
             return sb.toString();
 
         } catch (IOException e) {
