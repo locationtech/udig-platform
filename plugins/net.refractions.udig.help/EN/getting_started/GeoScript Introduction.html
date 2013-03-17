@@ -1,0 +1,211 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>GeoScript Introduction &mdash; User Guide</title>
+    
+    <link rel="stylesheet" href="../_static/udig.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.3.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/udig.ico"/>
+    <link rel="top" title="User Guide" href="../index.html" />
+    <link rel="up" title="Getting Started" href="index.html" />
+    <link rel="next" title="Concepts" href="../concepts/index.html" />
+    <link rel="prev" title="Introduction to the Spatial Toolbox" href="Introduction to the Spatial Toolbox.html" /> 
+  </head>
+  <body>
+    <div class="header">
+        <div class="wrap">
+            <!--div id="searchbox">
+                <form class="search" action="../search.html" method="get">
+                    <input id="searchbox-query" type="text" name="q" size="25" value="Search &hellip;" tabindex="3" onblur="if(this.value=='') this.value='Search &hellip;';" onfocus="if(this.value=='Search &hellip;') this.value='';" />
+                    <input id="searchbox-submit" type="image" value="Search" src="../_static/img/search_icon_green.png" />
+                    <input type="hidden" name="check_keywords" value="yes" />
+                    <input type="hidden" name="area" value="default" />
+                </form>
+            </div-->
+        </div>
+    </div>
+ 
+
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="geoscript-introduction">
+<h1>GeoScript Introduction<a class="headerlink" href="#geoscript-introduction" title="Permalink to this headline">¶</a></h1>
+<p>Scripting is one of the powerful things in GIS. Non developers have the possibility
+to automate common tasks.</p>
+<p>The <a class="reference external" href="http://geoscript.org/">geoscript</a> scripting engine can be used
+from within uDig to do geo-scripting.</p>
+<p><strong>Related reference</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="../reference/GeoScript editor.html"><em>GeoScript editor</em></a></li>
+<li><a class="reference external" href="http://geoscript.org/">geoscript</a></li>
+</ul>
+<div class="section" id="open-the-geoscript-editor">
+<h2>Open the GeoScript editor<a class="headerlink" href="#open-the-geoscript-editor" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Two icons can be used to open the scripting editor: one for creating a new empty script
+and one to open an existing script.</p>
+<img alt="../_images/01_open_editor.png" src="../_images/01_open_editor.png" />
+</li>
+<li><p class="first">Let&#8217;s create a new one. The you will be prompted to save the new script to
+file and an empty editor is opened.</p>
+<div class="figure">
+<img alt="../_images/02_empty_editor.png" src="../_images/02_empty_editor.png" style="width: 80%;" />
+</div>
+</li>
+<li><p class="first">There are a few tool inside the editor, needed to start and stop scripts, or set the heap memory
+allowed to be used by a script or enable logging.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="using-the-editor">
+<h2>Using the editor<a class="headerlink" href="#using-the-editor" title="Permalink to this headline">¶</a></h2>
+<p>With the editor open you are free to script away, with command completion and syntax coloring
+as described below.</p>
+<ol class="arabic">
+<li><p class="first">Inside the editor command completion is available for common geoscript objects.</p>
+<p>Type the following into your editor:</p>
+<div class="highlight-python"><pre>import geoscript.geom.*
+
+Geo</pre>
+</div>
+</li>
+<li><p class="first">Select <strong>Geometry</strong> from the list of suggestions and press <tt class="kbd docutils literal"><span class="pre">Enter</span></tt> to activate command completion.</p>
+<div class="figure">
+<img alt="../_images/03_complete_class.png" src="../_images/03_complete_class.png" style="width: 80%;" />
+</div>
+</li>
+<li><p class="first">Command completion is also available for methods.</p>
+<p>Continue to type the following into your editor:</p>
+<div class="highlight-python"><pre>import geoscript.geom.*
+
+Geometry.fr</pre>
+</div>
+</li>
+<li><p class="first">Select the <strong>from WKT</strong> method from the list of selection and press <tt class="kbd docutils literal"><span class="pre">Enter</span></tt>.</p>
+<div class="figure">
+<img alt="../_images/04_complete_method.png" src="../_images/04_complete_method.png" style="width: 80%;" />
+</div>
+</li>
+<li><p class="first">When using command completion:</p>
+<ul class="simple">
+<li>the first completion proposals that start with the inserted text are suggested</li>
+<li>next the suggestions that simply contain the text</li>
+</ul>
+</li>
+<li><p class="first">While using the editor Syntax coloring is used to highlight keywords and improve readability.</p>
+<p>Complete your script with the following:</p>
+<div class="highlight-python"><pre>import geoscript.geom.*
+
+poly4 = Geometry.fromWKT("POLYGON ((0 0, 8 0, 8 8, 0 8, 0 0))")
+poly5 = Geometry.fromWKT("POLYGON ((5 5, 13 5, 13 13, 5 13, 5 5))")
+poly6 = poly4.intersection(poly5)
+
+println "Intersection: " + poly 6</pre>
+</div>
+<p>You can use Syntax coloring as visual feedback while typing to double check your script
+for typos.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="run-your-script">
+<h2>Run your script<a class="headerlink" href="#run-your-script" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Once you have completed your script, push the <em class="guilabel">Start</em> button.</p>
+<p>The script will be run through the Spatial Toolbox engine and the output displayed
+in the <strong>Console view</strong>.</p>
+</li>
+<li><p class="first">The script creates two polygons, and generates their intersection.</p>
+<div class="figure">
+<img alt="../_images/05_first_script_run.png" src="../_images/05_first_script_run.png" style="width: 80%;" />
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="import-common-modules">
+<h2>Import common modules<a class="headerlink" href="#import-common-modules" title="Permalink to this headline">¶</a></h2>
+<p>Geoscript needs you to define the modules you want to use in your
+script through the import directive, which is usually placed at
+the top of the script.</p>
+<ol class="arabic">
+<li><p class="first">Try and plot the result by adding the following to your script:</p>
+<div class="highlight-python"><pre>import geoscript.geom.*
+
+poly4 = Geometry.fromWKT("POLYGON ((0 0, 8 0, 8 8, 0 8, 0 0))")
+poly5 = Geometry.fromWKT("POLYGON ((5 5, 13 5, 13 13, 5 13, 5 5))")
+poly6 = poly4.intersection(poly5)
+
+println "Intersection: " + poly 6
+
+Plot.plot([poly6,poly5,poly4])</pre>
+</div>
+</li>
+<li><p class="first">Press <strong>Start</strong> to try out this change.</p>
+<p>It will fail, because the plot module was not imported:</p>
+<div class="figure">
+<img alt="../_images/06_missing_imports.png" src="../_images/06_missing_imports.png" style="width: 80%;" />
+</div>
+</li>
+<li><p class="first">The editor supplies a quick way to import the most common modules, which
+can be useful when starting with the scripting as way to learn what
+modules are available.</p>
+<p>Push the <strong>Import</strong> button at the right of the <strong>Stop</strong> button and the
+imports are added to the top of your script.</p>
+</li>
+<li><p class="first">Press <strong>Start</strong> to try your script again now that it includes the <strong>Plot</strong> import.</p>
+</li>
+</ol>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="" src="../_images/07_plot.png" style="width: 80%;" />
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="geoscript-tutorials">
+<h2>Geoscript Tutorials<a class="headerlink" href="#geoscript-tutorials" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="http://geoscript.org/">GeoScript Project</a> allows for some fun, the best way to get into it is to start
+from the web site tutorial page:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://geoscript.org/tutorials">http://geoscript.org/tutorials</a></li>
+</ul>
+<p>Just to add one more complex example, lets see a script that can render a map, properly styled, to an image:</p>
+<div class="figure">
+<img alt="../_images/08_render.png" src="../_images/08_render.png" style="width: 80%;" />
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div> 
+
+    <div class="footer">
+        &copy; Copyright 2012, Refractions Research.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

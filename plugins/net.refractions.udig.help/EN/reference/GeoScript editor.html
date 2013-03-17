@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Search view &mdash; User Guide</title>
+    <title>GeoScript editor &mdash; User Guide</title>
     
     <link rel="stylesheet" href="../_static/udig.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -28,8 +28,8 @@
     <link rel="shortcut icon" href="../_static/udig.ico"/>
     <link rel="top" title="User Guide" href="../index.html" />
     <link rel="up" title="Views and editors" href="Views and editors.html" />
-    <link rel="next" title="Spatial Toolbox view" href="Spatial Toolbox View.html" />
-    <link rel="prev" title="Projects view" href="Projects view.html" /> 
+    <link rel="next" title="Help view" href="Help view.html" />
+    <link rel="prev" title="Document view" href="Document view.html" /> 
   </head>
   <body>
     <div class="header">
@@ -51,20 +51,27 @@
       <div class="documentwrapper">
           <div class="body">
             
-  <div class="section" id="search-view">
-<h1>Search view<a class="headerlink" href="#search-view" title="Permalink to this headline">¶</a></h1>
-<p>The Search view is used to search for resources. The exciting part is that the search view is able
-to search catalogs on the web, allowing you to discover new information.</p>
+  <div class="section" id="geoscript-editor">
+<h1>GeoScript editor<a class="headerlink" href="#geoscript-editor" title="Permalink to this headline">¶</a></h1>
+<p>The <strong>GeoScript editor</strong> is used edit custom scripts to automated common GIS tasks.
+The editor makes use of the <strong>GeoScript</strong> library using the <strong>Groovy</strong> language for scripting.</p>
 <div class="figure align-center">
-<img alt="" src="../_images/SearchView.png" />
+<img alt="" src="../_images/GeoScript.png" />
 </div>
-<p>You can enter text into the text bar to search data with the key words. The checkbox to the right
-will limit the search to items within the current map.
-Below the text area is are two areas. The left area shows the results of the search and dragging
-items into the <a class="reference internal" href="Map editor.html"><em>Map editor</em></a> or the <a class="reference internal" href="Layers view.html"><em>Layers view</em></a> will create a new layer from the dragged
-data. Right clicking on the data will allow some introspection of the data as well as options to
-add to the current map or create a new map. The right area shows a summary of the data selected
-in the left.</p>
+<p>The editor uses the <em class="guilabel">Console view</em> to display output.</p>
+<div class="section" id="buttons">
+<h2>Buttons<a class="headerlink" href="#buttons" title="Permalink to this headline">¶</a></h2>
+<p>The following buttons are provided for interaction.</p>
+<ul class="simple">
+<li><em class="guilabel">Start</em>: used to execute the script, output will be displayed in the <strong>Console view</strong>.</li>
+<li><em class="guilabel">Stop</em>: Stop the currently executing script. Used to cancel a long running process.</li>
+<li><em class="guilabel">Common Imports</em>: import commonly used packages as an assist when learning GeoScript</li>
+</ul>
+<p><strong>Related tutorials</strong></p>
+<p><a class="reference internal" href="../getting_started/GeoScript Introduction.html"><em>GeoScript Introduction</em></a></p>
+<p><strong>Related Reference</strong></p>
+<p><a class="reference external" href="http://geoscript.org/">geoscript.org</a></p>
+</div>
 </div>
 
 
