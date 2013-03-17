@@ -6,12 +6,12 @@
 <topic label="uDig Overview" href="EN/uDig Overview.html">
     </topic>
             
-<topic label="Getting Started" href="EN/Getting Started.html">
+<topic label="Getting Started" href="EN/getting_started/index.html">
      
-    <topic label="Quickstart" href="EN/Quickstart.html">
+    <topic label="Quickstart" href="EN/getting_started/Quickstart.html">
         </topic>
                     
-    <topic label="Walkthrough 1" href="EN/Walkthrough 1.html">
+    <topic label="Walkthrough 1" href="EN/getting_started/Walkthrough 1.html">
         <topic label="uDig Walkthrough 1" href="EN/getting_started/walkthrough1/index.html">
         
         <topic label="Introduction" href="EN/getting_started/walkthrough1/Introduction.html">
@@ -49,7 +49,7 @@
             </topic>        
         </topic>
                     </topic>
-    <topic label="Walkthrough 2" href="EN/Walkthrough 2.html">
+    <topic label="Walkthrough 2" href="EN/getting_started/Walkthrough 2.html">
             
         <topic label="GeoServer Install" href="EN/getting_started/geoserver/index.html">
             </topic>
@@ -89,12 +89,9 @@
         </topic>
         
                             
-        <topic label="Introduction to the Spatial Toolbox" href="EN/Introduction to the Spatial Toolbox.html">
+        <topic label="Introduction to the Spatial Toolbox" href="EN/getting_started/Introduction to the Spatial Toolbox.html">
                 </topic>
                 
-        <topic label="Merge Tool" href="EN/Merge Tool.html">
-                </topic>
-
         <topic label="The Geoscript Editor" href="EN/getting_started/The Geoscript Editor.html">
                 </topic>
    
@@ -190,9 +187,12 @@
         
                 </topic>
                     
-        <topic label="Viewport" href="EN/concepts/Viewport.html">
-        
+        <topic label="Viewport" href="EN/concepts/Viewport.html">        
                 </topic>
+
+        <topic label="Edit Blackboard" href="EN/concepts/Edit Blackboard.html">        
+                </topic>
+
         </topic>
                     
         <topic label="Page" href="EN/concepts/Page.html">
@@ -260,10 +260,6 @@
                     
         <topic label="Fast views" href="EN/concepts/Fast views.html">
         
-                            
-        <topic label="Creating fast views" href="EN/Creating fast views.html">
-        
-                </topic>
         </topic>
                     
         <topic label="Help system" href="EN/concepts/Help system.html">
@@ -305,464 +301,463 @@
         </topic>
             
         <topic label="Tasks" href="EN/tasks/index.html">
+
+        <topic label="Drag and Drop" href="EN/tasks/Drag and Drop.html">        
+                </topic>
+                            
+        <topic label="Installation and Configuration" href="EN/tasks/Installation and Configuration.html">
         
                             
-        <topic label="Installation and Configuration" href=EN/tasks/Installation and Configuration.html">
+        <topic label="Running uDig" href="EN/tasks/Running uDig.html">
+        
+                </topic>
+                    
+        <topic label="Support" href="EN/tasks/Support.html">
         
                             
-        <topic label="Running uDig" href=EN/tasks/Running uDig.html">
+        <topic label="Submit Error Log" href="EN/tasks/Submit Error Log.html">
         
                 </topic>
                     
-        <topic label="Support" href=EN/tasks/Support.html">
-        
-                            
-        <topic label="Submit Error Log" href=EN/tasks/Submit Error Log.html">
+        <topic label="Subscribe to the user list" href="EN/tasks/Subscribe to the user list.html">
         
                 </topic>
                     
-        <topic label="Subscribe to the user list" href=EN/tasks/Subscribe to the user list.html">
+        <topic label="Tracing WMS Calls" href="EN/tasks/Tracing WMS Calls.html">
         
                 </topic>
                     
-        <topic label="Tracing WMS Calls" href=EN/tasks/Tracing WMS Calls.html">
+        <topic label="Using the Issue Tracker" href="EN/tasks/Using the Issue Tracker.html">
         
                 </topic>
                     
-        <topic label="Using the Issue Tracker" href=EN/tasks/Using the Issue Tracker.html">
-        
-                </topic>
-                    
-        <topic label="View Error Log and Configuration Details" href=EN/tasks/View Error Log and Configuration Details.html">
+        <topic label="View Error Log and Configuration Details" href="EN/tasks/View Error Log and Configuration Details.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Working with the Update Manager" href=EN/tasks/Working with the Update Manager.html">
+        <topic label="Working with the Update Manager" href="EN/tasks/Working with the Update Manager.html">
         
                             
-        <topic label="Keeping up to date" href=EN/tasks/Keeping up to date.html">
+        <topic label="Keeping up to date" href="EN/tasks/Keeping up to date.html">
         
                             
-        <topic label="Finding new plugins" href=EN/tasks/Finding new plugins.html">
+        <topic label="Finding new plugins" href="EN/tasks/Finding new plugins.html">
         
                 </topic>
         </topic>
         </topic>
         </topic>
                     
-        <topic label="Using the Catalog" href=EN/tasks/Using the Catalog.html">
+        <topic label="Using the Catalog" href="EN/tasks/Using the Catalog.html">
         
                             
-        <topic label="Adding features from a Shapefile" href=EN/tasks/Adding features from a Shapefile.html">
+        <topic label="Adding features from a Shapefile" href="EN/tasks/Adding features from a Shapefile.html">
         
                 </topic>
                     
-        <topic label="Adding features from ArcSDE" href=EN/tasks/Adding features from ArcSDE.html">
+        <topic label="Adding features from ArcSDE" href="EN/tasks/Adding features from ArcSDE.html">
         
                 </topic>
                     
-        <topic label="Adding Features from DB2" href=EN/tasks/Adding Features from DB2.html">
+        <topic label="Adding Features from DB2" href="EN/tasks/Adding Features from DB2.html">
         
                 </topic>
                     
-        <topic label="Adding features from Oracle" href=EN/tasks/Adding features from Oracle.html">
+        <topic label="Adding features from Oracle" href="EN/tasks/Adding features from Oracle.html">
         
                 </topic>
                     
-        <topic label="Adding features from PostGIS" href=EN/tasks/Adding features from PostGIS.html">
+        <topic label="Adding features from PostGIS" href="EN/tasks/Adding features from PostGIS.html">
         
                 </topic>
                     
-        <topic label="Adding features from WFS" href=EN/tasks/Adding features from WFS.html">
+        <topic label="Adding features from WFS" href="EN/tasks/Adding features from WFS.html">
         
                 </topic>
                     
-        <topic label="Adding layers from WMS" href=EN/tasks/Adding layers from WMS.html">
+        <topic label="Adding layers from WMS" href="EN/tasks/Adding layers from WMS.html">
         
                 </topic>
                     
-        <topic label="Enabling a Tileset from a WMS Server" href=EN/tasks/Enabling a Tileset from a WMS Server.html">
+        <topic label="Enabling a Tileset from a WMS Server" href="EN/tasks/Enabling a Tileset from a WMS Server.html">
         
                 </topic>
                     
-        <topic label="Handling Shapefiles with different Character Sets" href=EN/tasks/Handling Shapefiles with different Character Sets.html">
+        <topic label="Handling Shapefiles with different Character Sets" href="EN/tasks/Handling Shapefiles with different Character Sets.html">
         
                 </topic>
                     
-        <topic label="Importing data" href=EN/tasks/Importing data.html">
+        <topic label="Importing data" href="EN/tasks/Importing data.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Using the Workbench" href=EN/tasks/Using the Workbench.html">
+        <topic label="Using the Workbench" href="EN/tasks/Using the Workbench.html">
         
                             
-        <topic label="Closing an editor" href=EN/tasks/Closing an editor.html">
+        <topic label="Closing an editor" href="EN/tasks/Closing an editor.html">
         
                 </topic>
                     
-        <topic label="Exiting the workbench" href=EN/tasks/Exiting the workbench.html">
+        <topic label="Exiting the workbench" href="EN/tasks/Exiting the workbench.html">
         
                 </topic>
                     
-        <topic label="Rearranging the main toolbar" href=EN/tasks/Rearranging the main toolbar.html">
+        <topic label="Rearranging the main toolbar" href="EN/tasks/Rearranging the main toolbar.html">
         
                 </topic>
                     
-        <topic label="Rearranging views and editors" href=EN/tasks/Rearranging views and editors.html">
+        <topic label="Rearranging views and editors" href="EN/tasks/Rearranging views and editors.html">
         
                             
-        <topic label="Drop cursors" href=EN/tasks/Drop cursors.html">
+        <topic label="Drop cursors" href="EN/tasks/Drop cursors.html">
         
                 </topic>
                     
-        <topic label="Maximizing" href=EN/tasks/Maximizing.html">
+        <topic label="Maximizing" href="EN/tasks/Maximizing.html">
         
                 </topic>
                     
-        <topic label="Rearranging tabbed views" href=EN/tasks/Rearranging tabbed views.html">
+        <topic label="Rearranging tabbed views" href="EN/tasks/Rearranging tabbed views.html">
         
                 </topic>
                     
-        <topic label="Rearranging views" href=EN/tasks/Rearranging views.html">
+        <topic label="Rearranging views" href="EN/tasks/Rearranging views.html">
         
                 </topic>
                     
-        <topic label="Tiling editors" href=EN/tasks/Tiling editors.html">
+        <topic label="Tiling editors" href="EN/tasks/Tiling editors.html">
         
                 </topic>
         </topic>
-                    
-        <topic label="Using the Catalog view" href=EN/tasks/Using the Catalog view.html">
+
+        <topic label="Creating fast views" href="EN/tasks/Creating fast views.html">
+		    	</topic>
+            
+        <topic label="Using the Catalog view" href="EN/tasks/Using the Catalog view.html">
         
                 </topic>
                     
-        <topic label="Using the help system" href=EN/tasks/Using the help system.html">
+        <topic label="Using the help system" href="EN/tasks/Using the help system.html">
         
                             
-        <topic label="Accessing context sensitive help" href=EN/tasks/Accessing context sensitive help.html">
+        <topic label="Accessing context sensitive help" href="EN/tasks/Accessing context sensitive help.html">
                 </topic>
         </topic>
                     
-        <topic label="Using the Layers view" href=EN/tasks/Using the Layers view.html">
+        <topic label="Using the Layers view" href="EN/tasks/Using the Layers view.html">
         
                             
-        <topic label="Deleting a layer" href=EN/tasks/Deleting a layer.html">
+        <topic label="Deleting a layer" href="EN/tasks/Deleting a layer.html">
         
                 </topic>
                     
-        <topic label="Zooming to a layer" href=EN/tasks/Zooming to a layer.html">
+        <topic label="Zooming to a layer" href="EN/tasks/Zooming to a layer.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Using the Legend View" href=EN/tasks/Using the Legend View.html">
+        <topic label="Using the Legend View" href="EN/tasks/Using the Legend View.html">
         
                             
-        <topic label="Adding a folder" href=EN/tasks/Adding a folder.html">
+        <topic label="Adding a folder" href="EN/tasks/Adding a folder.html">
         
                 </topic>
                     
-        <topic label="Changing a layer's z-order" href=EN/tasks/Changing a layer's z-order.html">
+        <topic label="Changing a layer's z-order" href="EN/tasks/Changing a layer's z-order.html">
         
                 </topic>
                     
-        <topic label="Grouping layers by folder" href=EN/tasks/Grouping layers by folder.html">
+        <topic label="Grouping layers by folder" href="EN/tasks/Grouping layers by folder.html">
         
                 </topic>
                     
-        <topic label="Show or hide background layers" href=EN/tasks/Show or hide background layers.html">
+        <topic label="Show or hide background layers" href="EN/tasks/Show or hide background layers.html">
         
                 </topic>
                     
-        <topic label="Show or hide grid layer on map" href=EN/tasks/Show or hide grid layer on map.html">
+        <topic label="Show or hide grid layer on map" href="EN/tasks/Show or hide grid layer on map.html">
         
                 </topic>
                     
-        <topic label="Show or Hide map graphics layers" href=EN/tasks/Show or Hide map graphics layers.html">
+        <topic label="Show or Hide map graphics layers" href="EN/tasks/Show or Hide map graphics layers.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Using the Search view" href=EN/tasks/Using the Search view.html">
+        <topic label="Using the Search view" href="EN/tasks/Using the Search view.html">
         
                 </topic>
                     
-        <topic label="Using the Table View" href=EN/tasks/Using the Table View.html">
+        <topic label="Using the Table View" href="EN/tasks/Using the Table View.html">
         
                 </topic>
                     
-        <topic label="Working with cheat sheets" href=EN/tasks/Working with cheat sheets.html">
+        <topic label="Working with cheat sheets" href="EN/tasks/Working with cheat sheets.html">
         
                             
-        <topic label="Working with composite cheat sheets" href=EN/tasks/Working with composite cheat sheets.html">
+        <topic label="Working with composite cheat sheets" href="EN/tasks/Working with composite cheat sheets.html">
         
                 </topic>
         </topic>
-                    
-        <topic label="Working with fast views" href=EN/tasks/Working with fast views.html">
         
+        <topic label="Working with fast views" href="EN/tasks/Working with fast views.html">
                 </topic>
         </topic>
                     
-        <topic label="Working with AOI" href=EN/tasks/Working with AOI.html">
+        <topic label="Working with AOI" href="EN/tasks/Working with AOI.html">
         
                             
-        <topic label="Configure table view to list the contents of a polygon" href=EN/tasks/Configure table view to list the contents of a polygon.html">
+        <topic label="Configure table view to list the contents of a polygon" href="EN/tasks/Configure table view to list the contents of a polygon.html">
         
                 </topic>
                     
-        <topic label="Configure table view to list the contents of the screen" href=EN/tasks/Configure table view to list the contents of the screen.html">
+        <topic label="Configure table view to list the contents of the screen" href="EN/tasks/Configure table view to list the contents of the screen.html">
         
                 </topic>
                     
-        <topic label="Show the AOI on the map" href=EN/tasks/Show the AOI on the map.html">
+        <topic label="Show the AOI on the map" href="EN/tasks/Show the AOI on the map.html">
         
                 </topic>
                     
-        <topic label="Use a bookmark as the AOI" href=EN/tasks/Use a bookmark as the AOI.html">
+        <topic label="Use a bookmark as the AOI" href="EN/tasks/Use a bookmark as the AOI.html">
         
                 </topic>
                     
-        <topic label="Use a Coordinate Reference System as the AOI" href=EN/tasks/Use a Coordinate Reference System as the AOI.html">
+        <topic label="Use a Coordinate Reference System as the AOI" href="EN/tasks/Use a Coordinate Reference System as the AOI.html">
         
                 </topic>
                     
-        <topic label="Use a processing region as the AOI" href=EN/tasks/Use a processing region as the AOI.html">
+        <topic label="Use a processing region as the AOI" href="EN/tasks/Use a processing region as the AOI.html">
         
                 </topic>
                     
-        <topic label="Use polygon as the AOI" href=EN/tasks/Use polygon as the AOI.html">
+        <topic label="Use polygon as the AOI" href="EN/tasks/Use polygon as the AOI.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Working with Features" href=EN/tasks/Working with Features.html">
+        <topic label="Working with Features" href="EN/tasks/Working with Features.html">
         
                             
-        <topic label="Adding a column to a shapefile" href=EN/tasks/Adding a column to a shapefile.html">
+        <topic label="Adding a column to a shapefile" href="EN/tasks/Adding a column to a shapefile.html">
         
                 </topic>
                     
-        <topic label="Changing the projection of a shapefile" href=EN/tasks/Changing the projection of a shapefile.html">
+        <topic label="Changing the projection of a shapefile" href="EN/tasks/Changing the projection of a shapefile.html">
         
                 </topic>
                     
-        <topic label="Processing the Geometry in a Shapefile" href=EN/tasks/Processing the Geometry in a Shapefile.html">
+        <topic label="Processing the Geometry in a Shapefile" href="EN/tasks/Processing the Geometry in a Shapefile.html">
         
                 </topic>
                     
-        <topic label="Using Advanced Edit Mode" href=EN/tasks/Using Advanced Edit Mode.html">
+        <topic label="Using Advanced Edit Mode" href="EN/tasks/Using Advanced Edit Mode.html">
         
                 </topic>
                     
-        <topic label="Using Feature Edit Tools" href=EN/tasks/Using Feature Edit Tools.html">
+        <topic label="Using Feature Edit Tools" href="EN/tasks/Using Feature Edit Tools.html">
         
                             
-        <topic label="Delete Tool" href=EN/tasks/Delete Tool.html">
+        <topic label="Delete Tool" href="EN/tasks/Delete Tool.html">
         
                 </topic>
                     
-        <topic label="Fill Tool" href=EN/tasks/Fill Tool.html">
+        <topic label="Fill Tool" href="EN/tasks/Fill Tool.html">
         
+                </topic>
+
+        <topic label="Merge Tool" href="EN/tasks/Merge Tool.html">
                 </topic>
                     
         </topic>
                     
-        <topic label="Using Feature operations" href=EN/tasks/Using Feature operations.html">
+        <topic label="Using Feature operations" href="EN/tasks/Using Feature operations.html">
         
                 </topic>
                     
-        <topic label="Using Geometry Creation Tools" href=EN/tasks/Using Geometry Creation Tools.html">
+        <topic label="Using Geometry Creation Tools" href="EN/tasks/Using Geometry Creation Tools.html">
         
                             
-        <topic label="Draw Geometry Tool" href=EN/tasks/Draw Geometry Tool.html">
+        <topic label="Draw Geometry Tool" href="EN/tasks/Draw Geometry Tool.html">
         
                 </topic>
                     
-        <topic label="Ellipse Tool" href=EN/tasks/Ellipse Tool.html">
+        <topic label="Ellipse Tool" href="EN/tasks/Ellipse Tool.html">
         
                 </topic>
                     
-        <topic label="Line Creation Tool" href=EN/tasks/Line Creation Tool.html">
+        <topic label="Line Creation Tool" href="EN/tasks/Line Creation Tool.html">
         
                 </topic>
                     
-        <topic label="Point Creation Tool" href=EN/tasks/Point Creation Tool.html">
+        <topic label="Point Creation Tool" href="EN/tasks/Point Creation Tool.html">
         
                 </topic>
                     
-        <topic label="Polygon Creation Tool" href=EN/tasks/Polygon Creation Tool.html">
+        <topic label="Polygon Creation Tool" href="EN/tasks/Polygon Creation Tool.html">
         
                 </topic>
                     
-        <topic label="Rectangle Tool" href=EN/tasks/Rectangle Tool.html">
+        <topic label="Rectangle Tool" href="EN/tasks/Rectangle Tool.html">
         
                 </topic>
                     
-        <topic label="Smart Buffer Tool" href=EN/tasks/Smart Buffer Tool.html">
+        <topic label="Smart Buffer Tool" href="EN/tasks/Smart Buffer Tool.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Using Vertex Tools" href=EN/tasks/Using Vertex Tools.html">
+        <topic label="Using Vertex Tools" href="EN/tasks/Using Vertex Tools.html">
         
                             
-        <topic label="Add Vertex Tool" href=EN/tasks/Add Vertex Tool.html">
+        <topic label="Add Vertex Tool" href="EN/tasks/Add Vertex Tool.html">
         
                 </topic>
                     
-        <topic label="Edit Geometry Tool" href=EN/tasks/Edit Geometry Tool.html">
+        <topic label="Edit Geometry Tool" href="EN/tasks/Edit Geometry Tool.html">
         
                             
-        <topic label="EditBlackboard" href=EN/tasks/EditBlackboard.html">
-        
-                </topic>
         </topic>
                     
-        <topic label="Hole Cutter" href=EN/tasks/Hole Cutter.html">
+        <topic label="Hole Cutter" href="EN/tasks/Hole Cutter.html">
         
                 </topic>
                     
-        <topic label="Remove Vertex Tool" href=EN/tasks/Remove Vertex Tool.html">
+        <topic label="Remove Vertex Tool" href="EN/tasks/Remove Vertex Tool.html">
         
                 </topic>
         </topic>
         </topic>
-    <topic label="Working with Documents" href=EN/tasks/Working with Documents.html">
-        <topic label="Configure documents" href=EN/tasks/Configure documents.html">
+    <topic label="Working with Documents" href="EN/tasks/Working with Documents.html">
+        <topic label="Configure documents" href="EN/tasks/Configure documents.html">
             </topic>
-        <topic label="Attaching a document" href=EN/tasks/Attaching a document.html">
+        <topic label="Attaching a document" href="EN/tasks/Attaching a document.html">
             </topic>
-        <topic label="Linking a document" href=EN/tasks/Linking a document.html">
+        <topic label="Linking a document" href="EN/tasks/Linking a document.html">
                 </topic>
-        <topic label="Setting a hotlink" href=EN/tasks/Setting a hotlink.html">
+        <topic label="Setting a hotlink" href="EN/tasks/Setting a hotlink.html">
                 </topic>
     </topic>
                 
-    <topic label="Working with Images" href=EN/tasks/Working with Images.html">
+    <topic label="Working with Images" href="EN/tasks/Working with Images.html">
         
                             
-        <topic label="Set raster transparent color" href=EN/tasks/Set raster transparent color.html">
+        <topic label="Set raster transparent color" href="EN/tasks/Set raster transparent color.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Working with Layers" href=EN/tasks/Working with Layers.html">
+        <topic label="Working with Layers" href="EN/tasks/Working with Layers.html">
         
                             
-        <topic label="Adding a layer" href=EN/tasks/Adding a layer.html">
+        <topic label="Adding a layer" href="EN/tasks/Adding a layer.html">
         
                 </topic>
                     
-        <topic label="Change a Layers Style" href=EN/tasks/Change a Layers Style.html">
+        <topic label="Change a Layers Style" href="EN/tasks/Change a Layers Style.html">
         
                 </topic>
                     
-        <topic label="Configure a AOI layer" href=EN/tasks/Configure a AOI layer.html">
+        <topic label="Configure a AOI layer" href="EN/tasks/Configure a AOI layer.html">
         
                 </topic>
                     
-        <topic label="Create Layer from Query" href=EN/tasks/Create Layer from Query.html">
+        <topic label="Create Layer from Query" href="EN/tasks/Create Layer from Query.html">
         
                 </topic>
                     
-        <topic label="Feature count" href=EN/tasks/Feature count.html">
+        <topic label="Feature count" href="EN/tasks/Feature count.html">
         
                 </topic>
                     
-        <topic label="Using Layer Operations" href=EN/tasks/Using Layer Operations.html">
+        <topic label="Using Layer Operations" href="EN/tasks/Using Layer Operations.html">
         
                             
-        <topic label="Validation" href=EN/tasks/Validation.html">
+        <topic label="Validation" href="EN/tasks/Validation.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Using Resource Summary" href=EN/tasks/Using Resource Summary.html">
+        <topic label="Using Resource Summary" href="EN/tasks/Using Resource Summary.html">
         
                 </topic>
         </topic>
-        <topic label="Working with Decorations" href=EN/tasks/Working with Decorations.html">
-            <topic label="Add new Graticule" href=EN/tasks/Add new Graticule.html">
+        <topic label="Working with Decorations" href="EN/tasks/Working with Decorations.html">
+            <topic label="Add new Graticule" href="EN/tasks/Add new Graticule.html">
                 </topic>
-            <topic label="Add multiple Graticules with different CRS" href=EN/tasks/Add multiple Graticules with different CRS.html">
+            <topic label="Add multiple Graticules with different CRS" href="EN/tasks/Add multiple Graticules with different CRS.html">
                 </topic>
         
             </topic>
-        <topic label="Working with Maps" href=EN/tasks/Working with Maps.html">
+        <topic label="Working with Maps" href="EN/tasks/Working with Maps.html">
         
                             
-        <topic label="Creating a new Map" href=EN/tasks/Creating a new Map.html">
+        <topic label="Creating a new Map" href="EN/tasks/Creating a new Map.html">
         
                 </topic>
                     
-        <topic label="Map Navigation" href=EN/tasks/Map Navigation.html">
+        <topic label="Map Navigation" href="EN/tasks/Map Navigation.html">
         
                             
-        <topic label="Pan" href=EN/tasks/Pan.html">
+        <topic label="Pan" href="EN/tasks/Pan.html">
         
                 </topic>
                     
-        <topic label="Zoom" href=EN/tasks/Zoom.html">
+        <topic label="Zoom" href="EN/tasks/Zoom.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Printing the current Map" href=EN/tasks/Printing the current Map.html">
+        <topic label="Printing the current Map" href="EN/tasks/Printing the current Map.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Working with Projects" href=EN/tasks/Working with Projects.html">
+        <topic label="Working with Projects" href="EN/tasks/Working with Projects.html">
         
                             
-        <topic label="Creating a new Project" href=EN/tasks/Creating a new Project.html">
+        <topic label="Creating a new Project" href="EN/tasks/Creating a new Project.html">
         
                 </topic>
                     
-        <topic label="Creating a Project" href=EN/tasks/Creating a Project.html">
+        <topic label="Creating a Project" href="EN/tasks/Creating a Project.html">
         
                 </topic>
                     
-        <topic label="Using new to add a Map to a Project" href=EN/tasks/Using new to add a Map to a Project.html">
+        <topic label="Using new to add a Map to a Project" href="EN/tasks/Using new to add a Map to a Project.html">
         
                 </topic>
                     
-        <topic label="Using the Context menu to add a Map to a Project" href=EN/tasks/Using the Context menu to add a Map to a Project.html">
+        <topic label="Using the Context menu to add a Map to a Project" href="EN/tasks/Using the Context menu to add a Map to a Project.html">
         
                 </topic>
                     
-        <topic label="Using the File menu to add a new Map" href=EN/tasks/Using the File menu to add a new Map.html">
+        <topic label="Using the File menu to add a new Map" href="EN/tasks/Using the File menu to add a new Map.html">
         
                 </topic>
                     
-        <topic label="Using the Projects view" href=EN/tasks/Using the Projects view.html">
+        <topic label="Using the Projects view" href="EN/tasks/Using the Projects view.html">
         
                 </topic>
         </topic>
                     
-        <topic label="Working with Selection" href=EN/tasks/Working with Selection.html">
+        <topic label="Working with Selection" href="EN/tasks/Working with Selection.html">
         
                             
-        <topic label="Selection using Attributes" href=EN/tasks/Selection using Attributes.html">
+        <topic label="Selection using Attributes" href="EN/tasks/Selection using Attributes.html">
         
                 </topic>
                     
-        <topic label="Selection using CQL" href=EN/tasks/Selection using CQL.html">
+        <topic label="Selection using CQL" href="EN/tasks/Selection using CQL.html">
         
                 </topic>
         </topic>
         </topic>
             
         <topic label="Reference" href="EN/reference/index.html">
-        
-                            
-        <topic label="Drag and Drop" href="EN/reference/Drag and Drop.html">
-        
-                </topic>
-                    
+                                                
         <topic label="Filters and Expressions" href="EN/reference/Filters and Expressions.html">
         
                             
@@ -1251,7 +1246,7 @@
         </topic>
         <topic label="Community" href="EN/reference/Community.html">
                 
-            <topic label="Jody" href="EN//reference/Jody.html">
+            <topic label="Jody" href="EN/reference/Jody.html">
                 <topic label="North Arrow" href="EN/reference/North Arrow.html">
                         </topic>
                 </topic>

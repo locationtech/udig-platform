@@ -7,11 +7,11 @@ Drag and Drop is the general practise of:
 #. Using the mouse to "Drag" the object into position; and
 #. Releasing the mouse button to "Drop" the into the desired spot
 
-Layer view
-==========
+Layer view DnD
+--------------
 
 Changing Layer Order
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 You can drag and drop existing layers to sort them into the desired order.
 
@@ -23,7 +23,7 @@ You can drag and drop existing layers to sort them into the desired order.
 This effect is the same as pressing the move up and move down buttons.
 
 Inserting a Layer
------------------
+~~~~~~~~~~~~~~~~~
 
 You can insert a new layer; into the exact position desired; by dragging and dropping any of the
 following:
@@ -46,11 +46,11 @@ To insert a Service:
 #. Release; a :doc:`/reference/Resource Selection page` will be displayed
    allowing you to choose which layers to insert. The service will also be added to the catalog.
 
-Projects View
-=============
+Projects View DnD
+-----------------
 
 Creating a New map
-------------------
+~~~~~~~~~~~~~~~~~~
 
 You can drag a resource from the Catalog; a file or a URL into the Projects view to create a new
 Map.
@@ -68,8 +68,8 @@ Creating a new Map from a shapefile:
      The resource(s) must be dragged to the exact location in the Projects view hierarchy; they cannot
      be simply dragged and dropped onto a blank area.
 
-Map Editor
-==========
+Map Editor DnD
+--------------
 
 You can drag a File, URL or Catalog resource onto an open Map Editor; a layer will be added to the
 Map as if you had used the :doc:`/reference/Add Data wizard`
