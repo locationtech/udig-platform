@@ -89,7 +89,7 @@ public class LegendEntry {
 		} else if (rule != null) {
 			return new String[]{getText(rule)};
 		}
-		return new String[]{}; //$NON-NLS-1$ 
+		return new String[]{};
 	}
 	
 	/**
