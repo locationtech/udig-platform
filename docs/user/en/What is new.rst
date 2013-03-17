@@ -29,12 +29,16 @@ This license change has enabled the uDig project to
 GeoScript Editor
 ================
 
-uDig is pleased to directly offer a scripting environment for the first time.  Scripting is one of the powerful techniques in a Geospaital Information System 
-allowing non-developers the ability to automate common tasks.
+uDig is pleased to directly offer a scripting environment for the first time.  Scripting a powerful technique
+in a Geospaital Information Systems allowing non-developers the ability to automate common tasks.
 
-For more information check out the `geoscript <http://geoscript.org/>`_ project.
+.. figure:: /images/geoscript_editor/GeoScript.png
+   :align: center
+   :alt: 
+   
+There is a quick tutorial (:doc:`/getting_started/GeoScript Introduction`) and a reference page for the :doc:`/reference/GeoScript editor`.
 
-We also have a hands on tutorial on using the :doc:`/getting_started/The Geoscript Editor`.
+For more information and tutorials please checkout GeoScript at `geoscript.org <http://geoscript.org/>`_
 
 Documents
 =========

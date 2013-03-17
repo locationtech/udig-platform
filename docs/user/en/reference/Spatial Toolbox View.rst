@@ -1,4 +1,4 @@
-Spatial Toolbox View
+Spatial Toolbox view
 ####################
 
 The Spatial Toolbox view is used to call processing routines provided by the spatial toolbox.
@@ -17,11 +17,17 @@ distribute with the uDig application directly.
 **Related reference**
 
 `DemManipulation <http://code.google.com/p/jgrasstools/wiki/DemManipulation>`_ (jgrasstools)
+
 `Geomorphology <http://code.google.com/p/jgrasstools/wiki/Geomorphology>`_ (jgrasstools)
+
 `Network <http://code.google.com/p/jgrasstools/wiki/Network>`_ (jgrasstools)
+
 `Hillslope <http://code.google.com/p/jgrasstools/wiki/Hillslope>`_ (jgrasstools)
+
 `Basin <http://code.google.com/p/jgrasstools/wiki/Basin>`_ (jgrasstools)
+
 `Statistics <http://code.google.com/p/jgrasstools/wiki/Statistics>`_ (jgrasstools)
+
 `Hydrogeomorphology <http://code.google.com/p/jgrasstools/wiki/Hydrogeomorphology>`_ (jgrasstools)
 
 Spatial Toolbox
