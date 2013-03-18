@@ -14,7 +14,8 @@ You should now see something similar to the example below
      :align: center
      :alt:
 
-**Note**: Graticule only support CRS with unit "meter" on all axis. Support for degrees is comming soon.
+.. note::
+   Graticule only support CRS with unit "meter" on all axis. Support for degrees is comming soon.
 
 **Related tasks**
 
