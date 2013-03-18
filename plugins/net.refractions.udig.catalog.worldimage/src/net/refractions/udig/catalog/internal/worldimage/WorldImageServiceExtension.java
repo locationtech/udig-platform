@@ -147,7 +147,7 @@ public class WorldImageServiceExtension implements ServiceExtension2 {
                 return Messages.WorldImageServiceExtension_needsFile;
         }
         
-        if( !id.getProtocol().equals("file") ){
+        if( !id.getProtocol().equals("file") ){ //$NON-NLS-1$
             return Messages.WorldImageServiceExtension_mustBeFIle;
         }
         try {
