@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
@@ -32,8 +33,11 @@ import net.refractions.udig.project.ui.internal.Messages;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.PageChangedEvent;
@@ -174,7 +178,7 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
     private void exportMap( IMap map, IProgressMonitor monitor ) throws RenderException,
             IOException, TransformException, NoninvertibleTransformException {
 
-        monitor.beginTask(Messages.ExportMapToImageWizard_RenderingTaskName, 3);
+        monitor.beginTask(Messages.ExportMapToImageWizard_RenderingTaskName, 10);
         String pattern = Messages.ExportMapToImageWizard_preparingTaskName;
         Object[] args = new Object[]{map.getName()};
         monitor.setTaskName(MessageFormat.format(pattern, args));
@@ -197,7 +201,7 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
 
         IMap renderedMap;
         try {
-            monitor.worked(1);
+            monitor.worked(2);
             pattern = Messages.ExportMapToImageWizard_renderingTaskname;
             args = new Object[]{map.getName()};
             monitor.setTaskName(MessageFormat.format(pattern, args));
@@ -212,25 +216,36 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
         } finally {
             g.dispose();
         }
-        monitor.worked(1);
+        monitor.worked(3);
         pattern = Messages.ExportMapToImageWizard_writingTaskname;
         args = new Object[]{map.getName()};
         monitor.setTaskName(MessageFormat.format(pattern, args));
         imageSettingsPage.getFormat().write(renderedMap, image, destination);
-
-        addToCatalog(destination);
-
+        
+        addToCatalog(destination ); 
+        
         monitor.done();
     }
 
-    private void addToCatalog( File destination ) throws MalformedURLException {
-        IServiceFactory serviceFactory = CatalogPlugin.getDefault().getServiceFactory();
-        URL url = DataUtilities.fileToURL(destination);
-        List<IService> services = serviceFactory.createService(url);
-        ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
-        for( IService service : services ) {
-            addToCatalog(localCatalog, service);
+    private void addToCatalog( final File file ) throws IOException {
+        if( !file.exists() ){
+            throw new FileNotFoundException("Expected "+file+" was not created");
         }
+        Job addToCatalog = new Job("Add "+file.getName() ){
+            @Override
+            protected IStatus run(IProgressMonitor monitor) {
+                ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
+                URL url = new ID( file, null ).toURL();
+                IService service = null;
+                try {
+                    service = localCatalog.acquire( url, monitor );
+                }
+                catch( IOException unepected ){
+                }
+                return service != null ? Status.OK_STATUS : new Status( IStatus.ERROR, ProjectUIPlugin.ID, "Failed to add "+file );
+            }
+        };
+        addToCatalog.schedule();
     }
     /**
      * This implementation is a bit more drastic then the usual catalog add method
