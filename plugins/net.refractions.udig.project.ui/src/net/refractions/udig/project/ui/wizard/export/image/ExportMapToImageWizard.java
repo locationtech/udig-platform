@@ -231,6 +231,12 @@ public class ExportMapToImageWizard extends Wizard implements IExportWizard {
         if( !file.exists() ){
             throw new FileNotFoundException("Expected "+file+" was not created");
         }
+
+        // try if the file isn't a pdf
+        if ( file.getAbsolutePath().toLowerCase().endsWith("pdf") ) { //$NON-NLS-1$
+            return;
+        }
+
         Job addToCatalog = new Job("Add "+file.getName() ){
             @Override
             protected IStatus run(IProgressMonitor monitor) {
