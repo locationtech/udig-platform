@@ -67,9 +67,16 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
                     case Notification.ADD: {
                         final Object eventNewObj = msg.getNewValue();    
                         if (eventNewObj instanceof Layer) {
-                            final LayerLegendItem layerLegendItem = ProjectFactory.eINSTANCE.createLayerLegendItem();
-                            layerLegendItem.setLayer((Layer) eventNewObj);
-                            getMap().getLegend().add(layerLegendItem);
+                            Map map = getMap();
+                            if( map != null ){
+                                List<ILegendItem> legend = map.getLegend();
+                                if( legend != null ){
+                                    final LayerLegendItem layerLegendItem = ProjectFactory.eINSTANCE.createLayerLegendItem();
+                                    layerLegendItem.setLayer((Layer) eventNewObj);
+
+                                    legend.add(layerLegendItem);
+                                }
+                            }
                         }
                         break;
                     }
@@ -96,7 +103,11 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
      */
     private boolean removeLayerLegendItem(Layer layer) {
         LayerLegendItem flaggedLayerItem = null;
-        for (ILegendItem item : getMap().getLegend()) {
+        Map map = getMap();
+        if( map == null ){
+            return false; // legend not available
+        }
+        for (ILegendItem item : map.getLegend()) {
             if (item instanceof Folder) {
                 final boolean isRemoved = removeLayerLegendItem((Folder) item, layer);
                 if (isRemoved) {
@@ -111,7 +122,7 @@ public class ContextModelImpl extends EObjectImpl implements ContextModel {
             }
         }
         if (flaggedLayerItem != null) {
-            getMap().getLegend().remove(flaggedLayerItem);
+            map.getLegend().remove(flaggedLayerItem);
             return true;
         }
         return false;
