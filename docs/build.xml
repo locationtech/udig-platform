@@ -26,7 +26,7 @@
             <isset property="build.directory" />
         </condition>
 
-        <condition property="project.version" value="${project.version}" else="1.3.3">
+        <condition property="project.version" value="${project.version}" else="1.4.0">
             <isset property="project.version" />
         </condition>
 
