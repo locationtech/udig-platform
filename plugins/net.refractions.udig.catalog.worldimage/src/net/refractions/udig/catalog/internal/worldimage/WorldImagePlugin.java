@@ -23,6 +23,9 @@ import org.osgi.framework.BundleContext;
  * @since 0.6.0
  */
 public class WorldImagePlugin extends AbstractUIPlugin {
+    
+    public static final String PROTOCOL_FILE = "file"; //$NON-NLS-1$
+    
     private static WorldImagePlugin plugin;
     private ResourceBundle resourceBundle;
 

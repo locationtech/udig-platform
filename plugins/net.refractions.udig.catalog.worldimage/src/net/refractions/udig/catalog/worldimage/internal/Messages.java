@@ -21,7 +21,6 @@ public class Messages extends NLS {
     public static String InMemoryCoverageLoader_restart_button;
     public static String WorldImageGeoResourceImpl_PrjUnavailable;
     public static String WorldImageServiceExtension_badFileExtension;
-    public static String WorldImageServiceExtension_file;
     public static String WorldImageServiceExtension_geotoolsDisagrees;
     public static String WorldImageServiceExtension_IllegalFilePart1;
     public static String WorldImageServiceExtension_IllegalFilePart2;

@@ -126,7 +126,7 @@ public class WorldImageGeoResourceImpl extends AbstractRasterGeoResource {
     }
 
     /**
-     * Convienience method to create a ReadableByteChannel from a URL.
+     * Convenience method to create a ReadableByteChannel from a URL.
      * 
      * @param prjURL
      * @return A Channel for the given file
@@ -135,7 +135,7 @@ public class WorldImageGeoResourceImpl extends AbstractRasterGeoResource {
     private ReadableByteChannel getReadChannel( URL prjURL ) throws IOException {
         ReadableByteChannel channel = null;
 
-        if (prjURL.getProtocol().equalsIgnoreCase("file")) { //$NON-NLS-1$
+        if (prjURL.getProtocol().equalsIgnoreCase(WorldImagePlugin.PROTOCOL_FILE)) {
             File file = URLUtils.urlToFile(prjURL);
 
             if (!file.exists() || !file.canRead()) {
