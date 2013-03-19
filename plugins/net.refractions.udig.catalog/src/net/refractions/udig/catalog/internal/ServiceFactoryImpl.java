@@ -116,8 +116,8 @@ public class ServiceFactoryImpl extends IServiceFactory {
      * @return List of candidate services
      */
     public List<IService> createService( final URL targetUrl ) {
-        final Map<String, Map<String, Serializable>> available = new HashMap<String, Map<String, Serializable>>();
-        final Map<String, Map<String, Serializable>> generic = new HashMap<String, Map<String, Serializable>>();
+        final Map<ServiceExtension, Map<String, Serializable>> available = new HashMap<ServiceExtension, Map<String, Serializable>>();
+        final Map<ServiceExtension, Map<String, Serializable>> generic = new HashMap<ServiceExtension, Map<String, Serializable>>();
         
         for( ServiceExtension serviceExtension : CatalogPlugin.getDefault().getServiceExtensions() ) {
             String name = serviceExtension.getClass().getName();
@@ -128,10 +128,10 @@ public class ServiceFactoryImpl extends IServiceFactory {
                 Map<String, Serializable> defaultParams = serviceExtension.createParams(targetUrl);
                 if (defaultParams != null) {
                     if( isGeneric(serviceExtension)){
-                        generic.put(name, defaultParams);
+                        generic.put(serviceExtension, defaultParams);
                     }
                     else {
-                        available.put(name, defaultParams);
+                        available.put(serviceExtension, defaultParams);
                     }
                 }
             } catch (Throwable t) {
@@ -144,35 +144,43 @@ public class ServiceFactoryImpl extends IServiceFactory {
         }
         List<IService> candidates = new LinkedList<IService>();
         if( !available.isEmpty()){
-            for( Map.Entry<String, Map<String, Serializable>> candidateEntry : available.entrySet() ) {
-                String extentionIdentifier = candidateEntry.getKey();
+            for( Map.Entry<ServiceExtension, Map<String, Serializable>> candidateEntry : available.entrySet() ) {
+                String extentionIdentifier = candidateEntry.getKey().getClass().getName();
+                ServiceExtension serviceExtension = candidateEntry.getKey();
                 Map<String, Serializable> connectionParameters = candidateEntry.getValue();
                 try {
-                    List<IService> service = createService(connectionParameters);
-                    if (service != null && !service.isEmpty()) {
-                        for( IService created : service ){
-                            CatalogImpl.runInterceptor(created, ServiceInterceptor.CREATED_ID);
-                            candidates.add(created);
-                        }
-                    }
+                    IService sevice = serviceExtension.createService(null, connectionParameters);
+                    CatalogImpl.runInterceptor(sevice, ServiceInterceptor.CREATED_ID);
+                    candidates.add(sevice);
+//                    List<IService> service = createService(connectionParameters);
+//                    if (service != null && !service.isEmpty()) {
+//                        for( IService created : service ){
+//                            CatalogImpl.runInterceptor(created, ServiceInterceptor.CREATED_ID);
+//                            candidates.add(created);
+//                        }
+//                    }
                 } catch (Throwable deadService) {
                     CatalogPlugin.log(extentionIdentifier + " could not create service", deadService); //$NON-NLS-1$
                 }
             }
         }
-        if( !candidates.isEmpty() && generic.isEmpty()){
+        if( candidates.isEmpty() && !generic.isEmpty()){
             // add generic entries if needed
-            for( Map.Entry<String, Map<String, Serializable>> candidateEntry : generic.entrySet() ) {
-                String extentionIdentifier = candidateEntry.getKey();
+            for( Map.Entry<ServiceExtension, Map<String, Serializable>> candidateEntry : generic.entrySet() ) {
+                String extentionIdentifier = candidateEntry.getKey().getClass().getName();
+                ServiceExtension serviceExtension = candidateEntry.getKey();
                 Map<String, Serializable> connectionParameters = candidateEntry.getValue();
                 try {
-                    List<IService> service = createService(connectionParameters);
-                    if (service != null && !service.isEmpty()) {                    
-                        for( IService created : service ){
-                            CatalogImpl.runInterceptor(created, ServiceInterceptor.CREATED_ID);
-                            candidates.add(created);
-                        }
-                    }
+                    IService sevice = serviceExtension.createService(null, connectionParameters);
+                    CatalogImpl.runInterceptor(sevice, ServiceInterceptor.CREATED_ID);
+                    candidates.add(sevice);
+//                    List<IService> service = createService(connectionParameters);
+//                    if (service != null && !service.isEmpty()) {                    
+//                        for( IService created : service ){
+//                            CatalogImpl.runInterceptor(created, ServiceInterceptor.CREATED_ID);
+//                            candidates.add(created);
+//                        }
+//                    }
                 } catch (Throwable deadService) {
                     CatalogPlugin.log(extentionIdentifier + " could not create service", deadService); //$NON-NLS-1$
                 }
