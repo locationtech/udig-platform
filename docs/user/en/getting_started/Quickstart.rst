@@ -23,27 +23,13 @@ The *data_1_3.zip* download is the full dataset used by :doc:`Walkthrough 1`.
 
 .. note:: Natural Earth Data
 
-  We would like to thank `www.naturalearthdata.com <http://www.naturalearthdata.com>`_ for this sample data. Please
-  visit their web site to download individual files (and at different scales for more detailed work):
-
-  * `HYP\_50M\_SR\_W.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/raster/HYP_50M_SR_W.zip>`_,
-  * `10m-populated-places-simple.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-populated-places-simple.zip>`_,
-  * `10m-admin-0-countries.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-0-countries.zip>`_,
-  * `10m-admin-1-states-provinces-shp.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-admin-1-states-provinces-shp.zip>`_,
-  * `10m-urban-area.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-urban-area.zip>`_,
-  * `10m-geography-regions-polys.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-polys.zip>`_,
-  * `10m-geography-regions-points.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-points.zip>`_,
-  * `10m-geography-regions-elevation-points.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-regions-elevation-points.zip>`_,
-  * `10m-geography-marine-polys.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-geography-marine-polys.zip>`_,
-  * `10m-land.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-land.zip>`_,
-  * `10m-ocean.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-ocean.zip>`_,
-  * `physical/10m-lakes.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-lakes.zip>`_,
-  * `physical/10m-rivers-lake-centerlines.zip <http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-rivers-lake-centerlines.zip>`_
+  We would like to thank `www.naturalearthdata.com <http://www.naturalearthdata.com>`_ for this sample data.
+  Visit the website for individual files (avaialble at different scales for more detailed work).
 
 uDig Application
 ~~~~~~~~~~~~~~~~
 
-#. Choose :menuselection:`uDig 1.3 --> uDig` from the start menu
+#. Choose :menuselection:`uDig 1.4 --> uDig` from the start menu
 #. The application will take a few moments to start up
 
    |image0|
