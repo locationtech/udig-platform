@@ -177,6 +177,8 @@ available layers of information that you can mix into your own maps.
 
 #. Press **Finish** to add these layers to your map
 
+#. You can press the :guilabel:`Zoom to Extent` toolbar button to show all the layer content. 
+
    .. figure:: /images/quickstart/WMSMap.png
       :width: 80%
       :alt: WMS Map
