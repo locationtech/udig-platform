@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.swt.widgets.Display;
@@ -211,7 +212,10 @@ public abstract class IGeoResource implements IResolve {
             synchronized (this) { // support concurrent access
                 if (info == null) {
                     if (Display.getCurrent() != null) {
-                        throw new IllegalStateException("Lookup of getInfo not available from the display thread"); //$NON-NLS-1$
+                        // This is bad and has a chance of hanging the UI
+                        if( Platform.inDevelopmentMode()){
+                            throw new IllegalStateException("Lookup of getInfo not available from the display thread"); //$NON-NLS-1$
+                        }
                     }
                     info = createInfo(monitor);
                     if (info == null) {
