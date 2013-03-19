@@ -77,7 +77,7 @@ public class AbstractRasterServiceInfo extends IServiceInfo {
 
             CoordinateReferenceSystem CRS = reader.getCrs();
 
-            if (!CRS.equals(DefaultEngineeringCRS.GENERIC_2D))
+            if (!(CRS instanceof DefaultEngineeringCRS))
                 numberOfAvailableInfoFields++;
             
             GeneralEnvelope env = reader.getOriginalEnvelope();

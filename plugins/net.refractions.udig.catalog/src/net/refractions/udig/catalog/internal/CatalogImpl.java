@@ -1152,10 +1152,12 @@ public class CatalogImpl extends ICatalog {
                 try {
                     IServiceInfo info1 = o1.getInfo(new SubProgressMonitor(monitor2, 1));
                     IServiceInfo info2 = o2.getInfo(new SubProgressMonitor(monitor2, 1));
-
-                    if (info1.getMetric() > info2.getMetric()) {
+                    double metric1 = info1.getMetric();
+                    double metric2 = info2.getMetric();
+                    
+                    if (metric1 > metric2) {
                         return 1;
-                    }else if(info1.getMetric() < info2.getMetric()){
+                    }else if(metric1 < metric2){
                        return -1;
                     }else{
                        return 0;
