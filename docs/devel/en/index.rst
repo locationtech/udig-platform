@@ -14,6 +14,7 @@ applications which combine existing and possibly new plug-ins.
 
    getting_started
    programmer_guide
+   docguide/docguide
    working_with_eclipse_rcp
    working_with_the_gis_platform
    working_with_gis_application

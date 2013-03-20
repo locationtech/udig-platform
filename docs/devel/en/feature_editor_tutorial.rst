@@ -884,7 +884,7 @@ Okay, I am sure you can think of lots of things to try:
    :figwidth: 100%
 Fig. MigLayout samples
 
-- Can you re-do the layout of this view using the Eclipse FormLayout? This layout manager makes the opposite trade off – you have real Java data structures to fill in for your layout data. Here is a small example to get you started::
+- Can you re-do the layout of this view using the Eclipse FormLayout? This layout manager makes the opposite trade off you have real Java data structures to fill in for your layout data. Here is a small example to get you started::
 
    parent.setLayout(new GridLayout(2, false));
    
