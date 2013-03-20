@@ -386,20 +386,41 @@ public final class AWTSWTImageUtils {
      */
     public static ImageData createImageData( BufferedImage image ) {
         AWTSWTImageUtils.checkAccess();
-    
-        if( image.getType()!=BufferedImage.TYPE_3BYTE_BGR ){
-            return createImageData((RenderedImage)image, image.getTransparency()!=Transparency.OPAQUE);
+        
+        int width = image.getWidth();
+        int height = image.getHeight();
+        
+        if (image.getType() == BufferedImage.TYPE_3BYTE_BGR) {
+            int bands = image.getColorModel().getColorSpace().getNumComponents();
+            int depth = 24;
+            byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
+
+            PaletteData paletteData = new PaletteData(0x0000ff, 0x00ff00, 0xff0000);
+            
+            ImageData data = new ImageData(width, height, depth, paletteData, width * bands, pixels);
+            return data;
         }
-    
-        int width=image.getWidth();
-        int height=image.getHeight();
-        int bands=image.getColorModel().getColorSpace().getNumComponents();
-        int depth=24;
-        byte[] pixels = ((DataBufferByte) image.getRaster()
-                .getDataBuffer()).getData();
-        ImageData data = new ImageData(width, height, depth, new PaletteData(
-                0x0000ff, 0x00ff00, 0xff0000), width * bands, pixels);
-        return data;
+        else if (image.getType() == BufferedImage.TYPE_4BYTE_ABGR) {
+            int bands = image.getColorModel().getColorSpace().getNumComponents() + 1;
+            int depth = 32;
+            byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
+
+            PaletteData paletteData = new PaletteData(0x0000ff, 0x00ff00, 0xff0000);
+            
+            ImageData data = new ImageData(width, height, depth, paletteData, width * bands, pixels);
+            
+            // scanning darkly
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    int pixel = image.getRGB(x, y);
+                    int alpha_value = (pixel >> 24) & 0x000000FF;
+                    data.setAlpha(x, y,  alpha_value );
+                }
+            }
+            return data;
+        }
+        // else pixel by pixel
+        return createImageData((RenderedImage) image, image.getTransparency() != Transparency.OPAQUE);
     }
 
     /**
