@@ -53,14 +53,10 @@ public class OmsScriptExecutor {
         /*
          * get java exec
          */
-        javaFile = null;
-        File udigJava = OmsBoxPlugin.getUdigJava();
-        if (udigJava != null) {
-            javaFile = udigJava.getAbsolutePath();
-        } else {
-            javaFile = "java";
+        javaFile = OmsBoxPlugin.getUdigJava();
+        if (!javaFile.equals("java")) {
+            javaFile = "\"" + javaFile + "\"";
         }
-
         /*
          * get libraries
          */
