@@ -15,9 +15,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import net.refractions.udig.catalog.ID;
@@ -28,7 +26,6 @@ import net.refractions.udig.catalog.geotiff.internal.Messages;
 
 import org.geotools.gce.geotiff.GeoTiffFormat;
 import org.geotools.gce.geotiff.GeoTiffFormatFactorySpi;
-import org.geotools.gce.image.WorldImageFormat;
 
 
 /**

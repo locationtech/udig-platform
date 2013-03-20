@@ -13,6 +13,7 @@ package net.refractions.udig.catalog.internal;
 
 import java.io.Serializable;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -117,25 +118,23 @@ public class ServiceFactoryImpl extends IServiceFactory {
      */
     public List<IService> createService( final URL targetUrl ) {
         final Map<ServiceExtension, Map<String, Serializable>> available = new HashMap<ServiceExtension, Map<String, Serializable>>();
-        final Map<ServiceExtension, Map<String, Serializable>> generic = new HashMap<ServiceExtension, Map<String, Serializable>>();
+        // lazy load parameters of generic Services only if no other ServiceExtension is available 
+        final List<ServiceExtension> generic = new ArrayList<ServiceExtension>();
         
         for( ServiceExtension serviceExtension : CatalogPlugin.getDefault().getServiceExtensions() ) {
-            String name = serviceExtension.getClass().getName();
             if( isGeneric(serviceExtension)){
-                continue; // skip generic for this pass
+                generic.add(serviceExtension);
+                continue;
             }
+            
             try {
                 Map<String, Serializable> defaultParams = serviceExtension.createParams(targetUrl);
                 if (defaultParams != null) {
-                    if( isGeneric(serviceExtension)){
-                        generic.put(serviceExtension, defaultParams);
-                    }
-                    else {
-                        available.put(serviceExtension, defaultParams);
-                    }
+                    available.put(serviceExtension, defaultParams);
                 }
             } catch (Throwable t) {
                 if (CatalogPlugin.getDefault().isDebugging()) {
+                    String name = serviceExtension.getClass().getName();
                     IStatus warning = new Status(IStatus.WARNING, CatalogPlugin.ID, name
                             + " could not create params " + targetUrl, t);
                     CatalogPlugin.getDefault().getLog().log(warning);
@@ -166,23 +165,23 @@ public class ServiceFactoryImpl extends IServiceFactory {
         }
         if( candidates.isEmpty() && !generic.isEmpty()){
             // add generic entries if needed
-            for( Map.Entry<ServiceExtension, Map<String, Serializable>> candidateEntry : generic.entrySet() ) {
-                String extentionIdentifier = candidateEntry.getKey().getClass().getName();
-                ServiceExtension serviceExtension = candidateEntry.getKey();
-                Map<String, Serializable> connectionParameters = candidateEntry.getValue();
+            for(ServiceExtension serviceExtension : generic) {
                 try {
-                    IService sevice = serviceExtension.createService(null, connectionParameters);
-                    CatalogImpl.runInterceptor(sevice, ServiceInterceptor.CREATED_ID);
-                    candidates.add(sevice);
-//                    List<IService> service = createService(connectionParameters);
-//                    if (service != null && !service.isEmpty()) {                    
-//                        for( IService created : service ){
-//                            CatalogImpl.runInterceptor(created, ServiceInterceptor.CREATED_ID);
-//                            candidates.add(created);
-//                        }
-//                    }
+                    Map<String, Serializable> connectionParameters = serviceExtension.createParams(targetUrl);
+                    if (connectionParameters != null) {
+                        IService service = serviceExtension.createService(null, connectionParameters);
+                        CatalogImpl.runInterceptor(service, ServiceInterceptor.CREATED_ID);
+                        candidates.add(service);
+    //                    List<IService> service = createService(connectionParameters);
+    //                    if (service != null && !service.isEmpty()) {                    
+    //                        for( IService created : service ){
+    //                            CatalogImpl.runInterceptor(created, ServiceInterceptor.CREATED_ID);
+    //                            candidates.add(created);
+    //                        }
+    //                    }
+                    }
                 } catch (Throwable deadService) {
-                    CatalogPlugin.log(extentionIdentifier + " could not create service", deadService); //$NON-NLS-1$
+                    CatalogPlugin.log(serviceExtension.getClass().getName() + " could not create service", deadService); //$NON-NLS-1$
                 }
             }
         }
