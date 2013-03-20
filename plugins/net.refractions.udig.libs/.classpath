@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="lib/groovy-1.8.9.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-geojson-9-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/json-simple-1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/itext-2.1.7.jar"/>
@@ -8,7 +9,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/asm-commons-3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/asm-tree-3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/asm-util-3.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/groovy-1.8.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/json-20090211.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/geoscript-groovy-1.1-SNAPSHOT.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>

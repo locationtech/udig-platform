@@ -102,7 +102,10 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
         }
 
         for( Iterator<Project> iter = projects.iterator(); iter.hasNext(); ) {
-            if (iter.next().eResource() == null) iter.remove();
+            Project project = iter.next();
+            if (project.eResource() == null){
+                iter.remove(); // delete this one its resource is missing
+            }
         }
         return projects;
     }

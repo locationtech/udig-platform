@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +26,7 @@ import java.util.Set;
 
 import oms3.CLI;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.Platform;
 import org.joda.time.DateTime;
 
@@ -41,8 +41,6 @@ import eu.udig.omsbox.utils.OmsBoxConstants;
 @SuppressWarnings("nls")
 public class OmsScriptExecutor {
 
-    private static final String[] JAVA_EXES = {"jre/bin/java.exe", "jre/bin/java"};
-
     private String classPath;
 
     private boolean isRunning = false;
@@ -55,32 +53,11 @@ public class OmsScriptExecutor {
         /*
          * get java exec
          */
-        // search for the java exec to use
-        // try one. The udig jre, which has all we need
-        URL url = Platform.getInstallLocation().getURL();
-        String path = url.getPath();
-        File installLocation = new File(path);
         javaFile = null;
-        for( String java : JAVA_EXES ) {
-            File tmpJavaFile = new File(installLocation, java);
-            if (tmpJavaFile.exists()) {
-                javaFile = tmpJavaFile.getAbsolutePath();
-                break;
-            }
-        }
-        // else try the java home
-        if (javaFile == null) {
-            String jreDirectory = System.getProperty("java.home");
-            for( String java : JAVA_EXES ) {
-                File tmpJavaFile = new File(jreDirectory, java);
-                if (tmpJavaFile.exists()) {
-                    javaFile = tmpJavaFile.getAbsolutePath();
-                    break;
-                }
-            }
-        }
-        // else hope for one in the path
-        if (javaFile == null) {
+        File udigJava = OmsBoxPlugin.getUdigJava();
+        if (udigJava != null) {
+            javaFile = udigJava.getAbsolutePath();
+        } else {
             javaFile = "java";
         }
 
@@ -173,18 +150,38 @@ public class OmsScriptExecutor {
         arguments.add("-cp");
         arguments.add(classPath);
         arguments.add(CLI.class.getCanonicalName());
-        arguments.add("-r");
-        arguments.add(scriptFile.getAbsolutePath());
+        arguments.add("-r ");
+        arguments.add("\"" + scriptFile.getAbsolutePath() + "\"");
 
-        String[] args = arguments.toArray(new String[0]);
+        String homeDir = System.getProperty("java.io.tmpdir");
+        File homeFile = new File(homeDir);
+        StringBuilder runSb = new StringBuilder();
+        for( String arg : arguments ) {
+            runSb.append(arg).append(" ");
+        }
+
+        String[] args;
+        if (Platform.getOS().equals(Platform.OS_WIN32)) {
+            File tmpRunFile = new File(homeFile, "udig_spatialtoolbox.bat");
+            FileUtils.writeStringToFile(tmpRunFile, runSb.toString());
+            args = new String[]{"cmd", "/c", tmpRunFile.getAbsolutePath()};
+        } else {
+            File tmpRunFile = new File(homeFile, "udig_spatialtoolbox.sh");
+            FileUtils.writeStringToFile(tmpRunFile, runSb.toString());
+            args = new String[]{"sh", tmpRunFile.getAbsolutePath()};
+        }
+
         // {javaFile, ramExpr, resourcesFlag, "-cp", classPath,
         // CLI.class.getCanonicalName(), "-r",
         // scriptFile.getAbsolutePath()};
 
         ProcessBuilder processBuilder = new ProcessBuilder(args);
         // work in home
-        String homeDir = System.getProperty("java.home");
-        processBuilder.directory(new File(homeDir));
+        // processBuilder.directory(homeFile);
+
+        // environment
+        Map<String, String> environment = processBuilder.environment();
+        // environment.put("CLASSPATH", classPath);
 
         final Process process = processBuilder.start();
         internalStream.println("Process started: " + new DateTime().toString(OmsBoxConstants.dateTimeFormatterYYYYMMDDHHMMSS));
@@ -196,21 +193,13 @@ public class OmsScriptExecutor {
             internalStream.println("Launching command: ");
             internalStream.println("------------------");
             List<String> command = processBuilder.command();
-            int i = 0;
             for( String arg : command ) {
-                if (i++ != 0) {
-                    if (!arg.startsWith("-")) {
-                        internalStream.print("\t\t");
-                    } else {
-                        internalStream.print("\t");
-                    }
-                }
                 internalStream.print(arg);
-                internalStream.print("\n");
+                internalStream.print(" ");
             }
-            internalStream.println("");
-            internalStream.println("(Put it all on a single line to execute it from command line)");
-            internalStream.println("------------------------------>8----------------------------");
+            internalStream.println("\n");
+            internalStream.println("(you can run the above from command line, customizing the content)");
+            internalStream.println("----------------------------------->8---------------------------------");
             internalStream.println("");
             // script run
             internalStream.println("Script run: ");
@@ -222,7 +211,7 @@ public class OmsScriptExecutor {
             // environment used
             internalStream.println("Environment used: ");
             internalStream.println("-----------------");
-            Map<String, String> environment = processBuilder.environment();
+
             Set<Entry<String, String>> entrySet = environment.entrySet();
             for( Entry<String, String> entry : entrySet ) {
                 internalStream.print(entry.getKey());
