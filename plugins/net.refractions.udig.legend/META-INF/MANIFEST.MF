@@ -17,3 +17,4 @@ Export-Package: net.refractions.udig.legend,
  net.refractions.udig.legend.ui,
  net.refractions.udig.legend.ui.actions
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: udig.refractions.net

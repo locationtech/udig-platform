@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: uDig Rasterings Plug-in
+Bundle-Name: Rasterings Catalog Plug-in
 Bundle-SymbolicName: net.refractions.udig.catalog.rasterings;singleton:=true
 Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: net.refractions.udig.catalog.rasterings.RasteringsPlugin
@@ -13,3 +13,4 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Export-Package: net.refractions.udig.catalog.rasterings
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: udig.refractions.net
