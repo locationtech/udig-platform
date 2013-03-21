@@ -4,29 +4,11 @@ Introduction to the Spatial Toolbox
 The Spatial Toolbox View gives the possibility to execute tools from loaded libraries on resources
 visualized in uDig.
 
-`Introduction to the Spatial Toolbox`_
-
-`Before you Start`_
-
-`Download the Spearfish example data`_
-
-`The Spatial toolbox View`_
-
-`Installing JGrasstools`_
-
-`Processing`_
-
-`Generating Aspect of an Elevation Model`_
-
-`Things to Try`_
-
-
 **Related reference**
 
 :doc:`/reference/Spatial Toolbox View`
 
-
-This is how it looks like when it is enabled:
+Here is an example of the spatial toolbox in action:
 
 .. figure:: /images/introduction_to_the_spatial_toolbox/omsbox.png
    :width: 80%
@@ -51,11 +33,13 @@ In the example we will use a raster elevation model of the Spearfish region.
    -  elevation.asc
    -  elevation.prj
 
-#. Try to drag it into uDig and see if it look like the following:
+#. Try to drag it into uDig to visualy confirm height data looking like the following.
+   
+   .. tip:: You can use the :guilabel:`Style Editor` to fill in a color map for the raw elevation data
 
-.. figure:: /images/introduction_to_the_spatial_toolbox/elevation.png
-   :width: 80%
-   :alt:
+   .. figure:: /images/introduction_to_the_spatial_toolbox/elevation.png
+      :width: 80%
+      :alt:
 
 The Spatial toolbox View
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -110,18 +94,19 @@ To load the modules:
    `jgrasstools <http://www.jgrasstools.org/>`_ library.
 #. Therefore it is possible to jump on the jgrass website to get a processing library to use it in
    uDig.
-#. At the time of writing the jgrass 0.7.1 library is packaged and available for use
-#. To start to have some fun we need to download two jar files:
+#. To start to have some fun we need to download several jar files.
+   
+   At the time of writing the jgrass 0.7.2 is being packaged for your use.
+   
+   - the `generic GIS modules library <http://jgrasstools.googlecode.com/files/jgt-jgrassgears-0.7.2.jar>`_
+   - the `horton machine <http://jgrasstools.googlecode.com/files/jgt-hortonmachine-0.7.2.jar>`_
+     for hydro-geomophologic analyses
 
-   -  the `generic GIS modules library <http://jgrasstools.googlecode.com/files/jgt-jgrassgears-0.7.2.jar>`_
-   -  the `horton machine <http://jgrasstools.googlecode.com/files/jgt-hortonmachine-0.7.2.jar>`_
-      for hydro-geomophologic analyses
-
-#. You can download these two files anywhere; for today we will be placing them in a "jgrass" folder
+#. You can download these files anywhere; for today we will be placing them in a "jgrass" folder
    in your home directory.
 #. Create a "jgrass" folder in your home directory
-#. Download the above two files and place them in the jgrass folder
-#. Then push the last icon of the toolbar:
+#. Download the above files and place them in the jgrass folder
+#. Then push the :guilabel:`Settings Panel` icon on the toolbar (the last icon at the end).
 
    .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_05.png
       :alt:
@@ -167,67 +152,60 @@ already loaded from the sample dataset.
       :width: 80%
       :alt:
 
-#. Please select the Aspect module so we can describe the tabs used to control a service.
-#. inputs tab:
+#. Please select the :guilabel:`Aspect` module.
+   
+   Each module provides two tabs:
+   
+   * inputs tab: used to fill in the information required to run
+   * description tab: details and background on the module. 
+   
+#. We will now set up the Aspect service to work with our
+   sample digital elevation model.
 
-   .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_11.png
+#. To define the input raster to process, we need to fill
+   in :guilabel:`The map of the digital elevation model (DEM)`:
+
+   The simplest thing is to drag *aspect* raster layer from the udig layer
+   view into the textfield and let udig do the rest.
+   
+   ..note: To browse the file system use the :guilabel:`...` button to open a file dialog.
+   
+   .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_14.png
       :width: 80%
-      :alt:
 
-
-   .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_12.png
+#. Next we can provide the path for the generated file.
+   
+   This time we can not drag an existing raster (as we have not created it yet) so we will
+   have to use the :guilabel:`...` button to browse. The button will open in the same folder
+   of the last inserted raster and allow us to supply a filename.
+   
+   Type in the filename :kbd:`aspect.asc` to create an esri ascii also as output.
+   
+   .. tip: Other supported raster formats are :kbd:`tiff` and kbd:`grass`
+   
+   .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_15.png
       :width: 80%
 
-      **outputs tab**
+#. Before we run the module there are a couple of configuration options that are useful to
+   control.
+   
+   The most important is the amount of memory that we permit the module to use:
+
+   .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_16.png
+
+   In the above example the local machine has 8 gigabytes of RAM, allowing us to easily allocate
+   2000 megabytes for for the work.
+   
+   Please set an appropriate value your your machine.
+
+#. To execute the module please click the **run** button in the view toolbar
+
+   .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_17.png
 
 
-   .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_13.png
-      :width: 80%
+   The module will execute opening a console window that gives feedback on what is going on.
 
-      **documentation tab**
-
-
-#. We will now set up the Aspect service to work with our sample digital elevation model.
-#. To define the input raster to process, simply push the input data button.
-
-   -  A raster reader dialog will open.
-   -  You could browse for the raster, but the simplest thing is to drag the raster map from the
-      udig layer view into the textfield and let udig do the rest.
-
-      .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_14.png
-	     :width: 80%
-
-#. Output data
-
-   -  In the case of the output data, we can't drag an existing map, so we will have to use the
-      browse button, which will open in the same folder of the last inserted map.
-   -  There we simply write **aspect.asc** to create an esri ascii also as output \\ (other formats
-      supported are tiffs and grass binary rasters)
-
-      .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_15.png
-	     :width: 80%
-
-#. Configure
-
-   -  Before we run the module there are a couple of configuration options that are useful to
-      control.
-   -  The most important is the amount of memory that we permit the module to use:
-
-	  .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_16.png
-
-
-#. In the above example the local machine has 8 gigabytes of RAM, allowing us to easily allocate
-   2000 megabytes for for the work
-#. Execute the module
-
-   -  To execute the module please click the **run** button in the view toolbar
-
-      .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_17.png
-
-
-   -  The module will execute opening a console window that gives feedback on what is going on.
-
-#. Once the process is done, the resulting map is loaded in the map window:
+#. Once the process is done, the resulting map is loaded in the map window
 
    .. figure:: /images/introduction_to_the_spatial_toolbox/spatial_toolbox_18.png
       :width: 80%
