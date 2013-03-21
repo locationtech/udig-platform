@@ -159,7 +159,7 @@ public class OmsScriptExecutor {
         String[] args;
         if (Platform.getOS().equals(Platform.OS_WIN32)) {
             File tmpRunFile = new File(homeFile, "udig_spatialtoolbox.bat");
-            FileUtils.writeStringToFile(tmpRunFile, runSb.toString());
+            FileUtils.writeStringToFile(tmpRunFile, "@echo off\n" + runSb.toString());
             args = new String[]{"cmd", "/c", tmpRunFile.getAbsolutePath()};
         } else {
             File tmpRunFile = new File(homeFile, "udig_spatialtoolbox.sh");
