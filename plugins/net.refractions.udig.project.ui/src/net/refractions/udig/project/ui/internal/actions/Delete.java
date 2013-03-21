@@ -268,21 +268,25 @@ public class Delete extends UDIGGenericAction {
             message = MessageFormat.format(deleteMany, size);
         }
 
-        MessageDialogWithToggle dialog = MessageDialogWithToggle.openOkCancelConfirm(Display
-                .getCurrent().getActiveShell(), Messages.Delete_delete, message,
-                Messages.Delete_filesystem, getDoDelete(), null, null);
+        boolean delete = MessageDialog.openConfirm( Display.getCurrent().getActiveShell(), Messages.Delete_delete, message );
+        boolean deleteFiles = false;
+        
+//        MessageDialogWithToggle dialog = MessageDialogWithToggle.openOkCancelConfirm(Display
+//                .getCurrent().getActiveShell(), Messages.Delete_delete, message,
+//                Messages.Delete_filesystem, getDoDelete(), null, null);
         // note: we will do our own preference store persistence, since the built in one is
         // backwards
-        boolean deleteFiles = dialog.getToggleState();
-        int returnCode = dialog.getReturnCode();
-        if (returnCode == Window.OK) {
+//        boolean deleteFiles = dialog.getToggleState();
+//        int returnCode = dialog.getReturnCode();
+//        if (returnCode == Window.OK) {
+        if( delete ){
             if (deleteFiles != getDoDelete()) {
                 setDoDelete(deleteFiles);
             }
-            return Pair.create(deleteFiles, returnCode);
+            return Pair.create(deleteFiles, Window.OK);
         } else {
             // Window.CANCEL
-            return Pair.create(null, returnCode);
+            return Pair.create(null, Window.CANCEL);
         }
     }
 
