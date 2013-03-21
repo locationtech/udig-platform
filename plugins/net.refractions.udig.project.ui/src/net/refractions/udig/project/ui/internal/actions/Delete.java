@@ -268,17 +268,29 @@ public class Delete extends UDIGGenericAction {
             message = MessageFormat.format(deleteMany, size);
         }
 
+        /*
+         *  FIXME as of https://jira.codehaus.org/browse/UDIG-1974
+         *  there is a bug in the maps removal.
+         *  The below should be fixed once the bug has been fixed.
+         */
+        
+        // START OLD CODE
+            //        MessageDialogWithToggle dialog = MessageDialogWithToggle.openOkCancelConfirm(Display
+            //                .getCurrent().getActiveShell(), Messages.Delete_delete, message,
+            //                Messages.Delete_filesystem, getDoDelete(), null, null);
+                    // note: we will do our own preference store persistence, since the built in one is
+                    // backwards
+            //        boolean deleteFiles = dialog.getToggleState();
+            //        int returnCode = dialog.getReturnCode();
+            //        if (returnCode == Window.OK) {
+        // END OLD CODE
+        
+        // START TEMPORARY NEW CODE
         boolean delete = MessageDialog.openConfirm( Display.getCurrent().getActiveShell(), Messages.Delete_delete, message );
         boolean deleteFiles = false;
+        // END TEMPORARY NEW CODE
         
-//        MessageDialogWithToggle dialog = MessageDialogWithToggle.openOkCancelConfirm(Display
-//                .getCurrent().getActiveShell(), Messages.Delete_delete, message,
-//                Messages.Delete_filesystem, getDoDelete(), null, null);
-        // note: we will do our own preference store persistence, since the built in one is
-        // backwards
-//        boolean deleteFiles = dialog.getToggleState();
-//        int returnCode = dialog.getReturnCode();
-//        if (returnCode == Window.OK) {
+        
         if( delete ){
             if (deleteFiles != getDoDelete()) {
                 setDoDelete(deleteFiles);
