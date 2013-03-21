@@ -39,6 +39,7 @@
                 <include name="**/" />
                 <exclude name="classes/**" />
             </fileset>
+            <fileset dir="${basedir}" includes="common.pyc"/>
         </delete>
     </target>
 
