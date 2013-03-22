@@ -13,7 +13,6 @@ package net.refractions.udig.style.sld;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringReader;
 import java.net.URL;
 import java.util.ArrayList;
@@ -36,13 +35,10 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.filter.IllegalFilterException;
 import org.geotools.filter.function.FilterFunction_geometryType;
-import org.geotools.sld.v1_1.SLDConfiguration;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Fill;
 import org.geotools.styling.LineSymbolizer;
-import org.geotools.styling.Mark;
-import org.geotools.styling.NamedStyle;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
@@ -57,7 +53,6 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.UserLayer;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
-import org.geotools.xml.Parser;
 import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -65,7 +60,6 @@ import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.PropertyIsEqualTo;
 import org.opengis.filter.expression.Expression;
-import org.opengis.style.SemanticType;
 
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
@@ -270,39 +264,29 @@ public final class SLDContent extends StyleContent {
         
         SimpleFeatureType schema = featureSource.getSchema();
         GeometryDescriptor geom = schema.getGeometryDescriptor();
-        if( geom==null )
+        if (geom == null) {
             return null;
-        
-        Style style = null;
+        }
 
-        SLDContentManager sldContentManager; 
-        
-        if (style == null) {
-            // fall back to create some default
-            style = styleBuilder.createStyle();
-            sldContentManager = new SLDContentManager(styleBuilder, style);
+        Style style = styleBuilder.createStyle();
+        SLDContentManager sldContentManager = new SLDContentManager(styleBuilder, style);
 
-            // initialize the symbolizers based on geometry type
-            if (geom != null) {
-                if (SLD.isLine(geom)) {
-                    sldContentManager.addSymbolizer(createLineSymbolizer(colour));
-                } else if (SLD.isPoint(geom)) {
-                    sldContentManager.addSymbolizer(createPointSymbolizer(colour));
-                } else if (SLD.isPolygon(geom)) {
-                    PolygonSymbolizer symbol = createPolygonSymbolizer(colour);
-                    sldContentManager.addSymbolizer(symbol);
-                } else {
-                    try {
-                        createGeometrySLD(colour, schema.getGeometryDescriptor().getName().getLocalPart(),
-                                sldContentManager);
-                    } catch (Exception e) {
-                        SLDPlugin.log("Failed to create geometry SLD", e); //$NON-NLS-1$
-                        sldContentManager.addSymbolizer(styleBuilder.createLineSymbolizer());
-                    }
-                }
-            }
+        // initialize the symbolizers based on geometry type
+        if (SLD.isLine(geom)) {
+            sldContentManager.addSymbolizer(createLineSymbolizer(colour));
+        } else if (SLD.isPoint(geom)) {
+            sldContentManager.addSymbolizer(createPointSymbolizer(colour));
+        } else if (SLD.isPolygon(geom)) {
+            PolygonSymbolizer symbol = createPolygonSymbolizer(colour);
+            sldContentManager.addSymbolizer(symbol);
         } else {
-            sldContentManager = new SLDContentManager(styleBuilder, style);
+            try {
+                createGeometrySLD(colour, schema.getGeometryDescriptor().getName().getLocalPart(),
+                        sldContentManager);
+            } catch (Exception e) {
+                SLDPlugin.log("Failed to create geometry SLD", e); //$NON-NLS-1$
+                sldContentManager.addSymbolizer(styleBuilder.createLineSymbolizer());
+            }
         }
 
         //set the feature type name
