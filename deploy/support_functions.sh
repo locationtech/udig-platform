@@ -109,6 +109,7 @@ function windows_installer () {
         
         cp ${INSTALLER}/* ${BUILD}/${PLATFORM}
         cp ${INSTALLER}/*.txt ${BUILD}/${PLATFORM}
+        cp ${INSTALLER}/*.bmp ${BUILD}/${PLATFORM}
         cp ${INSTALLER}/udig/icons ${BUILD}/${PLATFORM}/icons
         
         sed -e "s/VersionXXXX/${VERSION}/g" ${INSTALLER}/uDigInstallScript.nsi > ${BUILD}/${PLATFORM}/uDigInstallScript.nsi

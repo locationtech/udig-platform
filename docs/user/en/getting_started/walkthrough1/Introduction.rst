@@ -15,12 +15,19 @@ uDig is collaborative effort brought together by a diverse project management co
 
  * Mauricio Pazos (Spain)
 
-uDig was originally started by `Refractions Research <http://www.refractions.net/>`_ in Canada with funding from `GeoConnections <http://www.geoconnections.org/>`_ Canada.
+uDig was originated at `Refractions Research <http://www.refractions.net/>`_ in Canada with funding from `GeoConnections <http://www.geoconnections.org/>`_ Canada.
 
-uDig is intended to be used in conjunction with your existing investment in spatial information. We are of the opinion that data (your data) is what is important. To that end we support a wide range of formats, compatibility with a range of spatial databases and accessing of information services such as WMS and WFS. This information is combined with excellent desktop integration.
+uDig is intended to be used in conjunction with your existing investment in spatial information.
+We are of the opinion that your data is what is important. To that end we support a wide range of
+formats, compatibility with a range of spatial databases and accessing of information services
+such as WMS and WFS.
 
-The use of an open source license (`EPL <http://www.eclipse.org/legal/epl-v10.html>`_ and `BSD <http://opensource.org/licenses/BSD-3-Clause>`_) allows the uDig project to be used by your organization with no per seat license.
-Any fixes you make to the core uDig codebase; do have to be passed on to your users. May we recommend submitting a patch as an easy way to accomplish this goal.
+We also recognize the expectations placed on a desktop application with support for printing
+and excellent desktop integration. 
+
+The use of an open source license (`EPL <http://www.eclipse.org/legal/epl-v10.html>`_ and
+`BSD <http://opensource.org/licenses/BSD-3-Clause>`_) allows the uDig project to be used
+by your organization with no per seat license.
 
 For more information and a selection of case studies:
 
@@ -28,4 +35,5 @@ For more information and a selection of case studies:
 
  * http://udig.refractions.net/gallery/
 
-In addition to supporting an open source license, uDig is also offers an open development model with clear procedures allowing your team to take part.
+In addition to supporting an open source license, uDig is also offers an open vendor-neutral
+development model with clear procedures allowing your team to take part.

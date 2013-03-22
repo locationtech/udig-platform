@@ -12,7 +12,7 @@ and advanced editing tools.
 
 Files needed to install GeoServer:
 
-* `GeoServer Latest <http://geoserver.org/display/GEOS/Latest>`_
+* `GeoServer (Stable) <http://geoserver.org/display/GEOS/Stable>`_
 
 * `Java Development Kit <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_
 

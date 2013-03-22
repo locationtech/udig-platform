@@ -78,10 +78,12 @@
   !define MUI_ICON "udig\icons\32-uDigIcon.ico"
   ;I tried to use the same windows uninstaller I did, but NSIS doesn't seem
   ;to like icons of different sizes -ch
-
-  ;!define MUI_UNICON "udig\plugins\net.refractions.udig.ui_0.3.0\icons\udig.ico"
-  ;!define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\win-uninstall.ico"
   !define MUI_UNICON "udig\icons\32-uninstallIcon.ico"
+
+  !define MUI_HEADERIMAGE
+  !define MUI_HEADERIMAGE_RIGHT
+  !define MUI_HEADERIMAGE_BITMAP header.bmp
+  !define MUI_WELCOMEFINISHPAGE_BITMAP side_left.bmp
   
   !define MUI_ABORTWARNING
   
@@ -99,20 +101,6 @@
 
   !insertmacro MUI_PAGE_WELCOME
   
-  ;custom page I made to detect java.  I have it repeat the java version that
-  ;it found.  I like the functionality, unfortunately it looks ghetto, as I 
-  ;just did a pop up box.  See my comments on the echoJava function -ch
-  ;
-  ;Chris included this, but we do not require a JDK of any sort, so it is commented
-  ;out for now.
-  ;Page custom echoJava
-  
-  ; ---------------------------------------------------------------------------
-  ; At this point, we should also determine the location of the JRE, and what
-  ; version we are dealing with.  We should also make sure that JAI and ImageIO
-  ; are installed.
-  ; ---------------------------------------------------------------------------
-
   ;A text file for the license here would be better.  And it probably should
   ;be your license text, dual license requires two pages?
   ;You should explain something here, have the license as users install it. -ch
@@ -255,6 +243,15 @@ Function .onInit
 
    ClearErrors
 
+; Splash screen
+  SetOutPath $TEMP
+  File /oname=spltmp.bmp "splash.bmp"
+  advsplash::show 1500 500 0 -1 $TEMP\spltmp
+	;advsplash::show Delay FadeIn FadeOut KeyColor FileName
+  Pop $0 ; $0 has '1' if the user closed the splash screen early,
+         ;    has '0' if everything closed normally, and '-1' if some error occurred.
+  Delete $TEMP\spltmp.bmp
+	  
 FunctionEnd
 
 ;--------------------------------
