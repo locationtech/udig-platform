@@ -24,12 +24,11 @@ Windows install:
   .. image:: images/installer_license.png
     :width: 8cm
 
-  .. note:: Licences
-     uDig is an open source project released with a business friendly Eclipse Public License
+  .. note:: uDig is an open source project released with a business friendly Eclipse Public License
      (`EPL <http://udig.refractions.net/files/epl-v10.html>`_) and Refractions BSD 3 Clause License
      (`BSD <http://udig.refractions.net/files/bsd3-v10.html>`_).
 
-     ECW/JP2 support is freely available to desktop applications.
+     ECW/JP2 support is freely licensed for desktop application use.
 
 * By default uDig will be installed into your Program Files directory.
 
