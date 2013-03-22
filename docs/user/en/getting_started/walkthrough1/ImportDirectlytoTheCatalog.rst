@@ -23,11 +23,10 @@ Earlier we learned how to work with content from the Catalog view, in this secti
     :height: 7.47cm
 
 
-  .. note::
-     You can copy the `URL <http://demo.opengeo.org/geoserver/ows?service=wms&version=1.1.1&request=GetCapabilities>`_ from the :doc:`Walkthrough 1 <../Walkthrough 1>` page.
-
 * This time we are going to import an OpenGeo demo Web Map Server using the following Capabilities document:
 
+  http://demo.opengeo.org/geoserver/ows?service=wms&version=1.1.1&request=GetCapabilities
+  
   .. image:: images/wms_wizard.png
     :alt: WMS Wizard
 
