@@ -320,6 +320,7 @@ public final class SLDContent extends StyleContent {
         PropertyIsEqualTo filter = createGeometryFunctionFilter(geomXPath, Point.class.getSimpleName());
         rule.setFilter(filter);
         rule.symbolizers().add(createPointSymbolizer(colour));
+        sldContentManager.getDefaultFeatureTypeStyle().rules().add(rule);
 
         // create MultiPoint rule
         rule=sldContentManager.createRule();
@@ -431,8 +432,15 @@ public final class SLDContent extends StyleContent {
     protected static PointSymbolizer createPointSymbolizer(Color colour) {
         PointSymbolizer symb=styleBuilder.createPointSymbolizer();
         Fill fill = styleBuilder.createFill(colour, 1.0);        
+
         Stroke outline=styleBuilder.createStroke(Color.BLACK,1,1);
-        symb.getGraphic().graphicalSymbols().add( styleBuilder.createMark(StyleBuilder.MARK_SQUARE, fill, outline));
+
+        // check existing default graphics
+        if (symb.getGraphic().graphicalSymbols() != null && symb.getGraphic().graphicalSymbols().size() == 1) {
+            symb.getGraphic().graphicalSymbols().clear();
+        }
+        symb.getGraphic().graphicalSymbols().add(styleBuilder.createMark(StyleBuilder.MARK_SQUARE, fill, outline));
+
         symb.getGraphic().setSize( styleBuilder.literalExpression(6.0));
         return symb;
     }
