@@ -414,7 +414,7 @@
                  adapt="true"
                  class="net.refractions.udig.catalog.IResolve"/>
            <destination
-                 adapt="true"
+                 adapt="false"
                  class="net.refractions.udig.catalog.IResolve"/>
 	    </action>
   </extension>
