@@ -12,7 +12,7 @@ package net.refractions.udig.internal.ui;
 
 /**
 * Constants for use with eclipse tracing api.
-* Rember only engage tracing if WMSPlugin.getDefault().isDebugging().
+* Rememeber only engage tracing if WMSPlugin.getDefault().isDebugging().
 * <p>
 * Sample use:<pre><code>
 * static import net.refractions.udig.project.ui.internal.RENDERING;

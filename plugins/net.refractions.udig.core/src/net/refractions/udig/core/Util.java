@@ -14,18 +14,23 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.PlatformObject;
+import org.eclipse.core.runtime.Plugin;
 
 /**
- * The internal eclipse.ui Util class is not available; here are a few methods
- * we found use for.
+ * Helpful method suitable for use as a static include.
+ * 
  * 
  * @author jody
  * @since 1.2.0
  */
 public class Util {
+    
     /**
      * If it is possible to adapt the given object to the given type, this
      * returns the adapter. Performs the following checks:
+     * <p>
+     * This is a copy of the internal eclipse.ui Util class which was not available.
+     * </p>
      * 
      * <ol>
      * <li>Returns <code>sourceObject</code> if it is an instance of the

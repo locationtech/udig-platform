@@ -1001,10 +1001,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @generated NOT
      */
     public String toString() {
-        if (eIsProxy()) return super.toString();
-
+        if (eIsProxy()) {
+            return super.toString();
+        }
         StringBuffer result = new StringBuffer();
-        result.append(" (name: "); //$NON-NLS-1$
+        result.append("Layer ( name: "); //$NON-NLS-1$
         result.append(name);
         result.append(')');
         return result.toString();

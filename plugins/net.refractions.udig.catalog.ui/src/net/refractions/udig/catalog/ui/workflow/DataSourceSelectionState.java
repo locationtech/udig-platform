@@ -79,7 +79,8 @@ public class DataSourceSelectionState extends State {
                 }
             } catch (Throwable t) {
                 // log and keep going
-                CatalogPlugin.log(t.getLocalizedMessage(), t);
+                CatalogPlugin.trace("Factory "+d.getId()+" unable to handle "+context, t);
+                // CatalogPlugin.log(t.getLocalizedMessage(), t);
             }
         }
         // if we already have a descriptor, we have a conflict
@@ -111,7 +112,10 @@ public class DataSourceSelectionState extends State {
         }
  
         if( descriptor != null ){
-            CatalogPlugin.log("Drag and Drop of "+descriptor.getId() + " from "+context, null );
+            String value = context.toString();
+            String type = context.getClass().getName();
+            
+            CatalogPlugin.trace("Drag and Drop selected factory "+descriptor.getId() + " to handle "+type+":"+value, null );
         }
     }
 

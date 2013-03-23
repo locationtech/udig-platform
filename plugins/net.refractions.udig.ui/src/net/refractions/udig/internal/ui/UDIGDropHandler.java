@@ -10,6 +10,7 @@
  */
 package net.refractions.udig.internal.ui;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,10 +35,12 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
+import org.eclipse.swt.widgets.Control;
 
 /**
  * A drop event handler which delegates to an extension point in order to perform drag and drop
@@ -156,7 +159,10 @@ public class UDIGDropHandler extends DropTargetAdapter {
     @Override
     public void dragEnter( DropTargetEvent event ) {
         if (UiPlugin.isDebugging(Trace.DND)) {
-            System.out.println("UDIGDropHandler.dragEnter: Setting event.detail to COPY"); //$NON-NLS-1$
+            DropTarget target = (DropTarget) event.getSource();
+            Control control = target.getControl();
+            
+            System.out.println("UDIGDropHandler.dragEnter "+control.toString()+": Setting event.detail to COPY"); //$NON-NLS-1$
         }
         event.detail = DND.DROP_COPY;
     }
@@ -195,9 +201,13 @@ public class UDIGDropHandler extends DropTargetAdapter {
         
         CompositeDropActionJob actionJob = getActionJob();
         if (actions != null && !actions.isEmpty()){
-        	List<IDropAction> filteredActions = filterActions(event,actions);
-            UiPlugin.trace(Trace.DND, getClass(), event.data+" dropped on "+getTarget()+" "+filteredActions.size()+" found to process drop",null); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            UiPlugin.trace(Trace.DND, getClass(), "Actions for drop are: "+filteredActions.toString(), null ); //$NON-NLS-1$
+            List<IDropAction> filteredActions = filterActions(event,actions);
+            
+            UiPlugin.trace(Trace.DND, getClass(), "Target "+getTarget()+" found "+filteredActions.size()+" drop actions",null); //$NON-NLS-1$ //$NON-NLS-2$ 
+            for( IDropAction action : filteredActions ){
+                UiPlugin.trace(Trace.DND, getClass(), " * Action "+action.getName()+" implementation "+action.getClass().getSimpleName(), null ); //$NON-NLS-1$
+            }
+
             actionJob.addActions(this, filteredActions);
         } else {
             UiPlugin.trace(Trace.DND, getClass(), event.data+" dropped on "+getTarget()+" found no actions for processing it",null );  //$NON-NLS-1$//$NON-NLS-2$
@@ -216,8 +226,8 @@ public class UDIGDropHandler extends DropTargetAdapter {
      * @param the action extensions that were found that claim to be able to process the drop event
      */
     protected List<IDropAction> filterActions(DropTargetEvent event, List<IDropAction> actions) {
-		return actions;
-	}
+        return actions;
+    }
     /**
      * Go through and determine if we have any IDropActions based on the provided event.
      * 
@@ -225,11 +235,17 @@ public class UDIGDropHandler extends DropTargetAdapter {
      * @param event
      * @return
      */
-	private List<IDropAction> findDropActions( Object data, DropTargetEvent event ) {
+    private List<IDropAction> findDropActions( Object data, DropTargetEvent event ) {
         if (UiPlugin.isDebugging(Trace.DND)) {
-            System.out.println("Find drop called on " + data + "(" + data.getClass() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            String type = data.getClass().getSimpleName();
+            String value = data.getClass().isArray() ?
+                    Array.getLength( data )+" items" :
+                    data.toString();
+            
+            UiPlugin.trace(Trace.DND, UDIGDropHandler.class,
+                    "Find drop actions for " + type +": "+value ,null); //$NON-NLS-1$ //$NON-NLS-2$        
         }
-        // do a check for a multi object and separate the children out
+        // do a check for a multi-object and separate the children out
         Class<?> type = data.getClass();
 
         Object[] objects = null;
@@ -264,8 +280,11 @@ public class UDIGDropHandler extends DropTargetAdapter {
 
         CompositeDropActionJob actionJob = getActionJob();
         if (!actions.isEmpty()){
-            UiPlugin.trace(Trace.DND, getClass(), data+" dropped on "+getTarget()+" "+actions.size()+" found to process drop",null); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            UiPlugin.trace(Trace.DND, getClass(), "Actions for drop are: "+actions.toString(), null ); //$NON-NLS-1$
+            UiPlugin.trace(Trace.DND, getClass(), data+" dropped on "+getTarget()+" found "+actions.size()+" drop actions",null); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            for( IDropAction action : actions ){
+                UiPlugin.trace(Trace.DND, getClass(), " * Action "+action.getName()+" implementation "+action.getClass().getSimpleName(), null ); //$NON-NLS-1$
+            }
+            
             actionJob.addActions(this, actions);
         } else {
             UiPlugin.trace(Trace.DND, getClass(), data+" dropped on "+getTarget()+" found no actions for processing it",null );  //$NON-NLS-1$//$NON-NLS-2$

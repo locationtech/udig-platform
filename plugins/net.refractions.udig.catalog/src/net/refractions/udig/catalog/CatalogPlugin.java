@@ -507,7 +507,7 @@ public class CatalogPlugin extends Plugin {
      */
     public static void log( String message, Throwable t ) {
         String msg = message == null ? "" : message;
-        int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.WARNING;
+        int status = t instanceof Exception || message != null ? IStatus.ERROR : IStatus.INFO;
         getDefault().getLog().log(new Status(status, ID, IStatus.OK, msg, t));
     }
     /**

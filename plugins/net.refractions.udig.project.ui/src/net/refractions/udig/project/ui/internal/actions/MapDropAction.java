@@ -130,11 +130,11 @@ public class MapDropAction extends CatalogImportDropAction {
                 Collection<IGeoResource> additionalResources = toResources(monitor, object, getClass());
                 
                 ProjectUIPlugin.trace(Trace.DND, MapDropAction.class,
-                        "Resources converted from DnD data:"+additionalResources,null);
-                
+                        "Converted from DnD "+object.getClass().getSimpleName()+" data to:"+additionalResources,null);
                 resources.addAll(additionalResources);
             }
         }
+        
         if( !resources.isEmpty() ){
             addResourcesToMap(resources, layerpos, map);
         }
@@ -163,7 +163,7 @@ public class MapDropAction extends CatalogImportDropAction {
             Set<IGeoResource> keySet = state.getResources().keySet();
 
             ProjectUIPlugin.trace(Trace.DND, callingClass,
-                    "converted " + object + " to " + keySet + " IGeoResources.", null); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    "converted " + object + " to " + keySet, null); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
             return keySet;
         } else {
@@ -182,10 +182,10 @@ public class MapDropAction extends CatalogImportDropAction {
         if (map==null )
             map = ApplicationGIS.getActiveMap();
         if( map==ApplicationGIS.NO_MAP ){
-            ProjectUIPlugin.trace(Trace.DND, getClass(), "Creating a new map with from resources: "+resources, null); //$NON-NLS-1$
+            ProjectUIPlugin.trace(Trace.DND, getClass(), "Creating new Map with from resources: "+resources, null); //$NON-NLS-1$
             ApplicationGIS.addLayersToMap((IMap)null, resources, layerpos);
         }else{
-            ProjectUIPlugin.trace(Trace.DND, getClass(), "Adding resources: "+resources+" to map:"+map.getName(), null);  //$NON-NLS-1$//$NON-NLS-2$
+            ProjectUIPlugin.trace(Trace.DND, getClass(), "Add layers to "+map.getName()+" from resources: "+resources, null);  //$NON-NLS-1$//$NON-NLS-2$
             ApplicationGIS.addLayersToMap(map, resources, layerpos, null, true);
         }
     }

@@ -347,11 +347,11 @@ public abstract class IGeoResource implements IResolve {
      */
     public String toString() {
         StringBuffer buf = new StringBuffer();
-        String classname = getClass().getName();
-        String name = classname.substring(classname.lastIndexOf('.') + 1);
-        buf.append(name);
+        String classname = getClass().getSimpleName();
+        buf.append(classname);
         buf.append("("); //$NON-NLS-1$
-        buf.append(getIdentifier());
+        ID ref = getID();
+        buf.append( ref.labelResource() );
         buf.append(")"); //$NON-NLS-1$
         return buf.toString();
     }
