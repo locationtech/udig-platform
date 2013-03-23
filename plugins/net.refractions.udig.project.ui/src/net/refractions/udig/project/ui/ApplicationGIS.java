@@ -105,31 +105,31 @@ public class ApplicationGIS {
     private static IToolManager                                          toolManager;
     private static ActiveMapTracker activeMapTracker;
 
-	/**
-	 * Obtains the current project.
-	 * 
-	 * @return The current active project
-	 */
-	public static IProject getActiveProject() {
-		Project project = ProjectPlugin.getPlugin().getProjectRegistry()
-				.getCurrentProject();
+    /**
+     * Obtains the current project.
+     * 
+     * @return The current active project
+     */
+    public static IProject getActiveProject() {
+        Project project = ProjectPlugin.getPlugin().getProjectRegistry()
+                .getCurrentProject();
 
-		if (project != null)
-			return project;
+        if (project != null)
+            return project;
 
-		return ProjectPlugin.getPlugin().getProjectRegistry()
-				.getDefaultProject();
-	}
+        return ProjectPlugin.getPlugin().getProjectRegistry()
+                .getDefaultProject();
+    }
 
-	/**
-	 * Return all Projects. The list is unmodifiable.
-	 * 
-	 * @return all Projects.
-	 */
-	public static List<? extends IProject> getProjects() {
-		return Collections.unmodifiableList(ProjectPlugin.getPlugin()
-				.getProjectRegistry().getProjects());
-	}
+    /**
+     * Return all Projects. The list is unmodifiable.
+     * 
+     * @return all Projects.
+     */
+    public static List<? extends IProject> getProjects() {
+        return Collections.unmodifiableList(ProjectPlugin.getPlugin()
+                .getProjectRegistry().getProjects());
+    }
 
 
     /**
@@ -159,141 +159,141 @@ public class ApplicationGIS {
         return activeMapTracker.getVisibleMaps();
     }
 
-	/**
-	 * Opens a Map editor for the provided map, This is a non-blocking call.
-	 * Equivalent to openMap(map, false);
-	 * 
-	 * @param map
-	 *            the map to open. Must be an instance of Map.
-	 */
-	public static void openMap(IMap map) {
-		openMap(map, false);
-	}
+    /**
+     * Opens a Map editor for the provided map, This is a non-blocking call.
+     * Equivalent to openMap(map, false);
+     * 
+     * @param map
+     *            the map to open. Must be an instance of Map.
+     */
+    public static void openMap(IMap map) {
+        openMap(map, false);
+    }
 
-	/**
-	 * Opens a Map editor for the provided map.
-	 * 
-	 * @param map
-	 *            the map to open. Must be an instance of Map.
-	 * @param wait
-	 *            indicates whether to wait for the map to open before
-	 *            returning.
-	 */
-	public static void openMap(IMap map, boolean wait) {
-		openProjectElement(map, wait);
-	}
+    /**
+     * Opens a Map editor for the provided map.
+     * 
+     * @param map
+     *            the map to open. Must be an instance of Map.
+     * @param wait
+     *            indicates whether to wait for the map to open before
+     *            returning.
+     */
+    public static void openMap(IMap map, boolean wait) {
+        openProjectElement(map, wait);
+    }
 
-	/**
-	 * creates a map and opens an editor for the map.
-	 * 
-	 * @param a
-	 *            list of IGeoResources. Each resource will be a layer in the
-	 *            created map.
-	 */
-	public static void createAndOpenMap(List<IGeoResource> resources) {
-		CreateMapCommand command = new CreateMapCommand(null, resources, null);
-		getActiveProject().sendSync(command);
-		openMap(command.getCreatedMap());
-	}
+    /**
+     * creates a map and opens an editor for the map.
+     * 
+     * @param a
+     *            list of IGeoResources. Each resource will be a layer in the
+     *            created map.
+     */
+    public static void createAndOpenMap(List<IGeoResource> resources) {
+        CreateMapCommand command = new CreateMapCommand(null, resources, null);
+        getActiveProject().sendSync(command);
+        openMap(command.getCreatedMap());
+    }
 
-	/**
-	 * creates a map and opens an editor for the map.
-	 * 
-	 * @param a
-	 *            list of IGeoResources. Each resource will be a layer in the
-	 *            created map.
-	 * @param owner
-	 *            the project that will contain the map. owner must be an
-	 *            instance of Project. If it is obtained using the framework
-	 *            then this will always be the case.
-	 */
-	public static void createAndOpenMap(List<IGeoResource> resources,
-			IProject owner) {
-		CreateMapCommand command = new CreateMapCommand(null, resources, owner);
-		getActiveProject().sendSync(command);
-		openMap(command.getCreatedMap());
-	}
-	
-	/**
-	 * creates a map and opens an editor for the map.
-	 * 
-	 * @param a
-	 *            list of IGeoResources. Each resource will be a layer in the
-	 *            created map.
-	 * @param owner
-	 *            the project that will contain the map. owner must be an
-	 *            instance of Project. If it is obtained using the framework
-	 *            then this will always be the case.
-	 * @param wait
-	 *            indicates whether to wait for the map to open before
-	 *            returning.
-	 */
-	public static void createAndOpenMap(List<IGeoResource> resources,
-			IProject owner, boolean wait) {
-		CreateMapCommand command = new CreateMapCommand(null, resources, owner);
-		getActiveProject().sendSync(command);
-		openMap(command.getCreatedMap(), wait);
-	}
+    /**
+     * creates a map and opens an editor for the map.
+     * 
+     * @param a
+     *            list of IGeoResources. Each resource will be a layer in the
+     *            created map.
+     * @param owner
+     *            the project that will contain the map. owner must be an
+     *            instance of Project. If it is obtained using the framework
+     *            then this will always be the case.
+     */
+    public static void createAndOpenMap(List<IGeoResource> resources,
+            IProject owner) {
+        CreateMapCommand command = new CreateMapCommand(null, resources, owner);
+        getActiveProject().sendSync(command);
+        openMap(command.getCreatedMap());
+    }
+    
+    /**
+     * creates a map and opens an editor for the map.
+     * 
+     * @param a
+     *            list of IGeoResources. Each resource will be a layer in the
+     *            created map.
+     * @param owner
+     *            the project that will contain the map. owner must be an
+     *            instance of Project. If it is obtained using the framework
+     *            then this will always be the case.
+     * @param wait
+     *            indicates whether to wait for the map to open before
+     *            returning.
+     */
+    public static void createAndOpenMap(List<IGeoResource> resources,
+            IProject owner, boolean wait) {
+        CreateMapCommand command = new CreateMapCommand(null, resources, owner);
+        getActiveProject().sendSync(command);
+        openMap(command.getCreatedMap(), wait);
+    }
 
-	/**
-	 * Gets a reference to a view. If the view has not been opened previously
-	 * then the view will be opened.
-	 * 
-	 * @param show
-	 *            whether to show the view or not.
-	 * @param id
-	 *            the id of the view to show.
-	 * @return returns the view or null if the view does not exist
-	 */
-	public static IViewPart getView(boolean show, String id) {
-		IWorkbenchPage page = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage();
-		IViewReference[] view = page.getViewReferences();
-		IViewReference infoRef = null;
-		for (IViewReference reference : view) {
-			if (reference.getId().equals(id)) {
-				infoRef = reference;
-				break;
-			}
-		}
-		// JONES: need to get the part and set the selection to null so that the
-		// last selected
-		// feature will not flash (because it will not be in list any more).
-		IViewPart infoView = null;
-		if (infoRef == null) {
-			try {
-				infoView = page.showView(id);
-			} catch (PartInitException e1) {
-				return null;
-			}
-			if (infoView == null) {
-				return null;
-			}
-		}
-		if (infoRef != null)
-			return (IViewPart) infoRef.getPart(show);
+    /**
+     * Gets a reference to a view. If the view has not been opened previously
+     * then the view will be opened.
+     * 
+     * @param show
+     *            whether to show the view or not.
+     * @param id
+     *            the id of the view to show.
+     * @return returns the view or null if the view does not exist
+     */
+    public static IViewPart getView(boolean show, String id) {
+        IWorkbenchPage page = PlatformUI.getWorkbench()
+                .getActiveWorkbenchWindow().getActivePage();
+        IViewReference[] view = page.getViewReferences();
+        IViewReference infoRef = null;
+        for (IViewReference reference : view) {
+            if (reference.getId().equals(id)) {
+                infoRef = reference;
+                break;
+            }
+        }
+        // JONES: need to get the part and set the selection to null so that the
+        // last selected
+        // feature will not flash (because it will not be in list any more).
+        IViewPart infoView = null;
+        if (infoRef == null) {
+            try {
+                infoView = page.showView(id);
+            } catch (PartInitException e1) {
+                return null;
+            }
+            if (infoView == null) {
+                return null;
+            }
+        }
+        if (infoRef != null)
+            return (IViewPart) infoRef.getPart(show);
 
-		return null;
+        return null;
 
-	}
+    }
 
-	/**
-	 * Runs the given runnable in a protected mode. Exceptions thrown in the
-	 * runnable are logged and passed to the runnable's exception handler. Such
-	 * exceptions are not rethrown by this method.
-	 */
-	public static void run(ISafeRunnable request) {
-		PlatformGIS.run(request);
-	}
+    /**
+     * Runs the given runnable in a protected mode. Exceptions thrown in the
+     * runnable are logged and passed to the runnable's exception handler. Such
+     * exceptions are not rethrown by this method.
+     */
+    public static void run(ISafeRunnable request) {
+        PlatformGIS.run(request);
+    }
 
-	/**
-	 * Returns an editor input for the type passed in. Processes the
-	 * editorInputs extension point.
-	 * 
-	 * @param type
-	 * @return an editor input for the type passed in.
-	 */
-	public static List<UDIGEditorInputDescriptor> getEditorInputs(
+    /**
+     * Returns an editor input for the type passed in. Processes the
+     * editorInputs extension point.
+     * 
+     * @param type
+     * @return an editor input for the type passed in.
+     */
+    public static List<UDIGEditorInputDescriptor> getEditorInputs(
             final IProjectElement projectElement) {
 
         final List<UDIGEditorInputDescriptor> newInputs = new ArrayList<UDIGEditorInputDescriptor>();
@@ -344,12 +344,12 @@ public class ApplicationGIS {
     }
 
 
-	/**
-	 * Returns the ToolManager singleton.
-	 * 
-	 * @return the ToolManager singleton.
-	 */
-	public static IToolManager getToolManager() {
+    /**
+     * Returns the ToolManager singleton.
+     * 
+     * @return the ToolManager singleton.
+     */
+    public static IToolManager getToolManager() {
         synchronized (ToolManager.class) {
             if (toolManager == null) {
                 
@@ -372,158 +372,158 @@ public class ApplicationGIS {
         return toolManager;
    }
 
-	/**
-	 * Returns the IEditorInput instance that wraps the element argument.
-	 * 
-	 * @return the IEditorInput instance that wraps the element argument.
-	 */
-	public static UDIGEditorInput getInput(IProjectElement element) {
-		List<UDIGEditorInputDescriptor> descriptors = getEditorInputs(element);
-		for (UDIGEditorInputDescriptor descriptor : descriptors) {
-			UDIGEditorInput input = descriptor.createInput(element);
-			if (input != null) {
-				return input;
-			}
-		}
-		return null;
-	}
+    /**
+     * Returns the IEditorInput instance that wraps the element argument.
+     * 
+     * @return the IEditorInput instance that wraps the element argument.
+     */
+    public static UDIGEditorInput getInput(IProjectElement element) {
+        List<UDIGEditorInputDescriptor> descriptors = getEditorInputs(element);
+        for (UDIGEditorInputDescriptor descriptor : descriptors) {
+            UDIGEditorInput input = descriptor.createInput(element);
+            if (input != null) {
+                return input;
+            }
+        }
+        return null;
+    }
 
-	/**
-	 * Creates a Tools Context out of Map.
-	 * 
-	 * @param map
-	 *            that the context interacts with
-	 * @return a ToolContext
-	 * @see ToolContext
-	 */
-	public static IToolContext createContext(IMap map) {
-		if (map instanceof net.refractions.udig.project.internal.Map) {
-			ToolContext context = new ToolContextImpl();
-			context
-					.setMapInternal((net.refractions.udig.project.internal.Map) map);
-			return context;
-		}
-		return null;
-	}
+    /**
+     * Creates a Tools Context out of Map.
+     * 
+     * @param map
+     *            that the context interacts with
+     * @return a ToolContext
+     * @see ToolContext
+     */
+    public static IToolContext createContext(IMap map) {
+        if (map instanceof net.refractions.udig.project.internal.Map) {
+            ToolContext context = new ToolContextImpl();
+            context
+                    .setMapInternal((net.refractions.udig.project.internal.Map) map);
+            return context;
+        }
+        return null;
+    }
 
-	/**
-	 * Make layers from the resourceList and adds the layers to the map.
-	 * <p>
-	 * <b>NOTE</b> map may be null. If it is then the current open map will be
-	 * used (see {@link #getActiveMap()} or a new map will be created if that is
-	 * null.
-	 * </p>
-	 * 
-	 * @param map
-	 *            the map to add the layers to. If null the current active map
-	 *            will be used or a new one will be created
-	 * @param resourceList
-	 *            Resources to add to the map.
-	 * @param startPosition
-	 *            z-position of the layers to add. if -1 it will be added to the
-	 *            top of the map (0 is the bottom of the map and
-	 *            map.getMapLayer.size() is the top of the map).
-	 * @return layers that were added.
-	 */
-	public static List<? extends ILayer> addLayersToMap(IMap map,
-			List<IGeoResource> resourceList, int startPosition) {
-		return addLayersToMap(map, resourceList, startPosition, null, false);
-	}
+    /**
+     * Make layers from the resourceList and adds the layers to the map.
+     * <p>
+     * <b>NOTE</b> map may be null. If it is then the current open map will be
+     * used (see {@link #getActiveMap()} or a new map will be created if that is
+     * null.
+     * </p>
+     * 
+     * @param map
+     *            the map to add the layers to. If null the current active map
+     *            will be used or a new one will be created
+     * @param resourceList
+     *            Resources to add to the map.
+     * @param startPosition
+     *            z-position of the layers to add. if -1 it will be added to the
+     *            top of the map (0 is the bottom of the map and
+     *            map.getMapLayer.size() is the top of the map).
+     * @return layers that were added.
+     */
+    public static List<? extends ILayer> addLayersToMap(IMap map,
+            List<IGeoResource> resourceList, int startPosition) {
+        return addLayersToMap(map, resourceList, startPosition, null, false);
+    }
 
-	/**
-	 * Make layers from the resourceList, creates a new map, adds layers to map
-	 * and adds map to the project.
-	 * 
-	 * @param project
-	 *            project that new map should be added to
-	 * @param resourceList
-	 *            Resources to add to the map.
-	 * @param startPosition
-	 *            z-position of the layers to add. if -1 it will be added to the
-	 *            top of the map (0 is the bottom of the map and
-	 *            map.getMapLayer.size() is the top of the map).
-	 * 
-	 * @return layers that were added.
-	 */
-	public static List<? extends ILayer> addLayersToMap(IProject project,
-			List<IGeoResource> resourceList) {
-		return addLayersToMap(null, resourceList, 0, project, false);
-	}
+    /**
+     * Make layers from the resourceList, creates a new map, adds layers to map
+     * and adds map to the project.
+     * 
+     * @param project
+     *            project that new map should be added to
+     * @param resourceList
+     *            Resources to add to the map.
+     * @param startPosition
+     *            z-position of the layers to add. if -1 it will be added to the
+     *            top of the map (0 is the bottom of the map and
+     *            map.getMapLayer.size() is the top of the map).
+     * 
+     * @return layers that were added.
+     */
+    public static List<? extends ILayer> addLayersToMap(IProject project,
+            List<IGeoResource> resourceList) {
+        return addLayersToMap(null, resourceList, 0, project, false);
+    }
 
-	/**
-	 * Make layers from the resourceList and adds the layers to the map.
-	 * <p>
-	 * <b>NOTE</b> map may be null. If it is then the current open map will be
-	 * used (see {@link #getActiveMap()} or a new map will be created if that is
-	 * null.
-	 * </p>
-	 * 
-	 * @param map
-	 *            the map to add the layers to. If null the current active map
-	 *            will be used or a new one will be created
-	 * @param resourceList
-	 *            Resources to add to the map.
-	 * @param startPosition
-	 *            z-position of the layers to add. if -1 it will be added to the
-	 *            top of the map (0 is the bottom of the map and
-	 *            map.getMapLayer.size() is the top of the map).
-	 * @param project
-	 *            project that map should be added to... Only used if there is
-	 *            no current map. If project is then the default project is
-	 *            used.
-	 * @return layers that were added.
-	 * @deprecated
-	 */
-	public static List<? extends ILayer> addLayersToMap(IMap map,
-			List<IGeoResource> resourceList, int startPosition, Project project) {
-		return addLayersToMap(map, resourceList, startPosition, project, false);
-	}
+    /**
+     * Make layers from the resourceList and adds the layers to the map.
+     * <p>
+     * <b>NOTE</b> map may be null. If it is then the current open map will be
+     * used (see {@link #getActiveMap()} or a new map will be created if that is
+     * null.
+     * </p>
+     * 
+     * @param map
+     *            the map to add the layers to. If null the current active map
+     *            will be used or a new one will be created
+     * @param resourceList
+     *            Resources to add to the map.
+     * @param startPosition
+     *            z-position of the layers to add. if -1 it will be added to the
+     *            top of the map (0 is the bottom of the map and
+     *            map.getMapLayer.size() is the top of the map).
+     * @param project
+     *            project that map should be added to... Only used if there is
+     *            no current map. If project is then the default project is
+     *            used.
+     * @return layers that were added.
+     * @deprecated
+     */
+    public static List<? extends ILayer> addLayersToMap(IMap map,
+            List<IGeoResource> resourceList, int startPosition, Project project) {
+        return addLayersToMap(map, resourceList, startPosition, project, false);
+    }
 
-	/**
-	 * Make layers from the resourceList and adds the layers to the map.
-	 * <p>
-	 * <b>NOTE</b> map may be null. If it is then the current open map will be
-	 * used (see {@link #getActiveMap()} or a new map will be created if that is
-	 * null.
-	 * </p>
-	 * 
-	 * @param map
-	 *            the map to add the layers to. If null the current active map
-	 *            will be used or a new one will be created
-	 * @param resourceList
-	 *            Resources to add to the map.
-	 * @param startPosition
-	 *            z-position of the layers to add. if -1 it will be added to the
-	 *            top of the map (0 is the bottom of the map and
-	 *            map.getMapLayer.size() is the top of the map).
-	 * @param project
-	 *            project that map should be added to... Only used if there is
-	 *            no current map. If project is then the default project is
-	 *            used.
-	 * @param wait
-	 *            if true then method will block until map has been opened
-	 *            otherwise will return without blocking.
-	 */
-	public static List<? extends ILayer> addLayersToMap(IMap map2,
-			List<IGeoResource> resourceList, int startPosition2,
-			IProject project2, boolean wait) {
-		
-		IMap map = map2;
-		if (map == null && project2 == null)
-			map = (IMap) getActiveMap();
+    /**
+     * Make layers from the resourceList and adds the layers to the map.
+     * <p>
+     * <b>NOTE</b> map may be null. If it is then the current open map will be
+     * used (see {@link #getActiveMap()} or a new map will be created if that is
+     * null.
+     * </p>
+     * 
+     * @param map
+     *            the map to add the layers to. If null the current active map
+     *            will be used or a new one will be created
+     * @param resourceList
+     *            Resources to add to the map.
+     * @param startPosition
+     *            z-position of the layers to add. if -1 it will be added to the
+     *            top of the map (0 is the bottom of the map and
+     *            map.getMapLayer.size() is the top of the map).
+     * @param project
+     *            project that map should be added to... Only used if there is
+     *            no current map. If project is then the default project is
+     *            used.
+     * @param wait
+     *            if true then method will block until map has been opened
+     *            otherwise will return without blocking.
+     */
+    public static List<? extends ILayer> addLayersToMap(IMap map2,
+            List<IGeoResource> resourceList, int startPosition2,
+            IProject project2, boolean wait) {
+        
+        IMap map = map2;
+        if (map == null && project2 == null)
+            map = (IMap) getActiveMap();
 
         if(map==NO_MAP){
             map = null;
         }
         
-		IProject project = project2;
-		if (project == null) {
-			if (map == null)
-				project = ProjectPlugin.getPlugin().getProjectRegistry()
-						.getCurrentProject();
-			else
-				project = map.getProject();
-		}
+        IProject project = project2;
+        if (project == null) {
+            if (map == null)
+                project = ProjectPlugin.getPlugin().getProjectRegistry()
+                        .getCurrentProject();
+            else
+                project = map.getProject();
+        }
         List<? extends ILayer> layers;
         
         /*
@@ -547,84 +547,84 @@ public class ApplicationGIS {
             layers=alCommand.getLayers();
         }
 
-		if (!ApplicationGISInternal.getOpenMaps().contains(map)) {
-			openMap(map, wait);
-		}
-		return layers;
-	}
+        if (!ApplicationGISInternal.getOpenMaps().contains(map)) {
+            openMap(map, wait);
+        }
+        return layers;
+    }
 
-	/**
-	 * Loads the project element indicated by the url and adds the map to the
-	 * provided project.
-	 * 
-	 * @param url
-	 *            the project element to load
-	 * @param project
-	 *            the project to add the project element to.
-	 * @return returns the loaded project element.
-	 * @throws IOException
-	 *             thrown if there is a problem reading the project element file
-	 * @throws IllegalArgumentException
-	 *             thrown if the file indicated by the URL is not a project
-	 *             element file.
-	 */
-	public static IProjectElement loadProjectElement(URL url, IProject project)
-			throws IOException, IllegalArgumentException {
-		URI uri = URI.createURI(url.toString());
+    /**
+     * Loads the project element indicated by the url and adds the map to the
+     * provided project.
+     * 
+     * @param url
+     *            the project element to load
+     * @param project
+     *            the project to add the project element to.
+     * @return returns the loaded project element.
+     * @throws IOException
+     *             thrown if there is a problem reading the project element file
+     * @throws IllegalArgumentException
+     *             thrown if the file indicated by the URL is not a project
+     *             element file.
+     */
+    public static IProjectElement loadProjectElement(URL url, IProject project)
+            throws IOException, IllegalArgumentException {
+        URI uri = URI.createURI(url.toString());
 
-		Resource mapResource;
-		try {
-			mapResource = ProjectRegistryImpl.getProjectRegistry().eResource()
-					.getResourceSet().getResource(uri, true);
-		} catch (Exception e) {
-			throw new IOException(Messages.ApplicationGIS_loadError + uri);
-		}
+        Resource mapResource;
+        try {
+            mapResource = ProjectRegistryImpl.getProjectRegistry().eResource()
+                    .getResourceSet().getResource(uri, true);
+        } catch (Exception e) {
+            throw new IOException(Messages.ApplicationGIS_loadError + uri);
+        }
 
-		Object obj;
-		try {
-			obj = mapResource.getContents().get(0);
-		} catch (Exception e) {
-			throw new IllegalArgumentException(
-					Messages.ApplicationGIS_illegalArgumentPart1 + uri
-							+ Messages.ApplicationGIS_illegalArgumentPart2);
-		}
-		if (!(obj instanceof ProjectElement))
-			throw new IllegalArgumentException(
-					Messages.ApplicationGIS_noProjectElement
-							+ obj.getClass().getSimpleName());
+        Object obj;
+        try {
+            obj = mapResource.getContents().get(0);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(
+                    Messages.ApplicationGIS_illegalArgumentPart1 + uri
+                            + Messages.ApplicationGIS_illegalArgumentPart2);
+        }
+        if (!(obj instanceof ProjectElement))
+            throw new IllegalArgumentException(
+                    Messages.ApplicationGIS_noProjectElement
+                            + obj.getClass().getSimpleName());
 
-		ProjectElement elem = (ProjectElement) obj;
-		((Project) project).getElementsInternal().add(elem);
+        ProjectElement elem = (ProjectElement) obj;
+        ((Project) project).getElementsInternal().add(elem);
 
-		return elem;
-	}
+        return elem;
+    }
    
-	/**
-	 * Opens a {@link IProjectElement} for editing/viewing.
-	 * 
-	 * @param obj
-	 *            object to open
-	 * @param wait
-	 *            whether or not to perform the action asynchronously
-	 */
-	public static void openProjectElement(IProjectElement obj, boolean wait) {
-		OpenProjectElementCommand command = new OpenProjectElementCommand(obj);
-		if (wait)
-			ApplicationGIS.getActiveProject().sendSync(command);
-		else
-			ApplicationGIS.getActiveProject().sendASync(command);
-	}
+    /**
+     * Opens a {@link IProjectElement} for editing/viewing.
+     * 
+     * @param obj
+     *            object to open
+     * @param wait
+     *            whether or not to perform the action asynchronously
+     */
+    public static void openProjectElement(IProjectElement obj, boolean wait) {
+        OpenProjectElementCommand command = new OpenProjectElementCommand(obj);
+        if (wait)
+            ApplicationGIS.getActiveProject().sendSync(command);
+        else
+            ApplicationGIS.getActiveProject().sendASync(command);
+    }
 
-	/**
-	 * Parameter class for
-	 * {@link ApplicationGIS#drawMap(net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter)}
-	 * 
-	 * @author jesse
-	 * 
-	 * @see ApplicationGIS#drawMap(net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter)
-	 */
+    /**
+     * Parameter class for
+     * {@link ApplicationGIS#drawMap(net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter)}
+     * 
+     * @author jesse
+     * 
+     * @see ApplicationGIS#drawMap(net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter)
+     */
     public static class DrawMapParameter {
-    	final BoundsStrategy boundsStrategy;
+        final BoundsStrategy boundsStrategy;
         final Graphics2D graphics;
         final Dimension destinationSize;
         final IMap toDraw;
@@ -739,28 +739,28 @@ public class ApplicationGIS {
          * Copies the parameters as well as the graphics and destinationSize objects.  DOES NOT COPY map ToDraw
          * @param params2 the parameters to copy
          */
-		public DrawMapParameter(DrawMapParameter params2) {
-			this((Graphics2D) params2.graphics.create(), new Dimension(
-					params2.destinationSize), params2.toDraw,
-					params2.boundsStrategy, params2.dpi,  params2.selectionStyle,
-					params2.monitor,params2.transparent, params2.doBufferedImageForGrids);
-		}
-		
+        public DrawMapParameter(DrawMapParameter params2) {
+            this((Graphics2D) params2.graphics.create(), new Dimension(
+                    params2.destinationSize), params2.toDraw,
+                    params2.boundsStrategy, params2.dpi,  params2.selectionStyle,
+                    params2.monitor,params2.transparent, params2.doBufferedImageForGrids);
+        }
+        
     }
     
     /**
-	 * Renders the provided map on to the provided graphics2D object.
+     * Renders the provided map on to the provided graphics2D object.
      * @param params parameters that describe how and where to draw the map
-	 * 
-	 * @throws RenderException
-	 *             Thrown if an error occurs such as a unreachable server.
-	 *             
-	 * @return the map that was rendered.  It will not be saved or and is not part of any project.
-	 */
+     * 
+     * @throws RenderException
+     *             Thrown if an error occurs such as a unreachable server.
+     *             
+     * @return the map that was rendered.  It will not be saved or and is not part of any project.
+     */
     public static IMap drawMap(final DrawMapParameter drawMapParams) throws RenderException {
-    	final DrawMapParameter params = new DrawMapParameter( drawMapParams );
-    	IProgressMonitor monitor = params.monitor;
-    	
+        final DrawMapParameter params = new DrawMapParameter( drawMapParams );
+        IProgressMonitor monitor = params.monitor;
+        
         final Map map = (Map) EcoreUtil.copy((EObject) params.toDraw);
         
         map.getBlackboard().addAll(drawMapParams.toDraw.getBlackboard());
@@ -777,17 +777,17 @@ public class ApplicationGIS {
             public void run(IProgressMonitor monitor)
                     throws InvocationTargetException, InterruptedException {
                 // Load IGeoResources using original map. The new map can't do this because it doesn't have a
-            	// Resource(file) and therefore can't resolve relative URIs
-            	List<ILayer> layers = drawMapParams.toDraw.getMapLayers();
-            	for (ILayer layer : layers) {
-					layer.getGeoResources();
-				}
-            	
-            	Color background = (Color) map.getBlackboard().get(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR);
-            	params.graphics.setBackground(background);
-				if (!drawMapParams.transparent) {
-				    params.graphics.clearRect(0, 0, params.destinationSize.width, params.destinationSize.height);
-				}
+                // Resource(file) and therefore can't resolve relative URIs
+                List<ILayer> layers = drawMapParams.toDraw.getMapLayers();
+                for (ILayer layer : layers) {
+                    layer.getGeoResources();
+                }
+                
+                Color background = (Color) map.getBlackboard().get(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR);
+                params.graphics.setBackground(background);
+                if (!drawMapParams.transparent) {
+                    params.graphics.clearRect(0, 0, params.destinationSize.width, params.destinationSize.height);
+                }
                 List<Layer> layersToRender = params.selectionStyle.handleSelection(map.getLayersInternal());
                 
                 ProjectUIPlugin
@@ -815,45 +815,45 @@ public class ApplicationGIS {
                     IProgressMonitor monitor, RendererCreator decisive,
                     SortedSet<RenderContext> sortedContexts)
                     throws InvocationTargetException {
-            	
-            	monitor.beginTask("Rendering map", sortedContexts.size());
-            	RenderContext mainContext = decisive.getContext();
+                
+                monitor.beginTask("Rendering map", sortedContexts.size());
+                RenderContext mainContext = decisive.getContext();
 
-            	ILabelPainter labelPainter = mainContext.getLabelPainter();
-            	labelPainter.clear();
-				labelPainter.start();
-            	
-            	Dimension displaySize = params.destinationSize;
+                ILabelPainter labelPainter = mainContext.getLabelPainter();
+                labelPainter.clear();
+                labelPainter.start();
+                
+                Dimension displaySize = params.destinationSize;
                 Iterator<RenderContext> iter = sortedContexts.iterator();
                 while (iter.hasNext()) {
-					RenderContext context = (RenderContext) iter.next();
+                    RenderContext context = (RenderContext) iter.next();
 
-					ILayer layer = context.getLayer();
-					boolean isLayerFromGrid = layer.getGeoResource().canResolve(GridCoverage.class);
+                    ILayer layer = context.getLayer();
+                    boolean isLayerFromGrid = layer.getGeoResource().canResolve(GridCoverage.class);
                     String layerId = getLayerId(layer);
 
-					if( !(layer instanceof SelectionLayer) ||
-					        ((layer instanceof SelectionLayer) && params.selectionStyle.getShowLabels()) ){
-						labelPainter.startLayer(layerId);
-					}
-					try {
-						if (context instanceof CompositeRenderContext) {
-							CompositeRenderContext compositeContext = (CompositeRenderContext) context;
-							List<ILayer> layers = compositeContext.getLayers();
-							boolean visible = false;
-							for (ILayer tmpLayer : layers) {
-								visible = visible || tmpLayer.isVisible();
-							}
-							if (!visible)
-								continue;
-						} else if (!layer.isVisible())
-							continue;
-						Renderer renderer = decisive.getRenderer(context);
-						ProjectUIPlugin
-								.trace(
-										ApplicationGIS.class,
-										"Issuing render call to " + renderer.getName(), null); //$NON-NLS-1$
-						try {
+                    if( !(layer instanceof SelectionLayer) ||
+                            ((layer instanceof SelectionLayer) && params.selectionStyle.getShowLabels()) ){
+                        labelPainter.startLayer(layerId);
+                    }
+                    try {
+                        if (context instanceof CompositeRenderContext) {
+                            CompositeRenderContext compositeContext = (CompositeRenderContext) context;
+                            List<ILayer> layers = compositeContext.getLayers();
+                            boolean visible = false;
+                            for (ILayer tmpLayer : layers) {
+                                visible = visible || tmpLayer.isVisible();
+                            }
+                            if (!visible)
+                                continue;
+                        } else if (!layer.isVisible())
+                            continue;
+                        Renderer renderer = decisive.getRenderer(context);
+                        ProjectUIPlugin
+                                .trace(
+                                        ApplicationGIS.class,
+                                        "Issuing render call to " + renderer.getName(), null); //$NON-NLS-1$
+                        try {
                             Graphics2D graphics = (Graphics2D) params.graphics.create();
                             if (params.doBufferedImageForGrids && isLayerFromGrid) {
                                 Rectangle clipBounds = graphics.getClipBounds();
@@ -866,23 +866,23 @@ public class ApplicationGIS {
                             }else{
                                 renderer.render(graphics, monitor);
                             }
-						    
-						} catch (RenderException e) {
-							throw new InvocationTargetException(e);
-						}
-					} finally {
-						labelPainter.endLayer(layerId, params.graphics,
-								new Rectangle(displaySize));
-					}
-				}
-				labelPainter.end(
-						params.graphics,
-						new Rectangle(displaySize));
-				labelPainter.clear();
+                            
+                        } catch (RenderException e) {
+                            throw new InvocationTargetException(e);
+                        }
+                    } finally {
+                        labelPainter.endLayer(layerId, params.graphics,
+                                new Rectangle(displaySize));
+                    }
+                }
+                labelPainter.end(
+                        params.graphics,
+                        new Rectangle(displaySize));
+                labelPainter.clear();
             }
 
             private String getLayerId(ILayer layer ) {
-        		String layerId = layer.getID().toString();
+                String layerId = layer.getID().toString();
                 if ( layer instanceof SelectionLayer )
                     layerId = layerId+"-Selection"; //$NON-NLS-1$
                 return layerId;
@@ -993,11 +993,11 @@ public class ApplicationGIS {
      */
     public static IMap copyMap(IMap mapToCopy){
         // Load IGeoResources using original map. The new map can't do this because it doesn't have a
-    	// Resource(file) and therefore can't resolve relative URIs
-    	List<ILayer> layers = mapToCopy.getMapLayers();
-    	for (ILayer layer : layers) {
-			layer.getGeoResources();
-		}
+        // Resource(file) and therefore can't resolve relative URIs
+        List<ILayer> layers = mapToCopy.getMapLayers();
+        for (ILayer layer : layers) {
+            layer.getGeoResources();
+        }
 
         final Map copy = (Map) EcoreUtil.copy((EObject) mapToCopy);
         copy.getBlackboard().addAll(mapToCopy.getBlackboard());

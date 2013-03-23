@@ -61,21 +61,26 @@ public class MapDropAction extends CatalogImportDropAction {
     private boolean canAccept( Object data2 ) {
         if( data2 instanceof LayerResource ){
             ILayer layer=((LayerResource) data2).getLayer();
-            if ( desinationContainsLayer(layer) )
+            
+            // Do not accept layer from same map, user is just changing order
+            if ( desinationContainsLayer(layer) ){
                 return false;
-            if ( destinationLayerMapContainsLayer(layer)) 
+            }
+            if ( destinationLayerMapContainsLayer(layer)){ 
                 return false;
+            }
         }
         if( data2 instanceof IGeoResource ){
             return true;
         }
         if( data2 instanceof IAdaptable ){
             IAdaptable adaptable=(IAdaptable) data2;
-            if( adaptable.getAdapter(IGeoResource.class)!=null )
+            if( adaptable.getAdapter(IGeoResource.class)!=null ){
                 return true;
+            }
         }
         if (data2 instanceof IResolve){
-            return true;
+            return true; // may have to prompt the user to choose 
         }
         return canImport(data2);
     }
@@ -99,7 +104,7 @@ public class MapDropAction extends CatalogImportDropAction {
     }
     
     @Override
-	public void perform(IProgressMonitor monitor) {
+    public void perform(IProgressMonitor monitor) {
         List<IGeoResource> resources=new ArrayList<IGeoResource>();
         List<Object> otherData=new ArrayList<Object>();
         
@@ -110,7 +115,7 @@ public class MapDropAction extends CatalogImportDropAction {
             for( int i = 0; i < array.length; i++ ) {
                 Object object = array[i];
                 if(canAccept(object)){
-                	seperateGeoResources(resources, otherData, object);
+                    seperateGeoResources(resources, otherData, object);
                 }
             }
         }else{
@@ -118,11 +123,16 @@ public class MapDropAction extends CatalogImportDropAction {
         }
         
         int layerpos=-1;
-		layerpos = calculateDropPosition();
+        layerpos = calculateDropPosition();
         IMap map=null;
         if( !otherData.isEmpty() ){
             for( Object object : otherData ) {
-                resources.addAll(toResources(monitor, object, getClass()));
+                Collection<IGeoResource> additionalResources = toResources(monitor, object, getClass());
+                
+                ProjectUIPlugin.trace(Trace.DND, MapDropAction.class,
+                        "Resources converted from DnD data:"+additionalResources,null);
+                
+                resources.addAll(additionalResources);
             }
         }
         if( !resources.isEmpty() ){
@@ -179,12 +189,21 @@ public class MapDropAction extends CatalogImportDropAction {
             ApplicationGIS.addLayersToMap(map, resources, layerpos, null, true);
         }
     }
-
+    /**
+     * Places the object into the appropriate resources or otherData list.
+     * 
+     * @param resources
+     * @param otherData
+     * @param object
+     */
     private void seperateGeoResources( List<IGeoResource> resources, List<Object> otherData, Object object ) {
-        if( object instanceof IGeoResource )
+        if( object instanceof IGeoResource ){
             resources.add((IGeoResource) object);
-        else
-            otherData.add(processDropItem(object));
+        }
+        else {
+            Object processed = processDropItem(object);
+            otherData.add(processed);
+        }
     }
 
     private int calculateDropPosition( ) {
@@ -211,15 +230,19 @@ public class MapDropAction extends CatalogImportDropAction {
         }
         return layerpos;
     }
-
+    /**
+     * Tries to return a File or URL if possible from provided concreteData2
+     * @param concreteData2
+     * @return
+     */
     private Object processDropItem( Object concreteData2 ) {
         Object concreteData = concreteData2;
         if (concreteData instanceof String) {
-			URL url = extractURL((String) concreteData);
-			if (url != null) {
+            URL url = extractURL((String) concreteData);
+            if (url != null) {
                 concreteData = url;
-			}
-		}
+            }
+        }
         return concreteData;
     }
 

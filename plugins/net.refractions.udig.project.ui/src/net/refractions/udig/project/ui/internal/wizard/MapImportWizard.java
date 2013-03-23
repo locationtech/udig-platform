@@ -90,7 +90,7 @@ public class MapImportWizard extends CatalogImportWizard {
         if( state != null ){
             java.util.Map<IGeoResource, IService> resourceMap = state.getResources();
             if (resourceMap != null && !resourceMap.isEmpty() ){
-                resourceList.addAll( resourceMap.keySet() );                
+                resourceList.addAll( resourceMap.keySet() );
             }
         }
         if( resourceList.isEmpty() ){

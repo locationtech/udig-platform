@@ -157,6 +157,8 @@ public class UDIGDragDropUtilities {
      * 
      * @param viewer the viewer to have drag and drop support added to it.
      * @param defaultTarget The target to use if the mouse is not over an item in the viewer
+     * @param showDropFeedback
+     * @param expandTree 
      */
     public static void addDragDropSupport(StructuredViewer viewer, IDropTargetProvider defaultTarget, boolean showDropFeedback, 
             boolean expandTree) {

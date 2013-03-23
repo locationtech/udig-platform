@@ -117,19 +117,19 @@ public class CatalogImportDropAction extends IDropAction {
         Object data = getData();
 
         if (data.getClass().isArray()) {
-        	Object[] array = (Object[]) data;
-        	for (Object object : array) {
-        		if( canAccept(object)){
-        			doImportSingleItem(monitor, object);
-        		}
-			}
+            Object[] array = (Object[]) data;
+            for (Object object : array) {
+                if( canAccept(object)){
+                    doImportSingleItem(monitor, object);
+                }
+            }
         }else{
-        	doImportSingleItem(monitor, data);
+            doImportSingleItem(monitor, data);
         }
     }
 
-	private void doImportSingleItem(IProgressMonitor monitor, Object data) {
-		if (data instanceof String) {
+    private void doImportSingleItem(IProgressMonitor monitor, Object data) {
+        if (data instanceof String) {
             URL url = extractURL((String) data);
             if (url != null) {
                 data = url;
@@ -138,7 +138,7 @@ public class CatalogImportDropAction extends IDropAction {
 
         CatalogImport catalogImport = new CatalogImport();
         catalogImport.run(monitor, data);
-	}
+    }
     /**
      * Searches a String looking for URLs and returns the first one it can find.
      * 
@@ -224,7 +224,7 @@ public class CatalogImportDropAction extends IDropAction {
         Matcher urlMatcher = urlPattern.matcher(line);
 
         if (urlMatcher.find()) {
-        	String group = urlMatcher.group(1);
+            String group = urlMatcher.group(1);
             try {
                 int index = group.indexOf('"');
                 if (index != -1)
@@ -234,7 +234,7 @@ public class CatalogImportDropAction extends IDropAction {
                     group = group.substring(0, index);
                 result = new URL(group);
             } catch (MalformedURLException e) {
-            	UiPlugin.trace(Trace.DND, CatalogImportDropAction.class,"failure to create url from "+group, e);
+                UiPlugin.trace(Trace.DND, CatalogImportDropAction.class,"failure to create url from "+group, e);
             }
         }
         return result;
@@ -300,9 +300,9 @@ public class CatalogImportDropAction extends IDropAction {
                     // get the id
                     IConfigurationElement[] elements = extension.getConfigurationElements();
                     for( int i = 0; i < elements.length; i++ ) {
-                    	if( elements[i].getAttribute("id") != null){
-                    		ids.add(elements[i].getAttribute("id")); //$NON-NLS-1$
-                    	}
+                        if( elements[i].getAttribute("id") != null){
+                            ids.add(elements[i].getAttribute("id")); //$NON-NLS-1$
+                        }
                     }
                 }
             } catch (Throwable t) {
