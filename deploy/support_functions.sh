@@ -225,7 +225,7 @@ function make_dmg_pretty () {
                    set the bounds of container window to {'${dmg_topleft_x}', '${dmg_topleft_y}', '${dmg_bottomright_x}', '${dmg_bottomright_y}'}
                    set theViewOptions to the icon view options of container window
                    set arrangement of theViewOptions to not arranged
-                   set icon size of theViewOptions to 100
+                   set icon size of theViewOptions to 96
                    set background picture of theViewOptions to file ".background:'${DMG_BACK}'"
                    set position of item "'udig'" of container window to {150, 100}
                    set position of item "'Applications'" of container window to {350, 100}
