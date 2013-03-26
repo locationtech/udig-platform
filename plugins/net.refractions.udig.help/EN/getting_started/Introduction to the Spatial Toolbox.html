@@ -55,17 +55,9 @@
 <h1>Introduction to the Spatial Toolbox<a class="headerlink" href="#introduction-to-the-spatial-toolbox" title="Permalink to this headline">¶</a></h1>
 <p>The Spatial Toolbox View gives the possibility to execute tools from loaded libraries on resources
 visualized in uDig.</p>
-<p><a class="reference internal" href="#introduction-to-the-spatial-toolbox">Introduction to the Spatial Toolbox</a></p>
-<p><a class="reference internal" href="#before-you-start">Before you Start</a></p>
-<p><a class="reference internal" href="#download-the-spearfish-example-data">Download the Spearfish example data</a></p>
-<p><a class="reference internal" href="#the-spatial-toolbox-view">The Spatial toolbox View</a></p>
-<p><a class="reference internal" href="#installing-jgrasstools">Installing JGrasstools</a></p>
-<p><a class="reference internal" href="#processing">Processing</a></p>
-<p><a class="reference internal" href="#generating-aspect-of-an-elevation-model">Generating Aspect of an Elevation Model</a></p>
-<p><a class="reference internal" href="#things-to-try">Things to Try</a></p>
 <p><strong>Related reference</strong></p>
 <p><a class="reference internal" href="../reference/Spatial Toolbox View.html"><em>Spatial Toolbox view</em></a></p>
-<p>This is how it looks like when it is enabled:</p>
+<p>Here is an example of the spatial toolbox in action:</p>
 <div class="figure align-center">
 <img alt="" src="../_images/omsbox.png" style="width: 80%;" />
 </div>
@@ -86,12 +78,16 @@ visualized in uDig.</p>
 <li>elevation.prj</li>
 </ul>
 </li>
-<li><p class="first">Try to drag it into uDig and see if it look like the following:</p>
-</li>
-</ol>
+<li><p class="first">Try to drag it into uDig to visualy confirm height data looking like the following.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">You can use the <em class="guilabel">Style Editor</em> to fill in a color map for the raw elevation data</p>
+</div>
 <div class="figure">
 <img alt="" src="../_images/elevation.png" style="width: 80%;" />
 </div>
+</li>
+</ol>
 </div>
 </div>
 <div class="section" id="the-spatial-toolbox-view">
@@ -146,23 +142,22 @@ project. If you are interested in the details please have a look here:</p>
 <li><p class="first">Therefore it is possible to jump on the jgrass website to get a processing library to use it in
 uDig.</p>
 </li>
-<li><p class="first">At the time of writing the jgrass 0.7.1 library is packaged and available for use</p>
-</li>
-<li><p class="first">To start to have some fun we need to download two jar files:</p>
+<li><p class="first">To start to have some fun we need to download several jar files.</p>
+<p>At the time of writing the jgrass 0.7.2 is being packaged for your use.</p>
 <ul class="simple">
 <li>the <a class="reference external" href="http://jgrasstools.googlecode.com/files/jgt-jgrassgears-0.7.2.jar">generic GIS modules library</a></li>
 <li>the <a class="reference external" href="http://jgrasstools.googlecode.com/files/jgt-hortonmachine-0.7.2.jar">horton machine</a>
 for hydro-geomophologic analyses</li>
 </ul>
 </li>
-<li><p class="first">You can download these two files anywhere; for today we will be placing them in a &#8220;jgrass&#8221; folder
+<li><p class="first">You can download these files anywhere; for today we will be placing them in a &#8220;jgrass&#8221; folder
 in your home directory.</p>
 </li>
 <li><p class="first">Create a &#8220;jgrass&#8221; folder in your home directory</p>
 </li>
-<li><p class="first">Download the above two files and place them in the jgrass folder</p>
+<li><p class="first">Download the above files and place them in the jgrass folder</p>
 </li>
-<li><p class="first">Then push the last icon of the toolbar:</p>
+<li><p class="first">Then push the <em class="guilabel">Settings Panel</em> icon on the toolbar (the last icon at the end).</p>
 <div class="figure">
 <img alt="" src="../_images/spatial_toolbox_05.png" />
 </div>
@@ -209,77 +204,51 @@ already loaded from the sample dataset.</p>
 <img alt="" src="../_images/spatial_toolbox_10.png" style="width: 80%;" />
 </div>
 </li>
-<li><p class="first">Please select the Aspect module so we can describe the tabs used to control a service.</p>
+<li><p class="first">Please select the <em class="guilabel">Aspect</em> module.</p>
+<p>Each module provides two tabs:</p>
+<ul class="simple">
+<li>inputs tab: used to fill in the information required to run</li>
+<li>description tab: details and background on the module.</li>
+</ul>
 </li>
-<li><p class="first">inputs tab:</p>
-<div class="figure">
-<img alt="" src="../_images/spatial_toolbox_11.png" style="width: 80%;" />
-</div>
-<div class="figure">
-<img alt="../_images/spatial_toolbox_12.png" src="../_images/spatial_toolbox_12.png" style="width: 80%;" />
-<p class="caption"><strong>outputs tab</strong></p>
-</div>
-<div class="figure">
-<img alt="../_images/spatial_toolbox_13.png" src="../_images/spatial_toolbox_13.png" style="width: 80%;" />
-<p class="caption"><strong>documentation tab</strong></p>
-</div>
+<li><p class="first">We will now set up the Aspect service to work with our
+sample digital elevation model.</p>
 </li>
-<li><p class="first">We will now set up the Aspect service to work with our sample digital elevation model.</p>
-</li>
-<li><p class="first">To define the input raster to process, simply push the input data button.</p>
-<ul>
-<li><p class="first">A raster reader dialog will open.</p>
-</li>
-<li><p class="first">You could browse for the raster, but the simplest thing is to drag the raster map from the
-udig layer view into the textfield and let udig do the rest.</p>
+<li><p class="first">To define the input raster to process, we need to fill
+in <em class="guilabel">The map of the digital elevation model (DEM)</em>:</p>
+<p>The simplest thing is to drag <em>aspect</em> raster layer from the udig layer
+view into the textfield and let udig do the rest.</p>
+<p>..note: To browse the file system use the <em class="guilabel">...</em> button to open a file dialog.</p>
 <div class="figure">
 <img alt="../_images/spatial_toolbox_14.png" src="../_images/spatial_toolbox_14.png" style="width: 80%;" />
 </div>
 </li>
-</ul>
-</li>
-<li><p class="first">Output data</p>
-<ul>
-<li><p class="first">In the case of the output data, we can&#8217;t drag an existing map, so we will have to use the
-browse button, which will open in the same folder of the last inserted map.</p>
-</li>
-<li><p class="first">There we simply write <strong>aspect.asc</strong> to create an esri ascii also as output \ (other formats
-supported are tiffs and grass binary rasters)</p>
+<li><p class="first">Next we can provide the path for the generated file.</p>
+<p>This time we can not drag an existing raster (as we have not created it yet) so we will
+have to use the <em class="guilabel">...</em> button to browse. The button will open in the same folder
+of the last inserted raster and allow us to supply a filename.</p>
+<p>Type in the filename <tt class="kbd docutils literal"><span class="pre">aspect.asc</span></tt> to create an esri ascii also as output.</p>
 <div class="figure">
 <img alt="../_images/spatial_toolbox_15.png" src="../_images/spatial_toolbox_15.png" style="width: 80%;" />
 </div>
 </li>
-</ul>
-</li>
-<li><p class="first">Configure</p>
-<ul>
 <li><p class="first">Before we run the module there are a couple of configuration options that are useful to
 control.</p>
-</li>
-<li><p class="first">The most important is the amount of memory that we permit the module to use:</p>
-<blockquote>
-<div><div class="figure">
+<p>The most important is the amount of memory that we permit the module to use:</p>
+<div class="figure">
 <img alt="../_images/spatial_toolbox_16.png" src="../_images/spatial_toolbox_16.png" />
 </div>
-</div></blockquote>
+<p>In the above example the local machine has 8 gigabytes of RAM, allowing us to easily allocate
+2000 megabytes for for the work.</p>
+<p>Please set an appropriate value your your machine.</p>
 </li>
-</ul>
-</li>
-<li><p class="first">In the above example the local machine has 8 gigabytes of RAM, allowing us to easily allocate
-2000 megabytes for for the work</p>
-</li>
-<li><p class="first">Execute the module</p>
-<ul>
 <li><p class="first">To execute the module please click the <strong>run</strong> button in the view toolbar</p>
 <div class="figure">
 <img alt="../_images/spatial_toolbox_17.png" src="../_images/spatial_toolbox_17.png" />
 </div>
+<p>The module will execute opening a console window that gives feedback on what is going on.</p>
 </li>
-<li><p class="first">The module will execute opening a console window that gives feedback on what is going on.</p>
-</li>
-</ul>
-</li>
-<li><p class="first">Once the process is done, the resulting map is loaded in the map window:</p>
+<li><p class="first">Once the process is done, the resulting map is loaded in the map window</p>
 <div class="figure">
 <img alt="../_images/spatial_toolbox_18.png" src="../_images/spatial_toolbox_18.png" style="width: 80%;" />
 </div>
