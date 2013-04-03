@@ -132,7 +132,8 @@ public class ID implements Serializable {
 						File canonicalFile = file.getCanonicalFile();
 						canonicalFile = new File(canonicalPath.substring(0, canonicalPath.length() - fragment.length() - 1));
 						URI canonicalURI = canonicalFile.toURI();
-						this.uri = new URI(canonicalURI.toASCIIString()+"#"+fragment);
+						this.uri = new URI(canonicalURI.toASCIIString()+"#"+uri.getRawFragment());
+						
 						// this results in "re"encoding messing up use of spaces
 //						this.uri = new URI(canonicalURI.getScheme(),
 //								canonicalURI.getRawSchemeSpecificPart(),

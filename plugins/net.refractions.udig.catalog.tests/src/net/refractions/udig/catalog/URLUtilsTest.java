@@ -23,6 +23,38 @@ import org.junit.Test;
 
 public class URLUtilsTest {
     
+	
+	@Test
+	public void testEquals() throws Exception{
+		
+		URL url1 = new URL("file:/C:/test/my test/my test.shp");
+		URL url2 = new URL("file:/C:/test/my test/mytest.shp");
+		URL url3 = new URL("file:/C:/test/mytest/mytest.shp");
+		URL url4 = new URL("file:/C:/test/mytest/mytest.shp#mytest");
+		URL url5 = new URL("file:/C:/test/my test/my test.shp#my%20test");
+		URL url6 = new URL("file:/C:/test/my test/my test.shp#my test");
+		
+		assertEquals(true, URLUtils.urlEquals(url1, url1, true));
+		assertEquals(false, URLUtils.urlEquals(url1, url2, true));
+		assertEquals(false, URLUtils.urlEquals(url2, url3, true));
+		
+		assertEquals(true, URLUtils.urlEquals(url1, url5, true));
+		assertEquals(true, URLUtils.urlEquals(url5, url1, true));
+		assertEquals(false, URLUtils.urlEquals(url1, url5, false));
+		assertEquals(false, URLUtils.urlEquals(url5, url1, false));
+		
+		assertEquals(true, URLUtils.urlEquals(url1, url6, true));
+		assertEquals(true, URLUtils.urlEquals(url6, url1, true));
+		assertEquals(false, URLUtils.urlEquals(url1, url6, false));
+		assertEquals(false, URLUtils.urlEquals(url6, url1, false));
+		
+		assertEquals(true, URLUtils.urlEquals(url3, url4, true));
+		assertEquals(true, URLUtils.urlEquals(url4, url3, true));
+		assertEquals(false, URLUtils.urlEquals(url3, url4, false));
+		assertEquals(false, URLUtils.urlEquals(url4, url3, false));
+		
+	}
+	
     @Ignore
     @Test
     public void testPrefix() throws Exception {
