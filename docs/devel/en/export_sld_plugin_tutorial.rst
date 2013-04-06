@@ -258,29 +258,6 @@ Implementing a export operation
 #. And then **save** the file. This should refresh the project and clear up any error markers
    left behind.
 
-.. todo::
-   review source code url, the net.refractions.udig.sld.export plugin is not available in 
-   udig-community repository at github (https://github.com/uDig-Community/udig-community)
-
-.. hint::
-   **Optional**
-
-   You may check your work against the completed plugin code available here:
-
-   #. Download :download:`net.refractions.udig.sld.export_1.0.0.jar`
-
-   #. Save in your udig plugins directory.
-   #. Right clicking on any layer will now let you export a SLD file 
-      :download:`net.refractions.udig.sld.export_1.0.0.jar`
-      archive file.
-
-      This file is suitable for use with GeoServer.
-
-   Source code Avaiable here: `<http://svn.geotools.org/udig/trunk/community/jesse/net.refractions.udig.sld.export/>`_
-
-
-.. svn co `http://svn.geotools.org/udig/trunk/community/jesse/net.refractions.udig.sld.export/ <http://svn.geotools.org/udig/trunk/community/jesse/net.refractions.udig.sld.export/>`_
-
 Testing The Plug-in
 ```````````````````
 
