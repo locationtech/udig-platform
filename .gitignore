@@ -6,6 +6,8 @@ plugins/net.refractions.udig.libs.oracle/lib
 plugins/net.refractions.udig.*/.settings
 plugins/eu.udig.libs.teradata/gtlib
 plugins/net.refractions.udig.libs/src/org/
+features/net.refractions.udig-site.community/artifacts.jar
+features/net.refractions.udig-site.community/content.jar
 target
 bin
 javaCompiler...args
