@@ -34,8 +34,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <java-version>1.6</java-version>
-        <tycho-version>0.15.0</tycho-version>
-        <tycho-extras-version>0.15.0</tycho-extras-version>
+        <tycho-version>0.16.0</tycho-version>
+        <tycho-extras-version>0.16.0</tycho-extras-version>
     </properties>
     
     <!--
@@ -181,6 +181,7 @@ Includes the ossim feaure (this may be dead code)
         </profile>
     </profiles>
     
+<!-- not required, see targets/indigo/udig-indigo-target.target -->
     <repositories>
         <repository>
             <id>indigo-web</id>
@@ -192,6 +193,12 @@ Includes the ossim feaure (this may be dead code)
             <id>indigo-babel-web</id>
             <layout>p2</layout>
             <url>http://download.eclipse.org/technology/babel/update-site/R0.10.0/indigo</url>
+        </repository>
+
+        <repository>
+            <id>eclipse-orbit</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository/</url>
         </repository>
 
     </repositories>
@@ -210,6 +217,26 @@ Includes the ossim feaure (this may be dead code)
                 <artifactId>target-platform-configuration</artifactId>
                 <version>${tycho-version}</version>
                 <configuration>
+<!--
+           <dependency-resolution>
+             <extraRequirements>
+               <requirement>
+                 <type>p2-installable-unit</type>
+                 <id>org.eclipse.jdt.feature.group</id>
+                 <versionRange>0.0.0</versionRange>
+               </requirement>
+             </extraRequirements>
+           </dependency-resolution>
+-->
+<!-- target from sub-module eclipse-target-definition project
+                    <target>
+                        <artifact>
+                            <groupId>net.refractions.udig-target</groupId>
+                            <artifactId>udig-indigo-target</artifactId>
+                            <version>3.7</version>
+                        </artifact>
+                    </target>
+-->
                     <resolver>p2</resolver>
                     <dependency-resolution>
                         <optionalDependencies>ignore</optionalDependencies>
@@ -222,7 +249,16 @@ Includes the ossim feaure (this may be dead code)
                           <id>org.eclipse.ui.ide</id>
                           <removeAll/>
                        </filter>
-                    </filters> -->
+                    </filters> 
+-->
+<!-- example 3: work around Equinox bug 348045 -->
+                    <filters>
+                       <filter>
+                          <type>eclipse-plugin</type>
+                          <id>org.eclipse.jdt.core</id>
+                          <removeAll/>
+                       </filter>
+                    </filters>
                     <!--pomDependencies>consider</pomDependencies-->
                     <environments>
                         <environment>

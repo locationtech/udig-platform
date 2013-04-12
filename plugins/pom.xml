@@ -84,7 +84,6 @@
     </profiles>
 
     <modules>
-        <module>org.apache.log4j</module>
         <module>com.lowagie.itext</module>
         <module>eu.udig.catalog.csw</module>
         <module>eu.udig.catalog.jgrass</module>
