@@ -38,7 +38,9 @@
    <intro introId="net.refractions.udig.ui.intro"/>
 
    <vm>
+<!--
       <macos include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6</macos>
+-->
    </vm>
 
    <license>
@@ -66,7 +68,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&
 
    <features>
       <feature id="net.refractions.udig-feature"/>
+<!-- babel has different core dependencies (ranges not used?) than the latest bundles from indigo P2 repository (SR2)
+
       <feature id="net.refractions.udig_language-feature"/>
+-->
    </features>
 
    <configurations>
