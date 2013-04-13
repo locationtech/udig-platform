@@ -84,7 +84,6 @@
     </profiles>
 
     <modules>
-        <module>com.lowagie.itext</module>
         <module>eu.udig.catalog.csw</module>
         <module>eu.udig.catalog.jgrass</module>
         <module>eu.udig.catalog.kml</module>

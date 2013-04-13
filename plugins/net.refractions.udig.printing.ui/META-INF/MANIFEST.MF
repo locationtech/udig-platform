@@ -30,6 +30,6 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.mapgraphic,
  net.refractions.udig.legend,
  net.refractions.udig.style.sld,
- com.lowagie.itext
+ com.lowagie.text;bundle-version="[2.1.7,2.2.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
