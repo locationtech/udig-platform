@@ -21,10 +21,6 @@ Export-Package: net.refractions.udig.ui,
  org.jmock.lib.action
 Bundle-ClassPath: lib/jmock-2.3.0-RC2.jar,
  lib/jmock-junit3-2.3.0-RC2.jar,
- .,
- lib/cglib-nodep-2.1_3.jar,
- lib/hamcrest-core-1.1.jar,
- lib/hamcrest-library-1.1.jar,
- lib/objenesis-1.0.jar
+ .
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Eclipse-BundleShape: dir
