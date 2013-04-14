@@ -187,6 +187,7 @@ public class FeatureTableControlTest {
         assertEquals(features, table.getFeatures());
     }
 
+    @Ignore
     @Test
     public void testSetFeatures() {
     	FeatureCollection<SimpleFeatureType, SimpleFeature> newFeatures = FeatureCollections.newCollection();

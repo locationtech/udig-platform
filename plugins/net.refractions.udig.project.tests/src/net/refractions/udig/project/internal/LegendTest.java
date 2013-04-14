@@ -18,6 +18,7 @@ import java.util.List;
 import net.refractions.udig.project.tests.support.MapTests;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -65,6 +66,8 @@ public class LegendTest {
         layerItem.setLayer( layer );
         map.getLegend().add( layerItem );
     }
+    
+    @Ignore
     @Test
     public void testLegendBaseline() throws Exception {
         assertTrue( "Folder", map.getLegend().get(0) instanceof Folder );
@@ -77,6 +80,8 @@ public class LegendTest {
         assertSame( "Reference Resource 2", map.getLayersInternal().get(2), ((LayerLegendItem)map.getLegend().get(1)).getLayer() );
         assertSame( "Reference Resource 3", map.getLayersInternal().get(3), ((LayerLegendItem)map.getLegend().get(2)).getLayer() );
     }
+    
+    @Ignore
     @Test
     public void prototypeLayerSync() throws Exception {
         Layer layer = map.getLayersInternal().get(2);
