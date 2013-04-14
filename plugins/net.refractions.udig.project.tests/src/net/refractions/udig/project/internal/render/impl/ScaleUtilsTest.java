@@ -12,11 +12,10 @@ import java.awt.Point;
 
 import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
 
+import org.easymock.EasyMock;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.jmock.Expectations;
-import org.jmock.Mockery;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -32,12 +31,10 @@ import com.vividsolutions.jts.geom.Envelope;
 public class ScaleUtilsTest {
 
 	private IMapDisplay display;
-	private Mockery mockery;
 
 	@Before
 	public void setUp() throws Exception {
-		mockery = new Mockery();
-		display = mockery.mock(IMapDisplay.class);
+	    display = EasyMock.createNiceMock(IMapDisplay.class);
 	}
 
 	/**
@@ -45,22 +42,24 @@ public class ScaleUtilsTest {
 	 */
 	private void configureDisplaySize(final int width, final int height,
 			final int dpi) {
-		mockery.checking(new Expectations() {
-			{
-				Dimension dim = new Dimension(width, height);
-				allowing(display).getDisplaySize();
-				will(returnValue(dim));
-				allowing(display).getWidth();
-				will(returnValue(width));
-				allowing(display).getHeight();
-				will(returnValue(height));
-				allowing(display).getDPI();
-				will(returnValue(dpi));
-			}
-		});
+	    Dimension dim = new Dimension(width, height);
+	    
+	    display.getDisplaySize();
+	    EasyMock.expectLastCall().andReturn(dim).anyTimes();
+	    
+	    display.getWidth();
+	    EasyMock.expectLastCall().andReturn(width).anyTimes();
+	    
+	    display.getHeight();
+        EasyMock.expectLastCall().andReturn(height).anyTimes();
+        
+        display.getDPI();
+        EasyMock.expectLastCall().andReturn(dpi).anyTimes();
+        
+        EasyMock.replay(display);
 	}
 
-	@Ignore
+	
 	@Test
 	public void roundTripSetScaleDenomWithinWorld() throws Exception {
 		configureDisplaySize(360, 180, 100);
@@ -78,10 +77,13 @@ public class ScaleUtilsTest {
 		assertEquals(scale, ScaleUtils.calculateScaleDenominator(bounds,
 				display.getDisplaySize(), display.getDPI()),
 				ScaleUtils.ACCURACY);
+		
+		EasyMock.verify(display);
+		EasyMock.reset(display);
 
 	}
 
-	@Ignore
+	
 	@Test
 	public void roundTripSetScaleDenomAlbers() throws Exception {
 		configureDisplaySize(360, 180, 100);
@@ -99,10 +101,12 @@ public class ScaleUtilsTest {
 		assertEquals(scale, ScaleUtils.calculateScaleDenominator(bounds,
 				display.getDisplaySize(), display.getDPI()),
 				ScaleUtils.ACCURACY);
+        EasyMock.verify(display);
+        EasyMock.reset(display);
 
 	}
 
-	@Ignore
+	
 	@Test
 	public void roundTripSetScaleDenomOutOfBounds() throws Exception {
 		configureDisplaySize(360, 180, 100);
@@ -120,6 +124,8 @@ public class ScaleUtilsTest {
 		assertEquals(scale, ScaleUtils.calculateScaleDenominator(bounds,
 				display.getDisplaySize(), display.getDPI()),
 				ScaleUtils.ACCURACY);
+        EasyMock.verify(display);
+        EasyMock.reset(display);
 
 	}
 

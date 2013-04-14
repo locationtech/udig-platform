@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Project Tests Plug-in
 Bundle-SymbolicName: net.refractions.udig.project.tests; singleton:=true
 Bundle-Version: 1.2.0.qualifier
-Bundle-Localization: plugin
 Export-Package: net.refractions.udig.project.command,
  net.refractions.udig.project.internal,
  net.refractions.udig.project.internal.commands.edit,
@@ -22,7 +21,8 @@ Require-Bundle: org.junit,
  net.refractions.udig.catalog.tests;visibility:=reexport,
  net.refractions.udig.ui.tests,
  net.refractions.udig.ui,
- net.refractions.udig.project.edit
+ net.refractions.udig.project.edit,
+ org.easymock
 Bundle-ActivationPolicy: lazy
 Import-Package: org.junit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
