@@ -23,12 +23,10 @@ import net.refractions.udig.catalog.internal.wmt.WMTService;
 import net.refractions.udig.catalog.internal.wmt.WMTServiceExtension;
 import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.CSControl;
 import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.JGrasstoolsTmsFolderControl;
-import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.MQControl;
 import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.OSMCloudMadeControl;
 import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.OSMControl;
 import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.WMTWizardControl;
 import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.WWControl;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.MQSource;
 import net.refractions.udig.catalog.internal.wmt.wmtsource.NASASource;
 import net.refractions.udig.catalog.internal.wmt.wmtsource.NASASourceManager;
 import net.refractions.udig.catalog.internal.wmt.wmtsource.OSMCloudMadeSource;
@@ -238,7 +236,6 @@ public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnect
         createTreeControl(composite);
 
         TreeItem osm = addOsmOptions();
-        // addMapQuestOptions();
         addWorldWindOptions();
         addNasaOptions();
 
@@ -339,16 +336,6 @@ public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnect
         wwTreeItem.setData(dataWW);
 
         ww.setExpanded(true);
-    }
-
-    private void addMapQuestOptions() {
-        MQControl mqControlFactory = new MQControl();
-        TreeItem mq = new TreeItem(tree, SWT.NONE);
-        mq.setText(MQSource.NAME);
-
-        addWMTSourceToTree(mq, MQSource.class, mqControlFactory);
-
-        mq.setExpanded(true);
     }
 
     // region GUI helper methods
