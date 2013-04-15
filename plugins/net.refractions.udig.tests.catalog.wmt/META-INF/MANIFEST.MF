@@ -7,8 +7,7 @@ Bundle-Activator: net.refractions.udig.tests.catalog.wmt.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.catalog.wmt;bundle-version="1.2.0",
- org.junit,
- org.eclipse.pde.junit.runtime;bundle-version="3.4.0"
+ org.junit
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: net.refractions.udig.catalog.wmsc.server
