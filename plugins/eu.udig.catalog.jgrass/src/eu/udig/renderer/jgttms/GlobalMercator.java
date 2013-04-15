@@ -154,4 +154,43 @@ public class GlobalMercator {
         int topLeft = (int) ((Math.pow(2, z) - 1) - j);
         return new int[]{i, topLeft };
     }
+    
+    private static void check( boolean check, String msg ){
+        if( !check ) {
+            System.err.println( msg );
+        }
+    }
+    private static void check( int expected[], int actual[], String msg ){
+        if( expected.length != actual.length ){
+            System.err.println("Expected "+expected.length+" items, but "+actual.length+" items sipplied:"+msg);
+        }
+        for(int i=0; i< expected.length && i<actual.length; i++){
+            if( expected[i] != actual[i]){
+                System.err.println("At "+i+" index "+expected[i]+"!="+actual[i]+" "+msg);
+            }
+        }
+        
+    }
+    public static void main( String args[] ){
+//        check( true, "true");
+//        check( false, "false");
+//        check( new int[]{1,2}, new int[]{1,2}, " same ints");
+//        check( new int[]{1,2}, new int[]{2,3}, " diff ints");
+//        check( new int[]{1,2}, new int[]{1,2,3}, " miss match ints");
+        
+        // zoom level 1
+        check( new int[]{0,1}, tile( 0.0, 0.0, 1), "centre");
+        check( new int[]{1,2}, tile( -180.0, 90.0, 1), "north west");
+        check( new int[]{1,2}, tile( 180.0, 90.0, 1), "north east");
+        check( new int[]{0,2}, tile( -180.0, -90.0, 1), "south west");
+        check( new int[]{0,2}, tile( 180.0, -90.0, 1), "south east");
+        
+        // zoom level 2
+        check( new int[]{1,2}, tile( 0.0, 0.0, 2), "level 2 centre");
+        check( new int[]{2,4}, tile( -180.0, 90.0, 2), "level 2 north west");
+        check( new int[]{2,4}, tile( 180.0, 90.0, 2), "level 2 north east");
+        check( new int[]{0,4}, tile( -180.0, -90.0, 2), "level 2 south west");
+        check( new int[]{0,4}, tile( 180.0, -90.0, 2), "level 2 south east");
+        
+    }
 }
