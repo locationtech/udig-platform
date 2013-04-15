@@ -2,6 +2,5 @@
 <project name="Compile net.refractions.udig.extras" default="main">
 	<target name="main">
 		<ant antfile="build.xml" dir="../../trunk/extras/net.refractions.udig.dev" target="build.jars"/>
-		<ant antfile="build.xml" dir="../../trunk/extras/org.apache.maven-ant-tasks" target="build.jars"/>
 	</target>
 </project>
