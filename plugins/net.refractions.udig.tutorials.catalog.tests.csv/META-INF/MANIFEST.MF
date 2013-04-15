@@ -6,7 +6,6 @@ Bundle-Version: 1.3.0.qualifier
 Require-Bundle: net.refractions.udig.tutorials.catalog.csv,
  net.refractions.udig.catalog,
  org.eclipse.core.runtime,
- org.junit4,
- org.eclipse.pde.junit.runtime
+ org.junit
 Eclipse-LazyStart: true
 Bundle-Activator: net.refractions.udig.tutorials.catalog.csv.internal.Activator

@@ -17,11 +17,12 @@
             <id>test</id>
             <modules>
                 <module>net.refractions.udig.ui.tests</module>
+                <module>net.refractions.udig.project.tests</module>
+                <module>net.refractions.udig.catalog.tests</module>
+<!--
                 <module>net.refractions.udig.catalog.tests.ui</module>
                 <module>net.refractions.udig.project.tests.ui</module>
 
-                <module>net.refractions.udig.catalog.tests</module>
-                <module>net.refractions.udig.project.tests</module>
                 
                 <module>net.refractions.udig.catalog.tests.geotiff</module>
                 <module>net.refractions.udig.catalog.tests.wfs</module>
@@ -41,6 +42,7 @@
                 
                 <module>eu.udig.tools.tests</module>
                 <module>org.tcat.citd.sim.udig.bookmarks.tests</module>
+-->
             </modules>
         </profile>
 
