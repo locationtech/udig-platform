@@ -7,6 +7,6 @@ Bundle-Activator: org.tcat.citd.sim.udig.bookmarks.tests.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.tcat.citd.sim.udig.bookmarks,
- org.junit
+ org.junit;bundle-version="[4.0.0,5.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

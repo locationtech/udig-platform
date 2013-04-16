@@ -6,7 +6,7 @@ Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: net.refractions.udig.render.feature.basic.test.Activator
 Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.core.runtime,
- org.junit,
+ org.junit;bundle-version="[4.0.0,5.0.0)",
  net.refractions.udig.render.feature.basic,
  net.refractions.udig.libs,
  net.refractions.udig.project,

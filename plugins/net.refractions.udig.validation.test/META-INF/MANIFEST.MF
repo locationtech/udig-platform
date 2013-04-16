@@ -5,13 +5,12 @@ Bundle-SymbolicName: net.refractions.udig.validation.test
 Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: net.refractions.udig.validation.test.TestPlugin
 Bundle-Vendor: udig.refractions.net
-Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.libs,
  net.refractions.udig.validation,
  net.refractions.udig.project.tests,
- org.junit,
+ org.junit;bundle-version="[4.0.0,5.0.0)",
  net.refractions.udig.catalog,
  net.refractions.udig.project,
  net.refractions.udig.ui,

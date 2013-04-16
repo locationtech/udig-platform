@@ -8,6 +8,6 @@ Bundle-Vendor: udig.refractions.net
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.project.ui,
- org.junit;bundle-version="[4.10.0,5.0.0)"
+ org.junit;bundle-version="[4.0.0,5.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
