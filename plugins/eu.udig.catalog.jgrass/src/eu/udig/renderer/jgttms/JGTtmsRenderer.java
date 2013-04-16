@@ -53,7 +53,7 @@ public class JGTtmsRenderer extends RendererImpl {
     // private static final String THE_MAP_IS_OUTSIDE_OF_THE_VISIBLE_REGION =
     // "The map is outside of the visible region.";
 
-    private static GlobalMercator gm = new GlobalMercator();
+    //private static GlobalMercator gm = new GlobalMercator();
     private static final String EPSG_MERCATOR = "EPSG:3857";
 
     /**
@@ -127,8 +127,8 @@ public class JGTtmsRenderer extends RendererImpl {
             int z = nearestZoomLevel;
 
             // get ul and lr tile number in GOOGLE tiles
-            int[] llTileXY = gm.GoogleTile(s, w, z);
-            int[] urTileXY = gm.GoogleTile(n, e, z);
+            int[] llTileXY = GlobalMercator.tile(s, w, z);
+            int[] urTileXY = GlobalMercator.tile(n, e, z);
 
             int startXTile = Math.min(llTileXY[0], urTileXY[0]);
             int endXTile = Math.max(llTileXY[0], urTileXY[0]);
@@ -165,8 +165,7 @@ public class JGTtmsRenderer extends RendererImpl {
 
                     int[] fileNameTileNumbers = {i, j};
                     if (tmsProperties.type == JGTtmsProperties.TILESCHEMA.tms) {
-                        int[] tmsNUms = gm.TMSTileFromGoogleTile(i, j, z);
-                        fileNameTileNumbers = tmsNUms;
+                        fileNameTileNumbers = GlobalMercator.toTMS( i,j,z);
                     } else if (tmsProperties.type == JGTtmsProperties.TILESCHEMA.google) {
                         // is already
                     }

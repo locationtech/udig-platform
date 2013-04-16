@@ -1,7 +1,7 @@
 /**
- *    Copyright (C) 2009, 2010 
- *    State of California,
- *    Department of Water Resources.
+ *    Copyright (C) 2013, Jody Garnett
+ *    Copyright (C) 2009, 2010 State of California, Department of Water Resources.
+ *    
  *    This file is part of DSM2 Grid Map
  *    The DSM2 Grid Map is free software: 
  *    you can redistribute it and/or modify
@@ -102,282 +102,95 @@ import java.util.Arrays;
  * PROJECTION["Mercator_1SP"], PARAMETER["central_meridian",0],
  * PARAMETER["scale_factor",1], PARAMETER["false_easting",0],
  * PARAMETER["false_northing",0], UNIT["metre",1, AUTHORITY["EPSG","9001"]]]
- * 
- * 
  */
 public class GlobalMercator {
-    public static final int TILE_SIZE = 256;
-    private final int tileSize;
-    private final double initialResolution;
-    private final double originShift;
-
-    public GlobalMercator() {
-        tileSize = TILE_SIZE;
-        initialResolution = 2 * Math.PI * 6378137 / tileSize;
-        // 156543.03392804062 for tileSize 256 pixels
-        originShift = 2 * Math.PI * 6378137 / 2.0;
-        // 20037508.342789244
-    }
-
-    /**
-     * Converts given lat/lon in WGS84 Datum to XY in Spherical Mercator
-     * EPSG:900913
-     * 
-     * @param lat
-     * @param lon
-     * @return
-     */
-    public double[] LatLonToMeters( double lat, double lon ) {
-
-        double mx = lon * originShift / 180.0;
-        double my = Math.log(Math.tan((90 + lat) * Math.PI / 360.0)) / (Math.PI / 180.0);
-        my = my * originShift / 180.0;
-        return new double[]{mx, my};
-    }
-
-    /**
-     * Converts XY point from Spherical Mercator EPSG:900913 to lat/lon in WGS84
-     * Datum
-     * 
-     * @return
-     */
-    public double[] MetersToLatLon( double mx, double my ) {
-
-        double lon = (mx / originShift) * 180.0;
-        double lat = (my / originShift) * 180.0;
-
-        lat = 180 / Math.PI * (2 * Math.atan(Math.exp(lat * Math.PI / 180.0)) - Math.PI / 2.0);
-        return new double[]{lat, lon};
-    }
-
-    /**
-     * Converts pixel coordinates in given zoom level of pyramid to EPSG:900913
-     * 
-     * @return
-     */
-    public double[] PixelsToMeters( double px, double py, int zoom ) {
-        double res = Resolution(zoom);
-        double mx = px * res - originShift;
-        double my = py * res - originShift;
-        return new double[]{mx, my};
-    }
-
-    /**
-     * Converts EPSG:900913 to pyramid pixel coordinates in given zoom level
-     * 
-     * @param mx
-     * @param my
-     * @param zoom
-     * @return
-     */
-    public int[] MetersToPixels( double mx, double my, int zoom ) {
-        double res = Resolution(zoom);
-        int px = (int) Math.round((mx + originShift) / res);
-        int py = (int) Math.round((my + originShift) / res);
-        return new int[]{px, py};
-    }
-
-    /**
-     * Returns a tile covering region in given pixel coordinates
-     * 
-     * @param px
-     * @param py
-     * @return
-     */
-    public int[] PixelsToTile( int px, int py ) {
-        int tx = (int) Math.ceil(px / ((double) tileSize) - 1);
-        int ty = (int) Math.ceil(py / ((double) tileSize) - 1);
-        return new int[]{tx, ty};
-    }
-
-    /**
-     * Move the origin of pixel coordinates to top-left corner
-     * 
-     * @param px
-     * @param py
-     * @param zoom
-     * @return
-     */
-    public int[] PixelsToRaster( int px, int py, int zoom ) {
-        int mapSize = tileSize << zoom;
-        return new int[]{px, mapSize - py};
-    }
-
-    /**
-     * Returns tile for given mercator coordinates
-     * 
-     * @return
-     */
-    public int[] MetersToTile( double mx, double my, int zoom ) {
-        int[] p = MetersToPixels(mx, my, zoom);
-        return PixelsToTile(p[0], p[1]);
-    }
-
-    public int[] metersToTileUp( double mx, double my, int zoom ) {
-        int[] p = metersToPixelsUp(mx, my, zoom);
-        return pixelsToTileUp(p[0], p[1]);
-    }
     
-    public int[] metersToPixelsUp( double mx, double my, int zoom ) {
-        double res = Resolution(zoom);
-        int px = (int) Math.ceil((mx + originShift) / res);
-        int py = (int) Math.ceil((my + originShift) / res);
-        return new int[]{px, py};
-    }
-    
-    public int[] pixelsToTileUp( int px, int py ) {
-        int tx = (int) Math.ceil(px / ((double) tileSize) - 1);
-        int ty = (int) Math.ceil(py / ((double) tileSize) - 1);
-        return new int[]{tx, ty};
-    }
-
-    public int[] metersToTileDown( double mx, double my, int zoom ) {
-        int[] p = metersToPixelsDown(mx, my, zoom);
-        return pixelsToTileDown(p[0], p[1]);
-    }
-    
-    public int[] metersToPixelsDown( double mx, double my, int zoom ) {
-        double res = Resolution(zoom);
-        int px = (int) Math.floor((mx + originShift) / res);
-        int py = (int) Math.floor((my + originShift) / res);
-        return new int[]{px, py};
-    }
-    
-    public int[] pixelsToTileDown( int px, int py ) {
-        int tx = (int) Math.floor(px / ((double) tileSize) - 1);
-        int ty = (int) Math.floor(py / ((double) tileSize) - 1);
-        return new int[]{tx, ty};
-    }
-
     /**
-     * Returns bounds of the given tile in EPSG:900913 coordinates
-     * 
-     * @param tx
-     * @param ty
-     * @param zoom
-     * @return
-     */
-    public double[] TileBounds( int tx, int ty, int zoom ) {
-        double[] min = PixelsToMeters(tx * tileSize, ty * tileSize, zoom);
-        double minx = min[0], miny = min[1];
-        double[] max = PixelsToMeters((tx + 1) * tileSize, (ty + 1) * tileSize, zoom);
-        double maxx = max[0], maxy = max[1];
-        return new double[]{minx, miny, maxx, maxy};
-    }
-
-    /**
-     * Returns bounds of the given tile in latitude/longitude using WGS84 datum
-     * 
-     */
-    public double[] TileLatLonBounds( int tx, int ty, int zoom ) {
-        double[] bounds = TileBounds(tx, ty, zoom);
-        double[] mins = MetersToLatLon(bounds[0], bounds[1]);
-        double[] maxs = MetersToLatLon(bounds[2], bounds[3]);
-        return new double[]{mins[0], mins[1], maxs[0], maxs[1]};
-    }
-
-    /**
-     * Resolution (meters/pixel) for given zoom level (measured at Equator)
-     * 
-     * @return
-     */
-    public double Resolution( int zoom ) {
-        // return (2 * Math.PI * 6378137) / (this.tileSize * 2**zoom)
-        return initialResolution / Math.pow(2, zoom);
-    }
-
-    /**
-     * Maximal scaledown zoom of the pyramid closest to the pixelSize
-     * 
-     * @param pixelSize
-     * @return
-     */
-    public int ZoomForPixelSize( int pixelSize ) {
-        for( int i = 0; i < 30; i++ ) {
-            if (pixelSize > Resolution(i)) {
-                if (i != 0) {
-                    return i - 1;
-                } else {
-                    return 0; // We don't want to scale up
-                }
-            }
-        }
-        return 0;
-    }
-
-    /**
-     * Converts TMS tile coordinates to Google Tile coordinates
-     * 
-     * @param tx
-     * @param ty
-     * @param zoom
-     * @return
-     */
-    public int[] GoogleTile( int tx, int ty, int zoom ) {
-        // coordinate origin is moved from bottom-left to top-left corner of the
-        // extent
-        return new int[]{tx, (int) ((Math.pow(2, zoom) - 1) - ty)};
-    }
-
-    public int[] TMSTileFromGoogleTile( int tx, int ty, int zoom ) {
-        // coordinate origin is moved from bottom-left to top-left corner of the
-        // extent
-        return new int[]{tx, (int) ((Math.pow(2, zoom) - 1) - ty)};
-    }
-
-    /**
-     * Converts a lat long coordinates to Google Tile Coordinates
+     * Look up the tile index for the provided lat / lon.
+     * <p>
+     * Tile index is based the common web mapping convention of starting
+     * at -180,-90 and dividing the world up into two squares for the first
+     * zoom level. This technique is used by WMS-C, Google Maps and other services.
      * 
      * @param lat
      * @param lon
      * @param zoom
-     * @return
+     * @return tile index
      */
-    public int[] GoogleTile( double lat, double lon, int zoom ) {
-        double[] meters = LatLonToMeters(lat, lon);
-        int[] tile = MetersToTile(meters[0], meters[1], zoom);
-        return this.GoogleTile(tile[0], tile[1], zoom);
+    public static int[] tile( double lat, double lon, int zoom ){
+        // From: http://en.wikipedia.org/wiki/Figure_of_the_Earth
+        double WGS84_EQUATORAL_RADIUS = 6378137.0;
+        
+        final double SHIFT = 2 * Math.PI * WGS84_EQUATORAL_RADIUS / 2.0;
+        final double RESOLUTION = 2 * Math.PI * WGS84_EQUATORAL_RADIUS / 256;
+        
+        double x = lon * SHIFT / 180.0;
+        double y = Math.log(Math.tan((90 + lat) * Math.PI / 360.0)) / (Math.PI / 180.0);
+        y = y * SHIFT / 180.0;
+        double[] meters = new double[]{x, y};
+        
+        final double factor = Math.pow(2, zoom);
+        double res = RESOLUTION / factor;
+        int px = (int) Math.round((meters[0] + SHIFT) / res);
+        int py = (int) Math.round((meters[1] + SHIFT) / res);
+        int[] p = new int[]{px, py};
+        int tx = (int) Math.ceil(p[0] / 256.0 - 1);
+        int ty = (int) Math.ceil(p[1] / 256.0 - 1);
+        int[] tile = new int[]{tx, ty};
+        return new int[]{tile[0],(int) ((factor - 1) - tile[1])};
     }
 
     /**
-     * Converts TMS tile coordinates to Microsoft QuadTree
+     * Swap to TMS tile.
+     * <p>
+     * TMS standard uses the topLeft.
      * 
-     * @return
+     * @param i
+     * @param j
+     * @param z
+     * @return tile index for TMS
      */
-    public String QuadTree( int tx, int ty, int zoom ) {
-        String quadKey = "";
-        ty = (int) ((Math.pow(2, zoom) - 1) - ty);
-        for( int i = zoom; i < 0; i-- ) {
-            int digit = 0;
-            int mask = 1 << (i - 1);
-            if ((tx & mask) != 0) {
-                digit += 1;
-            }
-            if ((ty & mask) != 0) {
-                digit += 2;
-            }
-            quadKey += (digit + "");
-        }
-        return quadKey;
+    public static int[] toTMS( int i, int j, int z ){
+        int topLeft = (int) ((Math.pow(2, z) - 1) - j);
+        return new int[]{i, topLeft };
     }
-
-    public static void main( String[] args ) {
-        int[][] TMS = {//
-        {0, 1, 1},//
-                {16, 20, 5},//
-                {8930, 10684, 14},//
-        };
-        int[][] GOOGLE = {//
-        {0, 0, 1}, //
-                {16, 11, 5}, //
-                {8930, 5699, 14},//
-        };
-
-        GlobalMercator gm = new GlobalMercator();
-        for( int i = 0; i < GOOGLE.length; i++ ) {
-            int[] googleTile = gm.TMSTileFromGoogleTile(GOOGLE[i][0], GOOGLE[i][1], GOOGLE[i][2]);
-            System.out.println(Arrays.toString(googleTile));
+    
+    private static void check( boolean check, String msg ){
+        if( !check ) {
+            System.err.println( msg );
         }
     }
-
+    private static void check( int expected[], int actual[], String msg ){
+        if( expected.length != actual.length ){
+            System.err.println("Expected "+expected.length+" items, but "+actual.length+" items sipplied:"+msg);
+        }
+        for(int i=0; i< expected.length && i<actual.length; i++){
+            if( expected[i] != actual[i]){
+                System.err.println("At "+i+" index "+expected[i]+"!="+actual[i]+" "+msg);
+            }
+        }
+        
+    }
+    public static void main( String args[] ){
+//        check( true, "true");
+//        check( false, "false");
+//        check( new int[]{1,2}, new int[]{1,2}, " same ints");
+//        check( new int[]{1,2}, new int[]{2,3}, " diff ints");
+//        check( new int[]{1,2}, new int[]{1,2,3}, " miss match ints");
+        
+        // zoom level 1
+        check( new int[]{0,1}, tile( 0.0, 0.0, 1), "centre");
+        check( new int[]{1,2}, tile( -180.0, 90.0, 1), "north west");
+        check( new int[]{1,2}, tile( 180.0, 90.0, 1), "north east");
+        check( new int[]{0,2}, tile( -180.0, -90.0, 1), "south west");
+        check( new int[]{0,2}, tile( 180.0, -90.0, 1), "south east");
+        
+        // zoom level 2
+        check( new int[]{1,2}, tile( 0.0, 0.0, 2), "level 2 centre");
+        check( new int[]{2,4}, tile( -180.0, 90.0, 2), "level 2 north west");
+        check( new int[]{2,4}, tile( 180.0, 90.0, 2), "level 2 north east");
+        check( new int[]{0,4}, tile( -180.0, -90.0, 2), "level 2 south west");
+        check( new int[]{0,4}, tile( 180.0, -90.0, 2), "level 2 south east");
+        
+    }
 }
