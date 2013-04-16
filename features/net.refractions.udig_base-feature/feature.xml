@@ -38,13 +38,6 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.help.appserver"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.ui.cheatsheets"
          download-size="0"
          install-size="0"
@@ -148,13 +141,14 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
          version="0.0.0"
          unpack="false"/>
 
+<!--
    <plugin
          id="org.eclipse.ant.core"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+-->
    <plugin
          id="org.eclipse.core.net"
          download-size="0"
@@ -217,26 +211,6 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
          install-size="0"
          version="0.0.0"/>
 
-   <plugin
-         id="org.apache.commons.codec"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.commons.httpclient"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.commons.lang"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
    <plugin
          id="org.apache.batik.bridge"
@@ -344,13 +318,6 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ui.navigator"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.ui.views.properties.tabbed"
          download-size="0"
          install-size="0"
@@ -436,55 +403,6 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
 
    <plugin
          id="org.eclipse.equinox.ds"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.lucene.highlighter"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.lucene.memory"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.lucene.misc"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.lucene.queries"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.lucene.snowball"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.lucene.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.lucene.spellchecker"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -603,13 +521,6 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
 
    <plugin
          id="org.eclipse.equinox.p2.touchpoint.eclipse"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.team.core"
          download-size="0"
          install-size="0"
          version="0.0.0"

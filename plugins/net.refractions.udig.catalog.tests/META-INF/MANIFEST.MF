@@ -6,7 +6,7 @@ Bundle-Version: 1.2.0.qualifier
 Export-Package: net.refractions.udig.catalog.tests,
  net.refractions.udig.catalog.tests.internal;x-internal:=true
 Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
- org.junit;visibility:=reexport,
+ org.junit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.jface;visibility:=reexport,
  net.refractions.udig.catalog;visibility:=reexport,
  net.refractions.udig.catalog.geotools,

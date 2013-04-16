@@ -181,28 +181,6 @@ Includes the ossim feaure (this may be dead code)
         </profile>
     </profiles>
     
-<!-- not required, see targets/indigo/udig-indigo-target.target -->
-    <repositories>
-        <repository>
-            <id>indigo-web</id>
-            <layout>p2</layout>
-            <url>http://download.eclipse.org/releases/indigo</url>
-        </repository>
-        
-        <repository>
-            <id>indigo-babel-web</id>
-            <layout>p2</layout>
-            <url>http://download.eclipse.org/technology/babel/update-site/R0.10.0/indigo</url>
-        </repository>
-
-        <repository>
-            <id>eclipse-orbit</id>
-            <layout>p2</layout>
-            <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository/</url>
-        </repository>
-
-    </repositories>
-    
     <build>
         <plugins>
             <plugin>
@@ -217,18 +195,7 @@ Includes the ossim feaure (this may be dead code)
                 <artifactId>target-platform-configuration</artifactId>
                 <version>${tycho-version}</version>
                 <configuration>
-<!--
-           <dependency-resolution>
-             <extraRequirements>
-               <requirement>
-                 <type>p2-installable-unit</type>
-                 <id>org.eclipse.jdt.feature.group</id>
-                 <versionRange>0.0.0</versionRange>
-               </requirement>
-             </extraRequirements>
-           </dependency-resolution>
--->
-<!-- target from sub-module eclipse-target-definition project
+                    <!-- target from sub-module eclipse-target-definition project -->
                     <target>
                         <artifact>
                             <groupId>net.refractions.udig-target</groupId>
@@ -236,7 +203,6 @@ Includes the ossim feaure (this may be dead code)
                             <version>3.7</version>
                         </artifact>
                     </target>
--->
                     <resolver>p2</resolver>
                     <dependency-resolution>
                         <optionalDependencies>ignore</optionalDependencies>
@@ -250,8 +216,8 @@ Includes the ossim feaure (this may be dead code)
                           <removeAll/>
                        </filter>
                     </filters> 
--->
-<!-- example 3: work around Equinox bug 348045 -->
+                    -->
+                    <!-- example 3: work around Equinox bug 348045 -->
                     <filters>
                        <filter>
                           <type>eclipse-plugin</type>
@@ -259,7 +225,9 @@ Includes the ossim feaure (this may be dead code)
                           <removeAll/>
                        </filter>
                     </filters>
-                    <!--pomDependencies>consider</pomDependencies-->
+                    <!--
+                    <pomDependencies>consider</pomDependencies>
+                    -->
                     <environments>
                         <environment>
                             <os>win32</os>
@@ -370,6 +338,7 @@ Includes the ossim feaure (this may be dead code)
     </reporting>
     
     <modules>
+	    <module>targets</module>
         <module>plugins</module>
         <module>features</module>
     </modules>

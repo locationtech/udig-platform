@@ -12,7 +12,7 @@ Export-Package: net.refractions.udig.project.command,
  net.refractions.udig.project.render,
  net.refractions.udig.project.tests.internal.commands,
  net.refractions.udig.project.tests.support
-Require-Bundle: org.junit,
+Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  net.refractions.udig.project,
  org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -24,5 +24,4 @@ Require-Bundle: org.junit,
  net.refractions.udig.project.edit,
  org.easymock
 Bundle-ActivationPolicy: lazy
-Import-Package: org.junit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

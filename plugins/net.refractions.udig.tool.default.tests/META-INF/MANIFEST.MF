@@ -9,6 +9,6 @@ Require-Bundle: org.eclipse.core.runtime,
  net.refractions.udig.tool.default,
  net.refractions.udig.libs,
  net.refractions.udig.project.ui,
- org.junit
+ org.junit;bundle-version="[4.0.0,5.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
