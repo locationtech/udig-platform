@@ -31,6 +31,22 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
          id="org.eclipse.rcp.source"
          version="0.0.0"/>
 
+    <includes
+         id="org.eclipse.help.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.pde.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.platform.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.xsd.source"
+         version="0.0.0"/>
+
    <includes
          id="net.refractions.udig-feature"
          version="0.0.0"/>
@@ -40,32 +56,7 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.xsd.source"
-         version="0.0.0"/>
-
-   <includes
          id="net.refractions.udig_language-feature"
          version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.help.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.pde.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.platform.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
 </feature>

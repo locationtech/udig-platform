@@ -5,6 +5,7 @@
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.help.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.help.source.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.rcp.sdk.id" version="0.0.0"/>
 <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.gef.sdk.feature.group" version="0.0.0"/>
@@ -64,8 +65,11 @@
 <unit id="org.sat4j.core" version="0.0.0"/>
 <unit id="org.sat4j.pb" version="0.0.0"/>
 <unit id="org.apache.ant" version="0.0.0"/>
-<unit id="org.eclipse.pde.source" version="0.0.0"/>
-<unit id="org.eclipse.platform.source" version="0.0.0"/>
+<unit id="org.eclipse.xsd.source.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.pde.source.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.platform.source.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.ui.ide" version="0.0.0"/>
+<unit id="org.eclipse.ui.ide.application" version="0.0.0"/>
 <repository location="http://download.eclipse.org/releases/indigo"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
