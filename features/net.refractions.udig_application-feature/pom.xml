@@ -25,7 +25,7 @@
                         <version>${tycho-extras-version}</version>
                         <configuration>
                             <excludes>
-                                <plugin id="com.lowagie.itext"/>
+                                <plugin id="com.lowagie.text"/>
                             </excludes>
                         </configuration>
                         <executions>
