@@ -10,7 +10,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.6</maven.compiler.source>
         <maven.compiler.target>1.6</maven.compiler.target>
-        <tycho-version>0.13.0</tycho-version>
+        <tycho-version>0.16.0</tycho-version>
         <tycho-provider>org.eclipse.tycho</tycho-provider>
     </properties>
 

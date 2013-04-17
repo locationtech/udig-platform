@@ -124,8 +124,6 @@
         <module>net.refractions.udig.help</module>
         <module>net.refractions.udig.info</module>
         <module>net.refractions.udig.issues</module>
-        <module>net.refractions.udig.jai</module>
-        <module>net.refractions.udig.jai.macosx</module>
         <module>net.refractions.udig.legend</module>
         <module>net.refractions.udig.libs</module>
         <module>net.refractions.udig.libs.db2</module>
