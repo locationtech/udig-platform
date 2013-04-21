@@ -13,6 +13,7 @@ package eu.udig.catalog.csw;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -91,6 +92,8 @@ public class CswCatalog extends ISearch {
 	@Override
 	public List<IResolve> search(String pattern, Envelope bbox,
 			IProgressMonitor monitor) throws IOException {
+	    return Collections.emptyList();
+	    /*
 		OgcFilter filter = new PropertyIsEqualTo("Type", "dataset");
 		PropertyIsEqualTo textSearch = new PropertyIsEqualTo("AnyText", pattern);
 		if(!pattern.trim().isEmpty()) {
@@ -118,6 +121,7 @@ public class CswCatalog extends ISearch {
 			}
 		}
 		return resolves;
+		*/
 	}
 
 }
