@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <!-- This script was created to automagically download the external libs 
+        required for this plugin to build and export correctly.
+        
+        To download the required  libraries, use:
+            
+            mvn install -f pom-libs.xml 
+        
+        After they have downloaded, make sure you:
+          - refresh this project in Eclipse;
+          - verify the classpath (Manfiest Runtime tab) references the libs
+          - ensure the lib versions in the classpath are also correct. -->
+
+
+    <developers>
+        <developer>
+            <id>Sev</id>
+            <name>Severin</name>
+            <email>djseverin@gmail.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+10</timezone>
+        </developer>
+    </developers>
+
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>net.sf.opencsv</groupId>
+    <artifactId>download</artifactId>
+    <version>2.3.0</version>
+    <name>OpenCSV Download</name>
+    
+    <packaging>pom</packaging>
+
+    <properties>
+        <lib.dir>${basedir}/lib</lib.dir>
+        <lib.source.dir>${basedir}/lib-src</lib.source.dir>
+    </properties>
+
+    <repositories>
+        <!-- The OpenGeo company offers a SNAPSHOT repository populated by GeoTools
+        nightly builds - in general it is much faster then the official repository
+        above -->
+        <repository>
+            <id>geotools-snapshot</id>
+            <name>Geotools Snapshot</name>
+            <url>http://repo.opengeo.org</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!-- OpenCSV Downloads -->
+        <dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.3</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.4.1</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${lib.dir}</directory>
+                            <includes>
+                                <include>*.*</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                        <fileset>
+                            <directory>${lib.source.dir}</directory>
+                            <includes>
+                                <include>*.*</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${lib.dir}</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <excludeScope>provided</excludeScope>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-dependencies-sources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>sources</classifier>
+                            <outputDirectory>${lib.source.dir}</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <excludeScope>provided</excludeScope>
+                            <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>remove-lib-timestamp</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <target>
+                                <macrodef name="remove-lib-timestamp">
+                                    <attribute name="lib-dir"/>
+                                    <sequential>
+                                        <move todir="@{lib-dir}" includeemptydirs="false">
+                                            <fileset dir="@{lib-dir}">
+                                                <include name="**/*.jar"/>
+                                            </fileset>
+                                            <!-- YYYYMMDD.HHIISS-increment -->
+                                            <regexpmapper handledirsep="yes"
+                                                from="(.*?)-([\\\d]{8}(\.[\\\d]{6})?-[\\\d]+)((-sources)?\.jar)$$"
+                                                to="\1-SNAPSHOT\4"/>
+                                        </move>
+                                    </sequential>
+                                </macrodef>
+                                
+                                <remove-lib-timestamp lib-dir="${lib.dir}"/>
+                                <remove-lib-timestamp lib-dir="${lib.source.dir}"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+         </plugins>
+    </build>
+    
+</project>

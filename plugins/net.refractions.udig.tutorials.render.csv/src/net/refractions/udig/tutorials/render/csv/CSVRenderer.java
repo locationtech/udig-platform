@@ -32,7 +32,8 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import com.csvreader.CsvReader;
+import au.com.bytecode.opencsv.CSVReader;
+
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Point;
 
@@ -61,7 +62,7 @@ public class CSVRenderer extends RendererImpl {
 
         monitor.beginTask("csv render", 100);
 
-        CsvReader reader = null;
+        CSVReader reader = null;
         try {
             g.setColor(Color.BLACK);
             ILayer layer = getContext().getLayer();
@@ -78,15 +79,16 @@ public class CSVRenderer extends RendererImpl {
             
             CSV csv = resource.resolve(CSV.class, new SubProgressMonitor(monitor, 10) );
             reader = csv.reader();
-            reader.readHeaders();
-            int nameIndex = reader.getIndex("name");
+            
+            int nameIndex = csv.getHeader("name");
 
             IProgressMonitor drawMonitor = new SubProgressMonitor(monitor, 90);
             Coordinate worldLocation = new Coordinate();
             
             drawMonitor.beginTask("draw "+csv.toString(), csv.getSize());            
-            while( reader.readRecord() ) {
-                Point point = CSV.getPoint(reader);
+            String [] row;
+            while ((row = reader.readNext()) != null) {
+                Point point = csv.getPoint(row);
                 Coordinate dataLocation = point.getCoordinate();
                 try {
                     JTS.transform(dataLocation, worldLocation, dataToWorld);
@@ -98,7 +100,7 @@ public class CSVRenderer extends RendererImpl {
                 }                
                 java.awt.Point p = getContext().worldToPixel(worldLocation);
                 g.fillOval(p.x, p.y, 10, 10);
-                String name = reader.get(nameIndex);
+                String name = row[nameIndex];
                 g.drawString(name, p.x + 15, p.y + 15);
                 drawMonitor.worked(1);
 
@@ -112,7 +114,11 @@ public class CSVRenderer extends RendererImpl {
             throw new RenderException(e); // rethrow any exceptions encountered
         } finally {
             if (reader != null)
-                reader.close();
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    throw new RenderException(e);
+                }
             monitor.done();
         }
     }
@@ -153,7 +159,7 @@ public class CSVRenderer extends RendererImpl {
             monitor = new NullProgressMonitor();
 
         monitor.beginTask("csv render", IProgressMonitor.UNKNOWN);
-        CsvReader reader = null;
+        CSVReader reader = null;
         try {
             g.setColor(Color.BLUE);
 
@@ -167,20 +173,20 @@ public class CSVRenderer extends RendererImpl {
 
             CSV csv = resource.resolve(CSV.class, new SubProgressMonitor(monitor, 10));
             reader = csv.reader();
-            reader.readHeaders();
-
+            
             monitor.subTask("drawing");
-            int nameIndex = reader.getIndex("name");
+            int nameIndex = csv.getHeader("name");
             Coordinate worldLocation = new Coordinate();
-            while( reader.readRecord() ) {
-                Point point = CSV.getPoint(reader);
+            String [] row;
+            while ((row = reader.readNext()) != null) {
+                Point point = csv.getPoint(row);
                 worldLocation = point.getCoordinate();
                 if (bounds != null && !bounds.contains(worldLocation)) {
                     continue; // optimize!
                 }
                 java.awt.Point p = getContext().worldToPixel(worldLocation);
                 g.fillOval(p.x, p.y, 10, 10);
-                String name = reader.get(nameIndex);
+                String name = row[nameIndex];
                 g.drawString(name, p.x + 15, p.y + 15);
                 monitor.worked(1);
 
@@ -191,7 +197,11 @@ public class CSVRenderer extends RendererImpl {
             throw new RenderException(e); // rethrow any exceptions encountered
         } finally {
             if (reader != null)
-                reader.close();
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    throw new RenderException(e); // rethrow any exceptions encountered
+                }
             monitor.done();
         }
     }

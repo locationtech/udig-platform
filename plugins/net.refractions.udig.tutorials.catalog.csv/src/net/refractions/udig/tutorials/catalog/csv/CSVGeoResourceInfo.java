@@ -18,7 +18,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 
-import com.csvreader.CsvReader;
+import au.com.bytecode.opencsv.CSVReader;
+
 import com.vividsolutions.jts.geom.Point;
 
 public class CSVGeoResourceInfo extends IGeoResourceInfo {
@@ -27,18 +28,21 @@ public class CSVGeoResourceInfo extends IGeoResourceInfo {
         this.handle = resource;
         this.title = handle.getIdentifier().toString();
         CSV csv = handle.getCSV( monitor );
-        CsvReader reader = csv.reader();
+        CSVReader reader = csv.reader();
         try {
-            reader.readHeaders();
             this.description = "Information:";
-            for( String header : reader.getHeaders() ){
+            for( String header : csv.getHeader() ){
                 this.description += " "+header;
             }
             this.bounds = new ReferencedEnvelope(DefaultGeographicCRS.WGS84);
-            while( reader.readRecord() ){
-                Point point = CSV.getPoint( reader );
-                if( point == null ) continue;
-                this.bounds.expandToInclude(point.getCoordinate());                
+            
+            String row[];
+            while ((row = reader.readNext()) != null) {
+                Point point = csv.getPoint( row );
+                if( point == null ) {
+                    continue; // what is the point
+                }
+                this.bounds.expandToInclude(point.getCoordinate());
             }
         }
         finally {
