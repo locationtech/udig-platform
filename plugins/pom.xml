@@ -97,7 +97,6 @@
         <module>eu.udig.tools.jgrass</module>
         <module>net.refractions.udig</module>
         <module>net.refractions.udig_base</module>
-        <module>net.refractions.udig.unstable</module>
         <module>net.refractions.udig.browser</module>
         <module>net.refractions.udig.catalog</module>
         <module>net.refractions.udig.catalog.arcgrid</module>
