@@ -31,7 +31,8 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import com.csvreader.CsvReader;
+import au.com.bytecode.opencsv.CSVReader;
+
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Point;
 
@@ -54,7 +55,7 @@ public void render( Graphics2D g, IProgressMonitor monitor ) throws RenderExcept
     if (monitor == null)
         monitor = new NullProgressMonitor();
 
-    CsvReader reader = null;
+    CSVReader reader = null;
     try {
         ILayer layer = getContext().getLayer();
         IGeoResource resource = layer.findGeoResource(CSV.class);
@@ -75,11 +76,12 @@ public void render( Graphics2D g, IProgressMonitor monitor ) throws RenderExcept
         // DRAW FILE
         monitor.beginTask("csv render", csv.getSize());
         reader = csv.reader();
-        reader.readHeaders();
-        int nameIndex = reader.getIndex("name");
+        
+        int nameIndex = csv.getHeader("name");
         Coordinate worldLocation = new Coordinate();
-        while( reader.readRecord() ) {
-            Point point = CSV.getPoint(reader);
+        String [] row;
+        while ((row = reader.readNext()) != null) {
+            Point point = csv.getPoint(row);
             Coordinate dataLocation = point.getCoordinate();
             try {
                 JTS.transform(dataLocation, worldLocation, dataToWorld);
@@ -95,7 +97,7 @@ public void render( Graphics2D g, IProgressMonitor monitor ) throws RenderExcept
             g.fillRect(p.x-2, p.y-2, 6, 6);
             
             g.setColor(Color.BLACK);
-            String name = reader.get(nameIndex);
+            String name = row[nameIndex];
             g.drawString(name, p.x + 15, p.y + 15);
             monitor.worked(1);
             if (monitor.isCanceled()) break;
@@ -106,7 +108,11 @@ public void render( Graphics2D g, IProgressMonitor monitor ) throws RenderExcept
         throw new RenderException(e); // rethrow any exceptions encountered
     } finally {
         if (reader != null)
-            reader.close();
+            try {
+                reader.close();
+            } catch (IOException e) {
+                throw new RenderException(e); // rethrow any exceptions encountered
+            }
         monitor.done();
     }
 }

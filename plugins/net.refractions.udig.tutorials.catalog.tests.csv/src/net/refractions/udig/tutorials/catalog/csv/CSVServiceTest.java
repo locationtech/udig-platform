@@ -31,7 +31,8 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 
-import com.csvreader.CsvReader;
+import au.com.bytecode.opencsv.CSVReader;
+
 import com.vividsolutions.jts.geom.Point;
 
 @SuppressWarnings("nls")
@@ -91,16 +92,16 @@ public class CSVServiceTest {
                csv = resource.resolve(CSV.class, null );
            }
         }
-        CsvReader reader = csv.reader();
-        reader.readHeaders();
-        reader.setCaptureRawRecord(true);
-        reader.setTrimWhitespace(true);
+        CSVReader reader = csv.reader();
+        String row[];
         int count=0;
-        while( reader.readRecord() ){
-            String x = reader.get("x");
-            String y = reader.get("y");
-            System.out.print( reader.getCurrentRecord() +" point "+x+" x "+y);
-            Point point = CSV.getPoint( reader );
+        int lon = csv.getHeader("x");
+        int lat = csv.getHeader("y");
+        while ((row = reader.readNext()) != null) {
+            String x = row[lon];
+            String y = row[lat];
+            System.out.print( "row "+count+": point "+x+" x "+y);
+            Point point = csv.getPoint( row );
             System.out.println( "-->"+ point );
             
             count++;
