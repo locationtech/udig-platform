@@ -16,7 +16,6 @@
  *    @author Nicky Sandhu
  */
 package eu.udig.renderer.jgttms;
-import java.util.Arrays;
 
 /**
  * TMS Global Mercator Profile ---------------------------
@@ -164,26 +163,41 @@ public class GlobalMercator {
         if( expected.length != actual.length ){
             System.err.println("Expected "+expected.length+" items, but "+actual.length+" items sipplied:"+msg);
         }
+        StringBuffer buffer = new StringBuffer("[");
+        int fail = -1;
         for(int i=0; i< expected.length && i<actual.length; i++){
-            if( expected[i] != actual[i]){
-                System.err.println("At "+i+" index "+expected[i]+"!="+actual[i]+" "+msg);
+            boolean match = expected[i] == actual[i];
+            if(!match){
+                buffer.append("*");
+                if( fail == -1 ) fail = i;
             }
+            else {
+                buffer.append(" ");
+            }
+            buffer.append(expected[i]);
+            buffer.append( match ? " " : "*");
+            if( i< expected.length){
+                buffer.append(",");
+            }
+            
+        }
+        buffer.append("]");
+
+        if( fail != -1 ){
+            System.out.println("Expected "+buffer+" did not match "+ actual[fail]+" at index"+fail+": "+msg);
         }
         
     }
     public static void main( String args[] ){
-//        check( true, "true");
-//        check( false, "false");
-//        check( new int[]{1,2}, new int[]{1,2}, " same ints");
-//        check( new int[]{1,2}, new int[]{2,3}, " diff ints");
-//        check( new int[]{1,2}, new int[]{1,2,3}, " miss match ints");
-        
         // zoom level 1
         check( new int[]{0,1}, tile( 0.0, 0.0, 1), "centre");
         check( new int[]{1,2}, tile( -180.0, 90.0, 1), "north west");
         check( new int[]{1,2}, tile( 180.0, 90.0, 1), "north east");
         check( new int[]{0,2}, tile( -180.0, -90.0, 1), "south west");
         check( new int[]{0,2}, tile( 180.0, -90.0, 1), "south east");
+        
+        check( new int[]{0,0}, toTMS( 0, 1, 1 ), "Swap [0,1] level 1 to TMS");
+        check( new int[]{1,0}, toTMS( 1, 2, 1 ), "Swap [1,2] level 1 to TMS");
         
         // zoom level 2
         check( new int[]{1,2}, tile( 0.0, 0.0, 2), "level 2 centre");
