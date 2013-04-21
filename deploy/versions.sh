@@ -8,8 +8,8 @@ export BASE=`dirname $0`
 export INSTALLER="${BASE}/installer"
 #export TARGET=${BASE}/target
 #export TARGET=${BASE}/../features/net.refractions.udig-product/target/products/
-export SERIES=1.4
-export VERSION=1.4.0
+export SERIES=1.5
+export VERSION=1.5-SNAPSHOT
 export BUILD="${BASE}/build"
 
 # Tycho Build
