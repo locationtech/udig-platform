@@ -40,7 +40,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <lib.dir>${basedir}/libs</lib.dir>
+        <lib.dir>${basedir}/lib</lib.dir>
         <lib.dummy.dir>${lib.dir}/dummy</lib.dummy.dir>
     </properties>
 
