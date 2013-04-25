@@ -108,7 +108,7 @@
                                       <attribute name="Implementation-Version" value="1.0.0"/>
                                     </manifest>
                                 </jar>
-                                <jar destfile="${lib.dir}/db2jcc_license.jar">
+                                <jar destfile="${lib.dir}/db2jcc_license_cu.jar">
                                      basedir="${lib.dummy.dir}">
                                     <manifest>
                                       <attribute name="Built-By" value="${user.name}"/>
