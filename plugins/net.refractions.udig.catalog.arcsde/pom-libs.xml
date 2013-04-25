@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <!-- 
+    
+    The files icu4j-3.2+.jar,jpe_sdk-9.2+.jar and jsde_sdk-9.2+.jar genearted here
+    are fake ones. They're empty jar files in order for eclipse not to complain
+    about the plugin missing required jars. When running udig, since the 
+    geotools arcsde plugin won't find the required ESRI Java API classes, it
+    will ask for the location of the actual jars.
+    
+    So, if running udig from within eclipse to connect to ArcSDE, make sure not
+    to accidentally commit the actual jars, that udig will replaces these fake ones with.
+
+    You will need to generate the dummy jars using:
+            
+            mvn install -f pom-libs.xml 
+        
+     -->
+
+    <developers>
+        <developer>
+            <id>jodygarnett</id>
+            <name>Jody Garnett</name>
+            <email>jody.garnett@gmail.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+10</timezone>
+        </developer>
+    </developers>
+
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>net.refractions.catalog.arcsde</groupId>
+    <artifactId>download</artifactId>
+    <version>1.4.0</version>
+    <name>ArcSDE Dummy Jar Creation</name>
+    
+    <packaging>pom</packaging>
+
+    <properties>
+        <lib.dir>${basedir}/libs</lib.dir>
+        <lib.dummy.dir>${lib.dir}/dummy</lib.dummy.dir>
+    </properties>
+
+    <repositories>
+        <!-- The OpenGeo company offers a SNAPSHOT repository populated by GeoTools
+        nightly builds - in general it is much faster then the official repository
+        above -->
+        <repository>
+            <id>geotools-snapshot</id>
+            <name>Geotools Snapshot</name>
+            <url>http://repo.opengeo.org</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.4.1</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${lib.dir}</directory>
+                            <includes>
+                                <include>*.*</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                        <fileset>
+                            <directory>${lib.dummy.dir}</directory>
+                            <includes>
+                                <include>*.*</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <!-- create icu4j-3.2+.jar, jpe_sdk-9.2+.jar, jsde_sdk-9.2+.jar -->
+                    <execution>
+                        <id>create_dummy</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${lib.dir}"/>
+                                <mkdir dir="${lib.dummy.dir}"/>
+                                <touch file="${lib.dummy.dir}/DUMMY.txt"/>
+                                
+                                <jar destfile="${lib.dir}/icu4j-3.2+.jar"
+                                     basedir="${lib.dummy.dir}"/>
+                                <jar destfile="${lib.dir}/jpe_sdk-9.2+.jar"
+                                     basedir="${lib.dummy.dir}"/>
+                                <jar destfile="${lib.dir}/jsde_sdk-9.2+.jar"
+                                     basedir="${lib.dummy.dir}"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+         </plugins>
+    </build>
+    
+</project>
