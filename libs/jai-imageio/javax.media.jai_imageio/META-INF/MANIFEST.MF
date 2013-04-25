@@ -7,7 +7,7 @@ Bundle-ClassPath: jai_codec-1.1.3.jar,
  jai_core-1.1.3.jar,
  mlibwrapper_jai.jar,
  clibwrapper_jiio.jar,
- jai_imageio.jar
+ jai_imageio-1.1.jar
 Export-Package: com.sun.media.imageio.plugins.bmp,
  com.sun.media.imageio.plugins.jpeg2000,
  com.sun.media.imageio.plugins.pnm,

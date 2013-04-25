@@ -6,6 +6,6 @@
 	<classpathentry exported="true" kind="lib" path="jai_core-1.1.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="mlibwrapper_jai.jar"/>
 	<classpathentry exported="true" kind="lib" path="clibwrapper_jiio.jar"/>
-	<classpathentry exported="true" kind="lib" path="jai_imageio.jar"/>
+	<classpathentry exported="true" kind="lib" path="jai_imageio-1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

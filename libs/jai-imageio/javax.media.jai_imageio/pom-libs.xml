@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <!-- This script was created to automagically download the external libs 
+        required for this plugin to build and export correctly.
+        
+        To download the required  libraries, use:
+            
+            mvn install -f pom-libs.xml 
+        
+        After they have downloaded, make sure you:
+          - refresh this project in Eclipse;
+          - verify the classpath (Manfiest Runtime tab) references the libs
+          - ensure the lib versions in the classpath are also correct. -->
+
+
+    <developers>
+        <developer>
+            <id>Sev</id>
+            <name>Severin</name>
+            <email>djseverin@gmail.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+10</timezone>
+        </developer>
+    </developers>
+
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>javax.media.jai_imageio</groupId>
+    <artifactId>download</artifactId>
+    <version>1.1.3</version>
+    <name>Java Advanced Imaging Download</name>
+    
+    <packaging>pom</packaging>
+
+    <repositories>
+        <!-- Open Source Geospatial Foundation is the official repository used by
+        the GeoTools project for stable releases - use this repository when
+        using an official GeoTools numbered release -->
+        <repository>
+            <id>geotools-release</id>
+            <name>Geotools Release</name>
+            <url>http://download.osgeo.org/webdav/geotools</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+
+        <!-- The OpenGeo company offers a SNAPSHOT repository populated by GeoTools
+        nightly builds - in general it is much faster then the official repository
+        above -->
+        <repository>
+            <id>geotools-snapshot</id>
+            <name>Geotools Snapshot</name>
+            <url>http://repo.opengeo.org</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+        <!-- The JAI tools maven repository is actually the offical sonaType snapshot repository -->
+        <repository>
+            <id>sonatype-snapshot</id>
+            <name>Sonatype Snapshot Repository</name>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+        <!-- GeoSolutions provide their own repository for imageio-ext builds -->
+        <repository>
+            <id>geosolutions</id>
+            <name>GeoSolutions</name>
+            <url>http://maven.geo-solutions.it</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!-- Java Advanced Imaging -->
+        <dependency>
+            <groupId>javax.media</groupId>
+            <artifactId>jai_imageio</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.media</groupId>
+            <artifactId>jai_codec</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.media</groupId>
+            <artifactId>jai_core</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.4.1</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}</directory>
+                            <includes>
+                                <include>*.jar</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <excludeScope>provided</excludeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+         </plugins>
+    </build>
+    
+</project>
