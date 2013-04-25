@@ -128,8 +128,8 @@ public class JGTtmsRenderer extends RendererImpl {
 
             // get ul and lr tile number in GOOGLE tiles
             // TODO: Replace with logic from OSMTile or other
-            int[] llTileXY = GlobalMercator.tile(s, w, z,256);
-            int[] urTileXY = GlobalMercator.tile(n, e, z,256);
+            int[] llTileXY = new int[]{0,1}; // TODO: rplce GlobalMercator.tile(s, w, z,256);
+            int[] urTileXY = new int[]{0,2}; // TODO: replace GlobalMercator.tile(n, e, z,256);
 
             int startXTile = Math.min(llTileXY[0], urTileXY[0]);
             int endXTile = Math.max(llTileXY[0], urTileXY[0]);
@@ -166,7 +166,7 @@ public class JGTtmsRenderer extends RendererImpl {
 
                     int[] fileNameTileNumbers = {i, j};
                     if (tmsProperties.type == JGTtmsProperties.TILESCHEMA.tms) {
-                        fileNameTileNumbers = GlobalMercator.swap( i,j,z);
+                        fileNameTileNumbers = new int[]{i,j};// TODO replace GlobalMercator.swap( i,j,z);
                     } else if (tmsProperties.type == JGTtmsProperties.TILESCHEMA.google) {
                         // is already
                     }
