@@ -71,7 +71,7 @@
                         <fileset>
                             <directory>${lib.dir}</directory>
                             <includes>
-                                <include>*.*</include>
+                                <include>*.jar</include>
                             </includes>
                             <followSymlinks>false</followSymlinks>
                         </fileset>
