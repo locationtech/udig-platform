@@ -1,34 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-    <!-- This script was created to automagically download the external libs 
-        required for this plugin to build and export correctly.
+    <!-- 
+        At the time of writing we cannot distrubtue the DB2 JDBC drivers
+        and have created placeholder using a an empty DUMMY.txt file.
         
-        At the time of writing the Oracle JDBC Driver required a click-through license
-        (while we can distribute this plugin as "works-with" the Oracle JDBC
-        driver that does not strictly let us compile the code during our
-        nightly build).
+        At runtime users can in stall the readl thing downloaded from IBM.
         
-        The following work around is from the GeoTools project:
-         
-        Download the ojdbc14.jar driver from oracle and install
-        into maven:
-        
-            mvn install:install-file -Dfile=ojdbc14.jar \
-                -DgroupId=com.oracle -DartifactId=ojdbc14 \
-                -Dversion=10.2.0.3.0 -Dpackaging=jar -DgeneratePom=true
-        
-        You can then download the required  libraries, using
+        You will need to generate the dummy jars using:
             
             mvn install -f pom-libs.xml 
         
-        Our uDig solution was toL
+        Details:
         
-        1. Zip up a single DUMMY.txt file into an oracle-classes.jar
+        1. Zip up a single DUMMY.txt file into an db2jcc.jar and db2jcc_license_cu.jar
         2. This gives us something to add to the plugin MANIFEST.MF
-        3. Proivde a wizard for users to replace this jar
-           with their own downloaded copy.
-           
+        3. Proivde a wizard for users to replace these jars
      -->
 
     <developers>
@@ -45,10 +32,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     
-    <groupId>net.refractions.udig.libs.oracle</groupId>
+    <groupId>net.refractions.udig.libs.db2</groupId>
     <artifactId>download</artifactId>
     <version>1.4.0</version>
-    <name>Oracle Dummy Jar Creation</name>
+    <name>DB2 Dummy Jar Creation</name>
     
     <packaging>pom</packaging>
 
@@ -74,24 +61,6 @@
         </repository>
     </repositories>
 
-  <profiles>
-    <profile>
-        <id>oracle.jdbc-true</id>
-        <activation>
-           <property>
-              <name>oracle</name>
-           </property>           
-        </activation>
-        <dependencies>
-          <dependency>
-            <artifactId>ojdbc14</artifactId>
-            <groupId>com.oracle</groupId>
-            <version>10.2.0.3.0</version>
-          </dependency>
-        </dependencies>
-    </profile>
-  </profiles>
-
     <build>
         <plugins>
             <plugin>
@@ -116,30 +85,6 @@
                     </filesets>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.3</version>
-                
-                <!-- used to download oracle jar if installed locally -->
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${lib.dir}</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>false</overWriteSnapshots>
-                            <overWriteIfNewer>true</overWriteIfNewer>
-                            <excludeScope>provided</excludeScope>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -155,7 +100,7 @@
                                 <mkdir dir="${lib.dummy.dir}"/>
                                 <touch file="${lib.dummy.dir}/DUMMY.txt"/>
                                 
-                                <jar destfile="${lib.dir}/oracle-classes.jar"
+                                <jar destfile="${lib.dir}/db2jcc.jar"
                                      basedir="${lib.dummy.dir}">
                                     <manifest>
                                       <attribute name="Built-By" value="${user.name}"/>
@@ -163,8 +108,7 @@
                                       <attribute name="Implementation-Version" value="1.0.0"/>
                                     </manifest>
                                 </jar>
-                                <!-- need logic here to use oracle jar if installed -->
-                                <jar destfile="${lib.dir}/oracle-driver.jar">
+                                <jar destfile="${lib.dir}/db2jcc_license.jar">
                                      basedir="${lib.dummy.dir}">
                                     <manifest>
                                       <attribute name="Built-By" value="${user.name}"/>
