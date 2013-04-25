@@ -105,18 +105,23 @@ package eu.udig.renderer.jgttms;
 public class GlobalMercator {
     
     /**
-     * Look up the tile index for the provided lat / lon.
+     * Look up the tile index for the provided lat / lon assuming Spherical Mercator.
      * <p>
      * Tile index is based the common web mapping convention of starting
-     * at -180,-90 and dividing the world up into two squares for the first
-     * zoom level. This technique is used by WMS-C, Google Maps and other services.
+     * at -180,-90 and dividing the world up into tiles based on zoom level.
+     * 
+     * This technique is used by WMS-C, Google Maps and other services.
+     * 
+     * The initial tile is based on the equatoral raidus for the earth
+     * from http://en.wikipedia.org/wiki/Figure_of_the_Earth
      * 
      * @param lat
      * @param lon
-     * @param zoom
+     * @param zoom 
+     * @param tileSize Used to determine resolution
      * @return tile index
      */
-    public static int[] tile( double lat, double lon, int zoom ){
+    public static int[] tile( double lat, double lon, int zoom, int tileSize ){
         // From: http://en.wikipedia.org/wiki/Figure_of_the_Earth
         double WGS84_EQUATORAL_RADIUS = 6378137.0;
         
@@ -140,17 +145,19 @@ public class GlobalMercator {
     }
 
     /**
-     * Swap to TMS tile.
-     * <p>
-     * TMS standard uses the topLeft.
+     * Swap the {@link #tile} index orientation between bottom left and top left.
      * 
-     * @param i
-     * @param j
-     * @param z
+     * Implementations start counting from either bottom left and top left.
+     * This method can swap between these two orientation.
+     * 
+     * 
+     * @param i column of tile
+     * @param j row of tile that needs to be swaped
+     * @param zoomLevel
      * @return tile index for TMS
      */
-    public static int[] toTMS( int i, int j, int z ){
-        int topLeft = (int) ((Math.pow(2, z) - 1) - j);
+    public static int[] swap( int i, int j, int zoomLevel ){
+        int topLeft = (int) ((Math.pow(2, zoomLevel) - 1) - j);
         return new int[]{i, topLeft };
     }
     
@@ -190,21 +197,21 @@ public class GlobalMercator {
     }
     public static void main( String args[] ){
         // zoom level 1
-        check( new int[]{0,1}, tile( 0.0, 0.0, 1), "centre");
-        check( new int[]{1,2}, tile( -180.0, 90.0, 1), "north west");
-        check( new int[]{1,2}, tile( 180.0, 90.0, 1), "north east");
-        check( new int[]{0,2}, tile( -180.0, -90.0, 1), "south west");
-        check( new int[]{0,2}, tile( 180.0, -90.0, 1), "south east");
+        check( new int[]{0,1}, tile( 0.0, 0.0, 1,256), "centre");
+        check( new int[]{1,2}, tile( -180.0, 90.0, 1,256), "north west");
+        check( new int[]{1,2}, tile( 180.0, 90.0, 1,256), "north east");
+        check( new int[]{0,2}, tile( -180.0, -90.0, 1,256), "south west");
+        check( new int[]{0,2}, tile( 180.0, -90.0, 1,256), "south east");
         
-        check( new int[]{0,0}, toTMS( 0, 1, 1 ), "Swap [0,1] level 1 to TMS");
-        check( new int[]{1,0}, toTMS( 1, 2, 1 ), "Swap [1,2] level 1 to TMS");
+        check( new int[]{0,0}, swap( 0, 1, 1 ), "Swap [0,1] level 1 to TMS");
+        check( new int[]{1,0}, swap( 1, 2, 1 ), "Swap [1,2] level 1 to TMS");
         
         // zoom level 2
-        check( new int[]{1,2}, tile( 0.0, 0.0, 2), "level 2 centre");
-        check( new int[]{2,4}, tile( -180.0, 90.0, 2), "level 2 north west");
-        check( new int[]{2,4}, tile( 180.0, 90.0, 2), "level 2 north east");
-        check( new int[]{0,4}, tile( -180.0, -90.0, 2), "level 2 south west");
-        check( new int[]{0,4}, tile( 180.0, -90.0, 2), "level 2 south east");
+        check( new int[]{1,2}, tile( 0.0, 0.0, 2,256), "level 2 centre");
+        check( new int[]{2,4}, tile( -180.0, 90.0, 2,256), "level 2 north west");
+        check( new int[]{2,4}, tile( 180.0, 90.0, 2,256), "level 2 north east");
+        check( new int[]{0,4}, tile( -180.0, -90.0, 2,256), "level 2 south west");
+        check( new int[]{0,4}, tile( 180.0, -90.0, 2,256), "level 2 south east");
         
     }
 }
