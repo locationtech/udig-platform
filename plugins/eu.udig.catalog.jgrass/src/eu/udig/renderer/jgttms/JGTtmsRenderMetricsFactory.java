@@ -34,7 +34,9 @@ public class JGTtmsRenderMetricsFactory implements IRenderMetricsFactory {
         // check if it is a Property resource
         IGeoResource resource = context.getGeoResource();
         boolean isRightResource = resource.canResolve(JGTtmsGeoResource.class);
-        return isRightResource;
+        //return isRightResource;
+        
+        return false; // TODO: Fix implementation of JGTmsRenderer calaculation of tile bounds
     }
 
     public AbstractRenderMetrics createMetrics( IRenderContext context ) {
