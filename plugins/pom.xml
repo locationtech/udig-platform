@@ -51,7 +51,7 @@
             </activation>
             <modules>
                 <!-- TUTORIALS -->
-                <module>com.csvreader</module>
+                <module>net.sf.opencsv/</module>
                 <module>eu.udig.tutorials.preferredzoomlevels</module>
                 <module>eu.udig.tutorials.tool-view</module>
                 <module>net.refractions.udig.tutorials.catalog.csv</module>
