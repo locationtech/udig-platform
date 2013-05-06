@@ -1,5 +1,4 @@
-The uDig Software Developers Kit is distributed to under the terms of the Lesser 
-General Public License (LGPL).
+The uDig Software Developers Kit is distributed to under the terms and conditions of the Eclipse Public License Version 1.0 ("EPL"), and the Refractions BSD License 1.0 ("BSD"). 
 
 However, the source code examples published as part of this docs directory are placed into
 the public domain to assist users in adapting these examples as a starting point for their own work.
