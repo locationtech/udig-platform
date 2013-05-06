@@ -93,8 +93,7 @@
       Please report any problems or suggestions for improvement to \
       udig-devel@lists.refractions.net. \r\n \r\n \
       uDig is distributed under a dual Eclipse Public License \
-      and Refractions BSD License. There is also a license for \
-      ECW/JP2 support. \r\n \r\n \
+      and Refractions BSD License. \r\n \r\n \
       Click Next to continue."
 ;--------------------------------
 ;Pages
@@ -108,8 +107,6 @@
   !insertmacro MUI_PAGE_LICENSE "epl-v10.txt"  
   
   !insertmacro MUI_PAGE_LICENSE "bsd3-v10.txt"
-  
-  !insertmacro MUI_PAGE_LICENSE "ECWEULA.txt"
   
   !insertmacro MUI_PAGE_DIRECTORY
 
