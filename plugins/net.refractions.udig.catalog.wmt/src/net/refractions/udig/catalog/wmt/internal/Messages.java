@@ -55,9 +55,6 @@ public class Messages extends NLS {
     public static String Wizard_Osm_Info;
     public static String Wizard_Osm_InfoLink;
     
-    public static String Wizard_Mq_Info;
-    public static String Wizard_Mq_InfoLink;
-    
     public static String Wizard_Ww_Example_Title;
     public static String Wizard_Ww_Example_Demis_Title;
     public static String Wizard_Ww_Example_Demis_Info;
