@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project.ui">
+<schema targetNamespace="net.refractions.udig.project.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
          <meta.schema plugin="net.refractions.udig.project.ui" id="editorInputs" name="Editor Inputs"/>
@@ -11,6 +11,11 @@
    </annotation>
 
    <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
       <complexType>
          <sequence>
             <element ref="editorInput" minOccurs="1" maxOccurs="unbounded"/>
@@ -119,7 +124,22 @@
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         
+uDig - User Friendly Desktop Internet GIS client
+<A HREF="http://udig.refractions.net">http://udig.refractions.net</A>
+(C) 2004-2012, Refractions Research Inc.
+
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+(<A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>), and Refractions BSD
+License v1.0 (<A HREF="http://www.eclipse.org/org/documents/edl-v10.html">http://www.eclipse.org/org/documents/edl-v10.html</A>).
+
+&lt;A HREF=&quot;http://udig.refractions.net&quot;&gt;http://udig.refractions.net&lt;/A&gt;
+(C) 2004-2012, Refractions Research Inc.
+
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+(&lt;A HREF=&quot;http://www.eclipse.org/legal/epl-v10.html&quot;&gt;http://www.eclipse.org/legal/epl-v10.html&lt;/A&gt;), and Refractions BSD
+License v1.0 (&lt;A HREF=&quot;http://www.eclipse.org/org/documents/edl-v10.html&quot;&gt;http://www.eclipse.org/org/documents/edl-v10.html&lt;/A&gt;).
       </documentation>
    </annotation>
 
