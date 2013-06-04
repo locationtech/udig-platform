@@ -14,7 +14,7 @@ This workbook is part of our public training materials:
 
 Downloads:
 
-* :download:`distance_icons.zip`
+* `distance_icons.zip`
 
 Source code:
 

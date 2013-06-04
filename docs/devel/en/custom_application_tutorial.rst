@@ -23,7 +23,7 @@ This workbook is part of our public training materials:
 
 Downloads:
 
-* :download:`rcp_branding.zip <CustomApplication/rcp_branding.zip>` Images and Icons used in the Tutorial
+* `rcp_branding.zip` Images and Icons used in the Tutorial
 
 Source code:
 
