@@ -122,7 +122,7 @@ public class EndConnectionState extends State {
     @Override
     public boolean run( IProgressMonitor monitor ) throws IOException {
         if (factory == null)
-            return false; // something went wrong, crap out
+            return false; // something went wrong, abort
 
         if( !services.isEmpty() ){
             return true;
