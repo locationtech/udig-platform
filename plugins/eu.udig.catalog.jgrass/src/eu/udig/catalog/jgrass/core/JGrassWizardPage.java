@@ -50,7 +50,7 @@ import eu.udig.catalog.jgrass.messages.Messages;
 
 /**
  * <p>
- * Data page responsible for aquiring a JGrass database
+ * Data page responsible for acquiring a JGrass database
  * </p>
  * <p>
  * <i>Note: based on the WMS plugin</i>
