@@ -422,7 +422,7 @@ public class PointEditorPage extends StyleEditorPage {
     }
     
     /**
-     * Creates a fancy-ass combo box that may or may not have an included default indicator, and 
+     * Creates a fancy combo box that may or may not have an included default indicator, and 
      * has an unselected message initially, if no selected value or default are available.
      *
      * @param parent Parent Composite
