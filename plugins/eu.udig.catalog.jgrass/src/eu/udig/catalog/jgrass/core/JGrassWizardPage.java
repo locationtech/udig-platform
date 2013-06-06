@@ -1,7 +1,6 @@
 /*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
+ * uDig - User Friendly Desktop Internet GIS client
  * (C) HydroloGIS - www.hydrologis.com 
- * (C) C.U.D.A.M. Universita' di Trento
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -51,7 +50,7 @@ import eu.udig.catalog.jgrass.messages.Messages;
 
 /**
  * <p>
- * Data page responsible for aquiring a JGrass database
+ * Data page responsible for acquiring a JGrass database
  * </p>
  * <p>
  * <i>Note: based on the WMS plugin</i>

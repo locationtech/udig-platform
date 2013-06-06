@@ -1,5 +1,5 @@
 /*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
+ * uDig - User Friendly Desktop Internet GIS client
  * (C) HydroloGIS - www.hydrologis.com 
  *
  * All rights reserved. This program and the accompanying materials

@@ -19,7 +19,7 @@ This workbook is part of our public training materials:
 
 Resources:
 
-* :download:`workbench_icons.zip`
+* `workbench_icons.zip`
 
 Source code:
 

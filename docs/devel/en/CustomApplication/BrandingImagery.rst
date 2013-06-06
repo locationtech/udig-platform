@@ -61,7 +61,7 @@ Fiddling around with drawing programs is a bit beyond the scope of this workbook
   Enough of that - lets download the files we need and keep going. If you have any questions please consult the `Eclipse User Inferface Guidelines <http://www.eclipse.org/articles/Article-UI-Guidelines/Index.html>`_
 
 
-* Download the following file: :download:`rcp_branding.zip`
+* Download the following file: `rcp_branding.zip`
 
   .. note::
      If you are using this workbook in a lab setting you will find the file rcp_branding.zip on your dvd.
@@ -75,7 +75,7 @@ Fiddling around with drawing programs is a bit beyond the scope of this workbook
 
 * Fill in the following details on the Archive file page:
 
-  From archive file: :download:`rcp_branding.zip`
+  From archive file: `rcp_branding.zip`
 
   Into folder: ``net.refractions.udig.tutorials.customapp``
 

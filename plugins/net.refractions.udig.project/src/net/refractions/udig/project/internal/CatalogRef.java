@@ -279,7 +279,7 @@ public class CatalogRef {
         String[] segments = externalizedLayerID.split("#"); //$NON-NLS-1$
 
         if (segments.length < 2) {
-            // oh crap the service that this layer was originally created from does not obey the
+            // the service that this layer was originally created from does not obey the
             // convention where georesources must be the serviceid#subid
             ProjectPlugin
                     .log("Some service doesn't obey the convention where georesources must be the serviceid#subid. \n\nLayer id = " //$NON-NLS-1$
