@@ -188,7 +188,7 @@ public class CustomPalettesLoader implements IStartup {
      * Converts "[#text: 1,2,3]" to "1,2,3".
      *
      * <p>
-     * This is a brutal hack for fixing the org.w3c.dom API. Under j1.4
+     * This is a fix for the org.w3c.dom API. Under j1.4
      * Node.toString() returns "1,2,3", under j1.5 Node.toString() returns
      * "[#text: 1,2,3]".
      * </p>

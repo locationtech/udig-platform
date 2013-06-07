@@ -309,7 +309,7 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
         for( UpdateLabel updater : allImageWorkers ) {
             updater.cancel();
         }
-        // should clean up after hack
+        // clean up 
         decorated.clear();
         listeners.removeAll(instanceListeners);
         instanceListeners.clear();

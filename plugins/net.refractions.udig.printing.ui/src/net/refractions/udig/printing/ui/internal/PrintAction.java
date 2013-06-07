@@ -70,7 +70,7 @@ public class PrintAction extends Action implements IEditorActionDelegate {
             outFile = new File(path);
         }
 
-        // copy the page before hacking on it
+        // copy the page before modifying it
         final Page copy = (Page) EcoreUtil.copy((EObject) page);
         final PdfPrintingEngine engine = new PdfPrintingEngine(copy, outFile);
 

@@ -1,5 +1,11 @@
-/**
- * 
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004-2012, Refractions Research Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package eu.udig.tools.merge;
 
@@ -36,41 +42,6 @@ public final class Util {
 	
 	private Util(){}
 
-	/**
-	 * Retrieves the features from layer using the filter
-	 * 
-	 * @param filter
-	 * @param layer
-	 * 
-	 * @return List of {@link SimpleFeature}}
-	 * @throws IOException
-	 */
-//	public static List<SimpleFeature> retrieveFeatures(Filter filter, ILayer layer) throws IOException {
-//
-//		SimpleFeatureSource source = (SimpleFeatureSource) layer.getResource(FeatureSource.class, null);
-//
-//		String typename = source.getSchema().getName().toString();
-//
-//		Query query = new Query(typename, filter);
-//
-//		//SimpleFeatureCollection features = source.getFeatures(query);
-//		SimpleFeatureCollection features = source.getFeatures(); //FIXME Hack done to continue the merge tool devel (It is necessary to solve this issue)
-//		
-//		List<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
-//		FeatureIterator<SimpleFeature> iter = null;
-//		try {
-//			iter = features.features();
-//			while (iter.hasNext()) {
-//				SimpleFeature f = iter.next();
-//				featureList.add(f);
-//			}
-//		} finally {
-//			if (iter != null) {
-//				iter.close();
-//			}
-//		}
-//		return featureList;
-//	}
 	public static List<SimpleFeature> retrieveFeatures(Filter filter, ILayer layer) throws IOException {
 
 		FeatureCollection<SimpleFeatureType, SimpleFeature> features = LayerUtil.getSelectedFeatures(layer, filter);

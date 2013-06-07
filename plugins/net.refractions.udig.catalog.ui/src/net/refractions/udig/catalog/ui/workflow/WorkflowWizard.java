@@ -208,7 +208,7 @@ public class WorkflowWizard extends Wizard {
                     name = state.getName();
                 }
                 CatalogUIPlugin.log(name + " could not finish.", e); //$NON-NLS-1$
-                // HACK A really bad hack because this sometimes causes a null pointer when
+                // FIXME this sometimes causes a null pointer when
                 // wizard dialog calls stopped. it appears that sometimes the wait
                 // cursor is null odd. but I dn't have time to track it down.
             }

@@ -100,7 +100,6 @@ public class Palette {
             String defn = properties.getProperty( KEY+i );
 //          ie. {158, 202, 225},{ 49, 130, 189}
             List<Color> colours = new ArrayList<Color>();
-            //StringBuffer hack = new StringBuffer( defn );
             defn = defn.replace("},", "|" ); //$NON-NLS-1$ //$NON-NLS-2$
             defn = defn.replace('}', ' ' );  
             defn = defn.replace('{', ' ' );            

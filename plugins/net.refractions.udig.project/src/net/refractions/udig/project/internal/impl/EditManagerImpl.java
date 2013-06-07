@@ -425,8 +425,8 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
                         // create an event that notifies listeners that the area has changed again.
                         // calculate bounds of all the Changes to date.
                         // The reason for this is that otherwise I would have to make the entire
-                        // viewport re-render on a rollback. This little hack is to
-                        // get around that.
+                        // viewport re-render on a rollback. 
+                        // TODO This is a workaround to get around that.
                         Envelope envelope = new Envelope();
                         for( FeatureEvent event : changes ) {
                             envelope.expandToInclude(event.getBounds());

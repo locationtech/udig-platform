@@ -35,7 +35,7 @@ import org.eclipse.jface.viewers.LabelProviderChangedEvent;
  */
 public class LayerStateDecorator implements ILightweightLabelDecorator {
 
-    private Adapter hack = new AdapterImpl(){
+    private Adapter adapterImpl = new AdapterImpl(){
         public void notifyChanged( Notification msg ) {
             if (msg.getNotifier() instanceof Layer) {
                 Layer layer = (Layer) msg.getNotifier();
@@ -73,8 +73,8 @@ public class LayerStateDecorator implements ILightweightLabelDecorator {
                                             // check
         decoration.addOverlay(ProjectUIPlugin.getDefault().getImageDescriptor(ISharedImages.WRITE_OVR));
 
-        if (!layer.eAdapters().contains(hack)) {
-            layer.eAdapters().add(hack);
+        if (!layer.eAdapters().contains(adapterImpl)) {
+            layer.eAdapters().add(adapterImpl);
         }
     }
 
@@ -89,7 +89,7 @@ public class LayerStateDecorator implements ILightweightLabelDecorator {
      * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
      */
     public void dispose() {
-        // should clean up after hack
+        // clean up 
         listeners.clear();
     }
 

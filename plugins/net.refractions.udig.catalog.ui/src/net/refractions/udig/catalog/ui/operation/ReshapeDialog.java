@@ -306,7 +306,7 @@ public class ReshapeDialog extends Dialog {
             String name = definition.name;
             Expression expression = definition.expression;
 
-            // hack because sometimes expression returns null.  I think the real bug is with AttributeExpression
+            // FIXME : sometimes expression returns null.  I think the real bug is with AttributeExpression
             Class<?> binding = definition.binding;
             if( binding == null ){
                 Object value = expression.evaluate(sample);

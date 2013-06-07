@@ -49,7 +49,7 @@ import org.opengis.util.ProgressListener;
  * new temporary layer.
  * <p>
  * While the Dialog may be simple; this is a reasonable
- * example at how to hack at an operation that processes
+ * example at how to force an operation that processes
  * data in a way that does not force all the data into
  * memory.
  * <p>

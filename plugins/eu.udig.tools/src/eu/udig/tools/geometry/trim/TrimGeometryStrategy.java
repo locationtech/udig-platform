@@ -159,7 +159,7 @@ public class TrimGeometryStrategy {
 		Coordinate[] segment = new Coordinate[2];
 
 		final GeometryFactory gf = line.getFactory();
-		final double HACK_DISTANCE = 0.0000001;
+		final double DELTA_DISTANCE = 0.0000001;
 		for (int i = 1; i < coordinates.length; i++) {
 			segment[0] = coordinates[i - 1];
 			segment[1] = coordinates[i];
@@ -168,10 +168,10 @@ public class TrimGeometryStrategy {
 			// never returns true, even though intersectionPoint should be
 			// guaranteed
 			// to be over the line as it was produced by intersecting both lines
-			// so we're using this hack to determine if the point lies over the
+			// so we're using little buffer to determine if the point lies over the
 			// segment
 			Geometry lineSegment = gf.createLineString(segment);
-			lineSegment = lineSegment.buffer(HACK_DISTANCE, 2);
+			lineSegment = lineSegment.buffer(DELTA_DISTANCE, 2);
 			Point point = gf.createPoint(pointInLine);
 			Geometry intersection = lineSegment.intersection(point);
 			if (point.equals(intersection)) {

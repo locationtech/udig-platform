@@ -643,9 +643,9 @@ public class ToolManager implements IToolManager {
     /**
      * Sets the context of the currently active tool and ensures that all tools are enabled.
      * <p>
-     * This is a small hack called by the "support views" associated with the MapEditor,
+     * This is called by the "support views" associated with the MapEditor,
      * it is used so the tools can be active even when the MapEditor does not have the focus.
-     * Without this hack you would need to constantly select the MapEditor, change the tool
+     * Without this modification you would need to constantly select the MapEditor, change the tool
      * and then get to work.
      * <p>
      * Aside: it would be good if selecting a tool made the MapEditor grab focus.

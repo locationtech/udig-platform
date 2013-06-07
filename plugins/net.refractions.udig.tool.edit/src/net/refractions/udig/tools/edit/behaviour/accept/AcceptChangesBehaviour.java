@@ -187,7 +187,7 @@ public class AcceptChangesBehaviour implements Behaviour {
      * <li>edit feature is null: a CreateAndSetNewFeature
      * <li>otherwise the editGeom.getFeatureIDRef() feature will be modified
      * <ul>
-     * This method uses GeometryCreationUtil.ceateGeometryCollection to hack away at the origional
+     * This method uses GeometryCreationUtil.ceateGeometryCollection to modify the origional
      * geometry.
      * 
      * @param handler

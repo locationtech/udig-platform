@@ -43,7 +43,7 @@ public class DataStoreServiceInfo extends IServiceInfo {
         this.keywords = (info.getKeywords() != null ? info.getKeywords().toArray(new String[0]) : new String[0]);
         this.publisher = info.getPublisher();
         /* 
-         * This is a horrible hack to handle null namespaces in Name
+         * TODO : This is because of null namespaces in Name
          * If the namespace NPE's, we can just leave schema as it is.
          */
         try {

@@ -310,7 +310,7 @@ public class GridStyleConfigurator extends IStyleConfigurator implements Listene
     }
 
     /** 
-     * Stupid hack so that when apply is pressed the value in the spinners is set.
+     * Workaround solution that when apply is pressed the value in the spinners is set.
      * Spinners don't have the displayed value until enter or the focus changes
      * from the spinner.  So I'm going to kick the spinner to get it to synchronize with
      * the displayed value.

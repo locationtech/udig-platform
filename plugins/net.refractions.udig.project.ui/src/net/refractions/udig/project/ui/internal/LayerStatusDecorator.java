@@ -1,13 +1,12 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/* 
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004-2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
- *
  */
 package net.refractions.udig.project.ui.internal;
 
@@ -44,11 +43,11 @@ public class LayerStatusDecorator implements ILightweightLabelDecorator {
 
     private final Map<ILayer, Integer> currentlyDisplayedStatus=Collections.synchronizedMap(new WeakHashMap<ILayer, Integer>());
     private final Set<ILabelProviderListener> listeners = new CopyOnWriteArraySet<ILabelProviderListener>();
-    private Adapter hack = new AdapterImpl(){
+    private Adapter adapterImpl = new AdapterImpl(){
         public void notifyChanged( Notification msg ) {
             if (msg.getNotifier() instanceof Layer) {
                 final Layer layer = (Layer) msg.getNotifier();
-                if( hack==null ){
+                if( adapterImpl==null ){
                     layer.eAdapters().remove(this);
                     return;
                 }
@@ -86,8 +85,8 @@ public class LayerStatusDecorator implements ILightweightLabelDecorator {
         // decoration.addOverlay( ProjectUIPlugin.getDefault().getImageDescriptor( ISharedImages.SELECT_UDR ),
         // IDecoration.UNDERLAY );
 
-        if (!layer.eAdapters().contains(hack))
-            layer.eAdapters().add(hack);
+        if (!layer.eAdapters().contains(adapterImpl))
+            layer.eAdapters().add(adapterImpl);
     }
 
     private ImageDescriptor statusIcon( Layer layer ) {
@@ -141,10 +140,10 @@ public class LayerStatusDecorator implements ILightweightLabelDecorator {
      * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
      */
     public void dispose() {
-        // should clean up after hack
+        // clean up 
         listeners.clear();
-        // set hack to null so it will clean itself up if called again.
-        hack=null;
+        // set adapterImpl to null so it will clean itself up if called again.
+        adapterImpl=null;
     }
 
     /**

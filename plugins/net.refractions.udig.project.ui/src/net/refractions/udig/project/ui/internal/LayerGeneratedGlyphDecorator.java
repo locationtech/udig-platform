@@ -146,8 +146,8 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
 
                     try {
                         layer = queue.removeFirst();
-                        if (!layer.eAdapters().contains(hack)) {
-                            layer.eAdapters().add(hack);
+                        if (!layer.eAdapters().contains(adapterImpl)) {
+                            layer.eAdapters().add(adapterImpl);
                         }
                     } catch (NoSuchElementException noLayer) {
                         continue SERVICE;
@@ -239,7 +239,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
 
     Set<ILabelProviderListener> listeners = new CopyOnWriteArraySet<ILabelProviderListener>();
 
-    Adapter hack = new AdapterImpl(){
+    Adapter adapterImpl = new AdapterImpl(){
         public void notifyChanged( Notification msg ) {
             if (msg.getNotifier() instanceof Layer) {
                 final Layer layer = (Layer) msg.getNotifier();
@@ -631,7 +631,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
      * we are nexted refreshed.
      * <li>A random eclipse code will dispose our Images, and refrsh us (We can still generate our
      * images from the saved icon).
-     * <li>The listener *hack* will watch for changes to layer,if any look interesting the icon
+     * <li>TODO Review : The listener will watch for changes to layer,if any look interesting the icon
      * will be cleared and we will be refreshed. We still have our image so their will be no
      * downtime while waiting for piccaso to make us a new Icon.
      * </ul>
@@ -690,7 +690,7 @@ public class LayerGeneratedGlyphDecorator implements ILabelDecorator {
         disposed=true;
         queue.clear();
 
-        // should clean up after hack
+        // clean up 
         if (listeners != null) {
             listeners.clear();
             listeners = null;

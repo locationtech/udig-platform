@@ -327,12 +327,6 @@ public class FileConnectionPage extends AbstractUDIGImportPage implements UDIGCo
             fileDialog.setFilterPath(lastOpenedDirectory);
         }
 
-        // //this is a HACK to check for headless execution
-        // if (getContainer() instanceof HeadlessWizardDialog) {
-        // if (dnd)
-        // return true; //there was a workbench selection that allowed us select a file
-        // }
-        //        
         String result = fileDialog.open();
         if (result == null) {
             return false;

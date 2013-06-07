@@ -237,7 +237,7 @@ public class BookmarkServiceImpl implements IBookmarkService {
     public MapReference getMapReference( IMap map ) {
         MapReference ref = null;
         if (!mapReferences.containsKey(map.getID())) {
-            // HACK: fix this when IProject has a getID() method
+            // TODO fix this when IProject has a getID() method
             Project project = (Project) map.getProject();
             if (project != null) {
                 URI projectURI = project.eResource().getURI();

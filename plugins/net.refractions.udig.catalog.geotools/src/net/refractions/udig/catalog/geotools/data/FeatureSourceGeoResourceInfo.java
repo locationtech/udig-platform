@@ -38,7 +38,7 @@ public class FeatureSourceGeoResourceInfo extends IGeoResourceInfo {
         this.keywords = info.getKeywords().toArray(new String[0]);
         this.name = info.getName();
         /* 
-         * This is a horrible hack to handle null namespaces in Name
+         * TODO : This is because of null namespaces in Name
          * If the namespace NPE's, we can just leave schema as it is.
          */
         try {

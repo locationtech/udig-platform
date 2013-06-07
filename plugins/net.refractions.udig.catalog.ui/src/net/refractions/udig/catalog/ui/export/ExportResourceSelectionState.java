@@ -84,7 +84,7 @@ public class ExportResourceSelectionState extends State {
      * If the workbench selection has no selection then this method is called to see if there is another
      * logical selection.  For example a map or a catalog depending on the view selected.
      * 
-     * This is a hack to avoid implementing a new Selection provider for certain views. 
+     * TODO Created to avoid implementing a new Selection provider for certain views. 
      *
      * @return
      */

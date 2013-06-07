@@ -19,10 +19,9 @@ import org.opengis.filter.expression.Expression;
 /**
  * We cannot represent Filter.INCLUDE as an AdaptingFilter (since the class is final), using 1 EqualsTo 1 instead.
  * <p>
- * Using an AdaptingFitler to represent selection is a bit short sited; this is the
- * only case we have to hack away at right now. Our hack is almost successful int that
- * it wont show up for code using a FilterVisitor; but it will be noticed
- * by coding doing an instanceof check.
+ * FIXME : Using an AdaptingFitler to represent selection is a bit short sited;
+ * It is almost successful int that it wont show up for code using a FilterVisitor; 
+ * but it will be noticed by coding doing an instanceof check.
  * <p>
  * @author Jody Garnett (Refracitons Research Inc)
  * @since 1.2.0

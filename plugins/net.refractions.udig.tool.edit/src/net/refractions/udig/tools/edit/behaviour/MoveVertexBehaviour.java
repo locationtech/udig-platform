@@ -233,12 +233,13 @@ public class MoveVertexBehaviour implements EventBehaviour, LockingBehaviour {
             if( validator!=null ){
                 return doValidation(handler, e, eventType);
             }
-        	// this is a hack to test some bugs we are aware of and can't quickly fix so...
-        	String errorMessage = testToGeometry(handler.getCurrentGeom());
-        	if( errorMessage!=null ){
-                openErrorBubble(handler, e, errorMessage);
-                return new SetEditStateCommand(handler, EditState.MODIFYING);
-        	}
+
+            // TODO/ this is a workaround to test some bugs we are aware of and can't quickly fix so...
+            String errorMessage = testToGeometry(handler.getCurrentGeom());
+            if( errorMessage!=null ){
+               openErrorBubble(handler, e, errorMessage);
+               return new SetEditStateCommand(handler, EditState.MODIFYING);
+            }
             return createMoveCommand(handler);
         }
 

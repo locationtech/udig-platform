@@ -40,7 +40,7 @@ import org.eclipse.swt.widgets.Display;
  */
 public class MapDaemon extends Thread {
 
-	// This is a hack it will use the pluging system to
+	// TODO This is a modification it will use the pluging system to
 	// look up handlers in the future
 	private final static List<MessageHandler> handlers = new ArrayList<MessageHandler>();
 	static {

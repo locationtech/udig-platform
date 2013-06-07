@@ -169,7 +169,7 @@ public class WFSServiceImpl extends IService {
                     if (dsf.canProcess(params)) {
                         monitor.worked(1);
                         try {
-                            // HACK: explicitly ask for WFS 1.0
+                            // TODO Review : explicitly ask for WFS 1.0
                             URL url = (URL) params.get(WFSDataStoreFactory.URL.key);
                             url = WFSDataStoreFactory.createGetCapabilitiesRequest(url);
                             params = new HashMap<String, Serializable>(params);
