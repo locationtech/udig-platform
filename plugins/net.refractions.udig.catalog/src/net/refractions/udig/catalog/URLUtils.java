@@ -14,6 +14,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 
@@ -69,10 +70,12 @@ public class URLUtils {
                     }
                     if (stripRef) {
                         if (url1.getRef() != null) {
-                            path1 = path1.substring(0, path1.length() - url1.getRef().length() - 1);
+                            //path1 = path1.substring(0, path1.length() - url1.getRef().length() - 1);
+                        	path1 = path1.substring(0, path1.length() - decodeReference(url1.getRef()).length() - 1);
                         }
                         if (url2.getRef() != null) {
-                            path2 = path2.substring(0, path2.length() - url2.getRef().length() - 1);
+                            //path2 = path2.substring(0, path2.length() - url2.getRef().length() - 1);
+                            path2 = path2.substring(0, path2.length() - decodeReference(url2.getRef()).length() - 1);
                         }
                     }
                     return path1.equals(path2);
@@ -323,6 +326,23 @@ public class URLUtils {
         } catch (IOException e) {
             return url;
         }
+    }
+    
+    /**
+     * Decodes the reference part of the url
+     * 
+     * @param urlRef
+     * @return
+     */
+    private static String decodeReference( String urlRef) {
+    	String string = urlRef;
+    	 try {
+             string = URLDecoder.decode(urlRef, "UTF-8"); //$NON-NLS-1$
+         } catch (UnsupportedEncodingException e) {
+             // Shouldn't happen
+         }
+    	 string = string.replace("%20", " "); //$NON-NLS-1$ //$NON-NLS-2$
+    	 return string;
     }
 
     /**
