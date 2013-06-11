@@ -89,8 +89,10 @@ public class UniqueValuesDialog extends TitleAreaDialog{
 				} catch (Exception e) {
 					SLDPlugin.log(e.getMessage(), e);
 				}
-				uniqueValues.addAll(values);
-				sort();
+				if (values != null){
+					uniqueValues.addAll(values);
+					sort();
+				}
 
 			}finally{
 				if (getShell() == null){
