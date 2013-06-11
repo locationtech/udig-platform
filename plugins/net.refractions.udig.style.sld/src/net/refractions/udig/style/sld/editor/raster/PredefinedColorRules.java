@@ -246,7 +246,7 @@ public class PredefinedColorRules {
 
 			for (int i = 0; i < colorRules.length - 1; i++) {
 				try {
-					double to = dataMax + ((i + 1) * rinc);
+					double to = dataMin + ((i + 1) * rinc);
 					Color toColor = new Color(
 							Integer.parseInt(colorRules[i + 1][0]),
 							Integer.parseInt(colorRules[i + 1][1]),
