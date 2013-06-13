@@ -12,9 +12,9 @@
    <copyright url="http://udig.refractions.net/">
       (c) 2005-2012 Refractions Research
    </copyright>
-   
+
    <license url="http://udig.refractions.net/files/bsd3-v10.html">
-uDig - User Friendly Desktop Internet GIS client
+      uDig - User Friendly Desktop Internet GIS client
 http://udig.refractions.net
 (C) 2004-2012, Refractions Research Inc.
 
@@ -22,7 +22,7 @@ All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 (http://www.eclipse.org/legal/epl-v10.html), and Refractions BSD
 License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
-  </license>
+   </license>
 
    <url>
       <update label="User-friendly Desktop Internet GIS Updates" url="http://udig.refractions.net/update/"/>
@@ -83,12 +83,6 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <plugin
-         id="com.cvsreader"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
 
    <plugin
          id="net.refractions.udig.tutorials.catalog.csv"
