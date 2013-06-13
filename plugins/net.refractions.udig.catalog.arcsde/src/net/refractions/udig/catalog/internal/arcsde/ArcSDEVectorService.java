@@ -72,7 +72,7 @@ class ArcSDEVectorService extends ArcSDEService {
         }
         if (ds == null) {
             synchronized (ArcSDEDataStoreFactory.class) {
-                // please copy a better example from WFS
+                // please see WFS for a better example
                 if (ds == null) {
                     final ISessionPool sessionPool = getSessionPool();
                     try {
