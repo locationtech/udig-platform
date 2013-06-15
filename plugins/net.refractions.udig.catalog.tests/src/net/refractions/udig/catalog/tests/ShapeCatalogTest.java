@@ -1,10 +1,11 @@
-/*
- *    Parkinfo
- *    http://qpws/parkinfo
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
- *    (C) 2011, Department of Environment Resource Management
- *
- *    This code is provided for department use.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package net.refractions.udig.catalog.tests;
 
@@ -36,14 +37,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * TODO Purpose of 
- * <p>
- * <ul>
- * <li></li>
- * </ul>
- * </p>
+ * Confirm shapefile handling (particulary shape-ng).
+ * 
  * @author leviputna
- * @since 0.0.4
+ * @since 1.3.0
  */
 public class ShapeCatalogTest {
     /**
