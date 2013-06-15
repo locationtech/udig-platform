@@ -14,3 +14,5 @@ javaCompiler...args
 build.xml
 workspace
 /plugins/net.refractions.udig.libs/lib-src/
+
+/plugins/net.refractions.udig.libs.db2/libs/
