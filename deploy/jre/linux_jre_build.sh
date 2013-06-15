@@ -53,7 +53,7 @@ fi
 
 if [[ ! -e imageioext-${imageioext_version} ]]; then
 	if [[ ! -e imageio-ext-${imageioext_version}-linux32-mrsid-ecw-lib.tar.gz ]]; then
-		echo "The imageio-ext package version ${imageioext_version} cannot be downloaded automatically due to crazy pseudo-random sourceforge directory crap.  Please download it manually before trying again."
+		echo "The imageio-ext package version ${imageioext_version} cannot be downloaded automatically.  Please download it manually before trying again."
 		exit
 	fi
 	echo "Extracting imageio-ext version ${imageioext_version}."
@@ -65,7 +65,7 @@ fi
 
 if [[ ! -e gdal_data-${gdal_data_version} ]]; then
 	if [[ ! -e gdal_data-${gdal_data_version}.zip ]]; then
-		echo "The imageio-ext gdal_data package version ${gdal_data_version} cannot be downloaded automatically due to crazy pseudo-random sourceforge directory crap.  Please download it manually before trying again."
+		echo "The imageio-ext gdal_data package version ${gdal_data_version} cannot be downloaded automatically. Please download it manually before trying again."
 		exit
 	fi
 	echo "Extracting imageio-ext gdal_data version ${gdal_data_version}."
