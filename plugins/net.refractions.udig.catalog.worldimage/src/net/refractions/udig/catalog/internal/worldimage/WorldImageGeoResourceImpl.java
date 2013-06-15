@@ -84,7 +84,7 @@ public class WorldImageGeoResourceImpl extends AbstractRasterGeoResource {
     }
 
     /**
-     * Convenience method for opening a PrjFileReader. Stolen from Geotools ShapefileSomethingROther
+     * Convenience method for opening a PrjFileReader.
      * 
      * @return A new PrjFileReader
      * @throws IOException If an error occurs during creation.
@@ -104,7 +104,6 @@ public class WorldImageGeoResourceImpl extends AbstractRasterGeoResource {
         if (rbc == null) {
             return null;
         }
-
         return new PrjFileReader(rbc);
     }
 
@@ -134,7 +133,6 @@ public class WorldImageGeoResourceImpl extends AbstractRasterGeoResource {
      */
     private ReadableByteChannel getReadChannel( URL prjURL ) throws IOException {
         ReadableByteChannel channel = null;
-
         if (prjURL.getProtocol().equalsIgnoreCase(WorldImagePlugin.PROTOCOL_FILE)) {
             File file = URLUtils.urlToFile(prjURL);
 
@@ -143,12 +141,10 @@ public class WorldImageGeoResourceImpl extends AbstractRasterGeoResource {
             }
             FileInputStream in = new FileInputStream(file);
             channel = in.getChannel();
-
         } else {
             InputStream in = prjURL.openConnection().getInputStream();
             channel = Channels.newChannel(in);
         }
-
         return channel;
     }
 

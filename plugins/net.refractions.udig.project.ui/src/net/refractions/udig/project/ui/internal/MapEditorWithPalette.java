@@ -987,7 +987,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 	/**
 	 * Hijacked; supposed to create a GraphicalViewer on the specified <code>Composite</code>.
 	 * <p>
-	 * Instead we steal the composite for our MapViewer.
+	 * Instead we make use of the composite for our MapViewer.
 	 * 
 	 * @param parent
 	 *            the parent composite
