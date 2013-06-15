@@ -35,7 +35,7 @@ import java.util.List;
  * @since 1.4.0
  */
 public class RecentHistory<T> extends AbstractCollection<T> {
-    private final static int DEFAULT_LIMIT = 15;
+    public final static int DEFAULT_LIMIT = 15;
 
     private final int LIMIT;
 

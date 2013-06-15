@@ -135,7 +135,7 @@ public class WWWizardPage extends AbstractUDIGImportPage implements ModifyListen
         
         comboUrl = new Combo(composite, SWT.BORDER);
         comboUrl.setItems(getRecentURLs());
-        comboUrl.setVisibleItemCount(COMBO_HISTORY_LENGTH);
+        comboUrl.setVisibleItemCount(RecentHistory.DEFAULT_LIMIT);
         
         GridData gridDataCombo = new GridData(GridData.FILL_HORIZONTAL);
         gridDataCombo.widthHint = 400;
