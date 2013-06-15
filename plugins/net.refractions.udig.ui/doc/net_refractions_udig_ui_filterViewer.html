@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>FilterViewer</title>
+<style type="text/css">@import url("file:/Users/jody/eclipse/372/eclipse-modeling/configuration/org.eclipse.osgi/bundles/396/1/.cp/book.css");</style>
+<style type="text/css">@import url("file:/Users/jody/eclipse/372/eclipse-modeling/configuration/org.eclipse.osgi/bundles/408/1/.cp/schema.css");</style>
+</HEAD>
+<BODY>
+<H1 style="text-align:center">FilterViewer</H1>
+<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Identifier: </h6>net.refractions.udig.ui.filterViewer<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Since: </h6>1.3.2
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Description: </h6>Extension Point for creating a custom Filter or Expression viewer<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Configuration Markup:</h6>
+<p></p>
+<p class="code SchemaDtd">&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.expressionViewer">expressionViewer</a> | <a href="#e.filterViewer">filterViewer</a>)*&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST extension</p>
+<p class="code SchemaDtdAttlist">point&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p><p class="code SchemaDtdAttlist">name&nbsp;&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<p class="ConfigMarkupElementDesc">
+Used to contribute additional viewers for use with the OGC Filter specification.
+
+Filter Viewers are avaialble in two flacours:
+
+FilterViewers used to select content (for use or display)
+
+ExpressionViewers used to generate a value on demand (for use when defining a Filter, or defining a Color when used in rendering).</p>
+<br>
+<ul class="ConfigMarkupAttlistDesc">
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.filterViewer">filterViewer</a> EMPTY&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST filterViewer</p>
+<p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">description&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>id</b> - </li>
+<li><b>name</b> - Display name shown to users allowing them to select this filter viewer.
+
+Example: CQL or Include</li>
+<li><b>class</b> - </li>
+<li><b>description</b> - Quick description of this viewer allowing the user to choose.</li>
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.expressionViewer">expressionViewer</a> EMPTY&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST expressionViewer</p>
+<p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">description&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>id</b> - </li>
+<li><b>name</b> - Display name shown to users allowing them to select this expression viewer.
+
+Example: CQL or Crayons</li>
+<li><b>class</b> - </li>
+<li><b>description</b> - Quick description of this viewer allowing the user to choose.</li>
+</ul>
+<br><h6 class="CaptionFigColumn SchemaHeader">Examples: </h6>To contribute additional viewers into your application use the extension point as shown below:
+<pre class="Example"><span class="code SchemaTag">
+&lt;extension id=</span><span class="code SchemaCstring">&quot;net.refractions.udig.tutorial.viewers&quot;</span><span class="code SchemaTag">
+           point=</span><span class="code SchemaCstring">&quot;net.refractions.udig.ui.filterViewer&quot;</span><span class="code SchemaTag">
+           name=</span><span class="code SchemaCstring">&quot;Custom Filter Viewers&quot;</span><span class="code SchemaTag">&gt;
+    &lt;filterViewer
+        id=</span><span class="code SchemaCstring">&quot;roadCondition&quot;</span><span class="code SchemaTag">
+        name=</span><span class="code SchemaCstring">&quot;Road Condition&quot;</span><span class="code SchemaTag">
+        class=</span><span class="code SchemaCstring">&quot;net.refractions.udig.tutorial.viewer.RoadConditionFilterViewerFactory&quot;</span><span class="code SchemaTag">
+        description=</span><span class="code SchemaCstring">&quot;Filter sample road dataset using a graphical display of road condition&quot;</span><span class="code SchemaTag">/&gt;
+    &lt;expressionViewer
+        id=</span><span class="code SchemaCstring">&quot;crayons&quot;</span><span class="code SchemaTag">
+        name=</span><span class="code SchemaCstring">&quot;Crayons&quot;</span><span class="code SchemaTag">
+        class=</span><span class="code SchemaCstring">&quot;net.refractions.udig.tutorial.viewer.CrayonExpressionViewerFactory&quot;</span><span class="code SchemaTag">
+        description=</span><span class="code SchemaCstring">&quot;Define color using all the crayons in the box&quot;</span><span class="code SchemaTag">/&gt;
+&lt;/extension&gt;
+</span></pre>
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">API Information: </h6>To contribute a filter viewer  you will need to provide an implementation of IFilterViewer (used to edit a provided Filter) and FilterViewerFactory used to determine when your FilterViewer can be succcessfully applied.
+
+Several FilterViewers are available out of the box. You may use these as a starting poitn for your own implementation.
+
+IncludeFilterViewer is an easy to follow example offering two toggle buttons allowing users to enable or disable content.
+
+To contribute an expression viewer you will need to implement IExpressionViewer and ExpressionViewerFactory.
+
+RGBExpressionViewer is an easy to follow example allowing the user to edit a Color using red, green and blue values.
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Supplied Implementation: </h6>To use a FilterViewer in your own code you can either use the implementation directly; or offer the user a choice by dropping in the general purpose DefaultFilterViewer (which allows the user to switch between the avaialle implementations using a combo box).
+<p></p>
+
+<br>
+<p class="note SchemaCopyright">
+</p>
+</BODY>
+</HTML>

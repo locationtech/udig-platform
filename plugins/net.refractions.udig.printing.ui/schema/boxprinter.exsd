@@ -1,19 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.printing.ui">
+<schema targetNamespace="net.refractions.udig.printing.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
          <meta.schema plugin="net.refractions.udig.printing.ui" id="boxFactories" name="%printing.ui.boxFactories.name"/>
       </appInfo>
       <documentation>
-         [Enter description of this extension point.]
+         TBD
       </documentation>
    </annotation>
 
    <element name="extension">
       <annotation>
          <appInfo>
-            <meta.element labelAttribute="name"/>
+            <meta.element labelAttribute="name" />
          </appInfo>
          <documentation>
             Defines box printers.  A box printer is the object that is responsible for printing and previewing a box.  For a template to be able to use/save/load boxes (and their box printers) the box printer must have a boxprinter extension definition.  This is required because of the classloading enforced by eclipse.
@@ -216,7 +216,7 @@ See the net.refractions.udig.editAction extension point. It is the id of the edi
          <meta.section type="since"/>
       </appInfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         1.1.0
       </documentation>
    </annotation>
 
@@ -225,7 +225,7 @@ See the net.refractions.udig.editAction extension point. It is the id of the edi
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         [Enter extension point usage example here.]
+         TBD
       </documentation>
    </annotation>
 
@@ -234,7 +234,7 @@ See the net.refractions.udig.editAction extension point. It is the id of the edi
          <meta.section type="apiInfo"/>
       </appInfo>
       <documentation>
-         [Enter API information here.]
+         TBD
       </documentation>
    </annotation>
 
@@ -243,7 +243,7 @@ See the net.refractions.udig.editAction extension point. It is the id of the edi
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         [Enter information about supplied implementation of this extension point.]
+         TBD
       </documentation>
    </annotation>
 
@@ -252,14 +252,7 @@ See the net.refractions.udig.editAction extension point. It is the id of the edi
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-uDig - User Friendly Desktop Internet GIS client
-<A HREF="http://udig.refractions.net">http://udig.refractions.net</A>
-(C) 2004-2012, Refractions Research Inc.
-
-All rights reserved. This program and the accompanying materials
-are made available under the terms of the Eclipse Public License v1.0
-(<A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>), and Refractions BSD
-License v1.0 (<A HREF="http://www.eclipse.org/org/documents/edl-v10.html">http://www.eclipse.org/org/documents/edl-v10.html</A>).
+         uDig - User Friendly Desktop Internet GIS client
       </documentation>
    </annotation>
 
