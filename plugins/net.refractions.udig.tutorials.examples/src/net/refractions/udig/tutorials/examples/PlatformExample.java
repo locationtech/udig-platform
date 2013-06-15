@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.Status;
  * The eclipse Platform is where all the magic happens.
  * <p>
  * 
- * @author jive
+ * @author Jody Garnett
  * @since 1.2.0
  */
 public class PlatformExample {

@@ -107,9 +107,9 @@ public class WMSBasicTest {
 		MapMouseEvent e = new MapMouseEvent(null, 5, 5, 
 				MapMouseEvent.NONE, MapMouseEvent.NONE, MapMouseEvent.NONE);
 		
-		/*
-		 * Taken straight from InfoTool.mouseReleased()
-		 */
+        /*
+         * box from from InfoTool.mouseReleased()
+         */
         Envelope box = context.getBoundingBox( e.getPoint(), 5 );
         ReferencedEnvelope bbox;
         if( box instanceof ReferencedEnvelope) {

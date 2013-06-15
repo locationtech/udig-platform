@@ -55,7 +55,7 @@ public interface IStyleEditorPageContainer extends IEditorPageContainer, IPageCh
     
     /**
      * StyleLayer wraps around the origional layer and has a
-     * copy of the StyleBlackboard for you to work on.
+     * duplicate of the StyleBlackboard for the user to edit.
      * <p>
      * StyleLayer has apply and revert actions for interacting
      * with the actual Map.

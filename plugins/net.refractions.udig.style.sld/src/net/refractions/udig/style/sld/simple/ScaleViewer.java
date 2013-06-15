@@ -11,6 +11,7 @@ package net.refractions.udig.style.sld.simple;
 
 import net.refractions.udig.style.sld.AbstractSimpleConfigurator;
 import net.refractions.udig.style.sld.SLDPlugin;
+import net.refractions.udig.style.sld.SimpleRasterConfigurator;
 import net.refractions.udig.style.sld.internal.Messages;
 
 import org.eclipse.swt.SWT;
@@ -36,7 +37,7 @@ import org.eclipse.swt.widgets.Composite;
  * Workflow:
  * <ol>
  * <li>createControl( parent ) - set up controls
- * <li>setFill( stroke, mode ) - provide content from SimpleStyleConfigurator/SimpleRasterConfigurator
+ * <li>setFill( stroke, mode ) - provide fill from {@link SimpleStyleConfigurator} / {@link SimpleRasterConfigurator}
  *    <ol>
  *    <li> scale values got from rules
  *    <li> values copied into controls
