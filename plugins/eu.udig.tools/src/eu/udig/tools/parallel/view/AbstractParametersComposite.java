@@ -1,13 +1,8 @@
-/* Spatial Operations & Editing Tools for uDig
- * 
- * Axios Engineering under a funding contract with: 
- *      Diputación Foral de Gipuzkoa, Ordenación Territorial 
- *
- *      http://b5m.gipuzkoa.net
- *      http://www.axios.es 
- *
- * (C) 2006, Diputación Foral de Gipuzkoa, Ordenación Territorial (DFG-OT). 
- * DFG-OT agrees to licence under Lesser General Public License (LGPL).
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
+ * (C) 2006, Axios Engineering S.L. (Axios)
+ * (C) 2006, County Council of Gipuzkoa, Department of Environment and Planning
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
