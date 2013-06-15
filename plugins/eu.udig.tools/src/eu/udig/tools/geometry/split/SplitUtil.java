@@ -1,14 +1,6 @@
-/* Spatial Operations & Editing Tools for uDig
- * 
- * Axios Engineering under a funding contract with: 
- *      Wien Government 
- *
- *      http://wien.gov.at
- *      http://www.axios.es 
- *
- * (C) 2009, Vienna City - Municipal Department of Automated Data Processing, 
- * Information and Communications Technologies.
- * Vienna City agrees to license under Lesser General Public License (LGPL).
+/* uDig - User Friendly Desktop Internet GIS
+ * http://udig.refractions.net
+ * (c) 2010, Vienna City
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
