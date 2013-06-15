@@ -15,9 +15,6 @@
  */
 package net.refractions.udig.ui.dialogs;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.refractions.udig.context.internal.Messages;
 import net.refractions.udig.project.IMap;
 import net.refractions.udig.project.ui.ApplicationGIS;
@@ -51,8 +48,6 @@ public abstract class WizardDataTransferPage extends WizardPage implements
     // constants
     protected static final int SIZING_TEXT_FIELD_WIDTH = 250;
 
-    protected static final int COMBO_HISTORY_LENGTH = 5;
-
     /**
      * Creates a new wizard page.
      *
@@ -60,40 +55,6 @@ public abstract class WizardDataTransferPage extends WizardPage implements
      */
     protected WizardDataTransferPage(String pageName) {
         super(pageName);
-    }
-
-    /**
-     * Adds an entry to a history, while taking care of duplicate history items
-     * and excessively long histories.  The assumption is made that all histories
-     * should be of length <code>WizardDataTransferPage.COMBO_HISTORY_LENGTH</code>.
-     *
-     * @param history the current history
-     * @param newEntry the entry to add to the history
-     */
-    protected String[] addToHistory(String[] history, String newEntry) {
-        java.util.ArrayList l = new java.util.ArrayList(Arrays.asList(history));
-        addToHistory(l, newEntry);
-        String[] r = new String[l.size()];
-        l.toArray(r);
-        return r;
-    }
-
-    /**
-     * Adds an entry to a history, while taking care of duplicate history items
-     * and excessively long histories.  The assumption is made that all histories
-     * should be of length <code>WizardDataTransferPage.COMBO_HISTORY_LENGTH</code>.
-     *
-     * @param history the current history
-     * @param newEntry the entry to add to the history
-     */
-    protected void addToHistory(List history, String newEntry) {
-        history.remove(newEntry);
-        history.add(0, newEntry);
-
-        // since only one new item was added, we can be over the limit
-        // by at most one item
-        if (history.size() > COMBO_HISTORY_LENGTH)
-            history.remove(COMBO_HISTORY_LENGTH);
     }
 
     /**

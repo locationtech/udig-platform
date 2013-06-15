@@ -1,13 +1,11 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004-2013, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
- *
  */
 package net.refractions.udig.catalog.internal.wfs.ui;
 
@@ -31,6 +29,7 @@ import net.refractions.udig.catalog.ui.UDIGConnectionPage;
 import net.refractions.udig.catalog.ui.wizard.DataStoreWizardPage;
 import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
 import net.refractions.udig.catalog.wfs.internal.Messages;
+import net.refractions.udig.core.RecentHistory;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -455,13 +454,12 @@ UDIGConnectionPage{
         if( trim.length()==0 )
             return false;
         return factory.canProcess(params);
-	}
-	
-	private WFSDataStoreFactory factory=new WFSDataStoreFactory();
-    private static final int COMBO_HISTORY_LENGTH = 15;
-	
+    }
+
+    private WFSDataStoreFactory factory = new WFSDataStoreFactory();
+
     public List<URL> getURLs() {
-    	return null;
+        return null;
     }
     
     public Map<String,Serializable> getParams() {
@@ -576,49 +574,12 @@ UDIGConnectionPage{
      * Saves the widget values
      */
     private void saveWidgetValues() {
-        // Update history
         if (settings != null) {
-            String[] recentWFSs = settings.getArray(WFS_RECENTLY_USED_ID);
-            if (recentWFSs == null) recentWFSs = new String[0];
-            recentWFSs = addToHistory(recentWFSs, urlCombo.getText());
-            settings.put(WFS_RECENTLY_USED_ID, recentWFSs);
+            RecentHistory<String> recent =
+                    new RecentHistory<String>( settings.getArray(WFS_RECENTLY_USED_ID) );
+            recent.add( urlCombo.getText() );
+            settings.put(WFS_RECENTLY_USED_ID, recent.toArray(new String[recent.size()]));
         }
     }
-    
-    /**
-     * Adds an entry to a history, while taking care of duplicate history items
-     * and excessively long histories.  The assumption is made that all histories
-     * should be of length <code>ConfigurationWizardMainPage.COMBO_HISTORY_LENGTH</code>.
-     *
-     * @param history the current history
-     * @param newEntry the entry to add to the history
-     * @return the history with the new entry appended
-     * Stolen from org.eclipse.team.internal.ccvs.ui.wizards.ConfigurationWizardMainPage
-     */
-    private String[] addToHistory(String[] history, String newEntry) {
-        ArrayList<String> l = new ArrayList<String>(Arrays.asList(history));
-        addToHistory(l, newEntry);
-        String[] r = new String[l.size()];
-        l.toArray(r);
-        return r;
-    }
-    
-    /**
-     * Adds an entry to a history, while taking care of duplicate history items
-     * and excessively long histories.  The assumption is made that all histories
-     * should be of length <code>ConfigurationWizardMainPage.COMBO_HISTORY_LENGTH</code>.
-     *
-     * @param history the current history
-     * @param newEntry the entry to add to the history
-     * Stolen from org.eclipse.team.internal.ccvs.ui.wizards.ConfigurationWizardMainPage
-     */
-    private void addToHistory(List<String> history, String newEntry) {
-        history.remove(newEntry);
-        history.add(0,newEntry);
-    
-        // since only one new item was added, we can be over the limit
-        // by at most one item
-        if (history.size() > COMBO_HISTORY_LENGTH)
-            history.remove(COMBO_HISTORY_LENGTH);
-    }    
+
 }

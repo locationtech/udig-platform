@@ -1,7 +1,7 @@
-/*
- * uDig - User Friendly Desktop Internet GIS client
+/* uDig - User Friendly Desktop Internet GIS client
  * (C) HydroloGIS - www.hydrologis.com 
- *
+ * (C) 2009 IBM Corporation and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
@@ -24,6 +24,7 @@ import java.util.Map;
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.URLUtils;
 import net.refractions.udig.catalog.ui.UDIGConnectionPage;
+import net.refractions.udig.core.RecentHistory;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -269,52 +270,12 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
      * Saves the widget values
      */
     private void saveWidgetValues() {
-        // Update history
         if (settings != null) {
-            String[] recentJGrasses = settings.getArray(JGRASS_RECENT);
-            if (recentJGrasses == null) {
-                recentJGrasses = new String[0];
-            }
-            recentJGrasses = addToHistory(recentJGrasses, url);
-            settings.put(JGRASS_RECENT, recentJGrasses);
+            RecentHistory<String> recent =
+                    new RecentHistory<String>( settings.getArray(JGRASS_RECENT) );
+            recent.add( url);
+            settings.put(JGRASS_RECENT, recent.toArray(new String[recent.size()]));
         }
-    }
-
-    /**
-     * Adds an entry to a history, while taking care of duplicate history items and excessively long
-     * histories. The assumption is made that all histories should be of length
-     * <code>COMBO_HISTORY_LENGTH</code>.
-     * 
-     * @param history the current history
-     * @param newEntry the entry to add to the history
-     * @return the history with the new entry appended Stolen from
-     *         org.eclipse.team.internal.ccvs.ui.wizards.ConfigurationWizardMainPage
-     */
-    private String[] addToHistory( String[] history, String newEntry ) {
-        ArrayList<String> l = new ArrayList<String>(Arrays.asList(history));
-        addToHistory(l, newEntry);
-        String[] r = new String[l.size()];
-        l.toArray(r);
-        return r;
-    }
-
-    /**
-     * Adds an entry to a history, while taking care of duplicate history items and excessively long
-     * histories. The assumption is made that all histories should be of length
-     * <code>COMBO_HISTORY_LENGTH</code>.
-     * 
-     * @param history the current history
-     * @param newEntry the entry to add to the history Stolen from
-     *            org.eclipse.team.internal.ccvs.ui.wizards.ConfigurationWizardMainPage
-     */
-    private void addToHistory( List<String> history, String newEntry ) {
-        history.remove(newEntry);
-        history.add(0, newEntry);
-
-        // since only one new item was added, we can be over the limit
-        // by at most one item
-        if (history.size() > COMBO_HISTORY_LENGTH)
-            history.remove(COMBO_HISTORY_LENGTH);
     }
 
     public Map<String, Serializable> getParams() {
@@ -330,17 +291,6 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
             return null;
         }
     }
-
-    // public List<URL> getURLs() {
-    // try {
-    // ArrayList<URL> l = new ArrayList<URL>();
-    // l.add(new URL(url));
-    //
-    // return l;
-    // } catch (MalformedURLException e) {
-    // return null;
-    // }
-    // }
 
     public Collection<URL> getResourceIDs() {
         try {

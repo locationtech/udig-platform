@@ -1,6 +1,6 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
- * (C) 2010, Refractions Research Inc.
+ * (C) 2010-2013, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -31,6 +31,7 @@ import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
 import net.refractions.udig.catalog.ui.UDIGConnectionPage;
 import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
 import net.refractions.udig.catalog.wmt.internal.Messages;
+import net.refractions.udig.core.RecentHistory;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -69,7 +70,6 @@ public class WWWizardPage extends AbstractUDIGImportPage implements ModifyListen
     private static final String WW_WIZARD = "WW_WIZARD"; //$NON-NLS-1$
     private static final String WW_RECENT = "WW_RECENT"; //$NON-NLS-1$
     private static final String WW_PATH = "WW_PATH"; //$NON-NLS-1$
-    private static final int COMBO_HISTORY_LENGTH = 15;
 
     private IDialogSettings settings;
 
@@ -426,49 +426,12 @@ public class WWWizardPage extends AbstractUDIGImportPage implements ModifyListen
      * Saves the widget values
      */
     private void saveWidgetValues() {
-        // Update history
         if (settings != null) {
-            String[] recentURLs = getRecentURLs();
-            recentURLs = addToHistory(recentURLs, url);
-            settings.put(WW_RECENT, recentURLs);
+            RecentHistory<String> recent =
+                    new RecentHistory<String>( settings.getArray(WW_RECENT) );
+            recent.add( url );
+            settings.put(WW_RECENT, recent.toArray(new String[recent.size()]));
         }
-    }
-
-    /**
-     * Adds an entry to a history, while taking care of duplicate history items and excessively long
-     * histories. The assumption is made that all histories should be of length
-     * <code>COMBO_HISTORY_LENGTH</code>.
-     * 
-     * @param history the current history
-     * @param newEntry the entry to add to the history
-     * @return the history with the new entry appended Stolen from
-     *         org.eclipse.team.internal.ccvs.ui.wizards.ConfigurationWizardMainPage
-     */
-    private String[] addToHistory(String[] history, String newEntry) {
-        ArrayList<String> l = new ArrayList<String>(Arrays.asList(history));
-        addToHistory(l, newEntry);
-        String[] r = new String[l.size()];
-        l.toArray(r);
-        return r;
-    }
-
-    /**
-     * Adds an entry to a history, while taking care of duplicate history items and excessively long
-     * histories. The assumption is made that all histories should be of length
-     * <code>COMBO_HISTORY_LENGTH</code>.
-     * 
-     * @param history the current history
-     * @param newEntry the entry to add to the history Stolen from
-     *        org.eclipse.team.internal.ccvs.ui.wizards.ConfigurationWizardMainPage
-     */
-    private void addToHistory(List<String> history, String newEntry) {
-        history.remove(newEntry);
-        history.add(0, newEntry);
-
-        // since only one new item was added, we can be over the limit
-        // by at most one item
-        if (history.size() > COMBO_HISTORY_LENGTH)
-            history.remove(COMBO_HISTORY_LENGTH);
     }
 
     public Map<String, Serializable> getParams() {

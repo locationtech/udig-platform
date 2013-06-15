@@ -22,6 +22,7 @@ import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.internal.ServiceFactoryImpl;
 import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
 import net.refractions.udig.catalog.ui.UDIGConnectionPage;
+import net.refractions.udig.core.RecentHistory;
 import net.refractions.udig.project.ui.internal.Messages;
 import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
 
@@ -50,7 +51,6 @@ public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListe
     private static final String URL_WIZARD = "URL_WIZARD"; //$NON-NLS-1$
     private static final String URL_RECENT = "URL_RECENT"; //$NON-NLS-1$
     private IDialogSettings settings;
-    private static final int COMBO_HISTORY_LENGTH = 15;
 
     /**
      * Construct <code>URLWizardPage</code>.
@@ -170,52 +170,12 @@ public class URLWizardPage extends AbstractUDIGImportPage implements ModifyListe
      * Saves the widget values
      */
     private void saveWidgetValues() {
-        // Update history
         if (settings != null) {
-            String[] recentURLs = settings.getArray(URL_RECENT);
-            if (recentURLs == null) {
-                recentURLs = new String[0];
-            }
-            recentURLs = addToHistory(recentURLs, url.getText());
-            settings.put(URL_RECENT, recentURLs);
+            RecentHistory<String> recent =
+                    new RecentHistory<String>( settings.getArray(URL_RECENT) );
+            recent.add( url.getText() );
+            settings.put(URL_RECENT, recent.toArray(new String[recent.size()]));
         }
-    }
-
-    /**
-     * Adds an entry to a history, while taking care of duplicate history items and excessively long
-     * histories. The assumption is made that all histories should be of length
-     * <code>COMBO_HISTORY_LENGTH</code>.
-     * 
-     * @param history the current history
-     * @param newEntry the entry to add to the history
-     * @return the history with the new entry appended Stolen from
-     *         org.eclipse.team.internal.ccvs.ui.wizards.ConfigurationWizardMainPage
-     */
-    private String[] addToHistory( String[] history, String newEntry ) {
-        ArrayList<String> l = new ArrayList<String>(Arrays.asList(history));
-        addToHistory(l, newEntry);
-        String[] r = new String[l.size()];
-        l.toArray(r);
-        return r;
-    }
-
-    /**
-     * Adds an entry to a history, while taking care of duplicate history items and excessively long
-     * histories. The assumption is made that all histories should be of length
-     * <code>COMBO_HISTORY_LENGTH</code>.
-     * 
-     * @param history the current history
-     * @param newEntry the entry to add to the history Stolen from
-     *        org.eclipse.team.internal.ccvs.ui.wizards.ConfigurationWizardMainPage
-     */
-    private void addToHistory( List<String> history, String newEntry ) {
-        history.remove(newEntry);
-        history.add(0, newEntry);
-
-        // since only one new item was added, we can be over the limit
-        // by at most one item
-        if (history.size() > COMBO_HISTORY_LENGTH)
-            history.remove(COMBO_HISTORY_LENGTH);
     }
 
     public Map<String, Serializable> getParams() {
