@@ -116,7 +116,7 @@ public class PostGisConnectionFactory extends UDIGConnectionFactory {
      * Candidates for conversion are:
      * <ul>
      * <li>URL - from browser DnD
-     * <li>PostgisService2 - from catalog DnD
+     * <li>PostgisService2 (the uDig class) - from catalog DnD
      * <li>IService - from search DnD
      * </ul>
      * </p>
