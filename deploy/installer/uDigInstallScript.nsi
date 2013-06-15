@@ -1,5 +1,11 @@
 ;uDig Null Soft Installer creation file.
-;Written by Chris Holmes
+;Written by Chris Holmes (OpenGeo)
+;(C) 2--42012, Refractions Research Inc.
+
+;All rights reserved. This program and the accompanying materials
+;are made available under the terms of the Eclipse Public License v1.0
+;(http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+;License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
 
 ;This is an example of a windows installer for uDig.  It was adapted from
 ;the geoserver nsi file.  There are a few things which I don't know enough
