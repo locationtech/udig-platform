@@ -162,8 +162,8 @@ public class WorldImageGeoResourceImpl extends AbstractRasterGeoResource {
 
             DefaultParameterDescriptor<GridGeometry> gridGeometryDescriptor = getWorldGridGeomDescriptor();
 
-            // Stolen from WorldImageFormat, as mInfo is not externally
-            // accesible
+            // HashMap duplicate of that in GeoTools WorldImageFormat mInfo.
+            // due to visibility restrictions
             HashMap<String, Object> info1 = new HashMap<String, Object>();
             info1.put("name", "WorldImage"); //$NON-NLS-1$//$NON-NLS-2$
             info1.put("description", //$NON-NLS-1$

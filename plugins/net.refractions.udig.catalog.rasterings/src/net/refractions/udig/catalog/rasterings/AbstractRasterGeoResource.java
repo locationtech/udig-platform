@@ -114,34 +114,30 @@ public abstract class AbstractRasterGeoResource extends IGeoResource {
 		}
 	}
 
-	/**
-	 * Retrieves the parameters used to create the GridCoverageReader for this
-	 * resource. This simply delegates the creation of these parameters to a
-	 * GridFormat.
-	 * 
-	 * @return ParameterGroup describing the GeoResource
-	 */
-	public synchronized ParameterGroup getReadParameters() {
-		if (this.readParams == null) {
+    /**
+     * Retrieves the parameters used to create the GridCoverageReader for this resource. This simply
+     * delegates the creation of these parameters to a GridFormat.
+     * 
+     * @return ParameterGroup describing the GeoResource
+     */
+    public synchronized ParameterGroup getReadParameters() {
+        if (this.readParams == null) {
 
-			DefaultParameterDescriptor<GridGeometry> gridGeometryDescriptor = getWorldGridGeomDescriptor();
-
-			// Stolen from WorldImageFormat, as mInfo is not externally
-			// accesible
-			HashMap<String, Object> info1 = new HashMap<String, Object>();
-			info1.put("name", "Raster"); //$NON-NLS-1$//$NON-NLS-2$
-			info1.put("description", //$NON-NLS-1$
-					"A raster file accompanied by a spatial data file"); //$NON-NLS-1$
-			info1.put("vendor", "Geotools"); //$NON-NLS-1$ //$NON-NLS-2$
-			info1
-					.put(
-							"docURL", "http://www.geotools.org/WorldImageReader+formats"); //$NON-NLS-1$ //$NON-NLS-2$
-			info1.put("version", "1.0"); //$NON-NLS-1$ //$NON-NLS-2$
-			this.readParams =  new ParameterGroup(new DefaultParameterDescriptorGroup(
-					info1, new GeneralParameterDescriptor[] { gridGeometryDescriptor }));
-		}
-		return this.readParams;
-	}
+            DefaultParameterDescriptor<GridGeometry> gridGeometryDescriptor = getWorldGridGeomDescriptor();
+            // HashMap duplicate of that in GeoTools WorldImageFormat mInfo.
+            // due to visibility restrictions
+            HashMap<String, Object> info1 = new HashMap<String, Object>();
+            info1.put("name", "Raster"); //$NON-NLS-1$//$NON-NLS-2$
+            info1.put("description", //$NON-NLS-1$
+                    "A raster file accompanied by a spatial data file"); //$NON-NLS-1$
+            info1.put("vendor", "Geotools"); //$NON-NLS-1$ //$NON-NLS-2$
+            info1.put("docURL", "http://www.geotools.org/WorldImageReader+formats"); //$NON-NLS-1$ //$NON-NLS-2$
+            info1.put("version", "1.0"); //$NON-NLS-1$ //$NON-NLS-2$
+            this.readParams = new ParameterGroup(new DefaultParameterDescriptorGroup(info1,
+                    new GeneralParameterDescriptor[] { gridGeometryDescriptor }));
+        }
+        return this.readParams;
+    }
 
 	/**
 	 * Finds or creates the GridCoverage for this resource.
