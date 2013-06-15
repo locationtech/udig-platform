@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Display;
  * it will continue to call {@link Display#readAndDispatch()}.  The Display thread
  * gets priority over non-display threads.
  * 
- * API is copied from the {@link ReentrantLock}
+ * API is method compatible with {@link ReentrantLock}
  * 
  * @author Jesse
  * @since 1.1.0
