@@ -336,64 +336,7 @@ public class ResolveManager2 implements IResolveManager {
     }
 
     /**
-     * ClassLoader aware "class for name" implementation making use of factory to provide a
-     * classloader. Thanks to the inspiration of AdapterManager this code makes use of a cache to
-     * prevent the reloading of classes.
-     */
-    // private Class<?> classForName( IResolveAdapterFactory factory, String adapterName ){
-    // Class<?> adapterClass = cacheLookup(factory, adapterName);
-    // if( adapterClass != null ) return adapterClass; // that was quick
-    //
-    // adapterClass = loadClass( factory, adapterName );
-    // cache( factory, adapterClass ); // we even cache null to prevent repeat lookup
-    //
-    // return adapterClass;
-    // }
-    //
-    // private void cache( IResolveAdapterFactory factory, Class<?> adapterClass ){
-    // try {
-    // classLookupLock.writeLock().lock();
-    // if( classLookup == null ){
-    // classLookup = new HashMap<IResolveAdapterFactory, Map<String,Class<?>>>();
-    // }
-    // Map<String, Class<?>> typeMap = classLookup.get( factory );
-    // if( typeMap == null ){
-    // typeMap = new HashMap<String, Class<?>>();
-    // classLookup.put(factory, typeMap);
-    // }
-    // typeMap.put( adapterClass.getName(), adapterClass );
-    // }
-    // finally {
-    // classLookupLock.writeLock().unlock();
-    // }
-    // }
-    /**
-     * Checks classLookup which provides a type map used to prevent repeated (slow) classloader
-     * calls
-     * 
-     * @param factory
-     * @param adapterName
-     * @return requested class, or null if not found
-     */
-    // private Class<?> cacheLookup( IResolveAdapterFactory factory, String adapterName ){
-    // try {
-    // classLookupLock.readLock().lock();
-    //
-    // if( classLookup == null ) return null; // not found
-    //
-    // Map<String, Class<?>> typeMap = classLookup.get( factory );
-    // if( typeMap == null ) return null; // not found
-    //
-    // Class<?> adapterClass = typeMap.get( adapterName );
-    // return adapterClass;
-    // }
-    // finally {
-    // classLookupLock.readLock().unlock();
-    // }
-    // }
-
-    /**
-     * Class cache design taken from AdapterManager (monkey see monkey do).
+     * Class cache design based on AdapterManager (monkey see monkey do).
      * 
      * @param factory
      * @param typeName
