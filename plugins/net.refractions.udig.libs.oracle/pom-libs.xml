@@ -9,7 +9,7 @@
         driver that does not strictly let us compile the code during our
         nightly build).
         
-        The following work around is from the GeoTools project:
+        We can use the same manual install procedure as employed for the GeoTools project.
          
         Download the ojdbc14.jar driver from oracle and install
         into maven:
