@@ -57,7 +57,7 @@ import com.vividsolutions.jts.io.WKTWriter;
  * <p>
  * Only if the current transaction is "AUTO_COMMIT" can the transaction be set.
  * 
- * @author jive
+ * @author Jody Garnett
  * @since 1.2.1
  * @see UDIGFeatureStore
  */

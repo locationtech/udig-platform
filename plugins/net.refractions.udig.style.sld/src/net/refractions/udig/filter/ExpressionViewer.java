@@ -67,7 +67,7 @@ import org.opengis.filter.expression.Function;
  * Future directions from Mark:
  * <ul>
  * <li>
- * @author jive
+ * @author Jody Garnett
  * @since 1.1.0
  * @deprecated Please use {@link IExpressionViewer}
  */
