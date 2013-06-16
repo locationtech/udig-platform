@@ -1,13 +1,26 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
- *
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
+ * (C) 2000, 2010 IBM Corporation and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
+ * 
+ * Contributor org.eclipse.ui.internal.util.Util:
+ *     IBM Corporation - initial API and implementation
  */
+/*******************************************************************************
+ * Copyright (c) 2000, 2010 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
 package net.refractions.udig.core;
 
 import org.eclipse.core.runtime.Assert;
@@ -17,10 +30,9 @@ import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.core.runtime.Plugin;
 
 /**
- * Helpful method suitable for use as a static include.
+ * Utility class of helper methods for getting along with the Eclipse Platform.
  * 
- * 
- * @author jody
+ * @author Jody Garnett
  * @since 1.2.0
  */
 public class Util {
@@ -29,7 +41,9 @@ public class Util {
      * If it is possible to adapt the given object to the given type, this
      * returns the adapter. Performs the following checks:
      * <p>
-     * This is a copy of the internal eclipse.ui Util class which was not available.
+     * This is based on the eclipse org.eclipse.ui.internal.util.Util class
+     * which was not visible to RCP applications. Java 5 templating added for
+     * usability.
      * </p>
      * 
      * <ol>
@@ -49,13 +63,13 @@ public class Util {
      * @return a representation of sourceObject that is assignable to the
      *         adapter type, or null if no such representation exists
      */
-    public static Object getAdapter(Object sourceObject, Class adapterType) {
+    public static <T> T getAdapter(Object sourceObject, Class<T> adapterType) {
         Assert.isNotNull(adapterType);
         if (sourceObject == null) {
             return null;
         }
         if (adapterType.isInstance(sourceObject)) {
-            return sourceObject;
+            return adapterType.cast( sourceObject );
         }
 
         if (sourceObject instanceof IAdaptable) {
@@ -65,17 +79,16 @@ public class Util {
             if (result != null) {
                 // Sanity-check
                 Assert.isTrue(adapterType.isInstance(result));
-                return result;
+                return adapterType.cast( result );
             }
         } 
         
         if (!(sourceObject instanceof PlatformObject)) {
             Object result = Platform.getAdapterManager().getAdapter(sourceObject, adapterType);
             if (result != null) {
-                return result;
+                return adapterType.cast( result );
             }
         }
-
-        return null;
+        return null; // sourceObject not available as requested adapterType
     }
 }
