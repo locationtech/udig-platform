@@ -1,14 +1,16 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
- *
+/* uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
+ * (C) 2004, 2005 IBM Corporation and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
- * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
- * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
  */
-package net.refractions.udig.style.sld.editor.internal;
 /*******************************************************************************
  * Copyright (c) 2004, 2005 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
@@ -19,6 +21,7 @@ package net.refractions.udig.style.sld.editor.internal;
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
+package net.refractions.udig.style.sld.editor.internal;
 
 import java.util.ArrayList;
 import java.util.HashSet;

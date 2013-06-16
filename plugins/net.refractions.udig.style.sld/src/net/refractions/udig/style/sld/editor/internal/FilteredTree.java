@@ -50,6 +50,7 @@ import org.eclipse.ui.progress.WorkbenchJob;
  * of the text widget are used to drive a PatternFilter that is on the viewer.
  * 
  * @since 3.0
+ * @see org.eclipse.ui.dialogs.FilteredTree
  */
 public class FilteredTree extends Composite {
 
