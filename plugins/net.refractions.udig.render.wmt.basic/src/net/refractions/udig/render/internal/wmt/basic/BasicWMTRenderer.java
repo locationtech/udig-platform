@@ -46,6 +46,7 @@ import net.refractions.udig.project.ILayer;
 import net.refractions.udig.project.internal.StyleBlackboard;
 import net.refractions.udig.project.internal.render.impl.RendererImpl;
 import net.refractions.udig.project.render.RenderException;
+import net.refractions.udig.render.internal.wmsc.basic.BasicWMSCRenderer;
 import net.refractions.udig.render.internal.wmsc.basic.WMSCTileCaching;
 import net.refractions.udig.render.wmt.basic.WMTPlugin;
 import net.refractions.udig.render.wmt.basic.internal.Messages;
@@ -534,10 +535,9 @@ public class BasicWMTRenderer extends RendererImpl {
     } 
     
     /**
-     * TileListener implementation for rendering new tiles that are ready
+     * TileListener implementation for rendering new tiles that are ready.
      * 
-     * This is a plain copy of the BasiWMSCRenderer implementation!
-     * 
+     * This duplicates the functionality of {@link BasicWMSCRenderer}.
      * 
      * @author GDavis
      * @since 1.1.0
