@@ -9,133 +9,83 @@
  */
 package net.refractions.udig.catalog.wmsc.server;
 
-import java.util.LinkedList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import net.refractions.udig.catalog.CatalogPlugin;
 import net.refractions.udig.catalog.internal.PreferenceConstants;
 
 /**
- * This is a work queue for re-using a group of threads to do Tile work.  An example use
- * is the work of saving tiles to disk.  When preloading all tiles in a tileset, the number of
- * threads originally got out of hand for saving tiles.  This queue allows a group
- * of threads to be reused to do the work.  It can also be used to manage the threads
- * for sending tile requests out, but there should be a separate queue for each.
+ * This is a work queue for re-using a group of threads to do Tile work. An example use is the work
+ * of saving tiles to disk. When preloading all tiles in a tileset, the number of threads originally
+ * got out of hand for saving tiles. This queue allows a group of threads to be reused to do the
+ * work. It can also be used to manage the threads for sending tile requests out, but there should
+ * be a separate queue for each.
  * 
  * NOTE: This class is not intended to be subclassed or extended.
  * 
- * The base of this class was copied from IBM's online resource
- * "Java theory and practice: Thread pools and work queues"
+ * This class us based on the code example "Java theory and practice: Thread pools and work queues"
+ * 
  * @see http://www.ibm.com/developerworks/library/j-jtp0730.html
  * 
+ *      This class can be replaced with {@link Executor} now that Doug Lee's work is included in
+ *      Java.
+ * 
  * @author GDavis
- *
+ * 
  */
 public class TileWorkerQueue {
-    private final int nThreads;
-    private final PoolWorker[] threads;
-    private final LinkedList<Runnable> queue;
-
+    /** Collection of threads and quee of tasks waiting for execution */
+    ExecutorService executor;
+    final int limit;
     /**
-     * Max size could be larger, but beware that larger numbers of threads
-     * could mean a much slower system.
+     * Max size could be larger, but beware that larger numbers of threads could mean a much slower
+     * system.
      */
     public static final int maxWorkingQueueSize = 64;
+
     public static final int minWorkingQueueSize = 1;
+
     public static final int defaultWorkingQueueSize = 16;
-    
+
     private boolean isTerminated = false;
-    
+
     public TileWorkerQueue() {
-    	// check if a preference is set for the max number of threads
-    	int nThreads = CatalogPlugin.getDefault().getPreferenceStore().getInt(PreferenceConstants.P_WMSCTILE_MAX_CON_REQUESTS);
-    	if (nThreads <= 0) nThreads = defaultWorkingQueueSize;
-        this.nThreads = nThreads;
-        queue = new LinkedList<Runnable>();
-        threads = new PoolWorker[nThreads];
-        initThreads();
-    }    
+        // check if a preference is set for the max number of threads
+        int nThreads = CatalogPlugin.getDefault().getPreferenceStore()
+                .getInt(PreferenceConstants.P_WMSCTILE_MAX_CON_REQUESTS);
+        if (nThreads <= 0) {
+            nThreads = 16;
+        }
+        executor = Executors.newFixedThreadPool(nThreads);
+        limit = nThreads;
+    }
 
     public TileWorkerQueue(int nThreads) {
-    	if (nThreads > maxWorkingQueueSize) nThreads = maxWorkingQueueSize;
-    	if (nThreads < minWorkingQueueSize) nThreads = minWorkingQueueSize;
-        this.nThreads = nThreads;
-        queue = new LinkedList<Runnable>();
-        threads = new PoolWorker[nThreads];
-        initThreads();
-    }
-    
-    private void initThreads() {
-        for (int i=0; i<this.nThreads; i++) {
-            threads[i] = new PoolWorker();
-            threads[i].start();
-        }
-    }
-    
-    public int getThreadPoolSize() {
-    	return this.nThreads;
+        if (nThreads > maxWorkingQueueSize)
+            nThreads = maxWorkingQueueSize;
+        if (nThreads < minWorkingQueueSize)
+            nThreads = minWorkingQueueSize;
+        executor = Executors.newFixedThreadPool(nThreads);
+        limit = nThreads;
     }
 
     public void execute(Runnable r) {
-        synchronized(queue) {
-            queue.addLast(r);
-            queue.notify();
-        }
-    }
-    
-    public boolean isQueueEmpty() {
-        synchronized(queue) {
-            return queue.isEmpty();
-        }
+        executor.execute(r); // submit for execution
     }
 
-    private class PoolWorker extends Thread {
-        public void run() {
-            Runnable r;
-
-            while (!isTerminated) {
-                synchronized(queue) {
-                    while (queue.isEmpty() && !isTerminated) {
-                        try
-                        {
-                            queue.wait();
-                        }
-                        catch (InterruptedException ignored)
-                        {
-                        }
-                    }
-
-                    if (!queue.isEmpty()) {
-                    	r = (Runnable) queue.removeFirst();
-                    }
-                    else {
-                    	r = null;
-                    }
-                }
-
-                // If we don't catch RuntimeException, 
-                // the pool could leak threads
-                try {
-                    r.run();
-                }
-                catch (RuntimeException e) {
-                    // You might want to log something here
-                }
-            }
-        }
-    }
-    
     /*
      * Stop and delete all the threads
      */
-    public void dispose() {
-    	this.isTerminated = true;
-        for (int i=0; i<this.nThreads; i++) {
-            threads[i] = null;
+    public synchronized void dispose() {
+        if (executor != null && !executor.isShutdown()) {
+            executor.shutdownNow();
+            executor = null;
         }
-        synchronized(queue) {
-            queue.clear();
-            queue.notifyAll();
-        }        
+    }
+    /** Maximum number of threads support by Executor */
+    public int getThreadPoolSize() {
+        return limit;
     }
 }
-

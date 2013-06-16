@@ -113,7 +113,7 @@ public class WMSCTileUtils {
         private Map<String, Tile> tileRangeTiles;
         private TileWorkerQueue requestTileWorkQueue;
         private TileWorkerQueue writeTileWorkQueue;
-
+        
         /**
          * The maximum number of tile requests to send to a server at once before waiting to send
          * the next group of requests off (used for preloading all tiles).
