@@ -16,6 +16,7 @@ import java.util.Set;
 
 import net.refractions.udig.catalog.ID;
 import net.refractions.udig.catalog.IGeoResource;
+import net.refractions.udig.catalog.IGeoResourceInfo;
 import net.refractions.udig.catalog.IResolveChangeListener;
 import net.refractions.udig.core.IBlockingAdaptable;
 import net.refractions.udig.project.IBlackboard;
@@ -97,7 +98,7 @@ public interface Layer
 
     /**
      * Sets the spatial bounds of this layer. This property is normally
-     * derived from the IGeoResourceInfos, but this provides an override. This
+     * derived from the {@link IGeoResourceInfo} but this provides an override. This
      * will affect the "Zoom to Extent" and "Zoom to Layer" actions.
      *
      * @param bounds a ReferencedEnvelope indicating the new bounds for the layer
