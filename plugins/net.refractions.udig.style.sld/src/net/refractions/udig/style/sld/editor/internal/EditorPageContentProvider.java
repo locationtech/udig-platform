@@ -2,28 +2,34 @@
  * http://udig.refractions.net
  * (C) 2010, Refractions Research Inc.
  * (C) 2003, 2005 IBM Corporation and others
- * ------
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
- * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
- * --------
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
+/*******************************************************************************
+ * Copyright (c) 2003, 2006 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
 package net.refractions.udig.style.sld.editor.internal;
 
 import net.refractions.udig.style.sld.editor.EditorPageManager;
 
+import org.eclipse.jface.preference.PreferenceContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
 /**
- * Provides a tree model for <code>PreferenceManager</code> content.
+ * Provides a tree model for <code>EditorPageManager</code> content.
  * 
- * @since 3.0
+ * @see PreferenceContentProvider
  */
 public class EditorPageContentProvider implements ITreeContentProvider {
 

@@ -1,18 +1,25 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2010, Refractions Research Inc.
- * (C) 2000, 2005 IBM Corporation and others
- * ------
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
- * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
- * --------
+ * (C) 2000, 2009 IBM Corporation and others
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
+/*******************************************************************************
+ * Copyright (c) 2000, 2009 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *     Teddy Walker <teddy.walker@googlemail.com>
+ *      - Bug 188056 [Preferences] PreferencePages have to less indent in PreferenceDialog
+ *******************************************************************************/
 package net.refractions.udig.style.sld.editor.internal;
 
 import java.util.Iterator;
@@ -34,6 +41,7 @@ import org.eclipse.jface.dialogs.IPageChangeProvider;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.PageChangedEvent;
+import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.resource.JFaceResources;
@@ -80,10 +88,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 
 /**
- * A preference dialog is a hierarchical presentation of preference pages. Each
- * page is represented by a node in the tree shown on the left hand side of the
- * dialog; when a node is selected, the corresponding page is shown on the right
- * hand side.
+ * Adapting PreferenceDialog to allow for the general approach to be used for
+ * editing attributes.
+ * <p>
+ * Each page is represented by a node in the tree shown on the left hand side of the
+ * dialog; when a node is selected, the corresponding page is shown on the right hand side.
+ * 
+ * @see PreferenceDialog
  */
 public class EditorDialog extends Dialog implements IEditorPageContainer, IPageChangeProvider {
 	/**
