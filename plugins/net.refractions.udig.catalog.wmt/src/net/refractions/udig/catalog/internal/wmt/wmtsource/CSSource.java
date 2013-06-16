@@ -153,16 +153,22 @@ public class CSSource extends OSMSource {
 
     /**
      * Converts Google tile coordinates to TMS Tile coordinates.
+     * <p>
+     * Calculation of number of rows for provided zoom level described by open street maps:
+     * http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
      * 
-     * <p>Code copied from: http://code.google.com/p/gmap-tile-generator/</p>
+     * <p>
+     * Google maps requires the opposite vertical orientation.
      * 
-     * @param tx the x tile number.
-     * @param ty the y tile number.
+     * @param xTile the x tile number.
+     * @param yTile the y tile number.
      * @param zoom the current zoom level.
      * @return the converted values.
      */
-    public static int[] googleTile2TmsTile( int tx, int ty, int zoom ) {
-        return new int[]{tx, (int) ((Math.pow(2, zoom) - 1) - ty)};
+    public static int[] googleTile2TmsTile( int xTile, int yTile, int zoom ) {
+        final int n = ((int) Math.pow(2, zoom)) -1;
+        int swappedRow = n - yTile;
+        return new int[]{xTile, swappedRow};
     }
 
 }
