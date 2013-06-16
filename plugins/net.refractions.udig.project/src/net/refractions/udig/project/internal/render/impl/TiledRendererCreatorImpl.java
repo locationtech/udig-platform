@@ -211,8 +211,7 @@ public class TiledRendererCreatorImpl implements RendererCreator {
             break;
         }
         case Notification.MOVE: {
-            //moving a layer
-            // this should be a layer according to the reverse engineered rules... 
+            // moving a layer (getNewValue is expected to return a layer)
             // I like type safety better. or at least documentation :( 
             Layer newV=(Layer) event.getNewValue();
             
