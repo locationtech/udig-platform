@@ -1,18 +1,27 @@
 /* uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2010, Refractions Research Inc.
- * (C) 2001, 2007 IBM Corporation and others
- * ------
+ * (C) 2001, 2008 IBM Corporation and others
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
- * --------
+ * 
+ * Contributors:
+ *     Refractions Research - adapt to Feature Model
+ *     IBM Corporation - initial API and implementation
+ */
+/*******************************************************************************
+ * Copyright (c) 2001, 2008 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- */
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
 package net.refractions.udig.feature.panel;
 
 import java.util.ArrayList;
@@ -24,9 +33,10 @@ import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributo
 import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
- * tabbed property registry factory. Caches the tabbed property registry by
+ * Tabbed property registry factory. Caches the tabbed property registry by
  * tabbed property contributor ID.
  * 
+ * @author Jody Garnett
  * @author Anthony Hunter
  */
 public class FeaturePanelRegistryFactory {
