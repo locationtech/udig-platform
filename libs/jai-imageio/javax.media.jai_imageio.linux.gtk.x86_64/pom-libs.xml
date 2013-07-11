@@ -44,44 +44,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     
-    <artifactId>download.jars-bundle</artifactId>
-    <name>JAI Download java libs</name>
+    <artifactId>download.native-linux.x86_64</artifactId>
+    <name>JAI Download native libs : linux x86_64</name>
     
     <packaging>pom</packaging>
-
-    <dependencies>
-        <!-- Java Advanced Imaging -->
-        <dependency>
-            <groupId>javax.media</groupId>
-            <artifactId>jai_imageio</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.media</groupId>
-            <artifactId>jai_codec</artifactId>
-            <version>1.1.3</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.media</groupId>
-            <artifactId>jai_core</artifactId>
-            <version>1.1.3</version>
-        </dependency>
-        <!-- add mlibwrapper_jai.jar and clibwrapper_jiio.jar -->
-        <!-- you will need to install these into your local repository -->
-        <!-- see below, these are taken from udig.refractions downloads -->
-        <!--
-        <dependency>
-            <groupId>com.sun</groupId>
-            <artifactId>mlibwrapper_jai</artifactId>
-            <version>1.1.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun</groupId>
-            <artifactId>clibwrapper_jiio</artifactId>
-            <version>1.1.3</version>
-        </dependency>       
-        -->
-    </dependencies>
 
     <build>
         <plugins>
@@ -92,7 +58,7 @@
                         <fileset>
                             <directory>${basedir}</directory>
                             <includes>
-                                <include>*.jar</include>
+                                <include>*.so</include>
                             </includes>
                             <followSymlinks>false</followSymlinks>
                         </fileset>
@@ -102,36 +68,16 @@
             
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>false</overWriteSnapshots>
-                            <overWriteIfNewer>true</overWriteIfNewer>
-                            <excludeScope>provided</excludeScope>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>create_dummy</id>
+                        <id>copy_native_libs</id>
                         <phase>compile</phase>
                         <configuration>
                             <target>
                                 <get dest="${basedir}">
-                                    <url url="http://udig.refractions.net/files/downloads/jre/jai/mlibwrapper_jai.jar"/>
-                                    <url url="http://udig.refractions.net/files/downloads/jre/jai/clibwrapper_jiio.jar"/>
+                                    <url url="http://udig.refractions.net/files/downloads/jre/jai/imageio.linux.x86_64/libclib_jiio.so"/>
+                                    <url url="http://udig.refractions.net/files/downloads/jre/jai/imageio.linux.x86_64/libmlib_jai.so"/>
                                 </get>
                             </target>
                         </configuration>

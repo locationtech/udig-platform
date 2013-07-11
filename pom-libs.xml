@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <!-- This script was created to automagically download the external libs 
+        required for uDig to build and export correctly. To download the required 
+        libraries, use: mvn install -f pom-libs.xml 
+        
+        After they have downloaded, make sure you:
+          - refresh the net.refractions.udig.libs project in Eclipse;
+          - verify the classpath (Manfiest Runtime tab) references the libs;
+          - ensure the lib versions in the classpath are also correct. -->
+
+
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>net.refractions.udig</groupId>
+    <artifactId>pom-libs.parent</artifactId>
+    <version>0.0.1</version>
+    <name>uDig 3rd-Party libraries Download</name>
+    
+    <packaging>pom</packaging>
+
+    <developers>
+        <developer>
+            <id>fgdrf</id>
+            <name>Frank Gasdorf</name>
+            <email>fgdrf@users.sourceforge.net</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+
+    <modules>
+       <module>libs/jai-imageio/pom-libs.xml</module>
+       <module>plugins/net.refractions.udig.catalog.arcsde/pom-libs.xml</module>
+       <module>plugins/net.refractions.udig.libs/pom-libs.xml</module>
+       <module>plugins/net.refractions.udig.libs.db2/pom-libs.xml</module>
+       <module>plugins/net.refractions.udig.libs.oracle/pom-libs.xml</module>
+       <module>plugins/net.sf.opencsv/pom-libs.xml</module>
+    </modules>
+
+    <properties>
+        <lib.dir>${basedir}/lib</lib.dir>
+        <lib.source.dir>${basedir}/lib-src</lib.source.dir>
+    </properties>
+
+    <repositories>
+        <!-- Open Source Geospatial Foundation is the official repository used by
+        the GeoTools project for stable releases - use this repository when
+        using an official GeoTools numbered release -->
+        <repository>
+            <id>geotools-release</id>
+            <name>Geotools Release</name>
+            <url>http://download.osgeo.org/webdav/geotools</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+
+        <!-- The OpenGeo company offers a SNAPSHOT repository populated by GeoTools
+        nightly builds - in general it is much faster then the official repository
+        above -->
+        <repository>
+            <id>geotools-snapshot</id>
+            <name>Geotools Snapshot</name>
+            <url>http://repo.opengeo.org</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+        <!-- The JAI tools maven repository is actually the offical sonaType snapshot repository -->
+        <repository>
+            <id>sonatype-snapshot</id>
+            <name>Sonatype Snapshot Repository</name>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+        <!-- GeoSolutions provide their own repository for imageio-ext builds -->
+        <repository>
+            <id>geosolutions</id>
+            <name>GeoSolutions</name>
+            <url>http://maven.geo-solutions.it</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>2.4.1</version>
+                </plugin>
+            
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.3</version>
+                </plugin>
+            
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.7</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

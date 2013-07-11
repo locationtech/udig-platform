@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
+    <parent>
+        <groupId>net.refractions.udig</groupId>
+        <artifactId>pom-libs.parent</artifactId>
+        <version>0.0.1</version>
+        <relativePath>../../../pom-libs.xml</relativePath>
+    </parent>
+
     <!-- This script was created to automagically download the external libs 
         required for this plugin to build and export correctly.
         
@@ -24,6 +31,15 @@
             </roles>
             <timezone>+10</timezone>
         </developer>
+        <developer>
+            <id>fgdrf</id>
+            <name>Frank Gasdorf</name>
+            <email>fgdrf@users.sourceforge.net</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
     </developers>
 
     <modelVersion>4.0.0</modelVersion>
@@ -40,23 +56,6 @@
         <lib.source.dir>${basedir}/lib-src</lib.source.dir>
     </properties>
 
-    <repositories>
-        <!-- The OpenGeo company offers a SNAPSHOT repository populated by GeoTools
-        nightly builds - in general it is much faster then the official repository
-        above -->
-        <repository>
-            <id>geotools-snapshot</id>
-            <name>Geotools Snapshot</name>
-            <url>http://repo.opengeo.org</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
     <dependencies>
         <!-- OpenCSV Downloads -->
         <dependency>
@@ -69,8 +68,8 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
-                <version>2.4.1</version>
                 <configuration>
                     <filesets>
                         <fileset>
@@ -94,7 +93,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.3</version>
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>
@@ -132,7 +130,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
                 <executions>
                     <execution>
                         <id>remove-lib-timestamp</id>
@@ -164,7 +161,7 @@
                     </execution>
                 </executions>
             </plugin>
-         </plugins>
+        </plugins>
     </build>
     
 </project>
