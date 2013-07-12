@@ -5,7 +5,7 @@
         <groupId>net.refractions.udig</groupId>
         <artifactId>pom-libs.parent</artifactId>
         <version>0.0.1</version>
-        <relativePath>../../../pom-libs.xml</relativePath>
+        <relativePath>../../pom-libs.xml</relativePath>
     </parent>
 
     <!-- This script was created to automagically download the external libs 
