@@ -13,7 +13,7 @@
         
         To download the required  libraries, use:
             
-            mvn install -f pom-libs.xml 
+            mvn package -f pom-libs.xml 
         
         After they have downloaded, make sure you:
           - refresh this project in Eclipse;

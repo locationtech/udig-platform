@@ -21,7 +21,7 @@
 
     You will need to generate the dummy jars using:
             
-            mvn install -f pom-libs.xml 
+            mvn package -f pom-libs.xml 
         
      -->
 

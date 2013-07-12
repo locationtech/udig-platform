@@ -2,8 +2,11 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <!-- This script was created to automagically download the external libs 
-        required for uDig to build and export correctly. To download the required 
-        libraries, use: mvn install -f pom-libs.xml 
+        required for uDig to build and export correctly. 
+        
+        To download the required libraries, use: 
+        
+           mvn package -f pom-libs.xml 
         
         After they have downloaded, make sure you:
           - refresh the net.refractions.udig.libs project in Eclipse;
