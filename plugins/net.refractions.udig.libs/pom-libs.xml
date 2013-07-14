@@ -311,8 +311,8 @@
 		          <groupId>org.geotools</groupId>
 		          <artifactId>gt-geojson</artifactId>
 		        </exclusion>
-                        -->
-                     <exclusion>
+		        -->
+              <exclusion>
 		          <groupId>org.codehaus.groovy</groupId>
 		          <artifactId>groovy</artifactId>
 		        </exclusion>
@@ -730,7 +730,23 @@
             <version>${jt.version}</version>
             <scope>provided</scope>
         </dependency>
-
+        <!-- antlr dependencies
+             ==================
+             
+             Both groovy and jiffle depend on the antlr.jar, while only
+             requring the antlr runtime.
+        -->
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr</artifactId>
+            <version>3.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr-runtime</artifactId>
+            <version>3.3</version>
+        </dependency>
         <!-- 
              omsbox dependencies 
              ===================
