@@ -109,7 +109,7 @@ A North Arrow would make an excellent Map Graphic how would you make one?
 Tips, Tricks and Suggestions
 ----------------------------
 
-The following tips have been provided by the udig-devel list; please stop by and introduce yourself.
+The following tips have been provided by the udig-dev list; please stop by and introduce yourself.
 
 Check what is stored on the blackboard
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

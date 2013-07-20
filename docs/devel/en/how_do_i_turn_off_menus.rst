@@ -61,7 +61,7 @@ There are two ways to contribute menus:
 
 
 Check the eclipse help for details; you may find that some uDig menu contributions need to be
-patched so you can turn them off smoothly. If so jump on udig-devel with a patch and we will be
+patched so you can turn them off smoothly. If so jump on udig-dev with a patch and we will be
 happy to help.
 
 Also note that we process some of our uDig extension points into menu and toolbar contributions:

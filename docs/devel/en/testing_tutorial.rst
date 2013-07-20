@@ -71,7 +71,7 @@ This is often a requirement of build systems such as Hudson / Jenkins / CurseCon
 Tips, Tricks and Suggestions
 ----------------------------
 
-The following tips have been provided by the udig-devel list; please stop by and introduce yourself.
+The following tips have been provided by the udig-dev list; please stop by and introduce yourself.
 
 What is JUnit
 `````````````

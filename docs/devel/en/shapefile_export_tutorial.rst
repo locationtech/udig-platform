@@ -154,7 +154,7 @@ Hint: The CQL parser will make Filters based on a provided String.
 Tips, Tricks and Suggestions
 ----------------------------
 
-The following tips have been provided by the udig-devel list; please stop by and introduce yourself.
+The following tips have been provided by the udig-dev list; please stop by and introduce yourself.
 
 Display Thread
 ``````````````

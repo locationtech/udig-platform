@@ -41,7 +41,7 @@ plug-in tutorial.
 
 Steps:
 
-#. Sign up: `<http://lists.refractions.net/mailman/listinfo/udig-devel>`_
+#. Sign up: `<https://www.locationtech.org/mailman/listinfo/udig-dev>`_
 #. Install: :doc:`SDKQuickstart/SDKQuickstart` for simple plugins (or `Home <http://udig.refractions.net/confluence//display/ADMIN/Home>`_ for core development)
 #. Follow: :doc:`tool_plugin_tutorial`
 
@@ -55,8 +55,7 @@ part of things?
 Our docs are on as an needed basis, so as you have questions we will due our best to make a page of
 docs to answer email, and help people later. So you you are already on the right track, ask
 questions!
-
-#. Email: `udig-devel@lists.refractions.net <mailto:udig-devel@lists.refractions.net>`_
+ Email: `udig-dev@locationtech.org <mailto:udig-dev@locationtech.org>`_
 
 Q: How to Make a View
                      
@@ -515,7 +514,7 @@ very easy to morph uDig to meet your needs.
           }
        });
 
--  Listener: the project sets add/remove listener methods as they are requested on the udig-devel
+-  Listener: the project sets add/remove listener methods as they are requested on the udig-dev
    email list:
 
    .. code-block:: java

@@ -133,7 +133,7 @@ Advanced: Perform a build from the command line, eclipse help has the details.
 Tips and Tricks
 ---------------
 
-The following tips and tricks and suggestions have been collected from the udig-devel email list;
+The following tips and tricks and suggestions have been collected from the udig-dev email list;
 drop by and introduce yourself.
 
 The Application is Missing when I try and Run
@@ -181,7 +181,7 @@ My SDK cannot export
 ^^^^^^^^^^^^^^^^^^^^
 
 The other possibility is that **gasp** we left something out of the uDig SDK. Please contact us on
-the udig-devel list.
+the udig-dev list.
 
 Examples of ways we have messed things up in the past:
 

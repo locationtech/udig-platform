@@ -504,7 +504,7 @@ Here are some additional things to try when running uDig.
 Tips, Ticks and Suggestions
 ===========================
 
-The following tips, tricks and suggestions have been collected from the udig-devel email list. If
+The following tips, tricks and suggestions have been collected from the udig-dev email list. If
 you have any questions feel free to drop by and introduce yourself.
 
 ClassNotFoundException at EclipseStarter
@@ -527,7 +527,7 @@ As a temporary measure:
    net.refractions.udig.ui is in this list)
 #. Hit add required plugins
 
-Please email the `udig-devel <http://lists.refractions.net/mailman/listinfo/udig-devel>`_ list; and
+Please email the `udig-dev <https://www.locationtech.org/mailman/listinfo/udig-dev>`_ list; and
 volunteer to test the SDK with the version of eclipse you are using.
 
 NoClassDefFoundError JAI

@@ -85,7 +85,7 @@ value).
 Tips, Tricks and Suggestions
 ----------------------------
 
-The following tips have been provided by the udig-devel list; please stop by and introduce yourself.
+The following tips have been provided by the udig-dev list; please stop by and introduce yourself.
 
 Commercial Training Materials
 -----------------------------

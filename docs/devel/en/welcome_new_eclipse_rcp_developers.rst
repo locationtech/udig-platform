@@ -27,7 +27,7 @@ our training materials available to you.
 uDig Tutorials
 --------------
 
-Other than that please jump on in; the udig-devel email list is a good place to ask questions.
+Other than that please jump on in; the udig-dev email list is a good place to ask questions.
 Please go through the "getting started" tutorials in the developers guide and ask lots of questions
 on the email list and IRC.
 
@@ -107,7 +107,7 @@ from the developers guide.
 How it fits together
 --------------------
 
-The following notes come from email discussion on the udig-devel list; we will add to this if you
+The following notes come from email discussion on the udig-dev list; we will add to this if you
 have any additional questions. The concepts here were introduced in the above tutorials.
 
 How plugins work

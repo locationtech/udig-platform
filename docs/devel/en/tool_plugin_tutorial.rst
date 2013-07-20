@@ -159,7 +159,7 @@ Try hooking up your tool category to a keyboard binding.
 Tips, Tricks and Suggestions
 ----------------------------
 
-The following tips, tricks and suggestions have been collected from the udig-devel email list. If
+The following tips, tricks and suggestions have been collected from the udig-dev email list. If
 you have any questions please drop by and introduce yourself.
 
 Use the Source Luke!
