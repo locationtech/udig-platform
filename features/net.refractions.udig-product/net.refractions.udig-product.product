@@ -38,28 +38,23 @@
    <intro introId="net.refractions.udig.ui.intro"/>
 
    <vm>
-<!--
-      <macos include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6</macos>
--->
    </vm>
 
    <license>
         <url>http://udig.refractions.net/files/bsd3-v10.html</url>
         <text>
-   Refractions BSD 3 Clause License (BSD) - v 1.0
-
-Copyright (c) 2012, Refractions Research Inc.
+   Copyright (c) 2013, Refractions Research Inc.
 All rights reserved.
 
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+Refractions Research makes available all content in this product (&quot;Content&quot;). Unless otherwise indicated below, the Content is provided to you under the terms
+and conditions of the &lt;a href=&quot;http://www.eclipse.org/legal/epl-v10.html&quot;&gt;Eclipse Public License Version 1.0&lt;/a&gt; (&quot;EPL&quot;), and 
+the &lt;a href=&quot;http://udig.refractions.net/files/bsd3-v10.html&quot;&gt;Refractions BSD License 1.0&lt;/a&gt; (&quot;BSD&quot;). For purposes of the EPL and BSD, &quot;Program&quot; will 
+mean the Content.
 
-* Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-
-* Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
-* Neither the name of the Refractions Research nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+If you did not receive this Content directly from the Refractions Research, the Content is being redistributed by another party (&quot;Redistributor&quot;) and different 
+terms and conditions may apply to your use of any object code in the Content. Check the Redistributor&apos;s license that was provided with the Content. If no 
+such license exists, contact the Redistributor. Unless otherwise indicated below, the terms and conditions of the EPL still apply to any source code in the 
+Content and such source code may be obtained at http://github.com/udig .
          </text>
    </license>
 
@@ -68,10 +63,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&
 
    <features>
       <feature id="net.refractions.udig-feature"/>
-<!-- babel has different core dependencies (ranges not used?) than the latest bundles from indigo P2 repository (SR2)
-
-      <feature id="net.refractions.udig_language-feature"/>
--->
    </features>
 
    <configurations>
