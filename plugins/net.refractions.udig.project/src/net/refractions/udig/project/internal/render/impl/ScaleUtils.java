@@ -358,16 +358,11 @@ public final class ScaleUtils {
 			return scaleDenominator;
 
 		} else {
-			double refWidthMeters = fromCrsToMeter(bounds.getWidth(), crs);
-			double displayMeterDistancePixels = refWidthMeters * dpi / 2.54
-					* 100.0;
-			double widthScaleDenominator = displayMeterDistancePixels / width;
-			double refHeightMeters = ScaleUtils.fromCrsToMeter(bounds.getHeight(), crs);
-			double displayMeterHeightPixels = refHeightMeters * dpi / 2.54
-			    * 100.0;
-			double heightScaleDenominator = displayMeterHeightPixels / height;
-			
-			return Math.sqrt(heightScaleDenominator*heightScaleDenominator + widthScaleDenominator*widthScaleDenominator);
+			double diaWidthUnits = Math.sqrt(bounds.getWidth() * bounds.getWidth() + bounds.getHeight() * bounds.getHeight());
+			double diaWidthPx = Math.sqrt(width * width + height * height);
+			double d1 = fromCrsToMeter(diaWidthUnits , crs);
+			double meter = (d1 * dpi / 2.54 * 100.0) / diaWidthPx;
+			return meter;
 		}
 	}
 
