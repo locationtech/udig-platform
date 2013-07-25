@@ -9,9 +9,12 @@
     </parent>
 
     <!-- This script was created to automagically download the external libs 
-        required for uDig to build and export correctly. To download the required 
-        libraries, use: mvn install -f pom-libs.xml 
-        
+        required for uDig to build and export correctly. 
+
+        To download the required libraries, use: 
+
+            mvn package -f pom-libs.xml 
+
         After they have downloaded, make sure you:
           - refresh the net.refractions.udig.libs project in Eclipse;
           - verify the classpath (Manfiest Runtime tab) references the libs;
@@ -308,8 +311,8 @@
 		          <groupId>org.geotools</groupId>
 		          <artifactId>gt-geojson</artifactId>
 		        </exclusion>
-                        -->
-                     <exclusion>
+		        -->
+              <exclusion>
 		          <groupId>org.codehaus.groovy</groupId>
 		          <artifactId>groovy</artifactId>
 		        </exclusion>
@@ -727,7 +730,23 @@
             <version>${jt.version}</version>
             <scope>provided</scope>
         </dependency>
-
+        <!-- antlr dependencies
+             ==================
+             
+             Both groovy and jiffle depend on the antlr.jar, while only
+             requring the antlr runtime.
+        -->
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr</artifactId>
+            <version>3.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr-runtime</artifactId>
+            <version>3.3</version>
+        </dependency>
         <!-- 
              omsbox dependencies 
              ===================
