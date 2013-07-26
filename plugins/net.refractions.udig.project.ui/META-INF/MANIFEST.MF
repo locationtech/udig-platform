@@ -56,4 +56,4 @@ Require-Bundle: net.refractions.udig.style.sld,
  org.eclipse.core.expressions,
  com.lowagie.text;bundle-version="[2.1.7,2.2.0)"
 Bundle-ActivationPolicy: lazy
-Import-Package: net.miginfocom.swt
+Import-Package: net.miginfocom.swt;version="[3.7.0,3.8.0)"

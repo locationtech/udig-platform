@@ -20,4 +20,4 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.ui,
  org.eclipse.ui.forms
 Bundle-ActivationPolicy: lazy
-Import-Package: net.miginfocom.swt
+Import-Package: net.miginfocom.swt;version="[3.7.0,3.8.0)"

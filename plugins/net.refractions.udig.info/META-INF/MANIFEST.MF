@@ -24,4 +24,4 @@ Require-Bundle: org.eclipse.ui,
  net.refractions.udig.catalog.shp;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: net.miginfocom.swt
+Import-Package: net.miginfocom.swt;version="[3.7.0,3.8.0)"
