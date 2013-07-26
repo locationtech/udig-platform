@@ -101,6 +101,9 @@
 <unit id="org.junit" version="4.10.0.v4_10_0_v20120426-0900"/>
 <unit id="org.easymock" version="2.4.0.v20090202-0900"/>
 <unit id="com.lowagie.text" version="0.0.0"/>
+<unit id="net.miginfocom.layout" version="0.0.0"/>
+<unit id="net.miginfocom.layout.swt" version="0.0.0"/>
+<unit id="net.miginfocom.layout.swing" version="0.0.0"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">

@@ -30,3 +30,4 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.expressions
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: net.miginfocom.swt

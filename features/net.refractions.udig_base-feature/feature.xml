@@ -19,7 +19,6 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
    </copyright>
 
    <license url="http://udig.refractions.net/files/bsd3-v10.html">
-
       uDig - User Friendly Desktop Internet GIS client
       http://udig.refractions.net
       (C) 2004-2012, Refractions Research Inc.
@@ -151,14 +150,6 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
          version="0.0.0"
          unpack="false"/>
 
-<!--
-   <plugin
-         id="org.eclipse.ant.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
--->
    <plugin
          id="org.eclipse.core.net"
          download-size="0"
@@ -220,7 +211,6 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
          download-size="0"
          install-size="0"
          version="0.0.0"/>
-
 
    <plugin
          id="org.apache.batik.bridge"
@@ -587,6 +577,20 @@ If you add a depenedncy on any aspect of &quot;org.eclipse.*&quot; then please a
 
    <plugin
          id="org.eclipse.core.filebuffers"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.miginfocom.layout"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.miginfocom.layout.swt"
          download-size="0"
          install-size="0"
          version="0.0.0"
