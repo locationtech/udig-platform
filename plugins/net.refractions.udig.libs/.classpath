@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="lib/antlr-2.7.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/antlr-runtime-3.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/groovy-1.8.8.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geojson-9-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/json-simple-1.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/itext-2.1.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/asm-3.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/asm-analysis-3.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/asm-commons-3.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/asm-tree-3.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/asm-util-3.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/json-20090211.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/geoscript-groovy-1.1-SNAPSHOT.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="lib/antlr-2.7.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/antlr-runtime-3.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-beanutils-1.7.0.jar" sourcepath="lib-src/commons-beanutils-1.7.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-collections-3.1.jar" sourcepath="lib-src/commons-collections-3.1-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-dbcp-1.3.jar" sourcepath="lib-src/commons-dbcp-1.3-sources.jar"/>
@@ -131,7 +120,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/jt-rangelookup-1.3.0.jar" sourcepath="lib-src/jt-rangelookup-1.3.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jt-vectorize-1.3.0.jar" sourcepath="lib-src/jt-vectorize-1.3.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jts-1.12.jar" sourcepath="lib-src/jts-1.12-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/miglayout-3.7.jar" sourcepath="lib-src/miglayout-3.7-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.1.17.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/net.opengis.fes-9.0-M0.jar" sourcepath="lib-src/net.opengis.fes-9.0-M0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/net.opengis.ows-9.0-M0.jar" sourcepath="lib-src/net.opengis.ows-9.0-M0-sources.jar"/>
@@ -154,5 +142,16 @@
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-client-3.0.jar" sourcepath="lib-src/xmlrpc-client-3.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-common-3.0.jar" sourcepath="lib-src/xmlrpc-common-3.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xpp3_min-1.1.4c.jar" sourcepath="lib-src/xpp3_min-1.1.4c-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/groovy-1.8.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/geoscript-groovy-1.1-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/json-20090211.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-3.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-analysis-3.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-commons-3.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-tree-3.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-util-3.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/itext-2.1.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geojson-9-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/json-simple-1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
