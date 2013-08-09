@@ -19,6 +19,7 @@ import java.util.Map;
 
 import net.refractions.udig.catalog.IService;
 import net.refractions.udig.catalog.ServiceExtension;
+import net.refractions.udig.catalog.URLUtils;
 
 import org.geotools.gce.arcgrid.ArcGridFormat;
 import org.geotools.gce.arcgrid.ArcGridFormatFactory;
@@ -77,11 +78,9 @@ public class ArcGridServiceExtension implements ServiceExtension {
 			return msg;
 		}
 		
-		File file = null;
-		try {
-			file = new File(url.getFile());
-		} catch (IllegalArgumentException e) {
-			msg = "Not a file";
+		File file = URLUtils.urlToFile(url);
+		if (!file.exists()){
+			msg = "file doesn't exist";
 			return msg;		
 		}
 		
