@@ -34,11 +34,10 @@ import net.refractions.udig.catalog.service.database.TableDescriptor;
 import net.refractions.udig.ui.UDIGDisplaySafeLock;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 
 /**
  * A postgis service that represents the database. Its children are "folders" that each resolve to a
@@ -65,7 +64,7 @@ public class PostgisService2 extends IService {
     @Override
     public String getTitle() {
         URL id = getIdentifier();
-		return ("PostGIS " +id.getHost()+ "/" +id.getPath()).replaceAll("//","/"); //$NON-NLS-1$
+        return ("PostGIS " +id.getHost()+ "/" +id.getPath()).replaceAll("//","/"); //$NON-NLS-1$
     }
 
     @Override
@@ -121,7 +120,7 @@ public class PostgisService2 extends IService {
         lock.lock();
         try {
             if (members.isEmpty()) {
-            	Map<String, Collection<TableDescriptor>> schemas = lookupSchemasInDB(SubMonitor.convert(monitor,
+                Map<String, Collection<TableDescriptor>> schemas = lookupSchemasInDB(SubMonitor.convert(monitor,
                         "looking up schemas", 1));
                 if (schemas == null) {
                     // couldn't look up schema so...
@@ -129,8 +128,8 @@ public class PostgisService2 extends IService {
                     String[] schemaNames = commaSeperated.split(","); //$NON-NLS-1$
                     schemas = new HashMap<String, Collection<TableDescriptor>>();
                     for (String name : schemaNames) {
-						schemas.put(name, Collections.<TableDescriptor>emptyList());
-					}
+                        schemas.put(name, Collections.<TableDescriptor>emptyList());
+                    }
                 }
                 createSchemaFolder(schemas);
                 message = null;
@@ -159,7 +158,7 @@ public class PostgisService2 extends IService {
             return null;
         }
         Set<TableDescriptor> tables = runnable.getTableDescriptors();
-        Multimap<String, TableDescriptor> schemas = Multimaps.newHashMultimap();
+        Multimap<String, TableDescriptor> schemas = HashMultimap.create();
         for( TableDescriptor schema : tables ) {
             schemas.put(schema.schema,schema);
         }

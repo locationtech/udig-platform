@@ -165,7 +165,7 @@ public class Utilities {
     /**
      * A map of names for all the marks.
      */
-    public static final BiMap<String, String> markNamesToDef = new HashBiMap<String, String>();
+    public static final BiMap<String, String> markNamesToDef = HashBiMap.create();
     static {
 
         // well known marks
