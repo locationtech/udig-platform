@@ -98,13 +98,14 @@
 <unit id="org.w3c.dom.events" version="3.0.0.draft20060413_v201105210656"/>
 <unit id="org.hamcrest.core" version="1.1.0.v20090501071000"/>
 <unit id="org.hamcrest.library" version="1.1.0.v20090501071000"/>
-<unit id="org.junit" version="4.10.0.v4_10_0_v20120426-0900"/>
+<unit id="org.junit" version="4.10.0.v20130308-0414"/>
 <unit id="org.easymock" version="2.4.0.v20090202-0900"/>
 <unit id="com.lowagie.text" version="0.0.0"/>
 <unit id="net.miginfocom.layout" version="0.0.0"/>
 <unit id="net.miginfocom.layout.swt" version="0.0.0"/>
 <unit id="net.miginfocom.layout.swing" version="0.0.0"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository"/>
+<unit id="com.google.guava" version="12.0.0"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20130517111416/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.babel.nls_rt.equinox_fr.feature.group" version="0.0.0"/>
@@ -152,7 +153,7 @@
 <unit id="org.eclipse.babel.nls_mylyn_es.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.babel.nls_tools.gef_es.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.babel.nls_birt_es.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/technology/babel/update-site/R0.10.0/indigo"/>
+<repository location="http://archive.eclipse.org/technology/babel/update-site/R0.10.0/indigo"/>
 </location>
 </locations>
 </target>
