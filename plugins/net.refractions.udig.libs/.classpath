@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="lib/gt-geojson-9.0-M0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-gtopo30-9.0-M0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-imagepyramid-9.0-M0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="lib/antlr-2.7.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/antlr-runtime-3.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/asm-3.2.jar"/>
@@ -29,16 +35,13 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-cql-9.0-M0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-data-9.0-M0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-hsql-9.0-M0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geojson-9-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-geotiff-9.0-M0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-graph-9.0-M0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-grassraster-9.0-M0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-grid-9.0-M0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-gtopo30-9-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-image-9.0-M0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-imageio-ext-gdal-9.0-M0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-imagemosaic-9.0-M0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-imagepyramid-9-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-9.0-M0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-db2-9.0-M0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-h2-9.0-M0.jar"/>
@@ -62,7 +65,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-shapefile-renderer-9.0-M0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-svg-9.0-M0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-swing-9.0-M0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-transform-9-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-validation-9.0-M0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-wfs-9.0-M0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-wms-9.0-M0.jar"/>
@@ -155,8 +157,5 @@
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-client-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xmlrpc-common-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xpp3_min-1.1.4c.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
