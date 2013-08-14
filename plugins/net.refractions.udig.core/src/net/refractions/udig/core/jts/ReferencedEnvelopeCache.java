@@ -11,8 +11,6 @@
 package net.refractions.udig.core.jts;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -22,13 +20,10 @@ import org.opengis.metadata.extent.BoundingPolygon;
 import org.opengis.metadata.extent.Extent;
 import org.opengis.metadata.extent.GeographicBoundingBox;
 import org.opengis.metadata.extent.GeographicExtent;
-import org.opengis.referencing.ReferenceIdentifier;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 
 public class ReferencedEnvelopeCache {
     private static Cache<Object, Object> crsCache = CacheBuilder.newBuilder().build();

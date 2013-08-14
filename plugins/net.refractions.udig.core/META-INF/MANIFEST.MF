@@ -18,3 +18,4 @@ Require-Bundle: org.eclipse.core.runtime,
  net.refractions.udig.libs;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: com.google.common.cache;version="[12.0.0,13.0.0)"
