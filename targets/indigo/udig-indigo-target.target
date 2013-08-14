@@ -104,7 +104,7 @@
 <unit id="net.miginfocom.layout" version="0.0.0"/>
 <unit id="net.miginfocom.layout.swt" version="0.0.0"/>
 <unit id="net.miginfocom.layout.swing" version="0.0.0"/>
-<unit id="com.google.guava" version="12.0.0"/>
+<unit id="com.google.guava" version="0.0.0"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20130517111416/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
