@@ -45,7 +45,6 @@ Bundle-ClassPath: .,
  lib/eastwood-1.1.1-20090908.jar,
  lib/ehcache-1.6.2.jar,
  lib/geodb-0.7-RC2.jar,
- lib/geoscript-groovy-1.1-SNAPSHOT.jar,
  lib/groovy-1.8.8.jar,
  lib/gt-api-9.0-M0.jar,
  lib/gt-arcgrid-9.0-M0.jar,
@@ -183,7 +182,9 @@ Bundle-ClassPath: .,
  lib/xpp3_min-1.1.4c.jar,
  lib/gt-geojson-9.0-M0.jar,
  lib/gt-gtopo30-9.0-M0.jar,
- lib/gt-imagepyramid-9.0-M0.jar
+ lib/gt-imagepyramid-9.0-M0.jar,
+ lib/geoscript-groovy-1.1-M0.jar,
+ lib/gt-transform-9.0-M0.jar
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: .,
  au.com.objectix.jgridshift,
