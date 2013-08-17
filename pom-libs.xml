@@ -70,7 +70,7 @@
             <name>Geotools Snapshot</name>
             <url>http://repo.opengeo.org</url>
             <releases>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </releases>
             <snapshots>
                 <enabled>true</enabled>
