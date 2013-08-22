@@ -317,12 +317,14 @@ public class OmsBoxPlugin extends AbstractUIPlugin {
             addPath(log4jFolderPath + File.separator + "*", sb);
         }
         Bundle itextBundle = Platform.getBundle("com.lowagie.text");
-        String itextFolderPath = getPath(itextBundle, "lib");
-        if (itextFolderPath != null) {
+        
+        String itextPath = getPath(itextBundle, "/");
+        if (itextPath != null) {
+            itextPath = itextPath.replaceAll("!", "");
             sb.append(File.pathSeparator);
-            addPath(itextFolderPath + File.separator + "*", sb);
+            addPath(itextPath, sb);
         }
-
+        
         Location installLocation = Platform.getInstallLocation();
         File installFolder = DataUtilities.urlToFile(installLocation.getURL());
         if (installFolder != null && installFolder.exists()) {
