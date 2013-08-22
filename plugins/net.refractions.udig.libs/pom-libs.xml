@@ -338,17 +338,10 @@
 		          <groupId>org.bouncycastle</groupId>
 		          <artifactId>bcmail-jdk14</artifactId>
 		        </exclusion>
-
-		        <!--
-                <exclusion>
-		          <groupId>org.json</groupId>
-		          <artifactId>json</artifactId>
-		        </exclusion>
 		        <exclusion>
 		          <groupId>com.lowagie</groupId>
 		          <artifactId>itext</artifactId>
 		        </exclusion>
-                -->
 	      	</exclusions>
         </dependency>
         <dependency>

@@ -105,7 +105,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-streams-1.1.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-tiff-1.1.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/imageio-ext-utilities-1.1.5.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/itext-2.1.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/janino-2.5.16.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jansi-1.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/javassist-3.8.0.GA.jar"/>
