@@ -11,13 +11,13 @@ uDig is an open project, with developers from multiple companies participating i
 * <a href="irc://us.freenode.net/udig">#udig</a> on "freenode":http://freenode.net/irc_servers.shtml
 * <a href="irc://us.freenode.net/geotools">#geotools</a> on "freenode":http://freenode.net/irc_servers.shtml
 
-h1. Website
+h2. Website
 
 * uDig Project - http://locationtech.org/projects/technology.udig
 * uDig Website - "http://udig.refractions.net/":http://udig.refractions.net/
 * Developers Guide - "http://udig.refractions.net/developers/":http://udig.refractions.net/developers/
 
-h1. Project Outline
+h2. Project Outline
 
 The goal of uDig is to provide a complete Java solution for desktop GIS data access, editing, and viewing. uDig aims to be:
 * <b>U</b>ser friendly, providing a familiar graphical environment for GIS users;
@@ -25,7 +25,7 @@ The goal of uDig is to provide a complete Java solution for desktop GIS data acc
 * <b>I</b>nternet oriented, consuming standard (WMS, WFS, WCS) and de facto (GeoRSS, KML, tiles) geospatial web services; and,
 * <b>G</b>IS ready, providing the framework on which complex analytical capabilities can be built, and gradually subsuming those capabilities into the main application.
 
-h1. Steering Committee
+h2. Steering Committee
 
 * Andrea Antonello
 * Frank Gasdorf
@@ -33,7 +33,7 @@ h1. Steering Committee
 * Jody Garnett
 * Mauricio Pazos
 
-h1. Contributing
+h2. Contributing
 
 Join us in working on uDig
 
@@ -43,9 +43,9 @@ Join us in working on uDig
 
 There are two ways to take part: indirectly using github pull requests; and directly by obtaining commit access.
 
-h2. Build Instructions
+h1. Build Instructions
 
-#. Here is the branch, check it out, or fork as you see fit:
+1. Here is the branch, check it out, or fork as you see fit:
 
    * https://github.com/uDig/udig-platform/tree/locationtech_ip
 
@@ -55,7 +55,7 @@ h2. Build Instructions
      cd udig
      git checkout locationtech_ip
    </pre></code>
-#. Download stuff (using maven and wget):
+2. Download stuff (using maven and wget):
    <pre><code>
      mvn clean install -f pom-libs.xml
 
@@ -64,13 +64,13 @@ h2. Build Instructions
      [INFO] ------------------------------------------------------------------------
      [INFO] Total time: 8:05.291s
    </pre></code>
-#. Build native fragments used for target platform:
+3. Build native fragments used for target platform:
    <pre><code>
      cd libs
      cd jai-imageio
      mvn clean install
    </pre></code>
-#. Build Online Help (requires and sphinx-build to be installed):
+4. Build Online Help (requires and sphinx-build to be installed):
    <pre><code>
      cd docs
      ant help-deploy
@@ -82,9 +82,9 @@ h2. Build Instructions
      Total time: 13 seconds
    </pre></code>
 
-h3. Option - Command Line Build
+h2. Option - Command Line Build
 
-#. Tycho Build
+1. Tycho Build
    <pre><code>
       mvn clean install -Pproduct -Psdk
 
@@ -93,7 +93,7 @@ h3. Option - Command Line Build
       [INFO] ------------------------------------------------------------------------
       [INFO] Total time: 12:44.827s
    </code></pre>
-#. Packaging, branding and installers::
+2. Packaging, branding and installers::
    <pre><code>
       cd deploy
       ./all.sh
@@ -109,11 +109,11 @@ h3. Option - Command Line Build
       Preparing ./build/linux64 with start up scripts and html files
       Assemble ./build/udig-1.5-SNAPSHOT.linux.gtk.x86_64.zip
    </pre></code>
-#. Upload to website
+3. Upload to website
 
 See results at http://udig.refractions.net/download/unstable/ there should be a 1.5-SNAPSHOT by the time you read this.
 
-h3. Option - Eclipse Build
+h2. Option - Eclipse Build
 
 uDig makes use of a target platform, in order to download and reference bundles from:
 
@@ -123,13 +123,13 @@ uDig makes use of a target platform, in order to download and reference bundles 
 
 Here is how to set that up:
 
-#. Import the targets/indigo/eu.udig.targets.indgo project.
-#. Open up udig-indigo-target.target and click on Set as Target Platform
+1. Import the targets/indigo/eu.udig.targets.indgo project.
+2. Open up udig-indigo-target.target and click on Set as Target Platform
 
    !target.jpg!
 
    This will reset the target platform which will take some time.
-#. Once that is done you can import the remaining uDig projects
-#. And open up *net.refractions.udig/udig.product and click *Run*
+3. Once that is done you can import the remaining uDig projects
+4. And open up *net.refractions.udig/udig.product and click *Run*
 
    !product.gif!
