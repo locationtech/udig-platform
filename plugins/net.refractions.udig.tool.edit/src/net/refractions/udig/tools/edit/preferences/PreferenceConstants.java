@@ -24,4 +24,9 @@ public class PreferenceConstants {
     public static final String P_HIDE_SELECTED_FEATURES = "P_HIDE_SELECTED_FEATURES"; //$NON-NLS-1$
     public static final String P_ADVANCED_ACTIVE = "P_ADVANCED_ACTIVE"; //$NON-NLS-1$
     public static final String P_SELECT_POST_ACCEPT = "P_DESELECT_POST_ACCEPT"; //$NON-NLS-1$
+    
+    public static final String P_BUFFER_SEGMENTS = "P_BUFFER_SEGMENTS"; //$NON-NLS-1$
+    public static final String P_BUFFER_DEFULT_SIZE = "P_BUFFER_DEFULT_SIZE"; //$NON-NLS-1$
+    public static final String P_BUFFER_MAX_SIZE = "P_BUFFER_MAX_SIZE"; //$NON-NLS-1$
+    public static final String P_BUFFER_CAP_TYPE = "P_BUFFER_CAP_TYPE"; //$NON-NLS-1$
 }

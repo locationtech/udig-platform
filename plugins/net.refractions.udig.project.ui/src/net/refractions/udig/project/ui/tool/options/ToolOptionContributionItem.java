@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Spinner;
 
 /**
  * This object is used when creating tool options, it provide access to the preference store so that
@@ -138,6 +139,17 @@ public abstract class ToolOptionContributionItem extends ContributionItem
         fields.put(combo, preferenceString);
         combo.addSelectionListener(selectionListener);
         
+    }
+    
+    public void addField( String preferenceString, Spinner spinner) {
+        
+        if (preferenceString == null) {
+            throw new NullPointerException("PreferenceString required");
+        }
+        
+        fields.put(spinner, preferenceString);
+        // normally we would use button.setData but ContributionItems gets stored there
+        spinner.addSelectionListener(selectionListener);
     }
 
     /**

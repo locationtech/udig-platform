@@ -62,7 +62,6 @@ public class LineTool extends AbstractEditTool {
 
     @Override
     protected void initActivators( Set<Activator> activators ) {
-        
         DrawType type = DrawGeomsActivator.DrawType.LINE;
         Set<Activator> defaults = DefaultEditToolBehaviour.createDefaultCreateActivators(type);
         activators.addAll(defaults);

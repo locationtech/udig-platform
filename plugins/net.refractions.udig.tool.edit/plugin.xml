@@ -124,6 +124,41 @@
                   </toolOption>
                </modalTool>
                <modalTool
+                     categoryId="net.refractions.udig.tool.edit.create"
+                     class="net.refractions.udig.tools.edit.impl.SmartBufferTool"
+                     icon="icons/etool16/new_smartbuffer_mode.gif"
+                     id="net.refractions.udig.tools.pointBufferEdit"
+                     largeIcon="icons/etool24/new_smartbuffer_mode.png"
+                     name="%edit.buffer.name"
+                     onToolbar="true"
+                     preferencePageId="net.refractions.udig.tool.edit.preference.smartbuffer"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.buffer.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif">
+                  </cursor>
+                  <enablement>
+                     <and>
+                        <or>
+                           <property
+                                 expectedValue="com.vividsolutions.jts.geom.MultiPolygon"
+                                 propertyId="net.refractions.udig.project.ui.GeometryType">
+                           </property>
+                           <property
+                                 expectedValue="com.vividsolutions.jts.geom.Polygon"
+                                 propertyId="net.refractions.udig.project.ui.GeometryType">
+                           </property>
+                        </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SmartBufferToolOptionContributionItem"
+                        id="smartBufferOption">
+                  </toolOption>
+               </modalTool>
+               <modalTool
                      categoryId="net.refractions.udig.tool.edit.edit"
                      class="net.refractions.udig.tools.edit.impl.SelectionTool"
                      icon="icons/etool16/edit_vertex_mode.gif"
@@ -511,6 +546,12 @@
             class="net.refractions.udig.tools.edit.preferences.PerformancelPreferences"
             id="net.refractions.udig.tool.edit.preference.performance"
             name="%preferences.edit.tool.performance.name"/>
+      <page
+            category="net.refractions.udig.tools.edit.preferences"
+            class="net.refractions.udig.tools.edit.preferences.SmartBufferPreferences"
+            id="net.refractions.udig.tool.edit.preference.smartbuffer"
+            name="%preferences.edit.tool.smartbuffer.name">
+      </page>
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">

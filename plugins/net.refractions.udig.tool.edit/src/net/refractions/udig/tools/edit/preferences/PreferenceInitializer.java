@@ -17,6 +17,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.graphics.RGB;
 
+import com.vividsolutions.jts.operation.buffer.BufferOp;
+
 /**
  * Initializes Editing preferences
  * @author Jesse
@@ -37,7 +39,12 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
         store.setDefault(PreferenceConstants.P_HIDE_SELECTED_FEATURES, true);
         store.setDefault(PreferenceConstants.P_SNAP_BEHAVIOUR, SnapBehaviour.OFF.toString());
         store.setDefault(PreferenceConstants.P_ADVANCED_ACTIVE, false); 
-        store.setDefault(PreferenceConstants.P_SELECT_POST_ACCEPT, true); 
+        store.setDefault(PreferenceConstants.P_SELECT_POST_ACCEPT, true);
+        
+        store.setDefault(PreferenceConstants.P_BUFFER_SEGMENTS, 8);
+        store.setDefault(PreferenceConstants.P_BUFFER_DEFULT_SIZE, 20);
+        store.setDefault(PreferenceConstants.P_BUFFER_MAX_SIZE, 200);
+        store.setDefault(PreferenceConstants.P_BUFFER_CAP_TYPE, BufferOp.CAP_ROUND);
     }
 
 }
