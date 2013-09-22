@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: eu.udig.image.georeferencing
-Bundle-SymbolicName: eu.udig.image.georeferencing;singleton:=true
-Bundle-Version: 1.4.0.qualifier
-Bundle-Activator: eu.udig.image.georeferencing.Activator
+Bundle-SymbolicName: org.locationtech.udig.image.georeferencing;singleton:=true
+Bundle-Version: 2.0.0.qualifier
+Bundle-Activator: org.locationtech.udig.image.georeferencing.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  net.refractions.udig.project.ui,
@@ -13,18 +13,18 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: uDig Community
-Export-Package: eu.udig.image.georeferencing;uses:="org.eclipse.ui.plugin,org.osgi.framework",
- eu.udig.image.georeferencing.internal.i18n;x-internal:=true,
- eu.udig.image.georeferencing.internal.preferences;x-internal:=true,
- eu.udig.image.georeferencing.internal.process;x-internal:=true,
- eu.udig.image.georeferencing.internal.ui;x-internal:=true,
- eu.udig.image.georeferencing.internal.ui.coordinatepanel;x-internal:=true,
- eu.udig.image.georeferencing.internal.ui.coordinatepanel.image;x-internal:=true,
- eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools;x-internal:=true,
- eu.udig.image.georeferencing.internal.ui.image;x-internal:=true,
- eu.udig.image.georeferencing.internal.ui.imagepanel;x-internal:=true,
- eu.udig.image.georeferencing.internal.ui.imagepanel.image;x-internal:=true,
- eu.udig.image.georeferencing.internal.ui.imagepanel.tools;x-internal:=true,
- eu.udig.image.georeferencing.internal.ui.message;x-internal:=true,
- eu.udig.image.georeferencing.ui,
- eu.udig.image.georeferencing.ui.images
+Export-Package: org.locationtech.udig.image.georeferencing;uses:="org.eclipse.ui.plugin,org.osgi.framework",
+ org.locationtech.udig.image.georeferencing.internal.i18n;x-internal:=true,
+ org.locationtech.udig.image.georeferencing.internal.preferences;x-internal:=true,
+ org.locationtech.udig.image.georeferencing.internal.process;x-internal:=true,
+ org.locationtech.udig.image.georeferencing.internal.ui;x-internal:=true,
+ org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel;x-internal:=true,
+ org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.image;x-internal:=true,
+ org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools;x-internal:=true,
+ org.locationtech.udig.image.georeferencing.internal.ui.image;x-internal:=true,
+ org.locationtech.udig.image.georeferencing.internal.ui.imagepanel;x-internal:=true,
+ org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.image;x-internal:=true,
+ org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.tools;x-internal:=true,
+ org.locationtech.udig.image.georeferencing.internal.ui.message;x-internal:=true,
+ org.locationtech.udig.image.georeferencing.ui,
+ org.locationtech.udig.image.georeferencing.ui.images

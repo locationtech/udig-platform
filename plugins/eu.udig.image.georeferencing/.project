@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>eu.udig.image.georeferencing</name>
+	<name>org.locationtech.udig.image.georeferencing</name>
 	<comment></comment>
 	<projects>
 	</projects>

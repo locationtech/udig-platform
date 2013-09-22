@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JConsole Plugin
-Bundle-SymbolicName: eu.udig.jconsole;singleton:=true
-Bundle-Version: 1.4.0.qualifier
-Bundle-Activator: eu.udig.jconsole.JConsolePlugin
+Bundle-SymbolicName: org.locationtech.udig.jconsole;singleton:=true
+Bundle-Version: 2.0.0.qualifier
+Bundle-Activator: org.locationtech.udig.jconsole.JConsolePlugin
 Bundle-Vendor: HydroloGIS s.r.l.
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

@@ -6,7 +6,7 @@
       <view
             allowMultiple="false"
             category="eu.udig.image.georeferencing.categoryImage"
-            class="eu.udig.image.georeferencing.ui.GeoreferencingView"
+            class="org.locationtech.udig.image.georeferencing.ui.GeoreferencingView"
             icon="icons/etool16/georeferencing.png"
             id="eu.udig.image.georeferencing.ui.GeoreferencingView"
             name="Image Georeferencing"
@@ -20,7 +20,7 @@
    <extension
          point="net.refractions.udig.mapgraphic.mapgraphic">
       <mapGraphic
-            class="eu.udig.image.georeferencing.internal.ui.coordinatepanel.MapMarksGraphics"
+            class="org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.MapMarksGraphics"
             id="eu.udig.image.georeferencing.internal.ui.MapMarksGraphics"
             name="Georeferencing">
       </mapGraphic>
@@ -34,7 +34,7 @@
       </category>
       <modalTool
             categoryId="eu.udig.image.georeferencing.categorytools"
-            class="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.AddCoordinateTool"
+            class="org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.AddCoordinateTool"
             icon="icons/etool16/place.png"
             id="eu.udig.image.georeferencing.tools.addcoordinate"
             name="Add coordinate"
@@ -50,7 +50,7 @@
       </modalTool>
       <modalTool
             categoryId="eu.udig.image.georeferencing.categorytools"
-            class="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.DeleteCoordinateTool"
+            class="org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.DeleteCoordinateTool"
             icon="icons/etool16/delete.gif"
             id="eu.udig.image.georeferencing.tools.deletecoordinate"
             name="Delete coordinate"
@@ -66,7 +66,7 @@
       </modalTool>
       <modalTool
             categoryId="eu.udig.image.georeferencing.categorytools"
-            class="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.MoveCoordinateTool"
+            class="org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.MoveCoordinateTool"
             icon="icons/etool16/movemarker.png"
             id="eu.udig.image.georeferencing.tools.movecoordinate"
             name="Move coordinate"
@@ -102,7 +102,7 @@
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="eu.udig.image.georeferencing.internal.preferences.PreferencesInitializer">
+            class="org.locationtech.udig.image.georeferencing.internal.preferences.PreferencesInitializer">
       </initializer>
    </extension>
    <extension
@@ -110,7 +110,7 @@
       <object
             targetClass="java.lang.Object">
          <property
-               class="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue"
+               class="org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue"
                id="eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools.CoordToolPropertyValue">
          </property>
       </object>
