@@ -55,6 +55,7 @@ h1. Build Instructions
      cd udig
      git checkout locationtech_ip
    </pre></code>
+
 2. Download stuff (using maven and wget):
    <pre><code>
      mvn clean install -f pom-libs.xml
@@ -63,13 +64,15 @@ h1. Build Instructions
      [INFO] BUILD SUCCESS
      [INFO] ------------------------------------------------------------------------
      [INFO] Total time: 8:05.291s
-   </pre></code>
+   </code></pre>
+
 3. Build native fragments used for target platform:
    <pre><code>
      cd libs
      cd jai-imageio
      mvn clean install
-   </pre></code>
+   </code></pre>
+
 4. Build Online Help (requires and sphinx-build to be installed):
    <pre><code>
      cd docs
@@ -80,7 +83,7 @@ h1. Build Instructions
 
      BUILD SUCCESSFUL
      Total time: 13 seconds
-   </pre></code>
+   </code></pre>
 
 h2. Option - Command Line Build
 
@@ -93,6 +96,7 @@ h2. Option - Command Line Build
       [INFO] ------------------------------------------------------------------------
       [INFO] Total time: 12:44.827s
    </code></pre>
+
 2. Packaging, branding and installers::
    <pre><code>
       cd deploy
@@ -108,7 +112,8 @@ h2. Option - Command Line Build
       Extracting ./jre/jre1.6.0_25.lin64_gdal_ecw.tar.gz
       Preparing ./build/linux64 with start up scripts and html files
       Assemble ./build/udig-1.5-SNAPSHOT.linux.gtk.x86_64.zip
-   </pre></code>
+   </code></pre>
+
 3. Upload to website
 
 See results at http://udig.refractions.net/download/unstable/ there should be a 1.5-SNAPSHOT by the time you read this.
