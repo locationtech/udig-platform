@@ -15,7 +15,7 @@ import org.eclipse.ui.IPerspectiveFactory;
 
 public class CustomPerspectiveFactory implements IPerspectiveFactory {
 
-    private static final String BOOKMARKS = "org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarksView";
+    private static final String BOOKMARKS = "org.locationtech.udig.bookmarks.internal.ui.BookmarksView";
     private static final String PROJECTS = "net.refractions.udig.project.ui.projectExplorer";
     private static final String LAYERS = "net.refractions.udig.project.ui.layerManager";
 

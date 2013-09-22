@@ -155,13 +155,6 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
          unpack="false"/>
 
    <plugin
-         id="org.tcat.citd.sim.udig.bookmarks"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="net.refractions.udig.feature.editor"
          download-size="0"
          install-size="0"
@@ -239,6 +232,13 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
 
    <plugin
          id="org.locationtech.udig.image.georeferencing"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.bookmarks"
          download-size="0"
          install-size="0"
          version="0.0.0"
