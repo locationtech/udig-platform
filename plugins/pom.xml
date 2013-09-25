@@ -88,6 +88,7 @@
         <module>eu.udig.catalog.jgrass</module>
         <module>eu.udig.catalog.kml</module>
         <module>eu.udig.catalog.teradata</module>
+        <module>org.locationtech.udig.bookmarks</module>
         <module>org.locationtech.udig.image.georeferencing</module>
         <module>org.locationtech.udig.jconsole</module>
         <module>eu.udig.omsbox</module>
@@ -150,7 +151,6 @@
         <module>net.refractions.udig.tool.select</module>
         <module>net.refractions.udig.ui</module>
         <module>net.refractions.udig.validation</module>
-        <module>org.tcat.citd.sim.udig.bookmarks</module>
     </modules>
 
 </project>
