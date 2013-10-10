@@ -146,43 +146,6 @@ License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
          unpack="false"/>
 
    <plugin
-         id="javax.media.jai_imageio"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.media.jai_imageio.win32.win32.x86"
-         os="win32"
-         ws="win32"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
-         id="javax.media.jai_imageio.linux.gtk.x86"
-         os="linux"
-         ws="gtk"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
-         id="javax.media.jai_imageio.linux.gtk.x86_64"
-         os="linux"
-         ws="gtk"
-         arch="x86_64"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>   
-
-   <plugin
          id="net.refractions.udig.catalog.imageio"
          download-size="0"
          install-size="0"
