@@ -18,3 +18,5 @@ Require-Bundle: net.refractions.udig.project,
  net.refractions.udig.catalog.rasterings,
  net.refractions.udig.style.sld
 Bundle-ActivationPolicy: lazy
+Import-Package: javax.media.jai
+

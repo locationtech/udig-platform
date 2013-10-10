@@ -24,3 +24,6 @@ Export-Package: eu.udig.catalog.jgrass,
  eu.udig.catalog.jgrass.operations,
  eu.udig.catalog.jgrass.utils,
  eu.udig.catalog.jgrass.workspacecreation
+Import-Package: javax.media.jai,
+ javax.media.jai.iterator
+

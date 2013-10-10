@@ -3,8 +3,7 @@
       id="net.refractions.udig_unstable-feature"
       label="%feature.name"
       version="1.3.0.qualifier"
-      provider-name="udig.refractions.net"
-      plugin="net.refractions.udig.unstable">
+      provider-name="udig.refractions.net">
 
    <description url="http://udig.refractions.net/">
       Unstable uDig plugins available for preview
@@ -15,7 +14,7 @@
    </copyright>
 
    <license url="http://udig.refractions.net/files/bsd3-v10.html">
-uDig - User Friendly Desktop Internet GIS client
+      uDig - User Friendly Desktop Internet GIS client
 http://udig.refractions.net
 (C) 2004-2012, Refractions Research Inc.
 
@@ -23,7 +22,7 @@ All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 (http://www.eclipse.org/legal/epl-v10.html), and Refractions BSD
 License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
-  </license>
+   </license>
 
    <url>
       <update label="User-friendly Desktop Internet GIS Updates" url="http://udig.refractions.net/update/"/>
