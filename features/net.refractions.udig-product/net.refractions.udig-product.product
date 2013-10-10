@@ -63,6 +63,7 @@ Content and such source code may be obtained at http://github.com/udig .
 
    <features>
       <feature id="net.refractions.udig-feature"/>
+      <feature id="javax.media.jai_imageio-feature"/>
    </features>
 
    <configurations>
