@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Feature Editor Plug-in
+Bundle-SymbolicName: net.refractions.udig.tutorials.featureeditor;singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: net.refractions.udig.tutorials.featureeditor.Activator
+Bundle-Vendor: udig.refractions.net
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.project.ui,
+ net.refractions.udig.feature.editor,
+ org.eclipse.ui.forms
+Bundle-ActivationPolicy: lazy
+Import-Package: net.miginfocom.layout;version="[3.7.0,3.8.0)",
+ net.miginfocom.swt;version="[3.7.0,3.8.0)"

@@ -1,0 +1,305 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="net.refractions.udig.project.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="net.refractions.udig.project.ui" id="featurePanel" name="Feature Panel"/>
+      </appInfo>
+      <documentation>
+         Declares a panel used to edit feature content.
+
+The panel is setup to work only against specific feature content. The panel is available in the feature view when editing a selected feature (or optionally displayed in a wizard when creating a new feature).
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <element ref="featurePanel"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="featurePanel">
+      <annotation>
+         <documentation>
+            A feature panel shown to a user to edit the &quot;current&quot; feature. 
+All communication with the current feature is handled through a FeatureSite ... allowing the panel to be reused in either a wizard or a view.
+         </documentation>
+      </annotation>
+      <complexType>
+         <choice minOccurs="0" maxOccurs="1">
+            <element ref="featureType"/>
+            <element ref="checkForm"/>
+         </choice>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The name of the feature panel; displayed to the user as a tab or wizard dialog title. This name should be concise ( read short ) but sufficient to communicate to the user what he or she is working on.
+
+This field is translatable using&quot;%key&quot; to indicate which plugin.properties definition to use.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="title" type="string">
+            <annotation>
+               <documentation>
+                  The title of the current group of fields; or wizard page. This is used along with the description to describe what is happening right now.
+
+We will probably supliment this with a class so the title and description can be dynamic and reflect the current state of the feature.
+
+This field is translatable using&quot;%key&quot; to indicate which plugin.properties definition to use.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string">
+            <annotation>
+               <documentation>
+                  Combined with the title to describe additional information about the group of fields the user is working on.
+
+We will probably supliment this with a class so the title and description can be dynamic and reflect the current state of the feature.
+
+This field is translatable using&quot;%key&quot; to indicate which plugin.properties definition to use.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  The unique id of the feature panel; this is used to refer to the panel when describing order.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="afterPanel" type="string">
+            <annotation>
+               <documentation>
+                  Reference to another featurePanel; used to sort feature panels into an order. This order is used to order the tabs in a feature view; or order pages in a feature wizard.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="panel" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The feature panel to display; please note the panel is displayed with context information provided by name, title and description so you do not need to repeate this information in your panel.
+
+Please do use a good layout manager as the panel may be displayed in a horizontal or vertical orientation.  it is recommended to break out multiple columns to use horizontal space if avaialble ... with this in mind virtical scrolling will be available; horizontal scrolling is not encouraged.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.IFeaturePanel:"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="labelProvider" type="string">
+            <annotation>
+               <documentation>
+                  Optional LabelProvider if you would like to control how the current feature is described to the user in the header.
+
+By default the &quot;Feature ID&quot; will be shown; you may wish to override this entry if your feature content has a name attribute or similar.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.jface.viewers.ILabelProvider"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="featureType">
+      <annotation>
+         <documentation>
+            &lt;p&gt;FeatureType defines the feature type signature that the editor can edit.  If the selected feature is does not have the signature of the defined featureType then the editor will not show up in the &quot;edit with&quot; menu.&lt;/p&gt;
+&lt;p&gt;Either a typename is defined, which declares that the editor will edit only one type of feature, or a set of attributes.  If a set of attributes are declared then the editor will be available for editing any feature with a feature type that contains the set of attributes.&lt;/p&gt;
+         </documentation>
+      </annotation>
+      <complexType>
+         <choice>
+            <element ref="typeName"/>
+            <element ref="attribute" minOccurs="1" maxOccurs="unbounded"/>
+         </choice>
+      </complexType>
+   </element>
+
+   <element name="attribute">
+      <annotation>
+         <documentation>
+            &lt;p&gt;Defines an attribute in the featureType.  Defines a 1-many mapping between an editor and featureTypes.  If the name of the attribute is not set then the attribute will match all attributes of the declared type. &lt;/p&gt; 
+&lt;p&gt;See definition of featureType for more information.&lt;/p&gt;
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  The name of the expected attribute; if left empty we assume you are checking the default geometry.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="type" type="string" use="required">
+            <annotation>
+               <documentation>
+                  This is the Java type of the expected attribute. 
+
+Examples:
+- java.lang.String
+- java.lang.Intenger
+- com.vividsolutions.jts.geom.MultiPolygon
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="typeName">
+      <annotation>
+         <documentation>
+            They typename of the featureType.  Defines a 1-1 mapping between an editor and a featureType.  See definition of featureType for more information.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="namespace" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Namespace of the feature type
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  name of the featuretype, without the namespace.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="checkForm">
+      <annotation>
+         <documentation>
+            Used to check if the form contribution works on the currently selected editLayer. This facility should be used with care as it will force your contributing plugin to be loaded (indeed checking with featureType is much more efficient).
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  id for check used in error reporting and logs
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Check the feature site to ensure your form is able to operate.
+
+A full IFeatureSite is provided allowing you to check the GeoResource and/or Layer.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.IFeaturePanelCheck:"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         1.2
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         CountryEditor from the udig tutorials contains an example implementation:
+- http://svn.refractions.net/udig/udig/trunk/tutorials/net.refractions.udig.tutorials.featureeditor/
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiinfo"/>
+      </appInfo>
+      <documentation>
+         FeaturePanel describes a user interface contribution using the same method names as org.eclipse.ui.views that can be contributed to a feature editor or view.
+
+The FeaturePanel has access to a FeatureSite offering access to:
+- IFeaturePanel
+- EditManager - holding the Transaction
+- Layer
+- FeatureStore
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         http://udig.refractions.net/confluence/display/HACK/Feature+Attribution+Workflow
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+uDig - User Friendly Desktop Internet GIS client
+<A HREF="http://udig.refractions.net">http://udig.refractions.net</A>
+(C) 2004-2012, Refractions Research Inc.
+
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+(<A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>), and Refractions BSD
+License v1.0 (<A HREF="http://www.eclipse.org/org/documents/edl-v10.html">http://www.eclipse.org/org/documents/edl-v10.html</A>).
+      </documentation>
+   </annotation>
+
+</schema>

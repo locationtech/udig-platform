@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Legend Plug-in
+Bundle-SymbolicName: net.refractions.udig.legend; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: net.refractions.udig.legend.LegendPlugin
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.mapgraphic,
+ net.refractions.udig.project,
+ net.refractions.udig.ui,
+ net.refractions.udig.project.ui,
+ net.refractions.udig.style
+Bundle-ActivationPolicy: lazy
+Export-Package: net.refractions.udig.legend,
+ net.refractions.udig.legend.ui,
+ net.refractions.udig.legend.ui.actions
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: udig.refractions.net

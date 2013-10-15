@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+           id="net.refractions.udig.catalog.worldimage.services"
+           name="World Image Services"
+           point="net.refractions.udig.catalog.ServiceExtension">
+      <service
+            class="net.refractions.udig.catalog.internal.worldimage.WorldImageServiceExtension"
+            id="worldimage"
+            name="World plus Image"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.catalog.ui.fileFormat">
+      <fileService name="GIF Files" fileExtension="*.gif"/>
+      <fileService name="JPEG Files" fileExtension="*.jpg;*.jpeg"/>
+      <fileService name="PNG Files" fileExtension="*.png"/>
+   </extension>
+</plugin>

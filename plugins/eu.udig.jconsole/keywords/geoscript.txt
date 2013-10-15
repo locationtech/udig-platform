@@ -1,0 +1,52 @@
+Draw
+Expression
+Fill
+Font
+Font("normal", "bold", 10, "Arial")
+Function
+GeoJSONWriter
+GeoJSONWriter()
+GeoRSSWriter
+GeoRSSWriter()
+Geometry
+GeometryCollection
+GeometryCollection(p, l, ...)
+Gml2Writer()
+Gml3Writer()
+Hatch
+Icon
+KmlWriter()
+Label
+Label("fieldname")
+LineString
+LineString
+LineString([[x1, y1],[x2, y2],[x3, y3]])
+LinearRing
+LinearRing([[x1, y1],[x2, y2],[x3, y3]])
+Map
+MultiLineString
+MultiLineString(l1, l2, ...)
+MultiPoint
+MultiPoint([x1, y1],[x2, y2])
+MultiPolygon
+MultiPolygon(p1, p2, ...)
+Plot
+Point
+Point(x, y)
+Polygon
+Projection
+Projection("epsg:code")
+Projection("wkt")
+Shape
+Shapefile
+Shapefile("path")
+Stroke
+Stroke("#000000", width)
+WktWriter
+WktWriter()
+WkbWriter
+WkbWriter()
+Directory
+PostGIS
+SLDWriter
+SLDReader

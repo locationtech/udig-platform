@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- jwsdp-1.5/jaxrpc/bin/wscompile.sh -gen -keep -d src etc/config.xml -->
+
+<configuration
+    xmlns="http://java.sun.com/xml/ns/jax-rpc/ri/config">
+    <wsdl
+        location="http://udig.refractions.net/search/google.php?wsdl"
+        packageName="net.refractions.udig.catalog.google.stub" />
+</configuration>

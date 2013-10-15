@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <parent>
+        <groupId>net.refractions.udig</groupId>
+        <artifactId>pom-libs.parent</artifactId>
+        <version>0.0.1</version>
+        <relativePath>../../pom-libs.xml</relativePath>
+    </parent>
+
+    <!-- This script was created to automagically download the external libs 
+        required for this plugin to build and export correctly.
+        
+        At the time of writing the Oracle JDBC Driver required a click-through license
+        (while we can distribute this plugin as "works-with" the Oracle JDBC
+        driver that does not strictly let us compile the code during our
+        nightly build).
+        
+        We can use the same manual install procedure as employed for the GeoTools project.
+         
+        Download the ojdbc14.jar driver from oracle and install
+        into maven:
+        
+            mvn install:install-file -Dfile=ojdbc14.jar \
+                -DgroupId=com.oracle -DartifactId=ojdbc14 \
+                -Dversion=10.2.0.3.0 -Dpackaging=jar -DgeneratePom=true
+        
+        You can then download the required  libraries, using
+            
+            mvn install -f pom-libs.xml 
+        
+        Our uDig solution was toL
+        
+        1. Zip up a single DUMMY.txt file into an oracle-classes.jar
+        2. This gives us something to add to the plugin MANIFEST.MF
+        3. Proivde a wizard for users to replace this jar
+           with their own downloaded copy.
+           
+     -->
+
+    <developers>
+        <developer>
+            <id>jodygarnett</id>
+            <name>Jody Garnett</name>
+            <email>jody.garnett@gmail.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+10</timezone>
+        </developer>
+        <developer>
+            <id>fgdrf</id>
+            <name>Frank Gasdorf</name>
+            <email>fgdrf@users.sourceforge.net</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>net.refractions.udig.libs.oracle</groupId>
+    <artifactId>download</artifactId>
+    <version>1.4.0</version>
+    <name>Oracle Dummy Jar Creation</name>
+    
+    <packaging>pom</packaging>
+
+    <properties>
+        <lib.dir>${basedir}/libs</lib.dir>
+        <lib.dummy.dir>${lib.dir}/dummy</lib.dummy.dir>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>oracle.jdbc-true</id>
+            <activation>
+                <property>
+                    <name>oracle</name>
+                </property>           
+            </activation>
+            <dependencies>
+                <dependency>
+                    <artifactId>ojdbc14</artifactId>
+                    <groupId>com.oracle</groupId>
+                    <version>10.2.0.3.0</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${lib.dir}</directory>
+                            <includes>
+                                <include>*.jar</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                        <fileset>
+                            <directory>${lib.dummy.dir}</directory>
+                            <includes>
+                                <include>*.*</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                
+                <!-- used to download oracle jar if installed locally -->
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${lib.dir}</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <excludeScope>provided</excludeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>create_dummy</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${lib.dir}"/>
+                                <mkdir dir="${lib.dummy.dir}"/>
+                                <touch file="${lib.dummy.dir}/DUMMY.txt"/>
+                                
+                                <jar destfile="${lib.dir}/oracle-classes.jar"
+                                     basedir="${lib.dummy.dir}">
+                                    <manifest>
+                                      <attribute name="Built-By" value="${user.name}"/>
+                                      <attribute name="Implementation-Title" value="Dummy"/>
+                                      <attribute name="Implementation-Version" value="1.0.0"/>
+                                    </manifest>
+                                </jar>
+                                <!-- need logic here to use oracle jar if installed -->
+                                <jar destfile="${lib.dir}/oracle-driver.jar">
+                                     basedir="${lib.dummy.dir}">
+                                    <manifest>
+                                      <attribute name="Built-By" value="${user.name}"/>
+                                      <attribute name="Implementation-Title" value="Dummy"/>
+                                      <attribute name="Implementation-Version" value="1.0.0"/>
+                                    </manifest>
+                                </jar>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    
+</project>

@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Validation Plug-in
+Bundle-SymbolicName: net.refractions.udig.validation; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: net.refractions.udig.validation.ValidationPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui;visibility:=reexport,
+ org.eclipse.core.runtime;visibility:=reexport,
+ net.refractions.udig.libs;visibility:=reexport,
+ net.refractions.udig.project;visibility:=reexport,
+ net.refractions.udig.ui;visibility:=reexport,
+ net.refractions.udig.project.ui,
+ net.refractions.udig.issues
+Bundle-ActivationPolicy: lazy
+Export-Package: net.refractions.udig.validation
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

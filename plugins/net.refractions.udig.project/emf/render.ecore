@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="render"
+    nsURI="http:///net/refractions/udig/project/internal/render.ecore" nsPrefix="net.refractions.udig.project.internal.render">
+  <eClassifiers xsi:type="ecore:EClass" name="IRenderManager" instanceClassName="net.refractions.udig.project.render.IRenderManager"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IViewportModel" instanceClassName="net.refractions.udig.project.render.IViewportModel"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IMultiLayerRenderer" instanceClassName="net.refractions.udig.project.render.IMultiLayerRenderer"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IRenderer" instanceClassName="net.refractions.udig.project.render.IRenderer"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ILayer" instanceClassName="net.refractions.udig.project.ILayer"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MultiLayerRenderer" abstract="true"
+      eSuperTypes="#//Renderer #//IMultiLayerRenderer">
+    <eOperations name="refreshImage" eExceptions="#//RenderException"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RenderExecutor" eSuperTypes="#//Renderer">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="renderer" lowerBound="1"
+        eType="#//Renderer" transient="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RenderManager" eSuperTypes="#//IRenderManager">
+    <eOperations name="refresh">
+      <eParameters name="bounds" eType="#//Envelope"/>
+    </eOperations>
+    <eOperations name="dispose"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="renderExecutor" eType="#//RenderExecutor"
+        resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mapDisplay" eType="#//MapDisplay"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mapInternal" eType="ecore:EClass internal.ecore#//Map"
+        transient="true" eOpposite="internal.ecore#//Map/renderManagerInternal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="viewportModelInternal"
+        eType="#//ViewportModel" transient="true" resolveProxies="false" eOpposite="#//ViewportModel/renderManagerInternal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ViewportModel" eSuperTypes="#//IMapDisplayListener #//IViewportModel">
+    <eOperations name="setBounds" eExceptions="#//IllegalArgumentException">
+      <eParameters name="minx" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eParameters name="maxx" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eParameters name="miny" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eParameters name="maxy" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    </eOperations>
+    <eOperations name="worldToScreenTransform" eType="#//AffineTransform"/>
+    <eOperations name="worldToPixel" eType="#//Point">
+      <eParameters name="coord" eType="#//Coordinate"/>
+    </eOperations>
+    <eOperations name="pixelToWorld" eType="#//Coordinate">
+      <eParameters name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eParameters name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="panUsingScreenCoords" eType="#//ViewportModel">
+      <eParameters name="xpixels" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eParameters name="ypixels" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="panUsingWorldCoords" eType="#//ViewportModel">
+      <eParameters name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eParameters name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    </eOperations>
+    <eOperations name="zoom" eType="#//ViewportModel">
+      <eParameters name="zoom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    </eOperations>
+    <eOperations name="zoom" eType="#//ViewportModel">
+      <eParameters name="zoom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      <eParameters name="fixedPoint" eType="#//Coordinate"/>
+    </eOperations>
+    <eOperations name="zoomToExtent"/>
+    <eOperations name="zoomToBox">
+      <eParameters name="box" eType="#//Envelope"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cRS" eType="#//CoordinateReferenceSystem"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bounds" eType="#//ReferencedEnvelope"
+        defaultValueLiteral=""/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="center" eType="#//Coordinate"
+        volatile="true" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+        volatile="true" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+        volatile="true" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="aspectRatio" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+        changeable="false" volatile="true" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pixelSize" eType="#//Coordinate"
+        changeable="false" volatile="true" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mapInternal" eType="ecore:EClass internal.ecore#//Map"
+        transient="true" eOpposite="internal.ecore#//Map/viewportModelInternal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="renderManagerInternal"
+        eType="#//RenderManager" transient="true" resolveProxies="false" eOpposite="#//RenderManager/viewportModelInternal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="preferredScaleDenominators">
+      <eGenericType eClassifier="#//SortedSet">
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="availableTimesteps" upperBound="-1"
+        eType="#//DateTime"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="currentTimestep" eType="#//DateTime"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="availableElevation" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="currentElevation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Comparable" instanceTypeName="Comparable"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Renderer" abstract="true" eSuperTypes="#//IRenderer">
+    <eOperations name="dispose"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="0"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="#//IRenderContext"
+        transient="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IMapDisplayListener" instanceClassName="net.refractions.udig.project.render.displayAdapter.IMapDisplayListener"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IRenderContext" instanceClassName="net.refractions.udig.project.render.IRenderContext"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="CoordinateReferenceSystem" instanceClassName="org.opengis.referencing.crs.CoordinateReferenceSystem"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Envelope" instanceClassName="com.vividsolutions.jts.geom.Envelope"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="IGeoResource" instanceClassName="net.refractions.udig.catalog.IGeoResource"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="BufferedImage" instanceClassName="java.awt.image.BufferedImage"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Rectangle" instanceClassName="java.awt.Rectangle"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Query" instanceClassName="org.geotools.data.Query"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Graphics2D" instanceClassName="java.awt.Graphics2D"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="List" instanceClassName="java.util.List"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Coordinate" instanceClassName="com.vividsolutions.jts.geom.Coordinate"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="java.awt.Point"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="AffineTransform" instanceClassName="java.awt.geom.AffineTransform"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="MapDisplay" instanceClassName="net.refractions.udig.project.render.displayAdapter.IMapDisplay"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="IProgressMonitor" instanceClassName="org.eclipse.core.runtime.IProgressMonitor"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="RenderException" instanceClassName="net.refractions.udig.project.render.RenderException"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="SortedSet" instanceClassName="java.util.SortedSet">
+    <eTypeParameters name="T"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="ReferencedEnvelope" instanceClassName="org.geotools.geometry.jts.ReferencedEnvelope"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="DateTime" instanceClassName="org.joda.time.DateTime"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="IllegalArgumentException" instanceClassName="java.lang.IllegalArgumentException"/>
+</ecore:EPackage>

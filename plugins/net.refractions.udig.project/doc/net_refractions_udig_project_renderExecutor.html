@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>RenderExecutor</title>
+<style type="text/css">@import url("file:/Users/jody/eclipse/372/eclipse-modeling/configuration/org.eclipse.osgi/bundles/396/1/.cp/book.css");</style>
+<style type="text/css">@import url("file:/Users/jody/eclipse/372/eclipse-modeling/configuration/org.eclipse.osgi/bundles/408/1/.cp/schema.css");</style>
+</HEAD>
+<BODY>
+<H1 style="text-align:center">RenderExecutor</H1>
+<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Identifier: </h6>net.refractions.udig.project.RenderExecutor<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Since: </h6>[Enter the first release in which this extension point appears.]
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Description: </h6>[Enter description of this extension point.]<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Configuration Markup:</h6>
+<p></p>
+<p class="code SchemaDtd">&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.RenderExecutor">RenderExecutor</a>*)&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST extension</p>
+<p class="code SchemaDtdAttlist">point&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p><p class="code SchemaDtdAttlist">name&nbsp;&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<p class="ConfigMarkupElementDesc">
+Declares render executors to use for rendering particular types of renderers.  Renderers are not required to implement a executor.  The default ones will work in most cases.</p>
+<br>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>id</b> - Optional id of the extension</li>
+<li><b>name</b> - Optional id of the extension</li>
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.RenderExecutor">RenderExecutor</a> (<a href="#e.Description">Description</a>)&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST RenderExecutor</p>
+<p class="code SchemaDtdAttlist">executorClass&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">rendererClass&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<p class="ConfigMarkupElementDesc">
+A declaration of a RenderExecutor to use to execute a renderer.</p>
+<br>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>executorClass</b> - The class of the RenderExecutor</li>
+<li><b>rendererClass</b> - The renderClass that the executor will execute.</li>
+<li><b>name</b> - The name of the executor</li>
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.Description">Description</a> (#PCDATA)&gt;</p>
+<p></p>
+<br><br>
+<h6 class="CaptionFigColumn SchemaHeader">Examples: </h6>[Enter extension point usage example here.]
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">API Information: </h6>[Enter API information here.]
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Supplied Implementation: </h6>[Enter information about supplied implementation of this extension point.]
+<p></p>
+
+<br>
+<p class="note SchemaCopyright">
+uDig - User Friendly Desktop Internet GIS client
+
+</p>
+</BODY>
+</HTML>

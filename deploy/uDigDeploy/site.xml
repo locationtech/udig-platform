@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/uCore_0.2.0.jar" id="uCore" version="0.2.0">
+      <category name="uDig"/>
+   </feature>
+   <feature url="features/uLibs_0.2.0.jar" id="uLibs" version="0.2.0">
+      <category name="uDig"/>
+   </feature>
+   <category-def name="uDig" label="uDig"/>
+</site>

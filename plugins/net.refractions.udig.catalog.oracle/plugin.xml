@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+    	<extension
+         point="net.refractions.udig.catalog.ServiceExtension">
+      <service
+            class="net.refractions.udig.catalog.internal.oracle.OracleServiceExtension"
+            id="Oracle"
+            name="Oracle"/>
+   	</extension>
+    <extension
+       point="net.refractions.udig.catalog.ui.connectionFactory">
+
+	<factory class="net.refractions.udig.catalog.internal.oracle.ui.OracleSpatialConnectionFactory"
+          id="net.refractions.udig.catalog.ui.oracle"/>       
+    <wizardPage
+          banner="icons/wizban/oracle_wiz.gif"
+          class="net.refractions.udig.catalog.internal.oracle.ui.OracleSpatialWizardPage"
+          description="%wizard.description"
+          icon="icons/etool16/oracle_wiz.gif"
+          name="%wizard.name"/>
+
+ </extension>
+    <extension
+          point="org.eclipse.ui.preferencePages">
+       <page
+             category="net.refractions.udig.catalog.ui.preferences.CatalogPreferencePage"
+             class="net.refractions.udig.catalog.internal.oracle.ui.OracleSpatialPreferences"
+             id="net.refractions.udig.catalog.oracle.lib preferences"
+             name="%oracle.preferences"/>
+    </extension>
+</plugin>

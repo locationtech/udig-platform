@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %plugin.name
+Bundle-SymbolicName: net.refractions.udig.render.gridcoverage.basic; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: net.refractions.udig.render.internal.gridcoverage.basic.RendererPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Export-Package: net.refractions.udig.render.gridcoverage.basic.internal,
+ net.refractions.udig.render.internal.gridcoverage.basic
+Require-Bundle: net.refractions.udig.project,
+ org.eclipse.core.runtime,
+ net.refractions.udig.catalog,
+ org.eclipse.jface,
+ net.refractions.udig.ui,
+ net.refractions.udig.project.ui,
+ org.eclipse.ui.views,
+ net.refractions.udig.catalog.rasterings,
+ net.refractions.udig.style.sld
+Bundle-ActivationPolicy: lazy
+Import-Package: javax.media.jai
+

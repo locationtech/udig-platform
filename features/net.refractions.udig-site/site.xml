@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description url="http://udig.refractions.net/update">
+      This is the Refractions Research update site for the User-friendly Desktop Internet GIS (uDig) application.
+   </description>
+   <feature url="features/net.refractions.udig_platform_1.0.0.jar" id="net.refractions.udig_platform" version="1.0.0">
+      <category name="uDig"/>
+   </feature>
+   <feature url="features/net.refractions.udig_base_1.0.0.jar" id="net.refractions.udig_base" version="1.0.0">
+      <category name="uDig"/>
+   </feature>
+   <feature url="features/net.refractions.udig_application_1.0.0.jar" id="net.refractions.udig_application" version="1.0.0">
+      <category name="uDig"/>
+   </feature>
+   <feature url="features/net.refractions.udig_1.0.0.jar" id="net.refractions.udig" version="1.0.0">
+      <category name="uDig"/>
+   </feature>
+   <feature url="features/net.refractions.udig_language_1.0.0.jar" id="net.refractions.udig_language" version="1.0.0">
+      <category name="uDig"/>
+   </feature>
+   <feature url="features/net.refractions.udig_printing_1.0.0.jar" id="net.refractions.udig_printing" version="1.0.0">
+      <category name="uDig"/>
+   </feature>
+   <feature url="features/net.refractions.udig_unstable_1.0.0.jar" id="net.refractions.udig_unstable" version="1.0.0">
+      <category name="uDig"/>
+   </feature>
+   <category-def name="uDig" label="User-friendly Desktop Internet GIS">
+      <description>
+         User-friendly Desktop Internet GIS (uDig) is an open source spatial data viewer/editor, with special emphasis on the OpenGIS standards for internet GIS, the Web Map Server and Web Feature Server standards. uDig will provide a common Java platform for building spatial applications with open source components.
+      </description>
+   </category-def>
+</site>

@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>uDig Aide En-ligne : Démarrage rapide</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- uDig Aide En-ligne : Démarrage rapide -->
+       <h1>Démarrage rapide</h1>
+       <p>Ceci est une introduction rapide à l'application uDig inclus dans le cadre de l'aide en ligne.</p>
+
+<h2><a name="D%C3%A9marragerapide-Exemplededonn%C3%A9es"></a>Exemple de données</h2>
+
+<p>Avant de commencer s'il vous plaît prenez un moment pour télécharger des données d'échantillon, nous avons mis à disposition sur le web:</p>
+<ol>
+	<li>Clic droit sur le lien et choisissez Enregistrer le lien sous: <br clear="all" /> <a href="http://udig.refractions.net/docs/data-v1_1.zip">data-v1_1.zip </a></li>
+	<li>A la question de l'emplacement du fichier pour choisir un emplacement approprié tel que votre ordinateur de bureau</li>
+	<li>Décompressez le contenu de ce fichier dans un dossier de données (<b>data</b>) sur votre bureau</li>
+</ol>
+
+
+<p>Si vous avez vos propres données SIG s'il vous plaît n'hésitez pas à expérimenter. Faisant usage de l'échantillon de données ci-dessus vous permettra de suivre ce didacticiel, étape par étape.</p>
+
+<h2><a name="D%C3%A9marragerapide-ApplicationuDig"></a>Application uDig</h2>
+
+<ol>
+	<li>Choisissez uDig 1,1&gt; uDig * dans le menu Démarrer</li>
+	<li>La demande de prendre quelques instants pour démarrer<br/>
+<img src="download/attachments/12057/udigouvrir.JPG" align="absmiddle" border="0"/></li>
+</ol>
+
+
+<p>L'application uDig tient un dossier de configuration dans votre répertoire, le dossier sera créé la première fois que l'application est lancée. Si vous avez des difficultés, ou utilisez uDig sur Linux ou Mac s'il vous plaît réexaminer l'<a href="http://udig.refractions.net/confluence//display/EN/Running+uDig" title="Running uDig">Running uDig</a> page de référence.</p>
+
+<h2><a name="D%C3%A9marragerapide-BienvenueVoir"></a>Bienvenue Voir</h2>
+
+<ol>
+	<li>Lorsque vous démarrez uDig pour la première fois la vue * * Bienvenue reprend l'ensemble de l'affichage. Cet écran a des liens vers des tutoriels, la documentation et le site Web du projet.</li>
+	<li>Cliquez sur la flèche étiqueté * * Workbench dans le coin supérieur droit, de révéler le contenu de la uDig établi.<br/>
+<img src="download/attachments/12057/udigbienvenue.JPG" align="absmiddle" border="0"/></li>
+</ol>
+
+
+<p>Vous pouvez revenir à la vue Bienvenue à n'importe quel moment en sélectionnant l'&#42; Aide&gt; Bienvenue * dans la barre de menus.</p>
+
+<h2><a name="D%C3%A9marragerapide-Workbench"></a>Workbench</h2>
+
+<p>La fenêtre Workbench offre de multiples Editors (chacun montrant une carte), et soutenant Views (offrant des informations sur l'état actuel de carte).</p>
+
+<p><img src="download/attachments/12057/redacteur.JPG" align="absmiddle" border="0"/></p>
+
+<p>Ci-dessus est un typique uDig session avec les Carte éditeur, Projets vue, Couches vue Catalog et voir étiquetés. Ces vues seront décrits plus en détail car nous démontrer leur utilisation.</p>
+
+<h2><a name="D%C3%A9marragerapide-Fichiers"></a>Fichiers</h2>
+
+<p>Pour commencer à nous allons charger certaines des données de l'échantillon que vous avez téléchargé plus tôt.</p>
+<ol>
+	<li>Choisissez <b>Calque&gt; Ajouter</b> dans la barre de menus pour ouvrir l'Ajouter Data wizard</li>
+	<li>Sélectionner Fichiers  de la liste des sources de données<br/>
+Suivant Presse <b>Ouvert</b> pour ouvrir une boîte de dialogue Fichier</li>
+	<li>Sélectionnez les fichiers suivants à partir de votre dossier de données: <b>countries.shp</b><br/>
+Presse <b>Ouvert</b>
+	<ul>
+		<li>Un nouveau Carte éditeur sera ouvert basé sur le contenu de votre shapefile. Le nom par défaut et de la projection de la carte a été prise à partir de votre shapefile.</li>
+		<li>Vous pouvez voir la vue <b>Catalogue</b> a été mis à jour avec une entrée pour <b>countries.shp</b> et <b>clouds.jpg</b>. Ce point de vue est utilisé pour suivre l'utilisation des ressources par l'application uDig.<br/>
+Le <b>Couches vue</b> montre une seule couche est affichée sur cette carte. Ce point de vue est utilisée pour changer l'ordre de l'information et de l'apparence de votre carte.<br/>
+Le point de vue <b>Projets</b> a été mis à jour pour montrer que votre carte est stockée dans <b>les projets&gt; pays</b>. Vous pouvez avoir plusieurs projets ouverts à la fois, chaque projet peut avoir plusieurs cartes.</li>
+	</ul>
+	</li>
+	<li>Lancez votre dossier de données dans les fenêtres<br/>
+Faites glisser le fichier <b>clouds.jpg</b> sur l'Éditeur de carte, une nouvelle couche est ajoutée à la carte.</li>
+	<li>Vous pouvez voir l'ordre dans lequel les couches sont puisés dans la couche vue. À l'heure actuelle, la couche <b>clouds.jpg</b> est attirée sur les pays de la couche.<br/>
+Sélectionnez le <b>clouds.jpg</b> couche dans le catalogue de vue et faites-la glisser vers le bas de la liste<br/>
+<img src="download/attachments/12057/cartepays.JPG" align="absmiddle" border="0"/></li>
+</ol>
+
+
+<ul>
+	<li>Info: * Une des questions les plus courantes posées lors uDig est considérée pour une entreprise est la quantité de mémoire que l'application utilise. Contrairement à la plupart des applications SIG uDig peuvent avoir besoin d'un montant fixe de la mémoire. Le shapefile ci-dessus n'est pas chargé en mémoire, nous avons une politique de maintien de données sur le disque et le dessin de données comme ceci shapefile sur l'écran en fonction des besoins.</li>
+</ul>
+
+
+<p><b>Conseil</b> Vous pouvez également faire glisser des shapefiles uDig directement dans l'application!</p>
+
+<h2><a name="D%C3%A9marragerapide-Carte"></a>Carte</h2>
+
+<p>Vous pouvez contrôler dans le monde où l'Éditeur de carte est à la recherche en utilisant les outils de navigation dans la barre d'outils en haut de l'écran.</p>
+<ol>
+	<li><img src="download/attachments/12057/Zoom_mode.gif" align="absmiddle" border="0"/> <b>Zoom</b> outil est disponible par défaut
+	<ul>
+		<li>Utilisez le zoom en traçant une boîte en utilisant le bouton gauche de la souris autour de la zone de la mondialement que vous souhaitez voir.</li>
+		<li>Pour effectuer un zoom arrière dessiner une boîte avec le bouton droit de votre souris. La carte actuelle degrés sera localisé dans la boîte vous dessinez.</li>
+	</ul>
+	</li>
+	<li><img src="download/attachments/12057/pan_mode.gif" align="absmiddle" border="0"/> <b>Pan</b> outil peut être utilisé pour faire défiler autour de votre carte sans changer l'échelle.</li>
+	<li>Il y a également plusieurs boutons de navigation qui peut être utilisé à tout moment:</li>
+	<li><img src="download/attachments/12057/zoom_extent_co.gif" align="absmiddle" border="0"/> <b>Montrer tous</b>, peut être utilisée pour revenir à la pleine étendue à tout moment</li>
+	<li><img src="download/attachments/12057/zoom_in_co.gif" align="absmiddle" border="0"/> <b>Zoom avant</b> et <img src="download/attachments/12057/zoom_out_co.gif" align="absmiddle" border="0"/> <b>Zoom arrière</b> peut être utilisé pour modifier l'échelle d'un montant fixe.<br/>
+#Vous pouvez utiliser <b>Navigation&gt; Back</b> et <b>Navigation&gt; Forward</b> dans la barre de menu à bien le cycle des lieux qu'ils ont visités précédemment.</li>
+</ol>
+
+
+<p><b>Astuce:</b> La plupart des outils vous permettent de Pan en tenant le bouton central de contrôle et de l'échelle en utilisant la molette de défilement.</p>
+
+<h2><a name="D%C3%A9marragerapide-WebMapServer"></a>Web Map Server</h2>
+
+<p>Une des raisons pour utiliser une application comme uDig est de l'accès gratuit de tous les grands de l'information géospatiale disponible sur le web. Cette section traite de l'utilisation <b>de serveurs Web Map</b> qui rendent disponibles couches d'information que vous pouvez mélanger dans vos propres cartes.</p>
+<ol>
+	<li><b>Sélectionnez Fichier&gt; Nouveau&gt; Nouveau Carte</b> de la barre de menu</li>
+	<li>Modification à la vue <b>Web</b>, cliquez sur l'onglet à côté de la vision <b>Catalogue</b> de révéler le Web.</li>
+	<li>Cliquez sur le lien WMS &#42;: * dm solutions lien<br/>
+<img src="download/attachments/12057/webvue.JPG" align="absmiddle" border="0"/></li>
+	<li>A partir de la page de sélection des ressources, nous allons choisir les couches suivantes:<br/>
+#Élévation / Bathymétrie<br/>
+#Parcs<br/>
+#Villes<br/>
+<img src="download/attachments/12057/ressources.JPG" align="absmiddle" border="0"/><br/>
+Presse <b>Terminer</b> pour ajouter ce calque à votre carte<br/>
+<img src="download/attachments/12057/WMSfiches.JPG" align="absmiddle" border="0"/></li>
+	<li>Utilisez <img src="download/attachments/12057/zoom_mode.gif" align="absmiddle" border="0"/> <b>Zoom Outil</b> de se rapprocher de l'un des parcs</li>
+	<li>Passage à <img src="download/attachments/12057/info_mode.gif" align="absmiddle" border="0"/> <b>Information</b> et cliquez sur l'un des parcs pour en savoir plus</li>
+</ol>
+
+
+<p><b>Astuce:</b> Vous pouvez alterner entre les infos et les outils de zoom en appuyant sur <b>Z</b> et <b>I</b> sur le clavier.</p>
+
+<h2><a name="D%C3%A9marragerapide-Style"></a>Style</h2>
+
+<ol>
+	<li>Sélectionnez le <b>projet&gt; pays</b> - vous pouvez double-cliquer pour ouvrir cette carte, ou Clic Droit et choisissez <b>Ouvrir la carte</b></li>
+	<li>Sélectionnez le <b>pays</b> dans <b>la Couche vue</b></li>
+	<li>Ouvrez le Style Editor en faisant un clic droit sur le calque <b>pays</b> dans la vue couches. Suivant, changement et choix de style.</li>
+	<li>Nous allons changer quelques petites choses sur la façon dont sont affichés pays
+	<ul>
+		<li>Line: Cliquez sur la <b>couleur</b> et changer la couleur à <b>BLACK</b></li>
+		<li>Trame: décochez la case pour désactiver les combler</li>
+		<li>Label: cocher la case et choisir <b>CNTRY_NAME</b> à partir de la liste des attributs<br/>
+<img src="download/attachments/12057/styleeditor.JPG" align="absmiddle" border="0"/><br/>
+Presse <b>Appliquer</b> pour voir ce que cela ressemble à celui de votre carte, la couche vue sera également mise à jour pour refléter le style actuel</li>
+	</ul>
+	</li>
+	<li>Lorsque vous êtes satisfait du résultat, vous pouvez appuyez sur <b>Fermer</b> pour fermer la boîte de dialogue de licencier</li>
+	<li>Quelques fichiers comprennent les paramètres de style, choisissez <b>Calque&gt; Ajouter</b> dans la barre de menus<br/>
+Sélectionnez <b>Fichiers</b> de la liste des sources de données dans le menu <b>Couches&gt;Ajouter</b> et appuyez sur <b>Suivant</b></li>
+	<li>Utiliser le sélecteur de fichier de l'ouvrir <b>timezone.shp</b> et appuyez sur <b>Ouvrir</b></li>
+	<li>C'est un peu difficile de voir ce qui se passe avec la couche <b>clouds.jpg</b> fournissant autant de détails. Sélectionnez <b>Map&gt; Mylar</b> dans la barre de menu de se concentrer sur le calque sélectionné</li>
+	<li>Utilisation de la couche vue select <b>timezone</b>, <b>pays</b> et <b>clouds.jpg</b> à son tour pour voir l'effet<br/>
+<img src="download/attachments/12057/cartemylar.JPG" align="absmiddle" border="0"/></li>
+	<li>Vous pouvez désactiver cet effet, à tout moment, en utilisant <b>la carte&gt; Mylar</b> dans la barre de menus.</li>
+</ol>
+
+
+<h2><a name="D%C3%A9marragerapide-QuelestSuivant"></a>Quel est Suivant</h2>
+
+<p>Ce n'est que la première étape sur la route de l'aide uDig. Il ya beaucoup plus grande du matériel (et la capacité) à votre gauche pour découvrir nos soluces.</p>
+<ul>
+	<li>Walkthrough 1 &#45; Essayez l'utilisation de PostGIS, extraire des données à partir d'un Web Feature Server et étudier l'utilisation des Thèmes avec notre puissant Color Brewer technologie.</li>
+	<li>Walkthrough 2 &#45; Apprendre à créer et utiliser les shapefiles Edit outils pour manipulare fonction des données, couvre l'installation de GeoServer et à l'édition d'un Web Feature Server.</li>
+</ul>
+
+
+<small>(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.</small>
+    </body>
+</html>

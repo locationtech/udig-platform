@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>fileFormat</title>
+<style type="text/css">@import url("file:/Users/jody/eclipse/372/eclipse-modeling/configuration/org.eclipse.osgi/bundles/396/1/.cp/book.css");</style>
+<style type="text/css">@import url("file:/Users/jody/eclipse/372/eclipse-modeling/configuration/org.eclipse.osgi/bundles/408/1/.cp/schema.css");</style>
+</HEAD>
+<BODY>
+<H1 style="text-align:center">fileFormat</H1>
+<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Identifier: </h6>net.refractions.udig.catalog.ui.fileFormat<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Since: </h6>1.0
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Description: </h6>Used to teach uDig about new file extensions suitable for use in the File wizard page.<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Configuration Markup:</h6>
+<p></p>
+<p class="code SchemaDtd">&lt;!ELEMENT <a name="e.extension">extension</a> ((<a href="#e.fileService">fileService</a> | <a href="#e.provider">provider</a>)*)&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST extension</p>
+<p class="code SchemaDtdAttlist">point&nbsp;CDATA #REQUIRED</p><p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p><p class="code SchemaDtdAttlist">name&nbsp;&nbsp;CDATA #IMPLIED</p>&gt;</p>
+<p></p>
+<ul class="ConfigMarkupAttlistDesc">
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.fileService">fileService</a> EMPTY&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST fileService</p>
+<p class="code SchemaDtdAttlist">name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p><p class="code SchemaDtdAttlist">fileExtension&nbsp;CDATA #REQUIRED</p>&gt;</p>
+<p></p>
+<p class="ConfigMarkupElementDesc">
+Used to register a static file extension (such as "*.txt" or "*.shp) for use.</p>
+<br>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>name</b> - Name of the file format (may be translated into the local language)</li>
+<li><b>fileExtension</b> - This is the actual file extension being declaired.</li>
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.provider">provider</a> EMPTY&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST provider</p>
+<p class="code SchemaDtdAttlist">class&nbsp;CDATA #REQUIRED</p>&gt;</p>
+<p></p>
+<p class="ConfigMarkupElementDesc">
+Dynamically generate a list of supported file formats. Used to communicate the capabilieis of an external library such as GDAL, ImageIO-Ext or GeoTools.</p>
+<br>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>class</b> - FormatProvider instance used to list file format extensions and translated file format names.
+
+Should only be used to sort out "optional" file formats where supporting the format is sorted out at runtime. For static listing of a file format please use the normal fileService element.</li>
+</ul>
+<br><h6 class="CaptionFigColumn SchemaHeader">Examples: </h6>net.refractions.udig.catalog.shp contrinutes the "*.shp" format; and provides a service connection factory capable of working with "*.shp" files.
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">API Information: </h6>Implement a FormatProvider to list your supported file extensions (along with their format names).
+<p></p>
+
+<h6 class="CaptionFigColumn SchemaHeader">Supplied Implementation: </h6>Day 4 tutorial materials cover the addition of a "*.csv" file; you may review this source code in the tutorials directory.
+<p></p>
+
+<br>
+<p class="note SchemaCopyright">
+uDig - User Friendly Desktop Internet GIS client
+
+</p>
+</BODY>
+</HTML>

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="internal"
+    nsURI="http:///net/refractions/udig/project/internal.ecore" nsPrefix="net.refractions.udig.project.internal">
+  <eClassifiers xsi:type="ecore:EClass" name="Comparable" instanceTypeName="Comparable"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IMap" instanceClassName="net.refractions.udig.project.IMap"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ILayer" instanceClassName="net.refractions.udig.project.ILayer"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IEditManager" instanceClassName="net.refractions.udig.project.IEditManager"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IProject" instanceClassName="net.refractions.udig.project.IProject"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IAbstractContext" instanceClassName="net.refractions.udig.project.IAbstractContext"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IBlackboard" instanceClassName="net.refractions.udig.project.IBlackboard"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IProjectElement" instanceClassName="net.refractions.udig.project.IProjectElement"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IRenderManager" instanceClassName="net.refractions.udig.project.render.IRenderManager"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IViewportModel" instanceClassName="net.refractions.udig.project.render.IViewportModel"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ContextModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layers" upperBound="-1"
+        eType="#//Layer" containment="true" resolveProxies="false" eOpposite="#//Layer/contextModel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="map" eType="#//Map" transient="true"
+        eOpposite="#//Map/contextModel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EditManager" eSuperTypes="#//IEditManager">
+    <eOperations name="setEditFeature" eExceptions="#//IllegalArgumentException">
+      <eParameters name="value" eType="#//SimpleFeature"/>
+      <eParameters name="layer" eType="#//Layer"/>
+    </eOperations>
+    <eOperations name="startTransaction"/>
+    <eOperations name="commitTransaction" eExceptions="#//IOException"/>
+    <eOperations name="rollbackTransaction" eExceptions="#//IOException"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="editFeature" eType="#//SimpleFeature"
+        changeable="false" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mapInternal" eType="#//Map"
+        transient="true" eOpposite="#//Map/editManagerInternal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="editLayerInternal" eType="#//Layer"
+        changeable="false" transient="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transactionType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass"
+        changeable="false" volatile="true" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="editLayerLocked" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="selectedLayer" eType="#//Layer"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Layer" eSuperTypes="#//ILayer #//IAdaptable #//IBlockingAdaptable #//IResolveChangeListener">
+    <eOperations name="getQuery" eType="#//Query">
+      <eParameters name="selection" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eOperations>
+    <eOperations name="getCRS" eType="#//CoordinateReferenceSystem">
+      <eParameters name="monitor" eType="#//IProgressMonitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contextModel" eType="#//ContextModel"
+        transient="true" eOpposite="#//ContextModel/layers"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="filter" eType="#//Filter"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="styleBlackboard" eType="#//StyleBlackboard"
+        containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="zorder" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        transient="true" defaultValueLiteral="0"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogRef" eType="#//CatalogRef"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="iD" eType="#//URL" iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="visible" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="geoResource" eType="#//IGeoResource"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="geoResources" upperBound="-1"
+        eType="#//IGeoResource" changeable="false" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cRS" eType="#//CoordinateReferenceSystem"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" eType="#//IBlackboard"
+        changeable="false" transient="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="colourScheme" eType="#//ColourScheme"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultColor" eType="#//Color"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="featureChanges" upperBound="-1"
+        eType="#//FeatureEvent" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minScaleDenominator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxScaleDenominator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interactionMap" upperBound="-1"
+        eType="#//InteractionToEBooleanObjectMapEntry" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shown" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="icon" eType="#//ImageDescriptor"
+        transient="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Map" eSuperTypes="#//ProjectElement #//IMap">
+    <eOperations name="getBounds" eType="#//ReferencedEnvelope">
+      <eParameters name="monitor" eType="#//IProgressMonitor"/>
+    </eOperations>
+    <eOperations name="getAspectRatio" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eParameters name="monitor" eType="#//IProgressMonitor"/>
+    </eOperations>
+    <eOperations name="redo"/>
+    <eOperations name="undo"/>
+    <eOperations name="backwardHistory"/>
+    <eOperations name="forwardHistory"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contextModel" eType="#//ContextModel"
+        containment="true" resolveProxies="false" eOpposite="#//ContextModel/map"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="abstract" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="navCommandStack" eType="#//NavCommandStack"
+        changeable="false" volatile="true" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="commandStack" eType="#//CommandStack"
+        changeable="false" volatile="true" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layerFactory" eType="#//LayerFactory"
+        containment="true" resolveProxies="false" eOpposite="#//LayerFactory/map"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="viewportModelInternal"
+        eType="ecore:EClass render.ecore#//ViewportModel" containment="true" resolveProxies="false"
+        eOpposite="render.ecore#//ViewportModel/mapInternal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="colorPalette" eType="#//BrewerPalette"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="editManagerInternal" eType="#//EditManager"
+        transient="true" containment="true" resolveProxies="false" eOpposite="#//EditManager/mapInternal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="renderManagerInternal"
+        eType="ecore:EClass render.ecore#//RenderManager" transient="true" eOpposite="render.ecore#//RenderManager/mapInternal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="colourScheme" eType="#//ColourScheme"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="blackBoardInternal" eType="#//Blackboard"
+        containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="legend" upperBound="-1"
+        eType="#//ILegendItem" containment="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//IProject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elementsInternal" upperBound="-1"
+        eType="#//ProjectElement" eOpposite="#//ProjectElement/projectInternal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProjectElement" abstract="true" interface="true"
+      eSuperTypes="#//IProjectElement #//IAdaptable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="projectInternal" eType="#//Project"
+        eOpposite="#//Project/elementsInternal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProjectRegistry">
+    <eOperations name="getProject" eType="#//Project">
+      <eParameters name="uri" eType="#//URI"/>
+    </eOperations>
+    <eOperations name="getProject" eType="#//Project">
+      <eParameters name="projectPath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="currentProject" eType="#//Project"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="projects" upperBound="-1"
+        eType="#//Project"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StyleBlackboard" eSuperTypes="#//IStyleBlackboard #//Cloneable">
+    <eOperations name="get" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject">
+      <eParameters name="styleId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="lookup" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject">
+      <eParameters name="theClass">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
+          <eTypeArguments/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations name="contains" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="styleId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="put">
+      <eParameters name="styleId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eParameters name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+    </eOperations>
+    <eOperations name="put" eExceptions="#//IOException">
+      <eParameters name="url" eType="#//URL"/>
+      <eParameters name="monitor" eType="#//IProgressMonitor"/>
+    </eOperations>
+    <eOperations name="remove" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject">
+      <eParameters name="styleId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="clone" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="content" upperBound="-1"
+        eType="#//StyleEntry" containment="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StyleEntry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="iD" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="memento" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"
+        volatile="true" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="styleClass" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass"
+        volatile="true" transient="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Cloneable" instanceTypeName="Cloneable"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LayerFactory">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="map" eType="#//Map" transient="true"
+        eOpposite="#//Map/layerFactory"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IAdaptable" instanceClassName="org.eclipse.core.runtime.IAdaptable"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IBlockingAdaptable" instanceClassName="net.refractions.udig.core.IBlockingAdaptable"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Blackboard" eSuperTypes="#//IBlackboard">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entries" upperBound="-1"
+        eType="#//BlackboardEntry" containment="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BlackboardEntry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="memento" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="objectClass" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass"
+        volatile="true" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="object" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"
+        volatile="true" transient="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IResolveChangeListener" instanceClassName="net.refractions.udig.catalog.IResolveChangeListener"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IStyleBlackboard" instanceClassName="net.refractions.udig.project.IStyleBlackboard"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InteractionToEBooleanObjectMapEntry"
+      instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="#//Interaction"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBooleanObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IFolder" instanceClassName="net.refractions.udig.project.IFolder"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Folder" eSuperTypes="#//IFolder #//LegendItem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
+        eType="#//ILegendItem" containment="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ILayerLegendItem" instanceClassName="net.refractions.udig.project.ILayerLegendItem"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LegendItem" eSuperTypes="#//ILegendItem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shown" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="icon" eType="#//ImageDescriptor"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ILegendItem" instanceClassName="net.refractions.udig.project.ILegendItem"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Coordinate" instanceClassName="com.vividsolutions.jts.geom.Coordinate"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="MapDisplay" instanceClassName="net.refractions.udig.project.render.displayAdapter.IMapDisplay"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="List" instanceClassName="java.util.List"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="AffineTransform" instanceClassName="java.awt.geom.AffineTransform"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="NavCommandStack" instanceClassName="net.refractions.udig.project.command.NavCommandStack"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="IGeoResource" instanceClassName="net.refractions.udig.catalog.IGeoResource"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Filter" instanceClassName="org.opengis.filter.Filter"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="CoordinateReferenceSystem" instanceClassName="org.opengis.referencing.crs.CoordinateReferenceSystem"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="CommandStack" instanceClassName="net.refractions.udig.project.command.CommandStack"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="java.awt.Point"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Adapter" instanceClassName="org.eclipse.emf.common.notify.Adapter"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="IProgressMonitor" instanceClassName="org.eclipse.core.runtime.IProgressMonitor"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Query" instanceClassName="org.geotools.data.Query"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="URL" instanceClassName="java.net.URL"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ImageDescriptor" instanceClassName="org.eclipse.jface.resource.ImageDescriptor"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="EditCommand" instanceClassName="net.refractions.udig.project.command.EditCommand"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="NavCommand" instanceClassName="net.refractions.udig.project.command.NavCommand"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Envelope" instanceClassName="com.vividsolutions.jts.geom.Envelope"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="EditManagerControlCommand" instanceClassName="net.refractions.udig.project.command.EditManagerControlCommand"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Command" instanceClassName="net.refractions.udig.project.command.MapCommand"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="CatalogRef" instanceClassName="net.refractions.udig.project.internal.CatalogRef"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ColourPalette" instanceClassName="net.refractions.udig.ui.palette.ColourPalette"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ColourScheme" instanceClassName="net.refractions.udig.ui.palette.ColourScheme"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="MutablePicoContainer" instanceClassName="org.picocontainer.MutablePicoContainer"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ReferencedEnvelope" instanceClassName="org.geotools.geometry.jts.ReferencedEnvelope"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="FeatureEvent" instanceClassName="org.geotools.data.FeatureEvent"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="SimpleFeature" instanceClassName="org.opengis.feature.simple.SimpleFeature"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="IllegalArgumentException" instanceClassName="java.lang.IllegalArgumentException"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="IOException" instanceClassName="java.io.IOException"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Color" instanceClassName="java.awt.Color"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="BrewerPalette" instanceClassName="org.geotools.brewer.color.BrewerPalette"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Interaction" instanceClassName="net.refractions.udig.project.Interaction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LayerLegendItem" eSuperTypes="#//LegendItem #//ILayerLegendItem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layer" lowerBound="1" eType="#//Layer"/>
+  </eClassifiers>
+</ecore:EPackage>

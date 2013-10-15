@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %plugin.name
+Bundle-SymbolicName: net.refractions.udig.render.feature.basic; singleton:=true
+Bundle-Version: 1.2.1.qualifier
+Bundle-Activator: net.refractions.udig.render.internal.feature.basic.RendererPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Export-Package: net.refractions.udig.render.internal.feature.basic
+Require-Bundle: org.eclipse.core.runtime,
+ net.refractions.udig.project,
+ net.refractions.udig.libs,
+ org.eclipse.ui,
+ net.refractions.udig.project.ui,
+ net.refractions.udig.style.sld
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

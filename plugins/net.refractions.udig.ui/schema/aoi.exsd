@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="net.refractions.udig.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="net.refractions.udig.ui" id="aoi" name="Area of Interest"/>
+      </appInfo>
+      <documentation>
+         Define a new Area of Interest to be used application wide as a limit. The use of the current AOI is context specific examples include as a target for Zoom To Extent or as a filter when displaying features in a TableView.
+
+Use of the AOI is optional and placed under use control; the default value is considered to be All resulting in no AOI being defined.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="aoi" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  identifier of Area of Interest contribution used in log messages
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  Human readible name of Area of Interest Contribution may be used in displayed error messages
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="aoi">
+      <annotation>
+         <documentation>
+            Area of Interest used as an optional limit for search, feature display and zoom to extent.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  machine readible identifier suitable as a reference for logging or persistence.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Area of Interest name displayed to a user in for example the AOIView.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Implementation of IAOIStrategy used to supply a ReferencedEnvelope to any operations that require it.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="net.refractions.udig.aoi.IAOIStrategy:"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="page" type="string">
+            <annotation>
+               <documentation>
+                  Optional Page to be displayed in the AOI View (or as a pop up) if the user wishes to configure the details of the current Area of Interest.
+
+We make use of IPageBookViewPage although the abstract class Page is a recommended starting place.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="org.eclipse.ui.part.Page:org.eclipse.ui.part.IPageBookViewPage"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         1.3.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         We have a couple good examples if you would like to review some sample code before getting started: ScreenAOIStrategy, MapCrsAOIStrategy and AOIStrategyAll.
+
+To use the current AOI you can make use of the workbench AOIService as follows:
+&lt;pre&gt;
+IAOIService aoiService = PlatformGIS.getAOIService();
+ReferencedEnvelope extent = aoiService.getExtent();
+&lt;/pre&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiinfo"/>
+      </appInfo>
+      <documentation>
+         Implementors  are asked to porvide an implementation of IAOIStrategy; as an option they may also provide a Page for futher confiuration options.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         Please note the use of a Page is optional; if a page is not provided the user will simply be able to choose from a list; and the Page area will be filled in with a short description.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         uDig - User Friendly Desktop Internet GIS client
+      </documentation>
+   </annotation>
+
+</schema>

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Java CSV Plug-in
+Bundle-SymbolicName: net.sf.opencsv
+Bundle-Version: 2.3
+Bundle-ClassPath: lib/opencsv-2.3.jar
+Export-Package: au.com.bytecode.opencsv,
+ au.com.bytecode.opencsv.bean
+Eclipse-BundleShape: dir
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

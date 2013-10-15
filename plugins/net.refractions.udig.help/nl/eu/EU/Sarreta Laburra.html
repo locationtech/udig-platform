@@ -1,0 +1,170 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../book.css" type="text/css" />
+        <title>Basque User Guide : Sarreta Laburra</title>
+    </head>
+    <body BGCOLOR="#FFFFFF">
+       <!-- Basque User Guide : Sarreta Laburra -->
+       <h1>Sarreta Laburra</h1>
+       <p>Hurrengo hau, laguntzaren barne dagoen uDig aplikaziorako sarrera azkar bat da.</p>
+
+<h2><a name="SarretaLaburra-Adibidedatuak"></a>Adibide datuak</h2>
+
+<p>Mesedez, hasi aurretik, har ezazu une bat, web orrian jarri ditugun adibide datu batzuk deskargatzeko.</p>
+<ol>
+	<li>Hurrengo loturan eskuineko botoia sakatu eta aukera ezazu <b>Gorde lotura bezala...</b>:
+<br clear="all" />  <a href="http://udig.refractions.net/docs/data-v1_1.zip">data_v1_1.zip</a></li>
+	<li>Fitxategiaren kokapenari buruz galdetzen duenean, aukeratu zure idaztegia kokapen egoki bezala.</li>
+	<li>Fitxategiaren edukiera deskonprimatu (unzip) zure idaztegian duzun datu karpeta batean.</li>
+</ol>
+
+
+<p>Nahiago baduzu, zure SIG datuekin froga dezakezu. Aurreko adibide datuak erabiliz, pausoz pausoko gida honekin segi ahal izando duzu.</p>
+
+<h2><a name="SarretaLaburra-uDigaplikazioa"></a>uDig aplikazioa</h2>
+
+<ol>
+	<li>Aukeratu <b>uDig 1.1 &gt; uDig</b> hasierako menuan.</li>
+	<li>Aplikazioak minutu batzuk beharko ditu hasteko.<br/>
+<img src="download/attachments/3407905/Quickstart1Splash.png" align="absmiddle" border="0"/></li>
+</ol>
+
+
+<p>uDig aplikazioak, lan direktorioan konfigurazio karpeta bat du. Konfigurazio karpeta hori, aplikazioa lehen aldiz exekutatzean sortuko da. Arazoak badituzu, edota uDig Linux-ean edo Mac-ean exekutatzen ari bazara, mesedez erreferentzi orria begiratu&nbsp; <a href="http://udig.refractions.net/confluence//display/EN/Running+uDig" title="Running uDig">uDig exekutatzen</a></p>
+
+<h2><a name="SarretaLaburra-Ongietorribista"></a>Ongi etorri bista</h2>
+
+<ol>
+	<li>uDig lehen aldiz abiatzean, <b>Ongi etorri</b> bista pantaila osoan aurkeztuko da. Pantaila honek  gidetera, dokumentaziora eta proiektuaren Web gunera loturak ditu.</li>
+	<li>Klik egin ezazu <b>Workbench</b> bezala izendatutako gezian, goi eskuineko ertzean, eta uDig-en lan biltegiaren edukiera aurkeztuko du.</li>
+</ol>
+
+
+<p><img src="download/attachments/3407905/ongi-etorri.png" align="absmiddle" border="0"/></p>
+
+<p>Edozein momentutan Ongi etorri bistara itzuli dezakezu, barra menuan <b>Laguntza &gt; Ongi etorri</b> aukeratuz.</p>
+
+<h2><a name="SarretaLaburra-Workbench"></a>Workbench</h2>
+
+<p><b>Workbench</b> leihoak era askotako editoreak eta laguntza bistak (egungo mapari buruz informazioa eskeintzen dutenak) eskeintzen ditu.</p>
+
+<p><img src="download/attachments/3407905/workbench.png" align="absmiddle" border="0"/></p>
+
+<p>Goian, uDig-en sesio tipiko bat erakusten da <a href="http://udig.refractions.net/confluence//display/EN/Map+editor" title="Map editor">Mapa Editorea </a>, <a href="http://udig.refractions.net/confluence//display/EN/Projects+view" title="Projects view">Proiektu bista </a>, <a href="http://udig.refractions.net/confluence//display/EN/Layers+view" title="Layers view">Geruza bista </a> eta <a href="http://udig.refractions.net/confluence//display/EN/Catalog+view" title="Catalog view">Katalogo bistarekin </a>.  Bista hauek aurrerago xehetasunez deskribatuko (azalduko) dira, bere erabilera erakusten dugunean.</p>
+
+<h2><a name="SarretaLaburra-Fitxategiak"></a>Fitxategiak</h2>
+
+<p>Hasteko, aurretik deskargatu dituzun adibide datu batzuk kargatuko ditugu.</p>
+<ol>
+	<li>Aukeratu <b>Geruza &gt; Gehitu</b> menu barran Datuak Gehitzeko laguntza lehioa zabaltzeko.</li>
+	<li>Aukeratu <a href="http://udig.refractions.net/confluence//display/EN/Files+page" title="Files page">Fitxategiak</a> datu jatorrien zerrendatik.</li>
+	<li><b>Hurrengoa</b> sakatu, fitxategi elkarrizketa zabaltzeko.</li>
+	<li>Aukeratu zure datu karpetatik hurrengo fitxategia: <b>countries.shp</b></li>
+	<li><b>Ireki</b> tekla sakatu
+	<ul>
+		<li>Zure shapefile-aren edukieran oinarritutako <a href="http://udig.refractions.net/confluence//display/EN/Map+editor" title="Map editor">Mapa Editore</a> berri bat irekiko da. Izena ez egitez eta Maparen proiekzioa shapefiletik hartuak izango dira.</li>
+		<li><b>Katalogo bista, countries.shp</b>-entzat sarrera bat aurkezten eguneratu dela ikusi ahal izango duzu. Bista hau uDig-ek erabilitako baliabideen erabilera jarraitzeko erabiltzen da.</li>
+		<li><b>Geruzak</b> bistak hedatutako geruza bakarra aurkeztuko du mapa honetan. Bista hau, zure mapan informazioaren txanda eta itxura aldatzeko erabiltzen da.</li>
+		<li><b>Proiektu</b> bista, zure mapa <b>proiektuak &gt; countries</b> tokian biltzen dela erakusteko eguneratuko da. Proiektu ugari batera zabalik izatea posible da, horietako bakoitzak mapa ugari izan ditzake.</li>
+	</ul>
+	</li>
+	<li>Ireki Windows-eko zure datuen karpeta</li>
+	<li>Mapa editorean, <b>clouds.jpg</b> fitxategia narraztu, mapari geruza berri bat gehituko zaio.</li>
+	<li>Marraztutako geruzen txanda, geruzen bistan ikusi ahal izando duzu. Orain clouds.jpg geruza, countries geruzaren goikaldean marrazten da.</li>
+	<li>Aukeratu <b>clouds.jpg</b> geruza, Katologo biztan, eta zerrandako behe aldera eraman ezazu<br/>
+<img src="download/attachments/3407905/files.png" align="absmiddle" border="0"/></li>
+</ol>
+
+
+<p><b>Argibidea:</b> maiz eginten den galderatako bat, erakunde batentzat uDig erabilgarri tresnatzat jotzen denean,  zenbateko memoria finkoa erabiltzen duen da. Beste GIS aplikazio batzuen alde, uDig memori kantitate finko batekin exekutatu daiteke. Aurreko shapefilea ez da memorian kargatua, diskoan dauden datuak mantentzeko politica bat dugu eta beharrezkoa denean shapefile honen datuak pantailan marraztu.</p>
+
+<p><b>Aholkua:</b> uDig aplikazioan, shapefileak zuzenki narraztu eta askatu ere egin ditzakezu&#33;</p>
+
+<h2><a name="SarretaLaburra-Mapa"></a>Mapa</h2>
+
+<p>Mapa Editorieak aurkezten duen muduko tokia kontrolatzea posible da, pantailako goikaldean aurkitzen den tresna barran dauden nabegazio tresnak erabiliz.</p>
+<ol>
+	<li><img src="download/attachments/3407905/zoom_mode.gif" align="absmiddle" border="0"/> <b>Zoom</b> tresna, gutxiegiz erabilgarri dago.
+	<ul>
+		<li>Zoom tresna erabili ezazu, saguaren eskuineko botoiaz errektangeluar gune bat marrazteko, ikusi nahi duzun munduaren azalera itxiz.</li>
+		<li>Marrazkia urruntzeko, eskuineko botoiaz errektangeluar gune bat egin ezazu.</li>
+	</ul>
+	</li>
+	<li><img src="download/attachments/3407905/pan_mode.gif" align="absmiddle" border="0"/> Mapa panoramikoaren ikuspegia (<b>Pan</b>), eskala aldatu gabe, mapatik mugitzeko erabili daiteke.</li>
+	<li>Aldi berean erabili daitekeen nabegazio botoi ugari existitzen dira:
+	<ul>
+		<li><img src="download/attachments/3407905/zoom_extent_co.gif" align="absmiddle" border="0"/> Erakutsi datu guztiak, edozein momentutan azalera osoa berriz ikusteko erabil daiteke.</li>
+		<li><img src="download/attachments/3407905/zoom_in_co.gif" align="absmiddle" border="0"/> Haunditu eta <img src="download/attachments/3407905/zoom_out_co.gif" align="absmiddle" border="0"/> Txikitu (<b>Zoom In</b> eta <b>Zoom Out</b>) eskala kantitate finko batengatik aldatzeko erabil daitezke.</li>
+	</ul>
+	</li>
+	<li>Menu barran <b>Nabigazioa &gt; Atzera</b> eta <b>Nabigazioa &gt; Aurrera</b> erabil ditzakezu, aurrez ikusitako tokien bitartez ziklatzeko.</li>
+</ol>
+
+
+<p><b>Aholkua:</b> tresna askok, erdiko botoia sakatuta mantenduz Pan bat egitea eta desplazamendu gurpila erabiliz eskala kontrolatzea onartzen dute.</p>
+
+<h2><a name="SarretaLaburra-WebMapenZerbitzaria"></a>Web Mapen Zerbitzaria</h2>
+
+<p>uDig bezalako aplikazio bat erabiltzeko arrazoietako bat, Web orrian eskuragarri dagoen informazio geoespazialera heltzeko aukera da. Sekzio honek, zure mapetan sar dezakezun informazio geruzak dituzten <b>Web Map Servers</b>-en erabilera betetzen du.</p>
+<ol>
+	<li>Aukeratu <b>Fitxategia &gt; Berria &gt; Mapa berria</b> menu barratik</li>
+	<li><b>Catalog</b>-ak <b>Web</b> bista aurkezteko, irtengunean klik bat eginez aldatu ezazu <b>Web</b> bistara.</li>
+	<li>WMS:dm solutions loturan klik bat egin ezazu<br/>
+<img src="download/attachments/3407905/web map server.png" align="absmiddle" border="0"/></li>
+	<li><a href="http://udig.refractions.net/confluence//display/EN/Resource+Selection+page" title="Resource Selection page">Baliabide aukeraketa </a> orrian, hurrengo geruza hauek aukeratuko ditugu:
+	<ul>
+		<li>Elevation / Bathymetry *</li>
+		<li>Parks</li>
+		<li>Cities<br/>
+<img src="download/attachments/3407905/web map server1.png" align="absmiddle" border="0"/></li>
+	</ul>
+	</li>
+	<li>Geruza hauek zure mapara gehitzeko, <b>Amaitu</b> sakatu<br/>
+<img src="download/attachments/3407905/web map server2.png" align="absmiddle" border="0"/></li>
+	<li>Erabili Zoom tresna <img src="download/attachments/3407905/zoom_mode.gif" align="absmiddle" border="0"/> horietako pakete batera hurbiltzeko</li>
+	<li>Informazio gehiago lortzeko, aldatu <img src="download/attachments/3407905/info_mode.gif" align="absmiddle" border="0"/> aukerara eta klik egin pakete batean</li>
+</ol>
+
+
+<p><b>Aholkua:</b> Teklatuan <b>Z</b> eta <b>I</b> sakatuz, Zoom eta Informazio tresnen artean alda dezakezu.</p>
+
+<h2><a name="SarretaLaburra-Estiloa"></a>Estiloa</h2>
+
+<ol>
+	<li>Aukeratu proiektuak &gt; countries, klik bikoitza egin dezakezu Mapa hau irekitzeko, edo ta eskuineko botoiaz klik bakarra eta <b>Open Map</b> aukeratuz.</li>
+	<li>Geruzen bistan, aukeratu countries geruza.</li>
+	<li>Estilo editorea ireki, eskuineko botoiaz countries geruzan klik eginez eta Altatu Estiloa aukeratuz.</li>
+	<li>1.Lurraldeen aurkezpenean aldaketa batzuk burutuko ditugu
+	<ul>
+		<li>Lerroa: Kolerean klik egin eta aldatu kolere BELTZera</li>
+		<li>Bete: egiaztapen laukitxoko gurutzea kenduko dugu, betea desaktibatzeko</li>
+		<li>Etiketa: laukitxoa baieztatu eta atributuen listan <b>CNTRY_NAME</b> aukera ezazu<br/>
+<img src="download/attachments/3407905/style1.png" align="absmiddle" border="0"/></li>
+	</ul>
+	</li>
+	<li><b>Aplikatu</b> sakatu, zure Mapa nola aurkezten den ikusteko, Geruzen bista, egungo estiloa erakusteko eguneratuko da.</li>
+	<li>Emaitzarekin adoz zaudenean, <b>Onartu</b> sakatu ahal izango duzu irtetzekov.</li>
+	<li>Fitxategi batzuk estiloak barneratzen dituzte, aukeratu Geruza &gt; Gehitu... menu barran</li>
+	<li>Aukeratu <b>Fitxategia</b> datuen iturri zerrendatik eta <b>Hurrengoa</b>  sakatu</li>
+	<li>lkarrizketa erabiliz, <b>timezone.shp</b> fitxategia aukeratu eta <b>Zabaldu</b> sakatu</li>
+	<li>Zaila izan daiteke xehetasun gehiagorako zer gertazen den clouds.jpg geruzarekin ikustea. Aukeratu <b>Mapa &gt; Mylar</b>, menu barran, aukeratutako geruza fokatzeko.</li>
+	<li>Geruzen bista erabiliz, aukera itzazu timezone, countries eta clouds.jpg txandaka, efektua ikusteko<br/>
+<img src="download/attachments/3407905/style2.png" align="absmiddle" border="0"/></li>
+	<li>1.Efektu hau edozein unetan ezeztatu dezakezu, menu barratik <b>Mapa &gt; Mylar</b> erabiliz.</li>
+</ol>
+
+
+<h2><a name="SarretaLaburra-Zerdahurrengoa%3F"></a>Zer da hurrengoa?</h2>
+
+<p>Hau soilik lehen pasua da uDig ikasketaren bidean. Material ugari dago (eta gaitasun gehiago) gure pausoz pausoko gidetan (walkthroughs) aukitu ahal izango dituzunak.</p>
+<ul>
+	<li><a href="http://udig.refractions.net/confluence//display/EN/Walkthrough+1" title="Walkthrough 1">Walkthrough 1</a> &#45; PostGIS-en erabilera froga ahal izando duzu, Web Feature Server batetik datuak ateratzeko eta Gaien erabilera esportatu gure kolorezko Brewer teknologia indartsuarekin.</li>
+	<li><a href="http://udig.refractions.net/confluence//display/EN/Walkthrough+2" title="Walkthrough 2">Walkthrough 2</a> &#45; Hemengo honetan, shapefiletako datuen ezaugarri desberdinen edizio eta manipulazio tresnak sortzeko eta erabilitzeko aukera desberdinak aurkezten dira, horrez gain GeoServer-en instalazioa eta edizioa Web Feature baten bitartez.</li>
+</ul>
+
+
+<small>(c) Copyright (c) 2004-2008 Refractions Research Inc. and others.</small>
+    </body>
+</html>
+

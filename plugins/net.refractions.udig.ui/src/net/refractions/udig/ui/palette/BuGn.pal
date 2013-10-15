@@ -1,0 +1,46 @@
+# A palette file containing info from the ColorBrewer application
+#
+# These keys provide enough information for us to grab the contents
+# and construct a friendly ui for this information
+#
+palette.key=bugn
+palette.display=Blue Green
+palette.min=2
+palette.max=9
+palette.type=SEQUENTIAL
+
+# good & doubtful can the following:
+#    colorBlind, photoCopy, projector, lcd, crt, print
+#
+# not case sensititve, bad is assumed by default
+
+bugn2={153, 216, 201},{ 44, 162,  95}
+#{GOOD, GOOD, DOUBTFUL, GOOD, GOOD, GOOD},
+bugn2.good=colorBlind, photoCopy, lcd, crt, print
+bugn2.doubtful=projector
+
+bugn3= {229, 245, 249},{153, 216, 201},{ 44, 162,  95}
+bugn3.good=colorBlind, photoCopy, lcd, crt, print
+bugn3.doubtful=projector
+
+bugn4={237, 248, 251},{178, 226, 226},{102, 194, 164},{ 35, 139,  69}
+bugn4.good=colorBlind, photoCopy, lcd, print
+bugn4.doubtful=projector, crt
+
+bugn5={237, 248, 251},{178, 226, 226},{102, 194, 164},{ 44, 162,  95},{  0, 109,  44}
+bugn5.good=colorBlind, lcd
+bugn5.doubtful=photoCopy, projector, crt, print
+
+bugn6={237, 248, 251},{204, 236, 230},{153, 216, 201},{102, 194, 164},{ 44, 162,  95},{  0, 109,  44}
+bugn6.good=colorBlind
+bugn6.doubtful=lcd, print
+
+bugn7={237, 248, 251},{204, 236, 230},{153, 216, 201},{102, 194, 164},{ 65, 174, 118},{ 35, 139,  69},{  0,  88,  36}
+bugn7.good=colorBlind
+bugn7.doubtful=lcd
+
+bugn8={247, 252, 253},{229, 245, 249},{204, 236, 230},{153, 216, 201},{102, 194, 164},{ 65, 174, 118},{ 35, 139,  69},{  0,  88,  36}
+bugn8.good=colorBlind
+
+bugn9={247, 252, 253},{229, 245, 249},{204, 236, 230},{153, 216, 201},{102, 194, 164},{ 65, 174, 118},{ 35, 139,  69},{  0, 109,  44},{  0,  68,  27}
+bugn9.good=colorBlind

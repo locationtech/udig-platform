@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+           id="net.refractions.udig.catalog.imageio.services"
+           name="ImageIO Services"
+           point="net.refractions.udig.catalog.ServiceExtension">
+      <service
+            class="net.refractions.udig.catalog.imageio.ImageServiceExtension"
+            id="imageio"
+            name="Image IO"/>
+   </extension>
+   <extension
+         id="net.refractions.udig.catalog.imageio.formats"
+         name="ImageIO File Formats"
+         point="net.refractions.udig.catalog.ui.fileFormat">
+      <provider
+            class="net.refractions.udig.catalog.imageio.internal.GDALFormatProvider">
+      </provider>
+   </extension>
+</plugin>

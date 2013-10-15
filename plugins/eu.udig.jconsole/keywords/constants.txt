@@ -1,0 +1,14 @@
+cap
+color
+dash
+false
+height
+join
+null
+size
+true
+type
+width
+stroke
+opacity
+rotation

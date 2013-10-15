@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+    <extension
+         point="net.refractions.udig.catalog.ServiceExtension">
+      <service
+            class="net.refractions.udig.catalog.tests.DummyServiceExtension"
+            id="Dummy"
+            name="Dummy"/>
+      <service
+            class="net.refractions.udig.catalog.tests.DummyMultiResourceServiceExtension"
+            id="MultiDummy"
+            name="MultiDummy"/>
+   </extension>
+    <extension
+          point="net.refractions.udig.catalog.resolvers">
+       <factory
+             class="net.refractions.udig.catalog.tests.internal.DummyResolverFactory"
+             resolveableType="net.refractions.udig.catalog.tests.DummyGeoResource">
+          <resolve type="net.refractions.udig.catalog.tests.internal.ResolvedTo"/>
+       </factory>
+       <factory
+             class="net.refractions.udig.catalog.tests.internal.DummyResolverFactory"
+             resolveableType="net.refractions.udig.catalog.tests.DummyService">
+          <resolve type="net.refractions.udig.catalog.tests.internal.ResolvedTo"/>
+       </factory>
+    </extension>
+   
+</plugin>

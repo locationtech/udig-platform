@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="net.refractions.udig.project.persister">
+      <persister class="net.refractions.udig.project.internal.impl.APersister"/>
+      <persister class="net.refractions.udig.project.internal.impl.BPersister"/>
+      <persister class="net.refractions.udig.project.internal.impl.CPersister"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.provider">
+      <provider
+            class="net.refractions.udig.project.internal.impl.AProvider"
+            key="a"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.resourceInterceptor">
+      <interceptor
+            class="net.refractions.udig.project.tests.TestInterceptorPre"
+            id="net.refractions.udig.project.tests.interceptor"
+            order="PRE"
+            target="org.geotools.data.FeatureSource"/>
+      <cachingStrategy
+            class="net.refractions.udig.project.tests.TestInterceptorCaching"
+            id="net.refractions.udig.project.tests.interceptor2"/>
+      <interceptor
+            class="net.refractions.udig.project.tests.TestInterceptorPost"
+            id="net.refractions.udig.project.tests.interceptor3"
+            order="POST"/>
+      <interceptor
+            class="net.refractions.udig.project.tests.TestInterceptorPost2"
+            id="net.refractions.udig.project.tests.interceptor4"
+            order="POST"
+            target="org.geotools.data.FeatureSource"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.renderer">
+      <renderer
+            class="net.refractions.udig.project.internal.render.impl.renderercreator.SingleRenderMetricsFactory"
+            id="single"
+            name="singletest"/>
+      <renderer
+            class="net.refractions.udig.project.internal.render.impl.renderercreator.SingleRenderMetricsFactory2"
+            id="single2"
+            name="singletest2"/>
+      <renderer
+            class="net.refractions.udig.project.internal.render.impl.renderercreator.MultiRenderMetricsFactory"
+            id="multi"
+            name="multitest"/>
+      <renderer
+            class="net.refractions.udig.project.internal.render.impl.renderercreator.BadRenderMetricsFactory"
+            />
+   </extension>
+      <extension
+            point="net.refractions.udig.project.mapInterceptor">
+         <mapCreation
+               class="net.refractions.udig.project.internal.TestMapCreationInterceptor"
+               id="net.refractions.udig.project.tests.ui.mapCreation1"
+               name="testMapCreationInterceptor"/>
+         <mapOpening
+               class="net.refractions.udig.project.internal.TestMapOpeningInterceptor"
+               id="net.refractions.udig.project.tests.ui.mapOpening1"
+               name="TestMapOpeningInterceptor"/>
+      </extension>
+      <extension
+            point="net.refractions.udig.project.style">
+         <style
+               class="net.refractions.udig.project.internal.render.impl.renderercreator.SingleRendererStyleContent"
+               id="net.refractions.udig.project.tests.single"
+               name="Single Renderer Style"/>
+         <style
+               class="net.refractions.udig.project.internal.render.impl.renderercreator.MultiRendererStyleContent"
+               id="net.refractions.udig.project.tests.multi"
+               name="Mulit Renderer Style"/>
+      </extension>
+      <extension
+            point="net.refractions.udig.project.layerInterceptor">
+         <layerAdded
+               class="net.refractions.udig.project.internal.TestLayerAddedInterceptor"
+               id="net.refractions.udig.project.tests.ui.layerAdded1"
+               name="TestLayerAddedInterceptor"/>
+         <layerRemoved
+               class="net.refractions.udig.project.internal.TestLayerRemovedInterceptor"
+               id="net.refractions.udig.project.tests.ui.layerRemoved1"
+               name="TestLayerRemovedInterceptor"/>
+         <layerCreated
+               class="net.refractions.udig.project.internal.TestLayerCreatedInterceptor"
+               id="net.refractions.udig.project.tests.layerCreated1"
+               name="TestLayerCreatedInterceptor"/>
+      </extension>
+</plugin>

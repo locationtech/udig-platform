@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+     <extension
+         point="net.refractions.udig.catalog.ServiceExtension">
+      <service
+            class="net.crischan.udig.arcgrid.ArcGridServiceExtension"
+            id="ArcGrid"
+            name="ArcGrid"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.catalog.ui.fileFormat">
+      <fileService
+            fileExtension="*.asc"
+            name="ArcGRID Files"/>
+   </extension>
+
+</plugin>

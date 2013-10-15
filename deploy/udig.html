@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>VersionXXXX Release Notes</title>
+</head>
+<body>
+<p>Welcome to the uDig VersionXXXX release.
+
+
+<h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">Installation</h2>
+<p>Download the package appropriate to your platform, unzip and run:</p>
+<ul>
+  <li>Windows</li>
+  <li>Linux</li>
+  <li>Mac</li>
+  <li>SDK: For use with <a href="http://udig.github.com/docs/dev/SDKQuickstart/SDKQuickstart.html">SDK Quickstart</a> instructions</li>
+</ul>
+<p>Windows and Linux packages includes a Java Runtime so you really can unzip and run without making
+any configuration changes to your Machine. On Mac OSX uDig is able to check for Java Advanced Imaging
+and install if needed.</p>
+<p>To get started with uDig:</p>
+<ul>
+  <li>Help Menu provides a <a href="http://udig.github.com/docs/user/getting_started/Quickstart.html">Quickstart</a> and Guided Cheatsheet</li>
+  <li><a href="http://udig.github.com/docs/user/getting_started/Walkthrough%201.html">Walkthrough 1</a></li>
+  <li><a href="http://udig.github.com/docs/user/getting_started/Walkthrough%202.html">Walkthrough 2</a></li>
+</ul>
+
+<h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">About uDig VersionXXXX</h2>
+<p>
+The 1.4.0 release includes a number of the headline features.</p>
+<p>
+New this release is the GeoScripe editor allowing users to work with <a href="http://geoscript.org">GeoScript</a>
+directly from the uDig application. 
+<p>
+Next we have the addition of a Document view allowing files and web pages to be listed
+for the selected feature. This includes traditional "hotlink" functionality which can be used to
+mark specific attributes as containing a file reference, web link or action. It also includes the
+new idea of document attachments in a similar fashion to an email program. Thanks to Naz Chan and
+LISAsoft for this work.</p>
+<p>
+Next up we have a full featured graticule map decoration (using the GeoTools gt-graph module)
+provided by Kenneth Gulbrandsoy. A long time member of the uDig community Kenneth has been promoted
+to committeer status. Congratulations and thanks for the exciting work Kenneth.
+<p>
+Behind the scenes Jody Garnett has been testing WMS 1.3.0 support which is now enabled by default.
+Thanks to LISAsoft for supporting this work.</p>
+<p>
+For developers this release includes an SDK package for developers generated using maven and the tycho
+plugin. Thanks to Sam Guymer for sorting out how to include GeoTools source code. Thanks to Suraj Patil
+and Thomas Dolley for testing the <a href="http://udig.github.com/docs/dev/SDKQuickstart/SDKQuickstart.html">SDK
+Quickstart</a> and <a href="http://udig.github.com/docs/dev/CustomApplication/CustomApplication.html">
+Custom Application</a> instructions.</p>
+<p>
+Finally the project has formally changed license and is now available under a dual EPL and BSD license.
+</p>
+
+<p>Release notes:</p>
+<ul>
+   <li><a href="https://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10600&version=18773">uDig 1.4.0 Release Notes</a></li>
+</ul>
+
+<h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">About uDig 1.4</h2>
+<p>
+The 1.4 series features some great usability improvements with a new tool palette and easy to
+access tool options.</p>
+<p>
+For developers this release of the uDig platform provides access to the latest open source libraries.</p>
+<p>
+The 1.4 series features:</p>
+<ul>
+  <li>Additional bundled Edit Tools - no longer require a separate download</li>
+  <li>For details on these and other features check out the <a href="http://udig.github.com/docs/user/What%20is%20new.html">What is new</a>!</li>
+</ul>
+
+<p>Additional documentation:</p>
+<ul>
+  <li>Step by step <a href="http://udig.github.com/docs/user/Introduction%20to%20the%20Spatial%20Toolbox.html">Introduction to Spatial Toolbox</a></li>
+</ul>
+
+<p>For developers:</p>
+<ul>
+   <li>Maven command line build using Tycho plugin</li>
+   <li>Access to the GeoTools 9</li>
+</ul>
+
+<p>Release notes:</p>
+<ul>
+   <li><a href="https://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10600&version=18773">uDig 1.4.0 Release Notes</a></li>
+   <li><a href="https://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10600&version=18235">uDig 1.3.2 Release Notes</a></li>
+   <li><a href="https://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10600&version=18149">uDig 1.3.1 Release Notes</a></li>
+   <li><a href="https://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10600&version=17485">uDig 1.3.0 Release Notes</a></li>
+   <li><a href="https://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10600&version=15072">uDig 1.2.2 Release Notes</a></li>
+   <li><a href="https://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10600&version=16440">uDig 1.2.1 Release Notes</a></li>
+   <li><a href="https://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=10600&version=16264">uDig 1.2.0 Release Notes</a></li>
+</ul>
+
+<h2 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Arial">Known Issues:</h2>
+<ul>
+  <li>The mac release is unable to support the full range of ImageIO-EXT formats. Please contact udig-devel if you are able to build GDAL on Mac OSX.</li>
+  <li>The ImageIO-EXT / GDAL library requires native code for MrSID and ECW available on limited platforms (win32, linux32)</li>
+</ul>
+</body>
+</html>

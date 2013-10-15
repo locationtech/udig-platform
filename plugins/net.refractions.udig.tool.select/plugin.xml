@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         point="net.refractions.udig.project.ui.tool">
+            <modalTool
+                  categoryId="net.refractions.udig.tool.category.selection"
+                  class="net.refractions.udig.tool.select.BBoxSelection"
+                  icon="icons/etool16/selection_mode.gif"
+                  id="net.refractions.udig.tools.BBoxSelect"
+                  largeIcon="icons/etool24/selection_mode.png"
+                  name="%selection.bbox.name"
+                  onToolbar="true"
+                  toolCursorId="bboxCursor"
+                  tooltip="%selection.bbox.tooltip">
+   			<cursor
+            hotspotY="10"
+            hotspotX="10"
+            image="icons/pointers/select_source.png"
+            id="bbox_cursor"/>
+              <enablement>
+                 <property
+                       expectedValue="SELECT"
+                       propertyId="InteractionProperty">
+                 </property>
+                  </enablement>
+         </modalTool>
+          <modalTool
+                categoryId="net.refractions.udig.tool.category.selection"
+                class="net.refractions.udig.tool.select.ArrowSelection"
+                icon="icons/etool16/select_feature_mode.gif"
+                id="net.refractions.udig.tools.ArrowSelect"
+                largeIcon="icons/etool24/select_feature_mode.png"
+                name="%selection.arrow.name"
+                onToolbar="false"
+                toolCursorId="selectFeatureCursor"
+                tooltip="%selection.arrow.tooltip">
+   			<cursor
+            hotspotY="10"
+            hotspotX="10"
+            image="icons/pointers/select_feature_cursor.gif"
+            id="arrow_cursor"/>
+               <enablement>
+                  	<and>
+                        <property propertyId="FeatureSourceResourceProperty" expectedValue=""/>                  	
+	                     <or>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="net.refractions.udig.project.ui.GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                     </or>
+                      <property
+                            expectedValue="SELECT"
+                            propertyId="InteractionProperty">
+                      </property>
+                     </and>
+                  </enablement>
+         </modalTool>
+          <modalTool
+                categoryId="net.refractions.udig.tool.category.selection"
+                class="net.refractions.udig.tool.select.internal.AOILayerSelectionTool"
+                icon="icons/etool16/aoi_mode.png"
+                id="net.refractions.udig.tool.selection.aoi"
+                largeIcon="icons/etool24/aoi_mode.png"
+                name="%selection.aoi.name"
+                onToolbar="true"
+                preferencePageId="net.refractions.udig.tool.select.page"
+                toolCursorId="aoiSelectCursor"
+                tooltip="%selection.aoi.tooltip">
+             <toolOption
+                   class="net.refractions.udig.tool.select.internal.AOILayerSelectionTool$OptionContribtionItem"
+                   id="setAOIToolOptions">
+             </toolOption>
+          </modalTool>
+                <actionTool
+                     categoryId="net.refractions.udig.tool.category.zoom"
+                     class="net.refractions.udig.tool.select.internal.ZoomSelection"
+                     icon="icons/elcl16/zoom_select_co.png"
+                     id="net.refractions.udig.tool.default.show.selection"
+                     menuPath="navigate/zoom.ext"
+                     name="%zoom.select.name"
+                     onToolbar="true"
+                     tooltip="%zoom.select.tooltip">
+                  <enablement>
+                     <property
+                           expectedValue="unimportant"
+                           propertyId="net.refractions.udig.tool.select.layerHasSelectionProperty"/>
+                  </enablement>
+               </actionTool>
+               <toolCursor
+                     hotspotX="10"
+                     hotspotY="10"
+                     id="bboxCursor"
+                     image="icons/pointers/select_source.png"/>
+               <toolCursor
+                     hotspotX="10"
+                     hotspotY="10"
+                     id="selectFeatureCursor"
+                     image="icons/pointers/select_feature_cursor.gif"/>
+               <toolCursor
+                     hotspotX="9"
+                     hotspotY="6"
+                     id="aoiSelectCursor"
+                     image="icons/pointers/aoi_select_sorce.png">
+               </toolCursor>
+               <toolCursor
+                     hotspotX="11"
+                     hotspotY="11"
+                     id="aoiBoxSelectCursor"
+                     image="icons/pointers/aoi_box_select_sorce.png">
+               </toolCursor>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            category="layer"
+            class="net.refractions.udig.tool.select.TableView"
+            fastViewWidthRatio="30%"
+            icon="icons/eview16/table_view.gif"
+            id="net.refractions.udig.tool.select.TableView"
+            name="%TableViewName"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
+         <view
+               id="net.refractions.udig.tool.select.TableView"
+               relationship="stack"
+               relative="net.refractions.udig.catalog.ui.CatalogView"
+               visible="true"/>
+         <viewShortcut id="net.refractions.udig.tool.select.TableView"/>
+      </perspectiveExtension>
+   </extension>
+      <extension
+            point="net.refractions.udig.ui.objectProperty">
+         <object targetClass="net.refractions.udig.project.ILayer">
+            <property
+                  id="layerHasSelectionProperty"
+                  class="net.refractions.udig.tool.select.internal.LayerHasSelectionProperty"/>
+         </object>
+      </extension>
+      <extension
+            point="net.refractions.udig.project.ui.featureEditor">
+         <editor
+               icon="icons/eview16/table_view.gif"
+               id="net.refractions.udig.tool.select.view"
+               name="Table View"
+               viewId="net.refractions.udig.tool.select.TableView"/>
+      </extension>
+      <extension
+            point="org.eclipse.ui.viewActions">
+         <viewContribution
+               id="net.refractions.udig.tool.select.tableContribution"
+               targetID="net.refractions.udig.tool.select.TableView">
+            <action
+                  class="net.refractions.udig.tool.select.AOIActionDelegate"
+                  icon="icons/etool16/aoi_filter_obj.png"
+                  id="net.refractions.udig.tool.select.aoiAction"
+                  label="AOI Filter"
+                  style="toggle"
+                  toolbarPath="additions">
+            </action>
+         </viewContribution>
+      </extension>
+      <extension
+            point="org.eclipse.ui.preferencePages">
+         <page
+               category="net.refractions.udig.project.ui.preferences.tool"
+               class="net.refractions.udig.tool.select.internal.SelectionToolPreferencePage"
+               id="net.refractions.udig.tool.select.page"
+               name="%selection.page">
+         </page>
+      </extension>
+      <extension
+            point="org.eclipse.core.runtime.preferences">
+         <initializer
+               class="net.refractions.udig.tool.select.SelectionToolPreferenceInitializer">
+         </initializer>
+      </extension>
+      <extension
+            point="net.refractions.udig.ui.aoi">
+         <aoi
+               class="net.refractions.udig.tool.select.internal.AOILayerStrategy"
+               id="net.refractions.udig.tool.select.internal.aoiLayer"
+               name="Area of Interest Layer"
+               page="net.refractions.udig.tool.select.internal.AOILayerPage">
+         </aoi>
+      </extension>
+</plugin>

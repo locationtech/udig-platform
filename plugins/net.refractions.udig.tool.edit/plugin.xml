@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         id="net.refractions.udig.tool.edit.tools"
+         name="Edit Tools"
+         point="net.refractions.udig.project.ui.tool">
+
+               <modalTool
+                     categoryId="net.refractions.udig.tool.edit.create"
+                     class="net.refractions.udig.tools.edit.impl.PolygonTool"
+                     icon="icons/etool16/new_polygon_mode.gif"
+                     id="net.refractions.udig.tools.polygonEdit"
+                     largeIcon="icons/etool24/new_polygon_mode.png"
+                     name="%edit.polygon.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.polygon.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property
+                               expectedValue="com.vividsolutions.jts.geom.MultiPolygon"
+                               propertyId="GeometryType"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+               </modalTool>
+               <modalTool
+                     categoryId="net.refractions.udig.tool.edit.create"
+                     class="net.refractions.udig.tools.edit.impl.LineTool"
+                     icon="icons/etool16/new_line_mode.gif"
+                     id="net.refractions.udig.tools.lineEdit"
+                     largeIcon="icons/etool24/new_line_mode.png"
+                     name="%edit.line.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.line.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+               </modalTool>
+               <!-- 
+               <modalTool
+                     categoryId="net.refractions.udig.tool.edit.create"
+                     class="net.refractions.udig.tools.edit.impl.FreeHandTool"
+                     icon="icons/etool16/new_freehand_mode.gif"
+                     id="net.refractions.udig.tools.freeHandTool"
+                     name="%edit.freehand.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.freehand.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                     </or>
+                     </and>
+                  </enablement>
+               </modalTool> 
+               -->
+               <modalTool
+                     categoryId="net.refractions.udig.tool.edit.create"
+                     class="net.refractions.udig.tools.edit.impl.PointTool"
+                     icon="icons/etool16/new_point_mode.gif"
+                     id="net.refractions.udig.tools.pointEdit"
+                     largeIcon="icons/etool24/new_point_mode.png"
+                     name="%edit.point.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.point.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+               </modalTool>
+               <modalTool
+                     categoryId="net.refractions.udig.tool.edit.edit"
+                     class="net.refractions.udig.tools.edit.impl.SelectionTool"
+                     icon="icons/etool16/edit_vertex_mode.gif"
+                     id="net.refractions.udig.tools.selectionTool"
+                     largeIcon="icons/etool24/edit_vertex_mode.png"
+                     name="%edit.selection.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.selection.tooltip">
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+               </modalTool>
+               <modalTool
+                     categoryId="net.refractions.udig.tool.edit.edit"
+                     class="net.refractions.udig.tools.edit.impl.InsertVertexTool"
+                     icon="icons/etool16/add_vertext_mode.gif"
+                     id="net.refractions.udig.tools.addVertexTool"
+                     largeIcon="icons/etool24/add_vertext_mode.png"
+                     name="%edit.vertex.add.name"
+                     onToolbar="true"
+                     toolCursorId="addVertexCursor"
+                     tooltip="%edit.vertex.add.tooltip">
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+               </modalTool>
+               <modalTool
+                     categoryId="net.refractions.udig.tool.edit.edit"
+                     class="net.refractions.udig.tools.edit.impl.RemoveVertexTool"
+                     icon="icons/etool16/remove_vertext_mode.gif"
+                     id="net.refractions.udig.tools.removeVertexTool"
+                     largeIcon="icons/etool24/remove_vertext_mode.png"
+                     name="%edit.vertex.remove.name"
+                     onToolbar="true"
+                     toolCursorId="deleteVertexCursor"
+                     tooltip="%edit.vertex.remove.tooltip">
+                  <enablement>
+                	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                     </or>
+                     </and>
+                  </enablement>
+               </modalTool>
+               <modalTool
+                     categoryId="net.refractions.udig.tool.edit.edit"
+                     class="net.refractions.udig.tools.edit.impl.HoleTool"
+                     icon="icons/etool16/hole_vertex_mode.gif"
+                     id="net.refractions.udig.tools.holeEdit"
+                     largeIcon="icons/etool24/hole_vertex_mode.png"
+                     name="%edit.hole.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.hole.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+               </modalTool>
+			   <modalTool
+            categoryId="net.refractions.udig.tool.edit.create"
+            class="net.refractions.udig.tools.edit.impl.FillDifferenceTool"
+            icon="icons/etool16/difference_feature_mode.gif"
+            id="net.refractions.udig.tools.differenceTool"
+            largeIcon="icons/etool24/difference_feature_mode.png"
+            name="%edit.difference.name"
+            onToolbar="true"
+            toolCursorId="arrowCursor"
+            tooltip="%edit.difference.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+               </modalTool>
+               <modalTool
+                     categoryId="net.refractions.udig.tool.edit.create"
+                     class="net.refractions.udig.tools.edit.impl.RectangleTool"
+                     icon="icons/etool16/new_rectangle_mode.gif"
+                     id="net.refractions.udig.tool.edit.createRectangle"
+                     largeIcon="icons/etool24/new_rectangle_mode.png"
+                     name="%edit.rectangle.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.rectangle.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                     </or>
+					</and>
+                  </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+                </modalTool>
+               <modalTool
+                     categoryId="net.refractions.udig.tool.edit.create"
+                     class="net.refractions.udig.tools.edit.impl.EllipseTool"
+                     icon="icons/etool16/new_circle_mode.gif"
+                     id="net.refractions.udig.tool.edit.createEllipse"
+                     largeIcon="icons/etool24/new_circle_mode.png"
+                     name="%edit.ellipse.name"
+                     onToolbar="true"
+                     toolCursorId="arrowCursor"
+                     tooltip="%edit.ellipse.tooltip">
+                  <cursor
+                        hotspotX="10"
+                        hotspotY="10"
+                        image="icons/pointers/edit_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                     </or>
+                     </and>
+                  </enablement>
+                  <toolOption
+                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        id="SnappingOption">
+                  </toolOption>
+                </modalTool>
+                <modalTool
+                      categoryId="net.refractions.udig.tool.edit.feature"
+                      class="net.refractions.udig.tools.edit.impl.DeleteTool"
+                      icon="icons/etool16/delete_feature_mode.gif"
+                      id="net.refractions.udig.tools.deleteTool"
+                      largeIcon="icons/etool24/delete_feature_mode.png"
+                      name="%edit.delete.name"
+                      onToolbar="true"
+                      toolCursorId="deleteCursor"
+                      tooltip="%edit.delete.tooltip">
+                  <cursor
+                        hotspotX="3"
+                        hotspotY="3"
+                        image="icons/pointers/delete_select_source.gif"/>
+                  <enablement>
+                  	<and>
+                        <property propertyId="FeatureStoreResourceProperty" expectedValue=""/>
+                        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	                     <or>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiLineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.LineString"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPolygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Polygon"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.MultiPoint"/>
+	                        <property propertyId="GeometryType" expectedValue="com.vividsolutions.jts.geom.Point"/>
+	                     </or>
+                     </and>
+                  </enablement>
+               </modalTool>
+               <actionTool
+                     categoryId="net.refractions.udig.tool.category.selection"
+                     class="net.refractions.udig.tools.edit.ClearSelection"
+                     id="net.refractions.udig.tools.clearSelection"
+                     menuPath="edit/additions"
+                     name="%clear.selection.name"
+                     onToolbar="false"
+                     tooltip="%clear.selection.tooltip">
+                  <enablement>
+                    <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+                  </enablement>                     
+               </actionTool>
+               <category
+                     commandId="net.refractions.udig.tool.edit.editCategoryCommand"
+                     id="net.refractions.udig.tool.edit.edit"
+                     name="%editCategory.name"
+                     selectionProvider="net.refractions.udig.tools.edit.EditSelectionProvider"/>
+               <category
+                     commandId="net.refractions.udig.tool.edit.createCategoryCommand"
+                     id="net.refractions.udig.tool.edit.create"
+                     name="%createCategory.name"
+                     selectionProvider="net.refractions.udig.tools.edit.EditSelectionProvider"/>
+               <category
+                     commandId="net.refractions.udig.tool.edit.featureCategoryCommand"
+                     id="net.refractions.udig.tool.edit.feature"
+                     name="%featureCategory.name"
+                     selectionProvider="net.refractions.udig.tools.edit.EditSelectionProvider"/>
+               <toolCursor
+                     hotspotX="10"
+                     hotspotY="10"
+                     id="arrowCursor"
+                     image="icons/pointers/edit_source.gif"/>
+               <toolCursor
+                     hotspotX="5"
+                     hotspotY="5"
+                     id="deleteCursor"
+                     image="icons/pointers/delete_select_source.gif"/>
+               <toolCursor
+                     hotspotX="10"
+                     hotspotY="10"
+                     id="addVertexCursor"
+                     image="icons/pointers/edit_add_source.gif">
+               </toolCursor>
+               <toolCursor
+                     hotspotX="10"
+                     hotspotY="10"
+                     id="deleteVertexCursor"
+                     image="icons/pointers/edit_remove_source.gif">
+               </toolCursor>
+              </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="net.refractions.udig.tools.toolCategory"
+            id="net.refractions.udig.tool.edit.clearAction"
+            name="%cancel.command"/>
+      <command
+            categoryId="net.refractions.udig.tools.toolCategory"
+            id="net.refractions.udig.tool.edit.acceptAction"
+            name="%accept.command"/>
+      <command
+            categoryId="net.refractions.udig.tools.toolCategory"
+            id="net.refractions.udig.tool.edit.createCategoryCommand"
+            name="%createCategory.command"/>
+      <command
+            categoryId="net.refractions.udig.tools.toolCategory"
+            id="net.refractions.udig.tool.edit.editCategoryCommand"
+            name="%editCategory.command"/>
+      <command
+            categoryId="net.refractions.udig.tools.toolCategory"
+            id="net.refractions.udig.tool.edit.featureCategoryCommand"
+            name="%featureCategory.command"/>
+      <command
+            categoryId="net.refractions.udig.tools.toolCategory"
+            id="net.refractions.udig.tool.edit.cycle.snap.behaviour"
+            name="%snapBehaviourCommand.name"/>
+      <command
+            categoryId="net.refractions.udig.tools.toolCategory"
+            id="net.refractions.udig.tool.edit.advanced.edit.command"
+            name="%command.advance.edit.name"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="net.refractions.udig.tool.edit.clearAction"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="ESC"
+            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+      <key
+            commandId="net.refractions.udig.tool.edit.acceptAction"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="ENTER"
+            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+      <key
+            commandId="net.refractions.udig.tool.edit.createCategoryCommand"
+            contextId="net.refractions.udig.project.ui.tool"
+            sequence="C"
+            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+      <key
+            commandId="net.refractions.udig.tool.edit.editCategoryCommand"
+            contextId="net.refractions.udig.project.ui.tool"
+            sequence="E"
+            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+      <key
+            commandId="net.refractions.udig.tool.edit.featureCategoryCommand"
+            contextId="net.refractions.udig.project.ui.tool"
+            sequence="F"
+            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+      <key
+            commandId="net.refractions.udig.tool.edit.cycle.snap.behaviour"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            sequence="M1+SHIFT+S"/>
+      <key
+            commandId="net.refractions.udig.tool.edit.advanced.edit.command"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            sequence="M1+SHIFT+A"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.ui.operation">
+      <operation
+            class="net.refractions.udig.tool.edit.DifferenceOp"
+            enablesFor="2"
+            id="net.refractions.udig.tool.edit.difference"
+            name="%difference.name"
+            targetClass="net.refractions.udig.project.ILayer">
+          <enablement>
+		        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
+	      </enablement>   
+      </operation>
+      <operation
+            class="net.refractions.udig.tool.edit.SplitLineOp"
+            enablesFor="+"
+            id="net.refractions.udig.tool.edit.operation1"
+            menuPath="edit/add.ext"
+            name="%operation.splitLine.name"
+            targetClass="net.refractions.udig.tools.edit.support.Point">
+         <enablement>
+            <and>
+                <property propertyId="net.refractions.udig.tools.edit.CurrentShape.ShapeType" expectedValue="LINE"/>
+			    <property propertyId="net.refractions.udig.project.ui.OpenMap" expectedValue="java.lang.Object"/>
+            </and>
+         </enablement>
+      </operation>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="net.refractions.udig.project.ui.preferences.tool"
+            class="net.refractions.udig.tools.edit.preferences.EditToolPreferences"
+            id="net.refractions.udig.tools.edit.preferences"
+            name="%preferences.edit.tool.name"/>
+      <page
+            category="net.refractions.udig.tools.edit.preferences"
+            class="net.refractions.udig.tools.edit.preferences.PerformancelPreferences"
+            id="net.refractions.udig.tool.edit.preference.performance"
+            name="%preferences.edit.tool.performance.name"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="net.refractions.udig.tools.edit.preferences.PreferenceInitializer"/>
+   </extension>
+   <extension
+         point="net.refractions.udig.ui.objectProperty">
+      <object targetClass="java.lang.Object">
+         <property
+               id="CurrentShape.ShapeType"
+               class="net.refractions.udig.tool.edit.CurrentShapeTypePropertyValue"/>
+      </object>
+   </extension>
+         <extension
+               point="net.refractions.udig.project.mapInterceptor">
+            <mapClosing
+                  class="net.refractions.udig.tools.edit.support.DisposeBlackboardOnCloseInterceptor"
+                  id="net.refractions.udig.tool.edit.mapClosing1"
+                  name="Dispose EditBlackboards on close.">
+            </mapClosing>
+         </extension>
+   </plugin>

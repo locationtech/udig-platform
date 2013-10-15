@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         id="BasicGridCoverageRenderer"
+         name="BasicGridCoverageRenderer"
+         point="net.refractions.udig.project.renderer">
+      <renderer
+            class="net.refractions.udig.render.internal.gridcoverage.basic.GridCoverageReaderMetricsFactory"
+            id="reader"
+            name="Grid Coverage Reader Renderer">
+         <description>
+            %renderer.desc
+         </description>
+         %renderer.desc
+      </renderer>
+      <renderer
+            class="net.refractions.udig.render.internal.gridcoverage.basic.MemoryGridCoverageMetricsFactory"
+            id="memory"
+            name="Grid Coverage Memory Renderer">
+         <description>
+            %renderer.desc
+         </description>
+         %renderer.desc
+      </renderer>
+     </extension>
+     <extension
+           point="net.refractions.udig.project.ui.tool">
+        <modalTool
+              categoryId="net.refractions.udig.tool.category.info"
+              class="net.refractions.udig.render.gridcoverage.tool.info.MoasicInfoTool"
+              icon="icons/etool16/mosaic_mode.gif"
+              id="net.refractions.udig.render.gridcoverage.tool.info.mosaicInfoTool"
+              name="%mosaicinfo.name"
+              onToolbar="true"
+              toolCursorId="mosaicInfoCursor"
+              tooltip="%mosaicinfo.tooltip">
+           <cursor
+                 hotspotX="5"
+                 hotspotY="5"
+                 image="icons/pointer/info_source.png">
+           </cursor>
+           <enablement>
+              <adaptsTo
+                    target="org.geotools.coverage.grid.io.AbstractGridCoverage2DReader">
+              </adaptsTo>
+           </enablement>
+        </modalTool>
+        <toolCursor
+              hotspotX="5"
+              hotspotY="5"
+              id="mosaicInfoCursor"
+              image="icons/pointer/info_source.png">
+        </toolCursor>
+     </extension>
+     <extension
+           point="org.eclipse.ui.views">
+        <view
+              allowMultiple="false"
+              category="net.refractions.udig.project.ui.project"
+              class="net.refractions.udig.render.gridcoverage.tool.info.internal.MosaicInfoView"
+              id="net.refractions.udig.render.gridcoverage.view.infoView"
+              name="%mosaicInfoView.name"
+              restorable="true">
+           <description>
+              description body text
+           </description>
+        </view>
+     </extension>
+
+</plugin>

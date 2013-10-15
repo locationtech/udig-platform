@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test Plug-in
+Bundle-SymbolicName: net.refractions.udig.location.test
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: net.refractions.udig.location.test.TestPlugin
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.junit;bundle-version="[4.0.0,5.0.0)",
+ org.apache.ant,
+ net.refractions.udig.libs,
+ net.refractions.udig.location
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

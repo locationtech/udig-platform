@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.refractions</groupId>
+    <artifactId>udig-tycho</artifactId>
+    <version>1.4.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <description>
+        This is the base uDig pom that controls the version numbers
+        used by the nightly build process.
+    </description>
+    <prerequisites>
+        <maven>3.0</maven>
+    </prerequisites>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <java-version>1.6</java-version>
+        <tycho-version>0.16.0</tycho-version>
+        <tycho-extras-version>0.16.0</tycho-extras-version>
+    </properties>
+
+    <!--
+        We need to ask you to download some libs prior to doing a full build:
+        simply run here at the same level the following commend to download libraries:
+       
+           mvn clean package -f pom-libs.xml
+
+        In addition its required to build some bundles (JAI/ImageIO) before building this project. 
+        Bundles will be installed into the maven repository and will be resolved because of the 
+        following option for target-platform-configuration:
+
+        <pomDependencies>consider</pomDependencies>
+
+        Simply run:
+           mvn clean install -f libs/jai-imageio/pom.xml 
+
+        Our maven tests require a bit more memory:
+           export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
+
+        Once that is done you can run a full build on the command line:
+           mvn install -Dall
+
+        If you run into any problems (to list debug and stack trace)
+           mvn -Dall -e -X install
+
+        Please note the Tycho maven plugin used to build RCP projects is a a work in progress; you
+        will do better to review the stack trace with a checkout of the Tycho code in hand as the
+        error messages are often misleading and evil.
+
+        The build supports the use of profiles - the following profiles are defined:
+
+        To quickly build the product (result is in features/net.refractions.udig-product/target):
+           mvn install -Pproduct
+
+        Builds documentation (requires sphinx-build is installed):
+          mvn install -Pdocs
+
+        Gathers the tutorials and source code for the software developers kit
+          mvn install -Dall -Psdk
+
+        To run a full build with tests:
+          mvn install -Dall -Ptest
+          
+        To run a full build with user interfaces tests (requires a display):
+          mvn install -Dall -Ptest,test-ui
+
+        To profile the tests you will need:
+          mvn install -Ptest -Pprofile
+
+        Gathers the plugins that are not included in the default product 
+          mvn install -Ppending (included by -Dall)
+          
+        Includes the udig and community sites:
+           -Psite
+
+        Includes the ossim feaure (this may be dead code) 
+          -Possim
+    -->
+
+    <profiles>
+        <profile>
+            <id>docs</id>
+            <modules>
+                <module>docs</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>coverage</id>
+            <activation>
+                <property>
+                    <name>coverage</name>
+                </property>
+            </activation>
+            <properties>
+                <emma.session.out.file>${project.build.directory}/emma/${project.artifactId}.es</emma.session.out.file>
+                <emma.filter>se.mattiasholmqvist.*</emma.filter>
+                <eclemma.instrument.bundles>se.mattiasholmqvist.tychoexamples.bundle</eclemma.instrument.bundles>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>attach-artifacts</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>attach-artifact</goal>
+                                </goals>
+                                <configuration>
+                                    <artifacts>
+                                        <artifact>
+                                            <file>${emma.session.out.file}</file>
+                                            <type>es</type>
+                                        </artifact>
+                                    </artifacts>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.eclipse.tycho</groupId>
+                        <artifactId>tycho-surefire-plugin</artifactId>
+                        <version>${tycho-version}</version>
+                        <configuration>
+                            <systemProperties combine.children="append">
+                                <eclemma.help>true</eclemma.help>
+                                <emma.session.out.file>${emma.session.out.file}</emma.session.out.file>
+                                <emma.filter>${emma.filter}</emma.filter>
+                                <eclemma.instrument.bundles>${eclemma.instrument.bundles}</eclemma.instrument.bundles>
+                            </systemProperties>
+                            <frameworkExtensions>
+                                <frameworkExtension>
+                                    <groupId>se.mattiasholmqvist.tychoexamples</groupId>
+                                    <artifactId>eclemma.runtime.equinox</artifactId>
+                                    <version>1.1.0.200908261008</version>
+                                </frameworkExtension>
+                            </frameworkExtensions>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>mac-os</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+            <properties>
+                <tycho.test.OSspecific>-XstartOnFirstThread</tycho.test.OSspecific>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>other-os</id>
+            <activation>
+                <os>
+                    <family>!mac</family>
+                </os>
+            </activation>
+            <properties>
+                <tycho.test.OSspecific />
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-maven-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <extensions>true</extensions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>target-platform-configuration</artifactId>
+                <version>${tycho-version}</version>
+                <configuration>
+                    <!-- target from sub-module eclipse-target-definition project -->
+                    <target>
+                        <artifact>
+                            <groupId>net.refractions.udig-target</groupId>
+                            <artifactId>udig-indigo-target</artifactId>
+                            <version>3.7</version>
+                        </artifact>
+                    </target>
+                    <resolver>p2</resolver>
+                    <dependency-resolution>
+                        <optionalDependencies>ignore</optionalDependencies>
+                    </dependency-resolution>
+                    <!-- filter out optional dependency -->
+                    <!-- currently allowed in until jconsole is fixed
+                    <filters>
+                       <filter>
+                          <type>eclipse-plugin</type>
+                          <id>org.eclipse.ui.ide</id>
+                          <removeAll/>
+                       </filter>
+                    </filters> 
+                    -->
+                    <!-- example 3: work around Equinox bug 348045 -->
+                    <filters>
+                        <filter>
+                            <type>eclipse-plugin</type>
+                            <id>org.eclipse.jdt.core</id>
+                            <removeAll/>
+                        </filter>
+                    </filters>
+
+                    <pomDependencies>consider</pomDependencies>
+
+                    <environments>
+                        <environment>
+                            <os>win32</os>
+                            <ws>win32</ws>
+                            <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>win32</os>
+                            <ws>win32</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                        <environment>
+                            <os>linux</os>
+                            <ws>gtk</ws>
+                            <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>linux</os>
+                            <ws>gtk</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                        <environment>
+                            <os>macosx</os>
+                            <ws>cocoa</ws>
+                            <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>macosx</os>
+                            <ws>cocoa</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                    </environments>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-compiler-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <configuration>
+                    <source>${java-version}</source>
+                    <target>${java-version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-source-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <executions>
+                    <execution>
+                        <id>plugin-source</id>
+                        <goals>
+                            <goal>plugin-source</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>the-execution-id</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-surefire-plugin</artifactId>
+                    <version>${tycho-version}</version>
+                    <configuration>
+                        <useUIHarness>true</useUIHarness>
+                        <product>net.refractions.udig-product</product>
+                        <argLine>-Xmx1024m -XX:MaxPermSize=256m -Dlauncher.suppressErrors -Dsdtcore.headless ${tycho.test.OSspecific}</argLine>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <reporting>
+        <plugins>
+            <!-- Code coverage report -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.2</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>2.1</version>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <modules>
+        <module>targets</module>
+        <module>plugins</module>
+        <module>features</module>
+    </modules>
+</project>

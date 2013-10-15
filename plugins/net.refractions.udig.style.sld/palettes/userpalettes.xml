@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type>
+<name>Custom</name>
+<description>Custom user added palettes.</description>
+<!--
+<samples>
+ <sample size="2">5,8</sample>
+ <sample size="3">2,5,8</sample>
+ <sample size="4">1,4,6,9</sample>
+ <sample size="5">1,4,6,8,10</sample>
+ <sample size="6">0,2,5,7,10,12</sample>
+ <sample size="7">0,2,5,6,8,10,12</sample>
+ <sample size="8">0,2,3,5,6,9,10,11</sample>
+ <sample size="9">0,2,3,5,6,7,9,10,12</sample>
+</samples>
+-->
+<palettes>
+ <palette>
+  <name>Corinne</name>
+  <description>The official corinne landcover colortable</description>
+  <colors>
+230,000,077:
+255,000,000:
+204,077,242:
+204,000,000:
+230,204,204:
+230,204,230:
+166,000,204:
+166,077,000:
+255,077,255:
+255,166,255:
+255,230,255:
+255,255,168:
+255,255,000:
+230,230,000:
+230,128,000:
+242,166,077:
+230,166,000:
+230,230,077:
+255,230,166:
+255,230,077:
+230,204,077:
+242,204,166:
+128,255,000:
+000,166,000:
+077,255,000:
+204,242,077:
+166,255,128:
+166,230,077:
+166,242,000:
+230,230,230:
+204,204,204:
+204,255,204:
+000,000,000:
+166,230,204:
+166,166,255:
+077,077,255:
+204,204,255:
+230,230,255:
+166,166,230:
+000,204,242:
+128,242,230:
+000,255,166:
+166,255,230:
+230,242,255:
+230,242,255
+  </colors>
+  <!--
+  <suitability>
+   <scheme size="2">G,G,D,G,G,G</scheme>
+   <scheme size="3">G,G,D,G,G,G</scheme>
+   <scheme size="4">G,G,D,D,D,G</scheme>
+   <scheme size="5">G,D,D,D,D,D</scheme>
+   <scheme size="6">G,B,B,B,B,D</scheme>
+   <scheme size="7">G,B,B,B,B,B</scheme>
+   <scheme size="8">G,B,B,B,B,B</scheme>
+   <scheme size="9">G,B,B,B,B,B</scheme>
+  </suitability>
+  -->
+ </palette>
+</palettes>
+</type>

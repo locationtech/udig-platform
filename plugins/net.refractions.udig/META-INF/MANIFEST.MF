@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: net.refractions.udig; singleton:=true
+Bundle-Version: 1.4.0.qualifier
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ net.refractions.udig.ui,
+ org.eclipse.core.expressions,
+ org.eclipse.ui.intro,
+ net.refractions.udig.browser
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

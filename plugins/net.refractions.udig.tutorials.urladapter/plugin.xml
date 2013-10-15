@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="net.refractions.udig.tutorials.urladapter.operation"
+         name="urlOperations"
+         point="net.refractions.udig.ui.operation">
+      <operation
+            categoryId="net.refractions.udig.project.ui.informationOperations"
+            class="net.refractions.udig.tutorials.urladapter.DisplayURLOp"
+            id="net.refractions.udig.tutorials.urladapter.operation"
+            name="Display URL"
+            targetClass="java.net.URL">
+      </operation>
+   </extension>
+   <extension
+         id="net.refractions.udig.tutorials.urladapter.adapters"
+         name="urlAdapters"
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="net.refractions.udig.catalog.IGeoResource"
+            class="net.refractions.udig.tutorials.urladapter.URLAdapterFactory">
+         <adapter
+               type="java.net.URL">
+         </adapter>
+      </factory>
+	  <factory
+            adaptableType="net.refractions.udig.catalog.IService"
+            class="net.refractions.udig.tutorials.urladapter.URLAdapterFactory">
+         <adapter
+               type="java.net.URL">
+         </adapter>
+      </factory>
+   </extension>
+
+</plugin>

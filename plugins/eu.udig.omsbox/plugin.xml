@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="eu.udig.omsbox.category"
+            name="Spatial Toolbox">
+      </category>
+      <view
+            allowMultiple="false"
+            category="eu.udig.omsbox.category"
+            class="eu.udig.omsbox.view.OmsBoxView"
+            fastViewWidthRatio="0.30"
+            icon="icons/blocks.gif"
+            id="eu.udig.omsbox.view.OmsBoxView"
+            name="Spatial Toolbox"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.viewActions">
+      <viewContribution
+            id="eu.udig.omsbox.viewContribution"
+            targetID="eu.udig.omsbox.view.OmsBoxView">
+         <action
+               class="eu.udig.omsbox.view.actions.OmsBoxSettingsAction"
+               icon="icons/settings.gif"
+               id="eu.udig.omsbox.view.actions.OmsBoxSettingsAction"
+               label="Open Settings"
+               style="push"
+               toolbarPath="omsboxtoolbar"
+               tooltip="Open the settings panel">
+         </action>
+         <action
+               class="eu.udig.omsbox.view.actions.OmsScriptGenerationAction"
+               icon="icons/generate_script.gif"
+               id="eu.udig.omsbox.view.actions.OmsScriptGenerationAction"
+               label="Generate Script"
+               style="push"
+               toolbarPath="omsboxtoolbar"
+               tooltip="Generate a script without running it">
+         </action>
+         <action
+               class="eu.udig.omsbox.view.actions.OmsScriptExecutionAction"
+               icon="icons/run_script.gif"
+               id="eu.udig.omsbox.view.actions.OmsScriptExecutionAction"
+               label="Run Script"
+               style="push"
+               toolbarPath="omsboxtoolbar"
+               tooltip="Run a script file">
+         </action>
+         <action
+               class="eu.udig.omsbox.view.actions.OmsModelsExecutionAction"
+               icon="icons/run_module.gif"
+               id="eu.udig.omsbox.view.actions.OmsModelsExecutionAction"
+               label="Run Module"
+               style="push"
+               toolbarPath="omsboxtoolbar"
+               tooltip="Run the selected module">
+         </action>
+         <action
+               class="eu.udig.omsbox.view.actions.OmsStopExecutionAction"
+               icon="icons/stop_module.gif"
+               id="eu.udig.omsbox.view.actions.OmsStopExecutionAction"
+               label="Stop process"
+               style="push"
+               toolbarPath="omsboxtoolbar"
+               tooltip="Stop a running process">
+         </action>
+         <action
+               class="eu.udig.omsbox.view.actions.ProcessingRegionToggleAction"
+               disabledIcon="icons/processingregion_disabled.png"
+               icon="icons/processingregion.png"
+               id="eu.udig.omsbox.view.actions.ProcessingRegionToggleAction"
+               label="Toggle processing region"
+               state="false"
+               style="toggle"
+               toolbarPath="omsboxtoolbar"
+               tooltip="Consider/Ignore the processing region in the modules">
+         </action>
+      </viewContribution>
+   </extension>
+   <extension
+         point="net.refractions.udig.mapgraphic.mapgraphic">
+      <mapGraphic
+            class="eu.udig.omsbox.processingregion.ProcessingRegionMapGraphic"
+            icon="icons/processingregion.png"
+            id="eu.udig.omsbox.processingregion.ProcessingRegionMapGraphic"
+            name="Processing Region">
+      </mapGraphic>
+      <mapGraphic
+            class="eu.udig.omsbox.processingregion.AOILayerDecorator"
+            icon="icons/aoi_mode.png"
+            id="eu.udig.omsbox.processingregion.aoiLayerDecorator"
+            name="Area of Interest">
+      </mapGraphic>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.style">
+      <style
+            class="eu.udig.omsbox.processingregion.ProcessingRegionStyleContent"
+            id="eu.udig.omsbox.processingregion.ProcessingRegionStyleContent"
+            name="Processing Region Style">
+      </style>
+   </extension>
+   <extension
+         point="net.refractions.udig.style.styleConfigurator">
+      <styleConfigurator
+            class="eu.udig.omsbox.processingregion.ProcessingRegionGraphicStyleConfigurator"
+            id="processingregion"
+            label="Processing Region Settings"
+            requires="eu.udig.omsbox.processingregion.ProcessingRegionMapGraphic"
+            styleId="eu.udig.omsbox.processingregion.ProcessingRegionStyleContent">
+      </styleConfigurator>
+   </extension>
+   <extension
+         point="net.refractions.udig.project.ui.tool">
+      <modalTool
+            categoryId="eu.hydrologis.jgrass.tools.category"
+            class="eu.udig.omsbox.processingregion.ProcessingRegionBBoxSelection"
+            icon="icons/processingregion.png"
+            id="eu.udig.omsbox.processingregion.ProcessingRegionBBoxSelection"
+            name="Processing Region Box Selection"
+            onToolbar="true"
+            toolCursorId="bboxactiveregion"
+            tooltip="Processing Region Box Selection">
+         <cursor
+               hotspotX="10"
+               hotspotY="10"
+               id="bboxactiveregion"
+               image="icons/select_source.png">
+         </cursor>
+      </modalTool>
+      <toolCursor
+            hotspotX="10"
+            hotspotY="10"
+            id="bboxactiveregion"
+            image="icons/select_source.png">
+      </toolCursor>
+   </extension>
+   <extension
+         point="net.refractions.udig.ui.aoi">
+      <aoi
+            class="eu.udig.omsbox.processingregion.ProcessingRegionAOIStrategy"
+            id="eu.udig.omsbox.processingregion.aoi"
+            name="Processing Region">
+      </aoi>
+   </extension>
+</plugin>

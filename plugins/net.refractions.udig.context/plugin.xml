@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         id="context.export.wiz"
+         name="Context Export Wizards"
+         point="org.eclipse.ui.exportWizards">
+      <wizard
+            class="net.refractions.udig.context.internal.ContextExportWizard"
+            icon="icons/obj16/ows_context_obj.gif"
+            id="net.refractions.udig.context.export.wizard"
+            name="%export.ows.context.name">
+         <description>
+            %export.wizard.desc
+         </description>
+         <selection
+               class="net.refractions.udig.project.IMap"
+               />
+      </wizard>
+   </extension>
+   <extension
+         id="context.import.wiz"
+         name="Context Import Wizards"
+         point="org.eclipse.ui.importWizards">
+      <wizard
+            class="net.refractions.udig.context.internal.ContextImportWizard"
+            icon="icons/obj16/ows_context_obj.gif"
+            id="net.refractions.udig.context.import.wizard"
+            name="%import.ows.context.name">
+         <description>
+            %import.wizard.desc
+         </description>
+      </wizard>
+   </extension>
+
+</plugin>

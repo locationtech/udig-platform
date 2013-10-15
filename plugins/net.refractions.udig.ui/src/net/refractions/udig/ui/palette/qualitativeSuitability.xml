@@ -1,0 +1,119 @@
+<type>
+	<scheme>
+		<schemeName>Accent</schemeName>
+		<a>BAD, DOUBTFUL, GOOD, GOOD, GOOD, DOUBTFUL</a>
+	    <b>BAD, DOUBTFUL, GOOD, GOOD, GOOD, DOUBTFUL</b>
+	    <c>BAD, DOUBTFUL, GOOD, GOOD, GOOD, DOUBTFUL</c>
+	    <d>BAD, DOUBTFUL, GOOD, GOOD, GOOD, DOUBTFUL</d>
+	    <e>BAD, DOUBTFUL, GOOD, GOOD, GOOD, DOUBTFUL</e>
+	    <f>BAD, DOUBTFUL, GOOD, GOOD, GOOD, DOUBTFUL</f>
+	    <g>BAD, DOUBTFUL, GOOD, GOOD, GOOD, DOUBTFUL</g>
+	    <h>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</h>
+	    <i>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</i>
+	    <j>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</j>
+	    <k>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</k>
+	</scheme>
+	<scheme>
+		<schemeName>Set1</schemeName>
+		<a>GOOD, DOUBTFUL, GOOD, GOOD, GOOD, DOUBTFUL</a>
+		<b>GOOD, DOUBTFUL, GOOD, GOOD, GOOD, DOUBTFUL</b>
+	    <c>GOOD, BAD, GOOD, GOOD, GOOD, BAD</c>
+	    <d>GOOD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</d>
+	    <e>GOOD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</e>
+	    <f>GOOD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</f>
+	    <g>GOOD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</g>
+	    <h>GOOD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</h>
+	    <i>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</i>
+	    <j>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</j>
+	    <k>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</k>
+	</scheme>
+	<scheme>
+		<schemeName>Set2</schemeName>
+		<a>GOOD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</a>
+	    <b>GOOD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</b>
+	    <c>BAD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</c>
+	    <d>BAD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</d>
+	    <e>BAD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</e>
+	    <f>BAD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</f>
+	    <g>BAD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</g>
+	    <h>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</h>
+	    <i>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</i>
+	    <j>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</j>
+	    <k>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</k>
+	</scheme>
+	<scheme>
+		<schemeName>Set3</schemeName>
+		<a>GOOD, DOUBTFUL, GOOD, DOUBTFUL, GOOD, DOUBTFUL</a>
+	    <b>GOOD, DOUBTFUL, GOOD, DOUBTFUL, GOOD, DOUBTFUL</b>
+	    <c>GOOD, DOUBTFUL, GOOD, DOUBTFUL, GOOD, DOUBTFUL</c>
+	    <d>BAD, DOUBTFUL, GOOD, DOUBTFUL, GOOD, DOUBTFUL</d>
+	    <e>BAD, DOUBTFUL, GOOD, DOUBTFUL, GOOD, DOUBTFUL</e>
+	    <f>BAD, DOUBTFUL, GOOD, DOUBTFUL, DOUBTFUL, DOUBTFUL</f>
+	    <g>BAD, DOUBTFUL, GOOD, DOUBTFUL, DOUBTFUL, GOOD</g>
+	    <h>BAD, DOUBTFUL, DOUBTFUL, DOUBTFUL, DOUBTFUL, DOUBTFUL</h>
+	    <i>BAD, BAD, DOUBTFUL, BAD, DOUBTFUL, DOUBTFUL</i>
+	    <j>BAD, BAD, BAD, BAD, GOOD, DOUBTFUL</j>
+	    <k>BAD, BAD, BAD, BAD, BAD, BAD</k>
+	    <l>BAD, BAD, BAD, BAD, BAD, BAD</l>
+	</scheme>
+	<scheme>
+		<schemeName>Dark2</schemeName>
+		<a>GOOD, BAD, GOOD, GOOD, GOOD, DOUBTFUL</a>
+	    <b>GOOD, BAD, GOOD, GOOD, GOOD, DOUBTFUL</b>
+	    <c>GOOD, BAD, GOOD, GOOD, GOOD, DOUBTFUL</c>
+	    <d>GOOD, BAD, GOOD, GOOD, GOOD, DOUBTFUL</d>
+	    <e>GOOD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</e>
+	    <f>GOOD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</f>
+	    <g>GOOD, BAD, BAD, BAD, BAD, DOUBTFUL</g>
+	    <h>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</h>
+	    <i>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</i>
+	    <j>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</j>
+	    <k>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</k>
+	</scheme>
+	<scheme>
+		<schemeName>Paired</schemeName>
+		<a>GOOD, BAD, GOOD, GOOD, GOOD, BAD</a>
+	    <b>GOOD, BAD, GOOD, GOOD, GOOD, BAD</b>
+	    <c>GOOD, BAD, GOOD, GOOD, GOOD, BAD</c>
+	    <d>GOOD, BAD, GOOD, GOOD, GOOD, BAD</d>
+	    <e>GOOD, BAD, GOOD, GOOD, GOOD, DOUBTFUL</e>
+	    <f>BAD, BAD, GOOD, GOOD, GOOD, DOUBTFUL</f>
+	    <g>BAD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</g>
+	    <h>BAD, BAD, GOOD, GOOD, GOOD, DOUBTFUL</h>
+	    <i>BAD, BAD, GOOD, GOOD, GOOD, DOUBTFUL</i>
+	    <j>BAD, BAD, GOOD, DOUBTFUL, GOOD, BAD</j>
+	    <k>BAD, BAD, BAD, BAD, BAD, BAD</k>	
+	    <l>BAD, BAD, BAD, BAD, BAD, BAD</l>
+	</scheme>
+	<scheme>
+		<schemeName>Pastel1</schemeName>
+		<a>GOOD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</a>
+	    <b>GOOD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</b>
+	    <c>BAD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</c>
+	    <d>BAD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</d>
+	    <e>BAD, BAD, GOOD, DOUBTFUL, GOOD, DOUBTFUL</e>
+	    <f>BAD, BAD, DOUBTFUL, DOUBTFUL, GOOD, DOUBTFUL</f>
+	    <g>BAD, BAD, BAD, BAD, DOUBTFUL, DOUBTFUL</g>
+	    <h>BAD, BAD, BAD, BAD, DOUBTFUL, DOUBTFUL</h>
+	    <i>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</i>
+	    <j>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</j>
+	    <k>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</k>
+	</scheme>
+	<scheme>
+		<schemeName>Pastel2</schemeName>
+		<a>GOOD, BAD, DOUBTFUL, DOUBTFUL, DOUBTFUL, DOUBTFUL</a>
+	    <b>GOOD, BAD, DOUBTFUL, DOUBTFUL, DOUBTFUL, DOUBTFUL</b>
+	    <c>BAD, BAD, DOUBTFUL, DOUBTFUL, DOUBTFUL, DOUBTFUL</c>
+	    <d>BAD, BAD, DOUBTFUL, DOUBTFUL, DOUBTFUL, DOUBTFUL</d>
+	    <e>BAD, BAD, BAD, BAD, DOUBTFUL, GOOD</e>
+	    <f>BAD, BAD, BAD, BAD, BAD, BAD</f>
+	    <g>BAD, BAD, BAD, BAD, BAD, BAD</g>
+	    <h>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</h>
+	    <i>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</i>
+	    <j>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</j>
+	    <k>GOOD, GOOD, GOOD, GOOD, GOOD, GOOD</k>
+	</scheme>
+</type>
+	
+
+		

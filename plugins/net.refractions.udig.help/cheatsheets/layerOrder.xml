@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Layer View">
+  <intro>
+    <description>
+    	The Layers view shows the layers displayed on the current Map, we can use this view to control how they are displayed.
+    	<br/><br/>
+    	To complete this cheat sheet you need to have a minimum of two layers added to a map.
+	</description>
+  </intro>  
+  <item title="Layer Order">
+     <description>
+		Like other views in the Workbench, the Layer view has its own tool bar. Tool bar buttons are provided for moving a layer up or down in the rendering context.
+		<br/><br/>
+		Select the layer at the bottom of the layer view.
+		<br/><br/>
+		<b>Example:</b> countries
+	</description>
+  
+  </item>
+  
+  <item title="Order Up">
+     <description>
+		<b>Click</b> the <b>Up Arrow</b> to move the selected layer towards the top of the view, changing its z order on the map and allowing it to be drawn on top of layers further down in the list.
+	</description>
+  
+  </item>
+  
+  <item title="Order Down">
+     <description>
+     Similarly <b>Click</b> the <b>Down Arrow</b> to move the selected layer towards the bottom of the view, changing its z order on the map and allowing it to be drawn under layers further up in the list.
+	</description>
+  
+  </item>
+  
+  <item title="Drag and Drop" 
+  	href="/net.refractions.udig.help/EN/Drag andDrop.html">
+     <description>
+     In addition to using the up and down arrows you can also drag and drop layers to change the order. 
+     <br/><br/>
+     <b>Drag</b> the layer from the top of the layer list to the bottom of the layer list to change its draw order on the map.
+	</description>
+  
+  </item>
+</cheatsheet>

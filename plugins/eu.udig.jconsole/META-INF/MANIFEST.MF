@@ -1,0 +1,32 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JConsole Plugin
+Bundle-SymbolicName: eu.udig.jconsole;singleton:=true
+Bundle-Version: 1.4.0.qualifier
+Bundle-Activator: eu.udig.jconsole.JConsolePlugin
+Bundle-Vendor: HydroloGIS s.r.l.
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.jface.text,
+ org.eclipse.ui.views,
+ org.eclipse.ui.console,
+ org.eclipse.ui.workbench.texteditor,
+ org.eclipse.ui.editors,
+ org.eclipse.core.resources,
+ org.eclipse.core.filesystem,
+ net.refractions.udig.libs,
+ eu.udig.omsbox,
+ net.refractions.udig.ui,
+ net.refractions.udig.project,
+ net.refractions.udig.catalog,
+ net.refractions.udig.catalog.rasterings,
+ net.refractions.udig.catalog.ui,
+ net.refractions.udig.project.ui,
+ net.refractions.udig.mapgraphic,
+ eu.udig.catalog.jgrass
+Bundle-ActivationPolicy: lazy
+Eclipse-BuddyPolicy: global
+Eclipse-AutoStart: true 
+Bundle-ClassPath: .
+Export-Package: .
+

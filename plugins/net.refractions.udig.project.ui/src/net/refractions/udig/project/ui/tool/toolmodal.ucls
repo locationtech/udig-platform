@@ -1,0 +1,99 @@
+<class-diagram generalizations="true" realizations="true" associations="true" dependencies="false" 
+  nesting-relationships="true">  
+  <classifier-display autosize="true" package="true" attributes="false" operations="true" initial-value="false" 
+    signature="true" visibility="true"/>  
+  <association-display labels="true" multiplicity="true"/>  
+  <class type="java" name="net.refractions.udig.project.ui.tool.AbstractModalTool" 
+    project="net.refractions.udig.project.ui" 
+    file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/AbstractModalTool.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="true" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="717" y="231" width="-1" height="-1"/>  
+  </class>  
+  <class type="java" name="net.refractions.udig.project.ui.tool.SimpleTool" project="net.refractions.udig.project.ui" 
+    file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/SimpleTool.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="true" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="717" y="535" width="-1" height="-1"/>  
+  </class>  
+  <class type="java" name="net.refractions.udig.project.ui.tool.AbstractTool" project="net.refractions.udig.project.ui" 
+    file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/AbstractTool.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="true" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="427" y="356" width="-1" height="-1"/>  
+  </class>  
+  <class type="java" name="net.refractions.udig.project.ui.tool.AbstractActionTool" 
+    project="net.refractions.udig.project.ui" 
+    file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/AbstractActionTool.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="true" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="159" y="230" width="-1" height="-1"/>  
+  </class>  
+  <interface type="java" name="net.refractions.udig.project.ui.tool.ActionTool" 
+    project="net.refractions.udig.project.ui" 
+    file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/ActionTool.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="true" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="159" y="51" width="-1" height="-1"/>  
+  </interface>  
+  <interface type="java" name="net.refractions.udig.project.ui.tool.Tool" project="net.refractions.udig.project.ui" 
+    file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/Tool.java" corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="false" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="427" y="50" width="-1" height="-1"/>  
+  </interface>  
+  <interface type="java" name="net.refractions.udig.project.ui.tool.ModalTool" project="net.refractions.udig.project.ui" 
+    file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/ModalTool.java" 
+    corner="BOTTOM_RIGHT">    
+    <display autosize="true" package="true" attributes="false" operations="false" initial-value="false" signature="true" 
+      visibility="true"/>    
+    <position x="717" y="51" width="-1" height="-1"/>  
+  </interface>  
+  <generalization>    
+    <source project="net.refractions.udig.project.ui" name="net.refractions.udig.project.ui.tool.SimpleTool" 
+      file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/SimpleTool.java"/>    
+    <target project="net.refractions.udig.project.ui" name="net.refractions.udig.project.ui.tool.AbstractModalTool" 
+      file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/AbstractModalTool.java"/>  
+  </generalization>  
+  <realization>    
+    <source project="net.refractions.udig.project.ui" name="net.refractions.udig.project.ui.tool.AbstractActionTool" 
+      file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/AbstractActionTool.java"/>    
+    <target project="net.refractions.udig.project.ui" name="net.refractions.udig.project.ui.tool.ActionTool" 
+      file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/ActionTool.java"/>  
+  </realization>  
+  <generalization>    
+    <source project="net.refractions.udig.project.ui" name="net.refractions.udig.project.ui.tool.ModalTool" 
+      file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/ModalTool.java"/>    
+    <target project="net.refractions.udig.project.ui" name="net.refractions.udig.project.ui.tool.Tool" 
+      file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/Tool.java"/>  
+  </generalization>  
+  <generalization>    
+    <source project="net.refractions.udig.project.ui" name="net.refractions.udig.project.ui.tool.ActionTool" 
+      file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/ActionTool.java"/>    
+    <target project="net.refractions.udig.project.ui" name="net.refractions.udig.project.ui.tool.Tool" 
+      file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/Tool.java"/>  
+  </generalization>  
+  <realization>    
+    <source project="net.refractions.udig.project.ui" name="net.refractions.udig.project.ui.tool.AbstractTool" 
+      file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/AbstractTool.java"/>    
+    <target project="net.refractions.udig.project.ui" name="net.refractions.udig.project.ui.tool.Tool" 
+      file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/Tool.java"/>  
+  </realization>  
+  <realization>    
+    <source project="net.refractions.udig.project.ui" name="net.refractions.udig.project.ui.tool.AbstractModalTool" 
+      file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/AbstractModalTool.java"/>    
+    <target project="net.refractions.udig.project.ui" name="net.refractions.udig.project.ui.tool.ModalTool" 
+      file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/ModalTool.java"/>  
+  </realization>  
+  <generalization>    
+    <source project="net.refractions.udig.project.ui" name="net.refractions.udig.project.ui.tool.AbstractModalTool" 
+      file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/AbstractModalTool.java"/>    
+    <target project="net.refractions.udig.project.ui" name="net.refractions.udig.project.ui.tool.AbstractTool" 
+      file="/net.refractions.udig.project.ui/src/net/refractions/udig/project/ui/tool/AbstractTool.java"/>  
+  </generalization>
+</class-diagram>

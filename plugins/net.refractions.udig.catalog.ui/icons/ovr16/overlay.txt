@@ -1,0 +1,88 @@
+STATE: n/a
+TYPE: overlay
+SIZE: 7x pixels wide x 8
+PALETTE: Eclipse 183 colour palette
+
+Overlay 
+-------
+
+Maximum 7 pixels wide x 8 pixels high, always centered.
+
+Icon should have a white outside keyline around it to separate it from the icon it is being appended to. 
+Position of overlay based on what kind of information is being communicated.
+
+Nature Overlay:
+
+  Overlay indicating the "nature" of the object.
+  
+  +--+   Top right of 16x16 icon
+  | A|
+  |  |
+  +--+
+  
+   
+  Only a few project nature overlay icons should be used to prevent crowding in the interface.
+  Quickly identify the type object.
+  
+  The white keyline border is applied around the image to enhance legibility (may use 70% white)
+
+  Example: background layer.
+
+Auxillary Overlay:
+  The auxiliary overlay quickly identifies the status of an object (displayed in all tree views).
+  
+  +--+  Bottom Left of 16x16 icon
+  |  |
+  |A |
+  +--+
+
+  Examples of auxiliary overlays are connected, waiting, warning, error, failure, and success.
+  
+Layer Overlay:
+  Overlays are displayed in the Layer, Info and Document view to identify attributes of an object.
+  
+  +--+    Extend the base 16x16 icon offering positions A, B and C.
+  |  A B
+  |   C
+  +--+
+  
+  It is important to make sure the base object icon can support the addition of overlays without compromising readability.
+  
+  Slots A and B are used to communicate attributes.
+  Slot C is used to communicate double-click "interaction".
+  
+  Example: Document marked with "paperclip" attachment in position A, and "T" in position B to indicate a template
+  and a "+" in position "C" to indicate a new document will be created if they double click.
+
+Session Overlay:
+  Communicate session information (local modifications, status of the current commit and so on). Anything
+  around the possibility of losing work.
+  
+  When displayed in the catalog view position A can be used to how session interaction is handled.
+  
+  Example: mark "dirty" temporary resources that will need to be written out when the application closes.
+  Example: mark "sync" if resource acts in auto-commit mode (and ignores the current transaction)
+  
+  +--+
+  |  |
+  | A|
+  +--+
+  
+  When displayed in the context of a transaction (such as an open Map) the overlay extends the base 16x16 icon.
+  Position A remains dedicated to big picture changes (temporary layers, involved in the current transaction).
+  Position B can get more specific about the nature of the outstanding change.
+  
+  +--+
+  |  B
+  |  A
+  +--+
+  
+  Examples are "added", "deleted", "changed" (or "dirty")
+    
+Underlay
+--------
+
+  Suggested to communicate interaction status.
+  
+  Example: Highlight layers that interact with the current tool.
+  
