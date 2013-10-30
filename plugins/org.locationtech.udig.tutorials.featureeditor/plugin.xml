@@ -2,21 +2,21 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         id="net.refractions.udig.tutorials.featureeditor.views"
+         id="org.locationtech.udig.tutorials.featureeditor.views"
          name="Feature Editor Views"
          point="org.eclipse.ui.views">
       <view
-            class="net.refractions.udig.tutorials.featureeditor.CountryView"
-            id="net.refractions.udig.tutorials.featureeditor.views.country"
+            class="org.locationtech.udig.tutorials.featureeditor.CountryView"
+            id="org.locationtech.udig.tutorials.featureeditor.views.country"
             name="Country">
       </view>
    </extension>
    <extension
-         point="net.refractions.udig.project.ui.featureEditor">
+         point="org.locationtech.udig.project.ui.featureEditor">
       <editor
-            id="net.refractions.udig.tutorials.featureeditor.countriesEditor"
+            id="org.locationtech.udig.tutorials.featureeditor.countriesEditor"
             name="Country"
-            viewId="net.refractions.udig.tutorials.featureeditor.views.country">
+            viewId="org.locationtech.udig.tutorials.featureeditor.views.country">
          <featureType>
             <attribute
                   type="com.vividsolutions.jts.geom.MultiPolygon">
@@ -36,15 +36,15 @@
       </editor>
    </extension>
    <extension
-         id="net.refractions.udig.tutorials.featureeditor.panels"
+         id="org.locationtech.udig.tutorials.featureeditor.panels"
          name="Tutorials Feature Panels"
-         point="net.refractions.udig.project.ui.featurePanel">
+         point="org.locationtech.udig.project.ui.featurePanel">
       <featurePanel
             description="Edit Country information using this handy form."
-            id="net.refractions.udig.tutorials.featureeditor.panels.countryPanel1"
-            labelProvider="net.refractions.udig.tutorials.featureeditor.CountryLabelProvider"
+            id="org.locationtech.udig.tutorials.featureeditor.panels.countryPanel1"
+            labelProvider="org.locationtech.udig.tutorials.featureeditor.CountryLabelProvider"
             name="Country"
-            panel="net.refractions.udig.tutorials.featureeditor.CountryFeaturePanel2"
+            panel="org.locationtech.udig.tutorials.featureeditor.CountryFeaturePanel2"
             title="Country Feature">
          <featureType>
             <attribute
@@ -65,9 +65,9 @@
       </featurePanel>
       <featurePanel
             description="Statistics and facts about this country"
-            id="net.refractions.udig.tutorials.featureeditor.panels.countryPanel2"
+            id="org.locationtech.udig.tutorials.featureeditor.panels.countryPanel2"
             name="Statistics"
-            panel="net.refractions.udig.tutorials.featureeditor.CountryFeaturePanel3"
+            panel="org.locationtech.udig.tutorials.featureeditor.CountryFeaturePanel3"
             title="Statistics">
          <featureType>
             <attribute

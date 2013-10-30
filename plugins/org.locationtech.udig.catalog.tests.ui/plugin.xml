@@ -4,18 +4,18 @@
 
    
    <extension
-         point="net.refractions.udig.catalog.ui.connectionFactory">
-      <factory class="net.refractions.udig.catalog.tests.ui.DummyConnectionFactory"
-            id="net.refractions.udig.catalog.tests.ui.dummyPage"/>
+         point="org.locationtech.udig.catalog.ui.connectionFactory">
+      <factory class="org.locationtech.udig.catalog.tests.ui.DummyConnectionFactory"
+            id="org.locationtech.udig.catalog.tests.ui.dummyPage"/>
       <wizardPage
 		    class=""
             name="Dummy"/>
    </extension>
       
    <extension
-         point="net.refractions.udig.catalog.ui.connectionFactory">
-      <factory class="net.refractions.udig.catalog.tests.ui.DummyMulitResourceConnectionFactory"
-            id="net.refractions.udig.catalog.tests.ui.DummyMulitResourcePage"/>
+         point="org.locationtech.udig.catalog.ui.connectionFactory">
+      <factory class="org.locationtech.udig.catalog.tests.ui.DummyMulitResourceConnectionFactory"
+            id="org.locationtech.udig.catalog.tests.ui.DummyMulitResourcePage"/>
       <wizardPage
 		    class=""
             name="DummyMulitResource"/>

@@ -13,8 +13,8 @@
 <plugin>
 
     <extension
-        point="net.refractions.udig.project.ui.itemProviderAdapterFactories">
-     <itemProviderAdapterFactory class="net.refractions.udig.printing.model.provider.ModelItemProviderAdapterFactory"/>
+        point="org.locationtech.udig.project.ui.itemProviderAdapterFactories">
+     <itemProviderAdapterFactory class="org.locationtech.udig.printing.model.provider.ModelItemProviderAdapterFactory"/>
   </extension>
 
 </plugin>

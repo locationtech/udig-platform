@@ -2,27 +2,27 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         id="net.refractions.udig.tutorials.catalog.csv"
+         id="org.locationtech.udig.tutorials.catalog.csv"
          name="Service Extentions"
-         point="net.refractions.udig.catalog.ServiceExtension">
+         point="org.locationtech.udig.catalog.ServiceExtension">
       <service
-            class="net.refractions.udig.tutorials.catalog.csv.CSVServiceExtension"
-            id="net.refractions.udig.tutorials.catalog.csv.service"
+            class="org.locationtech.udig.tutorials.catalog.csv.CSVServiceExtension"
+            id="org.locationtech.udig.tutorials.catalog.csv.service"
             name="CSV Service Extention">
       </service>
    </extension>
    <extension
-         point="net.refractions.udig.catalog.ui.fileFormat">
+         point="org.locationtech.udig.catalog.ui.fileFormat">
       <fileService
             fileExtension="*.csv"
             name="Comma Seperated Value Files"/>
    </extension>
    <extension
-         point="net.refractions.udig.ui.operation">
+         point="org.locationtech.udig.ui.operation">
       <operation
-            class="net.refractions.udig.tutorials.catalog.csv.internal.SaveCSVOp"
+            class="org.locationtech.udig.tutorials.catalog.csv.internal.SaveCSVOp"
             enablesFor="1"
-            id="net.refractions.udig.tutorials.catalog.csv.operation.save"
+            id="org.locationtech.udig.tutorials.catalog.csv.operation.save"
             name="Save CSV"
             targetClass="org.geotools.data.FeatureSource">
       </operation>

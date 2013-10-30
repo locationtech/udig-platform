@@ -2,52 +2,52 @@
 <?eclipse version="3.0"?>
 <plugin>
    <extension
-         point="net.refractions.udig.mapgraphic.mapgraphic">
+         point="org.locationtech.udig.mapgraphic.mapgraphic">
 		 <mapGraphic
-         class="net.refractions.udig.legend.ui.LegendGraphic"
+         class="org.locationtech.udig.legend.ui.LegendGraphic"
          icon="icons/obj16/legend_obj.gif"
          id="legend"
          name="%legend.name"/>
    </extension>
    <extension
-         point="net.refractions.udig.style.styleConfigurator">
+         point="org.locationtech.udig.style.styleConfigurator">
       <styleConfigurator
-            class="net.refractions.udig.legend.ui.LegendGraphicStyleConfigurator"
+            class="org.locationtech.udig.legend.ui.LegendGraphicStyleConfigurator"
             id="legend"
             label="%legend.style.conf.label"
-            requires="net.refractions.udig.legend.ui.LegendGraphic"
-            styleId="net.refractions.udig.legend.style"/>
+            requires="org.locationtech.udig.legend.ui.LegendGraphic"
+            styleId="org.locationtech.udig.legend.style"/>
       <styleConfigurator
-            class="net.refractions.udig.mapgraphic.style.LocationStyleConfigurator"
-            id="net.refractions.udig.legend.location"
+            class="org.locationtech.udig.mapgraphic.style.LocationStyleConfigurator"
+            id="org.locationtech.udig.legend.location"
             label="%location.label"
-            requires="net.refractions.udig.legend.ui.LegendGraphic"
-            styleId="net.refractions.udig.printing.ui.locationStyle"/>
+            requires="org.locationtech.udig.legend.ui.LegendGraphic"
+            styleId="org.locationtech.udig.printing.ui.locationStyle"/>
       <styleConfigurator
-            class="net.refractions.udig.mapgraphic.style.FontStyleConfigurator"
-            id="net.refractions.udig.legend.ui.style.font"
+            class="org.locationtech.udig.mapgraphic.style.FontStyleConfigurator"
+            id="org.locationtech.udig.legend.ui.style.font"
             label="Font"
-            requires="net.refractions.udig.legend.ui.LegendGraphic"
-            styleId="net.refractions.udig.mapgraphic.style.font">
+            requires="org.locationtech.udig.legend.ui.LegendGraphic"
+            styleId="org.locationtech.udig.mapgraphic.style.font">
       </styleConfigurator>
    </extension>
    <extension
-         point="net.refractions.udig.project.style">
+         point="org.locationtech.udig.project.style">
       <style
-            class="net.refractions.udig.legend.ui.LegendStyleContent"
-            id="net.refractions.udig.legend.legendStyle"
+            class="org.locationtech.udig.legend.ui.LegendStyleContent"
+            id="org.locationtech.udig.legend.legendStyle"
             name="%legend.style.name"/>
    </extension>
       <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
-            id="net.refractions.udig.legend.mapGraphic.action"
+            id="org.locationtech.udig.legend.mapGraphic.action"
             label="%actionset.mapgraphic.label"
             visible="false">
          <action
-               class="net.refractions.udig.legend.ui.actions.LegendAction"
+               class="org.locationtech.udig.legend.ui.actions.LegendAction"
                icon="icons/obj16/legend_obj.gif"
-               id="net.refractions.udig.project.ui.action.addlegend"
+               id="org.locationtech.udig.project.ui.action.addlegend"
                label="%action.addlegend.label"
                menubarPath="layer/mapGraphic.ext"
                style="push"/>
@@ -55,32 +55,32 @@
    </extension>
       <extension
             point="org.eclipse.ui.perspectiveExtensions">
-         <perspectiveExtension targetID="net.refractions.udig.ui.stylePerspective">
-            <actionSet id="net.refractions.udig.legend.mapGraphic.action"/>
+         <perspectiveExtension targetID="org.locationtech.udig.ui.stylePerspective">
+            <actionSet id="org.locationtech.udig.legend.mapGraphic.action"/>
          </perspectiveExtension>
-         <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
-            <actionSet id="net.refractions.udig.legend.mapGraphic.action"/>
+         <perspectiveExtension targetID="org.locationtech.udig.ui.mapPerspective">
+            <actionSet id="org.locationtech.udig.legend.mapGraphic.action"/>
          </perspectiveExtension>
       </extension>
       <extension
-            point="net.refractions.udig.catalog.resolvers">
+            point="org.locationtech.udig.catalog.resolvers">
          <factory
-               class="net.refractions.udig.legend.internal.ResolversFactory"
-               resolveableType="net.refractions.udig.mapgraphic.internal.MapGraphicResource">
+               class="org.locationtech.udig.legend.internal.ResolversFactory"
+               resolveableType="org.locationtech.udig.mapgraphic.internal.MapGraphicResource">
             <resolve
                   type="java.awt.Rectangle">
             </resolve>
          </factory>
       </extension>
        <extension
-            point="net.refractions.udig.project.layerInterceptor">
+            point="org.locationtech.udig.project.layerInterceptor">
          <layerRemoved
-               class="net.refractions.udig.legend.internal.RemoveMapgraphicLayerInterceptor"
-               id="net.refractions.udig.legend.layerRemoved">
+               class="org.locationtech.udig.legend.internal.RemoveMapgraphicLayerInterceptor"
+               id="org.locationtech.udig.legend.layerRemoved">
          </layerRemoved>
          <layerAdded
-               class="net.refractions.udig.legend.internal.AddMapgraphicLayerInterceptor"
-               id="net.refractions.udig.legend.layerAdded">
+               class="org.locationtech.udig.legend.internal.AddMapgraphicLayerInterceptor"
+               id="org.locationtech.udig.legend.layerAdded">
          </layerAdded>
       </extension>
 </plugin>

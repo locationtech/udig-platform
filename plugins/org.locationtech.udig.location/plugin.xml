@@ -5,33 +5,33 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="true"
-            class="net.refractions.udig.location.ui.LocationView"
+            class="org.locationtech.udig.location.ui.LocationView"
             icon="icons/eview16/location.gif"
-            id="net.refractions.udig.location.view"
+            id="org.locationtech.udig.location.view"
             name="%view.name"/>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
-         <viewShortcut id="net.refractions.udig.location.view"/>
+      <perspectiveExtension targetID="org.locationtech.udig.ui.mapPerspective">
+         <viewShortcut id="org.locationtech.udig.location.view"/>
          <view
                closeable="true"
-               id="net.refractions.udig.location.view"
+               id="org.locationtech.udig.location.view"
                moveable="true"
                relationship="stack"
-               relative="net.refractions.udig.catalog.ui.CatalogView"
+               relative="org.locationtech.udig.catalog.ui.CatalogView"
                showTitle="true"
                standalone="true"
                visible="false"/>
       </perspectiveExtension>
-      <perspectiveExtension targetID="net.refractions.udig.ui.stylePerspective">
-         <viewShortcut id="net.refractions.udig.location.view"/>
+      <perspectiveExtension targetID="org.locationtech.udig.ui.stylePerspective">
+         <viewShortcut id="org.locationtech.udig.location.view"/>
          <view
                closeable="true"
-               id="net.refractions.udig.location.view"
+               id="org.locationtech.udig.location.view"
                moveable="true"
                relationship="stack"
-               relative="net.refractions.udig.catalog.ui.CatalogView"
+               relative="org.locationtech.udig.catalog.ui.CatalogView"
                showTitle="true"
                standalone="true"
                visible="true"/>

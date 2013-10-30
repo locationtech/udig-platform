@@ -6,34 +6,34 @@
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
-               class="net.refractions.udig.tutorials.customapp.CustomApp">
+               class="org.locationtech.udig.tutorials.customapp.CustomApp">
          </run>
       </application>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            class="net.refractions.udig.tutorials.customapp.CustomPerspectiveFactory"
+            class="org.locationtech.udig.tutorials.customapp.CustomPerspectiveFactory"
             icon="icons/obj16/world_obj.png"
-            id="net.refractions.udig.tutorials.customapp.perspective"
+            id="org.locationtech.udig.tutorials.customapp.perspective"
             name="Custom Perspective">
       </perspective>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
-            targetID="net.refractions.udig.tutorials.customapp.perspective">
+            targetID="org.locationtech.udig.tutorials.customapp.perspective">
          <actionSet
-               id="net.refractions.udig.project.ui.LayerActions">
+               id="org.locationtech.udig.project.ui.LayerActions">
          </actionSet>
 		 <actionSet
-               id="net.refractions.udig.project.ui.layer.menu">
+               id="org.locationtech.udig.project.ui.layer.menu">
          </actionSet>
          <actionSet
-               id="net.refractions.udig.project.ui.map.menu">
+               id="org.locationtech.udig.project.ui.map.menu">
          </actionSet>
          <actionSet
-               id="net.refractions.udig.project.ui.data.menu">
+               id="org.locationtech.udig.project.ui.data.menu">
          </actionSet>
       </perspectiveExtension>
    </extension>
@@ -41,7 +41,7 @@
          id="customapp"
          point="org.eclipse.core.runtime.products">
       <product
-            application="net.refractions.udig.tutorials.customapp.id1"
+            application="org.locationtech.udig.tutorials.customapp.id1"
             name="Custom">
          <property
                name="windowImages"

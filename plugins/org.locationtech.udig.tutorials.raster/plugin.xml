@@ -17,7 +17,7 @@
                visible="false">
          </separator>
          <command
-               commandId="net.refractions.udig.tutorials.raster.command1"
+               commandId="org.locationtech.udig.tutorials.raster.command1"
                label="Raster Example"
                style="push">
          </command>
@@ -34,8 +34,8 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="net.refractions.udig.tutorials.raster.RasterTutorialHandler"
-            id="net.refractions.udig.tutorials.raster.command1"
+            defaultHandler="org.locationtech.udig.tutorials.raster.RasterTutorialHandler"
+            id="org.locationtech.udig.tutorials.raster.command1"
             name="Raster Example">
       </command>
    </extension>

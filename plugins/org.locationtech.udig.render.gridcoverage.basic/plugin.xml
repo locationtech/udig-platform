@@ -5,9 +5,9 @@
      <extension
          id="BasicGridCoverageRenderer"
          name="BasicGridCoverageRenderer"
-         point="net.refractions.udig.project.renderer">
+         point="org.locationtech.udig.project.renderer">
       <renderer
-            class="net.refractions.udig.render.internal.gridcoverage.basic.GridCoverageReaderMetricsFactory"
+            class="org.locationtech.udig.render.internal.gridcoverage.basic.GridCoverageReaderMetricsFactory"
             id="reader"
             name="Grid Coverage Reader Renderer">
          <description>
@@ -16,7 +16,7 @@
          %renderer.desc
       </renderer>
       <renderer
-            class="net.refractions.udig.render.internal.gridcoverage.basic.MemoryGridCoverageMetricsFactory"
+            class="org.locationtech.udig.render.internal.gridcoverage.basic.MemoryGridCoverageMetricsFactory"
             id="memory"
             name="Grid Coverage Memory Renderer">
          <description>
@@ -26,12 +26,12 @@
       </renderer>
      </extension>
      <extension
-           point="net.refractions.udig.project.ui.tool">
+           point="org.locationtech.udig.project.ui.tool">
         <modalTool
-              categoryId="net.refractions.udig.tool.category.info"
-              class="net.refractions.udig.render.gridcoverage.tool.info.MoasicInfoTool"
+              categoryId="org.locationtech.udig.tool.category.info"
+              class="org.locationtech.udig.render.gridcoverage.tool.info.MoasicInfoTool"
               icon="icons/etool16/mosaic_mode.gif"
-              id="net.refractions.udig.render.gridcoverage.tool.info.mosaicInfoTool"
+              id="org.locationtech.udig.render.gridcoverage.tool.info.mosaicInfoTool"
               name="%mosaicinfo.name"
               onToolbar="true"
               toolCursorId="mosaicInfoCursor"
@@ -58,9 +58,9 @@
            point="org.eclipse.ui.views">
         <view
               allowMultiple="false"
-              category="net.refractions.udig.project.ui.project"
-              class="net.refractions.udig.render.gridcoverage.tool.info.internal.MosaicInfoView"
-              id="net.refractions.udig.render.gridcoverage.view.infoView"
+              category="org.locationtech.udig.project.ui.project"
+              class="org.locationtech.udig.render.gridcoverage.tool.info.internal.MosaicInfoView"
+              id="org.locationtech.udig.render.gridcoverage.view.infoView"
               name="%mosaicInfoView.name"
               restorable="true">
            <description>

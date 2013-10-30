@@ -7,104 +7,104 @@
      <extension-point id="editAction" name="%editAction.label" schema="schema/editAction.exsd"/>
 
    <extension
-         point="net.refractions.udig.printing.ui.templateFactories">
+         point="org.locationtech.udig.printing.ui.templateFactories">
             <template
-            class="net.refractions.udig.printing.ui.internal.template.A4LandscapeTemplate"
-            id="net.refractions.udig.printing.ui.internal.template.A4LandscapeTemplate"
+            class="org.locationtech.udig.printing.ui.internal.template.A4LandscapeTemplate"
+            id="org.locationtech.udig.printing.ui.internal.template.A4LandscapeTemplate"
             name="%A4.landscape.template">
       </template>
       <template
-            class="net.refractions.udig.printing.ui.internal.template.A3LandscapeTemplate"
-            id="net.refractions.udig.printing.ui.internal.template.A3LandscapeTemplate"
+            class="org.locationtech.udig.printing.ui.internal.template.A3LandscapeTemplate"
+            id="org.locationtech.udig.printing.ui.internal.template.A3LandscapeTemplate"
             name="%A3.landscape.template">
       </template>
       <template
-            class="net.refractions.udig.printing.ui.internal.template.A2LandscapeTemplate"
-            id="net.refractions.udig.printing.ui.internal.template.A2LandscapeTemplate"
+            class="org.locationtech.udig.printing.ui.internal.template.A2LandscapeTemplate"
+            id="org.locationtech.udig.printing.ui.internal.template.A2LandscapeTemplate"
             name="%A2.landscape.template">
       </template>
       <template
-            class="net.refractions.udig.printing.ui.internal.template.A1LandscapeTemplate"
-            id="net.refractions.udig.printing.ui.internal.template.A1LandscapeTemplate"
+            class="org.locationtech.udig.printing.ui.internal.template.A1LandscapeTemplate"
+            id="org.locationtech.udig.printing.ui.internal.template.A1LandscapeTemplate"
             name="%A1.landscape.template">
       </template>
       <template
-            class="net.refractions.udig.printing.ui.internal.template.A0LandscapeTemplate"
-            id="net.refractions.udig.printing.ui.internal.template.A0LandscapeTemplate"
+            class="org.locationtech.udig.printing.ui.internal.template.A0LandscapeTemplate"
+            id="org.locationtech.udig.printing.ui.internal.template.A0LandscapeTemplate"
             name="%A0.landscape.template">
       </template>
       <template
-            class="net.refractions.udig.printing.ui.internal.template.A4PortraitTemplate"
-            id="net.refractions.udig.printing.ui.internal.template.A4PortraitTemplate"
+            class="org.locationtech.udig.printing.ui.internal.template.A4PortraitTemplate"
+            id="org.locationtech.udig.printing.ui.internal.template.A4PortraitTemplate"
             name="%A4.portrait.template">
       </template>
       <template
-            class="net.refractions.udig.printing.ui.internal.template.A3PortraitTemplate"
-            id="net.refractions.udig.printing.ui.internal.template.A3PortraitTemplate"
+            class="org.locationtech.udig.printing.ui.internal.template.A3PortraitTemplate"
+            id="org.locationtech.udig.printing.ui.internal.template.A3PortraitTemplate"
             name="%A3.portrait.template">
       </template>
       <template
-            class="net.refractions.udig.printing.ui.internal.template.A2PortraitTemplate"
-            id="net.refractions.udig.printing.ui.internal.template.A2PortraitTemplate"
+            class="org.locationtech.udig.printing.ui.internal.template.A2PortraitTemplate"
+            id="org.locationtech.udig.printing.ui.internal.template.A2PortraitTemplate"
             name="%A2.portrait.template">
       </template>
       <template
-            class="net.refractions.udig.printing.ui.internal.template.A1PortraitTemplate"
-            id="net.refractions.udig.printing.ui.internal.template.A1PortraitTemplate"
+            class="org.locationtech.udig.printing.ui.internal.template.A1PortraitTemplate"
+            id="org.locationtech.udig.printing.ui.internal.template.A1PortraitTemplate"
             name="%A1.portrait.template">
       </template>
       <template
-            class="net.refractions.udig.printing.ui.internal.template.A0PortraitTemplate"
-            id="net.refractions.udig.printing.ui.internal.template.A0PortraitTemplate"
+            class="org.locationtech.udig.printing.ui.internal.template.A0PortraitTemplate"
+            id="org.locationtech.udig.printing.ui.internal.template.A0PortraitTemplate"
             name="%A0.portrait.template">
       </template>
     	<template
-            class="net.refractions.udig.printing.ui.internal.template.LetterLandscapeTemplate"
-            id="net.refractions.udig.printing.ui.internal.template.LetterLandscapeTemplate"
+            class="org.locationtech.udig.printing.ui.internal.template.LetterLandscapeTemplate"
+            id="org.locationtech.udig.printing.ui.internal.template.LetterLandscapeTemplate"
             name="%Letter.landscape.template">
       </template>
     	<template
-            class="net.refractions.udig.printing.ui.internal.template.LegalLandscapeTemplate"
-            id="net.refractions.udig.printing.ui.internal.template.LegalLandscapeTemplate"
+            class="org.locationtech.udig.printing.ui.internal.template.LegalLandscapeTemplate"
+            id="org.locationtech.udig.printing.ui.internal.template.LegalLandscapeTemplate"
             name="%Legal.landscape.template">
       </template>
       <template
-            class="net.refractions.udig.printing.ui.internal.template.LetterPortraitTemplate"
-            id="net.refractions.udig.printing.ui.internal.template.LetterPortraitTemplate"
+            class="org.locationtech.udig.printing.ui.internal.template.LetterPortraitTemplate"
+            id="org.locationtech.udig.printing.ui.internal.template.LetterPortraitTemplate"
             name="%Letter.portrait.template">
       </template>
       <template
-            class="net.refractions.udig.printing.ui.internal.template.LegalPortraitTemplate"
-            id="net.refractions.udig.printing.ui.internal.template.LegalPortraitTemplate"
+            class="org.locationtech.udig.printing.ui.internal.template.LegalPortraitTemplate"
+            id="org.locationtech.udig.printing.ui.internal.template.LegalPortraitTemplate"
             name="%Legal.portrait.template">
       </template>
    </extension>
    
    <extension
          id="standardBoxes"
-         point="net.refractions.udig.printing.ui.boxprinter">
+         point="org.locationtech.udig.printing.ui.boxprinter">
       <boxprinter
-            class="net.refractions.udig.printing.model.impl.MapBoxPrinter"
-            defaultAction="net.refractions.udig.printing.ui.mapEditorAction"
+            class="org.locationtech.udig.printing.model.impl.MapBoxPrinter"
+            defaultAction="org.locationtech.udig.printing.ui.mapEditorAction"
             description="Creates an area that represents a Map"
             name="%mapArea.box.name"
             visible="false"/>
       <boxprinter
-            class="net.refractions.udig.printing.model.impl.LabelBoxPrinter"
-            defaultAction="net.refractions.udig.printing.ui.renameLabelBox"
+            class="org.locationtech.udig.printing.model.impl.LabelBoxPrinter"
+            defaultAction="org.locationtech.udig.printing.ui.renameLabelBox"
             description="Creates a label with changable text"
             name="%label.box.name"
             visible="true"/>
       <boxprinter
-            class="net.refractions.udig.printing.model.impl.MapGraphicBoxPrinter"
-            defaultAction="net.refractions.udig.printing.ui.styleAction"
+            class="org.locationtech.udig.printing.model.impl.MapGraphicBoxPrinter"
+            defaultAction="org.locationtech.udig.printing.ui.styleAction"
             description="A dynamic graphic such as a scalebar"
             name="%graphic.label"
             visible="true">
       </boxprinter>
       <boxprinter
-            class="net.refractions.udig.printing.model.impl.RectangleEllipseBoxPrinter"
-            defaultAction="net.refractions.udig.printing.ui.simpleStyleAction"
+            class="org.locationtech.udig.printing.model.impl.RectangleEllipseBoxPrinter"
+            defaultAction="org.locationtech.udig.printing.ui.simpleStyleAction"
             description="%box.box.printer.description"
             name="%box.box.printer"
             visible="true">
@@ -115,52 +115,52 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="net.refractions.udig.project.ui.preferences.project"
-            class="net.refractions.udig.printing.ui.internal.PrintingPreferences"
-            id="net.refractions.udig.printing.ui.preferences"
+            category="org.locationtech.udig.project.ui.preferences.project"
+            class="org.locationtech.udig.printing.ui.internal.PrintingPreferences"
+            id="org.locationtech.udig.printing.ui.preferences"
             name="%printing.ui.preferences.name"/>
    </extension>
    <extension
          point="org.eclipse.ui.editors">
          <editor
-               class="net.refractions.udig.printing.ui.internal.editor.PageEditor"
+               class="org.locationtech.udig.printing.ui.internal.editor.PageEditor"
                default="true"
                icon="icons/obj16/page_obj.gif"
-               id="net.refractions.udig.printing.ui.internal.editor.pageEditor"
+               id="org.locationtech.udig.printing.ui.internal.editor.pageEditor"
                name="%printing.ui.pageEditor.name"/>
    </extension>
    <extension
-         point="net.refractions.udig.project.ui.editorInputs">
+         point="org.locationtech.udig.project.ui.editorInputs">
       <editorInput
-            editorPartID="net.refractions.udig.printing.ui.internal.editor.pageEditor"
-            class="net.refractions.udig.printing.ui.internal.editor.PageEditorInput"
-            projectElement="net.refractions.udig.printing.model.impl.PageImpl"
-            name="net.refractions.udig.printing.ui.internal.editor.pageEditorInput"/>              
+            editorPartID="org.locationtech.udig.printing.ui.internal.editor.pageEditor"
+            class="org.locationtech.udig.printing.ui.internal.editor.PageEditorInput"
+            projectElement="org.locationtech.udig.printing.model.impl.PageImpl"
+            name="org.locationtech.udig.printing.ui.internal.editor.pageEditorInput"/>              
    </extension>
    <extension
          point="org.eclipse.ui.editorActions">
       <editorContribution
-            targetID="net.refractions.udig.project.ui.mapEditor"
-            id="net.refractions.udig.printing.ui.mapEditorContribution">
+            targetID="org.locationtech.udig.project.ui.mapEditor"
+            id="org.locationtech.udig.printing.ui.mapEditorContribution">
          <action
                disabledIcon="icons/dtool16/newpage_wiz.gif"
                toolbarPath="global/additions"
                label="%printing.ui.action.printFromMap.label"
-               class="net.refractions.udig.printing.ui.actions.CreatePageAction"
+               class="org.locationtech.udig.printing.ui.actions.CreatePageAction"
                icon="icons/etool16/newpage_wiz.gif"
                tooltip="%printing.ui.action.printFromMap.tooltip"
                style="push"
                menubarPath="file/print.ext"
-               id="net.refractions.udig.printing.ui.printAction"/>
+               id="org.locationtech.udig.printing.ui.printAction"/>
       </editorContribution>
       <editorContribution
-            id="net.refractions.udig.printing.ui.pageEditorContribution"
-            targetID="net.refractions.udig.printing.ui.internal.editor.pageEditor">
+            id="org.locationtech.udig.printing.ui.pageEditorContribution"
+            targetID="org.locationtech.udig.printing.ui.internal.editor.pageEditor">
          <action
-               class="net.refractions.udig.printing.ui.internal.PrintAction"
+               class="org.locationtech.udig.printing.ui.internal.PrintAction"
                disabledIcon="icons/etool16/pdf.png"
                icon="icons/etool16/pdf.png"
-               id="net.refractions.udig.printing.ui.printPdfAction"
+               id="org.locationtech.udig.printing.ui.printPdfAction"
                label="%printing.ui.action.printFromPage.label"
                menubarPath="file/print.ext"
                style="push"
@@ -169,20 +169,20 @@
          </action>
          <!--
          <action
-               class="net.refractions.udig.printing.ui.internal.ZoomInAction"
+               class="org.locationtech.udig.printing.ui.internal.ZoomInAction"
                disabledIcon="icons/etool16/zoom_in_co.gif"
                icon="icons/etool16/zoom_in_co.gif"
-               id="net.refractions.udig.printing.ui.action.zoomin"
+               id="org.locationtech.udig.printing.ui.action.zoomin"
                label="Zoom In Page"
                style="push"
                toolbarPath="global/additions"
                tooltip="Zoom In Page">
          </action>
          <action
-               class="net.refractions.udig.printing.ui.internal.ZoomOutAction"
+               class="org.locationtech.udig.printing.ui.internal.ZoomOutAction"
                disabledIcon="icons/etool16/zoom_out_co.gif"
                icon="icons/etool16/zoom_out_co.gif"
-               id="net.refractions.udig.printing.ui.action.zoomout"
+               id="org.locationtech.udig.printing.ui.action.zoomout"
                label="Zoom Out Page"
                style="push"
                toolbarPath="global/additions"
@@ -192,80 +192,80 @@
       </editorContribution>
    </extension>
          <extension
-               point="net.refractions.udig.printing.ui.editAction">
+               point="org.locationtech.udig.printing.ui.editAction">
             <editActionGroup
-                  acceptable="net.refractions.udig.printing.model.impl.LabelBoxPrinter">
+                  acceptable="org.locationtech.udig.printing.model.impl.LabelBoxPrinter">
                <editAction
-                     class="net.refractions.udig.printing.ui.internal.editor.RenameLabelBox"
+                     class="org.locationtech.udig.printing.ui.internal.editor.RenameLabelBox"
                      id="renameLabelBox"
                      name="%labelAction.name">
                </editAction>
                <editAction
-                     class="net.refractions.udig.printing.ui.internal.editor.SetLabelBoxFontAction"
-                     id="net.refractions.udig.printing.ui.editFont"
+                     class="org.locationtech.udig.printing.ui.internal.editor.SetLabelBoxFontAction"
+                     id="org.locationtech.udig.printing.ui.editFont"
                      name="%fontAction.label">
                </editAction>
             </editActionGroup>
-	      <editActionGroup acceptable="net.refractions.udig.printing.model.impl.MapBoxPrinter">
+	      <editActionGroup acceptable="org.locationtech.udig.printing.model.impl.MapBoxPrinter">
 	         <editAction
-	               class="net.refractions.udig.printing.ui.internal.editor.MapEditorAction"
+	               class="org.locationtech.udig.printing.ui.internal.editor.MapEditorAction"
 	               id="mapEditorAction"
 	               name="%editMap"/>
           <editAction
-                class="net.refractions.udig.printing.ui.internal.editor.SetScaleAction"
+                class="org.locationtech.udig.printing.ui.internal.editor.SetScaleAction"
                 id="setScaleAction"
                 name="%scaleAction.label">
           </editAction>
 	      </editActionGroup>
        <editActionGroup
-             acceptable="net.refractions.udig.printing.model.impl.MapGraphicBoxPrinter">
+             acceptable="org.locationtech.udig.printing.model.impl.MapGraphicBoxPrinter">
           <editAction
-                class="net.refractions.udig.printing.ui.internal.editor.SetGraphicAction"
+                class="org.locationtech.udig.printing.ui.internal.editor.SetGraphicAction"
                 id="setGraphicAction"
                 name="%setGraphicAction.label">
           </editAction>
           <editAction
-                class="net.refractions.udig.printing.ui.internal.editor.SetStyleAction"
+                class="org.locationtech.udig.printing.ui.internal.editor.SetStyleAction"
                 id="styleAction"
                 name="%styleAction.label">
           </editAction>
        </editActionGroup>
        <editActionGroup
-             acceptable="net.refractions.udig.printing.model.AbstractBoxPrinter">
+             acceptable="org.locationtech.udig.printing.model.AbstractBoxPrinter">
           <editAction
-                class="net.refractions.udig.printing.ui.internal.editor.RefreshAction"
+                class="org.locationtech.udig.printing.ui.internal.editor.RefreshAction"
                 id="refreshAction"
                 name="%refreshAction.label">
           </editAction>
           <editAction
-                class="net.refractions.udig.printing.ui.internal.editor.BringToFrontAction"
+                class="org.locationtech.udig.printing.ui.internal.editor.BringToFrontAction"
                 id="bringtofrontAction"
                 image="icons/obj16/bringtofront.png"
                 name="%bringtofrontAction.label">
           </editAction>
           <editAction
-                class="net.refractions.udig.printing.ui.internal.editor.BringForwardAction"
+                class="org.locationtech.udig.printing.ui.internal.editor.BringForwardAction"
                 id="bringforwardAction"
                 image="icons/obj16/bringforward.png"
                 name="%bringforwardAction.label">
           </editAction>
           <editAction
-                class="net.refractions.udig.printing.ui.internal.editor.BringBackwardAction"
+                class="org.locationtech.udig.printing.ui.internal.editor.BringBackwardAction"
                 id="bringbackwardAction"
                 image="icons/obj16/bringbackward.png"
                 name="%bringbackwardAction.label">
           </editAction>
           <editAction
-                class="net.refractions.udig.printing.ui.internal.editor.BringToBackAction"
+                class="org.locationtech.udig.printing.ui.internal.editor.BringToBackAction"
                 id="bringtobackAction"
                 image="icons/obj16/bringtoback.png"
                 name="%bringtobackAction.label">
           </editAction>
        </editActionGroup>
        <editActionGroup
-             acceptable="net.refractions.udig.printing.model.impl.RectangleEllipseBoxPrinter">
+             acceptable="org.locationtech.udig.printing.model.impl.RectangleEllipseBoxPrinter">
           <editAction
-                class="net.refractions.udig.printing.ui.internal.editor.SimpleStyleAction"
+                class="org.locationtech.udig.printing.ui.internal.editor.SimpleStyleAction"
                 id="simplestyleAction"
                 name="%simplestyle.label">
           </editAction>

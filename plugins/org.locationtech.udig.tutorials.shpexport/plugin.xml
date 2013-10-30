@@ -2,25 +2,25 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         id="net.refractions.udig.tutorials.shpexport.operations"
+         id="org.locationtech.udig.tutorials.shpexport.operations"
          name="shpExportOperations"
-         point="net.refractions.udig.ui.operation">
+         point="org.locationtech.udig.ui.operation">
       <category
             description="Additional operations for exporting shapefiles"
-            id="net.refractions.udig.tutorials.shpexport.category"
+            id="org.locationtech.udig.tutorials.shpexport.category"
             name="Shapefile Export Operations">
       </category>
       <operation
-            categoryId="net.refractions.udig.tutorials.shpexport.category"
-            class="net.refractions.udig.tutorials.shpexport.ShpExportOp"
-            id="net.refractions.udig.tutorials.shpexport.operation"
+            categoryId="org.locationtech.udig.tutorials.shpexport.category"
+            class="org.locationtech.udig.tutorials.shpexport.ShpExportOp"
+            id="org.locationtech.udig.tutorials.shpexport.operation"
             name="Export to Shapefile"
             targetClass="org.geotools.data.FeatureSource">
       </operation>
       <operation
-            class="net.refractions.udig.tutorials.shpexport.CalculateLengthOp"
+            class="org.locationtech.udig.tutorials.shpexport.CalculateLengthOp"
             enablesFor="1"
-            id="net.refractions.udig.tutorials.shpexport.operation1"
+            id="org.locationtech.udig.tutorials.shpexport.operation1"
             name="Calculate Length"
             targetClass="org.geotools.data.FeatureSource">
       </operation>

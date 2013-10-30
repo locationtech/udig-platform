@@ -3,93 +3,93 @@
 <plugin>
 
     	<extension
-           id="net.refractions.udig.catalog.shp.service"
-           point="net.refractions.udig.catalog.ServiceExtension">
+           id="org.locationtech.udig.catalog.shp.service"
+           point="org.locationtech.udig.catalog.ServiceExtension">
       <service
-            class="net.refractions.udig.catalog.internal.shp.ShpServiceExtension"
+            class="org.locationtech.udig.catalog.internal.shp.ShpServiceExtension"
             id="shp"
             name="Shapefile"/>
    	</extension>
     <extension
-          id="net.refractions.udig.catalog.shp.fileFormat"
-          point="net.refractions.udig.catalog.ui.fileFormat">
+          id="org.locationtech.udig.catalog.shp.fileFormat"
+          point="org.locationtech.udig.catalog.ui.fileFormat">
        <fileService
              fileExtension="*.shp"
              name="%fileService.name"/>
     </extension>
     <extension
-          id="net.refractions.udig.catalog.shp.preferencePages"
+          id="org.locationtech.udig.catalog.shp.preferencePages"
           point="org.eclipse.ui.preferencePages">
        <page
-             category="net.refractions.udig.catalog.ui.preferences.CatalogPreferencePage"
-             class="net.refractions.udig.catalog.shp.preferences.ShpPreferencePage"
-             id="net.refractions.udig.catalog.shp.preferences.ShpPreferencePage"
+             category="org.locationtech.udig.catalog.ui.preferences.CatalogPreferencePage"
+             class="org.locationtech.udig.catalog.shp.preferences.ShpPreferencePage"
+             id="org.locationtech.udig.catalog.shp.preferences.ShpPreferencePage"
              name="%preferences.shapefile.name"/>
     </extension>
     <extension
-          id="net.refractions.udig.catalog.shp.preferences"
+          id="org.locationtech.udig.catalog.shp.preferences"
           point="org.eclipse.core.runtime.preferences">
-       <initializer class="net.refractions.udig.catalog.shp.preferences.PreferenceInitializer"/>
+       <initializer class="org.locationtech.udig.catalog.shp.preferences.PreferenceInitializer"/>
     </extension>
     <extension
-          id="net.refractions.udig.catalog.shp.resolvers"
-          point="net.refractions.udig.catalog.resolvers">
+          id="org.locationtech.udig.catalog.shp.resolvers"
+          point="org.locationtech.udig.catalog.resolvers">
        <factory
-             class="net.refractions.udig.catalog.internal.shp.ShapeMoverAdaptorFactory"
-             resolveableType="net.refractions.udig.catalog.internal.shp.ShpServiceImpl">
+             class="org.locationtech.udig.catalog.internal.shp.ShapeMoverAdaptorFactory"
+             resolveableType="org.locationtech.udig.catalog.internal.shp.ShpServiceImpl">
           <resolve
-                type="net.refractions.udig.catalog.ServiceMover">
+                type="org.locationtech.udig.catalog.ServiceMover">
           </resolve>
        </factory>
     </extension>
     <extension
-          point="net.refractions.udig.ui.operation">
+          point="org.locationtech.udig.ui.operation">
        <operation
-             categoryId="net.refractions.udig.catalog.ui.operation.resourceCategory"
-             class="net.refractions.udig.catalog.shp.CharsetChange"
+             categoryId="org.locationtech.udig.catalog.ui.operation.resourceCategory"
+             class="org.locationtech.udig.catalog.shp.CharsetChange"
              enablesFor="+"
-             id="net.refractions.udig.catalog.shp.charsetChange"
-             menuPath="net.refractions.udig.catalog.ui.operation.resourceCategory"
+             id="org.locationtech.udig.catalog.shp.charsetChange"
+             menuPath="org.locationtech.udig.catalog.ui.operation.resourceCategory"
              name="%changeCharset"
-             targetClass="net.refractions.udig.catalog.IResolve">
+             targetClass="org.locationtech.udig.catalog.IResolve">
           <enablement>
              <or>
                 <adaptsTo
-                      target="net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl">
+                      target="org.locationtech.udig.catalog.internal.shp.ShpGeoResourceImpl">
                 </adaptsTo>
                 <adaptsTo
-                      target="net.refractions.udig.catalog.internal.shp.ShpServiceImpl">
+                      target="org.locationtech.udig.catalog.internal.shp.ShpServiceImpl">
                 </adaptsTo>
              </or>
           </enablement>
        </operation>
        <operation
-             categoryId="net.refractions.udig.catalog.ui.operation.resourceCategory"
-             class="net.refractions.udig.catalog.shp.op.SetProjection"
+             categoryId="org.locationtech.udig.catalog.ui.operation.resourceCategory"
+             class="org.locationtech.udig.catalog.shp.op.SetProjection"
              enablesFor="+"
-             id="net.refractions.udig.catalog.shp.prj.write"
-             menuPath="net.refractions.udig.catalog.ui.operation.resourceCategory"
+             id="org.locationtech.udig.catalog.shp.prj.write"
+             menuPath="org.locationtech.udig.catalog.ui.operation.resourceCategory"
              name="%writePRJ"
-             targetClass="net.refractions.udig.catalog.IResolve">
+             targetClass="org.locationtech.udig.catalog.IResolve">
           <enablement>
              <or>
                 <adaptsTo
-                      target="net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl">
+                      target="org.locationtech.udig.catalog.internal.shp.ShpGeoResourceImpl">
                 </adaptsTo>
                 <adaptsTo
-                      target="net.refractions.udig.catalog.internal.shp.ShpServiceImpl">
+                      target="org.locationtech.udig.catalog.internal.shp.ShpServiceImpl">
                 </adaptsTo>
              </or>
           </enablement>
        </operation>
     </extension>
     <extension
-          id="net.refractions.udig.catalog.shp.operations"
+          id="org.locationtech.udig.catalog.shp.operations"
           name="%Shapefile.Operations"
-          point="net.refractions.udig.ui.operation">
+          point="org.locationtech.udig.ui.operation">
        <category
              context="ShpGeoResource"
-             id="net.refractions.udig.catalog.shp.operationCategory"
+             id="org.locationtech.udig.catalog.shp.operationCategory"
              name="%Shapefile.Operations">
        </category>
     </extension>
@@ -98,8 +98,8 @@
        <menuContribution
              locationURI="menu:data?before=reset">
           <dynamic
-                class="net.refractions.udig.ui.operations.OpCategoryContributionItem:net.refractions.udig.catalog.shp.operationCategory"
-                id="net.refractions.udig.catalog.shp.menu">
+                class="org.locationtech.udig.ui.operations.OpCategoryContributionItem:org.locationtech.udig.catalog.shp.operationCategory"
+                id="org.locationtech.udig.catalog.shp.menu">
           </dynamic>
        </menuContribution>
     </extension>
@@ -108,8 +108,8 @@
       <wizard
             name="%wizard.name"
             icon="icons/shp_16.gif"
-            class="net.refractions.udig.catalog.internal.shp.ui.ShapefileWizard"
-            id="net.refractions.udig.catalog.ui.shapefile">
+            class="org.locationtech.udig.catalog.internal.shp.ui.ShapefileWizard"
+            id="org.locationtech.udig.catalog.ui.shapefile">
          <description>
             %wizard.description
          </description>

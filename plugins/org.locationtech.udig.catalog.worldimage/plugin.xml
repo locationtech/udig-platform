@@ -3,16 +3,16 @@
 <plugin>
 
      <extension
-           id="net.refractions.udig.catalog.worldimage.services"
+           id="org.locationtech.udig.catalog.worldimage.services"
            name="World Image Services"
-           point="net.refractions.udig.catalog.ServiceExtension">
+           point="org.locationtech.udig.catalog.ServiceExtension">
       <service
-            class="net.refractions.udig.catalog.internal.worldimage.WorldImageServiceExtension"
+            class="org.locationtech.udig.catalog.internal.worldimage.WorldImageServiceExtension"
             id="worldimage"
             name="World plus Image"/>
    </extension>
    <extension
-         point="net.refractions.udig.catalog.ui.fileFormat">
+         point="org.locationtech.udig.catalog.ui.fileFormat">
       <fileService name="GIF Files" fileExtension="*.gif"/>
       <fileService name="JPEG Files" fileExtension="*.jpg;*.jpeg"/>
       <fileService name="PNG Files" fileExtension="*.png"/>

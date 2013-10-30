@@ -2,7 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="net.refractions.udig.project.ui.tool">
+         point="org.locationtech.udig.project.ui.tool">
       <toolCursor
             hotspotX="10"
             hotspotY="10"
@@ -10,10 +10,10 @@
             image="icons/pointers/edit_coverage_source.gif">
       </toolCursor>
       <modalTool
-            categoryId="net.refractions.udig.tool.edit.edit"
-            class="net.refractions.udig.tutorials.tool.coverage.CoverageTool"
+            categoryId="org.locationtech.udig.tool.edit.edit"
+            class="org.locationtech.udig.tutorials.tool.coverage.CoverageTool"
             icon="icons/etool16/edit_coverage_mode.png"
-            id="net.refractions.udig.tutorials.tool.coverage.tool"
+            id="org.locationtech.udig.tutorials.tool.coverage.tool"
             name="Edit Coverage"
             onToolbar="true"
             toolCursorId="coverageTool"

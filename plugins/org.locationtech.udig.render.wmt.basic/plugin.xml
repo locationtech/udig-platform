@@ -4,10 +4,10 @@
      <extension
          id="BasicWMTRenderer"
          name="BasicWMTRenderer"
-         point="net.refractions.udig.project.renderer">
+         point="org.locationtech.udig.project.renderer">
       <renderer
-            class="net.refractions.udig.render.internal.wmt.basic.BasicWMTMetricsFactory"
-            id="net.refractions.udig.render.internal.wmt.basic.basicwmtrenderer"
+            class="org.locationtech.udig.render.internal.wmt.basic.BasicWMTMetricsFactory"
+            id="org.locationtech.udig.render.internal.wmt.basic.basicwmtrenderer"
             name="%renderer.name">        
       </renderer>
    </extension>

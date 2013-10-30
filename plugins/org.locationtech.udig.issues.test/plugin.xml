@@ -2,35 +2,35 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="net.refractions.udig.issues.issuesViewConfiguration">
+         point="org.locationtech.udig.issues.issuesViewConfiguration">
       <contentProvider
-            class="net.refractions.udig.issues.test.TestContentProvider$Provider1"
+            class="org.locationtech.udig.issues.test.TestContentProvider$Provider1"
             id="TestContentProvider"/>
       <expansionProvider
-            class="net.refractions.udig.issues.test.TestExpansionProvider$Provider1"
+            class="org.locationtech.udig.issues.test.TestExpansionProvider$Provider1"
             id="TestContentProvider"/>
       <sorter
-            class="net.refractions.udig.issues.test.TestSorter$Sorter1"
+            class="org.locationtech.udig.issues.test.TestSorter$Sorter1"
             id="TestSorter"/>
       <labelProvider
-            class="net.refractions.udig.issues.test.TestLabelProvider$Provider1"
+            class="org.locationtech.udig.issues.test.TestLabelProvider$Provider1"
             id="TestLabelProvider"/>
    </extension>
    <extension
-         point="net.refractions.udig.issues.issueFixer">
+         point="org.locationtech.udig.issues.issueFixer">
       <fixer
-            class="net.refractions.udig.issues.test.NonExistentClass"
+            class="org.locationtech.udig.issues.test.NonExistentClass"
             id="TestIssueFixer1">
          <requiredKey key="missingKey"/>
       </fixer>
       <fixer
-            class="net.refractions.udig.issues.test.NonExistentClass"
+            class="org.locationtech.udig.issues.test.NonExistentClass"
             id="TestIssueFixer2"
-            targetClass="net.refractions.udig.issues.test.DummyFixableIssue"/>
+            targetClass="org.locationtech.udig.issues.test.DummyFixableIssue"/>
       <fixer
-            class="net.refractions.udig.issues.test.DummyAutoIssueFixer"
+            class="org.locationtech.udig.issues.test.DummyAutoIssueFixer"
             id="TestIssueFixer3"
-            targetClass="net.refractions.udig.issues.FixableIssue">
+            targetClass="org.locationtech.udig.issues.FixableIssue">
          <requiredKey key="fixable"/>
       </fixer>
    </extension>

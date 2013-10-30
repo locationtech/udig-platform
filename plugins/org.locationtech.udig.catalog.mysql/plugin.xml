@@ -2,28 +2,28 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="net.refractions.udig.catalog.ServiceExtension">
+         point="org.locationtech.udig.catalog.ServiceExtension">
       <service
-            class="net.refractions.udig.catalog.MySQLServiceExtension"
+            class="org.locationtech.udig.catalog.MySQLServiceExtension"
             id="mysql"
             name="Mysql">
       </service>
    </extension>
    <extension
-         point="net.refractions.udig.catalog.ui.connectionFactory">
+         point="org.locationtech.udig.catalog.ui.connectionFactory">
       <factory
-            class="net.refractions.udig.catalog.internal.mysql.ui.MySQLuDigConnectionFactory"
+            class="org.locationtech.udig.catalog.internal.mysql.ui.MySQLuDigConnectionFactory"
             id="com.iai.udig.catalog.mysql.factory">
       </factory>
       <wizardPage
-            class="net.refractions.udig.catalog.internal.mysql.ui.MySQLUserHostPage"
+            class="org.locationtech.udig.catalog.internal.mysql.ui.MySQLUserHostPage"
             description="%wizard.description"
             icon="icons/etool16/mysql_wiz.png"
             name="MySQL host">
       </wizardPage>
       <wizardPage
             banner="icons/wizban/mysql_wiz.png"
-            class="net.refractions.udig.catalog.service.database.DataConnectionPage"
+            class="org.locationtech.udig.catalog.service.database.DataConnectionPage"
             description="%wizard.description"
             icon="icons/etool16/mysql_wiz.png"
             name="MySQL connection ">

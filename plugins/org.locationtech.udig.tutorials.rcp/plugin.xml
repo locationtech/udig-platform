@@ -7,7 +7,7 @@
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
-               class="net.refractions.udig.tutorials.rcp.Application">
+               class="org.locationtech.udig.tutorials.rcp.Application">
          </run>
       </application>
    </extension>
@@ -15,8 +15,8 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             name="RCP Perspective"
-            class="net.refractions.udig.tutorials.rcp.Perspective"
-            id="net.refractions.udig.tutorials.rcp.perspective">
+            class="org.locationtech.udig.tutorials.rcp.Perspective"
+            id="org.locationtech.udig.tutorials.rcp.perspective">
       </perspective>
    </extension>
    <extension
@@ -25,29 +25,29 @@
             name="Message"
             allowMultiple="true"
             icon="icons/sample2.gif"
-            class="net.refractions.udig.tutorials.rcp.View"
-            id="net.refractions.udig.tutorials.rcp.view">
+            class="org.locationtech.udig.tutorials.rcp.View"
+            id="org.locationtech.udig.tutorials.rcp.view">
       </view>
       <view
             name="Mailboxes"
             allowMultiple="true"
             icon="icons/sample3.gif"
-            class="net.refractions.udig.tutorials.rcp.NavigationView"
-            id="net.refractions.udig.tutorials.rcp.navigationView">
+            class="org.locationtech.udig.tutorials.rcp.NavigationView"
+            id="org.locationtech.udig.tutorials.rcp.navigationView">
       </view>
       <view
             allowMultiple="true"
-            class="net.refractions.udig.tutorials.rcp.MapView"
+            class="org.locationtech.udig.tutorials.rcp.MapView"
             icon="icons/createmap.gif"
-            id="net.refractions.udig.tutorials.rcp.mapView"
+            id="org.locationtech.udig.tutorials.rcp.mapView"
             name="Map View"
             restorable="true">
       </view>
       <view
             allowMultiple="true"
-            class="net.refractions.udig.tutorials.rcp.OverviewMapView"
+            class="org.locationtech.udig.tutorials.rcp.OverviewMapView"
             icon="icons/createmapoverview.gif"
-            id="net.refractions.udig.tutorials.rcp.mapViewOverview"
+            id="org.locationtech.udig.tutorials.rcp.mapViewOverview"
             name="Overview Map View"
             restorable="true">
       </view>
@@ -56,30 +56,30 @@
          point="org.eclipse.ui.commands">
       <category
             name="Mail"
-            id="net.refractions.udig.tutorials.rcp.category">
+            id="org.locationtech.udig.tutorials.rcp.category">
       </category>
       <command
             name="Open Mailbox"
             description="Opens a mailbox"
-            categoryId="net.refractions.udig.tutorials.rcp.category"
-            id="net.refractions.udig.tutorials.rcp.open">
+            categoryId="org.locationtech.udig.tutorials.rcp.category"
+            id="org.locationtech.udig.tutorials.rcp.open">
       </command>
       <command
             name="Open Message Dialog"
             description="Open a message dialog"
-            categoryId="net.refractions.udig.tutorials.rcp.category"
-            id="net.refractions.udig.tutorials.rcp.openMessage">
+            categoryId="org.locationtech.udig.tutorials.rcp.category"
+            id="org.locationtech.udig.tutorials.rcp.openMessage">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
       <key
-            commandId="net.refractions.udig.tutorials.rcp.open"
+            commandId="org.locationtech.udig.tutorials.rcp.open"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="CTRL+2">
       </key>
       <key
-            commandId="net.refractions.udig.tutorials.rcp.openMessage"
+            commandId="org.locationtech.udig.tutorials.rcp.openMessage"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="CTRL+3">
       </key>
@@ -93,7 +93,7 @@
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
-            application="net.refractions.udig.tutorials.rcp.application"
+            application="org.locationtech.udig.tutorials.rcp.application"
             name="RCP Product">
          <property
                name="aboutText"

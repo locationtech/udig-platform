@@ -3,20 +3,20 @@
 <plugin>
 
     	<extension
-         point="net.refractions.udig.catalog.ServiceExtension">
+         point="org.locationtech.udig.catalog.ServiceExtension">
       <service
-            class="net.refractions.udig.catalog.internal.oracle.OracleServiceExtension"
+            class="org.locationtech.udig.catalog.internal.oracle.OracleServiceExtension"
             id="Oracle"
             name="Oracle"/>
    	</extension>
     <extension
-       point="net.refractions.udig.catalog.ui.connectionFactory">
+       point="org.locationtech.udig.catalog.ui.connectionFactory">
 
-	<factory class="net.refractions.udig.catalog.internal.oracle.ui.OracleSpatialConnectionFactory"
-          id="net.refractions.udig.catalog.ui.oracle"/>       
+	<factory class="org.locationtech.udig.catalog.internal.oracle.ui.OracleSpatialConnectionFactory"
+          id="org.locationtech.udig.catalog.ui.oracle"/>       
     <wizardPage
           banner="icons/wizban/oracle_wiz.gif"
-          class="net.refractions.udig.catalog.internal.oracle.ui.OracleSpatialWizardPage"
+          class="org.locationtech.udig.catalog.internal.oracle.ui.OracleSpatialWizardPage"
           description="%wizard.description"
           icon="icons/etool16/oracle_wiz.gif"
           name="%wizard.name"/>
@@ -25,9 +25,9 @@
     <extension
           point="org.eclipse.ui.preferencePages">
        <page
-             category="net.refractions.udig.catalog.ui.preferences.CatalogPreferencePage"
-             class="net.refractions.udig.catalog.internal.oracle.ui.OracleSpatialPreferences"
-             id="net.refractions.udig.catalog.oracle.lib preferences"
+             category="org.locationtech.udig.catalog.ui.preferences.CatalogPreferencePage"
+             class="org.locationtech.udig.catalog.internal.oracle.ui.OracleSpatialPreferences"
+             id="org.locationtech.udig.catalog.oracle.lib preferences"
              name="%oracle.preferences"/>
     </extension>
 </plugin>

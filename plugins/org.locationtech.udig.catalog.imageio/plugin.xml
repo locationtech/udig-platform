@@ -3,20 +3,20 @@
 <plugin>
 
      <extension
-           id="net.refractions.udig.catalog.imageio.services"
+           id="org.locationtech.udig.catalog.imageio.services"
            name="ImageIO Services"
-           point="net.refractions.udig.catalog.ServiceExtension">
+           point="org.locationtech.udig.catalog.ServiceExtension">
       <service
-            class="net.refractions.udig.catalog.imageio.ImageServiceExtension"
+            class="org.locationtech.udig.catalog.imageio.ImageServiceExtension"
             id="imageio"
             name="Image IO"/>
    </extension>
    <extension
-         id="net.refractions.udig.catalog.imageio.formats"
+         id="org.locationtech.udig.catalog.imageio.formats"
          name="ImageIO File Formats"
-         point="net.refractions.udig.catalog.ui.fileFormat">
+         point="org.locationtech.udig.catalog.ui.fileFormat">
       <provider
-            class="net.refractions.udig.catalog.imageio.internal.GDALFormatProvider">
+            class="org.locationtech.udig.catalog.imageio.internal.GDALFormatProvider">
       </provider>
    </extension>
 </plugin>

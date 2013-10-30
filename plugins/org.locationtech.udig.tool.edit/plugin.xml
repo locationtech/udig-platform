@@ -2,15 +2,15 @@
 <?eclipse version="3.0"?>
 <plugin>
    <extension
-         id="net.refractions.udig.tool.edit.tools"
+         id="org.locationtech.udig.tool.edit.tools"
          name="Edit Tools"
-         point="net.refractions.udig.project.ui.tool">
+         point="org.locationtech.udig.project.ui.tool">
 
                <modalTool
-                     categoryId="net.refractions.udig.tool.edit.create"
-                     class="net.refractions.udig.tools.edit.impl.PolygonTool"
+                     categoryId="org.locationtech.udig.tool.edit.create"
+                     class="org.locationtech.udig.tools.edit.impl.PolygonTool"
                      icon="icons/etool16/new_polygon_mode.gif"
-                     id="net.refractions.udig.tools.polygonEdit"
+                     id="org.locationtech.udig.tools.polygonEdit"
                      largeIcon="icons/etool24/new_polygon_mode.png"
                      name="%edit.polygon.name"
                      onToolbar="true"
@@ -33,15 +33,15 @@
                      </and>
                   </enablement>
                   <toolOption
-                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
                         id="SnappingOption">
                   </toolOption>
                </modalTool>
                <modalTool
-                     categoryId="net.refractions.udig.tool.edit.create"
-                     class="net.refractions.udig.tools.edit.impl.LineTool"
+                     categoryId="org.locationtech.udig.tool.edit.create"
+                     class="org.locationtech.udig.tools.edit.impl.LineTool"
                      icon="icons/etool16/new_line_mode.gif"
-                     id="net.refractions.udig.tools.lineEdit"
+                     id="org.locationtech.udig.tools.lineEdit"
                      largeIcon="icons/etool24/new_line_mode.png"
                      name="%edit.line.name"
                      onToolbar="true"
@@ -62,16 +62,16 @@
                      </and>
                   </enablement>
                   <toolOption
-                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
                         id="SnappingOption">
                   </toolOption>
                </modalTool>
                <!-- 
                <modalTool
-                     categoryId="net.refractions.udig.tool.edit.create"
-                     class="net.refractions.udig.tools.edit.impl.FreeHandTool"
+                     categoryId="org.locationtech.udig.tool.edit.create"
+                     class="org.locationtech.udig.tools.edit.impl.FreeHandTool"
                      icon="icons/etool16/new_freehand_mode.gif"
-                     id="net.refractions.udig.tools.freeHandTool"
+                     id="org.locationtech.udig.tools.freeHandTool"
                      name="%edit.freehand.name"
                      onToolbar="true"
                      toolCursorId="arrowCursor"
@@ -95,10 +95,10 @@
                </modalTool> 
                -->
                <modalTool
-                     categoryId="net.refractions.udig.tool.edit.create"
-                     class="net.refractions.udig.tools.edit.impl.PointTool"
+                     categoryId="org.locationtech.udig.tool.edit.create"
+                     class="org.locationtech.udig.tools.edit.impl.PointTool"
                      icon="icons/etool16/new_point_mode.gif"
-                     id="net.refractions.udig.tools.pointEdit"
+                     id="org.locationtech.udig.tools.pointEdit"
                      largeIcon="icons/etool24/new_point_mode.png"
                      name="%edit.point.name"
                      onToolbar="true"
@@ -119,15 +119,15 @@
                      </and>
                   </enablement>
                   <toolOption
-                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
                         id="SnappingOption">
                   </toolOption>
                </modalTool>
                <modalTool
-                     categoryId="net.refractions.udig.tool.edit.edit"
-                     class="net.refractions.udig.tools.edit.impl.SelectionTool"
+                     categoryId="org.locationtech.udig.tool.edit.edit"
+                     class="org.locationtech.udig.tools.edit.impl.SelectionTool"
                      icon="icons/etool16/edit_vertex_mode.gif"
-                     id="net.refractions.udig.tools.selectionTool"
+                     id="org.locationtech.udig.tools.selectionTool"
                      largeIcon="icons/etool24/edit_vertex_mode.png"
                      name="%edit.selection.name"
                      onToolbar="true"
@@ -148,15 +148,15 @@
                      </and>
                   </enablement>
                   <toolOption
-                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
                         id="SnappingOption">
                   </toolOption>
                </modalTool>
                <modalTool
-                     categoryId="net.refractions.udig.tool.edit.edit"
-                     class="net.refractions.udig.tools.edit.impl.InsertVertexTool"
+                     categoryId="org.locationtech.udig.tool.edit.edit"
+                     class="org.locationtech.udig.tools.edit.impl.InsertVertexTool"
                      icon="icons/etool16/add_vertext_mode.gif"
-                     id="net.refractions.udig.tools.addVertexTool"
+                     id="org.locationtech.udig.tools.addVertexTool"
                      largeIcon="icons/etool24/add_vertext_mode.png"
                      name="%edit.vertex.add.name"
                      onToolbar="true"
@@ -176,15 +176,15 @@
                      </and>
                   </enablement>
                   <toolOption
-                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
                         id="SnappingOption">
                   </toolOption>
                </modalTool>
                <modalTool
-                     categoryId="net.refractions.udig.tool.edit.edit"
-                     class="net.refractions.udig.tools.edit.impl.RemoveVertexTool"
+                     categoryId="org.locationtech.udig.tool.edit.edit"
+                     class="org.locationtech.udig.tools.edit.impl.RemoveVertexTool"
                      icon="icons/etool16/remove_vertext_mode.gif"
-                     id="net.refractions.udig.tools.removeVertexTool"
+                     id="org.locationtech.udig.tools.removeVertexTool"
                      largeIcon="icons/etool24/remove_vertext_mode.png"
                      name="%edit.vertex.remove.name"
                      onToolbar="true"
@@ -205,10 +205,10 @@
                   </enablement>
                </modalTool>
                <modalTool
-                     categoryId="net.refractions.udig.tool.edit.edit"
-                     class="net.refractions.udig.tools.edit.impl.HoleTool"
+                     categoryId="org.locationtech.udig.tool.edit.edit"
+                     class="org.locationtech.udig.tools.edit.impl.HoleTool"
                      icon="icons/etool16/hole_vertex_mode.gif"
-                     id="net.refractions.udig.tools.holeEdit"
+                     id="org.locationtech.udig.tools.holeEdit"
                      largeIcon="icons/etool24/hole_vertex_mode.png"
                      name="%edit.hole.name"
                      onToolbar="true"
@@ -229,15 +229,15 @@
                      </and>
                   </enablement>
                   <toolOption
-                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
                         id="SnappingOption">
                   </toolOption>
                </modalTool>
 			   <modalTool
-            categoryId="net.refractions.udig.tool.edit.create"
-            class="net.refractions.udig.tools.edit.impl.FillDifferenceTool"
+            categoryId="org.locationtech.udig.tool.edit.create"
+            class="org.locationtech.udig.tools.edit.impl.FillDifferenceTool"
             icon="icons/etool16/difference_feature_mode.gif"
-            id="net.refractions.udig.tools.differenceTool"
+            id="org.locationtech.udig.tools.differenceTool"
             largeIcon="icons/etool24/difference_feature_mode.png"
             name="%edit.difference.name"
             onToolbar="true"
@@ -258,15 +258,15 @@
                      </and>
                   </enablement>
                   <toolOption
-                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
                         id="SnappingOption">
                   </toolOption>
                </modalTool>
                <modalTool
-                     categoryId="net.refractions.udig.tool.edit.create"
-                     class="net.refractions.udig.tools.edit.impl.RectangleTool"
+                     categoryId="org.locationtech.udig.tool.edit.create"
+                     class="org.locationtech.udig.tools.edit.impl.RectangleTool"
                      icon="icons/etool16/new_rectangle_mode.gif"
-                     id="net.refractions.udig.tool.edit.createRectangle"
+                     id="org.locationtech.udig.tool.edit.createRectangle"
                      largeIcon="icons/etool24/new_rectangle_mode.png"
                      name="%edit.rectangle.name"
                      onToolbar="true"
@@ -289,15 +289,15 @@
 					</and>
                   </enablement>
                   <toolOption
-                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
                         id="SnappingOption">
                   </toolOption>
                 </modalTool>
                <modalTool
-                     categoryId="net.refractions.udig.tool.edit.create"
-                     class="net.refractions.udig.tools.edit.impl.EllipseTool"
+                     categoryId="org.locationtech.udig.tool.edit.create"
+                     class="org.locationtech.udig.tools.edit.impl.EllipseTool"
                      icon="icons/etool16/new_circle_mode.gif"
-                     id="net.refractions.udig.tool.edit.createEllipse"
+                     id="org.locationtech.udig.tool.edit.createEllipse"
                      largeIcon="icons/etool24/new_circle_mode.png"
                      name="%edit.ellipse.name"
                      onToolbar="true"
@@ -320,15 +320,15 @@
                      </and>
                   </enablement>
                   <toolOption
-                        class="net.refractions.udig.tools.options.SnappingToolOptionContributionItem"
+                        class="org.locationtech.udig.tools.options.SnappingToolOptionContributionItem"
                         id="SnappingOption">
                   </toolOption>
                 </modalTool>
                 <modalTool
-                      categoryId="net.refractions.udig.tool.edit.feature"
-                      class="net.refractions.udig.tools.edit.impl.DeleteTool"
+                      categoryId="org.locationtech.udig.tool.edit.feature"
+                      class="org.locationtech.udig.tools.edit.impl.DeleteTool"
                       icon="icons/etool16/delete_feature_mode.gif"
-                      id="net.refractions.udig.tools.deleteTool"
+                      id="org.locationtech.udig.tools.deleteTool"
                       largeIcon="icons/etool24/delete_feature_mode.png"
                       name="%edit.delete.name"
                       onToolbar="true"
@@ -354,9 +354,9 @@
                   </enablement>
                </modalTool>
                <actionTool
-                     categoryId="net.refractions.udig.tool.category.selection"
-                     class="net.refractions.udig.tools.edit.ClearSelection"
-                     id="net.refractions.udig.tools.clearSelection"
+                     categoryId="org.locationtech.udig.tool.category.selection"
+                     class="org.locationtech.udig.tools.edit.ClearSelection"
+                     id="org.locationtech.udig.tools.clearSelection"
                      menuPath="edit/additions"
                      name="%clear.selection.name"
                      onToolbar="false"
@@ -366,20 +366,20 @@
                   </enablement>                     
                </actionTool>
                <category
-                     commandId="net.refractions.udig.tool.edit.editCategoryCommand"
-                     id="net.refractions.udig.tool.edit.edit"
+                     commandId="org.locationtech.udig.tool.edit.editCategoryCommand"
+                     id="org.locationtech.udig.tool.edit.edit"
                      name="%editCategory.name"
-                     selectionProvider="net.refractions.udig.tools.edit.EditSelectionProvider"/>
+                     selectionProvider="org.locationtech.udig.tools.edit.EditSelectionProvider"/>
                <category
-                     commandId="net.refractions.udig.tool.edit.createCategoryCommand"
-                     id="net.refractions.udig.tool.edit.create"
+                     commandId="org.locationtech.udig.tool.edit.createCategoryCommand"
+                     id="org.locationtech.udig.tool.edit.create"
                      name="%createCategory.name"
-                     selectionProvider="net.refractions.udig.tools.edit.EditSelectionProvider"/>
+                     selectionProvider="org.locationtech.udig.tools.edit.EditSelectionProvider"/>
                <category
-                     commandId="net.refractions.udig.tool.edit.featureCategoryCommand"
-                     id="net.refractions.udig.tool.edit.feature"
+                     commandId="org.locationtech.udig.tool.edit.featureCategoryCommand"
+                     id="org.locationtech.udig.tool.edit.feature"
                      name="%featureCategory.name"
-                     selectionProvider="net.refractions.udig.tools.edit.EditSelectionProvider"/>
+                     selectionProvider="org.locationtech.udig.tools.edit.EditSelectionProvider"/>
                <toolCursor
                      hotspotX="10"
                      hotspotY="10"
@@ -406,95 +406,95 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
-            id="net.refractions.udig.tool.edit.clearAction"
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            id="org.locationtech.udig.tool.edit.clearAction"
             name="%cancel.command"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
-            id="net.refractions.udig.tool.edit.acceptAction"
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            id="org.locationtech.udig.tool.edit.acceptAction"
             name="%accept.command"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
-            id="net.refractions.udig.tool.edit.createCategoryCommand"
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            id="org.locationtech.udig.tool.edit.createCategoryCommand"
             name="%createCategory.command"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
-            id="net.refractions.udig.tool.edit.editCategoryCommand"
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            id="org.locationtech.udig.tool.edit.editCategoryCommand"
             name="%editCategory.command"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
-            id="net.refractions.udig.tool.edit.featureCategoryCommand"
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            id="org.locationtech.udig.tool.edit.featureCategoryCommand"
             name="%featureCategory.command"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
-            id="net.refractions.udig.tool.edit.cycle.snap.behaviour"
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            id="org.locationtech.udig.tool.edit.cycle.snap.behaviour"
             name="%snapBehaviourCommand.name"/>
       <command
-            categoryId="net.refractions.udig.tools.toolCategory"
-            id="net.refractions.udig.tool.edit.advanced.edit.command"
+            categoryId="org.locationtech.udig.tools.toolCategory"
+            id="org.locationtech.udig.tool.edit.advanced.edit.command"
             name="%command.advance.edit.name"/>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
       <key
-            commandId="net.refractions.udig.tool.edit.clearAction"
+            commandId="org.locationtech.udig.tool.edit.clearAction"
             contextId="org.eclipse.ui.contexts.window"
             sequence="ESC"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
       <key
-            commandId="net.refractions.udig.tool.edit.acceptAction"
+            commandId="org.locationtech.udig.tool.edit.acceptAction"
             contextId="org.eclipse.ui.contexts.window"
             sequence="ENTER"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
       <key
-            commandId="net.refractions.udig.tool.edit.createCategoryCommand"
-            contextId="net.refractions.udig.project.ui.tool"
+            commandId="org.locationtech.udig.tool.edit.createCategoryCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
             sequence="C"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
       <key
-            commandId="net.refractions.udig.tool.edit.editCategoryCommand"
-            contextId="net.refractions.udig.project.ui.tool"
+            commandId="org.locationtech.udig.tool.edit.editCategoryCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
             sequence="E"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
       <key
-            commandId="net.refractions.udig.tool.edit.featureCategoryCommand"
-            contextId="net.refractions.udig.project.ui.tool"
+            commandId="org.locationtech.udig.tool.edit.featureCategoryCommand"
+            contextId="org.locationtech.udig.project.ui.tool"
             sequence="F"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
       <key
-            commandId="net.refractions.udig.tool.edit.cycle.snap.behaviour"
+            commandId="org.locationtech.udig.tool.edit.cycle.snap.behaviour"
             contextId="org.eclipse.ui.contexts.window"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
             sequence="M1+SHIFT+S"/>
       <key
-            commandId="net.refractions.udig.tool.edit.advanced.edit.command"
+            commandId="org.locationtech.udig.tool.edit.advanced.edit.command"
             contextId="org.eclipse.ui.contexts.window"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"
             sequence="M1+SHIFT+A"/>
    </extension>
    <extension
-         point="net.refractions.udig.ui.operation">
+         point="org.locationtech.udig.ui.operation">
       <operation
-            class="net.refractions.udig.tool.edit.DifferenceOp"
+            class="org.locationtech.udig.tool.edit.DifferenceOp"
             enablesFor="2"
-            id="net.refractions.udig.tool.edit.difference"
+            id="org.locationtech.udig.tool.edit.difference"
             name="%difference.name"
-            targetClass="net.refractions.udig.project.ILayer">
+            targetClass="org.locationtech.udig.project.ILayer">
           <enablement>
 		        <property propertyId="InteractionProperty" expectedValue="interaction_edit"/>
 	      </enablement>   
       </operation>
       <operation
-            class="net.refractions.udig.tool.edit.SplitLineOp"
+            class="org.locationtech.udig.tool.edit.SplitLineOp"
             enablesFor="+"
-            id="net.refractions.udig.tool.edit.operation1"
+            id="org.locationtech.udig.tool.edit.operation1"
             menuPath="edit/add.ext"
             name="%operation.splitLine.name"
-            targetClass="net.refractions.udig.tools.edit.support.Point">
+            targetClass="org.locationtech.udig.tools.edit.support.Point">
          <enablement>
             <and>
-                <property propertyId="net.refractions.udig.tools.edit.CurrentShape.ShapeType" expectedValue="LINE"/>
-			    <property propertyId="net.refractions.udig.project.ui.OpenMap" expectedValue="java.lang.Object"/>
+                <property propertyId="org.locationtech.udig.tools.edit.CurrentShape.ShapeType" expectedValue="LINE"/>
+			    <property propertyId="org.locationtech.udig.project.ui.OpenMap" expectedValue="java.lang.Object"/>
             </and>
          </enablement>
       </operation>
@@ -502,33 +502,33 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="net.refractions.udig.project.ui.preferences.tool"
-            class="net.refractions.udig.tools.edit.preferences.EditToolPreferences"
-            id="net.refractions.udig.tools.edit.preferences"
+            category="org.locationtech.udig.project.ui.preferences.tool"
+            class="org.locationtech.udig.tools.edit.preferences.EditToolPreferences"
+            id="org.locationtech.udig.tools.edit.preferences"
             name="%preferences.edit.tool.name"/>
       <page
-            category="net.refractions.udig.tools.edit.preferences"
-            class="net.refractions.udig.tools.edit.preferences.PerformancelPreferences"
-            id="net.refractions.udig.tool.edit.preference.performance"
+            category="org.locationtech.udig.tools.edit.preferences"
+            class="org.locationtech.udig.tools.edit.preferences.PerformancelPreferences"
+            id="org.locationtech.udig.tool.edit.preference.performance"
             name="%preferences.edit.tool.performance.name"/>
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">
-      <initializer class="net.refractions.udig.tools.edit.preferences.PreferenceInitializer"/>
+      <initializer class="org.locationtech.udig.tools.edit.preferences.PreferenceInitializer"/>
    </extension>
    <extension
-         point="net.refractions.udig.ui.objectProperty">
+         point="org.locationtech.udig.ui.objectProperty">
       <object targetClass="java.lang.Object">
          <property
                id="CurrentShape.ShapeType"
-               class="net.refractions.udig.tool.edit.CurrentShapeTypePropertyValue"/>
+               class="org.locationtech.udig.tool.edit.CurrentShapeTypePropertyValue"/>
       </object>
    </extension>
          <extension
-               point="net.refractions.udig.project.mapInterceptor">
+               point="org.locationtech.udig.project.mapInterceptor">
             <mapClosing
-                  class="net.refractions.udig.tools.edit.support.DisposeBlackboardOnCloseInterceptor"
-                  id="net.refractions.udig.tool.edit.mapClosing1"
+                  class="org.locationtech.udig.tools.edit.support.DisposeBlackboardOnCloseInterceptor"
+                  id="org.locationtech.udig.tool.edit.mapClosing1"
                   name="Dispose EditBlackboards on close.">
             </mapClosing>
          </extension>

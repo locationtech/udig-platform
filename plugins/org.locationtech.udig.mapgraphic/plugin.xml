@@ -4,68 +4,68 @@
 
      <extension-point id="mapgraphic" name="%extensionPoint.name" schema="schema/mapgraphic.exsd"/>
    <extension
-         point="net.refractions.udig.project.renderer">
+         point="org.locationtech.udig.project.renderer">
       <renderer
-            class="net.refractions.udig.mapgraphic.internal.MapGraphicRenderMetricsFactory"
-            id="net.refractions.udig.mapgraphic"
+            class="org.locationtech.udig.mapgraphic.internal.MapGraphicRenderMetricsFactory"
+            id="org.locationtech.udig.mapgraphic"
             name="%renderer.name"/>
    </extension>
    <extension
-         id="net.refractions.udig.mapgraphic.serviceExtension"
+         id="org.locationtech.udig.mapgraphic.serviceExtension"
          name="%extension.name"
-         point="net.refractions.udig.catalog.ServiceExtension">
+         point="org.locationtech.udig.catalog.ServiceExtension">
       <service
-            class="net.refractions.udig.mapgraphic.internal.MapGraphicServiceExtension"
+            class="org.locationtech.udig.mapgraphic.internal.MapGraphicServiceExtension"
             id="mapgraphic"
             name="Map Graphic"/>
    </extension>
    <extension
-         id="net.refractions.udig.mapgraphic.decoratorConnection"
-         point="net.refractions.udig.catalog.ui.connectionFactory">
-         <factory class="net.refractions.udig.mapgraphic.internal.ui.MapGraphicConnectionFactory"
-            id="net.refractions.udig.mapgraphic.decoratorFactory"/>
+         id="org.locationtech.udig.mapgraphic.decoratorConnection"
+         point="org.locationtech.udig.catalog.ui.connectionFactory">
+         <factory class="org.locationtech.udig.mapgraphic.internal.ui.MapGraphicConnectionFactory"
+            id="org.locationtech.udig.mapgraphic.decoratorFactory"/>
       <wizardPage
-            class="net.refractions.udig.mapgraphic.internal.ui.MapGraphicWizardPage"
+            class="org.locationtech.udig.mapgraphic.internal.ui.MapGraphicWizardPage"
             description="%mapGraphic.wizardPageDescription"
             icon="icons/obj16/graphic_obj.gif"
-            id="net.refractions.udig.mapgraphic.decoratorPage"
+            id="org.locationtech.udig.mapgraphic.decoratorPage"
             name="%mapGraphic.wizardPageName"/>
    </extension>
    <extension
          point="org.eclipse.ui.startup">
-      <startup class="net.refractions.udig.mapgraphic.internal.AddToCatalog"/>
+      <startup class="org.locationtech.udig.mapgraphic.internal.AddToCatalog"/>
    </extension>
    <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
-            id="net.refractions.udig.mapgraphic.commonDecorators"
+            id="org.locationtech.udig.mapgraphic.commonDecorators"
             label="Common Decorators"
             visible="false">
          <action
-               class="net.refractions.udig.mapgraphic.scalebar.ScalebarAction"
+               class="org.locationtech.udig.mapgraphic.scalebar.ScalebarAction"
                icon="icons/obj16/scalebar_obj.gif"
-               id="net.refractions.udig.project.ui.action.addscalebar"
+               id="org.locationtech.udig.project.ui.action.addscalebar"
                label="%action.scalebar.label"
                menubarPath="layer/mapGraphic.ext"
                style="push"/>
          <action
-               class="net.refractions.udig.mapgraphic.grid.AddGridAction"
+               class="org.locationtech.udig.mapgraphic.grid.AddGridAction"
                icon="icons/obj16/grid_obj.gif"
-               id="net.refractions.udig.project.ui.action.addgrid"
+               id="org.locationtech.udig.project.ui.action.addgrid"
                label="%action.addgrid.label"
                menubarPath="layer/mapGraphic.ext"
                style="push"/>
          <action
-               class="net.refractions.udig.mapgraphic.graticule.AddGraticuleAction"
+               class="org.locationtech.udig.mapgraphic.graticule.AddGraticuleAction"
                icon="icons/obj16/graticule_obj.gif"
-               id="net.refractions.udig.project.ui.action.addgraticule"
+               id="org.locationtech.udig.project.ui.action.addgraticule"
                label="%action.addgraticule.label"
                menubarPath="layer/mapGraphic.ext"
                style="push">
          </action>
          <action
-               class="net.refractions.udig.mapgraphic.internal.ui.OtherAction"
-               id="net.refractions.udig.mapgraphic.other"
+               class="org.locationtech.udig.mapgraphic.internal.ui.OtherAction"
+               id="org.locationtech.udig.mapgraphic.other"
                label="%action.other.name"
                menubarPath="layer/mapGraphicOther.ext"
                style="push"/>
@@ -73,126 +73,126 @@
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension targetID="net.refractions.udig.ui.mapPerspective">
-         <actionSet id="net.refractions.udig.mapgraphic.commonDecorators"/>
+      <perspectiveExtension targetID="org.locationtech.udig.ui.mapPerspective">
+         <actionSet id="org.locationtech.udig.mapgraphic.commonDecorators"/>
       </perspectiveExtension>
-      <perspectiveExtension targetID="net.refractions.udig.ui.stylePerspective">
-         <actionSet id="net.refractions.udig.mapgraphic.commonDecorators"/>
+      <perspectiveExtension targetID="org.locationtech.udig.ui.stylePerspective">
+         <actionSet id="org.locationtech.udig.mapgraphic.commonDecorators"/>
       </perspectiveExtension>
    </extension>
    <extension
-         point="net.refractions.udig.project.style">
+         point="org.locationtech.udig.project.style">
       <style
-            class="net.refractions.udig.mapgraphic.style.LocationStyleContent"
+            class="org.locationtech.udig.mapgraphic.style.LocationStyleContent"
             name="%printing.ui.locationStyle.name"
-            id="net.refractions.udig.printing.ui.locationStyle"/>
+            id="org.locationtech.udig.printing.ui.locationStyle"/>
     <style
-          class="net.refractions.udig.mapgraphic.grid.GridStyleContent"
-          id="net.refractions.udig.tool.edit.mapgraphic.grid.style"
+          class="org.locationtech.udig.mapgraphic.grid.GridStyleContent"
+          id="org.locationtech.udig.tool.edit.mapgraphic.grid.style"
           name="Grid Style"/>
     <style
-          class="net.refractions.udig.mapgraphic.graticule.GraticuleStyleContent"
-          id="net.refractions.udig.tool.edit.mapgraphic.graticule.style"
+          class="org.locationtech.udig.mapgraphic.graticule.GraticuleStyleContent"
+          id="org.locationtech.udig.tool.edit.mapgraphic.graticule.style"
           name="Graticule Style">
     </style>
     <style
-          class="net.refractions.udig.mapgraphic.style.FontStyleContent"
-          id="net.refractions.udig.mapgraphic.style.font"
+          class="org.locationtech.udig.mapgraphic.style.FontStyleContent"
+          id="org.locationtech.udig.mapgraphic.style.font"
           name="Font Style">
     </style>
     <style
-          class="net.refractions.udig.mapgraphic.scalebar.BarStyleContent"
-          id="net.refractions.udig.mapgraphic.style.bartype"
+          class="org.locationtech.udig.mapgraphic.scalebar.BarStyleContent"
+          id="org.locationtech.udig.mapgraphic.style.bartype"
           name="BarType Style">
     </style>
    </extension>
    <extension
-         point="net.refractions.udig.style.styleConfigurator">
+         point="org.locationtech.udig.style.styleConfigurator">
       <styleConfigurator
-            class="net.refractions.udig.mapgraphic.style.LocationStyleConfigurator"
+            class="org.locationtech.udig.mapgraphic.style.LocationStyleConfigurator"
             id="location"
             label="%printing.ui.location.config.label"
-            requires="net.refractions.udig.mapgraphic.scalebar.ScalebarMapGraphic"
-            styleId="net.refractions.udig.printing.ui.locationStyle"/>
+            requires="org.locationtech.udig.mapgraphic.scalebar.ScalebarMapGraphic"
+            styleId="org.locationtech.udig.printing.ui.locationStyle"/>
     <styleConfigurator
-          class="net.refractions.udig.mapgraphic.style.FontStyleConfigurator"
+          class="org.locationtech.udig.mapgraphic.style.FontStyleConfigurator"
           id="font"
           label="%font.style.label"
-          requires="net.refractions.udig.mapgraphic.scalebar.ScalebarMapGraphic"
-          styleId="net.refractions.udig.mapgraphic.style.font">
+          requires="org.locationtech.udig.mapgraphic.scalebar.ScalebarMapGraphic"
+          styleId="org.locationtech.udig.mapgraphic.style.font">
     </styleConfigurator>
     <styleConfigurator
-          class="net.refractions.udig.mapgraphic.scalebar.BarStyleConfigurator"
+          class="org.locationtech.udig.mapgraphic.scalebar.BarStyleConfigurator"
           id="bartype"
           label="BarType"
-          requires="net.refractions.udig.mapgraphic.scalebar.ScalebarMapGraphic"
-          styleId="net.refractions.udig.mapgraphic.style.bartype">
+          requires="org.locationtech.udig.mapgraphic.scalebar.ScalebarMapGraphic"
+          styleId="org.locationtech.udig.mapgraphic.style.bartype">
     </styleConfigurator>
     <styleConfigurator
-          class="net.refractions.udig.mapgraphic.grid.GridStyleConfigurator"
-          id="net.refractions.udig.tool.edit.mapgraphic.grid.configurator"
+          class="org.locationtech.udig.mapgraphic.grid.GridStyleConfigurator"
+          id="org.locationtech.udig.tool.edit.mapgraphic.grid.configurator"
           label="Grid"
-          requires="net.refractions.udig.mapgraphic.grid.GridMapGraphic"
-          styleId="net.refractions.udig.tool.edit.mapgraphic.grid.style"/>
+          requires="org.locationtech.udig.mapgraphic.grid.GridMapGraphic"
+          styleId="org.locationtech.udig.tool.edit.mapgraphic.grid.style"/>
     <styleConfigurator
-          class="net.refractions.udig.mapgraphic.style.FontStyleConfigurator"
+          class="org.locationtech.udig.mapgraphic.style.FontStyleConfigurator"
           id="font"
           label="%font.style.label"
-          requires="net.refractions.udig.mapgraphic.graticule.GraticuleGraphic"
-          styleId="net.refractions.udig.mapgraphic.style.font">
+          requires="org.locationtech.udig.mapgraphic.graticule.GraticuleGraphic"
+          styleId="org.locationtech.udig.mapgraphic.style.font">
     </styleConfigurator>
     <styleConfigurator
-          class="net.refractions.udig.mapgraphic.graticule.GraticuleCRSConfigurator"
-          id="net.refractions.udig.tool.edit.mapgraphic.graticule.crs"
+          class="org.locationtech.udig.mapgraphic.graticule.GraticuleCRSConfigurator"
+          id="org.locationtech.udig.tool.edit.mapgraphic.graticule.crs"
           label="Projection"
-          requires="net.refractions.udig.mapgraphic.graticule.GraticuleGraphic"
-          styleId="net.refractions.udig.tool.edit.mapgraphic.graticule.style">
+          requires="org.locationtech.udig.mapgraphic.graticule.GraticuleGraphic"
+          styleId="org.locationtech.udig.tool.edit.mapgraphic.graticule.style">
     </styleConfigurator>
     <styleConfigurator
-          class="net.refractions.udig.mapgraphic.graticule.GraticuleLinesConfigurator"
-          id="net.refractions.udig.tool.edit.mapgraphic.graticule.lines"
+          class="org.locationtech.udig.mapgraphic.graticule.GraticuleLinesConfigurator"
+          id="org.locationtech.udig.tool.edit.mapgraphic.graticule.lines"
           label="Lines"
-          requires="net.refractions.udig.mapgraphic.graticule.GraticuleGraphic"
-          styleId="net.refractions.udig.tool.edit.mapgraphic.graticule.style">
+          requires="org.locationtech.udig.mapgraphic.graticule.GraticuleGraphic"
+          styleId="org.locationtech.udig.tool.edit.mapgraphic.graticule.style">
     </styleConfigurator>
    </extension>
    <extension
-         point="net.refractions.udig.mapgraphic.mapgraphic">
+         point="org.locationtech.udig.mapgraphic.mapgraphic">
       <mapGraphic
-            class="net.refractions.udig.mapgraphic.scalebar.ScalebarMapGraphic"
+            class="org.locationtech.udig.mapgraphic.scalebar.ScalebarMapGraphic"
             icon="icons/obj16/scalebar_obj.gif"
             id="scalebar"
             name="%printing.ui.scalebar.mapgraphic.name"/>
       <mapGraphic
-            class="net.refractions.udig.mapgraphic.grid.GridMapGraphic"
+            class="org.locationtech.udig.mapgraphic.grid.GridMapGraphic"
             icon="icons/obj16/grid_obj.gif"
             id="grid"
             name="%mapgraphic.grid.name"/>
       <mapGraphic
-            class="net.refractions.udig.mapgraphic.northarrow.NorthArrowMapGraphic"
+            class="org.locationtech.udig.mapgraphic.northarrow.NorthArrowMapGraphic"
             icon="icons/obj16/graphic_obj.gif"
-            id="net.refractions.udig.mapgraphic.NorthArrowMapGraphic"
+            id="org.locationtech.udig.mapgraphic.NorthArrowMapGraphic"
             name="%mapgraphic.northarrow.name">
       </mapGraphic>
 	<mapGraphic
-            class="net.refractions.udig.mapgraphic.graticule.GraticuleGraphic"
+            class="org.locationtech.udig.mapgraphic.graticule.GraticuleGraphic"
             icon="icons/etool16/graticule.png"
             id="graticule"
             name="Graticule">
       </mapGraphic>      
     <!--  <mapGraphic
-            class="net.refractions.udig.mapgraphic.scalebar.ScaleDenomMapGraphic"
-            id="net.refractions.udig.mapgraphic.scalebar.ScaleDenomMapGraphic"
+            class="org.locationtech.udig.mapgraphic.scalebar.ScaleDenomMapGraphic"
+            id="org.locationtech.udig.mapgraphic.scalebar.ScaleDenomMapGraphic"
             name="%mapgraphic.scale.name">
       </mapGraphic> -->
    </extension>
    <!--
    <extension
-         point="net.refractions.udig.project.ui.tool">
+         point="org.locationtech.udig.project.ui.tool">
       <modalTool
-            class="net.refractions.udig.mapgraphic.northarrow.NorthArrowTool"
+            class="org.locationtech.udig.mapgraphic.northarrow.NorthArrowTool"
             icon="icons/etool16/xy.png"
-            id="net.refractions.udig.mapgraphic.tool.locationTool"
+            id="org.locationtech.udig.mapgraphic.tool.locationTool"
             name="%location.tool.name"
             onToolbar="true">
       </modalTool>

@@ -2,28 +2,28 @@
 <?eclipse version="3.0"?>
 <plugin>
    	<extension
-         point="net.refractions.udig.catalog.ServiceExtension">
+         point="org.locationtech.udig.catalog.ServiceExtension">
       <service
-            class="net.refractions.udig.catalog.PostgisServiceExtension2"
+            class="org.locationtech.udig.catalog.PostgisServiceExtension2"
             id="postgis"
             name="Postgis"/>
    	</extension>
  <extension
-       point="net.refractions.udig.catalog.ui.connectionFactory">
+       point="org.locationtech.udig.catalog.ui.connectionFactory">
     <factory
-          class="net.refractions.udig.catalog.internal.postgis.ui.PostGisConnectionFactory"
-          id="net.refractions.udig.catalog.postgis.experimental">
+          class="org.locationtech.udig.catalog.internal.postgis.ui.PostGisConnectionFactory"
+          id="org.locationtech.udig.catalog.postgis.experimental">
     </factory>
     <wizardPage
           banner="icons/wizban/postgis_wiz.gif"
-          class="net.refractions.udig.catalog.internal.postgis.ui.PostgisUserHostPage"
+          class="org.locationtech.udig.catalog.internal.postgis.ui.PostgisUserHostPage"
           description="%wizard.description"
           icon="icons/etool16/postgis_wiz.gif"
           name="PostGIS">
     </wizardPage>
     <wizardPage
           banner="icons/wizban/postgis_wiz.gif"
-          class="net.refractions.udig.catalog.service.database.DataConnectionPage"
+          class="org.locationtech.udig.catalog.service.database.DataConnectionPage"
           description="%wizard.description"
           icon="icons/etool16/postgis_wiz.gif"
           name="Connection">

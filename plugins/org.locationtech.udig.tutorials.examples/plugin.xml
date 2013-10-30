@@ -2,21 +2,21 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="net.refractions.udig.project.ui.tool">
+         point="org.locationtech.udig.project.ui.tool">
       <modalTool
-            class="net.refractions.udig.tutorials.examples.PickTool"
+            class="org.locationtech.udig.tutorials.examples.PickTool"
             icon="icons/etool16/pick_mode.gif"
-            id="net.refractions.udig.code.examples.pick"
+            id="org.locationtech.udig.code.examples.pick"
             name="Pick Features"
             onToolbar="true"
             toolCursorId="crosshair"
             tooltip="Pick Features"/>
    </extension>
    <extension
-         point="net.refractions.udig.mapgraphic.mapgraphic">
+         point="org.locationtech.udig.mapgraphic.mapgraphic">
       <mapGraphic
-            class="net.refractions.udig.tutorials.examples.AnimationMapGraphic"
-            id="net.refractions.udig.code.examples.runAnimationMapGraphic">
+            class="org.locationtech.udig.tutorials.examples.AnimationMapGraphic"
+            id="org.locationtech.udig.code.examples.runAnimationMapGraphic">
       </mapGraphic>
    </extension>
 

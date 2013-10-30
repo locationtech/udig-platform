@@ -2,14 +2,14 @@
 <?eclipse version="3.0"?>
 <plugin>
    <extension
-         id="net.refractions.udig.tutorials.distancetool"
+         id="org.locationtech.udig.tutorials.distancetool"
          name="Distance Tool Example"
-         point="net.refractions.udig.project.ui.tool">
+         point="org.locationtech.udig.project.ui.tool">
       <modalTool
-            categoryId="net.refractions.udig.tutorials.distancetool.mycategory"
-            class="net.refractions.udig.tutorials.distancetool.DistanceTool"
+            categoryId="org.locationtech.udig.tutorials.distancetool.mycategory"
+            class="org.locationtech.udig.tutorials.distancetool.DistanceTool"
             icon="icons/etool16/measure_mode.gif"
-            id="net.refractions.udig.tutorials.distancetool"
+            id="org.locationtech.udig.tutorials.distancetool"
             name="Distance"
             onToolbar="true"
             tooltip="Measure the surface distance between two points">
@@ -19,30 +19,30 @@
                image="icons/pointers/measure_source.gif"/>
       </modalTool>
 	  <category
-            commandId="net.refractions.udig.tutorials.mycommand"
+            commandId="org.locationtech.udig.tutorials.mycommand"
             icon="icons/pointers/measure_source.gif"
-            id="net.refractions.udig.tutorials.distancetool.mycategory"
+            id="org.locationtech.udig.tutorials.distancetool.mycategory"
             name="My Category">
       </category>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
        <key
-            commandId="net.refractions.udig.tutorials.mycommand"
-            contextId="net.refractions.udig.project.ui.tool"
+            commandId="org.locationtech.udig.tutorials.mycommand"
+            contextId="org.locationtech.udig.project.ui.tool"
             sequence="M"
-            schemeId="net.refractions.udig.defaultUDIGKeyConfiguration"/>
+            schemeId="org.locationtech.udig.defaultUDIGKeyConfiguration"/>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
          <category
             description="%category.description"
             name="%category.name"
-            id="net.refractions.udig.tools.toolCategory"/>
+            id="org.locationtech.udig.tools.toolCategory"/>
          <command
-            categoryId="net.refractions.udig.tools.toolCategory"
+            categoryId="org.locationtech.udig.tools.toolCategory"
             name="My Command"
-            id="net.refractions.udig.tutorials.mycommand"/>
+            id="org.locationtech.udig.tutorials.mycommand"/>
    </extension>
 
 </plugin>

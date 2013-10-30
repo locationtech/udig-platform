@@ -2,17 +2,17 @@
 <?eclipse version="3.0"?>
 <plugin>
    <extension
-         point="net.refractions.udig.printing.ui.templateFactories">
+         point="org.locationtech.udig.printing.ui.templateFactories">
       <templateFactory
-            class="net.refractions.udig.tutorials.template.ImageTemplateFactory"
-            id="net.refractions.udig.tutorials.template.imageTemplateFactory"/>
+            class="org.locationtech.udig.tutorials.template.ImageTemplateFactory"
+            id="org.locationtech.udig.tutorials.template.imageTemplateFactory"/>
    </extension>
    <extension
          id="image"
-         point="net.refractions.udig.printing.ui.boxprinter">
+         point="org.locationtech.udig.printing.ui.boxprinter">
       <boxprinter
-            class="net.refractions.udig.tutorials.template.ImageBoxPrinter"
-            name="net.refractions.udig.tutorials.template.imageBoxPrinter"
+            class="org.locationtech.udig.tutorials.template.ImageBoxPrinter"
+            name="org.locationtech.udig.tutorials.template.imageBoxPrinter"
             visible="true"/>
    </extension>
 

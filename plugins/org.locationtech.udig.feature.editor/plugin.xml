@@ -5,30 +5,30 @@
      <extension
          point="org.eclipse.ui.views">
       <view
-            category="net.refractions.udig.feature.editor.featureCategory"
-            class="net.refractions.udig.feature.editor.DefaultEditor"
+            category="org.locationtech.udig.feature.editor.featureCategory"
+            class="org.locationtech.udig.feature.editor.DefaultEditor"
             icon="icons/eview16/view_obj.gif"
-            id="net.refractions.udig.feature.editor.default"
+            id="org.locationtech.udig.feature.editor.default"
             name="%editor.name"/>
       <view
-            category="net.refractions.udig.feature.editor.featureCategory"
-            class="net.refractions.udig.feature.editor.FeatureUDIGView"
+            category="org.locationtech.udig.feature.editor.featureCategory"
+            class="org.locationtech.udig.feature.editor.FeatureUDIGView"
             icon="icons/eview16/feature_obj.gif"
-            id="net.refractions.udig.feature.editor.featureView"
+            id="org.locationtech.udig.feature.editor.featureView"
             name="%feature.name"
             restorable="true">
       </view>
       <category
-            id="net.refractions.udig.feature.editor.featureCategory"
+            id="org.locationtech.udig.feature.editor.featureCategory"
             name="%category.name">
       </category>
    </extension>
    <extension
-         point="net.refractions.udig.project.ui.featureEditor">
+         point="org.locationtech.udig.project.ui.featureEditor">
       <editor
-            id="net.refractions.udig.feature.editor.editor.default"
+            id="org.locationtech.udig.feature.editor.editor.default"
             name="%editor.name"
-            viewId="net.refractions.udig.feature.editor.views.default">
+            viewId="org.locationtech.udig.feature.editor.views.default">
          <featureType>
             <typeName
                   name="Feature"
@@ -37,9 +37,9 @@
          </featureType>
       </editor>
       <editor
-            id="net.refractions.udig.feature.editor.editors.feature"
+            id="org.locationtech.udig.feature.editor.editors.feature"
             name="%feature.name"
-            viewId="net.refractions.udig.feature.editor.featureView">
+            viewId="org.locationtech.udig.feature.editor.featureView">
          <featureType>
             <typeName
                   name="Feature"

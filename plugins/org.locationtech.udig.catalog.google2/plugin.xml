@@ -3,8 +3,8 @@
 <plugin>
 
      <extension
-         point="net.refractions.udig.catalog.ICatalog">
-      <catalog class="net.refractions.udig.catalog.google.GoogleCatalog"/>      
+         point="org.locationtech.udig.catalog.ICatalog">
+      <catalog class="org.locationtech.udig.catalog.google.GoogleCatalog"/>      
    </extension>
 
 </plugin>

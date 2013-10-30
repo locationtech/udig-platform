@@ -2,48 +2,48 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="net.refractions.udig.project.style">
+         point="org.locationtech.udig.project.style">
       <style
-            class="net.refractions.udig.tutorials.style.color.ColorStyle"
-            id="net.refractions.udig.tutorials.style.color.colorStyle"
+            class="org.locationtech.udig.tutorials.style.color.ColorStyle"
+            id="org.locationtech.udig.tutorials.style.color.colorStyle"
             name="Color">
       </style>
    </extension>
    <extension
-         point="net.refractions.udig.catalog.resolvers">
+         point="org.locationtech.udig.catalog.resolvers">
       <factory
-            class="net.refractions.udig.tutorials.style.color.CSVColorFactory"
-            resolveableType="net.refractions.udig.tutorials.catalog.csv.CSVGeoResource">
+            class="org.locationtech.udig.tutorials.style.color.CSVColorFactory"
+            resolveableType="org.locationtech.udig.tutorials.catalog.csv.CSVGeoResource">
          <resolve
                type="java.awt.Color"></resolve>
       </factory>
    </extension>
    <extension
-         point="net.refractions.udig.project.renderer">
+         point="org.locationtech.udig.project.renderer">
       <renderer
-            class="net.refractions.udig.tutorials.style.color.ColorCSVRenderMetricsFactory"
-            id="net.refractions.udig.tutorials.style.color.render.csvRender"
+            class="org.locationtech.udig.tutorials.style.color.ColorCSVRenderMetricsFactory"
+            id="org.locationtech.udig.tutorials.style.color.render.csvRender"
             name="Color CSV Render">
       </renderer>
    </extension>
    <extension
-         point="net.refractions.udig.style.styleConfigurator">
+         point="org.locationtech.udig.style.styleConfigurator">
       <styleConfigurator
-            class="net.refractions.udig.tutorials.style.color.ColorConfigurator"
-            id="net.refractions.udig.tutorials.style.color.colorConfigurator"
+            class="org.locationtech.udig.tutorials.style.color.ColorConfigurator"
+            id="org.locationtech.udig.tutorials.style.color.colorConfigurator"
             label="Color"
-            requires="net.refractions.udig.tutorials.catalog.csv.CSVGeoResource"
-            styleId="net.refractions.udig.tutorials.style.color.colorStyle">
+            requires="org.locationtech.udig.tutorials.catalog.csv.CSVGeoResource"
+            styleId="org.locationtech.udig.tutorials.style.color.colorStyle">
       </styleConfigurator>
    </extension>
    <extension
-         point="net.refractions.udig.ui.operation">
+         point="org.locationtech.udig.ui.operation">
       <operation
-            class="net.refractions.udig.tutorials.style.color.RemoveColorOp"
+            class="org.locationtech.udig.tutorials.style.color.RemoveColorOp"
             enablesFor="1"
-            id="net.refractions.udig.tutorials.style.color.removeOp"
+            id="org.locationtech.udig.tutorials.style.color.removeOp"
             name="Remove Color"
-            targetClass="net.refractions.udig.project.internal.Layer">
+            targetClass="org.locationtech.udig.project.internal.Layer">
          <enablement></enablement>
       </operation>
    </extension>

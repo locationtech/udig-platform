@@ -2,19 +2,19 @@
 <?eclipse version="3.0"?>
 <plugin>
    <extension
-         point="net.refractions.udig.style.styleConfigurator">
+         point="org.locationtech.udig.style.styleConfigurator">
       <styleConfigurator
-            class="net.refractions.udig.style.wms.WMSStyleConfigurator"
+            class="org.locationtech.udig.style.wms.WMSStyleConfigurator"
             id="wms-style"
             label="%WMSStyle.label"
             requires="org.eclipse.jface.resource.ImageDescriptor"
-            styleId="net.refractions.udig.render.wmsStyle"/>
+            styleId="org.locationtech.udig.render.wmsStyle"/>
    </extension>
    <extension
-         point="net.refractions.udig.project.style">
+         point="org.locationtech.udig.project.style">
       <style
-            class="net.refractions.udig.style.wms.WMSStyleContent"
-            id="net.refractions.udig.render.wmsStyle"
+            class="org.locationtech.udig.style.wms.WMSStyleContent"
+            id="org.locationtech.udig.render.wmsStyle"
             name="%style.name"/>
    </extension>
 
