@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="uDig" uid="net.refractions.udig-product" id="net.refractions.udig.product" application="net.refractions.udig.ui.application" version="1.4.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="uDig" uid="org.locationtech.udig-product" id="org.locationtech.udig.product" application="org.locationtech.udig.ui.application" version="1.4.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="./icons/about.png"/>
@@ -21,7 +21,7 @@
    <windowImages i16="./icons/icon16.gif" i32="./icons/icon32.gif" i48="./icons/icon48.gif" i64="./icons/icon64.gif" i128="./icons/icon128.gif"/>
 
    <splash
-      location="net.refractions.udig"
+      location="org.locationtech.udig"
       startupProgressRect="0,196,500,8"
       startupMessageRect="7,180,445,16"
       startupForegroundColor="FFFFFF" />
@@ -35,7 +35,7 @@
       </win>
    </launcher>
 
-   <intro introId="net.refractions.udig.ui.intro"/>
+   <intro introId="org.locationtech.udig.ui.intro"/>
 
    <vm>
    </vm>
@@ -62,7 +62,7 @@ Content and such source code may be obtained at http://github.com/udig .
    </plugins>
 
    <features>
-      <feature id="net.refractions.udig-feature"/>
+      <feature id="org.locationtech.udig-feature"/>
       <feature id="javax.media.jai_imageio-feature"/>
    </features>
 
