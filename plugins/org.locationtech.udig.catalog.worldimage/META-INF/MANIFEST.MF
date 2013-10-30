@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.locationtech.udig.catalog.worldimage; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.locationtech.udig.catalog.ui,
+ org.locationtech.udig.catalog.rasterings,
+ org.locationtech.udig.libs
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

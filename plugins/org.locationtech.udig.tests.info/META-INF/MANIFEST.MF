@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests Plug-in
+Bundle-SymbolicName: org.locationtech.udig.tests.info
+Bundle-Version: 1.3.3
+Bundle-Activator: org.locationtech.udig.tool.info.tests.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.info,
+ org.junit;bundle-version="[4.0.0,5.0.0)",
+ org.locationtech.udig.project.ui,
+ org.locationtech.udig.project.tests,
+ org.locationtech.udig.project.tests.ui,
+ org.locationtech.udig.catalog.tests.wms
+Bundle-ActivationPolicy: lazy

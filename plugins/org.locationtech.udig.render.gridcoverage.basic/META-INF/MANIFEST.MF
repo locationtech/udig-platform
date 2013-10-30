@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %plugin.name
+Bundle-SymbolicName: org.locationtech.udig.render.gridcoverage.basic; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.render.internal.gridcoverage.basic.RendererPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Export-Package: org.locationtech.udig.render.gridcoverage.basic.internal,
+ org.locationtech.udig.render.internal.gridcoverage.basic
+Require-Bundle: org.locationtech.udig.project,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.catalog,
+ org.eclipse.jface,
+ org.locationtech.udig.ui,
+ org.locationtech.udig.project.ui,
+ org.eclipse.ui.views,
+ org.locationtech.udig.catalog.rasterings,
+ org.locationtech.udig.style.sld
+Bundle-ActivationPolicy: lazy
+Import-Package: javax.media.jai
+

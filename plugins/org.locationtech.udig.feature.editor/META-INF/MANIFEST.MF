@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: FeatureEditor Plug-in
+Bundle-SymbolicName: org.locationtech.udig.feature.editor; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.feature.editor.FeatureEditorPlugin
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Export-Package: org.locationtech.udig.feature.editor,
+ org.locationtech.udig.feature.editor.field,
+ org.locationtech.udig.feature.panel
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.views,
+ org.locationtech.udig.project.ui,
+ org.locationtech.udig.libs,
+ org.eclipse.ui.views.properties.tabbed
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.locationtech.udig.catalog.geotiff; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Vendor: udig.refractions.net
+Bundle-Localization: plugin
+Eclipse-BuddyPolicy: ext
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.catalog.ui,
+ org.locationtech.udig.catalog,
+ org.locationtech.udig.libs,
+ org.locationtech.udig.catalog.rasterings
+Bundle-ActivationPolicy: lazy
+Export-Package: org.locationtech.udig.catalog.internal.geotiff;x-friends:="org.locationtech.udig.catalog.test.geotiff"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

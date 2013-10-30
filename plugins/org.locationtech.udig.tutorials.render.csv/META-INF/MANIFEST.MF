@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Render CSV Plug-in
+Bundle-SymbolicName: org.locationtech.udig.tutorials.render.csv;singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.tutorials.render.csv.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.project,
+ org.locationtech.udig.tutorials.catalog.csv,
+ org.locationtech.udig.ui;bundle-version="1.2.0"
+Bundle-ActivationPolicy: lazy

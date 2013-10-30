@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.locationtech.udig_tutorials-feature"
+      label="org.locationtech.udig_tutorials-feature"
+      version="1.4.0.qualifier"
+      provider-name="Refractions Research">
+
+   <description url="http://udig.refractions.net/confluence/display/DEV/1+Getting+Started">
+      uDig tutorials and examples
+   </description>
+
+   <copyright url="http://udig.refractions.net/">
+      (c) 2005-2012 Refractions Research
+   </copyright>
+
+   <license url="http://udig.refractions.net/files/bsd3-v10.html">
+      uDig - User Friendly Desktop Internet GIS client
+http://udig.refractions.net
+(C) 2004-2012, Refractions Research Inc.
+
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+(http://www.eclipse.org/legal/epl-v10.html), and Refractions BSD
+License v1.0 (http://www.eclipse.org/org/documents/edl-v10.html).
+   </license>
+
+   <url>
+      <update label="User-friendly Desktop Internet GIS Updates" url="http://udig.refractions.net/update/"/>
+   </url>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.customapp"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.distanceTool"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.mapgraphic"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.shpexport"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.template"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.tool.coordinate"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.urladapter"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.tool.coverage"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.catalog.csv"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.featureeditor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.render.csv"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.examples"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.style.color"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.workbench"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.genericprojectelement"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.raster"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.rcp"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.locationtech.udig.tutorials.tracking"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

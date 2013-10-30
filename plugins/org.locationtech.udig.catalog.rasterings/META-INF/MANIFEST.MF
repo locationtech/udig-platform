@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Rasterings Catalog Plug-in
+Bundle-SymbolicName: org.locationtech.udig.catalog.rasterings;singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.locationtech.udig.catalog.rasterings.RasteringsPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.catalog,
+ org.locationtech.udig.libs,
+ org.locationtech.udig.ui,
+ org.locationtech.udig.catalog.shp;resolution:=optional
+Bundle-ActivationPolicy: lazy
+Export-Package: org.locationtech.udig.catalog.rasterings
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: udig.refractions.net

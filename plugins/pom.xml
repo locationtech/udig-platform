@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>net.refractions</groupId>
+        <groupId>org.locationtech</groupId>
         <artifactId>udig-tycho</artifactId>
         <version>1.4.0-SNAPSHOT</version>
     </parent>
@@ -16,31 +16,31 @@
         <profile>
             <id>test</id>
             <modules>
-                <module>net.refractions.udig.ui.tests</module>
-                <module>net.refractions.udig.project.tests</module>
-                <module>net.refractions.udig.catalog.tests</module>
-                <module>net.refractions.udig.catalog.tests.ui</module>
-                <module>net.refractions.udig.project.tests.ui</module>
+                <module>org.locationtech.udig.ui.tests</module>
+                <module>org.locationtech.udig.project.tests</module>
+                <module>org.locationtech.udig.catalog.tests</module>
+                <module>org.locationtech.udig.catalog.tests.ui</module>
+                <module>org.locationtech.udig.project.tests.ui</module>
 
                 
-                <module>net.refractions.udig.catalog.tests.geotiff</module>
-                <module>net.refractions.udig.catalog.tests.wfs</module>
-                <module>net.refractions.udig.catalog.tests.wms</module>
-                <module>net.refractions.udig.tests.info</module>
-                <module>net.refractions.udig.issues.test</module>
-                <module>net.refractions.udig.libs.tests</module>
-                <module>net.refractions.udig.location.test</module>
-                <module>net.refractions.udig.render.feature.basic.test</module>
-                <module>net.refractions.udig.render.wms.basic.test</module>
-                <module>net.refractions.udig.style.tests</module>
-                <module>net.refractions.udig.tests.catalog.wmt</module>
-                <module>net.refractions.udig.tool.default.tests</module>
-                <module>net.refractions.udig.tool.edit.tests</module>
-                <module>net.refractions.udig.tool.select.tests</module>
-                <module>net.refractions.udig.validation.test</module>
+                <module>org.locationtech.udig.catalog.tests.geotiff</module>
+                <module>org.locationtech.udig.catalog.tests.wfs</module>
+                <module>org.locationtech.udig.catalog.tests.wms</module>
+                <module>org.locationtech.udig.tests.info</module>
+                <module>org.locationtech.udig.issues.test</module>
+                <module>org.locationtech.udig.libs.tests</module>
+                <module>org.locationtech.udig.location.test</module>
+                <module>org.locationtech.udig.render.feature.basic.test</module>
+                <module>org.locationtech.udig.render.wms.basic.test</module>
+                <module>org.locationtech.udig.style.tests</module>
+                <module>org.locationtech.udig.tests.catalog.wmt</module>
+                <module>org.locationtech.udig.tool.default.tests</module>
+                <module>org.locationtech.udig.tool.edit.tests</module>
+                <module>org.locationtech.udig.tool.select.tests</module>
+                <module>org.locationtech.udig.validation.test</module>
                 
-                <module>eu.udig.tools.tests</module>
-                <module>org.tcat.citd.sim.udig.bookmarks.tests</module>
+                <module>org.locationtech.udig.tools.tests</module>
+                <module>org.locationtech.udig.bookmarks.tests</module>
             </modules>
         </profile>
 
@@ -52,105 +52,105 @@
             <modules>
                 <!-- TUTORIALS -->
                 <module>net.sf.opencsv/</module>
-                <module>eu.udig.tutorials.preferredzoomlevels</module>
-                <module>eu.udig.tutorials.tool-view</module>
-                <module>net.refractions.udig.tutorials.catalog.csv</module>
-                <module>net.refractions.udig.tutorials.catalog.tests.csv</module>
+                <module>org.locationtech.udig.tutorials.preferredzoomlevels</module>
+                <module>org.locationtech.udig.tutorials.tool-view</module>
+                <module>org.locationtech.udig.tutorials.catalog.csv</module>
+                <module>org.locationtech.udig.tutorials.catalog.tests.csv</module>
 
-                <module>net.refractions.udig.tutorials.customapp</module>
-                <module>net.refractions.udig.tutorials.distancetool</module>
-                <module>net.refractions.udig.tutorials.examples</module>
-                <module>net.refractions.udig.tutorials.featureeditor</module>
-                <module>net.refractions.udig.tutorials.genericprojectelement</module>
-                <module>net.refractions.udig.tutorials.mapgraphic</module>
-                <module>net.refractions.udig.tutorials.raster</module>
-                <module>net.refractions.udig.tutorials.rcp</module>
-                <module>net.refractions.udig.tutorials.render.csv</module>
-                <module>net.refractions.udig.tutorials.shpexport</module>
-                <module>net.refractions.udig.tutorials.style.color</module>
-                <module>net.refractions.udig.tutorials.template</module>
-                <module>net.refractions.udig.tutorials.tool.coordinate</module>
-                <module>net.refractions.udig.tutorials.tool.coverage</module>
-                <module>net.refractions.udig.tutorials.tracking</module>
-                <module>net.refractions.udig.tutorials.urladapter</module>
-                <module>net.refractions.udig.tutorials.workbench</module>
+                <module>org.locationtech.udig.tutorials.customapp</module>
+                <module>org.locationtech.udig.tutorials.distancetool</module>
+                <module>org.locationtech.udig.tutorials.examples</module>
+                <module>org.locationtech.udig.tutorials.featureeditor</module>
+                <module>org.locationtech.udig.tutorials.genericprojectelement</module>
+                <module>org.locationtech.udig.tutorials.mapgraphic</module>
+                <module>org.locationtech.udig.tutorials.raster</module>
+                <module>org.locationtech.udig.tutorials.rcp</module>
+                <module>org.locationtech.udig.tutorials.render.csv</module>
+                <module>org.locationtech.udig.tutorials.shpexport</module>
+                <module>org.locationtech.udig.tutorials.style.color</module>
+                <module>org.locationtech.udig.tutorials.template</module>
+                <module>org.locationtech.udig.tutorials.tool.coordinate</module>
+                <module>org.locationtech.udig.tutorials.tool.coverage</module>
+                <module>org.locationtech.udig.tutorials.tracking</module>
+                <module>org.locationtech.udig.tutorials.urladapter</module>
+                <module>org.locationtech.udig.tutorials.workbench</module>
                 
-                <module>net.refractions.udig_tutorials.custom-feature</module>
+                <module>org.locationtech.udig_tutorials.custom-feature</module>
                 
                 <!-- build example feature after plugins -->
-                <module>net.refractions.udig.tutorials.rcp-feature</module>
+                <module>org.locationtech.udig.tutorials.rcp-feature</module>
              </modules>
         </profile>
     </profiles>
 
     <modules>
-        <module>eu.udig.catalog.csw</module>
-        <module>eu.udig.catalog.jgrass</module>
-        <module>eu.udig.catalog.kml</module>
-        <module>eu.udig.catalog.teradata</module>
-        <module>eu.udig.image.georeferencing</module>
-        <module>eu.udig.jconsole</module>
-        <module>eu.udig.omsbox</module>
-        <module>eu.udig.style.advanced</module>
-        <module>eu.udig.style.jgrass</module>
-        <module>eu.udig.tools</module>
-        <module>eu.udig.tools.jgrass</module>
-        <module>net.refractions.udig</module>
-        <module>net.refractions.udig_base</module>
-        <module>net.refractions.udig.browser</module>
-        <module>net.refractions.udig.catalog</module>
-        <module>net.refractions.udig.catalog.arcgrid</module>
-        <module>net.refractions.udig.catalog.arcsde</module>
-        <module>net.refractions.udig.catalog.db2</module>
-        <module>net.refractions.udig.catalog.geotiff</module>
-        <module>net.refractions.udig.catalog.geotools</module>
-        <module>net.refractions.udig.catalog.google2</module>
-        <module>net.refractions.udig.catalog.imageio</module>
-        <module>net.refractions.udig.catalog.mysql</module>
-        <module>net.refractions.udig.catalog.oracle</module>
-        <module>net.refractions.udig.catalog.postgis</module>
-        <module>net.refractions.udig.catalog.rasterings</module>
-        <module>net.refractions.udig.catalog.shp</module>
-        <module>net.refractions.udig.catalog.ui</module>
-        <module>net.refractions.udig.catalog.wfs</module>
-        <module>net.refractions.udig.catalog.wms</module>
-        <module>net.refractions.udig.catalog.wmt</module>
-        <module>net.refractions.udig.catalog.worldimage</module>
-        <module>net.refractions.udig.context</module>
-        <module>net.refractions.udig.core</module>
-        <module>net.refractions.udig.feature.editor</module>
-        <module>net.refractions.udig.graph</module>
-        <module>net.refractions.udig.help</module>
-        <module>net.refractions.udig.info</module>
-        <module>net.refractions.udig.issues</module>
-        <module>net.refractions.udig.legend</module>
-        <module>net.refractions.udig.libs</module>
-        <module>net.refractions.udig.libs.db2</module>
-        <module>net.refractions.udig.libs.oracle</module>
-        <module>net.refractions.udig.location</module>
-        <module>net.refractions.udig.mapgraphic</module>
-        <module>net.refractions.udig.printing.model</module>
-        <module>net.refractions.udig.printing.model.edit</module>
-        <module>net.refractions.udig.printing.ui</module>
-        <module>net.refractions.udig.project</module>
-        <module>net.refractions.udig.project.edit</module>
-        <module>net.refractions.udig.project.ui</module>
-        <module>net.refractions.udig.project.ui.editor</module>
-        <module>net.refractions.udig.render.feature.basic</module>
-        <module>net.refractions.udig.render.feature.shapefile</module>
-        <module>net.refractions.udig.render.gridcoverage.basic</module>
-        <module>net.refractions.udig.render.wms.basic</module>
-        <module>net.refractions.udig.render.wmt.basic</module>
-        <module>net.refractions.udig.socket</module>
-        <module>net.refractions.udig.style</module>
-        <module>net.refractions.udig.style.sld</module>
-        <module>net.refractions.udig.style.wms</module>
-        <module>net.refractions.udig.tool.default</module>
-        <module>net.refractions.udig.tool.edit</module>
-        <module>net.refractions.udig.tool.select</module>
-        <module>net.refractions.udig.ui</module>
-        <module>net.refractions.udig.validation</module>
-        <module>org.tcat.citd.sim.udig.bookmarks</module>
+        <module>org.locationtech.udig.catalog.csw</module>
+        <module>org.locationtech.udig.catalog.jgrass</module>
+        <module>org.locationtech.udig.catalog.kml</module>
+        <module>org.locationtech.udig.catalog.teradata</module>
+        <module>org.locationtech.udig.image.georeferencing</module>
+        <module>org.locationtech.udig.jconsole</module>
+        <module>org.locationtech.udig.omsbox</module>
+        <module>org.locationtech.udig.style.advanced</module>
+        <module>org.locationtech.udig.style.jgrass</module>
+        <module>org.locationtech.udig.tools</module>
+        <module>org.locationtech.udig.tools.jgrass</module>
+        <module>org.locationtech.udig</module>
+        <module>org.locationtech.udig_base</module>
+        <module>org.locationtech.udig.browser</module>
+        <module>org.locationtech.udig.catalog</module>
+        <module>org.locationtech.udig.catalog.arcgrid</module>
+        <module>org.locationtech.udig.catalog.arcsde</module>
+        <module>org.locationtech.udig.catalog.db2</module>
+        <module>org.locationtech.udig.catalog.geotiff</module>
+        <module>org.locationtech.udig.catalog.geotools</module>
+        <module>org.locationtech.udig.catalog.google2</module>
+        <module>org.locationtech.udig.catalog.imageio</module>
+        <module>org.locationtech.udig.catalog.mysql</module>
+        <module>org.locationtech.udig.catalog.oracle</module>
+        <module>org.locationtech.udig.catalog.postgis</module>
+        <module>org.locationtech.udig.catalog.rasterings</module>
+        <module>org.locationtech.udig.catalog.shp</module>
+        <module>org.locationtech.udig.catalog.ui</module>
+        <module>org.locationtech.udig.catalog.wfs</module>
+        <module>org.locationtech.udig.catalog.wms</module>
+        <module>org.locationtech.udig.catalog.wmt</module>
+        <module>org.locationtech.udig.catalog.worldimage</module>
+        <module>org.locationtech.udig.context</module>
+        <module>org.locationtech.udig.core</module>
+        <module>org.locationtech.udig.feature.editor</module>
+        <module>org.locationtech.udig.graph</module>
+        <module>org.locationtech.udig.help</module>
+        <module>org.locationtech.udig.info</module>
+        <module>org.locationtech.udig.issues</module>
+        <module>org.locationtech.udig.legend</module>
+        <module>org.locationtech.udig.libs</module>
+        <module>org.locationtech.udig.libs.db2</module>
+        <module>org.locationtech.udig.libs.oracle</module>
+        <module>org.locationtech.udig.location</module>
+        <module>org.locationtech.udig.mapgraphic</module>
+        <module>org.locationtech.udig.printing.model</module>
+        <module>org.locationtech.udig.printing.model.edit</module>
+        <module>org.locationtech.udig.printing.ui</module>
+        <module>org.locationtech.udig.project</module>
+        <module>org.locationtech.udig.project.edit</module>
+        <module>org.locationtech.udig.project.ui</module>
+        <module>org.locationtech.udig.project.ui.editor</module>
+        <module>org.locationtech.udig.render.feature.basic</module>
+        <module>org.locationtech.udig.render.feature.shapefile</module>
+        <module>org.locationtech.udig.render.gridcoverage.basic</module>
+        <module>org.locationtech.udig.render.wms.basic</module>
+        <module>org.locationtech.udig.render.wmt.basic</module>
+        <module>org.locationtech.udig.socket</module>
+        <module>org.locationtech.udig.style</module>
+        <module>org.locationtech.udig.style.sld</module>
+        <module>org.locationtech.udig.style.wms</module>
+        <module>org.locationtech.udig.tool.default</module>
+        <module>org.locationtech.udig.tool.edit</module>
+        <module>org.locationtech.udig.tool.select</module>
+        <module>org.locationtech.udig.ui</module>
+        <module>org.locationtech.udig.validation</module>
+        <module>org.locationtech.udig.bookmarks</module>
     </modules>
 
 </project>
