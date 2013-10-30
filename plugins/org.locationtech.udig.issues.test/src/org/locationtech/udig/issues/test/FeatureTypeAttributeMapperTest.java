@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.test;
+package org.locationtech.udig.issues.test;
 
 import static org.junit.Assert.assertEquals;
-import net.refractions.udig.issues.internal.datastore.FeatureTypeAttributeMapper;
+import org.locationtech.udig.issues.internal.datastore.FeatureTypeAttributeMapper;
 
 import org.geotools.data.DataUtilities;
 import org.junit.Test;

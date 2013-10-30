@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -16,11 +16,11 @@ import static org.junit.Assert.assertNotNull;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class RenderContextTest extends AbstractProjectTestCase {
 	}
 	
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.RenderContextImpl.getImage(int, int)'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.RenderContextImpl.getImage(int, int)'
 	 */
 	@Test
 	public void testGetImageIntInt() {

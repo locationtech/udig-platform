@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.Map;
 
-import net.refractions.udig.catalog.internal.Messages;
+import org.locationtech.udig.catalog.internal.Messages;
 
 import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.DataAccessFactory.Param;

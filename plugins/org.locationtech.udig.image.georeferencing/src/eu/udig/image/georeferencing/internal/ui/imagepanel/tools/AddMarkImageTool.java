@@ -10,18 +10,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.internal.ui.imagepanel.tools;
+package org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.tools;
 
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 
-import eu.udig.image.georeferencing.internal.process.MarkModel;
-import eu.udig.image.georeferencing.internal.process.MarkModelFactory;
-import eu.udig.image.georeferencing.internal.ui.InputEvent;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.ImageComposite;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.ImagePanelUtil;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.MarkImagePresenter;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.MarkImagePresenterFactory;
+import org.locationtech.udig.image.georeferencing.internal.process.MarkModel;
+import org.locationtech.udig.image.georeferencing.internal.process.MarkModelFactory;
+import org.locationtech.udig.image.georeferencing.internal.ui.InputEvent;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.ImageComposite;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.ImagePanelUtil;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.MarkImagePresenter;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.MarkImagePresenterFactory;
 
 /**
  * Tool used to add marks to the image.

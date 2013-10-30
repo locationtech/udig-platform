@@ -8,22 +8,22 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.location.ui;
+package org.locationtech.udig.location.ui;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.location.Location;
-import net.refractions.udig.location.LocationUIPlugin;
-import net.refractions.udig.location.USGLocation;
-import net.refractions.udig.location.internal.ImageConstants;
-import net.refractions.udig.location.internal.Messages;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.SearchPart;
+import org.locationtech.udig.location.Location;
+import org.locationtech.udig.location.LocationUIPlugin;
+import org.locationtech.udig.location.USGLocation;
+import org.locationtech.udig.location.internal.ImageConstants;
+import org.locationtech.udig.location.internal.Messages;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.NavCommand;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.SearchPart;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

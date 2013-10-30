@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.customapp;
+package org.locationtech.udig.tutorials.customapp;
 
-import net.refractions.udig.internal.ui.UDIGApplication;
-import net.refractions.udig.internal.ui.UDIGWorkbenchAdvisor;
+import org.locationtech.udig.internal.ui.UDIGApplication;
+import org.locationtech.udig.internal.ui.UDIGWorkbenchAdvisor;
 
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.ui.application.WorkbenchAdvisor;
@@ -23,7 +23,7 @@ public class CustomApp extends UDIGApplication implements IApplication {
         return new UDIGWorkbenchAdvisor() {
             @Override
             public String getInitialWindowPerspectiveId() {
-                return "net.refractions.udig.tutorials.customapp.perspective";
+                return "org.locationtech.udig.tutorials.customapp.perspective";
             }
         };
     }

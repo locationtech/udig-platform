@@ -7,23 +7,23 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.command.navigation;
+package org.locationtech.udig.project.internal.command.navigation;
 
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.command.PostDeterminedEffectCommand;
-import net.refractions.udig.project.command.UndoableCommand;
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.NavCommand;
+import org.locationtech.udig.project.command.PostDeterminedEffectCommand;
+import org.locationtech.udig.project.command.UndoableCommand;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.internal.render.ViewportModel;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal.command.navigation
+ * TODO Purpose of org.locationtech.udig.project.internal.command.navigation
  * <p>
  * </p>
  * 
@@ -45,7 +45,7 @@ public class NavComposite extends UndoableComposite implements NavCommand {
 	}
 
 	/**
-	 * @see net.refractions.udig.project.internal.command.navigation.NavCommand#setViewportModel(net.refractions.udig.project.ViewportModelControl)
+	 * @see org.locationtech.udig.project.internal.command.navigation.NavCommand#setViewportModel(org.locationtech.udig.project.ViewportModelControl)
 	 */
 	public void setViewportModel(ViewportModel model) {
 		this.model = model;

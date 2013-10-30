@@ -7,32 +7,32 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.impl;
+package org.locationtech.udig.tools.edit.impl;
 
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.tools.edit.AbstractEditTool;
-import net.refractions.udig.tools.edit.Activator;
-import net.refractions.udig.tools.edit.Behaviour;
-import net.refractions.udig.tools.edit.DefaultEditToolBehaviour;
-import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
-import net.refractions.udig.tools.edit.EnablementBehaviour;
-import net.refractions.udig.tools.edit.activator.DrawGeomsActivator;
-import net.refractions.udig.tools.edit.activator.GridActivator;
-import net.refractions.udig.tools.edit.activator.ResetAllStateActivator;
-import net.refractions.udig.tools.edit.activator.SetSnapBehaviourCommandHandlerActivator;
-import net.refractions.udig.tools.edit.activator.DrawGeomsActivator.DrawType;
-import net.refractions.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
-import net.refractions.udig.tools.edit.behaviour.AcceptWhenOverFirstVertexBehaviour;
-import net.refractions.udig.tools.edit.behaviour.AddVertexWhileCreatingBehaviour;
-import net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour;
-import net.refractions.udig.tools.edit.behaviour.DrawCreateVertexSnapAreaBehaviour;
-import net.refractions.udig.tools.edit.behaviour.StartEditingBehaviour;
-import net.refractions.udig.tools.edit.behaviour.accept.DifferenceFeatureAcceptBehaviour;
-import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
-import net.refractions.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviour;
-import net.refractions.udig.tools.edit.support.ShapeType;
+import org.locationtech.udig.tools.edit.AbstractEditTool;
+import org.locationtech.udig.tools.edit.Activator;
+import org.locationtech.udig.tools.edit.Behaviour;
+import org.locationtech.udig.tools.edit.DefaultEditToolBehaviour;
+import org.locationtech.udig.tools.edit.EditToolConfigurationHelper;
+import org.locationtech.udig.tools.edit.EnablementBehaviour;
+import org.locationtech.udig.tools.edit.activator.DrawGeomsActivator;
+import org.locationtech.udig.tools.edit.activator.GridActivator;
+import org.locationtech.udig.tools.edit.activator.ResetAllStateActivator;
+import org.locationtech.udig.tools.edit.activator.SetSnapBehaviourCommandHandlerActivator;
+import org.locationtech.udig.tools.edit.activator.DrawGeomsActivator.DrawType;
+import org.locationtech.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.AcceptWhenOverFirstVertexBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.AddVertexWhileCreatingBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.DefaultCancelBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.DrawCreateVertexSnapAreaBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.StartEditingBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.accept.DifferenceFeatureAcceptBehaviour;
+import org.locationtech.udig.tools.edit.enablement.ValidToolDetectionActivator;
+import org.locationtech.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviour;
+import org.locationtech.udig.tools.edit.support.ShapeType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;

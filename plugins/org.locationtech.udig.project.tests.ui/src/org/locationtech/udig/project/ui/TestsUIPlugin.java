@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -23,7 +23,7 @@ public class TestsUIPlugin extends AbstractUIPlugin {
 
     private static TestsUIPlugin plugin;
 
-    public static String ID = "net.refractions.udig.render.feature.basic"; //$NON-NLS-1$
+    public static String ID = "org.locationtech.udig.render.feature.basic"; //$NON-NLS-1$
     /**
      * Construct <code>RendererPlugin</code>.
      *
@@ -51,7 +51,7 @@ public class TestsUIPlugin extends AbstractUIPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:<pre><code>
-     * private static final String RENDERING = "net.refractions.udig.project/render/trace";
+     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
      * }

@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.tool;
+package org.locationtech.udig.project.ui.tool;
 
 import org.eclipse.core.commands.IHandler;
 
@@ -19,7 +19,7 @@ import org.eclipse.core.commands.IHandler;
  * Must have a public default constructor so that the plugin frame work can instantiate the class.
  * </p>
  * 
- * @see net.refractions.udig.project.ui.tool.AbstractToolCommandHandler
+ * @see org.locationtech.udig.project.ui.tool.AbstractToolCommandHandler
  * @author jeichar
  * @since 0.6.0
  * @see IHandler

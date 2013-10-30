@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.worldimage;
+package org.locationtech.udig.catalog.internal.worldimage;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -81,7 +81,7 @@ public class WorldImagePlugin extends AbstractUIPlugin {
         try {
             if(this.resourceBundle == null) {
                 this.resourceBundle = ResourceBundle.getBundle(
-                        "net.refractions.udig.catalog.worldimage.WorldImagePluginResources"); //$NON-NLS-1$
+                        "org.locationtech.udig.catalog.worldimage.WorldImagePluginResources"); //$NON-NLS-1$
             }
         } catch(MissingResourceException ex) {
             this.resourceBundle = null;

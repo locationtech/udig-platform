@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.kml.core;
+package org.locationtech.udig.catalog.kml.core;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,7 +37,7 @@ import org.opengis.referencing.operation.MathTransform;
 
 import com.vividsolutions.jts.geom.Geometry;
 
-import eu.udig.catalog.kml.internal.Messages;
+import org.locationtech.udig.catalog.kml.internal.Messages;
 
 /**
  * Utilities to convert kml to features and back (taken from geotools testcases).

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.rcp;
+package org.locationtech.udig.tutorials.rcp;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -31,7 +31,7 @@ public class OpenViewAction extends Action {
 		setId(ICommandIds.CMD_OPEN);
         // Associate the action with a pre-defined command, to allow key bindings.
 		setActionDefinitionId(ICommandIds.CMD_OPEN);
-		setImageDescriptor(net.refractions.udig.tutorials.rcp.Activator.getImageDescriptor("/icons/sample2.gif"));
+		setImageDescriptor(org.locationtech.udig.tutorials.rcp.Activator.getImageDescriptor("/icons/sample2.gif"));
 	}
 	
 	public void run() {

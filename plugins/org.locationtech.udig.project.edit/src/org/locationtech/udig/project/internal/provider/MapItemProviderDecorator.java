@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.internal.provider;
+package org.locationtech.udig.project.internal.provider;
 
 import java.util.Collection;
 import java.util.List;

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig;
+package org.locationtech.udig;
 
 import org.eclipse.ui.IStartup;
 
@@ -17,7 +17,7 @@ public class JaiInstallerBootstrap implements IStartup {
         // This looks for a InstallJaiStartup class contributed by a fragment.  If it finds it is executes it.
         // If it doesn't find it then it doesn't worry about it.
         try{
-            Class< ? > installerClass = Class.forName("net.refractions.udig.InstallJaiStartup", true, getClass().getClassLoader()); //$NON-NLS-1$
+            Class< ? > installerClass = Class.forName("org.locationtech.udig.InstallJaiStartup", true, getClass().getClassLoader()); //$NON-NLS-1$
             Runnable installer = (Runnable) installerClass.newInstance();
             installer.run();
         }catch (ClassNotFoundException e) {

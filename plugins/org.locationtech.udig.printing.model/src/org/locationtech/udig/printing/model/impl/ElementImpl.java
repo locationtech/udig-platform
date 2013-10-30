@@ -4,14 +4,14 @@
  *
  * $Id$
  */
-package net.refractions.udig.printing.model.impl;
+package org.locationtech.udig.printing.model.impl;
 
 import java.text.MessageFormat;
 
-import net.refractions.udig.printing.model.Element;
-import net.refractions.udig.printing.model.ModelPackage;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.printing.model.internal.Messages;
+import org.locationtech.udig.printing.model.Element;
+import org.locationtech.udig.printing.model.ModelPackage;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.model.internal.Messages;
 
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
@@ -28,9 +28,9 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link net.refractions.udig.printing.model.impl.ElementImpl#getLocation <em>Location</em>}</li>
- *   <li>{@link net.refractions.udig.printing.model.impl.ElementImpl#getSize <em>Size</em>}</li>
- *   <li>{@link net.refractions.udig.printing.model.impl.ElementImpl#getPaperSize <em>Paper Size</em>}</li>
+ *   <li>{@link org.locationtech.udig.printing.model.impl.ElementImpl#getLocation <em>Location</em>}</li>
+ *   <li>{@link org.locationtech.udig.printing.model.impl.ElementImpl#getSize <em>Size</em>}</li>
+ *   <li>{@link org.locationtech.udig.printing.model.impl.ElementImpl#getPaperSize <em>Paper Size</em>}</li>
  * </ul>
  * </p>
  *

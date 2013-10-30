@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.awt.Color;
 import java.io.File;
@@ -21,25 +21,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceFactory;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.internal.ui.ResourceSelectionPage;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.UDIGEditorInput;
-import net.refractions.udig.ui.ExceptionDisplayer;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceFactory;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.internal.ui.ResourceSelectionPage;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.UDIGEditorInput;
+import org.locationtech.udig.ui.ExceptionDisplayer;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -105,7 +105,7 @@ public class MapFactory {
      * 
      * @param resources a List of URLs pointing to services (WMS, Shapefile, etc)
      * @param target Project to use if a new map is going to be created
-     * @deprecated use {@link ApplicationGIS#createAndOpenMap(List, net.refractions.udig.project.IProject)}
+     * @deprecated use {@link ApplicationGIS#createAndOpenMap(List, org.locationtech.udig.project.IProject)}
      */
     public void processURLs( List<URL> resources, Project target ) {
         processURLs(resources, target, false);
@@ -123,7 +123,7 @@ public class MapFactory {
      * @param resources a List of URLs pointing to services (WMS, Shapefile, etc)
      * @param target Project to use if a new map is going to be created
      * @param newMap if true, a new map will be created even if there is one already open
-     * @deprecated use {@link ApplicationGIS#addLayersToMap(net.refractions.udig.project.IProject, List)} or {@link ApplicationGIS#createAndOpenMap(List, net.refractions.udig.project.IProject)}
+     * @deprecated use {@link ApplicationGIS#addLayersToMap(org.locationtech.udig.project.IProject, List)} or {@link ApplicationGIS#createAndOpenMap(List, org.locationtech.udig.project.IProject)}
      * 
      */
     public void processURLs( List<URL> resources, Project target, boolean newMap ) {

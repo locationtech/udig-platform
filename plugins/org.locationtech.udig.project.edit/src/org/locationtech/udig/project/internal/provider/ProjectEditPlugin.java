@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.internal.provider;
+package org.locationtech.udig.project.internal.provider;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -24,7 +24,7 @@ public final class ProjectEditPlugin extends EMFPlugin {
     /**
      * @generated NOT
      */
-    public static final String ID = "net.refractions.udig.project.edit"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.project.edit"; //$NON-NLS-1$
     /**
      * Keep track of the singleton.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -125,7 +125,7 @@ public final class ProjectEditPlugin extends EMFPlugin {
      * It is much prefered to do this:
      * 
      * <pre><code>
-     * private static final String RENDERING = &quot;net.refractions.udig.project/render/trace&quot;;
+     * private static final String RENDERING = &quot;org.locationtech.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }

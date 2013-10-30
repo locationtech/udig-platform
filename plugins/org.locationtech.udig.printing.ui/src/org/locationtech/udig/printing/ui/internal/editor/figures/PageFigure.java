@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal.editor.figures;
+package org.locationtech.udig.printing.ui.internal.editor.figures;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Layer;

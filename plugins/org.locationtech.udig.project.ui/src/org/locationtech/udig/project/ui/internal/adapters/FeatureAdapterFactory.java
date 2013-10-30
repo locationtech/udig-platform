@@ -9,13 +9,13 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.adapters;
+package org.locationtech.udig.project.ui.internal.adapters;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.AdaptableFeature;
-import net.refractions.udig.project.ui.internal.properties.FeaturePropertySource;
-import net.refractions.udig.project.ui.internal.properties.GeomPropertySource;
-import net.refractions.udig.project.ui.internal.properties.IGeoResourcePropertySource;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.AdaptableFeature;
+import org.locationtech.udig.project.ui.internal.properties.FeaturePropertySource;
+import org.locationtech.udig.project.ui.internal.properties.GeomPropertySource;
+import org.locationtech.udig.project.ui.internal.properties.IGeoResourcePropertySource;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IAdapterFactory;

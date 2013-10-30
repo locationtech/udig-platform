@@ -10,10 +10,10 @@
  *
  */
 
-package net.refractions.udig.render.gridcoverage.tool.info.internal;
+package org.locationtech.udig.render.gridcoverage.tool.info.internal;
 
 
-import net.refractions.udig.render.gridcoverage.basic.internal.Messages;
+import org.locationtech.udig.render.gridcoverage.basic.internal.Messages;
 
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;

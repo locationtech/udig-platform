@@ -8,15 +8,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.editor;
+package org.locationtech.udig.style.sld.editor;
 
 import java.util.EventObject;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.filter.ExpressionViewer;
-import net.refractions.udig.style.sld.IStyleEditorPageContainer;
-import net.refractions.udig.style.sld.SLDContentManager;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.filter.ExpressionViewer;
+import org.locationtech.udig.style.sld.IStyleEditorPageContainer;
+import org.locationtech.udig.style.sld.SLDContentManager;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.viewers.ISelectionChangedListener;

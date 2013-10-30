@@ -9,22 +9,22 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.internal.gridcoverage.basic;
+package org.locationtech.udig.render.internal.gridcoverage.basic;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.core.MinMaxScaleCalculator;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
-import net.refractions.udig.style.sld.SLDContent;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.core.MinMaxScaleCalculator;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.style.sld.SLDContent;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.geotools.styling.Style;
 import org.geotools.util.Range;
@@ -42,8 +42,8 @@ public class MemoryGridCoverageMetrics extends AbstractRenderMetrics {
      */
     private static List<String> listExpectedStyleIds(){
         ArrayList<String> styleIds = new ArrayList<String>();
-        styleIds.add("net.refractions.udig.style.sld");
-        styleIds.add("net.refractions.udig.style.cache");
+        styleIds.add("org.locationtech.udig.style.sld");
+        styleIds.add("org.locationtech.udig.style.cache");
         return styleIds;
     }
     
@@ -58,7 +58,7 @@ public class MemoryGridCoverageMetrics extends AbstractRenderMetrics {
         this.resolutionMetric = RES_DENSE; // reads more then is required for the screen!
         
         ID id = context.getGeoResource().getID();
-        //Boolean memory = (Boolean) context.getLayer().getStyleBlackboard().get("net.refractions.udig.style.cache");        
+        //Boolean memory = (Boolean) context.getLayer().getStyleBlackboard().get("org.locationtech.udig.style.cache");        
         if( id.isMemory() ){
             // we would not really want to use GridCoverageLoader on an in memory image
             this.latencyMetric = LATENCY_MEMORY;
@@ -77,14 +77,14 @@ public class MemoryGridCoverageMetrics extends AbstractRenderMetrics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.RenderMetrics#getRenderContext()
+     * @see org.locationtech.udig.project.render.RenderMetrics#getRenderContext()
      */
     public IRenderContext getRenderContext() {
         return context;
     }
 
     /**
-     * @see net.refractions.udig.project.render.IRenderMetrics#getRenderMetricsFactory()
+     * @see org.locationtech.udig.project.render.IRenderMetrics#getRenderMetricsFactory()
      */
     public IRenderMetricsFactory getRenderMetricsFactory() {
         return factory;
@@ -95,7 +95,7 @@ public class MemoryGridCoverageMetrics extends AbstractRenderMetrics {
     }
 
     public boolean canStyle( String styleID, Object value ) {
-        if( "net.refractions.udig.style.cache".equals(styleID)){
+        if( "org.locationtech.udig.style.cache".equals(styleID)){
             if( Boolean.TRUE.equals( value )){
                 return true; // user turned on caching
             }

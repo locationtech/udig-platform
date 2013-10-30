@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.internal;
+package org.locationtech.udig.issues.internal;
 
-import static net.refractions.udig.issues.internal.IssuesPreferencePage.PREFERENCE_ID;
+import static org.locationtech.udig.issues.internal.IssuesPreferencePage.PREFERENCE_ID;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -20,23 +20,23 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.issues.IIssue;
-import net.refractions.udig.issues.IIssuesList;
-import net.refractions.udig.issues.IIssuesManager;
-import net.refractions.udig.issues.IRemoteIssuesList;
-import net.refractions.udig.issues.IssueConstants;
-import net.refractions.udig.issues.IssuesList;
-import net.refractions.udig.issues.IssuesListConfigurator;
-import net.refractions.udig.issues.listeners.IIssueListener;
-import net.refractions.udig.issues.listeners.IIssuesListListener;
-import net.refractions.udig.issues.listeners.IIssuesManagerListener;
-import net.refractions.udig.issues.listeners.IssueEvent;
-import net.refractions.udig.issues.listeners.IssuePropertyChangeEvent;
-import net.refractions.udig.issues.listeners.IssuesListEvent;
-import net.refractions.udig.issues.listeners.IssuesManagerEvent;
-import net.refractions.udig.issues.listeners.IssuesManagerEventType;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.issues.IIssue;
+import org.locationtech.udig.issues.IIssuesList;
+import org.locationtech.udig.issues.IIssuesManager;
+import org.locationtech.udig.issues.IRemoteIssuesList;
+import org.locationtech.udig.issues.IssueConstants;
+import org.locationtech.udig.issues.IssuesList;
+import org.locationtech.udig.issues.IssuesListConfigurator;
+import org.locationtech.udig.issues.listeners.IIssueListener;
+import org.locationtech.udig.issues.listeners.IIssuesListListener;
+import org.locationtech.udig.issues.listeners.IIssuesManagerListener;
+import org.locationtech.udig.issues.listeners.IssueEvent;
+import org.locationtech.udig.issues.listeners.IssuePropertyChangeEvent;
+import org.locationtech.udig.issues.listeners.IssuesListEvent;
+import org.locationtech.udig.issues.listeners.IssuesManagerEvent;
+import org.locationtech.udig.issues.listeners.IssuesManagerEventType;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -46,7 +46,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.XMLMemento;
 
 /**
- * @see net.refractions.udig.issues.IIssuesManager
+ * @see org.locationtech.udig.issues.IIssuesManager
  * @author jones
  * @since 1.0.0
  */

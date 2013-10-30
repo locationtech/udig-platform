@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.commands;
+package org.locationtech.udig.project.internal.commands;
 
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.UndoableCommand;
-import net.refractions.udig.project.internal.Messages;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.UndoableCommand;
+import org.locationtech.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

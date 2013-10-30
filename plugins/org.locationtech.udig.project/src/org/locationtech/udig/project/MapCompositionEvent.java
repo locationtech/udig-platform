@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project;
+package org.locationtech.udig.project;
 
-import net.refractions.udig.project.MapEvent.MapEventType;
+import org.locationtech.udig.project.MapEvent.MapEventType;
 
 /**
  * Event encapsulating information about the changes of the composition of a map.

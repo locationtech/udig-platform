@@ -8,17 +8,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.tests;
+package org.locationtech.udig.project.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.TestMapOpeningInterceptor;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.TestMapOpeningInterceptor;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.junit.Before;
 import org.junit.Ignore;

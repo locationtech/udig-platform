@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.interceptor;
+package org.locationtech.udig.project.internal.interceptor;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IResourceCachingInterceptor;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IResourceCachingInterceptor;
 
 import org.geotools.styling.Style;
 import org.opengis.coverage.grid.GridCoverage;
@@ -29,7 +29,7 @@ import org.opengis.coverage.grid.GridCoverage;
  */
 @SuppressWarnings("unchecked")
 public class ResourceCacheInterceptor implements IResourceCachingInterceptor {
-    public static final String ID = "net.refractions.udig.project.caching"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.project.caching"; //$NON-NLS-1$
     private Map<Class, Object> resources = new HashMap<Class, Object>();
 
     private <T> void registerClasses( Class<T> clazz, Object obj ) {

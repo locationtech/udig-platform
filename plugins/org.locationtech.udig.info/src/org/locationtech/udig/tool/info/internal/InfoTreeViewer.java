@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tool.info.internal;
+package org.locationtech.udig.tool.info.internal;
 
 import java.util.List;
 
-import net.refractions.udig.tool.info.LayerPointInfo;
-import net.refractions.udig.ui.ImageCache;
+import org.locationtech.udig.tool.info.LayerPointInfo;
+import org.locationtech.udig.ui.ImageCache;
 
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;

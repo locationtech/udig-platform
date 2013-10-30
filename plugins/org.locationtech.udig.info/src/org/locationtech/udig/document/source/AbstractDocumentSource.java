@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.document.source;
+package org.locationtech.udig.document.source;
 
 import java.net.URL;
 import java.util.List;
 
 import org.opengis.feature.simple.SimpleFeature;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.document.IAbstractDocumentSource;
-import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.document.model.AbstractDocument;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.document.IAbstractDocumentSource;
+import org.locationtech.udig.catalog.document.IDocument;
+import org.locationtech.udig.document.model.AbstractDocument;
 
 /**
  * The base class for document sources.

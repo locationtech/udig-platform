@@ -7,20 +7,20 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.internal.datastore;
+package org.locationtech.udig.issues.internal.datastore;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.refractions.udig.core.internal.CorePlugin;
-import net.refractions.udig.issues.IIssuesList;
-import net.refractions.udig.issues.IIssuesPreferencePage;
-import net.refractions.udig.issues.IssuesListConfigurator;
-import net.refractions.udig.issues.StrategizedIssuesList;
-import net.refractions.udig.issues.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.core.internal.CorePlugin;
+import org.locationtech.udig.issues.IIssuesList;
+import org.locationtech.udig.issues.IIssuesPreferencePage;
+import org.locationtech.udig.issues.IssuesListConfigurator;
+import org.locationtech.udig.issues.StrategizedIssuesList;
+import org.locationtech.udig.issues.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -18,14 +18,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.junit.After;
@@ -49,7 +49,7 @@ public class AnimationUpdaterTest extends AbstractProjectUITestCase {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.AnimationUpdater.runTimer(IMapDisplay, List<IAnimation>)'
+     * Test method for 'org.locationtech.udig.project.ui.AnimationUpdater.runTimer(IMapDisplay, List<IAnimation>)'
      */
     @Ignore
     @Test

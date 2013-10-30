@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package eu.udig.jconsole.java;
+package org.locationtech.udig.jconsole.java;
 
 
 import org.eclipse.jface.text.BadLocationException;

@@ -7,36 +7,36 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.behaviour;
+package org.locationtech.udig.tools.edit.behaviour;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import net.refractions.udig.core.IProvider;
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.ui.AnimationUpdater;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.EventBehaviour;
-import net.refractions.udig.tools.edit.EventType;
-import net.refractions.udig.tools.edit.LockingBehaviour;
-import net.refractions.udig.tools.edit.animation.MessageBubble;
-import net.refractions.udig.tools.edit.commands.DrawSnapAreaCommand;
-import net.refractions.udig.tools.edit.commands.MoveVertexCommand;
-import net.refractions.udig.tools.edit.commands.SetEditStateCommand;
-import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.EditGeom;
-import net.refractions.udig.tools.edit.support.GeometryCreationUtil;
-import net.refractions.udig.tools.edit.support.Point;
-import net.refractions.udig.tools.edit.support.Selection;
-import net.refractions.udig.tools.edit.support.SnapBehaviour;
-import net.refractions.udig.tools.edit.validator.LegalShapeValidator;
+import org.locationtech.udig.core.IProvider;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.ui.AnimationUpdater;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.EditState;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.EventBehaviour;
+import org.locationtech.udig.tools.edit.EventType;
+import org.locationtech.udig.tools.edit.LockingBehaviour;
+import org.locationtech.udig.tools.edit.animation.MessageBubble;
+import org.locationtech.udig.tools.edit.commands.DrawSnapAreaCommand;
+import org.locationtech.udig.tools.edit.commands.MoveVertexCommand;
+import org.locationtech.udig.tools.edit.commands.SetEditStateCommand;
+import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.GeometryCreationUtil;
+import org.locationtech.udig.tools.edit.support.Point;
+import org.locationtech.udig.tools.edit.support.Selection;
+import org.locationtech.udig.tools.edit.support.SnapBehaviour;
+import org.locationtech.udig.tools.edit.validator.LegalShapeValidator;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
@@ -51,10 +51,10 @@ import com.vividsolutions.jts.geom.Polygon;
  * <li>currentState is MODIFIED or NONE </li>
  * <li>eventType is DRAGGED</li>
  * <li>no modifiers</li>
- * <li>{@link net.refractions.udig.tools.edit.MouseTracker#getDragStarted()} is over selected
+ * <li>{@link org.locationtech.udig.tools.edit.MouseTracker#getDragStarted()} is over selected
  * vertex (if not all vertices are selected)</li>
  * <li>If all vertices are selected then
- * {@link net.refractions.udig.tools.edit.MouseTracker#getDragStarted()} must be within the
+ * {@link org.locationtech.udig.tools.edit.MouseTracker#getDragStarted()} must be within the
  * geometry.
  * </ul>
  * </p>
@@ -62,7 +62,7 @@ import com.vividsolutions.jts.geom.Polygon;
  * Action:
  * <ul>
  * <li>move the vertices selected by {@link SelectVertexBehaviour} to location in
- * {@link net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent}</li>
+ * {@link org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent}</li>
  * <li>Locks the EditTool handler until mouse is released so other behaviours won't interfere</li>
  * </ul>
  * </p>

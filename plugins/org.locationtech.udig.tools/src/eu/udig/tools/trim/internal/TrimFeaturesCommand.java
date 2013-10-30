@@ -9,20 +9,20 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.trim.internal;
+package org.locationtech.udig.tools.trim.internal;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.command.factory.EditCommandFactory;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.command.factory.EditCommandFactory;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.tools.edit.EditState;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -35,11 +35,11 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 
-import eu.udig.tools.geometry.trim.TrimGeometryStrategy;
-import eu.udig.tools.internal.mediator.AppGISAdapter;
-import eu.udig.tools.internal.mediator.PlatformGISMediator;
-import eu.udig.tools.internal.ui.util.DialogUtil;
-import eu.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.geometry.trim.TrimGeometryStrategy;
+import org.locationtech.udig.tools.internal.mediator.AppGISAdapter;
+import org.locationtech.udig.tools.internal.mediator.PlatformGISMediator;
+import org.locationtech.udig.tools.internal.ui.util.DialogUtil;
+import org.locationtech.udig.tools.internal.i18n.Messages;
 
 /**
  * Command that adjust the longitude of a line starting over the intersection

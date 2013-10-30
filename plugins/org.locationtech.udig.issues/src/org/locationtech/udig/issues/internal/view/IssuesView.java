@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.internal.view;
+package org.locationtech.udig.issues.internal.view;
 
-import static net.refractions.udig.issues.internal.PreferenceConstants.KEY_VIEW_CONTENT_PROVIDER;
-import static net.refractions.udig.issues.internal.PreferenceConstants.KEY_VIEW_EXPANSION_PROVIDER;
-import static net.refractions.udig.issues.internal.PreferenceConstants.KEY_VIEW_LABEL_PROVIDER;
-import static net.refractions.udig.issues.internal.PreferenceConstants.KEY_VIEW_SORTER;
+import static org.locationtech.udig.issues.internal.PreferenceConstants.KEY_VIEW_CONTENT_PROVIDER;
+import static org.locationtech.udig.issues.internal.PreferenceConstants.KEY_VIEW_EXPANSION_PROVIDER;
+import static org.locationtech.udig.issues.internal.PreferenceConstants.KEY_VIEW_LABEL_PROVIDER;
+import static org.locationtech.udig.issues.internal.PreferenceConstants.KEY_VIEW_SORTER;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -20,28 +20,28 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.refractions.udig.core.enums.Resolution;
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.issues.Column;
-import net.refractions.udig.issues.IIssue;
-import net.refractions.udig.issues.IIssuesContentProvider;
-import net.refractions.udig.issues.IIssuesExpansionProvider;
-import net.refractions.udig.issues.IIssuesLabelProvider;
-import net.refractions.udig.issues.IIssuesList;
-import net.refractions.udig.issues.IIssuesManager;
-import net.refractions.udig.issues.IIssuesViewSorter;
-import net.refractions.udig.issues.IRemoteIssuesList;
-import net.refractions.udig.issues.IssuesList;
-import net.refractions.udig.issues.internal.ImageConstants;
-import net.refractions.udig.issues.internal.IssuesActivator;
-import net.refractions.udig.issues.internal.Messages;
-import net.refractions.udig.issues.listeners.IIssuesListListener;
-import net.refractions.udig.issues.listeners.IIssuesManagerListener;
-import net.refractions.udig.issues.listeners.IssuesListEvent;
-import net.refractions.udig.issues.listeners.IssuesManagerEvent;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.core.enums.Resolution;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.issues.Column;
+import org.locationtech.udig.issues.IIssue;
+import org.locationtech.udig.issues.IIssuesContentProvider;
+import org.locationtech.udig.issues.IIssuesExpansionProvider;
+import org.locationtech.udig.issues.IIssuesLabelProvider;
+import org.locationtech.udig.issues.IIssuesList;
+import org.locationtech.udig.issues.IIssuesManager;
+import org.locationtech.udig.issues.IIssuesViewSorter;
+import org.locationtech.udig.issues.IRemoteIssuesList;
+import org.locationtech.udig.issues.IssuesList;
+import org.locationtech.udig.issues.internal.ImageConstants;
+import org.locationtech.udig.issues.internal.IssuesActivator;
+import org.locationtech.udig.issues.internal.Messages;
+import org.locationtech.udig.issues.listeners.IIssuesListListener;
+import org.locationtech.udig.issues.listeners.IIssuesManagerListener;
+import org.locationtech.udig.issues.listeners.IssuesListEvent;
+import org.locationtech.udig.issues.listeners.IssuesManagerEvent;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -87,7 +87,7 @@ import org.eclipse.ui.part.ViewPart;
 /**
  * Lists the current issues and allows the issues to fixed.
  * 
- * @see net.refractions.udig.issues.IIssue for more information how how they
+ * @see org.locationtech.udig.issues.IIssue for more information how how they
  *      can be fixed.
  * @author jones
  * @since 1.0.0
@@ -106,8 +106,8 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
     // Listens for setIssuesList to be called
     private final IIssuesManagerListener managerListener=createIssuesManagerListener();
     
-    public static final String CONFIGURATION_EXTENSION_POINT_ID = "net.refractions.udig.issues.issuesViewConfiguration"; //$NON-NLS-1$
-    public static final String VIEW_ID = "net.refractions.udig.issues.view.issues"; //$NON-NLS-1$
+    public static final String CONFIGURATION_EXTENSION_POINT_ID = "org.locationtech.udig.issues.issuesViewConfiguration"; //$NON-NLS-1$
+    public static final String VIEW_ID = "org.locationtech.udig.issues.view.issues"; //$NON-NLS-1$
 
 	public static final int RESOLUTION_COLUMN = 0;
 
@@ -1009,7 +1009,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
         try {
             IIssuesManager.defaultInstance.save(monitor);
         } catch (IOException e) {
-            throw (RuntimeException) new RuntimeException( net.refractions.udig.issues.internal.Messages.IssuesView_saveError).initCause( e ); 
+            throw (RuntimeException) new RuntimeException( org.locationtech.udig.issues.internal.Messages.IssuesView_saveError).initCause( e ); 
         }
     }
 

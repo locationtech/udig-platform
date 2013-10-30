@@ -9,15 +9,15 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.text.MessageFormat;
 
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.ProjectRegistry;
-import net.refractions.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.ProjectRegistry;
+import org.locationtech.udig.project.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

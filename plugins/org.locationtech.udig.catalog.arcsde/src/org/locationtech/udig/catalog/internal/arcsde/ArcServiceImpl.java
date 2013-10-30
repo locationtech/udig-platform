@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.arcsde;
+package org.locationtech.udig.catalog.internal.arcsde;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -19,16 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveDelta;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.catalog.IResolve.Status;
-import net.refractions.udig.catalog.internal.CatalogImpl;
-import net.refractions.udig.catalog.internal.ResolveChangeEvent;
-import net.refractions.udig.catalog.internal.ResolveDelta;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveDelta;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.IResolve.Status;
+import org.locationtech.udig.catalog.internal.CatalogImpl;
+import org.locationtech.udig.catalog.internal.ResolveChangeEvent;
+import org.locationtech.udig.catalog.internal.ResolveDelta;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -109,7 +109,7 @@ public class ArcServiceImpl extends IService {
     }
 
     /**
-     * @see net.refractions.udig.catalog.IResolve#canResolve(Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null) {
@@ -156,7 +156,7 @@ public class ArcServiceImpl extends IService {
         return (IServiceArcSDEInfo) super.getInfo(monitor);
     }
     /*
-     * @see net.refractions.udig.catalog.IService#getInfo(org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.IService#getInfo(org.eclipse.core.runtime.IProgressMonitor)
      */
     @Override
     protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {

@@ -9,13 +9,13 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.internal.commands;
+package org.locationtech.udig.project.internal.commands;
 
-import net.refractions.udig.project.command.Command;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.command.navigation.AbstractNavCommand;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.command.navigation.AbstractNavCommand;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -45,7 +45,7 @@ public class ChangeCRSCommand extends AbstractNavCommand implements
 	/**
 	 * Each command has a name that is displayed with the undo/redo buttons.
 	 * 
-	 * @see net.refractions.udig.project.command.MapCommand#getName()
+	 * @see org.locationtech.udig.project.command.MapCommand#getName()
 	 */
 	public String getName() {
 		return NAME;

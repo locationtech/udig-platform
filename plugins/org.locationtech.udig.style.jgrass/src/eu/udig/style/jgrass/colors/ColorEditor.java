@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.jgrass.colors;
+package org.locationtech.udig.style.jgrass.colors;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,10 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.ui.ExceptionDetailsDialog;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -55,13 +55,13 @@ import org.geotools.gce.grassraster.JGrassUtilities;
 import org.geotools.gce.grassraster.core.color.ColorRule;
 import org.geotools.gce.grassraster.core.color.JGrassColorTable;
 
-import eu.udig.catalog.jgrass.activeregion.dialogs.JGRasterChooserDialog;
-import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
-import eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
-import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
-import eu.udig.style.jgrass.JGrassrasterStyleActivator;
-import eu.udig.style.jgrass.core.GrassColorTable;
-import eu.udig.style.jgrass.core.PredefinedColorRules;
+import org.locationtech.udig.catalog.jgrass.activeregion.dialogs.JGRasterChooserDialog;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
+import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.style.jgrass.JGrassrasterStyleActivator;
+import org.locationtech.udig.style.jgrass.core.GrassColorTable;
+import org.locationtech.udig.style.jgrass.core.PredefinedColorRules;
 
 /**
  * The composite holding the JGrass Raster map editing logic

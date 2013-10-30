@@ -8,16 +8,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tests.catalog.wmt;
+package org.locationtech.udig.tests.catalog.wmt;
 
 import static org.junit.Assert.assertEquals;
 
 import java.net.URL;
 import java.net.URLConnection;
 
-import net.refractions.udig.catalog.internal.wmt.tile.WWTile;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WWSource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.ww.QuadTileSet;
+import org.locationtech.udig.catalog.internal.wmt.tile.WWTile;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WWSource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.QuadTileSet;
 
 import org.jdom.Document;
 import org.jdom.Element;

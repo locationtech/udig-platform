@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.ww;
+package org.locationtech.udig.catalog.internal.wmt.ww;
 
 import java.io.Serializable;
 import java.net.MalformedURLException;
@@ -15,9 +15,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ServiceExtension2;
-import net.refractions.udig.catalog.wmt.internal.Messages;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ServiceExtension2;
+import org.locationtech.udig.catalog.wmt.internal.Messages;
 
 /**
  * A service extension for creating WWServices,

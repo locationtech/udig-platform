@@ -9,10 +9,10 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.internal.commands.selection;
+package org.locationtech.udig.project.internal.commands.selection;
 
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.internal.Messages;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -25,14 +25,14 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class CommitCommand extends AbstractCommand {
 
     /*
-     * @see net.refractions.udig.project.command.MapCommand#run()
+     * @see org.locationtech.udig.project.command.MapCommand#run()
      */
     public void run( IProgressMonitor monitor ) throws Exception {
         getMap().getEditManagerInternal().commitTransaction();
     }
 
     /*
-     * @see net.refractions.udig.project.command.MapCommand#getName()
+     * @see org.locationtech.udig.project.command.MapCommand#getName()
      */
     public String getName() {
         return Messages.CommitCommand_commitCommandName; 

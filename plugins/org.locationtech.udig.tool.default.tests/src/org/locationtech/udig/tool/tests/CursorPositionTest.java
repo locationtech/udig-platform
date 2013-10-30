@@ -8,11 +8,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.tests;
+package org.locationtech.udig.tool.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import net.refractions.udig.tools.internal.CursorPosition;
+import org.locationtech.udig.tools.internal.CursorPosition;
 
 import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;

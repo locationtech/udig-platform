@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.internal;
+package org.locationtech.udig.mapgraphic.internal;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -19,12 +19,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.catalog.ITransientResolve;
-import net.refractions.udig.core.internal.CorePlugin;
-import net.refractions.udig.mapgraphic.MapGraphicFactory;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.ITransientResolve;
+import org.locationtech.udig.core.internal.CorePlugin;
+import org.locationtech.udig.mapgraphic.MapGraphicFactory;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -63,7 +63,7 @@ public class MapGraphicService extends IService {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IService#resolve(java.lang.Class,
+     * @see org.locationtech.udig.catalog.IService#resolve(java.lang.Class,
      * org.eclipse.core.runtime.IProgressMonitor)
      */
     @Override
@@ -93,7 +93,7 @@ public class MapGraphicService extends IService {
         return new MapGraphicServiceInfo();
     }
     /*
-     * @see net.refractions.udig.catalog.IService#members(org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.IService#members(org.eclipse.core.runtime.IProgressMonitor)
      */
     @Override
     public List<MapGraphicResource> resources( IProgressMonitor monitor ) throws IOException {
@@ -118,7 +118,7 @@ public class MapGraphicService extends IService {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IService#getConnectionParams()
+     * @see org.locationtech.udig.catalog.IService#getConnectionParams()
      */
     @Override
     public Map<String, Serializable> getConnectionParams() {
@@ -128,7 +128,7 @@ public class MapGraphicService extends IService {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
         return adaptee != null
@@ -138,7 +138,7 @@ public class MapGraphicService extends IService {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getStatus()
+     * @see org.locationtech.udig.catalog.IResolve#getStatus()
      */
     public Status getStatus() {
         return Status.CONNECTED;
@@ -149,14 +149,14 @@ public class MapGraphicService extends IService {
         // built-in
     }
     /*
-     * @see net.refractions.udig.catalog.IResolve#getMessage()
+     * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
     public Throwable getMessage() {
         return null;
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getIdentifier()
+     * @see org.locationtech.udig.catalog.IResolve#getIdentifier()
      */
     public URL getIdentifier() {
         return SERVICE_URL;
@@ -164,7 +164,7 @@ public class MapGraphicService extends IService {
 
     static class MapGraphicServiceInfo extends IServiceInfo {
         /*
-         * @see net.refractions.udig.catalog.IServiceInfo#getTitle()
+         * @see org.locationtech.udig.catalog.IServiceInfo#getTitle()
          */
         @Override
         public String getTitle() {

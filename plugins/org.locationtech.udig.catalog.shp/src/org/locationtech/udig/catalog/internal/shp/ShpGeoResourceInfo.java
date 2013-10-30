@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.catalog.internal.shp;
+package org.locationtech.udig.catalog.internal.shp;
 
 import java.io.IOException;
 import java.net.URI;
@@ -9,12 +9,12 @@ import java.net.URISyntaxException;
 
 import javax.swing.Icon;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.shp.internal.Messages;
-import net.refractions.udig.catalog.util.GeotoolsResourceInfoAdapter;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
-import net.refractions.udig.ui.graphics.Glyph;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.shp.internal.Messages;
+import org.locationtech.udig.catalog.util.GeotoolsResourceInfoAdapter;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
+import org.locationtech.udig.ui.graphics.Glyph;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -79,7 +79,7 @@ class ShpGeoResourceInfo extends IGeoResourceInfo {
                     .log(
                             new org.eclipse.core.runtime.Status(
                                     IStatus.WARNING,
-                                    "net.refractions.udig.catalog", 0, Messages.ShpGeoResourceImpl_error_layer_bounds, e)); //$NON-NLS-1$
+                                    "org.locationtech.udig.catalog", 0, Messages.ShpGeoResourceImpl_error_layer_bounds, e)); //$NON-NLS-1$
             bounds = new ReferencedEnvelope(new Envelope(), getCRS());
         }
 

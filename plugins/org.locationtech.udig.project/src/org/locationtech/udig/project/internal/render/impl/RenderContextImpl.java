@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,17 +14,17 @@ import java.awt.image.BufferedImage;
 import javax.media.jai.JAI;
 import javax.media.jai.TileCache;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.Trace;
-import net.refractions.udig.project.internal.impl.AbstractContextImpl;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.render.ILabelPainter;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.Trace;
+import org.locationtech.udig.project.internal.impl.AbstractContextImpl;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.render.ILabelPainter;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 import org.geotools.data.DefaultQuery;
 import org.geotools.data.Query;

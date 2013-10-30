@@ -7,19 +7,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.wmsc.server;
+package org.locationtech.udig.catalog.wmsc.server;
 
 import java.awt.RenderingHints.Key;
 import java.net.URI;
 import java.util.Collections;
 import java.util.Map;
 
-import net.refractions.udig.catalog.wmsc.server.WMSCComplexTypes._BoundingBoxType;
-import net.refractions.udig.catalog.wmsc.server.WMSCComplexTypes._CapabilityType;
-import net.refractions.udig.catalog.wmsc.server.WMSCComplexTypes._ServiceType;
-import net.refractions.udig.catalog.wmsc.server.WMSCComplexTypes._TileSetType;
-import net.refractions.udig.catalog.wmsc.server.WMSCComplexTypes._VendorSpecificCapabilitiesType;
-import net.refractions.udig.catalog.wmsc.server.WMSCComplexTypes._WMT_MS_CapabilitiesType;
+import org.locationtech.udig.catalog.wmsc.server.WMSCComplexTypes._BoundingBoxType;
+import org.locationtech.udig.catalog.wmsc.server.WMSCComplexTypes._CapabilityType;
+import org.locationtech.udig.catalog.wmsc.server.WMSCComplexTypes._ServiceType;
+import org.locationtech.udig.catalog.wmsc.server.WMSCComplexTypes._TileSetType;
+import org.locationtech.udig.catalog.wmsc.server.WMSCComplexTypes._VendorSpecificCapabilitiesType;
+import org.locationtech.udig.catalog.wmsc.server.WMSCComplexTypes._WMT_MS_CapabilitiesType;
 
 import org.geotools.data.wms.xml.WMSSchema;
 import org.geotools.xml.schema.Attribute;

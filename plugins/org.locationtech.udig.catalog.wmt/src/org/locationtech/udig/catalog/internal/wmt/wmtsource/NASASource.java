@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.wmtsource;
+package org.locationtech.udig.catalog.internal.wmt.wmtsource;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.refractions.udig.catalog.internal.wmt.Trace;
-import net.refractions.udig.catalog.internal.wmt.WMTPlugin;
-import net.refractions.udig.catalog.internal.wmt.tile.NASATile;
-import net.refractions.udig.catalog.internal.wmt.tile.NASATile.NASATileName.NASAZoomLevel;
-import net.refractions.udig.catalog.internal.wmt.tile.WMTTile.WMTTileFactory;
+import org.locationtech.udig.catalog.internal.wmt.Trace;
+import org.locationtech.udig.catalog.internal.wmt.WMTPlugin;
+import org.locationtech.udig.catalog.internal.wmt.tile.NASATile;
+import org.locationtech.udig.catalog.internal.wmt.tile.NASATile.NASATileName.NASAZoomLevel;
+import org.locationtech.udig.catalog.internal.wmt.tile.WMTTile.WMTTileFactory;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;

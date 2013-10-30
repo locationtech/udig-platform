@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.internal.ui;
+package org.locationtech.udig.mapgraphic.internal.ui;
 
 import java.io.Serializable;
 import java.net.URL;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ui.UDIGConnectionFactory;
-import net.refractions.udig.mapgraphic.internal.MapGraphicService;
+import org.locationtech.udig.catalog.ui.UDIGConnectionFactory;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
 
 public class MapGraphicConnectionFactory extends UDIGConnectionFactory {
 

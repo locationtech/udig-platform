@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.kml.wizard;
+package org.locationtech.udig.catalog.kml.wizard;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.ui.ExceptionDetailsDialog;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -28,10 +28,10 @@ import org.geotools.data.simple.SimpleFeatureSource;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import eu.udig.catalog.kml.core.KmlToolPlugin;
-import eu.udig.catalog.kml.core.KmlUtils;
-import eu.udig.catalog.kml.internal.Messages;
-import eu.udig.catalog.kml.internal.ui.ImageConstants;
+import org.locationtech.udig.catalog.kml.core.KmlToolPlugin;
+import org.locationtech.udig.catalog.kml.core.KmlUtils;
+import org.locationtech.udig.catalog.kml.internal.Messages;
+import org.locationtech.udig.catalog.kml.internal.ui.ImageConstants;
 
 /**
  * @author Andrea Antonello (www.hydrologis.com)

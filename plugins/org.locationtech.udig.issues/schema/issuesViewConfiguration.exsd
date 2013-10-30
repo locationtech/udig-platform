@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.issues">
+<schema targetNamespace="org.locationtech.udig.issues">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.issues" id="issuesViewConfiguration" name="IssuesViewConfiguration"/>
+         <meta.schema plugin="org.locationtech.udig.issues" id="issuesViewConfiguration" name="IssuesViewConfiguration"/>
       </appInfo>
       <documentation>
          Defines extensions for configuring the issues view.  Extensions are required for persisting custom configurations between runs.  For example calling IssueConfigurator.setContentProvider() with a Content Provider without a extension declaration will work but only for the one session.  Future runs will have to call setContentProvider.
@@ -55,10 +55,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  net.refractions.udig.issues.IIssuesContentProvider implementation
+                  org.locationtech.udig.issues.IIssuesContentProvider implementation
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.issues.IIssuesContentProvider"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.issues.IIssuesContentProvider"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -82,10 +82,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  net.refractions.udig.issues.IIssuesExpansionProvider implementation
+                  org.locationtech.udig.issues.IIssuesExpansionProvider implementation
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.issues.IIssuesExpansionProvider"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.issues.IIssuesExpansionProvider"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -109,10 +109,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  net.refractions.udig.issues.IIssuesViewSorter implementation
+                  org.locationtech.udig.issues.IIssuesViewSorter implementation
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.issues.IIssuesViewSorter"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.issues.IIssuesViewSorter"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -136,10 +136,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  net.refractions.udig.issues.IIssuesLabelProvider implementation
+                  org.locationtech.udig.issues.IIssuesLabelProvider implementation
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.issues.IIssuesLabelProvider"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.issues.IIssuesLabelProvider"/>
                </appInfo>
             </annotation>
          </attribute>

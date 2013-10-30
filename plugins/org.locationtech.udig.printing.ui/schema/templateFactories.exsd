@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.printing">
+<schema targetNamespace="org.locationtech.udig.printing">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.printing" id="templateFactories" name="Template Factories"/>
+         <meta.schema plugin="org.locationtech.udig.printing" id="templateFactories" name="Template Factories"/>
       </appInfo>
       <documentation>
          A Template is used to layout elements on a Page that will be use for printing.
 
-See net.refractions.udig.printing.ui.internal.BasicTemplate for an example of how to create a template.
+See org.locationtech.udig.printing.ui.internal.BasicTemplate for an example of how to create a template.
       </documentation>
    </annotation>
 
@@ -69,10 +69,10 @@ Box box = ModelFactory.eINSTANCE.createBox();
             <annotation>
                <documentation>
                   The class that will produce a template for us.
-Must implement net.refractions.udig.printing.TemplateFactory
+Must implement org.locationtech.udig.printing.TemplateFactory
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.printing.ui.TemplateFactory"/>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.printing.ui.TemplateFactory"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -119,10 +119,10 @@ Box box = ModelFactory.eINSTANCE.createBox();
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The net.refractions.udig.printing.Template used to create a Page
+                  The org.locationtech.udig.printing.Template used to create a Page
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.printing.ui.Template"/>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.printing.ui.Template"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -144,10 +144,10 @@ Box box = ModelFactory.eINSTANCE.createBox();
       </appInfo>
       <documentation>
          &lt;pre&gt;
- &lt;extension point=&quot;net.refractions.udig.printing.templates&quot;
-            id=&quot;net.refractions.udig.examples.template&quot;&gt;
+ &lt;extension point=&quot;org.locationtech.udig.printing.templates&quot;
+            id=&quot;org.locationtech.udig.examples.template&quot;&gt;
      &lt;template name=&quot;%Basic%&quot; id=&quot;basic&quot;
-               class=&quot;net.refractions.udig.printing.internal.BasicTemplate&quot;/&gt;
+               class=&quot;org.locationtech.udig.printing.internal.BasicTemplate&quot;/&gt;
  &lt;/extension&gt;
 &lt;/pre&gt;
       </documentation>
@@ -158,7 +158,7 @@ Box box = ModelFactory.eINSTANCE.createBox();
          <meta.section type="apiInfo"/>
       </appInfo>
       <documentation>
-         See the &lt;code&gt;net.refractions.udig.printing&lt;/code&gt; package.
+         See the &lt;code&gt;org.locationtech.udig.printing&lt;/code&gt; package.
       </documentation>
    </annotation>
 
@@ -167,7 +167,7 @@ Box box = ModelFactory.eINSTANCE.createBox();
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         See the &lt;code&gt;net.refractions.udig.printing&lt;/code&gt; package.
+         See the &lt;code&gt;org.locationtech.udig.printing&lt;/code&gt; package.
       </documentation>
    </annotation>
 

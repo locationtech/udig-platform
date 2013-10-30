@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.socket;
+package org.locationtech.udig.socket;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,7 +18,7 @@ import java.io.StringReader;
 import java.net.URL;
 import java.util.Map;
 
-import net.refractions.udig.core.Pair;
+import org.locationtech.udig.core.Pair;
 
 import org.junit.Test;
 

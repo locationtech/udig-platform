@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.merge;
+package org.locationtech.udig.tools.merge;
 
 public class MergeToolException extends Exception {
 

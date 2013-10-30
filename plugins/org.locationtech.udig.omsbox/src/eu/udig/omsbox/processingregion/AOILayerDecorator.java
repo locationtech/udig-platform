@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.omsbox.processingregion;
+package org.locationtech.udig.omsbox.processingregion;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,15 +19,15 @@ import java.util.Collections;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
-import net.refractions.udig.aoi.AOIListener;
-import net.refractions.udig.aoi.IAOIService;
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.graphics.AWTGraphics;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.aoi.AOIListener;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.graphics.AWTGraphics;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -44,7 +44,7 @@ import com.vividsolutions.jts.geom.Polygon;
  */
 public class AOILayerDecorator implements MapGraphic {
 
-    public static final String ID = "eu.udig.omsbox.processingregion.aoiLayerDecorator";
+    public static final String ID = "org.locationtech.udig.omsbox.processingregion.aoiLayerDecorator";
 
     public AOILayerDecorator() {
     }

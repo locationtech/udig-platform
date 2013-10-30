@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  * 
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerLegendItem;
-import net.refractions.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerLegendItem;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link net.refractions.udig.project.internal.impl.LayerLegendItemImpl#getLayer <em>Layer</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.internal.impl.LayerLegendItemImpl#getLayer <em>Layer</em>}</li>
  * </ul>
  * </p>
  *

@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.google.internal;
+package org.locationtech.udig.catalog.google.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.catalog.google.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.catalog.google.internal.messages"; //$NON-NLS-1$
 	public static String GoogleCatalog_parseError;
 	public static String GoogleCatalog_searchMessage;
 	public static String GoogleCatalog_description;

@@ -9,15 +9,15 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.wizard;
+package org.locationtech.udig.project.ui.internal.wizard;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.refractions.udig.project.ui.internal.ISharedImages;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.internal.ISharedImages;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;

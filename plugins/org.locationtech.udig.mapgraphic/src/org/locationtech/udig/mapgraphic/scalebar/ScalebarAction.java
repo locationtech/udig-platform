@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.scalebar;
+package org.locationtech.udig.mapgraphic.scalebar;
 
-import net.refractions.udig.mapgraphic.AbstractToggleMapGraphicAction;
-import net.refractions.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.AbstractToggleMapGraphicAction;
+import org.locationtech.udig.mapgraphic.MapGraphic;
 
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 

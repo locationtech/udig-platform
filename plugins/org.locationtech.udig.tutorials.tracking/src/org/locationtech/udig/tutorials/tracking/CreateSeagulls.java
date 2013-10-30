@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.tracking;
+package org.locationtech.udig.tutorials.tracking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +24,15 @@ import org.geotools.util.SimpleInternationalString;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.ActiveMapTracker;
-import net.refractions.udig.tutorials.tracking.trackingitem.Seagull;
-import net.refractions.udig.tutorials.tracking.trackingitem.SeagullFlock;
-import net.refractions.udig.tutorials.tracking.trackingitem.TrackingItem;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ActiveMapTracker;
+import org.locationtech.udig.tutorials.tracking.trackingitem.Seagull;
+import org.locationtech.udig.tutorials.tracking.trackingitem.SeagullFlock;
+import org.locationtech.udig.tutorials.tracking.trackingitem.TrackingItem;
+import org.locationtech.udig.ui.operations.IOp;
 
 public class CreateSeagulls implements IOp {
 

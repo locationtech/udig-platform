@@ -7,20 +7,20 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.render.internal.feature.basic;
+package org.locationtech.udig.render.internal.feature.basic;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Dimension;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.render.impl.RenderContextImpl;
-import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.project.tests.support.TestMapDisplay;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.impl.RenderContextImpl;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.tests.support.TestMapDisplay;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.geometry.jts.JTS;
@@ -77,7 +77,7 @@ public class BasicFeatureRendererTest extends AbstractProjectTestCase {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.render.internal.feature.basic.BasicFeatureRenderer#validateBounds(com.vividsolutions.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor, net.refractions.udig.project.render.IRenderContext)}.
+     * Test method for {@link org.locationtech.udig.render.internal.feature.basic.BasicFeatureRenderer#validateBounds(com.vividsolutions.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor, org.locationtech.udig.project.render.IRenderContext)}.
      */
     @Ignore
     @Test

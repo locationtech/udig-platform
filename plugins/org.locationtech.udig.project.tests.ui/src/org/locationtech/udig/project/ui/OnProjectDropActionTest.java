@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -20,14 +20,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.project.ui.internal.actions.OnProjectDropAction;
-import net.refractions.udig.ui.ViewerDropLocation;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.ui.internal.actions.OnProjectDropAction;
+import org.locationtech.udig.ui.ViewerDropLocation;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Before;
@@ -57,7 +57,7 @@ public class OnProjectDropActionTest extends AbstractProjectUITestCase{
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.ui.internal.actions.OnProjectDropAction#accept()}.
+     * Test method for {@link org.locationtech.udig.project.ui.internal.actions.OnProjectDropAction#accept()}.
      */
     @Test
     public void testAccept() throws IOException {
@@ -94,7 +94,7 @@ public class OnProjectDropActionTest extends AbstractProjectUITestCase{
     }
 
     /**
-     * Test method for {@link net.refractions.udig.project.ui.internal.actions.OnProjectDropAction#perform(org.eclipse.core.runtime.IProgressMonitor)}.
+     * Test method for {@link org.locationtech.udig.project.ui.internal.actions.OnProjectDropAction#perform(org.eclipse.core.runtime.IProgressMonitor)}.
      */
     @Test
     public void testPerformAddResource() {
@@ -112,7 +112,7 @@ public class OnProjectDropActionTest extends AbstractProjectUITestCase{
     }
     
     /**
-     * Test method for {@link net.refractions.udig.project.ui.internal.actions.OnProjectDropAction#perform(org.eclipse.core.runtime.IProgressMonitor)}.
+     * Test method for {@link org.locationtech.udig.project.ui.internal.actions.OnProjectDropAction#perform(org.eclipse.core.runtime.IProgressMonitor)}.
      */
     @Test
     public void testPerformAddIllegalObject() {
@@ -129,7 +129,7 @@ public class OnProjectDropActionTest extends AbstractProjectUITestCase{
     }
     
     /**
-     * Test method for {@link net.refractions.udig.project.ui.internal.actions.OnProjectDropAction#perform(org.eclipse.core.runtime.IProgressMonitor)}.
+     * Test method for {@link org.locationtech.udig.project.ui.internal.actions.OnProjectDropAction#perform(org.eclipse.core.runtime.IProgressMonitor)}.
      */
     @Test
     public void testPerformAddCollection() {

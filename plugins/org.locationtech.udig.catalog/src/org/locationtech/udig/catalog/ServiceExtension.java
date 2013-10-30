@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 import java.io.Serializable;
 import java.net.URL;
@@ -45,7 +45,7 @@ import java.util.Map;
  */
 public interface ServiceExtension {
 
-    public final static String EXTENSION_ID = "net.refractions.udig.catalog.ServiceExtension"; //$NON-NLS-1$
+    public final static String EXTENSION_ID = "org.locationtech.udig.catalog.ServiceExtension"; //$NON-NLS-1$
 
     /**
      * Creates an IService based on the params provided. This may or may not return a singleton,

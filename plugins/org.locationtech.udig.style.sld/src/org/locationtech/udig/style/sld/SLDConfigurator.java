@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld;
+package org.locationtech.udig.style.sld;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.style.IStyleConfigurator;
-import net.refractions.udig.style.sld.internal.Messages;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.IStyleConfigurator;
+import org.locationtech.udig.style.sld.internal.Messages;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -87,7 +87,7 @@ public class SLDConfigurator extends IStyleConfigurator {
     }
 
     /**
-     * @see net.refractions.udig.style.IStyleConfigurator#init(org.eclipse.ui.IViewSite)
+     * @see org.locationtech.udig.style.IStyleConfigurator#init(org.eclipse.ui.IViewSite)
      */
     public void init() {
         sldContentManager = new SLDContentManager();
@@ -134,7 +134,7 @@ public class SLDConfigurator extends IStyleConfigurator {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.style.IStyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
+     * @see org.locationtech.udig.style.IStyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
      */
     public void createControl( Composite parent ) {
         createToolbarItems(); // now we have toolbar items
@@ -401,7 +401,7 @@ public class SLDConfigurator extends IStyleConfigurator {
         /*
          * (non-Javadoc)
          * 
-         * @see net.refractions.udig.style.sld.SLDEditorPart#getContentType()
+         * @see org.locationtech.udig.style.sld.SLDEditorPart#getContentType()
          */
         public Class getContentType() {
             return contentType;
@@ -410,7 +410,7 @@ public class SLDConfigurator extends IStyleConfigurator {
         /*
          * (non-Javadoc)
          * 
-         * @see net.refractions.udig.style.sld.SLDEditorPart#createPartControl(org.eclipse.swt.widgets.Composite)
+         * @see org.locationtech.udig.style.sld.SLDEditorPart#createPartControl(org.eclipse.swt.widgets.Composite)
          */
         protected Control createPartControl( Composite parent ) {
             return new Composite(parent, SWT.NONE);
@@ -419,7 +419,7 @@ public class SLDConfigurator extends IStyleConfigurator {
         /*
          * (non-Javadoc)
          * 
-         * @see net.refractions.udig.style.sld.SLDEditorPart#reset()
+         * @see org.locationtech.udig.style.sld.SLDEditorPart#reset()
          */
         public void reset() {
             // disable the content configurator

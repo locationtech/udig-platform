@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.editor.raster;
+package org.locationtech.udig.style.sld.editor.raster;
 
 import java.io.File;
 import java.text.Collator;
@@ -18,21 +18,21 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.style.sld.SLDContent;
-import net.refractions.udig.style.sld.SLDPlugin;
-import net.refractions.udig.style.sld.editor.CustomDynamicPalette;
-import net.refractions.udig.style.sld.editor.CustomPalettesLoader;
-import net.refractions.udig.style.sld.editor.StyleEditor;
-import net.refractions.udig.style.sld.editor.StyleEditorPage;
-import net.refractions.udig.style.sld.editor.internal.BrewerPaletteLabelProvider;
-import net.refractions.udig.style.sld.editor.raster.PredefinedColorRules.PredefinedColorRule;
-import net.refractions.udig.style.sld.editor.raster.ValueFormatter.DataType;
-import net.refractions.udig.style.sld.internal.Messages;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.style.sld.SLDContent;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.editor.CustomDynamicPalette;
+import org.locationtech.udig.style.sld.editor.CustomPalettesLoader;
+import org.locationtech.udig.style.sld.editor.StyleEditor;
+import org.locationtech.udig.style.sld.editor.StyleEditorPage;
+import org.locationtech.udig.style.sld.editor.internal.BrewerPaletteLabelProvider;
+import org.locationtech.udig.style.sld.editor.raster.PredefinedColorRules.PredefinedColorRule;
+import org.locationtech.udig.style.sld.editor.raster.ValueFormatter.DataType;
+import org.locationtech.udig.style.sld.internal.Messages;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -125,7 +125,7 @@ public class SingleBandEditorPage extends StyleEditorPage {
 	}
 
 	/**
-	 * @see net.refractions.udig.style.sld.IEditorPage#okToLeave()
+	 * @see org.locationtech.udig.style.sld.IEditorPage#okToLeave()
 	 */
 	@Override
 	public boolean okToLeave() {
@@ -443,10 +443,10 @@ public class SingleBandEditorPage extends StyleEditorPage {
         if (x instanceof BrewerPalette){
         	BrewerPalette palette = (BrewerPalette) x;
         	if (palette != null){
-        		styleBlackboard.put("net.refractions.udig.style.raster.palette", palette.getName()); //$NON-NLS-1$
+        		styleBlackboard.put("org.locationtech.udig.style.raster.palette", palette.getName()); //$NON-NLS-1$
         	}
         }else if (x instanceof PredefinedColorRule){
-        	styleBlackboard.put("net.refractions.udig.style.raster.palette", ((PredefinedColorRule) x).getName()); //$NON-NLS-1$
+        	styleBlackboard.put("org.locationtech.udig.style.raster.palette", ((PredefinedColorRule) x).getName()); //$NON-NLS-1$
         }
 	
 	}
@@ -606,7 +606,7 @@ public class SingleBandEditorPage extends StyleEditorPage {
 		cmbPalette.setInput(inputs);
 		
 		/* reselect based on blackboard setting */
-		String paletteName = (String) l.getStyleBlackboard().get("net.refractions.udig.style.raster.palette"); //$NON-NLS-1$
+		String paletteName = (String) l.getStyleBlackboard().get("org.locationtech.udig.style.raster.palette"); //$NON-NLS-1$
 		if (paletteName != null){
 			ColorBrewer cb = getBrewer();
 			BrewerPalette palette = cb.getPalette(paletteName);

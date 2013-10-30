@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.common.styleattributeclasses;
+package org.locationtech.udig.style.advanced.common.styleattributeclasses;
 
-import static eu.udig.style.advanced.utils.Utilities.getFormat;
-import static eu.udig.style.advanced.utils.Utilities.sb;
-import static eu.udig.style.advanced.utils.Utilities.sf;
+import static org.locationtech.udig.style.advanced.utils.Utilities.getFormat;
+import static org.locationtech.udig.style.advanced.utils.Utilities.sb;
+import static org.locationtech.udig.style.advanced.utils.Utilities.sf;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.URLUtils;
 
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.ExternalGraphic;
@@ -27,7 +27,7 @@ import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.PropertyName;
 
-import eu.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * An abstract wrapper for a {@link Symbolizer} to ease interaction with gui.

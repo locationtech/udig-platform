@@ -8,11 +8,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.impl;
+package org.locationtech.udig.tools.edit.impl;
 
-import net.refractions.udig.tools.edit.AbstractEditTool;
-import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
-import net.refractions.udig.tools.edit.support.TestHandler;
+import org.locationtech.udig.tools.edit.AbstractEditTool;
+import org.locationtech.udig.tools.edit.EditToolConfigurationHelper;
+import org.locationtech.udig.tools.edit.support.TestHandler;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public abstract class AbstractToolTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.LineTool.initActivators(Set<Activator>)'
+     * Test method for 'org.locationtech.udig.tools.edit.LineTool.initActivators(Set<Activator>)'
      */
     @Test
     public void testInitActivators() {
@@ -39,7 +39,7 @@ public abstract class AbstractToolTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.LineTool.initAcceptBehaviours(List<Behaviour>)'
+     * Test method for 'org.locationtech.udig.tools.edit.LineTool.initAcceptBehaviours(List<Behaviour>)'
      */
     @Test
     public void testInitAcceptBehaviours() {
@@ -47,7 +47,7 @@ public abstract class AbstractToolTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.LineTool.initCancelBehaviours(List<Behaviour>)'
+     * Test method for 'org.locationtech.udig.tools.edit.LineTool.initCancelBehaviours(List<Behaviour>)'
      */
     @Test
     public void testInitCancelBehaviours() {
@@ -55,7 +55,7 @@ public abstract class AbstractToolTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.LineTool.initEventBehaviours(EditToolConfigurationHelper)'
+     * Test method for 'org.locationtech.udig.tools.edit.LineTool.initEventBehaviours(EditToolConfigurationHelper)'
      */
     @Test
     public void testInitEventBehaviours() {

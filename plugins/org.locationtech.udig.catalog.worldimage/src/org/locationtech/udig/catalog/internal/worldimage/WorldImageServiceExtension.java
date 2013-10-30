@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.worldimage;
+package org.locationtech.udig.catalog.internal.worldimage;
 
 import java.io.File;
 import java.io.Serializable;
@@ -18,10 +18,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ServiceExtension2;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.worldimage.internal.Messages;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ServiceExtension2;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.worldimage.internal.Messages;
 
 import org.geotools.gce.image.WorldImageFormat;
 import org.geotools.gce.image.WorldImageFormatFactory;

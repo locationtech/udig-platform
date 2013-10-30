@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.command;
+package org.locationtech.udig.project.command;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.commands.AddLayerCommand;
-import net.refractions.udig.project.internal.commands.ChangeCRSCommand;
-import net.refractions.udig.project.internal.commands.DeleteLayerCommand;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.commands.AddLayerCommand;
+import org.locationtech.udig.project.internal.commands.ChangeCRSCommand;
+import org.locationtech.udig.project.internal.commands.DeleteLayerCommand;
 
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 

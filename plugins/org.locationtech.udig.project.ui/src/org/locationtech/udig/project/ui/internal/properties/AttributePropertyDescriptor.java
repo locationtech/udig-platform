@@ -8,16 +8,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.properties;
+package org.locationtech.udig.project.ui.internal.properties;
 
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.ui.AttributeValidator;
-import net.refractions.udig.ui.BasicTypeCellEditor;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.ui.AttributeValidator;
+import org.locationtech.udig.ui.BasicTypeCellEditor;
 
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;

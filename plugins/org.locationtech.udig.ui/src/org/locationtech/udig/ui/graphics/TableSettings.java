@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.graphics;
+package org.locationtech.udig.ui.graphics;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Tree;
  * 
  * @author chorner
  * @since 1.0.1
- * @see net.refractions.udig.ui.graphics.TableUtils
+ * @see org.locationtech.udig.ui.graphics.TableUtils
  */
 public class TableSettings {
     private static final int defaultMinPixels = 60; //default minimum width of a column

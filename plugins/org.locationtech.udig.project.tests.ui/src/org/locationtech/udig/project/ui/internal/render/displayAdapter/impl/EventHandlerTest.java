@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.render.displayAdapter.impl;
+package org.locationtech.udig.project.ui.internal.render.displayAdapter.impl;
 
 import static org.junit.Assert.assertEquals;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
@@ -43,7 +43,7 @@ public class EventHandlerTest {
     }
     
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.controlResized(Event)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.controlResized(Event)'
      */
     @Test
     public void testControlResized() {
@@ -53,7 +53,7 @@ public class EventHandlerTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseDoubleClick(Event)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseDoubleClick(Event)'
      */
     @Test
     public void testMouseDoubleClick() {
@@ -68,7 +68,7 @@ public class EventHandlerTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseDown(Event)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseDown(Event)'
      */
     @Test
     public void testMouseDown() {
@@ -95,7 +95,7 @@ public class EventHandlerTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseUp(Event)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseUp(Event)'
      */
     @Test
     public void testMouseUp() {
@@ -129,7 +129,7 @@ public class EventHandlerTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseMove(Event)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseMove(Event)'
      */
     @Test
     public void testMouseMove() {
@@ -137,7 +137,7 @@ public class EventHandlerTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseEnter(Event)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseEnter(Event)'
      */
     @Test
     public void testMouseEnter() {
@@ -145,7 +145,7 @@ public class EventHandlerTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseExit(Event)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseExit(Event)'
      */
     @Test
     public void testMouseExit() {
@@ -153,7 +153,7 @@ public class EventHandlerTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseHover(Event)'
+     * Test method for 'org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.EventHandler.mouseHover(Event)'
      */
     @Test
     public void testMouseHover() {

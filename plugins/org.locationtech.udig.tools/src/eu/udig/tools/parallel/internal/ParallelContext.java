@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.parallel.internal;
+package org.locationtech.udig.tools.parallel.internal;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -17,9 +17,9 @@ import java.util.List;
 
 import org.opengis.feature.simple.SimpleFeature;
 
-import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
-import net.refractions.udig.tools.edit.support.EditGeom;
-import net.refractions.udig.tools.edit.support.SnapBehaviour;
+import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.SnapBehaviour;
 
 import com.vividsolutions.jts.algorithm.CGAlgorithms;
 import com.vividsolutions.jts.geom.Coordinate;
@@ -33,7 +33,7 @@ import com.vividsolutions.jts.geom.util.LineStringExtracter;
 import com.vividsolutions.jts.geomgraph.Position;
 
 //import es.axios.udig.ui.editingtools.precisionparallels.internal.OffsetBuilder.OffsetPosition;
-import eu.udig.tools.parallel.internal.OffsetBuilder.OffsetPosition;
+import org.locationtech.udig.tools.parallel.internal.OffsetBuilder.OffsetPosition;
 
 /**
  * The context of the parallel.

@@ -8,15 +8,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
-import static net.refractions.udig.project.ui.internal.dragdrop.MoveLayerDropAction.toCollection;
+import static org.locationtech.udig.project.ui.internal.dragdrop.MoveLayerDropAction.toCollection;
 
 import java.util.Collection;
 
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.ui.IDropAction;
-import net.refractions.udig.ui.ViewerDropLocation;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.ui.IDropAction;
+import org.locationtech.udig.ui.ViewerDropLocation;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

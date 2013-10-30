@@ -7,26 +7,26 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.ui.export.CatalogExport;
-import net.refractions.udig.catalog.ui.export.CatalogExportWizard;
-import net.refractions.udig.catalog.ui.export.Data;
-import net.refractions.udig.catalog.ui.export.ExportResourceSelectionState;
-import net.refractions.udig.catalog.ui.workflow.State;
-import net.refractions.udig.catalog.ui.workflow.Workflow;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.ui.export.CatalogExport;
+import org.locationtech.udig.catalog.ui.export.CatalogExportWizard;
+import org.locationtech.udig.catalog.ui.export.Data;
+import org.locationtech.udig.catalog.ui.export.ExportResourceSelectionState;
+import org.locationtech.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.catalog.ui.workflow.Workflow;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.internal.StyleBlackboard;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;

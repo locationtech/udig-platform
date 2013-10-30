@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.commands;
+package org.locationtech.udig.tools.edit.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,9 +16,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.tools.edit.support.EditGeom;
-import net.refractions.udig.tools.edit.support.TestHandler;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.TestHandler;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -31,7 +31,7 @@ import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
 
 /**
- * Test {@link net.refractions.udig.tools.edit.commands.SelectFeaturesInFilterCommand}
+ * Test {@link org.locationtech.udig.tools.edit.commands.SelectFeaturesInFilterCommand}
  * @author jones
  * @since 1.1.0
  */
@@ -46,7 +46,7 @@ public class AddFeaturesCommandTest {
     }
     
     /*
-     * Test method for 'net.refractions.udig.tools.edit.commands.AddFeaturesCommand.run(IProgressMonitor)'
+     * Test method for 'org.locationtech.udig.tools.edit.commands.AddFeaturesCommand.run(IProgressMonitor)'
      */
     @Test
     public void testRun() throws Exception {

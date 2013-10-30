@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.grid;
+package org.locationtech.udig.mapgraphic.grid;
 
-import net.refractions.udig.mapgraphic.internal.Messages;
+import org.locationtech.udig.mapgraphic.internal.Messages;
 
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;

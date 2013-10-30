@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.geotools.data;
+package org.locationtech.udig.catalog.geotools.data;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,13 +21,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.catalog.geotools.Activator;
-import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
-import net.refractions.udig.catalog.ui.UDIGConnectionPage;
-import net.refractions.udig.catalog.ui.wizard.CatalogImportWizard;
-import net.refractions.udig.catalog.ui.workflow.State;
-import net.refractions.udig.catalog.ui.workflow.Workflow;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.geotools.Activator;
+import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
+import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
+import org.locationtech.udig.catalog.ui.wizard.CatalogImportWizard;
+import org.locationtech.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.catalog.ui.workflow.Workflow;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;

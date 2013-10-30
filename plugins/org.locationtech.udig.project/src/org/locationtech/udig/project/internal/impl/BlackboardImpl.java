@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.io.Serializable;
 import java.io.StringReader;
@@ -19,18 +19,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.project.BlackboardEvent;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IBlackboardListener;
-import net.refractions.udig.project.IPersister;
-import net.refractions.udig.project.IProvider;
-import net.refractions.udig.project.internal.Blackboard;
-import net.refractions.udig.project.internal.BlackboardEntry;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.project.BlackboardEvent;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IBlackboardListener;
+import org.locationtech.udig.project.IPersister;
+import org.locationtech.udig.project.IProvider;
+import org.locationtech.udig.project.internal.Blackboard;
+import org.locationtech.udig.project.internal.BlackboardEntry;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -62,7 +62,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
      * 
      * @uml.property name="blackboard"
      * @uml.associationEnd qualifier="key:java.lang.Object
-     *                     net.refractions.udig.project.internal.impl.BlackboardEntryImpl"
+     *                     org.locationtech.udig.project.internal.impl.BlackboardEntryImpl"
      */
     HashMap<String, BlackboardEntry> blackboard = new HashMap<String, BlackboardEntry>();
 
@@ -190,7 +190,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.project.IBlackboard#contains(java.lang.String)
+     * @see org.locationtech.udig.project.IBlackboard#contains(java.lang.String)
      */
     public boolean contains( String key ) {
         return get(key) != null;
@@ -198,7 +198,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.project.IBlackboard#get(java.lang.String)
+     * @see org.locationtech.udig.project.IBlackboard#get(java.lang.String)
      */
     @SuppressWarnings("unchecked")//$NON-NLS-1$
     public Object get( String key ) {
@@ -292,7 +292,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     }
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.project.IBlackboard#put(java.lang.String, java.lang.Object)
+     * @see org.locationtech.udig.project.IBlackboard#put(java.lang.String, java.lang.Object)
      */
     public void put( String key, Object value ) {
         if (key == null) {
@@ -351,7 +351,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.project.IBlackboard#getFloat(java.lang.String)
+     * @see org.locationtech.udig.project.IBlackboard#getFloat(java.lang.String)
      */
     public Float getFloat( String key ) {
         Object o = get(key);
@@ -364,7 +364,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.project.IBlackboard#getInteger(java.lang.String)
+     * @see org.locationtech.udig.project.IBlackboard#getInteger(java.lang.String)
      */
     public Integer getInteger( String key ) {
         Object o = get(key);
@@ -377,7 +377,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.project.IBlackboard#getString(java.lang.String)
+     * @see org.locationtech.udig.project.IBlackboard#getString(java.lang.String)
      */
     public String getString( String key ) {
         Object o = get(key);
@@ -390,7 +390,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.project.IBlackboard#putFloat(java.lang.String, float)
+     * @see org.locationtech.udig.project.IBlackboard#putFloat(java.lang.String, float)
      */
     public void putFloat( String key, float value ) {
         put(key, value);
@@ -398,7 +398,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.project.IBlackboard#putInteger(java.lang.String, int)
+     * @see org.locationtech.udig.project.IBlackboard#putInteger(java.lang.String, int)
      */
     public void putInteger( String key, int value ) {
         put(key, value);
@@ -407,7 +407,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.project.IBlackboard#putString(java.lang.String, java.lang.String)
+     * @see org.locationtech.udig.project.IBlackboard#putString(java.lang.String, java.lang.String)
      */
     public void putString( String key, String value ) {
         put(key, value);
@@ -415,7 +415,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.project.IBlackboard#clear()
+     * @see org.locationtech.udig.project.IBlackboard#clear()
      */
     public void clear() {
         blackboard.clear();

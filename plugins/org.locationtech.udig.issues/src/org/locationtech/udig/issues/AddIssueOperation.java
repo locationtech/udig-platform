@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues;
+package org.locationtech.udig.issues;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -15,13 +15,13 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 
-import net.refractions.udig.core.enums.Priority;
-import net.refractions.udig.issues.internal.IssuesActivator;
-import net.refractions.udig.issues.internal.Messages;
-import net.refractions.udig.issues.internal.view.IssuesView;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.core.enums.Priority;
+import org.locationtech.udig.issues.internal.IssuesActivator;
+import org.locationtech.udig.issues.internal.Messages;
+import org.locationtech.udig.issues.internal.view.IssuesView;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;

@@ -8,16 +8,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.tool.coverage;
+package org.locationtech.udig.tutorials.tool.coverage;
 
 import java.io.IOException;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.tools.edit.commands.SelectFeatureCommand;
-import net.refractions.udig.tools.edit.commands.SelectionParameter;
-import net.refractions.udig.tools.edit.commands.SelectionStrategy;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.tools.edit.commands.SelectFeatureCommand;
+import org.locationtech.udig.tools.edit.commands.SelectionParameter;
+import org.locationtech.udig.tools.edit.commands.SelectionStrategy;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureSource;

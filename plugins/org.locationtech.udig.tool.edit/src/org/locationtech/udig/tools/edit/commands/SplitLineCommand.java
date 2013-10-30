@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.commands;
+package org.locationtech.udig.tools.edit.commands;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,20 +17,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.UndoableCommand;
-import net.refractions.udig.tool.edit.internal.Messages;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.EditGeom;
-import net.refractions.udig.tools.edit.support.GeometryCreationUtil;
-import net.refractions.udig.tools.edit.support.Point;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
-import net.refractions.udig.tools.edit.support.ShapeType;
+import org.locationtech.udig.core.IBlockingProvider;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.UndoableCommand;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.GeometryCreationUtil;
+import org.locationtech.udig.tools.edit.support.Point;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.tools.edit.support.ShapeType;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;

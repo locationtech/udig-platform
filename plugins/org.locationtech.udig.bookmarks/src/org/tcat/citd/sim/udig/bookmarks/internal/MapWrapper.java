@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.tcat.citd.sim.udig.bookmarks.internal;
+package org.locationtech.udig.bookmarks.internal;
 
 import java.util.Collection;
 import java.util.Vector;
 
-import net.refractions.udig.project.IMap;
+import org.locationtech.udig.project.IMap;
 
 /**
  * This class provides a wrapper for displaying <code>IMap</code> objects as folders in the

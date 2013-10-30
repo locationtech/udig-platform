@@ -7,19 +7,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.simple;
+package org.locationtech.udig.style.sld.simple;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.style.sld.AbstractSimpleConfigurator;
-import net.refractions.udig.style.sld.SLD;
-import net.refractions.udig.style.sld.internal.FontEditor;
-import net.refractions.udig.style.sld.internal.Messages;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.style.sld.AbstractSimpleConfigurator;
+import org.locationtech.udig.style.sld.SLD;
+import org.locationtech.udig.style.sld.internal.FontEditor;
+import org.locationtech.udig.style.sld.internal.Messages;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyListener;

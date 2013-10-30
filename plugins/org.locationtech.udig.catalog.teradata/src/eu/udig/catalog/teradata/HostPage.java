@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.catalog.teradata;
+package org.locationtech.udig.catalog.teradata;
 
-import net.refractions.udig.catalog.service.database.UserHostPage;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
+import org.locationtech.udig.catalog.service.database.UserHostPage;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
 
 import org.eclipse.swt.widgets.Composite;
 
-import eu.udig.catalog.teradata.internal.Messages;
+import org.locationtech.udig.catalog.teradata.internal.Messages;
 
 public class HostPage extends UserHostPage {
 

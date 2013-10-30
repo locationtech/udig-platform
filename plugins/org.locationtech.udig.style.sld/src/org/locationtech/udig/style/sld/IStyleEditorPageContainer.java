@@ -8,9 +8,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld;
+package org.locationtech.udig.style.sld;
 
-import net.refractions.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.internal.StyleLayer;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IPageChangeProvider;

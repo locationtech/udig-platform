@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.interceptor;
+package org.locationtech.udig.project.interceptor;
 
-import net.refractions.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Layer;
 
 /**
- * An interceptor that is ran on a layer.  See the net.refractions.udig.mapInterceptor extension point for more details.
+ * An interceptor that is ran on a layer.  See the org.locationtech.udig.mapInterceptor extension point for more details.
  * 
  * @author Jessegit 
  * @since 1.1.0
@@ -21,7 +21,7 @@ public interface LayerInterceptor {
     /**
      * Extension Point ID of Layer interceptors
      */
-    String EXTENSION_ID = "net.refractions.udig.project.layerInterceptor"; //$NON-NLS-1$
+    String EXTENSION_ID = "org.locationtech.udig.project.layerInterceptor"; //$NON-NLS-1$
     /**
      * Attribute name of layer created interceptors
      */

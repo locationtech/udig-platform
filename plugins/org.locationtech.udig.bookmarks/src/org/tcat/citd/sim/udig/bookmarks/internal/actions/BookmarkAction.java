@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.tcat.citd.sim.udig.bookmarks.internal.actions;
+package org.locationtech.udig.bookmarks.internal.actions;
 
 import java.util.Collection;
 import java.util.List;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -33,15 +33,15 @@ import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.tcat.citd.sim.udig.bookmarks.Bookmark;
-import org.tcat.citd.sim.udig.bookmarks.BookmarkCommandFactory;
-import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
-import org.tcat.citd.sim.udig.bookmarks.IBookmark;
-import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
-import org.tcat.citd.sim.udig.bookmarks.internal.MapReference;
-import org.tcat.citd.sim.udig.bookmarks.internal.MapWrapper;
-import org.tcat.citd.sim.udig.bookmarks.internal.Messages;
-import org.tcat.citd.sim.udig.bookmarks.internal.ui.BookmarksView;
+import org.locationtech.udig.bookmarks.Bookmark;
+import org.locationtech.udig.bookmarks.BookmarkCommandFactory;
+import org.locationtech.udig.bookmarks.BookmarksPlugin;
+import org.locationtech.udig.bookmarks.IBookmark;
+import org.locationtech.udig.bookmarks.IBookmarkService;
+import org.locationtech.udig.bookmarks.internal.MapReference;
+import org.locationtech.udig.bookmarks.internal.MapWrapper;
+import org.locationtech.udig.bookmarks.internal.Messages;
+import org.locationtech.udig.bookmarks.internal.ui.BookmarksView;
 
 import com.vividsolutions.jts.geom.Envelope;
 

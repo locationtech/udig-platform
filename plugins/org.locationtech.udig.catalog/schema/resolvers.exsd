@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.catalog" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.catalog" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.catalog" id="resolvers" name="%resolvers.name"/>
+         <meta.schema plugin="org.locationtech.udig.catalog" id="resolvers" name="%resolvers.name"/>
       </appInfo>
       <documentation>
          Allows additional content types to be made available through geospatial resources handles.
@@ -14,7 +14,7 @@ This extention point is used to provide the following:
    - Making a CSW 2.0 association query for a related information Style.class
 2. Making additional Java API available
 
-In practice this is analagous to the org.eclipse.runtime.adapters extension point except that it applies to net.refractions.udig.catalog.IResolve objects instead of IAdaptable objects.
+In practice this is analagous to the org.eclipse.runtime.adapters extension point except that it applies to org.locationtech.udig.catalog.IResolve objects instead of IAdaptable objects.
       </documentation>
    </annotation>
 
@@ -77,17 +77,17 @@ In practice this is analagous to the org.eclipse.runtime.adapters extension poin
                   The fully qualified name of a class (typically implementing IResolve) that this factory provides resolvers for.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.catalog.IResolve"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.IResolve"/>
                </appInfo>
             </annotation>
          </attribute>
          <attribute name="class" type="string">
             <annotation>
                <documentation>
-                  The fully qualified name of the adapter factory class. Must implement net.refractions.udig.catalog.IResolveAdapterFactory
+                  The fully qualified name of the adapter factory class. Must implement org.locationtech.udig.catalog.IResolveAdapterFactory
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.catalog.IResolveAdapterFactory"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.IResolveAdapterFactory"/>
                </appInfo>
             </annotation>
          </attribute>

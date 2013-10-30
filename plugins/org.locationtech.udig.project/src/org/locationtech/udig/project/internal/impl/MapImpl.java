@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -21,44 +21,44 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.locks.Lock;
 
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILegendItem;
-import net.refractions.udig.project.IMapCompositionListener;
-import net.refractions.udig.project.IMapListener;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.command.CommandListener;
-import net.refractions.udig.project.command.CommandManager;
-import net.refractions.udig.project.command.CommandStack;
-import net.refractions.udig.project.command.EditCommand;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.command.NavCommandStack;
-import net.refractions.udig.project.internal.Blackboard;
-import net.refractions.udig.project.internal.ContextModel;
-import net.refractions.udig.project.internal.ContextModelListenerAdapter;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.commands.DefaultErrorHandler;
-import net.refractions.udig.project.internal.render.RenderFactory;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.render.IRenderManager;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.ProgressManager;
-import net.refractions.udig.ui.UDIGDisplaySafeLock;
-import net.refractions.udig.ui.palette.ColourScheme;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILegendItem;
+import org.locationtech.udig.project.IMapCompositionListener;
+import org.locationtech.udig.project.IMapListener;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.command.CommandListener;
+import org.locationtech.udig.project.command.CommandManager;
+import org.locationtech.udig.project.command.CommandStack;
+import org.locationtech.udig.project.command.EditCommand;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.NavCommand;
+import org.locationtech.udig.project.command.NavCommandStack;
+import org.locationtech.udig.project.internal.Blackboard;
+import org.locationtech.udig.project.internal.ContextModel;
+import org.locationtech.udig.project.internal.ContextModelListenerAdapter;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.commands.DefaultErrorHandler;
+import org.locationtech.udig.project.internal.render.RenderFactory;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.render.IRenderManager;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ProgressManager;
+import org.locationtech.udig.ui.UDIGDisplaySafeLock;
+import org.locationtech.udig.ui.palette.ColourScheme;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -112,7 +112,7 @@ import com.vividsolutions.jts.geom.Envelope;
 /**
  * Project element used by MapEditorInput.
  * <p>
- * For more information please see *net.refractions.udig.project.internal.ui.mapEditorInput*.
+ * For more information please see *org.locationtech.udig.project.internal.ui.mapEditorInput*.
  *
  * @author Jesse
  * @since 1.0.0
@@ -492,7 +492,7 @@ public class MapImpl extends EObjectImpl implements Map {
             this);
 
     /**
-     * @see net.refractions.udig.project.internal.Map#setContextModel(net.refractions.udig.project.ContextModel)
+     * @see org.locationtech.udig.project.internal.Map#setContextModel(org.locationtech.udig.project.ContextModel)
      */
     @SuppressWarnings({"unchecked", "deprecation"})
     public void setContextModel( ContextModel newContextModel ) {
@@ -1433,7 +1433,7 @@ public class MapImpl extends EObjectImpl implements Map {
     };
 
     /**
-     * @see net.refractions.udig.project.internal.Map#setRenderManager(net.refractions.udig.project.render.RenderManager)
+     * @see org.locationtech.udig.project.internal.Map#setRenderManager(org.locationtech.udig.project.render.RenderManager)
      * @uml.property name="renderManagerInternal"
      */
     @SuppressWarnings("unchecked")
@@ -1468,7 +1468,7 @@ public class MapImpl extends EObjectImpl implements Map {
     /*
      * (non-Javadoc)
      *
-     * @see net.refractions.udig.project.IMap#getBlackboard()
+     * @see org.locationtech.udig.project.IMap#getBlackboard()
      */
     public IBlackboard getBlackboard() {
         return getBlackBoardInternal();
@@ -1589,35 +1589,35 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     /**
-     * @see net.refractions.udig.project.IProjectElement#getProject()
+     * @see org.locationtech.udig.project.IProjectElement#getProject()
      */
     public IProject getProject() {
         return getProjectInternal();
     }
 
     /**
-     * @see net.refractions.udig.project.IMap#getViewportModel()
+     * @see org.locationtech.udig.project.IMap#getViewportModel()
      */
     public IViewportModel getViewportModel() {
         return getViewportModelInternal();
     }
 
     /**
-     * @see net.refractions.udig.project.IMap#getEditManager()
+     * @see org.locationtech.udig.project.IMap#getEditManager()
      */
     public IEditManager getEditManager() {
         return getEditManagerInternal();
     }
 
     /**
-     * @see net.refractions.udig.project.IMap#getRenderManager()
+     * @see org.locationtech.udig.project.IMap#getRenderManager()
      */
     public IRenderManager getRenderManager() {
         return getRenderManagerInternal();
     }
 
     /**
-     * @see net.refractions.udig.project.IMap#getMapLayers()
+     * @see org.locationtech.udig.project.IMap#getMapLayers()
      */
     @SuppressWarnings("unchecked")
     public List getMapLayers() {
@@ -1851,7 +1851,7 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.ContextModel#select(Filter)
+     * @see org.locationtech.udig.project.internal.ContextModel#select(Filter)
      * @generated NOT
      */
     public void select( Filter filter ) {
@@ -1866,7 +1866,7 @@ public class MapImpl extends EObjectImpl implements Map {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.ContextModel#select(Filter, boolean)
+     * @see org.locationtech.udig.project.internal.ContextModel#select(Filter, boolean)
      * @generated NOT
      */
     public void select( Filter filter, boolean and ) {

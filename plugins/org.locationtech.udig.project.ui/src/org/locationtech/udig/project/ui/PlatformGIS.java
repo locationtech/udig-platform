@@ -9,21 +9,21 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.ui.internal.MapEditorPart;
-import net.refractions.udig.project.ui.internal.MapFactory;
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.internal.MapFactory;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
@@ -74,7 +74,7 @@ public class PlatformGIS {
         
             //need to be in an event thread
             final ArrayList<IMap> l = new ArrayList<IMap>();
-            net.refractions.udig.ui.PlatformGIS.syncInDisplayThread(
+            org.locationtech.udig.ui.PlatformGIS.syncInDisplayThread(
               new Runnable() {
 
                 public void run() {
@@ -213,7 +213,7 @@ public class PlatformGIS {
      * Runs the given runnable in a protected mode.   Exceptions
      * thrown in the runnable are logged and passed to the runnable's
      * exception handler.  Such exceptions are not rethrown by this method.
-     * @deprecated - use to {@link net.refractions.udig.ui.PlatformGIS#run(ISafeRunnable)}
+     * @deprecated - use to {@link org.locationtech.udig.ui.PlatformGIS#run(ISafeRunnable)}
     */
     public static void run( ISafeRunnable request){
         runner.addRequest(request);

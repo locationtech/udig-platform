@@ -9,22 +9,22 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.ui.export;
+package org.locationtech.udig.catalog.ui.export;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.internal.ui.ImageConstants;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
-import net.refractions.udig.catalog.ui.workflow.State;
-import net.refractions.udig.catalog.ui.workflow.Workflow;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardAdapter;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardDialog;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.internal.ui.ImageConstants;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
+import org.locationtech.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.catalog.ui.workflow.Workflow;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardAdapter;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardDialog;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;

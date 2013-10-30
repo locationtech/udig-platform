@@ -9,24 +9,24 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.arc.internal;
+package org.locationtech.udig.tools.arc.internal;
 
 import java.awt.Shape;
 import java.awt.geom.Line2D;
 
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.ui.commands.DrawCommandFactory;
-import net.refractions.udig.project.ui.internal.commands.draw.DrawShapeCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.EventType;
-import net.refractions.udig.tools.edit.support.Point;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
-import eu.udig.tools.arc.internal.beahaviour.EditToolFeedbackManager;
-import eu.udig.tools.arc.internal.ArcBuilder;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
+import org.locationtech.udig.project.ui.internal.commands.draw.DrawShapeCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.tools.edit.EditState;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.EventType;
+import org.locationtech.udig.tools.edit.support.Point;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.tools.arc.internal.beahaviour.EditToolFeedbackManager;
+import org.locationtech.udig.tools.arc.internal.ArcBuilder;
 
 /**
  * Feedback manager for the arc creation tool that draws the arc while the mouse moves and clears

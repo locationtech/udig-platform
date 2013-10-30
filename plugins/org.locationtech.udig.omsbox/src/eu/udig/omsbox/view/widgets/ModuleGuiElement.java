@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.view.widgets;
+package org.locationtech.udig.omsbox.view.widgets;
 
 import net.miginfocom.swt.MigLayout;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import eu.udig.omsbox.core.FieldData;
+import org.locationtech.udig.omsbox.core.FieldData;
 
 /**
  * A gui element.

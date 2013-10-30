@@ -9,13 +9,13 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.gridcoverage.tool.info.internal;
+package org.locationtech.udig.render.gridcoverage.tool.info.internal;
 
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.render.gridcoverage.basic.internal.Messages;
-import net.refractions.udig.render.internal.gridcoverage.basic.RendererPlugin;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.render.gridcoverage.basic.internal.Messages;
+import org.locationtech.udig.render.internal.gridcoverage.basic.RendererPlugin;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
@@ -61,7 +61,7 @@ public class MosaicInfoView extends ViewPart {
     /**
      * Identifier
      */
-    public static final String VIEW_ID = "net.refractions.udig.render.gridcoverage.view.infoView"; //$NON-NLS-1$
+    public static final String VIEW_ID = "org.locationtech.udig.render.gridcoverage.view.infoView"; //$NON-NLS-1$
 
     private Text information;
     private MosaicInfoPanel infoPanel;

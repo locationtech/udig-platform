@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render;
+package org.locationtech.udig.project.internal.render;
 
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.render.IRenderManager;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.render.IRenderManager;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -38,7 +38,7 @@ public interface RenderManager extends EObject, IRenderManager {
     public Map getMapInternal();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.render.RenderManager#getMapInternal <em>Map Internal</em>}' reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.RenderManager#getMapInternal <em>Map Internal</em>}' reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Map Internal</em>' reference.
      * @see #getMapInternal()
@@ -57,14 +57,14 @@ public interface RenderManager extends EObject, IRenderManager {
      * 
      * @return the value of the '<em>Render Executor</em>' reference.
      * @see #setRenderExecutor(RenderExecutor)
-     * @see net.refractions.udig.project.internal.render.RenderPackage#getRenderManager_RenderExecutor()
+     * @see org.locationtech.udig.project.internal.render.RenderPackage#getRenderManager_RenderExecutor()
      * @model resolveProxies="false"
      * @generated
      */
     RenderExecutor getRenderExecutor();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.render.RenderManager#getRenderExecutor <em>Render Executor</em>}' reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.RenderManager#getRenderExecutor <em>Render Executor</em>}' reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Render Executor</em>' reference.
      * @see #getRenderExecutor()
@@ -76,12 +76,12 @@ public interface RenderManager extends EObject, IRenderManager {
      * Gets the ViewportPane for the current RenderManager.
      * 
      * @return the ViewportPane for the current RenderManager
-     * @model many="false" dataType=net.refractions.udig.project.render.displayAdapter.IMapDisplay"
+     * @model many="false" dataType=org.locationtech.udig.project.render.displayAdapter.IMapDisplay"
      */
     public IMapDisplay getMapDisplay();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.render.RenderManager#getMapDisplay <em>Map Display</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.RenderManager#getMapDisplay <em>Map Display</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Map Display</em>' attribute.
      * @see #getMapDisplay()
@@ -112,7 +112,7 @@ public interface RenderManager extends EObject, IRenderManager {
 
     /**
      * Returns the value of the '<em><b>Viewport Model Internal</b></em>' reference.
-     * It is bidirectional and its opposite is '{@link net.refractions.udig.project.internal.render.ViewportModel#getRenderManagerInternal <em>Render Manager Internal</em>}'.
+     * It is bidirectional and its opposite is '{@link org.locationtech.udig.project.internal.render.ViewportModel#getRenderManagerInternal <em>Render Manager Internal</em>}'.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Viewport Model</em>' reference isn't clear, there really
@@ -121,15 +121,15 @@ public interface RenderManager extends EObject, IRenderManager {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Viewport Model Internal</em>' reference.
      * @see #setViewportModelInternal(ViewportModel)
-     * @see net.refractions.udig.project.internal.render.RenderPackage#getRenderManager_ViewportModelInternal()
-     * @see net.refractions.udig.project.internal.render.ViewportModel#getRenderManagerInternal
+     * @see org.locationtech.udig.project.internal.render.RenderPackage#getRenderManager_ViewportModelInternal()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#getRenderManagerInternal
      * @model opposite="renderManagerInternal" resolveProxies="false" transient="true"
      * @generated
      */
     ViewportModel getViewportModelInternal();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.render.RenderManager#getViewportModelInternal <em>Viewport Model Internal</em>}' reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.RenderManager#getViewportModelInternal <em>Viewport Model Internal</em>}' reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Viewport Model Internal</em>' reference.
      * @see #getViewportModelInternal()

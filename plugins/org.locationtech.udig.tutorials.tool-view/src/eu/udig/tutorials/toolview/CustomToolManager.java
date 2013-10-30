@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.tutorials.toolview;
+package org.locationtech.udig.tutorials.toolview;
 
-import net.refractions.udig.project.ui.internal.tool.display.ToolCategory;
-import net.refractions.udig.project.ui.internal.tool.display.ToolManager;
-import net.refractions.udig.project.ui.internal.tool.display.ToolProxy;
-import net.refractions.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.project.ui.internal.tool.display.ToolCategory;
+import org.locationtech.udig.project.ui.internal.tool.display.ToolManager;
+import org.locationtech.udig.project.ui.internal.tool.display.ToolProxy;
+import org.locationtech.udig.project.ui.tool.IToolManager;
 
 /**
  * Remove info category from the tool bar
@@ -25,7 +25,7 @@ public class CustomToolManager extends ToolManager implements IToolManager {
 	@Override
 	protected boolean filterTool(String categoryId, ToolProxy proxy,
 			Class<? extends ToolCategory> categoryType) {
-		boolean defaultInfoTool = categoryId.equals("net.refractions.udig.tool.category.info");
+		boolean defaultInfoTool = categoryId.equals("org.locationtech.udig.tool.category.info");
 		return defaultInfoTool;
 	}
 }

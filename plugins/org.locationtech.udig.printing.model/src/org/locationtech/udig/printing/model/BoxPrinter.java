@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.model;
+package org.locationtech.udig.printing.model;
 
 import java.awt.Graphics2D;
 
@@ -72,7 +72,7 @@ public interface BoxPrinter extends IAdaptable {
     /**
      * Must return the id of the extension point where you registered this box printer.
      * <p>
-     * <b>Each box printer has to be registered</b> in an extension to the extension point "net.refractions.udig.printing.ui.boxprinter".<br/>
+     * <b>Each box printer has to be registered</b> in an extension to the extension point "org.locationtech.udig.printing.ui.boxprinter".<br/>
      * Say you have registered the extension with the id "myPrintBoxes" in the plugin "net.refractions.example.plugin":
      * this method should then return the extension id "net.refractions.example.plugin.myPrintBoxes".
      * </p>

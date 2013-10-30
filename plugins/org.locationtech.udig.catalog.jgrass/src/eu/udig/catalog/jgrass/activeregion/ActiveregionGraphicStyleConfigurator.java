@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass.activeregion;
+package org.locationtech.udig.catalog.jgrass.activeregion;
 
 import static java.lang.Math.round;
 
@@ -16,12 +16,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.impl.UDIGFeatureStore;
-import net.refractions.udig.project.ui.internal.dialogs.ColorEditor;
-import net.refractions.udig.style.IStyleConfigurator;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.impl.UDIGFeatureStore;
+import org.locationtech.udig.project.ui.internal.dialogs.ColorEditor;
+import org.locationtech.udig.style.IStyleConfigurator;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -48,12 +48,12 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
 
-import eu.udig.catalog.jgrass.activeregion.dialogs.CatalogJGrassMapsetTreeViewerDialog;
-import eu.udig.catalog.jgrass.activeregion.dialogs.FeatureChooserDialog;
-import eu.udig.catalog.jgrass.activeregion.dialogs.JGRasterChooserDialog;
-import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
-import eu.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
-import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.catalog.jgrass.activeregion.dialogs.CatalogJGrassMapsetTreeViewerDialog;
+import org.locationtech.udig.catalog.jgrass.activeregion.dialogs.FeatureChooserDialog;
+import org.locationtech.udig.catalog.jgrass.activeregion.dialogs.JGRasterChooserDialog;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
+import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
 
 public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator implements SelectionListener, ModifyListener {
 

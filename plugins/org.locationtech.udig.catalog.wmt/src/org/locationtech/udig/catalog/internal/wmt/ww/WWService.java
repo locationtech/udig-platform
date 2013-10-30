@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.ww;
+package org.locationtech.udig.catalog.internal.wmt.ww;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -19,15 +19,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.ww.LayerSet;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.ww.QuadTileSet;
-import net.refractions.udig.catalog.wmt.internal.Messages;
-import net.refractions.udig.ui.ErrorManager;
-import net.refractions.udig.ui.UDIGDisplaySafeLock;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.LayerSet;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.QuadTileSet;
+import org.locationtech.udig.catalog.wmt.internal.Messages;
+import org.locationtech.udig.ui.ErrorManager;
+import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -38,15 +38,15 @@ import org.eclipse.core.runtime.SubProgressMonitor;
  * Based on WMSServiceImpl this class represents a 
  * NASA WorldWind configuration file in the catalog.
  * 
- * @see net.refractions.udig.catalog.internal.wmt.wmtsource.ww.LayerSet
+ * @see org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.LayerSet
  * 
  * @author to.srwn
  * @since 1.1.0
  */
 public class WWService extends IService {
 
-    public static final String WW_URL_KEY = "net.refractions.udig.catalog.internal.wmt.WWService.WW_URL_KEY"; //$NON-NLS-1$
-    public static final String WW_LAYERSET_KEY = "net.refractions.udig.catalog.internal.wmt.WWService.WW_LAYERSET_KEY"; //$NON-NLS-1$
+    public static final String WW_URL_KEY = "org.locationtech.udig.catalog.internal.wmt.WWService.WW_URL_KEY"; //$NON-NLS-1$
+    public static final String WW_LAYERSET_KEY = "org.locationtech.udig.catalog.internal.wmt.WWService.WW_LAYERSET_KEY"; //$NON-NLS-1$
 
     private Map<String, Serializable> params;
 
@@ -139,7 +139,7 @@ public class WWService extends IService {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IService#resolve(java.lang.Class, org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.IService#resolve(java.lang.Class, org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
         if (adaptee == null) {
@@ -162,14 +162,14 @@ public class WWService extends IService {
     }
 
     /**
-     * @see net.refractions.udig.catalog.IService#getConnectionParams()
+     * @see org.locationtech.udig.catalog.IService#getConnectionParams()
      */
     public Map<String,Serializable> getConnectionParams() {
         return params;
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve(Class<T> adaptee) {
         if (adaptee == null)
@@ -240,14 +240,14 @@ public class WWService extends IService {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getMessage()
+     * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
     public Throwable getMessage() {
         return error;
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getIdentifier()
+     * @see org.locationtech.udig.catalog.IResolve#getIdentifier()
      */
     public URL getIdentifier() {
         return url;

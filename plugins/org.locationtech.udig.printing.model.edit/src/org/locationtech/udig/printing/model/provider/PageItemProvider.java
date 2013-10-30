@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package net.refractions.udig.printing.model.provider;
+package org.locationtech.udig.printing.model.provider;
 
 
 import java.util.ArrayList;
@@ -12,14 +12,14 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.BoxPrinter;
-import net.refractions.udig.printing.model.ModelFactory;
-import net.refractions.udig.printing.model.ModelPackage;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.printing.model.impl.MapBoxPrinter;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.BoxPrinter;
+import org.locationtech.udig.printing.model.ModelFactory;
+import org.locationtech.udig.printing.model.ModelPackage;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.model.impl.MapBoxPrinter;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -36,7 +36,7 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link net.refractions.udig.printing.model.Page} object.
+ * This is the item provider adapter for a {@link org.locationtech.udig.printing.model.Page} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

@@ -8,9 +8,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.render.wms.basic.preferences;
+package org.locationtech.udig.render.wms.basic.preferences;
 
-import net.refractions.udig.render.wms.basic.WMSPlugin;
+import org.locationtech.udig.render.wms.basic.WMSPlugin;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;

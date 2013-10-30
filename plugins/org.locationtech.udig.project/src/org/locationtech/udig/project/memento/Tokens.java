@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.memento;
+package org.locationtech.udig.project.memento;
 
 enum Tokens{
     _memento_,_data_,_text_,_children_,_none_,__null__

@@ -7,27 +7,27 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.ui.view;
+package org.locationtech.udig.catalog.internal.wmt.ui.view;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.internal.wmt.WMTPlugin;
-import net.refractions.udig.catalog.internal.wmt.WMTRenderJob;
-import net.refractions.udig.catalog.internal.wmt.WMTScaleZoomLevelMatcher;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
-import net.refractions.udig.catalog.wmt.internal.Messages;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IMapCompositionListener;
-import net.refractions.udig.project.MapCompositionEvent;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.commands.SetScaleCommand;
-import net.refractions.udig.project.render.IViewportModelListener;
-import net.refractions.udig.project.render.ViewportModelEvent;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.internal.wmt.WMTPlugin;
+import org.locationtech.udig.catalog.internal.wmt.WMTRenderJob;
+import org.locationtech.udig.catalog.internal.wmt.WMTScaleZoomLevelMatcher;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
+import org.locationtech.udig.catalog.wmt.internal.Messages;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IMapCompositionListener;
+import org.locationtech.udig.project.MapCompositionEvent;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.commands.SetScaleCommand;
+import org.locationtech.udig.project.render.IViewportModelListener;
+import org.locationtech.udig.project.render.ViewportModelEvent;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.resource.ImageDescriptor;

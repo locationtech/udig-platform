@@ -7,24 +7,24 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.edit;
+package org.locationtech.udig.tool.edit;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.provider.EditFeatureProvider;
-import net.refractions.udig.project.command.provider.EditLayerProvider;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.tools.edit.EditBlackboardUtil;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.commands.SplitLineCommand;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.Point;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.core.IBlockingProvider;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.provider.EditFeatureProvider;
+import org.locationtech.udig.project.command.provider.EditLayerProvider;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.tools.edit.EditBlackboardUtil;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.commands.SplitLineCommand;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.Point;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;

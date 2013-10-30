@@ -10,7 +10,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.ui.wizard;
+package org.locationtech.udig.catalog.ui.wizard;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -20,9 +20,9 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -51,7 +51,7 @@ import org.eclipse.swt.widgets.Widget;
  * David's magic superclass reduced to linear, documented, boring reality so that it may be
  * understandable by mortals; this is an abstract superclass for implementations of the
  * 'IWizardPage' interface required by the 'wizardPage' portion of the
- * <code>net.refractions.udig.catalog.ui.connectionFactory</code> extension point contract with the
+ * <code>org.locationtech.udig.catalog.ui.connectionFactory</code> extension point contract with the
  * uDig catalog system. The connectionFactory extension point needs a DataStore factory to make the
  * connection used by the Catalog and a IWizardPage to obtain from the user the parameters which
  * will be used by the factory. The IWizardPage interface extends the eclipse RCP 'Import...' system
@@ -216,7 +216,7 @@ import org.eclipse.swt.widgets.Widget;
  * abstract, is designed specifically for the needs of the extending classes, notably the
  * PostGISWizardPage and the AbstractProprietaryDatastoreWizardPage classes. See
  * 
- * @see net.refractions.udig.catalog.internal.postgis.ui.PostGisWizardPage for the cannonical
+ * @see org.locationtech.udig.catalog.internal.postgis.ui.PostGisWizardPage for the cannonical
  *      example of how to use (extend) this class in a concrete implementation. This class
  *      implicitly establishes the following contract with its extendors: I. EXTENDING CLASSES MUST:
  *      Implement a constructor which 1. calls this constructor, idealy with an appropriate string

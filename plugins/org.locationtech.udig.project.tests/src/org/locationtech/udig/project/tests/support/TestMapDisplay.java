@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.tests.support;
+package org.locationtech.udig.project.tests.support;
 
 import java.awt.Dimension;
 import org.junit.Ignore;
 
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 @Ignore
 public class TestMapDisplay implements IMapDisplay {

@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.commands.edit;
+package org.locationtech.udig.project.internal.commands.edit;
 
-import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.PostDeterminedEffectCommand;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Messages;
+import org.locationtech.udig.core.IBlockingProvider;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.PostDeterminedEffectCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
@@ -54,7 +54,7 @@ public class DeleteFeatureCommand extends AbstractEditCommand implements Undoabl
     }
 
     /**
-     * @see net.refractions.udig.project.command.MapCommand#run()
+     * @see org.locationtech.udig.project.command.MapCommand#run()
      */
     public void run( IProgressMonitor monitor ) throws Exception {
         execute(monitor);
@@ -78,14 +78,14 @@ public class DeleteFeatureCommand extends AbstractEditCommand implements Undoabl
     }
 
     /**
-     * @see net.refractions.udig.project.command.MapCommand#getName()
+     * @see org.locationtech.udig.project.command.MapCommand#getName()
      */
     public String getName() {
         return Messages.DeleteFeatureCommand_deleteFeature; 
     }
 
     /**
-     * @see net.refractions.udig.project.command.UndoableCommand#rollback()
+     * @see org.locationtech.udig.project.command.UndoableCommand#rollback()
      */
     public void rollback( IProgressMonitor monitor ) throws Exception {
         if( feature==null )

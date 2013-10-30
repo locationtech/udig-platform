@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.common;
+package org.locationtech.udig.style.advanced.common;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +20,8 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
-import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
-import eu.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * Composite blueprint for parameters interaction widget.

@@ -1,13 +1,13 @@
 /**
  * 
  */
-package net.refractions.udig.project.command.provider;
+package org.locationtech.udig.project.command.provider;
 
-import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.internal.commands.edit.SetAttributeCommand;
+import org.locationtech.udig.core.IBlockingProvider;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.internal.commands.edit.SetAttributeCommand;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

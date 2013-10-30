@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  * 
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
 import java.util.List;
-import net.refractions.udig.project.IFolder;
+import org.locationtech.udig.project.IFolder;
 
-import net.refractions.udig.project.ILegendItem;
+import org.locationtech.udig.project.ILegendItem;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.resource.ImageDescriptor;
 
@@ -26,19 +26,19 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link net.refractions.udig.project.internal.Folder#getItems <em>Items</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.internal.Folder#getItems <em>Items</em>}</li>
  * </ul>
  * </p>
  *
- * @see net.refractions.udig.project.internal.ProjectPackage#getFolder()
- * @model superTypes="net.refractions.udig.project.internal.IFolder net.refractions.udig.project.internal.LegendItem"
+ * @see org.locationtech.udig.project.internal.ProjectPackage#getFolder()
+ * @model superTypes="org.locationtech.udig.project.internal.IFolder org.locationtech.udig.project.internal.LegendItem"
  * @generated
  */
 public interface Folder extends IFolder, LegendItem {
 
     /**
      * Returns the value of the '<em><b>Items</b></em>' containment reference list.
-     * The list contents are of type {@link net.refractions.udig.project.ILegendItem}.
+     * The list contents are of type {@link org.locationtech.udig.project.ILegendItem}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Items</em>' containment reference list isn't clear,
@@ -46,8 +46,8 @@ public interface Folder extends IFolder, LegendItem {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Items</em>' containment reference list.
-     * @see net.refractions.udig.project.internal.ProjectPackage#getFolder_Items()
-     * @model type="net.refractions.udig.project.internal.ILegendItem" containment="true"
+     * @see org.locationtech.udig.project.internal.ProjectPackage#getFolder_Items()
+     * @model type="org.locationtech.udig.project.internal.ILegendItem" containment="true"
      * @generated
      */
     List<ILegendItem> getItems();

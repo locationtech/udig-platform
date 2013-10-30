@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.ui.pdf;
+package org.locationtech.udig.printing.ui.pdf;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -18,13 +18,13 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.mapgraphic.MapGraphicPlugin;
-import net.refractions.udig.mapgraphic.grid.GridStyle;
-import net.refractions.udig.mapgraphic.internal.Messages;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.mapgraphic.MapGraphicPlugin;
+import org.locationtech.udig.mapgraphic.grid.GridStyle;
+import org.locationtech.udig.mapgraphic.internal.Messages;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,15 +19,15 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.refractions.udig.project.geoselection.AbstractGeoSelectionManager;
-import net.refractions.udig.project.geoselection.GeoSelectionChangedEvent;
-import net.refractions.udig.project.geoselection.GeoSelectionEntry;
-import net.refractions.udig.project.geoselection.IGeoSelection;
-import net.refractions.udig.project.geoselection.IGeoSelectionChangedListener;
-import net.refractions.udig.project.geoselection.IGeoSelectionEntry;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.geoselection.AbstractGeoSelectionManager;
+import org.locationtech.udig.project.geoselection.GeoSelectionChangedEvent;
+import org.locationtech.udig.project.geoselection.GeoSelectionEntry;
+import org.locationtech.udig.project.geoselection.IGeoSelection;
+import org.locationtech.udig.project.geoselection.IGeoSelectionChangedListener;
+import org.locationtech.udig.project.geoselection.IGeoSelectionEntry;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener2;
@@ -50,22 +50,22 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
     /**
      * ID of the manager.
      */
-    public static final String ID = "net.refractions.udig.project.ui.platformGeoSelectionManager"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.project.ui.platformGeoSelectionManager"; //$NON-NLS-1$
     
     /**
      * Logger.
      */
-    public static Logger LOGGER = Logger.getLogger("net.refractions.udig.project.geoselection"); //$NON-NLS-1$
+    public static Logger LOGGER = Logger.getLogger("org.locationtech.udig.project.geoselection"); //$NON-NLS-1$
 
     /**
      * Key for selection bag in Map's blackboard.
      */
-    public static final String PLATFORM_SELECTION_BAG = "net.refractions.udig.project.ui.PLATFORM_SELECTION_BAG"; //$NON-NLS-1$
+    public static final String PLATFORM_SELECTION_BAG = "org.locationtech.udig.project.ui.PLATFORM_SELECTION_BAG"; //$NON-NLS-1$
     
     /**
      * Key for cached selection bag in Map's blackboard.
      */
-    public static final String PLATFORM_SELECTION_CACHE_KEY = "net.refractions.udig.project.ui.PLATFORM_SELECTION_CACHE"; //$NON-NLS-1$
+    public static final String PLATFORM_SELECTION_CACHE_KEY = "org.locationtech.udig.project.ui.PLATFORM_SELECTION_CACHE"; //$NON-NLS-1$
     
     private MapEditorPartListener partListener;
     
@@ -91,7 +91,7 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
 
     private void initialize(){
         if(!initialized){
-            net.refractions.udig.ui.PlatformGIS.syncInDisplayThread(new Runnable(){
+            org.locationtech.udig.ui.PlatformGIS.syncInDisplayThread(new Runnable(){
                 public void run() {
                     IWorkbenchWindow ww = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
                     if(ww != null){
@@ -278,7 +278,7 @@ public class PlatformGeoSelectionManager extends AbstractGeoSelectionManager {
     
 
     /* (non-Javadoc)
-     * @see net.refractions.udig.project.geoselection.IGeoSelectionManager#getSelections()
+     * @see org.locationtech.udig.project.geoselection.IGeoSelectionManager#getSelections()
      */
     public Iterator<IGeoSelectionEntry> getSelections() {
         Iterator<IGeoSelectionEntry> it;

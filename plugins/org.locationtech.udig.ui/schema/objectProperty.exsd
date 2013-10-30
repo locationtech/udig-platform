@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project.ui">
+<schema targetNamespace="org.locationtech.udig.project.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project.ui" id="objectProperty" name="%objectProperty.point"/>
+         <meta.schema plugin="org.locationtech.udig.project.ui" id="objectProperty" name="%objectProperty.point"/>
       </appInfo>
       <documentation>
          This point allows a true or false property to defined for an arbitrary object.  It is used by the enablesFor element of the tool extension point.
@@ -87,10 +87,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The PropertyValue implementation.  It is not required to be an net.refractions.udig.ui.operations.AbstractPropertyValue but it is recommended.  At minimum it must be a net.refractions.udig.ui.operations.PropertyValue
+                  The PropertyValue implementation.  It is not required to be an org.locationtech.udig.ui.operations.AbstractPropertyValue but it is recommended.  At minimum it must be a org.locationtech.udig.ui.operations.PropertyValue
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.ui.operations.AbstractPropertyValue:net.refractions.udig.ui.operations.PropertyValue"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.ui.operations.AbstractPropertyValue:org.locationtech.udig.ui.operations.PropertyValue"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -121,11 +121,11 @@
       </appInfo>
       <documentation>
          &lt;extension
-         point=&quot;net.refractions.udig.project.ui.objectProperty&quot;&gt;
-      &lt;object class=&quot;net.refractions.udig.project.ILayer&quot;&gt;
+         point=&quot;org.locationtech.udig.project.ui.objectProperty&quot;&gt;
+      &lt;object class=&quot;org.locationtech.udig.project.ILayer&quot;&gt;
          &lt;property
                id=&quot;GeometryType&quot;
-               value=&quot;net.refractions.udig.project.ui.internal.tool.display.GeometryProperty&quot;/&gt;
+               value=&quot;org.locationtech.udig.project.ui.internal.tool.display.GeometryProperty&quot;/&gt;
       &lt;/object&gt;
    &lt;/extension&gt;
       </documentation>

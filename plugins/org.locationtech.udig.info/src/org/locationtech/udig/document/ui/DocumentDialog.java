@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.document.ui;
+package org.locationtech.udig.document.ui;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,12 +23,12 @@ import java.util.Map;
 import java.util.Properties;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.ContentType;
-import net.refractions.udig.catalog.document.IDocument.Type;
-import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
-import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.tool.info.internal.Messages;
+import org.locationtech.udig.catalog.document.IDocument;
+import org.locationtech.udig.catalog.document.IDocument.ContentType;
+import org.locationtech.udig.catalog.document.IDocument.Type;
+import org.locationtech.udig.catalog.document.IDocumentSource.DocumentInfo;
+import org.locationtech.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import org.locationtech.udig.tool.info.internal.Messages;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jface.dialogs.Dialog;

@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.internal;
+package org.locationtech.udig.issues.internal;
 
-import net.refractions.udig.issues.AbstractIssue;
+import org.locationtech.udig.issues.AbstractIssue;
 
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;

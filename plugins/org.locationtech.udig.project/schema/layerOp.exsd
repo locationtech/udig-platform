@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project">
+<schema targetNamespace="org.locationtech.udig.project">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project" id="layerOp" name="LayerOp"/>
+         <meta.schema plugin="org.locationtech.udig.project" id="layerOp" name="LayerOp"/>
       </appInfo>
       <documentation>
          A layer operation extension is an extension that performs an operation on one or more layers in a map.  Since the layer op extension point is not yet defined this section is a recommendation.  The layer op extension point will allow programatical access to a layer.  Layer operations would be listed under the layer menu and in context menus in the layer view when a layer is right clicked.  In order provide a scalable solution the layer operation extension point will require a extension to declare a filter that will allow the menu managers to determine whether the layer operation is interested in the layer.  If it is then the operation will be added to the menu.  Otherwise the operation will be left out of the menu.
@@ -66,7 +66,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.LayerOp"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.LayerOp"/>
                </appInfo>
             </annotation>
          </attribute>

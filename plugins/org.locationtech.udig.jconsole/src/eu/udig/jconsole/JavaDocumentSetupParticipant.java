@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package eu.udig.jconsole;
+package org.locationtech.udig.jconsole;
 
 import org.eclipse.core.filebuffers.IDocumentSetupParticipant;
 

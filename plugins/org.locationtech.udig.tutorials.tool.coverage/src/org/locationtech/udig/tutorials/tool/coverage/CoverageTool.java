@@ -8,22 +8,22 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.tool.coverage;
+package org.locationtech.udig.tutorials.tool.coverage;
 
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.tools.edit.AbstractEditTool;
-import net.refractions.udig.tools.edit.Activator;
-import net.refractions.udig.tools.edit.Behaviour;
-import net.refractions.udig.tools.edit.DefaultEditToolBehaviour;
-import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
-import net.refractions.udig.tools.edit.EnablementBehaviour;
-import net.refractions.udig.tools.edit.activator.DrawGeomsActivator.DrawType;
-import net.refractions.udig.tools.edit.behaviour.MoveVertexBehaviour;
-import net.refractions.udig.tools.edit.behaviour.SelectFeatureBehaviour;
-import net.refractions.udig.tools.edit.behaviour.SelectVertexBehaviour;
-import net.refractions.udig.tools.edit.behaviour.SelectVertexOnMouseDownBehaviour;
+import org.locationtech.udig.tools.edit.AbstractEditTool;
+import org.locationtech.udig.tools.edit.Activator;
+import org.locationtech.udig.tools.edit.Behaviour;
+import org.locationtech.udig.tools.edit.DefaultEditToolBehaviour;
+import org.locationtech.udig.tools.edit.EditToolConfigurationHelper;
+import org.locationtech.udig.tools.edit.EnablementBehaviour;
+import org.locationtech.udig.tools.edit.activator.DrawGeomsActivator.DrawType;
+import org.locationtech.udig.tools.edit.behaviour.MoveVertexBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.SelectFeatureBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.SelectVertexBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.SelectVertexOnMouseDownBehaviour;
 
 import org.opengis.filter.spatial.Intersects;
 

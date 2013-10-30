@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.parallel.internal;
+package org.locationtech.udig.tools.parallel.internal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +32,7 @@ import com.vividsolutions.jts.geom.PrecisionModel;
 import com.vividsolutions.jts.geomgraph.Position;
 
 //import es.axios.lib.geometry.util.GeometryUtil;
-import eu.udig.tools.geometry.internal.util.GeometryUtil;
+import org.locationtech.udig.tools.geometry.internal.util.GeometryUtil;
 
 /**
  * Responsible of calculating the parallel curve.

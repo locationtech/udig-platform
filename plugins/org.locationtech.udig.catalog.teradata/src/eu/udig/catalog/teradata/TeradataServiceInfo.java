@@ -8,7 +8,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 
-package eu.udig.catalog.teradata;
+package org.locationtech.udig.catalog.teradata;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.IServiceInfo;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;

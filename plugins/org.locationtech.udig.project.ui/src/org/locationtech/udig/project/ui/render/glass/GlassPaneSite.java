@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.render.glass;
+package org.locationtech.udig.project.ui.render.glass;
 
-import net.refractions.udig.project.IAbstractContext;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.impl.AbstractContextImpl;
-import net.refractions.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.IAbstractContext;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.impl.AbstractContextImpl;
+import org.locationtech.udig.project.internal.render.RenderManager;
 
 /**
  * This class tracks the context of the glass pane.  This include

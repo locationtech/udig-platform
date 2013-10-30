@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.feature;
+package org.locationtech.udig.project.ui.feature;
 
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.ui.IFeaturePanel;
-import net.refractions.udig.project.ui.IFeaturePanelCheck;
-import net.refractions.udig.project.ui.IFeatureSite;
-import net.refractions.udig.project.ui.internal.FeatureTypeMatch;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ui.IFeaturePanel;
+import org.locationtech.udig.project.ui.IFeaturePanelCheck;
+import org.locationtech.udig.project.ui.IFeatureSite;
+import org.locationtech.udig.project.ui.internal.FeatureTypeMatch;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;

@@ -8,9 +8,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic;
+package org.locationtech.udig.mapgraphic;
 
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 
 /**
@@ -22,7 +22,7 @@ import net.refractions.udig.ui.graphics.ViewportGraphics;
 public interface MapGraphic {
  
     /** extension point id **/
-    public static final String XPID = "net.refractions.udig.mapgraphic.mapgraphic"; //$NON-NLS-1$
+    public static final String XPID = "org.locationtech.udig.mapgraphic.mapgraphic"; //$NON-NLS-1$
     
     /**
      * Draws the graphic.  Check the clip area of the {@link ViewportGraphics} object to determine what

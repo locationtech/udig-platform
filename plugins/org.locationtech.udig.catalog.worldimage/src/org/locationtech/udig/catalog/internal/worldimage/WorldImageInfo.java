@@ -1,10 +1,10 @@
 /**
  * 
  */
-package net.refractions.udig.catalog.internal.worldimage;
+package org.locationtech.udig.catalog.internal.worldimage;
 
-import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource;
-import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResourceInfo;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResourceInfo;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;

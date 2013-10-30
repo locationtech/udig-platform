@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.geoselection;
+package org.locationtech.udig.project.geoselection;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import net.refractions.udig.project.ILayer;
+import org.locationtech.udig.project.ILayer;
 
 import org.opengis.feature.simple.SimpleFeature;
 

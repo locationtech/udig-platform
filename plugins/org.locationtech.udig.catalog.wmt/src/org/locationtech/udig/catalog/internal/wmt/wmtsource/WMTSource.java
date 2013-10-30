@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.wmtsource;
+package org.locationtech.udig.catalog.internal.wmt.wmtsource;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,17 +16,17 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.internal.wmt.Trace;
-import net.refractions.udig.catalog.internal.wmt.WMTPlugin;
-import net.refractions.udig.catalog.internal.wmt.WMTRenderJob;
-import net.refractions.udig.catalog.internal.wmt.WMTScaleZoomLevelMatcher;
-import net.refractions.udig.catalog.internal.wmt.WMTService;
-import net.refractions.udig.catalog.internal.wmt.tile.WMTTile;
-import net.refractions.udig.catalog.internal.wmt.tile.WMTTile.WMTTileFactory;
-import net.refractions.udig.catalog.internal.wmt.tile.WMTTile.WMTZoomLevel;
-import net.refractions.udig.catalog.internal.wmt.ui.properties.WMTLayerProperties;
-import net.refractions.udig.catalog.wmsc.server.Tile;
-import net.refractions.udig.core.internal.CorePlugin;
+import org.locationtech.udig.catalog.internal.wmt.Trace;
+import org.locationtech.udig.catalog.internal.wmt.WMTPlugin;
+import org.locationtech.udig.catalog.internal.wmt.WMTRenderJob;
+import org.locationtech.udig.catalog.internal.wmt.WMTScaleZoomLevelMatcher;
+import org.locationtech.udig.catalog.internal.wmt.WMTService;
+import org.locationtech.udig.catalog.internal.wmt.tile.WMTTile;
+import org.locationtech.udig.catalog.internal.wmt.tile.WMTTile.WMTTileFactory;
+import org.locationtech.udig.catalog.internal.wmt.tile.WMTTile.WMTZoomLevel;
+import org.locationtech.udig.catalog.internal.wmt.ui.properties.WMTLayerProperties;
+import org.locationtech.udig.catalog.wmsc.server.Tile;
+import org.locationtech.udig.core.internal.CorePlugin;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
@@ -187,7 +187,7 @@ public abstract class WMTSource {
      * <pre>
      * For example:
      * getRelatedServiceUrl(OSMMapnikSource.class) returns:
-     * wmt://localhost/wmt/net.refractions.udig.catalog.internal.wmt.wmtsource.OSMMapnikSource
+     * wmt://localhost/wmt/org.locationtech.udig.catalog.internal.wmt.wmtsource.OSMMapnikSource
      * </pre>
      *
      * @param sourceClass

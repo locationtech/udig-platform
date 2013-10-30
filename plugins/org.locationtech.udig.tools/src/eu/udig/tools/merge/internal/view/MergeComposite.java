@@ -9,17 +9,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.merge.internal.view;
+package org.locationtech.udig.tools.merge.internal.view;
 
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -55,10 +55,10 @@ import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
 import org.opengis.filter.identity.FeatureId;
 
-import eu.udig.tools.internal.i18n.Messages;
-import eu.udig.tools.internal.ui.util.InfoMessage;
-import eu.udig.tools.internal.ui.util.LayerUtil;
-import eu.udig.tools.merge.MergeContext;
+import org.locationtech.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.internal.ui.util.InfoMessage;
+import org.locationtech.udig.tools.internal.ui.util.LayerUtil;
+import org.locationtech.udig.tools.merge.MergeContext;
 
 /**
  * Merge Controls for composite

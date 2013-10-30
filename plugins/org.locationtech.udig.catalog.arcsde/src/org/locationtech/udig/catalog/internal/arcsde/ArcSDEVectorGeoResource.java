@@ -9,16 +9,16 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.arcsde;
+package org.locationtech.udig.catalog.internal.arcsde;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.util.GeotoolsResourceInfoAdapter;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.util.GeotoolsResourceInfoAdapter;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.DataStore;
@@ -61,14 +61,14 @@ class ArcSDEVectorGeoResource extends IGeoResource {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IGeoResource#getStatus()
+     * @see org.locationtech.udig.catalog.IGeoResource#getStatus()
      */
     public Status getStatus() {
         return service.getStatus();
     }
 
     /*
-     * @see net.refractions.udig.catalog.IGeoResource#getStatusMessage()
+     * @see org.locationtech.udig.catalog.IGeoResource#getStatusMessage()
      */
     public Throwable getMessage() {
         return service.getMessage();
@@ -76,7 +76,7 @@ class ArcSDEVectorGeoResource extends IGeoResource {
 
     /*
      * Required adaptions: <ul> <li>IGeoResourceInfo.class <li>IService.class </ul>
-     * @see net.refractions.udig.catalog.IResolve#resolve(java.lang.Class,
+     * @see org.locationtech.udig.catalog.IResolve#resolve(java.lang.Class,
      * org.eclipse.core.runtime.IProgressMonitor)
      */
     @SuppressWarnings("unchecked")

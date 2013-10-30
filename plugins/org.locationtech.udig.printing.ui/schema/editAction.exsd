@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.printing.ui">
+<schema targetNamespace="org.locationtech.udig.printing.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.printing.ui" id="editAction" name="%editAction.label"/>
+         <meta.schema plugin="org.locationtech.udig.printing.ui" id="editAction" name="%editAction.label"/>
       </appInfo>
       <documentation>
          Defines an actions that can be performed on a type of Page layout &quot;Box&quot;.  If the box&apos;s BoxPrinter can adapt to the class specified by the extension then the action will be enabled for the Box.  For example the Font Edit action works on all Boxes whose BoxPrinter adapts to a FontStyle
@@ -84,7 +84,7 @@
                   The action that will perform the changes indicated by the policy.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.printing.ui.IBoxEditAction"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.printing.ui.IBoxEditAction"/>
                </appInfo>
             </annotation>
          </attribute>

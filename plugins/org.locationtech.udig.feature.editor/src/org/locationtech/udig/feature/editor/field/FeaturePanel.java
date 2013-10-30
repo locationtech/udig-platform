@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.feature.editor.field;
+package org.locationtech.udig.feature.editor.field;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.feature.panel.FeaturePanelWidgetFactory;
-import net.refractions.udig.project.ui.IFeaturePanel;
+import org.locationtech.udig.feature.panel.FeaturePanelWidgetFactory;
+import org.locationtech.udig.project.ui.IFeaturePanel;
 
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.util.IPropertyChangeListener;

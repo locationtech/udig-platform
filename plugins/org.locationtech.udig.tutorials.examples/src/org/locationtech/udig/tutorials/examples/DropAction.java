@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.examples;
+package org.locationtech.udig.tutorials.examples;
 
 import java.awt.Rectangle;
 
-import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.ui.IDropAction;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.ui.IDropAction;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.graphics.Point;
@@ -26,13 +26,13 @@ import org.eclipse.swt.widgets.Control;
  * <pre>
  * 
  *   &lt extension
- *           point="net.refractions.udig.ui.operation" &gt
+ *           point="org.locationtech.udig.ui.operation" &gt
  *       &lt operation
  *             class="java.lang.Object"
  *             enablesFor="1"
- *             id="net.refractions.udig.code.examples.draw.string"
+ *             id="org.locationtech.udig.code.examples.draw.string"
  *             name="DrawString"
- *             targetClass="net.refractions.udig.project.ui.render.displayAdapter.ViewportPane" /&gt
+ *             targetClass="org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane" /&gt
  *   &lt/ extension &gt
  * </pre>
  * 

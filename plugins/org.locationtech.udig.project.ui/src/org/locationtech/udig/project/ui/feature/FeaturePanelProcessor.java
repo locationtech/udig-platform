@@ -8,17 +8,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.feature;
+package org.locationtech.udig.project.ui.feature;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.ui.IFeatureSite;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ui.IFeatureSite;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -37,7 +37,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
  */
 public class FeaturePanelProcessor {
 
-    private static final String FEATURE_PANEL_ID = "net.refractions.udig.project.ui.featurePanel"; //$NON-NLS-1$
+    private static final String FEATURE_PANEL_ID = "org.locationtech.udig.project.ui.featurePanel"; //$NON-NLS-1$
     private static List<FeaturePanelEntry> featurePanelList;
 
     public FeaturePanelProcessor() {

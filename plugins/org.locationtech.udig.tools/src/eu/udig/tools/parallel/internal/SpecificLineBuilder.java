@@ -1,7 +1,7 @@
 /**
  * 
  */
-package eu.udig.tools.parallel.internal;
+package org.locationtech.udig.tools.parallel.internal;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;

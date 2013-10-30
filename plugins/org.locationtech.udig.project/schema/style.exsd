@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.core">
+<schema targetNamespace="org.locationtech.udig.core">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.core" id="StyleDefinition" name="StyleDefinition"/>
+         <meta.schema plugin="org.locationtech.udig.core" id="StyleDefinition" name="StyleDefinition"/>
       </appInfo>
       <documentation>
          Define style information to be stored on the style blackboard at specific ID. The extention point defines ID used to store information; and a StyleContent class that is used to persist information between runs.
@@ -75,7 +75,7 @@ This is the key which the style is placed under when a style is placed onto a St
                   An implemtation of StyleContent. This class is responsible for loading and saving the underlying style object from persistant storage.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.StyleContent"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.StyleContent"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -96,7 +96,7 @@ This is the key which the style is placed under when a style is placed onto a St
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         The net.refractions.udig.style.sld.SLDContent class is used to save and load an org.geotools.styling.Style object from the style blackboard. This value is saved with the id &quot;&quot;net.refractions.udig.style.sld&quot;&quot; (by convention this constant SLDContent.ID)
+         The org.locationtech.udig.style.sld.SLDContent class is used to save and load an org.geotools.styling.Style object from the style blackboard. This value is saved with the id &quot;&quot;org.locationtech.udig.style.sld&quot;&quot; (by convention this constant SLDContent.ID)
 
 This example is specific to syling features; you can store anything you want on the style blackboard; it is only a contract between you and a renderer (and the user if you make a style configurator).
       </documentation>
@@ -146,7 +146,7 @@ try {&lt;br&gt;
 &amp;nbsp;&amp;nbsp;e.printStackTrace();&lt;br&gt;
 }&lt;br&gt;
 &lt;i&gt;//create and fill out StyleMemento object&lt;/i&gt;&lt;br&gt;
-StyleMemento memo=new StyleMemento(&quot;SLDStyle&quot;, getName(), &quot;net.refractions.udig.project.SLDStyle&quot;);&lt;br&gt;
+StyleMemento memo=new StyleMemento(&quot;SLDStyle&quot;, getName(), &quot;org.locationtech.udig.project.SLDStyle&quot;);&lt;br&gt;
 memo.putTextData(out);&lt;br&gt;
 memo.putString(&quot;type&quot;,&quot;SLDStyle&quot;);&lt;br&gt;
 memo.putString(&quot;version&quot;,&quot;1.0&quot;);&lt;br&gt;

@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.style;
+package org.locationtech.udig.mapgraphic.style;
 
 import java.awt.Font;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.internal.Messages;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.style.IStyleConfigurator;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.internal.Messages;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.IStyleConfigurator;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;

@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.db2;
+package org.locationtech.udig.catalog.db2;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +28,7 @@ import org.osgi.framework.BundleContext;
 public class DB2Plugin extends AbstractUIPlugin {
 
     /** id of plugin, matches id decalred in plugin.xml * */
-    public static final String ID = "net.refractions.udig.catalog.db2"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.catalog.db2"; //$NON-NLS-1$
 
     // The shared instance.
     private static DB2Plugin plugin;
@@ -78,7 +78,7 @@ public class DB2Plugin extends AbstractUIPlugin {
      * @return the image descriptor
      */
     public static ImageDescriptor getImageDescriptor( String path ) {
-        return AbstractUIPlugin.imageDescriptorFromPlugin("net.refractions.udig.catalog.db2", path); //$NON-NLS-1$
+        return AbstractUIPlugin.imageDescriptorFromPlugin("org.locationtech.udig.catalog.db2", path); //$NON-NLS-1$
     }
 
     /**
@@ -100,7 +100,7 @@ public class DB2Plugin extends AbstractUIPlugin {
      * It is much prefered to do this:
      * 
      * <pre><code>
-     * private static final String RENDERING = &quot;net.refractions.udig.project/render/trace&quot;;
+     * private static final String RENDERING = &quot;org.locationtech.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }

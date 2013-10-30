@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests.ui.dnd;
+package org.locationtech.udig.catalog.tests.ui.dnd;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -17,10 +17,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
 
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.wms.WMSServiceImpl;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.wms.WMSServiceImpl;
 
 public class WMSCatalogViewDNDTest extends CatalogViewDNDTest {
 	

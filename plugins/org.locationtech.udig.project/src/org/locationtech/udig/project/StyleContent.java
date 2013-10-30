@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project;
+package org.locationtech.udig.project;
 
 import java.awt.Color;
 import java.io.BufferedInputStream;
@@ -23,8 +23,8 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.nio.charset.Charset;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.internal.ProjectPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
@@ -120,7 +120,7 @@ public abstract class StyleContent {
         }
     };
     /** <code>XPID</code> field */
-    public static final String XPID = "net.refractions.udig.project.style"; //$NON-NLS-1$
+    public static final String XPID = "org.locationtech.udig.project.style"; //$NON-NLS-1$
 
     private final String id;
 

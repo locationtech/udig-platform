@@ -9,23 +9,23 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal.editor.parts;
+package org.locationtech.udig.printing.ui.internal.editor.parts;
 
 import java.util.Collection;
 import java.util.List;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.BoxPrinter;
-import net.refractions.udig.printing.model.Connection;
-import net.refractions.udig.printing.model.PropertyListener;
-import net.refractions.udig.printing.ui.IBoxEditAction;
-import net.refractions.udig.printing.ui.internal.BoxFactory;
-import net.refractions.udig.printing.ui.internal.PrintingPlugin;
-import net.refractions.udig.printing.ui.internal.editor.BoxAction;
-import net.refractions.udig.printing.ui.internal.editor.commands.ConnectionCreateCommand;
-import net.refractions.udig.printing.ui.internal.editor.commands.ConnectionReconnectCommand;
-import net.refractions.udig.printing.ui.internal.editor.figures.BoxFigure;
-import net.refractions.udig.printing.ui.internal.editor.policies.PageElementEditPolicy;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.BoxPrinter;
+import org.locationtech.udig.printing.model.Connection;
+import org.locationtech.udig.printing.model.PropertyListener;
+import org.locationtech.udig.printing.ui.IBoxEditAction;
+import org.locationtech.udig.printing.ui.internal.BoxFactory;
+import org.locationtech.udig.printing.ui.internal.PrintingPlugin;
+import org.locationtech.udig.printing.ui.internal.editor.BoxAction;
+import org.locationtech.udig.printing.ui.internal.editor.commands.ConnectionCreateCommand;
+import org.locationtech.udig.printing.ui.internal.editor.commands.ConnectionReconnectCommand;
+import org.locationtech.udig.printing.ui.internal.editor.figures.BoxFigure;
+import org.locationtech.udig.printing.ui.internal.editor.policies.PageElementEditPolicy;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.draw2d.ChopboxAnchor;

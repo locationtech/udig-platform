@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tool.edit.internal;
+package org.locationtech.udig.tool.edit.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.tool.edit.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.tool.edit.internal.messages"; //$NON-NLS-1$
 	public static String AddVertexTool_add_vertex;
 	public static String AddVertexTool_select_feature;
     public static String AddVertexWhileCreatingBehaviour_illegal;

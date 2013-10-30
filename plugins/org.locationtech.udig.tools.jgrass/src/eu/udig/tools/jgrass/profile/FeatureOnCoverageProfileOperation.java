@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.tools.jgrass.profile;
+package org.locationtech.udig.tools.jgrass.profile;
 
 import static java.lang.Math.abs;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.style.sld.SLD;
-import net.refractions.udig.ui.ExceptionDetailsDialog;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.style.sld.SLD;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -37,10 +37,10 @@ import org.opengis.feature.type.GeometryDescriptor;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 
-import eu.udig.tools.jgrass.JGrassToolsPlugin;
-import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities;
-import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.ProfilePoint;
-import eu.udig.tools.jgrass.profile.borrowedfromjgrasstools.RegionMap;
+import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
+import org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools.CoverageUtilities;
+import org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools.ProfilePoint;
+import org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools.RegionMap;
 
 /**
  * Operation to create a profile of a line feature over a coverage.

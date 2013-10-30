@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.ui.wizard;
+package org.locationtech.udig.catalog.ui.wizard;
 
 import java.io.Serializable;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
+import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.geotools.data.DataStoreFactorySpi;

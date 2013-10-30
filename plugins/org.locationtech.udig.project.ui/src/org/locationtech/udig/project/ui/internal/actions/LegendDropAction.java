@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.project.ILegendItem;
-import net.refractions.udig.project.internal.Folder;
-import net.refractions.udig.project.internal.LayerLegendItem;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.IDropAction;
-import net.refractions.udig.ui.ViewerDropLocation;
+import org.locationtech.udig.project.ILegendItem;
+import org.locationtech.udig.project.internal.Folder;
+import org.locationtech.udig.project.internal.LayerLegendItem;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.IDropAction;
+import org.locationtech.udig.ui.ViewerDropLocation;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;

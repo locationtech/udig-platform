@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues;
+package org.locationtech.udig.issues;
 
-import net.refractions.udig.core.enums.Priority;
-import net.refractions.udig.core.enums.Resolution;
-import net.refractions.udig.issues.listeners.IIssueListener;
+import org.locationtech.udig.core.enums.Priority;
+import org.locationtech.udig.core.enums.Resolution;
+import org.locationtech.udig.issues.listeners.IIssueListener;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IEditorInput;
@@ -203,8 +203,8 @@ public interface IIssue {
      * If the class is can not be loaded then a Placeholder issue will be created instead which will
      * notify the user that a plugin is required to manage the issue.  
      * <p> The extension id is formed by the namespace of the plugin combined with the name of the extension element.</p>
-     * <p>For example:  The FeatureIssue's extension id would be: <em>net.refractions.udig.issues.featureIssue</em> because the issue implementation is in
-     * the Issues plugin (which the id <em>net.refractions.udig.issues</em>) and the extension name is featureIssue.  The two are combined to form the id of the
+     * <p>For example:  The FeatureIssue's extension id would be: <em>org.locationtech.udig.issues.featureIssue</em> because the issue implementation is in
+     * the Issues plugin (which the id <em>org.locationtech.udig.issues</em>) and the extension name is featureIssue.  The two are combined to form the id of the
      * extension</p> 
      */
     String getExtensionID();

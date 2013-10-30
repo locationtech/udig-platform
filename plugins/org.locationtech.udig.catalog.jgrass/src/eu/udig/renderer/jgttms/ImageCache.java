@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.renderer.jgttms;
+package org.locationtech.udig.renderer.jgttms;
 
 import java.awt.image.BufferedImage;
 import java.util.LinkedHashMap;

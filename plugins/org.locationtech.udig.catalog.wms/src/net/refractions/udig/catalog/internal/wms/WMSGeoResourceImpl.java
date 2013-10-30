@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wms;
+package org.locationtech.udig.catalog.internal.wms;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,14 +23,14 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.wmsc.WMSCServiceImpl;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.ISharedImages;
-import net.refractions.udig.catalog.wms.internal.Messages;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.wmsc.WMSCServiceImpl;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.ISharedImages;
+import org.locationtech.udig.catalog.wms.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -122,7 +122,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
         return parent;
     }
     /*
-     * @see net.refractions.udig.catalog.IGeoResource#getStatus()
+     * @see org.locationtech.udig.catalog.IGeoResource#getStatus()
      */
     public Status getStatus() {
         return service.getStatus();
@@ -156,7 +156,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IGeoResource#resolve(java.lang.Class,
+     * @see org.locationtech.udig.catalog.IGeoResource#resolve(java.lang.Class,
      * org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
@@ -500,7 +500,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null) {
@@ -519,7 +519,7 @@ public class WMSGeoResourceImpl extends IGeoResource {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getMessage()
+     * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
     public Throwable getMessage() {
         return service.getMessage();

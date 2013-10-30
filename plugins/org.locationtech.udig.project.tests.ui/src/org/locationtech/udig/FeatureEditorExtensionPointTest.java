@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig;
+package org.locationtech.udig;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import net.refractions.udig.project.ui.internal.FeatureEditorExtensionProcessor;
+import org.locationtech.udig.project.ui.internal.FeatureEditorExtensionProcessor;
 
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.GroupMarker;
@@ -37,11 +37,11 @@ import com.vividsolutions.jts.geom.MultiLineString;
 @SuppressWarnings("nls")
 public class FeatureEditorExtensionPointTest extends AbstractProjectUITestCase {
     
-    private static final String MATCH_ALL = "net.refractions.udig.feature.editor.MatchAll";
-    private static final String MATCH_ON_TYPE_NAME = "net.refractions.udig.feature.editor.MatchOnTypeName";
-    private static final String MATCH_GEOM_NAMED_GEO = "net.refractions.udig.feature.editor.MatchGeomNamedGeo";
-    private static final String MATCH_ANY_GEOM = "net.refractions.udig.feature.editor.MatchAnyGeom";
-    private static final String NEVER_SHOWN = "net.refractions.udig.feature.editor.NeverShown";
+    private static final String MATCH_ALL = "org.locationtech.udig.feature.editor.MatchAll";
+    private static final String MATCH_ON_TYPE_NAME = "org.locationtech.udig.feature.editor.MatchOnTypeName";
+    private static final String MATCH_GEOM_NAMED_GEO = "org.locationtech.udig.feature.editor.MatchGeomNamedGeo";
+    private static final String MATCH_ANY_GEOM = "org.locationtech.udig.feature.editor.MatchAnyGeom";
+    private static final String NEVER_SHOWN = "org.locationtech.udig.feature.editor.NeverShown";
 
     private static final String TEST_TYPE = "testType";
     private static final String INVALID_TEST_TYPE = "testType2";

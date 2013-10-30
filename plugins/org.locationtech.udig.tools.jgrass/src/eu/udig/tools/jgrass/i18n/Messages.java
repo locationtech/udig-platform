@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.tools.jgrass.i18n;
+package org.locationtech.udig.tools.jgrass.i18n;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class Messages {
-    private static final String BUNDLE_NAME = "eu.udig.tools.jgrass.i18n.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.locationtech.udig.tools.jgrass.i18n.messages"; //$NON-NLS-1$
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 

@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.polygons;
+package org.locationtech.udig.style.advanced.polygons;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.style.internal.StyleLayer;
-import net.refractions.udig.style.sld.SLD;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.sld.SLD;
 
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -45,16 +45,16 @@ import org.eclipse.swt.widgets.Label;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Style;
 
-import eu.udig.style.advanced.common.GroupRulesTreeContentProvider;
-import eu.udig.style.advanced.common.GroupRulesTreeLabelProvider;
-import eu.udig.style.advanced.common.PropertiesEditor;
-import eu.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.PolygonSymbolizerWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
-import eu.udig.style.advanced.internal.Messages;
-import eu.udig.style.advanced.utils.ImageCache;
-import eu.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.advanced.common.GroupRulesTreeContentProvider;
+import org.locationtech.udig.style.advanced.common.GroupRulesTreeLabelProvider;
+import org.locationtech.udig.style.advanced.common.PropertiesEditor;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.PolygonSymbolizerWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
+import org.locationtech.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.utils.ImageCache;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * An editor for polygon styles.

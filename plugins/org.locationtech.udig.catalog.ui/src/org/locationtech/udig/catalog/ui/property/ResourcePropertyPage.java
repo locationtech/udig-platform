@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui.property;
+package org.locationtech.udig.catalog.ui.property;
 
 import java.io.IOException;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.ui.filter.ExpressionInput;
-import net.refractions.udig.ui.filter.ExpressionViewer;
-import net.refractions.udig.ui.filter.IExpressionViewer;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.ui.filter.ExpressionInput;
+import org.locationtech.udig.ui.filter.ExpressionViewer;
+import org.locationtech.udig.ui.filter.IExpressionViewer;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swt.SWT;

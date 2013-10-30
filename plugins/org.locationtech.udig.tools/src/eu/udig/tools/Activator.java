@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools;
+package org.locationtech.udig.tools;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -21,7 +21,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "eu.udig.tools"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.locationtech.udig.tools"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;

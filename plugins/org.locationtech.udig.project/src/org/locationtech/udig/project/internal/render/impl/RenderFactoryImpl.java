@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -15,21 +15,21 @@ import java.util.Iterator;
 import java.util.List;
 
 import java.util.SortedSet;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.MultiLayerRenderer;
-import net.refractions.udig.project.internal.render.RenderExecutor;
-import net.refractions.udig.project.internal.render.RenderFactory;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.internal.render.RendererDecorator;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.MultiLayerRenderer;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.RenderFactory;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.internal.render.RendererDecorator;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -108,7 +108,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.RenderFactory#createRenderExecutor()
+     * @see org.locationtech.udig.project.internal.render.RenderFactory#createRenderExecutor()
      */
     public RenderExecutor createRenderExecutor() {
         return new RenderExecutorImpl();
@@ -730,7 +730,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.RenderFactory#createCompositeRenderer()
+     * @see org.locationtech.udig.project.internal.render.RenderFactory#createCompositeRenderer()
      */
     public MultiLayerRenderer createCompositeRenderer() {
         return new CompositeRendererImpl();

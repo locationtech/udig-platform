@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.wmt.internal;
+package org.locationtech.udig.catalog.wmt.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.catalog.wmt.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.catalog.wmt.internal.messages"; //$NON-NLS-1$
 		
 	public static String Properties_Layer_Title;
     public static String Properties_Layer_GroupBox;

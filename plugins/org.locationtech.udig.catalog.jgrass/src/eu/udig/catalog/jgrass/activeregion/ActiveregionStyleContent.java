@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass.activeregion;
+package org.locationtech.udig.catalog.jgrass.activeregion;
 
 import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.StyleContent;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.StyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
@@ -22,7 +22,7 @@ import org.eclipse.ui.IMemento;
 @SuppressWarnings("nls")
 public class ActiveregionStyleContent extends StyleContent {
 
-    public static final String ID = "eu.udig.catalog.jgrass.activeregion.activeregionStyle"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.catalog.jgrass.activeregion.activeregionStyle"; //$NON-NLS-1$
 
     public static final String WINDPATH = "WINDPATH";
     public static final String N = "N";

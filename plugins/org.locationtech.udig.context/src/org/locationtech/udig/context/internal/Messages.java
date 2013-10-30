@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.context.internal;
+package org.locationtech.udig.context.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.context.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.context.internal.messages"; //$NON-NLS-1$
 	public static String WizardDataTransferPage_error_transferError;
 	public static String WizardDataTransferPage_group_options_text;
 	public static String WizardDataTransferPage_dialog_title;

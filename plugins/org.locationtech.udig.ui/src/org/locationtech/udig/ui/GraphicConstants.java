@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 /**
  * This class defines constants for looking up resources that are available

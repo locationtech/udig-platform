@@ -9,20 +9,20 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.impl.MapImpl;
-import net.refractions.udig.project.ui.wizard.export.project.ExportProjectUtils;
-import net.refractions.udig.project.ui.wizard.export.project.ExportProjectWizard;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.impl.MapImpl;
+import org.locationtech.udig.project.ui.wizard.export.project.ExportProjectUtils;
+import org.locationtech.udig.project.ui.wizard.export.project.ExportProjectWizard;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.IProgressMonitor;

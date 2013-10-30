@@ -1,11 +1,11 @@
 /**
  * 
  */
-package net.refractions.udig.catalog.tests.ui.workflow;
+package org.locationtech.udig.catalog.tests.ui.workflow;
 
-import net.refractions.udig.catalog.ui.workflow.State;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import org.locationtech.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPage;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;

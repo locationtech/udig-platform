@@ -18,15 +18,15 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package net.refractions.udig.project.ui.wizard.export.project;
+package org.locationtech.udig.project.ui.wizard.export.project;
 
 import java.io.File;
 import java.util.List;
 
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.ProjectRegistry;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.ProjectRegistry;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.preference.ComboFieldEditor;

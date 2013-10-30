@@ -8,19 +8,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.viewers;
+package org.locationtech.udig.project.ui.viewers;
 
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.project.ui.internal.RenderManagerDynamic;
-import net.refractions.udig.project.ui.internal.TiledRenderManagerDynamic;
-import net.refractions.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneSWT;
-import net.refractions.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneTiledSWT;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.RenderManagerDynamic;
+import org.locationtech.udig.project.ui.internal.TiledRenderManagerDynamic;
+import org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneSWT;
+import org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneTiledSWT;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IStatusLineManager;

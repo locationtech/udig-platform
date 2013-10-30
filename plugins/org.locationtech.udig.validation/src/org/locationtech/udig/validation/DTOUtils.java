@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.validation;
+package org.locationtech.udig.validation;
 
 import java.util.Iterator;
 import java.util.Map;
 
-import net.refractions.udig.validation.internal.Messages;
+import org.locationtech.udig.validation.internal.Messages;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;

@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -11,19 +11,19 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.project.AdaptableFeature;
-import net.refractions.udig.project.EditManagerEvent;
-import net.refractions.udig.project.IEditManagerListener;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.AdaptableFeature;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -198,7 +198,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.EditManager#getTransaction()
+     * @see org.locationtech.udig.project.internal.EditManager#getTransaction()
      * @uml.property name="transaction"
      */
     public Transaction getTransaction() {
@@ -669,7 +669,7 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.EditManager#refreshEditFeature()
+     * @see org.locationtech.udig.project.internal.EditManager#refreshEditFeature()
      */
     public void refreshEditFeature() {
         Layer editLayer = getEditLayerInternal();
@@ -742,14 +742,14 @@ public class EditManagerImpl extends EObjectImpl implements EditManager {
     }
 
     /**
-     * @see net.refractions.udig.project.IEditManager#getMap()
+     * @see org.locationtech.udig.project.IEditManager#getMap()
      */
     public IMap getMap() {
         return getMapInternal();
     }
 
     /**
-     * @see net.refractions.udig.project.IEditManager#getEditLayer()
+     * @see org.locationtech.udig.project.IEditManager#getEditLayer()
      */
     public ILayer getEditLayer() {
         return getEditLayerInternal();

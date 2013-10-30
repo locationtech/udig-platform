@@ -9,18 +9,18 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.internal.wmsc.basic;
+package org.locationtech.udig.render.internal.wmsc.basic;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.refractions.udig.catalog.wmsc.server.TileSet;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.catalog.wmsc.server.TileSet;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
 
 import org.geotools.util.Range;
 

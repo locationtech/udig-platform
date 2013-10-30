@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.tools.jgrass.geopaparazzi;
+package org.locationtech.udig.tools.jgrass.geopaparazzi;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -61,7 +61,7 @@ import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiLineString;
 import com.vividsolutions.jts.geom.Point;
 
-import eu.udig.tools.jgrass.JGrassToolsPlugin;
+import org.locationtech.udig.tools.jgrass.JGrassToolsPlugin;
 
 /**
  * The wizard to import for geopaparazzi data.

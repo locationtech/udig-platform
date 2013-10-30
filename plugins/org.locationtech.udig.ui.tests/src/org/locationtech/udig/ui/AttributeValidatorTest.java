@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -30,7 +30,7 @@ import org.opengis.filter.PropertyIsEqualTo;
 public class AttributeValidatorTest {
 
     /**
-     * Test method for {@link net.refractions.udig.ui.AttributeValidator#isValid(java.lang.Object)}.
+     * Test method for {@link org.locationtech.udig.ui.AttributeValidator#isValid(java.lang.Object)}.
      * @throws Exception 
      */
     @Ignore

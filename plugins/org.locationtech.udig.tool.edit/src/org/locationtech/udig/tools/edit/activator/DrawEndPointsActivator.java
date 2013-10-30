@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.activator;
+package org.locationtech.udig.tools.edit.activator;
 
-import net.refractions.udig.core.IProvider;
-import net.refractions.udig.tools.edit.Activator;
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.commands.DrawEndPointsCommand;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.core.IProvider;
+import org.locationtech.udig.tools.edit.Activator;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.commands.DrawEndPointsCommand;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 
 /**
  * Adds a draw command to the viewport model that will draw the end points of the 

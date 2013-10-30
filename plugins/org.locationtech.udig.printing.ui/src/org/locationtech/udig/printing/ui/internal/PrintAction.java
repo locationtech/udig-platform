@@ -9,14 +9,14 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal;
+package org.locationtech.udig.printing.ui.internal;
 
 import java.io.File;
 
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.printing.ui.internal.editor.PageEditorInput;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.ui.UDIGEditorInput;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.ui.internal.editor.PageEditorInput;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.ui.UDIGEditorInput;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

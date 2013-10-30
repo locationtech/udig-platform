@@ -8,9 +8,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.test;
+package org.locationtech.udig.issues.test;
 
-import net.refractions.udig.issues.FixableIssue;
+import org.locationtech.udig.issues.FixableIssue;
 
 /**
  * Subclass of FixableIssue for extension point testing. 
@@ -22,7 +22,7 @@ import net.refractions.udig.issues.FixableIssue;
  */
 public class DummyFixableIssue extends FixableIssue {
     
-    public static final String ID = "net.refractions.udig.issues.test.DummyFixableIssue"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.issues.test.DummyFixableIssue"; //$NON-NLS-1$
     
     public String getExtensionID() {
         return ID;

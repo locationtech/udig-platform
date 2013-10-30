@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.tool;
+package org.locationtech.udig.project.ui.tool;
 
 import java.util.List;
 
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.project.ui.internal.tool.display.ActionToolCategory;
-import net.refractions.udig.project.ui.internal.tool.display.ModalToolCategory;
-import net.refractions.udig.project.ui.internal.tool.display.ToolCategory;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.tool.display.ActionToolCategory;
+import org.locationtech.udig.project.ui.internal.tool.display.ModalToolCategory;
+import org.locationtech.udig.project.ui.internal.tool.display.ToolCategory;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
@@ -29,7 +29,7 @@ import org.eclipse.ui.IWorkbenchPart;
 
 public interface IToolManager {
     
-    public final String XPID = "net.refractions.udig.project.ui.toolManagers"; //$NON-NLS-1$
+    public final String XPID = "org.locationtech.udig.project.ui.toolManagers"; //$NON-NLS-1$
     /**
      * Points to id field of extension point attribute
      */
@@ -43,7 +43,7 @@ public interface IToolManager {
     /**
      * Preference constant that can used to set and look up the default 
      * IToolManager. This can be set in plugin_customization.ini with the key
-     * "net.refractions.udig.project.ui/toolManager".
+     * "org.locationtech.udig.project.ui/toolManager".
      */
     public final String P_TOOL_MANAGER = "toolManager"; //$NON-NLS-1$
 
@@ -157,8 +157,8 @@ public interface IToolManager {
      * 
      * @param cbmanager
      * @param bars
-     * @see net.refractions.udig.project.ui.tool.ModalTool
-     * @see net.refractions.udig.project.ui.tool.ActionTool
+     * @see org.locationtech.udig.project.ui.tool.ModalTool
+     * @see org.locationtech.udig.project.ui.tool.ActionTool
      * 
      */
     void contributeToCoolBar( SubCoolBarManager cbmanager, IActionBars bars );

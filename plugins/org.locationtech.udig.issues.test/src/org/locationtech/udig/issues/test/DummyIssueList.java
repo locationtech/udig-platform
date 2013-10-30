@@ -1,9 +1,9 @@
 /**
  * 
  */
-package net.refractions.udig.issues.test;
+package org.locationtech.udig.issues.test;
 
-import net.refractions.udig.issues.IssuesList;
+import org.locationtech.udig.issues.IssuesList;
 
 class DummyIssueList extends IssuesList{
     /** long serialVersionUID field */

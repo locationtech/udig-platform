@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.polygons.widgets;
+package org.locationtech.udig.style.advanced.polygons.widgets;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
@@ -20,12 +20,12 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
-import eu.udig.style.advanced.common.ParameterComposite;
-import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
-import eu.udig.style.advanced.common.styleattributeclasses.PolygonSymbolizerWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
-import eu.udig.style.advanced.internal.Messages;
-import eu.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.advanced.common.ParameterComposite;
+import org.locationtech.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.PolygonSymbolizerWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import org.locationtech.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * A composite that holds widgets for polygon general parameter setting.

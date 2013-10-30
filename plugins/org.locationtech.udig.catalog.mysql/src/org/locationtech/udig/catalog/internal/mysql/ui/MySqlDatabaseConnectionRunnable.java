@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.mysql.ui;
+package org.locationtech.udig.catalog.internal.mysql.ui;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.refractions.udig.catalog.service.database.DatabaseConnectionRunnable;
+import org.locationtech.udig.catalog.service.database.DatabaseConnectionRunnable;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

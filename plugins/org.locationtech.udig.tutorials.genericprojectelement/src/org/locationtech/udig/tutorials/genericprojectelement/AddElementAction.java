@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.genericprojectelement;
+package org.locationtech.udig.tutorials.genericprojectelement;
 
 import java.util.Random;
 
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.element.ProjectElementAdapter;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.element.ProjectElementAdapter;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;

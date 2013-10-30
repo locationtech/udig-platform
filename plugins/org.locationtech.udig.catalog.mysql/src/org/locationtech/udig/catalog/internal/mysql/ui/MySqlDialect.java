@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.mysql.ui;
+package org.locationtech.udig.catalog.internal.mysql.ui;
 
 import static org.geotools.data.mysql.MySQLDataStoreFactory.*;
 import org.eclipse.jface.dialogs.IDialogSettings;
 
-import net.refractions.udig.catalog.MySQLServiceExtension;
-import net.refractions.udig.catalog.internal.mysql.MySQLPlugin;
-import net.refractions.udig.catalog.service.database.DatabaseConnectionRunnable;
-import net.refractions.udig.catalog.service.database.DatabaseServiceDialect;
-import net.refractions.udig.catalog.service.database.DatabaseWizardLocalization;
-import net.refractions.udig.catalog.service.database.LookUpSchemaRunnable;
+import org.locationtech.udig.catalog.MySQLServiceExtension;
+import org.locationtech.udig.catalog.internal.mysql.MySQLPlugin;
+import org.locationtech.udig.catalog.service.database.DatabaseConnectionRunnable;
+import org.locationtech.udig.catalog.service.database.DatabaseServiceDialect;
+import org.locationtech.udig.catalog.service.database.DatabaseWizardLocalization;
+import org.locationtech.udig.catalog.service.database.LookUpSchemaRunnable;
 
 /**
  * All the mysql specific code for working for the new wizard

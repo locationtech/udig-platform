@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal.editor.parts;
+package org.locationtech.udig.printing.ui.internal.editor.parts;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.PropertyListener;
-import net.refractions.udig.printing.ui.internal.editor.policies.PageElementEditPolicy;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.PropertyListener;
+import org.locationtech.udig.printing.ui.internal.editor.policies.PageElementEditPolicy;
 
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.editparts.AbstractTreeEditPart;
@@ -100,7 +100,7 @@ public class BoxTreeEditPart extends AbstractTreeEditPart {
             /**
          * TODO summary sentence for locationChanged ...
          * 
-         * @see net.refractions.udig.printing.model.PropertyListener#locationChanged()
+         * @see org.locationtech.udig.printing.model.PropertyListener#locationChanged()
          * 
          */
         protected void locationChanged() {
@@ -109,7 +109,7 @@ public class BoxTreeEditPart extends AbstractTreeEditPart {
         /**
          * TODO summary sentence for sizeChanged ...
          * 
-         * @see net.refractions.udig.printing.model.PropertyListener#sizeChanged()
+         * @see org.locationtech.udig.printing.model.PropertyListener#sizeChanged()
          * 
          */
         protected void sizeChanged() {

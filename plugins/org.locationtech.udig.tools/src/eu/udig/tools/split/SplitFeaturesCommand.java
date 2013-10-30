@@ -9,25 +9,25 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.split;
+package org.locationtech.udig.tools.split;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.command.factory.EditCommandFactory;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.GeometryCreationUtil;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.command.factory.EditCommandFactory;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.tools.edit.EditState;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.GeometryCreationUtil;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -49,13 +49,13 @@ import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 
-import eu.udig.tools.feature.split.CannotSplitException;
-import eu.udig.tools.feature.split.SplitFeatureBuilder;
-import eu.udig.tools.feature.split.SplitFeatureBuilderFailException;
-import eu.udig.tools.feature.util.GeoToolsUtils;
-import eu.udig.tools.internal.i18n.Messages;
-import eu.udig.tools.internal.ui.util.LayerUtil;
-import eu.udig.tools.internal.ui.util.MapUtil;
+import org.locationtech.udig.tools.feature.split.CannotSplitException;
+import org.locationtech.udig.tools.feature.split.SplitFeatureBuilder;
+import org.locationtech.udig.tools.feature.split.SplitFeatureBuilderFailException;
+import org.locationtech.udig.tools.feature.util.GeoToolsUtils;
+import org.locationtech.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.internal.ui.util.LayerUtil;
+import org.locationtech.udig.tools.internal.ui.util.MapUtil;
 
 /**
  * Undoable map command that splits a collection of Features with a given Line.

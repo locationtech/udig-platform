@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.gridcoverage.tool.info.internal;
+package org.locationtech.udig.render.gridcoverage.tool.info.internal;
 
 
 import java.awt.image.RenderedImage;
@@ -25,9 +25,9 @@ import javax.imageio.ImageIO;
 import javax.media.jai.JAI;
 import javax.media.jai.PlanarImage;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.render.gridcoverage.basic.internal.Messages;
-import net.refractions.udig.render.internal.gridcoverage.basic.RendererPlugin;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.render.gridcoverage.basic.internal.Messages;
+import org.locationtech.udig.render.internal.gridcoverage.basic.RendererPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

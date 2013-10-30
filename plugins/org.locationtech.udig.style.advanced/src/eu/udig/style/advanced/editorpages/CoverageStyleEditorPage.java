@@ -7,20 +7,20 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.editorpages;
+package org.locationtech.udig.style.advanced.editorpages;
 
 import java.util.ArrayList;
 import java.util.MissingResourceException;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.style.internal.StyleLayer;
-import net.refractions.udig.style.sld.SLDContent;
-import net.refractions.udig.style.sld.SLDContentManager;
-import net.refractions.udig.style.sld.editor.StyleEditorPage;
-import net.refractions.udig.ui.ExceptionDetailsDialog;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.sld.SLDContent;
+import org.locationtech.udig.style.sld.SLDContentManager;
+import org.locationtech.udig.style.sld.editor.StyleEditorPage;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.SWT;
@@ -48,10 +48,10 @@ import org.geotools.styling.Symbolizer;
 import org.opengis.coverage.grid.GridCoverage;
 import org.opengis.filter.expression.Expression;
 
-import eu.udig.style.advanced.StylePlugin;
-import eu.udig.style.advanced.internal.Messages;
-import eu.udig.style.advanced.raster.CoverageColorEditor;
-import eu.udig.style.advanced.raster.CoverageRule;
+import org.locationtech.udig.style.advanced.StylePlugin;
+import org.locationtech.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.raster.CoverageColorEditor;
+import org.locationtech.udig.style.advanced.raster.CoverageRule;
 
 /**
  * The style editor for single banded {@link GridCoverage2D coverages};

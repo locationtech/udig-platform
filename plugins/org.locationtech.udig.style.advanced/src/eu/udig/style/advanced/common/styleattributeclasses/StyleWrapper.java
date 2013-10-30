@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.common.styleattributeclasses;
+package org.locationtech.udig.style.advanced.common.styleattributeclasses;
 
-import static eu.udig.style.advanced.utils.Utilities.sf;
+import static org.locationtech.udig.style.advanced.utils.Utilities.sf;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +22,7 @@ import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;
 
-import eu.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * A wrapper for the {@link Style} object to ease gui use.

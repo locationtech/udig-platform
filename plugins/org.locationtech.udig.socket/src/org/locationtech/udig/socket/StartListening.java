@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.socket;
+package org.locationtech.udig.socket;
 
 import org.eclipse.ui.IStartup;
 

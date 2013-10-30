@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.internal;
+package org.locationtech.udig.style.advanced.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "eu.udig.style.advanced.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.style.advanced.internal.messages"; //$NON-NLS-1$
 	public static String Alignments_0;
 	public static String Alignments_1;
 	public static String Alignments_2;

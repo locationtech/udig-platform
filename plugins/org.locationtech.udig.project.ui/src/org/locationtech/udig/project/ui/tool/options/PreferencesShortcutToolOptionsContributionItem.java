@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.tool.options;
+package org.locationtech.udig.project.ui.tool.options;
 
 import java.awt.SystemColor;
 
-import net.refractions.udig.project.ui.controls.ScaleRatioLabel;
-import net.refractions.udig.project.ui.internal.tool.display.ToolProxy;
+import org.locationtech.udig.project.ui.controls.ScaleRatioLabel;
+import org.locationtech.udig.project.ui.internal.tool.display.ToolProxy;
 
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.jface.action.ContributionItem;
@@ -51,7 +51,7 @@ public class PreferencesShortcutToolOptionsContributionItem extends Contribution
     final ICommandService commandService = (ICommandService) PlatformUI.getWorkbench().getService(
             ICommandService.class);
 
-    final String defultPreferencePage = "net.refractions.udig.tools.edit.preferences";
+    final String defultPreferencePage = "org.locationtech.udig.tools.edit.preferences";
 
     //private ToolBar toolBar;
     private Label icon;

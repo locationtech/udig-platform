@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,10 +16,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.tool.display.ModalItem;
-import net.refractions.udig.project.ui.internal.tool.display.ModalToolCategory;
-import net.refractions.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.tool.display.ModalItem;
+import org.locationtech.udig.project.ui.internal.tool.display.ModalToolCategory;
+import org.locationtech.udig.project.ui.tool.IToolManager;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.palette.PaletteContainer;
@@ -51,7 +51,7 @@ public class MapToolPaletteFactory {
     /**
      * The ID of the default tool: Zoom
      */
-    private static final String DEFAULT_ID = "net.refractions.udig.tools.Zoom"; //$NON-NLS-1$
+    private static final String DEFAULT_ID = "org.locationtech.udig.tools.Zoom"; //$NON-NLS-1$
 
     /**
      * Create a map tool palette bridging from from uDig ToolManager to the GEF ToolEntry model.
@@ -82,8 +82,8 @@ public class MapToolPaletteFactory {
             String name = fixLabel(category.getName());
             
             PaletteContainer container;
-            if( category.getId().equals("net.refractions.udig.tool.category.zoom") ||
-                    category.getId().equals("net.refractions.udig.tool.category.pan")){
+            if( category.getId().equals("org.locationtech.udig.tool.category.zoom") ||
+                    category.getId().equals("org.locationtech.udig.tool.category.pan")){
                 container = navigation;
             }
             else {
@@ -123,10 +123,10 @@ public class MapToolPaletteFactory {
         
         Comparator<PaletteContainer> sorter = new Comparator<PaletteContainer>(){
             List<String> preferredOrder = Arrays.asList(new String[]{
-                    "net.refractions.udig.tool.category.zoom",
-                    "net.refractions.udig.tool.category.pan",
-                    "net.refractions.udig.tool.category.info",
-                    "net.refractions.udig.tool.category.selection"
+                    "org.locationtech.udig.tool.category.zoom",
+                    "org.locationtech.udig.tool.category.pan",
+                    "org.locationtech.udig.tool.category.info",
+                    "org.locationtech.udig.tool.category.selection"
             });
             int order( String id ){
                 int index = preferredOrder.indexOf(id);

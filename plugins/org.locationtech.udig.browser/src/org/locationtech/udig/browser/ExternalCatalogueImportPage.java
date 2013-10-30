@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.browser;
+package org.locationtech.udig.browser;
 
 import java.net.URL;
 
@@ -27,7 +27,7 @@ import org.eclipse.swt.browser.LocationListener;
 public interface ExternalCatalogueImportPage extends IWizardPage {
     /** ExternalCatalogueImportPage XPID field */
     public static final String XPID = 
-        "net.refractions.udig.browser.externalCatalogWizard"; //$NON-NLS-1$
+        "org.locationtech.udig.browser.externalCatalogWizard"; //$NON-NLS-1$
     /**
      *
      * @return ID

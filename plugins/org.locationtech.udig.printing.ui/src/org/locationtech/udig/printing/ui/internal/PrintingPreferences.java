@@ -9,13 +9,13 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal;
+package org.locationtech.udig.printing.ui.internal;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
-import net.refractions.udig.printing.ui.TemplateFactory;
+import org.locationtech.udig.printing.ui.TemplateFactory;
 
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;

@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.legend.internal;
+package org.locationtech.udig.legend.internal;
 
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.project.interceptor.LayerInterceptor;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.impl.MapImpl;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.project.interceptor.LayerInterceptor;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.impl.MapImpl;
 
 /**
  * Layer interceptor that removes the listener

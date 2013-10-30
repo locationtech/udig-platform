@@ -9,26 +9,26 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.merge.internal.view;
+package org.locationtech.udig.tools.merge.internal.view;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayerListener;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IMapCompositionListener;
-import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.project.MapCompositionEvent;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.ui.AnimationUpdater;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.IUDIGView;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.tools.edit.animation.MessageBubble;
-import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerListener;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IMapCompositionListener;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.project.MapCompositionEvent;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.ui.AnimationUpdater;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.IUDIGView;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.tools.edit.animation.MessageBubble;
+import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
@@ -45,12 +45,12 @@ import org.geotools.data.simple.SimpleFeatureCollection;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 
-import eu.udig.tools.internal.i18n.Messages;
-import eu.udig.tools.internal.mediator.AppGISAdapter;
-import eu.udig.tools.internal.mediator.PlatformGISMediator;
-import eu.udig.tools.internal.ui.util.StatusBar;
-import eu.udig.tools.merge.MergeContext;
-import eu.udig.tools.merge.Util;
+import org.locationtech.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.internal.mediator.AppGISAdapter;
+import org.locationtech.udig.tools.internal.mediator.PlatformGISMediator;
+import org.locationtech.udig.tools.internal.ui.util.StatusBar;
+import org.locationtech.udig.tools.merge.MergeContext;
+import org.locationtech.udig.tools.merge.Util;
 
 /**
  * This view shows the features to merge.
@@ -66,7 +66,7 @@ import eu.udig.tools.merge.Util;
  */
 public class MergeView extends ViewPart implements IUDIGView {
 
-	public static final String ID = "eu.udig.tools.merge.internal.view.MergeView"; //$NON-NLS-1$
+	public static final String ID = "org.locationtech.udig.tools.merge.internal.view.MergeView"; //$NON-NLS-1$
 
 	private MergeComposite mergeComposite = null;
 

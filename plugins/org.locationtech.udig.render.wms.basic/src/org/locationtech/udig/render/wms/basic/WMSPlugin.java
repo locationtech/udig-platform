@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.wms.basic;
+package org.locationtech.udig.render.wms.basic;
 
 
 import java.util.logging.Level;
@@ -29,7 +29,7 @@ import org.osgi.framework.BundleContext;
  */
 public class WMSPlugin extends AbstractUIPlugin {
 
-    public static final String ID = "net.refractions.udig.render.wms.basic"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.render.wms.basic"; //$NON-NLS-1$
     private static WMSPlugin plugin;
 
     /**
@@ -85,7 +85,7 @@ public class WMSPlugin extends AbstractUIPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:<pre><code>
-     * private static final String RENDERING = "net.refractions.udig.project/render/trace";
+     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
      * }

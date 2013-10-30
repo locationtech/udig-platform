@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.tools.merge;
+package org.locationtech.udig.tools.merge;
 
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;
@@ -22,7 +22,7 @@ import org.geotools.data.FeatureSource;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 
-import eu.udig.tools.merge.internal.view.MergeView;
+import org.locationtech.udig.tools.merge.internal.view.MergeView;
 
 /**
  * Supports an Operation-started Workflow for MergeTool usage.

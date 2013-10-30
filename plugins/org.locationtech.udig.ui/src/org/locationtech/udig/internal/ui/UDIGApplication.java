@@ -9,7 +9,7 @@
  *
  * Created on Jun 23, 2004
  */
-package net.refractions.udig.internal.ui;
+package org.locationtech.udig.internal.ui;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,8 +18,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.text.MessageFormat;
 
-import net.refractions.udig.libs.internal.Activator;
-import net.refractions.udig.ui.internal.Messages;
+import org.locationtech.udig.libs.internal.Activator;
+import org.locationtech.udig.ui.internal.Messages;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -98,7 +98,7 @@ public class UDIGApplication implements IApplication {
             if ("--version".equalsIgnoreCase(arg) || "-v".equalsIgnoreCase(arg)) { //$NON-NLS-1$ //$NON-NLS-2$
                 // get udig version
                 URL mappingsUrl = Platform
-                        .getBundle("net.refractions.udig").getResource("about.mappings"); //$NON-NLS-1$ //$NON-NLS-2$  
+                        .getBundle("org.locationtech.udig").getResource("about.mappings"); //$NON-NLS-1$ //$NON-NLS-2$  
                 String mappingsPathPath = FileLocator.toFileURL(mappingsUrl).getPath();
 
                 BufferedReader bR = new BufferedReader(new FileReader(mappingsPathPath));

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.processingregion;
+package org.locationtech.udig.omsbox.processingregion;
 
 import static java.lang.Math.round;
 
@@ -15,13 +15,13 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.impl.UDIGFeatureStore;
-import net.refractions.udig.project.ui.internal.dialogs.ColorEditor;
-import net.refractions.udig.style.IStyleConfigurator;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.impl.UDIGFeatureStore;
+import org.locationtech.udig.project.ui.internal.dialogs.ColorEditor;
+import org.locationtech.udig.style.IStyleConfigurator;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swt.SWT;
@@ -47,9 +47,9 @@ import org.opengis.coverage.grid.GridCoverage;
 
 import com.vividsolutions.jts.geom.Envelope;
 
-import eu.udig.catalog.jgrass.activeregion.dialogs.FeatureChooserDialog;
-import eu.udig.omsbox.ui.CoverageChooserDialog;
-import eu.udig.omsbox.utils.OmsBoxUtils;
+import org.locationtech.udig.catalog.jgrass.activeregion.dialogs.FeatureChooserDialog;
+import org.locationtech.udig.omsbox.ui.CoverageChooserDialog;
+import org.locationtech.udig.omsbox.utils.OmsBoxUtils;
 
 public class ProcessingRegionGraphicStyleConfigurator extends IStyleConfigurator implements SelectionListener, ModifyListener {
 

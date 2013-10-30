@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.test;
+package org.locationtech.udig.issues.test;
 
-import net.refractions.udig.core.enums.Priority;
-import net.refractions.udig.issues.Column;
-import net.refractions.udig.issues.IIssue;
-import net.refractions.udig.issues.IIssuesViewSorter;
+import org.locationtech.udig.core.enums.Priority;
+import org.locationtech.udig.issues.Column;
+import org.locationtech.udig.issues.IIssue;
+import org.locationtech.udig.issues.IIssuesViewSorter;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;

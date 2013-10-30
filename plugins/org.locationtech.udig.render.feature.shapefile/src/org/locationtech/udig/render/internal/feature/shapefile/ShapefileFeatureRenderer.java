@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.render.internal.feature.shapefile;
+package org.locationtech.udig.render.internal.feature.shapefile;
 
 import java.awt.RenderingHints;
 import java.util.HashMap;
 
-import net.refractions.udig.render.internal.feature.basic.BasicFeatureRenderer;
+import org.locationtech.udig.render.internal.feature.basic.BasicFeatureRenderer;
 
 import org.geotools.map.MapContext;
 import org.geotools.renderer.GTRenderer;

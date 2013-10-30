@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal;
+package org.locationtech.udig.catalog.internal;
 
 import java.io.Serializable;
 import java.net.URL;
@@ -19,11 +19,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceFactory;
-import net.refractions.udig.catalog.ServiceExtension;
-import net.refractions.udig.catalog.interceptor.ServiceInterceptor;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceFactory;
+import org.locationtech.udig.catalog.ServiceExtension;
+import org.locationtech.udig.catalog.interceptor.ServiceInterceptor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -112,7 +112,7 @@ public class ServiceFactoryImpl extends IServiceFactory {
      * the handles in the usual manner (ask for their info) after you get back this list.
      * </p>
      * 
-     * @see net.refractions.udig.catalog.IServiceFactory#acquire(java.net.URL)
+     * @see org.locationtech.udig.catalog.IServiceFactory#acquire(java.net.URL)
      * @param target Target url usually provided by drag and drop code
      * @return List of candidate services
      */

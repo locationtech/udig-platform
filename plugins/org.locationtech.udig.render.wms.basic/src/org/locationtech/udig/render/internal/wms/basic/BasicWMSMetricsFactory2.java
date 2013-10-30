@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.internal.wms.basic;
+package org.locationtech.udig.render.internal.wms.basic;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -18,9 +18,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
 
 import org.geotools.data.ows.Layer;
 import org.geotools.data.wms.WebMapServer;
@@ -121,13 +121,13 @@ public class BasicWMSMetricsFactory2 implements IRenderMetricsFactory {
     }
 
     /**
-     * @see net.refractions.udig.project.render.RenderMetricsFactory#createMetrics(net.refractions.udig.project.render.RenderContext)
+     * @see org.locationtech.udig.project.render.RenderMetricsFactory#createMetrics(org.locationtech.udig.project.render.RenderContext)
      */
     public AbstractRenderMetrics createMetrics( IRenderContext context ) {
         return new BasicWMSMetrics2(context, this);
     }
     /**
-     * @see net.refractions.udig.project.render.RenderMetrics#getRendererType()
+     * @see org.locationtech.udig.project.render.RenderMetrics#getRendererType()
      */
     public Class getRendererType() {
         return BasicWMSRenderer2.class;

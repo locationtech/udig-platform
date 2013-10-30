@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.element;
+package org.locationtech.udig.project.element;
 
 import java.util.List;
 
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.internal.ProjectElement;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.util.IPropertyChangeListener;

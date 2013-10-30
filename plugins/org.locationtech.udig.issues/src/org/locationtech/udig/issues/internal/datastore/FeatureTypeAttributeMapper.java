@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.internal.datastore;
+package org.locationtech.udig.issues.internal.datastore;
 
 import java.util.ArrayList;
 
-import net.refractions.udig.issues.internal.Messages;
+import org.locationtech.udig.issues.internal.Messages;
 
 import org.geotools.feature.SchemaException;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;

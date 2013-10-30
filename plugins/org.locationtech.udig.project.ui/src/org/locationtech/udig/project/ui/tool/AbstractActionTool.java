@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.tool;
+package org.locationtech.udig.project.ui.tool;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -46,21 +46,21 @@ public abstract class AbstractActionTool implements ActionTool {
 	}
 	
     /**
-     * @see net.refractions.udig.project.ui.tool.Tool#setContext(net.refractions.udig.project.ui.tool.ToolContext)
+     * @see org.locationtech.udig.project.ui.tool.Tool#setContext(org.locationtech.udig.project.ui.tool.ToolContext)
      */
     public void setContext( IToolContext toolContext ) {
     	this.context = toolContext;
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.Tool#getContext()
+     * @see org.locationtech.udig.project.ui.tool.Tool#getContext()
      */
 	public IToolContext getContext() {
 		return context;
 	}
 
     /**
-     * @see net.refractions.udig.project.ui.tool.Tool#getProperty()
+     * @see org.locationtech.udig.project.ui.tool.Tool#getProperty()
      */
 	public Object getProperty(String key) {
 		return properties.get(key);
@@ -68,7 +68,7 @@ public abstract class AbstractActionTool implements ActionTool {
 	}
 
     /**
-     * @see net.refractions.udig.project.ui.tool.Tool#setProperty()
+     * @see org.locationtech.udig.project.ui.tool.Tool#setProperty()
      */
 	public void setProperty(String key, Object value) {
 		properties.put(key, value);

@@ -7,20 +7,20 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.commands;
+package org.locationtech.udig.tools.edit.commands;
 
 import java.awt.Rectangle;
 import java.util.List;
 
-import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.preferences.PreferenceConstants;
-import net.refractions.udig.tools.edit.support.CurrentEditGeomPathIterator;
-import net.refractions.udig.tools.edit.support.EditGeom;
-import net.refractions.udig.tools.edit.support.Point;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
-import net.refractions.udig.tools.edit.support.ShapeType;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.preferences.PreferenceConstants;
+import org.locationtech.udig.tools.edit.support.CurrentEditGeomPathIterator;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.Point;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.tools.edit.support.ShapeType;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -28,8 +28,8 @@ import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.widgets.Display;
 
 /**
- * Draws all the {@link net.refractions.udig.tools.edit.support.EditGeom}s on the provided 
- * {@link net.refractions.udig.tools.edit.support.EditBlackboard}
+ * Draws all the {@link org.locationtech.udig.tools.edit.support.EditGeom}s on the provided 
+ * {@link org.locationtech.udig.tools.edit.support.EditBlackboard}
  * 
  * @author jones
  * @since 1.1.0

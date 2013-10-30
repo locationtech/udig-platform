@@ -4,7 +4,7 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package net.refractions.udig.catalog.util;
+package org.locationtech.udig.catalog.util;
 
 /**
  * Use the visitor pattern to traverse the AST

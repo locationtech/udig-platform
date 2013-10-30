@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.support;
+package org.locationtech.udig.tools.edit.support;
 
 import java.util.AbstractSet;
 import java.util.ArrayList;
@@ -20,8 +20,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.support.EditBlackboardEvent.EventType;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.support.EditBlackboardEvent.EventType;
 
 /**
  * A set of points that are on the EditBlackboard. Only the edit black board can edit this set. All

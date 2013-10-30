@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tool.info;
+package org.locationtech.udig.tool.info;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Control;
 /**
  * An InfoPanel is used to display a specific LayerPointInfo.
  * <p>
- * This interface is used by the net.refractions.udig.info.infoPanel
+ * This interface is used by the org.locationtech.udig.info.infoPanel
  * extention point to teach the InfoTool new tricks. The extention point
  * defines what MIME type this InfoPanel can respond to.
  * </p><p>

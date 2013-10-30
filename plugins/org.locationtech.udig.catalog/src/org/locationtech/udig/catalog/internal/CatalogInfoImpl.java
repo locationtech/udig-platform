@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal;
+package org.locationtech.udig.catalog.internal;
 
 import java.net.URL;
 
-import net.refractions.udig.catalog.ICatalogInfo;
+import org.locationtech.udig.catalog.ICatalogInfo;
 
 /**
  * Provides metadata for a catalog

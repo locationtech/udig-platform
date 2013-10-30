@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmsc;
+package org.locationtech.udig.catalog.internal.wmsc;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -19,16 +19,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IResolve.Status;
-import net.refractions.udig.catalog.internal.wms.WmsPlugin;
-import net.refractions.udig.catalog.wmsc.server.Capability;
-import net.refractions.udig.catalog.wmsc.server.TiledWebMapServer;
-import net.refractions.udig.catalog.wmsc.server.VendorSpecificCapabilities;
-import net.refractions.udig.catalog.wmsc.server.WMSCCapabilities;
-import net.refractions.udig.catalog.wmsc.server.WMSTileSet;
-import net.refractions.udig.ui.UDIGDisplaySafeLock;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IResolve.Status;
+import org.locationtech.udig.catalog.internal.wms.WmsPlugin;
+import org.locationtech.udig.catalog.wmsc.server.Capability;
+import org.locationtech.udig.catalog.wmsc.server.TiledWebMapServer;
+import org.locationtech.udig.catalog.wmsc.server.VendorSpecificCapabilities;
+import org.locationtech.udig.catalog.wmsc.server.WMSCCapabilities;
+import org.locationtech.udig.catalog.wmsc.server.WMSTileSet;
+import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.ows.ServiceException;
@@ -42,12 +42,12 @@ import org.geotools.ows.ServiceException;
  */
 public class WMSCServiceImpl extends IService {
 
-    private static final String CAPABILITIES_KEY = "net.refractions.udig.catalog.internal.wms.WMSCServiceImpl.capabilities"; //$NON-NLS-1$
+    private static final String CAPABILITIES_KEY = "org.locationtech.udig.catalog.internal.wms.WMSCServiceImpl.capabilities"; //$NON-NLS-1$
     /**
      * <code>WMS_URL_KEY</code> field Magic param key for Catalog WMSC persistence.
      */
-    public static final String WMSC_URL_KEY = "net.refractions.udig.catalog.internal.wms.WMSCServiceImpl.WMS_URL_KEY"; //$NON-NLS-1$
-    public static final String WMSC_WMS_KEY = "net.refractions.udig.catalog.internal.wms.WMSCServiceImpl.WMS_WMS_KEY"; //$NON-NLS-1$
+    public static final String WMSC_URL_KEY = "org.locationtech.udig.catalog.internal.wms.WMSCServiceImpl.WMS_URL_KEY"; //$NON-NLS-1$
+    public static final String WMSC_WMS_KEY = "org.locationtech.udig.catalog.internal.wms.WMSCServiceImpl.WMS_WMS_KEY"; //$NON-NLS-1$
 
     private Map<String, Serializable> params;
     private URL url;

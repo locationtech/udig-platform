@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.shp;
+package org.locationtech.udig.catalog.internal.shp;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,23 +21,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveDelta;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.IResolve.Status;
-import net.refractions.udig.catalog.internal.CatalogImpl;
-import net.refractions.udig.catalog.internal.ResolveChangeEvent;
-import net.refractions.udig.catalog.internal.ResolveDelta;
-import net.refractions.udig.catalog.shp.internal.Messages;
-import net.refractions.udig.ui.ErrorManager;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.UDIGDisplaySafeLock;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveDelta;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.IResolve.Status;
+import org.locationtech.udig.catalog.internal.CatalogImpl;
+import org.locationtech.udig.catalog.internal.ResolveChangeEvent;
+import org.locationtech.udig.catalog.internal.ResolveDelta;
+import org.locationtech.udig.catalog.shp.internal.Messages;
+import org.locationtech.udig.ui.ErrorManager;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -114,7 +114,7 @@ public class ShpServiceImpl extends IService {
 
     /*
      * Required adaptions: <ul> <li>IServiceInfo.class <li>List.class <IGeoResource> </ul>
-     * @see net.refractions.udig.catalog.IService#resolve(java.lang.Class,
+     * @see org.locationtech.udig.catalog.IService#resolve(java.lang.Class,
      * org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
@@ -133,7 +133,7 @@ public class ShpServiceImpl extends IService {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null)
@@ -155,7 +155,7 @@ public class ShpServiceImpl extends IService {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
      */
     public List<ShpGeoResourceImpl> resources( IProgressMonitor monitor ) throws IOException {
 
@@ -187,7 +187,7 @@ public class ShpServiceImpl extends IService {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IService#getInfo(org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.IService#getInfo(org.eclipse.core.runtime.IProgressMonitor)
      */
     protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
         ShapefileDataStore dataStore = getDS(monitor); // load ds
@@ -203,7 +203,7 @@ public class ShpServiceImpl extends IService {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IService#getConnectionParams()
+     * @see org.locationtech.udig.catalog.IService#getConnectionParams()
      */
     public Map<String, Serializable> getConnectionParams() {
         return params;
@@ -312,7 +312,7 @@ public class ShpServiceImpl extends IService {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getStatus()
+     * @see org.locationtech.udig.catalog.IResolve#getStatus()
      */
     public Status getStatus() {
         if( ds == null ){
@@ -322,14 +322,14 @@ public class ShpServiceImpl extends IService {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getMessage()
+     * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
     public Throwable getMessage() {
         return msg;
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getIdentifier()
+     * @see org.locationtech.udig.catalog.IResolve#getIdentifier()
      */
     public URL getIdentifier() {
         return id.toURL();

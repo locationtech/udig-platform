@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.render.displayAdapter.impl;
+package org.locationtech.udig.project.ui.internal.render.displayAdapter.impl;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -16,16 +16,16 @@ import java.awt.image.RenderedImage;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.render.Tile;
-import net.refractions.udig.project.ui.commands.IDrawCommand;
-import net.refractions.udig.project.ui.commands.IMapTransformCommand;
-import net.refractions.udig.project.ui.commands.IPreMapDrawCommand;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.internal.commands.draw.DrawEditFeatureCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.render.glass.GlassPane;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.render.Tile;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.project.ui.commands.IMapTransformCommand;
+import org.locationtech.udig.project.ui.commands.IPreMapDrawCommand;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.internal.commands.draw.DrawEditFeatureCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.render.glass.GlassPane;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swt.graphics.GC;

@@ -10,17 +10,17 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.element.impl;
+package org.locationtech.udig.project.element.impl;
 
 import java.util.List;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.element.ElementPackage;
-import net.refractions.udig.project.element.IGenericProjectElement;
-import net.refractions.udig.project.element.ProjectElementAdapter;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.element.ElementPackage;
+import org.locationtech.udig.project.element.IGenericProjectElement;
+import org.locationtech.udig.project.element.ProjectElementAdapter;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.common.notify.Notification;
@@ -37,9 +37,9 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link net.refractions.udig.project.element.impl.ProjectElementAdapterImpl#getName <em>Name</em>}</li>
- *   <li>{@link net.refractions.udig.project.element.impl.ProjectElementAdapterImpl#getProjectInternal <em>Project Internal</em>}</li>
- *   <li>{@link net.refractions.udig.project.element.impl.ProjectElementAdapterImpl#getBackingObject <em>Backing Object</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl#getProjectInternal <em>Project Internal</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.element.impl.ProjectElementAdapterImpl#getBackingObject <em>Backing Object</em>}</li>
  * </ul>
  * </p>
  *

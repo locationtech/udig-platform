@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -10,7 +10,7 @@ import static org.junit.Assert.fail;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 import org.easymock.EasyMock;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -131,7 +131,7 @@ public class ScaleUtilsTest {
 
 	/**
 	 * Test method for
-	 * {@link net.refractions.udig.project.internal.render.impl.ScaleUtils#calculateBoundsFromScale(double, java.awt.Dimension, double, org.geotools.geometry.jts.ReferencedEnvelope)}.
+	 * {@link org.locationtech.udig.project.internal.render.impl.ScaleUtils#calculateBoundsFromScale(double, java.awt.Dimension, double, org.geotools.geometry.jts.ReferencedEnvelope)}.
 	 */
 	@Ignore
 	@Test
@@ -142,7 +142,7 @@ public class ScaleUtilsTest {
 
 	/**
 	 * Test method for
-	 * {@link net.refractions.udig.project.internal.render.impl.ScaleUtils#toValidPixelBoundsClosestToCenter(java.awt.Dimension, org.geotools.geometry.jts.ReferencedEnvelope)}.
+	 * {@link org.locationtech.udig.project.internal.render.impl.ScaleUtils#toValidPixelBoundsClosestToCenter(java.awt.Dimension, org.geotools.geometry.jts.ReferencedEnvelope)}.
 	 */
 	@Ignore
 	@Test
@@ -160,7 +160,7 @@ public class ScaleUtilsTest {
 
 	/**
 	 * Test method for
-	 * {@link net.refractions.udig.project.internal.render.impl.ScaleUtils#toValidPixelBoundsClosestToCenter(java.awt.Dimension, org.geotools.geometry.jts.ReferencedEnvelope)}.
+	 * {@link org.locationtech.udig.project.internal.render.impl.ScaleUtils#toValidPixelBoundsClosestToCenter(java.awt.Dimension, org.geotools.geometry.jts.ReferencedEnvelope)}.
 	 */
 	@Ignore
 	@Test
@@ -192,7 +192,7 @@ public class ScaleUtilsTest {
 	
 	/**
 	 * Test method for
-	 * {@link net.refractions.udig.project.internal.render.impl.ScaleUtils#nearestPixel(java.awt.geom.Rectangle2D, int, int)}.
+	 * {@link org.locationtech.udig.project.internal.render.impl.ScaleUtils#nearestPixel(java.awt.geom.Rectangle2D, int, int)}.
 	 */
 	@Ignore
 	@Test
@@ -212,7 +212,7 @@ public class ScaleUtilsTest {
 
 	/**
 	 * Test method for
-	 * {@link net.refractions.udig.project.internal.render.impl.ScaleUtils#pixelBounds(int, int, org.geotools.geometry.jts.ReferencedEnvelope, java.awt.Dimension)}.
+	 * {@link org.locationtech.udig.project.internal.render.impl.ScaleUtils#pixelBounds(int, int, org.geotools.geometry.jts.ReferencedEnvelope, java.awt.Dimension)}.
 	 */
 	@Ignore
 	@Test
@@ -229,7 +229,7 @@ public class ScaleUtilsTest {
 
 	/**
 	 * Test method for
-	 * {@link net.refractions.udig.project.internal.render.impl.ScaleUtils#calculateScaleDenominator(org.geotools.geometry.jts.ReferencedEnvelope, Dimension, int)}.
+	 * {@link org.locationtech.udig.project.internal.render.impl.ScaleUtils#calculateScaleDenominator(org.geotools.geometry.jts.ReferencedEnvelope, Dimension, int)}.
 	 */
 	@Ignore
 	@Test

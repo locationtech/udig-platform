@@ -9,9 +9,9 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  * 
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
-import net.refractions.udig.project.ILayerLegendItem;
+import org.locationtech.udig.project.ILayerLegendItem;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,12 +21,12 @@ import net.refractions.udig.project.ILayerLegendItem;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link net.refractions.udig.project.internal.LayerLegendItem#getLayer <em>Layer</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.internal.LayerLegendItem#getLayer <em>Layer</em>}</li>
  * </ul>
  * </p>
  *
- * @see net.refractions.udig.project.internal.ProjectPackage#getLayerLegendItem()
- * @model superTypes="net.refractions.udig.project.internal.LegendItem net.refractions.udig.project.internal.ILayerLegendItem"
+ * @see org.locationtech.udig.project.internal.ProjectPackage#getLayerLegendItem()
+ * @model superTypes="org.locationtech.udig.project.internal.LegendItem org.locationtech.udig.project.internal.ILayerLegendItem"
  * @generated
  */
 public interface LayerLegendItem extends LegendItem, ILayerLegendItem {
@@ -40,14 +40,14 @@ public interface LayerLegendItem extends LegendItem, ILayerLegendItem {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Layer</em>' reference.
      * @see #setLayer(Layer)
-     * @see net.refractions.udig.project.internal.ProjectPackage#getLayerLegendItem_Layer()
+     * @see org.locationtech.udig.project.internal.ProjectPackage#getLayerLegendItem_Layer()
      * @model required="true"
      * @generated
      */
     Layer getLayer();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.LayerLegendItem#getLayer <em>Layer</em>}' reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.LayerLegendItem#getLayer <em>Layer</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Layer</em>' reference.

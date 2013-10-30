@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.wmsc.server;
+package org.locationtech.udig.catalog.wmsc.server;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.internal.PreferenceConstants;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.internal.PreferenceConstants;
 
 /**
  * This is a work queue for re-using a group of threads to do Tile work. An example use is the work

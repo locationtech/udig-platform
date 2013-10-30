@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project">
+<schema targetNamespace="org.locationtech.udig.project">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project" id="element" name="element"/>
+         <meta.schema plugin="org.locationtech.udig.project" id="element" name="element"/>
       </appInfo>
       <documentation>
-         This extension point is allows a simple way to add objects to a project.  In order to add a new type of object to a project you must either learn EMF and generate a new type of ProjectElement subclass or extend this extension point.  This extension point allows the extension mechanism to create a type of net.refractions.udig.project.element.IGenericProjectElement which, when wrapped by a ProjectElementAdapterImpl (created using ElementFactory or ApplicationGIS if you have the net.refractions.udig.ui.project plugin installed), can be added to a project and persisted between uDig runs.
+         This extension point is allows a simple way to add objects to a project.  In order to add a new type of object to a project you must either learn EMF and generate a new type of ProjectElement subclass or extend this extension point.  This extension point allows the extension mechanism to create a type of org.locationtech.udig.project.element.IGenericProjectElement which, when wrapped by a ProjectElementAdapterImpl (created using ElementFactory or ApplicationGIS if you have the org.locationtech.udig.ui.project plugin installed), can be added to a project and persisted between uDig runs.
       </documentation>
    </annotation>
 
@@ -48,7 +48,7 @@
             <meta.element labelAttribute="label" icon="icon"/>
          </appInfo>
          <documentation>
-            An element that can be wrapped by the net.refractions.udig.project.element.ProjectElementAdapter class and added to a project
+            An element that can be wrapped by the org.locationtech.udig.project.element.ProjectElementAdapter class and added to a project
          </documentation>
       </annotation>
       <complexType>
@@ -62,10 +62,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The implementation of the element type.  It is recommended that one extends the net.refractions.udig.project.element.AbstractGenericProjectElement class as it provides most of the boiler plate code required.  It also adapts to the ProjectElement interface.
+                  The implementation of the element type.  It is recommended that one extends the org.locationtech.udig.project.element.AbstractGenericProjectElement class as it provides most of the boiler plate code required.  It also adapts to the ProjectElement interface.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":net.refractions.udig.project.element.IGenericProjectElement"/>
+                  <meta.attribute kind="java" basedOn=":org.locationtech.udig.project.element.IGenericProjectElement"/>
                </appInfo>
             </annotation>
          </attribute>

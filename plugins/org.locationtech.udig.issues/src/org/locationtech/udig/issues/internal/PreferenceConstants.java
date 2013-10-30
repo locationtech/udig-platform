@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.internal;
+package org.locationtech.udig.issues.internal;
 
-import net.refractions.udig.issues.IIssuesContentProvider;
-import net.refractions.udig.issues.IIssuesExpansionProvider;
-import net.refractions.udig.issues.IIssuesLabelProvider;
-import net.refractions.udig.issues.IIssuesManager;
-import net.refractions.udig.issues.IIssuesViewSorter;
-import net.refractions.udig.issues.IssueConfiguration;
+import org.locationtech.udig.issues.IIssuesContentProvider;
+import org.locationtech.udig.issues.IIssuesExpansionProvider;
+import org.locationtech.udig.issues.IIssuesLabelProvider;
+import org.locationtech.udig.issues.IIssuesManager;
+import org.locationtech.udig.issues.IIssuesViewSorter;
+import org.locationtech.udig.issues.IssueConfiguration;
 
 /**
  * Lists the constants used for keys and values in the preferences.
@@ -27,7 +27,7 @@ public interface PreferenceConstants {
     // keys
     /**
      * Key for which issues list is used
-     * @see IIssuesManager#setIssuesList(net.refractions.udig.issues.IIssuesList)
+     * @see IIssuesManager#setIssuesList(org.locationtech.udig.issues.IIssuesList)
      * @see IIssuesManager#getIssuesList()
      */
     static final String KEY_ACTIVE_LIST = "enabledIssuesList"; //$NON-NLS-1$
@@ -60,5 +60,5 @@ public interface PreferenceConstants {
     /**
      * default value for {@link #KEY_ACTIVE_LIST}
      */
-    static final String VALUE_MEMORY_LIST = "net.refractions.udig.issues.memory"; //$NON-NLS-1$
+    static final String VALUE_MEMORY_LIST = "org.locationtech.udig.issues.memory"; //$NON-NLS-1$
 }

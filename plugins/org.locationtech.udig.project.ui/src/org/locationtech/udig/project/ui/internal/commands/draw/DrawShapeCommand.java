@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.commands.draw;
+package org.locationtech.udig.project.ui.internal.commands.draw;
 
 import java.awt.Color;
 import java.awt.Paint;
@@ -19,11 +19,11 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
-import net.refractions.udig.ui.graphics.SWTGraphics;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
+import org.locationtech.udig.ui.graphics.SWTGraphics;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.graphics.Path;

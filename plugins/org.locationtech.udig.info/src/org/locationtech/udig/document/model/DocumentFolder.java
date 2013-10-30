@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.document.model;
+package org.locationtech.udig.document.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.document.IAbstractDocumentSource;
-import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocumentFolder;
+import org.locationtech.udig.catalog.document.IAbstractDocumentSource;
+import org.locationtech.udig.catalog.document.IDocument;
+import org.locationtech.udig.catalog.document.IDocumentFolder;
 
 /**
  * This is the document folder implementation.

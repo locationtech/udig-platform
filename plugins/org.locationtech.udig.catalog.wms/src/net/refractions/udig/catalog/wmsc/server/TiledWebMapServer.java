@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.wmsc.server;
+package org.locationtech.udig.catalog.wmsc.server;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -22,7 +22,7 @@ import java.util.Set;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-import net.refractions.udig.catalog.internal.wms.WmsPlugin;
+import org.locationtech.udig.catalog.internal.wms.WmsPlugin;
 
 import org.geotools.data.ResourceInfo;
 import org.geotools.data.ServiceInfo;

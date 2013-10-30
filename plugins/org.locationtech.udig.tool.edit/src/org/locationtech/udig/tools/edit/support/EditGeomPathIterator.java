@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.support;
+package org.locationtech.udig.tools.edit.support;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.tools.edit.support.EditBlackboardEvent.EventType;
+import org.locationtech.udig.tools.edit.support.EditBlackboardEvent.EventType;
 
 
 /**
- * Wraps a {@link net.refractions.udig.tools.edit.support.EditGeom} so that it can be drawn to a
+ * Wraps a {@link org.locationtech.udig.tools.edit.support.EditGeom} so that it can be drawn to a
  * Graphics2d object.
  * 
  * @author jones

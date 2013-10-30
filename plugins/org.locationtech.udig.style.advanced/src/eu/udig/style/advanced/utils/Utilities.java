@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.utils;
+package org.locationtech.udig.style.advanced.utils;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -24,8 +24,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.style.sld.SLD;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.style.sld.SLD;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.swt.graphics.Image;
@@ -67,9 +67,9 @@ import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
-import eu.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.StyleWrapper;
 
 /**
  * Style related utilities.

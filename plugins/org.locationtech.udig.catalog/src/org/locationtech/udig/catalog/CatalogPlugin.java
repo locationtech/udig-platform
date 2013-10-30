@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,16 +28,16 @@ import java.util.ResourceBundle;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.refractions.udig.catalog.internal.CatalogImpl;
-import net.refractions.udig.catalog.internal.Messages;
-import net.refractions.udig.catalog.internal.ResolveManager;
-import net.refractions.udig.catalog.internal.ResolveManager2;
-import net.refractions.udig.catalog.internal.ServiceFactoryImpl;
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.ui.PreShutdownTask;
-import net.refractions.udig.ui.ProgressManager;
-import net.refractions.udig.ui.ShutdownTaskList;
+import org.locationtech.udig.catalog.internal.CatalogImpl;
+import org.locationtech.udig.catalog.internal.Messages;
+import org.locationtech.udig.catalog.internal.ResolveManager;
+import org.locationtech.udig.catalog.internal.ResolveManager2;
+import org.locationtech.udig.catalog.internal.ServiceFactoryImpl;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.ui.PreShutdownTask;
+import org.locationtech.udig.ui.ProgressManager;
+import org.locationtech.udig.ui.ShutdownTaskList;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -62,9 +62,9 @@ import org.osgi.service.prefs.BackingStoreException;
  */
 public class CatalogPlugin extends Plugin {
 
-    private static final String EXTENSION_POINT_ICATALOG = "net.refractions.udig.catalog.ICatalog";
+    private static final String EXTENSION_POINT_ICATALOG = "org.locationtech.udig.catalog.ICatalog";
 
-    public static final String ID = "net.refractions.udig.catalog"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.catalog"; //$NON-NLS-1$
 
     // The shared instance.
     private static CatalogPlugin plugin;
@@ -324,7 +324,7 @@ public class CatalogPlugin extends Plugin {
         try {
             if (resourceBundle == null)
                 resourceBundle = ResourceBundle
-                        .getBundle("net.refractions.udig.catalog.CatalogPluginResources"); //$NON-NLS-1$
+                        .getBundle("org.locationtech.udig.catalog.CatalogPluginResources"); //$NON-NLS-1$
         } catch (MissingResourceException x) {
             resourceBundle = null;
         }
@@ -487,7 +487,7 @@ public class CatalogPlugin extends Plugin {
      * @deprecated Please use ID.cast( data ).toURL();
      */
     public static URL locateURL( Object data ) {
-        ID id = net.refractions.udig.catalog.ID.cast(data);
+        ID id = org.locationtech.udig.catalog.ID.cast(data);
         if (id == null) {
             return null;
         }
@@ -516,7 +516,7 @@ public class CatalogPlugin extends Plugin {
      * It is much prefered to do this:
      * 
      * <pre><code>
-     * private static final String RENDERING = &quot;net.refractions.udig.project/render/trace&quot;;
+     * private static final String RENDERING = &quot;org.locationtech.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }

@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.document.model;
+package org.locationtech.udig.document.model;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 
-import net.refractions.udig.catalog.document.IAttachment;
-import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
+import org.locationtech.udig.catalog.document.IAttachment;
+import org.locationtech.udig.catalog.document.IDocumentSource.DocumentInfo;
 
 /**
  * Document model for attachment file documents.

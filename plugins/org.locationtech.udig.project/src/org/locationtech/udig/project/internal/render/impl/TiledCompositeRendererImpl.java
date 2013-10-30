@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -26,21 +26,21 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.MultiLayerRenderer;
-import net.refractions.udig.project.internal.render.RenderExecutor;
-import net.refractions.udig.project.internal.render.RenderFactory;
-import net.refractions.udig.project.internal.render.RenderListenerAdapter;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.ILabelPainter;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.RenderException;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.MultiLayerRenderer;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.RenderFactory;
+import org.locationtech.udig.project.internal.render.RenderListenerAdapter;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.ILabelPainter;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.RenderException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.Notification;
@@ -134,7 +134,7 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
         executor.eAdapters().add(new RenderListenerAdapter(){
 
             /**
-             * @see net.refractions.udig.project.internal.render.RenderListenerAdapter#renderDisposed(org.eclipse.emf.common.notify.Notification)
+             * @see org.locationtech.udig.project.internal.render.RenderListenerAdapter#renderDisposed(org.eclipse.emf.common.notify.Notification)
              */
             protected void renderDisposed( Notification msg ) {
                 EObject obj = (EObject) getTarget();
@@ -142,7 +142,7 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
             }
 
             /**
-             * @see net.refractions.udig.project.internal.render.RenderListenerAdapter#renderDone()
+             * @see org.locationtech.udig.project.internal.render.RenderListenerAdapter#renderDone()
              */
             protected void renderDone() {
                setState(DONE);
@@ -159,7 +159,7 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
             }
 
             /**
-             * @see net.refractions.udig.project.internal.render.RenderListenerAdapter#renderUpdate()
+             * @see org.locationtech.udig.project.internal.render.RenderListenerAdapter#renderUpdate()
              */
             protected void renderUpdate() {
                 synchronized (TiledCompositeRendererImpl.this) {
@@ -201,7 +201,7 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
 
 
     /**
-     * @see net.refractions.udig.project.render.IMultiLayerRenderer#getIContext()
+     * @see org.locationtech.udig.project.render.IMultiLayerRenderer#getIContext()
      */
     public IRenderContext getIContext() {
         throw new UnsupportedOperationException("Cannot get the context for a tile composite thing."); //$NON-NLS-1$
@@ -368,7 +368,7 @@ public class TiledCompositeRendererImpl extends CompositeRendererImpl implements
      * 
      * Kicks all the children renderers to render.
      * @throws RenderException
-     * @see net.refractions.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope)
      */
     public void render( IProgressMonitor monitor ) throws RenderException {
         if (this.childrenRenderers.size() == 0)

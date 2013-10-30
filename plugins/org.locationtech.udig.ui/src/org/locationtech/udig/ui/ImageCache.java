@@ -6,7 +6,7 @@
  * 
  * Contributors: IBM Corporation - initial API and implementation
  ******************************************************************************/
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;

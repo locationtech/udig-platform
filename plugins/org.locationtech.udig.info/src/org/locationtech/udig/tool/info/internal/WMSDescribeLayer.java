@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.info.internal;
+package org.locationtech.udig.tool.info.internal;
 
 import java.awt.Point;
 import java.io.BufferedReader;
@@ -24,14 +24,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.render.ICompositeRenderContext;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.render.internal.wms.basic.BasicWMSRenderer2;
-import net.refractions.udig.style.wms.WMSStyleContent;
-import net.refractions.udig.tool.info.InfoPlugin;
-import net.refractions.udig.tool.info.LayerPointInfo;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.render.ICompositeRenderContext;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.render.internal.wms.basic.BasicWMSRenderer2;
+import org.locationtech.udig.style.wms.WMSStyleContent;
+import org.locationtech.udig.tool.info.InfoPlugin;
+import org.locationtech.udig.tool.info.LayerPointInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.ows.Layer;

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.google;
+package org.locationtech.udig.catalog.google;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -28,7 +28,7 @@ public class GooglePlugin extends AbstractUIPlugin {
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
 	
-    public final static String ID = "net.refractions.udig.catalog.google"; //$NON-NLS-1$
+    public final static String ID = "org.locationtech.udig.catalog.google"; //$NON-NLS-1$
 
 	/**
 	 * The constructor.
@@ -80,7 +80,7 @@ public class GooglePlugin extends AbstractUIPlugin {
 	public ResourceBundle getResourceBundle() {
 		try {
 			if (resourceBundle == null)
-				resourceBundle = ResourceBundle.getBundle("net.refractions.udig.catalog.google.GooglePluginResources"); //$NON-NLS-1$
+				resourceBundle = ResourceBundle.getBundle("org.locationtech.udig.catalog.google.GooglePluginResources"); //$NON-NLS-1$
 		} catch (MissingResourceException x) {
 			resourceBundle = null;
 		}
@@ -105,7 +105,7 @@ public class GooglePlugin extends AbstractUIPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:<pre><code>
-     * private static final String RENDERING = "net.refractions.udig.project/render/trace";
+     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
      * }

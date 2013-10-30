@@ -8,8 +8,8 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.postgis.ui;
-import static net.refractions.udig.catalog.PostgisServiceExtension2.DIALECT;
+package org.locationtech.udig.catalog.internal.postgis.ui;
+import static org.locationtech.udig.catalog.PostgisServiceExtension2.DIALECT;
 import static org.geotools.data.postgis.PostgisNGDataStoreFactory.PORT;
 import static org.geotools.jdbc.JDBCDataStoreFactory.DATABASE;
 import static org.geotools.jdbc.JDBCDataStoreFactory.DBTYPE;
@@ -25,16 +25,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.PostgisGeoResource2;
-import net.refractions.udig.catalog.PostgisSchemaFolder;
-import net.refractions.udig.catalog.PostgisService2;
-import net.refractions.udig.catalog.PostgisServiceExtension2;
-import net.refractions.udig.catalog.internal.postgis.PostgisPlugin;
-import net.refractions.udig.catalog.ui.UDIGConnectionFactory;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.PostgisGeoResource2;
+import org.locationtech.udig.catalog.PostgisSchemaFolder;
+import org.locationtech.udig.catalog.PostgisService2;
+import org.locationtech.udig.catalog.PostgisServiceExtension2;
+import org.locationtech.udig.catalog.internal.postgis.PostgisPlugin;
+import org.locationtech.udig.catalog.ui.UDIGConnectionFactory;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 

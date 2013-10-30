@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.catalog.teradata;
+package org.locationtech.udig.catalog.teradata;
 
 import java.io.Serializable;
 import java.net.URL;
@@ -18,8 +18,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 
-import net.refractions.udig.catalog.service.database.Tab;
-import net.refractions.udig.core.Either;
+import org.locationtech.udig.catalog.service.database.Tab;
+import org.locationtech.udig.core.Either;
 
 public class ExtraParams implements Tab {
 

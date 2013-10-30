@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.handler;
+package org.locationtech.udig.tools.edit.handler;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.project.ui.AnimationUpdater;
-import net.refractions.udig.tool.edit.internal.Messages;
-import net.refractions.udig.tools.edit.activator.GridActivator;
-import net.refractions.udig.tools.edit.animation.MessageBubble;
-import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
-import net.refractions.udig.tools.edit.support.SnapBehaviour;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.ui.AnimationUpdater;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.tools.edit.activator.GridActivator;
+import org.locationtech.udig.tools.edit.animation.MessageBubble;
+import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
+import org.locationtech.udig.tools.edit.support.SnapBehaviour;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;

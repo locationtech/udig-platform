@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.ui.wizard.controls;
+package org.locationtech.udig.catalog.internal.wmt.ui.wizard.controls;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.wmt.WMTService;
-import net.refractions.udig.catalog.internal.wmt.WMTServiceExtension;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.wmt.WMTService;
+import org.locationtech.udig.catalog.internal.wmt.WMTServiceExtension;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jface.resource.JFaceResources;

@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,9 +11,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.project.internal.impl.ProjectRegistryImpl;
-import net.refractions.udig.ui.PostShutdownTask;
-import net.refractions.udig.ui.ShutdownTaskList;
+import org.locationtech.udig.project.internal.impl.ProjectRegistryImpl;
+import org.locationtech.udig.ui.PostShutdownTask;
+import org.locationtech.udig.ui.ShutdownTaskList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -38,7 +38,7 @@ import org.osgi.framework.BundleContext;
  */
 public final class ProjectPlugin extends EMFPlugin {
     /** Plugin ID */
-    public final static String ID = "net.refractions.udig.project"; //$NON-NLS-1$
+    public final static String ID = "org.locationtech.udig.project"; //$NON-NLS-1$
 
     /**
      * Keep track of the singleton.
@@ -114,7 +114,7 @@ public final class ProjectPlugin extends EMFPlugin {
     }
 
     /**
-     * TODO Purpose of net.refractions.udig.project.internal <p> </p>
+     * TODO Purpose of org.locationtech.udig.project.internal <p> </p>
      * @author   Jesse
      * @since   1.0.0
      * @generated
@@ -189,7 +189,7 @@ public final class ProjectPlugin extends EMFPlugin {
                 }
 
             });
-            undoableCommandWarning = "true".equals(getString("net.refractions.udig.project.undoableCommandWarning")); //$NON-NLS-1$//$NON-NLS-2$
+            undoableCommandWarning = "true".equals(getString("org.locationtech.udig.project.undoableCommandWarning")); //$NON-NLS-1$//$NON-NLS-2$
         }
 
         protected static final String ENCODING = "UTF-8"; //$NON-NLS-1$
@@ -215,7 +215,7 @@ public final class ProjectPlugin extends EMFPlugin {
         }
 
         /**
-         * @see net.refractions.udig.project.internal.ProjectFactory#getProjectRegistry()
+         * @see org.locationtech.udig.project.internal.ProjectFactory#getProjectRegistry()
          * @uml.property   name="projectRegistry"
          */
         public ProjectRegistry getProjectRegistry() {
@@ -284,7 +284,7 @@ public final class ProjectPlugin extends EMFPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:<pre><code>
-     * private static final String RENDERING = "net.refractions.udig.project/render/trace";
+     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
      * 

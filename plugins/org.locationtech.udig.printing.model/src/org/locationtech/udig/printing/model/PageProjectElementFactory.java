@@ -9,10 +9,10 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.model;
+package org.locationtech.udig.printing.model;
 
-import net.refractions.udig.project.IProjectElementFactory;
-import net.refractions.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.IProjectElementFactory;
+import org.locationtech.udig.project.internal.ProjectElement;
 
 /**
  * Provides a way to arbitrarily create a Page

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,39 +25,39 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.ContextModelListenerAdapter;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.ExecutorVisitor;
-import net.refractions.udig.project.internal.render.RenderExecutor;
-import net.refractions.udig.project.internal.render.RenderFactory;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.RendererCreator;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.internal.render.impl.CompositeRenderContextImpl;
-import net.refractions.udig.project.internal.render.impl.CompositeRendererImpl;
-import net.refractions.udig.project.internal.render.impl.RenderContextImpl;
-import net.refractions.udig.project.internal.render.impl.RenderExecutorComposite;
-import net.refractions.udig.project.internal.render.impl.RenderExecutorMultiLayer;
-import net.refractions.udig.project.internal.render.impl.RenderManagerImpl;
-import net.refractions.udig.project.internal.render.impl.TiledCompositeRendererImpl;
-import net.refractions.udig.project.internal.render.impl.TiledRendererCreatorImpl;
-import net.refractions.udig.project.internal.render.impl.UDIGLabelCache;
-import net.refractions.udig.project.internal.render.impl.TiledCompositeRendererImpl.RenderInfo;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.ILabelPainter;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.render.Tile;
-import net.refractions.udig.project.render.TileStateChangedListener;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneTiledSWT;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.ContextModelListenerAdapter;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.ExecutorVisitor;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.RenderFactory;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.RendererCreator;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.internal.render.impl.CompositeRenderContextImpl;
+import org.locationtech.udig.project.internal.render.impl.CompositeRendererImpl;
+import org.locationtech.udig.project.internal.render.impl.RenderContextImpl;
+import org.locationtech.udig.project.internal.render.impl.RenderExecutorComposite;
+import org.locationtech.udig.project.internal.render.impl.RenderExecutorMultiLayer;
+import org.locationtech.udig.project.internal.render.impl.RenderManagerImpl;
+import org.locationtech.udig.project.internal.render.impl.TiledCompositeRendererImpl;
+import org.locationtech.udig.project.internal.render.impl.TiledRendererCreatorImpl;
+import org.locationtech.udig.project.internal.render.impl.UDIGLabelCache;
+import org.locationtech.udig.project.internal.render.impl.TiledCompositeRendererImpl.RenderInfo;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.ILabelPainter;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.render.Tile;
+import org.locationtech.udig.project.render.TileStateChangedListener;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.render.displayAdapter.impl.ViewportPaneTiledSWT;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -285,7 +285,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
      * If refreshing this layer causes other layers to need refreshing then the other layers will be refreshed
      * too.  An example is that if a wms layer has been moved a refresh may result in multiple wms contexts in the rendering
      * stack; each which need to be refreshed.
-     * @see net.refractions.udig.project.render.impl.RenderManagerImpl#refresh(net.refractions.udig.project.Layer)
+     * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#refresh(org.locationtech.udig.project.Layer)
      */
     public void refresh(final ILayer layer, Envelope bounds) {
         checkState();
@@ -383,7 +383,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
     /**
      * 
      * Called when a selection layer is refreshed.
-     * @see net.refractions.udig.project.render.impl.RenderManagerImpl#refreshSelection(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#refreshSelection(com.vividsolutions.jts.geom.Envelope)
      */
     public void refreshSelection(final ILayer layer, final Envelope bounds) {
         
@@ -469,7 +469,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
    
     /**
      * Clears the selection layer
-     * @see net.refractions.udig.project.render.IRenderManager#clearSelection(ILayer)
+     * @see org.locationtech.udig.project.render.IRenderManager#clearSelection(ILayer)
      */
     public void clearSelection(ILayer layer) {
         checkState();
@@ -889,7 +889,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
      * Sets the map display to the new value and updates
      * the render manager associated with the map display.
      * 
-     * @see net.refractions.udig.project.render.RenderManager#setDisplay(net.refractions.udig.project.render.displayAdapter.IMapDisplay)
+     * @see org.locationtech.udig.project.render.RenderManager#setDisplay(org.locationtech.udig.project.render.displayAdapter.IMapDisplay)
      * @param value
      */
     public void setDisplay(IMapDisplay value) {
@@ -900,7 +900,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
 
 
     /**
-     * @see net.refractions.udig.project.render.impl.RenderManagerImpl#basicSetMap(net.refractions.udig.project.Map,
+     * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#basicSetMap(org.locationtech.udig.project.Map,
      *      org.eclipse.emf.common.notify.NotificationChain)
      */
     @Override
@@ -1159,7 +1159,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
     }
     
     /**
-     * @see net.refractions.udig.project.render.impl.RenderManagerImpl#setRenderExecutor(net.refractions.udig.project.render.RenderExecutor)
+     * @see org.locationtech.udig.project.render.impl.RenderManagerImpl#setRenderExecutor(org.locationtech.udig.project.render.RenderExecutor)
      */
     public void setRenderExecutor(RenderExecutor newRenderExecutor) {
         throw new UnsupportedOperationException("This operation is not supported for a Tiled Render Manager Dynamic."); //$NON-NLS-1$

@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.examples;
+package org.locationtech.udig.tutorials.examples;
 
 import java.io.IOException;
 import java.util.Iterator;
 
-import net.refractions.udig.project.IMap;
+import org.locationtech.udig.project.IMap;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
@@ -50,7 +50,7 @@ public class ConvertFeatureToNewSchema {
 		// we add a custom feature collection so that we can convert the feature fromt the source feature type to the destination one
 		// A slightly faster implementation is to not create a new Feature each time in the iterator but wrap the 
 		// source feature in a decorator that adapts the feature to the new Feature type.
-		// It is a more complicated example and you can see it in action in net.refractions.udig.catalog.ui.export.FeatureWrapper
+		// It is a more complicated example and you can see it in action in org.locationtech.udig.catalog.ui.export.FeatureWrapper
 		dest.addFeatures(new AdaptorFeatureCollection("converting",dest.getSchema()){
 			
 			@Override

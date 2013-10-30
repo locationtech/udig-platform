@@ -8,7 +8,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 
-package net.refractions.udig.catalog.wmsc.server;
+package org.locationtech.udig.catalog.wmsc.server;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

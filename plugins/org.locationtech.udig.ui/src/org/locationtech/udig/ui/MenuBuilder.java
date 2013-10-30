@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IMenuManager;
@@ -21,15 +21,15 @@ import org.eclipse.ui.IWorkbenchWindow;
  * 
  * The implementation of this interface that is called by the framework 
  * is specified by the extension in the preferences under the key 
- * 'net.refractions.udig.ui/menuBuilder'. You can place this in your 
+ * 'org.locationtech.udig.ui/menuBuilder'. You can place this in your 
  * product's plugin_customization.ini.
  * 
  * Example entry in plugin_customization.ini:
  * <pre>
- * net.refractions.udig.ui/menuBuilder=net.refractions.udig.ui.UDIGMenuBuilder
+ * org.locationtech.udig.ui/menuBuilder=org.locationtech.udig.ui.UDIGMenuBuilder
  * </pre>
  * 
- * See net.refractions.udig.ui.UDIGMenuBuilder for an example implementation.
+ * See org.locationtech.udig.ui.UDIGMenuBuilder for an example implementation.
  * 
  * @deprecated Please use org.eclipse.ui.menus extension point
  * @author Richard Gould, Refractions Research Inc.
@@ -37,7 +37,7 @@ import org.eclipse.ui.IWorkbenchWindow;
  */
 public interface MenuBuilder {
 
-    public final String XPID = "net.refractions.udig.ui.menuBuilders"; //$NON-NLS-1$
+    public final String XPID = "org.locationtech.udig.ui.menuBuilders"; //$NON-NLS-1$
     /**
      * Points to id field of extension point attribute
      */

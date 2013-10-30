@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.catalog.teradata;
+package org.locationtech.udig.catalog.teradata;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IResolve.Status;
-import net.refractions.udig.ui.graphics.Glyph;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IResolve.Status;
+import org.locationtech.udig.ui.graphics.Glyph;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -33,7 +33,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
 
-import eu.udig.catalog.teradata.internal.Messages;
+import org.locationtech.udig.catalog.teradata.internal.Messages;
 
 class TeradataResourceInfo extends IGeoResourceInfo {
 
@@ -103,7 +103,7 @@ class TeradataResourceInfo extends IGeoResourceInfo {
 						.getLog()
 						.log(new org.eclipse.core.runtime.Status(
 								IStatus.WARNING,
-								"net.refractions.udig.catalog", 0, Messages.TeradataGeoResource_error_layer_bounds, e)); //$NON-NLS-1$
+								"org.locationtech.udig.catalog", 0, Messages.TeradataGeoResource_error_layer_bounds, e)); //$NON-NLS-1$
 				bounds = new ReferencedEnvelope(new Envelope(), null);
 			}
 

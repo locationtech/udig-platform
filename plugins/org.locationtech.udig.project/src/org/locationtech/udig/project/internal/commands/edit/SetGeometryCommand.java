@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.commands.edit;
+package org.locationtech.udig.project.internal.commands.edit;
 
-import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.UndoableCommand;
+import org.locationtech.udig.core.IBlockingProvider;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.UndoableCommand;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.referencing.CRS;
@@ -71,7 +71,7 @@ public class SetGeometryCommand extends SetAttributeCommand implements UndoableC
     /**
      * Prepairs the geometry (srsName and default geometry name) prior setAttributeCommand.
      * 
-     * @see net.refractions.udig.project.internal.command.MapCommand#run()
+     * @see org.locationtech.udig.project.internal.command.MapCommand#run()
      */
     public void run( IProgressMonitor monitor ) throws Exception {
         SimpleFeatureType schema = editLayer.get(monitor).getSchema();

@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.internal.ui;
+package org.locationtech.udig.internal.ui;
 
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
@@ -21,7 +21,7 @@ import org.eclipse.ui.IPerspectiveFactory;
 public class StylePerspective implements IPerspectiveFactory {
 
 	/** <code>ID_PERSPECTIVE</code> field */
-	public static final String ID_PERSPECTIVE = "net.refractions.udig.ui.stylePerspective"; //$NON-NLS-1$
+	public static final String ID_PERSPECTIVE = "org.locationtech.udig.ui.stylePerspective"; //$NON-NLS-1$
 
     /**
      * Creates the initial layout for a page.
@@ -38,7 +38,7 @@ public class StylePerspective implements IPerspectiveFactory {
     public void createInitialLayout(IPageLayout layout) {
         // Get the editor area.
         String editorArea = layout.getEditorArea();
-        layout.addView("net.refractions.udig.style.styleView", IPageLayout.BOTTOM, 0.7f, editorArea); //$NON-NLS-1$
-        layout.addView( "net.refractions.udig.project.ui.layerManager", IPageLayout.RIGHT, 0.82f, editorArea ); //$NON-NLS-1$
+        layout.addView("org.locationtech.udig.style.styleView", IPageLayout.BOTTOM, 0.7f, editorArea); //$NON-NLS-1$
+        layout.addView( "org.locationtech.udig.project.ui.layerManager", IPageLayout.RIGHT, 0.82f, editorArea ); //$NON-NLS-1$
     }
 }

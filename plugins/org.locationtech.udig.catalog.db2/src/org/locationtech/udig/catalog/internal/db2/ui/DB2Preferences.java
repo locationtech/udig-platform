@@ -1,13 +1,13 @@
 /**
  * 
  */
-package net.refractions.udig.catalog.internal.db2.ui;
+package org.locationtech.udig.catalog.internal.db2.ui;
 
 import java.net.URL;
 
-import net.refractions.udig.catalog.db2.internal.Messages;
-import net.refractions.udig.catalog.internal.db2.DB2ServiceExtension;
-import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
+import org.locationtech.udig.catalog.db2.internal.Messages;
+import org.locationtech.udig.catalog.internal.db2.DB2ServiceExtension;
+import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -72,7 +72,7 @@ public class DB2Preferences extends AbstractProprietaryJarPreferencePage
 
     @Override
     protected URL getLibsURL() {
-        return Platform.getBundle("net.refractions.udig.libs.db2").getEntry("/libs"); //$NON-NLS-1$ //$NON-NLS-2$
+        return Platform.getBundle("org.locationtech.udig.libs.db2").getEntry("/libs"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
 }

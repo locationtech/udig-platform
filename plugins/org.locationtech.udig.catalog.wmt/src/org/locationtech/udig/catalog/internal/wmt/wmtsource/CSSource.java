@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.wmtsource;
+package org.locationtech.udig.catalog.internal.wmt.wmtsource;
 
 import java.io.File;
 import java.util.Arrays;
 
-import net.refractions.udig.catalog.internal.wmt.WMTPlugin;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.ww.LayerSet;
+import org.locationtech.udig.catalog.internal.wmt.WMTPlugin;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.LayerSet;
 
 /**
  * This class allows you to use your "Custom Server", which 

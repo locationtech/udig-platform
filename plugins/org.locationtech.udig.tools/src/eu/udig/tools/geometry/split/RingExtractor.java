@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.geometry.split;
+package org.locationtech.udig.tools.geometry.split;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,7 +23,7 @@ import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.operation.polygonize.Polygonizer;
 
-import eu.udig.tools.geometry.merge.MergeStrategy;
+import org.locationtech.udig.tools.geometry.merge.MergeStrategy;
 
 /**
  * 

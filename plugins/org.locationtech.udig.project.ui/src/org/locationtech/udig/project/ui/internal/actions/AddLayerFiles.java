@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -17,8 +17,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.project.ui.internal.MapFactory;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.internal.MapFactory;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 import org.eclipse.emf.common.ui.action.WorkbenchWindowActionDelegate;
 import org.eclipse.jface.action.IAction;
@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.FileDialog;
  */
 public class AddLayerFiles extends WorkbenchWindowActionDelegate {
 
-    public static final String ID = "net.refractions.udig.project.ui.openFilesAction"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.project.ui.openFilesAction"; //$NON-NLS-1$
 
     /*
      * @see org.eclipse.ui.IActionDelegate#run(org.eclipse.jface.action.IAction)

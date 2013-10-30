@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.behaviour;
+package org.locationtech.udig.tools.edit.behaviour;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -19,23 +19,23 @@ import java.awt.Rectangle;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.CommandManager;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EventType;
-import net.refractions.udig.tools.edit.behaviour.CreateShapeBehaviour.ShapeFactory;
-import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.Point;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
-import net.refractions.udig.tools.edit.support.ShapeType;
-import net.refractions.udig.tools.edit.support.TestHandler;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.CommandManager;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tools.edit.EditState;
+import org.locationtech.udig.tools.edit.EventType;
+import org.locationtech.udig.tools.edit.behaviour.CreateShapeBehaviour.ShapeFactory;
+import org.locationtech.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.Point;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.tools.edit.support.ShapeType;
+import org.locationtech.udig.tools.edit.support.TestHandler;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.geotools.data.FeatureSource;
 import org.junit.Test;
@@ -106,7 +106,7 @@ public class ShapeCreationBehaviourTest {
     }
     
     /*
-     * Test method for 'net.refractions.udig.tools.edit.behaviour.ShapeCreationBehaviour.getCommand(EditToolHandler, MapMouseEvent, EventType)'
+     * Test method for 'org.locationtech.udig.tools.edit.behaviour.ShapeCreationBehaviour.getCommand(EditToolHandler, MapMouseEvent, EventType)'
      */
     @Test
     public void testRectangleShape() throws Exception {

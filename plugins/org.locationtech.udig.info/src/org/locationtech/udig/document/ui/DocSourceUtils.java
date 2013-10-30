@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.document.ui;
+package org.locationtech.udig.document.ui;
 
-import net.refractions.udig.catalog.document.IAbstractDocumentSource;
-import net.refractions.udig.catalog.document.IAttachmentSource;
-import net.refractions.udig.catalog.document.IDocumentSource;
-import net.refractions.udig.catalog.document.IHotlinkSource;
+import org.locationtech.udig.catalog.document.IAbstractDocumentSource;
+import org.locationtech.udig.catalog.document.IAttachmentSource;
+import org.locationtech.udig.catalog.document.IDocumentSource;
+import org.locationtech.udig.catalog.document.IHotlinkSource;
 
 /**
  * Utility methods to access document sources.

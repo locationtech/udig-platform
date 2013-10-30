@@ -9,14 +9,14 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.legend.ui;
+package org.locationtech.udig.legend.ui;
 
 import java.awt.Color;
 
-import net.refractions.udig.legend.internal.Messages;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.ui.internal.dialogs.ColorEditor;
-import net.refractions.udig.style.IStyleConfigurator;
+import org.locationtech.udig.legend.internal.Messages;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.ui.internal.dialogs.ColorEditor;
+import org.locationtech.udig.style.IStyleConfigurator;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;

@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.parallel.internal.command;
+package org.locationtech.udig.tools.parallel.internal.command;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -25,30 +25,30 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.vividsolutions.jts.geom.Coordinate;
 
 //import es.axios.geotools.util.GeoToolsUtils;
-import eu.udig.tools.feature.util.GeoToolsUtils;
+import org.locationtech.udig.tools.feature.util.GeoToolsUtils;
 //import es.axios.udig.ui.commons.util.MapUtil;
-import eu.udig.tools.internal.ui.util.MapUtil;
+import org.locationtech.udig.tools.internal.ui.util.MapUtil;
 //import es.axios.udig.ui.editingtools.internal.i18n.Messages;
-import eu.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.internal.i18n.Messages;
 //import es.axios.udig.ui.editingtools.precisionparallels.internal.ParallelContext;
-import eu.udig.tools.parallel.internal.FeatureHighLight;
-import eu.udig.tools.parallel.internal.ParallelContext;
-import eu.udig.tools.parallel.internal.PrecisionToolsMode;
-import eu.udig.tools.parallel.internal.PrecisionToolsUtil;
+import org.locationtech.udig.tools.parallel.internal.FeatureHighLight;
+import org.locationtech.udig.tools.parallel.internal.ParallelContext;
+import org.locationtech.udig.tools.parallel.internal.PrecisionToolsMode;
+import org.locationtech.udig.tools.parallel.internal.PrecisionToolsUtil;
 //import es.axios.udig.ui.editingtools.precisiontools.commons.internal.FeatureHighLight;
 //import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsMode;
 //import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsUtil;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.ui.AnimationUpdater;
-import net.refractions.udig.project.ui.commands.IDrawCommand;
-import net.refractions.udig.project.ui.internal.commands.draw.DrawFeatureCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.Point;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.ui.AnimationUpdater;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.project.ui.internal.commands.draw.DrawFeatureCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.Point;
 
 /**
  * <p>

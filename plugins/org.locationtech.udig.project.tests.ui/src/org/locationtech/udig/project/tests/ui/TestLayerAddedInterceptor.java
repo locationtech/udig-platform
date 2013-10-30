@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.tests.ui;
+package org.locationtech.udig.project.tests.ui;
 
 import org.junit.Ignore;
 
-import net.refractions.udig.project.interceptor.LayerInterceptor;
-import net.refractions.udig.project.internal.Layer;
+import org.locationtech.udig.project.interceptor.LayerInterceptor;
+import org.locationtech.udig.project.internal.Layer;
 
 /**
  * Prints a message when a layer is added to a map.

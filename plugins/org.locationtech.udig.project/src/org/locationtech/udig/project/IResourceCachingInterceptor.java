@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project;
+package org.locationtech.udig.project;
 
-import net.refractions.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResource;
 
 /**
  * Controls the caching of resources returned by:

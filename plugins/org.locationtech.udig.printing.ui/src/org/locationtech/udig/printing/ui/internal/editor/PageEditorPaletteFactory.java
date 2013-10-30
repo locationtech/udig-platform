@@ -9,15 +9,15 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal.editor;
+package org.locationtech.udig.printing.ui.internal.editor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.printing.ui.internal.BoxFactory;
-import net.refractions.udig.printing.ui.internal.Messages;
-import net.refractions.udig.printing.ui.internal.PrintingPlugin;
-import net.refractions.udig.printing.ui.internal.editor.parts.BoxPart;
+import org.locationtech.udig.printing.ui.internal.BoxFactory;
+import org.locationtech.udig.printing.ui.internal.Messages;
+import org.locationtech.udig.printing.ui.internal.PrintingPlugin;
+import org.locationtech.udig.printing.ui.internal.editor.parts.BoxPart;
 
 import org.eclipse.gef.palette.CombinedTemplateCreationEntry;
 import org.eclipse.gef.palette.PaletteContainer;

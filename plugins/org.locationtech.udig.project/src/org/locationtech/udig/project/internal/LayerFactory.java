@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
 
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal
+ * TODO Purpose of org.locationtech.udig.project.internal
  * <p>
  * </p>
  * 
@@ -64,7 +64,7 @@ public interface LayerFactory extends EObject {
     public Map getMap();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.LayerFactory#getMap <em>Map</em>}' container reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.LayerFactory#getMap <em>Map</em>}' container reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Map</em>' container reference.
      * @see #getMap()

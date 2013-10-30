@@ -1,18 +1,18 @@
 /**
  * 
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.ITransientResolve;
-import net.refractions.udig.catalog.ui.export.CatalogExport;
-import net.refractions.udig.catalog.ui.export.ExportResourceSelectionState;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.EditManager;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.ITransientResolve;
+import org.locationtech.udig.catalog.ui.export.CatalogExport;
+import org.locationtech.udig.catalog.ui.export.ExportResourceSelectionState;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.EditManager;
 
 import org.eclipse.jface.viewers.StructuredSelection;
 

@@ -2,7 +2,7 @@
  * Created on Nov 24, 2004 TODO To change the template for this generated file go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,27 +10,27 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.ContextModel;
-import net.refractions.udig.project.internal.ContextModelListenerAdapter;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.MultiLayerRenderer;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.RenderListenerAdapter;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.RendererCreator;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.internal.render.impl.RenderManagerImpl;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.ContextModel;
+import org.locationtech.udig.project.internal.ContextModelListenerAdapter;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.MultiLayerRenderer;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.RenderListenerAdapter;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.RendererCreator;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.internal.render.impl.RenderManagerImpl;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -136,7 +136,7 @@ public class RenderManagerAdapters {
             final RenderManagerDynamic manager ) {
         return new ContextModelListenerAdapter(){
             /**
-             * @see net.refractions.udig.project.ContextModelListenerAdapter#commandExecuted(org.eclipse.emf.common.notify.Notification)
+             * @see org.locationtech.udig.project.ContextModelListenerAdapter#commandExecuted(org.eclipse.emf.common.notify.Notification)
              */
             public void notifyChanged( Notification msg ) {
                 super.notifyChanged(msg);
@@ -146,7 +146,7 @@ public class RenderManagerAdapters {
              * Will sychronizeAndRefresh( the manager based on the notification; and
              * updateImage().
              * 
-             * @see net.refractions.udig.project.ContextModelListenerAdapter#zorderChanged(org.eclipse.emf.common.notify.Notification)
+             * @see org.locationtech.udig.project.ContextModelListenerAdapter#zorderChanged(org.eclipse.emf.common.notify.Notification)
              */
             protected void zorderChanged( Notification msg ) {
                 synchronizeAndRefresh(msg, manager);
@@ -155,7 +155,7 @@ public class RenderManagerAdapters {
             }
 
             /**
-             * @see net.refractions.udig.project.ContextModelListenerAdapter#layerAdded(org.eclipse.emf.common.notify.Notification)
+             * @see org.locationtech.udig.project.ContextModelListenerAdapter#layerAdded(org.eclipse.emf.common.notify.Notification)
              */
             protected void layerAdded( Notification msg ) {
                 synchronizeAndRefresh(msg, manager);
@@ -163,7 +163,7 @@ public class RenderManagerAdapters {
             }
 
             /**
-             * @see net.refractions.udig.project.ContextModelListenerAdapter#layerRemoved(org.eclipse.emf.common.notify.Notification)
+             * @see org.locationtech.udig.project.ContextModelListenerAdapter#layerRemoved(org.eclipse.emf.common.notify.Notification)
              */
             protected void layerRemoved( Notification msg ) {
                 synchronizeAndRefresh(msg, manager);
@@ -172,7 +172,7 @@ public class RenderManagerAdapters {
             }
 
             /**
-             * @see net.refractions.udig.project.ContextModelListenerAdapter#manyLayersAdded(org.eclipse.emf.common.notify.Notification)
+             * @see org.locationtech.udig.project.ContextModelListenerAdapter#manyLayersAdded(org.eclipse.emf.common.notify.Notification)
              */
             protected void manyLayersAdded( Notification msg ) {
                 synchronizeAndRefresh(msg, manager);
@@ -180,7 +180,7 @@ public class RenderManagerAdapters {
             }
 
             /**
-             * @see net.refractions.udig.project.ContextModelListenerAdapter#manyLayersRemoved(org.eclipse.emf.common.notify.Notification)
+             * @see org.locationtech.udig.project.ContextModelListenerAdapter#manyLayersRemoved(org.eclipse.emf.common.notify.Notification)
              */
             protected void manyLayersRemoved( Notification msg ) {
                 synchronizeAndRefresh(msg, manager);
@@ -520,21 +520,21 @@ public class RenderManagerAdapters {
         }
 
         /**
-         * @see net.refractions.udig.project.render.RenderListenerAdapter#renderStarting()
+         * @see org.locationtech.udig.project.render.RenderListenerAdapter#renderStarting()
          */
         protected void renderStarting() {
             ((ViewportPane) manager.getMapDisplay()).renderStarting();
         }
 
         /**
-         * @see net.refractions.udig.project.render.RenderListenerAdapter#renderUpdate()
+         * @see org.locationtech.udig.project.render.RenderListenerAdapter#renderUpdate()
          */
         protected void renderUpdate() {
             ((ViewportPane) manager.getMapDisplay()).renderUpdate();
         }
 
         /**
-         * @see net.refractions.udig.project.render.RenderListenerAdapter#renderDone()
+         * @see org.locationtech.udig.project.render.RenderListenerAdapter#renderDone()
          */
         protected void renderDone() {
             ((ViewportPane) manager.getMapDisplay()).renderDone();
@@ -715,7 +715,7 @@ public class RenderManagerAdapters {
         
         return new ContextModelListenerAdapter(){
             /**
-             * @see net.refractions.udig.project.ContextModelListenerAdapter#commandExecuted(org.eclipse.emf.common.notify.Notification)
+             * @see org.locationtech.udig.project.ContextModelListenerAdapter#commandExecuted(org.eclipse.emf.common.notify.Notification)
              */
             public void notifyChanged( Notification msg ) {
                 super.notifyChanged(msg);
@@ -725,35 +725,35 @@ public class RenderManagerAdapters {
              * Will sychronizeAndRefresh( the manager based on the notification; and
              * updateImage().
              * 
-             * @see net.refractions.udig.project.ContextModelListenerAdapter#zorderChanged(org.eclipse.emf.common.notify.Notification)
+             * @see org.locationtech.udig.project.ContextModelListenerAdapter#zorderChanged(org.eclipse.emf.common.notify.Notification)
              */
             protected void zorderChanged( Notification msg ) {
                 manager.zorderChanged(msg);
             }
 
             /**
-             * @see net.refractions.udig.project.ContextModelListenerAdapter#layerAdded(org.eclipse.emf.common.notify.Notification)
+             * @see org.locationtech.udig.project.ContextModelListenerAdapter#layerAdded(org.eclipse.emf.common.notify.Notification)
              */
             protected void layerAdded( Notification msg ) {
                 manager.layersAdded(msg);
             }
 
             /**
-             * @see net.refractions.udig.project.ContextModelListenerAdapter#layerRemoved(org.eclipse.emf.common.notify.Notification)
+             * @see org.locationtech.udig.project.ContextModelListenerAdapter#layerRemoved(org.eclipse.emf.common.notify.Notification)
              */
             protected void layerRemoved( Notification msg ) {
                 manager.layersRemoved(msg);
             }
 
             /**
-             * @see net.refractions.udig.project.ContextModelListenerAdapter#manyLayersAdded(org.eclipse.emf.common.notify.Notification)
+             * @see org.locationtech.udig.project.ContextModelListenerAdapter#manyLayersAdded(org.eclipse.emf.common.notify.Notification)
              */
             protected void manyLayersAdded( Notification msg ) {
                 manager.layersAdded(msg);
             }
 
             /**
-             * @see net.refractions.udig.project.ContextModelListenerAdapter#manyLayersRemoved(org.eclipse.emf.common.notify.Notification)
+             * @see org.locationtech.udig.project.ContextModelListenerAdapter#manyLayersRemoved(org.eclipse.emf.common.notify.Notification)
              */
             protected void manyLayersRemoved( Notification msg ) {
                 manager.layersRemoved(msg);

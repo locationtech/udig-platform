@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.support;
+package org.locationtech.udig.tools.edit.support;
 
 
 import java.awt.geom.PathIterator;
@@ -21,28 +21,28 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.mapgraphic.grid.GridMapGraphic;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.ui.AnimationUpdater;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.animation.SearchBoxAnimation;
-import net.refractions.udig.tools.edit.commands.AddVertexCommand;
-import net.refractions.udig.tools.edit.commands.CreateAndSelectHoleCommand;
-import net.refractions.udig.tools.edit.preferences.PreferenceUtil;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.core.IBlockingProvider;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.mapgraphic.grid.GridMapGraphic;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.ui.AnimationUpdater;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.EditState;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.animation.SearchBoxAnimation;
+import org.locationtech.udig.tools.edit.commands.AddVertexCommand;
+import org.locationtech.udig.tools.edit.commands.CreateAndSelectHoleCommand;
+import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureSource;

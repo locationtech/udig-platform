@@ -1,12 +1,12 @@
-package net.refractions.udig.mapgraphic;
+package org.locationtech.udig.mapgraphic;
 
 import static org.junit.Assert.*;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IRepository;
-import net.refractions.udig.mapgraphic.internal.MapGraphicService;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IRepository;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Test;

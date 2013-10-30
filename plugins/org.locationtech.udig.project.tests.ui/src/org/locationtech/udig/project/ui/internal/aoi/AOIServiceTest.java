@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.aoi;
+package org.locationtech.udig.project.ui.internal.aoi;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import net.refractions.udig.aoi.AOIProxy;
-import net.refractions.udig.aoi.IAOIService;
-import net.refractions.udig.internal.aoi.AOIServiceFactory;
+import org.locationtech.udig.aoi.AOIProxy;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.internal.aoi.AOIServiceFactory;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,10 +41,10 @@ public class AOIServiceTest {
 
 	@Test
 	public void testCRSStrategy() {
-        AOIProxy proxy = aOIService.findProxy("net.refractions.udig.project.ui.crsAOI");
+        AOIProxy proxy = aOIService.findProxy("org.locationtech.udig.project.ui.crsAOI");
         aOIService.setProxy(proxy);
         String id = aOIService.getProxy().getId();
-        assertEquals("net.refractions.udig.project.ui.crsAOI", id);
+        assertEquals("org.locationtech.udig.project.ui.crsAOI", id);
         
         assertNull(aOIService.getExtent());
         assertNull(aOIService.getGeometry());
@@ -54,10 +54,10 @@ public class AOIServiceTest {
 	@Test
 	public void testScreenStrategy() {
         
-	    AOIProxy proxy = aOIService.findProxy("net.refractions.udig.project.ui.screenAOI");
+	    AOIProxy proxy = aOIService.findProxy("org.locationtech.udig.project.ui.screenAOI");
         aOIService.setProxy(proxy);
         String id = aOIService.getProxy().getId();
-        assertEquals("net.refractions.udig.project.ui.screenAOI", id);
+        assertEquals("org.locationtech.udig.project.ui.screenAOI", id);
         
         assertNull(aOIService.getExtent());
         assertNull(aOIService.getGeometry());

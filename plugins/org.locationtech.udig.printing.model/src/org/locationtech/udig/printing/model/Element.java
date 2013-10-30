@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.model;
+package org.locationtech.udig.printing.model;
 
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
@@ -38,7 +38,7 @@ public interface Element extends EObject{
     public abstract Point getLocation();
 
 	/**
-     * Sets the value of the '{@link net.refractions.udig.printing.model.Element#getLocation <em>Location</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.printing.model.Element#getLocation <em>Location</em>}' attribute.
      * <!-- begin-user-doc -->
      * Sets this element's location to the provided value
      * <!-- end-user-doc -->
@@ -56,7 +56,7 @@ public interface Element extends EObject{
      */
     public abstract Dimension getPaperSize();
     /**
-     * Sets the value of the '{@link net.refractions.udig.printing.model.Element#getPaperSize <em>Paper Size</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.printing.model.Element#getPaperSize <em>Paper Size</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Paper Size</em>' attribute.
@@ -75,7 +75,7 @@ public interface Element extends EObject{
     public abstract Dimension getSize();
 
 	/**
-     * Sets the value of the '{@link net.refractions.udig.printing.model.Element#getSize <em>Size</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.printing.model.Element#getSize <em>Size</em>}' attribute.
      * <!-- begin-user-doc -->
      * Set this element's size to the provided value
      * The size is expected in pixels, and represent coordinates on the page.

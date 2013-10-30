@@ -1,22 +1,22 @@
 /**
  * 
  */
-package net.refractions.udig.tool.info.tests;
+package org.locationtech.udig.tool.info.tests;
 
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IMapCompositionListener;
-import net.refractions.udig.project.IMapListener;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.render.IRenderManager;
-import net.refractions.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IMapCompositionListener;
+import org.locationtech.udig.project.IMapListener;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.render.IRenderManager;
+import org.locationtech.udig.project.render.IViewportModel;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;

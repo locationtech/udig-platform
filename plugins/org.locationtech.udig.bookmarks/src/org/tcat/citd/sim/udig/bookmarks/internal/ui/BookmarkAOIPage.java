@@ -8,15 +8,15 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 
-package org.tcat.citd.sim.udig.bookmarks.internal.ui;
+package org.locationtech.udig.bookmarks.internal.ui;
 
 import java.util.Collection;
 import java.util.List;
 
-import net.refractions.udig.aoi.AOIProxy;
-import net.refractions.udig.aoi.IAOIService;
-import net.refractions.udig.aoi.IAOIStrategy;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.aoi.AOIProxy;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.aoi.IAOIStrategy;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -31,11 +31,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.part.Page;
-import org.tcat.citd.sim.udig.bookmarks.BookmarkAOIStrategy;
-import org.tcat.citd.sim.udig.bookmarks.BookmarkListener;
-import org.tcat.citd.sim.udig.bookmarks.BookmarksPlugin;
-import org.tcat.citd.sim.udig.bookmarks.IBookmark;
-import org.tcat.citd.sim.udig.bookmarks.IBookmarkService;
+import org.locationtech.udig.bookmarks.BookmarkAOIStrategy;
+import org.locationtech.udig.bookmarks.BookmarkListener;
+import org.locationtech.udig.bookmarks.BookmarksPlugin;
+import org.locationtech.udig.bookmarks.IBookmark;
+import org.locationtech.udig.bookmarks.IBookmarkService;
 
 /**
  * A page to add to the AOI (Area of Interest) View used for additional configuration of the AOI.

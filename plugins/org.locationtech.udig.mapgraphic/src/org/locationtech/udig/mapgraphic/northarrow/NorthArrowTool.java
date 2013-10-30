@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.northarrow;
+package org.locationtech.udig.mapgraphic.northarrow;
 import java.awt.geom.Rectangle2D;
 
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ui.internal.commands.draw.DrawShapeCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.AbstractModalTool;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ui.internal.commands.draw.DrawShapeCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.AbstractModalTool;
 
 /**
  * Simple tool that places a screen position on the style blackboard.
@@ -31,7 +31,7 @@ import net.refractions.udig.project.ui.tool.AbstractModalTool;
 public class NorthArrowTool extends AbstractModalTool  {
 
     // I wish we had a general location property; consider using the same thing as scalebar and legend
-    public static final String STYLE_BLACKBOARD_KEY = "net.refractions.udig.tool.northarrow-style"; //$NON-NLS-1$
+    public static final String STYLE_BLACKBOARD_KEY = "org.locationtech.udig.tool.northarrow-style"; //$NON-NLS-1$
 
     private DrawShapeCommand command;
     

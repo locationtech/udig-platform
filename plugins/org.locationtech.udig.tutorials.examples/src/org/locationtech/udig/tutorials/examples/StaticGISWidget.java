@@ -8,22 +8,22 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.examples;
+package org.locationtech.udig.tutorials.examples;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IMapCompositionListener;
-import net.refractions.udig.project.IMapListener;
-import net.refractions.udig.project.MapCompositionEvent;
-import net.refractions.udig.project.MapEvent;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.BoundsStrategy;
-import net.refractions.udig.project.ui.SelectionStyle;
-import net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IMapCompositionListener;
+import org.locationtech.udig.project.IMapListener;
+import org.locationtech.udig.project.MapCompositionEvent;
+import org.locationtech.udig.project.MapEvent;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.BoundsStrategy;
+import org.locationtech.udig.project.ui.SelectionStyle;
+import org.locationtech.udig.project.ui.ApplicationGIS.DrawMapParameter;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

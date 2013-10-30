@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
 import java.util.List;
 
-import net.refractions.udig.project.IProject;
+import org.locationtech.udig.project.IProject;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -47,7 +47,7 @@ public interface Project extends EObject, IProject {
     public String getName();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Project#getName <em>Name</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Project#getName <em>Name</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Name</em>' attribute.
      * @see #getName()

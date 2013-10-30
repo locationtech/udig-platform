@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.shp;
+package org.locationtech.udig.catalog.shp;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,14 +18,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
-import net.refractions.udig.catalog.internal.shp.ShpServiceExtension;
-import net.refractions.udig.ui.CharsetSelectionDialog;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.shp.ShpGeoResourceImpl;
+import org.locationtech.udig.catalog.internal.shp.ShpServiceExtension;
+import org.locationtech.udig.ui.CharsetSelectionDialog;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

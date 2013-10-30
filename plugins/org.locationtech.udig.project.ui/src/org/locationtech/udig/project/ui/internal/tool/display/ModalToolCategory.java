@@ -9,17 +9,17 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.tool.display;
+package org.locationtech.udig.project.ui.internal.tool.display;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.MapEditorSelectionProvider;
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
-import net.refractions.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.MapEditorSelectionProvider;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
+import org.locationtech.udig.project.ui.tool.IToolManager;
 
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.CoreException;
@@ -73,7 +73,7 @@ public class ModalToolCategory extends ToolCategory {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.internal.tool.display.ToolCategory#getHandlerSubmission(java.lang.String)
+     * @see org.locationtech.udig.project.ui.internal.tool.display.ToolCategory#getHandlerSubmission(java.lang.String)
      */
     protected IHandler getHandler() {
         if (handler == null) {
@@ -155,7 +155,7 @@ public class ModalToolCategory extends ToolCategory {
     protected class CurrentModalToolContribution extends AbstractToolbarContributionItem {
 
         /**
-         * @see net.refractions.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#createToolItem(org.eclipse.swt.widgets.ToolBar,
+         * @see org.locationtech.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#createToolItem(org.eclipse.swt.widgets.ToolBar,
          *      int)
          */
         protected ToolItem createToolItem( final ToolBar parent, int index ) {
@@ -176,7 +176,7 @@ public class ModalToolCategory extends ToolCategory {
         }
         
         /**
-         * @see net.refractions.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#getTools()
+         * @see org.locationtech.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#getTools()
          */
         protected List<ModalItem> getTools() {
             List<ModalItem> onToolbar=new ArrayList<ModalItem>();
@@ -197,7 +197,7 @@ public class ModalToolCategory extends ToolCategory {
         }
 
         /**
-         * @see net.refractions.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#isDefaultItem()
+         * @see org.locationtech.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#isDefaultItem()
          */
         protected boolean isDefaultItem() {
             return getTools().contains(((ToolManager)manager).defaultModalToolProxy);
@@ -205,7 +205,7 @@ public class ModalToolCategory extends ToolCategory {
 
 		/**
 		 *  (non-Javadoc)
-		 * @see net.refractions.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#isActiveItem()
+		 * @see org.locationtech.udig.project.ui.internal.tool.display.AbstractToolbarContributionItem#isActiveItem()
 		 */
 		@Override
 		protected boolean isActiveItem() {

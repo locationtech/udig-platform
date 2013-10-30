@@ -9,24 +9,24 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.internal.gridcoverage.basic;
+package org.locationtech.udig.render.internal.gridcoverage.basic;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.core.MinMaxScaleCalculator;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
-import net.refractions.udig.style.sld.SLDContent;
-import net.refractions.udig.ui.graphics.SLDs;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.core.MinMaxScaleCalculator;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.style.sld.SLDContent;
+import org.locationtech.udig.ui.graphics.SLDs;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.geotools.styling.Style;
@@ -45,8 +45,8 @@ public class GridCoverageReaderMetrics extends AbstractRenderMetrics {
      */
     private static List<String> listExpectedStyleIds(){
         ArrayList<String> styleIds = new ArrayList<String>();
-        styleIds.add("net.refractions.udig.style.sld");
-        styleIds.add("net.refractions.udig.style.cache");
+        styleIds.add("org.locationtech.udig.style.sld");
+        styleIds.add("org.locationtech.udig.style.cache");
         return styleIds;
     }
     
@@ -62,7 +62,7 @@ public class GridCoverageReaderMetrics extends AbstractRenderMetrics {
         
         // DATA SOURCE PERFORMANCE INDICATORS
         ID id = context.getGeoResource().getID();
-        // Boolean memory = (Boolean) context.getLayer().getStyleBlackboard().get("net.refractions.udig.style.cache");        
+        // Boolean memory = (Boolean) context.getLayer().getStyleBlackboard().get("org.locationtech.udig.style.cache");        
         
         if( id.isMemory() ){
             // in memory grid coverage (example a temporary image froma WPS)
@@ -94,14 +94,14 @@ public class GridCoverageReaderMetrics extends AbstractRenderMetrics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.RenderMetrics#getRenderContext()
+     * @see org.locationtech.udig.project.render.RenderMetrics#getRenderContext()
      */
     public IRenderContext getRenderContext() {
         return context;
     }
 
     /**
-     * @see net.refractions.udig.project.render.IRenderMetrics#getRenderMetricsFactory()
+     * @see org.locationtech.udig.project.render.IRenderMetrics#getRenderMetricsFactory()
      */
     public IRenderMetricsFactory getRenderMetricsFactory() {
         return factory;
@@ -112,7 +112,7 @@ public class GridCoverageReaderMetrics extends AbstractRenderMetrics {
     }
 
     public boolean canStyle( String styleID, Object value ) {
-        if( "net.refractions.udig.style.cache".equals(styleID)){
+        if( "org.locationtech.udig.style.cache".equals(styleID)){
             if( Boolean.FALSE.equals( value )){
                 return true; // user turned off caching
             }

@@ -9,11 +9,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.split;
+package org.locationtech.udig.tools.split;
 
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.behaviour.AddVertexWhileCreatingBehaviour;
-import net.refractions.udig.tools.edit.support.Point;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.behaviour.AddVertexWhileCreatingBehaviour;
+import org.locationtech.udig.tools.edit.support.Point;
 
 /**
  * Inherit in order to redefines the {{@link #isNotDuplicated(EditToolHandler, Point)} 

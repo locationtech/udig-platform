@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.editorpages;
+package org.locationtech.udig.style.advanced.editorpages;
 
 import java.awt.Color;
 
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.style.sld.editor.StyleEditorPage;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.style.sld.editor.StyleEditorPage;
 
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.SWT;
@@ -27,8 +27,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.geotools.coverage.grid.GridCoverage2D;
 
-import eu.udig.style.advanced.internal.Messages;
-import eu.udig.style.advanced.utils.StolenColorEditor;
+import org.locationtech.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.utils.StolenColorEditor;
 
 /**
  * The style editor for single banded {@link GridCoverage2D coverages};

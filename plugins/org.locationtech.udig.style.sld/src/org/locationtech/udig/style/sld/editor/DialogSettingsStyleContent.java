@@ -1,14 +1,14 @@
 /**
  * 
  */
-package net.refractions.udig.style.sld.editor;
+package org.locationtech.udig.style.sld.editor;
 
 import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.StyleContent;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.StyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
@@ -21,7 +21,7 @@ import org.eclipse.ui.IMemento;
  */
 public class DialogSettingsStyleContent extends StyleContent{
 
-	public static final String EXTENSION_ID = "net.refractions.udig.style.dialogSettings"; //$NON-NLS-1$
+	public static final String EXTENSION_ID = "org.locationtech.udig.style.dialogSettings"; //$NON-NLS-1$
 	private static final String MEMENTO_KEY = "DialogSettings"; //$NON-NLS-1$
 
 	public DialogSettingsStyleContent() {

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.test;
+package org.locationtech.udig.issues.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -16,14 +16,14 @@ import static org.junit.Assert.assertNotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.core.enums.Priority;
-import net.refractions.udig.core.enums.Resolution;
-import net.refractions.udig.issues.FeatureIssue;
-import net.refractions.udig.issues.IIssue;
-import net.refractions.udig.issues.IRemoteIssuesList;
-import net.refractions.udig.issues.listeners.IIssuesListListener;
-import net.refractions.udig.issues.listeners.IssuesListEvent;
-import net.refractions.udig.issues.listeners.IssuesListEventType;
+import org.locationtech.udig.core.enums.Priority;
+import org.locationtech.udig.core.enums.Resolution;
+import org.locationtech.udig.issues.FeatureIssue;
+import org.locationtech.udig.issues.IIssue;
+import org.locationtech.udig.issues.IRemoteIssuesList;
+import org.locationtech.udig.issues.listeners.IIssuesListListener;
+import org.locationtech.udig.issues.listeners.IssuesListEvent;
+import org.locationtech.udig.issues.listeners.IssuesListEventType;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureStore;

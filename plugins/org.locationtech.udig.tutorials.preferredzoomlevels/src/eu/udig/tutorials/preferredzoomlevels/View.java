@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.tutorials.preferredzoomlevels;
+package org.locationtech.udig.tutorials.preferredzoomlevels;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,13 +15,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.ui.internal.DefaultMapViewPart;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.ui.internal.DefaultMapViewPart;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -34,7 +34,7 @@ import org.eclipse.jface.action.IStatusLineManager;
  */
 public class View extends DefaultMapViewPart {
 	@SuppressWarnings("nls")
-    public static final String ID = "eu.udig.tutorials.preferredzoomlevels.view";
+    public static final String ID = "org.locationtech.udig.tutorials.preferredzoomlevels.view";
 
 	@Override
 	protected void createResources(List<IGeoResource> resources, 

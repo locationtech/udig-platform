@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.db2.internal;
+package org.locationtech.udig.catalog.db2.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.catalog.db2.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.catalog.db2.internal.messages"; //$NON-NLS-1$
 	public static String DB2Preferences_driverNotValid;
 	public static String DB2Preferences_renameError;
 	public static String DB2Preferences_restartQuestion;

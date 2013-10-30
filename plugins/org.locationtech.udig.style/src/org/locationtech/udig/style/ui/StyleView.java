@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.ui;
+package org.locationtech.udig.style.ui;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,15 +18,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.project.ILayerListener;
-import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.style.IStyleConfigurator;
-import net.refractions.udig.style.StylePlugin;
-import net.refractions.udig.style.internal.Messages;
-import net.refractions.udig.style.internal.StyleLayer;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.project.ILayerListener;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.IStyleConfigurator;
+import org.locationtech.udig.style.StylePlugin;
+import org.locationtech.udig.style.internal.Messages;
+import org.locationtech.udig.style.internal.StyleLayer;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -99,7 +99,7 @@ import org.eclipse.ui.services.IServiceLocator;
 @SuppressWarnings("deprecation")
 public class StyleView extends ViewPart {
     /** ID used in the extension point to identify this view */
-    public final static String VIEW_ID = "net.refractions.udig.style.styleView"; //$NON-NLS-1$
+    public final static String VIEW_ID = "org.locationtech.udig.style.styleView"; //$NON-NLS-1$
 
     private final static String STYLE_MENU_GROUP = "style"; //$NON-NLS-1$
     private final static String CONFIG_MENU_GROUP = "config"; //$NON-NLS-1$
@@ -323,10 +323,10 @@ public class StyleView extends ViewPart {
                 return;
         }
 
-        sel = page2.getSelection("net.refractions.udig.project.ui.layerManager"); //$NON-NLS-1$
+        sel = page2.getSelection("org.locationtech.udig.project.ui.layerManager"); //$NON-NLS-1$
         if (findLayer(sel))
             return;
-        sel = page2.getSelection("net.refractions.udig.project.ui.projectExplorer"); //$NON-NLS-1$
+        sel = page2.getSelection("org.locationtech.udig.project.ui.projectExplorer"); //$NON-NLS-1$
         if (findLayer(sel))
             return;
 

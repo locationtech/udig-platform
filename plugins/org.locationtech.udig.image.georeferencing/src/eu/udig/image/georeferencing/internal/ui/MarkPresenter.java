@@ -10,12 +10,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.internal.ui;
+package org.locationtech.udig.image.georeferencing.internal.ui;
 
 import java.awt.Color;
 import java.util.Observer;
 
-import eu.udig.image.georeferencing.internal.process.MarkModel;
+import org.locationtech.udig.image.georeferencing.internal.process.MarkModel;
 
 /**
  * Interface implemented by all the presenters that show marks.

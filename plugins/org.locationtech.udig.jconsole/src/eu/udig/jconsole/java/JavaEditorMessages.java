@@ -8,14 +8,14 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package eu.udig.jconsole.java;
+package org.locationtech.udig.jconsole.java;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class JavaEditorMessages {
 
-	private static final String RESOURCE_BUNDLE= "eu.udig.jconsole.JavaEditorMessages";//$NON-NLS-1$
+	private static final String RESOURCE_BUNDLE= "org.locationtech.udig.jconsole.JavaEditorMessages";//$NON-NLS-1$
 
 	private static ResourceBundle fgResourceBundle= ResourceBundle.getBundle(RESOURCE_BUNDLE);
 

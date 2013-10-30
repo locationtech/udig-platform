@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.commands.draw;
+package org.locationtech.udig.project.ui.internal.commands.draw;
 
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.project.ui.commands.IDrawCommand;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
  * Abstract super class of commands that simply draw on the acetate layer. The top-most layer. The
@@ -37,8 +37,8 @@ public abstract class AbstractDrawCommand extends AbstractCommand implements IDr
     protected IMapDisplay display;
 
     /**
-     * @see net.refractions.udig.project.internal.commands.draw.IDrawCommand#setGraphics(net.refractions.udig.project.render.ViewportGraphics,
-     *      net.refractions.udig.project.render.MapDisplay)
+     * @see org.locationtech.udig.project.internal.commands.draw.IDrawCommand#setGraphics(org.locationtech.udig.project.render.ViewportGraphics,
+     *      org.locationtech.udig.project.render.MapDisplay)
      */
     public void setGraphics( ViewportGraphics graphics, IMapDisplay display ) {
         this.graphics = graphics;
@@ -46,14 +46,14 @@ public abstract class AbstractDrawCommand extends AbstractCommand implements IDr
     }
 
     /**
-     * @see net.refractions.udig.project.ui.commands.IDrawCommand#setValid(boolean)
+     * @see org.locationtech.udig.project.ui.commands.IDrawCommand#setValid(boolean)
      */
     public void setValid( boolean valid ) {
         this.valid = valid;
     }
 
     /**
-     * @see net.refractions.udig.project.ui.commands.IDrawCommand#isValid()
+     * @see org.locationtech.udig.project.ui.commands.IDrawCommand#isValid()
      */
     public boolean isValid() {
         return valid;

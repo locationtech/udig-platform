@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal
+ * TODO Purpose of org.locationtech.udig.project.internal
  * <p>
  * </p>
  * 
@@ -39,21 +39,21 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    String eNS_PREFIX = "net.refractions.udig.project.internal"; //$NON-NLS-1$
+    String eNS_PREFIX = "org.locationtech.udig.project.internal"; //$NON-NLS-1$
 
     /**
      * The singleton instance of the package.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    ProjectPackage eINSTANCE = net.refractions.udig.project.internal.impl.ProjectPackageImpl.init();
+    ProjectPackage eINSTANCE = org.locationtech.udig.project.internal.impl.ProjectPackageImpl.init();
 
     /**
      * The meta object id for the '{@link Comparable <em>Comparable</em>}' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see Comparable
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getComparable()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getComparable()
      * @generated
      */
     int COMPARABLE = 0;
@@ -68,10 +68,10 @@ public interface ProjectPackage extends EPackage {
     int COMPARABLE_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.IMap <em>IMap</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.IMap <em>IMap</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.IMap
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIMap()
+     * @see org.locationtech.udig.project.IMap
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIMap()
      * @generated
      */
     int IMAP = 1;
@@ -86,73 +86,73 @@ public interface ProjectPackage extends EPackage {
     int IMAP_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.ILayer <em>ILayer</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.ILayer <em>ILayer</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.ILayer
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getILayer()
+     * @see org.locationtech.udig.project.ILayer
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getILayer()
      * @generated
      */
     int ILAYER = 2;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.IEditManager <em>IEdit Manager</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.IEditManager <em>IEdit Manager</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.IEditManager
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIEditManager()
+     * @see org.locationtech.udig.project.IEditManager
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIEditManager()
      * @generated
      */
     int IEDIT_MANAGER = 3;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.IProject <em>IProject</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.IProject <em>IProject</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.IProject
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIProject()
+     * @see org.locationtech.udig.project.IProject
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIProject()
      * @generated
      */
     int IPROJECT = 4;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.IAbstractContext <em>IAbstract Context</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.IAbstractContext <em>IAbstract Context</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.IAbstractContext
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIAbstractContext()
+     * @see org.locationtech.udig.project.IAbstractContext
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIAbstractContext()
      * @generated
      */
     int IABSTRACT_CONTEXT = 5;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.IBlackboard <em>IBlackboard</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.IBlackboard <em>IBlackboard</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.IBlackboard
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIBlackboard()
+     * @see org.locationtech.udig.project.IBlackboard
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIBlackboard()
      * @generated
      */
     int IBLACKBOARD = 6;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.IProjectElement <em>IProject Element</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.IProjectElement <em>IProject Element</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.IProjectElement
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIProjectElement()
+     * @see org.locationtech.udig.project.IProjectElement
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIProjectElement()
      * @generated
      */
     int IPROJECT_ELEMENT = 7;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.render.IRenderManager <em>IRender Manager</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.render.IRenderManager <em>IRender Manager</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.render.IRenderManager
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIRenderManager()
+     * @see org.locationtech.udig.project.render.IRenderManager
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIRenderManager()
      * @generated
      */
     int IRENDER_MANAGER = 8;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.render.IViewportModel <em>IViewport Model</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.render.IViewportModel <em>IViewport Model</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.render.IViewportModel
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIViewportModel()
+     * @see org.locationtech.udig.project.render.IViewportModel
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIViewportModel()
      * @generated
      */
     int IVIEWPORT_MODEL = 9;
@@ -162,52 +162,52 @@ public interface ProjectPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see Cloneable
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCloneable()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCloneable()
      * @generated
      */
     int CLONEABLE = 19;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.ContextModelImpl <em>Context Model</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.ContextModelImpl <em>Context Model</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.ContextModelImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getContextModel()
+     * @see org.locationtech.udig.project.internal.impl.ContextModelImpl
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getContextModel()
      * @generated
      */
     int CONTEXT_MODEL = 10;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.EditManagerImpl <em>Edit Manager</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.EditManagerImpl <em>Edit Manager</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.EditManagerImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEditManager()
+     * @see org.locationtech.udig.project.internal.impl.EditManagerImpl
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEditManager()
      * @generated
      */
     int EDIT_MANAGER = 11;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.LayerImpl <em>Layer</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.LayerImpl <em>Layer</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.LayerImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getLayer()
+     * @see org.locationtech.udig.project.internal.impl.LayerImpl
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLayer()
      * @generated
      */
     int LAYER = 12;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.ProjectElement <em>Element</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.ProjectElement <em>Element</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.ProjectElement
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getProjectElement()
+     * @see org.locationtech.udig.project.internal.ProjectElement
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getProjectElement()
      * @generated
      */
     int PROJECT_ELEMENT = 15;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.MapImpl <em>Map</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.MapImpl <em>Map</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.MapImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getMap()
+     * @see org.locationtech.udig.project.internal.impl.MapImpl
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getMap()
      * @generated
      */
     int MAP = 13;
@@ -228,56 +228,56 @@ public interface ProjectPackage extends EPackage {
     //    int MAP__BATCH_EVENT = MAP_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.ProjectImpl <em>Project</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.ProjectImpl <em>Project</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.ProjectImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getProject()
+     * @see org.locationtech.udig.project.internal.impl.ProjectImpl
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getProject()
      * @generated
      */
     int PROJECT = 14;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.ProjectRegistryImpl <em>Registry</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.ProjectRegistryImpl <em>Registry</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.ProjectRegistryImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getProjectRegistry()
+     * @see org.locationtech.udig.project.internal.impl.ProjectRegistryImpl
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getProjectRegistry()
      * @generated
      */
     int PROJECT_REGISTRY = 16;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.IStyleBlackboard <em>IStyle Blackboard</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.IStyleBlackboard <em>IStyle Blackboard</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.IStyleBlackboard
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIStyleBlackboard()
+     * @see org.locationtech.udig.project.IStyleBlackboard
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIStyleBlackboard()
      * @generated
      */
     int ISTYLE_BLACKBOARD = 26;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.StyleBlackboardImpl <em>Style Blackboard</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.StyleBlackboardImpl <em>Style Blackboard</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.StyleBlackboardImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getStyleBlackboard()
+     * @see org.locationtech.udig.project.internal.impl.StyleBlackboardImpl
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getStyleBlackboard()
      * @generated
      */
     int STYLE_BLACKBOARD = 17;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.StyleEntryImpl <em>Style Entry</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.StyleEntryImpl <em>Style Entry</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.StyleEntryImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getStyleEntry()
+     * @see org.locationtech.udig.project.internal.impl.StyleEntryImpl
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getStyleEntry()
      * @generated
      */
     int STYLE_ENTRY = 18;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.LayerFactoryImpl <em>Layer Factory</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.LayerFactoryImpl <em>Layer Factory</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.LayerFactoryImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getLayerFactory()
+     * @see org.locationtech.udig.project.internal.impl.LayerFactoryImpl
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLayerFactory()
      * @generated
      */
     int LAYER_FACTORY = 20;
@@ -286,83 +286,83 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '{@link org.eclipse.core.runtime.IAdaptable <em>IAdaptable</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.core.runtime.IAdaptable
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIAdaptable()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIAdaptable()
      * @generated
      */
     int IADAPTABLE = 21;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.core.IBlockingAdaptable <em>IBlocking Adaptable</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.core.IBlockingAdaptable <em>IBlocking Adaptable</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.core.IBlockingAdaptable
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIBlockingAdaptable()
+     * @see org.locationtech.udig.core.IBlockingAdaptable
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIBlockingAdaptable()
      * @generated
      */
     int IBLOCKING_ADAPTABLE = 22;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.BlackboardImpl <em>Blackboard</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.BlackboardImpl <em>Blackboard</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.BlackboardImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getBlackboard()
+     * @see org.locationtech.udig.project.internal.impl.BlackboardImpl
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getBlackboard()
      * @generated
      */
     int BLACKBOARD = 23;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.BlackboardEntryImpl <em>Blackboard Entry</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.BlackboardEntryImpl <em>Blackboard Entry</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.BlackboardEntryImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getBlackboardEntry()
+     * @see org.locationtech.udig.project.internal.impl.BlackboardEntryImpl
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getBlackboardEntry()
      * @generated
      */
     int BLACKBOARD_ENTRY = 24;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.catalog.IResolveChangeListener <em>IResolve Change Listener</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.catalog.IResolveChangeListener <em>IResolve Change Listener</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see net.refractions.udig.catalog.IResolveChangeListener
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIResolveChangeListener()
+     * @see org.locationtech.udig.catalog.IResolveChangeListener
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIResolveChangeListener()
      * @generated
      */
     int IRESOLVE_CHANGE_LISTENER = 25;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl <em>Interaction To EBoolean Object Map Entry</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl <em>Interaction To EBoolean Object Map Entry</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getInteractionToEBooleanObjectMapEntry()
+     * @see org.locationtech.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getInteractionToEBooleanObjectMapEntry()
      * @generated
      */
     int INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY = 27;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.IFolder <em>IFolder</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.IFolder <em>IFolder</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.IFolder
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIFolder()
+     * @see org.locationtech.udig.project.IFolder
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIFolder()
      * @generated
      */
     int IFOLDER = 28;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.FolderImpl <em>Folder</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.FolderImpl <em>Folder</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.FolderImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFolder()
+     * @see org.locationtech.udig.project.internal.impl.FolderImpl
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getFolder()
      * @generated
      */
     int FOLDER = 29;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.ILegendItem <em>ILegend Item</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.ILegendItem <em>ILegend Item</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.ILegendItem
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getILegendItem()
+     * @see org.locationtech.udig.project.ILegendItem
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getILegendItem()
      * @generated
      */
     int ILEGEND_ITEM = 32;
@@ -1210,11 +1210,11 @@ public interface ProjectPackage extends EPackage {
     int FOLDER_FEATURE_COUNT = IFOLDER_FEATURE_COUNT + 4;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.ILayerLegendItem <em>ILayer Legend Item</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.ILayerLegendItem <em>ILayer Legend Item</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.ILayerLegendItem
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getILayerLegendItem()
+     * @see org.locationtech.udig.project.ILayerLegendItem
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getILayerLegendItem()
      * @generated
      */
     int ILAYER_LEGEND_ITEM = 30;
@@ -1238,11 +1238,11 @@ public interface ProjectPackage extends EPackage {
     int ILEGEND_ITEM_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.LegendItemImpl <em>Legend Item</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.LegendItemImpl <em>Legend Item</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.LegendItemImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getLegendItem()
+     * @see org.locationtech.udig.project.internal.impl.LegendItemImpl
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLegendItem()
      * @generated
      */
     int LEGEND_ITEM = 31;
@@ -1284,11 +1284,11 @@ public interface ProjectPackage extends EPackage {
     int LEGEND_ITEM_FEATURE_COUNT = ILEGEND_ITEM_FEATURE_COUNT + 3;
 
     /**
-     * The meta object id for the '{@link net.refractions.udig.project.internal.impl.LayerLegendItemImpl <em>Layer Legend Item</em>}' class.
+     * The meta object id for the '{@link org.locationtech.udig.project.internal.impl.LayerLegendItemImpl <em>Layer Legend Item</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.internal.impl.LayerLegendItemImpl
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getLayerLegendItem()
+     * @see org.locationtech.udig.project.internal.impl.LayerLegendItemImpl
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLayerLegendItem()
      * @generated
      */
     int LAYER_LEGEND_ITEM = 33;
@@ -1343,7 +1343,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see com.vividsolutions.jts.geom.Coordinate
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCoordinate()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCoordinate()
      * @generated
      */
     int COORDINATE = 34;
@@ -1352,8 +1352,8 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '<em>Map Display</em>' data type.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * @see net.refractions.udig.project.render.displayAdapter.IMapDisplay
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getMapDisplay()
+     * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplay
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getMapDisplay()
      * @generated
      */
     int MAP_DISPLAY = 35;
@@ -1363,7 +1363,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see java.util.List
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getList()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getList()
      * @generated
      */
     int LIST = 36;
@@ -1373,7 +1373,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see java.awt.geom.AffineTransform
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getAffineTransform()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getAffineTransform()
      * @generated
      */
     int AFFINE_TRANSFORM = 37;
@@ -1382,8 +1382,8 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '<em>Nav Command Stack</em>' data type.
      * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * @see net.refractions.udig.project.command.NavCommandStack
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getNavCommandStack()
+     * @see org.locationtech.udig.project.command.NavCommandStack
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getNavCommandStack()
      * @generated
      */
     int NAV_COMMAND_STACK = 38;
@@ -1392,8 +1392,8 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '<em>IGeo Resource</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.catalog.IGeoResource
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIGeoResource()
+     * @see org.locationtech.udig.catalog.IGeoResource
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIGeoResource()
      * @generated
      */
     int IGEO_RESOURCE = 39;
@@ -1403,7 +1403,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see org.opengis.filter.Filter
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFilter()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getFilter()
      * @generated
      */
     int FILTER = 40;
@@ -1413,7 +1413,7 @@ public interface ProjectPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see org.opengis.referencing.crs.CoordinateReferenceSystem
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCoordinateReferenceSystem()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCoordinateReferenceSystem()
      * @generated
      */
     int COORDINATE_REFERENCE_SYSTEM = 41;
@@ -1422,8 +1422,8 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '<em>Command Stack</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.command.CommandStack
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCommandStack()
+     * @see org.locationtech.udig.project.command.CommandStack
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCommandStack()
      * @generated
      */
     int COMMAND_STACK = 42;
@@ -1433,7 +1433,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see java.awt.Point
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getPoint()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getPoint()
      * @generated
      */
     int POINT = 43;
@@ -1443,7 +1443,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see org.eclipse.emf.common.notify.Adapter
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getAdapter()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getAdapter()
      * @generated
      */
     int ADAPTER = 44;
@@ -1453,7 +1453,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
      * @see org.eclipse.core.runtime.IProgressMonitor
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIProgressMonitor()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIProgressMonitor()
      * @generated
      */
     int IPROGRESS_MONITOR = 45;
@@ -1463,7 +1463,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see org.geotools.data.Query
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getQuery()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getQuery()
      * @generated
      */
     int QUERY = 46;
@@ -1473,7 +1473,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see java.net.URL
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getURL()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getURL()
      * @generated
      */
     int URL = 47;
@@ -1483,7 +1483,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.eclipse.jface.resource.ImageDescriptor
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getImageDescriptor()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getImageDescriptor()
      * @generated
      */
     int IMAGE_DESCRIPTOR = 48;
@@ -1492,8 +1492,8 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '<em>Edit Command</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.command.EditCommand
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEditCommand()
+     * @see org.locationtech.udig.project.command.EditCommand
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEditCommand()
      * @generated
      */
     int EDIT_COMMAND = 49;
@@ -1502,8 +1502,8 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '<em>Nav Command</em>' data type.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * @see net.refractions.udig.project.command.NavCommand
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getNavCommand()
+     * @see org.locationtech.udig.project.command.NavCommand
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getNavCommand()
      * @generated
      */
     int NAV_COMMAND = 50;
@@ -1513,7 +1513,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see com.vividsolutions.jts.geom.Envelope
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEnvelope()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEnvelope()
      * @generated
      */
     int ENVELOPE = 51;
@@ -1522,7 +1522,7 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '<em>Edit Manager Control Command</em>' data type. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEditManagerControlCommand()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEditManagerControlCommand()
      * @generated
      */
     int EDIT_MANAGER_CONTROL_COMMAND = 52;
@@ -1531,8 +1531,8 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '<em>Command</em>' data type.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * @see net.refractions.udig.project.command.MapCommand
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCommand()
+     * @see org.locationtech.udig.project.command.MapCommand
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCommand()
      * @generated
      */
     int COMMAND = 53;
@@ -1542,7 +1542,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see org.eclipse.emf.common.util.URI
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getURI()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getURI()
      * @generated
      */
     int URI = 54;
@@ -1551,8 +1551,8 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '<em>Catalog Ref</em>' data type.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * @see net.refractions.udig.project.internal.CatalogRef
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCatalogRef()
+     * @see org.locationtech.udig.project.internal.CatalogRef
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCatalogRef()
      * @generated
      */
     int CATALOG_REF = 55;
@@ -1561,8 +1561,8 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '<em>Colour Palette</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.ui.palette.ColourPalette
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getColourPalette()
+     * @see org.locationtech.udig.ui.palette.ColourPalette
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getColourPalette()
      * @generated
      */
     int COLOUR_PALETTE = 56;
@@ -1571,8 +1571,8 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '<em>Colour Scheme</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.ui.palette.ColourScheme
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getColourScheme()
+     * @see org.locationtech.udig.ui.palette.ColourScheme
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getColourScheme()
      * @generated
      */
     int COLOUR_SCHEME = 57;
@@ -1582,7 +1582,7 @@ public interface ProjectPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see org.picocontainer.MutablePicoContainer
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getMutablePicoContainer()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getMutablePicoContainer()
      * @generated
      */
     int MUTABLE_PICO_CONTAINER = 58;
@@ -1592,7 +1592,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
      * @see org.geotools.geometry.jts.ReferencedEnvelope
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getReferencedEnvelope()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getReferencedEnvelope()
      * @generated
      */
     int REFERENCED_ENVELOPE = 59;
@@ -1602,7 +1602,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.geotools.data.FeatureEvent
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFeatureEvent()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getFeatureEvent()
      * @generated
      */
     int FEATURE_EVENT = 60;
@@ -1612,7 +1612,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.opengis.feature.simple.SimpleFeature
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getSimpleFeature()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getSimpleFeature()
      * @generated
      */
     int SIMPLE_FEATURE = 61;
@@ -1622,7 +1622,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see java.lang.IllegalArgumentException
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIllegalArgumentException()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIllegalArgumentException()
      * @generated
      */
     int ILLEGAL_ARGUMENT_EXCEPTION = 62;
@@ -1632,7 +1632,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see java.io.IOException
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIOException()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIOException()
      * @generated
      */
     int IO_EXCEPTION = 63;
@@ -1642,7 +1642,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see java.awt.Color
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getColor()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getColor()
      * @generated
      */
     int COLOR = 64;
@@ -1652,7 +1652,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.geotools.brewer.color.BrewerPalette
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getBrewerPalette()
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getBrewerPalette()
      * @generated
      */
     int BREWER_PALETTE = 65;
@@ -1661,8 +1661,8 @@ public interface ProjectPackage extends EPackage {
      * The meta object id for the '<em>Interaction</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.refractions.udig.project.Interaction
-     * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getInteraction()
+     * @see org.locationtech.udig.project.Interaction
+     * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getInteraction()
      * @generated
      */
     int INTERACTION = 66;
@@ -1683,8 +1683,8 @@ public interface ProjectPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the meta object for class '<em>Comparable</em>'.
-     * @see net.refractions.udig.project.IMap
-     * @model instanceClass="net.refractions.udig.project.IMap"
+     * @see org.locationtech.udig.project.IMap
+     * @model instanceClass="org.locationtech.udig.project.IMap"
      * @generated
      */
     EClass getIMap();
@@ -1694,8 +1694,8 @@ public interface ProjectPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the meta object for class '<em>Comparable</em>'.
-     * @see net.refractions.udig.project.ILayer
-     * @model instanceClass="net.refractions.udig.project.ILayer"
+     * @see org.locationtech.udig.project.ILayer
+     * @model instanceClass="org.locationtech.udig.project.ILayer"
      * @generated
      */
     EClass getILayer();
@@ -1705,8 +1705,8 @@ public interface ProjectPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the meta object for class '<em>Comparable</em>'.
-     * @see net.refractions.udig.project.IEditManager
-     * @model instanceClass="net.refractions.udig.project.IEditManager"
+     * @see org.locationtech.udig.project.IEditManager
+     * @model instanceClass="org.locationtech.udig.project.IEditManager"
      * @generated
      */
     EClass getIEditManager();
@@ -1716,8 +1716,8 @@ public interface ProjectPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the meta object for class '<em>Comparable</em>'.
-     * @see net.refractions.udig.project.IProject
-     * @model instanceClass="net.refractions.udig.project.IProject"
+     * @see org.locationtech.udig.project.IProject
+     * @model instanceClass="org.locationtech.udig.project.IProject"
      * @generated
      */
     EClass getIProject();
@@ -1727,8 +1727,8 @@ public interface ProjectPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the meta object for class '<em>Comparable</em>'.
-     * @see net.refractions.udig.project.IAbstractContext
-     * @model instanceClass="net.refractions.udig.project.IAbstractContext"
+     * @see org.locationtech.udig.project.IAbstractContext
+     * @model instanceClass="org.locationtech.udig.project.IAbstractContext"
      * @generated
      */
     EClass getIAbstractContext();
@@ -1738,8 +1738,8 @@ public interface ProjectPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the meta object for class '<em>Comparable</em>'.
-     * @see net.refractions.udig.project.IBlackboard
-     * @model instanceClass="net.refractions.udig.project.IBlackboard"
+     * @see org.locationtech.udig.project.IBlackboard
+     * @model instanceClass="org.locationtech.udig.project.IBlackboard"
      * @generated
      */
     EClass getIBlackboard();
@@ -1749,8 +1749,8 @@ public interface ProjectPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the meta object for class '<em>Comparable</em>'.
-     * @see net.refractions.udig.project.IProjectElement
-     * @model instanceClass="net.refractions.udig.project.IProjectElement"
+     * @see org.locationtech.udig.project.IProjectElement
+     * @model instanceClass="org.locationtech.udig.project.IProjectElement"
      * @generated
      */
     EClass getIProjectElement();
@@ -1760,8 +1760,8 @@ public interface ProjectPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the meta object for class '<em>Comparable</em>'.
-     * @see net.refractions.udig.project.render.IRenderManager
-     * @model instanceClass="net.refractions.udig.project.render.IRenderManager"
+     * @see org.locationtech.udig.project.render.IRenderManager
+     * @model instanceClass="org.locationtech.udig.project.render.IRenderManager"
      * @generated
      */
     EClass getIRenderManager();
@@ -1771,235 +1771,235 @@ public interface ProjectPackage extends EPackage {
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the meta object for class '<em>Comparable</em>'.
-     * @see net.refractions.udig.project.render.IViewportModel
-     * @model instanceClass="net.refractions.udig.project.render.IViewportModel"
+     * @see org.locationtech.udig.project.render.IViewportModel
+     * @model instanceClass="org.locationtech.udig.project.render.IViewportModel"
      * @generated
      */
     EClass getIViewportModel();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.ContextModel <em>Context Model</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.ContextModel <em>Context Model</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Context Model</em>'.
-     * @see net.refractions.udig.project.internal.ContextModel
+     * @see org.locationtech.udig.project.internal.ContextModel
      * @generated
      */
     EClass getContextModel();
 
     /**
-     * Returns the meta object for the containment reference list '{@link net.refractions.udig.project.internal.ContextModel#getLayers <em>Layers</em>}'.
+     * Returns the meta object for the containment reference list '{@link org.locationtech.udig.project.internal.ContextModel#getLayers <em>Layers</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the containment reference list '<em>Layers</em>'.
-     * @see net.refractions.udig.project.internal.ContextModel#getLayers()
+     * @see org.locationtech.udig.project.internal.ContextModel#getLayers()
      * @see #getContextModel()
      * @generated
      */
     EReference getContextModel_Layers();
 
     /**
-     * Returns the meta object for the container reference '{@link net.refractions.udig.project.internal.ContextModel#getMap <em>Map</em>}'.
+     * Returns the meta object for the container reference '{@link org.locationtech.udig.project.internal.ContextModel#getMap <em>Map</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Map</em>'.
-     * @see net.refractions.udig.project.internal.ContextModel#getMap()
+     * @see org.locationtech.udig.project.internal.ContextModel#getMap()
      * @see #getContextModel()
      * @generated
      */
     EReference getContextModel_Map();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.EditManager <em>Edit Manager</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.EditManager <em>Edit Manager</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Edit Manager</em>'.
-     * @see net.refractions.udig.project.internal.EditManager
+     * @see org.locationtech.udig.project.internal.EditManager
      * @generated
      */
     EClass getEditManager();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.EditManager#getEditFeature <em>Edit Feature</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.EditManager#getEditFeature <em>Edit Feature</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Edit Feature</em>'.
-     * @see net.refractions.udig.project.internal.EditManager#getEditFeature()
+     * @see org.locationtech.udig.project.internal.EditManager#getEditFeature()
      * @see #getEditManager()
      * @generated
      */
     EAttribute getEditManager_EditFeature();
 
     /**
-     * Returns the meta object for the container reference '{@link net.refractions.udig.project.internal.EditManager#getMapInternal <em>Map Internal</em>}'.
+     * Returns the meta object for the container reference '{@link org.locationtech.udig.project.internal.EditManager#getMapInternal <em>Map Internal</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Map Internal</em>'.
-     * @see net.refractions.udig.project.internal.EditManager#getMapInternal()
+     * @see org.locationtech.udig.project.internal.EditManager#getMapInternal()
      * @see #getEditManager()
      * @generated
      */
     EReference getEditManager_MapInternal();
 
     /**
-     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.EditManager#getEditLayerInternal <em>Edit Layer Internal</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.EditManager#getEditLayerInternal <em>Edit Layer Internal</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Edit Layer Internal</em>'.
-     * @see net.refractions.udig.project.internal.EditManager#getEditLayerInternal()
+     * @see org.locationtech.udig.project.internal.EditManager#getEditLayerInternal()
      * @see #getEditManager()
      * @generated
      */
     EReference getEditManager_EditLayerInternal();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.EditManager#getTransactionType <em>Transaction Type</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.EditManager#getTransactionType <em>Transaction Type</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Transaction Type</em>'.
-     * @see net.refractions.udig.project.internal.EditManager#getTransactionType()
+     * @see org.locationtech.udig.project.internal.EditManager#getTransactionType()
      * @see #getEditManager()
      * @generated
      */
     EAttribute getEditManager_TransactionType();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.EditManager#isEditLayerLocked <em>Edit Layer Locked</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.EditManager#isEditLayerLocked <em>Edit Layer Locked</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Edit Layer Locked</em>'.
-     * @see net.refractions.udig.project.internal.EditManager#isEditLayerLocked()
+     * @see org.locationtech.udig.project.internal.EditManager#isEditLayerLocked()
      * @see #getEditManager()
      * @generated
      */
     EAttribute getEditManager_EditLayerLocked();
 
     /**
-     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.EditManager#getSelectedLayer <em>Selected Layer</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.EditManager#getSelectedLayer <em>Selected Layer</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Selected Layer</em>'.
-     * @see net.refractions.udig.project.internal.EditManager#getSelectedLayer()
+     * @see org.locationtech.udig.project.internal.EditManager#getSelectedLayer()
      * @see #getEditManager()
      * @generated
      */
     EReference getEditManager_SelectedLayer();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.Layer <em>Layer</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.Layer <em>Layer</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Layer</em>'.
-     * @see net.refractions.udig.project.internal.Layer
+     * @see org.locationtech.udig.project.internal.Layer
      * @generated
      */
     EClass getLayer();
 
     /**
-     * Returns the meta object for the container reference '{@link net.refractions.udig.project.internal.Layer#getContextModel <em>Context Model</em>}'.
+     * Returns the meta object for the container reference '{@link org.locationtech.udig.project.internal.Layer#getContextModel <em>Context Model</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Context Model</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getContextModel()
+     * @see org.locationtech.udig.project.internal.Layer#getContextModel()
      * @see #getLayer()
      * @generated
      */
     EReference getLayer_ContextModel();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getFilter <em>Filter</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getFilter <em>Filter</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Filter</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getFilter()
+     * @see org.locationtech.udig.project.internal.Layer#getFilter()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_Filter();
 
     /**
-     * Returns the meta object for the containment reference '{@link net.refractions.udig.project.internal.Layer#getStyleBlackboard <em>Style Blackboard</em>}'.
+     * Returns the meta object for the containment reference '{@link org.locationtech.udig.project.internal.Layer#getStyleBlackboard <em>Style Blackboard</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Style Blackboard</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getStyleBlackboard()
+     * @see org.locationtech.udig.project.internal.Layer#getStyleBlackboard()
      * @see #getLayer()
      * @generated
      */
     EReference getLayer_StyleBlackboard();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getZorder <em>Zorder</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getZorder <em>Zorder</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Zorder</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getZorder()
+     * @see org.locationtech.udig.project.internal.Layer#getZorder()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_Zorder();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getStatus <em>Status</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getStatus <em>Status</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Status</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getStatus()
+     * @see org.locationtech.udig.project.internal.Layer#getStatus()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_Status();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getName <em>Name</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getName <em>Name</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Name</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getName()
+     * @see org.locationtech.udig.project.internal.Layer#getName()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_Name();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getCatalogRef <em>Catalog Ref</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getCatalogRef <em>Catalog Ref</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Catalog Ref</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getCatalogRef()
+     * @see org.locationtech.udig.project.internal.Layer#getCatalogRef()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_CatalogRef();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getID <em>ID</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getID <em>ID</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>ID</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getID()
+     * @see org.locationtech.udig.project.internal.Layer#getID()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_ID();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#isVisible <em>Visible</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#isVisible <em>Visible</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Visible</em>'.
-     * @see net.refractions.udig.project.internal.Layer#isVisible()
+     * @see org.locationtech.udig.project.internal.Layer#isVisible()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_Visible();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getGeoResource <em>Geo Resource</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getGeoResource <em>Geo Resource</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Geo Resource</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getGeoResource()
+     * @see org.locationtech.udig.project.internal.Layer#getGeoResource()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_GeoResource();
 
     /**
-     * Returns the meta object for the attribute list '{@link net.refractions.udig.project.internal.Layer#getGeoResources <em>Geo Resources</em>}'.
+     * Returns the meta object for the attribute list '{@link org.locationtech.udig.project.internal.Layer#getGeoResources <em>Geo Resources</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute list '<em>Geo Resources</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getGeoResources()
+     * @see org.locationtech.udig.project.internal.Layer#getGeoResources()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_GeoResources();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getCRS <em>CRS</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getCRS <em>CRS</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>CRS</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getCRS()
+     * @see org.locationtech.udig.project.internal.Layer#getCRS()
      * @see #getLayer()
      * @generated
      */
@@ -2007,380 +2007,380 @@ public interface ProjectPackage extends EPackage {
     EAttribute getLayer_CRS();
 
     /**
-     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.Layer#getProperties <em>Properties</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.Layer#getProperties <em>Properties</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Properties</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getProperties()
+     * @see org.locationtech.udig.project.internal.Layer#getProperties()
      * @see #getLayer()
      * @generated
      */
     EReference getLayer_Properties();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getColourScheme <em>Colour Scheme</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getColourScheme <em>Colour Scheme</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Colour Scheme</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getColourScheme()
+     * @see org.locationtech.udig.project.internal.Layer#getColourScheme()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_ColourScheme();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getDefaultColor <em>Default Color</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getDefaultColor <em>Default Color</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Default Color</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getDefaultColor()
+     * @see org.locationtech.udig.project.internal.Layer#getDefaultColor()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_DefaultColor();
 
     /**
-     * Returns the meta object for the attribute list '{@link net.refractions.udig.project.internal.Layer#getFeatureChanges <em>Feature Changes</em>}'.
+     * Returns the meta object for the attribute list '{@link org.locationtech.udig.project.internal.Layer#getFeatureChanges <em>Feature Changes</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute list '<em>Feature Changes</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getFeatureChanges()
+     * @see org.locationtech.udig.project.internal.Layer#getFeatureChanges()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_FeatureChanges();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getMinScaleDenominator <em>Min Scale Denominator</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getMinScaleDenominator <em>Min Scale Denominator</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Min Scale Denominator</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getMinScaleDenominator()
+     * @see org.locationtech.udig.project.internal.Layer#getMinScaleDenominator()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_MinScaleDenominator();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getMaxScaleDenominator <em>Max Scale Denominator</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getMaxScaleDenominator <em>Max Scale Denominator</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Max Scale Denominator</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getMaxScaleDenominator()
+     * @see org.locationtech.udig.project.internal.Layer#getMaxScaleDenominator()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_MaxScaleDenominator();
 
     /**
-     * Returns the meta object for the map '{@link net.refractions.udig.project.internal.Layer#getInteractionMap <em>Interaction Map</em>}'.
+     * Returns the meta object for the map '{@link org.locationtech.udig.project.internal.Layer#getInteractionMap <em>Interaction Map</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the map '<em>Interaction Map</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getInteractionMap()
+     * @see org.locationtech.udig.project.internal.Layer#getInteractionMap()
      * @see #getLayer()
      * @generated
      */
     EReference getLayer_InteractionMap();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#isShown <em>Shown</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#isShown <em>Shown</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Shown</em>'.
-     * @see net.refractions.udig.project.internal.Layer#isShown()
+     * @see org.locationtech.udig.project.internal.Layer#isShown()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_Shown();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Layer#getIcon <em>Icon</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Layer#getIcon <em>Icon</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Icon</em>'.
-     * @see net.refractions.udig.project.internal.Layer#getIcon()
+     * @see org.locationtech.udig.project.internal.Layer#getIcon()
      * @see #getLayer()
      * @generated
      */
     EAttribute getLayer_Icon();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.Map <em>Map</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.Map <em>Map</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Map</em>'.
-     * @see net.refractions.udig.project.internal.Map
+     * @see org.locationtech.udig.project.internal.Map
      * @generated
      */
     EClass getMap();
 
     /**
-     * Returns the meta object for the containment reference '{@link net.refractions.udig.project.internal.Map#getContextModel <em>Context Model</em>}'.
+     * Returns the meta object for the containment reference '{@link org.locationtech.udig.project.internal.Map#getContextModel <em>Context Model</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Context Model</em>'.
-     * @see net.refractions.udig.project.internal.Map#getContextModel()
+     * @see org.locationtech.udig.project.internal.Map#getContextModel()
      * @see #getMap()
      * @generated
      */
     EReference getMap_ContextModel();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Map#getAbstract <em>Abstract</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Map#getAbstract <em>Abstract</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Abstract</em>'.
-     * @see net.refractions.udig.project.internal.Map#getAbstract()
+     * @see org.locationtech.udig.project.internal.Map#getAbstract()
      * @see #getMap()
      * @generated
      */
     EAttribute getMap_Abstract();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Map#getNavCommandStack <em>Nav Command Stack</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Map#getNavCommandStack <em>Nav Command Stack</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Nav Command Stack</em>'.
-     * @see net.refractions.udig.project.internal.Map#getNavCommandStack()
+     * @see org.locationtech.udig.project.internal.Map#getNavCommandStack()
      * @see #getMap()
      * @generated
      */
     EAttribute getMap_NavCommandStack();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Map#getCommandStack <em>Command Stack</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Map#getCommandStack <em>Command Stack</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Command Stack</em>'.
-     * @see net.refractions.udig.project.internal.Map#getCommandStack()
+     * @see org.locationtech.udig.project.internal.Map#getCommandStack()
      * @see #getMap()
      * @generated
      */
     EAttribute getMap_CommandStack();
 
     /**
-     * Returns the meta object for the containment reference '{@link net.refractions.udig.project.internal.Map#getLayerFactory <em>Layer Factory</em>}'.
+     * Returns the meta object for the containment reference '{@link org.locationtech.udig.project.internal.Map#getLayerFactory <em>Layer Factory</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Layer Factory</em>'.
-     * @see net.refractions.udig.project.internal.Map#getLayerFactory()
+     * @see org.locationtech.udig.project.internal.Map#getLayerFactory()
      * @see #getMap()
      * @generated
      */
     EReference getMap_LayerFactory();
 
     /**
-     * Returns the meta object for the containment reference '{@link net.refractions.udig.project.internal.Map#getViewportModelInternal <em>Viewport Model Internal</em>}'.
+     * Returns the meta object for the containment reference '{@link org.locationtech.udig.project.internal.Map#getViewportModelInternal <em>Viewport Model Internal</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Viewport Model Internal</em>'.
-     * @see net.refractions.udig.project.internal.Map#getViewportModelInternal()
+     * @see org.locationtech.udig.project.internal.Map#getViewportModelInternal()
      * @see #getMap()
      * @generated
      */
     EReference getMap_ViewportModelInternal();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Map#getColorPalette <em>Color Palette</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Map#getColorPalette <em>Color Palette</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Color Palette</em>'.
-     * @see net.refractions.udig.project.internal.Map#getColorPalette()
+     * @see org.locationtech.udig.project.internal.Map#getColorPalette()
      * @see #getMap()
      * @generated
      */
     EAttribute getMap_ColorPalette();
 
     /**
-     * Returns the meta object for the containment reference '{@link net.refractions.udig.project.internal.Map#getEditManagerInternal <em>Edit Manager Internal</em>}'.
+     * Returns the meta object for the containment reference '{@link org.locationtech.udig.project.internal.Map#getEditManagerInternal <em>Edit Manager Internal</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Edit Manager Internal</em>'.
-     * @see net.refractions.udig.project.internal.Map#getEditManagerInternal()
+     * @see org.locationtech.udig.project.internal.Map#getEditManagerInternal()
      * @see #getMap()
      * @generated
      */
     EReference getMap_EditManagerInternal();
 
     /**
-     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.Map#getRenderManagerInternal <em>Render Manager Internal</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.Map#getRenderManagerInternal <em>Render Manager Internal</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Render Manager Internal</em>'.
-     * @see net.refractions.udig.project.internal.Map#getRenderManagerInternal()
+     * @see org.locationtech.udig.project.internal.Map#getRenderManagerInternal()
      * @see #getMap()
      * @generated
      */
     EReference getMap_RenderManagerInternal();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Map#getColourScheme <em>Colour Scheme</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Map#getColourScheme <em>Colour Scheme</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Colour Scheme</em>'.
-     * @see net.refractions.udig.project.internal.Map#getColourScheme()
+     * @see org.locationtech.udig.project.internal.Map#getColourScheme()
      * @see #getMap()
      * @generated
      */
     EAttribute getMap_ColourScheme();
 
     /**
-     * Returns the meta object for the containment reference '{@link net.refractions.udig.project.internal.Map#getBlackBoardInternal <em>Black Board Internal</em>}'.
+     * Returns the meta object for the containment reference '{@link org.locationtech.udig.project.internal.Map#getBlackBoardInternal <em>Black Board Internal</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Black Board Internal</em>'.
-     * @see net.refractions.udig.project.internal.Map#getBlackBoardInternal()
+     * @see org.locationtech.udig.project.internal.Map#getBlackBoardInternal()
      * @see #getMap()
      * @generated
      */
     EReference getMap_BlackBoardInternal();
 
     /**
-     * Returns the meta object for the containment reference list '{@link net.refractions.udig.project.internal.Map#getLegend <em>Legend</em>}'.
+     * Returns the meta object for the containment reference list '{@link org.locationtech.udig.project.internal.Map#getLegend <em>Legend</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference list '<em>Legend</em>'.
-     * @see net.refractions.udig.project.internal.Map#getLegend()
+     * @see org.locationtech.udig.project.internal.Map#getLegend()
      * @see #getMap()
      * @generated
      */
     EReference getMap_Legend();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.Project <em>Project</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.Project <em>Project</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Project</em>'.
-     * @see net.refractions.udig.project.internal.Project
+     * @see org.locationtech.udig.project.internal.Project
      * @generated
      */
     EClass getProject();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.Project#getName <em>Name</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.Project#getName <em>Name</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Name</em>'.
-     * @see net.refractions.udig.project.internal.Project#getName()
+     * @see org.locationtech.udig.project.internal.Project#getName()
      * @see #getProject()
      * @generated
      */
     EAttribute getProject_Name();
 
     /**
-     * Returns the meta object for the reference list '{@link net.refractions.udig.project.internal.Project#getElementsInternal <em>Elements Internal</em>}'.
+     * Returns the meta object for the reference list '{@link org.locationtech.udig.project.internal.Project#getElementsInternal <em>Elements Internal</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference list '<em>Elements Internal</em>'.
-     * @see net.refractions.udig.project.internal.Project#getElementsInternal()
+     * @see org.locationtech.udig.project.internal.Project#getElementsInternal()
      * @see #getProject()
      * @generated
      */
     EReference getProject_ElementsInternal();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.ProjectElement <em>Element</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.ProjectElement <em>Element</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Element</em>'.
-     * @see net.refractions.udig.project.internal.ProjectElement
+     * @see org.locationtech.udig.project.internal.ProjectElement
      * @generated
      */
     EClass getProjectElement();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.ProjectElement#getName <em>Name</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.ProjectElement#getName <em>Name</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Name</em>'.
-     * @see net.refractions.udig.project.internal.ProjectElement#getName()
+     * @see org.locationtech.udig.project.internal.ProjectElement#getName()
      * @see #getProjectElement()
      * @generated
      */
     EAttribute getProjectElement_Name();
 
     /**
-     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.ProjectElement#getProjectInternal <em>Project Internal</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.ProjectElement#getProjectInternal <em>Project Internal</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Project Internal</em>'.
-     * @see net.refractions.udig.project.internal.ProjectElement#getProjectInternal()
+     * @see org.locationtech.udig.project.internal.ProjectElement#getProjectInternal()
      * @see #getProjectElement()
      * @generated
      */
     EReference getProjectElement_ProjectInternal();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.ProjectRegistry <em>Registry</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.ProjectRegistry <em>Registry</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Registry</em>'.
-     * @see net.refractions.udig.project.internal.ProjectRegistry
+     * @see org.locationtech.udig.project.internal.ProjectRegistry
      * @generated
      */
     EClass getProjectRegistry();
 
     /**
-     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.ProjectRegistry#getCurrentProject <em>Current Project</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.ProjectRegistry#getCurrentProject <em>Current Project</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Current Project</em>'.
-     * @see net.refractions.udig.project.internal.ProjectRegistry#getCurrentProject()
+     * @see org.locationtech.udig.project.internal.ProjectRegistry#getCurrentProject()
      * @see #getProjectRegistry()
      * @generated
      */
     EReference getProjectRegistry_CurrentProject();
 
     /**
-     * Returns the meta object for the reference list '{@link net.refractions.udig.project.internal.ProjectRegistry#getProjects <em>Projects</em>}'.
+     * Returns the meta object for the reference list '{@link org.locationtech.udig.project.internal.ProjectRegistry#getProjects <em>Projects</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the reference list '<em>Projects</em>'.
-     * @see net.refractions.udig.project.internal.ProjectRegistry#getProjects()
+     * @see org.locationtech.udig.project.internal.ProjectRegistry#getProjects()
      * @see #getProjectRegistry()
      * @generated
      */
     EReference getProjectRegistry_Projects();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.StyleBlackboard <em>Style Blackboard</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.StyleBlackboard <em>Style Blackboard</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Style Blackboard</em>'.
-     * @see net.refractions.udig.project.internal.StyleBlackboard
+     * @see org.locationtech.udig.project.internal.StyleBlackboard
      * @generated
      */
     EClass getStyleBlackboard();
 
     /**
-     * Returns the meta object for the containment reference list '{@link net.refractions.udig.project.internal.StyleBlackboard#getContent <em>Content</em>}'.
+     * Returns the meta object for the containment reference list '{@link org.locationtech.udig.project.internal.StyleBlackboard#getContent <em>Content</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the containment reference list '<em>Content</em>'.
-     * @see net.refractions.udig.project.internal.StyleBlackboard#getContent()
+     * @see org.locationtech.udig.project.internal.StyleBlackboard#getContent()
      * @see #getStyleBlackboard()
      * @generated
      */
     EReference getStyleBlackboard_Content();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.StyleEntry <em>Style Entry</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.StyleEntry <em>Style Entry</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Style Entry</em>'.
-     * @see net.refractions.udig.project.internal.StyleEntry
+     * @see org.locationtech.udig.project.internal.StyleEntry
      * @generated
      */
     EClass getStyleEntry();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.StyleEntry#getID <em>ID</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.StyleEntry#getID <em>ID</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>ID</em>'.
-     * @see net.refractions.udig.project.internal.StyleEntry#getID()
+     * @see org.locationtech.udig.project.internal.StyleEntry#getID()
      * @see #getStyleEntry()
      * @generated
      */
     EAttribute getStyleEntry_ID();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.StyleEntry#getMemento <em>Memento</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.StyleEntry#getMemento <em>Memento</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Memento</em>'.
-     * @see net.refractions.udig.project.internal.StyleEntry#getMemento()
+     * @see org.locationtech.udig.project.internal.StyleEntry#getMemento()
      * @see #getStyleEntry()
      * @generated
      */
     EAttribute getStyleEntry_Memento();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.StyleEntry#getStyle <em>Style</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.StyleEntry#getStyle <em>Style</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Style</em>'.
-     * @see net.refractions.udig.project.internal.StyleEntry#getStyle()
+     * @see org.locationtech.udig.project.internal.StyleEntry#getStyle()
      * @see #getStyleEntry()
      * @generated
      */
     EAttribute getStyleEntry_Style();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.StyleEntry#getStyleClass <em>Style Class</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.StyleEntry#getStyleClass <em>Style Class</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Style Class</em>'.
-     * @see net.refractions.udig.project.internal.StyleEntry#getStyleClass()
+     * @see org.locationtech.udig.project.internal.StyleEntry#getStyleClass()
      * @see #getStyleEntry()
      * @generated
      */
@@ -2398,19 +2398,19 @@ public interface ProjectPackage extends EPackage {
     EClass getCloneable();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.LayerFactory <em>Layer Factory</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.LayerFactory <em>Layer Factory</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Layer Factory</em>'.
-     * @see net.refractions.udig.project.internal.LayerFactory
+     * @see org.locationtech.udig.project.internal.LayerFactory
      * @generated
      */
     EClass getLayerFactory();
 
     /**
-     * Returns the meta object for the container reference '{@link net.refractions.udig.project.internal.LayerFactory#getMap <em>Map</em>}'.
+     * Returns the meta object for the container reference '{@link org.locationtech.udig.project.internal.LayerFactory#getMap <em>Map</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Map</em>'.
-     * @see net.refractions.udig.project.internal.LayerFactory#getMap()
+     * @see org.locationtech.udig.project.internal.LayerFactory#getMap()
      * @see #getLayerFactory()
      * @generated
      */
@@ -2427,100 +2427,100 @@ public interface ProjectPackage extends EPackage {
     EClass getIAdaptable();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.core.IBlockingAdaptable <em>IBlocking Adaptable</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.core.IBlockingAdaptable <em>IBlocking Adaptable</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>IBlocking Adaptable</em>'.
-     * @see net.refractions.udig.core.IBlockingAdaptable
-     * @model instanceClass="net.refractions.udig.core.IBlockingAdaptable"
+     * @see org.locationtech.udig.core.IBlockingAdaptable
+     * @model instanceClass="org.locationtech.udig.core.IBlockingAdaptable"
      * @generated
      */
     EClass getIBlockingAdaptable();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.Blackboard <em>Blackboard</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.Blackboard <em>Blackboard</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Blackboard</em>'.
-     * @see net.refractions.udig.project.internal.Blackboard
+     * @see org.locationtech.udig.project.internal.Blackboard
      * @generated
      */
     EClass getBlackboard();
 
     /**
-     * Returns the meta object for the containment reference list '{@link net.refractions.udig.project.internal.Blackboard#getEntries <em>Entries</em>}'.
+     * Returns the meta object for the containment reference list '{@link org.locationtech.udig.project.internal.Blackboard#getEntries <em>Entries</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the containment reference list '<em>Entries</em>'.
-     * @see net.refractions.udig.project.internal.Blackboard#getEntries()
+     * @see org.locationtech.udig.project.internal.Blackboard#getEntries()
      * @see #getBlackboard()
      * @generated
      */
     EReference getBlackboard_Entries();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.BlackboardEntry <em>Blackboard Entry</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.BlackboardEntry <em>Blackboard Entry</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>Blackboard Entry</em>'.
-     * @see net.refractions.udig.project.internal.BlackboardEntry
+     * @see org.locationtech.udig.project.internal.BlackboardEntry
      * @generated
      */
     EClass getBlackboardEntry();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.BlackboardEntry#getKey <em>Key</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.BlackboardEntry#getKey <em>Key</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Key</em>'.
-     * @see net.refractions.udig.project.internal.BlackboardEntry#getKey()
+     * @see org.locationtech.udig.project.internal.BlackboardEntry#getKey()
      * @see #getBlackboardEntry()
      * @generated
      */
     EAttribute getBlackboardEntry_Key();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.BlackboardEntry#getMemento <em>Memento</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.BlackboardEntry#getMemento <em>Memento</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Memento</em>'.
-     * @see net.refractions.udig.project.internal.BlackboardEntry#getMemento()
+     * @see org.locationtech.udig.project.internal.BlackboardEntry#getMemento()
      * @see #getBlackboardEntry()
      * @generated
      */
     EAttribute getBlackboardEntry_Memento();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.BlackboardEntry#getObjectClass <em>Object Class</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.BlackboardEntry#getObjectClass <em>Object Class</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Object Class</em>'.
-     * @see net.refractions.udig.project.internal.BlackboardEntry#getObjectClass()
+     * @see org.locationtech.udig.project.internal.BlackboardEntry#getObjectClass()
      * @see #getBlackboardEntry()
      * @generated
      */
     EAttribute getBlackboardEntry_ObjectClass();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.BlackboardEntry#getObject <em>Object</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.BlackboardEntry#getObject <em>Object</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Object</em>'.
-     * @see net.refractions.udig.project.internal.BlackboardEntry#getObject()
+     * @see org.locationtech.udig.project.internal.BlackboardEntry#getObject()
      * @see #getBlackboardEntry()
      * @generated
      */
     EAttribute getBlackboardEntry_Object();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.catalog.IResolveChangeListener <em>IResolve Change Listener</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.catalog.IResolveChangeListener <em>IResolve Change Listener</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for class '<em>IResolve Change Listener</em>'.
-     * @see net.refractions.udig.catalog.IResolveChangeListener
-     * @model instanceClass="net.refractions.udig.catalog.IResolveChangeListener"
+     * @see org.locationtech.udig.catalog.IResolveChangeListener
+     * @model instanceClass="org.locationtech.udig.catalog.IResolveChangeListener"
      * @generated
      */
     EClass getIResolveChangeListener();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.IStyleBlackboard <em>IStyle Blackboard</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.IStyleBlackboard <em>IStyle Blackboard</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>IStyle Blackboard</em>'.
-     * @see net.refractions.udig.project.IStyleBlackboard
-     * @model instanceClass="net.refractions.udig.project.IStyleBlackboard"
+     * @see org.locationtech.udig.project.IStyleBlackboard
+     * @model instanceClass="org.locationtech.udig.project.IStyleBlackboard"
      * @generated
      */
     EClass getIStyleBlackboard();
@@ -2531,7 +2531,7 @@ public interface ProjectPackage extends EPackage {
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Interaction To EBoolean Object Map Entry</em>'.
      * @see java.util.Map.Entry
-     * @model keyDataType="net.refractions.udig.project.internal.Interaction"
+     * @model keyDataType="org.locationtech.udig.project.internal.Interaction"
      *        valueDataType="org.eclipse.emf.ecore.EBooleanObject"
      * @generated
      */
@@ -2560,118 +2560,118 @@ public interface ProjectPackage extends EPackage {
     EAttribute getInteractionToEBooleanObjectMapEntry_Value();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.IFolder <em>IFolder</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.IFolder <em>IFolder</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>IFolder</em>'.
-     * @see net.refractions.udig.project.IFolder
-     * @model instanceClass="net.refractions.udig.project.IFolder"
+     * @see org.locationtech.udig.project.IFolder
+     * @model instanceClass="org.locationtech.udig.project.IFolder"
      * @generated
      */
     EClass getIFolder();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.Folder <em>Folder</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.Folder <em>Folder</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Folder</em>'.
-     * @see net.refractions.udig.project.internal.Folder
+     * @see org.locationtech.udig.project.internal.Folder
      * @generated
      */
     EClass getFolder();
 
     /**
-     * Returns the meta object for the containment reference list '{@link net.refractions.udig.project.internal.Folder#getItems <em>Items</em>}'.
+     * Returns the meta object for the containment reference list '{@link org.locationtech.udig.project.internal.Folder#getItems <em>Items</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference list '<em>Items</em>'.
-     * @see net.refractions.udig.project.internal.Folder#getItems()
+     * @see org.locationtech.udig.project.internal.Folder#getItems()
      * @see #getFolder()
      * @generated
      */
     EReference getFolder_Items();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.ILayerLegendItem <em>ILayer Legend Item</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.ILayerLegendItem <em>ILayer Legend Item</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>ILayer Legend Item</em>'.
-     * @see net.refractions.udig.project.ILayerLegendItem
-     * @model instanceClass="net.refractions.udig.project.ILayerLegendItem"
+     * @see org.locationtech.udig.project.ILayerLegendItem
+     * @model instanceClass="org.locationtech.udig.project.ILayerLegendItem"
      * @generated
      */
     EClass getILayerLegendItem();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.LegendItem <em>Legend Item</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.LegendItem <em>Legend Item</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Legend Item</em>'.
-     * @see net.refractions.udig.project.internal.LegendItem
+     * @see org.locationtech.udig.project.internal.LegendItem
      * @generated
      */
     EClass getLegendItem();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.LegendItem#getName <em>Name</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.LegendItem#getName <em>Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Name</em>'.
-     * @see net.refractions.udig.project.internal.LegendItem#getName()
+     * @see org.locationtech.udig.project.internal.LegendItem#getName()
      * @see #getLegendItem()
      * @generated
      */
     EAttribute getLegendItem_Name();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.LegendItem#isShown <em>Shown</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.LegendItem#isShown <em>Shown</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Shown</em>'.
-     * @see net.refractions.udig.project.internal.LegendItem#isShown()
+     * @see org.locationtech.udig.project.internal.LegendItem#isShown()
      * @see #getLegendItem()
      * @generated
      */
     EAttribute getLegendItem_Shown();
 
     /**
-     * Returns the meta object for the attribute '{@link net.refractions.udig.project.internal.LegendItem#getIcon <em>Icon</em>}'.
+     * Returns the meta object for the attribute '{@link org.locationtech.udig.project.internal.LegendItem#getIcon <em>Icon</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Icon</em>'.
-     * @see net.refractions.udig.project.internal.LegendItem#getIcon()
+     * @see org.locationtech.udig.project.internal.LegendItem#getIcon()
      * @see #getLegendItem()
      * @generated
      */
     EAttribute getLegendItem_Icon();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.ILegendItem <em>ILegend Item</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.ILegendItem <em>ILegend Item</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>ILegend Item</em>'.
-     * @see net.refractions.udig.project.ILegendItem
-     * @model instanceClass="net.refractions.udig.project.ILegendItem"
+     * @see org.locationtech.udig.project.ILegendItem
+     * @model instanceClass="org.locationtech.udig.project.ILegendItem"
      * @generated
      */
     EClass getILegendItem();
 
     /**
-     * Returns the meta object for class '{@link net.refractions.udig.project.internal.LayerLegendItem <em>Layer Legend Item</em>}'.
+     * Returns the meta object for class '{@link org.locationtech.udig.project.internal.LayerLegendItem <em>Layer Legend Item</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Layer Legend Item</em>'.
-     * @see net.refractions.udig.project.internal.LayerLegendItem
+     * @see org.locationtech.udig.project.internal.LayerLegendItem
      * @generated
      */
     EClass getLayerLegendItem();
 
     /**
-     * Returns the meta object for the reference '{@link net.refractions.udig.project.internal.LayerLegendItem#getLayer <em>Layer</em>}'.
+     * Returns the meta object for the reference '{@link org.locationtech.udig.project.internal.LayerLegendItem#getLayer <em>Layer</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Layer</em>'.
-     * @see net.refractions.udig.project.internal.LayerLegendItem#getLayer()
+     * @see org.locationtech.udig.project.internal.LayerLegendItem#getLayer()
      * @see #getLayerLegendItem()
      * @generated
      */
@@ -2688,11 +2688,11 @@ public interface ProjectPackage extends EPackage {
     EDataType getCoordinate();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.project.render.displayAdapter.IMapDisplay <em>Map Display</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.render.displayAdapter.IMapDisplay <em>Map Display</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Map Display</em>'.
-     * @see net.refractions.udig.project.render.displayAdapter.IMapDisplay
-     * @model instanceClass="net.refractions.udig.project.render.displayAdapter.IMapDisplay"
+     * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplay
+     * @model instanceClass="org.locationtech.udig.project.render.displayAdapter.IMapDisplay"
      * @generated
      */
     EDataType getMapDisplay();
@@ -2719,21 +2719,21 @@ public interface ProjectPackage extends EPackage {
     EDataType getAffineTransform();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.project.command.NavCommandStack <em>Nav Command Stack</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.command.NavCommandStack <em>Nav Command Stack</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Nav Command Stack</em>'.
-     * @see net.refractions.udig.project.command.NavCommandStack
-     * @model instanceClass="net.refractions.udig.project.command.NavCommandStack"
+     * @see org.locationtech.udig.project.command.NavCommandStack
+     * @model instanceClass="org.locationtech.udig.project.command.NavCommandStack"
      * @generated
      */
     EDataType getNavCommandStack();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.catalog.IGeoResource <em>IGeo Resource</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.catalog.IGeoResource <em>IGeo Resource</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>IGeo Resource</em>'.
-     * @see net.refractions.udig.catalog.IGeoResource
-     * @model instanceClass="net.refractions.udig.catalog.IGeoResource"
+     * @see org.locationtech.udig.catalog.IGeoResource
+     * @model instanceClass="org.locationtech.udig.catalog.IGeoResource"
      * @generated
      */
     EDataType getIGeoResource();
@@ -2759,11 +2759,11 @@ public interface ProjectPackage extends EPackage {
     EDataType getCoordinateReferenceSystem();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.project.command.CommandStack <em>Command Stack</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.command.CommandStack <em>Command Stack</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Command Stack</em>'.
-     * @see net.refractions.udig.project.command.CommandStack
-     * @model instanceClass="net.refractions.udig.project.command.CommandStack"
+     * @see org.locationtech.udig.project.command.CommandStack
+     * @model instanceClass="org.locationtech.udig.project.command.CommandStack"
      * @generated
      */
     EDataType getCommandStack();
@@ -2831,21 +2831,21 @@ public interface ProjectPackage extends EPackage {
     EDataType getImageDescriptor();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.project.command.EditCommand <em>Edit Command</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.command.EditCommand <em>Edit Command</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Edit Command</em>'.
-     * @see net.refractions.udig.project.command.EditCommand
-     * @model instanceClass="net.refractions.udig.project.command.EditCommand"
+     * @see org.locationtech.udig.project.command.EditCommand
+     * @model instanceClass="org.locationtech.udig.project.command.EditCommand"
      * @generated
      */
     EDataType getEditCommand();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.project.command.NavCommand <em>Nav Command</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.command.NavCommand <em>Nav Command</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Nav Command</em>'.
-     * @see net.refractions.udig.project.command.NavCommand
-     * @model instanceClass="net.refractions.udig.project.command.NavCommand"
+     * @see org.locationtech.udig.project.command.NavCommand
+     * @model instanceClass="org.locationtech.udig.project.command.NavCommand"
      * @generated
      */
     EDataType getNavCommand();
@@ -2861,21 +2861,21 @@ public interface ProjectPackage extends EPackage {
     EDataType getEnvelope();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.project.command.EditManagerControlCommand <em>Edit Manager Control Command</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.command.EditManagerControlCommand <em>Edit Manager Control Command</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Edit Manager Control Command</em>'.
-     * @see net.refractions.udig.project.command.EditManagerControlCommand
-     * @model instanceClass="net.refractions.udig.project.command.EditManagerControlCommand"
+     * @see org.locationtech.udig.project.command.EditManagerControlCommand
+     * @model instanceClass="org.locationtech.udig.project.command.EditManagerControlCommand"
      * @generated
      */
     EDataType getEditManagerControlCommand();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.project.command.MapCommand <em>Command</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.command.MapCommand <em>Command</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Command</em>'.
-     * @see net.refractions.udig.project.command.MapCommand
-     * @model instanceClass="net.refractions.udig.project.command.MapCommand"
+     * @see org.locationtech.udig.project.command.MapCommand
+     * @model instanceClass="org.locationtech.udig.project.command.MapCommand"
      * @generated
      */
     EDataType getCommand();
@@ -2891,31 +2891,31 @@ public interface ProjectPackage extends EPackage {
     EDataType getURI();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.project.internal.CatalogRef <em>Catalog Ref</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.internal.CatalogRef <em>Catalog Ref</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Catalog Ref</em>'.
-     * @see net.refractions.udig.project.internal.CatalogRef
-     * @model instanceClass="net.refractions.udig.project.internal.CatalogRef"
+     * @see org.locationtech.udig.project.internal.CatalogRef
+     * @model instanceClass="org.locationtech.udig.project.internal.CatalogRef"
      * @generated
      */
     EDataType getCatalogRef();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.ui.palette.ColourPalette <em>Colour Palette</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.ui.palette.ColourPalette <em>Colour Palette</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Colour Palette</em>'.
-     * @see net.refractions.udig.ui.palette.ColourPalette
-     * @model instanceClass="net.refractions.udig.ui.palette.ColourPalette"
+     * @see org.locationtech.udig.ui.palette.ColourPalette
+     * @model instanceClass="org.locationtech.udig.ui.palette.ColourPalette"
      * @generated
      */
     EDataType getColourPalette();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.ui.palette.ColourScheme <em>Colour Scheme</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.ui.palette.ColourScheme <em>Colour Scheme</em>}'.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the meta object for data type '<em>Colour Scheme</em>'.
-     * @see net.refractions.udig.ui.palette.ColourScheme
-     * @model instanceClass="net.refractions.udig.ui.palette.ColourScheme"
+     * @see org.locationtech.udig.ui.palette.ColourScheme
+     * @model instanceClass="org.locationtech.udig.ui.palette.ColourScheme"
      * @generated
      */
     EDataType getColourScheme();
@@ -3006,12 +3006,12 @@ public interface ProjectPackage extends EPackage {
     EDataType getBrewerPalette();
 
     /**
-     * Returns the meta object for data type '{@link net.refractions.udig.project.Interaction <em>Interaction</em>}'.
+     * Returns the meta object for data type '{@link org.locationtech.udig.project.Interaction <em>Interaction</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for data type '<em>Interaction</em>'.
-     * @see net.refractions.udig.project.Interaction
-     * @model instanceClass="net.refractions.udig.project.Interaction"
+     * @see org.locationtech.udig.project.Interaction
+     * @model instanceClass="org.locationtech.udig.project.Interaction"
      * @generated
      */
     EDataType getInteraction();
@@ -3043,107 +3043,107 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see Comparable
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getComparable()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getComparable()
          * @generated
          */
         EClass COMPARABLE = eINSTANCE.getComparable();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.IMap <em>IMap</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.IMap <em>IMap</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.IMap
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIMap()
+         * @see org.locationtech.udig.project.IMap
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIMap()
          * @generated
          */
         EClass IMAP = eINSTANCE.getIMap();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.ILayer <em>ILayer</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.ILayer <em>ILayer</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.ILayer
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getILayer()
+         * @see org.locationtech.udig.project.ILayer
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getILayer()
          * @generated
          */
         EClass ILAYER = eINSTANCE.getILayer();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.IEditManager <em>IEdit Manager</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.IEditManager <em>IEdit Manager</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.IEditManager
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIEditManager()
+         * @see org.locationtech.udig.project.IEditManager
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIEditManager()
          * @generated
          */
         EClass IEDIT_MANAGER = eINSTANCE.getIEditManager();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.IProject <em>IProject</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.IProject <em>IProject</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.IProject
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIProject()
+         * @see org.locationtech.udig.project.IProject
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIProject()
          * @generated
          */
         EClass IPROJECT = eINSTANCE.getIProject();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.IAbstractContext <em>IAbstract Context</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.IAbstractContext <em>IAbstract Context</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.IAbstractContext
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIAbstractContext()
+         * @see org.locationtech.udig.project.IAbstractContext
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIAbstractContext()
          * @generated
          */
         EClass IABSTRACT_CONTEXT = eINSTANCE.getIAbstractContext();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.IBlackboard <em>IBlackboard</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.IBlackboard <em>IBlackboard</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.IBlackboard
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIBlackboard()
+         * @see org.locationtech.udig.project.IBlackboard
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIBlackboard()
          * @generated
          */
         EClass IBLACKBOARD = eINSTANCE.getIBlackboard();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.IProjectElement <em>IProject Element</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.IProjectElement <em>IProject Element</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.IProjectElement
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIProjectElement()
+         * @see org.locationtech.udig.project.IProjectElement
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIProjectElement()
          * @generated
          */
         EClass IPROJECT_ELEMENT = eINSTANCE.getIProjectElement();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.render.IRenderManager <em>IRender Manager</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.IRenderManager <em>IRender Manager</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.render.IRenderManager
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIRenderManager()
+         * @see org.locationtech.udig.project.render.IRenderManager
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIRenderManager()
          * @generated
          */
         EClass IRENDER_MANAGER = eINSTANCE.getIRenderManager();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.render.IViewportModel <em>IViewport Model</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.render.IViewportModel <em>IViewport Model</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.render.IViewportModel
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIViewportModel()
+         * @see org.locationtech.udig.project.render.IViewportModel
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIViewportModel()
          * @generated
          */
         EClass IVIEWPORT_MODEL = eINSTANCE.getIViewportModel();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.ContextModelImpl <em>Context Model</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.ContextModelImpl <em>Context Model</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.impl.ContextModelImpl
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getContextModel()
+         * @see org.locationtech.udig.project.internal.impl.ContextModelImpl
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getContextModel()
          * @generated
          */
         EClass CONTEXT_MODEL = eINSTANCE.getContextModel();
@@ -3165,11 +3165,11 @@ public interface ProjectPackage extends EPackage {
         EReference CONTEXT_MODEL__MAP = eINSTANCE.getContextModel_Map();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.EditManagerImpl <em>Edit Manager</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.EditManagerImpl <em>Edit Manager</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.impl.EditManagerImpl
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEditManager()
+         * @see org.locationtech.udig.project.internal.impl.EditManagerImpl
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEditManager()
          * @generated
          */
         EClass EDIT_MANAGER = eINSTANCE.getEditManager();
@@ -3223,11 +3223,11 @@ public interface ProjectPackage extends EPackage {
         EReference EDIT_MANAGER__SELECTED_LAYER = eINSTANCE.getEditManager_SelectedLayer();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.LayerImpl <em>Layer</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.LayerImpl <em>Layer</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.impl.LayerImpl
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getLayer()
+         * @see org.locationtech.udig.project.internal.impl.LayerImpl
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLayer()
          * @generated
          */
         EClass LAYER = eINSTANCE.getLayer();
@@ -3401,11 +3401,11 @@ public interface ProjectPackage extends EPackage {
         EAttribute LAYER__ICON = eINSTANCE.getLayer_Icon();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.MapImpl <em>Map</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.MapImpl <em>Map</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.impl.MapImpl
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getMap()
+         * @see org.locationtech.udig.project.internal.impl.MapImpl
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getMap()
          * @generated
          */
         EClass MAP = eINSTANCE.getMap();
@@ -3507,11 +3507,11 @@ public interface ProjectPackage extends EPackage {
         EReference MAP__LEGEND = eINSTANCE.getMap_Legend();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.ProjectImpl <em>Project</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.ProjectImpl <em>Project</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.impl.ProjectImpl
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getProject()
+         * @see org.locationtech.udig.project.internal.impl.ProjectImpl
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getProject()
          * @generated
          */
         EClass PROJECT = eINSTANCE.getProject();
@@ -3533,11 +3533,11 @@ public interface ProjectPackage extends EPackage {
         EReference PROJECT__ELEMENTS_INTERNAL = eINSTANCE.getProject_ElementsInternal();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.ProjectElement <em>Element</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.ProjectElement <em>Element</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.ProjectElement
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getProjectElement()
+         * @see org.locationtech.udig.project.internal.ProjectElement
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getProjectElement()
          * @generated
          */
         EClass PROJECT_ELEMENT = eINSTANCE.getProjectElement();
@@ -3560,11 +3560,11 @@ public interface ProjectPackage extends EPackage {
                 .getProjectElement_ProjectInternal();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.ProjectRegistryImpl <em>Registry</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.ProjectRegistryImpl <em>Registry</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.impl.ProjectRegistryImpl
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getProjectRegistry()
+         * @see org.locationtech.udig.project.internal.impl.ProjectRegistryImpl
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getProjectRegistry()
          * @generated
          */
         EClass PROJECT_REGISTRY = eINSTANCE.getProjectRegistry();
@@ -3587,11 +3587,11 @@ public interface ProjectPackage extends EPackage {
         EReference PROJECT_REGISTRY__PROJECTS = eINSTANCE.getProjectRegistry_Projects();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.StyleBlackboardImpl <em>Style Blackboard</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.StyleBlackboardImpl <em>Style Blackboard</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.impl.StyleBlackboardImpl
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getStyleBlackboard()
+         * @see org.locationtech.udig.project.internal.impl.StyleBlackboardImpl
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getStyleBlackboard()
          * @generated
          */
         EClass STYLE_BLACKBOARD = eINSTANCE.getStyleBlackboard();
@@ -3605,11 +3605,11 @@ public interface ProjectPackage extends EPackage {
         EReference STYLE_BLACKBOARD__CONTENT = eINSTANCE.getStyleBlackboard_Content();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.StyleEntryImpl <em>Style Entry</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.StyleEntryImpl <em>Style Entry</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.impl.StyleEntryImpl
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getStyleEntry()
+         * @see org.locationtech.udig.project.internal.impl.StyleEntryImpl
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getStyleEntry()
          * @generated
          */
         EClass STYLE_ENTRY = eINSTANCE.getStyleEntry();
@@ -3651,17 +3651,17 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see Cloneable
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCloneable()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCloneable()
          * @generated
          */
         EClass CLONEABLE = eINSTANCE.getCloneable();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.LayerFactoryImpl <em>Layer Factory</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.LayerFactoryImpl <em>Layer Factory</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.impl.LayerFactoryImpl
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getLayerFactory()
+         * @see org.locationtech.udig.project.internal.impl.LayerFactoryImpl
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLayerFactory()
          * @generated
          */
         EClass LAYER_FACTORY = eINSTANCE.getLayerFactory();
@@ -3679,27 +3679,27 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.eclipse.core.runtime.IAdaptable
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIAdaptable()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIAdaptable()
          * @generated
          */
         EClass IADAPTABLE = eINSTANCE.getIAdaptable();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.core.IBlockingAdaptable <em>IBlocking Adaptable</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.core.IBlockingAdaptable <em>IBlocking Adaptable</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.core.IBlockingAdaptable
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIBlockingAdaptable()
+         * @see org.locationtech.udig.core.IBlockingAdaptable
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIBlockingAdaptable()
          * @generated
          */
         EClass IBLOCKING_ADAPTABLE = eINSTANCE.getIBlockingAdaptable();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.BlackboardImpl <em>Blackboard</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.BlackboardImpl <em>Blackboard</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.impl.BlackboardImpl
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getBlackboard()
+         * @see org.locationtech.udig.project.internal.impl.BlackboardImpl
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getBlackboard()
          * @generated
          */
         EClass BLACKBOARD = eINSTANCE.getBlackboard();
@@ -3713,11 +3713,11 @@ public interface ProjectPackage extends EPackage {
         EReference BLACKBOARD__ENTRIES = eINSTANCE.getBlackboard_Entries();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.BlackboardEntryImpl <em>Blackboard Entry</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.BlackboardEntryImpl <em>Blackboard Entry</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.impl.BlackboardEntryImpl
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getBlackboardEntry()
+         * @see org.locationtech.udig.project.internal.impl.BlackboardEntryImpl
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getBlackboardEntry()
          * @generated
          */
         EClass BLACKBOARD_ENTRY = eINSTANCE.getBlackboardEntry();
@@ -3755,31 +3755,31 @@ public interface ProjectPackage extends EPackage {
         EAttribute BLACKBOARD_ENTRY__OBJECT = eINSTANCE.getBlackboardEntry_Object();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.catalog.IResolveChangeListener <em>IResolve Change Listener</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.catalog.IResolveChangeListener <em>IResolve Change Listener</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.catalog.IResolveChangeListener
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIResolveChangeListener()
+         * @see org.locationtech.udig.catalog.IResolveChangeListener
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIResolveChangeListener()
          * @generated
          */
         EClass IRESOLVE_CHANGE_LISTENER = eINSTANCE.getIResolveChangeListener();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.IStyleBlackboard <em>IStyle Blackboard</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.IStyleBlackboard <em>IStyle Blackboard</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.IStyleBlackboard
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIStyleBlackboard()
+         * @see org.locationtech.udig.project.IStyleBlackboard
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIStyleBlackboard()
          * @generated
          */
         EClass ISTYLE_BLACKBOARD = eINSTANCE.getIStyleBlackboard();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl <em>Interaction To EBoolean Object Map Entry</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl <em>Interaction To EBoolean Object Map Entry</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getInteractionToEBooleanObjectMapEntry()
+         * @see org.locationtech.udig.project.internal.impl.InteractionToEBooleanObjectMapEntryImpl
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getInteractionToEBooleanObjectMapEntry()
          * @generated
          */
         EClass INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY = eINSTANCE
@@ -3804,21 +3804,21 @@ public interface ProjectPackage extends EPackage {
                 .getInteractionToEBooleanObjectMapEntry_Value();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.IFolder <em>IFolder</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.IFolder <em>IFolder</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.IFolder
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIFolder()
+         * @see org.locationtech.udig.project.IFolder
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIFolder()
          * @generated
          */
         EClass IFOLDER = eINSTANCE.getIFolder();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.FolderImpl <em>Folder</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.FolderImpl <em>Folder</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.impl.FolderImpl
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFolder()
+         * @see org.locationtech.udig.project.internal.impl.FolderImpl
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getFolder()
          * @generated
          */
         EClass FOLDER = eINSTANCE.getFolder();
@@ -3832,21 +3832,21 @@ public interface ProjectPackage extends EPackage {
         EReference FOLDER__ITEMS = eINSTANCE.getFolder_Items();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.ILayerLegendItem <em>ILayer Legend Item</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.ILayerLegendItem <em>ILayer Legend Item</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.ILayerLegendItem
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getILayerLegendItem()
+         * @see org.locationtech.udig.project.ILayerLegendItem
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getILayerLegendItem()
          * @generated
          */
         EClass ILAYER_LEGEND_ITEM = eINSTANCE.getILayerLegendItem();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.LegendItemImpl <em>Legend Item</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.LegendItemImpl <em>Legend Item</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.impl.LegendItemImpl
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getLegendItem()
+         * @see org.locationtech.udig.project.internal.impl.LegendItemImpl
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLegendItem()
          * @generated
          */
         EClass LEGEND_ITEM = eINSTANCE.getLegendItem();
@@ -3876,21 +3876,21 @@ public interface ProjectPackage extends EPackage {
         EAttribute LEGEND_ITEM__ICON = eINSTANCE.getLegendItem_Icon();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.ILegendItem <em>ILegend Item</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.ILegendItem <em>ILegend Item</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.ILegendItem
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getILegendItem()
+         * @see org.locationtech.udig.project.ILegendItem
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getILegendItem()
          * @generated
          */
         EClass ILEGEND_ITEM = eINSTANCE.getILegendItem();
 
         /**
-         * The meta object literal for the '{@link net.refractions.udig.project.internal.impl.LayerLegendItemImpl <em>Layer Legend Item</em>}' class.
+         * The meta object literal for the '{@link org.locationtech.udig.project.internal.impl.LayerLegendItemImpl <em>Layer Legend Item</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.impl.LayerLegendItemImpl
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getLayerLegendItem()
+         * @see org.locationtech.udig.project.internal.impl.LayerLegendItemImpl
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getLayerLegendItem()
          * @generated
          */
         EClass LAYER_LEGEND_ITEM = eINSTANCE.getLayerLegendItem();
@@ -3908,7 +3908,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see com.vividsolutions.jts.geom.Coordinate
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCoordinate()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCoordinate()
          * @generated
          */
         EDataType COORDINATE = eINSTANCE.getCoordinate();
@@ -3917,8 +3917,8 @@ public interface ProjectPackage extends EPackage {
          * The meta object literal for the '<em>Map Display</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.render.displayAdapter.IMapDisplay
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getMapDisplay()
+         * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplay
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getMapDisplay()
          * @generated
          */
         EDataType MAP_DISPLAY = eINSTANCE.getMapDisplay();
@@ -3928,7 +3928,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.util.List
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getList()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getList()
          * @generated
          */
         EDataType LIST = eINSTANCE.getList();
@@ -3938,7 +3938,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.awt.geom.AffineTransform
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getAffineTransform()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getAffineTransform()
          * @generated
          */
         EDataType AFFINE_TRANSFORM = eINSTANCE.getAffineTransform();
@@ -3947,8 +3947,8 @@ public interface ProjectPackage extends EPackage {
          * The meta object literal for the '<em>Nav Command Stack</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.command.NavCommandStack
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getNavCommandStack()
+         * @see org.locationtech.udig.project.command.NavCommandStack
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getNavCommandStack()
          * @generated
          */
         EDataType NAV_COMMAND_STACK = eINSTANCE.getNavCommandStack();
@@ -3957,8 +3957,8 @@ public interface ProjectPackage extends EPackage {
          * The meta object literal for the '<em>IGeo Resource</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.catalog.IGeoResource
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIGeoResource()
+         * @see org.locationtech.udig.catalog.IGeoResource
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIGeoResource()
          * @generated
          */
         EDataType IGEO_RESOURCE = eINSTANCE.getIGeoResource();
@@ -3968,7 +3968,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.opengis.filter.Filter
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFilter()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getFilter()
          * @generated
          */
         EDataType FILTER = eINSTANCE.getFilter();
@@ -3978,7 +3978,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.opengis.referencing.crs.CoordinateReferenceSystem
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCoordinateReferenceSystem()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCoordinateReferenceSystem()
          * @generated
          */
         EDataType COORDINATE_REFERENCE_SYSTEM = eINSTANCE.getCoordinateReferenceSystem();
@@ -3987,8 +3987,8 @@ public interface ProjectPackage extends EPackage {
          * The meta object literal for the '<em>Command Stack</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.command.CommandStack
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCommandStack()
+         * @see org.locationtech.udig.project.command.CommandStack
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCommandStack()
          * @generated
          */
         EDataType COMMAND_STACK = eINSTANCE.getCommandStack();
@@ -3998,7 +3998,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.awt.Point
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getPoint()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getPoint()
          * @generated
          */
         EDataType POINT = eINSTANCE.getPoint();
@@ -4008,7 +4008,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.eclipse.emf.common.notify.Adapter
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getAdapter()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getAdapter()
          * @generated
          */
         EDataType ADAPTER = eINSTANCE.getAdapter();
@@ -4018,7 +4018,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.eclipse.core.runtime.IProgressMonitor
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIProgressMonitor()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIProgressMonitor()
          * @generated
          */
         EDataType IPROGRESS_MONITOR = eINSTANCE.getIProgressMonitor();
@@ -4028,7 +4028,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.geotools.data.Query
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getQuery()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getQuery()
          * @generated
          */
         EDataType QUERY = eINSTANCE.getQuery();
@@ -4038,7 +4038,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.net.URL
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getURL()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getURL()
          * @generated
          */
         EDataType URL = eINSTANCE.getURL();
@@ -4048,7 +4048,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.eclipse.jface.resource.ImageDescriptor
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getImageDescriptor()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getImageDescriptor()
          * @generated
          */
         EDataType IMAGE_DESCRIPTOR = eINSTANCE.getImageDescriptor();
@@ -4057,8 +4057,8 @@ public interface ProjectPackage extends EPackage {
          * The meta object literal for the '<em>Edit Command</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.command.EditCommand
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEditCommand()
+         * @see org.locationtech.udig.project.command.EditCommand
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEditCommand()
          * @generated
          */
         EDataType EDIT_COMMAND = eINSTANCE.getEditCommand();
@@ -4067,8 +4067,8 @@ public interface ProjectPackage extends EPackage {
          * The meta object literal for the '<em>Nav Command</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.command.NavCommand
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getNavCommand()
+         * @see org.locationtech.udig.project.command.NavCommand
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getNavCommand()
          * @generated
          */
         EDataType NAV_COMMAND = eINSTANCE.getNavCommand();
@@ -4078,7 +4078,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see com.vividsolutions.jts.geom.Envelope
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEnvelope()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEnvelope()
          * @generated
          */
         EDataType ENVELOPE = eINSTANCE.getEnvelope();
@@ -4087,8 +4087,8 @@ public interface ProjectPackage extends EPackage {
          * The meta object literal for the '<em>Edit Manager Control Command</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.command.EditManagerControlCommand
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getEditManagerControlCommand()
+         * @see org.locationtech.udig.project.command.EditManagerControlCommand
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getEditManagerControlCommand()
          * @generated
          */
         EDataType EDIT_MANAGER_CONTROL_COMMAND = eINSTANCE.getEditManagerControlCommand();
@@ -4097,8 +4097,8 @@ public interface ProjectPackage extends EPackage {
          * The meta object literal for the '<em>Command</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.command.MapCommand
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCommand()
+         * @see org.locationtech.udig.project.command.MapCommand
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCommand()
          * @generated
          */
         EDataType COMMAND = eINSTANCE.getCommand();
@@ -4108,7 +4108,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.eclipse.emf.common.util.URI
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getURI()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getURI()
          * @generated
          */
         EDataType URI = eINSTANCE.getURI();
@@ -4117,8 +4117,8 @@ public interface ProjectPackage extends EPackage {
          * The meta object literal for the '<em>Catalog Ref</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.internal.CatalogRef
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getCatalogRef()
+         * @see org.locationtech.udig.project.internal.CatalogRef
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getCatalogRef()
          * @generated
          */
         EDataType CATALOG_REF = eINSTANCE.getCatalogRef();
@@ -4127,8 +4127,8 @@ public interface ProjectPackage extends EPackage {
          * The meta object literal for the '<em>Colour Palette</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.ui.palette.ColourPalette
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getColourPalette()
+         * @see org.locationtech.udig.ui.palette.ColourPalette
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getColourPalette()
          * @generated
          */
         EDataType COLOUR_PALETTE = eINSTANCE.getColourPalette();
@@ -4137,8 +4137,8 @@ public interface ProjectPackage extends EPackage {
          * The meta object literal for the '<em>Colour Scheme</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.ui.palette.ColourScheme
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getColourScheme()
+         * @see org.locationtech.udig.ui.palette.ColourScheme
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getColourScheme()
          * @generated
          */
         EDataType COLOUR_SCHEME = eINSTANCE.getColourScheme();
@@ -4148,7 +4148,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.picocontainer.MutablePicoContainer
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getMutablePicoContainer()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getMutablePicoContainer()
          * @generated
          */
         EDataType MUTABLE_PICO_CONTAINER = eINSTANCE.getMutablePicoContainer();
@@ -4158,7 +4158,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.geotools.geometry.jts.ReferencedEnvelope
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getReferencedEnvelope()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getReferencedEnvelope()
          * @generated
          */
         EDataType REFERENCED_ENVELOPE = eINSTANCE.getReferencedEnvelope();
@@ -4168,7 +4168,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.geotools.data.FeatureEvent
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getFeatureEvent()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getFeatureEvent()
          * @generated
          */
         EDataType FEATURE_EVENT = eINSTANCE.getFeatureEvent();
@@ -4178,7 +4178,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.opengis.feature.simple.SimpleFeature
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getSimpleFeature()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getSimpleFeature()
          * @generated
          */
         EDataType SIMPLE_FEATURE = eINSTANCE.getSimpleFeature();
@@ -4188,7 +4188,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.lang.IllegalArgumentException
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIllegalArgumentException()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIllegalArgumentException()
          * @generated
          */
         EDataType ILLEGAL_ARGUMENT_EXCEPTION = eINSTANCE.getIllegalArgumentException();
@@ -4198,7 +4198,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.io.IOException
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getIOException()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getIOException()
          * @generated
          */
         EDataType IO_EXCEPTION = eINSTANCE.getIOException();
@@ -4208,7 +4208,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.awt.Color
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getColor()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getColor()
          * @generated
          */
         EDataType COLOR = eINSTANCE.getColor();
@@ -4218,7 +4218,7 @@ public interface ProjectPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see org.geotools.brewer.color.BrewerPalette
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getBrewerPalette()
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getBrewerPalette()
          * @generated
          */
         EDataType BREWER_PALETTE = eINSTANCE.getBrewerPalette();
@@ -4227,8 +4227,8 @@ public interface ProjectPackage extends EPackage {
          * The meta object literal for the '<em>Interaction</em>' data type.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see net.refractions.udig.project.Interaction
-         * @see net.refractions.udig.project.internal.impl.ProjectPackageImpl#getInteraction()
+         * @see org.locationtech.udig.project.Interaction
+         * @see org.locationtech.udig.project.internal.impl.ProjectPackageImpl#getInteraction()
          * @generated
          */
         EDataType INTERACTION = eINSTANCE.getInteraction();

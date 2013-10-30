@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.mysql.ui;
+package org.locationtech.udig.catalog.internal.mysql.ui;
 
 import static org.geotools.jdbc.JDBCDataStoreFactory.DATABASE;
 import static org.geotools.jdbc.JDBCDataStoreFactory.DBTYPE;
@@ -29,12 +29,12 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import net.refractions.udig.catalog.MySQLServiceExtension;
-import net.refractions.udig.catalog.internal.mysql.MySQLPlugin;
-import net.refractions.udig.catalog.mysql.internal.Messages;
-import net.refractions.udig.catalog.ui.UDIGConnectionPage;
-import net.refractions.udig.catalog.ui.wizard.DataBaseConnInfo;
-import net.refractions.udig.catalog.ui.wizard.DataBaseRegistryWizardPage;
+import org.locationtech.udig.catalog.MySQLServiceExtension;
+import org.locationtech.udig.catalog.internal.mysql.MySQLPlugin;
+import org.locationtech.udig.catalog.mysql.internal.Messages;
+import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
+import org.locationtech.udig.catalog.ui.wizard.DataBaseConnInfo;
+import org.locationtech.udig.catalog.ui.wizard.DataBaseRegistryWizardPage;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -153,7 +153,7 @@ public class MySQLWizardPage extends DataBaseRegistryWizardPage implements UDIGC
      * Returns the id of the wizard
      */
     public String getId() {
-        return "net.refractions.udig.catalog.ui.mysql"; //$NON-NLS-1$
+        return "org.locationtech.udig.catalog.ui.mysql"; //$NON-NLS-1$
     }
 
     /** Can be called during createControl */

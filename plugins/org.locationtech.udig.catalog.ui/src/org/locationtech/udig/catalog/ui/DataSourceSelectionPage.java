@@ -8,15 +8,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui;
+package org.locationtech.udig.catalog.ui;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.catalog.ui.workflow.DataSourceSelectionState;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
-import net.refractions.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.catalog.ui.workflow.DataSourceSelectionState;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPage;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -46,7 +46,7 @@ import org.eclipse.swt.widgets.Event;
  * <p>
  * Each data source is described an instance of
  * 
- * @see net.refractions.udig.catalog.ui.UDIGImportPageDescriptor.
+ * @see org.locationtech.udig.catalog.ui.UDIGImportPageDescriptor.
  *      </p>
  *      <p>
  *      Client code may instantiate objects of this class,but may only call

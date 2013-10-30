@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit;
+package org.locationtech.udig.tools.edit;
 
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.ui.tool.AbstractActionTool;
-import net.refractions.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.ui.tool.AbstractActionTool;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 
 /**
  * Action that clears the selection of the map.

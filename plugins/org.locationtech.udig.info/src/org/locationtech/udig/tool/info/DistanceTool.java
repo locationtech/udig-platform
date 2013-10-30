@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.info;
+package org.locationtech.udig.tool.info;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -17,13 +17,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.catalog.util.CRSUtil;
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.SimpleTool;
-import net.refractions.udig.tool.info.internal.Messages;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.util.CRSUtil;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.SimpleTool;
+import org.locationtech.udig.tool.info.internal.Messages;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IStatusLineManager;
@@ -173,12 +173,12 @@ public class DistanceTool extends SimpleTool implements KeyListener {
 
         if (statusBar == null)
             return; // shouldn't happen if the tool is being used.
-        String units = UiPlugin.getDefault().getPreferenceStore().getString(net.refractions.udig.ui.preferences.PreferenceConstants.P_DEFAULT_UNITS);
-        if (units.equals( net.refractions.udig.ui.preferences.PreferenceConstants.AUTO_UNITS) && CRSUtil.isCoordinateReferenceSystemImperial(context.getCRS())){
-            units = net.refractions.udig.ui.preferences.PreferenceConstants.IMPERIAL_UNITS;
+        String units = UiPlugin.getDefault().getPreferenceStore().getString(org.locationtech.udig.ui.preferences.PreferenceConstants.P_DEFAULT_UNITS);
+        if (units.equals( org.locationtech.udig.ui.preferences.PreferenceConstants.AUTO_UNITS) && CRSUtil.isCoordinateReferenceSystemImperial(context.getCRS())){
+            units = org.locationtech.udig.ui.preferences.PreferenceConstants.IMPERIAL_UNITS;
         }
         final String message;
-        if (units.equals( net.refractions.udig.ui.preferences.PreferenceConstants.IMPERIAL_UNITS)){
+        if (units.equals( org.locationtech.udig.ui.preferences.PreferenceConstants.IMPERIAL_UNITS)){
             message = createMessageImperial(distance);
         }else{
             message = createMessageMetric(distance);

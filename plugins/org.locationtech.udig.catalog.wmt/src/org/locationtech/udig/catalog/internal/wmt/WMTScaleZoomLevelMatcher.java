@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt;
+package org.locationtech.udig.catalog.internal.wmt;
 
 import java.awt.Dimension;
 import java.util.Arrays;
 
-import net.refractions.udig.catalog.internal.wmt.tile.WMTTile;
-import net.refractions.udig.catalog.internal.wmt.tile.WMTTile.WMTTileFactory;
-import net.refractions.udig.catalog.internal.wmt.tile.WMTTile.WMTZoomLevel;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
-import net.refractions.udig.project.internal.render.impl.ScaleUtils;
+import org.locationtech.udig.catalog.internal.wmt.tile.WMTTile;
+import org.locationtech.udig.catalog.internal.wmt.tile.WMTTile.WMTTileFactory;
+import org.locationtech.udig.catalog.internal.wmt.tile.WMTTile.WMTZoomLevel;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
+import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
 
 import org.eclipse.swt.widgets.Display;
 import org.geotools.geometry.jts.ReferencedEnvelope;

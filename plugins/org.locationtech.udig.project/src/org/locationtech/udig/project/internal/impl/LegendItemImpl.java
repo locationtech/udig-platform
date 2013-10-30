@@ -9,10 +9,10 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  * 
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
-import net.refractions.udig.project.internal.LegendItem;
-import net.refractions.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.LegendItem;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -28,9 +28,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link net.refractions.udig.project.internal.impl.LegendItemImpl#getName <em>Name</em>}</li>
- *   <li>{@link net.refractions.udig.project.internal.impl.LegendItemImpl#isShown <em>Shown</em>}</li>
- *   <li>{@link net.refractions.udig.project.internal.impl.LegendItemImpl#getIcon <em>Icon</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.internal.impl.LegendItemImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.internal.impl.LegendItemImpl#isShown <em>Shown</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.internal.impl.LegendItemImpl#getIcon <em>Icon</em>}</li>
  * </ul>
  * </p>
  *

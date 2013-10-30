@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.commands;
+package org.locationtech.udig.tools.edit.commands;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,23 +16,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.Command;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.ui.AnimationUpdater;
-import net.refractions.udig.tool.edit.internal.Messages;
-import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.animation.AddVertexAnimation;
-import net.refractions.udig.tools.edit.animation.DeleteVertexAnimation;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.EditGeom;
-import net.refractions.udig.tools.edit.support.Point;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
-import net.refractions.udig.tools.edit.support.Selection;
-import net.refractions.udig.tools.edit.support.ShapeType;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.WaitCondition;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.ui.AnimationUpdater;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.tools.edit.EditState;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.animation.AddVertexAnimation;
+import org.locationtech.udig.tools.edit.animation.DeleteVertexAnimation;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.Point;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.tools.edit.support.Selection;
+import org.locationtech.udig.tools.edit.support.ShapeType;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.WaitCondition;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

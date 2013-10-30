@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.merge.internal.view;
+package org.locationtech.udig.tools.merge.internal.view;
 
 import java.util.Collections;
 import java.util.EventListener;
@@ -18,7 +18,7 @@ import java.util.List;
 
 import javax.swing.event.EventListenerList;
 
-import net.refractions.udig.project.ILayer;
+import org.locationtech.udig.project.ILayer;
 
 import org.geotools.data.DataUtilities;
 import org.geotools.feature.FeatureCollection;
@@ -37,7 +37,7 @@ import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
-import eu.udig.tools.geometry.internal.util.GeometryUtil;
+import org.locationtech.udig.tools.geometry.internal.util.GeometryUtil;
 
 /**
  * A builder for a {@link Feature} that allows to select which attributes from a

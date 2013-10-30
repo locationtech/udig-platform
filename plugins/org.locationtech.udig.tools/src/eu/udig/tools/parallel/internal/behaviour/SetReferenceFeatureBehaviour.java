@@ -9,21 +9,21 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.parallel.internal.behaviour;
+package org.locationtech.udig.tools.parallel.internal.behaviour;
 
 //import es.axios.udig.ui.editingtools.precisionparallels.internal.ParallelContext;
-import eu.udig.tools.parallel.internal.ParallelContext;
-import eu.udig.tools.parallel.internal.PrecisionToolsUtil;
-import eu.udig.tools.parallel.internal.command.SetReferenceFeatureCommand;
+import org.locationtech.udig.tools.parallel.internal.ParallelContext;
+import org.locationtech.udig.tools.parallel.internal.PrecisionToolsUtil;
+import org.locationtech.udig.tools.parallel.internal.command.SetReferenceFeatureCommand;
 //import es.axios.udig.ui.editingtools.precisionparallels.internal.command.SetReferenceFeatureCommand;
 //import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsUtil;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.EventBehaviour;
-import net.refractions.udig.tools.edit.EventType;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.EditState;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.EventBehaviour;
+import org.locationtech.udig.tools.edit.EventType;
 
 /**
  * The user select the reference line.

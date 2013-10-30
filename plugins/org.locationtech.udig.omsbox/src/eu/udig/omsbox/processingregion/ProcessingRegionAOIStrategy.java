@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.omsbox.processingregion;
+package org.locationtech.udig.omsbox.processingregion;
 
-import net.refractions.udig.aoi.IAOIStrategy;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IStyleBlackboard;
+import org.locationtech.udig.aoi.IAOIStrategy;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IStyleBlackboard;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -19,7 +19,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
-import eu.udig.omsbox.OmsBoxPlugin;
+import org.locationtech.udig.omsbox.OmsBoxPlugin;
 
 /**
  * Strategy to provide an AOI (Area of Interest) from the processing region

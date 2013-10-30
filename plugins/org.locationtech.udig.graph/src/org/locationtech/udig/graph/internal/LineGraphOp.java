@@ -8,26 +8,26 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.graph.internal;
+package org.locationtech.udig.graph.internal;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.util.GeoToolsAdapters;
-import net.refractions.udig.core.internal.CorePlugin;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.SetLayerVisibilityCommand;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.util.GeoToolsAdapters;
+import org.locationtech.udig.core.internal.CorePlugin;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.SetLayerVisibilityCommand;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

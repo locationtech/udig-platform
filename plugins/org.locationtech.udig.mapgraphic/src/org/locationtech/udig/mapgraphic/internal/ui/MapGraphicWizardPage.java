@@ -7,22 +7,22 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.internal.ui;
+package org.locationtech.udig.mapgraphic.internal.ui;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceFactory;
-import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
-import net.refractions.udig.catalog.ui.UDIGConnectionPage;
-import net.refractions.udig.catalog.ui.workflow.Listener;
-import net.refractions.udig.catalog.ui.workflow.State;
-import net.refractions.udig.mapgraphic.internal.MapGraphicService;
-import net.refractions.udig.mapgraphic.internal.Messages;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceFactory;
+import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
+import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
+import org.locationtech.udig.catalog.ui.workflow.Listener;
+import org.locationtech.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
+import org.locationtech.udig.mapgraphic.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Composite;
 
 public class MapGraphicWizardPage extends AbstractUDIGImportPage implements UDIGConnectionPage, Listener {
 
-    public static final String ID = "net.refractions.udig.mapgraphic.wizardPageId"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.mapgraphic.wizardPageId"; //$NON-NLS-1$
 
     public MapGraphicWizardPage() {
         super(Messages.MapGraphic_title); 

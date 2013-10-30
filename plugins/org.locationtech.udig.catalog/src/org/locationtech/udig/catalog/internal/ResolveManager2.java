@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal;
+package org.locationtech.udig.catalog.internal;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,12 +19,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveAdapterFactory;
-import net.refractions.udig.catalog.IResolveManager;
-import net.refractions.udig.catalog.ResolveAdapterFactory;
-import net.refractions.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveAdapterFactory;
+import org.locationtech.udig.catalog.IResolveManager;
+import org.locationtech.udig.catalog.ResolveAdapterFactory;
+import org.locationtech.udig.core.internal.ExtensionPointList;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -37,7 +37,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
  * Improvements provided by this implementation:
  * <ul>
  * <li>(pending) The ability to register (and unregister) IResolveAdapterFactory instances
- * programatically rather that strictly through the "net.refractions.udig.catalog.resolvers"
+ * programatically rather that strictly through the "org.locationtech.udig.catalog.resolvers"
  * extensions point.
  * <li>
  * <li>(pending) Explicit control over if a plugin should be loaded in order to provide a needed
@@ -49,7 +49,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
  */
 public class ResolveManager2 implements IResolveManager {
 
-    private static final String RESOLVE_FACTORY_EXTENSION_POINT = "net.refractions.udig.catalog.resolvers"; //$NON-NLS-1$
+    private static final String RESOLVE_FACTORY_EXTENSION_POINT = "org.locationtech.udig.catalog.resolvers"; //$NON-NLS-1$
 
     // Maps resolve class name --> Map (target class name --> factory instance )
     Map<String, Map<String, IResolveAdapterFactory>> adapterLookup;

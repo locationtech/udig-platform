@@ -9,20 +9,20 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.commands.draw;
+package org.locationtech.udig.project.ui.internal.commands.draw;
 
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.List;
 
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.ui.Drawing;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.ui.Drawing;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.Adapter;
@@ -82,7 +82,7 @@ public class DrawEditFeatureCommand extends AbstractDrawCommand {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.command.MapCommand#open()
+     * @see org.locationtech.udig.project.internal.command.MapCommand#open()
      */
     public void run( IProgressMonitor monitor ) {
         SimpleFeature feature = model.getMapInternal().getEditManager().getEditFeature();
@@ -127,7 +127,7 @@ public class DrawEditFeatureCommand extends AbstractDrawCommand {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.commands.AbstractDrawCommand#setValid(boolean)
+     * @see org.locationtech.udig.project.ui.commands.AbstractDrawCommand#setValid(boolean)
      */
     @SuppressWarnings("unchecked")//$NON-NLS-1$
     public void setValid( boolean valid ) {

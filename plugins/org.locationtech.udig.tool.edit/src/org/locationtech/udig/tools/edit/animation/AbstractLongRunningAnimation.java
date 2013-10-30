@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.animation;
+package org.locationtech.udig.tools.edit.animation;
 
-import net.refractions.udig.core.IProvider;
-import net.refractions.udig.project.ui.IAnimation;
-import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.core.IProvider;
+import org.locationtech.udig.project.ui.IAnimation;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
 
 /**
  * Provides framework for commands that run an unknown length of

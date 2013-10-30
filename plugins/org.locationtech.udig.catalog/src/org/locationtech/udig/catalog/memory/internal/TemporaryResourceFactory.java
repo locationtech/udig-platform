@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.memory.internal;
+package org.locationtech.udig.catalog.memory.internal;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.memory.MemoryServiceExtensionImpl;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.memory.MemoryServiceExtensionImpl;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.memory.MemoryDataStore;
@@ -34,7 +34,7 @@ import org.opengis.feature.type.AttributeDescriptor;
  */
 public class TemporaryResourceFactory
         implements
-            net.refractions.udig.catalog.TemporaryResourceFactory {
+            org.locationtech.udig.catalog.TemporaryResourceFactory {
 
     public IGeoResource createResource( Object param ) throws IOException {
         SimpleFeatureType featureType = (SimpleFeatureType) param;

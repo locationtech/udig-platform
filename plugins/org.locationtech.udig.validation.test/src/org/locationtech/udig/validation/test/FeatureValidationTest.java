@@ -7,23 +7,23 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.validation.test;
+package org.locationtech.udig.validation.test;
 
 import static org.junit.Assert.assertEquals;
 
 import java.awt.Dimension;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
-import net.refractions.udig.validation.ValidateGeometry;
-import net.refractions.udig.validation.ValidateLineMustBeASinglePart;
-import net.refractions.udig.validation.ValidateLineNoSelfIntersect;
-import net.refractions.udig.validation.ValidateLineNoSelfOverlapping;
-import net.refractions.udig.validation.ValidateNullZero;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.validation.ValidateGeometry;
+import org.locationtech.udig.validation.ValidateLineMustBeASinglePart;
+import org.locationtech.udig.validation.ValidateLineNoSelfIntersect;
+import org.locationtech.udig.validation.ValidateLineNoSelfOverlapping;
+import org.locationtech.udig.validation.ValidateNullZero;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -46,7 +46,7 @@ import com.vividsolutions.jts.geom.LineString;
 public class FeatureValidationTest {
 
     /*
-     * Test method for 'net.refractions.udig.validation.ValidateGeometry.op(Display, Object,
+     * Test method for 'org.locationtech.udig.validation.ValidateGeometry.op(Display, Object,
      * IProgressMonitor)'
      */
     @Ignore
@@ -80,7 +80,7 @@ public class FeatureValidationTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.validation.ValidateLineMustBeASinglePart.op(Display,
+     * Test method for 'org.locationtech.udig.validation.ValidateLineMustBeASinglePart.op(Display,
      * Object, IProgressMonitor)'
      */
     @Ignore
@@ -131,7 +131,7 @@ public class FeatureValidationTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.validation.ValidateLineNoSelfIntersect.op(Display,
+     * Test method for 'org.locationtech.udig.validation.ValidateLineNoSelfIntersect.op(Display,
      * Object, IProgressMonitor)'
      */
     @Ignore
@@ -181,7 +181,7 @@ public class FeatureValidationTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.validation.ValidateLineNoSelfOverlap.op(Display,
+     * Test method for 'org.locationtech.udig.validation.ValidateLineNoSelfOverlap.op(Display,
      * Object, IProgressMonitor)'
      */
     @Ignore
@@ -232,7 +232,7 @@ public class FeatureValidationTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.validation.ValidateNullZero.op(Display,
+     * Test method for 'org.locationtech.udig.validation.ValidateNullZero.op(Display,
      * Object, IProgressMonitor)'
      */
     @Test
@@ -280,7 +280,7 @@ public class FeatureValidationTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.validation.ValidatePolygonNoGaps.op(Display,
+     * Test method for 'org.locationtech.udig.validation.ValidatePolygonNoGaps.op(Display,
      * Object, IProgressMonitor)'
      */
     /*public void testPolygonNoGapsOp() throws Exception {

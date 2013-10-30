@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.tests.ui;
+package org.locationtech.udig.project.tests.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -22,31 +22,31 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.ui.ResourceSelectionPage;
-import net.refractions.udig.catalog.tests.DummyMultiResourceService;
-import net.refractions.udig.catalog.tests.DummyService;
-import net.refractions.udig.catalog.tests.ui.workflow.DialogDriver;
-import net.refractions.udig.catalog.tests.ui.workflow.DummyMonitor;
-import net.refractions.udig.catalog.ui.workflow.ResourceSelectionState;
-import net.refractions.udig.catalog.ui.workflow.State;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.LayersView;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.wizard.MapImport;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.ui.ResourceSelectionPage;
+import org.locationtech.udig.catalog.tests.DummyMultiResourceService;
+import org.locationtech.udig.catalog.tests.DummyService;
+import org.locationtech.udig.catalog.tests.ui.workflow.DialogDriver;
+import org.locationtech.udig.catalog.tests.ui.workflow.DummyMonitor;
+import org.locationtech.udig.catalog.ui.workflow.ResourceSelectionState;
+import org.locationtech.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.LayersView;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.wizard.MapImport;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -203,7 +203,7 @@ public class MapImportTest extends AbstractProjectUITestCase {
         
         currentState.setResources(resources);
         
-        net.refractions.udig.project.internal.Map activeMap = ApplicationGISInternal.getActiveMap();
+        org.locationtech.udig.project.internal.Map activeMap = ApplicationGISInternal.getActiveMap();
         if( activeMap!=ApplicationGIS.NO_MAP )
             activeMap.getLayersInternal().clear();
 

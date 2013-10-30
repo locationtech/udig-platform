@@ -8,15 +8,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests.ui;
+package org.locationtech.udig.catalog.tests.ui;
 
 import static org.junit.Assert.assertTrue;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.wms.WMSServiceImpl;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.wms.WMSServiceImpl;
 
 public class WMSCatalogImportTest extends CatalogImportTest {
 

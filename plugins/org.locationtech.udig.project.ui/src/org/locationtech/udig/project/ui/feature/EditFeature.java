@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.feature;
+package org.locationtech.udig.project.ui.feature;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,10 +17,10 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.commands.edit.SetAttributeCommand;
-import net.refractions.udig.project.internal.commands.edit.SetAttributesCommand;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.commands.edit.SetAttributeCommand;
+import org.locationtech.udig.project.internal.commands.edit.SetAttributesCommand;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;

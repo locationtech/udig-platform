@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,30 +20,30 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
-import net.refractions.udig.core.Pair;
-import net.refractions.udig.core.filter.AdaptingFilter;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.command.factory.EditCommandFactory;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectElement;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.commands.edit.DeleteManyFeaturesCommand;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.UDIGGenericAction;
-import net.refractions.udig.project.ui.commands.DrawCommandFactory;
-import net.refractions.udig.project.ui.commands.IDrawCommand;
-import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.internal.UDIGEditorInputDescriptor;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.core.Pair;
+import org.locationtech.udig.core.filter.AdaptingFilter;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.command.factory.EditCommandFactory;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.commands.edit.DeleteManyFeaturesCommand;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.UDIGGenericAction;
+import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.internal.UDIGEditorInputDescriptor;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
@@ -153,7 +153,7 @@ public class Delete extends UDIGGenericAction {
     }
     
     /**
-     * @see net.refractions.udig.project.ui.UDIGGenericAction#operate(net.refractions.udig.project.Layer)
+     * @see org.locationtech.udig.project.ui.UDIGGenericAction#operate(org.locationtech.udig.project.Layer)
      */
     protected void operate( Layer layer ) {
         if (layer == null || layer.getMap() == null)
@@ -167,7 +167,7 @@ public class Delete extends UDIGGenericAction {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.UDIGGenericAction#operate(net.refractions.udig.project.internal.Layer[])
+     * @see org.locationtech.udig.project.ui.UDIGGenericAction#operate(org.locationtech.udig.project.internal.Layer[])
      */
     @Override
     protected void operate( Layer[] layers, Object context ) {
@@ -214,7 +214,7 @@ public class Delete extends UDIGGenericAction {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.UDIGGenericAction#operate(net.refractions.udig.project.IProjectElement)
+     * @see org.locationtech.udig.project.ui.UDIGGenericAction#operate(org.locationtech.udig.project.IProjectElement)
      */
     @SuppressWarnings("unchecked")
     protected void operate( ProjectElement element, Object context ) {
@@ -369,7 +369,7 @@ public class Delete extends UDIGGenericAction {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.UDIGGenericAction#operate(net.refractions.udig.project.Project)
+     * @see org.locationtech.udig.project.ui.UDIGGenericAction#operate(org.locationtech.udig.project.Project)
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -448,7 +448,7 @@ public class Delete extends UDIGGenericAction {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.UDIGGenericAction#operate(org.geotools.feature.SimpleFeature)
+     * @see org.locationtech.udig.project.ui.UDIGGenericAction#operate(org.geotools.feature.SimpleFeature)
      */
     @Override
     protected void operate( final SimpleFeature feature, Object c ) {

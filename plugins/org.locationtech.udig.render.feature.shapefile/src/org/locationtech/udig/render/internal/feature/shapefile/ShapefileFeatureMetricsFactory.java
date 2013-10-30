@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.internal.feature.shapefile;
+package org.locationtech.udig.render.internal.feature.shapefile;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
-import net.refractions.udig.project.render.IRenderer;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.project.render.IRenderer;
 
 import org.geotools.data.FeatureSource;
 import org.geotools.data.shapefile.ShapefileDataStore;
@@ -29,14 +29,14 @@ import org.geotools.data.view.DefaultView;
 public class ShapefileFeatureMetricsFactory implements IRenderMetricsFactory {
 
     /**
-     * @see net.refractions.udig.project.render.IRenderMetricsFactory#createMetrics(net.refractions.udig.project.render.IRenderContext)
+     * @see org.locationtech.udig.project.render.IRenderMetricsFactory#createMetrics(org.locationtech.udig.project.render.IRenderContext)
      */
     public ShapefileFeatureMetrics createMetrics(IRenderContext context) {
         return new ShapefileFeatureMetrics(context, this);
     }
 
     /**
-     * @see net.refractions.udig.project.render.IRenderMetricsFactory#canRender(net.refractions.udig.project.render.IRenderContext)
+     * @see org.locationtech.udig.project.render.IRenderMetricsFactory#canRender(org.locationtech.udig.project.render.IRenderContext)
      */
     @SuppressWarnings("unchecked")
     public boolean canRender(IRenderContext context) {

@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,54 +28,54 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.element.ElementFactory;
-import net.refractions.udig.project.element.IGenericProjectElement;
-import net.refractions.udig.project.element.ProjectElementAdapter;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectElement;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.commands.AddLayersCommand;
-import net.refractions.udig.project.internal.commands.CreateMapCommand;
-import net.refractions.udig.project.internal.impl.ProjectRegistryImpl;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.RenderFactory;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.internal.render.RendererCreator;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.internal.render.impl.RenderContextImpl;
-import net.refractions.udig.project.internal.render.impl.RendererCreatorImpl;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.render.ILabelPainter;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.project.render.displayAdapter.MapDisplayEvent;
-import net.refractions.udig.project.ui.commands.OpenProjectElementCommand;
-import net.refractions.udig.project.ui.internal.ActiveMapTracker;
-import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.internal.UDIGEditorInputDescriptor;
-import net.refractions.udig.project.ui.internal.tool.ToolContext;
-import net.refractions.udig.project.ui.internal.tool.display.ToolManager;
-import net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.project.ui.tool.IToolManager;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.element.ElementFactory;
+import org.locationtech.udig.project.element.IGenericProjectElement;
+import org.locationtech.udig.project.element.ProjectElementAdapter;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.commands.AddLayersCommand;
+import org.locationtech.udig.project.internal.commands.CreateMapCommand;
+import org.locationtech.udig.project.internal.impl.ProjectRegistryImpl;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.RenderFactory;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.internal.render.RendererCreator;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.internal.render.impl.RenderContextImpl;
+import org.locationtech.udig.project.internal.render.impl.RendererCreatorImpl;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.render.ILabelPainter;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
+import org.locationtech.udig.project.ui.commands.OpenProjectElementCommand;
+import org.locationtech.udig.project.ui.internal.ActiveMapTracker;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.internal.UDIGEditorInputDescriptor;
+import org.locationtech.udig.project.ui.internal.tool.ToolContext;
+import org.locationtech.udig.project.ui.internal.tool.display.ToolManager;
+import org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -298,7 +298,7 @@ public class ApplicationGIS {
 
         final List<UDIGEditorInputDescriptor> newInputs = new ArrayList<UDIGEditorInputDescriptor>();
 
-        List<IConfigurationElement> extensions = ExtensionPointList.getExtensionPointList("net.refractions.udig.project.ui.editorInputs");
+        List<IConfigurationElement> extensions = ExtensionPointList.getExtensionPointList("org.locationtech.udig.project.ui.editorInputs");
         Class toMatch;
         if( projectElement instanceof ProjectElementAdapter){
             toMatch = ((ProjectElementAdapter)projectElement).getBackingObject().getClass();
@@ -397,10 +397,10 @@ public class ApplicationGIS {
      * @see ToolContext
      */
     public static IToolContext createContext(IMap map) {
-        if (map instanceof net.refractions.udig.project.internal.Map) {
+        if (map instanceof org.locationtech.udig.project.internal.Map) {
             ToolContext context = new ToolContextImpl();
             context
-                    .setMapInternal((net.refractions.udig.project.internal.Map) map);
+                    .setMapInternal((org.locationtech.udig.project.internal.Map) map);
             return context;
         }
         return null;
@@ -617,11 +617,11 @@ public class ApplicationGIS {
 
     /**
      * Parameter class for
-     * {@link ApplicationGIS#drawMap(net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter)}
+     * {@link ApplicationGIS#drawMap(org.locationtech.udig.project.ui.ApplicationGIS.DrawMapParameter)}
      * 
      * @author jesse
      * 
-     * @see ApplicationGIS#drawMap(net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter)
+     * @see ApplicationGIS#drawMap(org.locationtech.udig.project.ui.ApplicationGIS.DrawMapParameter)
      */
     public static class DrawMapParameter {
         final BoundsStrategy boundsStrategy;
@@ -1018,7 +1018,7 @@ public class ApplicationGIS {
      * Creates an instance of the typeToCreate and wraps it with the {@link ProjectElementAdapter}.
      *
      * This is part of the mechanism for adding custom items to a Project without needing to learn
-     * the EMF framework.  See the net.refractions.udig.project.element Extension Point.
+     * the EMF framework.  See the org.locationtech.udig.project.element Extension Point.
      * 
      * If the typeToCreate is NOT the same or a superclass of the object created or if an object cannot
      * be created a {@link IllegalArgumentException} will be thrown 
@@ -1039,7 +1039,7 @@ public class ApplicationGIS {
      * Creates an instance of the typeToCreate and wraps it with the {@link ProjectElementAdapter}.
      *
      * This is part of the mechanism for adding custom items to a Project without needing to learn
-     * the EMF framework.  See the net.refractions.udig.project.element Extension Point.
+     * the EMF framework.  See the org.locationtech.udig.project.element Extension Point.
      * 
      * If the typeToCreate is NOT the same or a superclass of the object created or if an object cannot
      * be created a {@link IllegalArgumentException} will be thrown 

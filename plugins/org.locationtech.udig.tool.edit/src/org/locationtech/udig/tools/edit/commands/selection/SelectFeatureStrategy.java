@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.commands.selection;
+package org.locationtech.udig.tools.edit.commands.selection;
 
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.commands.SelectFeatureAsEditFeatureCommand;
-import net.refractions.udig.tools.edit.commands.SelectFeatureCommand;
-import net.refractions.udig.tools.edit.commands.SelectionParameter;
-import net.refractions.udig.tools.edit.commands.SelectionStrategy;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.Point;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.commands.SelectFeatureAsEditFeatureCommand;
+import org.locationtech.udig.tools.edit.commands.SelectFeatureCommand;
+import org.locationtech.udig.tools.edit.commands.SelectionParameter;
+import org.locationtech.udig.tools.edit.commands.SelectionStrategy;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.Point;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.opengis.feature.simple.SimpleFeature;

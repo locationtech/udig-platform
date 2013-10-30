@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.tile;
+package org.locationtech.udig.catalog.internal.wmt.tile;
 
 import java.net.URL;
 
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
 
 public abstract class WMTTileName {
     public static final String ID_DIVIDER = "_"; //$NON-NLS-1$

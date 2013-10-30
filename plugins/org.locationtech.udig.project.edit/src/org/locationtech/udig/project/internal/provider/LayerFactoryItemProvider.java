@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.internal.provider;
+package org.locationtech.udig.project.internal.provider;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 
 /**
- * This is the item provider adapter for a {@link net.refractions.udig.project.internal.LayerFactory} object.
+ * This is the item provider adapter for a {@link org.locationtech.udig.project.internal.LayerFactory} object.
  * <!-- begin-user-doc --> <!--
  * end-user-doc -->
  * @generated

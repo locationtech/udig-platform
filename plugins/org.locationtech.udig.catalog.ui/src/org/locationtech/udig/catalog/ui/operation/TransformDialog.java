@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui.operation;
+package org.locationtech.udig.catalog.ui.operation;
 
 import java.util.List;
 
 import net.miginfocom.swt.MigLayout;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.core.IProvider;
-import net.refractions.udig.core.StaticProvider;
-import net.refractions.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.core.IProvider;
+import org.locationtech.udig.core.StaticProvider;
+import org.locationtech.udig.core.internal.ExtensionPointList;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -122,7 +122,7 @@ public class TransformDialog extends Dialog {
         int selected = 0;
 
         List<IConfigurationElement> extensions = ExtensionPointList
-                .getExtensionPointList("net.refractions.udig.catalog.ui.reshapePostAction"); //$NON-NLS-1$
+                .getExtensionPointList("org.locationtech.udig.catalog.ui.reshapePostAction"); //$NON-NLS-1$
         for (final IConfigurationElement configurationElement : extensions) {
             String name = configurationElement.getAttribute("name"); //$NON-NLS-1$
             IProvider<PostReshapeAction> provider = new IProvider<PostReshapeAction>() {

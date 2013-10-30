@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.operations;
+package org.locationtech.udig.project.ui.operations;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.ui.operations.AbstractPropertyValue;
-import net.refractions.udig.ui.operations.PropertyValue;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.ui.operations.AbstractPropertyValue;
+import org.locationtech.udig.ui.operations.PropertyValue;
 
 import org.geotools.filter.Filter;
 

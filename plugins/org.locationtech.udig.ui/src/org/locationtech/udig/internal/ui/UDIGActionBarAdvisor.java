@@ -8,21 +8,21 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.internal.ui;
+package org.locationtech.udig.internal.ui;
 
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.ui.Constants;
-import net.refractions.udig.ui.MenuBuilder;
-import net.refractions.udig.ui.UDIGMenuBuilder;
-import net.refractions.udig.ui.action.NewObjectContribution;
-import net.refractions.udig.ui.action.NewObjectDelegate;
-import net.refractions.udig.ui.action.NewObjectDelegateComparator;
-import net.refractions.udig.ui.internal.Messages;
-import net.refractions.udig.ui.preferences.PreferenceConstants;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.ui.Constants;
+import org.locationtech.udig.ui.MenuBuilder;
+import org.locationtech.udig.ui.UDIGMenuBuilder;
+import org.locationtech.udig.ui.action.NewObjectContribution;
+import org.locationtech.udig.ui.action.NewObjectDelegate;
+import org.locationtech.udig.ui.action.NewObjectDelegateComparator;
+import org.locationtech.udig.ui.internal.Messages;
+import org.locationtech.udig.ui.preferences.PreferenceConstants;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProduct;

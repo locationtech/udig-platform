@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.view.widgets;
+package org.locationtech.udig.omsbox.view.widgets;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,8 +17,8 @@ import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridGeometry2D;
 import org.geotools.data.simple.SimpleFeatureCollection;
 
-import eu.udig.omsbox.core.FieldData;
-import eu.udig.omsbox.utils.OmsBoxConstants;
+import org.locationtech.udig.omsbox.core.FieldData;
+import org.locationtech.udig.omsbox.utils.OmsBoxConstants;
 
 /**
  * A factory for guis.

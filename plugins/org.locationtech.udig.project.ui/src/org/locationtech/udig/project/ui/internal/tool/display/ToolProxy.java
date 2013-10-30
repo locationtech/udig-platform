@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.tool.display;
+package org.locationtech.udig.project.ui.internal.tool.display;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,24 +17,24 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.internal.ui.operations.OperationCategory;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.MapEditorSelectionProvider;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.tool.AbstractTool;
-import net.refractions.udig.project.ui.tool.ActionTool;
-import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.project.ui.tool.Tool;
-import net.refractions.udig.project.ui.tool.ToolConstants;
-import net.refractions.udig.project.ui.tool.ToolLifecycleListener;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.operations.EnablementUtil;
-import net.refractions.udig.ui.operations.LazyOpFilter;
-import net.refractions.udig.ui.operations.OpFilter;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.internal.ui.operations.OperationCategory;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.MapEditorSelectionProvider;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.tool.AbstractTool;
+import org.locationtech.udig.project.ui.tool.ActionTool;
+import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.project.ui.tool.Tool;
+import org.locationtech.udig.project.ui.tool.ToolConstants;
+import org.locationtech.udig.project.ui.tool.ToolLifecycleListener;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.operations.EnablementUtil;
+import org.locationtech.udig.ui.operations.LazyOpFilter;
+import org.locationtech.udig.ui.operations.OpFilter;
 
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.CoreException;
@@ -94,7 +94,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     /**
      * The ID of the default tool: Zoom
      */
-    private static final String DEFAULT_ID = "net.refractions.udig.tools.Zoom"; //$NON-NLS-1$
+    private static final String DEFAULT_ID = "org.locationtech.udig.tools.Zoom"; //$NON-NLS-1$
 
     /**
      * The action object in UI for this tool proxy. It is lazy created.
@@ -242,7 +242,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.Tool#setContext(net.refractions.udig.project.ui.tool.IToolContext)
+     * @see org.locationtech.udig.project.ui.tool.Tool#setContext(org.locationtech.udig.project.ui.tool.IToolContext)
      */
     public void setContext( IToolContext toolContext ) {
         this.toolContext = toolContext;
@@ -378,7 +378,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.Tool#getContext()
+     * @see org.locationtech.udig.project.ui.tool.Tool#getContext()
      */
     public IToolContext getContext() {
         return toolContext;
@@ -414,7 +414,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
     /**
      *  (non-Javadoc)
-     * @see net.refractions.udig.project.ui.tool.Tool#isEnabled()
+     * @see org.locationtech.udig.project.ui.tool.Tool#isEnabled()
      */
     @Override
 	public boolean isEnabled() {
@@ -428,7 +428,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     
 	/**
      *  (non-Javadoc)
-     * @see net.refractions.udig.project.ui.tool.ModalTool#setEnabled(boolean)
+     * @see org.locationtech.udig.project.ui.tool.ModalTool#setEnabled(boolean)
      */
     @Override
     public void setEnabled( final boolean enabled ) {
@@ -519,7 +519,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     }
 	/**
 	 * Runs getModelessTool() safely in the display thread.
-     * @see net.refractions.udig.project.ui.internal.tool.display.ModalItem#runModeless()
+     * @see org.locationtech.udig.project.ui.internal.tool.display.ModalItem#runModeless()
      */
     protected void runModeless() {
         if (type != ACTION) {
@@ -537,7 +537,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.internal.tool.display.ModalItem#setActive(boolean)
+     * @see org.locationtech.udig.project.ui.internal.tool.display.ModalItem#setActive(boolean)
      */
     public void setActive( boolean active ) {
     	if (toolContext == null){
@@ -560,7 +560,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.internal.tool.display.ModalItem#dispose()
+     * @see org.locationtech.udig.project.ui.internal.tool.display.ModalItem#dispose()
      */
     public void dispose() {
         disposed=true;
@@ -574,7 +574,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.internal.tool.display.ModalItem#getHandler(java.lang.String)
+     * @see org.locationtech.udig.project.ui.internal.tool.display.ModalItem#getHandler(java.lang.String)
      */
     public IHandler getHandler( String commandId ) {
         if (handlerType != null && handlerType.length() > 0)
@@ -583,7 +583,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.internal.tool.display.ModalItem#getDefaultItem()
+     * @see org.locationtech.udig.project.ui.internal.tool.display.ModalItem#getDefaultItem()
      */
     protected ModalItem getDefaultItem() {
         return toolManager.defaultModalToolProxy;
@@ -591,14 +591,14 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
     /**
      * 
-     * @see net.refractions.udig.project.ui.internal.tool.display.ModalItem#getActiveItem()
+     * @see org.locationtech.udig.project.ui.internal.tool.display.ModalItem#getActiveItem()
      */
     protected ToolProxy getActiveItem() {
         return toolManager.getActiveToolProxy();
     }
 
     /**
-     * @see net.refractions.udig.project.ui.internal.tool.display.ModalItem#setActiveItem(net.refractions.udig.project.ui.internal.tool.display.ModalItem)
+     * @see org.locationtech.udig.project.ui.internal.tool.display.ModalItem#setActiveItem(org.locationtech.udig.project.ui.internal.tool.display.ModalItem)
      */
     protected void setActiveItem( ModalItem modalItem ) {
     	toolManager.setActiveModalToolProxy( (ToolProxy)modalItem );
@@ -606,7 +606,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 
 
     /** (non-Javadoc)
-     * @see net.refractions.udig.project.ui.tool.ModalTool#isActive()
+     * @see org.locationtech.udig.project.ui.tool.ModalTool#isActive()
      */
     public boolean isActive() {
         return getModalTool().isActive();
@@ -658,7 +658,7 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
     
     
     /** (non-Javadoc)
-     * @see net.refractions.udig.project.ui.tool.ModalTool#getCursorID()
+     * @see org.locationtech.udig.project.ui.tool.ModalTool#getCursorID()
      */
     public String getCursorID() {
     	throw new UnsupportedOperationException("Call ToolProxy.getTool().getCursorID() method instead"); //$NON-NLS-1$
@@ -668,21 +668,21 @@ public class ToolProxy extends ModalItem implements ModalTool, ActionTool {
 	/**
 	 * Empty implementation
 	 * 
-	 * @see net.refractions.udig.project.ui.tool.ModalTool#setCursorID(java.lang.String)
+	 * @see org.locationtech.udig.project.ui.tool.ModalTool#setCursorID(java.lang.String)
 	 */
 	public void setCursorID(String id) {
 		throw new UnsupportedOperationException("Call ToolProxy.getTool().setCursorID(String) method instead"); //$NON-NLS-1$
 	}
 
 	/** (non-Javadoc)
-	 * @see net.refractions.udig.project.ui.tool.Tool#getProperty(java.lang.String)
+	 * @see org.locationtech.udig.project.ui.tool.Tool#getProperty(java.lang.String)
 	 */
 	public Object getProperty(String key) {
 		throw new UnsupportedOperationException("Call ToolProxy.getTool().getProperty(String) method instead"); //$NON-NLS-1$
 	}
 
 	/** (non-Javadoc)
-	 * @see net.refractions.udig.project.ui.tool.Tool#setProperty(java.lang.String, java.lang.Object)
+	 * @see org.locationtech.udig.project.ui.tool.Tool#setProperty(java.lang.String, java.lang.Object)
 	 */
 	public void setProperty(String key, Object value) {
 		throw new UnsupportedOperationException("Call ToolProxy.getTool().setProperty(String, String) method instead"); //$NON-NLS-1$

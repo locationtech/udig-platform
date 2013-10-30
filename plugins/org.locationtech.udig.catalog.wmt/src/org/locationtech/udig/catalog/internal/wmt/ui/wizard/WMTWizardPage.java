@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.ui.wizard;
+package org.locationtech.udig.catalog.internal.wmt.ui.wizard;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
@@ -15,29 +15,29 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.wmt.Trace;
-import net.refractions.udig.catalog.internal.wmt.WMTPlugin;
-import net.refractions.udig.catalog.internal.wmt.WMTService;
-import net.refractions.udig.catalog.internal.wmt.WMTServiceExtension;
-import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.CSControl;
-import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.JGrasstoolsTmsFolderControl;
-import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.OSMCloudMadeControl;
-import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.OSMControl;
-import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.WMTWizardControl;
-import net.refractions.udig.catalog.internal.wmt.ui.wizard.controls.WWControl;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.NASASource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.NASASourceManager;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.OSMCloudMadeSource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.OSMCycleMapSource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.OSMMapnikSource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.OSMOsmarenderSource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.OSMSource;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
-import net.refractions.udig.catalog.ui.AbstractUDIGImportPage;
-import net.refractions.udig.catalog.ui.UDIGConnectionPage;
-import net.refractions.udig.catalog.wmt.internal.Messages;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.wmt.Trace;
+import org.locationtech.udig.catalog.internal.wmt.WMTPlugin;
+import org.locationtech.udig.catalog.internal.wmt.WMTService;
+import org.locationtech.udig.catalog.internal.wmt.WMTServiceExtension;
+import org.locationtech.udig.catalog.internal.wmt.ui.wizard.controls.CSControl;
+import org.locationtech.udig.catalog.internal.wmt.ui.wizard.controls.JGrasstoolsTmsFolderControl;
+import org.locationtech.udig.catalog.internal.wmt.ui.wizard.controls.OSMCloudMadeControl;
+import org.locationtech.udig.catalog.internal.wmt.ui.wizard.controls.OSMControl;
+import org.locationtech.udig.catalog.internal.wmt.ui.wizard.controls.WMTWizardControl;
+import org.locationtech.udig.catalog.internal.wmt.ui.wizard.controls.WWControl;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.NASASource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.NASASourceManager;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.OSMCloudMadeSource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.OSMCycleMapSource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.OSMMapnikSource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.OSMOsmarenderSource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.OSMSource;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
+import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
+import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
+import org.locationtech.udig.catalog.wmt.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -74,7 +74,7 @@ public class WMTWizardPage extends AbstractUDIGImportPage implements UDIGConnect
     }
 
     public String getId() {
-        return "net.refractions.udig.catalog.ui.WMT"; //$NON-NLS-1$
+        return "org.locationtech.udig.catalog.ui.WMT"; //$NON-NLS-1$
     }
 
     @Override

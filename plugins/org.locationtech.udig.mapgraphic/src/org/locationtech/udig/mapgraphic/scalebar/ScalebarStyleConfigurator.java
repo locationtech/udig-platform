@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.scalebar;
+package org.locationtech.udig.mapgraphic.scalebar;
 
 import java.awt.Rectangle;
 
-import net.refractions.udig.mapgraphic.internal.Messages;
-import net.refractions.udig.mapgraphic.style.LocationStyleContent;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.style.IStyleConfigurator;
+import org.locationtech.udig.mapgraphic.internal.Messages;
+import org.locationtech.udig.mapgraphic.style.LocationStyleContent;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.style.IStyleConfigurator;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -58,7 +58,7 @@ public class ScalebarStyleConfigurator extends IStyleConfigurator
     private Combo yCombo;
 
     /* (non-Javadoc)
-	 * @see net.refractions.udig.style.IStyleConfigurator#init()
+	 * @see org.locationtech.udig.style.IStyleConfigurator#init()
 	 */
 	public void init() {
 		// do nothing
@@ -66,7 +66,7 @@ public class ScalebarStyleConfigurator extends IStyleConfigurator
 	}
     
     /*
-     * @see net.refractions.udig.style.IStyleConfigurator#refresh()
+     * @see org.locationtech.udig.style.IStyleConfigurator#refresh()
      */
     public void refresh() {
         IBlackboard blackboard = getStyleBlackboard();
@@ -98,7 +98,7 @@ public class ScalebarStyleConfigurator extends IStyleConfigurator
     }
 
     /*
-     * @see net.refractions.udig.style.IStyleConfigurator#apply()
+     * @see org.locationtech.udig.style.IStyleConfigurator#apply()
      */
     public void apply() {
         IBlackboard blackboard = getStyleBlackboard();
@@ -114,7 +114,7 @@ public class ScalebarStyleConfigurator extends IStyleConfigurator
     }
 
     /*
-     * @see net.refractions.udig.style.IStyleConfigurator#canStyle(net.refractions.udig.project.Layer)
+     * @see org.locationtech.udig.style.IStyleConfigurator#canStyle(org.locationtech.udig.project.Layer)
      */
     public boolean canStyle( Layer layer ) {
         return layer.hasResource(ScalebarMapGraphic.class);
@@ -255,7 +255,7 @@ public class ScalebarStyleConfigurator extends IStyleConfigurator
     }
 
     /* (non-Javadoc)
-	 * @see net.refractions.udig.style.IStyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
+	 * @see org.locationtech.udig.style.IStyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createControl(Composite parent) {
         parent.setLayout( new GridLayout( 2, true ));

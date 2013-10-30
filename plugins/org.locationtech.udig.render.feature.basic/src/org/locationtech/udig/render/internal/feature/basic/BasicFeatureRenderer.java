@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.render.internal.feature.basic;
+package org.locationtech.udig.render.internal.feature.basic;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -22,22 +22,22 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.refractions.udig.core.TransparencyRemovingVisitor;
-import net.refractions.udig.core.jts.ReferencedEnvelopeCache;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.internal.render.impl.RendererImpl;
-import net.refractions.udig.project.internal.render.impl.Styling;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.render.ILabelPainter;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.render.feature.basic.internal.Messages;
-import net.refractions.udig.style.filter.FilterStyle;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.core.TransparencyRemovingVisitor;
+import org.locationtech.udig.core.jts.ReferencedEnvelopeCache;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.internal.render.impl.RendererImpl;
+import org.locationtech.udig.project.internal.render.impl.Styling;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.render.ILabelPainter;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.render.feature.basic.internal.Messages;
+import org.locationtech.udig.style.filter.FilterStyle;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -115,7 +115,7 @@ public class BasicFeatureRenderer extends RendererImpl {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RendererImpl#render(java.awt.Graphics2D,
+     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(java.awt.Graphics2D,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public void render( Graphics2D destination, IProgressMonitor monitor ) throws RenderException {
@@ -291,7 +291,7 @@ public class BasicFeatureRenderer extends RendererImpl {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RendererImpl#dispose()
+     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#dispose()
      */
     public void dispose() {
         if (getRenderer() != null)
@@ -305,7 +305,7 @@ public class BasicFeatureRenderer extends RendererImpl {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RendererImpl#render(com.vividsolutions.jts.geom.Envelope,
+     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(com.vividsolutions.jts.geom.Envelope,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public void render( IProgressMonitor monitor ) throws RenderException {

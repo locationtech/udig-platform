@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package eu.udig.jconsole.util;
+package org.locationtech.udig.jconsole.util;
 
 import java.util.HashMap;
 import java.util.Iterator;

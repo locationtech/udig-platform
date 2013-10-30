@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tool.select;
+package org.locationtech.udig.tool.select;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,49 +19,49 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.aoi.AOIListener;
-import net.refractions.udig.aoi.IAOIService;
-import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.core.IProvider;
-import net.refractions.udig.core.StaticBlockingProvider;
-import net.refractions.udig.core.filter.AdaptingFilter;
-import net.refractions.udig.core.filter.AdaptingFilterFactory;
-import net.refractions.udig.internal.ui.UDIGDropHandler;
-import net.refractions.udig.project.EditManagerEvent;
-import net.refractions.udig.project.IEditManagerListener;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayerListener;
-import net.refractions.udig.project.IMapCompositionListener;
-import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.project.MapCompositionEvent;
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.CompositeCommand;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.UndoableCommand;
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.command.factory.EditCommandFactory;
-import net.refractions.udig.project.command.factory.SelectionCommandFactory;
-import net.refractions.udig.project.command.provider.FIDFeatureProvider;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.commands.edit.DeleteFeatureCommand;
-import net.refractions.udig.project.internal.commands.edit.DeleteManyFeaturesCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.IUDIGView;
-import net.refractions.udig.project.ui.internal.MapEditor;
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.project.ui.internal.tool.display.ToolManager;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.project.ui.tool.ToolsConstants;
-import net.refractions.udig.tool.select.internal.Messages;
-import net.refractions.udig.tool.select.internal.ZoomSelection;
-import net.refractions.udig.ui.FeatureTableControl;
-import net.refractions.udig.ui.IDropAction;
-import net.refractions.udig.ui.IDropHandlerListener;
-import net.refractions.udig.ui.IFeatureTableLoadingListener;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.aoi.AOIListener;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.core.IBlockingProvider;
+import org.locationtech.udig.core.IProvider;
+import org.locationtech.udig.core.StaticBlockingProvider;
+import org.locationtech.udig.core.filter.AdaptingFilter;
+import org.locationtech.udig.core.filter.AdaptingFilterFactory;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerListener;
+import org.locationtech.udig.project.IMapCompositionListener;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.project.MapCompositionEvent;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.CompositeCommand;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.UndoableCommand;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.command.factory.EditCommandFactory;
+import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
+import org.locationtech.udig.project.command.provider.FIDFeatureProvider;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.commands.edit.DeleteFeatureCommand;
+import org.locationtech.udig.project.internal.commands.edit.DeleteManyFeaturesCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.IUDIGView;
+import org.locationtech.udig.project.ui.internal.MapEditor;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.tool.display.ToolManager;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.tool.ToolsConstants;
+import org.locationtech.udig.tool.select.internal.Messages;
+import org.locationtech.udig.tool.select.internal.ZoomSelection;
+import org.locationtech.udig.ui.FeatureTableControl;
+import org.locationtech.udig.ui.IDropAction;
+import org.locationtech.udig.ui.IDropHandlerListener;
+import org.locationtech.udig.ui.IFeatureTableLoadingListener;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -357,7 +357,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
 
             public RGB get(Object... params) {
                 ScopedPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
-                String key = net.refractions.udig.project.preferences.PreferenceConstants.P_SELECTION_COLOR;
+                String key = org.locationtech.udig.project.preferences.PreferenceConstants.P_SELECTION_COLOR;
                 RGB color = PreferenceConverter.getColor(store, key);
                 return color;
             }
@@ -1457,7 +1457,7 @@ public class TableView extends ViewPart implements ISelectionProvider, IUDIGView
                     }, null );
                     table.select( selection );
                 } catch (Exception e ){
-                    Status status = new Status(Status.WARNING, "net.refractions.udig.ui", e.getLocalizedMessage(), e );
+                    Status status = new Status(Status.WARNING, "org.locationtech.udig.ui", e.getLocalizedMessage(), e );
                     UIPlugin.getDefault().getLog().log( status );
                     searchWidget.setToolTipText( e.getLocalizedMessage() );
                 }

@@ -7,19 +7,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.commands.edit;
+package org.locationtech.udig.project.internal.commands.edit;
 
 import java.util.Collections;
 
-import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.core.StaticFeatureCollection;
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.command.provider.EditFeatureProvider;
-import net.refractions.udig.project.command.provider.EditLayerFeatureStoreProvider;
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.core.IBlockingProvider;
+import org.locationtech.udig.core.StaticFeatureCollection;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.command.provider.EditFeatureProvider;
+import org.locationtech.udig.project.command.provider.EditLayerFeatureStoreProvider;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
@@ -69,7 +69,7 @@ public class WriteFeatureChangesCommand extends AbstractEditCommand implements U
     }
 
     /**
-     * @see net.refractions.udig.project.internal.command.MapCommand#run()
+     * @see org.locationtech.udig.project.internal.command.MapCommand#run()
      */
     @SuppressWarnings("deprecation") 
     public void run( IProgressMonitor monitor ) throws Exception {
@@ -113,14 +113,14 @@ public class WriteFeatureChangesCommand extends AbstractEditCommand implements U
     }
 
     /**
-     * @see net.refractions.udig.project.internal.command.MapCommand#copy()
+     * @see org.locationtech.udig.project.internal.command.MapCommand#copy()
      */
     public MapCommand copy() {
         return new WriteFeatureChangesCommand();
     }
 
     /**
-     * @see net.refractions.udig.project.command.MapCommand#getName()
+     * @see org.locationtech.udig.project.command.MapCommand#getName()
      */
     public String getName() {
         return Messages.WriteFeatureChangesCommand_commandName;  

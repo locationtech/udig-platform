@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.render;
+package org.locationtech.udig.project.render;
 
 import java.awt.Rectangle;
 import java.util.List;
 
-import net.refractions.udig.project.internal.render.RenderingCoordinator;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.internal.render.RenderingCoordinator;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 

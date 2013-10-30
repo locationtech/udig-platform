@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.core.enums;
+package org.locationtech.udig.core.enums;
 
 /**
  * @author jones

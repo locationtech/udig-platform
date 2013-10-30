@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.mysql.ui;
+package org.locationtech.udig.catalog.internal.mysql.ui;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,14 +18,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.MySQLGeoResource;
-import net.refractions.udig.catalog.MySQLServiceExtension;
-import net.refractions.udig.catalog.MySQLServiceImpl;
-import net.refractions.udig.catalog.internal.mysql.MySQLPlugin;
-import net.refractions.udig.catalog.ui.UDIGConnectionFactory;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.MySQLGeoResource;
+import org.locationtech.udig.catalog.MySQLServiceExtension;
+import org.locationtech.udig.catalog.MySQLServiceImpl;
+import org.locationtech.udig.catalog.internal.mysql.MySQLPlugin;
+import org.locationtech.udig.catalog.ui.UDIGConnectionFactory;
 import static org.geotools.data.mysql.MySQLDataStoreFactory.*;
 /**
  * The Factory class used to build connections for mysql

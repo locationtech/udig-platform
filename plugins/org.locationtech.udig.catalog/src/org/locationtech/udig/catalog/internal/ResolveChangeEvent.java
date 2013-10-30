@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal;
+package org.locationtech.udig.catalog.internal;
 
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveDelta;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveDelta;
 
 /**
  * Everything change change change ...
@@ -62,28 +62,28 @@ public class ResolveChangeEvent implements IResolveChangeEvent {
     }
 
     /**
-     * @see net.refractions.udig.catalog.ICatalogChangeEvent#getDelta()
+     * @see org.locationtech.udig.catalog.ICatalogChangeEvent#getDelta()
      */
     public IResolveDelta getDelta() {
         return delta;
     }
 
     /**
-     * @see net.refractions.udig.catalog.ICatalogChangeEvent#getResource()
+     * @see org.locationtech.udig.catalog.ICatalogChangeEvent#getResource()
      */
     public IResolve getResolve() {
         return handle;
     }
 
     /**
-     * @see net.refractions.udig.catalog.ICatalogChangeEvent#getSource()
+     * @see org.locationtech.udig.catalog.ICatalogChangeEvent#getSource()
      */
     public Object getSource() {
         return source;
     }
 
     /**
-     * @see net.refractions.udig.catalog.ICatalogChangeEvent#getType()
+     * @see org.locationtech.udig.catalog.ICatalogChangeEvent#getType()
      */
     public Type getType() {
         return type;

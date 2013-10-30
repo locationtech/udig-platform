@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.info.tests;
+package org.locationtech.udig.tool.info.tests;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -21,16 +21,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.wmsc.server.MockHttpResponse;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.tool.info.InfoTool;
-import net.refractions.udig.tool.info.LayerPointInfo;
-import net.refractions.udig.tool.info.internal.WMSDescribeLayer;
+import org.locationtech.udig.catalog.wmsc.server.MockHttpResponse;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.tool.info.InfoTool;
+import org.locationtech.udig.tool.info.LayerPointInfo;
+import org.locationtech.udig.tool.info.internal.WMSDescribeLayer;
 
 import org.geotools.data.ows.HTTPResponse;
 import org.geotools.data.ows.Layer;

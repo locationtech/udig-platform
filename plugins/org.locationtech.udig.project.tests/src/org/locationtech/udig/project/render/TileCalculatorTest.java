@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.render;
+package org.locationtech.udig.project.render;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -18,7 +18,7 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 
-import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +37,7 @@ public class TileCalculatorTest extends AbstractProjectTestCase {
 	
 	
 	/*
-	 * Test method for 'net.refractions.udig.project.render.TileCalculator.numXTiles()'
+	 * Test method for 'org.locationtech.udig.project.render.TileCalculator.numXTiles()'
 	 */
 	@Test
 	public void testNumXTiles() {
@@ -53,7 +53,7 @@ public class TileCalculatorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.render.TileCalculator.numYTiles()'
+	 * Test method for 'org.locationtech.udig.project.render.TileCalculator.numYTiles()'
 	 */
 	@Test
 	public void testNumYTiles() {
@@ -69,7 +69,7 @@ public class TileCalculatorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.render.TileCalculator.getWorldTile(int, int)'
+	 * Test method for 'org.locationtech.udig.project.render.TileCalculator.getWorldTile(int, int)'
 	 */
 	@Test
 	public void testGetWorldTile() {
@@ -90,7 +90,7 @@ public class TileCalculatorTest extends AbstractProjectTestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.render.TileCalculator.getScreenTile(int, int)'
+	 * Test method for 'org.locationtech.udig.project.render.TileCalculator.getScreenTile(int, int)'
 	 */
 	@Test
 	public void testGetScreenTile() {

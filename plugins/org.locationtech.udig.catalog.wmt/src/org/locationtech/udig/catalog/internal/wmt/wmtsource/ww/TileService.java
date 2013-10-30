@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.wmtsource.ww;
+package org.locationtech.udig.catalog.internal.wmt.wmtsource.ww;
 
-import net.refractions.udig.catalog.internal.wmt.tile.WWTile.WWTileName;
+import org.locationtech.udig.catalog.internal.wmt.tile.WWTile.WWTileName;
 
 import org.jdom.Element;
 

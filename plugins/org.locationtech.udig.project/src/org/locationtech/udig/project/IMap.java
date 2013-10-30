@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project;
+package org.locationtech.udig.project;
 
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.project.command.EditCommand;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.render.IRenderManager;
-import net.refractions.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.command.EditCommand;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.render.IRenderManager;
+import org.locationtech.udig.project.render.IViewportModel;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
@@ -178,7 +178,7 @@ public interface IMap extends IProjectElement {
      * name, ViewportModel, Bounds, etc...
      *
      * @param listener Listener to be added
-     * @see net.refractions.udig.project.MapEvent.MapEventType
+     * @see org.locationtech.udig.project.MapEvent.MapEventType
      */
     public void addMapListener( IMapListener listener );
     
@@ -194,7 +194,7 @@ public interface IMap extends IProjectElement {
      * Events are fired when the layers of the Map change: added, removed or reordered.
      *
      * @param listener Listener to be added
-     * @see net.refractions.udig.project.MapEvent.MapEventType
+     * @see org.locationtech.udig.project.MapEvent.MapEventType
      */
     public void addMapCompositionListener( IMapCompositionListener listener );
     

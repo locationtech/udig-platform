@@ -9,16 +9,16 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.style.cache;
+package org.locationtech.udig.style.cache;
 
 import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.project.StyleContent;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.project.StyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
@@ -33,7 +33,7 @@ import org.geotools.styling.Style;
 public final class CacheContent extends StyleContent {
 
     /** style id, used to identify cache style on a blackboard */
-    public static final String ID = "net.refractions.udig.style.cache"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.style.cache"; //$NON-NLS-1$
 
     /**
      * SLDContent constructor.
@@ -45,7 +45,7 @@ public final class CacheContent extends StyleContent {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.project.StyleContent#getStyleClass()
+     * @see org.locationtech.udig.project.StyleContent#getStyleClass()
      */
     public Class<?> getStyleClass() {
         return Boolean.class;
@@ -54,7 +54,7 @@ public final class CacheContent extends StyleContent {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.project.StyleContent#save(org.eclipse.ui.IMemento,
+     * @see org.locationtech.udig.project.StyleContent#save(org.eclipse.ui.IMemento,
      *      java.lang.Object)
      */
     public void save( IMemento memento, Object value ) {
@@ -68,7 +68,7 @@ public final class CacheContent extends StyleContent {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.project.StyleContent#load(org.eclipse.ui.IMemento)
+     * @see org.locationtech.udig.project.StyleContent#load(org.eclipse.ui.IMemento)
      */
     public Object load( IMemento momento ) {
         Boolean style = momento.getBoolean("cache");
@@ -79,7 +79,7 @@ public final class CacheContent extends StyleContent {
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.project.StyleContent#load(java.net.URL)
+     * @see org.locationtech.udig.project.StyleContent#load(java.net.URL)
      */
     public Object load( URL url, IProgressMonitor m ) throws IOException {
         return null;

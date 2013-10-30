@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.tools.jgrass.profile;
+package org.locationtech.udig.tools.jgrass.profile;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -48,7 +48,7 @@ import org.jfree.ui.TextAnchor;
  */
 public class ProfileView extends ViewPart {
 
-    public static final String ID = "eu.udig.tools.jgrass.profileview";
+    public static final String ID = "org.locationtech.udig.tools.jgrass.profileview";
     private XYSeries series;
     private XYItemRenderer renderer;
     private XYPlot plot;

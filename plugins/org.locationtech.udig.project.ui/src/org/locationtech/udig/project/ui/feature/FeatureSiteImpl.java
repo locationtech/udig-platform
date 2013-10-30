@@ -8,16 +8,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.feature;
+package org.locationtech.udig.project.ui.feature;
 
 import org.opengis.feature.simple.SimpleFeature;
 
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.ui.IFeatureSite;
-import net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.ui.IFeatureSite;
+import org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl;
 
 /**
  * Facilitate editing of feature content.

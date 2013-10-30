@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.style;
+package org.locationtech.udig.mapgraphic.style;
 
 import java.awt.Font;
 
-import net.refractions.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.StyleBlackboard;
 
 /**
  * A style that essentially is a font.  This is primarily intended for use with MapGraphics so that the font

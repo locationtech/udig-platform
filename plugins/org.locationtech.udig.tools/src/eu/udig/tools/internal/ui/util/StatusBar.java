@@ -9,9 +9,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.internal.ui.util;
+package org.locationtech.udig.tools.internal.ui.util;
 
-import net.refractions.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.jface.action.IStatusLineManager;
 

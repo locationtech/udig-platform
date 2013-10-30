@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.tests.ui;
+package org.locationtech.udig.project.tests.ui;
 
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
@@ -16,7 +16,7 @@ import org.junit.Ignore;
 /**
  * A perpective for tests. 
  * 
- * @see net.refractions.udig.issues.test.IssueHandlerTest
+ * @see org.locationtech.udig.issues.test.IssueHandlerTest
  * @author jones
  * @since 1.0.0
  */

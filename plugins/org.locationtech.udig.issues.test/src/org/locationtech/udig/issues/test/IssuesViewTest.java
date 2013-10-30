@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.test;
+package org.locationtech.udig.issues.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -19,39 +19,39 @@ import static org.junit.Assert.assertTrue;
 import java.awt.Dimension;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.core.enums.Priority;
-import net.refractions.udig.core.enums.Resolution;
-import net.refractions.udig.issues.AbstractIssue;
-import net.refractions.udig.issues.FeatureIssue;
-import net.refractions.udig.issues.IIssue;
-import net.refractions.udig.issues.IIssuesContentProvider;
-import net.refractions.udig.issues.IIssuesList;
-import net.refractions.udig.issues.IIssuesManager;
-import net.refractions.udig.issues.IRemoteIssuesList;
-import net.refractions.udig.issues.IssueConfiguration;
-import net.refractions.udig.issues.IssueConstants;
-import net.refractions.udig.issues.IssuesList;
-import net.refractions.udig.issues.internal.ImageConstants;
-import net.refractions.udig.issues.internal.IssuesActivator;
-import net.refractions.udig.issues.internal.IssuesManager;
-import net.refractions.udig.issues.internal.PreferenceConstants;
-import net.refractions.udig.issues.internal.view.IssueExpansionProvider;
-import net.refractions.udig.issues.internal.view.IssuesContentProvider;
-import net.refractions.udig.issues.internal.view.IssuesLabelProvider;
-import net.refractions.udig.issues.internal.view.IssuesSorter;
-import net.refractions.udig.issues.internal.view.IssuesView;
-import net.refractions.udig.issues.internal.view.StrategizedSorter;
-import net.refractions.udig.issues.listeners.IIssuesListListener;
-import net.refractions.udig.issues.listeners.IssuesListEvent;
-import net.refractions.udig.issues.listeners.IssuesListEventType;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.project.tests.ui.ViewPart1;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.enums.Priority;
+import org.locationtech.udig.core.enums.Resolution;
+import org.locationtech.udig.issues.AbstractIssue;
+import org.locationtech.udig.issues.FeatureIssue;
+import org.locationtech.udig.issues.IIssue;
+import org.locationtech.udig.issues.IIssuesContentProvider;
+import org.locationtech.udig.issues.IIssuesList;
+import org.locationtech.udig.issues.IIssuesManager;
+import org.locationtech.udig.issues.IRemoteIssuesList;
+import org.locationtech.udig.issues.IssueConfiguration;
+import org.locationtech.udig.issues.IssueConstants;
+import org.locationtech.udig.issues.IssuesList;
+import org.locationtech.udig.issues.internal.ImageConstants;
+import org.locationtech.udig.issues.internal.IssuesActivator;
+import org.locationtech.udig.issues.internal.IssuesManager;
+import org.locationtech.udig.issues.internal.PreferenceConstants;
+import org.locationtech.udig.issues.internal.view.IssueExpansionProvider;
+import org.locationtech.udig.issues.internal.view.IssuesContentProvider;
+import org.locationtech.udig.issues.internal.view.IssuesLabelProvider;
+import org.locationtech.udig.issues.internal.view.IssuesSorter;
+import org.locationtech.udig.issues.internal.view.IssuesView;
+import org.locationtech.udig.issues.internal.view.StrategizedSorter;
+import org.locationtech.udig.issues.listeners.IIssuesListListener;
+import org.locationtech.udig.issues.listeners.IssuesListEvent;
+import org.locationtech.udig.issues.listeners.IssuesListEventType;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.tests.ui.ViewPart1;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -735,10 +735,10 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
     @Test
     public void testInit() throws Exception {
         IPreferenceStore preferenceStore = IssuesActivator.getDefault().getPreferenceStore();
-        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_CONTENT_PROVIDER, "net.refractions.udig.issues.test.TestContentProvider"); //$NON-NLS-1$
-        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_SORTER, "net.refractions.udig.issues.test.TestSorter"); //$NON-NLS-1$
-        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_EXPANSION_PROVIDER, "net.refractions.udig.issues.test.TestContentProvider"); //$NON-NLS-1$
-        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_LABEL_PROVIDER, "net.refractions.udig.issues.test.TestLabelProvider"); //$NON-NLS-1$
+        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_CONTENT_PROVIDER, "org.locationtech.udig.issues.test.TestContentProvider"); //$NON-NLS-1$
+        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_SORTER, "org.locationtech.udig.issues.test.TestSorter"); //$NON-NLS-1$
+        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_EXPANSION_PROVIDER, "org.locationtech.udig.issues.test.TestContentProvider"); //$NON-NLS-1$
+        preferenceStore.setValue(PreferenceConstants.KEY_VIEW_LABEL_PROVIDER, "org.locationtech.udig.issues.test.TestLabelProvider"); //$NON-NLS-1$
         
         view.initViewerProviders();
         

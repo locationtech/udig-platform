@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.commands;
+package org.locationtech.udig.project.ui.commands;
 
 /**
  * PreMapDrawCommands are draw commands that are executed before the map is drawn onto the

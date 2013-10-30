@@ -8,19 +8,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.editor;
+package org.locationtech.udig.style.sld.editor;
 
 import java.util.Iterator;
 
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.style.sld.SLDPlugin;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 
 /**
- * Processes the net.refractions.udig.style.sld.SimpleStyleConfigurator extension points and adds the 
+ * Processes the org.locationtech.udig.style.sld.SimpleStyleConfigurator extension points and adds the 
  * ones that work for the layer to the manager.
  * 
  * @author jesse

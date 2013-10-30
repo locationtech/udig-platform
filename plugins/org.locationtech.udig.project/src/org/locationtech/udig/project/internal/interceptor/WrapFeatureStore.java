@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.interceptor;
+package org.locationtech.udig.project.internal.interceptor;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IResourceInterceptor;
-import net.refractions.udig.project.internal.impl.UDIGFeatureStore;
-import net.refractions.udig.project.internal.impl.UDIGSimpleFeatureStore;
-import net.refractions.udig.project.internal.impl.UDIGStore;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IResourceInterceptor;
+import org.locationtech.udig.project.internal.impl.UDIGFeatureStore;
+import org.locationtech.udig.project.internal.impl.UDIGSimpleFeatureStore;
+import org.locationtech.udig.project.internal.impl.UDIGStore;
 
 import org.geotools.data.FeatureStore;
 import org.geotools.data.simple.SimpleFeatureStore;

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.render.wms.basic.test;
+package org.locationtech.udig.render.wms.basic.test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -19,14 +19,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.tests.DummyService;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.render.impl.CompositeRenderContextImpl;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.render.internal.wms.basic.BasicWMSMetricsFactory2;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.tests.DummyService;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.render.impl.CompositeRenderContextImpl;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.render.internal.wms.basic.BasicWMSMetricsFactory2;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.ows.CRSEnvelope;
@@ -100,7 +100,7 @@ public class WMSRenderMetricsTest {
         CompositeRenderContextImpl comp = createCompositeRenderer();
         AbstractRenderMetrics metrics = fac.createMetrics(comp);
         assertTrue(metrics.canAddLayer(map.getLayersInternal().get(1)));
-        net.refractions.udig.project.internal.Layer layer = map.getLayerFactory().createLayer(members2.get(0));
+        org.locationtech.udig.project.internal.Layer layer = map.getLayerFactory().createLayer(members2.get(0));
         assertFalse(metrics.canAddLayer(layer));
     }
 

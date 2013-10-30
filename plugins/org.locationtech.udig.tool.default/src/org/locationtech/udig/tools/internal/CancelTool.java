@@ -9,9 +9,9 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tools.internal;
+package org.locationtech.udig.tools.internal;
 
-import net.refractions.udig.project.ui.tool.AbstractActionTool;
+import org.locationtech.udig.project.ui.tool.AbstractActionTool;
 
 /**
  * Cancel all currently running jobs.
@@ -23,14 +23,14 @@ public class CancelTool  extends AbstractActionTool {
 
 
     /*
-     * @see net.refractions.udig.project.ui.tool.ActionTool#run()
+     * @see org.locationtech.udig.project.ui.tool.ActionTool#run()
      */
     public void run() {
        getContext().getRenderManager().stopRendering();
     }
 
     /*
-     * @see net.refractions.udig.project.ui.tool.Tool#dispose()
+     * @see org.locationtech.udig.project.ui.tool.Tool#dispose()
      */
     public void dispose() {
         //do nothing.

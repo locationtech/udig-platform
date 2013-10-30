@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.ui.internal.editor;
+package org.locationtech.udig.printing.ui.internal.editor;
 
-import net.refractions.udig.printing.ui.internal.Messages;
-import net.refractions.udig.printing.ui.internal.editor.parts.TreePartFactory;
+import org.locationtech.udig.printing.ui.internal.Messages;
+import org.locationtech.udig.printing.ui.internal.editor.parts.TreePartFactory;
 
 import org.eclipse.gef.ContextMenuProvider;
 import org.eclipse.gef.EditPartViewer;
@@ -56,7 +56,7 @@ public class PageEditorOutlinePage extends ContentOutlinePage {
         ContextMenuProvider cmProvider = new PageContextMenuProvider(getViewer(), editor
                 .getActionRegistry());
         getViewer().setContextMenu(cmProvider);
-        getSite().registerContextMenu("net.refractions.udig.printing.outline.contextmenu", //$NON-NLS-1$
+        getSite().registerContextMenu("org.locationtech.udig.printing.outline.contextmenu", //$NON-NLS-1$
                 cmProvider, getSite().getSelectionProvider());
         editor.getSelectionSynchronizer().addViewer(getViewer());
         getViewer().setContents(editor.getModel());

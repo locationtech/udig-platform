@@ -9,13 +9,13 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tool.info.internal;
+package org.locationtech.udig.tool.info.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
     
-    private static final String BUNDLE_NAME = "net.refractions.udig.tool.info.internal.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.locationtech.udig.tool.info.internal.messages"; //$NON-NLS-1$
 
     public static String AbstractAttachmentDocument_errSaveAsNotSupported;
 

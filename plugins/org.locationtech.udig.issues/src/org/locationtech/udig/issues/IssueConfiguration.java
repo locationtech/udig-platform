@@ -7,19 +7,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues;
+package org.locationtech.udig.issues;
 
-import static net.refractions.udig.issues.internal.PreferenceConstants.KEY_VIEW_CONTENT_PROVIDER;
-import static net.refractions.udig.issues.internal.PreferenceConstants.KEY_VIEW_EXPANSION_PROVIDER;
-import static net.refractions.udig.issues.internal.PreferenceConstants.KEY_VIEW_LABEL_PROVIDER;
-import static net.refractions.udig.issues.internal.PreferenceConstants.KEY_VIEW_SORTER;
-import net.refractions.udig.issues.internal.IssuesActivator;
-import net.refractions.udig.issues.internal.view.IssueExpansionProvider;
-import net.refractions.udig.issues.internal.view.IssuesContentProvider;
-import net.refractions.udig.issues.internal.view.IssuesLabelProvider;
-import net.refractions.udig.issues.internal.view.IssuesSorter;
-import net.refractions.udig.issues.internal.view.IssuesView;
-import net.refractions.udig.issues.internal.view.IssuesViewRefresher;
+import static org.locationtech.udig.issues.internal.PreferenceConstants.KEY_VIEW_CONTENT_PROVIDER;
+import static org.locationtech.udig.issues.internal.PreferenceConstants.KEY_VIEW_EXPANSION_PROVIDER;
+import static org.locationtech.udig.issues.internal.PreferenceConstants.KEY_VIEW_LABEL_PROVIDER;
+import static org.locationtech.udig.issues.internal.PreferenceConstants.KEY_VIEW_SORTER;
+import org.locationtech.udig.issues.internal.IssuesActivator;
+import org.locationtech.udig.issues.internal.view.IssueExpansionProvider;
+import org.locationtech.udig.issues.internal.view.IssuesContentProvider;
+import org.locationtech.udig.issues.internal.view.IssuesLabelProvider;
+import org.locationtech.udig.issues.internal.view.IssuesSorter;
+import org.locationtech.udig.issues.internal.view.IssuesView;
+import org.locationtech.udig.issues.internal.view.IssuesViewRefresher;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IViewPart;

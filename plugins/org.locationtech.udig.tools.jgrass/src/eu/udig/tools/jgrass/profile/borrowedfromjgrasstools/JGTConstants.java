@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.tools.jgrass.profile.borrowedfromjgrasstools;
+package org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools;
 
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;

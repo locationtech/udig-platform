@@ -4,22 +4,22 @@
  *
  * $Id$
  */
-package net.refractions.udig.printing.model.impl;
+package org.locationtech.udig.printing.model.impl;
 
 import java.awt.Graphics2D;
-import net.refractions.udig.printing.model.*;
+import org.locationtech.udig.printing.model.*;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.BoxPrinter;
-import net.refractions.udig.printing.model.Connection;
-import net.refractions.udig.printing.model.Element;
-import net.refractions.udig.printing.model.ModelFactory;
-import net.refractions.udig.printing.model.ModelPackage;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.printing.model.PrintingModelPlugin;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.BoxPrinter;
+import org.locationtech.udig.printing.model.Connection;
+import org.locationtech.udig.printing.model.Element;
+import org.locationtech.udig.printing.model.ModelFactory;
+import org.locationtech.udig.printing.model.ModelPackage;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.model.PrintingModelPlugin;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;

@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.command;
+package org.locationtech.udig.project.command;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
@@ -50,7 +50,7 @@ public class CompositeCommand implements MapCommand {
 
     public CompositeCommand(){  super();  }
 	/**
-	 * @see net.refractions.udig.project.internal.command.MapCommand#run()
+	 * @see org.locationtech.udig.project.internal.command.MapCommand#run()
 	 */
 	public void run(IProgressMonitor monitor) throws Exception {
         monitor.beginTask(getName(), 2+10*commands.size()+10*finalizerCommands.size());
@@ -81,14 +81,14 @@ public class CompositeCommand implements MapCommand {
 
     
 	/**
-	 * @see net.refractions.udig.project.internal.command.MapCommand#copy()
+	 * @see org.locationtech.udig.project.internal.command.MapCommand#copy()
 	 */
 	public MapCommand copy() {
 		return new CompositeCommand(new LinkedList<MapCommand>(commands));
 	}
 
 	/**
-	 * @see net.refractions.udig.project.command.MapCommand#getName()
+	 * @see org.locationtech.udig.project.command.MapCommand#getName()
 	 */
 	public String getName() {
         if( name==null )
@@ -102,7 +102,7 @@ public class CompositeCommand implements MapCommand {
 
     
 	/**
-     * @see net.refractions.udig.project.command.MapCommand#setMap(IMap)
+     * @see org.locationtech.udig.project.command.MapCommand#setMap(IMap)
      * @uml.property   name="map"
      */
 	public void setMap(IMap map) {
@@ -113,7 +113,7 @@ public class CompositeCommand implements MapCommand {
 	}
 
 	/**
-     * @see net.refractions.udig.project.command.MapCommand#getMap()
+     * @see org.locationtech.udig.project.command.MapCommand#getMap()
      * @uml.property   name="map"
      */
 	public Map getMap() {

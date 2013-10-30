@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic;
+package org.locationtech.udig.mapgraphic;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.AbstractContext;
-import net.refractions.udig.project.render.ILabelPainter;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.AbstractContext;
+import org.locationtech.udig.project.render.ILabelPainter;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
  * 

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.ui;
+package org.locationtech.udig.omsbox.ui;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,10 +16,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -37,7 +37,7 @@ import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
 import org.opengis.coverage.grid.GridCoverage;
 
-import eu.udig.omsbox.utils.ImageCache;
+import org.locationtech.udig.omsbox.utils.ImageCache;
 
 /**
  * Tree viewer containing coverage resources from the available layers.

@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.browser.ui;
+package org.locationtech.udig.browser.ui;
 
-import net.refractions.udig.browser.BrowserPlugin;
+import org.locationtech.udig.browser.BrowserPlugin;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;

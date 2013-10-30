@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt;
+package org.locationtech.udig.catalog.internal.wmt;
 
-import net.refractions.udig.catalog.internal.wmt.ui.preferences.WMTPreferenceConstants;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.WMTSource;
+import org.locationtech.udig.catalog.internal.wmt.ui.preferences.WMTPreferenceConstants;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.WMTSource;
 
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;

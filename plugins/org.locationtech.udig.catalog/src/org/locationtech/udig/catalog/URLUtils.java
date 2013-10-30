@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -18,7 +18,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 
-import net.refractions.udig.core.internal.CorePlugin;
+import org.locationtech.udig.core.internal.CorePlugin;
 
 /**
  * Utilities for dealing with the catalog's use of URLs as identifiers

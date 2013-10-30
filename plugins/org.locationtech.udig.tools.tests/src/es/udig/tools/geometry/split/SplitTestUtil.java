@@ -25,7 +25,7 @@ import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 
-import eu.udig.tools.geometry.split.SplitStrategy;
+import org.locationtech.udig.tools.geometry.split.SplitStrategy;
 
 /**
  * @author Mauricio Pazos (www.axios.es)

@@ -9,30 +9,30 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.arc;
+package org.locationtech.udig.tools.arc;
 
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.tools.edit.AbstractEditTool;
-import net.refractions.udig.tools.edit.Activator;
-import net.refractions.udig.tools.edit.Behaviour;
-import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
-import net.refractions.udig.tools.edit.EnablementBehaviour;
-import net.refractions.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator;
-import net.refractions.udig.tools.edit.activator.EditStateListenerActivator;
-import net.refractions.udig.tools.edit.activator.ResetAllStateActivator;
-import net.refractions.udig.tools.edit.activator.SetSnapBehaviourCommandHandlerActivator;
-import net.refractions.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
-import net.refractions.udig.tools.edit.behaviour.AddVertexWhileCreatingBehaviour;
-import net.refractions.udig.tools.edit.behaviour.DefaultCancelBehaviour;
-import net.refractions.udig.tools.edit.behaviour.DrawCreateVertexSnapAreaBehaviour;
-import net.refractions.udig.tools.edit.behaviour.SetSnapSizeBehaviour;
-import net.refractions.udig.tools.edit.behaviour.StartEditingBehaviour;
-import net.refractions.udig.tools.edit.enablement.ValidToolDetectionActivator;
-import net.refractions.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviour;
-import net.refractions.udig.tools.edit.support.ShapeType;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.tools.edit.AbstractEditTool;
+import org.locationtech.udig.tools.edit.Activator;
+import org.locationtech.udig.tools.edit.Behaviour;
+import org.locationtech.udig.tools.edit.EditToolConfigurationHelper;
+import org.locationtech.udig.tools.edit.EnablementBehaviour;
+import org.locationtech.udig.tools.edit.activator.DrawCurrentGeomVerticesActivator;
+import org.locationtech.udig.tools.edit.activator.EditStateListenerActivator;
+import org.locationtech.udig.tools.edit.activator.ResetAllStateActivator;
+import org.locationtech.udig.tools.edit.activator.SetSnapBehaviourCommandHandlerActivator;
+import org.locationtech.udig.tools.edit.behaviour.AcceptOnDoubleClickBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.AddVertexWhileCreatingBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.DefaultCancelBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.DrawCreateVertexSnapAreaBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.SetSnapSizeBehaviour;
+import org.locationtech.udig.tools.edit.behaviour.StartEditingBehaviour;
+import org.locationtech.udig.tools.edit.enablement.ValidToolDetectionActivator;
+import org.locationtech.udig.tools.edit.enablement.WithinLegalLayerBoundsBehaviour;
+import org.locationtech.udig.tools.edit.support.ShapeType;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
@@ -40,18 +40,18 @@ import com.vividsolutions.jts.geom.MultiLineString;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 
-import eu.udig.tools.arc.internal.ArcFeedbackManager;
-import eu.udig.tools.arc.internal.CreateArcBehaviour;
+import org.locationtech.udig.tools.arc.internal.ArcFeedbackManager;
+import org.locationtech.udig.tools.arc.internal.CreateArcBehaviour;
 /*
 import es.axios.udig.ui.editingtools.arc.internal.ArcFeedbackManager;
 import es.axios.udig.ui.editingtools.arc.internal.CreateArcBehaviour;
 */
 
-import eu.udig.tools.arc.internal.beahaviour.AcceptFeedbackBehaviour;
-import eu.udig.tools.arc.internal.beahaviour.CancelFeedbakBehaviour;
-import eu.udig.tools.arc.internal.beahaviour.EditToolFeedbackBehaviour;
-import eu.udig.tools.arc.internal.beahaviour.EditToolFeedbackManager;
-import eu.udig.tools.arc.internal.beahaviour.NumOfPointsRunAcceptBehaviour;
+import org.locationtech.udig.tools.arc.internal.beahaviour.AcceptFeedbackBehaviour;
+import org.locationtech.udig.tools.arc.internal.beahaviour.CancelFeedbakBehaviour;
+import org.locationtech.udig.tools.arc.internal.beahaviour.EditToolFeedbackBehaviour;
+import org.locationtech.udig.tools.arc.internal.beahaviour.EditToolFeedbackManager;
+import org.locationtech.udig.tools.arc.internal.beahaviour.NumOfPointsRunAcceptBehaviour;
 /*
 import es.axios.udig.ui.editingtools.internal.commons.behaviour.AcceptFeedbackBehaviour;
 import es.axios.udig.ui.editingtools.internal.commons.behaviour.CancelFeedbakBehaviour;
@@ -59,7 +59,7 @@ import es.axios.udig.ui.editingtools.internal.commons.behaviour.EditToolFeedback
 import es.axios.udig.ui.editingtools.internal.commons.behaviour.EditToolFeedbackManager;
 import es.axios.udig.ui.editingtools.internal.commons.behaviour.NumOfPointsRunAcceptBehaviour;
 */
-import eu.udig.tools.arc.internal.presentation.StatusBar;
+import org.locationtech.udig.tools.arc.internal.presentation.StatusBar;
 
 /**
  * Edit tool that allows to create a linear approximation of an arc of circumference by specifying

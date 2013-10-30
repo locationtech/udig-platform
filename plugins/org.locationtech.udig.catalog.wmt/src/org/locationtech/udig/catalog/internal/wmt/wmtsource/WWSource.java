@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.wmtsource;
+package org.locationtech.udig.catalog.internal.wmt.wmtsource;
 
-import net.refractions.udig.catalog.internal.wmt.tile.WWTile;
-import net.refractions.udig.catalog.internal.wmt.tile.WWTile.WWTileFactory;
-import net.refractions.udig.catalog.internal.wmt.tile.WWTile.WWTileName.WWZoomLevel;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.ww.QuadTileSet;
+import org.locationtech.udig.catalog.internal.wmt.tile.WWTile;
+import org.locationtech.udig.catalog.internal.wmt.tile.WWTile.WWTileFactory;
+import org.locationtech.udig.catalog.internal.wmt.tile.WWTile.WWTileName.WWZoomLevel;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.QuadTileSet;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;

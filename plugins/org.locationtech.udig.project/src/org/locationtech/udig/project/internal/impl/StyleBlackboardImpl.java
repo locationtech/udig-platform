@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -29,18 +29,18 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.locks.Lock;
 
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.project.BlackboardEvent;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IBlackboardListener;
-import net.refractions.udig.project.StyleContent;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.StyleEntry;
-import net.refractions.udig.ui.UDIGDisplaySafeLock;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.project.BlackboardEvent;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IBlackboardListener;
+import org.locationtech.udig.project.StyleContent;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.StyleEntry;
+import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -79,7 +79,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
      * 
      * @uml.property name="id2content"
      * @uml.associationEnd qualifier="key:java.lang.Object
-     *                     net.refractions.udig.project.StyleContent"
+     *                     org.locationtech.udig.project.StyleContent"
      * @generated NOT
      */
     protected HashMap<String, StyleContent> id2content = new HashMap<String, StyleContent>();
@@ -334,7 +334,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
         /*
          * @see
-         * net.refractions.udig.core.internal.ExtensionPointProcessor#process(org.eclipse.core.runtime
+         * org.locationtech.udig.core.internal.ExtensionPointProcessor#process(org.eclipse.core.runtime
          * .IExtension, org.eclipse.core.runtime.IConfigurationElement)
          */
         public void process( IExtension extension, IConfigurationElement element ) throws Exception {
@@ -531,7 +531,7 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
     }
 
     /**
-     * @see net.refractions.udig.project.IBlackboard#getFloat(java.lang.String)
+     * @see org.locationtech.udig.project.IBlackboard#getFloat(java.lang.String)
      */
     public Float getFloat( String key ) {
         if (contains(key)) {

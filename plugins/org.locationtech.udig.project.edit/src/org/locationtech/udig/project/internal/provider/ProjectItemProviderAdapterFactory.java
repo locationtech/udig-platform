@@ -4,13 +4,13 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.internal.provider;
+package org.locationtech.udig.project.internal.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.refractions.udig.project.internal.impl.SynchronizedEList;
-import net.refractions.udig.project.internal.util.ProjectAdapterFactory;
+import org.locationtech.udig.project.internal.impl.SynchronizedEList;
+import org.locationtech.udig.project.internal.util.ProjectAdapterFactory;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -77,7 +77,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.ContextModel} instances.
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.ContextModel} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -85,7 +85,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     protected ContextModelItemProvider contextModelItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.ContextModel}.
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.ContextModel}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -99,7 +99,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.Layer}. <!--
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.Layer}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
@@ -110,7 +110,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.Map}. <!--
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.Map}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
@@ -121,7 +121,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.Project}. <!--
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.Project}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
@@ -132,7 +132,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.ProjectRegistry} instances.
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.ProjectRegistry} instances.
      * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
      * @generated
@@ -140,7 +140,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     protected ProjectRegistryItemProvider projectRegistryItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.ProjectRegistry}.
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.ProjectRegistry}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -154,7 +154,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.StyleBlackboard} instances.
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.StyleBlackboard} instances.
      * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
      * @generated
@@ -162,7 +162,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     protected StyleBlackboardItemProvider styleBlackboardItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.StyleBlackboard}.
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.StyleBlackboard}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -176,7 +176,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.StyleEntry} instances.
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.StyleEntry} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -184,7 +184,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     protected StyleEntryItemProvider styleEntryItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.StyleEntry}. <!--
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.StyleEntry}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
@@ -199,7 +199,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.LayerFactory} instances.
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.LayerFactory} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -207,7 +207,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     protected LayerFactoryItemProvider layerFactoryItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.LayerFactory}.
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.LayerFactory}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -221,7 +221,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.Blackboard} instances.
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Blackboard} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -229,7 +229,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     protected BlackboardItemProvider blackboardItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.Blackboard}. <!--
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.Blackboard}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
@@ -244,7 +244,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.BlackboardEntry} instances.
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.BlackboardEntry} instances.
      * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
      * @generated
@@ -252,7 +252,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     protected BlackboardEntryItemProvider blackboardEntryItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.BlackboardEntry}.
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.BlackboardEntry}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -290,7 +290,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.Folder} instances.
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Folder} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -298,7 +298,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     protected FolderItemProvider folderItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.Folder}.
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.Folder}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -313,7 +313,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.LegendItem} instances.
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.LegendItem} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -321,7 +321,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     protected LegendItemItemProvider legendItemItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.LegendItem}.
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.LegendItem}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -336,7 +336,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.LayerLegendItem} instances.
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.LayerLegendItem} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -344,7 +344,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     protected LayerLegendItemItemProvider layerLegendItemItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.LayerLegendItem}.
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.LayerLegendItem}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -359,7 +359,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link net.refractions.udig.project.internal.EditManager} instances.
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.EditManager} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -367,7 +367,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     protected EditManagerItemProvider editManagerItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.internal.EditManager}.
+     * This creates an adapter for a {@link org.locationtech.udig.project.internal.EditManager}.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */

@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.util;
+package org.locationtech.udig.catalog.util;
 
 import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IServiceInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.ResourceInfo;

@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig;
+package org.locationtech.udig;
 
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.tool.ActionTool;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.project.ui.tool.ToolLifecycleListener;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.tool.ActionTool;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.tool.ToolLifecycleListener;
 
 import org.eclipse.jface.action.IAction;
 
@@ -25,8 +25,8 @@ import org.eclipse.jface.action.IAction;
 public class RunModalTool implements ActionTool {
 
     public void run() {
-        IAction tool = ApplicationGIS.getToolManager().getTool("net.refractions.udig.tools.Pan",  //$NON-NLS-1$
-                "net.refractions.udig.tool.category.pan"); //$NON-NLS-1$
+        IAction tool = ApplicationGIS.getToolManager().getTool("org.locationtech.udig.tools.Pan",  //$NON-NLS-1$
+                "org.locationtech.udig.tool.category.pan"); //$NON-NLS-1$
         
         tool.run();
     }

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.info;
+package org.locationtech.udig.tool.info;
 
 import java.net.URL;
 
@@ -42,7 +42,7 @@ public class InfoPlugin extends AbstractUIPlugin {
     // The shared instance.
     private static InfoPlugin plugin;
 
-    public static final String ID = "net.refractions.udig.info"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.info"; //$NON-NLS-1$
 
     public static final String IMG_OBJ_PATH = "icons/obj16/"; //$NON-NLS-1$
     public static final String IMG_OBJ_BASE = IMG_OBJ_PATH + "base_doc_obj.png"; //$NON-NLS-1$
@@ -97,7 +97,7 @@ public class InfoPlugin extends AbstractUIPlugin {
      * It is much prefered to do this:
      * 
      * <pre><code>
-     * private static final String RENDERING = "net.refractions.udig.project/render/trace";
+     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
      * }

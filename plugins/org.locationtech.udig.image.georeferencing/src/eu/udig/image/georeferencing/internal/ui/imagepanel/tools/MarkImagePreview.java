@@ -10,7 +10,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.internal.ui.imagepanel.tools;
+package org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.tools;
 
 import java.awt.Color;
 import java.util.Observable;
@@ -22,10 +22,10 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
-import eu.udig.image.georeferencing.internal.process.MarkModel;
-import eu.udig.image.georeferencing.internal.ui.AbstractMarkPresenter;
-import eu.udig.image.georeferencing.internal.ui.InputEvent;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.MarkImagePresenter;
+import org.locationtech.udig.image.georeferencing.internal.process.MarkModel;
+import org.locationtech.udig.image.georeferencing.internal.ui.AbstractMarkPresenter;
+import org.locationtech.udig.image.georeferencing.internal.ui.InputEvent;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.MarkImagePresenter;
 
 /**
  * Preview used to show a mark while being D&D.

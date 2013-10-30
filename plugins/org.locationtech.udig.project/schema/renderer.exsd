@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.render">
+<schema targetNamespace="org.locationtech.udig.render">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.render" id="renderer" name="renderer"/>
+         <meta.schema plugin="org.locationtech.udig.render" id="renderer" name="renderer"/>
       </appInfo>
       <documentation>
          &lt;p&gt;A Renderer interprets spatial data and represents the data in a visual manner.  In UDIG there are different types of renderers that can render different types of data.  For example, a feature renderer can render features data.  A WMS renderer can communicate with and render images from a web map server.&lt;/p&gt;
@@ -69,7 +69,7 @@ Note PrintManager will also make use of this extention point.
                   The implementation class of the Renderer.  The Renderer interface must also be implemented
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.render.IRenderMetricsFactory"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.render.IRenderMetricsFactory"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -110,8 +110,8 @@ Note PrintManager will also make use of this extention point.
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         &lt;extension point=&quot;net.refractions.udig.project.impl.renderer&quot;&gt;
-   &lt;renderer class=&quot;net.refractions.udig.render.internal.feature.basic.BasicFeatureMetricsFactory&quot;&gt;
+         &lt;extension point=&quot;org.locationtech.udig.project.impl.renderer&quot;&gt;
+   &lt;renderer class=&quot;org.locationtech.udig.render.internal.feature.basic.BasicFeatureMetricsFactory&quot;&gt;
    &lt;/renderer&gt;
 &lt;/extension&gt;
       </documentation>
@@ -138,7 +138,7 @@ Note PrintManager will also make use of this extention point.
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         net.refractions.udig.render.feature.basic
+         org.locationtech.udig.render.feature.basic
       </documentation>
    </annotation>
 

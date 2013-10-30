@@ -9,9 +9,9 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
-import net.refractions.udig.project.internal.provider.LoadingPlaceHolder;
+import org.locationtech.udig.project.internal.provider.LoadingPlaceHolder;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;

@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.points;
+package org.locationtech.udig.style.advanced.points;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import net.refractions.udig.style.sld.SLD;
+import org.locationtech.udig.style.sld.SLD;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
@@ -39,21 +39,21 @@ import org.geotools.styling.Font;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.Filter;
 
-import eu.udig.style.advanced.StylePlugin;
-import eu.udig.style.advanced.common.FiltersComposite;
-import eu.udig.style.advanced.common.IStyleChangesListener;
-import eu.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.SymbolizerWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
-import eu.udig.style.advanced.internal.Messages;
-import eu.udig.style.advanced.points.widgets.PointBoderParametersComposite;
-import eu.udig.style.advanced.points.widgets.PointFillParametersComposite;
-import eu.udig.style.advanced.points.widgets.PointCharacterChooserComposite;
-import eu.udig.style.advanced.points.widgets.PointGeneralParametersComposite;
-import eu.udig.style.advanced.points.widgets.PointLabelsParametersComposite;
-import eu.udig.style.advanced.utils.Utilities;
-import static eu.udig.style.advanced.utils.Utilities.*;
+import org.locationtech.udig.style.advanced.StylePlugin;
+import org.locationtech.udig.style.advanced.common.FiltersComposite;
+import org.locationtech.udig.style.advanced.common.IStyleChangesListener;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.SymbolizerWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.TextSymbolizerWrapper;
+import org.locationtech.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.points.widgets.PointBoderParametersComposite;
+import org.locationtech.udig.style.advanced.points.widgets.PointFillParametersComposite;
+import org.locationtech.udig.style.advanced.points.widgets.PointCharacterChooserComposite;
+import org.locationtech.udig.style.advanced.points.widgets.PointGeneralParametersComposite;
+import org.locationtech.udig.style.advanced.points.widgets.PointLabelsParametersComposite;
+import org.locationtech.udig.style.advanced.utils.Utilities;
+import static org.locationtech.udig.style.advanced.utils.Utilities.*;
 
 @SuppressWarnings("nls")
 public class PointPropertiesComposite extends SelectionAdapter implements ModifyListener, IStyleChangesListener {

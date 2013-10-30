@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.ui">
+<schema targetNamespace="org.locationtech.udig.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.ui" id="menuBuilders" name="Menu Builders"/>
+         <meta.schema plugin="org.locationtech.udig.ui" id="menuBuilders" name="Menu Builders"/>
       </appInfo>
       <documentation>
          Provides a mechanism to configure the menu bar and cool bar without supplying your own application. Use this if you creating your own uDig based application but do not wish to supply your own Application or WorkbenchAdvisor
@@ -57,7 +57,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.ui.MenuBuilder"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.ui.MenuBuilder"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -79,7 +79,7 @@
       </appInfo>
       <documentation>
          &lt;extension
-      point=&quot;net.refractions.udig.ui.menuBuilders&quot;&gt;
+      point=&quot;org.locationtech.udig.ui.menuBuilders&quot;&gt;
    &lt;workbenchConfiguration
          class=&quot;com.xyz.ui.internal.XYZMenuBuilder&quot;
          id=&quot;com.xyz.ui.menuBuilder&quot;/&gt;
@@ -92,7 +92,7 @@
          <meta.section type="apiInfo"/>
       </appInfo>
       <documentation>
-         The class attribute must be a fully qualified identifier for an implementation of net.refractions.udig.ui.MenuBuilder.
+         The class attribute must be a fully qualified identifier for an implementation of org.locationtech.udig.ui.MenuBuilder.
       </documentation>
    </annotation>
 
@@ -101,7 +101,7 @@
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         The default implementation for uDig is provided in plug-in &quot;net.refractions.udig.ui&quot; in the class net.refractions.udig.ui.UDIGMenuBuilder.
+         The default implementation for uDig is provided in plug-in &quot;org.locationtech.udig.ui&quot; in the class org.locationtech.udig.ui.UDIGMenuBuilder.
       </documentation>
    </annotation>
 

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.preferences;
+package org.locationtech.udig.ui.preferences;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,9 +19,9 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.ui.ExceptionDetailsDialog;
-import net.refractions.udig.ui.internal.Messages;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.ExceptionDetailsDialog;
+import org.locationtech.udig.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;

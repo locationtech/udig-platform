@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.wizard.export.image;
+package org.locationtech.udig.project.ui.wizard.export.image;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
@@ -21,7 +21,7 @@ import java.io.PrintWriter;
 
 import javax.imageio.ImageIO;
 
-import net.refractions.udig.project.IMap;
+import org.locationtech.udig.project.IMap;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;

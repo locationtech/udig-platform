@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.legend.internal;
+package org.locationtech.udig.legend.internal;
 
 import java.awt.Rectangle;
 import java.io.IOException;
 
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveAdapterFactory;
-import net.refractions.udig.legend.ui.LegendGraphic;
-import net.refractions.udig.mapgraphic.internal.MapGraphicResource;
-import net.refractions.udig.mapgraphic.style.LocationStyleContent;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveAdapterFactory;
+import org.locationtech.udig.legend.ui.LegendGraphic;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicResource;
+import org.locationtech.udig.mapgraphic.style.LocationStyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.util.Collection;
 import java.util.concurrent.locks.Lock;
 
-import net.refractions.udig.ui.UDIGDisplaySafeLock;
+import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;

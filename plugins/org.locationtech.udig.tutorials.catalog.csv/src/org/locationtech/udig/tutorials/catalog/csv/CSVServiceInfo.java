@@ -8,11 +8,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.catalog.csv;
+package org.locationtech.udig.tutorials.catalog.csv;
 
 import java.util.Date;
 
-import net.refractions.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.IServiceInfo;
 
 public class CSVServiceInfo extends IServiceInfo {
     CSVService handle;

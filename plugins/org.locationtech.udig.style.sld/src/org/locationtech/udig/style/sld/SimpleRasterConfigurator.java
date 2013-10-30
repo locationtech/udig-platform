@@ -9,19 +9,19 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.style.sld;
+package org.locationtech.udig.style.sld;
 
 import java.awt.Color;
 
 import javax.media.jai.Histogram;
 
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.style.sld.internal.Messages;
-import net.refractions.udig.style.sld.simple.ChannelViewer;
-import net.refractions.udig.style.sld.simple.OpacityViewer;
-import net.refractions.udig.style.sld.simple.RGBChannelViewer;
-import net.refractions.udig.style.sld.simple.ScaleViewer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.style.sld.internal.Messages;
+import org.locationtech.udig.style.sld.simple.ChannelViewer;
+import org.locationtech.udig.style.sld.simple.OpacityViewer;
+import org.locationtech.udig.style.sld.simple.RGBChannelViewer;
+import org.locationtech.udig.style.sld.simple.ScaleViewer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

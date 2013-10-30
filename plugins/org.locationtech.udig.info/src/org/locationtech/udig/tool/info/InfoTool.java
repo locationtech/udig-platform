@@ -9,17 +9,17 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tool.info;
+package org.locationtech.udig.tool.info;
 
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.AbstractModalTool;
-import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.tool.info.internal.InfoView2;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.commands.SelectionBoxCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.AbstractModalTool;
+import org.locationtech.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.tool.info.internal.InfoView2;
 
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
@@ -56,8 +56,8 @@ public class InfoTool extends AbstractModalTool implements ModalTool {
     /**
      * ID of the current tool.
      */
-    public static final String ID = "net.refractions.udig.tool.info.infoMode"; //$NON-NLS-1$
-	public static final String CATEGORY_ID = "net.refractions.udig.tool.category.info"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.tool.info.infoMode"; //$NON-NLS-1$
+	public static final String CATEGORY_ID = "org.locationtech.udig.tool.category.info"; //$NON-NLS-1$
 
     /**
      * Creates an LayerPointInfo Tool.
@@ -105,7 +105,7 @@ public class InfoTool extends AbstractModalTool implements ModalTool {
      * <p>
      * See class description for intended workflow.
      * </p>
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseReleased(MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(MapMouseEvent)
      */
     public void mouseReleased(MapMouseEvent e) {
         try {            
@@ -146,7 +146,7 @@ public class InfoTool extends AbstractModalTool implements ModalTool {
     }
     
     /**
-     * @see net.refractions.udig.project.ui.tool.Tool#dispose()
+     * @see org.locationtech.udig.project.ui.tool.Tool#dispose()
      */
     public void dispose() {
         super.dispose();

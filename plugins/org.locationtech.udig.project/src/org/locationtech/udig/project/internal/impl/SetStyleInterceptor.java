@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.interceptor.LayerInterceptor;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.SetDefaultStyleProcessor;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.interceptor.LayerInterceptor;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.SetDefaultStyleProcessor;
 
 /**
  * Sets the default style of the layer.

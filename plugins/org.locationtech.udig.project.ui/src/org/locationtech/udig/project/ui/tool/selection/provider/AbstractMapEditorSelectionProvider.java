@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.tool.selection.provider;
+package org.locationtech.udig.project.ui.tool.selection.provider;
 
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
+import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;

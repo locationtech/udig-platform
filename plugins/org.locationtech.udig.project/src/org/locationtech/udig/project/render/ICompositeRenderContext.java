@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.render;
+package org.locationtech.udig.project.render;
 
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
+import org.locationtech.udig.project.ILayer;
 
 /**
  * A toolkit that is provided to composite renderers.

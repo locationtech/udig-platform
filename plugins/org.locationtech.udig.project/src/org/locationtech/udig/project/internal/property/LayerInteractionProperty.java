@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.property;
+package org.locationtech.udig.project.internal.property;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.ui.operations.AbstractPropertyValue;
-import net.refractions.udig.ui.operations.PropertyValue;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.ui.operations.AbstractPropertyValue;
+import org.locationtech.udig.ui.operations.PropertyValue;
 
 /**
  * Allows tools or operations to check what kind of interactions a layer

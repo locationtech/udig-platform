@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.internal;
+package org.locationtech.udig.style.sld.internal;
 
 import java.awt.Color;
 
@@ -26,7 +26,7 @@ import org.geotools.styling.Symbolizer;
 public class SymbolizerContent {
     //   
     /** <code>ID</code> field */
-    public static final String ID = "net.refractions.udig.style.sld.symbolizer"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.style.sld.symbolizer"; //$NON-NLS-1$
 
     static final String TAG_TYPE = "featureType"; //$NON-NLS-1$
     static final String TAG_LABEL = "text_label"; //$NON-NLS-1$

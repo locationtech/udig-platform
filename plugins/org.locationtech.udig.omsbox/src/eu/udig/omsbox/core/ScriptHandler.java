@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.core;
+package org.locationtech.udig.omsbox.core;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -18,16 +18,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceFactory;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.internal.commands.AddLayerCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceFactory;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.internal.commands.AddLayerCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -39,14 +39,14 @@ import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.gce.grassraster.JGrassConstants;
 
-import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
-import eu.udig.catalog.jgrass.core.JGrassService;
-import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
-import eu.udig.omsbox.OmsBoxPlugin;
-import eu.udig.omsbox.utils.OmsBoxConstants;
-import eu.udig.omsbox.utils.OmsBoxUtils;
-import eu.udig.omsbox.view.widgets.ModuleGui;
-import eu.udig.omsbox.view.widgets.ModuleGuiElement;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
+import org.locationtech.udig.catalog.jgrass.core.JGrassService;
+import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.omsbox.OmsBoxPlugin;
+import org.locationtech.udig.omsbox.utils.OmsBoxConstants;
+import org.locationtech.udig.omsbox.utils.OmsBoxUtils;
+import org.locationtech.udig.omsbox.view.widgets.ModuleGui;
+import org.locationtech.udig.omsbox.view.widgets.ModuleGuiElement;
 
 /**
  * Handler for script generation from gui and script execution.

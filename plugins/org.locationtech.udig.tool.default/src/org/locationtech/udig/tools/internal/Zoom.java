@@ -9,19 +9,19 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tools.internal;
+package org.locationtech.udig.tools.internal;
 
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import net.refractions.udig.project.internal.command.navigation.ZoomCommand;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.ui.commands.DrawCommandFactory;
-import net.refractions.udig.project.ui.commands.SelectionBoxCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.tool.AbstractModalTool;
-import net.refractions.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.project.internal.command.navigation.ZoomCommand;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
+import org.locationtech.udig.project.ui.commands.SelectionBoxCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.tool.AbstractModalTool;
+import org.locationtech.udig.project.ui.tool.ModalTool;
 
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -104,7 +104,7 @@ public class Zoom extends AbstractModalTool implements ModalTool {
 
     
     /**
-     * @see net.refractions.udig.project.tool.AbstractTool#mousePressed(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mousePressed(MapMouseEvent e) {
         if (e.button == MapMouseEvent.BUTTON3 && showContextOnRightClick) {
@@ -125,7 +125,7 @@ public class Zoom extends AbstractModalTool implements ModalTool {
     }
 
     /**
-     * @see net.refractions.udig.project.tool.AbstractTool#mouseReleased(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.tool.AbstractTool#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mouseReleased(MapMouseEvent e) {
         if (e.button == MapMouseEvent.BUTTON3  && showContextOnRightClick) {

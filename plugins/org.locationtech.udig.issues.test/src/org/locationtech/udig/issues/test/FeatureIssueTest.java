@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.test;
+package org.locationtech.udig.issues.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,30 +16,30 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.Dimension;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.tests.CatalogTests;
-import net.refractions.udig.core.enums.Priority;
-import net.refractions.udig.core.enums.Resolution;
-import net.refractions.udig.issues.FeatureIssue;
-import net.refractions.udig.issues.IIssue;
-import net.refractions.udig.issues.internal.view.IssueHandler;
-import net.refractions.udig.issues.listeners.IIssueListener;
-import net.refractions.udig.issues.listeners.IssueChangeType;
-import net.refractions.udig.issues.listeners.IssueEvent;
-import net.refractions.udig.issues.listeners.IssuePropertyChangeEvent;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.AbstractCommand;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.UndoableCommand;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.WaitCondition;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.core.enums.Priority;
+import org.locationtech.udig.core.enums.Resolution;
+import org.locationtech.udig.issues.FeatureIssue;
+import org.locationtech.udig.issues.IIssue;
+import org.locationtech.udig.issues.internal.view.IssueHandler;
+import org.locationtech.udig.issues.listeners.IIssueListener;
+import org.locationtech.udig.issues.listeners.IssueChangeType;
+import org.locationtech.udig.issues.listeners.IssueEvent;
+import org.locationtech.udig.issues.listeners.IssuePropertyChangeEvent;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.AbstractCommand;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.UndoableCommand;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.WaitCondition;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IViewPart;
@@ -96,7 +96,7 @@ public class FeatureIssueTest extends AbstractProjectUITestCase {
 	}
 
 	/*
-	 * Test method for 'net.refractions.udig.project.ui.FeatureIssue.fixIssue(IViewPart, IEditorPart)'
+	 * Test method for 'org.locationtech.udig.project.ui.FeatureIssue.fixIssue(IViewPart, IEditorPart)'
 	 */
 	@Ignore
 	@Test

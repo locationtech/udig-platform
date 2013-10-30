@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project">
+<schema targetNamespace="org.locationtech.udig.project">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project" id="resourceInterceptor" name="resourceInterceptor"/>
+         <meta.schema plugin="org.locationtech.udig.project" id="resourceInterceptor" name="resourceInterceptor"/>
       </appInfo>
       <documentation>
          resourceInterceptors are ran when getResource(Class&lt;?&gt;, IProgressMonitor) is called on a Layer.  It allows the returned resource to be modified.
@@ -56,7 +56,7 @@
                   The resource intercepter to run if the target type is correct.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.IResourceInterceptor"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.IResourceInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -118,7 +118,7 @@ For example if a new feature store was returned each time then every plugin that
                   The resource caching intercepter to run if the target type is correct.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.IResourceCachingInterceptor"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.IResourceCachingInterceptor"/>
                </appInfo>
             </annotation>
          </attribute>

@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.tools.merge;
+package org.locationtech.udig.tools.merge;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
@@ -32,7 +32,7 @@ import org.opengis.filter.Or;
 
 import com.vividsolutions.jts.geom.Envelope;
 
-import eu.udig.tools.internal.ui.util.LayerUtil;
+import org.locationtech.udig.tools.internal.ui.util.LayerUtil;
 
 /**
  * @author Mauricio Pazos

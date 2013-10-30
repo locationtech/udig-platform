@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.shp;
+package org.locationtech.udig.catalog.internal.shp;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -16,8 +16,8 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.refractions.udig.catalog.shp.preferences.PreferenceConstants;
-import net.refractions.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.catalog.shp.preferences.PreferenceConstants;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -35,11 +35,11 @@ public class ShpPlugin extends AbstractUIPlugin {
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
 
-    public static final String SHP_TRACE_FINEST = "net.refractions.udig.catalog.shp/debug/finest"; //$NON-NLS-1$
-    public static final String SHP_TRACE_FINE = "net.refractions.udig.catalog.shp/debug/fine"; //$NON-NLS-1$
+    public static final String SHP_TRACE_FINEST = "org.locationtech.udig.catalog.shp/debug/finest"; //$NON-NLS-1$
+    public static final String SHP_TRACE_FINE = "org.locationtech.udig.catalog.shp/debug/fine"; //$NON-NLS-1$
     
 	
-    public static final String ID = "net.refractions.udig.catalog.shp"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.catalog.shp"; //$NON-NLS-1$
 	/**
 	 * The constructor.
 	 */
@@ -105,7 +105,7 @@ public class ShpPlugin extends AbstractUIPlugin {
 	public ResourceBundle getResourceBundle() {
 		try {
 			if (resourceBundle == null)
-				resourceBundle = ResourceBundle.getBundle("net.refractions.udig.catalog.internal.shp.ShpPluginResources"); //$NON-NLS-1$
+				resourceBundle = ResourceBundle.getBundle("org.locationtech.udig.catalog.internal.shp.ShpPluginResources"); //$NON-NLS-1$
 		} catch (MissingResourceException x) {
 			resourceBundle = null;
 		}
@@ -121,7 +121,7 @@ public class ShpPlugin extends AbstractUIPlugin {
      * It is much prefered to do this:
      * 
      * <pre><code>
-     * private static final String RENDERING = &quot;net.refractions.udig.project/render/trace&quot;;
+     * private static final String RENDERING = &quot;org.locationtech.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging()
      *      &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *  System.out.println(&quot;your message here&quot;);
@@ -170,7 +170,7 @@ public class ShpPlugin extends AbstractUIPlugin {
     }
 
     public String defaultCharset() {
-        return UiPlugin.getDefault().getPreferenceStore().getString(net.refractions.udig.ui.preferences.PreferenceConstants.P_DEFAULT_CHARSET);
+        return UiPlugin.getDefault().getPreferenceStore().getString(org.locationtech.udig.ui.preferences.PreferenceConstants.P_DEFAULT_CHARSET);
     }
 
 }

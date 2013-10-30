@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.catalog.ui">
+<schema targetNamespace="org.locationtech.udig.catalog.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.catalog.ui" id="dataExceptionHandler" name="Data Exception Handler"/>
+         <meta.schema plugin="org.locationtech.udig.catalog.ui" id="dataExceptionHandler" name="Data Exception Handler"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
@@ -55,7 +55,7 @@
                   The connection error handler class. A subclass of IConnectionErrorHandler.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.catalog.internal.ui.wizard.IConnectionErrorHandler"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.catalog.internal.ui.wizard.IConnectionErrorHandler"/>
                </appInfo>
             </annotation>
          </attribute>

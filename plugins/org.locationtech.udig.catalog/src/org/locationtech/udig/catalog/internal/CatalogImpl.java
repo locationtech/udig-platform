@@ -9,10 +9,10 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal;
+package org.locationtech.udig.catalog.internal;
 
-import static net.refractions.udig.catalog.IResolve.Status.CONNECTED;
-import static net.refractions.udig.catalog.IResolve.Status.NOTCONNECTED;
+import static org.locationtech.udig.catalog.IResolve.Status.CONNECTED;
+import static org.locationtech.udig.catalog.IResolve.Status.NOTCONNECTED;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,33 +34,33 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ICatalogInfo;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveChangeListener;
-import net.refractions.udig.catalog.IResolveDelta;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceFactory;
-import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.catalog.ServiceParameterPersister;
-import net.refractions.udig.catalog.TemporaryResourceFactory;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.interceptor.GeoResourceInterceptor;
-import net.refractions.udig.catalog.interceptor.ServiceInterceptor;
-import net.refractions.udig.catalog.moved.MovedService;
-import net.refractions.udig.catalog.util.AST;
-import net.refractions.udig.catalog.util.ASTFactory;
-import net.refractions.udig.catalog.util.IFriend;
-import net.refractions.udig.core.WeakHashSet;
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.ICatalogInfo;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveChangeListener;
+import org.locationtech.udig.catalog.IResolveDelta;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceFactory;
+import org.locationtech.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.ServiceParameterPersister;
+import org.locationtech.udig.catalog.TemporaryResourceFactory;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.interceptor.GeoResourceInterceptor;
+import org.locationtech.udig.catalog.interceptor.ServiceInterceptor;
+import org.locationtech.udig.catalog.moved.MovedService;
+import org.locationtech.udig.catalog.util.AST;
+import org.locationtech.udig.catalog.util.ASTFactory;
+import org.locationtech.udig.catalog.util.IFriend;
+import org.locationtech.udig.core.WeakHashSet;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -90,7 +90,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * @version 1.2
  */
 public class CatalogImpl extends ICatalog {
-    private static final String TEMPORARY_RESOURCE_EXT_ID = "net.refractions.udig.catalog.temporaryResource"; //$NON-NLS-1$
+    private static final String TEMPORARY_RESOURCE_EXT_ID = "org.locationtech.udig.catalog.temporaryResource"; //$NON-NLS-1$
 
     /** All services known to the local catalog */
     private final Set<IService> services = new CopyOnWriteArraySet<IService>();
@@ -121,7 +121,7 @@ public class CatalogImpl extends ICatalog {
     }
 
     /**
-     * @see net.refractions.udig.catalog.ICatalog#addCatalogListener(net.refractions.udig.catalog.ICatalog.ICatalogListener)
+     * @see org.locationtech.udig.catalog.ICatalog#addCatalogListener(org.locationtech.udig.catalog.ICatalog.ICatalogListener)
      * @param listener
      */
     public void addCatalogListener( IResolveChangeListener listener ) {
@@ -132,7 +132,7 @@ public class CatalogImpl extends ICatalog {
     }
 
     /**
-     * @see net.refractions.udig.catalog.ICatalog#removeCatalogListener(net.refractions.udig.catalog.ICatalog.ICatalogListener)
+     * @see org.locationtech.udig.catalog.ICatalog#removeCatalogListener(org.locationtech.udig.catalog.ICatalog.ICatalogListener)
      * @param listener
      */
     public void removeCatalogListener( IResolveChangeListener listener ) {
@@ -170,7 +170,7 @@ public class CatalogImpl extends ICatalog {
     }
 
     /**
-     * @see net.refractions.udig.catalog.ICatalog#remove(net.refractions.udig.catalog.IService)
+     * @see org.locationtech.udig.catalog.ICatalog#remove(org.locationtech.udig.catalog.IService)
      * @param entry
      * @throws UnsupportedOperationException
      */
@@ -473,7 +473,7 @@ public class CatalogImpl extends ICatalog {
      * Quick search by url match.
      * 
      * @param query
-     * @see net.refractions.udig.catalog.ICatalog#search(org.opengis.filter.Filter)
+     * @see org.locationtech.udig.catalog.ICatalog#search(org.opengis.filter.Filter)
      * @return List<IResolve>
      * @throws IOException
      */
@@ -512,7 +512,7 @@ public class CatalogImpl extends ICatalog {
     public List<IResolve> friends( final IResolve handle ) {
         final List<IResolve> friends = new ArrayList<IResolve>();
         ExtensionPointUtil.process(CatalogPlugin.getDefault(),
-                "net.refractions.udig.catalog.friendly", new ExtensionPointProcessor(){ //$NON-NLS-1$
+                "org.locationtech.udig.catalog.friendly", new ExtensionPointProcessor(){ //$NON-NLS-1$
                     /**
                      * Lets find our friends.
                      */
@@ -665,7 +665,7 @@ public class CatalogImpl extends ICatalog {
      * represent 'OR' use ! to represent 'NOT' use ( ) to designate scope The bbox provided shall be
      * in Lat - Long, or null if the search is not to be contained within a specified area.
      * 
-     * @see net.refractions.udig.catalog.ICatalog#search(java.lang.String,
+     * @see org.locationtech.udig.catalog.ICatalog#search(java.lang.String,
      *      com.vividsolutions.jts.geom.Envelope)
      * @param pattern
      * @param bbox used for an intersection test
@@ -864,7 +864,7 @@ public class CatalogImpl extends ICatalog {
     }
 
     /**
-     * @see net.refractions.udig.catalog.ICatalog#resolve(java.lang.Class,
+     * @see org.locationtech.udig.catalog.ICatalog#resolve(java.lang.Class,
      *      org.eclipse.core.runtime.IProgressMonitor)
      * @SuppressWarnings(value={"unchecked" )
      */
@@ -897,7 +897,7 @@ public class CatalogImpl extends ICatalog {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
         Object value = resolve(adaptee, null);
@@ -905,7 +905,7 @@ public class CatalogImpl extends ICatalog {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
+     * @see org.locationtech.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
      */
     public List<IResolve> members( IProgressMonitor monitor2 ) {
         IProgressMonitor monitor = monitor2;
@@ -921,21 +921,21 @@ public class CatalogImpl extends ICatalog {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getStatus()
+     * @see org.locationtech.udig.catalog.IResolve#getStatus()
      */
     public Status getStatus() {
         return Status.CONNECTED;
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getMessage()
+     * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
     public Throwable getMessage() {
         return null;
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getIdentifier()
+     * @see org.locationtech.udig.catalog.IResolve#getIdentifier()
      */
     public URL getIdentifier() {
         return metadata.getSource();

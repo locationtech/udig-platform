@@ -9,13 +9,13 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tools.internal;
+package org.locationtech.udig.tools.internal;
 
 import java.lang.reflect.InvocationTargetException;
 
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.ui.tool.AbstractActionTool;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.ui.tool.AbstractActionTool;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -33,7 +33,7 @@ public class CommitTool extends AbstractActionTool {
 
 
     /*
-     * @see net.refractions.udig.project.ui.tool.ActionTool#run()
+     * @see org.locationtech.udig.project.ui.tool.ActionTool#run()
      */
     public void run() {
 //        context.sendASyncCommand(context.getEditFactory().createCommitCommand());
@@ -65,7 +65,7 @@ public class CommitTool extends AbstractActionTool {
     }
 
     /*
-     * @see net.refractions.udig.project.ui.tool.Tool#dispose()
+     * @see org.locationtech.udig.project.ui.tool.Tool#dispose()
      */
     public void dispose() {
     }

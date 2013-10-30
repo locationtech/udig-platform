@@ -1,13 +1,13 @@
 /**
  * 
  */
-package net.refractions.udig.project.command.provider;
+package org.locationtech.udig.project.command.provider;
 
 import java.io.IOException;
 
-import net.refractions.udig.core.IBlockingProvider;
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.project.ILayer;
+import org.locationtech.udig.core.IBlockingProvider;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.ILayer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

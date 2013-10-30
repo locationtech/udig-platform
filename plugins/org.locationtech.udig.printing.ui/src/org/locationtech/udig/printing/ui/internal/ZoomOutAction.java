@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package net.refractions.udig.printing.ui.internal;
+package org.locationtech.udig.printing.ui.internal;
 
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.printing.ui.internal.editor.PageEditorInput;
-import net.refractions.udig.project.ui.UDIGEditorInput;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.ui.internal.editor.PageEditorInput;
+import org.locationtech.udig.project.ui.UDIGEditorInput;
 
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.jface.action.Action;

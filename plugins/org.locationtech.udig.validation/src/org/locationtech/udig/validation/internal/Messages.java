@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.validation.internal;
+package org.locationtech.udig.validation.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.validation.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.validation.internal.messages"; //$NON-NLS-1$
 	public static String ValidationTableLabelProvider_invalidColumn;
 	public static String OpUtils_results;
 	public static String OpUtils_notifyResult;

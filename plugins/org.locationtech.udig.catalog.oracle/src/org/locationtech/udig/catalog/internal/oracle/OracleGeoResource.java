@@ -9,21 +9,21 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.oracle;
+package org.locationtech.udig.catalog.internal.oracle;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.oracle.internal.Messages;
-import net.refractions.udig.core.jts.ReferencedEnvelopeCache;
-import net.refractions.udig.ui.graphics.Glyph;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.oracle.internal.Messages;
+import org.locationtech.udig.core.jts.ReferencedEnvelopeCache;
+import org.locationtech.udig.ui.graphics.Glyph;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -77,14 +77,14 @@ public class OracleGeoResource extends IGeoResource {
 
     
     /*
-     * @see net.refractions.udig.catalog.IGeoResource#getStatus()
+     * @see org.locationtech.udig.catalog.IGeoResource#getStatus()
      */
     public Status getStatus() {
         return service.getStatus();
     }
 
     /*
-     * @see net.refractions.udig.catalog.IGeoResource#getStatusMessage()
+     * @see org.locationtech.udig.catalog.IGeoResource#getStatusMessage()
      */
     public Throwable getMessage() {
         return service.getMessage();
@@ -92,7 +92,7 @@ public class OracleGeoResource extends IGeoResource {
 
     /*
      * Required adaptions: <ul> <li>IGeoResourceInfo.class <li>IService.class </ul>
-     * @see net.refractions.udig.catalog.IResolve#resolve(java.lang.Class,
+     * @see org.locationtech.udig.catalog.IResolve#resolve(java.lang.Class,
      * org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
@@ -122,7 +122,7 @@ public class OracleGeoResource extends IGeoResource {
         return super.resolve(adaptee, monitor);
     }
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null)
@@ -201,7 +201,7 @@ public class OracleGeoResource extends IGeoResource {
                         .log(
                                 new org.eclipse.core.runtime.Status(
                                         IStatus.WARNING,
-                                        "net.refractions.udig.catalog", 0, Messages.OracleGeoResource_error_layerBounds, e)); //$NON-NLS-1$
+                                        "org.locationtech.udig.catalog", 0, Messages.OracleGeoResource_error_layerBounds, e)); //$NON-NLS-1$
                 bounds = new ReferencedEnvelope(new Envelope(), null);
             }
 

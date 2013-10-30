@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.support;
+package org.locationtech.udig.tools.edit.support;
 
 import java.awt.Dimension;
 import java.io.InputStream;
@@ -16,8 +16,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Random;
 
-import net.refractions.udig.project.internal.render.impl.ScaleUtils;
-import net.refractions.udig.tool.edit.tests.TestsPlugin;
+import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
+import org.locationtech.udig.tool.edit.tests.TestsPlugin;
 
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.FeatureCollections;

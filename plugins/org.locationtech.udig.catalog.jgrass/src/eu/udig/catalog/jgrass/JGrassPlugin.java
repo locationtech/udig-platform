@@ -7,26 +7,26 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass;
+package org.locationtech.udig.catalog.jgrass;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.mapgraphic.internal.MapGraphicService;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import eu.udig.catalog.jgrass.activeregion.ActiveRegionMapGraphic;
+import org.locationtech.udig.catalog.jgrass.activeregion.ActiveRegionMapGraphic;
 
 /**
  * <p>
@@ -39,7 +39,7 @@ import eu.udig.catalog.jgrass.activeregion.ActiveRegionMapGraphic;
 public class JGrassPlugin extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "eu.udig.catalog.jgrass";
+    public static final String PLUGIN_ID = "org.locationtech.udig.catalog.jgrass";
 
     // The shared instance
     private static JGrassPlugin plugin;

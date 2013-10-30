@@ -1,12 +1,12 @@
 /**
  * 
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.tool.display.PlaceholderToolbarContributionItem;
-import net.refractions.udig.project.ui.tool.IToolManager;
-import net.refractions.udig.project.ui.tool.ToolConstants;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.tool.display.PlaceholderToolbarContributionItem;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.project.ui.tool.ToolConstants;
 
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.jface.action.IContributionItem;
@@ -22,7 +22,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.part.EditorActionBarContributor;
 
 /**
- * Adds {@link net.refractions.udig.project.ui.tool.Tool}s to the actions bars.
+ * Adds {@link org.locationtech.udig.project.ui.tool.Tool}s to the actions bars.
  * <p>
  * You can configure the MapEditorActionBarContributor to only add Action Tools
  * (in order to make use of the GEF palette.

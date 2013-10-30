@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.ui.pdf;
+package org.locationtech.udig.printing.ui.pdf;
 
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
@@ -20,20 +20,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.core.internal.Icons;
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.ModelFactory;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.printing.ui.Template;
-import net.refractions.udig.printing.ui.TemplateFactory;
-import net.refractions.udig.printing.ui.internal.Messages;
-import net.refractions.udig.printing.ui.internal.PrintingPlugin;
-import net.refractions.udig.printing.ui.internal.TemplatePrintingEngine;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.MapEditorInput;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.internal.Icons;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.ModelFactory;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.ui.Template;
+import org.locationtech.udig.printing.ui.TemplateFactory;
+import org.locationtech.udig.printing.ui.internal.Messages;
+import org.locationtech.udig.printing.ui.internal.PrintingPlugin;
+import org.locationtech.udig.printing.ui.internal.TemplatePrintingEngine;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.MapEditorInput;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.model;
+package org.locationtech.udig.printing.model;
 
 /**
  * A Connection represents some sort of relation between two Boxes.
@@ -30,7 +30,7 @@ public interface Connection extends Element{
     public boolean isConnected();
 
 	/**
-     * Sets the value of the '{@link net.refractions.udig.printing.model.Connection#isConnected <em>Connected</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.printing.model.Connection#isConnected <em>Connected</em>}' attribute.
      * <!-- begin-user-doc -->
      * Sets the connected state of this connection to the value provided 
      * <!-- end-user-doc --> 
@@ -51,7 +51,7 @@ public interface Connection extends Element{
     public Box getSource();
 
 	/**
-     * Sets the value of the '{@link net.refractions.udig.printing.model.Connection#getSource <em>Source</em>}' reference.
+     * Sets the value of the '{@link org.locationtech.udig.printing.model.Connection#getSource <em>Source</em>}' reference.
      * <!-- begin-user-doc -->
      * Sets this connection's source Box 
      * This will affect the connection by notifying any listeners of the change.
@@ -74,7 +74,7 @@ public interface Connection extends Element{
     public Box getTarget();
 
 	/**
-     * Sets the value of the '{@link net.refractions.udig.printing.model.Connection#getTarget <em>Target</em>}' reference.
+     * Sets the value of the '{@link org.locationtech.udig.printing.model.Connection#getTarget <em>Target</em>}' reference.
      * <!-- begin-user-doc -->
      * Sets this connection's source Box 
      * This represents a link between a Box and this class. The target of a

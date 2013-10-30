@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package eu.udig.catalog.teradata.internal;
+package org.locationtech.udig.catalog.teradata.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "eu.udig.catalog.teradata.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.catalog.teradata.internal.messages"; //$NON-NLS-1$
 
 	public static String GetHTMLDriverMsg;
 	public static String GetHTMLCopyPluginMsg;

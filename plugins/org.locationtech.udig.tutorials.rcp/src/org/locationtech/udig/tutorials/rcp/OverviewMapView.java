@@ -8,24 +8,24 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.rcp;
+package org.locationtech.udig.tutorials.rcp;
 
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.project.ui.internal.tool.display.ToolManager;
-import net.refractions.udig.project.ui.internal.wizard.MapImport;
-import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
-import net.refractions.udig.project.ui.tool.IToolManager;
-import net.refractions.udig.project.ui.tool.ModalTool;
-import net.refractions.udig.project.ui.viewers.MapEditDomain;
-import net.refractions.udig.project.ui.viewers.MapViewer;
-import net.refractions.udig.tools.internal.ScrollPanTool;
-import net.refractions.udig.tools.internal.Zoom;
-import net.refractions.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
-import net.refractions.udig.tutorials.tracking.glasspane.TrackSeagullOp;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.tool.display.ToolManager;
+import org.locationtech.udig.project.ui.internal.wizard.MapImport;
+import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.project.ui.viewers.MapEditDomain;
+import org.locationtech.udig.project.ui.viewers.MapViewer;
+import org.locationtech.udig.tools.internal.ScrollPanTool;
+import org.locationtech.udig.tools.internal.Zoom;
+import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
+import org.locationtech.udig.tutorials.tracking.glasspane.TrackSeagullOp;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.Action;
@@ -59,7 +59,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
  */
 public class OverviewMapView extends ViewPart implements MapPart {
 
-    public static final String ID = "net.refractions.udig.tutorials.rcp.mapViewOverview"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.tutorials.rcp.mapViewOverview"; //$NON-NLS-1$
 
     private MapViewer mapviewer; // main map viewer
     private OverviewMapViewer overviewmapviewer; // overview map viewer

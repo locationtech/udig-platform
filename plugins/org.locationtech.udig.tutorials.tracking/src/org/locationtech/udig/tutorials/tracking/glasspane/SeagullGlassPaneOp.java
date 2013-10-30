@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tutorials.tracking.glasspane;
+package org.locationtech.udig.tutorials.tracking.glasspane;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,10 +18,10 @@ import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.render.glass.GlassPane;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.render.glass.GlassPane;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.graphics.GC;

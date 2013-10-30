@@ -8,12 +8,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 
-package net.refractions.udig.style.filter;
+package org.locationtech.udig.style.filter;
 
 import java.io.IOException;
 
-import net.refractions.udig.aoi.IAOIService;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;

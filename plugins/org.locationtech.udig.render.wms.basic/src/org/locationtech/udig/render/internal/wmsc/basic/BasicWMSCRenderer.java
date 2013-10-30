@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.internal.wmsc.basic;
+package org.locationtech.udig.render.internal.wmsc.basic;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -22,23 +22,23 @@ import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.internal.PreferenceConstants;
-import net.refractions.udig.catalog.internal.wms.WmsPlugin;
-import net.refractions.udig.catalog.wmsc.server.Tile;
-import net.refractions.udig.catalog.wmsc.server.TileListener;
-import net.refractions.udig.catalog.wmsc.server.TileRange;
-import net.refractions.udig.catalog.wmsc.server.TileRangeInMemory;
-import net.refractions.udig.catalog.wmsc.server.TileRangeOnDisk;
-import net.refractions.udig.catalog.wmsc.server.TileSet;
-import net.refractions.udig.catalog.wmsc.server.TileWorkerQueue;
-import net.refractions.udig.catalog.wmsc.server.TiledWebMapServer;
-import net.refractions.udig.catalog.wmsc.server.WMSTile;
-import net.refractions.udig.project.internal.render.impl.RendererImpl;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.render.wms.basic.WMSPlugin;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.internal.PreferenceConstants;
+import org.locationtech.udig.catalog.internal.wms.WmsPlugin;
+import org.locationtech.udig.catalog.wmsc.server.Tile;
+import org.locationtech.udig.catalog.wmsc.server.TileListener;
+import org.locationtech.udig.catalog.wmsc.server.TileRange;
+import org.locationtech.udig.catalog.wmsc.server.TileRangeInMemory;
+import org.locationtech.udig.catalog.wmsc.server.TileRangeOnDisk;
+import org.locationtech.udig.catalog.wmsc.server.TileSet;
+import org.locationtech.udig.catalog.wmsc.server.TileWorkerQueue;
+import org.locationtech.udig.catalog.wmsc.server.TiledWebMapServer;
+import org.locationtech.udig.catalog.wmsc.server.WMSTile;
+import org.locationtech.udig.project.internal.render.impl.RendererImpl;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.render.wms.basic.WMSPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

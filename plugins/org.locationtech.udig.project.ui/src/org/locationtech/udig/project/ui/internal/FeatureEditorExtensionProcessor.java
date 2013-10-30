@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,17 +15,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.ui.IUDIGDialogPage;
-import net.refractions.udig.project.ui.IUDIGView;
-import net.refractions.udig.project.ui.internal.tool.ToolContext;
-import net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.ui.IUDIGDialogPage;
+import org.locationtech.udig.project.ui.IUDIGView;
+import org.locationtech.udig.project.ui.internal.tool.ToolContext;
+import org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.common.notify.Notification;
@@ -71,7 +71,7 @@ public class FeatureEditorExtensionProcessor {
 
     static final String CURRENT_LOADER_ID = "FeatureEditorCurrentLoader"; //$NON-NLS-1$
 
-    private static final String FEATURE_EDITOR_ID = "net.refractions.udig.project.ui.featureEditor"; //$NON-NLS-1$
+    private static final String FEATURE_EDITOR_ID = "org.locationtech.udig.project.ui.featureEditor"; //$NON-NLS-1$
 
     private boolean running;
 

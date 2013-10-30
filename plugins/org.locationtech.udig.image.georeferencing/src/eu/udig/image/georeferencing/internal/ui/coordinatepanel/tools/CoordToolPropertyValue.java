@@ -1,10 +1,10 @@
 /**
  * 
  */
-package eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools;
+package org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.ui.operations.AbstractPropertyValue;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.ui.operations.AbstractPropertyValue;
 
 /**
  * This property is checked by the coordinate tools {@link AddCoordinateTool}, {@link DeleteCoordinateTool} and {@link MoveCoordinateTool} 
@@ -28,7 +28,7 @@ public class CoordToolPropertyValue extends AbstractPropertyValue<Object> {
 	}
 
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.ui.operations.PropertyValue#isTrue(java.lang.Object, java.lang.String)
+	 * @see org.locationtech.udig.ui.operations.PropertyValue#isTrue(java.lang.Object, java.lang.String)
 	 */
 	@Override
 	public boolean isTrue(Object object, String value) {
@@ -47,7 +47,7 @@ public class CoordToolPropertyValue extends AbstractPropertyValue<Object> {
 
 
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.ui.operations.PropertyValue#canCacheResult()
+	 * @see org.locationtech.udig.ui.operations.PropertyValue#canCacheResult()
 	 */
 	@Override
 	public boolean canCacheResult() {
@@ -55,7 +55,7 @@ public class CoordToolPropertyValue extends AbstractPropertyValue<Object> {
 	}
 
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.ui.operations.PropertyValue#isBlocking()
+	 * @see org.locationtech.udig.ui.operations.PropertyValue#isBlocking()
 	 */
 	@Override
 	public boolean isBlocking() {

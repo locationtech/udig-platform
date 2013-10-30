@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests.ui.workflow;
+package org.locationtech.udig.catalog.tests.ui.workflow;
 
 import static org.junit.Assert.assertFalse;
 
@@ -17,19 +17,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.internal.ui.ConnectionPageDecorator;
-import net.refractions.udig.catalog.internal.ui.ResourceSelectionPage;
-import net.refractions.udig.catalog.tests.DummyService;
-import net.refractions.udig.catalog.ui.ConnectionFactoryManager;
-import net.refractions.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
-import net.refractions.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
-import net.refractions.udig.catalog.ui.workflow.EndConnectionState;
-import net.refractions.udig.catalog.ui.workflow.ResourceSelectionState;
-import net.refractions.udig.catalog.ui.workflow.State;
-import net.refractions.udig.catalog.ui.workflow.Workflow;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizard;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardDialog;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
+import org.locationtech.udig.catalog.internal.ui.ConnectionPageDecorator;
+import org.locationtech.udig.catalog.internal.ui.ResourceSelectionPage;
+import org.locationtech.udig.catalog.tests.DummyService;
+import org.locationtech.udig.catalog.ui.ConnectionFactoryManager;
+import org.locationtech.udig.catalog.ui.UDIGConnectionFactoryDescriptor;
+import org.locationtech.udig.catalog.ui.workflow.BasicWorkflowWizardPageFactory;
+import org.locationtech.udig.catalog.ui.workflow.EndConnectionState;
+import org.locationtech.udig.catalog.ui.workflow.ResourceSelectionState;
+import org.locationtech.udig.catalog.ui.workflow.State;
+import org.locationtech.udig.catalog.ui.workflow.Workflow;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizard;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardDialog;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPageProvider;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.widgets.Display;
@@ -53,7 +53,7 @@ public class SingleResourceSelectionTest {
 	@Before
 	public void setUp() throws Exception {
 		ArrayList<String> l = new ArrayList<String>();
-		l.add("net.refractions.udig.catalog.tests.ui.dummyPage"); //$NON-NLS-1$
+		l.add("org.locationtech.udig.catalog.tests.ui.dummyPage"); //$NON-NLS-1$
 		
 		UDIGConnectionFactoryDescriptor d = ConnectionFactoryManager.instance().getConnectionFactoryDescriptors(l).get(0);
 

@@ -9,23 +9,23 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal.template;
+package org.locationtech.udig.printing.ui.internal.template;
 
 import java.awt.Font;
 
-import net.refractions.udig.legend.ui.LegendGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicChooserDialog;
-import net.refractions.udig.mapgraphic.scalebar.ScalebarMapGraphic;
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.ModelFactory;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.printing.model.impl.LabelBoxPrinter;
-import net.refractions.udig.printing.model.impl.MapBoxPrinter;
-import net.refractions.udig.printing.model.impl.MapGraphicBoxPrinter;
-import net.refractions.udig.printing.ui.internal.AbstractTemplate;
-import net.refractions.udig.printing.ui.internal.Messages;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
+import org.locationtech.udig.legend.ui.LegendGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicChooserDialog;
+import org.locationtech.udig.mapgraphic.scalebar.ScalebarMapGraphic;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.ModelFactory;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.model.impl.LabelBoxPrinter;
+import org.locationtech.udig.printing.model.impl.MapBoxPrinter;
+import org.locationtech.udig.printing.model.impl.MapGraphicBoxPrinter;
+import org.locationtech.udig.printing.ui.internal.AbstractTemplate;
+import org.locationtech.udig.printing.ui.internal.Messages;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;

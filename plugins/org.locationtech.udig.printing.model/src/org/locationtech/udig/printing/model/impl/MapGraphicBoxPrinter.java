@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.model.impl;
+package org.locationtech.udig.printing.model.impl;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,37 +18,37 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.core.Pair;
-import net.refractions.udig.mapgraphic.MapGraphicChooserDialog;
-import net.refractions.udig.mapgraphic.internal.MapGraphicRenderer;
-import net.refractions.udig.mapgraphic.internal.MapGraphicResource;
-import net.refractions.udig.mapgraphic.internal.MapGraphicService;
-import net.refractions.udig.mapgraphic.style.LocationStyleContent;
-import net.refractions.udig.printing.model.AbstractBoxPrinter;
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.BoxPrinter;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayerListener;
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerDecorator;
-import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.internal.render.impl.CompositeRenderContextImpl;
-import net.refractions.udig.project.internal.render.impl.ScaleUtils;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.BoundsStrategy;
-import net.refractions.udig.project.ui.UDIGEditorInput;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.core.Pair;
+import org.locationtech.udig.mapgraphic.MapGraphicChooserDialog;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicRenderer;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicResource;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
+import org.locationtech.udig.mapgraphic.style.LocationStyleContent;
+import org.locationtech.udig.printing.model.AbstractBoxPrinter;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.BoxPrinter;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerListener;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerDecorator;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.internal.render.impl.CompositeRenderContextImpl;
+import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.BoundsStrategy;
+import org.locationtech.udig.project.ui.UDIGEditorInput;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -280,7 +280,7 @@ public class MapGraphicBoxPrinter extends AbstractBoxPrinter {
     }
 
     public String getExtensionPointID() {
-        return "net.refractions.udig.printing.ui.standardBoxes"; //$NON-NLS-1$
+        return "org.locationtech.udig.printing.ui.standardBoxes"; //$NON-NLS-1$
     }
 
     public void setMapGraphic( MapGraphicResource resource ) {

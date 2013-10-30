@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues;
+package org.locationtech.udig.issues;
 
 import java.io.IOException;
 import java.util.AbstractSequentialList;
@@ -21,10 +21,10 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.refractions.udig.issues.internal.IssuesActivator;
-import net.refractions.udig.issues.listeners.IIssuesListListener;
-import net.refractions.udig.issues.listeners.IssuesListEvent;
-import net.refractions.udig.issues.listeners.IssuesListEventType;
+import org.locationtech.udig.issues.internal.IssuesActivator;
+import org.locationtech.udig.issues.listeners.IIssuesListListener;
+import org.locationtech.udig.issues.listeners.IssuesListEvent;
+import org.locationtech.udig.issues.listeners.IssuesListEventType;
 
 import org.eclipse.ui.WorkbenchException;
 
@@ -49,7 +49,7 @@ public class IssuesList extends AbstractSequentialList<IIssue> implements IIssue
 	/** long serialVersionUID field */
 	private static final long serialVersionUID = -7157333022429945548L;
 
-    private static final String ID = "net.refractions.udig.issues.memory"; //$NON-NLS-1$
+    private static final String ID = "org.locationtech.udig.issues.memory"; //$NON-NLS-1$
 
 	private boolean notify = true;
 

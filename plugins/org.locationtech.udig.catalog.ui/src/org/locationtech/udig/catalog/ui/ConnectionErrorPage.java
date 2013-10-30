@@ -8,17 +8,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui;
+package org.locationtech.udig.catalog.ui;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.ui.ConnectionPageDecorator;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.catalog.ui.workflow.ConnectionErrorState;
-import net.refractions.udig.catalog.ui.workflow.WorkflowWizardPage;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.ui.ConnectionPageDecorator;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.catalog.ui.workflow.ConnectionErrorState;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPage;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -41,7 +41,7 @@ import org.eclipse.swt.widgets.Text;
  * <p>
  * This page is intended for use in a wizard extending
  * 
- * @see net.refractions.udig.catalog.ui.UDIGImportPage to connect to a service.
+ * @see org.locationtech.udig.catalog.ui.UDIGImportPage to connect to a service.
  *      </p>
  * @author Justin Deoliveira
  */

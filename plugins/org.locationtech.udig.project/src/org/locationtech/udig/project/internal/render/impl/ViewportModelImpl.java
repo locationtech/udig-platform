@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -14,24 +14,24 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import net.refractions.udig.aoi.IAOIService;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.render.RenderFactory;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.render.IViewportModelListener;
-import net.refractions.udig.project.render.ViewportModelEvent;
-import net.refractions.udig.project.render.ViewportModelEvent.EventType;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.project.render.displayAdapter.MapDisplayEvent;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.render.RenderFactory;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.render.IViewportModelListener;
+import org.locationtech.udig.project.render.ViewportModelEvent;
+import org.locationtech.udig.project.render.ViewportModelEvent.EventType;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -61,7 +61,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal.render.impl
+ * TODO Purpose of org.locationtech.udig.project.internal.render.impl
  * <p>
  * </p>
  * 
@@ -577,7 +577,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.RenderManager#setMap(IMap)
+     * @see org.locationtech.udig.project.internal.render.RenderManager#setMap(IMap)
      */
     public void setMapInternal( Map newMap ) {
         if (isViewer()) {
@@ -843,7 +843,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * @see net.refractions.udig.project.render.displayAdapter.IMapDisplayListener#sizeChanged(net.refractions.udig.project.render.displayAdapter.MapDisplayEvent)
+     * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener#sizeChanged(org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent)
      */
     public void sizeChanged( final MapDisplayEvent event ) {
         if (event.getSize().width < 1 || event.getSize().height < 1) return;
@@ -911,7 +911,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.ViewportModel#zoomToBox(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#zoomToBox(com.vividsolutions.jts.geom.Envelope)
      */
     public void zoomToBox( Envelope newbbox ) {
         setInitialized(true);
@@ -1206,7 +1206,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.ViewportModel#isInitialized()
+     * @see org.locationtech.udig.project.internal.render.ViewportModel#isInitialized()
      * @uml.property name="initialized"
      */
     public boolean isInitialized() {
@@ -1222,7 +1222,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * @see net.refractions.udig.project.render.IViewportModel#getMap()
+     * @see org.locationtech.udig.project.render.IViewportModel#getMap()
      */
     public IMap getMap() {
         return getMapInternal();

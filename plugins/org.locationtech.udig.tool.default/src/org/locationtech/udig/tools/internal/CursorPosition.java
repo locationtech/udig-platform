@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.internal;
+package org.locationtech.udig.tools.internal;
 
 import java.awt.Point;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import net.refractions.udig.project.command.Command;
-import net.refractions.udig.project.internal.command.navigation.SetViewportCenterCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.AbstractTool;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportCenterCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.AbstractTool;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.ContributionItem;

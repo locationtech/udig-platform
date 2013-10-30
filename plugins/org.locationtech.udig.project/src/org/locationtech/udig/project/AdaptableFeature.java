@@ -9,10 +9,10 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project;
+package org.locationtech.udig.project;
 
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectPlugin;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
@@ -81,7 +81,7 @@ public class AdaptableFeature extends DecoratingFeature implements IAdaptable, S
     }
     
     /**
-     * @see net.refractions.udig.project.ui.internal.adapters.UDIGAdaptableDecorator#getObject()
+     * @see org.locationtech.udig.project.ui.internal.adapters.UDIGAdaptableDecorator#getObject()
      */
     public Object getObject() {
         return delegate;

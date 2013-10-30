@@ -9,13 +9,13 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.ui;
+package org.locationtech.udig.catalog.ui;
 
 import java.io.File;
 import java.net.URL;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.ui.internal.Messages;
 
 
 /**

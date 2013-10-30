@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.tcat.citd.sim.udig.bookmarks;
+package org.locationtech.udig.bookmarks;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.tcat.citd.sim.udig.bookmarks.internal.MapReference;
+import org.locationtech.udig.bookmarks.internal.MapReference;
 
 /**
  * Bookmark of the current MapViewport
@@ -41,14 +41,14 @@ public class Bookmark implements IBookmark {
     }
 
     /* (non-Javadoc)
-     * @see org.tcat.citd.sim.udig.bookmarks.IBookmark#getEnvelope()
+     * @see org.locationtech.udig.bookmarks.IBookmark#getEnvelope()
      */
     @Override
     public ReferencedEnvelope getEnvelope() {
         return envelope;
     }
     /* (non-Javadoc)
-     * @see org.tcat.citd.sim.udig.bookmarks.IBookmark#setEnvelope(org.geotools.geometry.jts.ReferencedEnvelope)
+     * @see org.locationtech.udig.bookmarks.IBookmark#setEnvelope(org.geotools.geometry.jts.ReferencedEnvelope)
      */
     @Override
     public void setEnvelope( ReferencedEnvelope envelope ) {
@@ -70,7 +70,7 @@ public class Bookmark implements IBookmark {
     }
 
     /* (non-Javadoc)
-     * @see org.tcat.citd.sim.udig.bookmarks.IBookmark#getName()
+     * @see org.locationtech.udig.bookmarks.IBookmark#getName()
      */
     @Override
     public String getName() {
@@ -83,7 +83,7 @@ public class Bookmark implements IBookmark {
     }
 
     /* (non-Javadoc)
-     * @see org.tcat.citd.sim.udig.bookmarks.IBookmark#setName(java.lang.String)
+     * @see org.locationtech.udig.bookmarks.IBookmark#setName(java.lang.String)
      */
     @Override
     public void setName( String name ) {

@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
 import static org.junit.Assert.assertEquals;
 
 import java.awt.Dimension;
 
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.tests.support.MapTests;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
@@ -31,7 +31,7 @@ public class ViewportModelImplTest {
 	private static final double ACCURACY = 0.000001;
 
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
 	 */
 	@Ignore
 	@Test
@@ -48,7 +48,7 @@ public class ViewportModelImplTest {
 	}
 	
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
 	 */
     @Test
 	public void testGetScaleDenominatorAlbersBoundsSmallerThanWorld() throws Exception {
@@ -64,7 +64,7 @@ public class ViewportModelImplTest {
 	
 
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
 	 */
     @Test
 	public void testGetScaleDenominatorWGS84BoundsLongerThanWorldIn1Direction() throws Exception {
@@ -80,7 +80,7 @@ public class ViewportModelImplTest {
 	}
     
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
 	 */
     @Test
 	public void testGetScaleDenominatorWGS84BoundsLargerThanWorld() throws Exception {
@@ -97,7 +97,7 @@ public class ViewportModelImplTest {
 	}
 	
 	/*
-	 * Test method for 'net.refractions.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
+	 * Test method for 'org.locationtech.udig.project.internal.render.impl.ViewportModelImpl.getScaleDenominator()'
 	 */
     @Test
 	public void testGetScaleDenominatorWGS84BoundsLargerThanWorldOffScreenData() throws Exception {

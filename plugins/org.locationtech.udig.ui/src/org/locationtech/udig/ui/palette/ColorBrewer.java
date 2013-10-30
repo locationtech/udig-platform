@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.ui.palette;
+package org.locationtech.udig.ui.palette;
 
 import java.awt.Color;
 import java.lang.reflect.Field;

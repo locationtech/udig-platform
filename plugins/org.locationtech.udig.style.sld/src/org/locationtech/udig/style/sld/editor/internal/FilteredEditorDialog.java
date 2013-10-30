@@ -19,16 +19,16 @@
  *     IBM Corporation - initial API and implementation
  *     Oakland Software (Francis Upton) <francisu@ieee.org> - bug 219273
  *******************************************************************************/
-package net.refractions.udig.style.sld.editor.internal;
+package org.locationtech.udig.style.sld.editor.internal;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import net.refractions.udig.style.StylePlugin;
-import net.refractions.udig.style.sld.IEditorPage;
-import net.refractions.udig.style.sld.editor.EditorPageManager;
-import net.refractions.udig.style.sld.internal.Messages;
+import org.locationtech.udig.style.StylePlugin;
+import org.locationtech.udig.style.sld.IEditorPage;
+import org.locationtech.udig.style.sld.editor.EditorPageManager;
+import org.locationtech.udig.style.sld.internal.Messages;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;

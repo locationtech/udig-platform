@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.common.styleattributeclasses;
+package org.locationtech.udig.style.advanced.common.styleattributeclasses;
 
-import static eu.udig.style.advanced.utils.Utilities.DEFAULT_MAXSCALE;
-import static eu.udig.style.advanced.utils.Utilities.DEFAULT_MINSCALE;
-import static eu.udig.style.advanced.utils.Utilities.sf;
+import static org.locationtech.udig.style.advanced.utils.Utilities.DEFAULT_MAXSCALE;
+import static org.locationtech.udig.style.advanced.utils.Utilities.DEFAULT_MINSCALE;
+import static org.locationtech.udig.style.advanced.utils.Utilities.sf;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -20,7 +20,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.style.sld.SLD;
+import org.locationtech.udig.style.sld.SLD;
 
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.PointSymbolizer;
@@ -34,7 +34,7 @@ import org.geotools.xml.Encoder;
 import org.geotools.xml.Parser;
 import org.opengis.filter.Filter;
 
-import eu.udig.style.advanced.utils.Utilities;
+import org.locationtech.udig.style.advanced.utils.Utilities;
 
 /**
  * A wrapper for the {@link Rule} object to ease gui use.

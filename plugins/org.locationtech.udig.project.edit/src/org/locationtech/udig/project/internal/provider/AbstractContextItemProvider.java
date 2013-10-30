@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.provider;
+package org.locationtech.udig.project.internal.provider;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 
 /**
  * This is the item provider adapter for a
- * {@link net.refractions.udig.project.internal.AbstractContext} object. <!-- begin-user-doc -->
+ * {@link org.locationtech.udig.project.internal.AbstractContext} object. <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
  * @generated

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
@@ -17,54 +17,54 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.catalog.ITransientResolve;
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.internal.ui.IDropTargetProvider;
-import net.refractions.udig.internal.ui.UDIGControlDropListener;
-import net.refractions.udig.internal.ui.UDIGDropHandler;
-import net.refractions.udig.project.EditManagerEvent;
-import net.refractions.udig.project.IEditManagerListener;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayerListener;
-import net.refractions.udig.project.IMapCompositionListener;
-import net.refractions.udig.project.IMapListener;
-import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.project.MapCompositionEvent;
-import net.refractions.udig.project.MapEvent;
-import net.refractions.udig.project.command.UndoRedoCommand;
-import net.refractions.udig.project.interceptor.MapInterceptor;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.commands.ChangeCRSCommand;
-import net.refractions.udig.project.internal.commands.selection.SelectLayerCommand;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.render.IViewportModelListener;
-import net.refractions.udig.project.render.ViewportModelEvent;
-import net.refractions.udig.project.render.ViewportModelEvent.EventType;
-import net.refractions.udig.project.ui.AnimationUpdater;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.IAnimation;
-import net.refractions.udig.project.ui.UDIGEditorInput;
-import net.refractions.udig.project.ui.commands.IDrawCommand;
-import net.refractions.udig.project.ui.controls.ScaleRatioLabel;
-import net.refractions.udig.project.ui.internal.commands.draw.DrawFeatureCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
-import net.refractions.udig.project.ui.tool.IToolManager;
-import net.refractions.udig.project.ui.viewers.MapEditDomain;
-import net.refractions.udig.project.ui.viewers.MapViewer;
-import net.refractions.udig.ui.CRSChooserDialog;
-import net.refractions.udig.ui.IBlockingSelection;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.PreShutdownTask;
-import net.refractions.udig.ui.ProgressManager;
-import net.refractions.udig.ui.ShutdownTaskList;
-import net.refractions.udig.ui.UDIGDragDropUtilities;
-import net.refractions.udig.ui.UDIGDragDropUtilities.DragSourceDescriptor;
-import net.refractions.udig.ui.UDIGDragDropUtilities.DropTargetDescriptor;
+import org.locationtech.udig.catalog.ITransientResolve;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.internal.ui.IDropTargetProvider;
+import org.locationtech.udig.internal.ui.UDIGControlDropListener;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerListener;
+import org.locationtech.udig.project.IMapCompositionListener;
+import org.locationtech.udig.project.IMapListener;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.project.MapCompositionEvent;
+import org.locationtech.udig.project.MapEvent;
+import org.locationtech.udig.project.command.UndoRedoCommand;
+import org.locationtech.udig.project.interceptor.MapInterceptor;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.commands.ChangeCRSCommand;
+import org.locationtech.udig.project.internal.commands.selection.SelectLayerCommand;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.render.IViewportModelListener;
+import org.locationtech.udig.project.render.ViewportModelEvent;
+import org.locationtech.udig.project.render.ViewportModelEvent.EventType;
+import org.locationtech.udig.project.ui.AnimationUpdater;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.IAnimation;
+import org.locationtech.udig.project.ui.UDIGEditorInput;
+import org.locationtech.udig.project.ui.commands.IDrawCommand;
+import org.locationtech.udig.project.ui.controls.ScaleRatioLabel;
+import org.locationtech.udig.project.ui.internal.commands.draw.DrawFeatureCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.project.ui.viewers.MapEditDomain;
+import org.locationtech.udig.project.ui.viewers.MapViewer;
+import org.locationtech.udig.ui.CRSChooserDialog;
+import org.locationtech.udig.ui.IBlockingSelection;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.PreShutdownTask;
+import org.locationtech.udig.ui.ProgressManager;
+import org.locationtech.udig.ui.ShutdownTaskList;
+import org.locationtech.udig.ui.UDIGDragDropUtilities;
+import org.locationtech.udig.ui.UDIGDragDropUtilities.DragSourceDescriptor;
+import org.locationtech.udig.ui.UDIGDragDropUtilities.DropTargetDescriptor;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -152,7 +152,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     private static final String LAYER_DIRTY_KEY = "DIRTY"; //$NON-NLS-1$
     
     /** The id of the MapViewport View */
-    public final static String ID = "net.refractions.udig.project.ui.mapEditor"; //$NON-NLS-1$
+    public final static String ID = "org.locationtech.udig.project.ui.mapEditor"; //$NON-NLS-1$
     
     //final MapEditorWithPalette editor = this;
     
@@ -831,7 +831,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
     private void removeTemporaryLayers( IPreferenceStore store ) {
         if (store
-                .getBoolean(net.refractions.udig.project.preferences.PreferenceConstants.P_REMOVE_LAYERS)) {
+                .getBoolean(org.locationtech.udig.project.preferences.PreferenceConstants.P_REMOVE_LAYERS)) {
             List<Layer> layers = getMap().getLayersInternal();
             List<Layer> layersToRemove = new ArrayList<Layer>();
             for( Layer layer : layers ) {
@@ -1012,7 +1012,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
         final IPreferenceStore preferenceStore = ProjectPlugin.getPlugin().getPreferenceStore();
         boolean istiled = preferenceStore
-                .getBoolean(net.refractions.udig.project.preferences.PreferenceConstants.P_TILED_RENDERING);
+                .getBoolean(org.locationtech.udig.project.preferences.PreferenceConstants.P_TILED_RENDERING);
 
         if (!istiled) {
             viewer = new MapViewer(composite, SWT.DOUBLE_BUFFERED);

@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.kml.core;
+package org.locationtech.udig.catalog.kml.core;
 
-import net.refractions.udig.core.AbstractUdigUIPlugin;
+import org.locationtech.udig.core.AbstractUdigUIPlugin;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -24,7 +24,7 @@ import org.osgi.framework.BundleContext;
 public class KmlToolPlugin extends AbstractUdigUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "eu.udig.catalog.kml"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "org.locationtech.udig.catalog.kml"; //$NON-NLS-1$
 
     // The shared instance
     private static KmlToolPlugin plugin;

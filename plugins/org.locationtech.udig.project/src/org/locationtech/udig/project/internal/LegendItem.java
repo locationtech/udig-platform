@@ -9,9 +9,9 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  * 
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
-import net.refractions.udig.project.ILegendItem;
+import org.locationtech.udig.project.ILegendItem;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -24,14 +24,14 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link net.refractions.udig.project.internal.LegendItem#getName <em>Name</em>}</li>
- *   <li>{@link net.refractions.udig.project.internal.LegendItem#isShown <em>Shown</em>}</li>
- *   <li>{@link net.refractions.udig.project.internal.LegendItem#getIcon <em>Icon</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.internal.LegendItem#getName <em>Name</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.internal.LegendItem#isShown <em>Shown</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.internal.LegendItem#getIcon <em>Icon</em>}</li>
  * </ul>
  * </p>
  *
- * @see net.refractions.udig.project.internal.ProjectPackage#getLegendItem()
- * @model superTypes="net.refractions.udig.project.internal.ILegendItem"
+ * @see org.locationtech.udig.project.internal.ProjectPackage#getLegendItem()
+ * @model superTypes="org.locationtech.udig.project.internal.ILegendItem"
  * @generated
  */
 public interface LegendItem extends EObject, ILegendItem {
@@ -46,14 +46,14 @@ public interface LegendItem extends EObject, ILegendItem {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
-     * @see net.refractions.udig.project.internal.ProjectPackage#getLegendItem_Name()
+     * @see org.locationtech.udig.project.internal.ProjectPackage#getLegendItem_Name()
      * @model
      * @generated
      */
     String getName();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.LegendItem#getName <em>Name</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.LegendItem#getName <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Name</em>' attribute.
@@ -72,14 +72,14 @@ public interface LegendItem extends EObject, ILegendItem {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Icon</em>' attribute.
      * @see #setIcon(ImageDescriptor)
-     * @see net.refractions.udig.project.internal.ProjectPackage#getLegendItem_Icon()
-     * @model dataType="net.refractions.udig.project.internal.ImageDescriptor"
+     * @see org.locationtech.udig.project.internal.ProjectPackage#getLegendItem_Icon()
+     * @model dataType="org.locationtech.udig.project.internal.ImageDescriptor"
      * @generated
      */
     ImageDescriptor getIcon();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.LegendItem#getIcon <em>Icon</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.LegendItem#getIcon <em>Icon</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Icon</em>' attribute.
@@ -98,14 +98,14 @@ public interface LegendItem extends EObject, ILegendItem {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Shown</em>' attribute.
      * @see #setShown(boolean)
-     * @see net.refractions.udig.project.internal.ProjectPackage#getLegendItem_Shown()
+     * @see org.locationtech.udig.project.internal.ProjectPackage#getLegendItem_Shown()
      * @model
      * @generated
      */
     boolean isShown();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.LegendItem#isShown <em>Shown</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.LegendItem#isShown <em>Shown</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Shown</em>' attribute.

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.feature.editor;
+package org.locationtech.udig.feature.editor;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -75,7 +75,7 @@ public class FeatureEditorPlugin extends AbstractUIPlugin {
 	public ResourceBundle getResourceBundle() {
 		try {
 			if (resourceBundle == null)
-				resourceBundle = ResourceBundle.getBundle("net.refractions.udig.featureEditor.FeatureEditorPluginResources"); //$NON-NLS-1$
+				resourceBundle = ResourceBundle.getBundle("org.locationtech.udig.featureEditor.FeatureEditorPluginResources"); //$NON-NLS-1$
 		} catch (MissingResourceException x) {
 			resourceBundle = null;
 		}

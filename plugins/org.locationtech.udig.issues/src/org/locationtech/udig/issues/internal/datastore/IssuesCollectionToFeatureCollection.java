@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.internal.datastore;
+package org.locationtech.udig.issues.internal.datastore;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Iterator;
 
-import net.refractions.udig.core.enums.Priority;
-import net.refractions.udig.core.enums.Resolution;
-import net.refractions.udig.issues.IIssue;
-import net.refractions.udig.issues.internal.IssuesActivator;
-import net.refractions.udig.issues.internal.Messages;
+import org.locationtech.udig.core.enums.Priority;
+import org.locationtech.udig.core.enums.Resolution;
+import org.locationtech.udig.issues.IIssue;
+import org.locationtech.udig.issues.internal.IssuesActivator;
+import org.locationtech.udig.issues.internal.Messages;
 
 import org.eclipse.ui.XMLMemento;
 import org.geotools.feature.FeatureCollection;

@@ -4,16 +4,16 @@
  *
  * $Id$
  */
-package net.refractions.udig.printing.model.util;
+package org.locationtech.udig.printing.model.util;
 
 import java.util.List;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.Connection;
-import net.refractions.udig.printing.model.Element;
-import net.refractions.udig.printing.model.ModelPackage;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.project.IProjectElement;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.Connection;
+import org.locationtech.udig.printing.model.Element;
+import org.locationtech.udig.printing.model.ModelPackage;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.project.IProjectElement;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -29,7 +29,7 @@ import org.eclipse.ui.IEditorInput;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see net.refractions.udig.printing.model.ModelPackage
+ * @see org.locationtech.udig.printing.model.ModelPackage
  * @generated
  */
 public class PageSwitch {

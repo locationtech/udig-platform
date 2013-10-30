@@ -9,15 +9,15 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tutorials.template;
+package org.locationtech.udig.tutorials.template;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.ModelFactory;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.printing.model.impl.LabelBoxPrinter;
-import net.refractions.udig.printing.model.impl.MapBoxPrinter;
-import net.refractions.udig.printing.ui.internal.AbstractTemplate;
-import net.refractions.udig.project.internal.Map;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.ModelFactory;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.model.impl.LabelBoxPrinter;
+import org.locationtech.udig.printing.model.impl.MapBoxPrinter;
+import org.locationtech.udig.printing.ui.internal.AbstractTemplate;
+import org.locationtech.udig.project.internal.Map;
 
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;

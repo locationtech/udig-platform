@@ -9,24 +9,24 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.render.internal.feature.basic;
+package org.locationtech.udig.render.internal.feature.basic;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.core.MinMaxScaleCalculator;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
-import net.refractions.udig.style.sld.SLDContent;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.core.MinMaxScaleCalculator;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.style.sld.SLDContent;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.geotools.styling.Style;
@@ -47,7 +47,7 @@ public class BasicFeatureMetrics extends AbstractRenderMetrics {
         styleIds.add(SLDContent.ID);
         styleIds.add(ProjectBlackboardConstants.LAYER__DATA_QUERY);
         styleIds.add(ProjectBlackboardConstants.LAYER__STYLE_FILTER);
-        styleIds.add("net.refractions.udig.style.cache");
+        styleIds.add("org.locationtech.udig.style.cache");
         
         return styleIds;
     }
@@ -66,7 +66,7 @@ public class BasicFeatureMetrics extends AbstractRenderMetrics {
         }
         // DATA SOURCE PERFORMANCE INDICATORS
         ID id = context.getGeoResource().getID();
-        Boolean memory = (Boolean) context.getLayer().getStyleBlackboard().get("net.refractions.udig.style.cache");
+        Boolean memory = (Boolean) context.getLayer().getStyleBlackboard().get("org.locationtech.udig.style.cache");
         
         if( id.isMemory() ){
             this.latencyMetric = LATENCY_MEMORY;
@@ -87,7 +87,7 @@ public class BasicFeatureMetrics extends AbstractRenderMetrics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.IRenderMetrics#createRenderer()
+     * @see org.locationtech.udig.project.render.IRenderMetrics#createRenderer()
      */
     public Renderer createRenderer() {
         Renderer renderer = new BasicFeatureRenderer();

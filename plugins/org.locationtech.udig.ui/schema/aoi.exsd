@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.ui" id="aoi" name="Area of Interest"/>
+         <meta.schema plugin="org.locationtech.udig.ui" id="aoi" name="Area of Interest"/>
       </appInfo>
       <documentation>
          Define a new Area of Interest to be used application wide as a limit. The use of the current AOI is context specific examples include as a target for Zoom To Extent or as a filter when displaying features in a TableView.
@@ -79,7 +79,7 @@ Use of the AOI is optional and placed under use control; the default value is co
                   Implementation of IAOIStrategy used to supply a ReferencedEnvelope to any operations that require it.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.aoi.IAOIStrategy:"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.aoi.IAOIStrategy:"/>
                </appInfo>
             </annotation>
          </attribute>

@@ -8,16 +8,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.featureeditor;
+package org.locationtech.udig.tutorials.featureeditor;
 
 import java.util.Arrays;
 
-import net.refractions.udig.feature.editor.field.AttributeField;
-import net.refractions.udig.feature.editor.field.ComboAttributeField2;
-import net.refractions.udig.feature.editor.field.FeaturePanel;
-import net.refractions.udig.feature.editor.field.IntegerAttributeField;
-import net.refractions.udig.feature.editor.field.StringAttributeField;
-import net.refractions.udig.project.ui.IFeatureSite;
+import org.locationtech.udig.feature.editor.field.AttributeField;
+import org.locationtech.udig.feature.editor.field.ComboAttributeField2;
+import org.locationtech.udig.feature.editor.field.FeaturePanel;
+import org.locationtech.udig.feature.editor.field.IntegerAttributeField;
+import org.locationtech.udig.feature.editor.field.StringAttributeField;
+import org.locationtech.udig.project.ui.IFeatureSite;
 
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ComboViewer;

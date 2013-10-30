@@ -8,24 +8,24 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.feature.editor;
+package org.locationtech.udig.feature.editor;
 
 import java.util.Iterator;
 
-import net.refractions.udig.feature.panel.FeaturePanelPage;
-import net.refractions.udig.feature.panel.FeaturePanelPageContributor;
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.project.EditManagerEvent;
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.IEditManagerListener;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.IFeatureSite;
-import net.refractions.udig.project.ui.IUDIGView;
-import net.refractions.udig.project.ui.feature.FeatureSiteImpl;
-import net.refractions.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.feature.panel.FeaturePanelPage;
+import org.locationtech.udig.feature.panel.FeaturePanelPageContributor;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.project.EditManagerEvent;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.IEditManagerListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.IFeatureSite;
+import org.locationtech.udig.project.ui.IUDIGView;
+import org.locationtech.udig.project.ui.feature.FeatureSiteImpl;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.ISelection;
@@ -66,7 +66,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * @since 1.2.0
  */
 public class FeatureUDIGView extends ViewPart implements FeaturePanelPageContributor, IUDIGView {
-    public static final String ID = "net.refractions.udig.feature.editor.featureView";
+    public static final String ID = "org.locationtech.udig.feature.editor.featureView";
 
     private IToolContext context;
     private FeaturePanelPage featurePage;

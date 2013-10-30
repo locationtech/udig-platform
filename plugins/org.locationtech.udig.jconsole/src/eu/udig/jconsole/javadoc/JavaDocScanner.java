@@ -8,14 +8,14 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package eu.udig.jconsole.javadoc;
+package org.locationtech.udig.jconsole.javadoc;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.udig.jconsole.util.JavaColorProvider;
-import eu.udig.jconsole.util.JavaWhitespaceDetector;
+import org.locationtech.udig.jconsole.util.JavaColorProvider;
+import org.locationtech.udig.jconsole.util.JavaWhitespaceDetector;
 
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.IRule;

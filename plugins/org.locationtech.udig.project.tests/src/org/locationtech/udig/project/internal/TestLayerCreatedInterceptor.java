@@ -8,11 +8,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
 import org.junit.Ignore;
 
-import net.refractions.udig.project.interceptor.LayerInterceptor;
+import org.locationtech.udig.project.interceptor.LayerInterceptor;
 
 @Ignore
 public class TestLayerCreatedInterceptor implements LayerInterceptor {

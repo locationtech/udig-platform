@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.wmsc;
+package org.locationtech.udig.catalog.wmsc;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -25,19 +25,19 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 import javax.management.ServiceNotFoundException;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.internal.wms.WmsPlugin;
-import net.refractions.udig.catalog.wms.internal.Messages;
-import net.refractions.udig.catalog.wmsc.server.Tile;
-import net.refractions.udig.catalog.wmsc.server.TileListener;
-import net.refractions.udig.catalog.wmsc.server.TileRangeOnDisk;
-import net.refractions.udig.catalog.wmsc.server.TileSet;
-import net.refractions.udig.catalog.wmsc.server.TileWorkerQueue;
-import net.refractions.udig.catalog.wmsc.server.WMSTileSet;
-import net.refractions.udig.project.internal.render.impl.ScaleUtils;
-import net.refractions.udig.project.ui.preferences.PreferenceConstants;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.internal.wms.WmsPlugin;
+import org.locationtech.udig.catalog.wms.internal.Messages;
+import org.locationtech.udig.catalog.wmsc.server.Tile;
+import org.locationtech.udig.catalog.wmsc.server.TileListener;
+import org.locationtech.udig.catalog.wmsc.server.TileRangeOnDisk;
+import org.locationtech.udig.catalog.wmsc.server.TileSet;
+import org.locationtech.udig.catalog.wmsc.server.TileWorkerQueue;
+import org.locationtech.udig.catalog.wmsc.server.WMSTileSet;
+import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
+import org.locationtech.udig.project.ui.preferences.PreferenceConstants;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.operations;
+package org.locationtech.udig.ui.operations;
 
 import java.lang.reflect.Array;
 import java.net.URL;
@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import net.refractions.udig.core.AdapterUtil;
-import net.refractions.udig.internal.ui.URLImageDescriptor;
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.internal.ui.operations.OperationCategory;
-import net.refractions.udig.internal.ui.operations.OperationMenuFactory;
-import net.refractions.udig.ui.internal.Messages;
-import net.refractions.udig.ui.operations.EnablementUtil.EnablesForData;
+import org.locationtech.udig.core.AdapterUtil;
+import org.locationtech.udig.internal.ui.URLImageDescriptor;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.internal.ui.operations.OperationCategory;
+import org.locationtech.udig.internal.ui.operations.OperationMenuFactory;
+import org.locationtech.udig.ui.internal.Messages;
+import org.locationtech.udig.ui.operations.EnablementUtil.EnablesForData;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;

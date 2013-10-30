@@ -8,16 +8,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.project.geoselection.IGeoSelectionChangedListener;
-import net.refractions.udig.project.geoselection.IGeoSelectionManager;
-import net.refractions.udig.project.geoselection.IGeoSelectionService;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.project.geoselection.IGeoSelectionChangedListener;
+import org.locationtech.udig.project.geoselection.IGeoSelectionManager;
+import org.locationtech.udig.project.geoselection.IGeoSelectionService;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -37,13 +37,13 @@ final public class GeoSelectionService implements IGeoSelectionService {
     /**
      * Logger.
      */
-    public static Logger LOGGER = Logger.getLogger("net.refractions.udig.project.geoselection"); //$NON-NLS-1$
+    public static Logger LOGGER = Logger.getLogger("org.locationtech.udig.project.geoselection"); //$NON-NLS-1$
 
     
     /**
      * An ID of extension point to add static listeners declaratively.
      */
-    public static final String EXTENSION_POINT_ID = "net.refractions.udig.project.geoselection"; //$NON-NLS-1$
+    public static final String EXTENSION_POINT_ID = "org.locationtech.udig.project.geoselection"; //$NON-NLS-1$
     
     
     private static GeoSelectionService instance;

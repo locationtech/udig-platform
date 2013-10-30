@@ -1,17 +1,17 @@
 /**
  * 
  */
-package net.refractions.udig.tutorials.examples;
+package org.locationtech.udig.tutorials.examples;
 
 import java.awt.Rectangle;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ui.AnimationUpdater;
-import net.refractions.udig.project.ui.IAnimation;
-import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ui.AnimationUpdater;
+import org.locationtech.udig.project.ui.IAnimation;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

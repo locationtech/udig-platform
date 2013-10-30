@@ -9,27 +9,27 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.document.source;
+package org.locationtech.udig.document.source;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.opengis.feature.simple.SimpleFeature;
 
-import net.refractions.udig.catalog.document.IAbstractDocumentSource;
-import net.refractions.udig.catalog.document.IDocument;
-import net.refractions.udig.catalog.document.IDocument.ContentType;
-import net.refractions.udig.catalog.document.IDocument.Type;
-import net.refractions.udig.catalog.document.IDocumentSource.DocumentInfo;
-import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
-import net.refractions.udig.document.model.AbstractDocument;
-import net.refractions.udig.document.model.ActionHotlinkDocument;
-import net.refractions.udig.document.model.DocumentFolder;
-import net.refractions.udig.document.model.FileAttachmentDocument;
-import net.refractions.udig.document.model.FileHotlinkDocument;
-import net.refractions.udig.document.model.FileLinkedDocument;
-import net.refractions.udig.document.model.WebHotlinkDocument;
-import net.refractions.udig.document.model.WebLinkedDocument;
+import org.locationtech.udig.catalog.document.IAbstractDocumentSource;
+import org.locationtech.udig.catalog.document.IDocument;
+import org.locationtech.udig.catalog.document.IDocument.ContentType;
+import org.locationtech.udig.catalog.document.IDocument.Type;
+import org.locationtech.udig.catalog.document.IDocumentSource.DocumentInfo;
+import org.locationtech.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import org.locationtech.udig.document.model.AbstractDocument;
+import org.locationtech.udig.document.model.ActionHotlinkDocument;
+import org.locationtech.udig.document.model.DocumentFolder;
+import org.locationtech.udig.document.model.FileAttachmentDocument;
+import org.locationtech.udig.document.model.FileHotlinkDocument;
+import org.locationtech.udig.document.model.FileLinkedDocument;
+import org.locationtech.udig.document.model.WebHotlinkDocument;
+import org.locationtech.udig.document.model.WebLinkedDocument;
 
 /**
  * Factory class to create shapefile documents and document folders.

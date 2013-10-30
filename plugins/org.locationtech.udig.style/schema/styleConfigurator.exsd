@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.style.net.refractions.udig" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.style.org.locationtech.udig" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="net.refractions.udig.style.net.refractions.udig" id="style" name="net.refractions.udig.style"/>
+         <meta.schema plugin="org.locationtech.udig.style.org.locationtech.udig" id="style" name="org.locationtech.udig.style"/>
       </appinfo>
       <documentation>
          The extension point for a UI element for editing a style on a layer&apos;s style blackboard.
@@ -87,14 +87,14 @@ If defined, the selected layer must resolve this class in order for this configu
                   Aninstance of IStyleConfigurator providing a user interface for editing the indicated styleId.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.style.IStyleConfigurator"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.style.IStyleConfigurator"/>
                </appinfo>
             </annotation>
          </attribute>
          <attribute name="styleId" type="string" use="required">
             <annotation>
                <documentation>
-                  The id of the style extension that the configurator is intended to work with. This extension point works in conjunction with the net.refractions.udig.project.style extension point. The &quot;id&quot; attribute of an extension of that type should match the &quot;styleId&quot; attribute of an extension of this type.
+                  The id of the style extension that the configurator is intended to work with. This extension point works in conjunction with the org.locationtech.udig.project.style extension point. The &quot;id&quot; attribute of an extension of that type should match the &quot;styleId&quot; attribute of an extension of this type.
                </documentation>
             </annotation>
          </attribute>
@@ -118,17 +118,17 @@ If defined, the selected layer must resolve this class in order for this configu
          Here is an example use from the uDig application:
 
 &lt;extension
-         point=&quot;net.refractions.udig.style.styleConfigurator&quot;&gt;
+         point=&quot;org.locationtech.udig.style.styleConfigurator&quot;&gt;
       &lt;styleConfigurator
-            class=&quot;net.refractions.udig.style.sld.SimpleStyleConfigurator&quot;
+            class=&quot;org.locationtech.udig.style.sld.SimpleStyleConfigurator&quot;
             id=&quot;simple&quot;
             label=&quot;Feature&quot;
             requires=&quot;org.geotools.data.FeatureSource&quot;
-            styleId=&quot;net.refractions.udig.style.sld&quot;/&gt;
+            styleId=&quot;org.locationtech.udig.style.sld&quot;/&gt;
       ...
 &lt;/extension&gt;
 
-There is a complete examples in net.refractions.udig.tutorials.style
+There is a complete examples in org.locationtech.udig.tutorials.style
       </documentation>
    </annotation>
 

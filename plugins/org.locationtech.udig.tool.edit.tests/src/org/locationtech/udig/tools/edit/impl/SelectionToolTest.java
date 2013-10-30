@@ -7,22 +7,22 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.impl;
+package org.locationtech.udig.tools.edit.impl;
 
 import static org.junit.Assert.assertEquals;
 
 import java.awt.Dimension;
 
-import net.refractions.udig.TestViewportPane;
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.AbstractEditTool;
-import net.refractions.udig.tools.edit.EditToolConfigurationHelper;
-import net.refractions.udig.tools.edit.support.Point;
-import net.refractions.udig.tools.edit.support.TestHandler;
+import org.locationtech.udig.TestViewportPane;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tools.edit.AbstractEditTool;
+import org.locationtech.udig.tools.edit.EditToolConfigurationHelper;
+import org.locationtech.udig.tools.edit.support.Point;
+import org.locationtech.udig.tools.edit.support.TestHandler;
 
 import org.geotools.data.FeatureStore;
 import org.geotools.factory.CommonFactoryFinder;

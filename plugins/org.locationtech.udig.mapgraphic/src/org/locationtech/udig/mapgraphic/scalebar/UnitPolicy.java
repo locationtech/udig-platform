@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.scalebar;
+package org.locationtech.udig.mapgraphic.scalebar;
 
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.mapgraphic.internal.Messages;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.mapgraphic.internal.Messages;
 
 public enum UnitPolicy {
     AUTO(Messages.BarStyleConfigurator_AutoUnits),
@@ -34,11 +34,11 @@ public enum UnitPolicy {
      * @return UnitPolicy to use by default
      */
     public static UnitPolicy determineDefaultUnits() {
-        String previous = UiPlugin.getDefault().getPreferenceStore().getString(net.refractions.udig.ui.preferences.PreferenceConstants.P_DEFAULT_UNITS);
-        if(previous.equals( net.refractions.udig.ui.preferences.PreferenceConstants.METRIC_UNITS)){
+        String previous = UiPlugin.getDefault().getPreferenceStore().getString(org.locationtech.udig.ui.preferences.PreferenceConstants.P_DEFAULT_UNITS);
+        if(previous.equals( org.locationtech.udig.ui.preferences.PreferenceConstants.METRIC_UNITS)){
             return METRIC;
         }
-        else if(previous.equals( net.refractions.udig.ui.preferences.PreferenceConstants.IMPERIAL_UNITS)){
+        else if(previous.equals( org.locationtech.udig.ui.preferences.PreferenceConstants.IMPERIAL_UNITS)){
             return IMPERIAL;
         }
         else return AUTO;

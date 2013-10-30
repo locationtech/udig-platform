@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.editor.raster;
+package org.locationtech.udig.style.sld.editor.raster;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -19,8 +19,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.style.sld.SLDPlugin;
-import net.refractions.udig.style.sld.internal.Messages;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.internal.Messages;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
@@ -370,7 +370,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	}
 	
 	/**
-	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#getColorMap()
+	 * @see org.locationtech.udig.style.raster.ui.IColorMapTypePanel#getColorMap()
 	 */
 	@Override
 	public ColorMap getColorMap() throws Exception{
@@ -413,7 +413,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	}
 	
 	/**
-	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#setColorPalette(org.geotools.brewer.color.BrewerPalette)
+	 * @see org.locationtech.udig.style.raster.ui.IColorMapTypePanel#setColorPalette(org.geotools.brewer.color.BrewerPalette)
 	 */
 	@Override
 	public void setColorPalette(BrewerPalette palette, boolean reverse) {
@@ -433,7 +433,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	}
 	
 	/**
-	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#init(org.geotools.styling.ColorMap)
+	 * @see org.locationtech.udig.style.raster.ui.IColorMapTypePanel#init(org.geotools.styling.ColorMap)
 	 */
 	@Override
 	public void init(ColorMap cm){
@@ -516,7 +516,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	}
 
 	/**
-	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#getName()
+	 * @see org.locationtech.udig.style.raster.ui.IColorMapTypePanel#getName()
 	 */
 	@Override
 	public String getName() {
@@ -524,7 +524,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	}
 
 	/**
-	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#computeValues()
+	 * @see org.locationtech.udig.style.raster.ui.IColorMapTypePanel#computeValues()
 	 */
 	@Override
 	public void computeValues() {
@@ -545,7 +545,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	}
 
 	/**
-	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#getComputeValuesLabel()
+	 * @see org.locationtech.udig.style.raster.ui.IColorMapTypePanel#getComputeValuesLabel()
 	 */
 	@Override
 	public String getComputeValuesLabel() {
@@ -553,7 +553,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	}
 
 	/**
-	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#canSupport(int)
+	 * @see org.locationtech.udig.style.raster.ui.IColorMapTypePanel#canSupport(int)
 	 */
 	@Override
 	public boolean canSupport(int colorMapType) {
@@ -561,7 +561,7 @@ public class IntervalValuesPanel implements IColorMapTypePanel{
 	}
 
 	/**
-	 * @see net.refractions.udig.style.raster.ui.IColorMapTypePanel#setFormatter(net.refractions.udig.style.raster.ui.ValueFormatter)
+	 * @see org.locationtech.udig.style.raster.ui.IColorMapTypePanel#setFormatter(org.locationtech.udig.style.raster.ui.ValueFormatter)
 	 */
 	@Override
 	public void setFormatter(ValueFormatter format) {

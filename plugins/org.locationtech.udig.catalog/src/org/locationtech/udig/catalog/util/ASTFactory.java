@@ -4,7 +4,7 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package net.refractions.udig.catalog.util;
+package org.locationtech.udig.catalog.util;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -172,7 +172,7 @@ public class ASTFactory {
         /**
          * TODO summary sentence for accept ...
          * 
-         * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
+         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
          * @param datum
          * @return
          */
@@ -184,7 +184,7 @@ public class ASTFactory {
         /**
          * TODO summary sentence for type ...
          * 
-         * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#type()
+         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#type()
          * @return
          */
         public int type() {
@@ -193,7 +193,7 @@ public class ASTFactory {
         /*
          * (non-Javadoc)
          * 
-         * @see net.refractions.udig.catalog.util.AST#getLeft()
+         * @see org.locationtech.udig.catalog.util.AST#getLeft()
          */
         public AST getLeft() {
             return left;
@@ -201,7 +201,7 @@ public class ASTFactory {
         /*
          * (non-Javadoc)
          * 
-         * @see net.refractions.udig.catalog.util.AST#getRight()
+         * @see org.locationtech.udig.catalog.util.AST#getRight()
          */
         public AST getRight() {
             return right;
@@ -222,7 +222,7 @@ public class ASTFactory {
         /**
          * TODO summary sentence for accept ...
          * 
-         * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
+         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
          * @param datum
          * @return
          */
@@ -234,7 +234,7 @@ public class ASTFactory {
         /**
          * TODO summary sentence for type ...
          * 
-         * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#type()
+         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#type()
          * @return
          */
         public int type() {
@@ -243,7 +243,7 @@ public class ASTFactory {
         /*
          * (non-Javadoc)
          * 
-         * @see net.refractions.udig.catalog.util.AST#getLeft()
+         * @see org.locationtech.udig.catalog.util.AST#getLeft()
          */
         public AST getLeft() {
             return left;
@@ -252,7 +252,7 @@ public class ASTFactory {
         /*
          * (non-Javadoc)
          * 
-         * @see net.refractions.udig.catalog.util.AST#getRight()
+         * @see org.locationtech.udig.catalog.util.AST#getRight()
          */
         public AST getRight() {
             return right;
@@ -272,7 +272,7 @@ public class ASTFactory {
         /**
          * TODO summary sentence for accept ...
          * 
-         * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
+         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
          * @param datum
          * @return
          */
@@ -284,7 +284,7 @@ public class ASTFactory {
         /**
          * TODO summary sentence for type ...
          * 
-         * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#type()
+         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#type()
          * @return
          */
         public int type() {
@@ -293,7 +293,7 @@ public class ASTFactory {
         /*
          * (non-Javadoc)
          * 
-         * @see net.refractions.udig.catalog.util.AST#getLeft()
+         * @see org.locationtech.udig.catalog.util.AST#getLeft()
          */
         public AST getLeft() {
             return child;
@@ -301,7 +301,7 @@ public class ASTFactory {
         /*
          * (non-Javadoc)
          * 
-         * @see net.refractions.udig.catalog.util.AST#getRight()
+         * @see org.locationtech.udig.catalog.util.AST#getRight()
          */
         public AST getRight() {
             return null;
@@ -321,7 +321,7 @@ public class ASTFactory {
         /**
          * TODO summary sentence for accept ...
          * 
-         * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
+         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
          * @param datum
          * @return
          */
@@ -333,7 +333,7 @@ public class ASTFactory {
         /**
          * TODO summary sentence for type ...
          * 
-         * @see net.refractions.udig.catalog.internal.CatalogImpl.AST#type()
+         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#type()
          * @return
          */
         public int type() {
@@ -342,7 +342,7 @@ public class ASTFactory {
         /*
          * (non-Javadoc)
          * 
-         * @see net.refractions.udig.catalog.util.AST#getLeft()
+         * @see org.locationtech.udig.catalog.util.AST#getLeft()
          */
         public AST getLeft() {
             return null;
@@ -350,7 +350,7 @@ public class ASTFactory {
         /*
          * (non-Javadoc)
          * 
-         * @see net.refractions.udig.catalog.util.AST#getRight()
+         * @see org.locationtech.udig.catalog.util.AST#getRight()
          */
         public AST getRight() {
             return null;

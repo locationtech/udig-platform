@@ -9,14 +9,14 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.tool.display;
+package org.locationtech.udig.project.ui.internal.tool.display;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.tool.IToolManager;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.IHandler;

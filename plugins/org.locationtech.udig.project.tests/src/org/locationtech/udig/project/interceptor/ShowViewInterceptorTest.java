@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.interceptor;
+package org.locationtech.udig.project.interceptor;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -15,14 +15,14 @@ import static org.junit.Assert.assertNull;
 import java.io.IOException;
 import java.net.URI;
 
-import net.refractions.udig.catalog.tests.CatalogTests;
-import net.refractions.udig.core.internal.FeatureUtils;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.interceptor.CacheInterceptor.ViewStyleContent;
-import net.refractions.udig.project.internal.interceptor.ShowViewInterceptor;
-import net.refractions.udig.project.tests.support.MapTests;
+import org.locationtech.udig.catalog.tests.CatalogTests;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.interceptor.CacheInterceptor.ViewStyleContent;
+import org.locationtech.udig.project.internal.interceptor.ShowViewInterceptor;
+import org.locationtech.udig.project.tests.support.MapTests;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ui.XMLMemento;
@@ -75,7 +75,7 @@ public class ShowViewInterceptorTest {
 
     /**
      * Test method for
-     * {@link net.refractions.udig.project.interceptor.ShowViewInterceptor#run(net.refractions.udig.project.ILayer, org.geotools.data.FeatureSource)}.
+     * {@link org.locationtech.udig.project.interceptor.ShowViewInterceptor#run(org.locationtech.udig.project.ILayer, org.geotools.data.FeatureSource)}.
      */
     @Ignore
     @Test
@@ -94,7 +94,7 @@ public class ShowViewInterceptorTest {
 
     /**
      * Test method for
-     * {@link net.refractions.udig.project.interceptor.ShowViewInterceptor#run(net.refractions.udig.project.ILayer, org.geotools.data.FeatureSource)}.
+     * {@link org.locationtech.udig.project.interceptor.ShowViewInterceptor#run(org.locationtech.udig.project.ILayer, org.geotools.data.FeatureSource)}.
      */
     @Ignore
     @Test
@@ -123,7 +123,7 @@ public class ShowViewInterceptorTest {
 
     /**
      * Test method for
-     * {@link net.refractions.udig.project.interceptor.ShowViewInterceptor#run(net.refractions.udig.project.ILayer, org.geotools.data.FeatureSource)}.
+     * {@link org.locationtech.udig.project.interceptor.ShowViewInterceptor#run(org.locationtech.udig.project.ILayer, org.geotools.data.FeatureSource)}.
      */
     @Ignore
     @Test
@@ -143,7 +143,7 @@ public class ShowViewInterceptorTest {
 
     /**
      * Test method for
-     * {@link net.refractions.udig.project.interceptor.ShowViewInterceptor#run(net.refractions.udig.project.ILayer, org.geotools.data.FeatureSource)}.
+     * {@link org.locationtech.udig.project.interceptor.ShowViewInterceptor#run(org.locationtech.udig.project.ILayer, org.geotools.data.FeatureSource)}.
      */
     @Ignore
     @Test

@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.wmtsource;
+package org.locationtech.udig.catalog.internal.wmt.wmtsource;
 
 import java.net.URL;
 
-import net.refractions.udig.catalog.internal.wmt.WMTService;
+import org.locationtech.udig.catalog.internal.wmt.WMTService;
 
 public class WMTSourceFactory {
     
@@ -32,9 +32,9 @@ public class WMTSourceFactory {
     /**
      * Strip out the start of the url:
      * 
-     * wmt://localhost/wmt/net.refractions.udig.catalog.internal.wmt.wmtsource.OSMSource
+     * wmt://localhost/wmt/org.locationtech.udig.catalog.internal.wmt.wmtsource.OSMSource
      *  -->
-     *  net.refractions.udig.catalog.internal.wmt.wmtsource.OSMSource 
+     *  org.locationtech.udig.catalog.internal.wmt.wmtsource.OSMSource 
      *
      * @param url
      * @return

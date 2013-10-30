@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.behaviour;
+package org.locationtech.udig.tools.edit.behaviour;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -15,16 +15,16 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.tools.edit.EventType;
-import net.refractions.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.EditGeom;
-import net.refractions.udig.tools.edit.support.Point;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
-import net.refractions.udig.tools.edit.support.TestEditBlackboard;
-import net.refractions.udig.tools.edit.support.TestHandler;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.tools.edit.EventType;
+import org.locationtech.udig.tools.edit.behaviour.accept.AcceptChangesBehaviour;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.Point;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.tools.edit.support.TestEditBlackboard;
+import org.locationtech.udig.tools.edit.support.TestHandler;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -105,7 +105,7 @@ public class MoveGeometryBehaviourTest {
 
     /*
      * Test method for
-     * 'net.refractions.udig.tools.edit.behaviour.MoveVertexBehaviour.getCommand(EditToolHandler,
+     * 'org.locationtech.udig.tools.edit.behaviour.MoveVertexBehaviour.getCommand(EditToolHandler,
      * MapMouseEvent, EventType)'
      */
     @Test

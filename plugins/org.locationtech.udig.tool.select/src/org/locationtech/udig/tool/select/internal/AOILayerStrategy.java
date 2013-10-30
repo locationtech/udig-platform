@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.select.internal;
+package org.locationtech.udig.tool.select.internal;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.aoi.AOIListener;
-import net.refractions.udig.aoi.IAOIStrategy;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.aoi.AOIListener;
+import org.locationtech.udig.aoi.IAOIStrategy;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.geotools.geometry.jts.JTSFactoryFinder;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -89,7 +89,7 @@ public class AOILayerStrategy extends IAOIStrategy {
     
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.aoi.IAOIStrategy#getExtent()
+     * @see org.locationtech.udig.aoi.IAOIStrategy#getExtent()
      */
     @Override
     public ReferencedEnvelope getExtent() {
@@ -103,7 +103,7 @@ public class AOILayerStrategy extends IAOIStrategy {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.aoi.IAOIStrategy#getAOI()
+     * @see org.locationtech.udig.aoi.IAOIStrategy#getAOI()
      */
     @Override
     public Geometry getGeometry() {
@@ -118,7 +118,7 @@ public class AOILayerStrategy extends IAOIStrategy {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.aoi.IAOIStrategy#getCrs()
+     * @see org.locationtech.udig.aoi.IAOIStrategy#getCrs()
      */
     @Override
     public CoordinateReferenceSystem getCrs() {
@@ -131,7 +131,7 @@ public class AOILayerStrategy extends IAOIStrategy {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.aoi.IAOIStrategy#getName()
+     * @see org.locationtech.udig.aoi.IAOIStrategy#getName()
      */
     @Override
     public String getName() {

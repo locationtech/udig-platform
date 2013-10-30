@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.ui.wizard;
+package org.locationtech.udig.catalog.internal.wmt.ui.wizard;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,21 +18,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.ww.LayerSet;
-import net.refractions.udig.catalog.internal.wmt.ww.WWGeoResource;
-import net.refractions.udig.catalog.internal.wmt.ww.WWService;
-import net.refractions.udig.catalog.internal.wmt.ww.WWServiceExtension;
-import net.refractions.udig.catalog.ui.UDIGConnectionFactory;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.LayerSet;
+import org.locationtech.udig.catalog.internal.wmt.ww.WWGeoResource;
+import org.locationtech.udig.catalog.internal.wmt.ww.WWService;
+import org.locationtech.udig.catalog.internal.wmt.ww.WWServiceExtension;
+import org.locationtech.udig.catalog.ui.UDIGConnectionFactory;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
  * Based on WMSConnectionFactory
  * 
- * @see net.refractions.udig.catalog.internal.wms.ui.WMSConnectionFactory
+ * @see org.locationtech.udig.catalog.internal.wms.ui.WMSConnectionFactory
  * 
  * @author to.srwn
  * @since 1.1.0

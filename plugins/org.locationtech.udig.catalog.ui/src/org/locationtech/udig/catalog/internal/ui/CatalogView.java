@@ -8,22 +8,22 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.ui;
+package org.locationtech.udig.catalog.internal.ui;
 
 import java.io.IOException;
 import java.util.Iterator;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ui.CatalogTreeViewer;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.StatusLineMessageBoardAdapter;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.internal.ui.IDropTargetProvider;
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.ui.ProgressManager;
-import net.refractions.udig.ui.UDIGDragDropUtilities;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ui.CatalogTreeViewer;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.StatusLineMessageBoardAdapter;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.internal.ui.IDropTargetProvider;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.ProgressManager;
+import org.locationtech.udig.ui.UDIGDragDropUtilities;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
@@ -95,7 +95,7 @@ import org.osgi.service.prefs.BackingStoreException;
 public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropTargetProvider {
 
     /** <code>VIEW_ID</code> field */
-    public static final String VIEW_ID = "net.refractions.udig.catalog.ui.CatalogView"; //$NON-NLS-1$
+    public static final String VIEW_ID = "org.locationtech.udig.catalog.ui.CatalogView"; //$NON-NLS-1$
 
     CatalogTreeViewer treeviewer;
 

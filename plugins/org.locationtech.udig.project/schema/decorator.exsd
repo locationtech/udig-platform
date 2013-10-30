@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project">
+<schema targetNamespace="org.locationtech.udig.project">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project" id="decorator" name="decorator"/>
+         <meta.schema plugin="org.locationtech.udig.project" id="decorator" name="decorator"/>
       </appInfo>
       <documentation>
          &lt;p&gt;A Decorator is a adds meaning to a map or page.  The Decorator interface that a decorator extension must extend consists of a draw() method and a setToolkit() method.  The toolkit passed in provides context for the decorator.  For example, a scalebar requires a viewport model and the ability to calculate the extent of a map; the toolkit provides access to that data.  The toolkit the decorator receives is a read only toolkit.  A decorator is not permitted to change UDIG model information.  It can only display information.&lt;/p&gt;
@@ -67,7 +67,7 @@
                   The class which decorators must extend.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.render.decorator.Decorator"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.render.decorator.Decorator"/>
                </appInfo>
             </annotation>
          </attribute>

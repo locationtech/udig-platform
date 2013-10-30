@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests.internal;
+package org.locationtech.udig.catalog.tests.internal;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -15,11 +15,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveAdapterFactory;
-import net.refractions.udig.catalog.IResolveManager;
-import net.refractions.udig.catalog.tests.DummyService;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveAdapterFactory;
+import org.locationtech.udig.catalog.IResolveManager;
+import org.locationtech.udig.catalog.tests.DummyService;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -37,7 +37,7 @@ public class ResolveManagerTest {
 
 
     /**
-     * Test method for {@link net.refractions.udig.catalog.internal.ResolveManager#canResolve(net.refractions.udig.catalog.IResolve, java.lang.Class)}.
+     * Test method for {@link org.locationtech.udig.catalog.internal.ResolveManager#canResolve(org.locationtech.udig.catalog.IResolve, java.lang.Class)}.
      */
     @Test
     public void testCanResolve() {
@@ -45,7 +45,7 @@ public class ResolveManagerTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.catalog.internal.ResolveManager#registerResolves(net.refractions.udig.catalog.IResolveAdapterFactory)}.
+     * Test method for {@link org.locationtech.udig.catalog.internal.ResolveManager#registerResolves(org.locationtech.udig.catalog.IResolveAdapterFactory)}.
      */
     @Test
     public void testRegisterResolves() {
@@ -75,7 +75,7 @@ public class ResolveManagerTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.catalog.internal.ResolveManager#resolve(net.refractions.udig.catalog.IResolve, java.lang.Class, IProgressMonitor)}.
+     * Test method for {@link org.locationtech.udig.catalog.internal.ResolveManager#resolve(org.locationtech.udig.catalog.IResolve, java.lang.Class, IProgressMonitor)}.
      */
     @Test
     public void testResolve() throws Exception {
@@ -83,7 +83,7 @@ public class ResolveManagerTest {
     }
 
     /**
-     * Test method for {@link net.refractions.udig.catalog.internal.ResolveManager#unregisterResolves(net.refractions.udig.catalog.IResolveAdapterFactory, java.lang.Class)}.
+     * Test method for {@link org.locationtech.udig.catalog.internal.ResolveManager#unregisterResolves(org.locationtech.udig.catalog.IResolveAdapterFactory, java.lang.Class)}.
      */
     @Test
     public void testUnregisterResolvesIResolveAdapterFactoryClass() {

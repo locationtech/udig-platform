@@ -7,20 +7,20 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.wizard.export;
+package org.locationtech.udig.project.ui.wizard.export;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.ui.AdapterFactoryLabelProviderDecorator;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectExplorer;
-import net.refractions.udig.project.ui.wizard.export.image.ExportMapToImageWizard;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.ui.AdapterFactoryLabelProviderDecorator;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectExplorer;
+import org.locationtech.udig.project.ui.wizard.export.image.ExportMapToImageWizard;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;

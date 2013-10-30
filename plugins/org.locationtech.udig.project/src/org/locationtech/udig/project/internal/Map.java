@@ -7,20 +7,20 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
 import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILegendItem;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.CommandStack;
-import net.refractions.udig.project.command.NavCommandStack;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.ui.palette.ColourScheme;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILegendItem;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.CommandStack;
+import org.locationtech.udig.project.command.NavCommandStack;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.ui.palette.ColourScheme;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.Adapter;
@@ -31,7 +31,7 @@ import org.opengis.filter.Filter;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal
+ * TODO Purpose of org.locationtech.udig.project.internal
  * <p>
  * </p>
  * 
@@ -49,7 +49,7 @@ public interface Map extends ProjectElement, IMap {
     public ContextModel getContextModel();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Map#getContextModel <em>Context Model</em>}' containment reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Map#getContextModel <em>Context Model</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Context Model</em>' containment reference.
@@ -67,7 +67,7 @@ public interface Map extends ProjectElement, IMap {
     public ViewportModel getViewportModelInternal();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Map#getViewportModelInternal <em>Viewport Model Internal</em>}' containment reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Map#getViewportModelInternal <em>Viewport Model Internal</em>}' containment reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Viewport Model Internal</em>' containment reference.
      * @see #getViewportModelInternal()
@@ -84,7 +84,7 @@ public interface Map extends ProjectElement, IMap {
     BrewerPalette getColorPalette();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Map#getColorPalette <em>Color Palette</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Map#getColorPalette <em>Color Palette</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Color Palette</em>' attribute.
      * @see #getColorPalette()
@@ -99,7 +99,7 @@ public interface Map extends ProjectElement, IMap {
     public ColourScheme getColourScheme();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Map#getColourScheme <em>Colour Scheme</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Map#getColourScheme <em>Colour Scheme</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Colour Scheme</em>' attribute.
      * @see #getColourScheme()
@@ -124,7 +124,7 @@ public interface Map extends ProjectElement, IMap {
     String getAbstract();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Map#getAbstract <em>Abstract</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Map#getAbstract <em>Abstract</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Abstract</em>' attribute.
      * @see #getAbstract()
@@ -167,7 +167,7 @@ public interface Map extends ProjectElement, IMap {
     public EditManager getEditManagerInternal();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Map#getEditManagerInternal <em>Edit Manager Internal</em>}' containment reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Map#getEditManagerInternal <em>Edit Manager Internal</em>}' containment reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Edit Manager Internal</em>' containment reference.
      * @see #getEditManagerInternal()
@@ -184,7 +184,7 @@ public interface Map extends ProjectElement, IMap {
     public RenderManager getRenderManagerInternal();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Map#getRenderManagerInternal <em>Render Manager Internal</em>}' reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Map#getRenderManagerInternal <em>Render Manager Internal</em>}' reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Render Manager Internal</em>' reference.
      * @see #getRenderManagerInternal()
@@ -240,7 +240,7 @@ public interface Map extends ProjectElement, IMap {
     LayerFactory getLayerFactory();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Map#getLayerFactory <em>Layer Factory</em>}' containment reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Map#getLayerFactory <em>Layer Factory</em>}' containment reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Layer Factory</em>' containment reference.
      * @see #getLayerFactory()
@@ -255,7 +255,7 @@ public interface Map extends ProjectElement, IMap {
     Blackboard getBlackBoardInternal();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.Map#getBlackBoardInternal <em>Black Board Internal</em>}' containment reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.Map#getBlackBoardInternal <em>Black Board Internal</em>}' containment reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Black Board Internal</em>' containment reference.
      * @see #getBlackBoardInternal()
@@ -265,7 +265,7 @@ public interface Map extends ProjectElement, IMap {
 
     /**
      * Returns the value of the '<em><b>Legend</b></em>' containment reference list.
-     * The list contents are of type {@link net.refractions.udig.project.ILegendItem}.
+     * The list contents are of type {@link org.locationtech.udig.project.ILegendItem}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Legend</em>' containment reference list isn't clear,
@@ -273,8 +273,8 @@ public interface Map extends ProjectElement, IMap {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Legend</em>' containment reference list.
-     * @see net.refractions.udig.project.internal.ProjectPackage#getMap_Legend()
-     * @model type="net.refractions.udig.project.internal.ILegendItem" containment="true"
+     * @see org.locationtech.udig.project.internal.ProjectPackage#getMap_Legend()
+     * @model type="org.locationtech.udig.project.internal.ILegendItem" containment="true"
      * @generated
      */
     List<ILegendItem> getLegend();

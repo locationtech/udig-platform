@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.awt.Color;
 import java.io.File;
@@ -24,43 +24,43 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolve.Status;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveDelta;
-import net.refractions.udig.catalog.IResolveDelta.Kind;
-import net.refractions.udig.catalog.URLUtils;
-import net.refractions.udig.catalog.util.SearchIDDeltaVisitor;
-import net.refractions.udig.core.Pair;
-import net.refractions.udig.core.internal.CorePlugin;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayerListener;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.project.internal.CatalogRef;
-import net.refractions.udig.project.internal.ContextModel;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.SimpleBlackboard;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.Trace;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.RendererCreator;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.ProgressManager;
-import net.refractions.udig.ui.UDIGDisplaySafeLock;
-import net.refractions.udig.ui.palette.ColourScheme;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolve.Status;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveDelta;
+import org.locationtech.udig.catalog.IResolveDelta.Kind;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.util.SearchIDDeltaVisitor;
+import org.locationtech.udig.core.Pair;
+import org.locationtech.udig.core.internal.CorePlugin;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerListener;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.project.internal.CatalogRef;
+import org.locationtech.udig.project.internal.ContextModel;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.SimpleBlackboard;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.Trace;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.RendererCreator;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ProgressManager;
+import org.locationtech.udig.ui.UDIGDisplaySafeLock;
+import org.locationtech.udig.ui.palette.ColourScheme;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
@@ -363,7 +363,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /*
      * @see
-     * net.refractions.udig.project.Layer#addListener(net.refractions.udig.project.LayerListener)
+     * org.locationtech.udig.project.Layer#addListener(org.locationtech.udig.project.LayerListener)
      */
     public void addListener( final ILayerListener listener ) {
         listeners.add(listener);
@@ -371,7 +371,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /*
      * @see
-     * net.refractions.udig.project.Layer#removeListener(net.refractions.udig.project.LayerListener)
+     * org.locationtech.udig.project.Layer#removeListener(org.locationtech.udig.project.LayerListener)
      */
     public void removeListener( final ILayerListener listener ) {
         listeners.remove(listener);
@@ -699,7 +699,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#getGeoResources(int)
+     * @see org.locationtech.udig.project.internal.Layer#getGeoResources(int)
      * @deprecated
      */
     public <T> IGeoResource getGeoResource( Class<T> clazz ) {
@@ -1012,7 +1012,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#getQuery(net.refractions.udig.project.Layer,
+     * @see org.locationtech.udig.project.internal.Layer#getQuery(org.locationtech.udig.project.Layer,
      *      boolean)
      * @generated NOT
      */
@@ -1320,7 +1320,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     private volatile String statusMessage = Messages.LayerImpl_status;
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#getSchema()
+     * @see org.locationtech.udig.project.internal.Layer#getSchema()
      */
     public SimpleFeatureType getSchema() {
         FeatureSource<SimpleFeatureType, SimpleFeature> data;
@@ -1364,7 +1364,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#getInteraction(java.lang.String)
+     * @see org.locationtech.udig.project.internal.Layer#getInteraction(java.lang.String)
      */
     public boolean getInteraction( Interaction interaction ) {
         // special cases handled as fields
@@ -1399,7 +1399,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#setInteraction(java.lang.String, boolean)
+     * @see org.locationtech.udig.project.internal.Layer#setInteraction(java.lang.String, boolean)
      */
     public void setInteraction( Interaction interaction, boolean applicable ) {
         if (Interaction.VISIBLE.equals(interaction)) {
@@ -2187,23 +2187,23 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.Layer#getMap()
+     * @see org.locationtech.udig.project.internal.Layer#getMap()
      */
-    public net.refractions.udig.project.internal.Map getMapInternal() {
+    public org.locationtech.udig.project.internal.Map getMapInternal() {
         ContextModel context = getContextModel();
         if (context == null) return null;
         return context.getMap();
     }
 
     /**
-     * @see net.refractions.udig.project.ILayer#getMap()
+     * @see org.locationtech.udig.project.ILayer#getMap()
      */
     public IMap getMap() {
         return getMapInternal();
     }
 
     /**
-     * @see net.refractions.udig.core.IBlockingAdaptable#getAdapter(java.lang.Class,
+     * @see org.locationtech.udig.core.IBlockingAdaptable#getAdapter(java.lang.Class,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T getAdapter( final Class<T> adapter, IProgressMonitor monitor ) throws IOException {
@@ -2220,14 +2220,14 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * @see net.refractions.udig.core.IBlockingAdaptable#canAdaptTo(java.lang.Class)
+     * @see org.locationtech.udig.core.IBlockingAdaptable#canAdaptTo(java.lang.Class)
      */
     public <T> boolean canAdaptTo( Class<T> adapter ) {
         return hasResource(adapter) || adapter.isAssignableFrom(CoordinateReferenceSystem.class);
     }
 
     /**
-     * @see net.refractions.udig.project.internal.LayerDecorator#setStatusMessage(java.lang.String)
+     * @see org.locationtech.udig.project.internal.LayerDecorator#setStatusMessage(java.lang.String)
      * @uml.property name="statusMessage"
      */
     public void setStatusMessage( String message ) {
@@ -2238,7 +2238,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.LayerDecorator#getStatusMessage()
+     * @see org.locationtech.udig.project.internal.LayerDecorator#getStatusMessage()
      * @uml.property name="statusMessage"
      */
     public String getStatusMessage() {
@@ -2272,7 +2272,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
             // parameters may have changed
             // so set modified on the map so the new params will be saved on
             // shutdown.
-            net.refractions.udig.project.internal.Map map = getMapInternal();
+            org.locationtech.udig.project.internal.Map map = getMapInternal();
             Resource eResource = map.eResource();
             if (eResource != null) {
                 eResource.setModified(true);
@@ -2390,7 +2390,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     public Set<Range> getScaleRange() {
-        net.refractions.udig.project.internal.Map mapInternal = getMapInternal();
+        org.locationtech.udig.project.internal.Map mapInternal = getMapInternal();
         if (mapInternal == null) {
             // we're in the middle of a map closing or map deleteing or something.
             return Collections.emptySet();

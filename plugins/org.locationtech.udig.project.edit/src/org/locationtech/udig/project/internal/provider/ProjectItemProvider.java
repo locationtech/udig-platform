@@ -4,16 +4,16 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.internal.provider;
+package org.locationtech.udig.project.internal.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -28,7 +28,7 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link net.refractions.udig.project.internal.Project}
+ * This is the item provider adapter for a {@link org.locationtech.udig.project.internal.Project}
  * object. <!-- begin-user-doc --> <!-- end-user-doc -->
  * 
  * @generated NOT

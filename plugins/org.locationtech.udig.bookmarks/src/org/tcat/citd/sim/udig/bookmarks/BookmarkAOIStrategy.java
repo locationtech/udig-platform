@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.tcat.citd.sim.udig.bookmarks;
+package org.locationtech.udig.bookmarks;
 
-import net.refractions.udig.aoi.AOIListener;
-import net.refractions.udig.aoi.IAOIStrategy;
+import org.locationtech.udig.aoi.AOIListener;
+import org.locationtech.udig.aoi.IAOIStrategy;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -26,7 +26,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
  * @version 1.3.0
  */
 public class BookmarkAOIStrategy extends IAOIStrategy {
-    public static String ID = "org.tcat.citd.sim.udig.bookmarks.bookmarkAOIStrategy";
+    public static String ID = "org.locationtech.udig.bookmarks.bookmarkAOIStrategy";
     
     private IBookmark currentBookmark = null;
     

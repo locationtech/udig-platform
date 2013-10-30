@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.graphics;
+package org.locationtech.udig.ui.graphics;
 
 import java.awt.Point;
 import java.awt.Shape;
@@ -122,7 +122,7 @@ public class SWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportGraphics#draw(java.awt.Shape)
+     * @see org.locationtech.udig.project.render.ViewportGraphics#draw(java.awt.Shape)
      */
     public void draw( Shape s ) {
         AWTSWTImageUtils.checkAccess();
@@ -155,7 +155,7 @@ public class SWTGraphics implements ViewportGraphics {
 
 
     /**
-     * @see net.refractions.udig.project.render.ViewportGraphics#draw(java.awt.Shape)
+     * @see org.locationtech.udig.project.render.ViewportGraphics#draw(java.awt.Shape)
      */
     public void fill( Shape s ) {
         Color tmp = prepareForFill();
@@ -190,7 +190,7 @@ public class SWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportGraphics#fillRect(int, int, int, int)
+     * @see org.locationtech.udig.project.render.ViewportGraphics#fillRect(int, int, int, int)
      */
     public void fillRect( int x, int y, int width, int height ) {
         Color tmp = prepareForFill();
@@ -200,7 +200,7 @@ public class SWTGraphics implements ViewportGraphics {
     }
 
 	/**
-	 * @see net.refractions.udig.project.render.ViewportGraphics#setColor(java.awt.Color)
+	 * @see org.locationtech.udig.project.render.ViewportGraphics#setColor(java.awt.Color)
 	 */
 	public void setColor(final java.awt.Color c) { 
         AWTSWTImageUtils.checkAccess();
@@ -215,7 +215,7 @@ public class SWTGraphics implements ViewportGraphics {
     /**
      * This is hard because - background doesn't mean what we think it means.
      * 
-     * @see net.refractions.udig.project.render.ViewportGraphics#setBackground(java.awt.Color)
+     * @see org.locationtech.udig.project.render.ViewportGraphics#setBackground(java.awt.Color)
      */
     public void setBackground( java.awt.Color c ) {
         AWTSWTImageUtils.checkAccess();
@@ -227,7 +227,7 @@ public class SWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportGraphics#setStroke(int, int)
+     * @see org.locationtech.udig.project.render.ViewportGraphics#setStroke(int, int)
      */
     public void setStroke( int style, int width ) {
         AWTSWTImageUtils.checkAccess();
@@ -269,7 +269,7 @@ public class SWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.project.render.ViewportGraphics#setClip(java.awt.Rectangle)
+     * @see org.locationtech.udig.project.render.ViewportGraphics#setClip(java.awt.Rectangle)
      */
     public void setClip( java.awt.Rectangle r ) {
         AWTSWTImageUtils.checkAccess();
@@ -277,7 +277,7 @@ public class SWTGraphics implements ViewportGraphics {
     }
 
 	/**
-	 * @see net.refractions.udig.project.render.ViewportGraphics#translate(java.awt.Point)
+	 * @see org.locationtech.udig.project.render.ViewportGraphics#translate(java.awt.Point)
 	 */
 	public void translate(Point offset) {
         AWTSWTImageUtils.checkAccess();
@@ -392,7 +392,7 @@ public class SWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#drawImage(java.awt.Image, int, int)
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#drawImage(java.awt.Image, int, int)
      *      Current version can only draw Image if the image is an RenderedImage
      */
     public void drawImage( java.awt.Image awtImage, int x, int y ) {
@@ -425,7 +425,7 @@ public class SWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#drawImage(java.awt.Image, int, int,
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#drawImage(java.awt.Image, int, int,
      *      int, int, int, int, int, int)
      */
     public void drawImage( java.awt.Image awtImage, int dx1, int dy1, int dx2, int dy2, int sx1,

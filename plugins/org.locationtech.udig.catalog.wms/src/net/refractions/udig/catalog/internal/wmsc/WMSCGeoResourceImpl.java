@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmsc;
+package org.locationtech.udig.catalog.internal.wmsc;
 
 import java.io.IOException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.wmsc.server.TileSet;
-import net.refractions.udig.catalog.wmsc.server.TiledWebMapServer;
-import net.refractions.udig.catalog.wmsc.server.WMSTileSet;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.wmsc.server.TileSet;
+import org.locationtech.udig.catalog.wmsc.server.TiledWebMapServer;
+import org.locationtech.udig.catalog.wmsc.server.WMSTileSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -62,7 +62,7 @@ public class WMSCGeoResourceImpl extends IGeoResource {
         return service;
     }
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     @Override
     public <T> boolean canResolve( Class<T> adaptee ) {
@@ -90,14 +90,14 @@ public class WMSCGeoResourceImpl extends IGeoResource {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#getMessage()
+     * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
     public Throwable getMessage() {
         return service.getMessage();
     }
 
     /*
-     * @see net.refractions.udig.catalog.IGeoResource#getStatus()
+     * @see org.locationtech.udig.catalog.IGeoResource#getStatus()
      */
     public Status getStatus() {
         return service.getStatus();

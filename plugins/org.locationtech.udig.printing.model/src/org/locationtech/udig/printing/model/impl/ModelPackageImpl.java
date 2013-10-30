@@ -4,21 +4,21 @@
  *
  * $Id$
  */
-package net.refractions.udig.printing.model.impl;
+package org.locationtech.udig.printing.model.impl;
 
 import java.awt.Graphics2D;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.BoxPrinter;
-import net.refractions.udig.printing.model.Connection;
-import net.refractions.udig.printing.model.Element;
-import net.refractions.udig.printing.model.ModelFactory;
-import net.refractions.udig.printing.model.ModelPackage;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.impl.ProjectPackageImpl;
-import net.refractions.udig.project.internal.render.impl.RenderPackageImpl;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.BoxPrinter;
+import org.locationtech.udig.printing.model.Connection;
+import org.locationtech.udig.printing.model.Element;
+import org.locationtech.udig.printing.model.ModelFactory;
+import org.locationtech.udig.printing.model.ModelPackage;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.impl.ProjectPackageImpl;
+import org.locationtech.udig.project.internal.render.impl.RenderPackageImpl;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.draw2d.geometry.Dimension;
@@ -111,7 +111,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.eclipse.emf.ecore.EPackage.Registry
-     * @see net.refractions.udig.printing.model.ModelPackage#eNS_URI
+     * @see org.locationtech.udig.printing.model.ModelPackage#eNS_URI
      * @see #init()
      * @generated
      */

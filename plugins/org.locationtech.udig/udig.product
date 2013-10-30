@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="%product.name" uid="udig" id="net.refractions.udig.product" application="net.refractions.udig.ui.application" version="1.4.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="%product.name" uid="udig" id="org.locationtech.udig.product" application="org.locationtech.udig.ui.application" version="1.4.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
-      <image path="/net.refractions.udig/icons/about.png"/>
+      <image path="/org.locationtech.udig/icons/about.png"/>
       <text>
          %verboseAboutText
       </text>
    </aboutInfo>
 
-   <configIni use="default" path="/net.refractions.udig-feature/config.files/configuration/config.ini">
+   <configIni use="default" path="/org.locationtech.udig-feature/config.files/configuration/config.ini">
    </configIni>
 
    <launcherArgs>
@@ -18,24 +18,24 @@
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts -Djava.awt.headless=true</vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/net.refractions.udig/icons/icon16.gif" i32="/net.refractions.udig/icons/icon32.gif" i48="/net.refractions.udig/icons/icon48.gif" i64="/net.refractions.udig/icons/icon64.gif" i128="/net.refractions.udig/icons/icon128.gif"/>
+   <windowImages i16="/org.locationtech.udig/icons/icon16.gif" i32="/org.locationtech.udig/icons/icon32.gif" i48="/org.locationtech.udig/icons/icon48.gif" i64="/org.locationtech.udig/icons/icon64.gif" i128="/org.locationtech.udig/icons/icon128.gif"/>
 
    <splash
-      location="net.refractions.udig"
+      location="org.locationtech.udig"
       startupProgressRect="0,196,500,8"
       startupMessageRect="7,180,445,16"
       startupForegroundColor="FFFFFF" />
    <launcher name="udig_internal">
-      <linux icon="/net.refractions.udig/icons/udig.xpm"/>
-      <macosx icon="/net.refractions.udig/icons/icon128.icns"/>
+      <linux icon="/org.locationtech.udig/icons/udig.xpm"/>
+      <macosx icon="/org.locationtech.udig/icons/icon128.icns"/>
       <solaris/>
       <win useIco="true">
-         <ico path="/net.refractions.udig/icons/udig.ico"/>
+         <ico path="/org.locationtech.udig/icons/udig.ico"/>
          <bmp/>
       </win>
    </launcher>
 
-   <intro introId="net.refractions.udig.ui.intro"/>
+   <intro introId="org.locationtech.udig.ui.intro"/>
 
    <vm>
    </vm>
@@ -62,8 +62,8 @@ Content and such source code may be obtained at http://github.com/udig .
    </plugins>
 
    <features>
-      <feature id="net.refractions.udig-feature"/>
-      <feature id="net.refractions.udig_language-feature"/>
+      <feature id="org.locationtech.udig-feature"/>
+      <feature id="org.locationtech.udig_language-feature"/>
       <feature id="javax.media.jai_imageio-feature"/>
    </features>
 

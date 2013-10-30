@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.arcsde;
+package org.locationtech.udig.catalog.internal.arcsde;
 
 import static org.geotools.arcsde.ArcSDEDataStoreFactory.DBTYPE_PARAM;
 import static org.geotools.arcsde.ArcSDEDataStoreFactory.INSTANCE_PARAM;
@@ -24,10 +24,10 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.AbstractDataStoreServiceExtension;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ServiceExtension;
-import net.refractions.udig.catalog.arcsde.internal.Messages;
+import org.locationtech.udig.catalog.AbstractDataStoreServiceExtension;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ServiceExtension;
+import org.locationtech.udig.catalog.arcsde.internal.Messages;
 
 import org.geotools.arcsde.ArcSDEDataStoreFactory;
 import org.geotools.data.DataStoreFactorySpi;

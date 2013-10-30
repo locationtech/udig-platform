@@ -1,29 +1,29 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.render.util;
+package org.locationtech.udig.project.internal.render.util;
 
 import java.util.List;
 
-import net.refractions.udig.project.IAbstractContext;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.AbstractContext;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.MultiLayerRenderer;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.RenderExecutor;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.internal.render.RendererCreator;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.render.ICompositeRenderContext;
-import net.refractions.udig.project.render.IMultiLayerRenderer;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderManager;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplayListener;
+import org.locationtech.udig.project.IAbstractContext;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.AbstractContext;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.MultiLayerRenderer;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.internal.render.RendererCreator;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.render.ICompositeRenderContext;
+import org.locationtech.udig.project.render.IMultiLayerRenderer;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderManager;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.util.Switch;
  * each class of the model, starting with the actual class of the object and proceeding up the
  * inheritance hierarchy until a non-null result is returned, which is the result of the switch.
  * <!-- end-user-doc -->
- * @see net.refractions.udig.project.internal.render.RenderPackage
+ * @see org.locationtech.udig.project.internal.render.RenderPackage
  * @generated
  */
 public class RenderSwitch<T> extends Switch<T> {

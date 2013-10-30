@@ -7,9 +7,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
-import net.refractions.udig.project.IProjectElement;
+import org.locationtech.udig.project.IProjectElement;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecore.EObject;
@@ -31,7 +31,7 @@ public interface ProjectElement extends EObject, IProjectElement, IAdaptable {
     public Project getProjectInternal();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.ProjectElement#getProjectInternal <em>Project Internal</em>}' reference.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.ProjectElement#getProjectInternal <em>Project Internal</em>}' reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Project Internal</em>' reference.
      * @see #getProjectInternal()

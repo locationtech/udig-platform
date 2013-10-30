@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.memory.internal;
+package org.locationtech.udig.catalog.memory.internal;
 
 /**
  *  summary sentence.

@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.memento;
+package org.locationtech.udig.project.memento;
 
-import static net.refractions.udig.project.memento.Tokens.__null__;
-import static net.refractions.udig.project.memento.Tokens._children_;
-import static net.refractions.udig.project.memento.Tokens._data_;
-import static net.refractions.udig.project.memento.Tokens._memento_;
-import static net.refractions.udig.project.memento.Tokens._text_;
+import static org.locationtech.udig.project.memento.Tokens.__null__;
+import static org.locationtech.udig.project.memento.Tokens._children_;
+import static org.locationtech.udig.project.memento.Tokens._data_;
+import static org.locationtech.udig.project.memento.Tokens._memento_;
+import static org.locationtech.udig.project.memento.Tokens._text_;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

@@ -7,22 +7,22 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.tutorials.toolview;
+package org.locationtech.udig.tutorials.toolview;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ui.AnimationUpdater;
-import net.refractions.udig.project.ui.IAnimation;
-import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
-import net.refractions.udig.project.ui.internal.commands.draw.DrawShapeCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.project.ui.tool.SimpleTool;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ui.AnimationUpdater;
+import org.locationtech.udig.project.ui.IAnimation;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.project.ui.internal.commands.draw.DrawShapeCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.tool.SimpleTool;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.PlatformUI;
@@ -51,7 +51,7 @@ import com.vividsolutions.jts.geom.Envelope;
  */
 public class SendAlertTool extends SimpleTool {
 
-	public final static String EXTENSION_ID = "eu.udig.tutorials.tool-view.sendalerttool";
+	public final static String EXTENSION_ID = "org.locationtech.udig.tutorials.tool-view.sendalerttool";
 	
 	/**
 	 * Animation of a circle zooming to a point.

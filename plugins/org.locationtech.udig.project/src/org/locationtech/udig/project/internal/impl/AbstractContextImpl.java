@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -12,19 +12,19 @@ import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.internal.AbstractContext;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.render.IRenderManager;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.internal.AbstractContext;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.render.IRenderManager;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
@@ -229,7 +229,7 @@ public abstract class AbstractContextImpl implements AbstractContext {
     }
 
     /**
-     * @see net.refractions.udig.project.tool.ToolContext#getMapLayers()
+     * @see org.locationtech.udig.project.tool.ToolContext#getMapLayers()
      */
     public List<ILayer> getMapLayers() {
         return getMap().getMapLayers();

@@ -8,11 +8,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.wmsc;
+package org.locationtech.udig.catalog.wmsc;
 
-import net.refractions.udig.catalog.internal.wmsc.WMSCGeoResourceImpl;
-import net.refractions.udig.catalog.wmsc.server.TileSet;
-import net.refractions.udig.ui.operations.IOp;
+import org.locationtech.udig.catalog.internal.wmsc.WMSCGeoResourceImpl;
+import org.locationtech.udig.catalog.wmsc.server.TileSet;
+import org.locationtech.udig.ui.operations.IOp;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;

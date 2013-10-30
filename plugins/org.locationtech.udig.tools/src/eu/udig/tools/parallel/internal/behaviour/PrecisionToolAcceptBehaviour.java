@@ -9,19 +9,19 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.parallel.internal.behaviour;
+package org.locationtech.udig.tools.parallel.internal.behaviour;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.tools.edit.Behaviour;
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.tools.edit.Behaviour;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.support.EditGeom;
 //import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsContext;
-import eu.udig.tools.parallel.internal.PrecisionToolsContext;
+import org.locationtech.udig.tools.parallel.internal.PrecisionToolsContext;
 
 /**
  * Behaviour executed after committing a feature or adding to the blackboard.

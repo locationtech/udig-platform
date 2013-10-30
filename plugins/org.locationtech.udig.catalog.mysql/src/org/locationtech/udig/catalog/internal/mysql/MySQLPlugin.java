@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.mysql;
+package org.locationtech.udig.catalog.internal.mysql;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -29,7 +29,7 @@ import org.osgi.framework.BundleContext;
 public class MySQLPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "net.refractions.udig.catalog.mysql"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.locationtech.udig.catalog.mysql"; //$NON-NLS-1$
 
 	// The shared instance
 	private static MySQLPlugin plugin;
@@ -81,7 +81,7 @@ public class MySQLPlugin extends AbstractUIPlugin {
 	public ResourceBundle getResourceBundle() {
 		try {
 			if (resourceBundle == null)
-				resourceBundle = ResourceBundle.getBundle("net.refractions.udig.catalog.internal.mysql.MySQLPluginResources"); //$NON-NLS-1$
+				resourceBundle = ResourceBundle.getBundle("org.locationtech.udig.catalog.internal.mysql.MySQLPluginResources"); //$NON-NLS-1$
 		} catch (MissingResourceException x) {
 			resourceBundle = null;
 		}

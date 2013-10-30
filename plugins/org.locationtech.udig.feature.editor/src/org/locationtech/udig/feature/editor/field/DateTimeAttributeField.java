@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.feature.editor.field;
+package org.locationtech.udig.feature.editor.field;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import net.refractions.udig.project.ui.feature.EditFeature;
+import org.locationtech.udig.project.ui.feature.EditFeature;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.view;
+package org.locationtech.udig.omsbox.view;
 
 import i18n.omsbox.Messages;
 
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -49,16 +49,16 @@ import org.eclipse.ui.dialogs.PatternFilter;
 import org.eclipse.ui.part.ViewPart;
 import org.joda.time.DateTime;
 
-import eu.udig.omsbox.OmsBoxPlugin;
-import eu.udig.omsbox.core.ModuleDescription;
-import eu.udig.omsbox.core.ModuleDescription.Status;
-import eu.udig.omsbox.core.OmsModulesManager;
-import eu.udig.omsbox.core.ScriptHandler;
-import eu.udig.omsbox.utils.ImageCache;
-import eu.udig.omsbox.utils.OmsBoxConstants;
-import eu.udig.omsbox.utils.ViewerFolder;
-import eu.udig.omsbox.utils.ViewerModule;
-import eu.udig.omsbox.view.widgets.ModuleGui;
+import org.locationtech.udig.omsbox.OmsBoxPlugin;
+import org.locationtech.udig.omsbox.core.ModuleDescription;
+import org.locationtech.udig.omsbox.core.ModuleDescription.Status;
+import org.locationtech.udig.omsbox.core.OmsModulesManager;
+import org.locationtech.udig.omsbox.core.ScriptHandler;
+import org.locationtech.udig.omsbox.utils.ImageCache;
+import org.locationtech.udig.omsbox.utils.OmsBoxConstants;
+import org.locationtech.udig.omsbox.utils.ViewerFolder;
+import org.locationtech.udig.omsbox.utils.ViewerModule;
+import org.locationtech.udig.omsbox.view.widgets.ModuleGui;
 
 /**
  * The database view.
@@ -70,7 +70,7 @@ public class OmsBoxView extends ViewPart {
     public static final String SPATIAL_TOOLBOX = "Spatial Toolbox...";
     public static final String LOADING_MODULES_FROM_LIBRARIES = "Loading modules from libraries...";
 
-    public static final String ID = "eu.udig.omsbox.view.DatabaseView"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.omsbox.view.DatabaseView"; //$NON-NLS-1$
 
     private Composite modulesGuiComposite;
     private StackLayout modulesGuiStackLayout;

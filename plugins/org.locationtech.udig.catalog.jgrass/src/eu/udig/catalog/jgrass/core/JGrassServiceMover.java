@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
- package eu.udig.catalog.jgrass.core;
+ package org.locationtech.udig.catalog.jgrass.core;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,14 +15,14 @@ import java.io.Serializable;
 import java.net.URL;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveAdapterFactory;
-import net.refractions.udig.catalog.ServiceMover;
-import net.refractions.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveAdapterFactory;
+import org.locationtech.udig.catalog.ServiceMover;
+import org.locationtech.udig.catalog.URLUtils;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import eu.udig.catalog.jgrass.JGrassPlugin;
+import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
 
 public class JGrassServiceMover implements IResolveAdapterFactory, ServiceMover {
 

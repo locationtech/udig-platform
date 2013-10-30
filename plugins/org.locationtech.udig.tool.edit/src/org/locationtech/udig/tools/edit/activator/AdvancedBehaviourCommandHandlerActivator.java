@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.activator;
+package org.locationtech.udig.tools.edit.activator;
 
-import net.refractions.udig.tools.edit.Activator;
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.handler.AdvancedBehaviourCommandHandler;
+import org.locationtech.udig.tools.edit.Activator;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.handler.AdvancedBehaviourCommandHandler;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.IHandler;
@@ -20,12 +20,12 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 
 /**
- * Enables the {@link net.refractions.udig.tools.edit.handler.SnapBehaviourCommandHandler} on the CycleSnapBehaviour command.
+ * Enables the {@link org.locationtech.udig.tools.edit.handler.SnapBehaviourCommandHandler} on the CycleSnapBehaviour command.
  * @author Jesse
  * @since 1.1.0
  */
 public class AdvancedBehaviourCommandHandlerActivator implements Activator {
-    private static final String COMMAND_ID = "net.refractions.udig.tool.edit.advanced.edit.command"; //$NON-NLS-1$
+    private static final String COMMAND_ID = "org.locationtech.udig.tool.edit.advanced.edit.command"; //$NON-NLS-1$
     ICommandService service = (ICommandService) PlatformUI.getWorkbench().getAdapter(
             ICommandService.class);
     private IHandler commandHandler;;

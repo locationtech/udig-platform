@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.ui.graphics;
+package org.locationtech.udig.ui.graphics;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -67,26 +67,26 @@ public class AWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#draw(java.awt.Shape)
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#draw(java.awt.Shape)
      */
     public void draw( Shape s ) {
         g.draw(s);
     }
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#draw(java.awt.Shape)
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#draw(java.awt.Shape)
      */
     public void fill( Shape s ) {
         g.fill(s);
     }
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#setColor(java.awt.Color)
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#setColor(java.awt.Color)
      */
     public void setColor( Color c ) {
         g.setColor(c);
     }
 
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#setBackground(java.awt.Color)
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#setBackground(java.awt.Color)
      */
     public void setBackground( Color c ) {
         g.setBackground(c);
@@ -110,35 +110,35 @@ public class AWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#setClip(java.awt.Rectangle)
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#setClip(java.awt.Rectangle)
      */
     public void setClip( Rectangle r ) {
         g.setClip(r);
     }
 
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#fillRect(int, int, int, int)
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#fillRect(int, int, int, int)
      */
     public void fillRect( int x, int y, int width, int height ) {
         g.fillRect(x, y, width, height);
     }
 
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#translate(java.awt.Point)
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#translate(java.awt.Point)
      */
     public void translate( Point offset ) {
         g.setTransform(AffineTransform.getTranslateInstance(offset.x, offset.y));
     }
 
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#clearRect(int, int, int, int)
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#clearRect(int, int, int, int)
      */
     public void clearRect( int x, int y, int width, int height ) {
         g.clearRect(x, y, width, height);
     }
 
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#drawImage(javax.media.jai.PlanarImage,
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#drawImage(javax.media.jai.PlanarImage,
      *      int, int)
      */
     public void drawImage( RenderedImage image, int x, int y ) {
@@ -146,7 +146,7 @@ public class AWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#drawString(String, int, int)
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#drawString(String, int, int)
      */
     public void drawString( String string, int x, int y, int alignx, int aligny ) {
         Rectangle2D text = g.getFontMetrics().getStringBounds(string, g);
@@ -159,7 +159,7 @@ public class AWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#setTransform(java.awt.geom.AffineTransform)
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#setTransform(java.awt.geom.AffineTransform)
      */
     public void setTransform( AffineTransform transform ) {
         g.setTransform(transform);
@@ -167,7 +167,7 @@ public class AWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#drawImage(java.awt.Image, int, int)
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#drawImage(java.awt.Image, int, int)
      */
     public void drawImage( Image image, int x, int y ) {
         g.drawImage(image, x, y, null);
@@ -319,7 +319,7 @@ public class AWTGraphics implements ViewportGraphics {
     }
 
     /**
-     * @see net.refractions.udig.ui.graphics.ViewportGraphics#setStroke(int, int)
+     * @see org.locationtech.udig.ui.graphics.ViewportGraphics#setStroke(int, int)
      */
     public void setStroke( int style, int width ) {
         switch( style ) {

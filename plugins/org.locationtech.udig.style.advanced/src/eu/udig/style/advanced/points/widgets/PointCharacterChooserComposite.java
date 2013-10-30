@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.points.widgets;
+package org.locationtech.udig.style.advanced.points.widgets;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -45,11 +45,11 @@ import org.opengis.feature.FeatureVisitor;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-import eu.udig.style.advanced.common.ParameterComposite;
-import eu.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
-import eu.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
-import eu.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.common.ParameterComposite;
+import org.locationtech.udig.style.advanced.common.IStyleChangesListener.STYLEEVENTTYPE;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.PointSymbolizerWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import org.locationtech.udig.style.advanced.internal.Messages;
 
 /**
  * A composite that holds widgets for font and character selection.

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.validation.ui;
+package org.locationtech.udig.validation.ui;
 
 import java.beans.IntrospectionException;
 import java.io.File;
@@ -24,20 +24,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.issues.IIssuesManager;
-import net.refractions.udig.issues.IssueConstants;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.graphics.TableSettings;
-import net.refractions.udig.ui.graphics.TableUtils;
-import net.refractions.udig.validation.DTOUtils;
-import net.refractions.udig.validation.GenericValidationResults;
-import net.refractions.udig.validation.ImageConstants;
-import net.refractions.udig.validation.ValidationPlugin;
-import net.refractions.udig.validation.ValidationProcessor;
-import net.refractions.udig.validation.internal.Messages;
+import org.locationtech.udig.issues.IIssuesManager;
+import org.locationtech.udig.issues.IssueConstants;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.graphics.TableSettings;
+import org.locationtech.udig.ui.graphics.TableUtils;
+import org.locationtech.udig.validation.DTOUtils;
+import org.locationtech.udig.validation.GenericValidationResults;
+import org.locationtech.udig.validation.ImageConstants;
+import org.locationtech.udig.validation.ValidationPlugin;
+import org.locationtech.udig.validation.ValidationProcessor;
+import org.locationtech.udig.validation.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -108,7 +108,7 @@ public class ValidationDialog extends TitleAreaDialog {
      * Constant to use as the key for storing the validation processor on the
      * blackboard (for saving the state of the validation dialog box)
      */
-    public static final String BLACKBOARD_KEY = "net.refractions.udig.validation"; //$NON-NLS-1$
+    public static final String BLACKBOARD_KEY = "org.locationtech.udig.validation"; //$NON-NLS-1$
     
     private Button newButton;
     private Button deleteButton;

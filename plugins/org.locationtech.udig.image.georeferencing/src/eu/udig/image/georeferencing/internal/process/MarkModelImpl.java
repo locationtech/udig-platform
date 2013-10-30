@@ -10,7 +10,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.internal.process;
+package org.locationtech.udig.image.georeferencing.internal.process;
 
 import java.io.Serializable;
 import java.util.Observable;
@@ -51,63 +51,63 @@ final class MarkModelImpl extends Observable implements Serializable, MarkModel 
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#getXImage()
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#getXImage()
 	 */
 	public int getXImage() {
 		return xImage;
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#setXImage(int)
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#setXImage(int)
 	 */
 	public void setXImage(int xImage) {
 		this.xImage = xImage;
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#getYImage()
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#getYImage()
 	 */
 	public int getYImage() {
 		return yImage;
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#setYImage(int)
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#setYImage(int)
 	 */
 	public void setYImage(int yImage) {
 		this.yImage = yImage;
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#getXCoord()
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#getXCoord()
 	 */
 	public Double getXCoord() {
 		return xCoord;
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#setXCoord(java.lang.Double)
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#setXCoord(java.lang.Double)
 	 */
 	public void setXCoord(Double xCoord) {
 		this.xCoord = xCoord;
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#getYCoord()
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#getYCoord()
 	 */
 	public Double getYCoord() {
 		return yCoord;
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#setYCoord(java.lang.Double)
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#setYCoord(java.lang.Double)
 	 */
 	public void setYCoord(Double yCoord) {
 		this.yCoord = yCoord;
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#getID()
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#getID()
 	 */
 	public String getID() {
 
@@ -115,7 +115,7 @@ final class MarkModelImpl extends Observable implements Serializable, MarkModel 
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#initializeImagePosition(org.eclipse.swt.graphics.Point)
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#initializeImagePosition(org.eclipse.swt.graphics.Point)
 	 */
 	public void initializeImagePosition(Point point) {
 
@@ -127,7 +127,7 @@ final class MarkModelImpl extends Observable implements Serializable, MarkModel 
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#updateImagePosition(org.eclipse.swt.graphics.Point)
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#updateImagePosition(org.eclipse.swt.graphics.Point)
 	 */
 	public void updateImagePosition(Point point) {
 
@@ -139,7 +139,7 @@ final class MarkModelImpl extends Observable implements Serializable, MarkModel 
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#updateCoordinatePosition(com.vividsolutions.jts.geom.Coordinate)
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#updateCoordinatePosition(com.vividsolutions.jts.geom.Coordinate)
 	 */
 	public void updateCoordinatePosition(Coordinate coord) {
 
@@ -151,7 +151,7 @@ final class MarkModelImpl extends Observable implements Serializable, MarkModel 
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#getImagePosition()
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#getImagePosition()
 	 */
 	public Point getImagePosition() {
 
@@ -159,7 +159,7 @@ final class MarkModelImpl extends Observable implements Serializable, MarkModel 
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#delete()
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#delete()
 	 */
 	public void delete() {
 
@@ -168,7 +168,7 @@ final class MarkModelImpl extends Observable implements Serializable, MarkModel 
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#hashCode()
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#hashCode()
 	 */
 	@Override
 	public int hashCode() {
@@ -177,7 +177,7 @@ final class MarkModelImpl extends Observable implements Serializable, MarkModel 
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.udig.image.georeferencing.internal.process.Mark#toString()
+	 * @see org.locationtech.udig.image.georeferencing.internal.process.Mark#toString()
 	 */
 	@Override
 	public String toString() {

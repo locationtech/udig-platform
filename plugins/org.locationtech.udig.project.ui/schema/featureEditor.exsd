@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.project.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project.ui" id="featureEditor" name="Feature Editor"/>
+         <meta.schema plugin="org.locationtech.udig.project.ui" id="featureEditor" name="Feature Editor"/>
       </appInfo>
       <documentation>
          Declares a feature editor.  If a feature type is declared for the editor then the editor will only be available for use on features with a &lt;i&gt;matching&lt;/i&gt; feature type otherwise (if there is no decalred featureType element) the editor will be available for all features.
@@ -91,7 +91,7 @@
             <annotation>
                <documentation>
                   If the feature editor is an eclipse view then this attribute will have the id of the view.
-The view must implement net.refractions.udig.project.ui.IUDIGView
+The view must implement org.locationtech.udig.project.ui.IUDIGView
                </documentation>
             </annotation>
          </attribute>
@@ -101,7 +101,7 @@ The view must implement net.refractions.udig.project.ui.IUDIGView
                   If this is defined then a dialog will be opened with the declared IUDIGDialogPage.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.project.ui.IUDIGDialogPage"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.project.ui.IUDIGDialogPage"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -190,7 +190,7 @@ The view must implement net.refractions.udig.project.ui.IUDIGView
       </appInfo>
       <documentation>
          CountryEditor from the udig tutorials is an example implementation:
-- http://svn.refractions.net/udig/udig/trunk/tutorials/net.refractions.udig.tutorials.featureeditor/
+- http://svn.refractions.net/udig/udig/trunk/tutorials/org.locationtech.udig.tutorials.featureeditor/
       </documentation>
    </annotation>
 

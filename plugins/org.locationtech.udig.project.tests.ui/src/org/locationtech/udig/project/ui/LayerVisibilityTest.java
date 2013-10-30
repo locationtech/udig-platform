@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -20,23 +20,23 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.List;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.catalog.internal.shp.ShpServiceImpl;
-import net.refractions.udig.catalog.tests.ui.CatalogTestsUIPlugin;
-import net.refractions.udig.mapgraphic.internal.MapGraphicService;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.ExecutorVisitor;
-import net.refractions.udig.project.internal.render.RenderExecutor;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.impl.RenderExecutorComposite;
-import net.refractions.udig.project.internal.render.impl.RenderExecutorMultiLayer;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.project.ui.internal.LayersView;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.internal.shp.ShpServiceImpl;
+import org.locationtech.udig.catalog.tests.ui.CatalogTestsUIPlugin;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.ExecutorVisitor;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.impl.RenderExecutorComposite;
+import org.locationtech.udig.project.internal.render.impl.RenderExecutorMultiLayer;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.ui.internal.LayersView;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.swt.widgets.Display;

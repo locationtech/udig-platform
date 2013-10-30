@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,15 +11,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.internal.ui.UDIGDropHandler;
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.commands.OpenProjectElementCommand;
-import net.refractions.udig.project.ui.preferences.PreferenceConstants;
-import net.refractions.udig.ui.IDropAction;
-import net.refractions.udig.ui.IDropHandlerListener;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.commands.OpenProjectElementCommand;
+import org.locationtech.udig.project.ui.preferences.PreferenceConstants;
+import org.locationtech.udig.ui.IDropAction;
+import org.locationtech.udig.ui.IDropHandlerListener;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;

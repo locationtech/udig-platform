@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.operations;
+package org.locationtech.udig.ui.operations;
 
 import java.util.List;
 
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.internal.ui.operations.OperationCategory;
-import net.refractions.udig.internal.ui.operations.OperationMenuFactory;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.internal.ui.operations.OperationCategory;
+import org.locationtech.udig.internal.ui.operations.OperationMenuFactory;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -38,7 +38,7 @@ import org.eclipse.ui.actions.CompoundContributionItem;
  *        name=&quot;mbStart&quot;&gt;
  *      &lt;/separator&gt;
  *      &lt;dynamic
- *      class=&quot;net.refractions.udig.ui.operations.OpCategoryContributionItem:net.refractions.udig.catalog.ui.operation.resourceCategory&quot;
+ *      class=&quot;org.locationtech.udig.ui.operations.OpCategoryContributionItem:org.locationtech.udig.catalog.ui.operation.resourceCategory&quot;
  *      id=&quot;resource.ext&quot;&gt;
  *        &lt;visibleWhen
  *          checkEnabled=&quot;true&quot;&gt;

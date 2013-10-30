@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.render;
+package org.locationtech.udig.project.render;
 
 /**
  * The CompositeRenderer is a container for all the Renderers of a viewport.

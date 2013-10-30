@@ -7,14 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.core.AbstractUdigUIPlugin;
-import net.refractions.udig.project.ui.feature.FeaturePanelProcessor;
+import org.locationtech.udig.core.AbstractUdigUIPlugin;
+import org.locationtech.udig.project.ui.feature.FeaturePanelProcessor;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -40,7 +40,7 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.osgi.framework.BundleContext;
 
 /**
- * The Plugin class for the net.refractions.udig.project plugin. Provides access to plugin
+ * The Plugin class for the org.locationtech.udig.project plugin. Provides access to plugin
  * resources.
  * 
  * @author Jesse Eichar
@@ -56,7 +56,7 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
     private static final String ICONS_PATH = "icons/"; //$NON-NLS-1$
 
     /** The plugin ID */
-    public static final String ID = "net.refractions.udig.project.ui"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.project.ui"; //$NON-NLS-1$
 
     /** Preference store for the last directory open by the file selection dialog */
     public static final String PREF_OPEN_DIALOG_DIRECTORY = "udig.preferences.openDialog.lastDirectory"; //$NON-NLS-1$
@@ -71,7 +71,7 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
 
     List<AdapterFactory> adapterFactories;
 
-    private static final String ADAPTER_FACTORIES_ID = "net.refractions.udig.project.ui.itemProviderAdapterFactories"; //$NON-NLS-1$
+    private static final String ADAPTER_FACTORIES_ID = "org.locationtech.udig.project.ui.itemProviderAdapterFactories"; //$NON-NLS-1$
 
     public static final String MOUSE_SPEED_KEY = "MOUSE_SPEED_KEY";
 
@@ -254,7 +254,7 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:<pre><code>
-     * private static final String RENDERING = "net.refractions.udig.project/render/trace";
+     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
      * 
@@ -324,7 +324,7 @@ public class ProjectUIPlugin extends AbstractUdigUIPlugin {
     }
 
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.core.AbstractUdigUIPlugin#getIconPath()
+	 * @see org.locationtech.udig.core.AbstractUdigUIPlugin#getIconPath()
 	 */
 	public IPath getIconPath() {
 		return new Path(ICONS_PATH);

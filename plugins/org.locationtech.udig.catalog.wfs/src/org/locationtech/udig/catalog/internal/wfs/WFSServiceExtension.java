@@ -9,17 +9,17 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.wfs;
+package org.locationtech.udig.catalog.internal.wfs;
 
 import java.io.Serializable;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.AbstractDataStoreServiceExtension;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ServiceExtension;
-import net.refractions.udig.catalog.wfs.internal.Messages;
+import org.locationtech.udig.catalog.AbstractDataStoreServiceExtension;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ServiceExtension;
+import org.locationtech.udig.catalog.wfs.internal.Messages;
 
 import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.wfs.WFSDataStoreFactory;

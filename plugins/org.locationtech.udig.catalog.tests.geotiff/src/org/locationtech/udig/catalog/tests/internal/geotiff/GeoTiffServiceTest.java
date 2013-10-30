@@ -8,17 +8,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests.internal.geotiff;
+package org.locationtech.udig.catalog.tests.internal.geotiff;
 
 import it.geosolutions.imageio.gdalframework.GDALUtilities;
 
 import java.io.File;
 import java.net.URL;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.geotiff.GeoTiffServiceExtension;
-import net.refractions.udig.catalog.tests.AbstractServiceTest;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.geotiff.GeoTiffServiceExtension;
+import org.locationtech.udig.catalog.tests.AbstractServiceTest;
 
 import org.geotools.gce.geotiff.GeoTiffFormat;
 import org.geotools.gce.geotiff.GeoTiffFormatFactorySpi;

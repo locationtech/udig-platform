@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.postgis.ui;
+package org.locationtech.udig.catalog.internal.postgis.ui;
 
 import java.io.Serializable;
 import java.net.URL;
@@ -16,8 +16,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.catalog.service.database.Tab;
-import net.refractions.udig.core.Either;
+import org.locationtech.udig.catalog.service.database.Tab;
+import org.locationtech.udig.core.Either;
 
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.wizard.IWizard;

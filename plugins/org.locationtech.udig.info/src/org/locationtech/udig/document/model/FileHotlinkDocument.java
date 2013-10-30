@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.document.model;
+package org.locationtech.udig.document.model;
 
 import java.io.File;
 import java.util.List;
 
-import net.refractions.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
+import org.locationtech.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 
 /**
  * Document model for hotlink file documents.

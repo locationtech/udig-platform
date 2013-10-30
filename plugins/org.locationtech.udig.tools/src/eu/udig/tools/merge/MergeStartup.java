@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.tools.merge;
+package org.locationtech.udig.tools.merge;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IStartup;
@@ -17,7 +17,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
-import eu.udig.tools.merge.internal.view.MergeView;
+import org.locationtech.udig.tools.merge.internal.view.MergeView;
 
 /**
  * This class implements the org.eclipse.ui.startup extension point which is used to perform a

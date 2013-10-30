@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import java.awt.Graphics2D;
 import java.io.IOException;
@@ -18,23 +18,23 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.ContextModel;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.render.CompositeRenderContext;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.internal.render.RendererCreator;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.internal.render.impl.InternalRenderMetricsFactory.InternalRenderMetrics;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
-import net.refractions.udig.project.render.IRenderer;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.ContextModel;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.render.CompositeRenderContext;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.internal.render.RendererCreator;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.internal.render.impl.InternalRenderMetricsFactory.InternalRenderMetrics;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.project.render.IRenderer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.Notification;
@@ -68,7 +68,7 @@ public class RendererCreatorImpl implements RendererCreator {
     /**
      * @uml.property name="configuration"
      * @uml.associationEnd qualifier="key:java.lang.Object
-     *                     net.refractions.udig.project.internal.render.RenderContext"
+     *                     org.locationtech.udig.project.internal.render.RenderContext"
      */
     private volatile Map<Layer, RenderContext> configuration;
     
@@ -503,28 +503,28 @@ public class RendererCreatorImpl implements RendererCreator {
         }
 
         /**
-         * @see net.refractions.udig.project.render.IRenderMetrics#createRenderer()
+         * @see org.locationtech.udig.project.render.IRenderMetrics#createRenderer()
          */
         public Renderer createRenderer() {
             return new DumbRenderer();
         }
 
         /**
-         * @see net.refractions.udig.project.render.IRenderMetrics#getRenderContext()
+         * @see org.locationtech.udig.project.render.IRenderMetrics#getRenderContext()
          */
         public RenderContext getRenderContext() {
             return context;
         }
 
         /**
-         * @see net.refractions.udig.project.render.IRenderMetrics#setRenderContext(net.refractions.udig.project.render.RenderContext)
+         * @see org.locationtech.udig.project.render.IRenderMetrics#setRenderContext(org.locationtech.udig.project.render.RenderContext)
          */
         public void setRenderContext( IRenderContext context ) {
             // do nothing;
         }
 
         /**
-         * @see net.refractions.udig.project.render.IRenderMetrics#getRenderMetricsFactory()
+         * @see org.locationtech.udig.project.render.IRenderMetrics#getRenderMetricsFactory()
          */
         public IRenderMetricsFactory getRenderMetricsFactory() {
             return null;
@@ -552,33 +552,33 @@ public class RendererCreatorImpl implements RendererCreator {
     static class DumbRenderer extends RendererImpl {
 
         /**
-         * @see net.refractions.udig.project.internal.render.impl.RendererImpl#render(java.awt.Graphics2D)
+         * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(java.awt.Graphics2D)
          */
         public void render( Graphics2D destination, IProgressMonitor monitor ) {
             // do nothing
         }
 
         /**
-         * @see net.refractions.udig.project.internal.render.impl.RendererImpl#getInfo(java.awt.Point)
+         * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#getInfo(java.awt.Point)
          *      public InfoList getInfo( Point screenLocation ) { // do nothing return null; }
          */
 
         /**
-         * @see net.refractions.udig.project.internal.render.impl.RendererImpl#stopRendering()
+         * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#stopRendering()
          */
         public void stopRendering() {
             // do nothing
         }
 
         /**
-         * @see net.refractions.udig.project.internal.render.impl.RendererImpl#dispose()
+         * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#dispose()
          */
         public void dispose() {
             // do nothing
         }
 
         /**
-         * @see net.refractions.udig.project.internal.render.impl.RendererImpl#render(com.vividsolutions.jts.geom.Envelope,
+         * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(com.vividsolutions.jts.geom.Envelope,
          *      org.eclipse.core.runtime.IProgressMonitor)
          */
         public void render(IProgressMonitor monitor ) {
@@ -601,7 +601,7 @@ public class RendererCreatorImpl implements RendererCreator {
     Collection<RenderContext> contexts = Collections.synchronizedSet(new TreeSet<RenderContext>());
 
     /**
-     * @see net.refractions.udig.project.internal.render.RendererCreator#getConfiguration()
+     * @see org.locationtech.udig.project.internal.render.RendererCreator#getConfiguration()
      */
     public Collection<RenderContext> getConfiguration() {
 

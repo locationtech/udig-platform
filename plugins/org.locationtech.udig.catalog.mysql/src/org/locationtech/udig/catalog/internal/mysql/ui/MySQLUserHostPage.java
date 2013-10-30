@@ -8,9 +8,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.mysql.ui;
+package org.locationtech.udig.catalog.internal.mysql.ui;
 
-import net.refractions.udig.catalog.service.database.UserHostPage;
+import org.locationtech.udig.catalog.service.database.UserHostPage;
 
 public class MySQLUserHostPage extends UserHostPage {
 

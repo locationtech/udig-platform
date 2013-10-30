@@ -10,21 +10,21 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.element.impl;
+package org.locationtech.udig.project.element.impl;
 
-import net.refractions.udig.project.element.*;
+import org.locationtech.udig.project.element.*;
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.element.ElementFactory;
-import net.refractions.udig.project.element.ElementPackage;
-import net.refractions.udig.project.element.IGenericProjectElement;
-import net.refractions.udig.project.element.ProjectElementAdapter;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.memento.UdigMemento;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.element.ElementFactory;
+import org.locationtech.udig.project.element.ElementPackage;
+import org.locationtech.udig.project.element.IGenericProjectElement;
+import org.locationtech.udig.project.element.ProjectElementAdapter;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.memento.UdigMemento;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;

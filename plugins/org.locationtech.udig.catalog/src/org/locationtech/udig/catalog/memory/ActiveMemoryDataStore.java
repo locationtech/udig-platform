@@ -9,13 +9,13 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.memory;
+package org.locationtech.udig.catalog.memory;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.memory.internal.MemoryServiceListener;
+import org.locationtech.udig.catalog.memory.internal.MemoryServiceListener;
 
 import org.geotools.data.FeatureReader;
 import org.geotools.data.memory.MemoryDataStore;

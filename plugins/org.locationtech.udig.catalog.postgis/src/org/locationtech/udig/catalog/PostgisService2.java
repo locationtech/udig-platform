@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 import static org.geotools.data.postgis.PostgisNGDataStoreFactory.LOOSEBBOX;
 import static org.geotools.data.postgis.PostgisNGDataStoreFactory.PORT;
@@ -29,9 +29,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 
-import net.refractions.udig.catalog.internal.postgis.ui.PostgisLookUpSchemaRunnable;
-import net.refractions.udig.catalog.service.database.TableDescriptor;
-import net.refractions.udig.ui.UDIGDisplaySafeLock;
+import org.locationtech.udig.catalog.internal.postgis.ui.PostgisLookUpSchemaRunnable;
+import org.locationtech.udig.catalog.service.database.TableDescriptor;
+import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;

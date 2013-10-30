@@ -9,17 +9,17 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.mapgraphic.style;
+package org.locationtech.udig.mapgraphic.style;
 
 import java.awt.Rectangle;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.internal.Messages;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.style.IStyleConfigurator;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.internal.Messages;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.style.IStyleConfigurator;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -59,7 +59,7 @@ public final class LocationStyleConfigurator extends IStyleConfigurator implemen
 
 
     /**
-     * @see net.refractions.udig.style.StyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
+     * @see org.locationtech.udig.style.StyleConfigurator#createControl(org.eclipse.swt.widgets.Composite)
      */
     public void createControl( Composite parent ) {
         parent.setLayout( new GridLayout( 2, false ));

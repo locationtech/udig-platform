@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.kml.wizard;
+package org.locationtech.udig.catalog.kml.wizard;
 
 import java.io.File;
 import java.util.Map;
@@ -22,8 +22,8 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 
-import eu.udig.catalog.kml.core.KmlUtils;
-import eu.udig.catalog.kml.internal.Messages;
+import org.locationtech.udig.catalog.kml.core.KmlUtils;
+import org.locationtech.udig.catalog.kml.internal.Messages;
 
 /**
  * @author Andrea Antonello - www.hydrologis.com
@@ -31,7 +31,7 @@ import eu.udig.catalog.kml.internal.Messages;
  */
 public class KmlImportWizardPage extends WizardPage {
 
-    public static final String ID = "eu.udig.catalog.kml.wizard.KmlImportWizardPage"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.catalog.kml.wizard.KmlImportWizardPage"; //$NON-NLS-1$
     private File inFile = null;
 
     private boolean inIsOk = false;

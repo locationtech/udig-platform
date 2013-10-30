@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.model.impl;
+package org.locationtech.udig.printing.model.impl;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -15,29 +15,29 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import net.refractions.udig.printing.model.AbstractBoxPrinter;
-import net.refractions.udig.printing.model.PrintingModelPlugin;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayerListener;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IMapCompositionListener;
-import net.refractions.udig.project.IMapListener;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.project.MapCompositionEvent;
-import net.refractions.udig.project.MapEvent;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.render.IViewportModelListener;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.project.render.ViewportModelEvent;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.BoundsStrategy;
-import net.refractions.udig.project.ui.SelectionStyle;
-import net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter;
+import org.locationtech.udig.printing.model.AbstractBoxPrinter;
+import org.locationtech.udig.printing.model.PrintingModelPlugin;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerListener;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IMapCompositionListener;
+import org.locationtech.udig.project.IMapListener;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.project.MapCompositionEvent;
+import org.locationtech.udig.project.MapEvent;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.render.IViewportModelListener;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.project.render.ViewportModelEvent;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.BoundsStrategy;
+import org.locationtech.udig.project.ui.SelectionStyle;
+import org.locationtech.udig.project.ui.ApplicationGIS.DrawMapParameter;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -324,7 +324,7 @@ public class MapBoxPrinter extends AbstractBoxPrinter implements IAdaptable {
     }
 
     public String getExtensionPointID() {
-        return "net.refractions.udig.printing.ui.standardBoxes"; //$NON-NLS-1$
+        return "org.locationtech.udig.printing.ui.standardBoxes"; //$NON-NLS-1$
     }
 
     @SuppressWarnings("unchecked")

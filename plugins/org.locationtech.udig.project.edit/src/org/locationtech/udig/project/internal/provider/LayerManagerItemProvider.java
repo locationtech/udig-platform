@@ -4,11 +4,11 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.internal.provider;
+package org.locationtech.udig.project.internal.provider;
 
 import java.util.Collection;
 
-import net.refractions.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.EditManager;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -21,7 +21,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
- * This is the item provider adpater for a {@link net.refractions.udig.project.LayerManager} object.
+ * This is the item provider adpater for a {@link org.locationtech.udig.project.LayerManager} object.
  * <!-- begin-user-doc --> <!-- end-user-doc -->
  * 
  * @generated

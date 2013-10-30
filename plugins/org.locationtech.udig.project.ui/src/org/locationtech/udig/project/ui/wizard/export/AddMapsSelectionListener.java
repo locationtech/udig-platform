@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.wizard.export;
+package org.locationtech.udig.project.ui.wizard.export;
 
 
-import net.refractions.udig.project.ui.AdapterFactoryLabelProviderDecorator;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.ProjectExplorer;
+import org.locationtech.udig.project.ui.AdapterFactoryLabelProviderDecorator;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ProjectExplorer;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.IStructuredSelection;

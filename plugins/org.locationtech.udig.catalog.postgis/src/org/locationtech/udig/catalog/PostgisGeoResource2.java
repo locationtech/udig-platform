@@ -9,16 +9,16 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog;
+package org.locationtech.udig.catalog;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
 
-import net.refractions.udig.catalog.internal.postgis.PostgisPlugin;
-import net.refractions.udig.catalog.service.database.TableDescriptor;
-import net.refractions.udig.core.internal.CorePlugin;
+import org.locationtech.udig.catalog.internal.postgis.PostgisPlugin;
+import org.locationtech.udig.catalog.service.database.TableDescriptor;
+import org.locationtech.udig.core.internal.CorePlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.DataStore;
@@ -72,7 +72,7 @@ public class PostgisGeoResource2 extends IGeoResource {
         return parent;
     }
     /*
-     * @see net.refractions.udig.catalog.IGeoResource#getStatus()
+     * @see org.locationtech.udig.catalog.IGeoResource#getStatus()
      */
     public Status getStatus() {
         if( status!=null )
@@ -81,7 +81,7 @@ public class PostgisGeoResource2 extends IGeoResource {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IGeoResource#getStatusMessage()
+     * @see org.locationtech.udig.catalog.IGeoResource#getStatusMessage()
      */
     public Throwable getMessage() {
         if( message!=null )
@@ -92,7 +92,7 @@ public class PostgisGeoResource2 extends IGeoResource {
     /*
      * Required adaptions: <ul> <li>IGeoResourceInfo.class <li>IService.class </ul>
      * 
-     * @see net.refractions.udig.catalog.IResolve#resolve(java.lang.Class,
+     * @see org.locationtech.udig.catalog.IResolve#resolve(java.lang.Class,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
@@ -130,7 +130,7 @@ public class PostgisGeoResource2 extends IGeoResource {
         return super.resolve(adaptee, monitor);
     }
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null){

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.tool.display;
+package org.locationtech.udig.project.ui.internal.tool.display;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,11 +16,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -47,7 +47,7 @@ public class ToolManagerTest {
         for( ActionToolCategory category : categories ) {
             for( ModalItem item : category ) {
                 ToolProxy proxy=(ToolProxy) item;
-                if( "net.refractions.udig.project.tests.ui.actionTool1".equals(proxy.getId()) ){ //$NON-NLS-1$
+                if( "org.locationtech.udig.project.tests.ui.actionTool1".equals(proxy.getId()) ){ //$NON-NLS-1$
                     tool = proxy;
                     break;
                 }

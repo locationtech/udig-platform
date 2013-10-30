@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wfs;
+package org.locationtech.udig.catalog.internal.wfs;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -32,7 +32,7 @@ public class WfsPlugin extends AbstractUIPlugin {
 	private static WfsPlugin plugin;
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
-	public static final String ID = "net.refractions.udig.catalog.internal.wfs"; //$NON-NLS-1$
+	public static final String ID = "org.locationtech.udig.catalog.internal.wfs"; //$NON-NLS-1$
 	
 	/**
 	 * The constructor.
@@ -51,10 +51,10 @@ public class WfsPlugin extends AbstractUIPlugin {
         ClassLoader current = Thread.currentThread().getContextClassLoader();
         try {
             Thread.currentThread().setContextClassLoader(WFSDataStore.class.getClassLoader());
-            setLoggerLevel("org.geotools.data.wfs", "net.refractions.udig.catalog.wfs/debug/wfs"); //$NON-NLS-1$ //$NON-NLS-2$
-            setLoggerLevel("org.geotools.xml", "net.refractions.udig.catalog.wfs/debug/wfs"); //$NON-NLS-1$ //$NON-NLS-2$
-            setLoggerLevel("org.geotools.xml.sax", "net.refractions.udig.catalog.wfs/debug/wfs"); //$NON-NLS-1$ //$NON-NLS-2$
-            if (isDebugging("net.refractions.udig.catalog.wfs/debug/gml")) //$NON-NLS-1$
+            setLoggerLevel("org.geotools.data.wfs", "org.locationtech.udig.catalog.wfs/debug/wfs"); //$NON-NLS-1$ //$NON-NLS-2$
+            setLoggerLevel("org.geotools.xml", "org.locationtech.udig.catalog.wfs/debug/wfs"); //$NON-NLS-1$ //$NON-NLS-2$
+            setLoggerLevel("org.geotools.xml.sax", "org.locationtech.udig.catalog.wfs/debug/wfs"); //$NON-NLS-1$ //$NON-NLS-2$
+            if (isDebugging("org.locationtech.udig.catalog.wfs/debug/gml")) //$NON-NLS-1$
                 GMLSchema.setLogLevel(Level.FINE);
             else
                 GMLSchema.setLogLevel(Level.SEVERE);
@@ -111,7 +111,7 @@ public class WfsPlugin extends AbstractUIPlugin {
 	public ResourceBundle getResourceBundle() {
 		try {
 			if (resourceBundle == null)
-				resourceBundle = ResourceBundle.getBundle("net.refractions.udig.catalog.internal.wfs.WfsPluginResources"); //$NON-NLS-1$
+				resourceBundle = ResourceBundle.getBundle("org.locationtech.udig.catalog.internal.wfs.WfsPluginResources"); //$NON-NLS-1$
 		} catch (MissingResourceException x) {
 			resourceBundle = null;
 		}
@@ -136,7 +136,7 @@ public class WfsPlugin extends AbstractUIPlugin {
      * Messages that only engage if getDefault().isDebugging()
      * <p>
      * It is much prefered to do this:<pre><code>
-     * private static final String RENDERING = "net.refractions.udig.project/render/trace";
+     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
      *      System.out.println( "your message here" );
      * }

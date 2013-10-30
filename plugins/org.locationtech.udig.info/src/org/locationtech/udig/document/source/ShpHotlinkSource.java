@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.document.source;
+package org.locationtech.udig.document.source;
 
-import net.refractions.udig.catalog.document.IDocument.ContentType;
-import net.refractions.udig.catalog.internal.shp.ShpGeoResourceImpl;
+import org.locationtech.udig.catalog.document.IDocument.ContentType;
+import org.locationtech.udig.catalog.internal.shp.ShpGeoResourceImpl;
 
 /**
  * Shapefile feature hotlink support. This implements getter and setters for hotlinks.

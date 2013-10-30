@@ -7,13 +7,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.commands;
+package org.locationtech.udig.project.ui.commands;
 
 import java.awt.Rectangle;
 
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
  * Draw commands do not change the model, rather they simply draw on the top-most layer. They are

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.test;
+package org.locationtech.udig.issues.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -16,20 +16,20 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.Dimension;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.internal.ui.MapPerspective;
-import net.refractions.udig.issues.AbstractIssue;
-import net.refractions.udig.issues.IssueConstants;
-import net.refractions.udig.issues.internal.view.IssueHandler;
-import net.refractions.udig.issues.internal.view.IssuesView;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.tests.support.MapTests;
-import net.refractions.udig.project.tests.ui.ViewPart1;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.MapEditorWithPalette;
-import net.refractions.udig.project.ui.internal.MapPart;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.internal.ui.MapPerspective;
+import org.locationtech.udig.issues.AbstractIssue;
+import org.locationtech.udig.issues.IssueConstants;
+import org.locationtech.udig.issues.internal.view.IssueHandler;
+import org.locationtech.udig.issues.internal.view.IssuesView;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.tests.support.MapTests;
+import org.locationtech.udig.project.tests.ui.ViewPart1;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -48,14 +48,14 @@ import org.opengis.feature.simple.SimpleFeature;
 public class IssueHandlerTest extends AbstractProjectUITestCase {
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.view.issues.IssueHandler.restorePerspective()'
+     * Test method for 'org.locationtech.udig.project.ui.internal.view.issues.IssueHandler.restorePerspective()'
      */
     @Test
     public void testRestorePerspective() throws WorkbenchException {
         int windows=PlatformUI.getWorkbench().getWorkbenchWindowCount();
-        IPerspectiveDescriptor p = PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId("net.refractions.udig.project.tests.ui.perspective.test"); //$NON-NLS-1$
+        IPerspectiveDescriptor p = PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId("org.locationtech.udig.project.tests.ui.perspective.test"); //$NON-NLS-1$
         getActiveWindow().getActivePage().setPerspective(p);
-        assertEquals("net.refractions.udig.project.tests.ui.perspective.test", getActiveWindow().getActivePage().getPerspective().getId()); //$NON-NLS-1$
+        assertEquals("org.locationtech.udig.project.tests.ui.perspective.test", getActiveWindow().getActivePage().getPerspective().getId()); //$NON-NLS-1$
         TestIssue issue = new TestIssue(){
             @Override
             public String getPerspectiveID() {
@@ -77,7 +77,7 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.view.issues.IssueHandler.restoreWorkbenchPart()'
+     * Test method for 'org.locationtech.udig.project.ui.internal.view.issues.IssueHandler.restoreWorkbenchPart()'
      */
     @Ignore
     @Test
@@ -131,7 +131,7 @@ public class IssueHandlerTest extends AbstractProjectUITestCase {
     }
 
     /*
-     * Test method for 'net.refractions.udig.project.ui.internal.view.issues.IssueHandler.restoreEditor()'
+     * Test method for 'org.locationtech.udig.project.ui.internal.view.issues.IssueHandler.restoreEditor()'
      */
     @Ignore
     @Test

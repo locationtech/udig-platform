@@ -10,7 +10,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.internal.ui.imagepanel;
+package org.locationtech.udig.image.georeferencing.internal.ui.imagepanel;
 
 import java.awt.Color;
 import java.util.Iterator;
@@ -22,7 +22,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 
-import net.refractions.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
@@ -50,24 +50,24 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
-import eu.udig.image.georeferencing.internal.i18n.Messages;
-import eu.udig.image.georeferencing.internal.preferences.Preferences;
-import eu.udig.image.georeferencing.internal.process.MarkModel;
-import eu.udig.image.georeferencing.internal.ui.GeoReferencingCommand;
-import eu.udig.image.georeferencing.internal.ui.GeoReferencingComposite;
-import eu.udig.image.georeferencing.internal.ui.GeoreferencingCommandEventChange;
-import eu.udig.image.georeferencing.internal.ui.InputEvent;
-import eu.udig.image.georeferencing.internal.ui.MainComposite;
-import eu.udig.image.georeferencing.internal.ui.MouseSelectionListener;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.ImageComposite.ZoomFeedBack.ZOOM_TYPE;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.tools.AddMarkImageTool;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.tools.DeleteMarkImageTool;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.tools.ImageInputEvent;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.tools.ImageTool;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.tools.MoveMarkImageTool;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.tools.PanImageTool;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.tools.ZoomInImageTool;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.tools.ZoomOutImageTool;
+import org.locationtech.udig.image.georeferencing.internal.i18n.Messages;
+import org.locationtech.udig.image.georeferencing.internal.preferences.Preferences;
+import org.locationtech.udig.image.georeferencing.internal.process.MarkModel;
+import org.locationtech.udig.image.georeferencing.internal.ui.GeoReferencingCommand;
+import org.locationtech.udig.image.georeferencing.internal.ui.GeoReferencingComposite;
+import org.locationtech.udig.image.georeferencing.internal.ui.GeoreferencingCommandEventChange;
+import org.locationtech.udig.image.georeferencing.internal.ui.InputEvent;
+import org.locationtech.udig.image.georeferencing.internal.ui.MainComposite;
+import org.locationtech.udig.image.georeferencing.internal.ui.MouseSelectionListener;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.ImageComposite.ZoomFeedBack.ZOOM_TYPE;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.tools.AddMarkImageTool;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.tools.DeleteMarkImageTool;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.tools.ImageInputEvent;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.tools.ImageTool;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.tools.MoveMarkImageTool;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.tools.PanImageTool;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.tools.ZoomInImageTool;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.tools.ZoomOutImageTool;
 
 /**
  * Class responsible of the canvas and its management.

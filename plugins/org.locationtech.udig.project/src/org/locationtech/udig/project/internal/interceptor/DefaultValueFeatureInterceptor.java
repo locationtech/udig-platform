@@ -8,9 +8,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.interceptor;
+package org.locationtech.udig.project.internal.interceptor;
 
-import net.refractions.udig.project.interceptor.FeatureInterceptor;
+import org.locationtech.udig.project.interceptor.FeatureInterceptor;
 
 import org.opengis.feature.Feature;
 import org.opengis.feature.Property;

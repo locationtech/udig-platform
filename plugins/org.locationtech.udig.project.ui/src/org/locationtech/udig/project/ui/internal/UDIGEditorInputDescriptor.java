@@ -9,13 +9,13 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.ui.UDIGEditorInput;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.ui.UDIGEditorInput;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
  * Since IProjectElements are not editor inputs and cannot be since they are model objects and not
  * UI objects an extensible system of turning IProjectElement objects into IEditorInput objects are
  * needed. The mapping between a IProjectElements and IEditorInput types are defined by
- * net.refractions.udig.project.ui.editorInputs extensions.
+ * org.locationtech.udig.project.ui.editorInputs extensions.
  * </p>
  * 
  * @author jones

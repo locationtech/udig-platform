@@ -9,14 +9,14 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.ui;
+package org.locationtech.udig.catalog.internal.ui;
 
 import java.io.IOException;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.ui.ImageCache;
-import net.refractions.udig.ui.OverlayCache;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.ui.ImageCache;
+import org.locationtech.udig.ui.OverlayCache;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IBaseLabelProvider;

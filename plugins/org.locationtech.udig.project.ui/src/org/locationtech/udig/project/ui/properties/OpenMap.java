@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.properties;
+package org.locationtech.udig.project.ui.properties;
 
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.ui.operations.IOpFilterListener;
-import net.refractions.udig.ui.operations.PropertyValue;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.operations.IOpFilterListener;
+import org.locationtech.udig.ui.operations.PropertyValue;
 
 /**
  * Returns true if there is an open map.

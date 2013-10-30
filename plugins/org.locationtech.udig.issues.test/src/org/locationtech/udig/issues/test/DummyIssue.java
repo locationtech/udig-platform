@@ -1,10 +1,10 @@
 /**
  * 
  */
-package net.refractions.udig.issues.test;
+package org.locationtech.udig.issues.test;
 
-import net.refractions.udig.core.enums.Priority;
-import net.refractions.udig.issues.AbstractIssue;
+import org.locationtech.udig.core.enums.Priority;
+import org.locationtech.udig.issues.AbstractIssue;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;

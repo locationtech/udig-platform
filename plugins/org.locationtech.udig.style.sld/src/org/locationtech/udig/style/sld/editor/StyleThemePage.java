@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.editor;
+package org.locationtech.udig.style.sld.editor;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -20,24 +20,24 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.style.internal.StyleLayer;
-import net.refractions.udig.style.sld.ImageConstants;
-import net.refractions.udig.style.sld.SLDContent;
-import net.refractions.udig.style.sld.SLDPlugin;
-import net.refractions.udig.style.sld.editor.BorderColorComboListener.Outline;
-import net.refractions.udig.style.sld.editor.CustomDynamicPalette.TABLE;
-import net.refractions.udig.style.sld.editor.internal.BrewerPaletteLabelProvider;
-import net.refractions.udig.style.sld.editor.internal.StyleTreeContentProvider;
-import net.refractions.udig.style.sld.editor.internal.StyleTreeLabelProvider;
-import net.refractions.udig.style.sld.editor.internal.StyleTreeSorter;
-import net.refractions.udig.style.sld.internal.Messages;
-import net.refractions.udig.ui.DecoratorOverlayIcon;
-import net.refractions.udig.ui.ErrorManager;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.graphics.SLDs;
-import net.refractions.udig.ui.graphics.TableSettings;
-import net.refractions.udig.ui.graphics.TableUtils;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.sld.ImageConstants;
+import org.locationtech.udig.style.sld.SLDContent;
+import org.locationtech.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.style.sld.editor.BorderColorComboListener.Outline;
+import org.locationtech.udig.style.sld.editor.CustomDynamicPalette.TABLE;
+import org.locationtech.udig.style.sld.editor.internal.BrewerPaletteLabelProvider;
+import org.locationtech.udig.style.sld.editor.internal.StyleTreeContentProvider;
+import org.locationtech.udig.style.sld.editor.internal.StyleTreeLabelProvider;
+import org.locationtech.udig.style.sld.editor.internal.StyleTreeSorter;
+import org.locationtech.udig.style.sld.internal.Messages;
+import org.locationtech.udig.ui.DecoratorOverlayIcon;
+import org.locationtech.udig.ui.ErrorManager;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.graphics.SLDs;
+import org.locationtech.udig.ui.graphics.TableSettings;
+import org.locationtech.udig.ui.graphics.TableUtils;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;

@@ -9,14 +9,14 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.commands.draw;
+package org.locationtech.udig.project.ui.internal.commands.draw;
 
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
-import net.refractions.udig.project.ui.commands.IMapTransformCommand;
-import net.refractions.udig.project.ui.commands.IPreMapDrawCommand;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.project.ui.commands.IMapTransformCommand;
+import org.locationtech.udig.project.ui.commands.IPreMapDrawCommand;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -53,7 +53,7 @@ public class TranslateCommand extends AbstractDrawCommand
         this.offset = new Point(x, y);
     }
     /**
-     * @see net.refractions.udig.project.internal.command.MapCommand#open()
+     * @see org.locationtech.udig.project.internal.command.MapCommand#open()
      */
     public void run( IProgressMonitor monitor ) throws Exception {
         if (offset.x > 0) {

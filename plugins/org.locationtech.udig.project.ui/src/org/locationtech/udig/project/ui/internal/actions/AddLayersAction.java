@@ -9,9 +9,9 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.actions;
+package org.locationtech.udig.project.ui.internal.actions;
 
-import net.refractions.udig.project.ui.internal.wizard.MapImport;
+import org.locationtech.udig.project.ui.internal.wizard.MapImport;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuCreator;
@@ -41,7 +41,7 @@ public class AddLayersAction extends ActionDelegate
             IAction{
 
     /** <code>ID</code> field */
-    public static final String ID = "net.refractions.udig.project.ui.openAction"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.project.ui.openAction"; //$NON-NLS-1$
 
     /**
      * @see org.eclipse.ui.actions.ActionDelegate#runWithEvent(org.eclipse.jface.action.IAction,

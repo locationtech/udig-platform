@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.view.widgets;
+package org.locationtech.udig.omsbox.view.widgets;
 
 import java.awt.Point;
 import java.io.File;
@@ -15,24 +15,24 @@ import java.net.URL;
 import java.text.MessageFormat;
 import java.util.List;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.internal.ui.UDigByteAndLocalTransfer;
-import net.refractions.udig.project.BlackboardEvent;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IBlackboardListener;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IStyleBlackboard;
-import net.refractions.udig.project.internal.impl.LayerImpl;
-import net.refractions.udig.project.render.IRenderManager;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.ui.CRSChooser;
-import net.refractions.udig.ui.Controller;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.internal.ui.UDigByteAndLocalTransfer;
+import org.locationtech.udig.project.BlackboardEvent;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IBlackboardListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IStyleBlackboard;
+import org.locationtech.udig.project.internal.impl.LayerImpl;
+import org.locationtech.udig.project.render.IRenderManager;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.ui.CRSChooser;
+import org.locationtech.udig.ui.Controller;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
@@ -68,14 +68,14 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-import eu.udig.omsbox.OmsBoxPlugin;
-import eu.udig.omsbox.core.FieldData;
-import eu.udig.omsbox.processingregion.ProcessingRegion;
-import eu.udig.omsbox.processingregion.ProcessingRegionStyle;
-import eu.udig.omsbox.processingregion.ProcessingRegionStyleContent;
-import eu.udig.omsbox.utils.MapcalculatorUtils;
-import eu.udig.omsbox.utils.OmsBoxConstants;
-import eu.udig.omsbox.utils.OmsBoxUtils;
+import org.locationtech.udig.omsbox.OmsBoxPlugin;
+import org.locationtech.udig.omsbox.core.FieldData;
+import org.locationtech.udig.omsbox.processingregion.ProcessingRegion;
+import org.locationtech.udig.omsbox.processingregion.ProcessingRegionStyle;
+import org.locationtech.udig.omsbox.processingregion.ProcessingRegionStyleContent;
+import org.locationtech.udig.omsbox.utils.MapcalculatorUtils;
+import org.locationtech.udig.omsbox.utils.OmsBoxConstants;
+import org.locationtech.udig.omsbox.utils.OmsBoxUtils;
 
 /**
  * Class representing an swt textfield gui.

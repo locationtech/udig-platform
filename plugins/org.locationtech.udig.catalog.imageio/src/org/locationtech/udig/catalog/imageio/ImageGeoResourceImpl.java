@@ -9,15 +9,15 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.imageio;
+package org.locationtech.udig.catalog.imageio;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResource;
-import net.refractions.udig.catalog.rasterings.AbstractRasterGeoResourceInfo;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource;
+import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResourceInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.coverage.grid.io.AbstractGridFormat;

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.imageio.internal;
+package org.locationtech.udig.catalog.imageio.internal;
 
 import it.geosolutions.imageio.gdalframework.GDALImageReaderSpi;
 import it.geosolutions.imageio.gdalframework.GDALUtilities;
@@ -23,8 +23,8 @@ import java.util.Set;
 
 import javax.imageio.spi.ImageReaderSpi;
 
-import net.refractions.udig.catalog.imageio.Activator;
-import net.refractions.udig.catalog.service.FormatProvider;
+import org.locationtech.udig.catalog.imageio.Activator;
+import org.locationtech.udig.catalog.service.FormatProvider;
 
 import org.gdal.gdal.Driver;
 import org.gdal.gdal.gdal;

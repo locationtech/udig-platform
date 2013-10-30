@@ -8,9 +8,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui;
+package org.locationtech.udig.project.ui;
 
-import net.refractions.udig.project.ui.feature.EditFeature;
+import org.locationtech.udig.project.ui.feature.EditFeature;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IMemento;
@@ -27,7 +27,7 @@ import org.eclipse.ui.PartInitException;
  */
 public abstract class IFeaturePanel {
     /** extension point id **/
-    public static final String XPID = "net.refractions.udig.project.ui.featurePanel"; //$NON-NLS-1$
+    public static final String XPID = "org.locationtech.udig.project.ui.featurePanel"; //$NON-NLS-1$
     /**
      * Access to the feature being edited
      */

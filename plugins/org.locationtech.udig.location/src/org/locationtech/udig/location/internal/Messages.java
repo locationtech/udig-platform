@@ -9,18 +9,18 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.location.internal;
+package org.locationtech.udig.location.internal;
 
 import java.lang.reflect.Field;
 
-import net.refractions.udig.location.LocationUIPlugin;
+import org.locationtech.udig.location.LocationUIPlugin;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.location.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.location.internal.messages"; //$NON-NLS-1$
 	public static String action_show_image;
 	public static String action_show_tooltip;
 	public static String action_show_label;

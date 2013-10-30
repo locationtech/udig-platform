@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.internal.ui.operations;
+package org.locationtech.udig.internal.ui.operations;
 
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.ui.operations.OpAction;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.operations.OpAction;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.window.Window;

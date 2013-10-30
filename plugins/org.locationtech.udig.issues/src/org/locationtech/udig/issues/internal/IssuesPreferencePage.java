@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.internal;
+package org.locationtech.udig.issues.internal;
 
-import static net.refractions.udig.issues.internal.PreferenceConstants.KEY_ACTIVE_LIST;
-import static net.refractions.udig.issues.internal.PreferenceConstants.VALUE_MEMORY_LIST;
+import static org.locationtech.udig.issues.internal.PreferenceConstants.KEY_ACTIVE_LIST;
+import static org.locationtech.udig.issues.internal.PreferenceConstants.VALUE_MEMORY_LIST;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -21,13 +21,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.core.internal.ExtensionPointList;
-import net.refractions.udig.issues.IIssuesList;
-import net.refractions.udig.issues.IIssuesManager;
-import net.refractions.udig.issues.IIssuesPreferencePage;
-import net.refractions.udig.issues.IssueConstants;
-import net.refractions.udig.issues.IssuesListConfigurator;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.issues.IIssuesList;
+import org.locationtech.udig.issues.IIssuesManager;
+import org.locationtech.udig.issues.IIssuesPreferencePage;
+import org.locationtech.udig.issues.IssueConstants;
+import org.locationtech.udig.issues.IssuesListConfigurator;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;

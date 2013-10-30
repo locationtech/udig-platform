@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.issues">
+<schema targetNamespace="org.locationtech.udig.issues">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.issues" id="issuesList" name="issuesList"/>
+         <meta.schema plugin="org.locationtech.udig.issues" id="issuesList" name="issuesList"/>
       </appInfo>
       <documentation>
-         Declares an implementation of the issues list as well as a class for initializing the issues list.  The list being used can be configured in the Preferences.  The .config file in the net.refractions.udig.project.ui plugin contains the ID of the default IssuesList.  By replacing the file with the id of another IssuesList (use a fragment) the default Issues list can be changed.
+         Declares an implementation of the issues list as well as a class for initializing the issues list.  The list being used can be configured in the Preferences.  The .config file in the org.locationtech.udig.project.ui plugin contains the ID of the default IssuesList.  By replacing the file with the id of another IssuesList (use a fragment) the default Issues list can be changed.
       </documentation>
    </annotation>
 
@@ -77,7 +77,7 @@
                   The implementation class of the issues list.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.issues.IIssuesList"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.issues.IIssuesList"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -87,7 +87,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.issues.IssuesListConfigurator"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.issues.IssuesListConfigurator"/>
                </appInfo>
             </annotation>
          </attribute>

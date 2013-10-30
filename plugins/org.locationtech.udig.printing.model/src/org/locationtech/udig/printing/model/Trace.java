@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.model;
+package org.locationtech.udig.printing.model;
 
 /**
  * Constants for use with eclipse tracing api.
  * Rember only engage tracing if PrintingModelPlugin.getDefault().isDebugging().
  * <p>
  * Sample use:<pre><code>
- * static import net.refractions.udig.project.ui.internal.RENDERING;
+ * static import org.locationtech.udig.project.ui.internal.RENDERING;
  * 
  * if( WMSPlugin.isDebugging( RENDERING ) ){
  *      System.out.println( "your message here" );
@@ -26,5 +26,5 @@ package net.refractions.udig.printing.model;
 public interface Trace {
     /** You may set this to "true" in your .options file */
     public static final String PRINTING =
-        "net.refractions.udig.printing.model/debug/printing/trace"; //$NON-NLS-1$    
+        "org.locationtech.udig.printing.model/debug/printing/trace"; //$NON-NLS-1$    
 }

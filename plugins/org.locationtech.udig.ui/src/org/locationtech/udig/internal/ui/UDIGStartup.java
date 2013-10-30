@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.internal.ui;
+package org.locationtech.udig.internal.ui;
 
 import java.awt.Rectangle;
 import java.rmi.server.UID;
@@ -10,10 +10,10 @@ import java.util.Set;
 
 import javax.measure.unit.SI;
 
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.ShutdownTaskList;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
-import net.refractions.udig.ui.internal.Messages;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.ShutdownTaskList;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
+import org.locationtech.udig.ui.internal.Messages;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;

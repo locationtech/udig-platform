@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.northarrow;
+package org.locationtech.udig.mapgraphic.northarrow;
 
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;

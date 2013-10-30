@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.location.test;
+package org.locationtech.udig.location.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -16,8 +16,8 @@ import static org.junit.Assert.fail;
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.location.AddressSeeker;
-import net.refractions.udig.location.USGLocation;
+import org.locationtech.udig.location.AddressSeeker;
+import org.locationtech.udig.location.USGLocation;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.junit.Before;

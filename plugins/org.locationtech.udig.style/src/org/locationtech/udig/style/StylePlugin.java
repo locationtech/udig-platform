@@ -8,9 +8,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style;
+package org.locationtech.udig.style;
 
-import net.refractions.udig.core.AbstractUdigUIPlugin;
+import org.locationtech.udig.core.AbstractUdigUIPlugin;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.Path;
 public class StylePlugin extends AbstractUdigUIPlugin {
     
     /** The id of the plug-in */
-  	public static final String ID = "net.refractions.udig.style"; //$NON-NLS-1$
+  	public static final String ID = "org.locationtech.udig.style"; //$NON-NLS-1$
   	
   	/** Icons path (value "icons/") */
   	public final static String ICONS_PATH = "icons/";//$NON-NLS-1$

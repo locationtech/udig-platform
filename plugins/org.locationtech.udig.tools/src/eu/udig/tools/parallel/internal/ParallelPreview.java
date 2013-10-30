@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.parallel.internal;
+package org.locationtech.udig.tools.parallel.internal;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,16 +18,16 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.commands.DeselectEditGeomCommand;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.EditGeom;
-import net.refractions.udig.tools.edit.support.EditUtils;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
-import net.refractions.udig.tools.edit.support.ShapeType;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.tools.edit.EditState;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.commands.DeselectEditGeomCommand;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.EditUtils;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.tools.edit.support.ShapeType;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -35,7 +35,7 @@ import com.vividsolutions.jts.geom.Geometry;
 //import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsContext;
 //import es.axios.udig.ui.editingtools.precisiontools.commons.internal.PrecisionToolsMode;
 //import es.axios.udig.ui.editingtools.precisiontools.commons.internal.command.AddCustomVertexCommand;
-import eu.udig.tools.parallel.internal.command.AddCustomVertexCommand;
+import org.locationtech.udig.tools.parallel.internal.command.AddCustomVertexCommand;
 
 /**
  * 

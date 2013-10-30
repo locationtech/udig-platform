@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.internal.ui;
+package org.locationtech.udig.internal.ui;
 
 /**
 * Constants for use with eclipse tracing api.
 * Rememeber only engage tracing if WMSPlugin.getDefault().isDebugging().
 * <p>
 * Sample use:<pre><code>
-* static import net.refractions.udig.project.ui.internal.RENDERING;
+* static import org.locationtech.udig.project.ui.internal.RENDERING;
 * 
 * if( UiPlugin.isDebugging( RENDERING ) ){
 *      System.out.println( "your message here" );
@@ -26,9 +26,9 @@ package net.refractions.udig.internal.ui;
 public interface Trace {
     /** You may set this to "true" in your .options file */
     public static final String DND =
-        "net.refractions.udig.ui/debug/dnd"; //$NON-NLS-1$    
+        "org.locationtech.udig.ui/debug/dnd"; //$NON-NLS-1$    
     /** traces the locking/unlocking of the UDIGDisplaySafeLoc */
     public static final String UDIG_DISPLAY_SAFE_LOCK =
-        "net.refractions.udig.ui/debug/udigdisplaysafelock"; //$NON-NLS-1$    
-    public static final String FEATURE_TABLE = "net.refractions.udig.ui/debug/featuretable"; //$NON-NLS-1$
+        "org.locationtech.udig.ui/debug/udigdisplaysafelock"; //$NON-NLS-1$    
+    public static final String FEATURE_TABLE = "org.locationtech.udig.ui/debug/featuretable"; //$NON-NLS-1$
 }

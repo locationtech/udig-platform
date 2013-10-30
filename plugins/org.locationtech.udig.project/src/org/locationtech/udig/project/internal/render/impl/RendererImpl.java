@@ -1,21 +1,21 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.text.MessageFormat;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.Trace;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.RenderException;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.Trace;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.RenderException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.Notification;
@@ -109,7 +109,7 @@ public abstract class RendererImpl extends EObjectImpl implements Renderer {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.Renderer#getName()
+     * @see org.locationtech.udig.project.internal.render.Renderer#getName()
      * @uml.property name="name"
      */
     public String getName() {

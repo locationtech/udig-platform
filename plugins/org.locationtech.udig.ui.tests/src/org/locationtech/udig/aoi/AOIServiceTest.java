@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.aoi;
+package org.locationtech.udig.aoi;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import net.refractions.udig.aoi.IAOIService;
-import net.refractions.udig.internal.aoi.AOIServiceFactory;
+import org.locationtech.udig.aoi.IAOIService;
+import org.locationtech.udig.internal.aoi.AOIServiceFactory;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,9 +40,9 @@ public class AOIServiceTest {
 
     @Test
 	public void testAllStrategy() {
-        aOIService.setProxy(aOIService.findProxy("net.refractions.udig.ui.aoiAll"));
+        aOIService.setProxy(aOIService.findProxy("org.locationtech.udig.ui.aoiAll"));
         String id = aOIService.getProxy().getId();
-        assertEquals("net.refractions.udig.ui.aoiAll", id);
+        assertEquals("org.locationtech.udig.ui.aoiAll", id);
         
         assertNull(aOIService.getExtent());
         assertNull(aOIService.getGeometry());

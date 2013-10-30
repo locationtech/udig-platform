@@ -9,16 +9,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.arc.internal;
+package org.locationtech.udig.tools.arc.internal;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.UndoableMapCommand;
-import net.refractions.udig.project.command.factory.EditCommandFactory;
-import net.refractions.udig.project.internal.commands.edit.CreateFeatureCommand;
-import net.refractions.udig.tools.edit.Behaviour;
-import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.command.factory.EditCommandFactory;
+import org.locationtech.udig.project.internal.commands.edit.CreateFeatureCommand;
+import org.locationtech.udig.tools.edit.Behaviour;
+import org.locationtech.udig.tools.edit.EditState;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.opengis.feature.IllegalAttributeException;
@@ -32,16 +32,16 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 
-//import eu.udig.tools.arc.es.axios.geotools.util.GeoToolsUtils;
-import eu.udig.tools.feature.util.GeoToolsUtils;
-//import eu.udig.tools.arc.es.axios.lib.geometry.util.GeometryUtil;
-import eu.udig.tools.geometry.internal.util.GeometryUtil;
-//import eu.udig.tools.arc.es.axios.udig.ui.commons.mediator.AppGISMediator;
-import eu.udig.tools.internal.mediator.AppGISAdapter;
-//import eu.udig.tools.arc.es.axios.udig.ui.commons.util.DialogUtil;
-import eu.udig.tools.internal.ui.util.DialogUtil;
-//import eu.udig.tools.arc.es.axios.udig.ui.commons.util.LayerUtil;
-import eu.udig.tools.internal.ui.util.LayerUtil;
+//import org.locationtech.udig.tools.arc.es.axios.geotools.util.GeoToolsUtils;
+import org.locationtech.udig.tools.feature.util.GeoToolsUtils;
+//import org.locationtech.udig.tools.arc.es.axios.lib.geometry.util.GeometryUtil;
+import org.locationtech.udig.tools.geometry.internal.util.GeometryUtil;
+//import org.locationtech.udig.tools.arc.es.axios.udig.ui.commons.mediator.AppGISMediator;
+import org.locationtech.udig.tools.internal.mediator.AppGISAdapter;
+//import org.locationtech.udig.tools.arc.es.axios.udig.ui.commons.util.DialogUtil;
+import org.locationtech.udig.tools.internal.ui.util.DialogUtil;
+//import org.locationtech.udig.tools.arc.es.axios.udig.ui.commons.util.LayerUtil;
+import org.locationtech.udig.tools.internal.ui.util.LayerUtil;
 
 /**
  * Acceptance behaviour for the arc creation tool.

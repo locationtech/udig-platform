@@ -10,7 +10,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.internal.ui.coordinatepanel;
+package org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel;
 
 import java.awt.Point;
 import java.util.Collections;
@@ -21,17 +21,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-import eu.udig.image.georeferencing.internal.process.MarkModel;
-import eu.udig.image.georeferencing.internal.ui.InputEvent;
-import eu.udig.image.georeferencing.internal.ui.MouseSelectionListener;
-import eu.udig.image.georeferencing.internal.ui.imagepanel.ImageComposite;
+import org.locationtech.udig.image.georeferencing.internal.process.MarkModel;
+import org.locationtech.udig.image.georeferencing.internal.ui.InputEvent;
+import org.locationtech.udig.image.georeferencing.internal.ui.MouseSelectionListener;
+import org.locationtech.udig.image.georeferencing.internal.ui.imagepanel.ImageComposite;
 
 /**
  * Responsible of drawing the mark collection on the map.
@@ -117,7 +117,7 @@ public final class MapMarksGraphics implements MapGraphic {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * net.refractions.udig.mapgraphic.MapGraphic#draw(net.refractions.udig.
+	 * org.locationtech.udig.mapgraphic.MapGraphic#draw(org.locationtech.udig.
 	 * mapgraphic.MapGraphicContext)
 	 */
 	public void draw(MapGraphicContext context) {

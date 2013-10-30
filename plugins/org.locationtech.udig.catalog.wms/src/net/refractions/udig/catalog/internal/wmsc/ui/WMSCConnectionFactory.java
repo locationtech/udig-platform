@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmsc.ui;
+package org.locationtech.udig.catalog.internal.wmsc.ui;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,15 +18,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.wmsc.WMSCGeoResourceImpl;
-import net.refractions.udig.catalog.internal.wmsc.WMSCServiceExtension;
-import net.refractions.udig.catalog.internal.wmsc.WMSCServiceImpl;
-import net.refractions.udig.catalog.ui.UDIGConnectionFactory;
-import net.refractions.udig.catalog.wmsc.server.TiledWebMapServer;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.wmsc.WMSCGeoResourceImpl;
+import org.locationtech.udig.catalog.internal.wmsc.WMSCServiceExtension;
+import org.locationtech.udig.catalog.internal.wmsc.WMSCServiceImpl;
+import org.locationtech.udig.catalog.ui.UDIGConnectionFactory;
+import org.locationtech.udig.catalog.wmsc.server.TiledWebMapServer;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 

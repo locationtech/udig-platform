@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.commands.draw;
+package org.locationtech.udig.project.ui.internal.commands.draw;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,15 +19,15 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.project.ui.commands.AbstractDrawCommand;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.ui.Drawing;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.graphics.AWTGraphics;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
-import net.refractions.udig.ui.graphics.SWTGraphics;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.ui.commands.AbstractDrawCommand;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.ui.Drawing;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.graphics.AWTGraphics;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
+import org.locationtech.udig.ui.graphics.SWTGraphics;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.graphics.Image;
@@ -172,7 +172,7 @@ public class DrawFeatureCommand extends AbstractDrawCommand {
     private static final boolean BUFFER_READY=false;
 
     /**
-     * @see net.refractions.udig.project.command.MapCommand#run()
+     * @see org.locationtech.udig.project.command.MapCommand#run()
      */
     public void run( IProgressMonitor monitor ) throws Exception {
         if( !BUFFER_READY || graphics instanceof AWTGraphics ){

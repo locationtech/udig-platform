@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.split;
+package org.locationtech.udig.tools.split;
 
 /**
  * Exception used when doing the split process, something goes wrong (i.e.

@@ -9,14 +9,14 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui;
+package org.locationtech.udig.printing.ui;
 
 import java.awt.Dimension;
 import java.util.Iterator;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.project.internal.Map;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.project.internal.Map;
 
 import org.eclipse.swt.graphics.Rectangle;
 
@@ -26,7 +26,7 @@ import org.eclipse.swt.graphics.Rectangle;
  * about repositioning and resizing each Box every time they create a new page.
  * <p>
  * <em>Note:</em> All Box Printers used to initialize the page must also have a
- * net.refractions.udig.printing.ui.boxprinter extension defined for it.
+ * org.locationtech.udig.printing.ui.boxprinter extension defined for it.
  * </p>
  * 
  * @author Richard Gould
@@ -68,7 +68,7 @@ public interface Template extends Cloneable {
      * </ul>
      * <p>
      * <em>Note:</em> All Box Printers used to in the Boxes in the page must also have a
-     * net.refractions.udig.printing.ui.boxprinter extension defined for it. This is so that the
+     * org.locationtech.udig.printing.ui.boxprinter extension defined for it. This is so that the
      * boxes can be restored after the application is shut down.
      * </p>
      * 

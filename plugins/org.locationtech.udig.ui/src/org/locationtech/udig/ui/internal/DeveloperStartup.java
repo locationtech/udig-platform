@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.internal;
+package org.locationtech.udig.ui.internal;
 
-import net.refractions.udig.core.internal.CorePlugin;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.core.internal.CorePlugin;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.PlatformUI;

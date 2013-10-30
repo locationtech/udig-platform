@@ -2,7 +2,7 @@
  * <copyright>Hello Jesse </copyright> $Id: ProjectPackageImpl.java 12218 2005-03-15 19:09:57Z
  * jgarnett $
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -10,55 +10,55 @@ import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolveChangeListener;
-import net.refractions.udig.core.IBlockingAdaptable;
-import net.refractions.udig.project.IAbstractContext;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IEditManager;
-import net.refractions.udig.project.IFolder;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayerLegendItem;
-import net.refractions.udig.project.ILegendItem;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.IProjectElement;
-import net.refractions.udig.project.IStyleBlackboard;
-import net.refractions.udig.project.Interaction;
-import net.refractions.udig.project.command.CommandStack;
-import net.refractions.udig.project.command.EditCommand;
-import net.refractions.udig.project.command.EditManagerControlCommand;
-import net.refractions.udig.project.command.MapCommand;
-import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.command.NavCommandStack;
-import net.refractions.udig.project.element.ElementPackage;
-import net.refractions.udig.project.element.impl.ElementPackageImpl;
-import net.refractions.udig.project.internal.AbstractContext;
-import net.refractions.udig.project.internal.Blackboard;
-import net.refractions.udig.project.internal.BlackboardEntry;
-import net.refractions.udig.project.internal.CatalogRef;
-import net.refractions.udig.project.internal.ContextModel;
-import net.refractions.udig.project.internal.EditManager;
-import net.refractions.udig.project.internal.Folder;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.internal.LayerLegendItem;
-import net.refractions.udig.project.internal.LegendItem;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.Project;
-import net.refractions.udig.project.internal.ProjectElement;
-import net.refractions.udig.project.internal.ProjectFactory;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectRegistry;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.project.internal.StyleEntry;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.impl.RenderPackageImpl;
-import net.refractions.udig.project.render.IRenderManager;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
-import net.refractions.udig.ui.palette.ColourPalette;
-import net.refractions.udig.ui.palette.ColourScheme;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolveChangeListener;
+import org.locationtech.udig.core.IBlockingAdaptable;
+import org.locationtech.udig.project.IAbstractContext;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IEditManager;
+import org.locationtech.udig.project.IFolder;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerLegendItem;
+import org.locationtech.udig.project.ILegendItem;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.IProjectElement;
+import org.locationtech.udig.project.IStyleBlackboard;
+import org.locationtech.udig.project.Interaction;
+import org.locationtech.udig.project.command.CommandStack;
+import org.locationtech.udig.project.command.EditCommand;
+import org.locationtech.udig.project.command.EditManagerControlCommand;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.command.NavCommand;
+import org.locationtech.udig.project.command.NavCommandStack;
+import org.locationtech.udig.project.element.ElementPackage;
+import org.locationtech.udig.project.element.impl.ElementPackageImpl;
+import org.locationtech.udig.project.internal.AbstractContext;
+import org.locationtech.udig.project.internal.Blackboard;
+import org.locationtech.udig.project.internal.BlackboardEntry;
+import org.locationtech.udig.project.internal.CatalogRef;
+import org.locationtech.udig.project.internal.ContextModel;
+import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.Folder;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.internal.LayerLegendItem;
+import org.locationtech.udig.project.internal.LegendItem;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectElement;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectRegistry;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.project.internal.StyleEntry;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.impl.RenderPackageImpl;
+import org.locationtech.udig.project.render.IRenderManager;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.ui.palette.ColourPalette;
+import org.locationtech.udig.ui.palette.ColourScheme;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -518,7 +518,7 @@ public class ProjectPackageImpl extends EPackageImpl implements ProjectPackage {
      * if one already exists.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.emf.ecore.EPackage.Registry
-     * @see net.refractions.udig.project.internal.ProjectPackage#eNS_URI
+     * @see org.locationtech.udig.project.internal.ProjectPackage#eNS_URI
      * @see #init()
      * @generated
      */

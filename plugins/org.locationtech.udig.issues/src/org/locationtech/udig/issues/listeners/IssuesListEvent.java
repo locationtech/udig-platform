@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.listeners;
+package org.locationtech.udig.issues.listeners;
 
 import java.util.Collection;
 
-import net.refractions.udig.issues.IIssue;
+import org.locationtech.udig.issues.IIssue;
 
 /**
  * Event representing a change to an issues list.

@@ -1,14 +1,14 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
 import java.util.List;
 
 import org.eclipse.emf.ecore.EFactory;
 
 /**
- * TODO Purpose of net.refractions.udig.project.internal
+ * TODO Purpose of org.locationtech.udig.project.internal
  * <p>
  * </p>
  * 
@@ -22,7 +22,7 @@ public interface ProjectFactory extends EFactory {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    ProjectFactory eINSTANCE = net.refractions.udig.project.internal.impl.ProjectFactoryImpl.init();
+    ProjectFactory eINSTANCE = org.locationtech.udig.project.internal.impl.ProjectFactoryImpl.init();
 
     /**
      * Returns a new object of class '<em>Context Model</em>'.

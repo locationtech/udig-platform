@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.template;
+package org.locationtech.udig.tutorials.template;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -17,7 +17,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import net.refractions.udig.printing.model.AbstractBoxPrinter;
+import org.locationtech.udig.printing.model.AbstractBoxPrinter;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
@@ -44,7 +44,7 @@ public class ImageBoxPrinter extends AbstractBoxPrinter {
 	}
 
     public String getExtensionPointID() {
-        return "net.refractions.udig.tutorials.template.image"; //$NON-NLS-1$
+        return "org.locationtech.udig.tutorials.template.image"; //$NON-NLS-1$
     }
     
     public  Object getAdapter( Class adapter ) {

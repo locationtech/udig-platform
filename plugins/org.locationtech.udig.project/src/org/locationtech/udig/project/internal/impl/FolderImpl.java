@@ -9,14 +9,14 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  * 
  */
-package net.refractions.udig.project.internal.impl;
+package org.locationtech.udig.project.internal.impl;
 
 import java.util.Collection;
 import java.util.List;
-import net.refractions.udig.project.ILegendItem;
-import net.refractions.udig.project.internal.Folder;
-import net.refractions.udig.project.internal.LegendItem;
-import net.refractions.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.ILegendItem;
+import org.locationtech.udig.project.internal.Folder;
+import org.locationtech.udig.project.internal.LegendItem;
+import org.locationtech.udig.project.internal.ProjectPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -37,10 +37,10 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getName <em>Name</em>}</li>
- *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#isShown <em>Shown</em>}</li>
- *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getIcon <em>Icon</em>}</li>
- *   <li>{@link net.refractions.udig.project.internal.impl.FolderImpl#getItems <em>Items</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.internal.impl.FolderImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.internal.impl.FolderImpl#isShown <em>Shown</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.internal.impl.FolderImpl#getIcon <em>Icon</em>}</li>
+ *   <li>{@link org.locationtech.udig.project.internal.impl.FolderImpl#getItems <em>Items</em>}</li>
  * </ul>
  * </p>
  *

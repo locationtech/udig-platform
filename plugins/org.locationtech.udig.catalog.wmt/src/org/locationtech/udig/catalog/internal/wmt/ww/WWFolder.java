@@ -7,22 +7,22 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.ww;
+package org.locationtech.udig.catalog.internal.wmt.ww;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveFolder;
-import net.refractions.udig.catalog.IResolveManager;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.internal.wmt.WMTPlugin;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.ww.LayerSet;
-import net.refractions.udig.catalog.internal.wmt.wmtsource.ww.QuadTileSet;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveFolder;
+import org.locationtech.udig.catalog.IResolveManager;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.wmt.WMTPlugin;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.LayerSet;
+import org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.QuadTileSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -30,7 +30,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 /** 
  * Based on WMSFolder this class represents a LayerSet in the catalog.
  * 
- * @see net.refractions.udig.catalog.internal.wmt.wmtsource.ww.LayerSet
+ * @see org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.LayerSet
  * 
  * @author to.srwn
  * @since 1.1.0
@@ -100,7 +100,7 @@ public class WWFolder implements IResolveFolder {
     }
 
     /*
-     * @see net.refractions.udig.catalog.IResolve#canResolve(java.lang.Class)
+     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null) {
@@ -116,7 +116,7 @@ public class WWFolder implements IResolveFolder {
     }
     
     /*
-     * @see net.refractions.udig.catalog.IGeoResource#resolve(java.lang.Class,
+     * @see org.locationtech.udig.catalog.IGeoResource#resolve(java.lang.Class,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {

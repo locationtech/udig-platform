@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.tutorials.toolview;
+package org.locationtech.udig.tutorials.toolview;
 
 import java.awt.Color;
 import java.awt.Shape;
 import java.util.List;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
@@ -26,7 +26,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 public class ShowAlertsMapGraphic implements MapGraphic {
 	
 	public static final String ALERTS_KEY = "ALERTS";
-	public static final String EXTENSION_ID = "eu.udig.tutorials.tool-view.showalertmapgraphic";
+	public static final String EXTENSION_ID = "org.locationtech.udig.tutorials.tool-view.showalertmapgraphic";
 
 	@Override
 	public void draw(MapGraphicContext context) {

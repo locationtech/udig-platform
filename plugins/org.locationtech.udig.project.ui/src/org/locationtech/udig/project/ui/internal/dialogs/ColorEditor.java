@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.dialogs;
+package org.locationtech.udig.project.ui.internal.dialogs;
 
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 
 /**
  * Duplicate class.
- * @deprecated Please use net.refractions.udig.ui.ColorEditor
+ * @deprecated Please use org.locationtech.udig.ui.ColorEditor
  */
-public class ColorEditor extends net.refractions.udig.ui.ColorEditor {
+public class ColorEditor extends org.locationtech.udig.ui.ColorEditor {
     /**
      * Construct <code>ColorEditor</code>.
      * 

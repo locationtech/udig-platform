@@ -1,21 +1,21 @@
 /**
  * 
  */
-package net.refractions.udig.tool.info.tests;
+package org.locationtech.udig.tool.info.tests;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Set;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.IBlackboardListener;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayerListener;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IStyleBlackboard;
-import net.refractions.udig.project.Interaction;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IBlackboardListener;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerListener;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IStyleBlackboard;
+import org.locationtech.udig.project.Interaction;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;

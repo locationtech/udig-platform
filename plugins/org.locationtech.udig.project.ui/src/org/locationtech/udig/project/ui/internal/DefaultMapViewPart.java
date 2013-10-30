@@ -1,24 +1,24 @@
 /**
  * 
  */
-package net.refractions.udig.project.ui.internal;
+package org.locationtech.udig.project.ui.internal;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.internal.ui.IDropTargetProvider;
-import net.refractions.udig.project.IProject;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.commands.CreateMapCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider;
-import net.refractions.udig.project.ui.tool.IToolManager;
-import net.refractions.udig.project.ui.viewers.MapEditDomain;
-import net.refractions.udig.project.ui.viewers.MapViewer;
-import net.refractions.udig.ui.UDIGDragDropUtilities;
-import net.refractions.udig.ui.UDIGDragDropUtilities.DropTargetDescriptor;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.internal.ui.IDropTargetProvider;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.commands.CreateMapCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
+import org.locationtech.udig.project.ui.tool.IToolManager;
+import org.locationtech.udig.project.ui.viewers.MapEditDomain;
+import org.locationtech.udig.project.ui.viewers.MapViewer;
+import org.locationtech.udig.ui.UDIGDragDropUtilities;
+import org.locationtech.udig.ui.UDIGDragDropUtilities.DropTargetDescriptor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuListener;

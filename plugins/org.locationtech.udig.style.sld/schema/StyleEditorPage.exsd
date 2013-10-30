@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.style.sld.editor" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.locationtech.udig.style.sld.editor" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="net.refractions.udig.style.sld.editor" id="StyleEditorPage" name="%StyleEditor.name"/>
+         <meta.schema plugin="org.locationtech.udig.style.sld.editor" id="StyleEditorPage" name="%StyleEditor.name"/>
       </appinfo>
       <documentation>
          An extension point for Style Layer Desriptor (SLD) style content.
@@ -82,7 +82,7 @@ Pages should completly delegate their state to the layer (ie the style blackboar
                   A subclass of SLDEditorPage to instantiate
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.style.sld.editor.StyleEditorPage"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.style.sld.editor.StyleEditorPage"/>
                </appinfo>
             </annotation>
          </attribute>

@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.ui;
+package org.locationtech.udig.omsbox.ui;
 
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResource;
 
 /**
  * Interface for objects that can select resources

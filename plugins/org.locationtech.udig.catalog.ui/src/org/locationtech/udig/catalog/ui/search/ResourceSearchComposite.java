@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.ui.search;
+package org.locationtech.udig.catalog.ui.search;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,14 +18,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.ISearch;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.ResolveContentProvider;
-import net.refractions.udig.catalog.ui.ResolveLabelProviderSimple;
-import net.refractions.udig.catalog.ui.ResolveTitlesDecorator;
-import net.refractions.udig.ui.PlatformGIS;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.ISearch;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.ResolveContentProvider;
+import org.locationtech.udig.catalog.ui.ResolveLabelProviderSimple;
+import org.locationtech.udig.catalog.ui.ResolveTitlesDecorator;
+import org.locationtech.udig.ui.PlatformGIS;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

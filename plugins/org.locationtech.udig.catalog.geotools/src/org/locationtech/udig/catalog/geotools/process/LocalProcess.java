@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.geotools.process;
+package org.locationtech.udig.catalog.geotools.process;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IProcess;
-import net.refractions.udig.catalog.IProcessInfo;
-import net.refractions.udig.catalog.ui.CatalogUIPlugin;
-import net.refractions.udig.catalog.ui.ISharedImages;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IProcess;
+import org.locationtech.udig.catalog.IProcessInfo;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.ISharedImages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.opengis.feature.type.Name;

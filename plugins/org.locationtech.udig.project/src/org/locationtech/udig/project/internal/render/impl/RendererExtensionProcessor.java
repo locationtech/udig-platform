@@ -8,27 +8,27 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.internal.render.impl.InternalRenderMetricsFactory.InternalRenderMetrics;
-import net.refractions.udig.project.render.IMultiLayerRenderer;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.internal.render.impl.InternalRenderMetricsFactory.InternalRenderMetrics;
+import org.locationtech.udig.project.render.IMultiLayerRenderer;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 
 /**
- * Processes the net.refractions.udig.project.renderer extension point adding the RendererMetricsFactories that apply to the layer to 
+ * Processes the org.locationtech.udig.project.renderer extension point adding the RendererMetricsFactories that apply to the layer to 
  * a cache of legal RendererMetricsFactories.
  * 
  * @author Jesse
@@ -39,7 +39,7 @@ public class RendererExtensionProcessor implements ExtensionPointProcessor {
 
     List<InternalRenderMetrics> rFactories = new ArrayList<InternalRenderMetrics>();
 
-    private net.refractions.udig.project.internal.Map map;
+    private org.locationtech.udig.project.internal.Map map;
 
     private RenderManager rm;
 
@@ -49,14 +49,14 @@ public class RendererExtensionProcessor implements ExtensionPointProcessor {
      * 
      * @param layer The layer which needs to be rendered
      */
-    public RendererExtensionProcessor( Layer layer, net.refractions.udig.project.internal.Map map, RenderManager rm ) {
+    public RendererExtensionProcessor( Layer layer, org.locationtech.udig.project.internal.Map map, RenderManager rm ) {
         this.layer = layer;
         this.rm=rm;
         this.map=map;
     }
 
     /**
-     * @see net.refractions.udig.core.internal.ExtensionPointProcessor#process(org.eclipse.core.runtime.IExtension,
+     * @see org.locationtech.udig.core.internal.ExtensionPointProcessor#process(org.eclipse.core.runtime.IExtension,
      *      org.eclipse.core.runtime.IConfigurationElement)
      */
     public void process( IExtension extension, IConfigurationElement element ) {

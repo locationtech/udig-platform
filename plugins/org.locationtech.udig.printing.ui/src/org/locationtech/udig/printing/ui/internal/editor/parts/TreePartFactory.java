@@ -9,11 +9,11 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal.editor.parts;
+package org.locationtech.udig.printing.ui.internal.editor.parts;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.Page;
-import net.refractions.udig.printing.model.impl.MapBoxPrinter;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.model.impl.MapBoxPrinter;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;

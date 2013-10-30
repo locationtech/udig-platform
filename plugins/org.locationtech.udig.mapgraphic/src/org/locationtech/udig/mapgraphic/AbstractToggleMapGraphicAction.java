@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic;
+package org.locationtech.udig.mapgraphic;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -15,19 +15,19 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.mapgraphic.internal.MapGraphicService;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.command.factory.BasicCommandFactory;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.commands.DeleteLayerCommand;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.ui.ProgressManager;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.command.factory.BasicCommandFactory;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.commands.DeleteLayerCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.ui.ProgressManager;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.IAction;
@@ -47,12 +47,12 @@ import org.eclipse.ui.actions.ActionDelegate;
  *       &lt;extension
  *        point="org.eclipse.ui.actionSets"&gt;
  *     &lt;actionSet
- *           id="net.refractions.udig.project.ui.mapGraphic.action"
+ *           id="org.locationtech.udig.project.ui.mapGraphic.action"
  *           label="MapGraphics"
  *           visible="true"&gt;
  *        &lt;action
- *              class="net.refractions.udig.legend.ui.actions.LegendAction"
- *              id="net.refractions.udig.project.ui.action.addlegend"
+ *              class="org.locationtech.udig.legend.ui.actions.LegendAction"
+ *              id="org.locationtech.udig.project.ui.action.addlegend"
  *              label="Legend"
  *              menubarPath="layer/mapGraphic.ext"
  *              style="push"/&gt;

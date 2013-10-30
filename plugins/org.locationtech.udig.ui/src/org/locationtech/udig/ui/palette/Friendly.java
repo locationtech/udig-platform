@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.ui.palette;
+package org.locationtech.udig.ui.palette;
 
 import java.util.EnumSet;
 import java.util.MissingResourceException;
@@ -86,7 +86,7 @@ public enum Friendly {
     private static InternationalString string( String key ) {
         if( bundle == null ){
             try {
-                bundle = ResourceBundle.getBundle("net.refractions.udig.ui.palette.friendly"); //$NON-NLS-1$
+                bundle = ResourceBundle.getBundle("org.locationtech.udig.ui.palette.friendly"); //$NON-NLS-1$
             } catch (Throwable t) {
                 t.printStackTrace();
             }

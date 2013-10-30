@@ -7,17 +7,17 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.objectproperty;
+package org.locationtech.udig.catalog.objectproperty;
 
 import java.net.URL;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveChangeListener;
-import net.refractions.udig.catalog.IResolveDelta;
-import net.refractions.udig.catalog.util.SearchIDDeltaVisitor;
-import net.refractions.udig.ui.operations.AbstractPropertyValue;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveChangeListener;
+import org.locationtech.udig.catalog.IResolveDelta;
+import org.locationtech.udig.catalog.util.SearchIDDeltaVisitor;
+import org.locationtech.udig.ui.operations.AbstractPropertyValue;
 
 /**
  * IResolveChangeListener that will watch a single GeoResource for changes and pass them over to the

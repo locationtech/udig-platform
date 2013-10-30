@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.catalog.jgrass.core;
+package org.locationtech.udig.catalog.jgrass.core;
 
 //package eu.hydrologis.udig.catalog.internal.jgrass;
 //
@@ -16,11 +16,11 @@ package eu.udig.catalog.jgrass.core;
 //import java.util.List;
 //
 //import junit.framework.TestCase;
-//import net.refractions.udig.catalog.CatalogPlugin;
-//import net.refractions.udig.catalog.IGeoResourceInfo;
-//import net.refractions.udig.catalog.IResolve;
-//import net.refractions.udig.catalog.IService;
-//import net.refractions.udig.catalog.IServiceFactory;
+//import org.locationtech.udig.catalog.CatalogPlugin;
+//import org.locationtech.udig.catalog.IGeoResourceInfo;
+//import org.locationtech.udig.catalog.IResolve;
+//import org.locationtech.udig.catalog.IService;
+//import org.locationtech.udig.catalog.IServiceFactory;
 //
 //import org.eclipse.core.runtime.Platform;
 //

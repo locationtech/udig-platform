@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.ui.workflow;
+package org.locationtech.udig.catalog.ui.workflow;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,11 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ServiceExtension;
-import net.refractions.udig.catalog.ServiceExtension2;
-import net.refractions.udig.catalog.ui.internal.Messages;
-import net.refractions.udig.core.Pair;
-import net.refractions.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.catalog.ServiceExtension;
+import org.locationtech.udig.catalog.ServiceExtension2;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.core.Pair;
+import org.locationtech.udig.core.internal.ExtensionPointList;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;

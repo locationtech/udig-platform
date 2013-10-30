@@ -7,26 +7,26 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.activator;
+package org.locationtech.udig.tools.edit.activator;
 
 import java.util.Iterator;
 
-import net.refractions.udig.project.command.UndoableComposite;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.tool.edit.internal.Messages;
-import net.refractions.udig.tools.edit.Activator;
-import net.refractions.udig.tools.edit.EditPlugin;
-import net.refractions.udig.tools.edit.EditState;
-import net.refractions.udig.tools.edit.EditToolHandler;
-import net.refractions.udig.tools.edit.commands.RemoveAllVerticesCommand;
-import net.refractions.udig.tools.edit.commands.RemoveSelectedVerticesCommand;
-import net.refractions.udig.tools.edit.commands.SetCurrentGeomCommand;
-import net.refractions.udig.tools.edit.commands.SetEditStateCommand;
-import net.refractions.udig.tools.edit.support.EditBlackboard;
-import net.refractions.udig.tools.edit.support.EditGeom;
-import net.refractions.udig.tools.edit.support.Point;
-import net.refractions.udig.tools.edit.support.PrimitiveShape;
+import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.tools.edit.Activator;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.EditState;
+import org.locationtech.udig.tools.edit.EditToolHandler;
+import org.locationtech.udig.tools.edit.commands.RemoveAllVerticesCommand;
+import org.locationtech.udig.tools.edit.commands.RemoveSelectedVerticesCommand;
+import org.locationtech.udig.tools.edit.commands.SetCurrentGeomCommand;
+import org.locationtech.udig.tools.edit.commands.SetEditStateCommand;
+import org.locationtech.udig.tools.edit.support.EditBlackboard;
+import org.locationtech.udig.tools.edit.support.EditGeom;
+import org.locationtech.udig.tools.edit.support.Point;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;

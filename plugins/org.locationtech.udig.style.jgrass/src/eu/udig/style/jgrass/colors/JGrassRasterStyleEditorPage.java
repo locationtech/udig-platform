@@ -7,15 +7,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.jgrass.colors;
+package org.locationtech.udig.style.jgrass.colors;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.style.sld.editor.StyleEditorPage;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.style.sld.editor.StyleEditorPage;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -27,14 +27,14 @@ import org.eclipse.swt.widgets.Label;
 import org.geotools.gce.grassraster.JGrassConstants;
 import org.geotools.gce.grassraster.core.color.ColorRule;
 
-import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
-import eu.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
-import eu.udig.style.jgrass.JGrassrasterStyleActivator;
-import eu.udig.style.jgrass.core.GrassColorTable;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
+import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.style.jgrass.JGrassrasterStyleActivator;
+import org.locationtech.udig.style.jgrass.core.GrassColorTable;
 
 public class JGrassRasterStyleEditorPage extends StyleEditorPage {
 
-    public static String ID = "eu.udig.style.jgrass.color";
+    public static String ID = "org.locationtech.udig.style.jgrass.color";
     private ColorEditor colorRulesEditor = null;
     private boolean editorSupported = false;
     private String type = "unknown";

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.wms;
+package org.locationtech.udig.style.wms;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -20,11 +20,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.StyleBlackboard;
-import net.refractions.udig.style.IStyleConfigurator;
-import net.refractions.udig.style.wms.internal.Messages;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.StyleBlackboard;
+import org.locationtech.udig.style.IStyleConfigurator;
+import org.locationtech.udig.style.wms.internal.Messages;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;

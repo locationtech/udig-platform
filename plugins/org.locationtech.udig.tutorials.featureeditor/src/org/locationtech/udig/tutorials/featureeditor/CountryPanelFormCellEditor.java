@@ -7,16 +7,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.featureeditor;
+package org.locationtech.udig.tutorials.featureeditor;
 
 import java.math.BigDecimal;
 
-import net.refractions.udig.project.command.CompositeCommand;
-import net.refractions.udig.project.internal.commands.edit.SetEditFeatureCommand;
-import net.refractions.udig.project.internal.commands.edit.WriteEditFeatureCommand;
-import net.refractions.udig.project.ui.tool.IToolContext;
-import net.refractions.udig.tutorials.celleditor.FormComboBoxCellEditor;
-import net.refractions.udig.tutorials.celleditor.FormTextCellEditor;
+import org.locationtech.udig.project.command.CompositeCommand;
+import org.locationtech.udig.project.internal.commands.edit.SetEditFeatureCommand;
+import org.locationtech.udig.project.internal.commands.edit.WriteEditFeatureCommand;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.tutorials.celleditor.FormComboBoxCellEditor;
+import org.locationtech.udig.tutorials.celleditor.FormTextCellEditor;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.ComboViewer;

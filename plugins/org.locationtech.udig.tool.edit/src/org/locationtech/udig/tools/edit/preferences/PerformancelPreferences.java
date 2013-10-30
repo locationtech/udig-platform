@@ -7,11 +7,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.preferences;
+package org.locationtech.udig.tools.edit.preferences;
 
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.tool.edit.internal.Messages;
-import net.refractions.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.tool.edit.internal.Messages;
+import org.locationtech.udig.tools.edit.EditPlugin;
 
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
@@ -44,8 +44,8 @@ public class PerformancelPreferences extends FieldEditorPreferencePage
         addField( new BooleanFieldEditor(PreferenceConstants.P_HIDE_SELECTED_FEATURES, 
                 Messages.PerformancelPreferences_hide_features,
                 getFieldEditorParent()));
-        addField( new BooleanFieldEditor(net.refractions.udig.project.preferences.PreferenceConstants.P_SHOW_ANIMATIONS, 
-                net.refractions.udig.project.ui.internal.Messages.RenderPreferences_animations,
+        addField( new BooleanFieldEditor(org.locationtech.udig.project.preferences.PreferenceConstants.P_SHOW_ANIMATIONS, 
+                org.locationtech.udig.project.ui.internal.Messages.RenderPreferences_animations,
                 getFieldEditorParent()){
             
             @Override

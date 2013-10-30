@@ -1,16 +1,16 @@
 /**
  * 
  */
-package net.refractions.udig.ui;
+package org.locationtech.udig.ui;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.refractions.udig.internal.ui.TransferStrategy;
-import net.refractions.udig.internal.ui.UDIGTransfer;
-import net.refractions.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.internal.ui.TransferStrategy;
+import org.locationtech.udig.internal.ui.UDIGTransfer;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 import org.eclipse.swt.dnd.ByteArrayTransfer;
 import org.eclipse.swt.dnd.TransferData;
@@ -29,7 +29,7 @@ import org.eclipse.swt.dnd.TransferData;
  * known strategies will be used until an object is obtained.
  * </p>
  * 
- * @see net.refractions.udig.internal.ui.TransferStrategy
+ * @see org.locationtech.udig.internal.ui.TransferStrategy
  * @author jeichar
  */
 public abstract class AbstractStrategizedTransfer extends ByteArrayTransfer implements UDIGTransfer{

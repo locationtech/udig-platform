@@ -1,14 +1,14 @@
 /**
  * 
  */
-package net.refractions.udig.feature.editor;
+package org.locationtech.udig.feature.editor;
 
-import net.refractions.udig.feature.editor.internal.Messages;
-import net.refractions.udig.internal.ui.UiPlugin;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.IUDIGView;
-import net.refractions.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.feature.editor.internal.Messages;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.IUDIGView;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -36,14 +36,14 @@ public class DefaultEditor extends ViewPart implements IUDIGView {
     private PropertySheetPage featureDisplay;
     private SimpleFeature current;
     /**
-     * @see net.refractions.udig.project.ui.IUDIGView#setContext()
+     * @see org.locationtech.udig.project.ui.IUDIGView#setContext()
      */
     public void setContext( IToolContext context ) {
         this.context = context;
     }
 
     /**
-     * @see net.refractions.udig.project.ui.IUDIGView#getContext()
+     * @see org.locationtech.udig.project.ui.IUDIGView#getContext()
      */
     public IToolContext getContext() {
         return context;

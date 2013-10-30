@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.printing.ui.pdf;
+package org.locationtech.udig.printing.ui.pdf;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -30,32 +30,32 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceFactory;
-import net.refractions.udig.core.internal.CorePlugin;
-import net.refractions.udig.mapgraphic.style.LocationStyleContent;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.LayerFactory;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.render.RenderException;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.BoundsStrategy;
-import net.refractions.udig.project.ui.SelectionStyle;
-import net.refractions.udig.project.ui.ApplicationGIS.DrawMapParameter;
-import net.refractions.udig.project.ui.internal.Messages;
-import net.refractions.udig.project.ui.internal.ProjectUIPlugin;
-import net.refractions.udig.project.ui.wizard.export.image.Image2Pdf;
-import net.refractions.udig.project.ui.wizard.export.image.ImageExportPage;
-import net.refractions.udig.project.ui.wizard.export.image.MapSelectorPageWithScaleColumn;
-import net.refractions.udig.project.ui.wizard.export.image.PDFImageExportFormat;
-import net.refractions.udig.project.ui.wizard.export.image.Paper;
-import net.refractions.udig.project.ui.wizard.export.image.XAffineTransform;
-import net.refractions.udig.style.sld.editor.DialogSettingsStyleContent;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceFactory;
+import org.locationtech.udig.core.internal.CorePlugin;
+import org.locationtech.udig.mapgraphic.style.LocationStyleContent;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.LayerFactory;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.BoundsStrategy;
+import org.locationtech.udig.project.ui.SelectionStyle;
+import org.locationtech.udig.project.ui.ApplicationGIS.DrawMapParameter;
+import org.locationtech.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
+import org.locationtech.udig.project.ui.wizard.export.image.Image2Pdf;
+import org.locationtech.udig.project.ui.wizard.export.image.ImageExportPage;
+import org.locationtech.udig.project.ui.wizard.export.image.MapSelectorPageWithScaleColumn;
+import org.locationtech.udig.project.ui.wizard.export.image.PDFImageExportFormat;
+import org.locationtech.udig.project.ui.wizard.export.image.Paper;
+import org.locationtech.udig.project.ui.wizard.export.image.XAffineTransform;
+import org.locationtech.udig.style.sld.editor.DialogSettingsStyleContent;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -369,7 +369,7 @@ public class SivecoExportMapToImageWizard extends Wizard implements IExportWizar
     	    ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
 
             LayerFactory layerFactory = map.getLayerFactory();
-            URL resourceID = new URL(null, "mapgraphic://localhost/mapgraphic#net.refractions.udig.tutorial.mapgraphic.Whitebox", CorePlugin.RELAXED_HANDLER); //$NON-NLS-1$
+            URL resourceID = new URL(null, "mapgraphic://localhost/mapgraphic#org.locationtech.udig.tutorial.mapgraphic.Whitebox", CorePlugin.RELAXED_HANDLER); //$NON-NLS-1$
             ID id = new ID(resourceID);
             IGeoResource resource = localCatalog.getById(IGeoResource.class, id, new NullProgressMonitor());
             Layer whiteboxLayer = layerFactory.createLayer(resource);
@@ -430,7 +430,7 @@ public class SivecoExportMapToImageWizard extends Wizard implements IExportWizar
             String id = (String)selectedFarmFeature.getAttribute(1);
             
             //put layer info on the mapgraphic's style blackboard
-            URL detailsResId = new URL(null, "mapgraphic://localhost/mapgraphic#net.refractions.udig.tutorial.mapgraphic.TitleArea", CorePlugin.RELAXED_HANDLER);
+            URL detailsResId = new URL(null, "mapgraphic://localhost/mapgraphic#org.locationtech.udig.tutorial.mapgraphic.TitleArea", CorePlugin.RELAXED_HANDLER);
             IGeoResource detailsRes = localCatalog.getById(IGeoResource.class, new ID(detailsResId), new NullProgressMonitor());
              
             Layer titleAreaLayer = layerFactory.createLayer(detailsRes);

@@ -1,10 +1,10 @@
 /**
  * 
  */
-package net.refractions.udig.issues.test;
+package org.locationtech.udig.issues.test;
 
-import net.refractions.udig.issues.listeners.IIssuesListListener;
-import net.refractions.udig.issues.listeners.IssuesListEvent;
+import org.locationtech.udig.issues.listeners.IIssuesListListener;
+import org.locationtech.udig.issues.listeners.IssuesListEvent;
 
 class DummyListener implements IIssuesListListener{
     int changes=0;

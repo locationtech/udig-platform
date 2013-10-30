@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.refractions.udig.tool.info.tests;
+package org.locationtech.udig.tool.info.tests;
 
 import java.awt.image.RenderedImage;
 import java.util.Collection;
@@ -10,12 +10,12 @@ import java.util.Map;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.render.IRenderManager;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.render.Tile;
-import net.refractions.udig.project.render.displayAdapter.IMapDisplay;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.render.IRenderManager;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.render.Tile;
+import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
 import com.vividsolutions.jts.geom.Envelope;
 

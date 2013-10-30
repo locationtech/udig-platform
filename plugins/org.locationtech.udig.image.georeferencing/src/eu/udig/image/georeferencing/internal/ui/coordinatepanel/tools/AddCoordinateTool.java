@@ -10,16 +10,16 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools;
+package org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools;
 
 import java.awt.Point;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.ui.ApplicationGIS;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.AbstractModalTool;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.AbstractModalTool;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
@@ -33,8 +33,8 @@ import com.vividsolutions.jts.geom.Coordinate;
  */
 public class AddCoordinateTool extends AbstractModalTool {
 
-	public static final String				ID			= "eu.udig.image.georeferencing.tools.addcoordinate";	//$NON-NLS-1$
-	public static final String				CATEGORY_ID	= "eu.udig.image.georeferencing.categorytools";			//$NON-NLS-1$
+	public static final String				ID			= "org.locationtech.udig.image.georeferencing.tools.addcoordinate";	//$NON-NLS-1$
+	public static final String				CATEGORY_ID	= "org.locationtech.udig.image.georeferencing.categorytools";			//$NON-NLS-1$
 
 	private Set<CapturedCoordinateListener>	listeners	= new HashSet<CapturedCoordinateListener>();
 

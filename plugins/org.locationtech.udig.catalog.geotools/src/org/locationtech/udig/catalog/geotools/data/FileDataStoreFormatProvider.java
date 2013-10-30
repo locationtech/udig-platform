@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.geotools.data;
+package org.locationtech.udig.catalog.geotools.data;
 
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.refractions.udig.catalog.service.FormatProvider;
+import org.locationtech.udig.catalog.service.FormatProvider;
 
 import org.geotools.data.FileDataStoreFinder;
 

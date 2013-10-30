@@ -8,10 +8,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.feature.editor;
+package org.locationtech.udig.feature.editor;
 
-import net.refractions.udig.project.ui.IFeatureSite;
-import net.refractions.udig.project.ui.IUDIGView;
+import org.locationtech.udig.project.ui.IFeatureSite;
+import org.locationtech.udig.project.ui.IUDIGView;
 
 import org.eclipse.ui.part.IPage;
 import org.opengis.feature.simple.SimpleFeature;

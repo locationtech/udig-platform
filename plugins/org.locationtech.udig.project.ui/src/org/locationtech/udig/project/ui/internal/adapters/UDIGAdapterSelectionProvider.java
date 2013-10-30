@@ -9,14 +9,14 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.internal.adapters;
+package org.locationtech.udig.project.ui.internal.adapters;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import net.refractions.udig.project.UDIGAdaptableDecorator;
+import org.locationtech.udig.project.UDIGAdaptableDecorator;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;

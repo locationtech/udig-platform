@@ -8,11 +8,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.preferences;
+package org.locationtech.udig.project.ui.preferences;
 
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.project.ui.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.project.ui.internal.Messages;
 
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
@@ -51,13 +51,13 @@ public class RenderPreferences extends FieldEditorPreferencePage implements
         addField(new BooleanFieldEditor(PreferenceConstants.P_TRANSPARENCY,
                 Messages.RenderPreferences_transparencies, 
                 getFieldEditorParent()));
-        addField( new BooleanFieldEditor(net.refractions.udig.project.preferences.PreferenceConstants.P_SHOW_ANIMATIONS, 
+        addField( new BooleanFieldEditor(org.locationtech.udig.project.preferences.PreferenceConstants.P_SHOW_ANIMATIONS, 
                 Messages.RenderPreferences_animations,
                 getFieldEditorParent()));
-        addField( new BooleanFieldEditor(net.refractions.udig.project.preferences.PreferenceConstants.P_IGNORE_LABELS_OVERLAPPING, 
+        addField( new BooleanFieldEditor(org.locationtech.udig.project.preferences.PreferenceConstants.P_IGNORE_LABELS_OVERLAPPING, 
                 Messages.RenderPreferences_labelOverlappings,
                 getFieldEditorParent()));
-        addField(new BooleanFieldEditor(net.refractions.udig.project.preferences.PreferenceConstants.P_TILED_RENDERING, 
+        addField(new BooleanFieldEditor(org.locationtech.udig.project.preferences.PreferenceConstants.P_TILED_RENDERING, 
                 Messages.RenderPreferences_tiledRendering,
                 getFieldEditorParent()));
 	}

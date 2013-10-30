@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.tcat.citd.sim.udig.bookmarks.internal.ui;
+package org.locationtech.udig.bookmarks.internal.ui;
 
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuListener;
@@ -26,10 +26,10 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
-import org.tcat.citd.sim.udig.bookmarks.Bookmark;
-import org.tcat.citd.sim.udig.bookmarks.internal.BookmarksContentProvider;
-import org.tcat.citd.sim.udig.bookmarks.internal.BookmarksLabelProvider;
-import org.tcat.citd.sim.udig.bookmarks.internal.actions.BookmarkAction;
+import org.locationtech.udig.bookmarks.Bookmark;
+import org.locationtech.udig.bookmarks.internal.BookmarksContentProvider;
+import org.locationtech.udig.bookmarks.internal.BookmarksLabelProvider;
+import org.locationtech.udig.bookmarks.internal.actions.BookmarkAction;
 
 /**
  * This is the view that displays the <code>Bookmark</code>s. The content provider connects to

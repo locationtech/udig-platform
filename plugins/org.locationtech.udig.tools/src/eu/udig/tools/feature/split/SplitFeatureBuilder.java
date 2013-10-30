@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.feature.split;
+package org.locationtech.udig.tools.feature.split;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -25,10 +25,10 @@ import org.opengis.referencing.operation.TransformException;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 
-import eu.udig.tools.feature.util.GeoToolsUtils;
-import eu.udig.tools.geometry.internal.util.GeometryUtil;
-import eu.udig.tools.geometry.split.SplitStrategy;
-import eu.udig.tools.geometry.split.VertexStrategy;
+import org.locationtech.udig.tools.feature.util.GeoToolsUtils;
+import org.locationtech.udig.tools.geometry.internal.util.GeometryUtil;
+import org.locationtech.udig.tools.geometry.split.SplitStrategy;
+import org.locationtech.udig.tools.geometry.split.VertexStrategy;
 
 /**
  * <p>

@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.tool;
+package org.locationtech.udig.project.ui.tool;
 
 /**
  * A tool that performs an action when the tool button is pressed.
@@ -21,7 +21,7 @@ package net.refractions.udig.project.ui.tool;
  * Must have a public default constructor.
  * </p>
  * 
- * @see net.refractions.udig.project.ui.tool.AbstractTool
+ * @see org.locationtech.udig.project.ui.tool.AbstractTool
  * @author jeichar
  * @since 0.3
  * @see Tool

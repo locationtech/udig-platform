@@ -8,11 +8,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.feature.editor;
+package org.locationtech.udig.feature.editor;
 
 
-import net.refractions.udig.project.ui.IUDIGDialogPage;
-import net.refractions.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.project.ui.IUDIGDialogPage;
+import org.locationtech.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
@@ -40,14 +40,14 @@ public class DialogEditor implements IUDIGDialogPage {
 		featureDisplay.setRootEntry(entry);
 	}
 	/**
-	 * @see net.refractions.udig.project.ui.IUDIGView#setContext()
+	 * @see org.locationtech.udig.project.ui.IUDIGView#setContext()
 	 */
 	public void setContext(IToolContext context) {
 		this.context = context;
 	}
 
 	/**
-	 * @see net.refractions.udig.project.ui.IUDIGView#getContext()
+	 * @see org.locationtech.udig.project.ui.IUDIGView#getContext()
 	 */
 	public IToolContext getContext() {
 		return context;

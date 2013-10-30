@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.omsbox.core;
+package org.locationtech.udig.omsbox.core;
 
-import eu.udig.omsbox.processingregion.ProcessingRegion;
-import eu.udig.omsbox.utils.OmsBoxConstants;
+import org.locationtech.udig.omsbox.processingregion.ProcessingRegion;
+import org.locationtech.udig.omsbox.utils.OmsBoxConstants;
 
 /**
  * The data that represent a field.

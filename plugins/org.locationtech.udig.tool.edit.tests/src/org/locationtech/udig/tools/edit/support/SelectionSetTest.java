@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tools.edit.support;
+package org.locationtech.udig.tools.edit.support;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -50,7 +50,7 @@ public class SelectionSetTest {
     }
     
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.SelectionSet.add(Point)'
+     * Test method for 'org.locationtech.udig.tools.edit.support.SelectionSet.add(Point)'
      */
     @Test
     public void testAdd() {
@@ -63,7 +63,7 @@ public class SelectionSetTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.SelectionSet.addAll(Collection<? extends Point>)'
+     * Test method for 'org.locationtech.udig.tools.edit.support.SelectionSet.addAll(Collection<? extends Point>)'
      */
     @Test
     public void testAddAll() {
@@ -81,7 +81,7 @@ public class SelectionSetTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.SelectionSet.clear()'
+     * Test method for 'org.locationtech.udig.tools.edit.support.SelectionSet.clear()'
      */
     @Test
     public void testClear() {
@@ -95,7 +95,7 @@ public class SelectionSetTest {
     }
 //  if not CopyOnWriteArraySet then this can be used but I'm ok with not allowing removes using iterator.
 //    /*
-//     * Test method for 'net.refractions.udig.tools.edit.support.SelectionSet.iterator()'
+//     * Test method for 'org.locationtech.udig.tools.edit.support.SelectionSet.iterator()'
 //     */
 //    public void testIterator() {
 //        Iterator<Point> iter = blackboard.getSelection().iterator();
@@ -109,7 +109,7 @@ public class SelectionSetTest {
 //    }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.SelectionSet.remove(Object)'
+     * Test method for 'org.locationtech.udig.tools.edit.support.SelectionSet.remove(Object)'
      */
     @Test
     public void testRemove() {
@@ -120,7 +120,7 @@ public class SelectionSetTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.SelectionSet.removeAll(Collection<?>)'
+     * Test method for 'org.locationtech.udig.tools.edit.support.SelectionSet.removeAll(Collection<?>)'
      */
     @Test
     public void testRemoveAll() {
@@ -138,7 +138,7 @@ public class SelectionSetTest {
     }
 
     /*
-     * Test method for 'net.refractions.udig.tools.edit.support.SelectionSet.retainAll(Collection<?>)'
+     * Test method for 'org.locationtech.udig.tools.edit.support.SelectionSet.retainAll(Collection<?>)'
      */
     @Test
     public void testRetainAll() {

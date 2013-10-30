@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.tcat.citd.sim.udig.bookmarks;
+package org.locationtech.udig.bookmarks;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -27,7 +27,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
-import org.tcat.citd.sim.udig.bookmarks.internal.MapReference;
+import org.locationtech.udig.bookmarks.internal.MapReference;
 
 import com.vividsolutions.jts.geom.Envelope;
 
@@ -35,7 +35,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * Plugin callback object for the bookmark plugin.
  */
 public class BookmarksPlugin extends AbstractUIPlugin {
-    public static String ID = "org.tcat.citd.sim.udig.bookmarks";
+    public static String ID = "org.locationtech.udig.bookmarks";
 
     private static final String KEY_NAME = "name"; //$NON-NLS-1$
     private static final String KEY_MINX = "minx"; //$NON-NLS-1$

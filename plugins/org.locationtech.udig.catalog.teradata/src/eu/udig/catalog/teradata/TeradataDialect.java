@@ -7,10 +7,10 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.catalog.teradata;
+package org.locationtech.udig.catalog.teradata;
 
-import static net.refractions.udig.catalog.service.database.ExtraParams.combo;
-import static net.refractions.udig.catalog.service.database.ExtraParams.text;
+import static org.locationtech.udig.catalog.service.database.ExtraParams.combo;
+import static org.locationtech.udig.catalog.service.database.ExtraParams.text;
 import static org.geotools.data.teradata.TeradataDataStoreFactory.DBTYPE;
 import static org.geotools.data.teradata.TeradataDataStoreFactory.PORT;
 import static org.geotools.jdbc.JDBCDataStoreFactory.DATABASE;
@@ -22,11 +22,11 @@ import static org.geotools.jdbc.JDBCDataStoreFactory.USER;
 import java.util.Arrays;
 import java.util.List;
 
-import net.refractions.udig.catalog.service.database.DatabaseConnectionRunnable;
-import net.refractions.udig.catalog.service.database.DatabaseServiceDialect;
-import net.refractions.udig.catalog.service.database.DatabaseWizardLocalization;
-import net.refractions.udig.catalog.service.database.ExtraParams;
-import net.refractions.udig.catalog.service.database.LookUpSchemaRunnable;
+import org.locationtech.udig.catalog.service.database.DatabaseConnectionRunnable;
+import org.locationtech.udig.catalog.service.database.DatabaseServiceDialect;
+import org.locationtech.udig.catalog.service.database.DatabaseWizardLocalization;
+import org.locationtech.udig.catalog.service.database.ExtraParams;
+import org.locationtech.udig.catalog.service.database.LookUpSchemaRunnable;
 
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.geotools.data.teradata.TeradataDataStoreFactory;

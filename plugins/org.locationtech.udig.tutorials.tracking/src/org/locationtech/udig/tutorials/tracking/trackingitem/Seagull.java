@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.tracking.trackingitem;
+package org.locationtech.udig.tutorials.tracking.trackingitem;
 
 import java.awt.Color;
 
@@ -22,8 +22,8 @@ import org.opengis.util.InternationalString;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 public class Seagull extends AbstractTrackingItem {
     

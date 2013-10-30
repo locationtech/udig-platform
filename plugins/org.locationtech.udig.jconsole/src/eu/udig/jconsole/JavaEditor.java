@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package eu.udig.jconsole;
+package org.locationtech.udig.jconsole;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -17,11 +17,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.internal.ui.UDigByteAndLocalTransfer;
-import net.refractions.udig.project.internal.impl.LayerImpl;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.internal.ui.UDigByteAndLocalTransfer;
+import org.locationtech.udig.project.internal.impl.LayerImpl;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -75,20 +75,20 @@ import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.joda.time.DateTime;
 
-import eu.udig.jconsole.util.ImageCache;
-import eu.udig.jconsole.util.Keywords;
-import eu.udig.omsbox.OmsBoxPlugin;
-import eu.udig.omsbox.core.IProcessListener;
-import eu.udig.omsbox.core.JConsoleOutputConsole;
-import eu.udig.omsbox.core.OmsScriptExecutor;
-import eu.udig.omsbox.ui.RunningProcessListDialog;
-import eu.udig.omsbox.utils.OmsBoxConstants;
+import org.locationtech.udig.jconsole.util.ImageCache;
+import org.locationtech.udig.jconsole.util.Keywords;
+import org.locationtech.udig.omsbox.OmsBoxPlugin;
+import org.locationtech.udig.omsbox.core.IProcessListener;
+import org.locationtech.udig.omsbox.core.JConsoleOutputConsole;
+import org.locationtech.udig.omsbox.core.OmsScriptExecutor;
+import org.locationtech.udig.omsbox.ui.RunningProcessListDialog;
+import org.locationtech.udig.omsbox.utils.OmsBoxConstants;
 
 /**
  * Java specific text editor.
  */
 public class JavaEditor extends TextEditor {
-    public static final String ID = "eu.udig.jconsole.editor"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.jconsole.editor"; //$NON-NLS-1$
 
     /** The outline page */
     private JavaContentOutlinePage fOutlinePage;
@@ -101,7 +101,7 @@ public class JavaEditor extends TextEditor {
     private URLTransfer urlTransfer;
     private UDigByteAndLocalTransfer udigTransfer;
 
-    private static final String CONTENTASSIST_PROPOSAL_ID = "eu.udig.jconsole.java.JavaCompletionProcessor";
+    private static final String CONTENTASSIST_PROPOSAL_ID = "org.locationtech.udig.jconsole.java.JavaCompletionProcessor";
 
     /**
      * Default constructor.

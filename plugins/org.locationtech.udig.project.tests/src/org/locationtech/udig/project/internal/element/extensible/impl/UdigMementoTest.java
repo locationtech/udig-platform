@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.element.extensible.impl;
+package org.locationtech.udig.project.internal.element.extensible.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -18,7 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import net.refractions.udig.project.memento.UdigMemento;
+import org.locationtech.udig.project.memento.UdigMemento;
 
 import org.eclipse.ui.IMemento;
 import org.junit.Test;
@@ -69,7 +69,7 @@ public class UdigMementoTest {
     @Test
     public void testAtSymbol() throws IOException{
     	UdigMemento mem = new UdigMemento();
-    	String value = "net.refractions.udig.project.test";
+    	String value = "org.locationtech.udig.project.test";
 		String key = "@ElementFactoryImpl.ExtensionPointId.key@";
 		mem.putString(key, value);
     	String persisted = mem.toString();

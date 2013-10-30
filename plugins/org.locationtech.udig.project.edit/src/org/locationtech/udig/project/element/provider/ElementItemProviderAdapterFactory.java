@@ -10,12 +10,12 @@
  *
  * $Id$
  */
-package net.refractions.udig.project.element.provider;
+package org.locationtech.udig.project.element.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.refractions.udig.project.element.util.ElementAdapterFactory;
+import org.locationtech.udig.project.element.util.ElementAdapterFactory;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -85,7 +85,7 @@ public class ElementItemProviderAdapterFactory extends ElementAdapterFactory
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link net.refractions.udig.project.element.ProjectElementAdapter} instances.
+     * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.element.ProjectElementAdapter} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -93,7 +93,7 @@ public class ElementItemProviderAdapterFactory extends ElementAdapterFactory
     protected ProjectElementAdapterItemProvider projectElementAdapterItemProvider;
 
     /**
-     * This creates an adapter for a {@link net.refractions.udig.project.element.ProjectElementAdapter}.
+     * This creates an adapter for a {@link org.locationtech.udig.project.element.ProjectElementAdapter}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

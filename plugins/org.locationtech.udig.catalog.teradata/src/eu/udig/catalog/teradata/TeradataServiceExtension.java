@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.catalog.teradata;
+package org.locationtech.udig.catalog.teradata;
 
 import static org.geotools.data.postgis.PostgisNGDataStoreFactory.PORT;
 import static org.geotools.data.teradata.TeradataDataStoreFactory.DBTYPE;
@@ -23,14 +23,14 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.AbstractDataStoreServiceExtension;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ServiceExtension2;
+import org.locationtech.udig.catalog.AbstractDataStoreServiceExtension;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ServiceExtension2;
 
 import org.eclipse.core.runtime.Platform;
 import org.geotools.data.teradata.TeradataDataStoreFactory;
 
-import eu.udig.catalog.teradata.internal.Messages;
+import org.locationtech.udig.catalog.teradata.internal.Messages;
 
 public class TeradataServiceExtension extends AbstractDataStoreServiceExtension
 		implements ServiceExtension2 {

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.mapgraphic.internal;
+package org.locationtech.udig.mapgraphic.internal;
 
 import java.awt.Color;
 import java.awt.Composite;
@@ -41,16 +41,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.refractions.udig.mapgraphic.MapGraphic;
-import net.refractions.udig.mapgraphic.MapGraphicContext;
-import net.refractions.udig.mapgraphic.MapGraphicPlugin;
-import net.refractions.udig.project.IBlackboard;
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.render.impl.RendererImpl;
-import net.refractions.udig.project.render.ICompositeRenderContext;
-import net.refractions.udig.project.render.IMultiLayerRenderer;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.RenderException;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.mapgraphic.MapGraphicPlugin;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.render.impl.RendererImpl;
+import org.locationtech.udig.project.render.ICompositeRenderContext;
+import org.locationtech.udig.project.render.IMultiLayerRenderer;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.RenderException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -101,7 +101,7 @@ public class MapGraphicRenderer extends RendererImpl implements IMultiLayerRende
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RendererImpl#render(java.awt.Graphics2D, IProgressMonitor)
+     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(java.awt.Graphics2D, IProgressMonitor)
      * @param destination
      */
     @Override
@@ -139,7 +139,7 @@ public class MapGraphicRenderer extends RendererImpl implements IMultiLayerRende
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RendererImpl#getContext()
+     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#getContext()
      */
     @Override
     public synchronized ICompositeRenderContext getContext() {
@@ -154,7 +154,7 @@ public class MapGraphicRenderer extends RendererImpl implements IMultiLayerRende
     /*
      * (non-Javadoc)
      * 
-     * @see net.refractions.udig.project.render.Renderer#render(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.render.Renderer#render(com.vividsolutions.jts.geom.Envelope)
      */
     @Override
     public void render( IProgressMonitor monitor ) {

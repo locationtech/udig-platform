@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.select;
+package org.locationtech.udig.tool.select;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -29,7 +29,7 @@ public class SelectPlugin extends AbstractUIPlugin {
     /**
      * Comment for <code>ID</code>
      */
-    public static final String ID = "net.refractions.udig.tool.select"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.tool.select"; //$NON-NLS-1$
 	
 	/**
 	 * The constructor.
@@ -85,7 +85,7 @@ public class SelectPlugin extends AbstractUIPlugin {
 	public ResourceBundle getResourceBundle() {
 		try {
 			if (resourceBundle == null)
-				resourceBundle = ResourceBundle.getBundle("net.refractions.udig.tool.select.SelectPluginResources"); //$NON-NLS-1$
+				resourceBundle = ResourceBundle.getBundle("org.locationtech.udig.tool.select.SelectPluginResources"); //$NON-NLS-1$
 		} catch (MissingResourceException x) {
 			resourceBundle = null;
 		}

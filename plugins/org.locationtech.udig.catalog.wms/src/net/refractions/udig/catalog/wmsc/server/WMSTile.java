@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.wmsc.server;
+package org.locationtech.udig.catalog.wmsc.server;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -23,7 +23,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import net.refractions.udig.catalog.internal.wms.WmsPlugin;
+import org.locationtech.udig.catalog.internal.wms.WmsPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.ows.AbstractOpenWebService;
@@ -97,7 +97,7 @@ public class WMSTile implements Tile {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.catalog.wmsc.server.Tile#getId()
+     * @see org.locationtech.udig.catalog.wmsc.server.Tile#getId()
      */
     public String getId() {
         if (id == null) {
@@ -112,7 +112,7 @@ public class WMSTile implements Tile {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.catalog.wmsc.server.Tile#getBounds()
+     * @see org.locationtech.udig.catalog.wmsc.server.Tile#getBounds()
      */
     public Envelope getBounds() {
         return bounds;
@@ -120,7 +120,7 @@ public class WMSTile implements Tile {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.catalog.wmsc.server.Tile#getScale()
+     * @see org.locationtech.udig.catalog.wmsc.server.Tile#getScale()
      */
     public double getScale() {
         return scale;
@@ -129,7 +129,7 @@ public class WMSTile implements Tile {
     /**
      * Set the buffered image while locking and set the state of the tile.
      * 
-     * @see net.refractions.udig.catalog.wmsc.server.Tile#setBufferedImage(java.awt.image.BufferedImage)
+     * @see org.locationtech.udig.catalog.wmsc.server.Tile#setBufferedImage(java.awt.image.BufferedImage)
      */
     public void setBufferedImage( BufferedImage im ) {
         Object lock = getTileLock();
@@ -152,7 +152,7 @@ public class WMSTile implements Tile {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.catalog.wmsc.server.Tile#getBufferedImage()
+     * @see org.locationtech.udig.catalog.wmsc.server.Tile#getBufferedImage()
      */
     public BufferedImage getBufferedImage() {
         return image;
@@ -182,7 +182,7 @@ public class WMSTile implements Tile {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.catalog.wmsc.server.Tile#getTileState()
+     * @see org.locationtech.udig.catalog.wmsc.server.Tile#getTileState()
      */
     public int getTileState() {
         return this.state;
@@ -190,7 +190,7 @@ public class WMSTile implements Tile {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.catalog.wmsc.server.Tile#setTileState(int)
+     * @see org.locationtech.udig.catalog.wmsc.server.Tile#setTileState(int)
      */
     public void setTileState( int state ) {
         this.state = state;
@@ -198,7 +198,7 @@ public class WMSTile implements Tile {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.catalog.wmsc.server.Tile#setPosition(java.lang.String)
+     * @see org.locationtech.udig.catalog.wmsc.server.Tile#setPosition(java.lang.String)
      */
     public void setPosition( String pos ) {
         this.position = pos;
@@ -206,7 +206,7 @@ public class WMSTile implements Tile {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.catalog.wmsc.server.Tile#getPosition()
+     * @see org.locationtech.udig.catalog.wmsc.server.Tile#getPosition()
      */
     public String getPosition() {
         return this.position;
@@ -215,7 +215,7 @@ public class WMSTile implements Tile {
     /*
      * (non-Javadoc)
      * @see
-     * net.refractions.udig.catalog.wmsc.server.Tile#loadTile(org.eclipse.core.runtime.IProgressMonitor
+     * org.locationtech.udig.catalog.wmsc.server.Tile#loadTile(org.eclipse.core.runtime.IProgressMonitor
      * )
      */
     public boolean loadTile( IProgressMonitor monitor ) {

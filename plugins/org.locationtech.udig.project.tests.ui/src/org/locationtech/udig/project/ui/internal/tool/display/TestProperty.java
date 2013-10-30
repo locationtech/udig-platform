@@ -8,15 +8,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.ui.internal.tool.display;
+package org.locationtech.udig.project.ui.internal.tool.display;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Ignore;
 
-import net.refractions.udig.ui.operations.IOpFilterListener;
-import net.refractions.udig.ui.operations.PropertyValue;
+import org.locationtech.udig.ui.operations.IOpFilterListener;
+import org.locationtech.udig.ui.operations.PropertyValue;
 
 @Ignore
 public class TestProperty implements PropertyValue {

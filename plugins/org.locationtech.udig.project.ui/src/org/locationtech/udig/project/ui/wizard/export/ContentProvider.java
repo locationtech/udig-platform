@@ -1,12 +1,12 @@
 /**
  * 
  */
-package net.refractions.udig.project.ui.wizard.export;
+package org.locationtech.udig.project.ui.wizard.export;
 
 import java.util.Collection;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.IProject;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.IProject;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;

@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced;
+package org.locationtech.udig.style.advanced;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import eu.udig.style.advanced.utils.ImageCache;
+import org.locationtech.udig.style.advanced.utils.ImageCache;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -20,7 +20,7 @@ import eu.udig.style.advanced.utils.ImageCache;
 public class StylePlugin extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "eu.udig.style.advanced"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "org.locationtech.udig.style.advanced"; //$NON-NLS-1$
 
     // The shared instance
     private static StylePlugin plugin;

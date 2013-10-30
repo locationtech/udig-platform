@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.tool;
+package org.locationtech.udig.project.ui.tool;
 
 import java.util.EventListener;
 import java.util.HashMap;
@@ -17,13 +17,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.refractions.udig.project.ui.internal.ApplicationGISInternal;
-import net.refractions.udig.project.ui.internal.MapEditorPart;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
+import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelListener;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.swt.widgets.Display;
@@ -224,21 +224,21 @@ public abstract class AbstractTool
     /**
      * This method does not need to be overridden by subclasses normally.
      * 
-     * @see net.refractions.udig.project.ui.tool.Tool#getContext()
+     * @see org.locationtech.udig.project.ui.tool.Tool#getContext()
      * @see IToolContext
      */
     public IToolContext getContext() {
         return context;
     }
     /**
-     * @see net.refractions.udig.project.ui.tool.Tool#dispose()
+     * @see org.locationtech.udig.project.ui.tool.Tool#dispose()
      */
     public void dispose() {
         deregisterMouseListeners();
     }
     
     /**
-     * @see net.refractions.udig.project.ui.tool.Tool#getProperty()
+     * @see org.locationtech.udig.project.ui.tool.Tool#getProperty()
      */
 	public Object getProperty(String key) {
 		return properties.get(key);
@@ -248,14 +248,14 @@ public abstract class AbstractTool
 	
 	/**
 	 *  (non-Javadoc)
-	 * @see net.refractions.udig.project.ui.tool.Tool#isEnabled()
+	 * @see org.locationtech.udig.project.ui.tool.Tool#isEnabled()
 	 */
 	public boolean isEnabled() {
 		return enabled;
 	}
 	
 	/** (non-Javadoc)
-	 * @see net.refractions.udig.project.ui.tool.Tool#setEnabled(boolean)
+	 * @see org.locationtech.udig.project.ui.tool.Tool#setEnabled(boolean)
 	 */
 	public void setEnabled(boolean enabled) {
 		boolean oldValue = this.enabled; 
@@ -268,7 +268,7 @@ public abstract class AbstractTool
 	}
 	
     /**
-     * @see net.refractions.udig.project.ui.tool.Tool#setProperty()
+     * @see org.locationtech.udig.project.ui.tool.Tool#setProperty()
      */
 	public void setProperty(String key, Object value) {
 		properties.put(key, value);
@@ -279,28 +279,28 @@ public abstract class AbstractTool
 	
 	
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.project.ui.tool.Tool#getSelectionProvider()
+	 * @see org.locationtech.udig.project.ui.tool.Tool#getSelectionProvider()
 	 */
 	public IMapEditorSelectionProvider getSelectionProvider() {
 		return selectionProvider;
 	}
 
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.project.ui.tool.Tool#setSelectionProvider(net.refractions.udig.project.ui.tool.IMapEditorSelectionProvider)
+	 * @see org.locationtech.udig.project.ui.tool.Tool#setSelectionProvider(org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider)
 	 */
 	public void setSelectionProvider(IMapEditorSelectionProvider selectionProvider) {
 		this.selectionProvider = selectionProvider;
 	}
 
 	/** (non-Javadoc)
-	 * @see net.refractions.udig.project.ui.tool.Tool#addListener(net.refractions.udig.project.ui.tool.ToolLifecycleListener)
+	 * @see org.locationtech.udig.project.ui.tool.Tool#addListener(org.locationtech.udig.project.ui.tool.ToolLifecycleListener)
 	 */
 	public void addListener(ToolLifecycleListener listener){
 		listeners.add(listener);
 	}
 	
 	/** (non-Javadoc)
-	 * @see net.refractions.udig.project.ui.tool.Tool#removeListener(net.refractions.udig.project.ui.tool.ToolLifecycleListener)
+	 * @see org.locationtech.udig.project.ui.tool.Tool#removeListener(org.locationtech.udig.project.ui.tool.ToolLifecycleListener)
 	 */
 	public void removeListener(ToolLifecycleListener listener){
 		listeners.remove(listener);
@@ -331,7 +331,7 @@ public abstract class AbstractTool
     /**
      * This method may be overridden by subclasses
      * 
-     * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener#mouseEntered(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener#mouseEntered(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
     public void mouseEntered( MapMouseEvent e ) { // do nothing
@@ -340,7 +340,7 @@ public abstract class AbstractTool
     /**
      * This method may be overridden by subclasses
      * 
-     * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener#mouseExited(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener#mouseExited(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
     public void mouseExited( MapMouseEvent e ) { // do nothing
@@ -349,7 +349,7 @@ public abstract class AbstractTool
     /**
      * This method may be overridden by subclasses
      * 
-     * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener#mousePressed(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
     public void mousePressed( MapMouseEvent e ) { // do nothing
@@ -358,7 +358,7 @@ public abstract class AbstractTool
     /**
      * This method may be overridden by subclasses
      * 
-     * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener#mouseReleased(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
     public void mouseReleased( MapMouseEvent e ) { // do nothing
@@ -367,7 +367,7 @@ public abstract class AbstractTool
     /**
      * This method may be overridden by subclasses
      * 
-     * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener#mouseDragged(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionListener#mouseDragged(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
     public void mouseDragged( MapMouseEvent e ) { // do nothing
@@ -376,7 +376,7 @@ public abstract class AbstractTool
     /**
      * This method may be overridden by subclasses
      * 
-     * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener#mouseMoved(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionListener#mouseMoved(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mouseMoved( MapMouseEvent e ) { // do nothing
     }   
@@ -384,7 +384,7 @@ public abstract class AbstractTool
     /**
      * This method may be overridden by subclasses
      * 
-     * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseMotionListener#mouseHovered(MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionListener#mouseHovered(MapMouseEvent)
      */
     public void mouseHovered( MapMouseEvent e ) { // do nothing
     }
@@ -392,7 +392,7 @@ public abstract class AbstractTool
     /**
      * This method may be overridden by subclasses
      * 
-     * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseWheelListener#mouseWheelMoved(net.refractions.udig.project.render.displayAdapter.MapMouseWheelEvent)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.MapMouseWheelListener#mouseWheelMoved(org.locationtech.udig.project.render.displayAdapter.MapMouseWheelEvent)
      * @see MapMouseEvent
      */
     public void mouseWheelMoved( MapMouseWheelEvent e ) { // do nothing
@@ -401,7 +401,7 @@ public abstract class AbstractTool
     /**
      * This method may be overridden by subclasses
      * 
-     * @see net.refractions.udig.project.ui.render.displayAdapter.MapMouseListener#mouseDoubleClicked(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener#mouseDoubleClicked(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      * @see MapMouseEvent
      */
     public void mouseDoubleClicked( MapMouseEvent event ) { // do nothing

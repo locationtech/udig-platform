@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.wmt.tile;
+package org.locationtech.udig.catalog.internal.wmt.tile;
 
 import java.io.File;
 
-import net.refractions.udig.catalog.wmsc.server.Tile;
-import net.refractions.udig.catalog.wmsc.server.TileImageReadWriter;
+import org.locationtech.udig.catalog.wmsc.server.Tile;
+import org.locationtech.udig.catalog.wmsc.server.TileImageReadWriter;
 
 public class WMTTileImageReadWriter extends TileImageReadWriter {
     private String baseDir;

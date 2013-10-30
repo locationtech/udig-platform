@@ -9,21 +9,21 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.tools.internal;
+package org.locationtech.udig.tools.internal;
 
 import java.awt.Point;
 
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.command.Command;
-import net.refractions.udig.project.command.NavCommand;
-import net.refractions.udig.project.internal.Map;
-import net.refractions.udig.project.internal.command.navigation.PanCommand;
-import net.refractions.udig.project.internal.render.ViewportModel;
-import net.refractions.udig.project.ui.internal.commands.draw.TranslateCommand;
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
-import net.refractions.udig.project.ui.tool.AbstractModalTool;
-import net.refractions.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.command.NavCommand;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.command.navigation.PanCommand;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.ui.internal.commands.draw.TranslateCommand;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ui.tool.AbstractModalTool;
+import org.locationtech.udig.project.ui.tool.ModalTool;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -48,7 +48,7 @@ public class Pan extends AbstractModalTool implements ModalTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseDragged(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseDragged(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mouseDragged(MapMouseEvent e) {
         if (dragging) {
@@ -58,7 +58,7 @@ public class Pan extends AbstractModalTool implements ModalTool {
     }
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mousePressed(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mousePressed(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mousePressed(MapMouseEvent e) {
     	
@@ -85,7 +85,7 @@ public class Pan extends AbstractModalTool implements ModalTool {
 	}
 
     /**
-     * @see net.refractions.udig.project.ui.tool.AbstractTool#mouseReleased(net.refractions.udig.project.render.displayAdapter.MapMouseEvent)
+     * @see org.locationtech.udig.project.ui.tool.AbstractTool#mouseReleased(org.locationtech.udig.project.render.displayAdapter.MapMouseEvent)
      */
     public void mouseReleased(MapMouseEvent e) {
         if (dragging) {
@@ -104,7 +104,7 @@ public class Pan extends AbstractModalTool implements ModalTool {
         }
     }
     /**
-     * @see net.refractions.udig.project.ui.tool.Tool#dispose()
+     * @see org.locationtech.udig.project.ui.tool.Tool#dispose()
      */
     public void dispose() {
         super.dispose();

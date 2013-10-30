@@ -9,12 +9,12 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.wfs.internal;
+package org.locationtech.udig.catalog.wfs.internal;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "net.refractions.udig.catalog.wfs.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.locationtech.udig.catalog.wfs.internal.messages"; //$NON-NLS-1$
 	public static String WFSRegistryWizardPage_label_timeout_tooltip;
 	public static String WFSRegistryWizardPage_label_timeout_text;
 	public static String WFSRegistryWizardPage_label_buffer_tooltip;

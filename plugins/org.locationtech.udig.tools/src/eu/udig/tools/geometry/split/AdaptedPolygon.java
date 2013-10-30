@@ -1,7 +1,7 @@
 /**
  * 
  */
-package eu.udig.tools.geometry.split;
+package org.locationtech.udig.tools.geometry.split;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,7 +18,7 @@ import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
-import eu.udig.tools.geometry.internal.util.GeometryList;
+import org.locationtech.udig.tools.geometry.internal.util.GeometryList;
 
 /**
  * Adapted Polygon maintains the polygon modified during the split process.

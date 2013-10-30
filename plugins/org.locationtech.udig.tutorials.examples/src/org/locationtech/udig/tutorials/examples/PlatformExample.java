@@ -8,11 +8,11 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.examples;
+package org.locationtech.udig.tutorials.examples;
 
-import net.refractions.udig.core.internal.ExtensionPointProcessor;
-import net.refractions.udig.core.internal.ExtensionPointUtil;
-import net.refractions.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.project.ui.tool.ModalTool;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -33,7 +33,7 @@ import org.eclipse.core.runtime.Status;
  */
 public class PlatformExample {
     void processingExtensionPointByHand() {
-        String xpid = "net.refractions.udig.project.ui.tool";
+        String xpid = "org.locationtech.udig.project.ui.tool";
         IExtensionRegistry registry = Platform.getExtensionRegistry();
         IExtensionPoint extensionPoint = registry.getExtensionPoint(xpid);
         if (extensionPoint == null) {
@@ -61,7 +61,7 @@ public class PlatformExample {
     }
     @SuppressWarnings("deprecation")
     void processingExtensionPointUsingUtilityClassOld() {
-        String xpid = "net.refractions.udig.project.ui.tool";
+        String xpid = "org.locationtech.udig.project.ui.tool";
         ExtensionPointUtil.process(xpid, new ExtensionPointProcessor(){
             public void process( IExtension extension, IConfigurationElement element )
                     throws Exception {
@@ -75,7 +75,7 @@ public class PlatformExample {
         });
     }
     void processingExtensionPointUsingUtilityClass() {
-        String xpid = "net.refractions.udig.project.ui.tool";
+        String xpid = "org.locationtech.udig.project.ui.tool";
         ExtensionPointUtil.process(Activator.getDefault(), xpid, new ExtensionPointProcessor(){
             public void process( IExtension extension, IConfigurationElement element )
                     throws Exception {

@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package eu.udig.catalog.csw;
+package org.locationtech.udig.catalog.csw;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.CatalogPlugin;
 
 import org.eclipse.ui.IStartup;
 import org.osgi.framework.BundleContext;

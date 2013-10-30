@@ -9,16 +9,16 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.printing.ui.internal.editor.figures;
+package org.locationtech.udig.printing.ui.internal.editor.figures;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 
-import net.refractions.udig.printing.model.Box;
-import net.refractions.udig.printing.model.PropertyListener;
-import net.refractions.udig.ui.PlatformGIS;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
+import org.locationtech.udig.printing.model.Box;
+import org.locationtech.udig.printing.model.PropertyListener;
+import org.locationtech.udig.ui.PlatformGIS;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

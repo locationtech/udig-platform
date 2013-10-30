@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tutorials.genericprojectelement;
+package org.locationtech.udig.tutorials.genericprojectelement;
 
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.project.element.AbstractGenericProjectElement;
-import net.refractions.udig.project.element.IGenericProjectElement;
+import org.locationtech.udig.project.element.AbstractGenericProjectElement;
+import org.locationtech.udig.project.element.IGenericProjectElement;
 
 import org.eclipse.ui.IMemento;
 
@@ -25,7 +25,7 @@ import org.eclipse.ui.IMemento;
  */
 public class MyProjectElement extends AbstractGenericProjectElement implements IGenericProjectElement {
 
-    public static final String EXT_ID = "net.refractions.udig.tutorials.genericprojectelement.element1"; //$NON-NLS-1$
+    public static final String EXT_ID = "org.locationtech.udig.tutorials.genericprojectelement.element1"; //$NON-NLS-1$
 	public static final String PROP_LABEL_CHANGE = "custom_event";
     private String m_label;
 

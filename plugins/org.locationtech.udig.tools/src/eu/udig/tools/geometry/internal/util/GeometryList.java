@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.geometry.internal.util;
+package org.locationtech.udig.tools.geometry.internal.util;
 
 import java.io.Serializable;
 import java.util.Collection;

@@ -7,22 +7,22 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
-package eu.udig.style.advanced.common;
+package org.locationtech.udig.style.advanced.common;
 
-import static eu.udig.style.advanced.utils.Utilities.*;
+import static org.locationtech.udig.style.advanced.utils.Utilities.*;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import net.refractions.udig.style.sld.SLD;
-import net.refractions.udig.ui.graphics.AWTSWTImageUtils;
+import org.locationtech.udig.style.sld.SLD;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
-import eu.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
-import eu.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
-import eu.udig.style.advanced.internal.Messages;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.FeatureTypeStyleWrapper;
+import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
+import org.locationtech.udig.style.advanced.internal.Messages;
 
 /**
  * A tree view label provider for {@link FeatureTypeStyleWrapper}s with {@link RuleWrapper} childs.

@@ -8,9 +8,9 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
-import net.refractions.udig.project.tests.support.AbstractProjectTestCase;
+import org.locationtech.udig.project.tests.support.AbstractProjectTestCase;
 
 public class TilingRendererTests extends AbstractProjectTestCase {
 
@@ -69,7 +69,7 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //	}
 //
 //	/*
-//	 * Test method for 'net.refractions.udig.project.internal.render.impl.TilingRenderer.render(Graphics2D, IProgressMonitor)'
+//	 * Test method for 'org.locationtech.udig.project.internal.render.impl.TilingRenderer.render(Graphics2D, IProgressMonitor)'
 //	 */
 //	public void testRenderGraphics2DIProgressMonitor() throws Exception {
 //		
@@ -79,7 +79,7 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //	}
 //
 //	/*
-//	 * Test method for 'net.refractions.udig.project.internal.render.impl.TilingRenderer.render(Envelope, IProgressMonitor)'
+//	 * Test method for 'org.locationtech.udig.project.internal.render.impl.TilingRenderer.render(Envelope, IProgressMonitor)'
 //	 */
 //	public void testRenderEnvelopeIProgressMonitor() throws Exception {
 //		renderer.render((Envelope)null,new NullProgressMonitor());
@@ -88,7 +88,7 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //	}
 //
 //	/*
-//	 * Test method for 'net.refractions.udig.project.internal.render.impl.TilingRenderer.render(Envelope, IProgressMonitor)'
+//	 * Test method for 'org.locationtech.udig.project.internal.render.impl.TilingRenderer.render(Envelope, IProgressMonitor)'
 //	 */
 //	public void testRenderNullEnvelope() throws Exception {
 //		renderer.render((Envelope)null,new NullProgressMonitor());
@@ -97,7 +97,7 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //	}
 //
 //	/*
-//	 * Test method for 'net.refractions.udig.project.internal.render.impl.TilingRenderer.render(Envelope, IProgressMonitor)'
+//	 * Test method for 'org.locationtech.udig.project.internal.render.impl.TilingRenderer.render(Envelope, IProgressMonitor)'
 //	 */
 //	public void testRenderPan() throws Exception {
 //		renderer.render((Envelope)null,new NullProgressMonitor());
@@ -274,14 +274,14 @@ public class TilingRendererTests extends AbstractProjectTestCase {
 //	}
 //	
 //	/*
-//	 * Test method for 'net.refractions.udig.project.internal.render.impl.TilingRenderer.dispose()'
+//	 * Test method for 'org.locationtech.udig.project.internal.render.impl.TilingRenderer.dispose()'
 //	 */
 //	public void testDispose() {
 //
 //	}
 //
 //	/*
-//	 * Test method for 'net.refractions.udig.project.internal.render.impl.TilingRenderer.isZoomChanged()'
+//	 * Test method for 'org.locationtech.udig.project.internal.render.impl.TilingRenderer.isZoomChanged()'
 //	 */
 //	public void testIsZoomChanged() {
 //

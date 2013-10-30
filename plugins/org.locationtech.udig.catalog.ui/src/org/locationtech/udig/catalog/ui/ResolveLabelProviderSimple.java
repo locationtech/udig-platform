@@ -9,24 +9,24 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.ui;
+package org.locationtech.udig.catalog.ui;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IProcess;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IResolveChangeEvent;
-import net.refractions.udig.catalog.IResolveChangeListener;
-import net.refractions.udig.catalog.IResolveFolder;
-import net.refractions.udig.catalog.ISearch;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IProcess;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IResolveChangeEvent;
+import org.locationtech.udig.catalog.IResolveChangeListener;
+import org.locationtech.udig.catalog.IResolveFolder;
+import org.locationtech.udig.catalog.ISearch;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceInfo;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -50,7 +50,7 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
     }
     /*
      * @see
-     * net.refractions.udig.catalog.IResolveChangeListener#changed(net.refractions.udig.catalog.
+     * org.locationtech.udig.catalog.IResolveChangeListener#changed(org.locationtech.udig.catalog.
      * IResolveChangeEvent)
      */
     public void changed( final IResolveChangeEvent event ) {

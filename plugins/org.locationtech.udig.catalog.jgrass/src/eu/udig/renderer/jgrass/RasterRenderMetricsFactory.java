@@ -7,20 +7,20 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
  * License v1.0 (http://udig.refractions.net/files/hsd3-v10.html).
  */
- package eu.udig.renderer.jgrass;
+ package org.locationtech.udig.renderer.jgrass;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.render.AbstractRenderMetrics;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderMetricsFactory;
-import net.refractions.udig.project.render.IRenderer;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.render.AbstractRenderMetrics;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderMetricsFactory;
+import org.locationtech.udig.project.render.IRenderer;
 
 import org.geotools.gce.grassraster.JGrassConstants;
 
-import eu.udig.catalog.jgrass.core.JGrassMapGeoResource;
+import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
 
 /**
  * This renderer can render all the JGrass supported raster maps.

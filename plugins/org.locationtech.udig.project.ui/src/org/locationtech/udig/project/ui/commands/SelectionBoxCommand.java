@@ -9,15 +9,15 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.project.ui.commands;
+package org.locationtech.udig.project.ui.commands;
 
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.Shape;
 
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.preferences.PreferenceConstants;
-import net.refractions.udig.ui.graphics.ViewportGraphics;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.preferences.PreferenceConstants;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -37,14 +37,14 @@ public class SelectionBoxCommand extends AbstractDrawCommand implements
 	
 	
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.project.ui.commands.IDrawCommand#getValidArea()
+	 * @see org.locationtech.udig.project.ui.commands.IDrawCommand#getValidArea()
 	 */
 	public Rectangle getValidArea() {
 		return shape.getBounds();
 	}
 
 	/* (non-Javadoc)
-	 * @see net.refractions.udig.project.command.Command#run(org.eclipse.core.runtime.IProgressMonitor)
+	 * @see org.locationtech.udig.project.command.Command#run(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void run(IProgressMonitor monitor) throws Exception {
 		if( shape!=null ){

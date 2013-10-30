@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.geotools.data;
+package org.locationtech.udig.catalog.geotools.data;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -22,15 +22,15 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ID;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IRepository;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.IServiceInfo;
-import net.refractions.udig.catalog.geotools.Activator;
-import net.refractions.udig.catalog.internal.ServiceFactoryImpl;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ID;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IRepository;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.IServiceInfo;
+import org.locationtech.udig.catalog.geotools.Activator;
+import org.locationtech.udig.catalog.internal.ServiceFactoryImpl;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -45,7 +45,7 @@ import org.opengis.feature.type.Name;
 
 /**
  * Tests support for the "generic" GeoTools DataStore support as provided by the
- * net.refractions.udig.catalog.geotools.data.
+ * org.locationtech.udig.catalog.geotools.data.
  * <p>
  * We are testing using the sample data in the "test-data" folder; although not common the use of
  * folders that do not follow package naming conventions is actually the java standard (explicitly
@@ -62,7 +62,7 @@ public class GeoToolsDataStoreServiceTest {
 
     @BeforeClass
     public static void onlyOnce() {
-        activator = net.refractions.udig.catalog.geotools.Activator.getDefault();
+        activator = org.locationtech.udig.catalog.geotools.Activator.getDefault();
         assertNotNull("Run as Plug-in Test", activator);
         serviceFactory = (ServiceFactoryImpl) CatalogPlugin.getDefault().getServiceFactory();
         local = CatalogPlugin.getDefault().getLocal();

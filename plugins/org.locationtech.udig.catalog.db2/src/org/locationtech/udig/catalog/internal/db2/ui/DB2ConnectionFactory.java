@@ -8,15 +8,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.internal.db2.ui;
+package org.locationtech.udig.catalog.internal.db2.ui;
 
 import java.io.Serializable;
 import java.net.URL;
 import java.util.Map;
 
-import net.refractions.udig.catalog.ServiceExtension2;
-import net.refractions.udig.catalog.internal.db2.DB2ServiceExtension;
-import net.refractions.udig.catalog.ui.AbstractUDIGConnectionFactory;
+import org.locationtech.udig.catalog.ServiceExtension2;
+import org.locationtech.udig.catalog.internal.db2.DB2ServiceExtension;
+import org.locationtech.udig.catalog.ui.AbstractUDIGConnectionFactory;
 
 public class DB2ConnectionFactory extends AbstractUDIGConnectionFactory {
 

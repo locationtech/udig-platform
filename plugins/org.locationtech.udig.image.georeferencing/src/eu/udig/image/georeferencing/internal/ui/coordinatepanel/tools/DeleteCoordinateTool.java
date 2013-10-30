@@ -10,15 +10,15 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.image.georeferencing.internal.ui.coordinatepanel.tools;
+package org.locationtech.udig.image.georeferencing.internal.ui.coordinatepanel.tools;
 
 import java.awt.Point;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.refractions.udig.project.ui.render.displayAdapter.MapMouseEvent;
-import net.refractions.udig.project.ui.tool.AbstractModalTool;
-import eu.udig.image.georeferencing.internal.ui.InputEvent;
+import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
+import org.locationtech.udig.project.ui.tool.AbstractModalTool;
+import org.locationtech.udig.image.georeferencing.internal.ui.InputEvent;
 
 /**
  * Map tool used to delete a MarkMapPresenter.
@@ -30,8 +30,8 @@ import eu.udig.image.georeferencing.internal.ui.InputEvent;
  */
 public class DeleteCoordinateTool extends AbstractModalTool{
 
-	public static final String				ID			= "eu.udig.image.georeferencing.tools.deletecoordinate"; //$NON-NLS-1$
-	public static final String				CATEGORY_ID	= "eu.udig.image.georeferencing.categorytools";			//$NON-NLS-1$
+	public static final String				ID			= "org.locationtech.udig.image.georeferencing.tools.deletecoordinate"; //$NON-NLS-1$
+	public static final String				CATEGORY_ID	= "org.locationtech.udig.image.georeferencing.categorytools";			//$NON-NLS-1$
 
 	private Set<DeletedCoordinateListener>	listeners	= new HashSet<DeletedCoordinateListener>();
 	private static int						targets		= MOUSE | WHEEL | MOTION;

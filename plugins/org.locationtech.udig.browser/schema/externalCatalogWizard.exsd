@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.browser">
+<schema targetNamespace="org.locationtech.udig.browser">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.browser" id="externalCatalogueWizard" name="externalCatalogueWizard"/>
+         <meta.schema plugin="org.locationtech.udig.browser" id="externalCatalogueWizard" name="externalCatalogueWizard"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
@@ -47,10 +47,10 @@
          <attribute name="class" type="string">
             <annotation>
                <documentation>
-                  Implementation of net.refractions.udig.browser.ExternalCatalogueImportPage that will gather information from the user to create the browser page.
+                  Implementation of org.locationtech.udig.browser.ExternalCatalogueImportPage that will gather information from the user to create the browser page.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.browser.ExternalCatalogueImportPage"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.browser.ExternalCatalogueImportPage"/>
                </appInfo>
             </annotation>
          </attribute>

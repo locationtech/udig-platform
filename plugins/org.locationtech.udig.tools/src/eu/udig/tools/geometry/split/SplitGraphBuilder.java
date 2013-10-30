@@ -9,7 +9,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
  * License v1.0 (http://udig.refractions.net/files/asd3-v10.html).
  */
-package eu.udig.tools.geometry.split;
+package org.locationtech.udig.tools.geometry.split;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -31,7 +31,7 @@ import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geomgraph.PlanarGraph;
 import com.vividsolutions.jts.geomgraph.Position;
 
-import eu.udig.tools.geometry.internal.util.GeometryList;
+import org.locationtech.udig.tools.geometry.internal.util.GeometryList;
 
 /**
  * A {@link PlanarGraph} that builds itself from a {@link Polygon} and a

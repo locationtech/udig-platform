@@ -17,9 +17,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.ServiceExtension;
-import net.refractions.udig.catalog.URLUtils;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ServiceExtension;
+import org.locationtech.udig.catalog.URLUtils;
 
 import org.geotools.gce.arcgrid.ArcGridFormat;
 import org.geotools.gce.arcgrid.ArcGridFormatFactory;

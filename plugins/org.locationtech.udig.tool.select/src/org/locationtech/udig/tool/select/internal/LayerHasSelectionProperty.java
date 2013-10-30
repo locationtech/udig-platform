@@ -7,12 +7,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.select.internal;
+package org.locationtech.udig.tool.select.internal;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.ILayerListener;
-import net.refractions.udig.project.LayerEvent;
-import net.refractions.udig.ui.operations.AbstractPropertyValue;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.ILayerListener;
+import org.locationtech.udig.project.LayerEvent;
+import org.locationtech.udig.ui.operations.AbstractPropertyValue;
 
 import org.opengis.filter.Filter;
 

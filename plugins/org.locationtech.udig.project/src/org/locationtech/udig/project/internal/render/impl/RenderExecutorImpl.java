@@ -1,7 +1,7 @@
 /**
  * <copyright></copyright> $Id$
  */
-package net.refractions.udig.project.internal.render.impl;
+package org.locationtech.udig.project.internal.render.impl;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -12,23 +12,23 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.internal.Layer;
-import net.refractions.udig.project.internal.Messages;
-import net.refractions.udig.project.internal.ProjectPackage;
-import net.refractions.udig.project.internal.ProjectPlugin;
-import net.refractions.udig.project.internal.impl.SynchronizedEList;
-import net.refractions.udig.project.internal.render.ExecutorVisitor;
-import net.refractions.udig.project.internal.render.RenderContext;
-import net.refractions.udig.project.internal.render.RenderExecutor;
-import net.refractions.udig.project.internal.render.RenderManager;
-import net.refractions.udig.project.internal.render.RenderPackage;
-import net.refractions.udig.project.internal.render.Renderer;
-import net.refractions.udig.project.internal.render.SelectionLayer;
-import net.refractions.udig.project.render.ILabelPainter;
-import net.refractions.udig.project.render.IRenderContext;
-import net.refractions.udig.project.render.IRenderer;
-import net.refractions.udig.project.render.RenderException;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.impl.SynchronizedEList;
+import org.locationtech.udig.project.internal.render.ExecutorVisitor;
+import org.locationtech.udig.project.internal.render.RenderContext;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.RenderManager;
+import org.locationtech.udig.project.internal.render.RenderPackage;
+import org.locationtech.udig.project.internal.render.Renderer;
+import org.locationtech.udig.project.internal.render.SelectionLayer;
+import org.locationtech.udig.project.render.ILabelPainter;
+import org.locationtech.udig.project.render.IRenderContext;
+import org.locationtech.udig.project.render.IRenderer;
+import org.locationtech.udig.project.render.RenderException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -270,7 +270,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RendererImpl#setState(int)
+     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#setState(int)
      */
     public void setState( int newState ) {
         super.setState(newState);
@@ -334,7 +334,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.Renderer#getContext()
+     * @see org.locationtech.udig.project.internal.render.Renderer#getContext()
      */
     public RenderContext getContext() {
         if (getRenderer() == null) return null;
@@ -354,7 +354,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.RenderExecutor#setRenderer(net.refractions.udig.project.render.Renderer)
+     * @see org.locationtech.udig.project.internal.render.RenderExecutor#setRenderer(org.locationtech.udig.project.render.Renderer)
      * @uml.property name="renderer"
      */
     @SuppressWarnings("unchecked")
@@ -472,7 +472,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         return super.eIsSet(featureID);
     }
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RendererImpl#getInfo(Point, Layer)
+     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#getInfo(Point, Layer)
      *      public InfoList getInfo(Point screenLocation) throws IOException { if
      *      (!(getContext().getLayer() instanceof SelectionLayer)) return
      *      renderer.getInfo(screenLocation); return new InfoList(screenLocation.x,
@@ -480,7 +480,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      */
 
     /**
-     * @see net.refractions.udig.project.internal.render.RenderExecutor#visit(net.refractions.udig.project.render.ExecutorVisitor)
+     * @see org.locationtech.udig.project.internal.render.RenderExecutor#visit(org.locationtech.udig.project.render.ExecutorVisitor)
      */
     public void visit( ExecutorVisitor visitor ) {
         visitor.visit(this);
@@ -499,7 +499,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope)
+     * @see org.locationtech.udig.project.internal.render.Renderer#render(com.vividsolutions.jts.geom.Envelope)
      */
     public synchronized void render() {
         if (getState() == DISPOSED || !getRenderer().getContext().isVisible()) {
@@ -517,7 +517,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     }
 
     /**
-     * @see net.refractions.udig.project.internal.render.impl.RendererImpl#render(com.vividsolutions.jts.geom.Envelope,
+     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(com.vividsolutions.jts.geom.Envelope,
      *      org.eclipse.core.runtime.IProgressMonitor)
      */
     public void render( IProgressMonitor monitor ) {

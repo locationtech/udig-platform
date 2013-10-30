@@ -7,18 +7,18 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.command;
+package org.locationtech.udig.project.command;
 
 import java.util.Arrays;
 
-import net.refractions.udig.project.internal.command.navigation.NavComposite;
-import net.refractions.udig.project.internal.command.navigation.PanCommand;
-import net.refractions.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import net.refractions.udig.project.internal.command.navigation.SetViewportCenterCommand;
-import net.refractions.udig.project.internal.command.navigation.SetViewportHeight;
-import net.refractions.udig.project.internal.command.navigation.SetViewportWidth;
-import net.refractions.udig.project.internal.command.navigation.ZoomCommand;
-import net.refractions.udig.project.internal.command.navigation.ZoomExtentCommand;
+import org.locationtech.udig.project.internal.command.navigation.NavComposite;
+import org.locationtech.udig.project.internal.command.navigation.PanCommand;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportCenterCommand;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportHeight;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportWidth;
+import org.locationtech.udig.project.internal.command.navigation.ZoomCommand;
+import org.locationtech.udig.project.internal.command.navigation.ZoomExtentCommand;
 
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -29,7 +29,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * Factory providing default implementations of common navigation commands.
  * 
  * @author jeichar
- * @deprecated Moved to net.refractions.udig.project.command.factory.NavigationCommandFactory
+ * @deprecated Moved to org.locationtech.udig.project.command.factory.NavigationCommandFactory
  * @since TODO provide version
  */
 public class NavigationCommandFactory {

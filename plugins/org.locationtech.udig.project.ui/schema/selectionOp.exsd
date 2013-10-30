@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.refractions.udig.project.ui">
+<schema targetNamespace="org.locationtech.udig.project.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.refractions.udig.project.ui" id="selectionOp" name="selectionOp"/>
+         <meta.schema plugin="org.locationtech.udig.project.ui" id="selectionOp" name="selectionOp"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
@@ -85,7 +85,7 @@
                   The operation class that will perform an operation on the targetClass.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="net.refractions.udig.ui.operations.IOp"/>
+                  <meta.attribute kind="java" basedOn="org.locationtech.udig.ui.operations.IOp"/>
                </appInfo>
             </annotation>
          </attribute>

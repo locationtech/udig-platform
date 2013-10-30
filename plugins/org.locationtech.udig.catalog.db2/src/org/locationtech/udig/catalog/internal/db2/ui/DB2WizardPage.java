@@ -10,7 +10,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.db2.ui;
+package org.locationtech.udig.catalog.internal.db2.ui;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -26,13 +26,13 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.db2.DB2Plugin;
-import net.refractions.udig.catalog.db2.internal.Messages;
-import net.refractions.udig.catalog.internal.db2.DB2ServiceExtension;
-import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryDatastoreWizardPage;
-import net.refractions.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
-import net.refractions.udig.catalog.ui.wizard.DataBaseConnInfo;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.db2.DB2Plugin;
+import org.locationtech.udig.catalog.db2.internal.Messages;
+import org.locationtech.udig.catalog.internal.db2.DB2ServiceExtension;
+import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryDatastoreWizardPage;
+import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
+import org.locationtech.udig.catalog.ui.wizard.DataBaseConnInfo;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -252,7 +252,7 @@ public class DB2WizardPage extends AbstractProprietaryDatastoreWizardPage {
      * @return the DB2 plugin name
      */
     public String getId() {
-        return "net.refractions.udig.catalog.ui.db2"; //$NON-NLS-1$
+        return "org.locationtech.udig.catalog.ui.db2"; //$NON-NLS-1$
     }
     /**
      * Returns the parameters Empty strings are converted to null to work correctly with

@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.catalog.tests;
+package org.locationtech.udig.catalog.tests;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -15,15 +15,15 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.ICatalog;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IResolve;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.catalog.memory.ActiveMemoryDataStore;
-import net.refractions.udig.catalog.memory.MemoryServiceExtensionImpl;
-import net.refractions.udig.catalog.memory.internal.MemoryServiceImpl;
-import net.refractions.udig.ui.tests.support.UDIGTestUtil;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.memory.ActiveMemoryDataStore;
+import org.locationtech.udig.catalog.memory.MemoryServiceExtensionImpl;
+import org.locationtech.udig.catalog.memory.internal.MemoryServiceImpl;
+import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureSource;

@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project;
+package org.locationtech.udig.project;
 
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.ui.IMemento;
@@ -22,7 +22,7 @@ import org.eclipse.ui.IMemento;
 public abstract class IPersister<T> {
 
     /** Extension point id. * */
-    public static final String XPID = "net.refractions.udig.project.persister"; //$NON-NLS-1$
+    public static final String XPID = "org.locationtech.udig.project.persister"; //$NON-NLS-1$
 
     /** the extension configuration element * */
     IExtension extension;

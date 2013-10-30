@@ -9,7 +9,7 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.catalog.internal.db2;
+package org.locationtech.udig.catalog.internal.db2;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -17,11 +17,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.CatalogPlugin;
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.catalog.IGeoResourceInfo;
-import net.refractions.udig.catalog.IService;
-import net.refractions.udig.ui.graphics.Glyph;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.ui.graphics.Glyph;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.DataSourceException;

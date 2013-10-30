@@ -8,14 +8,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.issues.internal.view;
+package org.locationtech.udig.issues.internal.view;
 
-import net.refractions.udig.issues.Column;
-import net.refractions.udig.issues.IIssue;
-import net.refractions.udig.issues.IIssuesLabelProvider;
-import net.refractions.udig.issues.internal.ImageConstants;
-import net.refractions.udig.issues.internal.IssuesActivator;
-import net.refractions.udig.issues.internal.Messages;
+import org.locationtech.udig.issues.Column;
+import org.locationtech.udig.issues.IIssue;
+import org.locationtech.udig.issues.IIssuesLabelProvider;
+import org.locationtech.udig.issues.internal.ImageConstants;
+import org.locationtech.udig.issues.internal.IssuesActivator;
+import org.locationtech.udig.issues.internal.Messages;
 
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;

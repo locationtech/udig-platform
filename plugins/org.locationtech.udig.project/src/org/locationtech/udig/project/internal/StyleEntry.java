@@ -8,7 +8,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.internal;
+package org.locationtech.udig.project.internal;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -29,7 +29,7 @@ public interface StyleEntry extends EObject {
     String getID();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.StyleEntry#getID <em>ID</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.StyleEntry#getID <em>ID</em>}' attribute.
      * <!-- begin-user-doc --> The ID is a unique identifier required by the Renderer and
      * StyleConfigurator. <!-- end-user-doc -->
      * @param value the new value of the '<em>ID</em>' attribute.
@@ -47,7 +47,7 @@ public interface StyleEntry extends EObject {
     String getMemento();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.StyleEntry#getMemento <em>Memento</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.StyleEntry#getMemento <em>Memento</em>}' attribute.
      * <!-- begin-user-doc --> Contents to persist, genrated StyleContent.save( Memento
      * mem, value ). <!-- end-user-doc -->
      * @param value the new value of the '<em>Memento</em>' attribute.
@@ -69,7 +69,7 @@ public interface StyleEntry extends EObject {
     public Object getStyle();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.StyleEntry#getStyle <em>Style</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.StyleEntry#getStyle <em>Style</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Style</em>' attribute.
      * @see #getStyle()
@@ -87,7 +87,7 @@ public interface StyleEntry extends EObject {
     public Class getStyleClass();
 
     /**
-     * Sets the value of the '{@link net.refractions.udig.project.internal.StyleEntry#getStyleClass <em>Style Class</em>}' attribute.
+     * Sets the value of the '{@link org.locationtech.udig.project.internal.StyleEntry#getStyleClass <em>Style Class</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Style Class</em>' attribute.
      * @see #getStyleClass()

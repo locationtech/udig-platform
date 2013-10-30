@@ -8,12 +8,12 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.style.sld.editor;
+package org.locationtech.udig.style.sld.editor;
 
-import net.refractions.udig.style.internal.StyleLayer;
-import net.refractions.udig.style.sld.IEditorPageContainer;
-import net.refractions.udig.style.sld.IStyleEditorPage;
-import net.refractions.udig.style.sld.IStyleEditorPageContainer;
+import org.locationtech.udig.style.internal.StyleLayer;
+import org.locationtech.udig.style.sld.IEditorPageContainer;
+import org.locationtech.udig.style.sld.IStyleEditorPage;
+import org.locationtech.udig.style.sld.IStyleEditorPageContainer;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.DialogPage;
@@ -39,7 +39,7 @@ import org.geotools.styling.StyledLayerDescriptor;
 public abstract class StyleEditorPage extends DialogPage implements IStyleEditorPage {
 
     /** Extension Point ID we are processing */
-    protected static final String XPID = "net.refractions.udig.style.sld.StyleEditorPage"; //$NON-NLS-1$
+    protected static final String XPID = "org.locationtech.udig.style.sld.StyleEditorPage"; //$NON-NLS-1$
 
     /**
      * Context for the page to run in; should have access to style blackboard and so forth.

@@ -1,16 +1,16 @@
 /**
  * 
  */
-package net.refractions.udig.tool.info.tests;
+package org.locationtech.udig.tool.info.tests;
 
 import java.awt.Point;
 import java.util.List;
 
-import net.refractions.udig.project.ILayer;
-import net.refractions.udig.project.command.Command;
-import net.refractions.udig.project.render.IViewportModel;
-import net.refractions.udig.project.ui.internal.tool.impl.ToolContextImpl;
-import net.refractions.udig.project.ui.render.displayAdapter.ViewportPane;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl;
+import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;

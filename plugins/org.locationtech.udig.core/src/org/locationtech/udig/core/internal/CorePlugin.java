@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.core.internal;
+package org.locationtech.udig.core.internal;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
 
 /**
- * PlugIn for net.refractions.udig.core, used by utility classes to access workbench log.
+ * PlugIn for org.locationtech.udig.core, used by utility classes to access workbench log.
  * 
  * @author jones
  * @since 0.3
@@ -35,7 +35,7 @@ import org.osgi.framework.BundleContext;
 public class CorePlugin extends Plugin {
 
     /** Plugin <code>ID</code> field */
-    public static final String ID = "net.refractions.udig.core"; //$NON-NLS-1$
+    public static final String ID = "org.locationtech.udig.core"; //$NON-NLS-1$
     private static CorePlugin plugin;
 
     
@@ -167,7 +167,7 @@ public class CorePlugin extends Plugin {
      * It is much prefered to do this:
      * 
      * <pre><code>
-     * private static final String RENDERING = &quot;net.refractions.udig.project/render/trace&quot;;
+     * private static final String RENDERING = &quot;org.locationtech.udig.project/render/trace&quot;;
      * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
      *     System.out.println(&quot;your message here&quot;);
      * }

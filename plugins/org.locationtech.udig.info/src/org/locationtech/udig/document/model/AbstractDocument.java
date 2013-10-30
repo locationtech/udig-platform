@@ -9,13 +9,13 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.document.model;
+package org.locationtech.udig.document.model;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.document.IDocument;
+import org.locationtech.udig.catalog.document.IDocument;
 
 import org.eclipse.swt.program.Program;
 

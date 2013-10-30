@@ -9,16 +9,16 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  *
  */
-package net.refractions.udig.style.filter;
+package org.locationtech.udig.style.filter;
 
 import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 
-import net.refractions.udig.catalog.IGeoResource;
-import net.refractions.udig.project.ProjectBlackboardConstants;
-import net.refractions.udig.project.StyleContent;
-import net.refractions.udig.style.sld.SLDPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.ProjectBlackboardConstants;
+import org.locationtech.udig.project.StyleContent;
+import org.locationtech.udig.style.sld.SLDPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
@@ -60,7 +60,7 @@ public final class FilterContent extends StyleContent {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.project.StyleContent#getStyleClass()
+     * @see org.locationtech.udig.project.StyleContent#getStyleClass()
      */
     public Class< ? > getStyleClass() {
         return Boolean.class;
@@ -68,7 +68,7 @@ public final class FilterContent extends StyleContent {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.project.StyleContent#save(org.eclipse.ui.IMemento,
+     * @see org.locationtech.udig.project.StyleContent#save(org.eclipse.ui.IMemento,
      * java.lang.Object)
      */
     public void save( IMemento memento, Object value ) {
@@ -97,7 +97,7 @@ public final class FilterContent extends StyleContent {
     /**
      * Retrieves a {@link FilterStyle}, or null if not provided.
      * (non-Javadoc)
-     * @see net.refractions.udig.project.StyleContent#load(org.eclipse.ui.IMemento)
+     * @see org.locationtech.udig.project.StyleContent#load(org.eclipse.ui.IMemento)
      */
     public Object load( IMemento memento ) {
         String type = memento.getString("type");
@@ -135,7 +135,7 @@ public final class FilterContent extends StyleContent {
 
     /*
      * (non-Javadoc)
-     * @see net.refractions.udig.project.StyleContent#load(java.net.URL)
+     * @see org.locationtech.udig.project.StyleContent#load(java.net.URL)
      */
     public Object load( URL url, IProgressMonitor m ) throws IOException {
         return null;

@@ -8,13 +8,13 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.tool.info.tests;
+package org.locationtech.udig.tool.info.tests;
 
 import java.awt.Dimension;
 
-import net.refractions.udig.AbstractProjectUITestCase;
-import net.refractions.udig.project.IMap;
-import net.refractions.udig.project.tests.support.MapTests;
+import org.locationtech.udig.AbstractProjectUITestCase;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.tests.support.MapTests;
 
 import org.junit.Test;
 

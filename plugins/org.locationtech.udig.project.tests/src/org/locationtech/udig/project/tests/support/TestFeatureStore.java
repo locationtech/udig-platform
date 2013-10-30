@@ -7,7 +7,7 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package net.refractions.udig.project.tests.support;
+package org.locationtech.udig.project.tests.support;
 
 import java.io.IOException;
 import java.util.Collections;
